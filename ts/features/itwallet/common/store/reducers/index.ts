@@ -16,7 +16,7 @@ import itwCredentialsReducer, {
 } from "../../../credentials/store/reducers";
 import identificationReducer, {
   ItwIdentificationState
-} from "../../../identification/store/reducers";
+} from "../../../identification/common/store/reducers";
 import issuanceReducer, {
   ItwIssuanceState
 } from "../../../issuance/store/reducers";
@@ -25,6 +25,9 @@ import wiaReducer, {
 } from "../../../walletInstance/store/reducers";
 import environmentReducer, { ItwEnvironmentState } from "./environment";
 import preferencesReducer, { ItwPreferencesState } from "./preferences";
+import securePreferencesReducer, {
+  ItwSecurePreferencesState
+} from "./securePreferences";
 
 export type ItWalletState = {
   environment: ItwEnvironmentState;
@@ -33,6 +36,7 @@ export type ItWalletState = {
   credentials: ItwCredentialsState & PersistPartial;
   walletInstance: ItwWalletInstanceState & PersistPartial;
   preferences: ItwPreferencesState;
+  securePreferences: ItwSecurePreferencesState & PersistPartial;
 };
 
 export type PersistedItWalletState = ReturnType<typeof persistedReducer>;
@@ -43,10 +47,11 @@ const itwReducer = combineReducers({
   issuance: issuanceReducer,
   credentials: itwCredentialsReducer,
   walletInstance: wiaReducer,
-  preferences: preferencesReducer
+  preferences: preferencesReducer,
+  securePreferences: securePreferencesReducer
 });
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 4;
+const CURRENT_REDUX_ITW_STORE_VERSION = 5;
 
 export const migrations: MigrationManifest = {
   // Added preferences store
@@ -70,7 +75,24 @@ export const migrations: MigrationManifest = {
 
   // Added environment reducer
   "4": (state: PersistedState): PersistedState =>
-    _.set(state, "environment", { env: "prod" })
+    _.set(state, "environment", { env: "prod" }),
+
+  // Renamed MDL to mDL
+  "5": (state: PersistedState): PersistedState => {
+    const requestedCredentials = Object.fromEntries(
+      Object.entries(_.get(state, "preferences.requestedCredentials")).map(
+        ([credentialType, requestedAt]) => [
+          credentialType.replace("MDL", "mDL"),
+          requestedAt
+        ]
+      )
+    );
+    return _.set(
+      state,
+      "preferences.requestedCredentials",
+      requestedCredentials
+    );
+  }
 };
 
 const itwPersistConfig: PersistConfig = {

@@ -12,7 +12,7 @@ import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
 import { useCallback, useEffect, useMemo } from "react";
 import { AppState, SafeAreaView, StyleSheet, View } from "react-native";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import { mixpanelTrack } from "../../../../../mixpanel";
 
 import {

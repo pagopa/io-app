@@ -1,25 +1,15 @@
-import { ListItemAction, useIOToast } from "@pagopa/io-app-design-system";
+import { ListItemAction } from "@pagopa/io-app-design-system";
 import { memo, ReactNode, useMemo } from "react";
-import { Alert, View } from "react-native";
-import I18n from "../../../../../i18n.ts";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
-import {
-  useIODispatch,
-  useIOSelector,
-  useIOStore
-} from "../../../../../store/hooks.ts";
-import {
-  CREDENTIALS_MAP,
-  trackCredentialDeleteProperties,
-  trackItwCredentialDelete
-} from "../../../analytics";
+import { View } from "react-native";
+import I18n from "i18next";
+import { useIOSelector } from "../../../../../store/hooks.ts";
 import { itwIPatenteCtaConfigSelector } from "../../../common/store/selectors/remoteConfig.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
-import { itwCredentialsRemoveByType } from "../../../credentials/store/actions";
 import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
 import { getCredentialDocumentNumber } from "../../../trustmark/utils";
 import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.ts";
 import { useItwStartCredentialSupportRequest } from "../hooks/useItwStartCredentialSupportRequest.tsx";
+import { useItwRemoveCredentialWithConfirm } from "../hooks/useItwRemoveCredentialWithConfirm";
 
 type ItwPresentationDetailFooterProps = {
   credential: StoredCredential;
@@ -32,52 +22,10 @@ type IPatenteListItemActionProps = {
 const ItwPresentationDetailsFooter = ({
   credential
 }: ItwPresentationDetailFooterProps) => {
-  const dispatch = useIODispatch();
-  const store = useIOStore();
-
-  const navigation = useIONavigation();
-  const toast = useIOToast();
-
   const startAndTrackSupportRequest =
     useItwStartCredentialSupportRequest(credential);
-
-  const handleRemoveCredential = () => {
-    dispatch(itwCredentialsRemoveByType(credential.credentialType));
-    toast.success(
-      I18n.t("features.itWallet.presentation.credentialDetails.toast.removed")
-    );
-    void trackCredentialDeleteProperties(
-      CREDENTIALS_MAP[credential.credentialType],
-      store.getState()
-    );
-
-    navigation.pop();
-  };
-
-  const showRemoveCredentialDialog = () => {
-    trackItwCredentialDelete(CREDENTIALS_MAP[credential.credentialType]);
-    return Alert.alert(
-      I18n.t(
-        "features.itWallet.presentation.credentialDetails.dialogs.remove.title"
-      ),
-      I18n.t(
-        "features.itWallet.presentation.credentialDetails.dialogs.remove.content"
-      ),
-      [
-        {
-          text: I18n.t(
-            "features.itWallet.presentation.credentialDetails.dialogs.remove.confirm"
-          ),
-          style: "destructive",
-          onPress: handleRemoveCredential
-        },
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
-        }
-      ]
-    );
-  };
+  const { confirmAndRemoveCredential } =
+    useItwRemoveCredentialWithConfirm(credential);
 
   const credentialActions = useMemo(
     () => getCredentialActions(credential),
@@ -109,7 +57,7 @@ const ItwPresentationDetailsFooter = ({
         accessibilityLabel={I18n.t(
           "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
         )}
-        onPress={showRemoveCredentialDialog}
+        onPress={confirmAndRemoveCredential}
       />
     </View>
   );
@@ -123,7 +71,7 @@ const getCredentialActions = (credential: StoredCredential): ReactNode => {
   const docNumber = getCredentialDocumentNumber(parsedCredential);
 
   return {
-    MDL: [
+    mDL: [
       <IPatenteListItemAction key="iPatenteActionMdl" docNumber={docNumber} />
     ],
     EuropeanHealthInsuranceCard: [],

@@ -9,12 +9,12 @@ import {
 } from "@pagopa/io-app-design-system";
 import { memo, PropsWithChildren, useState } from "react";
 import { Canvas, Rect, vec, LinearGradient } from "@shopify/react-native-skia";
+import I18n from "i18next";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
 import {
   IT_WALLET_ID_BG,
   IT_WALLET_ID_BG_LIGHT
 } from "../../../common/utils/constants";
-import I18n from "../../../../../i18n";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { ItwPresentationDetailsScreenBase } from "./ItwPresentationDetailsScreenBase";
 
@@ -41,9 +41,7 @@ const ScreenHeader = memo(() => (
       <VStack space={16}>
         <H2>{I18n.t("features.itWallet.credentialName.pid")}</H2>
         <Body color="black">
-          {I18n.t(
-            "features.itWallet.presentation.itWalletId.detail.description"
-          )}
+          {I18n.t("features.itWallet.presentation.itWalletId.description")}
         </Body>
       </VStack>
     </ContentWrapper>

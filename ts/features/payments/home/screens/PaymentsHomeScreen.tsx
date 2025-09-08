@@ -1,3 +1,4 @@
+import { ContentWrapper } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useState } from "react";
@@ -5,12 +6,12 @@ import Animated, {
   LinearTransition,
   useAnimatedRef
 } from "react-native-reanimated";
+import I18n from "i18next";
 import {
   IOScrollView,
   IOScrollViewActions
 } from "../../../../components/ui/IOScrollView";
 import { useHeaderFirstLevel } from "../../../../hooks/useHeaderFirstLevel";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -123,6 +124,7 @@ const PaymentsHomeScreen = () => {
   if (isTransactionsEmpty) {
     return (
       <IOScrollView
+        includeContentMargins={false}
         animatedRef={scrollViewContentRef}
         contentContainerStyle={{
           flexGrow: 1
@@ -190,7 +192,11 @@ const PaymentsHomeScreenContent = () => {
 
   return (
     <>
-      <PaymentsHomeUserMethodsList enforcedLoadingState={isLoadingFirstTime} />
+      <ContentWrapper>
+        <PaymentsHomeUserMethodsList
+          enforcedLoadingState={isLoadingFirstTime}
+        />
+      </ContentWrapper>
       <PaymentsHomeTransactionsList enforcedLoadingState={isLoadingFirstTime} />
     </>
   );

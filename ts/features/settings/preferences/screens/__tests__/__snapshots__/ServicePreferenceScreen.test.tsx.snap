@@ -260,7 +260,7 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                                 }
                               >
                                 <Text
-                                  accessibilityLabel="Who can contact you?"
+                                  accessibilityLabel="Chi può scriverti?"
                                   accessibilityRole="header"
                                   allowFontScaling={true}
                                   dynamicTypeRamp="title1"
@@ -279,7 +279,7 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                                     ]
                                   }
                                 >
-                                  Who can contact you?
+                                  Chi può scriverti?
                                 </Text>
                               </View>
                               <View
@@ -314,7 +314,7 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                                     ]
                                   }
                                 >
-                                  IO is simple because there's nothing to set up: if an institution or a service have something important to tell you, they can send you a message.
+                                  IO è semplice perché non devi fare nulla: se un Ente o un servizio hanno qualcosa di importante da dirti, possono mandarti un messaggio.
                                 </Text>
                               </View>
                               <View
@@ -433,7 +433,7 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                                               ]
                                             }
                                           >
-                                            Use quick setup
+                                            Usa configurazione rapida
                                           </Text>
                                         </View>
                                         <View
@@ -580,7 +580,7 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                                               ]
                                             }
                                           >
-                                            You'll receive messages only by the institutions which have something important to tell you.
+                                            Ti contatteranno solo gli enti che hanno qualcosa di importante da dirti.
                                              
                                             <Text
                                               allowFontScaling={true}
@@ -600,7 +600,7 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                                                 ]
                                               }
                                             >
-                                              You can always deactivate communications by services that do not interest you.
+                                              Potrai sempre disattivare le comunicazioni dei servizi che non ti interessano.
                                             </Text>
                                           </Text>
                                         </Text>
@@ -718,7 +718,7 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                                               ]
                                             }
                                           >
-                                            Configure manually
+                                            Configura manualmente
                                           </Text>
                                         </View>
                                         <View
@@ -847,7 +847,7 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          No one will contact you. To receive messages, you will have to enable services one by one.
+                                          Nessuno potrà contattarti. Per ricevere messaggi dovrai attivare i servizi uno a uno.
                                         </Text>
                                       </View>
                                     </View>
@@ -880,9 +880,6 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                               },
                               {},
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
                               },
@@ -907,7 +904,7 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1021,7 +1018,7 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Who can contact you?"
+                              accessibilityLabel="Chi può scriverti?"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -1061,7 +1058,7 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                                   ]
                                 }
                               >
-                                Who can contact you?
+                                Chi può scriverti?
                               </Text>
                             </View>
                             <View
@@ -1075,7 +1072,7 @@ exports[`ServicesPreferenceScreen should match snapshot 1`] = `
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

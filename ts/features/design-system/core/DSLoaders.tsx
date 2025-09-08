@@ -11,10 +11,10 @@ import {
 
 import { ReactNode, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
+import I18n from "i18next";
 import ActivityIndicator from "../../../components/ui/ActivityIndicator";
 import { CircularProgress } from "../../../components/ui/CircularProgress";
 import { LoadingIndicator } from "../../../components/ui/LoadingIndicator";
-import I18n from "../../../i18n";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 

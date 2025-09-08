@@ -1,8 +1,8 @@
-import { Body, IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@pagopa/io-app-design-system";
 import { TxtLinkNode } from "@textlint/ast-node-types";
-import { getTxtNodeKey } from "../../../../components/IOMarkdown/renderRules";
+import I18n from "i18next";
+import { linkNodeToReactNative } from "../../../../components/IOMarkdown/renderRules";
 import { Renderer } from "../../../../components/IOMarkdown/types";
-import I18n from "../../../../i18n";
 import { openWebUrl } from "../../../../utils/url";
 
 /**
@@ -12,20 +12,15 @@ import { openWebUrl } from "../../../../utils/url";
  */
 export const generateLinkRuleWithCallback = (callback: () => void) => ({
   Link(link: TxtLinkNode, render: Renderer) {
-    return (
-      <Body
-        weight="Semibold"
-        asLink
-        key={getTxtNodeKey(link)}
-        onPress={() => {
-          openWebUrl(link.url, () =>
-            IOToast.error(I18n.t("global.jserror.title"))
-          );
-          callback();
-        }}
-      >
-        {link.children.map(render)}
-      </Body>
+    return linkNodeToReactNative(
+      link,
+      () => {
+        openWebUrl(link.url, () =>
+          IOToast.error(I18n.t("global.jserror.title"))
+        );
+        callback();
+      },
+      render
     );
   }
 });

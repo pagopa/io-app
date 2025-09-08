@@ -16,7 +16,7 @@ const mockGlobalState = {
   remoteConfig: O.some({
     pn: {
       aarQRCodeRegex:
-        "^\\s*https:\\/\\/(dev\\.|test\\.|hotfix\\.|uat\\.)?cittadini\\.notifichedigitali\\.it(\\/[^?]*)?\\?aar=[^\\s]+"
+        "^\\s*https:\\/\\/(cittadini|login)\\.(uat\\.)?notifichedigitali\\.it(\\/[^?]*)?\\?aar=[^\\s]+"
     }
   })
 } as GlobalState;

@@ -2,7 +2,7 @@ import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
 import { useMemo } from "react";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import { StoredCredential } from "../utils/itwTypesUtils";
 import {
@@ -80,7 +80,7 @@ const ItwMetadataIssuanceListItem = ({
 const getAuthSource = (credential: StoredCredential) =>
   pipe(
     credential.issuerConf.openid_credential_issuer
-      .credential_configurations_supported?.[credential.credentialType],
+      .credential_configurations_supported?.[credential.credentialId],
     O.fromNullable,
     O.map(config => config.authentic_source),
     O.toUndefined

@@ -2942,11 +2942,9 @@
           "categories": "Kategorien",
           "cta": {
             "cancel": "Entfernen",
-            "confirm": {
-              "zero": "Filter anwenden",
-              "one": "({{count}}) Filter anwenden",
-              "other": "({{count}}) Filter anwenden"
-            }
+            "confirm_zero": "Filter anwenden",
+            "confirm_one": "({{count}}) Filter anwenden",
+            "confirm_other": "({{count}}) Filter anwenden"
           },
           "order": {
             "byDistance": "Nach der Nähe zu deinem Standort",
@@ -3106,14 +3104,10 @@
         "code": {
           "title": "Dein Rabattcode",
           "validUntil": "Noch gültig für",
-          "minutes": {
-            "one": "1 Minute",
-            "other": "{{minutes}} Minuten"
-          },
-          "seconds": {
-            "one": "1 Sekunde",
-            "other": "{{seconds}} Sekunden"
-          }
+          "minutes_one": "1 Minute",
+          "minutes_other": "{{minutes}} Minuten",
+          "seconds_one": "1 Sekunde",
+          "seconds_other": "{{seconds}} Sekunden"
         }
       }
     },
@@ -3262,7 +3256,7 @@
           "cgn": "Nationale Jugendkarte",
           "itw": "Dokumente",
           "payment": "Zahlungsmethoden",
-          "other": "Mehr"
+          "other": "Bonus und mehr"
         }
       },
       "onboarding": {
@@ -3576,22 +3570,11 @@
           }
         },
         "eidResult": {
-          "successL2": {
-            "title": "Alles ist bereit!",
-            "subtitle": "Du kannst nun das erste Dokument in das IO-Konto aufnehmen.",
-            "toast": "Erledigt!",
-            "actions": {
-              "continue": "Erstes Dokument hinzufügen",
-              "continueAlt": "Dokument hinzufügen",
-              "close": "Später fortfahren"
-            }
-          },
           "success": {
-            "title": "Il tuo IT-Wallet è pronto!",
-            "subtitle": "Ora hai accesso ai vantaggi del nuovo portafoglio digitale di Stato.",
-            "actions": {
-              "continue": "Esplora IT-Wallet"
-            }
+            "title": "È tutto pronto!",
+            "subtitle": "Ora puoi aggiungere il primo documento al Portafoglio di IO.",
+            "primaryAction": "Aggiungi primo documento",
+            "secondaryAction": "Continua più tardi"
           }
         },
         "credentialResult": {
@@ -3694,7 +3677,7 @@
               }
             }
           },
-          "MDL": {
+          "mDL": {
             "expiring": {
               "title": "Führerschein in IO: ablaufendes Dokument",
               "content": "Verlängere deinen Führerschein in den Büros des Ministeriums für Infrastruktur und Verkehr - Generaldirektion für Motorisierung oder bei einer autorisierten Stelle in deiner Nähe.\n\nDu musst dich einer medizinischen Untersuchung bei einem qualifizierten Arzt unterziehen und die vorgeschriebenen Formulare ausfüllen.\n\n###### Welche Dokumente sollte ich bereithalten?\n\n - den ablaufenden oder abgelaufenen Führerschein\n - ein Ausweisdokument\n - die Steuernummer\n - ein aktuelles Foto in Passgröße"
@@ -3779,7 +3762,7 @@
           "action": "Bestätige und fortfahren"
         },
         "loadingScreen": {
-          "title": "Wir deaktivieren Dokumente in IO...",
+          "title": "Wir deaktivieren {{name}}...",
           "subtitle": "Warte ein paar Sekunden"
         },
         "failureScreen": {
@@ -3974,7 +3957,8 @@
     "expiring": "Verfällt am {{endDate}}",
     "expired": "Abgelaufen am {{endDate}}",
     "paused": "In Pause",
-    "removed": "Entfernt"
+    "removed": "Entfernt",
+    "used": "Utilizzato"
   },
   "transaction": {
     "details": {
@@ -4119,8 +4103,8 @@
     "onboarding": {
       "enableMessages": {
         "cancelAction": "Stornieren",
-        "subtitle": "Aktivieren Sie die Möglichkeit, Sie in der App zu kontaktieren, um Aktualisierungen auf dem {{initiativeName}} zu erhalten. Dieser Schritt ist erforderlich, um mit der Anfrage fortzufahren.",
-        "title": "Nachrichten aktivieren",
+        "subtitle": "Questo passaggio è necessario per procedere con la richiesta. Ti permetterà di ricevere gli aggiornamenti sul {{initiativeName}}.",
+        "title": "Aktivieren Sie die Möglichkeit, Sie in der App zu kontaktieren",
         "confirmAction": "OK, aktiv"
       },
       "enableNotification": {
@@ -4135,6 +4119,15 @@
         "subtitle": "Attendi qualche secondo",
         "title": "Stiamo elaborando la tua richiesta"
       }
+    },
+    "support": {
+      "errorCode": "Fehlercode",
+      "serviceId": "Service ID",
+      "initiativeId": "ID Initiative",
+      "supportTitle": "Contatta l'assistenza",
+      "chat": "Chiedi aiuto in chat",
+      "additionalDataTitle": "Dati aggiuntivi",
+      "copyAll": "Copia tutti"
     }
   }
 }

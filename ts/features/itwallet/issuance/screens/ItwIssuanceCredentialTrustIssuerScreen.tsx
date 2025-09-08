@@ -5,17 +5,18 @@ import {
   ForceScrollDownView,
   H2,
   ListItemHeader,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
@@ -55,7 +56,8 @@ import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailur
 
 export type ItwIssuanceCredentialTrustIssuerNavigationParams = {
   credentialType?: string;
-  asyncContinuation?: boolean;
+  asyncContinuation?: boolean; // TODO to be removed in [SIW-2839]
+  isUpgrade?: boolean;
 };
 
 type ScreenProps =
@@ -68,7 +70,7 @@ type ScreenProps =
   | ItwIssuanceCredentialTrustIssuerNavigationParams;
 
 const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
-  const { credentialType, asyncContinuation } =
+  const { credentialType, asyncContinuation, isUpgrade } =
     ("route" in props ? props.route.params : props) ?? {};
 
   const eidOption = useIOSelector(itwCredentialsEidSelector);
@@ -94,12 +96,12 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
       if (credentialType) {
         machineRef.send({
           type: "select-credential",
-          skipNavigation: true,
           credentialType,
-          asyncContinuation
+          mode: isUpgrade ? "upgrade" : "issuance",
+          isAsyncContinuation: asyncContinuation // TODO to be removed in [SIW-2839]
         });
       }
-    }, [credentialType, asyncContinuation, machineRef])
+    }, [credentialType, asyncContinuation, machineRef, isUpgrade])
   );
 
   if (isLoading) {
@@ -139,6 +141,8 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isIssuing =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsIssuing);
+
+  const theme = useIOTheme();
 
   const handleContinuePress = () => {
     machineRef.send({ type: "confirm-trust-data" });
@@ -220,7 +224,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
             "features.itWallet.issuance.credentialAuth.requiredClaims"
           )}
           iconName="security"
-          iconColor="grey-700"
+          iconColor={theme["icon-default"]}
         />
         <ItwRequestedClaimsList items={requiredClaims} />
         <VSpacer size={24} />

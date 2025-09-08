@@ -3,6 +3,7 @@
  */
 import { isActionOf } from "typesafe-actions";
 import {
+  sessionCorrupted,
   sessionExpired,
   sessionInvalid
 } from "../../features/authentication/common/store/actions";
@@ -72,7 +73,8 @@ export default function startupReducer(
   }
   if (
     isActionOf(sessionInvalid, action) ||
-    isActionOf(sessionExpired, action)
+    isActionOf(sessionExpired, action) ||
+    isActionOf(sessionCorrupted, action)
   ) {
     return {
       ...state,

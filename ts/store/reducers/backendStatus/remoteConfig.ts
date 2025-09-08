@@ -20,7 +20,10 @@ import {
 import { getAppVersion, isVersionSupported } from "../../../utils/appVersion";
 import { backendStatusLoadSuccess } from "../../actions/backendStatus";
 import { Action } from "../../actions/types";
-import { isPropertyWithMinAppVersionEnabled } from "../featureFlagWithMinAppVersionStatus";
+import {
+  isMinAppVersionSupported,
+  isPropertyWithMinAppVersionEnabled
+} from "../featureFlagWithMinAppVersionStatus";
 import { isIdPayLocallyEnabledSelector } from "../persistedPreferences";
 import { GlobalState } from "../types";
 import { FimsServiceConfiguration } from "../../../../definitions/content/FimsServiceConfiguration";
@@ -56,6 +59,23 @@ export const cgnMerchantVersionSelector = createSelector(
       remoteConfig,
       O.map(config => config.cgn.merchants_v2),
       O.toUndefined
+    )
+);
+
+export const cgnMerchantsModalSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): boolean | undefined =>
+    pipe(
+      remoteConfig,
+      O.map(config =>
+        isVersionSupported(
+          Platform.OS === "ios"
+            ? config.cgn.show_cgn_categories_modal?.ios
+            : config.cgn.show_cgn_categories_modal?.android,
+          getAppVersion()
+        )
+      ),
+      O.getOrElse(() => false)
     )
 );
 
@@ -647,3 +667,48 @@ export const pnPrivacyUrlsSelector = createSelector(
       O.getOrElse(() => fallbackSendPrivacyUrls)
     )
 );
+
+/**
+ * Return true if the app supports the AAR feature (based on remote config).
+ * If the remote value is missing, consider the feature as enabled.
+ */
+export const isAARRemoteEnabled = (state: GlobalState) => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isNone(remoteConfigOption)) {
+    // CDN data not available, AAR is disabled
+    return false;
+  }
+
+  const aarMinAppVersion = remoteConfigOption.value.pn?.aar?.min_app_version;
+  if (aarMinAppVersion == null) {
+    // Either AAR configuration missing or min_app_version missing in AAR configuration. AAR is enabled
+    return true;
+  }
+
+  return isMinAppVersionSupported(
+    O.some({ min_app_version: aarMinAppVersion })
+  );
+};
+
+export const isCaCBannerEnabledSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    remoteConfigSelector,
+    O.map(config =>
+      isVersionSupported(
+        Platform.OS === "ios"
+          ? config.zendeskCacBanner?.min_app_version?.ios
+          : config.zendeskCacBanner?.min_app_version?.android,
+        getAppVersion()
+      )
+    ),
+    O.getOrElse(() => false)
+  );
+
+export const caCBannerConfigSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    remoteConfigSelector,
+    O.map(config => config.zendeskCacBanner),
+    O.toUndefined
+  );

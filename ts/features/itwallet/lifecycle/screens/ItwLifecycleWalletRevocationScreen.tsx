@@ -1,21 +1,25 @@
 import { Body, ContentWrapper } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../../i18n";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { selectIsLoading } from "../../machine/eid/selectors";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard.ts";
+import { useIOSelector } from "../../../../store/hooks.ts";
+import { itwLifecycleIsITWalletValidSelector } from "../store/selectors/index.ts";
 
 const RevocationLoadingScreen = () => {
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
   return (
     <LoadingScreenContent
       contentTitle={I18n.t(
-        "features.itWallet.walletRevocation.loadingScreen.title"
+        "features.itWallet.walletRevocation.loadingScreen.title",
+        { name: isItwL3 ? "IT-Wallet" : "Documenti su IO" }
       )}
     >
       <ContentWrapper style={{ alignItems: "center" }}>

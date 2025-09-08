@@ -7,10 +7,10 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { Errors } from "io-ts";
+import I18n from "i18next";
 import { Locales } from "../../locales/locales";
-import I18n from "../i18n";
 import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";
-import { getLocalePrimary, localeDateFormat } from "./locale";
+import { getLocalePrimary } from "./locale";
 import { NumberFromString } from "./number";
 
 type DateFnsLocale = typeof import("date-fns/locale/it");
@@ -50,7 +50,7 @@ export const formatFiscalCodeBirthdayAsShortFormat = (
 export const formatDateAsShortFormat = (date: Date): string =>
   isNaN(date.getTime())
     ? I18n.t("global.date.invalid")
-    : I18n.strftime(date, I18n.t("global.dateFormats.shortFormat"));
+    : new Intl.DateTimeFormat("it", { dateStyle: "short" }).format(date);
 
 export function formatDateAsMonth(date: Date): ReturnType<typeof format> {
   return format(date, "MMM");
@@ -90,7 +90,7 @@ export function format(
   date: string | number | Date,
   dateFormat?: string
 ): ReturnType<typeof dateFnsFormat> {
-  const localePrimary = getLocalePrimary(I18n.currentLocale());
+  const localePrimary = getLocalePrimary(I18n.language);
   return dateFnsFormat(
     date,
     dateFormat,
@@ -275,10 +275,10 @@ export const getTranslatedShortNumericMonthYear = (
   if (isNaN(year) || isNaN(indexedMonth)) {
     return undefined;
   }
-  return localeDateFormat(
-    new Date(year, indexedMonth - 1),
-    I18n.t("global.dateFormats.shortNumericMonthYear")
-  );
+  return new Intl.DateTimeFormat("it", {
+    month: "2-digit",
+    year: "2-digit"
+  }).format(new Date(year, indexedMonth - 1));
 };
 
 /**
@@ -288,10 +288,13 @@ export const getTranslatedShortNumericMonthYear = (
  * @returns the actual locale date short format without slashes.
  */
 export const toAndroidCacheTimestamp = () =>
-  localeDateFormat(
-    new Date(),
-    I18n.t("global.dateFormats.shortFormat").replace(/\//g, "")
-  );
+  new Intl.DateTimeFormat("it", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric"
+  })
+    .format(new Date())
+    .replace(/\//g, "");
 
 /**
  * This function returns a Date object from a string in format "YYYYMM"

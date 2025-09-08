@@ -4,7 +4,7 @@ import {
 } from "../../../../../../definitions/idpay/RefundDetailDTO";
 import { getRefundPeriodDateString } from "../strings";
 
-const T_REFUND: RefundDetailDTO = {
+const T_REFUND = {
   amountCents: 100,
   eventId: "ABC",
   operationDate: new Date(),
@@ -12,7 +12,7 @@ const T_REFUND: RefundDetailDTO = {
   operationType: OperationTypeEnum.PAID_REFUND,
   startDate: new Date(2023, 8, 21),
   endDate: new Date(2023, 9, 21)
-};
+} as RefundDetailDTO;
 
 describe("getRefundPeriodDateString", () => {
   it("should return correct date string", () => {

@@ -1,10 +1,8 @@
 import {
   Body,
-  BodySmall,
   H3,
   IOColors,
   IOVisualCostants,
-  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -14,20 +12,21 @@ import { pipe } from "fp-ts/lib/function";
 import { useState, useMemo } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
+import I18n from "i18next";
 import { TransactionBarCodeResponse } from "../../../../../definitions/idpay/TransactionBarCodeResponse";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { formatNumberCurrencyCents } from "../../common/utils/strings";
 import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IdPayBarcodeExpireProgressBar } from "../components/IdPayBarcodeExpireProgressBar";
 import { IdPayBarcodeParamsList } from "../navigation/params";
 import { idPayBarcodeByInitiativeIdSelector } from "../store";
 import { idPayGenerateBarcode } from "../store/actions";
 import { calculateIdPayBarcodeSecondsToExpire } from "../utils";
+import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 // -------------------- types --------------------
 
@@ -39,7 +38,6 @@ type IdPayBarcodeResultRouteProps = RouteProp<
   "IDPAY_BARCODE_RESULT"
 >;
 type SuccessContentProps = {
-  goBack: () => void;
   barcode: TransactionBarCodeResponse;
 };
 type BarcodeExpiredContentProps = {
@@ -55,6 +53,12 @@ const IdPayBarcodeResultScreen = () => {
   const barcodePot = useIOSelector(state =>
     idPayBarcodeByInitiativeIdSelector(state)(initiativeId)
   );
+
+  useHeaderSecondLevel({
+    title: "",
+    canGoBack: true,
+    supportRequest: true
+  });
 
   const navigateToInitiativeDetails = () =>
     navigation.navigate(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
@@ -82,20 +86,14 @@ const IdPayBarcodeResultScreen = () => {
           loop
         />
       ),
-      barcode => (
-        <SuccessContent
-          barcode={barcode}
-          goBack={navigateToInitiativeDetails}
-        />
-      )
+      barcode => <SuccessContent barcode={barcode} />
     )
   );
 };
 
 // -------------------- result screens --------------------
 
-const SuccessContent = ({ goBack, barcode }: SuccessContentProps) => {
-  const theme = useIOTheme();
+const SuccessContent = ({ barcode }: SuccessContentProps) => {
   const trx = barcode.trxCode.toUpperCase();
   const [isBarcodeExpired, setIsBarcodeExpired] = useState(false);
   // expire check is handled by the progress bar
@@ -114,18 +112,15 @@ const SuccessContent = ({ goBack, barcode }: SuccessContentProps) => {
     <IOScrollViewWithLargeHeader
       includeContentMargins
       actions={{
-        type: "TwoButtons",
+        type: "SingleButton",
         primary: {
-          label: I18n.t("idpay.barCode.resultScreen.success.saveImageCta"),
+          icon: "copy",
+          iconPosition: "end",
+          label: I18n.t("idpay.barCode.resultScreen.success.copyCodeCta"),
           accessibilityLabel: I18n.t(
-            "idpay.barCode.resultScreen.success.saveImageCta"
+            "idpay.barCode.resultScreen.success.copyCodeCta"
           ),
-          onPress: () => null
-        },
-        secondary: {
-          label: I18n.t("global.buttons.close"),
-          accessibilityLabel: I18n.t("global.buttons.close"),
-          onPress: goBack
+          onPress: () => clipboardSetStringWithFeedback(trx)
         }
       }}
       title={{
@@ -136,14 +131,6 @@ const SuccessContent = ({ goBack, barcode }: SuccessContentProps) => {
       })}
     >
       <View style={styles.barcodeContainer}>
-        <View style={{ flexDirection: "row", alignSelf: "center" }}>
-          <BodySmall weight="Regular" color={theme["textBody-default"]}>
-            {I18n.t("idpay.barCode.resultScreen.success.validUpTo")}
-          </BodySmall>
-          <BodySmall weight="Semibold" color={theme["textBody-default"]}>
-            {formatNumberCurrencyCents(barcode.residualBudgetCents)}
-          </BodySmall>
-        </View>
         <VSpacer size={4} />
         <Barcode format="CODE128" value={trx} />
         <H3 style={{ alignSelf: "center" }}>{trx}</H3>

@@ -1,6 +1,6 @@
 import { CieManager } from "@pagopa/io-react-native-cie";
 import { ActionArgs } from "xstate";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import {
   ItwFlow,
   trackItWalletCardReadingClose,

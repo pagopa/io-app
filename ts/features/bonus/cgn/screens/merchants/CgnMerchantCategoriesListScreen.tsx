@@ -15,8 +15,8 @@ import * as O from "fp-ts/lib/Option";
 import { useEffect, useMemo, useState } from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import I18n from "i18next";
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
-import I18n from "../../../../../i18n";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
@@ -27,6 +27,7 @@ import { cgnCategories } from "../../store/actions/categories";
 import { cgnCategoriesListSelector } from "../../store/reducers/categories";
 import { getCategorySpecs } from "../../utils/filters";
 import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
+import { cgnMerchantsModalSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 
 export const CgnMerchantCategoriesListScreen = () => {
   const theme = useIOTheme();
@@ -34,6 +35,8 @@ export const CgnMerchantCategoriesListScreen = () => {
   const dispatch = useIODispatch();
   const [isPullRefresh, setIsPullRefresh] = useState(false);
   const potCategories = useIOSelector(cgnCategoriesListSelector);
+
+  const showSortingInfo = useIOSelector(cgnMerchantsModalSelector);
 
   const navigation =
     useNavigation<
@@ -91,10 +94,10 @@ export const CgnMerchantCategoriesListScreen = () => {
           const accessibilityLabel =
             (countAvailable
               ? `${I18n.t("bonus.cgn.merchantsList.categoriesList.a11y", {
-                  name: I18n.t(s.nameKey),
+                  name: I18n.t(s.nameKey as any),
                   count: category.newDiscounts
                 })}`
-              : `${I18n.t(s.nameKey)}`) +
+              : `${I18n.t(s.nameKey as any)}`) +
             getListItemAccessibilityLabelCount(categoriesToArray.length, index);
 
           return (
@@ -109,7 +112,7 @@ export const CgnMerchantCategoriesListScreen = () => {
                       alignItems: "center"
                     }}
                   >
-                    <H6>{I18n.t(s.nameKey)}</H6>
+                    <H6>{I18n.t(s.nameKey as any)}</H6>
                     <Badge
                       accessible={false}
                       text={`${category?.newDiscounts}`}
@@ -117,7 +120,7 @@ export const CgnMerchantCategoriesListScreen = () => {
                     />
                   </View>
                 ) : (
-                  I18n.t(s.nameKey)
+                  I18n.t(s.nameKey as any)
                 )
               }
               accessibilityLabel={accessibilityLabel}
@@ -151,7 +154,7 @@ export const CgnMerchantCategoriesListScreen = () => {
       refreshing: isPullRefresh,
       onRefresh: onPullRefresh
     },
-    ListFooterComponent: (
+    ListFooterComponent: showSortingInfo ? (
       <>
         <Divider />
         <ListItemAction
@@ -166,7 +169,7 @@ export const CgnMerchantCategoriesListScreen = () => {
         />
         {bottomSheet}
       </>
-    ),
+    ) : undefined,
     ListEmptyComponent: undefined,
     skeleton: <CgnMerchantListSkeleton hasIcons count={10} />
   };

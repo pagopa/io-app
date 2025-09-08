@@ -1,10 +1,10 @@
 import * as O from "fp-ts/lib/Option";
 import { useMemo } from "react";
+import I18n from "i18next";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../../i18n";
 import { IdPayPaymentMachineContext } from "../machine/provider";
 import { failureSelector, isCancelledSelector } from "../machine/selectors";
 import { PaymentFailureEnum } from "../types/PaymentFailure";
@@ -40,6 +40,7 @@ const IDPayPaymentResultScreen = () => {
       <OperationResultScreenContent
         pictogram="trash"
         title={I18n.t("idpay.payment.result.cancelled.title")}
+        subtitle={I18n.t("idpay.payment.result.cancelled.subtitle")}
         action={defaultCloseAction}
         testID="paymentCancelledScreenTestID"
       />
@@ -50,7 +51,6 @@ const IDPayPaymentResultScreen = () => {
     <OperationResultScreenContent
       pictogram="success"
       title={I18n.t("idpay.payment.result.success.title")}
-      subtitle={I18n.t("idpay.payment.result.success.body")}
       action={defaultCloseAction}
       testID="paymentSuccessScreenTestID"
       enableAnimatedPictogram
@@ -60,11 +60,9 @@ const IDPayPaymentResultScreen = () => {
 };
 
 const genericErrorProps: OperationResultScreenContentProps = {
-  pictogram: "umbrella",
+  pictogram: "accessDenied",
   title: I18n.t("idpay.payment.result.failure.GENERIC.title"),
-  subtitle: I18n.t("idpay.payment.result.failure.GENERIC.subtitle"),
-  enableAnimatedPictogram: true,
-  loop: true
+  subtitle: I18n.t("idpay.payment.result.failure.GENERIC.subtitle")
 };
 
 const mapFailureToContentProps = (

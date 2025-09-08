@@ -385,7 +385,7 @@ exports[`useManualConfigBottomSheet should match snapshot 1`] = `
                             ]
                           }
                         >
-                          services.optIn.preferences.manualConfig.bottomSheet.body
+                          Con la configurazione manuale i servizi di IO, presenti o futuri, non possono inviarti messaggi. Per permettere ai servizi che ti interessano di contattarti, dovrai configurarli uno a uno abilitando la voce “Contattarti in app” che trovi in ogni scheda servizio.
                         </Text>
                       </View>
                       <View
@@ -446,7 +446,7 @@ exports[`useManualConfigBottomSheet should match snapshot 1`] = `
                               }
                             >
                               <View
-                                accessibilityLabel="global.buttons.cancel"
+                                accessibilityLabel="Annulla"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -563,7 +563,7 @@ exports[`useManualConfigBottomSheet should match snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      global.buttons.cancel
+                                      Annulla
                                     </Text>
                                   </View>
                                 </View>
@@ -577,7 +577,7 @@ exports[`useManualConfigBottomSheet should match snapshot 1`] = `
                               }
                             >
                               <View
-                                accessibilityLabel="global.buttons.confirm"
+                                accessibilityLabel="Conferma"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -693,7 +693,7 @@ exports[`useManualConfigBottomSheet should match snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      global.buttons.confirm
+                                      Conferma
                                     </Text>
                                   </View>
                                 </View>

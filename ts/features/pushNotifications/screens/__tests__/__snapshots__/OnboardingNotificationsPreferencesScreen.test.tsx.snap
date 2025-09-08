@@ -241,7 +241,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 ]
                               }
                             >
-                              Customize push notifications
+                              Personalizza le notifiche
                             </Text>
                             <View
                               style={
@@ -268,7 +268,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 ]
                               }
                             >
-                              Choose how to receive messages and reminders.
+                              Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                             <View
                               style={
@@ -435,7 +435,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       ]
                                     }
                                   >
-                                    You have a notice due soon
+                                    Hai un avviso in scadenza
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -455,7 +455,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       ]
                                     }
                                   >
-                                    Log in to pay the notice issued by ACI
+                                    Entra nell’app e paga l’avviso emesso da ACI
                                   </Text>
                                 </View>
                               </View>
@@ -539,7 +539,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       ]
                                     }
                                   >
-                                    Show a preview
+                                    Mostra anteprime
                                   </Text>
                                 </View>
                                 <View
@@ -559,7 +559,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Show a preview"
+                                    accessibilityLabel="Mostra anteprime"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -616,7 +616,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   ]
                                 }
                               >
-                                Include the sender and subject of the message in the push notification
+                                Includi nella notifica push il mittente e l’oggetto del messaggio.
                               </Text>
                               <View
                                 style={
@@ -625,30 +625,62 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 }
                               />
-                              <Text
+                              <View
                                 accessibilityRole="link"
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                onPress={[Function]}
-                                style={
-                                  [
-                                    {
-                                      "textDecorationLine": "underline",
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 12,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 18,
-                                    },
-                                  ]
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
                                 }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
                               >
-                                More info
-                              </Text>
+                                <Text
+                                  accessibilityRole="link"
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 12,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 18,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Scopri di più
+                                </Text>
+                              </View>
                             </View>
                             <View
                               style={
@@ -730,7 +762,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       ]
                                     }
                                   >
-                                    Allow reminders
+                                    Consenti promemoria
                                   </Text>
                                 </View>
                                 <View
@@ -750,7 +782,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Allow reminders"
+                                    accessibilityLabel="Consenti promemoria"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -807,7 +839,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines
+                                Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze
                               </Text>
                             </View>
                             <View
@@ -836,7 +868,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             >
                               <View
-                                accessibilityLabel="You can change this choice anytime in Settings > Privacy Policy and Terms of Service"
+                                accessibilityLabel="Puoi modificare la tua scelta in ogni momento da Impostazioni > Privacy e Condizioni d’uso"
                                 accessibilityRole="text"
                                 accessible={true}
                                 style={
@@ -865,7 +897,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     ]
                                   }
                                 >
-                                  You can change this choice anytime in Settings &gt; Privacy Policy and Terms of Service
+                                  Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
                                 </Text>
                               </View>
                               <View
@@ -1025,7 +1057,8 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       ]
                                     }
                                   >
-                                    If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
+                                    Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.
+Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando.
                                   </Text>
                                   <View
                                     style={
@@ -1064,7 +1097,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                         }
                       >
                         <View
-                          accessibilityLabel="Continue"
+                          accessibilityLabel="Continua"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -1180,7 +1213,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   ]
                                 }
                               >
-                                Continue
+                                Continua
                               </Text>
                             </View>
                           </View>
@@ -1207,9 +1240,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -1295,7 +1325,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -1687,7 +1717,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 ]
                               }
                             >
-                              Customize push notifications
+                              Personalizza le notifiche
                             </Text>
                             <View
                               style={
@@ -1714,7 +1744,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 ]
                               }
                             >
-                              Choose how to receive messages and reminders.
+                              Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                             <View
                               style={
@@ -1881,7 +1911,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       ]
                                     }
                                   >
-                                    You have a new message
+                                    Hai un nuovo messaggio
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -1901,7 +1931,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       ]
                                     }
                                   >
-                                    Open the app to read the content
+                                    Apri l'app per leggere il contenuto
                                   </Text>
                                 </View>
                               </View>
@@ -1985,7 +2015,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       ]
                                     }
                                   >
-                                    Show a preview
+                                    Mostra anteprime
                                   </Text>
                                 </View>
                                 <View
@@ -2005,7 +2035,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Show a preview"
+                                    accessibilityLabel="Mostra anteprime"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -2062,7 +2092,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   ]
                                 }
                               >
-                                Include the sender and subject of the message in the push notification
+                                Includi nella notifica push il mittente e l’oggetto del messaggio.
                               </Text>
                               <View
                                 style={
@@ -2071,30 +2101,62 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 }
                               />
-                              <Text
+                              <View
                                 accessibilityRole="link"
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                onPress={[Function]}
-                                style={
-                                  [
-                                    {
-                                      "textDecorationLine": "underline",
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 12,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 18,
-                                    },
-                                  ]
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
                                 }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
                               >
-                                More info
-                              </Text>
+                                <Text
+                                  accessibilityRole="link"
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 12,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 18,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Scopri di più
+                                </Text>
+                              </View>
                             </View>
                             <View
                               style={
@@ -2176,7 +2238,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       ]
                                     }
                                   >
-                                    Allow reminders
+                                    Consenti promemoria
                                   </Text>
                                 </View>
                                 <View
@@ -2196,7 +2258,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Allow reminders"
+                                    accessibilityLabel="Consenti promemoria"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -2253,7 +2315,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines
+                                Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze
                               </Text>
                             </View>
                             <View
@@ -2282,7 +2344,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             >
                               <View
-                                accessibilityLabel="You can change this choice anytime in Settings > Privacy Policy and Terms of Service"
+                                accessibilityLabel="Puoi modificare la tua scelta in ogni momento da Impostazioni > Privacy e Condizioni d’uso"
                                 accessibilityRole="text"
                                 accessible={true}
                                 style={
@@ -2311,7 +2373,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     ]
                                   }
                                 >
-                                  You can change this choice anytime in Settings &gt; Privacy Policy and Terms of Service
+                                  Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
                                 </Text>
                               </View>
                               <View
@@ -2471,7 +2533,8 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       ]
                                     }
                                   >
-                                    If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
+                                    Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.
+Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando.
                                   </Text>
                                   <View
                                     style={
@@ -2510,7 +2573,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                         }
                       >
                         <View
-                          accessibilityLabel="Continue"
+                          accessibilityLabel="Continua"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -2627,7 +2690,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   ]
                                 }
                               >
-                                Continue
+                                Continua
                               </Text>
                             </View>
                           </View>
@@ -2654,9 +2717,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -2742,7 +2802,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -3134,7 +3194,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 ]
                               }
                             >
-                              Customize push notifications
+                              Personalizza le notifiche
                             </Text>
                             <View
                               style={
@@ -3161,7 +3221,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 ]
                               }
                             >
-                              Choose how to receive messages and reminders.
+                              Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                             <View
                               style={
@@ -3328,7 +3388,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       ]
                                     }
                                   >
-                                    You have a notice due tomorrow
+                                    Hai un avviso che scade domani
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -3348,7 +3408,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       ]
                                     }
                                   >
-                                    Log in to pay for it
+                                    Entra nell'app per pagarlo
                                   </Text>
                                 </View>
                               </View>
@@ -3432,7 +3492,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       ]
                                     }
                                   >
-                                    Show a preview
+                                    Mostra anteprime
                                   </Text>
                                 </View>
                                 <View
@@ -3452,7 +3512,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Show a preview"
+                                    accessibilityLabel="Mostra anteprime"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -3509,7 +3569,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   ]
                                 }
                               >
-                                Include the sender and subject of the message in the push notification
+                                Includi nella notifica push il mittente e l’oggetto del messaggio.
                               </Text>
                               <View
                                 style={
@@ -3518,30 +3578,62 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 }
                               />
-                              <Text
+                              <View
                                 accessibilityRole="link"
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                onPress={[Function]}
-                                style={
-                                  [
-                                    {
-                                      "textDecorationLine": "underline",
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 12,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 18,
-                                    },
-                                  ]
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
                                 }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
                               >
-                                More info
-                              </Text>
+                                <Text
+                                  accessibilityRole="link"
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 12,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 18,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Scopri di più
+                                </Text>
+                              </View>
                             </View>
                             <View
                               style={
@@ -3623,7 +3715,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       ]
                                     }
                                   >
-                                    Allow reminders
+                                    Consenti promemoria
                                   </Text>
                                 </View>
                                 <View
@@ -3643,7 +3735,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Allow reminders"
+                                    accessibilityLabel="Consenti promemoria"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -3700,7 +3792,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines
+                                Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze
                               </Text>
                             </View>
                             <View
@@ -3729,7 +3821,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             >
                               <View
-                                accessibilityLabel="You can change this choice anytime in Settings > Privacy Policy and Terms of Service"
+                                accessibilityLabel="Puoi modificare la tua scelta in ogni momento da Impostazioni > Privacy e Condizioni d’uso"
                                 accessibilityRole="text"
                                 accessible={true}
                                 style={
@@ -3758,7 +3850,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     ]
                                   }
                                 >
-                                  You can change this choice anytime in Settings &gt; Privacy Policy and Terms of Service
+                                  Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
                                 </Text>
                               </View>
                               <View
@@ -3918,7 +4010,8 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       ]
                                     }
                                   >
-                                    If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
+                                    Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.
+Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando.
                                   </Text>
                                   <View
                                     style={
@@ -3957,7 +4050,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                         }
                       >
                         <View
-                          accessibilityLabel="Continue"
+                          accessibilityLabel="Continua"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -4074,7 +4167,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   ]
                                 }
                               >
-                                Continue
+                                Continua
                               </Text>
                             </View>
                           </View>
@@ -4101,9 +4194,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -4189,7 +4279,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -4581,7 +4671,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 ]
                               }
                             >
-                              Customize push notifications
+                              Personalizza le notifiche
                             </Text>
                             <View
                               style={
@@ -4608,7 +4698,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 ]
                               }
                             >
-                              Choose how to receive messages and reminders.
+                              Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                             <View
                               style={
@@ -4795,7 +4885,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       ]
                                     }
                                   >
-                                    Summer camp registration is now open
+                                    Sono aperte le iscrizioni per il centro estivo
                                   </Text>
                                 </View>
                               </View>
@@ -4879,7 +4969,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       ]
                                     }
                                   >
-                                    Show a preview
+                                    Mostra anteprime
                                   </Text>
                                 </View>
                                 <View
@@ -4899,7 +4989,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Show a preview"
+                                    accessibilityLabel="Mostra anteprime"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -4956,7 +5046,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   ]
                                 }
                               >
-                                Include the sender and subject of the message in the push notification
+                                Includi nella notifica push il mittente e l’oggetto del messaggio.
                               </Text>
                               <View
                                 style={
@@ -4965,30 +5055,62 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 }
                               />
-                              <Text
+                              <View
                                 accessibilityRole="link"
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                onPress={[Function]}
-                                style={
-                                  [
-                                    {
-                                      "textDecorationLine": "underline",
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 12,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 18,
-                                    },
-                                  ]
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
                                 }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
                               >
-                                More info
-                              </Text>
+                                <Text
+                                  accessibilityRole="link"
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 12,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 18,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Scopri di più
+                                </Text>
+                              </View>
                             </View>
                             <View
                               style={
@@ -5070,7 +5192,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       ]
                                     }
                                   >
-                                    Allow reminders
+                                    Consenti promemoria
                                   </Text>
                                 </View>
                                 <View
@@ -5090,7 +5212,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Allow reminders"
+                                    accessibilityLabel="Consenti promemoria"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -5147,7 +5269,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines
+                                Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze
                               </Text>
                             </View>
                             <View
@@ -5176,7 +5298,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             >
                               <View
-                                accessibilityLabel="You can change this choice anytime in Settings > Privacy Policy and Terms of Service"
+                                accessibilityLabel="Puoi modificare la tua scelta in ogni momento da Impostazioni > Privacy e Condizioni d’uso"
                                 accessibilityRole="text"
                                 accessible={true}
                                 style={
@@ -5205,7 +5327,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     ]
                                   }
                                 >
-                                  You can change this choice anytime in Settings &gt; Privacy Policy and Terms of Service
+                                  Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
                                 </Text>
                               </View>
                               <View
@@ -5365,7 +5487,8 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                       ]
                                     }
                                   >
-                                    If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
+                                    Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.
+Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando.
                                   </Text>
                                   <View
                                     style={
@@ -5404,7 +5527,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                         }
                       >
                         <View
-                          accessibilityLabel="Continue"
+                          accessibilityLabel="Continua"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -5521,7 +5644,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   ]
                                 }
                               >
-                                Continue
+                                Continua
                               </Text>
                             </View>
                           </View>
@@ -5548,9 +5671,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -5636,7 +5756,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -6028,7 +6148,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 ]
                               }
                             >
-                              Customize push notifications
+                              Personalizza le notifiche
                             </Text>
                             <View
                               style={
@@ -6055,7 +6175,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 ]
                               }
                             >
-                              Choose how to receive messages and reminders.
+                              Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                             <View
                               style={
@@ -6222,7 +6342,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                       ]
                                     }
                                   >
-                                    You have a notice due soon
+                                    Hai un avviso in scadenza
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -6242,7 +6362,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                       ]
                                     }
                                   >
-                                    Log in to pay the notice issued by ACI
+                                    Entra nell’app e paga l’avviso emesso da ACI
                                   </Text>
                                 </View>
                               </View>
@@ -6326,7 +6446,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                       ]
                                     }
                                   >
-                                    Show a preview
+                                    Mostra anteprime
                                   </Text>
                                 </View>
                                 <View
@@ -6548,7 +6668,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   ]
                                 }
                               >
-                                Include the sender and subject of the message in the push notification
+                                Includi nella notifica push il mittente e l’oggetto del messaggio.
                               </Text>
                               <View
                                 style={
@@ -6557,30 +6677,62 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   }
                                 }
                               />
-                              <Text
+                              <View
                                 accessibilityRole="link"
-                                allowFontScaling={true}
-                                dynamicTypeRamp="footnote"
-                                maxFontSizeMultiplier={1.5}
-                                onPress={[Function]}
-                                style={
-                                  [
-                                    {
-                                      "textDecorationLine": "underline",
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 12,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 18,
-                                    },
-                                  ]
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
                                 }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
                               >
-                                More info
-                              </Text>
+                                <Text
+                                  accessibilityRole="link"
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {
+                                        "textDecorationLine": "underline",
+                                      },
+                                      {
+                                        "color": "#0B3EE3",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 12,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 18,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Scopri di più
+                                </Text>
+                              </View>
                             </View>
                             <View
                               style={
@@ -6662,7 +6814,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                       ]
                                     }
                                   >
-                                    Allow reminders
+                                    Consenti promemoria
                                   </Text>
                                 </View>
                                 <View
@@ -6884,7 +7036,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines
+                                Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze
                               </Text>
                             </View>
                             <View
@@ -6913,7 +7065,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               }
                             >
                               <View
-                                accessibilityLabel="You can change this choice anytime in Settings > Privacy Policy and Terms of Service"
+                                accessibilityLabel="Puoi modificare la tua scelta in ogni momento da Impostazioni > Privacy e Condizioni d’uso"
                                 accessibilityRole="text"
                                 accessible={true}
                                 style={
@@ -6942,7 +7094,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     ]
                                   }
                                 >
-                                  You can change this choice anytime in Settings &gt; Privacy Policy and Terms of Service
+                                  Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
                                 </Text>
                               </View>
                               <View
@@ -7102,7 +7254,8 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                       ]
                                     }
                                   >
-                                    If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
+                                    Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.
+Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando.
                                   </Text>
                                   <View
                                     style={
@@ -7141,7 +7294,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                         }
                       >
                         <View
-                          accessibilityLabel="Continue"
+                          accessibilityLabel="Continua"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -7426,9 +7579,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                              },
-                              {
-                                "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },
                             ]
@@ -7512,7 +7662,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

@@ -17,8 +17,8 @@ import {
   View
 } from "react-native";
 import WebView from "react-native-webview";
+import I18n from "i18next";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
-import I18n from "../../../../i18n";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../../utils/webview";
 
 type Props = {

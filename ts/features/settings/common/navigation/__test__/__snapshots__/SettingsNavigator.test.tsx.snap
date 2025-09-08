@@ -240,7 +240,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                             }
                           >
                             <Text
-                              accessibilityLabel="Settings"
+                              accessibilityLabel="Impostazioni"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -259,7 +259,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                 ]
                               }
                             >
-                              Settings
+                              Impostazioni
                             </Text>
                           </View>
                           <View
@@ -441,7 +441,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                           ]
                                         }
                                       >
-                                        Turn on push notifications to know when you get a message on IO.
+                                        Attiva le notifiche push per sapere quando ricevi un messaggio su IO.
                                       </Text>
                                       <Text
                                         allowFontScaling={true}
@@ -462,7 +462,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                           ]
                                         }
                                       >
-                                        Turn on push notifications
+                                        Attiva notifiche push
                                       </Text>
                                     </View>
                                   </View>
@@ -487,30 +487,30 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                             data={
                               [
                                 {
-                                  "description": "Review your information",
+                                  "description": "Rivedi le tue informazioni",
                                   "onPress": [Function],
                                   "testID": "profileDataButton",
-                                  "value": "Your data",
+                                  "value": "I tuoi dati",
                                 },
                                 {
-                                  "description": "Customize your app experience",
+                                  "description": "Gestisci le preferenze dell'applicazione",
                                   "onPress": [Function],
-                                  "value": "Preferences",
+                                  "value": "Preferenze",
                                 },
                                 {
-                                  "description": "Manage biometric access and unlock code",
+                                  "description": "Gestisci accesso biometrico e codice di sblocco",
                                   "onPress": [Function],
-                                  "value": "Security and login",
+                                  "value": "Sicurezza e accesso",
                                 },
                                 {
-                                  "description": "Your rights and obligations when using IO",
+                                  "description": "I tuoi diritti e obblighi nell’uso di IO",
                                   "onPress": [Function],
-                                  "value": "Privacy Policy and Terms of Service",
+                                  "value": "Privacy e Condizioni d'uso",
                                 },
                                 {
-                                  "description": "Learn more about the IO app",
+                                  "description": "Per saperne di più sull'app IO",
                                   "onPress": [Function],
-                                  "value": "About IO",
+                                  "value": "Informazioni su IO",
                                 },
                               ]
                             }
@@ -538,7 +538,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                 style={null}
                               >
                                 <View
-                                  accessibilityLabel="Your data; Review your information"
+                                  accessibilityLabel="I tuoi dati; Rivedi le tue informazioni"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -630,7 +630,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                             ]
                                           }
                                         >
-                                          Your data
+                                          I tuoi dati
                                         </Text>
                                         <Text
                                           allowFontScaling={true}
@@ -650,7 +650,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                             ]
                                           }
                                         >
-                                          Review your information
+                                          Rivedi le tue informazioni
                                         </Text>
                                       </View>
                                       <RNSVGSvgView
@@ -728,7 +728,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                 style={null}
                               >
                                 <View
-                                  accessibilityLabel="Preferences; Customize your app experience"
+                                  accessibilityLabel="Preferenze; Gestisci le preferenze dell'applicazione"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -819,7 +819,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                             ]
                                           }
                                         >
-                                          Preferences
+                                          Preferenze
                                         </Text>
                                         <Text
                                           allowFontScaling={true}
@@ -839,7 +839,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                             ]
                                           }
                                         >
-                                          Customize your app experience
+                                          Gestisci le preferenze dell'applicazione
                                         </Text>
                                       </View>
                                       <RNSVGSvgView
@@ -917,7 +917,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                 style={null}
                               >
                                 <View
-                                  accessibilityLabel="Security and login; Manage biometric access and unlock code"
+                                  accessibilityLabel="Sicurezza e accesso; Gestisci accesso biometrico e codice di sblocco"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -1008,7 +1008,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                             ]
                                           }
                                         >
-                                          Security and login
+                                          Sicurezza e accesso
                                         </Text>
                                         <Text
                                           allowFontScaling={true}
@@ -1028,7 +1028,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                             ]
                                           }
                                         >
-                                          Manage biometric access and unlock code
+                                          Gestisci accesso biometrico e codice di sblocco
                                         </Text>
                                       </View>
                                       <RNSVGSvgView
@@ -1106,7 +1106,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                 style={null}
                               >
                                 <View
-                                  accessibilityLabel="Privacy Policy and Terms of Service; Your rights and obligations when using IO"
+                                  accessibilityLabel="Privacy e Condizioni d'uso; I tuoi diritti e obblighi nell’uso di IO"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -1197,7 +1197,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                             ]
                                           }
                                         >
-                                          Privacy Policy and Terms of Service
+                                          Privacy e Condizioni d'uso
                                         </Text>
                                         <Text
                                           allowFontScaling={true}
@@ -1217,7 +1217,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                             ]
                                           }
                                         >
-                                          Your rights and obligations when using IO
+                                          I tuoi diritti e obblighi nell’uso di IO
                                         </Text>
                                       </View>
                                       <RNSVGSvgView
@@ -1295,7 +1295,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                 style={null}
                               >
                                 <View
-                                  accessibilityLabel="About IO; Learn more about the IO app"
+                                  accessibilityLabel="Informazioni su IO; Per saperne di più sull'app IO"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -1386,7 +1386,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                             ]
                                           }
                                         >
-                                          About IO
+                                          Informazioni su IO
                                         </Text>
                                         <Text
                                           allowFontScaling={true}
@@ -1406,7 +1406,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                             ]
                                           }
                                         >
-                                          Learn more about the IO app
+                                          Per saperne di più sull'app IO
                                         </Text>
                                       </View>
                                       <RNSVGSvgView
@@ -1647,7 +1647,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                               </View>
                             </View>
                             <View
-                              accessibilityLabel="Logout from IO"
+                              accessibilityLabel="Esci da IO"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1800,14 +1800,14 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                         ]
                                       }
                                     >
-                                      Logout from IO
+                                      Esci da IO
                                     </Text>
                                   </View>
                                 </View>
                               </View>
                             </View>
                             <View
-                              accessibilityLabel="Version unknown"
+                              accessibilityLabel="Versione unknown"
                               accessibilityState={
                                 {
                                   "busy": undefined,
@@ -1868,7 +1868,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                     ]
                                   }
                                 >
-                                  Version unknown
+                                  Versione unknown
                                 </Text>
                               </View>
                             </View>
@@ -1906,7 +1906,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                 ]
                               }
                             >
-                              Developers
+                              Sviluppatori
                             </Text>
                             <View
                               style={
@@ -1987,7 +1987,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                       ]
                                     }
                                   >
-                                    Debug mode
+                                    Modalità debug
                                   </Text>
                                 </View>
                                 <View
@@ -2007,7 +2007,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Debug mode"
+                                    accessibilityLabel="Modalità debug"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -2057,7 +2057,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                             ItemSeparatorComponent={[Function]}
                             ListHeaderComponent={
                               <ListItemHeader
-                                label="Test Environment"
+                                label="Ambiente di test"
                               />
                             }
                             contentContainerStyle={
@@ -2068,7 +2068,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                             data={
                               [
                                 {
-                                  "description": "This change requires app reboot",
+                                  "description": "La modifica richiede il riavvio dell'app",
                                   "disabled": false,
                                   "label": "pagoPA",
                                   "onSwitchValueChange": [Function],
@@ -2080,13 +2080,18 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                   "value": false,
                                 },
                                 {
-                                  "description": "This change requires app reboot",
+                                  "label": "Avviso Avvenuta Ricezione (AAR)",
+                                  "onSwitchValueChange": [Function],
+                                  "value": false,
+                                },
+                                {
+                                  "description": "La modifica richiede il riavvio dell'app",
                                   "label": "IDPay",
                                   "onSwitchValueChange": [Function],
                                   "value": false,
                                 },
                                 {
-                                  "label": "Active session login",
+                                  "label": "Login a sessione attiva",
                                   "onSwitchValueChange": [Function],
                                   "value": false,
                                 },
@@ -2140,7 +2145,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                       }
                                     >
                                       <View
-                                        accessibilityLabel="Test Environment"
+                                        accessibilityLabel="Ambiente di test"
                                         accessibilityRole="header"
                                         accessible={true}
                                       >
@@ -2163,7 +2168,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                             ]
                                           }
                                         >
-                                          Test Environment
+                                          Ambiente di test
                                         </Text>
                                       </View>
                                     </View>
@@ -2323,7 +2328,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                       ]
                                     }
                                   >
-                                    This change requires app reboot
+                                    La modifica richiede il riavvio dell'app
                                   </Text>
                                 </View>
                                 <View
@@ -2549,6 +2554,143 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                           ]
                                         }
                                       >
+                                        Avviso Avvenuta Ricezione (AAR)
+                                      </Text>
+                                    </View>
+                                    <View
+                                      style={
+                                        {
+                                          "width": 8,
+                                        }
+                                      }
+                                    />
+                                    <View
+                                      style={
+                                        {
+                                          "alignSelf": "flex-start",
+                                          "justifyContent": "center",
+                                          "minHeight": 32,
+                                        }
+                                      }
+                                    >
+                                      <RCTSwitch
+                                        accessibilityLabel="Avviso Avvenuta Ricezione (AAR)"
+                                        accessibilityRole="switch"
+                                        accessibilityState={
+                                          {
+                                            "checked": false,
+                                            "disabled": undefined,
+                                          }
+                                        }
+                                        onChange={[Function]}
+                                        onResponderTerminationRequest={[Function]}
+                                        onStartShouldSetResponder={[Function]}
+                                        onTintColor="#0B3EE3"
+                                        style={
+                                          [
+                                            {
+                                              "height": 31,
+                                              "width": 51,
+                                            },
+                                            {
+                                              "backgroundColor": "#555C70",
+                                              "borderRadius": 16,
+                                            },
+                                          ]
+                                        }
+                                        thumbTintColor="#FFFFFF"
+                                        tintColor="#555C70"
+                                        value={false}
+                                      />
+                                    </View>
+                                  </View>
+                                </View>
+                                <View
+                                  style={
+                                    {
+                                      "backgroundColor": "#D2D6E3",
+                                      "height": 0.5,
+                                    }
+                                  }
+                                />
+                              </View>
+                              <View
+                                onFocusCapture={[Function]}
+                                onLayout={[Function]}
+                                style={null}
+                              >
+                                <View
+                                  accessible={false}
+                                  needsOffscreenAlphaCompositing={true}
+                                  pointerEvents="auto"
+                                  style={
+                                    [
+                                      {
+                                        "marginHorizontal": -24,
+                                        "paddingHorizontal": 24,
+                                        "paddingVertical": 12,
+                                      },
+                                      {
+                                        "opacity": 1,
+                                      },
+                                    ]
+                                  }
+                                  testID="ListItemSwitch"
+                                >
+                                  <View
+                                    accessible={false}
+                                    style={
+                                      [
+                                        {
+                                          "alignItems": "flex-start",
+                                          "flexDirection": "row",
+                                          "justifyContent": "space-between",
+                                        },
+                                        {
+                                          "alignItems": "center",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    <View
+                                      accessibilityState={
+                                        {
+                                          "disabled": undefined,
+                                        }
+                                      }
+                                      accessible={false}
+                                      style={
+                                        {
+                                          "alignItems": "center",
+                                          "columnGap": 18,
+                                          "flex": 1,
+                                          "flexDirection": "row",
+                                        }
+                                      }
+                                    >
+                                      <Text
+                                        accessible={false}
+                                        allowFontScaling={true}
+                                        dynamicTypeRamp="headline"
+                                        importantForAccessibility="no-hide-descendants"
+                                        maxFontSizeMultiplier={1.5}
+                                        style={
+                                          [
+                                            {},
+                                            {
+                                              "color": "#0E0F13",
+                                              "fontFamily": "Titillio",
+                                              "fontSize": 16,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                              "lineHeight": 24,
+                                            },
+                                            {
+                                              "flex": 1,
+                                            },
+                                          ]
+                                        }
+                                      >
                                         IDPay
                                       </Text>
                                     </View>
@@ -2624,7 +2766,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                       ]
                                     }
                                   >
-                                    This change requires app reboot
+                                    La modifica richiede il riavvio dell'app
                                   </Text>
                                 </View>
                                 <View
@@ -2713,7 +2855,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                           ]
                                         }
                                       >
-                                        Active session login
+                                        Login a sessione attiva
                                       </Text>
                                     </View>
                                     <View
@@ -2733,7 +2875,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                       }
                                     >
                                       <RCTSwitch
-                                        accessibilityLabel="Active session login"
+                                        accessibilityLabel="Login a sessione attiva"
                                         accessibilityRole="switch"
                                         accessibilityState={
                                           {
@@ -3071,7 +3213,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                       ]
                                     }
                                   >
-                                    Experimental interface
+                                    Interfaccia sperimentale
                                   </Text>
                                 </View>
                                 <View
@@ -3091,7 +3233,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Experimental interface"
+                                    accessibilityLabel="Interfaccia sperimentale"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -3278,9 +3420,6 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                               },
                               {},
                               {
-                                "backgroundColor": "#FFFFFF",
-                              },
-                              {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
                               },
@@ -3305,7 +3444,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -3419,7 +3558,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Settings"
+                              accessibilityLabel="Impostazioni"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -3459,7 +3598,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                   ]
                                 }
                               >
-                                Settings
+                                Impostazioni
                               </Text>
                             </View>
                             <View
@@ -3473,7 +3612,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

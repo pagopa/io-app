@@ -7,7 +7,8 @@ import {
   ListItemHeader,
   ListItemNav,
   SearchInput,
-  VSpacer
+  VSpacer,
+  VStack
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo } from "react";
@@ -16,11 +17,11 @@ import Animated, {
   LinearTransition,
   useAnimatedRef
 } from "react-native-reanimated";
+import I18n from "i18next";
 import { Institution } from "../../../../../definitions/services/Institution";
 import SectionStatusComponent from "../../../../components/SectionStatus";
 import { useHeaderFirstLevel } from "../../../../hooks/useHeaderFirstLevel";
 import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -102,9 +103,13 @@ export const ServicesHomeScreen = () => {
         />
         <EmailNotificationBanner />
         <Animated.View layout={LinearTransition.duration(300)}>
-          <FeaturedServiceList />
-          <FeaturedInstitutionList />
-          <ListItemHeader label={I18n.t("services.home.institutions.title")} />
+          <VStack space={16}>
+            <FeaturedServiceList />
+            <FeaturedInstitutionList />
+            <ListItemHeader
+              label={I18n.t("services.home.institutions.title")}
+            />
+          </VStack>
         </Animated.View>
       </>
     ),

@@ -2,12 +2,12 @@ import { Errors } from "@pagopa/io-react-native-wallet";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
-import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import {
   fallbackForLocalizedMessageKeys,
@@ -17,17 +17,14 @@ import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBa
 import { trackItwKoStateAction } from "../../analytics";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import {
-  ZendeskSubcategoryValue,
-  useItwFailureSupportModal
+  useItwFailureSupportModal,
+  ZendeskSubcategoryValue
 } from "../../common/hooks/useItwFailureSupportModal";
 import { itwDeferredIssuanceScreenContentSelector } from "../../common/store/selectors/remoteConfig";
 import { getClaimsFullLocale } from "../../common/utils/itwClaimsUtils";
 import { StatusAttestationError } from "../../common/utils/itwCredentialStatusAttestationUtils";
 import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
-import {
-  IssuerConfiguration,
-  LegacyIssuerConfiguration
-} from "../../common/utils/itwTypesUtils";
+import { IssuerConfiguration } from "../../common/utils/itwTypesUtils";
 import {
   CredentialIssuanceFailure,
   CredentialIssuanceFailureType
@@ -39,6 +36,7 @@ import {
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { useCredentialEventsTracking } from "../hooks/useCredentialEventsTracking";
+import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils.ts";
 
 // Errors that allow a user to send a support request to Zendesk
 const zendeskAssistanceErrors = [
@@ -178,6 +176,36 @@ const ContentView = ({ failure }: ContentViewProps) => {
               : { action: closeAction, secondaryAction: supportModalAction })
           };
         }
+        case CredentialIssuanceFailureType.UNTRUSTED_ISS: {
+          return {
+            title: I18n.t(
+              `features.itWallet.issuance.issuerNotTrustedCommonError.title`
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.issuance.issuerNotTrustedCommonError.subtitle",
+              {
+                credential: getCredentialNameFromType(
+                  O.toUndefined(credentialType)
+                )
+              }
+            ),
+            pictogram: "umbrella",
+            action: {
+              label: I18n.t(
+                `features.itWallet.issuance.issuerNotTrustedCommonError.primaryAction`
+              ),
+              onPress: () => machineRef.send({ type: "close" })
+            },
+            secondaryAction: {
+              label: I18n.t(
+                `features.itWallet.issuance.issuerNotTrustedCommonError.secondaryAction`
+              ),
+              onPress: () => {
+                supportModal.present();
+              }
+            }
+          };
+        }
       }
     };
 
@@ -210,7 +238,7 @@ type GetCredentialInvalidStatusDetailsParams = {
  */
 const getCredentialInvalidStatusDetails = (
   failure: CredentialIssuanceFailure,
-  { credentialType, issuerConf }: GetCredentialInvalidStatusDetailsParams
+  { issuerConf }: GetCredentialInvalidStatusDetailsParams
 ) => {
   const { errorCodeOption, credentialConfigurationId } = pipe(
     failure,
@@ -220,10 +248,7 @@ const getCredentialInvalidStatusDetails = (
         O.fromEither(StatusAttestationError.decode(reason?.reason)),
         O.map(({ error }) => error)
       ),
-      credentialConfigurationId: pipe(
-        O.fromNullable(reason?.credentialId),
-        O.alt(() => credentialType) // TODO: SIW-2530 Remove this line after fully migrating to the new APIs
-      )
+      credentialConfigurationId: O.fromNullable(reason?.metadata?.credentialId)
     })),
     O.getOrElse(() => ({
       errorCodeOption: O.none as O.Option<string>,
@@ -237,11 +262,13 @@ const getCredentialInvalidStatusDetails = (
       credentialConfigurationId,
       issuerConf
     }),
-    O.map(params =>
-      Errors.extractErrorMessageFromIssuerConf(params.errorCode, {
-        credentialType: params.credentialConfigurationId,
-        issuerConf: params.issuerConf as LegacyIssuerConfiguration
-      })
+    O.chain(params =>
+      O.tryCatch(() =>
+        Errors.extractErrorMessageFromIssuerConf(params.errorCode, {
+          credentialType: params.credentialConfigurationId,
+          issuerConf: params.issuerConf
+        })
+      )
     ),
     O.map(message => message?.[getClaimsFullLocale()]),
     O.toUndefined

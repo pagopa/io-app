@@ -2,6 +2,7 @@ import { Divider, ListItemHeader } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import { Fragment } from "react/jsx-runtime";
 import { useMemo, useState } from "react";
+import I18n from "i18next";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import {
   parseClaims,
@@ -10,7 +11,6 @@ import {
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { ItwCredentialClaim } from "../../../common/components/ItwCredentialClaim";
 import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
-import I18n from "../../../../../i18n";
 import { ItwIssuanceMetadata } from "../../../common/components/ItwIssuanceMetadata";
 
 type Props = {
@@ -22,7 +22,7 @@ export const ItwPresentationPidDetail = ({ credential }: Props) => {
   const navigation = useIONavigation();
 
   const listItemHeaderLabel = I18n.t(
-    "features.itWallet.presentation.itWalletId.detail.listItemHeader"
+    "features.itWallet.presentation.itWalletId.listItemHeader"
   );
   const claims = useMemo(
     () =>

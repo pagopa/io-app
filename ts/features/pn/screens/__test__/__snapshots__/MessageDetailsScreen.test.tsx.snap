@@ -309,9 +309,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                              },
-                              {
-                                "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },
                             ]
@@ -335,7 +332,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -501,7 +498,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -1154,9 +1151,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                               {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                              },
-                              {
-                                "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },
                             ]
@@ -1180,7 +1174,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1346,7 +1340,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

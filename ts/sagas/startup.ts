@@ -2,6 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { Alert } from "react-native";
 import { channel } from "redux-saga";
 import {
@@ -27,7 +28,7 @@ import {
   watchCheckSessionSaga
 } from "../features/authentication/common/saga/watchCheckSessionSaga";
 import { watchLogoutSaga } from "../features/authentication/common/saga/watchLogoutSaga";
-import { watchSessionExpiredSaga } from "../features/authentication/common/saga/watchSessionExpiredSaga";
+import { watchSessionExpiredOrCorruptedSaga } from "../features/authentication/common/saga/watchSessionExpiredSaga";
 import { sessionExpired } from "../features/authentication/common/store/actions";
 import {
   sessionInfoSelector,
@@ -102,7 +103,6 @@ import {
   watchZendeskGetSessionSaga
 } from "../features/zendesk/saga";
 import { formatRequestedTokenString } from "../features/zendesk/utils";
-import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
 import {
@@ -130,6 +130,9 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { getPin } from "../utils/keychain";
+import { watchActiveSessionLoginSaga } from "../features/authentication/activeSessionLogin/saga";
+import ROUTES from "../navigation/routes";
+import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
@@ -169,6 +172,10 @@ export function* initializeApplicationSaga(
   );
   const showIdentificationModal =
     startupAction?.payload?.showIdentificationModalAtStartup ?? true;
+
+  const isActiveLoginSuccessProp =
+    startupAction?.payload?.isActiveLoginSuccess ?? false;
+
   // Remove explicitly previous session data. This is done as completion of two
   // use cases:
   // 1. Logout with data reset
@@ -304,14 +311,21 @@ export function* initializeApplicationSaga(
       ? previousSessionToken
       : yield* call(authenticationSaga);
 
+  // TODO: review this logic in order to make it more simple and clear
+  if (isActiveLoginSuccessProp) {
+    NavigationService.navigate(ROUTES.MAIN, {
+      screen: MESSAGES_ROUTES.MESSAGES_HOME
+    });
+  }
+
   // BE CAREFUL where you get lollipop keyInfo.
   // They MUST be placed after authenticationSaga, because they are regenerated with each login attempt.
   // Get keyInfo for lollipop
 
   const keyInfo = yield* call(getKeyInfo);
 
-  // Handles the expiration of the session token
-  yield* fork(watchSessionExpiredSaga);
+  // Watches for session expiration or corruption and resets the application state accordingly
+  yield* fork(watchSessionExpiredOrCorruptedSaga);
   yield* fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel);
 
   // Instantiate a backend client from the session token
@@ -614,9 +628,11 @@ export function* initializeApplicationSaga(
   yield* call(checkItWalletIdentitySaga);
 
   yield* put(startupLoadSuccess(StartupStatusEnum.AUTHENTICATED));
-  //
   // User is autenticated, session token is valid
-  //
+
+  // active session login watcher
+  yield* fork(watchActiveSessionLoginSaga);
+
   // Start wathing new wallet sagas
   yield* fork(watchWalletSaga);
 

@@ -15,14 +15,12 @@ import { getWalletInstanceStatus } from "../../common/utils/itwAttestationUtils"
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwUpdateWalletInstanceStatus } from "../../walletInstance/store/actions";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import { itwLifecycleIsOperationalOrValid } from "../store/selectors";
 import { checkIntegrityServiceReadySaga } from "./checkIntegrityServiceReadySaga";
 import { handleWalletInstanceResetSaga } from "./handleWalletInstanceResetSaga";
 
 export function* getStatusOrResetWalletInstance(integrityKeyTag: string) {
   const sessionToken = yield* select(sessionTokenSelector);
-  const isWhiteListed = yield* select(itwIsL3EnabledSelector); // TODO: [SIW-2530] remove after full migration to API 1.0
   assert(sessionToken, "Missing session token");
 
   const env = getEnv(yield* select(selectItwEnv));
@@ -32,8 +30,7 @@ export function* getStatusOrResetWalletInstance(integrityKeyTag: string) {
       getWalletInstanceStatus,
       env,
       integrityKeyTag,
-      sessionToken,
-      isWhiteListed
+      sessionToken
     );
 
     if (walletInstanceStatus.is_revoked) {
