@@ -76,10 +76,6 @@ const IdPayInitiativeRefundSettingsComponent = (props: Props) => {
         const methodCountString = I18n.t(
           `idpay.initiative.details.initiativeDetailsScreen.configured.settings.methods`,
           {
-            defaultValue: I18n.t(
-              `idpay.initiative.details.initiativeDetailsScreen.configured.settings.methods.other`,
-              { count: nInstr }
-            ),
             count: nInstr
           }
         );
