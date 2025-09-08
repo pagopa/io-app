@@ -20,9 +20,23 @@ import { UIMessageDetails } from "../../types";
 import { extractContentFromMessageSources } from "../../utils";
 import { isTestEnv } from "../../../../utils/environment";
 
-export type ThirdPartyById = IndexedById<
-  pot.Pot<ThirdPartyMessageWithContent, Error>
->;
+export const thirdPartyTypes = {
+  TPM: "TPM",
+  AAR: "AAR"
+} as const;
+
+type ThirdPartyTypes = typeof thirdPartyTypes;
+
+export type ThirdPartyContent =
+  | { type: ThirdPartyTypes["TPM"]; content: ThirdPartyMessageWithContent }
+  | {
+      type: ThirdPartyTypes["AAR"];
+      content: ThirdPartyMessageWithContent;
+      mandateId?: string;
+    };
+
+// Stato Redux
+export type ThirdPartyById = IndexedById<pot.Pot<ThirdPartyContent, Error>>;
 
 export const initialState: ThirdPartyById = {};
 
@@ -85,7 +99,8 @@ export const thirdPartyMessageAttachments = (
     thirdPartyFromIdSelector(state, ioMessageId),
     pot.toOption,
     O.chainNullableK(
-      thirdPartyMessage => thirdPartyMessage.third_party_message.attachments
+      thirdPartyMessage =>
+        thirdPartyMessage.content.third_party_message.attachments
     ),
     O.getOrElse<ReadonlyArray<ThirdPartyAttachment>>(() => RA.empty)
   );

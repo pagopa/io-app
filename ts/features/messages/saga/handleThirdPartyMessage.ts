@@ -3,26 +3,26 @@ import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
+import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
 import { BackendClient } from "../../../api/backend";
-import { loadThirdPartyMessage } from "../store/actions";
-import { toPNMessage } from "../../pn/store/types/transformers";
+import { SagaCallReturnType } from "../../../types/utils";
+import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import {
   trackPNNotificationLoadError,
   trackPNNotificationLoadSuccess
 } from "../../pn/analytics";
+import { toPNMessage } from "../../pn/store/types/transformers";
+import { serviceDetailsByIdSelector } from "../../services/details/store/reducers";
 import {
   trackRemoteContentLoadFailure,
   trackRemoteContentLoadRequest,
   trackRemoteContentLoadSuccess,
   trackThirdPartyMessageAttachmentCount
 } from "../analytics";
-import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
-import { SagaCallReturnType } from "../../../types/utils";
+import { loadThirdPartyMessage } from "../store/actions";
+import { ThirdPartyContent } from "../store/reducers/thirdPartyById";
 import { unknownToReason } from "../utils";
-import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
-import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
-import { serviceDetailsByIdSelector } from "../../services/details/store/reducers";
-import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
 
 export function* handleThirdPartyMessage(
   getThirdPartyMessage: BackendClient["getThirdPartyMessage"],
@@ -55,9 +55,17 @@ export function* handleThirdPartyMessage(
       throw new Error(reason);
     } else if (result.right.status === 200) {
       const thirdPartyMessage = result.right.value;
-      yield* call(trackSuccess, thirdPartyMessage, serviceDetails, tag);
+      yield* call(
+        trackSuccess,
+        { type: "TPM", content: thirdPartyMessage },
+        serviceDetails,
+        tag
+      );
       yield* put(
-        loadThirdPartyMessage.success({ id, content: thirdPartyMessage })
+        loadThirdPartyMessage.success({
+          id,
+          content: { type: "TPM", content: thirdPartyMessage }
+        })
       );
     } else {
       const reason = `Response status ${result.right.status} - ${
@@ -73,7 +81,7 @@ export function* handleThirdPartyMessage(
 }
 
 const trackSuccess = (
-  messageFromApi: ThirdPartyMessageWithContent,
+  messageFromApi: ThirdPartyContent,
   serviceDetails: ServiceDetails | undefined,
   tag: string
 ) => {
@@ -94,7 +102,7 @@ const trackSuccess = (
       trackPNNotificationLoadError();
     }
   } else {
-    const attachments = messageFromApi.third_party_message.attachments;
+    const attachments = messageFromApi.content.third_party_message.attachments;
     const attachmentCount = attachments?.length ?? 0;
     trackThirdPartyMessageAttachmentCount(attachmentCount);
   }

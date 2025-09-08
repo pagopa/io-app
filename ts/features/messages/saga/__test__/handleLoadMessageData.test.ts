@@ -20,7 +20,10 @@ import { serviceDetailsByIdPotSelector } from "../../../services/details/store/r
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
 import { messageDetailsByIdSelector } from "../../store/reducers/detailsById";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
-import { thirdPartyFromIdSelector } from "../../store/reducers/thirdPartyById";
+import {
+  thirdPartyFromIdSelector,
+  thirdPartyTypes
+} from "../../store/reducers/thirdPartyById";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import { isPnRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isLoadingOrUpdatingInbox } from "../../store/reducers/allPaginated";
@@ -241,54 +244,60 @@ describe("getMessageDetails", () => {
   });
 });
 
+const thirdPartyTypesMock = Object.values(thirdPartyTypes);
 describe("getThirdPartyDataMessage", () => {
-  it("should dispatch a loadThirdPartyMessage.request and return the third party message when the related saga succeeds ", () => {
-    const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD";
-    const service = {
-      id: "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId,
-      name: "The name",
-      organization: {
-        fiscal_code: "OrgFisCod",
-        name: "Org name"
-      }
-    } as ServiceDetails;
-    const messageCategoryTag = "GENERIC";
-    const thirdPartyMessage = { id: "1" } as ThirdPartyMessageWithContent;
-    testSaga(
-      testable!.getThirdPartyDataMessage,
-      messageId,
-      false,
-      service,
-      messageCategoryTag
-    )
-      .next()
-      .put(
-        loadThirdPartyMessage.request({
-          id: messageId,
-          serviceId: service.id,
-          tag: messageCategoryTag
-        })
-      )
-      .next()
-      .take([loadThirdPartyMessage.success, loadThirdPartyMessage.failure])
-      .next(
-        loadThirdPartyMessage.success({
-          id: messageId,
-          content: thirdPartyMessage
-        })
-      )
-      .select(thirdPartyFromIdSelector, messageId)
-      .next(pot.some(thirdPartyMessage))
-      .call(
-        testable!.decodeAndTrackThirdPartyMessageDetailsIfNeeded,
+  thirdPartyTypesMock.forEach(type =>
+    it(`should dispatch a loadThirdPartyMessage.request with type='${type}' and return the third party message when the related saga succeeds`, () => {
+      const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD";
+      const service = {
+        id: "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId,
+        name: "The name",
+        organization: {
+          fiscal_code: "OrgFisCod",
+          name: "Org name"
+        }
+      } as ServiceDetails;
+      const messageCategoryTag = "GENERIC";
+      const thirdPartyMessage = { id: "1" } as ThirdPartyMessageWithContent;
+      testSaga(
+        testable!.getThirdPartyDataMessage,
+        messageId,
         false,
-        thirdPartyMessage,
         service,
         messageCategoryTag
       )
-      .next(O.none)
-      .returns(thirdPartyMessage);
-  });
+        .next()
+        .put(
+          loadThirdPartyMessage.request({
+            id: messageId,
+            serviceId: service.id,
+            tag: messageCategoryTag
+          })
+        )
+        .next()
+        .take([loadThirdPartyMessage.success, loadThirdPartyMessage.failure])
+        .next(
+          loadThirdPartyMessage.success({
+            id: messageId,
+            content: {
+              type,
+              content: thirdPartyMessage
+            }
+          })
+        )
+        .select(thirdPartyFromIdSelector, messageId)
+        .next(pot.some(thirdPartyMessage))
+        .call(
+          testable!.decodeAndTrackThirdPartyMessageDetailsIfNeeded,
+          false,
+          thirdPartyMessage,
+          service,
+          messageCategoryTag
+        )
+        .next(O.none)
+        .returns(thirdPartyMessage);
+    })
+  );
   it("should dispatch a loadThirdPartyMessage.request and return undefined when the related saga fails ", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD";
     const service = {
@@ -383,160 +392,166 @@ describe("setMessageReadIfNeeded", () => {
 });
 
 describe("dispatchSuccessAction", () => {
-  it("should properly report a PN message", () => {
-    const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD";
-    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
-    const serviceName = "serName";
-    const organizationName = "orgName";
-    const organizationFiscalCode = "orgFisCod";
-    const isRead = true;
-    const createdAt = new Date(2025, 0, 1, 10, 30, 26);
-    const paginatedMessage = {
-      id: messageId,
-      serviceId,
-      organizationName,
-      organizationFiscalCode,
-      serviceName,
-      isRead,
-      category: { tag: TagEnum.PN },
-      createdAt
-    } as UIMessage;
-    const messageDetails = {} as UIMessageDetails;
-    const thirdPartyMessage = {
-      third_party_message: {
-        attachments: [{} as ThirdPartyAttachment]
-      } as ThirdPartyMessage
-    } as ThirdPartyMessageWithContent;
-    const expectedOutput = {
-      containsAttachments: true,
-      containsPayment: undefined,
-      createdAt,
-      firstTimeOpening: !isRead,
-      hasFIMSCTA: false,
-      hasRemoteContent: true,
-      isLegacyGreenPass: false,
-      isPNMessage: true,
-      messageId,
-      organizationName,
-      organizationFiscalCode,
-      serviceId,
-      serviceName
-    };
-    testSaga(
-      testable!.dispatchSuccessAction,
-      paginatedMessage,
-      messageDetails,
-      thirdPartyMessage
-    )
-      .next()
-      .select(isPnRemoteEnabledSelector)
-      .next(true)
-      .put(getMessageDataAction.success(expectedOutput))
-      .next()
-      .isDone();
-  });
-  it("should properly report a Third Party message with attachments", () => {
-    const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD";
-    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
-    const serviceName = "serName";
-    const organizationName = "orgName";
-    const organizationFiscalCode = "orgFisCod";
-    const isRead = true;
-    const createdAt = new Date(2025, 0, 1, 10, 30, 26);
-    const paginatedMessage = {
-      id: messageId,
-      serviceId,
-      organizationName,
-      organizationFiscalCode,
-      serviceName,
-      isRead,
-      category: { tag: "GENERIC" },
-      createdAt
-    } as UIMessage;
-    const messageDetails = {} as UIMessageDetails;
-    const thirdPartyMessage = {
-      third_party_message: {
-        attachments: [{} as ThirdPartyAttachment]
-      } as ThirdPartyMessage
-    } as ThirdPartyMessageWithContent;
-    const expectedOutput = {
-      containsAttachments: true,
-      containsPayment: false,
-      createdAt,
-      firstTimeOpening: !isRead,
-      hasFIMSCTA: false,
-      hasRemoteContent: true,
-      isLegacyGreenPass: false,
-      isPNMessage: false,
-      messageId,
-      organizationName,
-      organizationFiscalCode,
-      serviceId,
-      serviceName
-    };
-    testSaga(
-      testable!.dispatchSuccessAction,
-      paginatedMessage,
-      messageDetails,
-      thirdPartyMessage
-    )
-      .next()
-      .select(isPnRemoteEnabledSelector)
-      .next(true)
-      .put(getMessageDataAction.success(expectedOutput))
-      .next()
-      .isDone();
-  });
-  it("should properly report a Third Party message with no attachments", () => {
-    const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD";
-    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
-    const serviceName = "serName";
-    const organizationName = "orgName";
-    const organizationFiscalCode = "orgFisCod";
-    const isRead = true;
-    const createdAt = new Date(2025, 0, 1, 10, 30, 26);
-    const paginatedMessage = {
-      id: messageId,
-      serviceId,
-      organizationName,
-      organizationFiscalCode,
-      serviceName,
-      isRead,
-      category: { tag: "GENERIC" },
-      createdAt
-    } as UIMessage;
-    const messageDetails = {} as UIMessageDetails;
-    const thirdPartyMessage = {
-      third_party_message: {} as ThirdPartyMessage
-    } as ThirdPartyMessageWithContent;
-    const expectedOutput = {
-      containsAttachments: false,
-      containsPayment: false,
-      createdAt,
-      firstTimeOpening: !isRead,
-      hasFIMSCTA: false,
-      hasRemoteContent: true,
-      isLegacyGreenPass: false,
-      isPNMessage: false,
-      messageId,
-      organizationName,
-      organizationFiscalCode,
-      serviceId,
-      serviceName
-    };
-    testSaga(
-      testable!.dispatchSuccessAction,
-      paginatedMessage,
-      messageDetails,
-      thirdPartyMessage
-    )
-      .next()
-      .select(isPnRemoteEnabledSelector)
-      .next(true)
-      .put(getMessageDataAction.success(expectedOutput))
-      .next()
-      .isDone();
-  });
+  thirdPartyTypesMock.forEach(type =>
+    it("should properly report a PN message", () => {
+      const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD";
+      const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
+      const serviceName = "serName";
+      const organizationName = "orgName";
+      const organizationFiscalCode = "orgFisCod";
+      const isRead = true;
+      const createdAt = new Date(2025, 0, 1, 10, 30, 26);
+      const paginatedMessage = {
+        id: messageId,
+        serviceId,
+        organizationName,
+        organizationFiscalCode,
+        serviceName,
+        isRead,
+        category: { tag: TagEnum.PN },
+        createdAt
+      } as UIMessage;
+      const messageDetails = {} as UIMessageDetails;
+      const thirdPartyMessage = {
+        third_party_message: {
+          attachments: [{} as ThirdPartyAttachment]
+        } as ThirdPartyMessage
+      } as ThirdPartyMessageWithContent;
+      const expectedOutput = {
+        containsAttachments: true,
+        containsPayment: undefined,
+        createdAt,
+        firstTimeOpening: !isRead,
+        hasFIMSCTA: false,
+        hasRemoteContent: true,
+        isLegacyGreenPass: false,
+        isPNMessage: true,
+        messageId,
+        organizationName,
+        organizationFiscalCode,
+        serviceId,
+        serviceName
+      };
+      testSaga(
+        testable!.dispatchSuccessAction,
+        paginatedMessage,
+        messageDetails,
+        { type, content: thirdPartyMessage }
+      )
+        .next()
+        .select(isPnRemoteEnabledSelector)
+        .next(true)
+        .put(getMessageDataAction.success(expectedOutput))
+        .next()
+        .isDone();
+    })
+  );
+  thirdPartyTypesMock.forEach(type =>
+    it("should properly report a Third Party message with attachments", () => {
+      const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD";
+      const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
+      const serviceName = "serName";
+      const organizationName = "orgName";
+      const organizationFiscalCode = "orgFisCod";
+      const isRead = true;
+      const createdAt = new Date(2025, 0, 1, 10, 30, 26);
+      const paginatedMessage = {
+        id: messageId,
+        serviceId,
+        organizationName,
+        organizationFiscalCode,
+        serviceName,
+        isRead,
+        category: { tag: "GENERIC" },
+        createdAt
+      } as UIMessage;
+      const messageDetails = {} as UIMessageDetails;
+      const thirdPartyMessage = {
+        third_party_message: {
+          attachments: [{} as ThirdPartyAttachment]
+        } as ThirdPartyMessage
+      } as ThirdPartyMessageWithContent;
+      const expectedOutput = {
+        containsAttachments: true,
+        containsPayment: false,
+        createdAt,
+        firstTimeOpening: !isRead,
+        hasFIMSCTA: false,
+        hasRemoteContent: true,
+        isLegacyGreenPass: false,
+        isPNMessage: false,
+        messageId,
+        organizationName,
+        organizationFiscalCode,
+        serviceId,
+        serviceName
+      };
+      testSaga(
+        testable!.dispatchSuccessAction,
+        paginatedMessage,
+        messageDetails,
+        { type, content: thirdPartyMessage }
+      )
+        .next()
+        .select(isPnRemoteEnabledSelector)
+        .next(true)
+        .put(getMessageDataAction.success(expectedOutput))
+        .next()
+        .isDone();
+    })
+  );
+  thirdPartyTypesMock.forEach(type =>
+    it("should properly report a Third Party message with no attachments", () => {
+      const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD";
+      const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
+      const serviceName = "serName";
+      const organizationName = "orgName";
+      const organizationFiscalCode = "orgFisCod";
+      const isRead = true;
+      const createdAt = new Date(2025, 0, 1, 10, 30, 26);
+      const paginatedMessage = {
+        id: messageId,
+        serviceId,
+        organizationName,
+        organizationFiscalCode,
+        serviceName,
+        isRead,
+        category: { tag: "GENERIC" },
+        createdAt
+      } as UIMessage;
+      const messageDetails = {} as UIMessageDetails;
+      const thirdPartyMessage = {
+        third_party_message: {} as ThirdPartyMessage
+      } as ThirdPartyMessageWithContent;
+      const expectedOutput = {
+        containsAttachments: false,
+        containsPayment: false,
+        createdAt,
+        firstTimeOpening: !isRead,
+        hasFIMSCTA: false,
+        hasRemoteContent: true,
+        isLegacyGreenPass: false,
+        isPNMessage: false,
+        messageId,
+        organizationName,
+        organizationFiscalCode,
+        serviceId,
+        serviceName
+      };
+      testSaga(
+        testable!.dispatchSuccessAction,
+        paginatedMessage,
+        messageDetails,
+        { type, content: thirdPartyMessage }
+      )
+        .next()
+        .select(isPnRemoteEnabledSelector)
+        .next(true)
+        .put(getMessageDataAction.success(expectedOutput))
+        .next()
+        .isDone();
+    })
+  );
   it("should properly report a message without Payment", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD";
     const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
@@ -730,61 +745,63 @@ describe("dispatchSuccessAction", () => {
       .next()
       .isDone();
   });
-  it("should properly report a Third Party message with FIMS CTA", () => {
-    const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD";
-    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
-    const serviceName = "serName";
-    const organizationName = "orgName";
-    const organizationFiscalCode = "orgFisCod";
-    const isRead = true;
-    const createdAt = new Date(2025, 0, 1, 10, 30, 26);
-    const paginatedMessage = {
-      id: messageId,
-      serviceId,
-      organizationName,
-      organizationFiscalCode,
-      serviceName,
-      isRead,
-      category: { tag: "GENERIC" },
-      createdAt
-    } as UIMessage;
-    const messageDetails = {} as UIMessageDetails;
-    const thirdPartyMessage = {
-      third_party_message: {
-        details: {
-          markdown: fimsCTAFrontMatter,
-          subject: "The subject"
-        }
-      } as ThirdPartyMessage
-    } as ThirdPartyMessageWithContent;
-    const expectedOutput = {
-      containsAttachments: false,
-      containsPayment: false,
-      createdAt,
-      firstTimeOpening: !isRead,
-      hasFIMSCTA: true,
-      hasRemoteContent: true,
-      isLegacyGreenPass: false,
-      isPNMessage: false,
-      messageId,
-      organizationName,
-      organizationFiscalCode,
-      serviceId,
-      serviceName
-    };
-    testSaga(
-      testable!.dispatchSuccessAction,
-      paginatedMessage,
-      messageDetails,
-      thirdPartyMessage
-    )
-      .next()
-      .select(isPnRemoteEnabledSelector)
-      .next(true)
-      .put(getMessageDataAction.success(expectedOutput))
-      .next()
-      .isDone();
-  });
+  thirdPartyTypesMock.forEach(type =>
+    it("should properly report a Third Party message with FIMS CTA", () => {
+      const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD";
+      const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
+      const serviceName = "serName";
+      const organizationName = "orgName";
+      const organizationFiscalCode = "orgFisCod";
+      const isRead = true;
+      const createdAt = new Date(2025, 0, 1, 10, 30, 26);
+      const paginatedMessage = {
+        id: messageId,
+        serviceId,
+        organizationName,
+        organizationFiscalCode,
+        serviceName,
+        isRead,
+        category: { tag: "GENERIC" },
+        createdAt
+      } as UIMessage;
+      const messageDetails = {} as UIMessageDetails;
+      const thirdPartyMessage = {
+        third_party_message: {
+          details: {
+            markdown: fimsCTAFrontMatter,
+            subject: "The subject"
+          }
+        } as ThirdPartyMessage
+      } as ThirdPartyMessageWithContent;
+      const expectedOutput = {
+        containsAttachments: false,
+        containsPayment: false,
+        createdAt,
+        firstTimeOpening: !isRead,
+        hasFIMSCTA: true,
+        hasRemoteContent: true,
+        isLegacyGreenPass: false,
+        isPNMessage: false,
+        messageId,
+        organizationName,
+        organizationFiscalCode,
+        serviceId,
+        serviceName
+      };
+      testSaga(
+        testable!.dispatchSuccessAction,
+        paginatedMessage,
+        messageDetails,
+        { type, content: thirdPartyMessage }
+      )
+        .next()
+        .select(isPnRemoteEnabledSelector)
+        .next(true)
+        .put(getMessageDataAction.success(expectedOutput))
+        .next()
+        .isDone();
+    })
+  );
 });
 
 describe("loadMessageData", () => {
@@ -1271,90 +1288,110 @@ describe("computeHasFIMSCTA", () => {
 
     expect(hasFIMSCTA).toBe(false);
   });
-  it("should return true for a remote message with FIMS cta (cta1)", () => {
-    const messageDetails = {
-      markdown: `This is the message body`
-    } as UIMessageDetails;
-    const remoteMessage = {
-      third_party_message: {
-        details: {
-          subject: "The subject",
-          markdown: `${fimsCTAFrontMatter}\nThis is the message body`
+  thirdPartyTypesMock.forEach(type =>
+    it("should return true for a remote message with FIMS cta (cta1)", () => {
+      const messageDetails = {
+        markdown: `This is the message body`
+      } as UIMessageDetails;
+      const remoteMessage = {
+        third_party_message: {
+          details: {
+            subject: "The subject",
+            markdown: `${fimsCTAFrontMatter}\nThis is the message body`
+          }
+        } as ThirdPartyMessage
+      } as ThirdPartyMessageWithContent;
+
+      const hasFIMSCTA = testable!.computeHasFIMSCTA(
+        messageDetails,
+        serviceId,
+        {
+          type,
+          content: remoteMessage
         }
-      } as ThirdPartyMessage
-    } as ThirdPartyMessageWithContent;
+      );
 
-    const hasFIMSCTA = testable!.computeHasFIMSCTA(
-      messageDetails,
-      serviceId,
-      remoteMessage
-    );
+      expect(hasFIMSCTA).toBe(true);
+    })
+  );
+  thirdPartyTypesMock.forEach(type =>
+    it("should return true for a remote message with FIMS cta (cta2)", () => {
+      const messageDetails = {
+        markdown: `This is the message body`
+      } as UIMessageDetails;
+      const remoteMessage = {
+        third_party_message: {
+          details: {
+            subject: "The subject",
+            markdown: `${fimsCTA2FrontMatter}\nThis is the message body`
+          }
+        } as ThirdPartyMessage
+      } as ThirdPartyMessageWithContent;
 
-    expect(hasFIMSCTA).toBe(true);
-  });
-  it("should return true for a remote message with FIMS cta (cta2)", () => {
-    const messageDetails = {
-      markdown: `This is the message body`
-    } as UIMessageDetails;
-    const remoteMessage = {
-      third_party_message: {
-        details: {
-          subject: "The subject",
-          markdown: `${fimsCTA2FrontMatter}\nThis is the message body`
+      const hasFIMSCTA = testable!.computeHasFIMSCTA(
+        messageDetails,
+        serviceId,
+        {
+          type,
+          content: remoteMessage
         }
-      } as ThirdPartyMessage
-    } as ThirdPartyMessageWithContent;
+      );
 
-    const hasFIMSCTA = testable!.computeHasFIMSCTA(
-      messageDetails,
-      serviceId,
-      remoteMessage
-    );
+      expect(hasFIMSCTA).toBe(true);
+    })
+  );
+  thirdPartyTypesMock.forEach(type =>
+    it("should return false for a remote message with no cta", () => {
+      const messageDetails = {
+        markdown: `This is the message body`
+      } as UIMessageDetails;
+      const remoteMessage = {
+        third_party_message: {
+          details: {
+            subject: "The subject",
+            markdown: `This is the message body`
+          }
+        } as ThirdPartyMessage
+      } as ThirdPartyMessageWithContent;
 
-    expect(hasFIMSCTA).toBe(true);
-  });
-  it("should return false for a remote message with no cta", () => {
-    const messageDetails = {
-      markdown: `This is the message body`
-    } as UIMessageDetails;
-    const remoteMessage = {
-      third_party_message: {
-        details: {
-          subject: "The subject",
-          markdown: `This is the message body`
+      const hasFIMSCTA = testable!.computeHasFIMSCTA(
+        messageDetails,
+        serviceId,
+        {
+          type,
+          content: remoteMessage
         }
-      } as ThirdPartyMessage
-    } as ThirdPartyMessageWithContent;
+      );
 
-    const hasFIMSCTA = testable!.computeHasFIMSCTA(
-      messageDetails,
-      serviceId,
-      remoteMessage
-    );
+      expect(hasFIMSCTA).toBe(false);
+    })
+  );
+  thirdPartyTypesMock.forEach(type =>
+    it("should return false for a remote message with CTAs unrelated to FIMS", () => {
+      const messageDetails = {
+        markdown: `This is the message body`
+      } as UIMessageDetails;
+      const remoteMessage = {
+        third_party_message: {
+          details: {
+            subject: "The subject",
+            markdown: `${unrelatedCTAFrontMatter}\nThis is the message body`
+          }
+        } as ThirdPartyMessage
+      } as ThirdPartyMessageWithContent;
 
-    expect(hasFIMSCTA).toBe(false);
-  });
-  it("should return false for a remote message with CTAs unrelated to FIMS", () => {
-    const messageDetails = {
-      markdown: `This is the message body`
-    } as UIMessageDetails;
-    const remoteMessage = {
-      third_party_message: {
-        details: {
-          subject: "The subject",
-          markdown: `${unrelatedCTAFrontMatter}\nThis is the message body`
+      const hasFIMSCTA = testable!.computeHasFIMSCTA(
+        messageDetails,
+        serviceId,
+        {
+          type,
+          content: remoteMessage
         }
-      } as ThirdPartyMessage
-    } as ThirdPartyMessageWithContent;
+      );
 
-    const hasFIMSCTA = testable!.computeHasFIMSCTA(
-      messageDetails,
-      serviceId,
-      remoteMessage
-    );
-
-    expect(hasFIMSCTA).toBe(false);
-  });
+      expect(hasFIMSCTA).toBe(false);
+    })
+  );
 });
 
 describe("handleLoadMessageData", () => {

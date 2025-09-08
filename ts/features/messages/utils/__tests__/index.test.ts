@@ -7,13 +7,14 @@ import {
   getRptIdStringFromPaymentData,
   initializeAndNavigateToWalletForPayment
 } from "..";
-import { PaymentData, UIMessageDetails } from "../../types";
+import { ThirdPartyMessage } from "../../../../../definitions/backend/ThirdPartyMessage";
+import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";
-import { addUserSelectedPaymentRptId } from "../../store/actions";
 import { startPaymentFlowWithRptIdWorkaround } from "../../../payments/checkout/tempWorkaround/pagoPaPaymentWorkaround";
-import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
-import { ThirdPartyMessage } from "../../../../../definitions/backend/ThirdPartyMessage";
+import { addUserSelectedPaymentRptId } from "../../store/actions";
+import { thirdPartyTypes } from "../../store/reducers/thirdPartyById";
+import { PaymentData, UIMessageDetails } from "../../types";
 
 jest.mock(
   "../../../payments/checkout/tempWorkaround/pagoPaPaymentWorkaround",
@@ -320,6 +321,7 @@ describe("emptyMessageArray", () => {
   });
 });
 
+const thirdPartyTypesMock = Object.values(thirdPartyTypes);
 describe("extractContentFromMessageSources", () => {
   it("should return undefined if both input messages are undefined", () => {
     const content = extractContentFromMessageSources(
@@ -341,61 +343,67 @@ describe("extractContentFromMessageSources", () => {
     );
     expect(content).toBe(standardMessage.markdown);
   });
-  it("should return standard message content if third party message's details are undefined", () => {
-    const standardMessage = {
-      markdown:
-        "This is the standard message markdown which must be longer than eighty characters in order to be properly recognised"
-    } as UIMessageDetails;
-    const remoteMessage = {
-      third_party_message: {}
-    } as ThirdPartyMessageWithContent;
-    const content = extractContentFromMessageSources(
-      data => data.markdown,
-      standardMessage,
-      remoteMessage
-    );
-    expect(content).toBe(standardMessage.markdown);
-  });
-  it("should return standard message content if third party message's details are not valid", () => {
-    const standardMessage = {
-      markdown:
-        "This is the standard message markdown which must be longer than eighty characters in order to be properly recognised"
-    } as UIMessageDetails;
-    const remoteMessage = {
-      third_party_message: {
-        details: {
-          markdown:
-            "This is the remote markdown, which is longer than eighty characters but the sibling subject property is missing"
-        }
-      } as ThirdPartyMessage
-    } as ThirdPartyMessageWithContent;
-    const content = extractContentFromMessageSources(
-      data => data.markdown,
-      standardMessage,
-      remoteMessage
-    );
-    expect(content).toBe(standardMessage.markdown);
-  });
-  it("should return third party message content if it is properly defined and formatted", () => {
-    const standardMessage = {
-      markdown:
-        "This is the standard message markdown which must be longer than eighty characters in order to be properly recognised"
-    } as UIMessageDetails;
-    const remoteMessageMarkdown =
-      "This is the remote markdown, which is longer than eighty characters and the sibling subject property is defined";
-    const remoteMessage = {
-      third_party_message: {
-        details: {
-          markdown: remoteMessageMarkdown,
-          subject: "This is the subject which must be a bit long"
-        }
-      } as ThirdPartyMessage
-    } as ThirdPartyMessageWithContent;
-    const content = extractContentFromMessageSources(
-      data => data.markdown,
-      standardMessage,
-      remoteMessage
-    );
-    expect(content).toBe(remoteMessageMarkdown);
-  });
+  thirdPartyTypesMock.forEach(type =>
+    it(`should return standard message content if third party message's details are undefined and type='${type}'`, () => {
+      const standardMessage = {
+        markdown:
+          "This is the standard message markdown which must be longer than eighty characters in order to be properly recognised"
+      } as UIMessageDetails;
+      const remoteMessage = {
+        third_party_message: {}
+      } as ThirdPartyMessageWithContent;
+      const content = extractContentFromMessageSources(
+        data => data.markdown,
+        standardMessage,
+        { type, content: remoteMessage }
+      );
+      expect(content).toBe(standardMessage.markdown);
+    })
+  );
+  thirdPartyTypesMock.forEach(type =>
+    it(`should return standard message content if third party message's details are not valid and type='${type}'`, () => {
+      const standardMessage = {
+        markdown:
+          "This is the standard message markdown which must be longer than eighty characters in order to be properly recognised"
+      } as UIMessageDetails;
+      const remoteMessage = {
+        third_party_message: {
+          details: {
+            markdown:
+              "This is the remote markdown, which is longer than eighty characters but the sibling subject property is missing"
+          }
+        } as ThirdPartyMessage
+      } as ThirdPartyMessageWithContent;
+      const content = extractContentFromMessageSources(
+        data => data.markdown,
+        standardMessage,
+        { type, content: remoteMessage }
+      );
+      expect(content).toBe(standardMessage.markdown);
+    })
+  );
+  thirdPartyTypesMock.forEach(type =>
+    it(`should return third party message content if it is properly defined and formatted and type='${type}'`, () => {
+      const standardMessage = {
+        markdown:
+          "This is the standard message markdown which must be longer than eighty characters in order to be properly recognised"
+      } as UIMessageDetails;
+      const remoteMessageMarkdown =
+        "This is the remote markdown, which is longer than eighty characters and the sibling subject property is defined";
+      const remoteMessage = {
+        third_party_message: {
+          details: {
+            markdown: remoteMessageMarkdown,
+            subject: "This is the subject which must be a bit long"
+          }
+        } as ThirdPartyMessage
+      } as ThirdPartyMessageWithContent;
+      const content = extractContentFromMessageSources(
+        data => data.markdown,
+        standardMessage,
+        { type, content: remoteMessage }
+      );
+      expect(content).toBe(remoteMessageMarkdown);
+    })
+  );
 });

@@ -1,13 +1,27 @@
-import { constUndefined, pipe } from "fp-ts/lib/function";
-import * as B from "fp-ts/lib/boolean";
-import * as O from "fp-ts/lib/Option";
-import * as E from "fp-ts/lib/Either";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import * as B from "fp-ts/lib/boolean";
+import * as E from "fp-ts/lib/Either";
+import { constUndefined, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { call, delay, put, race, select, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
-import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
+import { RemoteContentDetails } from "../../../../definitions/backend/RemoteContentDetails";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
+import { isPnRemoteEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { isTestEnv } from "../../../utils/environment";
+import { trackPNPushOpened } from "../../pn/analytics";
+import { loadServiceDetail } from "../../services/details/store/actions/details";
+import { serviceDetailsByIdPotSelector } from "../../services/details/store/reducers";
+import {
+  trackMessageDataLoadFailure,
+  trackMessageDataLoadPending,
+  trackMessageDataLoadRequest,
+  trackMessageDataLoadSuccess,
+  trackRemoteContentMessageDecodingWarning
+} from "../analytics";
 import {
   RequestGetMessageDataActionType,
   cancelGetMessageDataAction,
@@ -17,30 +31,18 @@ import {
   loadThirdPartyMessage,
   upsertMessageStatusAttributes
 } from "../store/actions";
-import { getPaginatedMessageById } from "../store/reducers/paginatedById";
-import { UIMessage, UIMessageDetails } from "../types";
-import { serviceDetailsByIdPotSelector } from "../../services/details/store/reducers";
-import { loadServiceDetail } from "../../services/details/store/actions/details";
-import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
-import { thirdPartyFromIdSelector } from "../store/reducers/thirdPartyById";
 import { isLoadingOrUpdatingInbox } from "../store/reducers/allPaginated";
-import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
-import { isPnRemoteEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
-import { trackPNPushOpened } from "../../pn/analytics";
-import { isTestEnv } from "../../../utils/environment";
-import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
-import {
-  trackMessageDataLoadFailure,
-  trackMessageDataLoadPending,
-  trackMessageDataLoadRequest,
-  trackMessageDataLoadSuccess,
-  trackRemoteContentMessageDecodingWarning
-} from "../analytics";
-import { RemoteContentDetails } from "../../../../definitions/backend/RemoteContentDetails";
+import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
 import { MessageGetStatusFailurePhaseType } from "../store/reducers/messageGetStatus";
+import { getPaginatedMessageById } from "../store/reducers/paginatedById";
+import {
+  ThirdPartyContent,
+  thirdPartyFromIdSelector
+} from "../store/reducers/thirdPartyById";
+import { UIMessage, UIMessageDetails } from "../types";
 
-import { extractContentFromMessageSources } from "../utils";
 import { isFIMSLink } from "../../fims/singleSignOn/utils";
+import { extractContentFromMessageSources } from "../utils";
 import {
   ctasFromLocalizedCTAs,
   localizedCTAsFromFrontMatter
@@ -312,7 +314,7 @@ function* setMessageReadIfNeeded(paginatedMessage: UIMessage) {
 function* dispatchSuccessAction(
   paginatedMessage: UIMessage,
   messageDetails: UIMessageDetails,
-  thirdPartyMessage: ThirdPartyMessageWithContent | undefined
+  thirdPartyMessage: ThirdPartyContent | undefined
 ) {
   const isPNMessageCategory = paginatedMessage.category.tag === TagEnum.PN;
   const containsPayment = pipe(
@@ -323,7 +325,7 @@ function* dispatchSuccessAction(
     )
   );
   const attachmentCount =
-    thirdPartyMessage?.third_party_message.attachments?.length ?? 0;
+    thirdPartyMessage?.content.third_party_message.attachments?.length ?? 0;
 
   const isPnEnabled = yield* select(isPnRemoteEnabledSelector);
 
@@ -370,7 +372,7 @@ function* commonFailureHandling(
 
 const decodeAndTrackThirdPartyMessageDetailsIfNeeded = (
   isPNMessage: boolean,
-  thirdPartyMessageOrUndefined: ThirdPartyMessageWithContent | undefined,
+  thirdPartyMessageOrUndefined: ThirdPartyContent | undefined,
   service: ServiceDetails,
   tag: string
 ) =>
@@ -379,7 +381,7 @@ const decodeAndTrackThirdPartyMessageDetailsIfNeeded = (
     O.fromNullable,
     O.filter(_ => !isPNMessage),
     O.chainNullableK(
-      thirdPartyMessage => thirdPartyMessage.third_party_message.details
+      thirdPartyMessage => thirdPartyMessage.content.third_party_message.details
     ),
     O.map(details =>
       pipe(
@@ -404,7 +406,7 @@ const decodeAndTrackThirdPartyMessageDetailsIfNeeded = (
 const computeHasFIMSCTA = (
   messageDetails: UIMessageDetails,
   serviceId: ServiceId,
-  thirdPartyMessage: ThirdPartyMessageWithContent | undefined
+  thirdPartyMessage: ThirdPartyContent | undefined
 ) => {
   const markdownWithCTAs = extractContentFromMessageSources(
     (messageContent: RemoteContentDetails | UIMessageDetails) =>

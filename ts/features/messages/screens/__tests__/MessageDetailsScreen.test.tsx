@@ -25,6 +25,7 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { ATTACHMENT_CATEGORY } from "../../types/attachmentCategory";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { thirdPartyTypes } from "../../store/reducers/thirdPartyById";
 
 export const thirdPartyMessage: ThirdPartyMessageWithContent = {
   ...message_1,
@@ -48,58 +49,72 @@ export const thirdPartyMessage: ThirdPartyMessageWithContent = {
     ] as Array<ThirdPartyAttachment>
   }
 };
-
+const thirdPartyTypesMock = Object.values(thirdPartyTypes);
 describe("MessageDetailsScreen", () => {
-  it("should display the attachment tag if there are attachments", () => {
-    const sequenceOfActions: ReadonlyArray<Action> = [
-      applicationChangeState("active"),
-      loadMessageById.success(toUIMessage(message_1)),
-      loadServiceDetail.success(service_1),
-      loadMessageDetails.success(toUIMessageDetails(messageWithExpiredPayment)),
-      loadThirdPartyMessage.success({
-        id: message_1.id,
-        content: thirdPartyMessage
-      })
-    ];
-
-    const state: GlobalState = reproduceSequence(
-      {} as GlobalState,
-      appReducer,
-      sequenceOfActions
-    );
-    const store: Store<GlobalState> = createStore(appReducer, state as any);
-
-    const { component } = renderComponent(store);
-    expect(component.queryByTestId("attachment-tag")).not.toBeNull();
-  });
-
-  it("should NOT display the attachment tag if there are no attachments", () => {
-    const sequenceOfActions: ReadonlyArray<Action> = [
-      applicationChangeState("active"),
-      loadMessageById.success(toUIMessage(message_1)),
-      loadServiceDetail.success(service_1),
-      loadMessageDetails.success(toUIMessageDetails(messageWithExpiredPayment)),
-      loadThirdPartyMessage.success({
-        id: message_1.id,
-        content: {
-          ...thirdPartyMessage,
-          third_party_message: {
-            attachments: []
+  thirdPartyTypesMock.forEach(type =>
+    it(`should display the attachment tag if there are attachments with type='${type}'`, () => {
+      const sequenceOfActions: ReadonlyArray<Action> = [
+        applicationChangeState("active"),
+        loadMessageById.success(toUIMessage(message_1)),
+        loadServiceDetail.success(service_1),
+        loadMessageDetails.success(
+          toUIMessageDetails(messageWithExpiredPayment)
+        ),
+        loadThirdPartyMessage.success({
+          id: message_1.id,
+          content: {
+            type,
+            content: thirdPartyMessage
           }
-        }
-      })
-    ];
+        })
+      ];
 
-    const state: GlobalState = reproduceSequence(
-      {} as GlobalState,
-      appReducer,
-      sequenceOfActions
-    );
-    const store: Store<GlobalState> = createStore(appReducer, state as any);
+      const state: GlobalState = reproduceSequence(
+        {} as GlobalState,
+        appReducer,
+        sequenceOfActions
+      );
+      const store: Store<GlobalState> = createStore(appReducer, state as any);
 
-    const { component } = renderComponent(store);
-    expect(component.queryByTestId("attachment-tag")).toBeNull();
-  });
+      const { component } = renderComponent(store);
+      expect(component.queryByTestId("attachment-tag")).not.toBeNull();
+    })
+  );
+
+  thirdPartyTypesMock.forEach(type =>
+    it(`should NOT display the attachment tag if there are no attachments with type='${type}'`, () => {
+      const sequenceOfActions: ReadonlyArray<Action> = [
+        applicationChangeState("active"),
+        loadMessageById.success(toUIMessage(message_1)),
+        loadServiceDetail.success(service_1),
+        loadMessageDetails.success(
+          toUIMessageDetails(messageWithExpiredPayment)
+        ),
+        loadThirdPartyMessage.success({
+          id: message_1.id,
+          content: {
+            type,
+            content: {
+              ...thirdPartyMessage,
+              third_party_message: {
+                attachments: []
+              }
+            }
+          }
+        })
+      ];
+
+      const state: GlobalState = reproduceSequence(
+        {} as GlobalState,
+        appReducer,
+        sequenceOfActions
+      );
+      const store: Store<GlobalState> = createStore(appReducer, state as any);
+
+      const { component } = renderComponent(store);
+      expect(component.queryByTestId("attachment-tag")).toBeNull();
+    })
+  );
 
   it("should display the alert banner if the message's due date is expiring", () => {
     const next7Days = new Date(new Date().setDate(new Date().getDate() + 7));
