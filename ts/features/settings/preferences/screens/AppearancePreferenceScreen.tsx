@@ -149,6 +149,13 @@ const AppearancePreferenceScreen = (): ReactElement => {
           <ListItemHeader
             iconName="theme"
             label={I18n.t("profile.preferences.list.appearance.theme.title")}
+            endElement={{
+              type: "badge",
+              componentProps: {
+                text: "Beta",
+                variant: "highlight"
+              }
+            }}
           />
           <RadioGroup<ColorModeChoice>
             type="radioListItem"
