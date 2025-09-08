@@ -30,6 +30,7 @@ import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisable
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
+  isL3FeaturesEnabledSelector,
   selectEidOption,
   selectIdentification
 } from "../../machine/eid/selectors";
@@ -69,11 +70,14 @@ const ContentView = ({ eid }: ContentViewProps) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const identification =
     ItwEidIssuanceMachineContext.useSelector(selectIdentification);
+  const isL3FeaturesEnabled = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const route = useRoute();
 
-  const isL3 = isItwCredential(eid.credential); // TODO: check if whitelisted
+  const isL3 = isL3FeaturesEnabled && isItwCredential(eid.credential);
 
   const mixPanelCredential = isL3 ? "ITW_PID" : "ITW_ID_V2";
 
