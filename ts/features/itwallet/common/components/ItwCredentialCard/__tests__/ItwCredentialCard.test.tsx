@@ -6,7 +6,7 @@ import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { ItwCredentialStatus } from "../../../utils/itwTypesUtils";
 import { ItwCredentialCard } from "../ItwCredentialCard";
-import * as selectors from "../../../store/selectors";
+import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
 
 describe("ItwCredentialCard", () => {
   it.each(["EuropeanHealthInsuranceCard", "EuropeanDisabilityCard", "mDL"])(
@@ -69,7 +69,7 @@ describe("ItwCredentialCard", () => {
     } as GlobalState);
 
     jest
-      .spyOn(selectors, "itwShouldRenderNewItWalletSelector")
+      .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
       .mockReturnValue(true);
 
     const component = render(

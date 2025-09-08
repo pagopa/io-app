@@ -13,6 +13,7 @@ import {
 } from "../machine/selectors";
 import { ItwRetryableQRCode } from "../../../common/components/ItwRetryableQRCode";
 import { trackItwProximityQrCodeLoadingRetry } from "../analytics";
+import { MaxBrightness } from "../../../../../utils/brightness";
 
 const QR_WIDTH =
   Dimensions.get("window").width - IOVisualCostants.appMarginDefault * 2;
@@ -40,6 +41,7 @@ export const useItwPresentQRCode = () => {
     ),
     component: (
       <VStack space={24}>
+        <MaxBrightness useSmoothTransition={true} />
         <Body>
           {I18n.t(
             "features.itWallet.presentation.proximity.mdl.bottomSheet.body"
