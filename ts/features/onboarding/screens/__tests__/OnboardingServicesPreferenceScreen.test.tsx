@@ -1,9 +1,9 @@
 import { fireEvent } from "@testing-library/react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
+import I18n from "i18next";
 import OnboardingServicesPreferenceScreen from "../OnboardingServicesPreferenceScreen";
 import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
-import I18n from "../../../../i18n";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";

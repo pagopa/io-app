@@ -2,7 +2,7 @@ import { BodySmall, IOSkeleton } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { StyleSheet, View } from "react-native";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { format } from "../../../../utils/dates";
 
 type Props = { isLoading: true } | { isLoading?: false; lastUpdateDate?: Date };

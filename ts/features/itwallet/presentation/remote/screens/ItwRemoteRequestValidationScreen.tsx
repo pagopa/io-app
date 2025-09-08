@@ -1,7 +1,7 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import * as E from "fp-ts/lib/Either";
-import I18n from "../../../../../i18n.ts";
+import I18n from "i18next";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
 import { ItwRemoteRequestPayload } from "../utils/itwRemoteTypeUtils.ts";

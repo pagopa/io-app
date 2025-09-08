@@ -57,16 +57,12 @@
     ],
     "meridian": ["am", "pm"],
     "time": {
-      "minutes": {
-        "zero": "0 minutes",
-        "one": "1 minute",
-        "other": "{{count}} minutes"
-      },
-      "seconds": {
-        "zero": "0 seconds",
-        "one": "1 second",
-        "other": "{{count}} seconds"
-      }
+      "minutes_zero": "0 minutes",
+      "minutes_one": "1 minute",
+      "minutes_other": "{{count}} minutes",
+      "seconds_zero": "0 seconds",
+      "seconds_one": "1 second",
+      "seconds_other": "{{count}} seconds"
     }
   },
   "global": {
@@ -3588,11 +3584,9 @@
           "categories": "Categories",
           "cta": {
             "cancel": "Remove",
-            "confirm": {
-              "zero": "Apply filters",
-              "one": "Apply filters ({{count}})",
-              "other": "Apply filters ({{count}})"
-            }
+            "confirm_zero": "Apply filters",
+            "confirm_one": "Apply filters ({{count}})",
+            "confirm_other": "Apply filters ({{count}})"
           },
           "order": {
             "byDistance": "By proximity to your location",
@@ -3757,14 +3751,10 @@
         "code": {
           "title": "Your discount code",
           "validUntil": "Still valid for",
-          "minutes": {
-            "one": "1 minute",
-            "other": "{{minutes}} minutes"
-          },
-          "seconds": {
-            "one": "1 second",
-            "other": "{{seconds}} seconds"
-          }
+          "minutes_one": "1 minute",
+          "minutes_other": "{{minutes}} minutes",
+          "seconds_one": "1 second",
+          "seconds_other": "{{seconds}} seconds"
         }
       }
     },
@@ -5007,10 +4997,10 @@
           "claimUnavailable": "Non disponibile",
           "optionalClaimsAlert": "I dati facoltativi ti offrono servizi più completi.",
           "missingClaimsAlert": "Alcuni dati facoltativi non sono disponibili nel tuo Portafoglio.",
-          "disclaimer": [
-            "I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.",
-            "I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento."
-          ],
+          "disclaimer": {
+            "0": "I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.",
+            "1": "I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento."
+          },
           "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}})."
         },
         "remote": {
@@ -5029,26 +5019,18 @@
             }
           },
           "missingCredentialsScreen": {
-            "title": {
-              "one": "Manca un documento per continuare",
-              "other": "Mancano alcuni documenti per continuare"
-            },
+            "title_one": "Manca un documento per continuare",
+            "title_other": "Mancano alcuni documenti per continuare",
             "subtitle": "Aggiungi {{credentialNames}} al Portafoglio e poi riprova.",
-            "primaryAction": {
-              "one": "Aggiungi documento al Portafoglio",
-              "other": "Aggiungi documenti al Portafoglio"
-            },
+            "primaryAction_one": "Aggiungi documento al Portafoglio",
+            "primaryAction_other": "Aggiungi documenti al Portafoglio",
             "secondaryAction": "Non ora"
           },
           "invalidCredentialsScreen": {
-            "title": {
-              "one": "Non puoi continuare con la richiesta perché {{credentialName}} non è valida",
-              "other": "Non puoi continuare con la richiesta perché alcuni documenti non risultano validi"
-            },
-            "subtitle": {
-              "one": "Assicurati di essere in possesso del documento richiesto valido e poi riprova.",
-              "other": "Assicurati di essere in possesso dei documenti richiesti validi e poi riprova."
-            },
+            "title_one": "Non puoi continuare con la richiesta perché {{credentialName}} non è valida",
+            "title_other": "Non puoi continuare con la richiesta perché alcuni documenti non risultano validi",
+            "subtitle_one": "Assicurati di essere in possesso del documento richiesto valido e poi riprova.",
+            "subtitle_other": "Assicurati di essere in possesso dei documenti richiesti validi e poi riprova.",
             "primaryAction": "Ho capito"
           },
           "deepLinkValidationErrorScreen": {
@@ -5206,10 +5188,10 @@
             "subtitle": "Saranno mostrati a **{{relyingParty}}** per completare la verifica dei documenti richiesti.",
             "requiredClaims": "Dati necessari",
             "purpose": "Finalità: Identificazione",
-            "disclaimer": [
-              "I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.",
-              "I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento."
-            ],
+            "disclaimer": {
+              "0": "I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.",
+              "1": "I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento."
+            },
             "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}}).",
             "alert": {
               "message": "Non potrai completare la verifica del documento."
@@ -5615,10 +5597,8 @@
               "showMore": "Vedi tutte",
               "header": "Impostazioni",
               "associatedPaymentMethods": "Metodi di pagamento associati",
-              "methods": {
-                "one": "1 metodo",
-                "other": "{{count}} metodi"
-              },
+              "methods_one": "1 metodo",
+              "methods_other": "{{count}} metodi",
               "selectedIBAN": "IBAN per l'accredito",
               "actionsRequired": "Azioni richieste"
             },
@@ -6232,7 +6212,8 @@
     "expiring": "Scade il {{endDate}}",
     "expired": "Scaduta il {{endDate}}",
     "paused": "In pausa",
-    "removed": "Rimossa"
+    "removed": "Rimossa",
+    "used": "Utilizzato"
   },
   "transaction": {
     "details": {

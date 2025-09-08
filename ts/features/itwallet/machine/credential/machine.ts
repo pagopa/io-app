@@ -2,14 +2,12 @@ import { assign, fromPromise, not, setup } from "xstate";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import {
-  GetWalletAttestationActorInput,
   GetWalletAttestationActorOutput,
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
   ObtainStatusAttestationActorInput,
   RequestCredentialActorInput,
-  RequestCredentialActorOutput,
-  VerifyTrustFederationActorInput
+  RequestCredentialActorOutput
 } from "./actors";
 import { Context, InitialContext } from "./context";
 import { CredentialIssuanceEvents } from "./events";
@@ -66,13 +64,9 @@ export const itwCredentialIssuanceMachine = setup({
     trackCredentialIssuingDataShareAccepted: notImplemented
   },
   actors: {
-    verifyTrustFederation: fromPromise<void, VerifyTrustFederationActorInput>(
-      notImplemented
-    ),
-    getWalletAttestation: fromPromise<
-      GetWalletAttestationActorOutput,
-      GetWalletAttestationActorInput
-    >(notImplemented),
+    verifyTrustFederation: fromPromise<void>(notImplemented),
+    getWalletAttestation:
+      fromPromise<GetWalletAttestationActorOutput>(notImplemented),
     requestCredential: fromPromise<
       RequestCredentialActorOutput,
       RequestCredentialActorInput
@@ -145,9 +139,6 @@ export const itwCredentialIssuanceMachine = setup({
         "Verification of the trust federation. This state verifies the trust chain of the wallet provider with the EAA provider.",
       tags: [ItwTags.Loading],
       invoke: {
-        input: ({ context }) => ({
-          isNewIssuanceFlowEnabled: context.isWhiteListed
-        }),
         src: "verifyTrustFederation",
         onDone: {
           target: "CheckingWalletInstanceAttestation"
@@ -179,9 +170,6 @@ export const itwCredentialIssuanceMachine = setup({
       tags: [ItwTags.Loading],
       invoke: {
         src: "getWalletAttestation",
-        input: ({ context }) => ({
-          isNewIssuanceFlowEnabled: context.isWhiteListed
-        }),
         onDone: {
           target: "RequestingCredential",
           actions: [
@@ -210,8 +198,7 @@ export const itwCredentialIssuanceMachine = setup({
         src: "requestCredential",
         input: ({ context }) => ({
           credentialType: context.credentialType,
-          walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
-          isNewIssuanceFlowEnabled: context.isWhiteListed
+          walletInstanceAttestation: context.walletInstanceAttestation?.jwt
         }),
         onDone: {
           target: "DisplayingTrustIssuer",
@@ -219,12 +206,7 @@ export const itwCredentialIssuanceMachine = setup({
             clientId: event.output.clientId,
             codeVerifier: event.output.codeVerifier,
             requestedCredential: event.output.requestedCredential,
-            issuerConf: event.output.issuerConf,
-            // TODO: [SIW-2530] In the new APIs is not needed
-            credentialDefinition:
-              "credentialDefinition" in event.output
-                ? event.output.credentialDefinition
-                : undefined
+            issuerConf: event.output.issuerConf
           }))
         },
         onError: {
@@ -265,10 +247,8 @@ export const itwCredentialIssuanceMachine = setup({
               walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
               clientId: context.clientId,
               codeVerifier: context.codeVerifier,
-              credentialDefinition: context.credentialDefinition,
               requestedCredential: context.requestedCredential,
               issuerConf: context.issuerConf,
-              isNewIssuanceFlowEnabled: context.isWhiteListed,
               // If we are upgrading the credential to the new format or the user has access to the
               // L3 features we need to pass the operationType header with the value "reissuing"
               operationType:
@@ -292,8 +272,7 @@ export const itwCredentialIssuanceMachine = setup({
           invoke: {
             src: "obtainStatusAttestation",
             input: ({ context }) => ({
-              credentials: context.credentials,
-              isNewIssuanceFlowEnabled: context.isWhiteListed
+              credentials: context.credentials
             }),
             onDone: {
               target: "Completed",

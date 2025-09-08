@@ -36,7 +36,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { connect } from "react-redux";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { ReduxProps } from "../../../../../store/actions/types";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";

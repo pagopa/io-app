@@ -541,7 +541,7 @@ exports[`CieExpiredOrInvalidScreen should render correctly and match snapshot 1`
                                 ]
                               }
                             >
-                              The CIE verification failed
+                              La verifica della CIE non è andata a buon fine
                             </Text>
                             <View
                               style={
@@ -571,7 +571,7 @@ exports[`CieExpiredOrInvalidScreen should render correctly and match snapshot 1`
                                 ]
                               }
                             >
-                              The card used is no longer valid or has expired. Use SPID to enter the app.
+                              La carta utilizzata potrebbe essere scaduta o non più valida. Prova ad usare SPID per entrare in app.
                             </Text>
                             <View
                               style={
@@ -589,7 +589,7 @@ exports[`CieExpiredOrInvalidScreen should render correctly and match snapshot 1`
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -705,7 +705,7 @@ exports[`CieExpiredOrInvalidScreen should render correctly and match snapshot 1`
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>

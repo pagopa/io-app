@@ -2,7 +2,7 @@ import { HStack, IOText, Tag } from "@pagopa/io-app-design-system";
 import Color from "color";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import { useIOSelector } from "../../../../../store/hooks";
 import { fontPreferenceSelector } from "../../../../../store/reducers/persistedPreferences";
 import {
@@ -13,7 +13,7 @@ import {
 } from "../../utils/itwCredentialUtils";
 import { getThemeColorByCredentialType } from "../../utils/itwStyleUtils";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
-import { itwShouldRenderNewItWalletSelector } from "../../store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { CardBackground } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
 import { CardColorScheme } from "./types";
@@ -50,8 +50,8 @@ export const ItwCredentialCard = ({
   isItwCredential
 }: ItwCredentialCard) => {
   const typefacePreference = useIOSelector(fontPreferenceSelector);
-  const isNewItwRenderable = useIOSelector(itwShouldRenderNewItWalletSelector);
-  const needsItwUpgrade = isNewItwRenderable && !isItwCredential;
+  const isItwPid = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const needsItwUpgrade = isItwPid && !isItwCredential;
 
   const borderColorMap = useBorderColorByStatus();
 

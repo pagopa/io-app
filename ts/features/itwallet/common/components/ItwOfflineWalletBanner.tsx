@@ -1,7 +1,7 @@
 import { Banner, IOToast } from "@pagopa/io-app-design-system";
 import { useCallback, useMemo } from "react";
 import { useRoute } from "@react-navigation/native";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { itwSetOfflineBannerHidden } from "../store/actions/preferences.ts";
 import { itwShouldRenderOfflineBannerSelector } from "../store/selectors";
