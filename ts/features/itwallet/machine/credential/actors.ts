@@ -14,7 +14,6 @@ import {
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { Env } from "../../common/utils/environment";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { enrichErrorWithMetadata } from "../../common/utils/itwFailureUtils";
 import { type Context } from "./context";
 
@@ -23,7 +22,9 @@ export type GetWalletAttestationActorOutput = Awaited<
 >;
 
 export type RequestCredentialActorInput =
-  Partial<credentialIssuanceUtils.RequestCredentialParams>;
+  Partial<credentialIssuanceUtils.RequestCredentialParams> & {
+    skipMdocIssuance: boolean;
+  };
 
 export type RequestCredentialActorOutput = Awaited<
   ReturnType<typeof credentialIssuanceUtils.requestCredential>
@@ -94,8 +95,8 @@ export const createCredentialIssuanceActorsImplementation = (
     RequestCredentialActorOutput,
     RequestCredentialActorInput
   >(async ({ input }) => {
-    const { credentialType, walletInstanceAttestation } = input;
-    const isItwValid = itwLifecycleIsITWalletValidSelector(store.getState());
+    const { credentialType, walletInstanceAttestation, skipMdocIssuance } =
+      input;
 
     assert(credentialType, "credentialType is undefined");
     assert(walletInstanceAttestation, "walletInstanceAttestation is undefined");
@@ -104,7 +105,7 @@ export const createCredentialIssuanceActorsImplementation = (
       env,
       credentialType,
       walletInstanceAttestation,
-      skipMdocIssuance: !isItwValid
+      skipMdocIssuance
     });
   });
 
