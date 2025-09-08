@@ -53,7 +53,6 @@ import {
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
 import { IdPayCardStatus } from "../utils";
-import { openLink } from "../../../../components/ui/Markdown/handlers/link";
 
 export type IdPayInitiativeDetailsScreenParams = {
   initiativeId: string;
