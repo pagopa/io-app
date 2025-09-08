@@ -5,7 +5,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as connectivitySelectors from "../../../../connectivity/store/selectors";
 import * as ingressSelectors from "../../../../ingress/store/selectors";
-import * as selectors from "../../../common/store/selectors";
+import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import {
   ItwCredentialWalletCard,
   ItwCredentialWalletCardProps
@@ -43,7 +43,7 @@ describe("WrappedItwCredentialCard", () => {
     const tCredentialType = "mDL";
 
     jest
-      .spyOn(selectors, "itwShouldRenderNewItWalletSelector")
+      .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
       .mockReturnValue(true);
     jest
       .spyOn(connectivitySelectors, "isConnectedSelector")
@@ -69,7 +69,7 @@ describe("WrappedItwCredentialCard", () => {
     const tCredentialType = "mDL";
 
     jest
-      .spyOn(selectors, "itwShouldRenderNewItWalletSelector")
+      .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
       .mockReturnValue(true);
     jest
       .spyOn(connectivitySelectors, "isConnectedSelector")
