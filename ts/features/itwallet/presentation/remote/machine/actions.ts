@@ -49,6 +49,12 @@ export const createRemoteActionsImplementation = (
     });
   },
 
+  navigateToExtendedLoadingScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_REMOTE_ROUTES.EXTENDED_LOADING_SCREEN
+    });
+  },
+
   closePresentation: () => {
     navigation.popToTop();
   },

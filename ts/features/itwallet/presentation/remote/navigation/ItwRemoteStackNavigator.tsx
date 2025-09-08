@@ -9,6 +9,7 @@ import { ItwRemoteClaimsDisclosureScreen } from "../screens/ItwRemoteClaimsDiscl
 import { ItwRemoteRequestValidationScreen } from "../screens/ItwRemoteRequestValidationScreen.tsx";
 import { ItwRemoteAuthResponseScreen } from "../screens/ItwRemoteAuthResponseScreen.tsx";
 import { ItwRemoteFailureScreen } from "../screens/ItwRemoteFailureScreen.tsx";
+import { ItwExtendedLoadingScreen } from "../../../common/screens/ItwExtendedLoadingScreen.tsx";
 import { ITW_REMOTE_ROUTES } from "./routes.ts";
 import { ItwRemoteParamsList } from "./ItwRemoteParamsList.ts";
 
@@ -54,6 +55,11 @@ const InnerNavigator = () => {
         name={ITW_REMOTE_ROUTES.FAILURE}
         component={ItwRemoteFailureScreen}
         options={hiddenHeader}
+      />
+      <Stack.Screen
+        name={ITW_REMOTE_ROUTES.EXTENDED_LOADING_SCREEN}
+        component={ItwExtendedLoadingScreen}
+        options={{ headerShown: false, gestureEnabled: false }}
       />
     </Stack.Navigator>
   );

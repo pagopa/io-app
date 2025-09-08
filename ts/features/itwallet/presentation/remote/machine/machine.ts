@@ -32,6 +32,7 @@ export const itwRemoteMachine = setup({
     navigateToIdentificationModeScreen: notImplemented,
     navigateToAuthResponseScreen: notImplemented,
     navigateToBarcodeScanScreen: notImplemented,
+    navigateToExtendedLoadingScreen: notImplemented,
     closePresentation: notImplemented,
     trackRemoteDataShare: notImplemented,
     storeWalletInstanceAttestation: notImplemented,
@@ -165,6 +166,11 @@ export const itwRemoteMachine = setup({
         onError: {
           actions: "setFailure",
           target: "Failure"
+        }
+      },
+      after: {
+        5000: {
+          actions: "navigateToExtendedLoadingScreen"
         }
       }
     },
