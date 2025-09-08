@@ -193,7 +193,7 @@ describe("test decodeIOBarcode function", () => {
       ["https://login.hotfix.notifichedigitali.it/?aar=whatever", false],
       ["https://login.dev.notifichedigitali.it/?aar=whatever", false],
       ["https://login.stage.notifichedigitali.it/?aar=whatever", false],
-      // invalid domains
+      // invalid cases
 
       ["https://cittadini.notifichedigitali.it/?aar=", false],
       ["https://cittadini.notifichedigitali.it/?aar= ", false],
