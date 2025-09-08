@@ -1,7 +1,7 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
+import I18n from "i18next";
 import { openWebUrl } from "../../../../utils/url";
-import I18n from "../../../../i18n";
 import ProfileAboutApp from "../screens/ProfileAboutApp";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";

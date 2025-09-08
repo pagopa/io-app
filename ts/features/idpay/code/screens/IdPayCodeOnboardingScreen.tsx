@@ -1,4 +1,5 @@
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import I18n from "i18next";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -9,7 +10,6 @@ import { IdPayCodeRoutes } from "../navigation/routes";
 import { idPayEnrollCode, idPayGenerateCode } from "../store/actions";
 import { isIdPayCodeOnboardedSelector } from "../store/selectors";
 import { useIdPayInfoCieBottomSheet } from "../components/IdPayInfoCieBottomSheet";
-import I18n from "../../../../i18n";
 import { identificationRequest } from "../../../identification/store/actions";
 import { shufflePinPadOnPayment } from "../../../../config";
 import { IOScrollViewCentredContent } from "../../../../components/ui/IOScrollViewCentredContent";

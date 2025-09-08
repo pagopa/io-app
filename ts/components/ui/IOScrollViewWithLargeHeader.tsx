@@ -13,13 +13,13 @@ import { useNavigation } from "@react-navigation/native";
 import { ComponentProps, forwardRef, ReactNode, useState } from "react";
 
 import { LayoutChangeEvent, View } from "react-native";
+import I18n from "i18next";
 import {
   BackProps,
   HeaderActionsProps,
   useHeaderProps
 } from "../../hooks/useHeaderProps";
 import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
-import I18n from "../../i18n";
 import { WithTestID } from "../../types/WithTestID";
 import { IOScrollView } from "./IOScrollView";
 

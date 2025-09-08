@@ -9,22 +9,32 @@ import {
 } from "redux";
 import { VersionInfoActions } from "../../common/versionInfo/store/actions/versionInfo";
 import { AppearanceSettingsActions } from "../../features/appearanceSettings/store/actions";
-import { BonusActions } from "../../features/bonus/common/store/actions";
-import {
-  CieLoginConfigActions,
-  CieAuthenticationActions
-} from "../../features/authentication/login/cie/store/actions";
+import { AppFeedbackActions } from "../../features/appReviews/store/actions";
+import { LoginInfoActions } from "../../features/authentication/activeSessionLogin/store/actions";
+import { AuthenticationActions } from "../../features/authentication/common/store/actions";
 import { FastLoginActions } from "../../features/authentication/fastLogin/store/actions";
+import {
+  CieAuthenticationActions,
+  CieLoginConfigActions
+} from "../../features/authentication/login/cie/store/actions";
+import { SpidConfigActions } from "../../features/authentication/login/idp/store/actions";
+import { LoginPreferencesActions } from "../../features/authentication/loginPreferences/store/actions";
+import { BonusActions } from "../../features/bonus/common/store/actions";
+import { ConnectivityActions } from "../../features/connectivity/store/actions";
 import { FciActions } from "../../features/fci/store/actions";
 import { FimsActions } from "../../features/fims/common/store/actions";
+import { IdentificationActions } from "../../features/identification/store/actions";
 import { IdPayActions } from "../../features/idpay/common/store/actions";
 import { IngressScreenActions } from "../../features/ingress/store/actions";
 import { ItwActions } from "../../features/itwallet/common/store/actions";
 import { LandingScreenBannerActions } from "../../features/landingScreenMultiBanner/store/actions";
 import { LollipopActions } from "../../features/lollipop/store/actions/lollipop";
+import { ProfileEmailValidationAction } from "../../features/mailCheck/store/actions/profileEmailValidationChange";
 import { MessagesActions } from "../../features/messages/store/actions";
 import { MixpanelFeatureActions } from "../../features/mixpanel/store/actions";
+import { OnboardingActions } from "../../features/onboarding/store/actions";
 import { PaymentsActions as PaymentsFeatureActions } from "../../features/payments/common/store/actions";
+import { AARFlowStateActions } from "../../features/pn/aar/store/actions";
 import { PnActions } from "../../features/pn/store/actions";
 import { NotificationPermissionsActions } from "../../features/pushNotifications/store/actions/environment";
 import { NotificationsActions } from "../../features/pushNotifications/store/actions/installation";
@@ -32,24 +42,15 @@ import { PendingMessageActions } from "../../features/pushNotifications/store/ac
 import { ProfileNotificationPermissionsActions } from "../../features/pushNotifications/store/actions/profileNotificationPermissions";
 import { UserBehaviourActions } from "../../features/pushNotifications/store/actions/userBehaviour";
 import { ServicesActions } from "../../features/services/common/store/actions";
-import { SpidConfigActions } from "../../features/authentication/login/idp/store/actions";
-import { AppFeedbackActions } from "../../features/appReviews/store/actions";
-import { UtmLinkActions } from "../../features/utmLink/store/actions";
+import { ProfileActions } from "../../features/settings/common/store/actions";
+import { UserDataProcessingActions } from "../../features/settings/common/store/actions/userDataProcessing";
+import { PinSetActions } from "../../features/settings/security/store/actions/pinset";
 import { TrialSystemActions } from "../../features/trialSystem/store/actions";
+import { UtmLinkActions } from "../../features/utmLink/store/actions";
 import { WalletActions } from "../../features/wallet/store/actions";
 import { WhatsNewActions } from "../../features/whatsnew/store/actions";
 import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
 import { GlobalState } from "../reducers/types";
-import { ConnectivityActions } from "../../features/connectivity/store/actions";
-import { LoginPreferencesActions } from "../../features/authentication/loginPreferences/store/actions";
-import { AuthenticationActions } from "../../features/authentication/common/store/actions";
-import { ProfileActions } from "../../features/settings/common/store/actions";
-import { UserDataProcessingActions } from "../../features/settings/common/store/actions/userDataProcessing";
-import { PinSetActions } from "../../features/settings/security/store/actions/pinset";
-import { ProfileEmailValidationAction } from "../../features/mailCheck/store/actions/profileEmailValidationChange";
-import { IdentificationActions } from "../../features/identification/store/actions";
-import { OnboardingActions } from "../../features/onboarding/store/actions";
-import { LoginInfoActions } from "../../features/authentication/activeSessionLogin/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { BackendStatusActions } from "./backendStatus";
@@ -121,6 +122,7 @@ export type Action =
   | UtmLinkActions
   | ConnectivityActions
   | LoginPreferencesActions
+  | AARFlowStateActions
   | LinkingActions;
 
 export type Dispatch = DispatchAPI<Action>;

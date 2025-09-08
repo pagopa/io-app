@@ -1,8 +1,8 @@
 import { constNull } from "fp-ts/lib/function";
 import { useCallback } from "react";
 import { Linking } from "react-native";
+import I18n from "i18next";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
-import I18n from "../../../../../i18n";
 import {
   trackItWalletCiePinForgotten,
   trackItWalletCiePukForgotten
