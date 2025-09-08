@@ -24,7 +24,15 @@
       "Friday",
       "Saturday"
     ],
-    "abbr_day_names": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    "abbr_day_names": [
+      "Sun",
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat"
+    ],
     "month_names": [
       " ",
       "January",
@@ -55,7 +63,10 @@
       "Nov",
       "Dec"
     ],
-    "meridian": ["am", "pm"],
+    "meridian": [
+      "am",
+      "pm"
+    ],
     "time": {
       "minutes_zero": "0 minutes",
       "minutes_one": "1 minute",
@@ -5648,7 +5659,8 @@
             "body": "If you forget the code, reset it under Settings > Security.",
             "cta": "Ok, chiudi"
           }
-        }
+        },
+        "secondaryCta": "Show merchants"
       },
       "beneficiaryDetails": {
         "infobox": {
