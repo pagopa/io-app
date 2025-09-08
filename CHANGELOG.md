@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.13.0-canary.7386](https://github.com/pagopa/io-app/compare/3.13.0-rc.2...3.13.0-canary.7386) (2025-09-08)
+
+
+### Features
+
+* [[IOPLT-1291](https://pagopa.atlassian.net/browse/IOPLT-1291)] Enable the theme switch on global app preferences ([cb9387e](https://github.com/pagopa/io-app/commit/cb9387e4486b8350187a6cd802b33770ddb39fc5))
+
 ## [3.13.0-rc.2](https://github.com/pagopa/io-app/compare/3.13.0-rc.1...3.13.0-rc.2) (2025-09-05)
 
 
