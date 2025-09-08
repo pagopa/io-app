@@ -91,7 +91,12 @@ export const CardBackground = ({
             <LinearGradient
               start={vec(0, 0)}
               end={vec(size.width, size.height)}
-              colors={credentialGradientColors[credentialType]}
+              colors={
+                credentialGradientColors[credentialType] ?? [
+                  IOColors["grey-100"],
+                  IOColors["grey-200"]
+                ]
+              }
             />
           </RoundedRect>
         )}
