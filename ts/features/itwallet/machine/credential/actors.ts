@@ -95,7 +95,7 @@ export const createCredentialIssuanceActorsImplementation = (
     RequestCredentialActorInput
   >(async ({ input }) => {
     const { credentialType, walletInstanceAttestation } = input;
-    const isPidL3 = itwLifecycleIsITWalletValidSelector(store.getState());
+    const isItwValid = itwLifecycleIsITWalletValidSelector(store.getState());
 
     assert(credentialType, "credentialType is undefined");
     assert(walletInstanceAttestation, "walletInstanceAttestation is undefined");
@@ -104,7 +104,7 @@ export const createCredentialIssuanceActorsImplementation = (
       env,
       credentialType,
       walletInstanceAttestation,
-      isPidL3
+      skipMdocIssuance: !isItwValid
     });
   });
 
