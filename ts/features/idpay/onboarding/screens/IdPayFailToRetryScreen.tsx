@@ -64,7 +64,8 @@ export const IdPayFailToRetryScreen = () => {
     return () => {
       timeouts?.forEach(clearTimeout);
     };
-  }, [dispatch, isFirstCallInPending, machine]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, machine]);
 
   if (showBlockingScreen) {
     return <IngressScreenBlockingError />;
