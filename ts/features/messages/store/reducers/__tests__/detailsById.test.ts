@@ -6,7 +6,7 @@ import {
 } from "../../../__mocks__/message";
 
 import { loadMessageDetails } from "../../actions";
-import { PaymentData, UIMessageDetails, UIMessageId } from "../../../types";
+import { PaymentData, UIMessageDetails } from "../../../types";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -16,7 +16,7 @@ import {
   messagePaymentDataSelector
 } from "../detailsById";
 
-const id = paymentValidInvalidAfterDueDate.id as UIMessageId;
+const id = paymentValidInvalidAfterDueDate.id;
 
 describe("detailsById reducer", () => {
   describe(`when a ${getType(loadMessageDetails.request)} is sent`, () => {
@@ -74,14 +74,11 @@ describe("detailsById reducer", () => {
 describe("messageDetailsByIdSelector", () => {
   it("Should return pot.none for an unmatching message id", () => {
     const state = appReducer(undefined, applicationChangeState("active"));
-    const messageDetailsPot = messageDetailsByIdSelector(
-      state,
-      "" as UIMessageId
-    );
+    const messageDetailsPot = messageDetailsByIdSelector(state, "");
     expect(messageDetailsPot).toBe(pot.none);
   });
   it("Should return pot.noneLoading for a matching loading message id", () => {
-    const messageId = "m1" as UIMessageId;
+    const messageId = "m1";
     const action = loadMessageDetails.request({ id: messageId });
     const state = appReducer(undefined, action);
     const messageDetailsPot = messageDetailsByIdSelector(state, messageId);
@@ -92,7 +89,7 @@ describe("messageDetailsByIdSelector", () => {
 describe("messagePaymentData selector", () => {
   it("should return undefined when the state is empty", () => {
     const appState = appReducer(undefined, applicationChangeState("active"));
-    const messageId = "01HR9ZVVKPQDGQ97TT83AN1W8C" as UIMessageId;
+    const messageId = "01HR9ZVVKPQDGQ97TT83AN1W8C";
     const paymentData = messagePaymentDataSelector(appState, messageId);
     expect(paymentData).toBeUndefined();
   });
@@ -115,7 +112,7 @@ describe("messagePaymentData selector", () => {
     } as GlobalState;
     const paymentData = messagePaymentDataSelector(
       finalState,
-      "01HR9ZVVKPQDGQ97TT83AN1W8C" as UIMessageId
+      "01HR9ZVVKPQDGQ97TT83AN1W8C"
     );
     expect(paymentData).toBeUndefined();
   });
@@ -136,7 +133,7 @@ describe("messagePaymentData selector", () => {
     } as GlobalState;
     const paymentData = messagePaymentDataSelector(
       finalState,
-      "01HR9ZVVKPQDGQ97TT83AN1W8C" as UIMessageId
+      "01HR9ZVVKPQDGQ97TT83AN1W8C"
     );
     expect(paymentData).toBeUndefined();
   });
@@ -160,7 +157,7 @@ describe("messagePaymentData selector", () => {
     } as GlobalState;
     const returnedPaymentData = messagePaymentDataSelector(
       finalState,
-      "01HR9ZVVKPQDGQ97TT83AN1W8C" as UIMessageId
+      "01HR9ZVVKPQDGQ97TT83AN1W8C"
     );
     expect(returnedPaymentData).toBe(paymentData);
   });

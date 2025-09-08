@@ -27,6 +27,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
+import I18n from "i18next";
 import { areTwoMinElapsedFromLastActivity } from "../../authentication/fastLogin/store/actions/sessionRefreshActions";
 import { refreshSessionToken } from "../../authentication/fastLogin/store/actions/tokenRefreshActions";
 import {
@@ -34,7 +35,6 @@ import {
   isFastLoginEnabledSelector
 } from "../../authentication/fastLogin/store/selectors";
 import { useDetectSmallScreen } from "../../../hooks/useDetectSmallScreen";
-import I18n from "../../../i18n";
 import {
   identificationCancel,
   identificationFailure,

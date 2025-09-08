@@ -8,6 +8,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as S from "fp-ts/lib/string";
 import { call, put, select, take, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
+import I18n from "i18next";
 import { AppVersion } from "../../../../../definitions/backend/AppVersion";
 import { ExtendedProfile } from "../../../../../definitions/backend/ExtendedProfile";
 import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
@@ -18,7 +19,6 @@ import { BackendClient } from "../../../../api/backend";
 import { cgnDetails } from "../../../bonus/cgn/store/actions/details";
 import { cgnDetailSelector } from "../../../bonus/cgn/store/reducers/details";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
-import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { trackProfileLoadSuccess } from "../analytics";
 import {

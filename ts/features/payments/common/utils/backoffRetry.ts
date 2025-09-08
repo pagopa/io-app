@@ -1,4 +1,4 @@
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 
 /**
  * This constant defines the seconds delays between each retry attempt.

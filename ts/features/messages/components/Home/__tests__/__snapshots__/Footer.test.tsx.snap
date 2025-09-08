@@ -745,7 +745,7 @@ exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComp
                       }
                     >
                       <View
-                        accessibilityLabel="Loading Messages..."
+                        accessibilityLabel="Caricamento dei messaggi..."
                         style={
                           {
                             "flexDirection": "row",

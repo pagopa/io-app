@@ -1,4 +1,4 @@
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { useIOSelector } from "../../../../store/hooks";
 import { shouldShowFooterListComponentSelector } from "../../store/reducers/allPaginated";
 import { MessageListCategory } from "../../types/messageListCategory";

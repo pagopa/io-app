@@ -10,7 +10,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import { ComponentProps, Fragment } from "react";
 import { View } from "react-native";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import {
   AppParamsList,
   IOStackNavigationProp

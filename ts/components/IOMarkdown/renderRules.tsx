@@ -44,7 +44,7 @@ import {
   useState
 } from "react";
 import { Dimensions, Image, Pressable, Text, View } from "react-native";
-import I18n from "../../i18n";
+import I18n from "i18next";
 import { isAndroid } from "../../utils/platform";
 import { openWebUrl } from "../../utils/url";
 import {

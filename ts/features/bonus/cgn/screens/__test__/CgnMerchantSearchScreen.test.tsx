@@ -1,12 +1,12 @@
 import { applyMiddleware, createStore } from "redux";
 import createSagaMiddleware from "redux-saga";
 import { fireEvent } from "@testing-library/react-native";
+import I18n from "i18next";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { CgnMerchantSearchScreen } from "../merchants/CgnMerchantSearchScreen";
 import CGN_ROUTES from "../../navigation/routes";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import I18n from "../../../../../i18n";
 import { watchBonusCgnSaga } from "../../saga";
 
 const mockFetch: typeof fetch = async (url, options) => {

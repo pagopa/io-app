@@ -16,7 +16,7 @@ import {
   withRepeat,
   withTiming
 } from "react-native-reanimated";
-import I18n from "../../../../i18n.ts";
+import I18n from "i18next";
 
 type Props = {
   variant?: "filled" | "outlined";

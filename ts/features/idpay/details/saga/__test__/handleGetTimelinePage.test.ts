@@ -10,8 +10,9 @@ import {
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { idpayTimelinePageGet } from "../../store/actions";
 import { handleGetTimelinePage } from "../handleGetTimelinePage";
+import { OperationDTO } from "../../../../../../definitions/idpay/OperationDTO";
 
-const mockResponseSuccess: TimelineDTO = {
+const mockResponseSuccess = {
   // mock TimelineDTO
   lastUpdate: new Date("2020-05-20T09:00:00.000Z"),
   operationList: [
@@ -26,13 +27,13 @@ const mockResponseSuccess: TimelineDTO = {
       maskedPan: "1234567890",
       circuitType: "MASTERCARD",
       status: StatusEnum.AUTHORIZED
-    }
-  ],
-  pageNo: 0,
+    } as OperationDTO
+  ] as ReadonlyArray<OperationDTO>,
+  pageNo: 1,
   pageSize: 10,
   totalElements: 1,
   totalPages: 1
-};
+} as TimelineDTO;
 
 describe("idpayTimelinePageGet", () => {
   const initiativeId = "abcdef";

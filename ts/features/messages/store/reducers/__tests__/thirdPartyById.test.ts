@@ -13,7 +13,7 @@ import {
   thirdPartyFromIdSelector,
   thirdPartyMessageAttachments
 } from "../thirdPartyById";
-import { UIMessageDetails, UIMessageId } from "../../../types";
+import { UIMessageDetails } from "../../../types";
 import {
   ThirdPartyMessage,
   ThirdPartyMessageDetails
@@ -26,7 +26,7 @@ import { DetailsById } from "../detailsById";
 
 describe("thirdPartyFromIdSelector", () => {
   it("Should return pot none for an unmatching message id", () => {
-    const messageId = "m1" as UIMessageId;
+    const messageId = "m1";
     const state = appReducer(undefined, applicationChangeState("active"));
     const thirdPartyMessageFromSelector = thirdPartyFromIdSelector(
       state,
@@ -35,7 +35,7 @@ describe("thirdPartyFromIdSelector", () => {
     expect(thirdPartyMessageFromSelector).toStrictEqual(pot.none);
   });
   it("Should return the third party message for a matching message id", () => {
-    const messageId = "m1" as UIMessageId;
+    const messageId = "m1";
     const thirdPartyMessage = {
       id: messageId as string
     } as ThirdPartyMessageWithContent;
@@ -57,11 +57,11 @@ describe("thirdPartyFromIdSelector", () => {
 describe("messageTitleSelector", () => {
   it("Should return undefined for an unmatching message Id", () => {
     const state = appReducer(undefined, applicationChangeState("active"));
-    const messageTitle = messageTitleSelector(state, "m1" as UIMessageId);
+    const messageTitle = messageTitleSelector(state, "m1");
     expect(messageTitle).toBeUndefined();
   });
   it("Should return undefined for a loading matching message", () => {
-    const messageId = "m1" as UIMessageId;
+    const messageId = "m1";
     const loadMessageDetailsRequest = loadMessageDetails.request({
       id: messageId
     });
@@ -70,7 +70,7 @@ describe("messageTitleSelector", () => {
     expect(messageTitle).toBeUndefined();
   });
   it("Should return undefined for a loading matching third party message", () => {
-    const messageId = "m1" as UIMessageId;
+    const messageId = "m1";
     const loadThirdPartyMessageRequest = loadThirdPartyMessage.request({
       id: messageId,
       serviceId: "s1" as ServiceId,
@@ -81,7 +81,7 @@ describe("messageTitleSelector", () => {
     expect(messageTitle).toBeUndefined();
   });
   it("Should return undefined for a matching loaded third party message with no details", () => {
-    const messageId = "m1" as UIMessageId;
+    const messageId = "m1";
     const content = {
       id: messageId as string,
       third_party_message: {}
@@ -95,7 +95,7 @@ describe("messageTitleSelector", () => {
     expect(messageTitle).toBeUndefined();
   });
   it("Should return undefined for a matching loaded third party message with bad typed details", () => {
-    const messageId = "m1" as UIMessageId;
+    const messageId = "m1";
     const content = {
       id: messageId as string,
       third_party_message: {
@@ -113,7 +113,7 @@ describe("messageTitleSelector", () => {
     expect(messageTitle).toBeUndefined();
   });
   it("Should return the message title for a matching loaded third party message with proper typed details", () => {
-    const messageId = "m1" as UIMessageId;
+    const messageId = "m1";
     const subject = "More than ten characters message title";
     const content = {
       id: messageId as string,
@@ -134,7 +134,7 @@ describe("messageTitleSelector", () => {
     expect(messageTitle).toBe(subject);
   });
   it("Should return the third party message title when there are both detailed and third party message", () => {
-    const messageId = "m1" as UIMessageId;
+    const messageId = "m1";
     const thirdPartySubject = "More than ten characters message title";
     const content = {
       id: messageId as string,
@@ -161,7 +161,7 @@ describe("messageTitleSelector", () => {
     expect(messageTitle).toBe(thirdPartySubject);
   });
   it("should return the message title when we have the detail and third party message with bad typed details", () => {
-    const messageId = "m1" as UIMessageId;
+    const messageId = "m1";
     const content = {
       id: messageId as string,
       third_party_message: {
@@ -196,11 +196,11 @@ describe("messageTitleSelector", () => {
 describe("messageMarkdownSelector", () => {
   it("Should return undefined for an unmatching message Id", () => {
     const state = appReducer(undefined, applicationChangeState("active"));
-    const messageMarkdown = messageMarkdownSelector(state, "m1" as UIMessageId);
+    const messageMarkdown = messageMarkdownSelector(state, "m1");
     expect(messageMarkdown).toBeUndefined();
   });
   it("Should return undefined for a loading matching message", () => {
-    const messageId = "m1" as UIMessageId;
+    const messageId = "m1";
     const loadMessageDetailsRequest = loadMessageDetails.request({
       id: messageId
     });
@@ -209,7 +209,7 @@ describe("messageMarkdownSelector", () => {
     expect(messageMarkdown).toBeUndefined();
   });
   it("Should return undefined for a loading matching third party message", () => {
-    const messageId = "m1" as UIMessageId;
+    const messageId = "m1";
     const loadThirdPartyMessageRequest = loadThirdPartyMessage.request({
       id: messageId,
       serviceId: "s1" as ServiceId,
@@ -220,7 +220,7 @@ describe("messageMarkdownSelector", () => {
     expect(messageMarkdown).toBeUndefined();
   });
   it("Should return undefined for a matching loaded third party message with no details", () => {
-    const messageId = "m1" as UIMessageId;
+    const messageId = "m1";
     const content = {
       id: messageId as string,
       third_party_message: {}
@@ -234,7 +234,7 @@ describe("messageMarkdownSelector", () => {
     expect(messageMarkdown).toBeUndefined();
   });
   it("Should return undefined for a matching loaded third party message with bad typed details", () => {
-    const messageId = "m1" as UIMessageId;
+    const messageId = "m1";
     const content = {
       id: messageId as string,
       third_party_message: {
@@ -252,7 +252,7 @@ describe("messageMarkdownSelector", () => {
     expect(messageMarkdown).toBeUndefined();
   });
   it("Should return the message markdown for a matching loaded third party message with proper typed details", () => {
-    const messageId = "m1" as UIMessageId;
+    const messageId = "m1";
     const markdown =
       "This is a more than 80 characters message markdown length. The decoder needs this";
     const content = {
@@ -273,7 +273,7 @@ describe("messageMarkdownSelector", () => {
     expect(messageMarkdown).toBe(markdown);
   });
   it("Should return the third party message markdown when there are both detailed and third party message", () => {
-    const messageId = "m1" as UIMessageId;
+    const messageId = "m1";
     const thirdPartyMarkdown =
       "This is a more than 80 characters message markdown length. The decoder needs this";
     const content = {
@@ -300,7 +300,7 @@ describe("messageMarkdownSelector", () => {
     expect(messageMarkdown).toBe(thirdPartyMarkdown);
   });
   it("should return the message markdown when we have the detail and third-party message with bad typed details", () => {
-    const messageId = "m1" as UIMessageId;
+    const messageId = "m1";
     const content = {
       id: messageId as string,
       third_party_message: {
@@ -334,7 +334,7 @@ describe("messageMarkdownSelector", () => {
 
 describe("thirdPartyMessageAttachments", () => {
   it("should return an empty array on initial state", () => {
-    const messageId = "01HNWRS7DP721KTC3SMCJ7G82E" as UIMessageId;
+    const messageId = "01HNWRS7DP721KTC3SMCJ7G82E";
     const initialState = appReducer(
       undefined,
       applicationChangeState("active")
@@ -344,7 +344,7 @@ describe("thirdPartyMessageAttachments", () => {
     expect(attachments.length).toBe(0);
   });
   it("should return an empty array on a third party message with no attachments", () => {
-    const messageId = "01HNWRS7DP721KTC3SMCJ7G82E" as UIMessageId;
+    const messageId = "01HNWRS7DP721KTC3SMCJ7G82E";
     const loadedThirdPartyMessage = appReducer(
       undefined,
       loadThirdPartyMessage.success({
@@ -362,7 +362,7 @@ describe("thirdPartyMessageAttachments", () => {
     expect(attachments.length).toBe(0);
   });
   it("should return an empty array on a third party message with empty attachments", () => {
-    const messageId = "01HNWRS7DP721KTC3SMCJ7G82E" as UIMessageId;
+    const messageId = "01HNWRS7DP721KTC3SMCJ7G82E";
     const loadedThirdPartyMessage = appReducer(
       undefined,
       loadThirdPartyMessage.success({
@@ -382,7 +382,7 @@ describe("thirdPartyMessageAttachments", () => {
     expect(attachments.length).toBe(0);
   });
   it("should return the first attachment on a third party message with just one attachment", () => {
-    const messageId = "01HNWRS7DP721KTC3SMCJ7G82E" as UIMessageId;
+    const messageId = "01HNWRS7DP721KTC3SMCJ7G82E";
     const thirdPartyAttachment = {
       id: "1",
       url: "https://invalid.url"
@@ -410,7 +410,7 @@ describe("thirdPartyMessageAttachments", () => {
 
 describe("hasAttachmentsSelector", () => {
   it("should return false if there are no attachments", () => {
-    const messageId = "01HNWRS7DP721KTC3SMCJ7G82E" as UIMessageId;
+    const messageId = "01HNWRS7DP721KTC3SMCJ7G82E";
     const loadedThirdPartyMessage = appReducer(
       undefined,
       loadThirdPartyMessage.success({
@@ -428,7 +428,7 @@ describe("hasAttachmentsSelector", () => {
   });
 
   it("should return true if there are attachments", () => {
-    const messageId = "01HNWRS7DP721KTC3SMCJ7G82E" as UIMessageId;
+    const messageId = "01HNWRS7DP721KTC3SMCJ7G82E";
     const thirdPartyAttachment = {
       id: "1",
       url: "https://invalid.url"
@@ -453,7 +453,7 @@ describe("hasAttachmentsSelector", () => {
 });
 
 describe("messageContentSelector", () => {
-  const messageId = "01JKAPT00J32WEJ44NTRH05FVV" as UIMessageId;
+  const messageId = "01JKAPT00J32WEJ44NTRH05FVV";
   const remoteContentMarkdown =
     "A remote markdown which must be longer than eighty characters in order to be parsed properly";
   const remoteContentMessage = {

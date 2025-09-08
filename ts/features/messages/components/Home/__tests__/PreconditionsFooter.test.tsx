@@ -10,7 +10,6 @@ import { TagEnum } from "../../../../../../definitions/backend/MessageCategoryBa
 import * as messagePrecondition from "../../../store/reducers/messagePrecondition";
 import * as urlUtils from "../../../../../utils/url";
 import * as analytics from "../../../analytics";
-import { UIMessageId } from "../../../types";
 import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
 
 describe("PreconditionsFooter", () => {
@@ -77,7 +76,7 @@ describe("PreconditionsFooter", () => {
     jest
       .spyOn(messagePrecondition, "preconditionsCategoryTagSelector")
       .mockImplementation(_ => categoryTag);
-    const messageId = "01J1NE8BY7YV0WJ2240HNQ2KJN" as UIMessageId;
+    const messageId = "01J1NE8BY7YV0WJ2240HNQ2KJN";
     jest
       .spyOn(messagePrecondition, "preconditionsMessageIdSelector")
       .mockImplementation(_ => messageId);

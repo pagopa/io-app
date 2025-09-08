@@ -9,7 +9,6 @@ import { isArchivingDisabledSelector } from "../../messages/store/reducers/archi
 import { resetMessageArchivingAction } from "../../messages/store/actions/archiving";
 import NavigationService from "../../../navigation/NavigationService";
 import { navigateToMessageRouterAction } from "../utils/navigation";
-import { UIMessageId } from "../../messages/types";
 import { trackNotificationPermissionsStatus } from "../analytics";
 
 export function* checkAndUpdateNotificationPermissionsIfNeeded(
@@ -83,7 +82,7 @@ export function* handlePendingMessageStateIfAllowed(
     yield* call(
       NavigationService.dispatchNavigationAction,
       navigateToMessageRouterAction({
-        messageId: messageId as UIMessageId,
+        messageId,
         fromNotification: true
       })
     );

@@ -7,7 +7,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { ComponentProps, useCallback, useState } from "react";
 import { View } from "react-native";
-import I18n from "../../../i18n";
+import I18n from "i18next";
 import { isDevEnv } from "../../../utils/environment";
 
 const PIN_LENGTH = 6;

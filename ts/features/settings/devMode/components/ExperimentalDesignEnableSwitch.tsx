@@ -3,7 +3,7 @@ import {
   ListItemSwitch,
   useIOExperimentalDesign
 } from "@pagopa/io-app-design-system";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { useIOSelector, useIODispatch } from "../../../../store/hooks";
 import { isExperimentalDesignEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { preferencesExperimentalDesignEnabled } from "../../../../store/actions/persistedPreferences";

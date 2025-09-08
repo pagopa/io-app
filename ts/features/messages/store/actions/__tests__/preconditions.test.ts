@@ -1,6 +1,5 @@
 import { MessageCategory } from "../../../../../../definitions/backend/MessageCategory";
 import { ThirdPartyMessagePrecondition } from "../../../../../../definitions/backend/ThirdPartyMessagePrecondition";
-import { UIMessageId } from "../../../types";
 import {
   errorPreconditionStatusAction,
   idlePreconditionStatusAction,
@@ -43,7 +42,7 @@ describe("Action payload generators", () => {
     expect(retrievingDataPayload.nextStatus).toStrictEqual("retrievingData");
   });
   it("should generate proper payload with 'toScheduledPayload'", () => {
-    const messageId = "01J1F5K8D1S71NZJNCDBWN4RYP" as UIMessageId;
+    const messageId = "01J1F5K8D1S71NZJNCDBWN4RYP";
     const categoryTag = "GENERIC" as MessageCategory["tag"];
     const scheduledPayload = toScheduledPayload(messageId, categoryTag);
     expect(scheduledPayload.nextStatus).toStrictEqual("scheduled");
@@ -100,7 +99,7 @@ describe("Action generators", () => {
   });
   it("should return the proper action data for 'scheduledPreconditionStatusAction'", () => {
     const scheduledPayload = toScheduledPayload(
-      "01J1F6DVSZF2SMV2T8635D25BQ" as UIMessageId,
+      "01J1F6DVSZF2SMV2T8635D25BQ",
       "GENERIC" as MessageCategory["tag"]
     );
     const scheduledPSA = scheduledPreconditionStatusAction(scheduledPayload);

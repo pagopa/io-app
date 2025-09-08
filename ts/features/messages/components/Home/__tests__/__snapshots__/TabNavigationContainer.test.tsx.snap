@@ -411,7 +411,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                               }
                             >
                               <View
-                                accessibilityLabel="Inbox"
+                                accessibilityLabel="Ricevuti"
                                 accessibilityRole="tab"
                                 accessibilityState={
                                   {
@@ -557,7 +557,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                       ]
                                     }
                                   >
-                                    Inbox
+                                    Ricevuti
                                   </Text>
                                 </View>
                               </View>
@@ -577,7 +577,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                               }
                             >
                               <View
-                                accessibilityLabel="Archived"
+                                accessibilityLabel="Archiviati"
                                 accessibilityRole="tab"
                                 accessibilityState={
                                   {
@@ -710,7 +710,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                       ]
                                     }
                                   >
-                                    Archived
+                                    Archiviati
                                   </Text>
                                 </View>
                               </View>
@@ -1142,7 +1142,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                               }
                             >
                               <View
-                                accessibilityLabel="Inbox"
+                                accessibilityLabel="Ricevuti"
                                 accessibilityRole="tab"
                                 accessibilityState={
                                   {
@@ -1301,7 +1301,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                       ]
                                     }
                                   >
-                                    Inbox
+                                    Ricevuti
                                   </Text>
                                 </View>
                               </View>
@@ -1321,7 +1321,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                               }
                             >
                               <View
-                                accessibilityLabel="Archived"
+                                accessibilityLabel="Archiviati"
                                 accessibilityRole="tab"
                                 accessibilityState={
                                   {
@@ -1454,7 +1454,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                       ]
                                     }
                                   >
-                                    Archived
+                                    Archiviati
                                   </Text>
                                 </View>
                               </View>

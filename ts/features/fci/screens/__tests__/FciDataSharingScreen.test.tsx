@@ -1,13 +1,13 @@
 import configureMockStore from "redux-mock-store";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import FciDataSharingScreen from "../valid/FciDataSharingScreen";
-import I18n from "../../../../i18n";
 import {
   profileEmailSelector,
   profileFiscalCodeSelector,

@@ -6,7 +6,6 @@ import PN_ROUTES from "../../navigation/routes";
 import { MessageBottomMenu } from "../MessageBottomMenu";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
-import { UIMessageId } from "../../../messages/types";
 import { NotificationStatusHistory } from "../../../../../definitions/pn/NotificationStatusHistory";
 
 jest.mock("../TimelineListItem");
@@ -793,7 +792,7 @@ const renderComponent = (
         history={history}
         isCancelled={isCancelled}
         iun={"randomIUN"}
-        messageId={"01HVPB9XYZMWNEPTDKZJ8ZJV28" as UIMessageId}
+        messageId={"01HVPB9XYZMWNEPTDKZJ8ZJV28"}
         paidNoticeCodes={paidNoticeCodes}
         payments={payments}
         serviceId={"01HT25YR72A8N42AJ0TEKAB2V7" as ServiceId}

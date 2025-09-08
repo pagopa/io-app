@@ -34,7 +34,7 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
         }
       >
         <Text
-          accessibilityLabel="Do you have the CieID app?"
+          accessibilityLabel="Hai l'app CieID?"
           accessibilityRole="header"
           allowFontScaling={true}
           dynamicTypeRamp="title1"
@@ -53,7 +53,7 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
             ]
           }
         >
-          Do you have the CieID app?
+          Hai l'app CieID?
         </Text>
       </View>
       <View
@@ -88,9 +88,9 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
             ]
           }
         >
-          If you have the CieID app on your device, enter the code you have set for the CieID app or use your face or fingerprint.
+          Se hai l’app CieID sul tuo dispositivo, inserisci il codice che hai impostato per l’app CieID o usa il tuo volto o l’impronta.
 
-To enter the IO app without physically using the Electronic Identity Card, you must first enable Level 1 and Level 2 access in the CieID application.
+Per entrare su IO senza usare fisicamente la Carta di Identità Elettronica, devi prima abilitare l’accesso con livello 1 e 2 nell’app CieID.
         </Text>
       </View>
       <View
@@ -115,7 +115,7 @@ To enter the IO app without physically using the Electronic Identity Card, you m
           }
         />
         <View
-          accessibilityLabel="What is CieID?"
+          accessibilityLabel="Cos'è CieID?"
           accessibilityRole="button"
           accessibilityState={
             {
@@ -237,7 +237,7 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                   ]
                 }
               >
-                What is CieID?
+                Cos'è CieID?
               </Text>
             </View>
           </View>
@@ -381,7 +381,7 @@ To enter the IO app without physically using the Electronic Identity Card, you m
       }
     >
       <View
-        accessibilityLabel="Yes, log in with CieID"
+        accessibilityLabel="Sì, entra con CieID"
         accessibilityRole="button"
         accessibilityState={
           {
@@ -498,7 +498,7 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                 ]
               }
             >
-              Yes, log in with CieID
+              Sì, entra con CieID
             </Text>
           </View>
         </View>
@@ -519,7 +519,7 @@ To enter the IO app without physically using the Electronic Identity Card, you m
           }
         />
         <View
-          accessibilityLabel="I don't have CieID"
+          accessibilityLabel="Non ho CieID"
           accessibilityRole="button"
           accessibilityState={
             {
@@ -641,7 +641,7 @@ To enter the IO app without physically using the Electronic Identity Card, you m
                   ]
                 }
               >
-                I don't have CieID
+                Non ho CieID
               </Text>
             </View>
           </View>
@@ -686,7 +686,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
         }
       >
         <Text
-          accessibilityLabel="Do you have your Electronic Identity Card and PIN?"
+          accessibilityLabel="Hai la Carta di Identità Elettronica e il PIN?"
           accessibilityRole="header"
           allowFontScaling={true}
           dynamicTypeRamp="title1"
@@ -705,7 +705,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
             ]
           }
         >
-          Do you have your Electronic Identity Card and PIN?
+          Hai la Carta di Identità Elettronica e il PIN?
         </Text>
       </View>
       <View
@@ -740,7 +740,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
             ]
           }
         >
-          If you have your Electronic Identity Card at hand, you can access IO by entering the card's PIN and bringing it close to the device to allow the data to be read.
+          Se hai la tua Carta di Identità Elettronica a portata di mano, puoi accedere a IO inserendo il PIN della carta e avvicinandola al dispositivo per consentire la lettura dei dati.
         </Text>
       </View>
       <View
@@ -765,7 +765,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
           }
         />
         <View
-          accessibilityLabel="Where can I find the CIE PIN?"
+          accessibilityLabel="Dove trovo il PIN della CIE?"
           accessibilityRole="button"
           accessibilityState={
             {
@@ -887,7 +887,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   ]
                 }
               >
-                Where can I find the CIE PIN?
+                Dove trovo il PIN della CIE?
               </Text>
             </View>
           </View>
@@ -921,7 +921,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                 ]
               }
             >
-              The PIN code consists of 8 digits and is divided in two parts:
+              Il codice PIN è composto da 8 cifre ed è diviso in due parti:
             </Text>
             <View>
               <View
@@ -1017,7 +1017,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                           ]
                         }
                       >
-                        the first 4 digits you received at the registry office;
+                        le prime 4 cifre le hai ricevute all’anagrafe;
                       </Text>
                     </View>
                   </View>
@@ -1083,7 +1083,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                           ]
                         }
                       >
-                        the last 4 digits you received at home with the CIE (Electronic Identification Card).
+                        le ultime 4 cifre le hai ricevute a casa con la CIE.
                       </Text>
                     </View>
                   </View>
@@ -1115,7 +1115,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                 ]
               }
             >
-              Put them together and enter in this order.
+              Mettile insieme e inseriscile in quest’ordine.
             </Text>
           </View>
           <View
@@ -1126,7 +1126,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
             }
           />
           <View
-            accessibilityLabel="Forgotten your PIN?"
+            accessibilityLabel="Hai dimenticato il PIN?"
             accessibilityRole="button"
             accessibilityState={
               {
@@ -1248,7 +1248,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                     ]
                   }
                 >
-                  Forgotten your PIN?
+                  Hai dimenticato il PIN?
                 </Text>
               </View>
             </View>
@@ -1400,7 +1400,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
       }
     >
       <View
-        accessibilityLabel="Yes, enter with CIE + PIN"
+        accessibilityLabel="Sì, entra con CIE + PIN"
         accessibilityRole="button"
         accessibilityState={
           {
@@ -1517,7 +1517,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                 ]
               }
             >
-              Yes, enter with CIE + PIN
+              Sì, entra con CIE + PIN
             </Text>
           </View>
         </View>
@@ -1538,7 +1538,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
           }
         />
         <View
-          accessibilityLabel="I don't have a CIE and PIN"
+          accessibilityLabel="Non ho la CIE e il PIN"
           accessibilityRole="button"
           accessibilityState={
             {
@@ -1660,7 +1660,7 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
                   ]
                 }
               >
-                I don't have a CIE and PIN
+                Non ho la CIE e il PIN
               </Text>
             </View>
           </View>
@@ -1705,7 +1705,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
         }
       >
         <Text
-          accessibilityLabel="Activate your digital identity!"
+          accessibilityLabel="Attiva la tua identità digitale!"
           accessibilityRole="header"
           allowFontScaling={true}
           dynamicTypeRamp="title1"
@@ -1724,7 +1724,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
             ]
           }
         >
-          Activate your digital identity!
+          Attiva la tua identità digitale!
         </Text>
       </View>
       <View
@@ -1759,7 +1759,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
             ]
           }
         >
-          You must have an active SPID or CIE (Electronic Identity Card) digital identity to use IO.
+          Devi avere un’identità digitale SPID o CIE (Carta di Identità Elettronica) attiva per usare IO.
         </Text>
       </View>
       <View
@@ -1801,7 +1801,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
             ]
           }
         >
-          How to activate it
+          Come attivarla
         </Text>
         <View
           style={
@@ -1811,7 +1811,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
           }
         />
         <View
-          accessibilityLabel="Ask for your CIE"
+          accessibilityLabel="Richiedi la tua CIE"
           accessibilityRole="button"
           accessibilityState={
             {
@@ -1964,14 +1964,14 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                     ]
                   }
                 >
-                  Ask for your CIE
+                  Richiedi la tua CIE
                 </Text>
               </View>
             </View>
           </View>
         </View>
         <View
-          accessibilityLabel="Activate CIE credentials"
+          accessibilityLabel="Attiva le credenziali CIE"
           accessibilityRole="button"
           accessibilityState={
             {
@@ -2166,14 +2166,14 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                     ]
                   }
                 >
-                  Activate CIE credentials
+                  Attiva le credenziali CIE
                 </Text>
               </View>
             </View>
           </View>
         </View>
         <View
-          accessibilityLabel="Ask for your SPID"
+          accessibilityLabel="Attiva SPID"
           accessibilityRole="button"
           accessibilityState={
             {
@@ -2326,7 +2326,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                     ]
                   }
                 >
-                  Ask for your SPID
+                  Attiva SPID
                 </Text>
               </View>
             </View>
@@ -2471,7 +2471,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
       }
     >
       <View
-        accessibilityLabel="Close"
+        accessibilityLabel="Chiudi"
         accessibilityRole="button"
         accessibilityState={
           {
@@ -2587,7 +2587,7 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
                 ]
               }
             >
-              Close
+              Chiudi
             </Text>
           </View>
         </View>
@@ -2631,7 +2631,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
         }
       >
         <Text
-          accessibilityLabel="Do you have SPID?"
+          accessibilityLabel="Hai SPID?"
           accessibilityRole="header"
           allowFontScaling={true}
           dynamicTypeRamp="title1"
@@ -2650,7 +2650,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
             ]
           }
         >
-          Do you have SPID?
+          Hai SPID?
         </Text>
       </View>
       <View
@@ -2685,7 +2685,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
             ]
           }
         >
-          If you have SPID, log in to IO by entering your credentials, using your face or fingerprint, or via your SPID provider's app.
+          Se hai SPID, entra su IO inserendo le tue credenziali, usando il tuo volto o l’impronta, oppure tramite l’app del tuo fornitore di SPID.
         </Text>
       </View>
     </View>
@@ -2826,7 +2826,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
       }
     >
       <View
-        accessibilityLabel="Yes, login with SPID"
+        accessibilityLabel="Sì, entra con SPID"
         accessibilityRole="button"
         accessibilityState={
           {
@@ -2943,7 +2943,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                 ]
               }
             >
-              Yes, login with SPID
+              Sì, entra con SPID
             </Text>
           </View>
         </View>
@@ -2964,7 +2964,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
           }
         />
         <View
-          accessibilityLabel="I don't have SPID"
+          accessibilityLabel="Non ho SPID"
           accessibilityRole="button"
           accessibilityState={
             {
@@ -3086,7 +3086,7 @@ exports[`SpidWizard Should match the snapshot 1`] = `
                   ]
                 }
               >
-                I don't have SPID
+                Non ho SPID
               </Text>
             </View>
           </View>

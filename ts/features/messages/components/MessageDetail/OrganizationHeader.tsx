@@ -13,11 +13,10 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { SERVICES_ROUTES } from "../../../services/common/navigation/routes";
 import { messagePaymentDataSelector } from "../../store/reducers/detailsById";
-import { UIMessageId } from "../../types";
 import { AvatarDouble } from "../Home/DS/AvatarDouble";
 
 export type OrganizationHeaderProps = {
-  messageId: UIMessageId;
+  messageId: string;
   organizationName: string;
   serviceId: ServiceId;
   serviceName: string;

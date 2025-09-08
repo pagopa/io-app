@@ -18,7 +18,6 @@ import {
 import { message_1 } from "../../../messages/__mocks__/message";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
 import { service_1 } from "../../../messages/__mocks__/messages";
-import { UIMessageId } from "../../../messages/types";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { thirdPartyMessage } from "../../__mocks__/pnMessage";
 
@@ -49,7 +48,7 @@ describe("MessageDetailsScreen", () => {
       loadServiceDetail.success(service_1),
       loadMessageDetails.success(toUIMessageDetails(message_1)),
       loadThirdPartyMessage.success({
-        id: message_1.id as UIMessageId,
+        id: message_1.id,
         content: thirdPartyMessage
       })
     ];

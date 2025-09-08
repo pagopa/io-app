@@ -14,7 +14,6 @@ import {
   messageSuccessDataSelector,
   showSpinnerFromMessageGetStatusSelector
 } from "../messageGetStatus";
-import { UIMessageId } from "../../../types";
 
 describe("messageGetStatusReducer", () => {
   it("INITIAL_STATE should match expected one", () => {
@@ -28,7 +27,7 @@ describe("messageGetStatusReducer", () => {
     expect(initialState).toStrictEqual(INITIAL_STATE);
   });
   it("should match loading state after getMessageDataAction.request action", () => {
-    const messageId = "m1" as UIMessageId;
+    const messageId = "m1";
     const fromPushNotification = false;
     const expectedLoadingState = {
       status: "loading",
@@ -49,7 +48,7 @@ describe("messageGetStatusReducer", () => {
   });
   it("should match successful state after getMessageDataAction.success action", () => {
     const successData = {
-      messageId: "m1" as UIMessageId,
+      messageId: "m1",
       serviceId: "s1" as ServiceId,
       serviceName: "name",
       firstTimeOpening: true,
@@ -140,7 +139,7 @@ describe("showSpinnerFromMessageGetStatusSelector", () => {
     const globalState = appReducer(
       undefined,
       getMessageDataAction.request({
-        messageId: "m1" as UIMessageId,
+        messageId: "m1",
         fromPushNotification: false
       })
     );
@@ -162,7 +161,7 @@ describe("showSpinnerFromMessageGetStatusSelector", () => {
     const globalState = appReducer(
       undefined,
       getMessageDataAction.success({
-        messageId: "m1" as UIMessageId,
+        messageId: "m1",
         serviceId: "s1" as ServiceId,
         serviceName: "name",
         firstTimeOpening: true,
@@ -197,7 +196,7 @@ describe("messageSuccessDataSelector", () => {
     const globalState = appReducer(
       undefined,
       getMessageDataAction.request({
-        messageId: "m1" as UIMessageId,
+        messageId: "m1",
         fromPushNotification: false
       })
     );
@@ -225,7 +224,7 @@ describe("messageSuccessDataSelector", () => {
   });
   it("should match expected success data for success state", () => {
     const expectedSuccessData = {
-      messageId: "m1" as UIMessageId,
+      messageId: "m1",
       serviceId: "s1" as ServiceId,
       serviceName: "name",
       firstTimeOpening: true,
@@ -255,7 +254,7 @@ describe("blockedFromPushNotificationSelector", () => {
     const globalState = appReducer(
       undefined,
       getMessageDataAction.request({
-        messageId: "m1" as UIMessageId,
+        messageId: "m1",
         fromPushNotification: false
       })
     );
@@ -266,7 +265,7 @@ describe("blockedFromPushNotificationSelector", () => {
     const globalState = appReducer(
       undefined,
       getMessageDataAction.success({
-        messageId: "m1" as UIMessageId,
+        messageId: "m1",
         serviceId: "s1" as ServiceId,
         serviceName: "name",
         firstTimeOpening: true,

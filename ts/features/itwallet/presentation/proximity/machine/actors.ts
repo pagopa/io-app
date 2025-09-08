@@ -17,7 +17,6 @@ import {
   promiseWithTimeout
 } from "../utils/itwProximityPresentationUtils";
 import { assert } from "../../../../../utils/assert";
-import { getError } from "../../../../../utils/errors";
 import {
   trackItwProximityBluetoothBlock,
   trackItwProximityBluetoothBlockAction
@@ -27,6 +26,7 @@ import { useIOStore } from "../../../../../store/hooks";
 import { itwCredentialsByTypeSelector } from "../store/selectors";
 import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors";
 import { CredentialFormat } from "../../../common/utils/itwTypesUtils";
+import { Env } from "../../../common/utils/environment";
 import { ProximityEvents } from "./events";
 import { Context } from "./context";
 
@@ -51,9 +51,15 @@ export type StartProximityFlowInput = {
   isRestarting?: boolean;
 } | void;
 
+export type GetQrCodeStringActorOutput = Awaited<
+  ReturnType<typeof ISO18013_5.getQrCodeString>
+>;
+
 export type SendErrorResponseActorOutput = Awaited<
   ReturnType<typeof ISO18013_5.sendErrorResponse>
 >;
+
+export type CloseActorOutput = Awaited<ReturnType<typeof ISO18013_5.close>>;
 
 export type SendDocumentsActorInput = Pick<Context, "verifierRequest">;
 
@@ -62,6 +68,7 @@ export type SendDocumentsActorOutput = Awaited<
 >;
 
 export const createProximityActorsImplementation = (
+  env: Env,
   store: ReturnType<typeof useIOStore>
 ) => {
   const checkPermissions = fromPromise<boolean, CheckPermissionsInput>(
@@ -111,11 +118,11 @@ export const createProximityActorsImplementation = (
         // The proximity flow must be closed before restarting
         await ISO18013_5.close().catch(constUndefined);
       }
-      await ISO18013_5.start();
+      await ISO18013_5.start({ certificates: [[env.X509_CERT_ROOT]] });
     }
   );
 
-  const generateQrCodeString = fromPromise<string, void>(
+  const generateQrCodeString = fromPromise<GetQrCodeStringActorOutput, void>(
     ISO18013_5.getQrCodeString
   );
 
@@ -137,7 +144,7 @@ export const createProximityActorsImplementation = (
         const { error } = eventPayload ?? {};
         sendBack({
           type: "device-error",
-          error: ISO18013_5.parseEventError(error)
+          error
         });
       };
 
@@ -163,31 +170,37 @@ export const createProximityActorsImplementation = (
             proximityDetails,
             verifierRequest: parsedRequest
           });
-        } catch (e) {
-          sendBack({
-            type: "device-error",
-            error: getError(e)
-          });
+        } catch (error) {
+          // Give some time to show the loading message
+          // and avoid glitches in the UI.
+          setTimeout(() => {
+            sendBack({
+              type: "device-error",
+              error
+            });
+          }, 500);
         }
       };
 
-      ISO18013_5.addListener("onDeviceConnecting", handleDeviceConnecting);
-      ISO18013_5.addListener("onDeviceConnected", handleDeviceConnected);
-      ISO18013_5.addListener(
-        "onDocumentRequestReceived",
-        handleDocumentRequestReceived
-      );
-      ISO18013_5.addListener("onDeviceDisconnected", handleDeviceDisconnected);
-      ISO18013_5.addListener("onError", handleError);
+      const listeners = [
+        ISO18013_5.addListener("onDeviceConnecting", handleDeviceConnecting),
+        ISO18013_5.addListener("onDeviceConnected", handleDeviceConnected),
+        ISO18013_5.addListener(
+          "onDocumentRequestReceived",
+          handleDocumentRequestReceived
+        ),
+        ISO18013_5.addListener(
+          "onDeviceDisconnected",
+          handleDeviceDisconnected
+        ),
+        ISO18013_5.addListener("onError", handleError)
+      ];
 
       return () => {
-        // Cleanup function
-        ISO18013_5.removeListener("onDeviceConnected");
-        ISO18013_5.removeListener("onDeviceConnecting");
-        ISO18013_5.removeListener("onDeviceDisconnected");
-        ISO18013_5.removeListener("onDocumentRequestReceived");
-        ISO18013_5.removeListener("onError");
-        void ISO18013_5.close();
+        // Remove event listeners
+        listeners.forEach(listener => listener.remove());
+        // Close the Bluetooth connection and clear all resources
+        void ISO18013_5.close().catch(constUndefined);
       };
     }
   );
@@ -229,7 +242,9 @@ export const createProximityActorsImplementation = (
     () => ISO18013_5.sendErrorResponse(ISO18013_5.ErrorCode.SESSION_TERMINATED)
   );
 
-  const closeProximityFlow = fromPromise<boolean, void>(ISO18013_5.close);
+  const closeProximityFlow = fromPromise<CloseActorOutput, void>(
+    ISO18013_5.close
+  );
 
   return {
     checkPermissions,

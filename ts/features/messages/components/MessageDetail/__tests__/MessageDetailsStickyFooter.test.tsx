@@ -3,7 +3,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MessageDetailsStickyFooter } from "../MessageDetailsStickyFooter";
-import { PaymentData, UIMessageId } from "../../../types";
+import { PaymentData } from "../../../types";
 import { CTA, CTAS } from "../../../../../types/LocalizedCTAs";
 import * as detailsById from "../../../store/reducers/detailsById";
 import * as payments from "../../../store/reducers/payments";
@@ -124,7 +124,7 @@ const renderComponent = (ctas?: CTAS) => {
   return renderScreenWithNavigationStoreContext(
     () => (
       <MessageDetailsStickyFooter
-        messageId={"01HRW6GJBD594Z0K9B4D6KAERC" as UIMessageId}
+        messageId={"01HRW6GJBD594Z0K9B4D6KAERC"}
         ctas={ctas}
         firstCTAIsPNOptInMessage={false}
         secondCTAIsPNOptInMessage={false}

@@ -4,10 +4,10 @@ import {
   ListItemNav
 } from "@pagopa/io-app-design-system";
 import { FlatList, ListRenderItemInfo } from "react-native";
+import I18n from "i18next";
 import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
 import { isReady } from "../../../common/model/RemoteValue";
 import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { toArray } from "../../../store/helpers/indexer";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";

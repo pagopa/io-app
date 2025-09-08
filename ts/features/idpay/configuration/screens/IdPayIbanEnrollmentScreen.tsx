@@ -1,10 +1,10 @@
 import { FeatureInfo, RadioGroup, VSpacer } from "@pagopa/io-app-design-system";
 import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import { ComponentProps, useCallback, useEffect, useState } from "react";
+import I18n from "i18next";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import {
   isLoadingSelector,

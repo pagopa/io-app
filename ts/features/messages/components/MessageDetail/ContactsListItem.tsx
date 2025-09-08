@@ -1,6 +1,6 @@
 import { Linking } from "react-native";
 import { Body, ListItemAction, VSpacer } from "@pagopa/io-app-design-system";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 
 export type ContactsListItemProps = {

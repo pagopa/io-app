@@ -8,7 +8,7 @@ import {
   useIOToast
 } from "@pagopa/io-app-design-system";
 import _ from "lodash";
-import I18n from "../i18n";
+import I18n from "i18next";
 import { useIOSelector } from "../store/hooks";
 import { preferredCalendarSelector } from "../store/reducers/persistedPreferences";
 

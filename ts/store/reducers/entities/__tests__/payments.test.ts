@@ -5,7 +5,6 @@ import {
   updatePaymentForMessage,
   UpdatePaymentForMessageFailure
 } from "../../../../features/messages/store/actions";
-import { UIMessageId } from "../../../../features/messages/types";
 import { isPaidPaymentFromDetailV2Enum } from "../../../../utils/payment";
 import { paymentByRptIdReducer, PaymentByRptIdState } from "../payments";
 
@@ -24,7 +23,7 @@ describe("payments", () => {
     };
     const payload: UpdatePaymentForMessageFailure = {
       reason: toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO),
-      messageId: "5a15aba4-7cd6-490b-b3fe-cf766f731a2f" as UIMessageId,
+      messageId: "5a15aba4-7cd6-490b-b3fe-cf766f731a2f",
       paymentId: "01234567890012345678912345630",
       serviceId: "75c046cf-77a7-4d33-9c3f-578e00379b55" as ServiceId
     };

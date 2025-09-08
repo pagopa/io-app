@@ -10,6 +10,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 import { View } from "react-native";
+import I18n from "i18next";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
@@ -20,7 +21,6 @@ import {
   fallbackForLocalizedMessageKeys,
   getFullLocale
 } from "../../../../utils/locale";
-import I18n from "../../../../i18n";
 import {
   isPaymentsPspBannerClosedSelector,
   walletPaymentSelectedPaymentMethodOptionSelector

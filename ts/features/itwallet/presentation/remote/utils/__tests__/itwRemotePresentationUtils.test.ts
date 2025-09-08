@@ -1,4 +1,4 @@
-import { createCryptoContextFor } from "@pagopa/io-react-native-wallet-v2";
+import { createCryptoContextFor } from "@pagopa/io-react-native-wallet";
 import { StoredCredential } from "../../../../common/utils/itwTypesUtils";
 import {
   enrichPresentationDetails,
@@ -198,8 +198,8 @@ describe("enrichPresentationDetails", () => {
     );
 
     expect(result.claimsToDisplay).toEqual([
-      { id: "name", label: "Name", value: "Mario" },
-      { id: "surname", label: "Surname", value: "Rossi" }
+      { id: "name", label: "Nome", value: "Mario" },
+      { id: "surname", label: "Cognome", value: "Rossi" }
     ]);
   });
 
@@ -223,8 +223,8 @@ describe("enrichPresentationDetails", () => {
     );
 
     expect(result.claimsToDisplay).toEqual([
-      { id: "name", label: "Name", value: "Mario" },
-      { id: "surname", label: "Surname", value: "Rossi" }
+      { id: "name", label: "Nome", value: "Mario" },
+      { id: "surname", label: "Cognome", value: "Rossi" }
     ]);
   });
 

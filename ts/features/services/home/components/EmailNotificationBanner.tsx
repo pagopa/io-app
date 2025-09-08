@@ -6,6 +6,7 @@ import Animated, {
   LinearTransition
 } from "react-native-reanimated";
 import { useEffect } from "react";
+import I18n from "i18next";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isIdPayOnboardingSucceededSelector } from "../../../idpay/wallet/store/reducers";
@@ -14,7 +15,6 @@ import {
   profileSelector
 } from "../../../settings/common/store/selectors";
 import { profileUpsert } from "../../../settings/common/store/actions";
-import I18n from "../../../../i18n";
 import { usePrevious } from "../../../../utils/hooks/usePrevious";
 import { setIdPayOnboardingSucceeded } from "../../../idpay/wallet/store/actions";
 

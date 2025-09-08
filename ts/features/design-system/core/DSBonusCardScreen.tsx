@@ -5,8 +5,8 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Alert } from "react-native";
+import I18n from "i18next";
 import { BonusCardScreenComponent } from "../../../components/BonusCard";
-import I18n from "../../../i18n";
 
 const DSBonusCardScreen = () => (
   <BonusCardScreenComponent

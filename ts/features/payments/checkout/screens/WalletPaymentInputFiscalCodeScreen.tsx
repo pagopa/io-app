@@ -10,8 +10,8 @@ import * as O from "fp-ts/lib/Option";
 import { flow, pipe } from "fp-ts/lib/function";
 import { useEffect, useRef, useState } from "react";
 import { InputAccessoryView, Keyboard, Platform, View } from "react-native";
+import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp

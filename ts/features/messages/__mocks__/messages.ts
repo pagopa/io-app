@@ -1,5 +1,3 @@
-import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
-
 import { TimeToLiveSeconds } from "../../../../definitions/backend/TimeToLiveSeconds";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
@@ -10,7 +8,6 @@ import {
   PreviousPageMessagesSuccessPayload,
   ReloadMessagesPayload
 } from "../store/actions";
-import { UIMessageId } from "../types";
 
 export const defaultRequestPayload = {
   pageSize: 12,
@@ -25,9 +22,9 @@ export const defaultRequestError = {
 
 const timeToLive = 3600 as unknown as TimeToLiveSeconds;
 
-export const messageId_1 = "PMT00003" as UIMessageId;
-export const messageId_2 = "PMT00002" as UIMessageId;
-export const messageId_3 = "FAT00001" as UIMessageId;
+export const messageId_1 = "PMT00003";
+export const messageId_2 = "PMT00002";
+export const messageId_3 = "FAT00001";
 export const serviceId_1 = "service_one" as ServiceId;
 export const serviceId_2 = "service_two" as ServiceId;
 
@@ -98,7 +95,6 @@ export const apiPayload = {
 const successPayloadMessages: ReloadMessagesPayload["messages"] = [
   {
     id: messageId_1,
-    fiscalCode: apiPayload.items[0].fiscal_code as FiscalCode,
     category: { tag: "GENERIC" } as MessageCategory,
     createdAt: new Date("2021-10-18T16:00:35.541Z"),
     isArchived: false,
@@ -109,12 +105,10 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
     organizationName: service_1.organization.name,
     organizationFiscalCode: service_1.organization.fiscal_code,
     title: "Għandek flus?",
-    hasPrecondition: false,
-    raw: apiPayload.items[0] as any
+    hasPrecondition: false
   },
   {
     id: messageId_2,
-    fiscalCode: apiPayload.items[1].fiscal_code as FiscalCode,
     category: { tag: "GENERIC" } as MessageCategory,
     createdAt: new Date("2021-10-18T16:00:34.541Z"),
     isRead: false,
@@ -125,12 +119,10 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
     organizationName: service_1.organization.name,
     organizationFiscalCode: service_1.organization.fiscal_code,
     title: "Analiżi tad-demm",
-    hasPrecondition: false,
-    raw: apiPayload.items[1] as any
+    hasPrecondition: false
   },
   {
     id: messageId_3,
-    fiscalCode: apiPayload.items[2].fiscal_code as FiscalCode,
     category: { tag: "GENERIC" } as MessageCategory,
     createdAt: new Date("2021-10-18T16:00:30.541Z"),
     isArchived: true,
@@ -141,8 +133,7 @@ const successPayloadMessages: ReloadMessagesPayload["messages"] = [
     organizationName: service_2.organization.name,
     organizationFiscalCode: service_2.organization.fiscal_code,
     title: "позвоните нам!",
-    hasPrecondition: false,
-    raw: apiPayload.items[2] as any
+    hasPrecondition: false
   }
 ];
 

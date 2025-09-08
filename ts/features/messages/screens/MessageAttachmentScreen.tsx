@@ -1,4 +1,3 @@
-import { UIMessageId } from "../types";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { MessagesParamsList } from "../navigation/params";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
@@ -6,7 +5,7 @@ import { MessageAttachment } from "../components/MessageAttachment/MessageAttach
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 
 export type MessageAttachmentScreenRouteParams = {
-  messageId: UIMessageId;
+  messageId: string;
   attachmentId: string;
   serviceId?: ServiceId;
 };

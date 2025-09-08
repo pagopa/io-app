@@ -2,7 +2,9 @@
 
 exports[`ItwHighlightBanner should match the snapshot for large variant 1`] = `
 <View
-  accessible={false}
+  accessibilityRole="button"
+  accessible={true}
+  onAccessibilityTap={[MockFunction]}
   style={
     {
       "backgroundColor": "#0B3EE3",
@@ -215,7 +217,9 @@ exports[`ItwHighlightBanner should match the snapshot for large variant 1`] = `
     </skRRect>
   </View>
   <View
-    accessibilityLabel="title description action"
+    accessibilityLabel="title
+description
+action"
     accessible={true}
     style={
       {
@@ -302,7 +306,7 @@ exports[`ItwHighlightBanner should match the snapshot for large variant 1`] = `
                   ]
                 }
               >
-                New
+                Novità
               </Text>
             </View>
           </View>
@@ -481,6 +485,7 @@ exports[`ItwHighlightBanner should match the snapshot for large variant 1`] = `
 
 exports[`ItwHighlightBanner should match the snapshot for small variant 1`] = `
 <View
+  accessibilityRole="button"
   accessibilityState={
     {
       "busy": undefined,
@@ -498,7 +503,7 @@ exports[`ItwHighlightBanner should match the snapshot for small variant 1`] = `
       "text": undefined,
     }
   }
-  accessible={false}
+  accessible={true}
   collapsable={false}
   focusable={true}
   onBlur={[Function]}
@@ -538,10 +543,7 @@ exports[`ItwHighlightBanner should match the snapshot for small variant 1`] = `
         },
         {
           "elevation": NaN,
-          "shadowOffset": {
-            "height": NaN,
-            "width": 0,
-          },
+          "shadowOpacity": NaN,
           "shadowRadius": NaN,
         },
       ]
@@ -741,7 +743,9 @@ exports[`ItwHighlightBanner should match the snapshot for small variant 1`] = `
       </skRRect>
     </View>
     <View
-      accessibilityLabel="title description action"
+      accessibilityLabel="title
+description
+action"
       accessible={true}
       style={
         {
@@ -828,7 +832,7 @@ exports[`ItwHighlightBanner should match the snapshot for small variant 1`] = `
                     ]
                   }
                 >
-                  New
+                  Novità
                 </Text>
               </View>
             </View>

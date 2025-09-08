@@ -984,7 +984,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       ]
                                     }
                                   >
-                                    Paid
+                                    Pagato
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -1234,7 +1234,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       ]
                                     }
                                   >
-                                    Paid
+                                    Pagato
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -1484,7 +1484,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       ]
                                     }
                                   >
-                                    Paid
+                                    Pagato
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -1734,7 +1734,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       ]
                                     }
                                   >
-                                    Paid
+                                    Pagato
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -1984,7 +1984,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       ]
                                     }
                                   >
-                                    Paid
+                                    Pagato
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -2234,7 +2234,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       ]
                                     }
                                   >
-                                    Paid
+                                    Pagato
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -2484,7 +2484,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                       ]
                                     }
                                   >
-                                    Paid
+                                    Pagato
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -3168,7 +3168,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       ]
                                     }
                                   >
-                                    Paid
+                                    Pagato
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -3418,7 +3418,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       ]
                                     }
                                   >
-                                    Paid
+                                    Pagato
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -3668,7 +3668,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       ]
                                     }
                                   >
-                                    Paid
+                                    Pagato
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -3918,7 +3918,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       ]
                                     }
                                   >
-                                    Paid
+                                    Pagato
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -4168,7 +4168,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       ]
                                     }
                                   >
-                                    Paid
+                                    Pagato
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -4418,7 +4418,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       ]
                                     }
                                   >
-                                    Paid
+                                    Pagato
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -4668,7 +4668,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                       ]
                                     }
                                   >
-                                    Paid
+                                    Pagato
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -5643,7 +5643,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     ]
                                   }
                                 >
-                                  Due date 02/05/2099
+                                  Entro il 02/05/2099
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -5677,7 +5677,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <Text
-                                  accessibilityLabel="1.99 €"
+                                  accessibilityLabel="1,99 €"
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
                                   maxFontSizeMultiplier={1.5}
@@ -5696,7 +5696,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     ]
                                   }
                                 >
-                                  1.99 €
+                                  1,99 €
                                 </Text>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
@@ -5865,7 +5865,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     ]
                                   }
                                 >
-                                  Notice code
+                                  Codice avviso
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -5944,7 +5944,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       ]
                                     }
                                   >
-                                    Revoked
+                                    Revocato
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -6114,7 +6114,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     ]
                                   }
                                 >
-                                  Notice code
+                                  Codice avviso
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -6193,7 +6193,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       ]
                                     }
                                   >
-                                    Expired
+                                    Scaduto
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -6363,7 +6363,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     ]
                                   }
                                 >
-                                  Notice code
+                                  Codice avviso
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -6442,7 +6442,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       ]
                                     }
                                   >
-                                    Ongoing
+                                    In corso
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -6612,7 +6612,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     ]
                                   }
                                 >
-                                  Notice code
+                                  Codice avviso
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -6691,7 +6691,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       ]
                                     }
                                   >
-                                    Paid
+                                    Pagato
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -7288,7 +7288,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     ]
                                   }
                                 >
-                                  Due date 02/05/2099
+                                  Entro il 02/05/2099
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -7322,7 +7322,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 }
                               >
                                 <Text
-                                  accessibilityLabel="1.99 €"
+                                  accessibilityLabel="1,99 €"
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
                                   maxFontSizeMultiplier={1.5}
@@ -7341,7 +7341,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     ]
                                   }
                                 >
-                                  1.99 €
+                                  1,99 €
                                 </Text>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
@@ -7510,7 +7510,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     ]
                                   }
                                 >
-                                  Notice code
+                                  Codice avviso
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -7589,7 +7589,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       ]
                                     }
                                   >
-                                    Revoked
+                                    Revocato
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -7759,7 +7759,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     ]
                                   }
                                 >
-                                  Notice code
+                                  Codice avviso
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -7838,7 +7838,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       ]
                                     }
                                   >
-                                    Expired
+                                    Scaduto
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -8008,7 +8008,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     ]
                                   }
                                 >
-                                  Notice code
+                                  Codice avviso
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -8087,7 +8087,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       ]
                                     }
                                   >
-                                    Ongoing
+                                    In corso
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -8257,7 +8257,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                     ]
                                   }
                                 >
-                                  Notice code
+                                  Codice avviso
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -8336,7 +8336,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                       ]
                                     }
                                   >
-                                    Paid
+                                    Pagato
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -8933,7 +8933,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     ]
                                   }
                                 >
-                                  Due date 02/05/2099
+                                  Entro il 02/05/2099
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -8967,7 +8967,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <Text
-                                  accessibilityLabel="1.99 €"
+                                  accessibilityLabel="1,99 €"
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
                                   maxFontSizeMultiplier={1.5}
@@ -8986,7 +8986,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     ]
                                   }
                                 >
-                                  1.99 €
+                                  1,99 €
                                 </Text>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
@@ -9155,7 +9155,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     ]
                                   }
                                 >
-                                  Notice code
+                                  Codice avviso
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -9234,7 +9234,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       ]
                                     }
                                   >
-                                    Revoked
+                                    Revocato
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -9404,7 +9404,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     ]
                                   }
                                 >
-                                  Notice code
+                                  Codice avviso
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -9483,7 +9483,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       ]
                                     }
                                   >
-                                    Expired
+                                    Scaduto
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -9653,7 +9653,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     ]
                                   }
                                 >
-                                  Notice code
+                                  Codice avviso
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -9732,7 +9732,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       ]
                                     }
                                   >
-                                    Ongoing
+                                    In corso
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -9902,7 +9902,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     ]
                                   }
                                 >
-                                  Notice code
+                                  Codice avviso
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -9981,7 +9981,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       ]
                                     }
                                   >
-                                    Paid
+                                    Pagato
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -10727,7 +10727,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     ]
                                   }
                                 >
-                                  Due date 02/05/2099
+                                  Entro il 02/05/2099
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -10761,7 +10761,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 }
                               >
                                 <Text
-                                  accessibilityLabel="1.99 €"
+                                  accessibilityLabel="1,99 €"
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
                                   maxFontSizeMultiplier={1.5}
@@ -10780,7 +10780,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     ]
                                   }
                                 >
-                                  1.99 €
+                                  1,99 €
                                 </Text>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
@@ -10949,7 +10949,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     ]
                                   }
                                 >
-                                  Notice code
+                                  Codice avviso
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -11028,7 +11028,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       ]
                                     }
                                   >
-                                    Revoked
+                                    Revocato
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -11198,7 +11198,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     ]
                                   }
                                 >
-                                  Notice code
+                                  Codice avviso
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -11277,7 +11277,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       ]
                                     }
                                   >
-                                    Expired
+                                    Scaduto
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -11447,7 +11447,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     ]
                                   }
                                 >
-                                  Notice code
+                                  Codice avviso
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -11526,7 +11526,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       ]
                                     }
                                   >
-                                    Ongoing
+                                    In corso
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -11696,7 +11696,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                     ]
                                   }
                                 >
-                                  Notice code
+                                  Codice avviso
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -11775,7 +11775,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                       ]
                                     }
                                   >
-                                    Paid
+                                    Pagato
                                   </Text>
                                 </View>
                                 <RNSVGSvgView
@@ -12521,7 +12521,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     ]
                                   }
                                 >
-                                  Due date 02/05/2099
+                                  Entro il 02/05/2099
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -12555,7 +12555,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 }
                               >
                                 <Text
-                                  accessibilityLabel="1.99 €"
+                                  accessibilityLabel="1,99 €"
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
                                   maxFontSizeMultiplier={1.5}
@@ -12574,7 +12574,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     ]
                                   }
                                 >
-                                  1.99 €
+                                  1,99 €
                                 </Text>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}
@@ -13170,7 +13170,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     ]
                                   }
                                 >
-                                  Due date 02/05/2099
+                                  Entro il 02/05/2099
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -13204,7 +13204,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 }
                               >
                                 <Text
-                                  accessibilityLabel="1.99 €"
+                                  accessibilityLabel="1,99 €"
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
                                   maxFontSizeMultiplier={1.5}
@@ -13223,7 +13223,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                     ]
                                   }
                                 >
-                                  1.99 €
+                                  1,99 €
                                 </Text>
                                 <RNSVGSvgView
                                   accessibilityElementsHidden={true}

@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import configureMockStore from "redux-mock-store";
 import { ComponentType } from "react";
+import I18n from "i18next";
 import { IDPayDetailsRoutes } from "../../navigation";
 import { IdPayInitiativeDetailsScreen } from "../IdPayInitiativeDetailsScreen";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
@@ -13,7 +14,6 @@ import {
   StatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { NetworkError } from "../../../../../utils/errors";
-import I18n from "../../../../../i18n";
 
 jest.mock("../../../../../components/helpers/withAppRequiredUpdate", () => ({
   withAppRequiredUpdate: (
@@ -21,8 +21,8 @@ jest.mock("../../../../../components/helpers/withAppRequiredUpdate", () => ({
   ) => Component
 }));
 
-const mockedInitiative: InitiativeDTO = {
-  endDate: new Date(2023, 1, 1),
+const mockedInitiative = {
+  voucherEndDate: new Date(2023, 1, 1),
   initiativeId: "ABC123",
   initiativeName: "Fake initiative",
   organizationName: "Fake organization",
@@ -30,7 +30,7 @@ const mockedInitiative: InitiativeDTO = {
   status: StatusEnum.REFUNDABLE,
   initiativeRewardType: InitiativeRewardTypeEnum.REFUND,
   lastCounterUpdate: new Date()
-};
+} as InitiativeDTO;
 
 describe("Test IdPayInitiativeDetailsScreen screen", () => {
   beforeEach(() => {

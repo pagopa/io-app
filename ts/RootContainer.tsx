@@ -14,7 +14,6 @@ import DebugInfoOverlay from "./components/DebugInfoOverlay";
 import PagoPATestIndicatorOverlay from "./components/PagoPATestIndicatorOverlay";
 import { LightModalRoot } from "./components/ui/LightModal";
 import { configurePushNotifications } from "./features/pushNotifications/utils/configurePushNotification";
-import { setLocale } from "./i18n";
 import { IONavigationContainer } from "./navigation/AppStackNavigator";
 import RootModal from "./screens/modal/RootModal";
 import { applicationChangeState } from "./store/actions/application";
@@ -28,6 +27,7 @@ import {
 } from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
 import { Store } from "./store/actions/types";
+import { setLocale } from "./i18n";
 
 type Props = ReturnType<typeof mapStateToProps> &
   typeof mapDispatchToProps & { store: Store };

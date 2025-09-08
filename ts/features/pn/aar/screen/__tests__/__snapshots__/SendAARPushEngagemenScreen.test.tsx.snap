@@ -756,7 +756,7 @@ exports[`SendQrScanPushEngagementScreen should match snapshot and track analytic
                               }
                             >
                               <View
-                                accessibilityLabel="Close"
+                                accessibilityLabel="Chiudi"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -1220,7 +1220,7 @@ exports[`SendQrScanPushEngagementScreen should render a blank page when told to 
                               }
                             >
                               <View
-                                accessibilityLabel="Close"
+                                accessibilityLabel="Chiudi"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

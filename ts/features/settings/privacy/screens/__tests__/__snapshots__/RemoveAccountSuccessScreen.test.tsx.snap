@@ -555,7 +555,7 @@ exports[`RemoveAccountSuccessScreen should match snapshot 1`] = `
                                 ]
                               }
                             >
-                              We've taken over your request.
+                              Abbiamo preso in carico la tua richiesta
                             </Text>
                             <View
                               style={
@@ -585,7 +585,7 @@ exports[`RemoveAccountSuccessScreen should match snapshot 1`] = `
                                 ]
                               }
                             >
-                              We've taken over your request and we will delete your account within 30 days. You can re-subscribe to the IO App at any time with SPID or CIE.
+                              Il tuo profilo verrà eliminato entro 30 giorni. Puoi tornare nuovamente su IO in qualsiasi momento entrando con SPID o CIE.
                             </Text>
                             <View
                               style={
@@ -603,7 +603,7 @@ exports[`RemoveAccountSuccessScreen should match snapshot 1`] = `
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -719,7 +719,7 @@ exports[`RemoveAccountSuccessScreen should match snapshot 1`] = `
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>

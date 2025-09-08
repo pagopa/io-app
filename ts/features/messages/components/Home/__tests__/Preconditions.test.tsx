@@ -18,7 +18,6 @@ import {
 } from "../../../store/actions/preconditions";
 import * as bottomSheet from "../../../../../utils/hooks/bottomSheet";
 import { PreconditionsFooterProps } from "../PreconditionsFooter";
-import { UIMessageId } from "../../../types";
 
 jest.mock("../PreconditionsContent");
 
@@ -130,7 +129,7 @@ describe("Preconditions", () => {
   });
   it("should provide 'PreconditionsFooter' with a navigation callback that navigates to the message router", () => {
     // eslint-disable-next-line functional/no-let
-    let onNavigationCallback: (_messageId: UIMessageId) => void = jest.fn();
+    let onNavigationCallback: (_messageId: string) => void = jest.fn();
     jest
       .spyOn(bottomSheet, "useIOBottomSheetModal")
       .mockImplementation(props => {
@@ -148,7 +147,7 @@ describe("Preconditions", () => {
 
     expect(onNavigationCallback).toBeTruthy();
 
-    const messageId = "01J1PVGMXAZ2SGCQ4H3341MARC" as UIMessageId;
+    const messageId = "01J1PVGMXAZ2SGCQ4H3341MARC";
     onNavigationCallback?.(messageId);
 
     expect(mockNavigate.mock.calls.length).toBe(1);

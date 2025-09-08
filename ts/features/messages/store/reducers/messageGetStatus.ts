@@ -8,7 +8,6 @@ import {
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { startApplicationInitialization } from "../../../../store/actions/application";
-import { UIMessageId } from "../../types";
 
 export type MessageGetStatusFailurePhaseType =
   | "none"
@@ -31,7 +30,7 @@ type BlockedOrErrorState = {
 type LoadingOrRetryState = {
   status: "loading" | "retry";
   data: {
-    messageId: UIMessageId;
+    messageId: string;
     fromPushNotification: boolean;
   };
 };

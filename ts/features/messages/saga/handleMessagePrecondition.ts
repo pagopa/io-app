@@ -16,7 +16,6 @@ import {
   toErrorPayload,
   toLoadingContentPayload
 } from "../store/actions/preconditions";
-import { UIMessageId } from "../types";
 import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
 import {
   preconditionsCategoryTagSelector,
@@ -92,7 +91,7 @@ function* messagePreconditionWorker(
 
 export function* getMessageIdAndCategoryTag(): Generator<
   ReduxSagaEffect,
-  { messageId: UIMessageId; categoryTag: MessageCategory["tag"] } | undefined,
+  { messageId: string; categoryTag: MessageCategory["tag"] } | undefined,
   any
 > {
   const messageId = yield* select(preconditionsMessageIdSelector);

@@ -1,4 +1,3 @@
-import { UIMessageId } from "../../../../messages/types";
 import {
   cancelPNPaymentStatusTracking,
   dismissPnActivationReminderBanner,
@@ -42,7 +41,7 @@ describe("PN actions", () => {
 
   describe("startPNPaymentStatusTracking", () => {
     it("should create a start tracking action with the provided messageId", () => {
-      const messageId = "message-123" as UIMessageId;
+      const messageId = "message-123";
 
       const action = startPNPaymentStatusTracking(messageId);
 

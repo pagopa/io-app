@@ -17,10 +17,10 @@ import { tosVersionSelector } from "../features/settings/common/store/selectors/
 import { checkNotificationPermissions } from "../features/pushNotifications/utils";
 import {
   getCredentialMixpanelStatus,
+  getPIDMixpanelStatus,
   ItwCredentialMixpanelStatus,
-  ItwId,
-  ItwStatus,
-  mapEidStatusToMixpanel
+  ItwPIDStatus,
+  ItwStatus
 } from "../features/itwallet/analytics";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import { itwAuthLevelSelector } from "../features/itwallet/common/store/selectors/preferences.ts";
@@ -30,10 +30,8 @@ import {
   PNServiceStatus
 } from "../features/pn/analytics/index.ts";
 import { isPnServiceEnabled } from "../features/pn/reminderBanner/reducer/bannerDismiss.ts";
-import {
-  itwCredentialsEidStatusSelector,
-  itwCredentialsSelector
-} from "../features/itwallet/credentials/store/selectors";
+import { itwCredentialsSelector } from "../features/itwallet/credentials/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../features/itwallet/lifecycle/store/selectors";
 import {
   cgnStatusHandler,
   loginSessionConfigHandler,
@@ -52,7 +50,8 @@ type ProfileProperties = {
   CGN_STATUS: TrackCgnStatus;
   FONT_PREFERENCE: string;
   ITW_STATUS_V2: ItwStatus;
-  ITW_ID_V2: ItwId;
+  ITW_ID_V2?: ItwPIDStatus;
+  ITW_PID: ItwPIDStatus;
   ITW_PG_V2: ItwCredentialMixpanelStatus;
   ITW_TS_V2: ItwCredentialMixpanelStatus;
   ITW_CED_V2: ItwCredentialMixpanelStatus;
@@ -83,8 +82,7 @@ export const updateMixpanelProfileProperties = async (
     const BIOMETRIC_TECHNOLOGY = await getBiometricsType();
     const CGN_STATUS = cgnStatusHandler(state);
     const FONT_PREFERENCE = fontPreferenceSelector(state);
-
-    const ITW_ID_V2 = idStatusHandler(state);
+    const ITW_PID = getPIDMixpanelStatus(state, true);
     const ITW_PG_V2 = credentialStatusHandler("mDL", state);
     const ITW_TS_V2 = credentialStatusHandler(
       "EuropeanHealthInsuranceCard",
@@ -105,12 +103,15 @@ export const updateMixpanelProfileProperties = async (
     const TRACKING = mixpanelOptInHandler(state);
     const WELFARE_STATUS = welfareStatusHandler(state);
 
+    const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
+
     const profilePropertiesObject: ProfileProperties = {
       BIOMETRIC_TECHNOLOGY,
       CGN_STATUS,
       FONT_PREFERENCE,
       ITW_CED_V2,
-      ITW_ID_V2,
+      ...(!isItwL3 && { ITW_ID_V2: getPIDMixpanelStatus(state, false) }),
+      ITW_PID,
       ITW_PG_V2,
       ITW_STATUS_V2,
       ITW_TS_V2,
@@ -161,13 +162,6 @@ const tosVersionHandler = (state: GlobalState): number | string => {
 const walletStatusHandler = (state: GlobalState): ItwStatus => {
   const authLevel = itwAuthLevelSelector(state);
   return authLevel ?? "not_active";
-};
-
-const idStatusHandler = (state: GlobalState): ItwId => {
-  const eidStatus = itwCredentialsEidStatusSelector(state);
-  return eidStatus !== undefined
-    ? mapEidStatusToMixpanel(eidStatus)
-    : "not_available";
 };
 
 const credentialStatusHandler = (

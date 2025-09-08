@@ -1,8 +1,8 @@
 import { View } from "react-native";
 import { Body, VSpacer } from "@pagopa/io-app-design-system";
 import { useEffect } from "react";
+import I18n from "i18next";
 import { useCountdown } from "../../../../components/countdown/CountdownProvider";
-import I18n from "../../../../i18n";
 import { ProgressIndicator } from "../../../../components/ui/ProgressIndicator";
 
 type CountdownProps = {

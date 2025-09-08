@@ -1,7 +1,7 @@
 import { useEffect } from "react";
+import I18n from "i18next";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import LoadingComponent from "../../../fci/components/LoadingComponent";
-import I18n from "../../../../i18n";
 import { isLoadingSelector } from "../../common/machine/selectors";
 
 const IdPayLoadingScreen = () => {

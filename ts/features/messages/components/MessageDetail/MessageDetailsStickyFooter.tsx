@@ -1,8 +1,8 @@
 import { FooterActions, useIOToast } from "@pagopa/io-app-design-system";
 import { useLinkTo } from "@react-navigation/native";
 import { ComponentProps, useCallback } from "react";
+import I18n from "i18next";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import I18n from "../../../../i18n";
 import {
   useIODispatch,
   useIOSelector,
@@ -16,7 +16,7 @@ import {
   canNavigateToPaymentFromMessageSelector,
   paymentsButtonStateSelector
 } from "../../store/reducers/payments";
-import { PaymentData, UIMessageId } from "../../types";
+import { PaymentData } from "../../types";
 import {
   getRptIdStringFromPaymentData,
   initializeAndNavigateToWalletForPayment
@@ -30,7 +30,7 @@ import {
 type MessageDetailsPaymentButtonProps = {
   ctas?: CTAS;
   firstCTAIsPNOptInMessage: boolean;
-  messageId: UIMessageId;
+  messageId: string;
   secondCTAIsPNOptInMessage: boolean;
   serviceId: ServiceId;
 };

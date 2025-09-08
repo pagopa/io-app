@@ -1,10 +1,10 @@
 import configureMockStore from "redux-mock-store";
+import I18n from "i18next";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { GlobalState } from "../../../../../store/reducers/types";
 import UnlockAccessScreen from "../../../login/unlockAccess/screens/UnlockAccessScreen";
-import I18n from "../../../../../i18n";
 import { UnlockAccessProps } from "../components/UnlockAccessComponent";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 

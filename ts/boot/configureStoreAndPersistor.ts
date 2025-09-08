@@ -62,7 +62,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 46;
+const CURRENT_REDUX_STORE_VERSION = 47;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -585,6 +585,17 @@ const migrations: MigrationManifest = {
       ...state,
       persistedPreferences: {
         ...restPersistedPreferences
+      }
+    };
+  },
+  // Add 'isAarFeatureEnabled' to 'persistedPreferences'
+  "47": (state: PersistedState) => {
+    const typedState = state as GlobalState;
+    return {
+      ...state,
+      persistedPreferences: {
+        ...typedState.persistedPreferences,
+        isAarFeatureEnabled: false
       }
     };
   }

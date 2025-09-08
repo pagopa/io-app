@@ -7,8 +7,8 @@ import { useMemo, memo } from "react";
 import { Modal } from "react-native";
 import { useSelector } from "react-redux";
 import _ from "lodash";
+import I18n from "i18next";
 import { OperationResultScreenContent } from "../../components/screens/OperationResultScreenContent";
-import I18n from "../../i18n";
 import { backendInfoMessageSelector } from "../../store/reducers/backendStatus/backendInfo";
 import { getFullLocale } from "../../utils/locale";
 const SystemOffModal = () => {

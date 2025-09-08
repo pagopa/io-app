@@ -14,7 +14,8 @@ import {
   pnMessagingServiceIdSelector,
   pnPrivacyUrlsSelector,
   fimsServiceIdInCookieDisabledListSelector,
-  pnAARQRCodeRegexSelector
+  pnAARQRCodeRegexSelector,
+  isAARRemoteEnabled
 } from "../remoteConfig";
 import * as appVersion from "../../../../utils/appVersion";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
@@ -696,4 +697,119 @@ describe("pnAARQRCodeRegexSelector", () => {
     const aarQRCodeRegex = pnAARQRCodeRegexSelector(state);
     expect(aarQRCodeRegex).toBe("some-regex");
   });
+});
+
+describe("isAARRemoteEnabled", () => {
+  (
+    [
+      [
+        {
+          remoteConfig: O.none
+        } as GlobalState,
+        false
+      ],
+      [
+        {
+          remoteConfig: O.some({})
+        },
+        true
+      ],
+      [
+        {
+          remoteConfig: O.some({ pn: {} })
+        },
+        true
+      ],
+      [
+        {
+          remoteConfig: O.some({
+            pn: { aar: {} }
+          })
+        },
+        true
+      ],
+      [
+        {
+          remoteConfig: O.some({
+            pn: {
+              aar: {
+                min_app_version: {}
+              }
+            }
+          })
+        },
+        false
+      ],
+      [
+        {
+          remoteConfig: O.some({
+            pn: {
+              aar: {
+                min_app_version: {
+                  android: "0.0.0.0",
+                  ios: "0.0.0.0"
+                }
+              }
+            }
+          })
+        },
+        false
+      ],
+      [
+        {
+          remoteConfig: O.some({
+            pn: {
+              aar: {
+                min_app_version: {
+                  android: "1.0.0.0",
+                  ios: "1.0.0.0"
+                }
+              }
+            }
+          })
+        },
+        true
+      ],
+      [
+        {
+          remoteConfig: O.some({
+            pn: {
+              aar: {
+                min_app_version: {
+                  android: "2.0.0.0",
+                  ios: "2.0.0.0"
+                }
+              }
+            }
+          })
+        },
+        true
+      ],
+      [
+        {
+          remoteConfig: O.some({
+            pn: {
+              aar: {
+                min_app_version: {
+                  android: "3.0.0.0",
+                  ios: "3.0.0.0"
+                }
+              }
+            }
+          })
+        },
+        false
+      ]
+    ] as ReadonlyArray<[GlobalState, boolean]>
+  ).forEach(testData =>
+    it(`should return '${testData[1]}' for '${JSON.stringify(
+      testData[0]
+    )}'`, () => {
+      jest
+        .spyOn(appVersion, "getAppVersion")
+        .mockImplementation(() => "2.0.0.0");
+      const output = isAARRemoteEnabled(testData[0]);
+      expect(output).toBe(testData[1]);
+    })
+  );
 });

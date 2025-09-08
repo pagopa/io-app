@@ -18,7 +18,7 @@ import {
   upsertMessageStatusAttributes
 } from "../store/actions";
 import { getPaginatedMessageById } from "../store/reducers/paginatedById";
-import { UIMessage, UIMessageDetails, UIMessageId } from "../types";
+import { UIMessage, UIMessageDetails } from "../types";
 import { serviceDetailsByIdPotSelector } from "../../services/details/store/reducers";
 import { loadServiceDetail } from "../../services/details/store/actions/details";
 import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
@@ -171,7 +171,7 @@ function* loadMessageData({
   );
 }
 
-function* getPaginatedMessage(messageId: UIMessageId) {
+function* getPaginatedMessage(messageId: string) {
   const initialMessagePot = yield* select(getPaginatedMessageById, messageId);
   if (!pot.isSome(initialMessagePot) || pot.isError(initialMessagePot)) {
     yield* put(loadMessageById.request({ id: messageId }));
@@ -217,7 +217,7 @@ function* getServiceDetails(serviceId: ServiceId) {
   return pot.toUndefined(initialServicePot);
 }
 
-function* getMessageDetails(messageId: UIMessageId) {
+function* getMessageDetails(messageId: string) {
   const initialMessageDetailsPot = yield* select(
     messageDetailsByIdSelector,
     messageId
@@ -247,7 +247,7 @@ function* getMessageDetails(messageId: UIMessageId) {
 }
 
 function* getThirdPartyDataMessage(
-  messageId: UIMessageId,
+  messageId: string,
   isPNMessage: boolean,
   service: ServiceDetails,
   tag: string

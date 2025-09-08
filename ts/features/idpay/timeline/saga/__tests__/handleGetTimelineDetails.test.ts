@@ -9,11 +9,11 @@ import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/ut
 import { idpayTimelineDetailsGet } from "../../store/actions";
 import { handleGetTimelineDetails } from "../handleGetTimelineDetails";
 
-const mockResponseSuccess: OperationDTO = {
+const mockResponseSuccess = {
   operationType: TransactionOperationType.TRANSACTION,
   brand: "VISA",
   operationDate: new Date(),
-  amountCents: 100.34,
+  amountCents: 10034,
   brandLogo:
     "https://uat.wisp2.pagopa.gov.it/wallet/assets/img/creditcard/carta_visa.png",
   circuitType: "01",
@@ -23,7 +23,7 @@ const mockResponseSuccess: OperationDTO = {
   idTrxAcquirer: "1",
   idTrxIssuer: "1",
   status: StatusEnum.AUTHORIZED
-};
+} as OperationDTO;
 
 const mockPayload = { initiativeId: "123", operationId: "123" };
 

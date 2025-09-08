@@ -1,17 +1,15 @@
-import { CodeEnum } from "../../../../../../definitions/idpay/PDNDCriteriaDTO";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
+import { CodeEnum } from "../../../../../../definitions/idpay/AutomatedCriteriaDTO";
 import { getPDNDCriteriaValueString } from "../strings";
 
 describe("getPDNDCriteriaValueString", () => {
   it("returns correct string for ISEE value", () => {
     const tAmountCents = 1000;
     const tAmountDecimal = tAmountCents / 100;
-    const tString = I18n.toCurrency(tAmountDecimal, {
-      precision: 2,
-      delimiter: I18n.t("global.localization.delimiterSeparator"),
-      separator: I18n.t("global.localization.decimalSeparator"),
-      format: "%n €"
-    });
+    const tString = `${new Intl.NumberFormat(I18n.language, {
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2
+    }).format(tAmountDecimal)} €`;
     const result = getPDNDCriteriaValueString(
       CodeEnum.ISEE,
       tAmountCents.toString()
@@ -25,11 +23,11 @@ describe("getPDNDCriteriaValueString", () => {
     );
     expect(result).toStrictEqual("-");
   });
-  it("returns correct string for BIRTHDATE value", () => {
+  it("returns correct string for BIRTHDAY value", () => {
     const tYear = 1993;
     const tString = tYear.toString();
     const result = getPDNDCriteriaValueString(
-      CodeEnum.BIRTHDATE,
+      CodeEnum.BIRTHDAY,
       tYear.toString()
     );
     expect(result).toStrictEqual(tString);

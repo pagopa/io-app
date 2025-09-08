@@ -4,6 +4,8 @@ import { ReactNode } from "react";
 import {
   idPayApiBaseUrl,
   idPayApiUatBaseUrl,
+  idPayApiUatVersion,
+  idPayApiVersion,
   idPayTestToken
 } from "../../../../config";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -28,6 +30,7 @@ export const IdPayPaymentMachineProvider = (props: Props) => {
 
   const bpdToken = useIOSelector(bpdTokenSelector);
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
+  const apiVersion = isPagoPATestEnabled ? idPayApiUatVersion : idPayApiVersion;
 
   if (!bpdToken) {
     throw new Error("BDP token is undefined");
@@ -36,7 +39,8 @@ export const IdPayPaymentMachineProvider = (props: Props) => {
   const token = idPayTestToken ?? bpdToken;
 
   const idPayClient = createIDPayClient(
-    isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl
+    isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl,
+    apiVersion
   );
 
   const actors = createActorsImplementation(idPayClient, token, dispatch);

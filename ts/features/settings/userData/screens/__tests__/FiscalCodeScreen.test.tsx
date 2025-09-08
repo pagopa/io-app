@@ -1,6 +1,7 @@
 import { PreloadedState, createStore } from "redux";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { act, fireEvent, waitFor } from "@testing-library/react-native";
+import I18n from "i18next";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -10,7 +11,6 @@ import { profileLoadSuccess } from "../../../common/store/actions";
 import { EmailAddress } from "../../../../../../definitions/backend/EmailAddress";
 import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/ServicesPreferencesMode";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
-import I18n from "../../../../../i18n";
 
 jest.mock("../../../../../utils/brightness", () => ({
   useMaxBrightness: jest.fn()

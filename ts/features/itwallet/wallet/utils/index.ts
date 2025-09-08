@@ -1,9 +1,7 @@
 import { WalletCard } from "../../../wallet/types";
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
-import {
-  CredentialFormat,
-  StoredCredential
-} from "../../common/utils/itwTypesUtils";
+import { isItwCredential } from "../../common/utils/itwCredentialUtils";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
 
 export const mapCredentialToWalletCard = (
   credential: StoredCredential
@@ -13,5 +11,5 @@ export const mapCredentialToWalletCard = (
   category: "itw",
   credentialType: credential.credentialType,
   credentialStatus: getCredentialStatus(credential),
-  isLegacyFormat: credential.format === CredentialFormat.LEGACY_SD_JWT
+  isItwCredential: isItwCredential(credential.credential)
 });

@@ -5,8 +5,8 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useState } from "react";
+import I18n from "i18next";
 import { IOListViewWithLargeHeader } from "../../../../../components/ui/IOListViewWithLargeHeader";
-import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useDisableRootNavigatorGesture } from "../../hooks/useDisableRootNavigatorGesture";
 import CGN_ROUTES from "../../navigation/routes";

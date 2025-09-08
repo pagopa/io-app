@@ -12,8 +12,8 @@ import {
   SafeAreaView,
   useSafeAreaInsets
 } from "react-native-safe-area-context";
+import I18n from "i18next";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
-import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { WithTestID } from "../../../types/WithTestID";

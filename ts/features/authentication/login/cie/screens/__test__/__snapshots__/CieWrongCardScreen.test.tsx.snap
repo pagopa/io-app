@@ -569,7 +569,7 @@ exports[`CieWrongCardScreen renders correctly and matches snapshot 1`] = `
                                 ]
                               }
                             >
-                              We could not retrieve the data from the card
+                              Non siamo riusciti a recuperare i dati dalla carta
                             </Text>
                             <View
                               style={
@@ -599,7 +599,7 @@ exports[`CieWrongCardScreen renders correctly and matches snapshot 1`] = `
                                 ]
                               }
                             >
-                              The card used does not seem to be an Electronic Identity Card.
+                              La carta utilizzata non sembra essere una Carta di Identità Elettronica.
                             </Text>
                             <View
                               style={
@@ -617,7 +617,7 @@ exports[`CieWrongCardScreen renders correctly and matches snapshot 1`] = `
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Retry"
+                                  accessibilityLabel="Riprova"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -733,7 +733,7 @@ exports[`CieWrongCardScreen renders correctly and matches snapshot 1`] = `
                                           ]
                                         }
                                       >
-                                        Retry
+                                        Riprova
                                       </Text>
                                     </View>
                                   </View>
@@ -756,7 +756,7 @@ exports[`CieWrongCardScreen renders correctly and matches snapshot 1`] = `
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -877,7 +877,7 @@ exports[`CieWrongCardScreen renders correctly and matches snapshot 1`] = `
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>

@@ -9,8 +9,8 @@ import { Platform, StyleSheet, View } from "react-native";
 import Pdf from "react-native-pdf";
 import Share from "react-native-share";
 import { useFocusEffect } from "@react-navigation/native";
+import I18n from "i18next";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
-import I18n from "../../../../../i18n.ts";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
 import { ItwGenericErrorContent } from "../../../common/components/ItwGenericErrorContent.tsx";
 import {

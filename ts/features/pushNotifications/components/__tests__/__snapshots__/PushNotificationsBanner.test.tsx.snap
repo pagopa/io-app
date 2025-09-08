@@ -432,7 +432,7 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                             }
                           >
                             <View
-                              accessibilityLabel="Don't miss any important messages! Turn on push notifications to know when you get a message on IO. Turn on push notifications"
+                              accessibilityLabel="Non perderti i messaggi importanti Attiva le notifiche push per sapere quando ricevi un messaggio su IO Attiva notifiche push"
                               accessibilityRole="button"
                               accessible={true}
                               style={
@@ -461,7 +461,7 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                   ]
                                 }
                               >
-                                Don't miss any important messages!
+                                Non perderti i messaggi importanti
                               </Text>
                               <Text
                                 allowFontScaling={true}
@@ -481,11 +481,11 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                   ]
                                 }
                               >
-                                Turn on push notifications to know when you get a message on IO.
+                                Attiva le notifiche push per sapere quando ricevi un messaggio su IO
                               </Text>
                               <View
                                 accessibilityElementsHidden={true}
-                                accessibilityLabel="Turn on push notifications"
+                                accessibilityLabel="Attiva notifiche push"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -548,7 +548,7 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                     ]
                                   }
                                 >
-                                  Turn on push notifications
+                                  Attiva notifiche push
                                 </Text>
                               </View>
                             </View>
@@ -711,7 +711,7 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                               }
                             >
                               <View
-                                accessibilityLabel="Close"
+                                accessibilityLabel="Chiudi"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

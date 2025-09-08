@@ -4,8 +4,8 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { getCredentialExpireDate } from "./itwClaimsUtils";
 import {
+  IssuerConfiguration,
   ItwCredentialStatus,
-  LegacyIssuerConfiguration,
   StoredCredential
 } from "./itwTypesUtils";
 
@@ -100,13 +100,21 @@ export const getCredentialStatusObject = (credential: StoredCredential) => {
       ? storedStatusAttestation.errorCode
       : undefined;
 
-  return {
-    status: getCredentialStatus(credential),
-    message: errorCode
-      ? Errors.extractErrorMessageFromIssuerConf(errorCode, {
-          issuerConf: issuerConf as LegacyIssuerConfiguration,
+  const message = pipe(
+    O.fromNullable(errorCode),
+    O.chain(code =>
+      O.tryCatch(() =>
+        Errors.extractErrorMessageFromIssuerConf(code, {
+          issuerConf: issuerConf as IssuerConfiguration,
           credentialType: credentialId
         })
-      : undefined
+      )
+    ),
+    O.toUndefined
+  );
+
+  return {
+    status: getCredentialStatus(credential),
+    message
   };
 };

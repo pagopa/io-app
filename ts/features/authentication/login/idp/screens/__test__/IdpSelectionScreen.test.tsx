@@ -1,7 +1,7 @@
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
+import I18n from "i18next";
 import IdpSelectionScreen from "../IdpSelectionScreen";
-import I18n from "../../../../../../i18n";
 import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";

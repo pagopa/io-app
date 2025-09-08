@@ -2,7 +2,7 @@ import { useIOToast } from "@pagopa/io-app-design-system";
 import { differenceInSeconds } from "date-fns";
 import * as O from "fp-ts/lib/Option";
 import { ActionArgs, assign } from "xstate";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import { useIOStore } from "../../../../store/hooks";
@@ -75,7 +75,6 @@ export const createItwTrustmarkActionsImplementation = (
     const timeUnit = timeDiffInSeconds > 60 ? "minutes" : "seconds";
 
     const timeString = I18n.t(`date.time.${timeUnit}`, {
-      defaultValue: I18n.t(`date.time.${timeUnit}.other`, { count: time }),
       count: time
     });
 

@@ -5,7 +5,7 @@ import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ComponentProps } from "react";
 import { View } from "react-native";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { useIOSelector } from "../../../../store/hooks";
 import {
   itwCredentialsEidSelector,

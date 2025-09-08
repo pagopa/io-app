@@ -11,13 +11,12 @@ import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { MutableRefObject } from "react";
 import { StyleSheet, View } from "react-native";
+import I18n from "i18next";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import { MessagePaymentItem } from "../../messages/components/MessageDetail/MessagePaymentItem";
 import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
-import { UIMessageId } from "../../messages/types";
 import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
 import { trackPNShowAllPayments } from "../analytics";
 import PN_ROUTES from "../navigation/routes";
@@ -36,7 +35,7 @@ const styles = StyleSheet.create({
 });
 
 type MessagePaymentsProps = {
-  messageId: UIMessageId;
+  messageId: string;
   isCancelled: boolean;
   payments: ReadonlyArray<NotificationPaymentInfo> | undefined;
   completedPaymentNoticeCodes: ReadonlyArray<string> | undefined;

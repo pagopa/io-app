@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from "react";
 import RNFS from "react-native-fs";
 import { IOToast } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import {
   downloadedMessageAttachmentSelector,
@@ -8,7 +9,6 @@ import {
   isDownloadingMessageAttachmentSelector,
   isRequestedAttachmentDownloadSelector
 } from "../store/reducers/downloads";
-import { UIMessageId } from "../types";
 import {
   cancelPreviousAttachmentDownload,
   clearRequestedAttachmentDownload,
@@ -18,7 +18,6 @@ import { MESSAGES_ROUTES } from "../navigation/routes";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { attachmentDisplayName } from "../store/reducers/transformers";
-import I18n from "../../../i18n";
 import {
   trackPNAttachmentDownloadFailure,
   trackPNAttachmentOpening
@@ -28,10 +27,10 @@ import PN_ROUTES from "../../pn/navigation/routes";
 import NavigationService from "../../../navigation/NavigationService";
 
 export const useAttachmentDownload = (
-  messageId: UIMessageId,
+  messageId: string,
   attachment: ThirdPartyAttachment,
   isPN: boolean,
-  serviceId?: ServiceId,
+  serviceId: ServiceId,
   onPreNavigate?: () => void
 ) => {
   const attachmentId = attachment.id;
@@ -110,11 +109,21 @@ export const useAttachmentDownload = (
         downloadAttachment.request({
           attachment,
           messageId,
-          skipMixpanelTrackingOnFailure: isPN
+          skipMixpanelTrackingOnFailure: isPN,
+          serviceId
         })
       );
     }
-  }, [attachment, dispatch, download, doNavigate, isFetching, isPN, messageId]);
+  }, [
+    attachment,
+    dispatch,
+    download,
+    doNavigate,
+    isFetching,
+    isPN,
+    messageId,
+    serviceId
+  ]);
 
   useEffect(() => {
     const state = store.getState();

@@ -17,8 +17,8 @@ import Animated, {
   SlideOutUp
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import I18n from "i18next";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
-import I18n from "../../i18n";
 import { openAppStoreUrl } from "../../utils/url";
 import { OperationResultScreenContent } from "../../components/screens/OperationResultScreenContent";
 import { Dismissable } from "../../components/ui/Dismissable";

@@ -110,7 +110,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
             category: "itw",
             credentialType: CredentialType.DRIVING_LICENSE,
             credentialStatus: "valid",
-            isLegacyFormat: false
+            isItwCredential: false
           },
           {
             key: `ITW_${CredentialType.EUROPEAN_DISABILITY_CARD}`,
@@ -118,7 +118,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
             category: "itw",
             credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
             credentialStatus: "valid",
-            isLegacyFormat: false
+            isItwCredential: false
           }
         ])
       )

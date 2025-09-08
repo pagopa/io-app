@@ -3,6 +3,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useMemo } from "react";
 import { View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import I18n from "i18next";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
 import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
@@ -11,7 +12,6 @@ import {
   isLoading
 } from "../../../../../common/model/RemoteValue";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../../../i18n";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
 import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";

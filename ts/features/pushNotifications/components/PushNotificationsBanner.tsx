@@ -7,7 +7,7 @@ import {
 import { useRoute } from "@react-navigation/native";
 import { useCallback, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import I18n from "../../../i18n";
+import I18n from "i18next";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import {

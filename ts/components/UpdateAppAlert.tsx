@@ -3,8 +3,8 @@ import {
   HeaderSecondLevel
 } from "@pagopa/io-app-design-system";
 import { useEffect } from "react";
+import I18n from "i18next";
 import { openAppStoreUrl } from "../utils/url";
-import I18n from "../i18n";
 import { useIONavigation } from "../navigation/params/AppParamsList";
 import { useStartSupportRequest } from "../hooks/useStartSupportRequest";
 import { OperationResultScreenContent } from "./screens/OperationResultScreenContent";

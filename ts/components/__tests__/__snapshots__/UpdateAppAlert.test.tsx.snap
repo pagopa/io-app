@@ -603,7 +603,7 @@ exports[`UpdateAppAlert should match snapshot 1`] = `
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Update the IO app"
+                                  accessibilityLabel="Aggiorna l'app"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -720,7 +720,7 @@ exports[`UpdateAppAlert should match snapshot 1`] = `
                                           ]
                                         }
                                       >
-                                        Update the IO app
+                                        Aggiorna l'app
                                       </Text>
                                     </View>
                                   </View>
@@ -743,7 +743,7 @@ exports[`UpdateAppAlert should match snapshot 1`] = `
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -865,7 +865,7 @@ exports[`UpdateAppAlert should match snapshot 1`] = `
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>

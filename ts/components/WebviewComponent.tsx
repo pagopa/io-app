@@ -5,7 +5,7 @@ import {
   WebViewHttpErrorEvent,
   WebViewSourceUri
 } from "react-native-webview/lib/WebViewTypes";
-import I18n from "../i18n";
+import I18n from "i18next";
 import { mixpanelTrack } from "../mixpanel";
 import { resetDebugData, setDebugData } from "../store/actions/debug";
 import { useIODispatch } from "../store/hooks";

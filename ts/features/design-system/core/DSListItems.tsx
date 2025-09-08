@@ -17,7 +17,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { Fragment } from "react";
 import { Alert, View } from "react-native";
-import I18n from "../../../i18n";
+import I18n from "i18next";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import {
   ListItemMessage,

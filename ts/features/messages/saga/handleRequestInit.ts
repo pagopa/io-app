@@ -9,13 +9,12 @@ import { lollipopRequestInit } from "../../lollipop/utils/fetch";
 import { isTestEnv } from "../../../utils/environment";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { attachmentDownloadUrl } from "../store/reducers/transformers";
-import { UIMessageId } from "../types";
 
 type HeaderType = Record<string, string>;
 
 export function* handleRequestInit(
   attachment: ThirdPartyAttachment,
-  messageId: UIMessageId,
+  messageId: string,
   bearerToken: string,
   nonce: string
 ) {

@@ -27,7 +27,7 @@ export function* handleGetTimelinePage(
     bearerAuth: bearerToken,
     "Accept-Language": language,
     initiativeId: action.payload.initiativeId,
-    page: action.payload.page,
+    page: (action.payload.page || 0) + 1,
     size: action.payload.pageSize
   });
 
@@ -41,18 +41,19 @@ export function* handleGetTimelinePage(
     yield pipe(
       getTimelineResult,
       E.fold(
-        error =>
+        error => {
           put(
             idpayTimelinePageGet.failure({
               ...getGenericError(new Error(readablePrivacyReport(error)))
             })
-          ),
+          );
+        },
         response => {
           if (response.status === 200) {
             return put(
               idpayTimelinePageGet.success({
                 timeline: response.value,
-                page: response.value.pageNo ?? 0
+                page: response.value.pageNo ?? 1
               })
             );
           } else {

@@ -1,12 +1,10 @@
 import { Alert, VSpacer } from "@pagopa/io-app-design-system";
-import { UIMessageId } from "../../types";
-import { localeDateFormat } from "../../../../utils/locale";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { MessageDetailsReminderExpiring } from "./MessageDetailsReminderExpiring";
 
 export type MessageDetailsReminderProps = {
   dueDate?: Date;
-  messageId: UIMessageId;
+  messageId: string;
   title: string;
 };
 
@@ -33,14 +31,14 @@ export const MessageDetailsReminder = ({
           testID="due-date-alert"
           variant="warning"
           content={I18n.t("features.messages.badge.dueDate", {
-            date: localeDateFormat(
-              dueDate,
-              I18n.t("global.dateFormats.dayMonthWithoutTime")
-            ),
-            time: localeDateFormat(
-              dueDate,
-              I18n.t("global.dateFormats.timeFormat")
-            )
+            date: new Intl.DateTimeFormat("it", {
+              day: "2-digit",
+              month: "short"
+            }).format(dueDate),
+            time: new Intl.DateTimeFormat("it", {
+              hour: "2-digit",
+              minute: "2-digit"
+            }).format(dueDate)
           })}
         />
       )}

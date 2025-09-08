@@ -1,6 +1,6 @@
 import { ListItemAction } from "@pagopa/io-app-design-system";
 
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import { useCgnUnsubscribe } from "../../hooks/useCgnUnsubscribe";
 
 const CgnUnsubscribe = () => {

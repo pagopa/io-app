@@ -8,7 +8,6 @@ import * as B from "fp-ts/lib/boolean";
 import { getType } from "typesafe-actions";
 import { ThirdPartyMessagePrecondition } from "../../../../../definitions/backend/ThirdPartyMessagePrecondition";
 import { Action } from "../../../../store/actions/types";
-import { UIMessageId } from "../../types";
 import {
   errorPreconditionStatusAction,
   idlePreconditionStatusAction,
@@ -26,7 +25,7 @@ import { MessageCategory } from "../../../../../definitions/backend/MessageCateg
 // MPS stands for Message Precondition Status
 type MPSError = {
   state: "error";
-  messageId: UIMessageId;
+  messageId: string;
   categoryTag: MessageCategory["tag"];
   reason: string;
 };
@@ -35,23 +34,23 @@ type MPSIdle = {
 };
 type MPSLoadingContent = {
   state: "loadingContent";
-  messageId: UIMessageId;
+  messageId: string;
   categoryTag: MessageCategory["tag"];
   content: ThirdPartyMessagePrecondition;
 };
 type MPSRetrievingData = {
   state: "retrievingData";
-  messageId: UIMessageId;
+  messageId: string;
   categoryTag: MessageCategory["tag"];
 };
 type MPSScheduled = {
   state: "scheduled";
-  messageId: UIMessageId;
+  messageId: string;
   categoryTag: MessageCategory["tag"];
 };
 type MPSShown = {
   state: "shown";
-  messageId: UIMessageId;
+  messageId: string;
   categoryTag: MessageCategory["tag"];
   content: ThirdPartyMessagePrecondition;
 };
@@ -192,7 +191,7 @@ export const preconditionReducer = (
 };
 
 export const toErrorMPS = (
-  messageId: UIMessageId,
+  messageId: string,
   categoryTag: MessageCategory["tag"],
   reason: string
 ): MPSError => ({
@@ -205,7 +204,7 @@ export const toIdleMPS = (): MPSIdle => ({
   state: "idle"
 });
 export const toLoadingContentMPS = (
-  messageId: UIMessageId,
+  messageId: string,
   categoryTag: MessageCategory["tag"],
   content: ThirdPartyMessagePrecondition
 ): MPSLoadingContent => ({
@@ -215,7 +214,7 @@ export const toLoadingContentMPS = (
   content
 });
 export const toRetrievingDataMPS = (
-  messageId: UIMessageId,
+  messageId: string,
   categoryTag: MessageCategory["tag"]
 ): MPSRetrievingData => ({
   state: "retrievingData",
@@ -223,7 +222,7 @@ export const toRetrievingDataMPS = (
   categoryTag
 });
 export const toScheduledMPS = (
-  messageId: UIMessageId,
+  messageId: string,
   categoryTag: MessageCategory["tag"]
 ): MPSScheduled => ({
   state: "scheduled",
@@ -231,7 +230,7 @@ export const toScheduledMPS = (
   categoryTag
 });
 export const toShownMPS = (
-  messageId: UIMessageId,
+  messageId: string,
   categoryTag: MessageCategory["tag"],
   content: ThirdPartyMessagePrecondition
 ): MPSShown => ({

@@ -10,8 +10,6 @@ import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/st
 import { ItwSessionExpiredError } from "../../../api/client.ts";
 import { RemoteEvents } from "./events.ts";
 
-const NEW_API_ENABLED = true; // TODO: [SIW-2530] Remove after transitioning to API 1.0
-
 export const createRemoteGuardsImplementation = (
   store: ReturnType<typeof useIOStore>
 ) => ({
@@ -32,7 +30,7 @@ export const createRemoteGuardsImplementation = (
     );
     return pipe(
       O.fromNullable(walletAttestation?.jwt),
-      O.map(wia => isWalletInstanceAttestationValid(wia, NEW_API_ENABLED)),
+      O.map(isWalletInstanceAttestationValid),
       O.getOrElse(() => false)
     );
   },

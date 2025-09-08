@@ -12,11 +12,11 @@ import { pipe } from "fp-ts/lib/function";
 import { useState, useMemo } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
+import I18n from "i18next";
 import { TransactionBarCodeResponse } from "../../../../../definitions/idpay/TransactionBarCodeResponse";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { IDPayDetailsRoutes } from "../../details/navigation";
@@ -26,6 +26,7 @@ import { idPayBarcodeByInitiativeIdSelector } from "../store";
 import { idPayGenerateBarcode } from "../store/actions";
 import { calculateIdPayBarcodeSecondsToExpire } from "../utils";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 // -------------------- types --------------------
 
@@ -52,6 +53,12 @@ const IdPayBarcodeResultScreen = () => {
   const barcodePot = useIOSelector(state =>
     idPayBarcodeByInitiativeIdSelector(state)(initiativeId)
   );
+
+  useHeaderSecondLevel({
+    title: "",
+    canGoBack: true,
+    supportRequest: true
+  });
 
   const navigateToInitiativeDetails = () =>
     navigation.navigate(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {

@@ -398,7 +398,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                             }
                           >
                             <Text
-                              accessibilityLabel="Security and login"
+                              accessibilityLabel="Sicurezza e accesso"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -417,7 +417,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                 ]
                               }
                             >
-                              Security and login
+                              Sicurezza e accesso
                             </Text>
                           </View>
                           <View
@@ -452,7 +452,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                 ]
                               }
                             >
-                              Manage in-app authentication methods.
+                              Gestisci le modalità di autenticazione in app.
                             </Text>
                           </View>
                           <View
@@ -470,7 +470,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                             }
                           >
                             <View
-                              accessibilityLabel="Change the unlock code"
+                              accessibilityLabel="Modifica il codice di sblocco"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -562,7 +562,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                         ]
                                       }
                                     >
-                                      Change the unlock code
+                                      Modifica il codice di sblocco
                                     </Text>
                                     <Text
                                       allowFontScaling={true}
@@ -582,7 +582,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                         ]
                                       }
                                     >
-                                      Set a new 6-digit code.
+                                      Imposta un nuovo codice di 6 cifre.
                                     </Text>
                                   </View>
                                   <RNSVGSvgView

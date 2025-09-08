@@ -1,9 +1,9 @@
 import { useMemo } from "react";
+import I18n from "i18next";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../../i18n";
 import UnlockAccessComponent, {
   UnlockAccessProps
 } from "../../login/unlockAccess/components/UnlockAccessComponent";

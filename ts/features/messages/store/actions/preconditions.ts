@@ -1,6 +1,5 @@
 import { createStandardAction } from "typesafe-actions";
 import { ThirdPartyMessagePrecondition } from "../../../../../definitions/backend/ThirdPartyMessagePrecondition";
-import { UIMessageId } from "../../types";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
 
 // NPS stands for Next Precondition Status
@@ -21,7 +20,7 @@ export type NPSRetrievingData = {
 };
 export type NPSScheduled = {
   nextStatus: "scheduled";
-  messageId: UIMessageId;
+  messageId: string;
   categoryTag: MessageCategory["tag"];
 };
 export type NPSShown = {
@@ -50,7 +49,7 @@ export const toRetrievingDataPayload = (): NPSRetrievingData => ({
   nextStatus: "retrievingData"
 });
 export const toScheduledPayload = (
-  messageId: UIMessageId,
+  messageId: string,
   categoryTag: MessageCategory["tag"]
 ): NPSScheduled => ({
   nextStatus: "scheduled",

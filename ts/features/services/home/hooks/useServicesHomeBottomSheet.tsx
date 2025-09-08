@@ -6,7 +6,7 @@ import {
   ListItemNav,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import * as analytics from "../../common/analytics";

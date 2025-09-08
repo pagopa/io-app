@@ -11,8 +11,8 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
   }
 >
   <View
-    accessibilityHint="Wait for the content load"
-    accessibilityLabel="Loading"
+    accessibilityHint="Attendi il caricamento del contenuto"
+    accessibilityLabel="Caricamento in corso"
     accessibilityRole="progressbar"
     accessible={true}
     style={

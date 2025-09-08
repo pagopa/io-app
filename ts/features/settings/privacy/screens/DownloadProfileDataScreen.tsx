@@ -9,11 +9,11 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ComponentProps, useCallback, useEffect, useMemo } from "react";
 import { AccessibilityInfo } from "react-native";
+import I18n from "i18next";
 import { UserDataProcessingChoiceEnum } from "../../../../../definitions/backend/UserDataProcessingChoice";
 import { BulletList, BulletListItem } from "../../../../components/BulletList";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { upsertUserDataProcessing } from "../../common/store/actions/userDataProcessing";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";

@@ -6,7 +6,7 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
 import { ReactElement } from "react";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import { useIOSelector } from "../../../../../store/hooks";
 import { profileSelector } from "../../../../settings/common/store/selectors";
 import { capitalizeTextName } from "../../../../../utils/strings";

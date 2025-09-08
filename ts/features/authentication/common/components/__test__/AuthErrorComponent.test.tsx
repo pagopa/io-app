@@ -1,6 +1,6 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import { createStore } from "redux";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import AuthErrorComponent, {
   AuthErrorComponentProps
 } from "../AuthErrorComponent";

@@ -392,7 +392,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                             }
                           >
                             <View
-                              accessibilityLabel="Attachments"
+                              accessibilityLabel="Allegati"
                               accessibilityRole="header"
                               accessible={true}
                             >
@@ -415,7 +415,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                                   ]
                                 }
                               >
-                                Attachments
+                                Allegati
                               </Text>
                             </View>
                           </View>
@@ -826,7 +826,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                             }
                           >
                             <View
-                              accessibilityLabel="Attachments"
+                              accessibilityLabel="Allegati"
                               accessibilityRole="header"
                               accessible={true}
                             >
@@ -849,7 +849,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment that 
                                   ]
                                 }
                               >
-                                Attachments
+                                Allegati
                               </Text>
                             </View>
                           </View>
@@ -2016,7 +2016,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                             }
                           >
                             <View
-                              accessibilityLabel="Attachments"
+                              accessibilityLabel="Allegati"
                               accessibilityRole="header"
                               accessible={true}
                             >
@@ -2039,7 +2039,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                                   ]
                                 }
                               >
-                                Attachments
+                                Allegati
                               </Text>
                             </View>
                           </View>
@@ -2450,7 +2450,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                             }
                           >
                             <View
-                              accessibilityLabel="Attachments"
+                              accessibilityLabel="Allegati"
                               accessibilityRole="header"
                               accessible={true}
                             >
@@ -2473,7 +2473,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments tha
                                   ]
                                 }
                               >
-                                Attachments
+                                Allegati
                               </Text>
                             </View>
                           </View>

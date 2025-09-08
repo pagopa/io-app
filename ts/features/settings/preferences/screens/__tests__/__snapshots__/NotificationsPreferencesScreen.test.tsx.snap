@@ -239,7 +239,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             }
                           >
                             <Text
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -258,7 +258,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 ]
                               }
                             >
-                              Customize push notifications
+                              Personalizza le notifiche
                             </Text>
                           </View>
                           <View
@@ -293,7 +293,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 ]
                               }
                             >
-                              Choose how to receive messages and reminders.
+                              Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
                           <View
@@ -475,7 +475,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    You have a new message
+                                    Hai un nuovo messaggio
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -495,7 +495,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    Open the app to read the content
+                                    Apri l'app per leggere il contenuto
                                   </Text>
                                 </View>
                               </View>
@@ -579,7 +579,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    Show a preview
+                                    Mostra anteprime
                                   </Text>
                                 </View>
                                 <View
@@ -599,7 +599,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Show a preview"
+                                    accessibilityLabel="Mostra anteprime"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -656,7 +656,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   ]
                                 }
                               >
-                                Include the sender and subject of the message in the push notification
+                                Includi nella notifica push il mittente e l’oggetto del messaggio.
                               </Text>
                               <View
                                 style={
@@ -718,7 +718,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     ]
                                   }
                                 >
-                                  More info
+                                  Scopri di più
                                 </Text>
                               </View>
                             </View>
@@ -802,7 +802,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    Allow reminders
+                                    Consenti promemoria
                                   </Text>
                                 </View>
                                 <View
@@ -822,7 +822,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Allow reminders"
+                                    accessibilityLabel="Consenti promemoria"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -879,7 +879,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines
+                                Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze
                               </Text>
                             </View>
                             <View
@@ -947,7 +947,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
+                                    Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.
+Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando.
                                   </Text>
                                   <View
                                     style={
@@ -1008,7 +1009,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1122,7 +1123,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -1162,7 +1163,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   ]
                                 }
                               >
-                                Customize push notifications
+                                Personalizza le notifiche
                               </Text>
                             </View>
                             <View
@@ -1176,7 +1177,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -1566,7 +1567,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             }
                           >
                             <Text
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -1585,7 +1586,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 ]
                               }
                             >
-                              Customize push notifications
+                              Personalizza le notifiche
                             </Text>
                           </View>
                           <View
@@ -1620,7 +1621,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 ]
                               }
                             >
-                              Choose how to receive messages and reminders.
+                              Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
                           <View
@@ -1802,7 +1803,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    You have a new message
+                                    Hai un nuovo messaggio
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -1822,7 +1823,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    Open the app to read the content
+                                    Apri l'app per leggere il contenuto
                                   </Text>
                                 </View>
                               </View>
@@ -1906,7 +1907,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    Show a preview
+                                    Mostra anteprime
                                   </Text>
                                 </View>
                                 <View
@@ -1926,7 +1927,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Show a preview"
+                                    accessibilityLabel="Mostra anteprime"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -1983,7 +1984,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   ]
                                 }
                               >
-                                Include the sender and subject of the message in the push notification
+                                Includi nella notifica push il mittente e l’oggetto del messaggio.
                               </Text>
                               <View
                                 style={
@@ -2045,7 +2046,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     ]
                                   }
                                 >
-                                  More info
+                                  Scopri di più
                                 </Text>
                               </View>
                             </View>
@@ -2129,7 +2130,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    Allow reminders
+                                    Consenti promemoria
                                   </Text>
                                 </View>
                                 <View
@@ -2149,7 +2150,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Allow reminders"
+                                    accessibilityLabel="Consenti promemoria"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -2206,7 +2207,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines
+                                Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze
                               </Text>
                             </View>
                             <View
@@ -2274,7 +2275,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
+                                    Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.
+Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando.
                                   </Text>
                                   <View
                                     style={
@@ -2335,7 +2337,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -2449,7 +2451,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -2489,7 +2491,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   ]
                                 }
                               >
-                                Customize push notifications
+                                Personalizza le notifiche
                               </Text>
                             </View>
                             <View
@@ -2503,7 +2505,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -2893,7 +2895,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             }
                           >
                             <Text
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -2912,7 +2914,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 ]
                               }
                             >
-                              Customize push notifications
+                              Personalizza le notifiche
                             </Text>
                           </View>
                           <View
@@ -2947,7 +2949,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 ]
                               }
                             >
-                              Choose how to receive messages and reminders.
+                              Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
                           <View
@@ -3129,7 +3131,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    You have a new message
+                                    Hai un nuovo messaggio
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -3149,7 +3151,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    Open the app to read the content
+                                    Apri l'app per leggere il contenuto
                                   </Text>
                                 </View>
                               </View>
@@ -3233,7 +3235,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    Show a preview
+                                    Mostra anteprime
                                   </Text>
                                 </View>
                                 <View
@@ -3253,7 +3255,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Show a preview"
+                                    accessibilityLabel="Mostra anteprime"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -3310,7 +3312,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   ]
                                 }
                               >
-                                Include the sender and subject of the message in the push notification
+                                Includi nella notifica push il mittente e l’oggetto del messaggio.
                               </Text>
                               <View
                                 style={
@@ -3372,7 +3374,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     ]
                                   }
                                 >
-                                  More info
+                                  Scopri di più
                                 </Text>
                               </View>
                             </View>
@@ -3456,7 +3458,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    Allow reminders
+                                    Consenti promemoria
                                   </Text>
                                 </View>
                                 <View
@@ -3476,7 +3478,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Allow reminders"
+                                    accessibilityLabel="Consenti promemoria"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -3533,7 +3535,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines
+                                Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze
                               </Text>
                             </View>
                             <View
@@ -3601,7 +3603,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
+                                    Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.
+Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando.
                                   </Text>
                                   <View
                                     style={
@@ -3662,7 +3665,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -3776,7 +3779,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -3816,7 +3819,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   ]
                                 }
                               >
-                                Customize push notifications
+                                Personalizza le notifiche
                               </Text>
                             </View>
                             <View
@@ -3830,7 +3833,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -4220,7 +4223,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             }
                           >
                             <Text
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -4239,7 +4242,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 ]
                               }
                             >
-                              Customize push notifications
+                              Personalizza le notifiche
                             </Text>
                           </View>
                           <View
@@ -4274,7 +4277,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 ]
                               }
                             >
-                              Choose how to receive messages and reminders.
+                              Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
                           <View
@@ -4456,7 +4459,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    You have a notice due tomorrow
+                                    Hai un avviso che scade domani
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -4476,7 +4479,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    Log in to pay for it
+                                    Entra nell'app per pagarlo
                                   </Text>
                                 </View>
                               </View>
@@ -4560,7 +4563,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    Show a preview
+                                    Mostra anteprime
                                   </Text>
                                 </View>
                                 <View
@@ -4580,7 +4583,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Show a preview"
+                                    accessibilityLabel="Mostra anteprime"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -4637,7 +4640,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   ]
                                 }
                               >
-                                Include the sender and subject of the message in the push notification
+                                Includi nella notifica push il mittente e l’oggetto del messaggio.
                               </Text>
                               <View
                                 style={
@@ -4699,7 +4702,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     ]
                                   }
                                 >
-                                  More info
+                                  Scopri di più
                                 </Text>
                               </View>
                             </View>
@@ -4783,7 +4786,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    Allow reminders
+                                    Consenti promemoria
                                   </Text>
                                 </View>
                                 <View
@@ -4803,7 +4806,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Allow reminders"
+                                    accessibilityLabel="Consenti promemoria"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -4860,7 +4863,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines
+                                Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze
                               </Text>
                             </View>
                             <View
@@ -4928,7 +4931,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
+                                    Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.
+Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando.
                                   </Text>
                                   <View
                                     style={
@@ -4989,7 +4993,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -5103,7 +5107,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -5143,7 +5147,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   ]
                                 }
                               >
-                                Customize push notifications
+                                Personalizza le notifiche
                               </Text>
                             </View>
                             <View
@@ -5157,7 +5161,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -5547,7 +5551,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             }
                           >
                             <Text
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -5566,7 +5570,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 ]
                               }
                             >
-                              Customize push notifications
+                              Personalizza le notifiche
                             </Text>
                           </View>
                           <View
@@ -5601,7 +5605,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 ]
                               }
                             >
-                              Choose how to receive messages and reminders.
+                              Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
                           <View
@@ -5783,7 +5787,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    You have a new message
+                                    Hai un nuovo messaggio
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -5803,7 +5807,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    Open the app to read the content
+                                    Apri l'app per leggere il contenuto
                                   </Text>
                                 </View>
                               </View>
@@ -5887,7 +5891,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    Show a preview
+                                    Mostra anteprime
                                   </Text>
                                 </View>
                                 <View
@@ -5907,7 +5911,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Show a preview"
+                                    accessibilityLabel="Mostra anteprime"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -5964,7 +5968,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   ]
                                 }
                               >
-                                Include the sender and subject of the message in the push notification
+                                Includi nella notifica push il mittente e l’oggetto del messaggio.
                               </Text>
                               <View
                                 style={
@@ -6026,7 +6030,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     ]
                                   }
                                 >
-                                  More info
+                                  Scopri di più
                                 </Text>
                               </View>
                             </View>
@@ -6110,7 +6114,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    Allow reminders
+                                    Consenti promemoria
                                   </Text>
                                 </View>
                                 <View
@@ -6130,7 +6134,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Allow reminders"
+                                    accessibilityLabel="Consenti promemoria"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -6187,7 +6191,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines
+                                Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze
                               </Text>
                             </View>
                             <View
@@ -6255,7 +6259,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
+                                    Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.
+Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando.
                                   </Text>
                                   <View
                                     style={
@@ -6316,7 +6321,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -6430,7 +6435,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -6470,7 +6475,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   ]
                                 }
                               >
-                                Customize push notifications
+                                Personalizza le notifiche
                               </Text>
                             </View>
                             <View
@@ -6484,7 +6489,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -6874,7 +6879,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             }
                           >
                             <Text
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -6893,7 +6898,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 ]
                               }
                             >
-                              Customize push notifications
+                              Personalizza le notifiche
                             </Text>
                           </View>
                           <View
@@ -6928,7 +6933,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 ]
                               }
                             >
-                              Choose how to receive messages and reminders.
+                              Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
                           <View
@@ -7110,7 +7115,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    You have a new message
+                                    Hai un nuovo messaggio
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -7130,7 +7135,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    Open the app to read the content
+                                    Apri l'app per leggere il contenuto
                                   </Text>
                                 </View>
                               </View>
@@ -7214,7 +7219,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    Show a preview
+                                    Mostra anteprime
                                   </Text>
                                 </View>
                                 <View
@@ -7234,7 +7239,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Show a preview"
+                                    accessibilityLabel="Mostra anteprime"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -7291,7 +7296,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   ]
                                 }
                               >
-                                Include the sender and subject of the message in the push notification
+                                Includi nella notifica push il mittente e l’oggetto del messaggio.
                               </Text>
                               <View
                                 style={
@@ -7353,7 +7358,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     ]
                                   }
                                 >
-                                  More info
+                                  Scopri di più
                                 </Text>
                               </View>
                             </View>
@@ -7437,7 +7442,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    Allow reminders
+                                    Consenti promemoria
                                   </Text>
                                 </View>
                                 <View
@@ -7457,7 +7462,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Allow reminders"
+                                    accessibilityLabel="Consenti promemoria"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -7514,7 +7519,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines
+                                Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze
                               </Text>
                             </View>
                             <View
@@ -7582,7 +7587,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                       ]
                                     }
                                   >
-                                    If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
+                                    Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.
+Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando.
                                   </Text>
                                   <View
                                     style={
@@ -7643,7 +7649,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -7757,7 +7763,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -7797,7 +7803,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   ]
                                 }
                               >
-                                Customize push notifications
+                                Personalizza le notifiche
                               </Text>
                             </View>
                             <View
@@ -7811,7 +7817,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -8201,7 +8207,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             }
                           >
                             <Text
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -8220,7 +8226,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 ]
                               }
                             >
-                              Customize push notifications
+                              Personalizza le notifiche
                             </Text>
                           </View>
                           <View
@@ -8255,7 +8261,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 ]
                               }
                             >
-                              Choose how to receive messages and reminders.
+                              Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
                           <View
@@ -8437,7 +8443,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    You have a new message
+                                    Hai un nuovo messaggio
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -8457,7 +8463,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    Open the app to read the content
+                                    Apri l'app per leggere il contenuto
                                   </Text>
                                 </View>
                               </View>
@@ -8541,7 +8547,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    Show a preview
+                                    Mostra anteprime
                                   </Text>
                                 </View>
                                 <View
@@ -8561,7 +8567,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Show a preview"
+                                    accessibilityLabel="Mostra anteprime"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -8618,7 +8624,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   ]
                                 }
                               >
-                                Include the sender and subject of the message in the push notification
+                                Includi nella notifica push il mittente e l’oggetto del messaggio.
                               </Text>
                               <View
                                 style={
@@ -8680,7 +8686,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     ]
                                   }
                                 >
-                                  More info
+                                  Scopri di più
                                 </Text>
                               </View>
                             </View>
@@ -8764,7 +8770,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    Allow reminders
+                                    Consenti promemoria
                                   </Text>
                                 </View>
                                 <View
@@ -8784,7 +8790,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Allow reminders"
+                                    accessibilityLabel="Consenti promemoria"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -8841,7 +8847,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines
+                                Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze
                               </Text>
                             </View>
                             <View
@@ -8909,7 +8915,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
+                                    Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.
+Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando.
                                   </Text>
                                   <View
                                     style={
@@ -8970,7 +8977,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -9084,7 +9091,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -9124,7 +9131,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   ]
                                 }
                               >
-                                Customize push notifications
+                                Personalizza le notifiche
                               </Text>
                             </View>
                             <View
@@ -9138,7 +9145,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -9528,7 +9535,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             }
                           >
                             <Text
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -9547,7 +9554,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 ]
                               }
                             >
-                              Customize push notifications
+                              Personalizza le notifiche
                             </Text>
                           </View>
                           <View
@@ -9582,7 +9589,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 ]
                               }
                             >
-                              Choose how to receive messages and reminders.
+                              Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
                           <View
@@ -9784,7 +9791,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    Summer camp registration is now open
+                                    Sono aperte le iscrizioni per il centro estivo
                                   </Text>
                                 </View>
                               </View>
@@ -9868,7 +9875,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    Show a preview
+                                    Mostra anteprime
                                   </Text>
                                 </View>
                                 <View
@@ -9888,7 +9895,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Show a preview"
+                                    accessibilityLabel="Mostra anteprime"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -9945,7 +9952,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   ]
                                 }
                               >
-                                Include the sender and subject of the message in the push notification
+                                Includi nella notifica push il mittente e l’oggetto del messaggio.
                               </Text>
                               <View
                                 style={
@@ -10007,7 +10014,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     ]
                                   }
                                 >
-                                  More info
+                                  Scopri di più
                                 </Text>
                               </View>
                             </View>
@@ -10091,7 +10098,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    Allow reminders
+                                    Consenti promemoria
                                   </Text>
                                 </View>
                                 <View
@@ -10111,7 +10118,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Allow reminders"
+                                    accessibilityLabel="Consenti promemoria"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -10168,7 +10175,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines
+                                Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze
                               </Text>
                             </View>
                             <View
@@ -10236,7 +10243,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
+                                    Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.
+Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando.
                                   </Text>
                                   <View
                                     style={
@@ -10297,7 +10305,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -10411,7 +10419,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -10451,7 +10459,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   ]
                                 }
                               >
-                                Customize push notifications
+                                Personalizza le notifiche
                               </Text>
                             </View>
                             <View
@@ -10465,7 +10473,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -10855,7 +10863,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             }
                           >
                             <Text
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -10874,7 +10882,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 ]
                               }
                             >
-                              Customize push notifications
+                              Personalizza le notifiche
                             </Text>
                           </View>
                           <View
@@ -10909,7 +10917,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 ]
                               }
                             >
-                              Choose how to receive messages and reminders.
+                              Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
                           <View
@@ -11091,7 +11099,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    You have a new message
+                                    Hai un nuovo messaggio
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -11111,7 +11119,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    Open the app to read the content
+                                    Apri l'app per leggere il contenuto
                                   </Text>
                                 </View>
                               </View>
@@ -11195,7 +11203,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    Show a preview
+                                    Mostra anteprime
                                   </Text>
                                 </View>
                                 <View
@@ -11215,7 +11223,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Show a preview"
+                                    accessibilityLabel="Mostra anteprime"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -11272,7 +11280,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   ]
                                 }
                               >
-                                Include the sender and subject of the message in the push notification
+                                Includi nella notifica push il mittente e l’oggetto del messaggio.
                               </Text>
                               <View
                                 style={
@@ -11334,7 +11342,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     ]
                                   }
                                 >
-                                  More info
+                                  Scopri di più
                                 </Text>
                               </View>
                             </View>
@@ -11418,7 +11426,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    Allow reminders
+                                    Consenti promemoria
                                   </Text>
                                 </View>
                                 <View
@@ -11438,7 +11446,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Allow reminders"
+                                    accessibilityLabel="Consenti promemoria"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -11495,7 +11503,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines
+                                Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze
                               </Text>
                             </View>
                             <View
@@ -11563,7 +11571,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
+                                    Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.
+Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando.
                                   </Text>
                                   <View
                                     style={
@@ -11624,7 +11633,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -11738,7 +11747,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -11778,7 +11787,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   ]
                                 }
                               >
-                                Customize push notifications
+                                Personalizza le notifiche
                               </Text>
                             </View>
                             <View
@@ -11792,7 +11801,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -12182,7 +12191,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             }
                           >
                             <Text
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -12201,7 +12210,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 ]
                               }
                             >
-                              Customize push notifications
+                              Personalizza le notifiche
                             </Text>
                           </View>
                           <View
@@ -12236,7 +12245,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 ]
                               }
                             >
-                              Choose how to receive messages and reminders.
+                              Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
                           <View
@@ -12418,7 +12427,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    You have a notice due soon
+                                    Hai un avviso in scadenza
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -12438,7 +12447,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    Log in to pay the notice issued by ACI
+                                    Entra nell’app e paga l’avviso emesso da ACI
                                   </Text>
                                 </View>
                               </View>
@@ -12522,7 +12531,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    Show a preview
+                                    Mostra anteprime
                                   </Text>
                                 </View>
                                 <View
@@ -12542,7 +12551,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Show a preview"
+                                    accessibilityLabel="Mostra anteprime"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -12599,7 +12608,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   ]
                                 }
                               >
-                                Include the sender and subject of the message in the push notification
+                                Includi nella notifica push il mittente e l’oggetto del messaggio.
                               </Text>
                               <View
                                 style={
@@ -12661,7 +12670,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     ]
                                   }
                                 >
-                                  More info
+                                  Scopri di più
                                 </Text>
                               </View>
                             </View>
@@ -12745,7 +12754,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    Allow reminders
+                                    Consenti promemoria
                                   </Text>
                                 </View>
                                 <View
@@ -12765,7 +12774,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Allow reminders"
+                                    accessibilityLabel="Consenti promemoria"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -12822,7 +12831,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines
+                                Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze
                               </Text>
                             </View>
                             <View
@@ -12890,7 +12899,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
+                                    Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.
+Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando.
                                   </Text>
                                   <View
                                     style={
@@ -12951,7 +12961,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -13065,7 +13075,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -13105,7 +13115,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   ]
                                 }
                               >
-                                Customize push notifications
+                                Personalizza le notifiche
                               </Text>
                             </View>
                             <View
@@ -13119,7 +13129,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -13509,7 +13519,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             }
                           >
                             <Text
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -13528,7 +13538,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 ]
                               }
                             >
-                              Customize push notifications
+                              Personalizza le notifiche
                             </Text>
                           </View>
                           <View
@@ -13563,7 +13573,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 ]
                               }
                             >
-                              Choose how to receive messages and reminders.
+                              Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
                           <View
@@ -13745,7 +13755,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    You have a new message
+                                    Hai un nuovo messaggio
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -13765,7 +13775,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    Open the app to read the content
+                                    Apri l'app per leggere il contenuto
                                   </Text>
                                 </View>
                               </View>
@@ -13849,7 +13859,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    Show a preview
+                                    Mostra anteprime
                                   </Text>
                                 </View>
                                 <View
@@ -13869,7 +13879,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Show a preview"
+                                    accessibilityLabel="Mostra anteprime"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -13926,7 +13936,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   ]
                                 }
                               >
-                                Include the sender and subject of the message in the push notification
+                                Includi nella notifica push il mittente e l’oggetto del messaggio.
                               </Text>
                               <View
                                 style={
@@ -13988,7 +13998,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     ]
                                   }
                                 >
-                                  More info
+                                  Scopri di più
                                 </Text>
                               </View>
                             </View>
@@ -14072,7 +14082,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    Allow reminders
+                                    Consenti promemoria
                                   </Text>
                                 </View>
                                 <View
@@ -14092,7 +14102,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Allow reminders"
+                                    accessibilityLabel="Consenti promemoria"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -14149,7 +14159,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines
+                                Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze
                               </Text>
                             </View>
                             <View
@@ -14217,7 +14227,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
+                                    Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.
+Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando.
                                   </Text>
                                   <View
                                     style={
@@ -14278,7 +14289,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -14392,7 +14403,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -14432,7 +14443,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   ]
                                 }
                               >
-                                Customize push notifications
+                                Personalizza le notifiche
                               </Text>
                             </View>
                             <View
@@ -14446,7 +14457,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -14836,7 +14847,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             }
                           >
                             <Text
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -14855,7 +14866,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 ]
                               }
                             >
-                              Customize push notifications
+                              Personalizza le notifiche
                             </Text>
                           </View>
                           <View
@@ -14890,7 +14901,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 ]
                               }
                             >
-                              Choose how to receive messages and reminders.
+                              Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
                           <View
@@ -15092,7 +15103,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    Summer camp registration is now open
+                                    Sono aperte le iscrizioni per il centro estivo
                                   </Text>
                                 </View>
                               </View>
@@ -15176,7 +15187,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    Show a preview
+                                    Mostra anteprime
                                   </Text>
                                 </View>
                                 <View
@@ -15196,7 +15207,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Show a preview"
+                                    accessibilityLabel="Mostra anteprime"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -15253,7 +15264,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   ]
                                 }
                               >
-                                Include the sender and subject of the message in the push notification
+                                Includi nella notifica push il mittente e l’oggetto del messaggio.
                               </Text>
                               <View
                                 style={
@@ -15315,7 +15326,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     ]
                                   }
                                 >
-                                  More info
+                                  Scopri di più
                                 </Text>
                               </View>
                             </View>
@@ -15399,7 +15410,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    Allow reminders
+                                    Consenti promemoria
                                   </Text>
                                 </View>
                                 <View
@@ -15419,7 +15430,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Allow reminders"
+                                    accessibilityLabel="Consenti promemoria"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -15476,7 +15487,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines
+                                Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze
                               </Text>
                             </View>
                             <View
@@ -15544,7 +15555,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                       ]
                                     }
                                   >
-                                    If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
+                                    Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.
+Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando.
                                   </Text>
                                   <View
                                     style={
@@ -15605,7 +15617,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -15719,7 +15731,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -15759,7 +15771,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   ]
                                 }
                               >
-                                Customize push notifications
+                                Personalizza le notifiche
                               </Text>
                             </View>
                             <View
@@ -15773,7 +15785,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -16163,7 +16175,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             }
                           >
                             <Text
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -16182,7 +16194,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 ]
                               }
                             >
-                              Customize push notifications
+                              Personalizza le notifiche
                             </Text>
                           </View>
                           <View
@@ -16217,7 +16229,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 ]
                               }
                             >
-                              Choose how to receive messages and reminders.
+                              Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
                           <View
@@ -16399,7 +16411,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    You have a new message
+                                    Hai un nuovo messaggio
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -16419,7 +16431,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    Open the app to read the content
+                                    Apri l'app per leggere il contenuto
                                   </Text>
                                 </View>
                               </View>
@@ -16503,7 +16515,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    Show a preview
+                                    Mostra anteprime
                                   </Text>
                                 </View>
                                 <View
@@ -16523,7 +16535,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Show a preview"
+                                    accessibilityLabel="Mostra anteprime"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -16580,7 +16592,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   ]
                                 }
                               >
-                                Include the sender and subject of the message in the push notification
+                                Includi nella notifica push il mittente e l’oggetto del messaggio.
                               </Text>
                               <View
                                 style={
@@ -16642,7 +16654,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     ]
                                   }
                                 >
-                                  More info
+                                  Scopri di più
                                 </Text>
                               </View>
                             </View>
@@ -16726,7 +16738,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    Allow reminders
+                                    Consenti promemoria
                                   </Text>
                                 </View>
                                 <View
@@ -16746,7 +16758,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Allow reminders"
+                                    accessibilityLabel="Consenti promemoria"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -16803,7 +16815,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines
+                                Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze
                               </Text>
                             </View>
                             <View
@@ -16871,7 +16883,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
+                                    Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.
+Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando.
                                   </Text>
                                   <View
                                     style={
@@ -16932,7 +16945,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -17046,7 +17059,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -17086,7 +17099,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   ]
                                 }
                               >
-                                Customize push notifications
+                                Personalizza le notifiche
                               </Text>
                             </View>
                             <View
@@ -17100,7 +17113,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -17490,7 +17503,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             }
                           >
                             <Text
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -17509,7 +17522,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 ]
                               }
                             >
-                              Customize push notifications
+                              Personalizza le notifiche
                             </Text>
                           </View>
                           <View
@@ -17544,7 +17557,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 ]
                               }
                             >
-                              Choose how to receive messages and reminders.
+                              Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
                           <View
@@ -17726,7 +17739,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    You have a new message
+                                    Hai un nuovo messaggio
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -17746,7 +17759,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    Open the app to read the content
+                                    Apri l'app per leggere il contenuto
                                   </Text>
                                 </View>
                               </View>
@@ -17830,7 +17843,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    Show a preview
+                                    Mostra anteprime
                                   </Text>
                                 </View>
                                 <View
@@ -17850,7 +17863,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Show a preview"
+                                    accessibilityLabel="Mostra anteprime"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -17907,7 +17920,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   ]
                                 }
                               >
-                                Include the sender and subject of the message in the push notification
+                                Includi nella notifica push il mittente e l’oggetto del messaggio.
                               </Text>
                               <View
                                 style={
@@ -17969,7 +17982,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     ]
                                   }
                                 >
-                                  More info
+                                  Scopri di più
                                 </Text>
                               </View>
                             </View>
@@ -18053,7 +18066,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    Allow reminders
+                                    Consenti promemoria
                                   </Text>
                                 </View>
                                 <View
@@ -18073,7 +18086,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Allow reminders"
+                                    accessibilityLabel="Consenti promemoria"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -18130,7 +18143,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines
+                                Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze
                               </Text>
                             </View>
                             <View
@@ -18198,7 +18211,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
+                                    Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.
+Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando.
                                   </Text>
                                   <View
                                     style={
@@ -18259,7 +18273,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -18373,7 +18387,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -18413,7 +18427,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   ]
                                 }
                               >
-                                Customize push notifications
+                                Personalizza le notifiche
                               </Text>
                             </View>
                             <View
@@ -18427,7 +18441,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -18817,7 +18831,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             }
                           >
                             <Text
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -18836,7 +18850,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 ]
                               }
                             >
-                              Customize push notifications
+                              Personalizza le notifiche
                             </Text>
                           </View>
                           <View
@@ -18871,7 +18885,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 ]
                               }
                             >
-                              Choose how to receive messages and reminders.
+                              Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
                           <View
@@ -19053,7 +19067,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    You have a new message
+                                    Hai un nuovo messaggio
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -19073,7 +19087,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    Open the app to read the content
+                                    Apri l'app per leggere il contenuto
                                   </Text>
                                 </View>
                               </View>
@@ -19157,7 +19171,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    Show a preview
+                                    Mostra anteprime
                                   </Text>
                                 </View>
                                 <View
@@ -19177,7 +19191,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Show a preview"
+                                    accessibilityLabel="Mostra anteprime"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -19234,7 +19248,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   ]
                                 }
                               >
-                                Include the sender and subject of the message in the push notification
+                                Includi nella notifica push il mittente e l’oggetto del messaggio.
                               </Text>
                               <View
                                 style={
@@ -19296,7 +19310,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     ]
                                   }
                                 >
-                                  More info
+                                  Scopri di più
                                 </Text>
                               </View>
                             </View>
@@ -19380,7 +19394,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    Allow reminders
+                                    Consenti promemoria
                                   </Text>
                                 </View>
                                 <View
@@ -19400,7 +19414,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Allow reminders"
+                                    accessibilityLabel="Consenti promemoria"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -19457,7 +19471,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines
+                                Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze
                               </Text>
                             </View>
                             <View
@@ -19525,7 +19539,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
+                                    Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.
+Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando.
                                   </Text>
                                   <View
                                     style={
@@ -19586,7 +19601,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -19700,7 +19715,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -19740,7 +19755,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   ]
                                 }
                               >
-                                Customize push notifications
+                                Personalizza le notifiche
                               </Text>
                             </View>
                             <View
@@ -19754,7 +19769,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -20144,7 +20159,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             }
                           >
                             <Text
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -20163,7 +20178,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 ]
                               }
                             >
-                              Customize push notifications
+                              Personalizza le notifiche
                             </Text>
                           </View>
                           <View
@@ -20198,7 +20213,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 ]
                               }
                             >
-                              Choose how to receive messages and reminders.
+                              Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
                           <View
@@ -20380,7 +20395,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    You have a notice due tomorrow
+                                    Hai un avviso che scade domani
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -20400,7 +20415,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    Log in to pay for it
+                                    Entra nell'app per pagarlo
                                   </Text>
                                 </View>
                               </View>
@@ -20484,7 +20499,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    Show a preview
+                                    Mostra anteprime
                                   </Text>
                                 </View>
                                 <View
@@ -20504,7 +20519,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Show a preview"
+                                    accessibilityLabel="Mostra anteprime"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -20561,7 +20576,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   ]
                                 }
                               >
-                                Include the sender and subject of the message in the push notification
+                                Includi nella notifica push il mittente e l’oggetto del messaggio.
                               </Text>
                               <View
                                 style={
@@ -20623,7 +20638,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     ]
                                   }
                                 >
-                                  More info
+                                  Scopri di più
                                 </Text>
                               </View>
                             </View>
@@ -20707,7 +20722,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    Allow reminders
+                                    Consenti promemoria
                                   </Text>
                                 </View>
                                 <View
@@ -20727,7 +20742,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Allow reminders"
+                                    accessibilityLabel="Consenti promemoria"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -20784,7 +20799,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines
+                                Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze
                               </Text>
                             </View>
                             <View
@@ -20852,7 +20867,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
+                                    Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.
+Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando.
                                   </Text>
                                   <View
                                     style={
@@ -20913,7 +20929,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -21027,7 +21043,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -21067,7 +21083,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   ]
                                 }
                               >
-                                Customize push notifications
+                                Personalizza le notifiche
                               </Text>
                             </View>
                             <View
@@ -21081,7 +21097,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -21471,7 +21487,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             }
                           >
                             <Text
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -21490,7 +21506,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 ]
                               }
                             >
-                              Customize push notifications
+                              Personalizza le notifiche
                             </Text>
                           </View>
                           <View
@@ -21525,7 +21541,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 ]
                               }
                             >
-                              Choose how to receive messages and reminders.
+                              Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
                           <View
@@ -21707,7 +21723,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    You have a new message
+                                    Hai un nuovo messaggio
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -21727,7 +21743,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    Open the app to read the content
+                                    Apri l'app per leggere il contenuto
                                   </Text>
                                 </View>
                               </View>
@@ -21811,7 +21827,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    Show a preview
+                                    Mostra anteprime
                                   </Text>
                                 </View>
                                 <View
@@ -21831,7 +21847,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Show a preview"
+                                    accessibilityLabel="Mostra anteprime"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -21888,7 +21904,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   ]
                                 }
                               >
-                                Include the sender and subject of the message in the push notification
+                                Includi nella notifica push il mittente e l’oggetto del messaggio.
                               </Text>
                               <View
                                 style={
@@ -21950,7 +21966,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     ]
                                   }
                                 >
-                                  More info
+                                  Scopri di più
                                 </Text>
                               </View>
                             </View>
@@ -22034,7 +22050,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    Allow reminders
+                                    Consenti promemoria
                                   </Text>
                                 </View>
                                 <View
@@ -22054,7 +22070,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Allow reminders"
+                                    accessibilityLabel="Consenti promemoria"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -22111,7 +22127,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines
+                                Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze
                               </Text>
                             </View>
                             <View
@@ -22179,7 +22195,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
+                                    Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.
+Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando.
                                   </Text>
                                   <View
                                     style={
@@ -22240,7 +22257,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -22354,7 +22371,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -22394,7 +22411,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   ]
                                 }
                               >
-                                Customize push notifications
+                                Personalizza le notifiche
                               </Text>
                             </View>
                             <View
@@ -22408,7 +22425,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -22798,7 +22815,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             }
                           >
                             <Text
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               allowFontScaling={true}
                               dynamicTypeRamp="title1"
@@ -22817,7 +22834,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 ]
                               }
                             >
-                              Customize push notifications
+                              Personalizza le notifiche
                             </Text>
                           </View>
                           <View
@@ -22852,7 +22869,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 ]
                               }
                             >
-                              Choose how to receive messages and reminders.
+                              Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
                           <View
@@ -23034,7 +23051,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    You have a new message
+                                    Hai un nuovo messaggio
                                   </Text>
                                   <Text
                                     allowFontScaling={true}
@@ -23054,7 +23071,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    Open the app to read the content
+                                    Apri l'app per leggere il contenuto
                                   </Text>
                                 </View>
                               </View>
@@ -23138,7 +23155,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    Show a preview
+                                    Mostra anteprime
                                   </Text>
                                 </View>
                                 <View
@@ -23158,7 +23175,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Show a preview"
+                                    accessibilityLabel="Mostra anteprime"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -23215,7 +23232,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   ]
                                 }
                               >
-                                Include the sender and subject of the message in the push notification
+                                Includi nella notifica push il mittente e l’oggetto del messaggio.
                               </Text>
                               <View
                                 style={
@@ -23277,7 +23294,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     ]
                                   }
                                 >
-                                  More info
+                                  Scopri di più
                                 </Text>
                               </View>
                             </View>
@@ -23361,7 +23378,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    Allow reminders
+                                    Consenti promemoria
                                   </Text>
                                 </View>
                                 <View
@@ -23381,7 +23398,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   }
                                 >
                                   <RCTSwitch
-                                    accessibilityLabel="Allow reminders"
+                                    accessibilityLabel="Consenti promemoria"
                                     accessibilityRole="switch"
                                     accessibilityState={
                                       {
@@ -23438,7 +23455,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   ]
                                 }
                               >
-                                Upon request of the sender, receive push notifications close to deadlines
+                                Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze
                               </Text>
                             </View>
                             <View
@@ -23506,7 +23523,8 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                       ]
                                     }
                                   >
-                                    If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
+                                    Una notifica push è un messaggio che ricevi sul tuo dispositivo anche quando non usi l'app. Se attivi questa opzione, riceverai notifiche push che ti mostreranno il mittente e l'oggetto del messaggio.
+Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dalle eventuali app di terze parti che stai utilizzando.
                                   </Text>
                                   <View
                                     style={
@@ -23567,7 +23585,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -23681,7 +23699,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="Customize push notifications"
+                              accessibilityLabel="Personalizza le notifiche"
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -23721,7 +23739,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   ]
                                 }
                               >
-                                Customize push notifications
+                                Personalizza le notifiche
                               </Text>
                             </View>
                             <View
@@ -23735,7 +23753,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

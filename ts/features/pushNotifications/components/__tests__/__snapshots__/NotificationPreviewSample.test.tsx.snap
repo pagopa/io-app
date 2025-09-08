@@ -491,7 +491,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                               ]
                             }
                           >
-                            You have a new message
+                            Hai un nuovo messaggio
                           </Text>
                           <Text
                             allowFontScaling={true}
@@ -511,7 +511,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                               ]
                             }
                           >
-                            Open the app to read the content
+                            Apri l'app per leggere il contenuto
                           </Text>
                         </View>
                       </View>
@@ -1019,7 +1019,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                               ]
                             }
                           >
-                            You have a notice due tomorrow
+                            Hai un avviso che scade domani
                           </Text>
                           <Text
                             allowFontScaling={true}
@@ -1039,7 +1039,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                               ]
                             }
                           >
-                            Log in to pay for it
+                            Entra nell'app per pagarlo
                           </Text>
                         </View>
                       </View>
@@ -1567,7 +1567,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                               ]
                             }
                           >
-                            Summer camp registration is now open
+                            Sono aperte le iscrizioni per il centro estivo
                           </Text>
                         </View>
                       </View>
@@ -2075,7 +2075,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                               ]
                             }
                           >
-                            You have a notice due soon
+                            Hai un avviso in scadenza
                           </Text>
                           <Text
                             allowFontScaling={true}
@@ -2095,7 +2095,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                               ]
                             }
                           >
-                            Log in to pay the notice issued by ACI
+                            Entra nell’app e paga l’avviso emesso da ACI
                           </Text>
                         </View>
                       </View>

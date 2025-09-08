@@ -1,5 +1,5 @@
+import I18n from "i18next";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import I18n from "../../../i18n";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
 import { fciEndRequest, fciStartRequest } from "../store/actions";
 import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";

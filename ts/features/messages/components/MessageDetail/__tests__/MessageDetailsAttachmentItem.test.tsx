@@ -2,7 +2,6 @@ import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { downloadAttachment } from "../../../store/actions";
-import { UIMessageId } from "../../../types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MessageDetailsAttachmentItem } from "../MessageDetailsAttachmentItem";
 import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
@@ -10,7 +9,8 @@ import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 
 describe("MessageDetailsAttachmentItem", () => {
   it("Should match snapshot with required parameters", () => {
-    const messageId = "01HNWXJG52YS359GWSYSRK2BWC" as UIMessageId;
+    const messageId = "01HNWXJG52YS359GWSYSRK2BWC";
+    const serviceId = "01HNWXKWAGWPHV7VGMQ21EZPSA" as ServiceId;
     const thirdPartyAttachment = {
       id: "1",
       url: "https://invalid.url",
@@ -19,11 +19,11 @@ describe("MessageDetailsAttachmentItem", () => {
       category: "DOCUMENT"
     } as ThirdPartyAttachment;
 
-    const component = renderScreen(thirdPartyAttachment, messageId);
+    const component = renderScreen(thirdPartyAttachment, messageId, serviceId);
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("Should match snapshot with all parameters", () => {
-    const messageId = "01HNWXJG52YS359GWSYSRK2BWC" as UIMessageId;
+    const messageId = "01HNWXJG52YS359GWSYSRK2BWC";
     const thirdPartyAttachment = {
       id: "1",
       url: "https://invalid.url",
@@ -44,7 +44,8 @@ describe("MessageDetailsAttachmentItem", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("Should match snapshot when the attachment has no name", () => {
-    const messageId = "01HNWXJG52YS359GWSYSRK2BWC" as UIMessageId;
+    const messageId = "01HNWXJG52YS359GWSYSRK2BWC";
+    const serviceId = "01HNWXKWAGWPHV7VGMQ21EZPSA" as ServiceId;
     const thirdPartyAttachment = {
       id: "1",
       url: "https://invalid.url",
@@ -52,11 +53,12 @@ describe("MessageDetailsAttachmentItem", () => {
       category: "DOCUMENT"
     } as ThirdPartyAttachment;
 
-    const component = renderScreen(thirdPartyAttachment, messageId);
+    const component = renderScreen(thirdPartyAttachment, messageId, serviceId);
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("Should match snapshot when is fetching the attachment", () => {
-    const messageId = "01HNWXJG52YS359GWSYSRK2BWC" as UIMessageId;
+    const messageId = "01HNWXJG52YS359GWSYSRK2BWC";
+    const serviceId = "01HNWXKWAGWPHV7VGMQ21EZPSA" as ServiceId;
     const thirdPartyAttachment = {
       id: "1",
       url: "https://invalid.url",
@@ -67,7 +69,7 @@ describe("MessageDetailsAttachmentItem", () => {
     const component = renderScreen(
       thirdPartyAttachment,
       messageId,
-      undefined,
+      serviceId,
       undefined,
       true,
       false
@@ -78,8 +80,8 @@ describe("MessageDetailsAttachmentItem", () => {
 
 const renderScreen = (
   attachment: ThirdPartyAttachment,
-  messageId: UIMessageId,
-  serviceId?: ServiceId,
+  messageId: string,
+  serviceId: ServiceId,
   bottomSpacer?: boolean,
   isFetching?: boolean,
   disabled?: boolean
@@ -91,7 +93,8 @@ const renderScreen = (
       ? downloadAttachment.request({
           attachment,
           messageId,
-          skipMixpanelTrackingOnFailure: false
+          skipMixpanelTrackingOnFailure: false,
+          serviceId
         })
       : downloadAttachment.success({
           messageId,

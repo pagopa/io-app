@@ -1,5 +1,5 @@
+import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../../i18n";
 import { useIODispatch } from "../../../../store/hooks";
 import { fimsHistoryGet } from "../store/actions";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";

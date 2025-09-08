@@ -1,12 +1,12 @@
 import { useEffect, useLayoutEffect } from "react";
 import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import { Alert } from "react-native";
+import I18n from "i18next";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { useIOSelector } from "../../../../store/hooks";
 import WalletPaymentWebView from "../components/WalletPaymentWebView";
 import { walletPaymentWebViewPayloadSelector } from "../store/selectors";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import I18n from "../../../../i18n";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 import * as analytics from "../analytics";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";

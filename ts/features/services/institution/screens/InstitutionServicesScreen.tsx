@@ -14,10 +14,10 @@ import Animated, {
   useAnimatedScrollHandler,
   useSharedValue
 } from "react-native-reanimated";
+import I18n from "i18next";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { ServiceMinified } from "../../../../../definitions/services/ServiceMinified";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";

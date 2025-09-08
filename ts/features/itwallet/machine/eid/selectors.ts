@@ -2,13 +2,17 @@ import { StateFrom } from "xstate";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ItwTags } from "../tags";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwEidIssuanceMachine } from "./machine";
 import { IdentificationContext } from "./context";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
+export const selectIssuanceMode = (snapshot: MachineSnapshot) =>
+  snapshot.context.mode || "issuing";
+
 export const isL3FeaturesEnabledSelector = (snapshot: MachineSnapshot) =>
-  snapshot.context.isL3FeaturesEnabled ?? false;
+  snapshot.context.isL3 ?? false;
 
 export const selectEidOption = (snapshot: MachineSnapshot) =>
   O.fromNullable(snapshot.context.eid);
@@ -44,3 +48,10 @@ export const selectAuthUrlOption = (snapshot: MachineSnapshot) =>
 
 export const selectIsLoading = (snapshot: MachineSnapshot) =>
   snapshot.hasTag(ItwTags.Loading);
+
+export const selectUpgradeFailedCredentials = (snapshot: MachineSnapshot) =>
+  pipe(
+    snapshot.context.failedCredentials,
+    O.fromNullable,
+    O.getOrElse(() => [] as ReadonlyArray<StoredCredential>)
+  );

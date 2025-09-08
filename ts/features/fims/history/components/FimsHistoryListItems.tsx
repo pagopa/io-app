@@ -9,9 +9,9 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
+import I18n from "i18next";
 import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
 import { Access } from "../../../../../definitions/fims_history/Access";
-import I18n from "../../../../i18n";
 import { dateToAccessibilityReadableFormat } from "../../../../utils/accessibility";
 import { FimsHistorySharedStyles } from "../utils/styles";
 

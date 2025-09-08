@@ -24,7 +24,7 @@ import {
 } from "react-native";
 import Animated from "react-native-reanimated";
 import Svg, { Circle } from "react-native-svg";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import { AvatarDouble } from "./AvatarDouble";
 
 export const ListItemMessageStandardHeight = 95;

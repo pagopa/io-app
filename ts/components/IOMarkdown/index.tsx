@@ -2,9 +2,9 @@ import { memo } from "react";
 import { View } from "react-native";
 import { Body } from "@pagopa/io-app-design-system";
 import * as Sentry from "@sentry/react-native";
+import I18n from "i18next";
 import { useIOSelector } from "../../store/hooks";
 import { isScreenReaderEnabledSelector } from "../../store/reducers/preferences";
-import I18n from "../../i18n";
 import { IOMarkdownRenderRules } from "./types";
 import {
   convertReferenceLinksToInline,

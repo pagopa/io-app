@@ -5,11 +5,10 @@ import {
   IOVisualCostants,
   ListItemAction
 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
-import I18n from "../../../i18n";
 import { NotificationStatusHistory } from "../../../../definitions/pn/NotificationStatusHistory";
 import { formatDateAsDay, formatDateAsMonth } from "../../../utils/dates";
-import { localeDateFormat } from "../../../utils/locale";
 import {
   getNotificationStatusInfo,
   notificationStatusToTimelineStatus
@@ -34,10 +33,10 @@ const generateTimelineData = (
   [...history].reverse().map(historyItem => ({
     day: formatDateAsDay(historyItem.activeFrom),
     month: formatDateAsMonth(historyItem.activeFrom),
-    time: localeDateFormat(
-      historyItem.activeFrom,
-      I18n.t("global.dateFormats.timeFormat")
-    ),
+    time: new Intl.DateTimeFormat("it", {
+      hour: "2-digit",
+      minute: "2-digit"
+    }).format(historyItem.activeFrom),
     description: getNotificationStatusInfo(historyItem.status),
     status: notificationStatusToTimelineStatus(historyItem.status)
   }));

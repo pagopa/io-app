@@ -1,7 +1,8 @@
 import { useCallback, useMemo } from "react";
-import { ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
+import { ListItemHeader } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
+import { View } from "react-native";
 import { Institution } from "../../../../../definitions/services/Institution";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -66,7 +67,7 @@ export const FeaturedInstitutionList = () => {
   }
 
   return (
-    <>
+    <View>
       <ListItemHeader
         label={I18n.t("services.home.featured.institutions.title")}
       />
@@ -77,7 +78,6 @@ export const FeaturedInstitutionList = () => {
           institutions={mappedFeaturedInstitutions}
         />
       )}
-      <VSpacer size={16} />
-    </>
+    </View>
   );
 };

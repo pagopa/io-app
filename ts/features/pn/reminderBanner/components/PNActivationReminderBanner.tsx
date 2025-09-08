@@ -2,7 +2,7 @@ import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useRef } from "react";
 import { StyleSheet, View } from "react-native";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";

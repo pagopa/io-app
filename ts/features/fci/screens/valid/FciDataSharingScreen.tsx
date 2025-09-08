@@ -14,8 +14,8 @@ import * as O from "fp-ts/lib/Option";
 
 import { ComponentProps, ReactElement } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
+import I18n from "i18next";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { formatFiscalCodeBirthdayAsShortFormat } from "../../../../utils/dates";

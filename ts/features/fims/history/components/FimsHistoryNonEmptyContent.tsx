@@ -5,8 +5,8 @@ import {
   useFooterActionsMeasurements
 } from "@pagopa/io-app-design-system";
 import { FlashList } from "@shopify/flash-list";
+import I18n from "i18next";
 import { AccessHistoryPage } from "../../../../../definitions/fims_history/AccessHistoryPage";
-import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { useFimsHistoryExport } from "../hooks/useFimsHistoryResultToasts";
 import {

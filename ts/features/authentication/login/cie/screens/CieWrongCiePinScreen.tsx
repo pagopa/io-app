@@ -6,7 +6,7 @@ import { Route, useRoute } from "@react-navigation/native";
 import { IOPictograms } from "@pagopa/io-app-design-system";
 import { Linking } from "react-native";
 import { constNull } from "fp-ts/lib/function";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { WithTestID } from "../../../../../types/WithTestID";

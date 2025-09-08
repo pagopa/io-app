@@ -1,5 +1,6 @@
 import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
+import I18n from "i18next";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -7,7 +8,6 @@ import {
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { idPayGenerateBarcode } from "../../barcode/store/actions";
 import { IdPayPaymentRoutes } from "../../payment/navigation/routes";
-import I18n from "../../../../i18n";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { idPayBarcodeSecondsTillExpireSelector } from "../../barcode/store";
 import { IdPayBarcodeRoutes } from "../../barcode/navigation/routes";

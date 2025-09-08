@@ -4,13 +4,13 @@
  */
 import { useState } from "react";
 import { ContentWrapper, H2 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
 import TosWebviewComponent from "../shared/components/TosWebviewComponent";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { getFlowType } from "../../../../utils/analytics";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { tosConfigSelector } from "../../../tos/store/selectors";
 import { trackTosScreen } from "../shared/analytics";

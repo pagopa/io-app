@@ -1,6 +1,6 @@
 import { fireEvent, render } from "@testing-library/react-native";
+import I18n from "i18next";
 import { PaymentsMethodDetailsErrorContent } from "../PaymentsMethodDetailsErrorContent";
-import I18n from "../../../../../i18n";
 import { paymentsGetMethodDetailsAction } from "../../store/actions";
 
 const mockDispatch = jest.fn();

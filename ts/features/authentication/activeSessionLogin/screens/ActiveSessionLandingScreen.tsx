@@ -14,8 +14,8 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import I18n from "i18next";
 import SectionStatusComponent from "../../../../components/SectionStatus";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import {
   useIODispatch,

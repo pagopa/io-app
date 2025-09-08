@@ -3,6 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
+import I18n from "i18next";
 import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { CieRequestAuthenticationOverlay } from "../CieRequestAuthenticationOverlay";
@@ -14,7 +15,6 @@ import { isCieLoginUatEnabledSelector } from "../../store/selectors";
 import { selectedIdentityProviderSelector } from "../../../../common/store/selectors";
 import * as LollipopLoginUtils from "../../../../../lollipop/utils/login";
 import { useIOSelector } from "../../../../../../store/hooks";
-import I18n from "../../../../../../i18n";
 import * as AnalyticsUtils from "../../../../../../utils/analytics";
 
 jest

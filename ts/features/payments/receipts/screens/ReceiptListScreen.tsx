@@ -13,13 +13,13 @@ import Animated, {
   useSharedValue
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import I18n from "i18next";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";

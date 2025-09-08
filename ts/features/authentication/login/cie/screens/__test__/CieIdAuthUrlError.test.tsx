@@ -1,5 +1,5 @@
 import { fireEvent, render } from "@testing-library/react-native";
-import i18n from "../../../../../../i18n";
+import i18n from "i18next";
 import * as analytics from "../../analytics";
 import CieIdAuthUrlError from "../CieIdAuthUrlError";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";

@@ -120,13 +120,11 @@ export const itwShouldRenderL3UpgradeBannerSelector = (state: GlobalState) =>
  * Returns whether the new IT-Wallet variant should be rendered.
  * - The IT Wallet feature flag is enabled
  * - The wallet is not offline
- * - The L3 feature flag is enabled
- * - Is ITW Credential
+ * - Is ITW Valid
  */
 export const itwShouldRenderNewItWalletSelector = (state: GlobalState) =>
   isItwEnabledSelector(state) &&
   !offlineAccessReasonSelector(state) &&
-  itwIsL3EnabledSelector(state) &&
   itwLifecycleIsITWalletValidSelector(state);
 
 /**

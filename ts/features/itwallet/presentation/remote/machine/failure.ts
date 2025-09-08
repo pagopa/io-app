@@ -1,4 +1,4 @@
-import { Credential, Errors, Trust } from "@pagopa/io-react-native-wallet-v2";
+import { Credential, Errors, Trust } from "@pagopa/io-react-native-wallet";
 import { isDefined } from "../../../../../utils/guards.ts";
 import { isFederationError } from "../../../common/utils/itwFailureUtils.ts";
 import { getCredentialTypeByVct } from "../utils/itwRemotePresentationUtils.ts";

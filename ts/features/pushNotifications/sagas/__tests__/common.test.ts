@@ -9,7 +9,6 @@ import {
   updateNotificationPermissionsIfNeeded
 } from "../common";
 import { navigateToMessageRouterAction } from "../../utils/navigation";
-import { UIMessageId } from "../../../messages/types";
 import { clearNotificationPendingMessage } from "../../store/actions/pendingMessage";
 import { isArchivingDisabledSelector } from "../../../messages/store/reducers/archiving";
 import NavigationService from "../../../../navigation/NavigationService";
@@ -28,7 +27,7 @@ describe("handlePendingMessageStateIfAllowed", () => {
 
   it("make the app navigate to the message detail when the user press on a notification", () => {
     const dispatchNavigationActionParameter = navigateToMessageRouterAction({
-      messageId: mockedPendingMessageState.id as UIMessageId,
+      messageId: mockedPendingMessageState.id,
       fromNotification: true
     });
 
@@ -50,7 +49,7 @@ describe("handlePendingMessageStateIfAllowed", () => {
 
   it("make the app navigate to the message detail when the user press on a notification, resetting the navigation stack before", () => {
     const dispatchNavigationActionParameter = navigateToMessageRouterAction({
-      messageId: mockedPendingMessageState.id as UIMessageId,
+      messageId: mockedPendingMessageState.id,
       fromNotification: true
     });
 
@@ -74,7 +73,7 @@ describe("handlePendingMessageStateIfAllowed", () => {
 
   it("make the app navigate to the message detail when the user press on a notification, resetting the message archiving/restoring if such is disabled", () => {
     const dispatchNavigationActionParameter = navigateToMessageRouterAction({
-      messageId: mockedPendingMessageState.id as UIMessageId,
+      messageId: mockedPendingMessageState.id,
       fromNotification: true
     });
 

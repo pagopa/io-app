@@ -5,8 +5,8 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { StyleSheet, View } from "react-native";
+import I18n from "i18next";
 import { ReceiptsCategoryFilter, receiptsCategoryFilters } from "../types";
-import I18n from "../../../../i18n";
 
 type Props = {
   selectedCategory: ReceiptsCategoryFilter;

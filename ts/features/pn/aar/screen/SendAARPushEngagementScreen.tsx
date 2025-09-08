@@ -5,8 +5,8 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useCallback, useEffect } from "react";
 import { View } from "react-native";
+import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useAARPushEngagementScreenLogic } from "../hooks/useAARpushEngagementScreenLogic";
 import {

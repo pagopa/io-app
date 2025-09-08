@@ -1,6 +1,5 @@
 import { Body, ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
-import I18n from "../../../i18n";
-import { UIMessageId } from "../../messages/types";
+import I18n from "i18next";
 import { useIOSelector } from "../../../store/hooks";
 import { thirdPartyMessageAttachments } from "../../messages/store/reducers/thirdPartyById";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
@@ -10,7 +9,7 @@ import { F24ListBottomSheetLink } from "./F24ListBottomSheetLink";
 
 type F24SectionProps = {
   isCancelled?: boolean;
-  messageId: UIMessageId;
+  messageId: string;
   serviceId: ServiceId;
 };
 
@@ -47,7 +46,11 @@ export const F24Section = ({
         />
       )}
       {f24Count > 1 && (
-        <F24ListBottomSheetLink f24List={f24s} messageId={messageId} />
+        <F24ListBottomSheetLink
+          f24List={f24s}
+          messageId={messageId}
+          serviceId={serviceId}
+        />
       )}
       <VSpacer size={16} />
     </>

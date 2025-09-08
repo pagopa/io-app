@@ -27,6 +27,7 @@ import {
   useSafeAreaInsets
 } from "react-native-safe-area-context";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import I18n from "i18next";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { BaseHeader } from "../../../components/screens/BaseHeader";
 import {
@@ -34,7 +35,6 @@ import {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
-import I18n from "../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp

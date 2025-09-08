@@ -5,6 +5,7 @@ import {
   HSpacer,
   IOColors,
   IOSkeleton,
+  useIOThemeContext,
   VSpacer
 } from "@pagopa/io-app-design-system";
 
@@ -29,6 +30,7 @@ import { BonusCardStatus } from "./BonusCardStatus";
 type BaseProps = {
   // For devices with small screens you may need to hide the logo to get more space
   hideLogo?: boolean;
+  isCGNType?: ReactNode;
 };
 
 type ContentProps = {
@@ -54,6 +56,9 @@ const BonusCardContent = (props: BonusCard) => {
     setAccessibilityFocus(bonusNameHeadingRef);
   }, [bonusNameHeadingRef]);
 
+  const { themeType } = useIOThemeContext();
+  const isDark = themeType === "dark";
+
   if (props.isLoading) {
     return <BonusCardSkeleton {...props} />;
   }
@@ -65,8 +70,11 @@ const BonusCardContent = (props: BonusCard) => {
     organizationName,
     status,
     counters,
-    cardFooter
+    cardFooter,
+    isCGNType
   } = props;
+
+  const idPayColors = isDark ? "blueIO-50" : "blueItalia-850";
 
   return (
     <View style={styles.content} testID="BonusCardContentTestID">
@@ -83,7 +91,7 @@ const BonusCardContent = (props: BonusCard) => {
       <H2
         ref={bonusNameHeadingRef}
         role="heading"
-        color="blueItalia-850"
+        color={!isCGNType ? idPayColors : "blueItalia-850"}
         style={{ textAlign: "center" }}
       >
         {name}
@@ -91,7 +99,7 @@ const BonusCardContent = (props: BonusCard) => {
       <VSpacer size={4} />
       <BodySmall
         weight="Regular"
-        color="blueItalia-850"
+        color={!isCGNType ? idPayColors : "blueItalia-850"}
         style={{ textAlign: "center", marginHorizontal: 16 }}
       >
         {organizationName}

@@ -2,7 +2,7 @@ import { Alert, View } from "react-native";
 import { ListItemAction } from "@pagopa/io-app-design-system";
 import { constNull } from "fp-ts/lib/function";
 import { memo } from "react";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import { useItwStartCredentialSupportRequest } from "../hooks/useItwStartCredentialSupportRequest";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";

@@ -1,8 +1,8 @@
 import { IOToast, ListItemSwitch } from "@pagopa/io-app-design-system";
 
 import { FC, useState } from "react";
+import I18n from "i18next";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
-import I18n from "../../../../i18n";
 import { useIODispatch } from "../../../../store/hooks";
 import { hasPaymentFeature } from "../../common/utils";
 import { paymentsTogglePagoPaCapabilityAction } from "../../details/store/actions";

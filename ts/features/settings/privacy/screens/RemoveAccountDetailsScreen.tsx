@@ -20,9 +20,9 @@ import {
   View
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import I18n from "i18next";
 import { shufflePinPadOnPayment } from "../../../../config";
 import { isCgnEnrolledSelector } from "../../../bonus/cgn/store/reducers/details";
-import I18n from "../../../../i18n";
 import NavigationService from "../../../../navigation/NavigationService";
 import { identificationRequest } from "../../../identification/store/actions";
 import {

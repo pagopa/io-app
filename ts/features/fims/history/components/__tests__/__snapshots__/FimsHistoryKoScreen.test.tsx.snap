@@ -651,7 +651,7 @@ exports[`fimshistoryKoScreen should match snapshot 1`] = `
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Retry"
+                                  accessibilityLabel="Riprova"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -768,7 +768,7 @@ exports[`fimshistoryKoScreen should match snapshot 1`] = `
                                           ]
                                         }
                                       >
-                                        Retry
+                                        Riprova
                                       </Text>
                                     </View>
                                   </View>
@@ -791,7 +791,7 @@ exports[`fimshistoryKoScreen should match snapshot 1`] = `
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Back"
+                                  accessibilityLabel="Indietro"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -913,7 +913,7 @@ exports[`fimshistoryKoScreen should match snapshot 1`] = `
                                           ]
                                         }
                                       >
-                                        Back
+                                        Indietro
                                       </Text>
                                     </View>
                                   </View>

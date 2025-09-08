@@ -14,9 +14,9 @@ import {
   useFocusEffect,
   useRoute
 } from "@react-navigation/native";
+import I18n from "i18next";
 import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import I18n from "../../../../../i18n";
 import { setFastLoginOptIn } from "../../../fastLogin/store/actions/optInActions";
 import {
   useIODispatch,

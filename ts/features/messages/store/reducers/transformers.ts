@@ -10,8 +10,7 @@ import {
   EUCovidCertificate,
   PaymentData,
   UIMessage,
-  UIMessageDetails,
-  UIMessageId
+  UIMessageDetails
 } from "../../types";
 
 /**
@@ -29,8 +28,7 @@ export const toUIMessage = (
   };
   const { is_read, is_archived } = messageFromApi as MessageStatusAttributes;
   return {
-    id: messageFromApi.id as UIMessageId,
-    fiscalCode: messageFromApi.fiscal_code,
+    id: messageFromApi.id,
     category,
     createdAt: new Date(messageFromApi.created_at),
     isRead: Boolean(is_read),
@@ -41,8 +39,7 @@ export const toUIMessage = (
     organizationFiscalCode: enriched.organization_fiscal_code,
     title: enriched.message_title,
     timeToLive: messageFromApi.time_to_live,
-    hasPrecondition: enriched.has_precondition ?? false,
-    raw: messageFromApi
+    hasPrecondition: enriched.has_precondition ?? false
   };
 };
 
@@ -88,7 +85,7 @@ export const toUIMessageDetails = (
   const dueDate = content.due_date ? new Date(content.due_date) : undefined;
 
   return {
-    id: id as UIMessageId,
+    id,
     markdown: content.markdown,
     dueDate,
 
@@ -97,8 +94,7 @@ export const toUIMessageDetails = (
     subject: content.subject,
     serviceId: messageFromApi.sender_service_id,
     hasThirdPartyData: !!content.third_party_data,
-    hasRemoteContent: !!content.third_party_data?.has_remote_content,
-    raw: messageFromApi
+    hasRemoteContent: !!content.third_party_data?.has_remote_content
   };
 };
 
@@ -107,7 +103,7 @@ export const attachmentDisplayName = (attachment: ThirdPartyAttachment) =>
 export const attachmentContentType = (attachment: ThirdPartyAttachment) =>
   attachment.content_type ?? "application/octet-stream";
 export const attachmentDownloadUrl = (
-  messageId: UIMessageId,
+  messageId: string,
   attachment: ThirdPartyAttachment
 ) =>
   `${apiUrlPrefix}/api/v1/third-party-messages/${messageId}/attachments/${attachment.url.replace(

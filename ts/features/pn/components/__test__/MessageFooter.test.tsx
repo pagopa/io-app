@@ -2,7 +2,6 @@ import { createStore } from "redux";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { UIMessageId } from "../../../messages/types";
 import { MessageFooter } from "../MessageFooter";
 import * as standardPayments from "../../../messages/store/reducers/payments";
 import * as payments from "../../store/reducers/payments";
@@ -50,7 +49,7 @@ describe("MessageFooter", () => {
 
 const renderScreen = (
   isCancelled: boolean = false,
-  messageId: UIMessageId = "01HRAAFS3VJAAKWKV8NM8Z6CPQ" as UIMessageId,
+  messageId: string = "01HRAAFS3VJAAKWKV8NM8Z6CPQ",
   maxVisiblePaymentCount: number = 5
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));

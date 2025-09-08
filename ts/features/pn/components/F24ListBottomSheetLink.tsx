@@ -1,21 +1,23 @@
 import { IOButton } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
-import I18n from "../../../i18n";
 import { MessageDetailsAttachmentItem } from "../../messages/components/MessageDetail/MessageDetailsAttachmentItem";
-import { UIMessageId } from "../../messages/types";
 import { trackPNShowF24 } from "../analytics";
 import { useIODispatch } from "../../../store/hooks";
 import { cancelPreviousAttachmentDownload } from "../../messages/store/actions";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
 
 type F24ListBottomSheetLinkProps = {
   f24List: ReadonlyArray<ThirdPartyAttachment>;
-  messageId: UIMessageId;
+  messageId: string;
+  serviceId: ServiceId;
 };
 
 export const F24ListBottomSheetLink = ({
   f24List,
-  messageId
+  messageId,
+  serviceId
 }: F24ListBottomSheetLinkProps) => {
   // The empty footer is needed in order for the internal scroll view to properly compute
   // its bottom space when the bottom sheet opens filling the entire view. Without it, the
@@ -34,6 +36,7 @@ export const F24ListBottomSheetLink = ({
             onPreNavigate={() => {
               dismiss();
             }}
+            serviceId={serviceId}
           />
         ))}
       </>

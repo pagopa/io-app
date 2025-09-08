@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import { connect } from "react-redux";
+import I18n from "i18next";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
-import I18n from "../../../../../i18n";
 import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";

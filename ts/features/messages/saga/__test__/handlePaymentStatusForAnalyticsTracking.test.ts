@@ -17,12 +17,11 @@ import {
   paymentStatusFromPaymentUpdateResult,
   testable
 } from "../handlePaymentStatusForAnalyticsTracking";
-import { UIMessageId } from "../../types";
 
 import { serviceDetailsByIdSelector } from "../../../services/details/store/reducers";
 import { trackPaymentStatus } from "../../analytics";
 
-const messageId = "01JWX68NS39VA6YVWX0R10E3VM" as UIMessageId;
+const messageId = "01JWX68NS39VA6YVWX0R10E3VM";
 const paymentId = "01234567890123456789012345678901234567890";
 const serviceId = "01JWX69WSREBXHRENH0GRP0N9M" as ServiceId;
 

@@ -1,9 +1,9 @@
 import { ListItemAction } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import { Alert } from "react-native";
+import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp

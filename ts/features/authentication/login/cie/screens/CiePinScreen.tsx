@@ -26,6 +26,7 @@ import {
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import I18n from "i18next";
 import { IdpData } from "../../../../../../definitions/content/IdpData";
 import IOMarkdown from "../../../../../components/IOMarkdown";
 import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
@@ -38,7 +39,6 @@ import {
   pinPukHelpUrl
 } from "../../../../../config";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../../../i18n";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { SessionToken } from "../../../../../types/SessionToken";

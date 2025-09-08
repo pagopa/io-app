@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo } from "react";
 import { Platform, View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
+import I18n from "i18next";
 import { DiscountCodeTypeEnum } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
 import { isLoading, isReady } from "../../../../../common/model/RemoteValue";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
@@ -12,7 +13,6 @@ import {
   IOScrollViewActions
 } from "../../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../../../i18n";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";

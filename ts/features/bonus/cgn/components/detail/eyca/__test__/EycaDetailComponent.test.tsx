@@ -1,13 +1,13 @@
 import { render } from "@testing-library/react-native";
 import configureMockStore from "redux-mock-store";
 import { Provider } from "react-redux";
+import I18n from "i18next";
 import EycaDetailComponent from "../EycaDetailComponent";
 import { EycaCard } from "../../../../../../../../definitions/cgn/EycaCard";
 import { StatusEnum as AcivatedStatus } from "../../../../../../../../definitions/cgn/CardActivated";
 import { StatusEnum as PendingStatus } from "../../../../../../../../definitions/cgn/CardPending";
 import { CcdbNumber } from "../../../../../../../../definitions/cgn/CcdbNumber";
 import { CgnEycaActivationStatus } from "../../../../store/reducers/eyca/activation";
-import I18n from "../../../../../../../i18n";
 import { appReducer } from "../../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../../store/actions/application";
 import { GlobalState } from "../../../../../../../store/reducers/types";

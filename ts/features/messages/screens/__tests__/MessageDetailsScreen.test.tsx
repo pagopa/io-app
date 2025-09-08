@@ -25,7 +25,6 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { ATTACHMENT_CATEGORY } from "../../types/attachmentCategory";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
-import { UIMessageId } from "../../types";
 
 export const thirdPartyMessage: ThirdPartyMessageWithContent = {
   ...message_1,
@@ -58,7 +57,7 @@ describe("MessageDetailsScreen", () => {
       loadServiceDetail.success(service_1),
       loadMessageDetails.success(toUIMessageDetails(messageWithExpiredPayment)),
       loadThirdPartyMessage.success({
-        id: message_1.id as UIMessageId,
+        id: message_1.id,
         content: thirdPartyMessage
       })
     ];
@@ -81,7 +80,7 @@ describe("MessageDetailsScreen", () => {
       loadServiceDetail.success(service_1),
       loadMessageDetails.success(toUIMessageDetails(messageWithExpiredPayment)),
       loadThirdPartyMessage.success({
-        id: message_1.id as UIMessageId,
+        id: message_1.id,
         content: {
           ...thirdPartyMessage,
           third_party_message: {

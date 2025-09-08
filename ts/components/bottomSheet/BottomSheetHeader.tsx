@@ -8,7 +8,7 @@ import {
   useEffect
 } from "react";
 import { StyleSheet, View } from "react-native";
-import I18n from "../../i18n";
+import I18n from "i18next";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 
 const styles = StyleSheet.create({

@@ -11,8 +11,8 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../i18n";
 import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { requestWriteCalendarPermission } from "../../../../utils/permission";

@@ -5,7 +5,6 @@ import {
   upsertMessageStatusAttributes as action,
   UpsertMessageStatusAttributesPayload
 } from "../../store/actions";
-import { UIMessageId } from "../../types";
 import { successReloadMessagesPayload } from "../../__mocks__/messages";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { handleUpsertMessageStatusAttributes } from "../handleUpsertMessageStatusAttributes";
@@ -15,7 +14,7 @@ describe("handleUpsertMessageStatusAttributes", () => {
   const actionPayload: UpsertMessageStatusAttributesPayload = {
     message: {
       ...successReloadMessagesPayload.messages[0],
-      id: "A" as UIMessageId
+      id: "A"
     },
     update: { tag: "bulk", isArchived: true }
   };
