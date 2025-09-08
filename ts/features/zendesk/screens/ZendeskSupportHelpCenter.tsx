@@ -177,7 +177,7 @@ const FaqManager = (props: FaqManagerProps) => {
     if (!bannerCaCConfig?.action) {
       return;
     }
-    // TODO: add trackHelpCenterCtaTapped for tracking into Mixpanel
+    // TODO: IOBP-1969 add trackHelpCenterCtaTapped for tracking into Mixpanel
     return openWebUrl(bannerCaCConfig.action.url?.[localeFallback], () =>
       IOToast.error(I18n.t("global.jserror.title"))
     );
