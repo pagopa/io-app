@@ -43,6 +43,7 @@ describe("itwRemoteMachine", () => {
   const navigateToClaimsDisclosureScreen = jest.fn();
   const navigateToIdentificationModeScreen = jest.fn();
   const navigateToAuthResponseScreen = jest.fn();
+  const navigateToExtendedLoadingScreen = jest.fn();
   const closePresentation = jest.fn();
   const trackRemoteDataShare = jest.fn();
   const storeWalletInstanceAttestation = jest.fn();
@@ -64,6 +65,7 @@ describe("itwRemoteMachine", () => {
       navigateToClaimsDisclosureScreen,
       navigateToIdentificationModeScreen,
       navigateToAuthResponseScreen,
+      navigateToExtendedLoadingScreen,
       closePresentation,
       trackRemoteDataShare,
       storeWalletInstanceAttestation
@@ -97,6 +99,10 @@ describe("itwRemoteMachine", () => {
 
   afterEach(() => {
     jest.clearAllMocks();
+  });
+
+  beforeEach(() => {
+    jest.useFakeTimers();
   });
 
   it("should initialize correctly", () => {
@@ -488,5 +494,59 @@ describe("itwRemoteMachine", () => {
     expect(
       storeWalletInstanceAttestation.mock.lastCall.at(0).event.output
     ).toEqual(mockWalletAttestation);
+  });
+
+  it("should not call navigateToExtendedLoadingScreen before 5000ms in EvaluatingRelyingPartyTrust state", async () => {
+    isItWalletL3Active.mockReturnValue(true);
+    isEidExpired.mockReturnValue(false);
+
+    evaluateRelyingPartyTrust.mockImplementation(
+      () =>
+        new Promise(resolve =>
+          setTimeout(
+            () => resolve({ rpConf: {}, rpSubject: T_CLIENT_ID }),
+            4000
+          )
+        )
+    );
+
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    actor.send({ type: "start", payload: qrCodePayload });
+
+    await waitFor(actor, s => s.matches("EvaluatingRelyingPartyTrust"));
+
+    jest.advanceTimersByTime(4000);
+    expect(navigateToExtendedLoadingScreen).toHaveBeenCalledTimes(0);
+  });
+
+  it("should call navigateToExtendedLoadingScreen once after 5000ms in EvaluatingRelyingPartyTrust state", async () => {
+    isItWalletL3Active.mockReturnValue(true);
+    isEidExpired.mockReturnValue(false);
+
+    evaluateRelyingPartyTrust.mockImplementation(
+      () =>
+        new Promise(resolve =>
+          setTimeout(
+            () => resolve({ rpConf: {}, rpSubject: T_CLIENT_ID }),
+            6000
+          )
+        )
+    );
+
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    actor.send({ type: "start", payload: qrCodePayload });
+
+    await waitFor(actor, s => s.matches("EvaluatingRelyingPartyTrust"));
+
+    jest.advanceTimersByTime(5000);
+
+    await waitFor(actor, () => {
+      expect(navigateToExtendedLoadingScreen).toHaveBeenCalledTimes(1);
+      return true;
+    });
   });
 });

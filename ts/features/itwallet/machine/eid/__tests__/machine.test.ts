@@ -52,6 +52,7 @@ describe("itwEidIssuanceMachine", () => {
   const navigateToCieWarningScreen = jest.fn();
   const navigateToL3IdentificationScreen = jest.fn();
   const navigateToL2IdentificationScreen = jest.fn();
+  const navigateToExtendedLoadingScreen = jest.fn();
   const storeIntegrityKeyTag = jest.fn();
   const cleanupIntegrityKeyTag = jest.fn();
   const storeWalletInstanceAttestation = jest.fn();
@@ -102,6 +103,7 @@ describe("itwEidIssuanceMachine", () => {
       navigateToCieWarningScreen,
       navigateToL3IdentificationScreen,
       navigateToL2IdentificationScreen,
+      navigateToExtendedLoadingScreen,
       storeIntegrityKeyTag,
       cleanupIntegrityKeyTag,
       storeWalletInstanceAttestation,
@@ -150,6 +152,7 @@ describe("itwEidIssuanceMachine", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     jest.resetAllMocks();
+    jest.useFakeTimers();
   });
 
   it("Should fail if trust federation verification fails", async () => {
@@ -1737,5 +1740,55 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "add-to-wallet" });
 
     expect(actor.getSnapshot().value).toStrictEqual("Success");
+  });
+
+  it("should not call navigateToExtendedLoadingScreen before 5000ms in TrustFederationVerification state", async () => {
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
+
+    actor.send({ type: "start" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
+
+    verifyTrustFederation.mockImplementation(() => Promise.resolve());
+
+    actor.send({ type: "accept-tos" });
+
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "TrustFederationVerification"
+    );
+
+    jest.advanceTimersByTime(4000);
+
+    expect(navigateToExtendedLoadingScreen).toHaveBeenCalledTimes(0);
+  });
+
+  it("should call navigateToExtendedLoadingScreen once after 5000ms in TrustFederationVerification state", async () => {
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
+
+    actor.send({ type: "start" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
+
+    verifyTrustFederation.mockImplementation(
+      () => new Promise(resolve => setTimeout(() => resolve({}), 6000))
+    );
+
+    actor.send({ type: "accept-tos" });
+
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "TrustFederationVerification"
+    );
+
+    jest.advanceTimersByTime(4000);
+
+    await waitFor(() =>
+      expect(navigateToExtendedLoadingScreen).toHaveBeenCalledTimes(1)
+    );
   });
 });

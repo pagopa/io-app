@@ -109,6 +109,7 @@ describe("itwCredentialIssuanceMachine", () => {
   const navigateToCredentialPreviewScreen = jest.fn();
   const navigateToFailureScreen = jest.fn();
   const navigateToWallet = jest.fn();
+  const navigateToExtendedLoadingScreen = jest.fn();
   const closeIssuance = jest.fn();
   const storeWalletInstanceAttestation = jest.fn();
   const storeCredential = jest.fn();
@@ -140,6 +141,7 @@ describe("itwCredentialIssuanceMachine", () => {
       navigateToCredentialPreviewScreen,
       navigateToFailureScreen,
       navigateToWallet,
+      navigateToExtendedLoadingScreen,
       closeIssuance,
       storeWalletInstanceAttestation,
       storeCredential,
@@ -186,6 +188,7 @@ describe("itwCredentialIssuanceMachine", () => {
     hasValidWalletInstanceAttestation.mockImplementation(() => false);
     isEidExpired.mockImplementation(() => false);
     isSkipNavigation.mockImplementation(() => true);
+    jest.useFakeTimers();
   });
 
   afterEach(() => {
@@ -695,6 +698,91 @@ describe("itwCredentialIssuanceMachine", () => {
 
     await waitFor(() =>
       expect(actor.getSnapshot().value).toStrictEqual("DisplayingTrustIssuer")
+    );
+  });
+
+  it("should not call navigateToExtendedLoadingScreen before 5000ms in TrustFederationVerification state", async () => {
+    const actor = createActor(mockedMachine);
+
+    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
+
+    requestCredential.mockImplementation(
+      () =>
+        new Promise(resolve =>
+          setTimeout(
+            () =>
+              resolve({
+                clientId: T_CLIENT_ID,
+                codeVerifier: T_CODE_VERIFIER,
+                credentialDefinition: T_CREDENTIAL_DEFINITION,
+                requestedCredential: T_REQUESTED_CREDENTIAL,
+                issuerConf: T_ISSUER_CONFIG
+              }),
+            10
+          )
+        )
+    );
+
+    verifyTrustFederation.mockImplementation(() => Promise.resolve());
+
+    actor.start();
+
+    actor.send({
+      type: "select-credential",
+      credentialType: "MDL",
+      mode: "issuance"
+    });
+
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "TrustFederationVerification"
+    );
+
+    jest.advanceTimersByTime(4000);
+
+    expect(navigateToExtendedLoadingScreen).toHaveBeenCalledTimes(0);
+  });
+
+  it("should call navigateToExtendedLoadingScreen once after 5000ms in TrustFederationVerification state", async () => {
+    const actor = createActor(mockedMachine);
+    requestCredential.mockImplementation(
+      () =>
+        new Promise(resolve =>
+          setTimeout(
+            () =>
+              resolve({
+                clientId: T_CLIENT_ID,
+                codeVerifier: T_CODE_VERIFIER,
+                credentialDefinition: T_CREDENTIAL_DEFINITION,
+                requestedCredential: T_REQUESTED_CREDENTIAL,
+                issuerConf: T_ISSUER_CONFIG
+              }),
+            10
+          )
+        )
+    );
+
+    verifyTrustFederation.mockImplementation(
+      () => new Promise(resolve => setTimeout(() => resolve({}), 6000))
+    );
+
+    actor.start();
+
+    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
+
+    actor.send({
+      type: "select-credential",
+      credentialType: "MDL",
+      mode: "issuance"
+    });
+
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "TrustFederationVerification"
+    );
+
+    jest.advanceTimersByTime(5000);
+
+    await waitFor(() =>
+      expect(navigateToExtendedLoadingScreen).toHaveBeenCalledTimes(1)
     );
   });
 });
