@@ -5,10 +5,10 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
+import I18n from "i18next";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { NotificationStatusHistory } from "../../../../definitions/pn/NotificationStatusHistory";
-import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import { ContactsListItem } from "../../messages/components/MessageDetail/ContactsListItem";
 import {

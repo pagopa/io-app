@@ -2,7 +2,7 @@ import { Body, FooterActionsInline } from "@pagopa/io-app-design-system";
 import { StackActions } from "@react-navigation/native";
 import { increment } from "fp-ts/lib/function";
 import { ComponentProps } from "react";
-import I18n from "../../../i18n";
+import I18n from "i18next";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";

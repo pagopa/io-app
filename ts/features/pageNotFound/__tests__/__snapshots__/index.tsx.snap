@@ -190,7 +190,7 @@ exports[`PageNotFound Should match the snapshot 1`] = `
           ]
         }
       >
-        Nothing here!
+        Qui non c’è nulla!
       </Text>
       <View
         style={
@@ -220,8 +220,8 @@ exports[`PageNotFound Should match the snapshot 1`] = `
           ]
         }
       >
-        This page does not exist or is not available in the version of the app you are using.
-Try updating IO.
+        Questa pagina non esiste o non è disponibile nella versione dell’app che stai usando.
+Prova ad aggiornare IO.
       </Text>
       <View
         style={
@@ -239,7 +239,7 @@ Try updating IO.
         />
         <View>
           <View
-            accessibilityLabel="Update the IO app"
+            accessibilityLabel="Aggiorna l'app"
             accessibilityRole="button"
             accessibilityState={
               {
@@ -356,7 +356,7 @@ Try updating IO.
                     ]
                   }
                 >
-                  Update the IO app
+                  Aggiorna l'app
                 </Text>
               </View>
             </View>
@@ -379,7 +379,7 @@ Try updating IO.
         />
         <View>
           <View
-            accessibilityLabel="Close"
+            accessibilityLabel="Chiudi"
             accessibilityRole="button"
             accessibilityState={
               {
@@ -501,7 +501,7 @@ Try updating IO.
                     ]
                   }
                 >
-                  Close
+                  Chiudi
                 </Text>
               </View>
             </View>

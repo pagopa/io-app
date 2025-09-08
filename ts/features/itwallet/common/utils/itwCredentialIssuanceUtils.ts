@@ -1,21 +1,26 @@
-import { AuthorizationDetail } from "@pagopa/io-react-native-wallet";
+import { generate } from "@pagopa/io-react-native-crypto";
+import {
+  createCryptoContextFor,
+  Credential
+} from "@pagopa/io-react-native-wallet";
+import { v4 as uuidv4 } from "uuid";
+import {
+  DPOP_KEYTAG,
+  regenerateCryptoKey,
+  WIA_KEYTAG
+} from "./itwCryptoContextUtils";
 import {
   IssuerConfiguration,
   RequestObject,
   StoredCredential
 } from "./itwTypesUtils";
 import { Env } from "./environment";
-import * as CredentialIssuanceUtilsV1 from "./itwCredentialIssuanceUtils.v1";
-import * as CredentialIssuanceUtilsV2 from "./itwCredentialIssuanceUtils.v2";
-
-// TODO: [SIW-2530] After fully migrating to the new API, move the content of itwCredentialIssuanceUtilsV2
-// to itwCredentialIssuanceUtils
+import { enrichErrorWithMetadata } from "./itwFailureUtils";
 
 export type RequestCredentialParams = {
   env: Env;
   credentialType: string;
   walletInstanceAttestation: string;
-  isNewIssuanceFlowEnabled: boolean;
   isPidL3: boolean;
 };
 
@@ -26,10 +31,50 @@ export type RequestCredentialParams = {
  * @param walletInstanceAttestation - The wallet instance attestation
  * @returns The credential request object
  */
-export const requestCredential = async (params: RequestCredentialParams) =>
-  params.isNewIssuanceFlowEnabled
-    ? CredentialIssuanceUtilsV2.requestCredential(params)
-    : CredentialIssuanceUtilsV1.requestCredential(params);
+export const requestCredential = async ({
+  env,
+  credentialType,
+  walletInstanceAttestation
+}: RequestCredentialParams) => {
+  // Get WIA crypto context
+  const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
+
+  // Evaluate issuer trust
+  const { issuerConf } = await Credential.Issuance.evaluateIssuerTrust(
+    env.WALLET_EAA_PROVIDER_BASE_URL
+  );
+
+  const credentialIds = getCredentialConfigurationIds(
+    issuerConf,
+    credentialType
+  );
+
+  // Start user authorization
+  const { issuerRequestUri, clientId, codeVerifier } =
+    await Credential.Issuance.startUserAuthorization(
+      issuerConf,
+      credentialIds,
+      {
+        walletInstanceAttestation,
+        redirectUri: env.ISSUANCE_REDIRECT_URI,
+        wiaCryptoContext
+      }
+    );
+
+  const requestObject =
+    await Credential.Issuance.getRequestedCredentialToBePresented(
+      issuerRequestUri,
+      clientId,
+      issuerConf
+    );
+
+  return {
+    clientId,
+    codeVerifier,
+    requestedCredential: requestObject,
+    issuerConf
+  };
+};
 
 export type ObtainCredentialParams = {
   env: Env;
@@ -39,9 +84,7 @@ export type ObtainCredentialParams = {
   pid: StoredCredential;
   clientId: string;
   codeVerifier: string;
-  credentialDefinition?: AuthorizationDetail;
   issuerConf: IssuerConfiguration;
-  isNewIssuanceFlowEnabled: boolean;
   operationType?: "reissuing";
 };
 
@@ -49,21 +92,135 @@ export type ObtainCredentialParams = {
  * Obtains a credential from the issuer.
  * @param env - The environment to use for the wallet provider base URL
  * @param credentialType - The type of credential to request
- * @param requestedCredential - The requested credential
+ * @param requestedCredential - The requested credential as a RequestObject
  * @param pid - The PID credential
  * @param walletInstanceAttestation - The wallet instance attestation
  * @param clientId - The client ID
  * @param codeVerifier - The code verifier
- * @param credentialDefinition - The credential definition
  * @param issuerConf - The issuer configuration
  * @param operationType - The operation type, e.g., "reissuing"
  * @returns The obtained credential
  */
-export const obtainCredential = async (params: ObtainCredentialParams) =>
-  params.isNewIssuanceFlowEnabled
-    ? CredentialIssuanceUtilsV2.obtainCredential(
-        params as CredentialIssuanceUtilsV2.ObtainCredentialParams
-      )
-    : CredentialIssuanceUtilsV1.obtainCredential(
-        params as CredentialIssuanceUtilsV1.ObtainCredentialParams
-      );
+export const obtainCredential = async ({
+  env,
+  credentialType,
+  requestedCredential: requestObject,
+  pid,
+  walletInstanceAttestation,
+  clientId,
+  codeVerifier,
+  issuerConf,
+  operationType
+}: ObtainCredentialParams) => {
+  // Get WIA crypto context
+  const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
+
+  // Create PID and DPoP crypto context;
+  await regenerateCryptoKey(DPOP_KEYTAG);
+  const dPopCryptoContext = createCryptoContextFor(DPOP_KEYTAG);
+
+  // Complete the user authorization via form_post.jwt mode
+  const { code } =
+    await Credential.Issuance.completeUserAuthorizationWithFormPostJwtMode(
+      requestObject,
+      pid.credential,
+      {
+        wiaCryptoContext,
+        pidCryptoContext: createCryptoContextFor(pid.keyTag)
+      }
+    );
+
+  const { accessToken } = await Credential.Issuance.authorizeAccess(
+    issuerConf,
+    code,
+    clientId,
+    env.ISSUANCE_REDIRECT_URI,
+    codeVerifier,
+    {
+      walletInstanceAttestation,
+      dPopCryptoContext,
+      wiaCryptoContext
+    }
+  );
+
+  const credentials = await Promise.all(
+    accessToken.authorization_details.map(
+      async ({ credential_configuration_id, credential_identifiers }) => {
+        const credentialKeyTag = uuidv4().toString();
+        await generate(credentialKeyTag);
+        const credentialCryptoContext =
+          createCryptoContextFor(credentialKeyTag);
+
+        // Obtain the credential
+        const { credential, format } =
+          await Credential.Issuance.obtainCredential(
+            issuerConf,
+            accessToken,
+            clientId,
+            {
+              credential_configuration_id,
+              credential_identifier: credential_identifiers[0]
+            },
+            {
+              dPopCryptoContext,
+              credentialCryptoContext
+            },
+            operationType
+          ).catch(
+            enrichErrorWithMetadata({
+              credentialId: credential_configuration_id
+            })
+          );
+
+        // Parse and verify the credential. The ignoreMissingAttributes flag must be set to false or omitted in production.
+        const { parsedCredential, issuedAt, expiration } =
+          await Credential.Issuance.verifyAndParseCredential(
+            issuerConf,
+            credential,
+            credential_configuration_id,
+            { credentialCryptoContext, ignoreMissingAttributes: true },
+            env.X509_CERT_ROOT
+          );
+
+        return {
+          credential,
+          parsedCredential,
+          credentialType,
+          credentialId: credential_configuration_id,
+          format,
+          issuerConf,
+          keyTag: credentialKeyTag,
+          jwt: {
+            expiration: expiration.toISOString(),
+            issuedAt: issuedAt?.toISOString()
+          }
+        };
+      }
+    )
+  );
+
+  return {
+    credentials
+  };
+};
+
+const getCredentialConfigurationIds = (
+  issuerConfig: Awaited<
+    ReturnType<Credential.Issuance.EvaluateIssuerTrust>
+  >["issuerConf"],
+  credentialType: string
+) => {
+  const { credential_configurations_supported } =
+    issuerConfig.openid_credential_issuer;
+  const supportedConfigurationsByScope = Object.entries(
+    credential_configurations_supported
+  ).reduce<Record<string, Array<string>>>(
+    (acc, [configId, config]) => ({
+      ...acc,
+      [config.scope]: [...(acc[config.scope] || []), configId]
+    }),
+    {}
+  );
+
+  return supportedConfigurationsByScope[credentialType] || [];
+};

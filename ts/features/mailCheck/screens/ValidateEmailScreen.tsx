@@ -2,7 +2,7 @@ import { useMemo, useCallback } from "react";
 import * as O from "fp-ts/lib/Option";
 import { Route, useRoute } from "@react-navigation/native";
 import { BodyProps } from "@pagopa/io-app-design-system";
-import I18n from "../../../i18n";
+import I18n from "i18next";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
 import { acknowledgeOnEmailValidation } from "../../settings/common/store/actions";

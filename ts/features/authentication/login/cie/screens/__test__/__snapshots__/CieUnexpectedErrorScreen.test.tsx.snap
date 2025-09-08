@@ -603,7 +603,7 @@ exports[`CieUnexpectedErrorScreen renders correctly and matches snapshot 1`] = `
                                 ]
                               }
                             >
-                              We could not retrieve the data from the card
+                              Non siamo riusciti a recuperare i dati dalla carta
                             </Text>
                             <View
                               style={
@@ -633,7 +633,7 @@ exports[`CieUnexpectedErrorScreen renders correctly and matches snapshot 1`] = `
                                 ]
                               }
                             >
-                              If you've had the problem a few times, give it a few minutes and try again.
+                              Se riscontri più volte il problema, attendi qualche minuto e riprova.
                             </Text>
                             <View
                               style={
@@ -651,7 +651,7 @@ exports[`CieUnexpectedErrorScreen renders correctly and matches snapshot 1`] = `
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Retry"
+                                  accessibilityLabel="Riprova"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -767,7 +767,7 @@ exports[`CieUnexpectedErrorScreen renders correctly and matches snapshot 1`] = `
                                           ]
                                         }
                                       >
-                                        Retry
+                                        Riprova
                                       </Text>
                                     </View>
                                   </View>
@@ -790,7 +790,7 @@ exports[`CieUnexpectedErrorScreen renders correctly and matches snapshot 1`] = `
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Close"
+                                  accessibilityLabel="Chiudi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -911,7 +911,7 @@ exports[`CieUnexpectedErrorScreen renders correctly and matches snapshot 1`] = `
                                           ]
                                         }
                                       >
-                                        Close
+                                        Chiudi
                                       </Text>
                                     </View>
                                   </View>
