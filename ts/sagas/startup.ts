@@ -49,13 +49,10 @@ import { startAndReturnIdentificationResult } from "../features/identification/s
 import { IdentificationResult } from "../features/identification/store/reducers";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
 import {
-  isDeviceOfflineWithWalletSaga,
+  shouldExitForOfflineAccess,
   watchSessionRefreshInOfflineSaga
 } from "../features/ingress/saga";
-import {
-  isBlockingScreenSelector,
-  offlineAccessReasonSelector
-} from "../features/ingress/store/selectors";
+import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
 import {
   watchItwOfflineSaga,
   watchItwSaga
@@ -136,7 +133,6 @@ import { getPin } from "../utils/keychain";
 import { watchActiveSessionLoginSaga } from "../features/authentication/activeSessionLogin/saga";
 import ROUTES from "../navigation/routes";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
-import { OfflineAccessReasonEnum } from "../features/ingress/store/reducer";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
@@ -260,23 +256,14 @@ export function* initializeApplicationSaga(
   // Start watching for ITW sagas that do not require internet connection or a valid session
   yield* fork(watchItwOfflineSaga);
 
-  /**
-   * Prevents the saga from executing if the user opened the app while offline.
-   *
-   * - Calls `isDeviceOfflineWithWalletSaga` to determine if the device is offline,
-   *   the user has a valid IT Wallet instance, and offline access is enabled.
-   * - If this condition is met, it means the app started in offline mode,
-   *   so the function exits early (`return`), preventing unnecessary execution of subsequent logic.
-   * - This ensures that only relevant flows are triggered based on the app’s startup condition.
-   */
-  const isDeviceOfflineWithWallet = yield* call(isDeviceOfflineWithWalletSaga);
-  if (isDeviceOfflineWithWallet) {
-    return;
-  }
+  // Before continuing with the startup flow, we check if the app started offline.
+  // In that case (offline wallet or timeout), we skip the saga to prevent triggering
+  // network-dependent logic unnecessarily.
+  const shouldExitFromStartupForOfflineAccess = yield* call(
+    shouldExitForOfflineAccess
+  );
 
-  const offlineAccessReason = yield* select(offlineAccessReasonSelector);
-
-  if (offlineAccessReason === OfflineAccessReasonEnum.TIMEOUT) {
+  if (shouldExitFromStartupForOfflineAccess) {
     return;
   }
 

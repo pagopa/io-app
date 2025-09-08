@@ -1,4 +1,4 @@
-import { put, select, take, takeLatest } from "typed-redux-saga/macro";
+import { call, put, select, take, takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 import { setOfflineAccessReason } from "../store/actions";
 import { offlineAccessReasonSelector } from "../store/selectors";
@@ -68,6 +68,32 @@ export function* isDeviceOfflineWithWalletSaga() {
   }
 
   if (isConnected === false && itwOfflineAccessAvailable) {
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Prevents the saga from executing if the user opened the app while offline.
+ *
+ * - Calls `isDeviceOfflineWithWalletSaga` to determine if the device is offline,
+ *   the user has a valid IT Wallet instance, and offline access is enabled.
+ * - If this condition is met, it means the app started in offline mode,
+ *   so the function exits early (`return`), preventing unnecessary execution of subsequent logic.
+ * - This ensures that only relevant flows are triggered based on the app’s startup condition.
+ * - Additionally, it checks if the offline access reason is due to a timeout (`OfflineAccessReasonEnum.TIMEOUT`).
+ *   If so, it also exits early to avoid further processing.
+ *
+ * @returns {boolean} - Returns `true` if the saga should exit early due to offline access conditions, otherwise `false`.
+ */ export function* shouldExitForOfflineAccess() {
+  const isDeviceOfflineWithWallet = yield* call(isDeviceOfflineWithWalletSaga);
+
+  if (isDeviceOfflineWithWallet) {
+    return true;
+  }
+  const offlineAccessReason = yield* select(offlineAccessReasonSelector);
+
+  if (offlineAccessReason === OfflineAccessReasonEnum.TIMEOUT) {
     return true;
   }
   return false;
