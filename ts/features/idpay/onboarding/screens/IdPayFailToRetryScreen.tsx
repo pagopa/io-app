@@ -23,8 +23,13 @@ export const IdPayFailToRetryScreen = () => {
   const [contentTitle, setContentTitle] = useState(
     I18n.t("idpay.onboarding.failToRetry.contentTitle")
   );
-  const { useActorRef } = IdPayOnboardingMachineContext;
+  const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
+
+  const state = useSelector(state => state);
+
+  const isFirstCallInPending =
+    state.hasTag("loading") || state.children.getRequiredCriteria !== undefined;
 
   useEffect(() => {
     // Since the screen is shown for a very short time,
@@ -44,10 +49,12 @@ export const IdPayFailToRetryScreen = () => {
         timeouts.shift();
       }, TIMEOUT_CHANGE_LABEL)
     );
-
     timeouts.push(
       setTimeout(() => {
-        machine.send({ type: "retryConnection" });
+        // if first call is still pending, do not send another retry event
+        if (!isFirstCallInPending) {
+          machine.send({ type: "retryConnection" });
+        }
         setShowBlockingScreen(true);
         dispatch(setIsBlockingScreen());
         timeouts.shift();
@@ -57,7 +64,7 @@ export const IdPayFailToRetryScreen = () => {
     return () => {
       timeouts?.forEach(clearTimeout);
     };
-  }, [dispatch, machine]);
+  }, [dispatch, isFirstCallInPending, machine]);
 
   if (showBlockingScreen) {
     return <IngressScreenBlockingError />;

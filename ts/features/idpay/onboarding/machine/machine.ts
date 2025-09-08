@@ -233,6 +233,7 @@ export const idPayOnboardingMachine = setup({
     LoadingCriteria: {
       tags: [IdPayTags.Loading],
       invoke: {
+        id: "getRequiredCriteria",
         src: "getRequiredCriteria",
         input: ({ context }) => selectInitiativeId(context),
         onDone: {
