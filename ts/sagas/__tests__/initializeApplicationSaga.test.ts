@@ -41,10 +41,7 @@ import { watchLogoutSaga } from "../../features/authentication/common/saga/watch
 import { cancellAllLocalNotifications } from "../../features/pushNotifications/utils";
 import { handleApplicationStartupTransientError } from "../../features/startup/sagas";
 import { startupTransientErrorInitialState } from "../../store/reducers/startup";
-import {
-  isBlockingScreenSelector,
-  offlineAccessReasonSelector
-} from "../../features/ingress/store/selectors";
+import { isBlockingScreenSelector } from "../../features/ingress/store/selectors";
 import { notificationPermissionsListener } from "../../features/pushNotifications/sagas/notificationPermissionsListener";
 import { trackKeychainFailures } from "../../utils/analytics";
 import { checkSession } from "../../features/authentication/common/saga/watchCheckSessionSaga";
@@ -53,7 +50,7 @@ import { checkPublicKeyAndBlockIfNeeded } from "../../features/lollipop/navigati
 import { userFromSuccessLoginSelector } from "../../features/authentication/loginInfo/store/selectors";
 import { watchItwOfflineSaga } from "../../features/itwallet/common/saga";
 import {
-  isDeviceOfflineWithWalletSaga,
+  shouldExitForOfflineAccess,
   watchSessionRefreshInOfflineSaga
 } from "../../features/ingress/saga";
 import { watchSessionExpiredOrCorruptedSaga } from "../../features/authentication/common/saga/watchSessionExpiredSaga";
@@ -121,9 +118,7 @@ describe("initializeApplicationSaga", () => {
       .next(false) // the device is supported
       .fork(watchItwOfflineSaga)
       .next()
-      .call(isDeviceOfflineWithWalletSaga)
-      .next()
-      .select(offlineAccessReasonSelector)
+      .call(shouldExitForOfflineAccess)
       .next()
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
@@ -182,10 +177,9 @@ describe("initializeApplicationSaga", () => {
       .next(false) // the device is supported
       .fork(watchItwOfflineSaga)
       .next()
-      .call(isDeviceOfflineWithWalletSaga)
+      .call(shouldExitForOfflineAccess)
       .next()
-      .select(offlineAccessReasonSelector)
-      .next()
+
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
       .select(remoteConfigSelector)
@@ -237,10 +231,9 @@ describe("initializeApplicationSaga", () => {
       .next(false) // the device is supported
       .fork(watchItwOfflineSaga)
       .next()
-      .call(isDeviceOfflineWithWalletSaga)
+      .call(shouldExitForOfflineAccess)
       .next()
-      .select(offlineAccessReasonSelector)
-      .next()
+
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
       .select(remoteConfigSelector)
@@ -297,10 +290,9 @@ describe("initializeApplicationSaga", () => {
       .next(false) // the device is supported
       .fork(watchItwOfflineSaga)
       .next()
-      .call(isDeviceOfflineWithWalletSaga)
+      .call(shouldExitForOfflineAccess)
       .next()
-      .select(offlineAccessReasonSelector)
-      .next()
+
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
       .select(remoteConfigSelector)
@@ -370,10 +362,9 @@ describe("initializeApplicationSaga", () => {
       .next(false) // the device is supported
       .fork(watchItwOfflineSaga)
       .next()
-      .call(isDeviceOfflineWithWalletSaga)
+      .call(shouldExitForOfflineAccess)
       .next()
-      .select(offlineAccessReasonSelector)
-      .next()
+
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
       .select(remoteConfigSelector)
@@ -430,10 +421,9 @@ describe("initializeApplicationSaga", () => {
       .next(false) // the device is supported
       .fork(watchItwOfflineSaga)
       .next()
-      .call(isDeviceOfflineWithWalletSaga)
+      .call(shouldExitForOfflineAccess)
       .next()
-      .select(offlineAccessReasonSelector)
-      .next()
+
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
       .select(remoteConfigSelector)
