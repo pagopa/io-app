@@ -701,7 +701,6 @@ describe("itwCredentialIssuanceMachine", () => {
               resolve({
                 clientId: T_CLIENT_ID,
                 codeVerifier: T_CODE_VERIFIER,
-                credentialDefinition: T_CREDENTIAL_DEFINITION,
                 requestedCredential: T_REQUESTED_CREDENTIAL,
                 issuerConf: T_ISSUER_CONFIG
               }),
@@ -739,7 +738,6 @@ describe("itwCredentialIssuanceMachine", () => {
               resolve({
                 clientId: T_CLIENT_ID,
                 codeVerifier: T_CODE_VERIFIER,
-                credentialDefinition: T_CREDENTIAL_DEFINITION,
                 requestedCredential: T_REQUESTED_CREDENTIAL,
                 issuerConf: T_ISSUER_CONFIG
               }),
