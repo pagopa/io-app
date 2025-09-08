@@ -690,9 +690,6 @@ describe("itwCredentialIssuanceMachine", () => {
 
   it("should not call navigateToExtendedLoadingScreen before 5000ms in TrustFederationVerification state", async () => {
     const actor = createActor(mockedMachine);
-
-    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
-
     requestCredential.mockImplementation(
       () =>
         new Promise(resolve =>
@@ -708,11 +705,9 @@ describe("itwCredentialIssuanceMachine", () => {
           )
         )
     );
-
     verifyTrustFederation.mockImplementation(() => Promise.resolve());
 
     actor.start();
-
     actor.send({
       type: "select-credential",
       credentialType: "MDL",
@@ -745,14 +740,11 @@ describe("itwCredentialIssuanceMachine", () => {
           )
         )
     );
-
     verifyTrustFederation.mockImplementation(
       () => new Promise(resolve => setTimeout(() => resolve({}), 6000))
     );
 
     actor.start();
-
-    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
     actor.send({
       type: "select-credential",

@@ -509,10 +509,9 @@ describe("itwRemoteMachine", () => {
           )
         )
     );
-
     const actor = createActor(mockedMachine);
-    actor.start();
 
+    actor.start();
     actor.send({ type: "start", payload: qrCodePayload });
 
     await waitFor(actor, s => s.matches("EvaluatingRelyingPartyTrust"));
@@ -536,8 +535,8 @@ describe("itwRemoteMachine", () => {
     );
 
     const actor = createActor(mockedMachine);
-    actor.start();
 
+    actor.start();
     actor.send({ type: "start", payload: qrCodePayload });
 
     await waitFor(actor, s => s.matches("EvaluatingRelyingPartyTrust"));

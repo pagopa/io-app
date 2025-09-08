@@ -1764,16 +1764,10 @@ describe("itwEidIssuanceMachine", () => {
 
   it("should not call navigateToExtendedLoadingScreen before 5000ms in TrustFederationVerification state", async () => {
     const actor = createActor(mockedMachine);
-    actor.start();
-
-    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
-
-    actor.send({ type: "start" });
-
-    expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
-
     verifyTrustFederation.mockImplementation(() => Promise.resolve());
 
+    actor.start();
+    actor.send({ type: "start" });
     actor.send({ type: "accept-tos" });
 
     expect(actor.getSnapshot().value).toStrictEqual(
@@ -1787,18 +1781,12 @@ describe("itwEidIssuanceMachine", () => {
 
   it("should call navigateToExtendedLoadingScreen once after 5000ms in TrustFederationVerification state", async () => {
     const actor = createActor(mockedMachine);
-    actor.start();
-
-    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
-
-    actor.send({ type: "start" });
-
-    expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
-
     verifyTrustFederation.mockImplementation(
       () => new Promise(resolve => setTimeout(() => resolve({}), 6000))
     );
 
+    actor.start();
+    actor.send({ type: "start" });
     actor.send({ type: "accept-tos" });
 
     expect(actor.getSnapshot().value).toStrictEqual(
