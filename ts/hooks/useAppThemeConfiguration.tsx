@@ -6,7 +6,7 @@ import { constVoid } from "fp-ts/lib/function";
 import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
 
 export const THEME_PERSISTENCE_KEY = "selectedAppThemeConfiguration";
-export type ColorModeChoice = "system" | "dark" | "light";
+export type ColorModeChoice = "auto" | "dark" | "light";
 
 export const useAppThemeConfiguration = () => {
   const { setTheme } = useIOThemeContext();
@@ -21,10 +21,10 @@ export const useAppThemeConfiguration = () => {
           return;
         }
         Appearance.setColorScheme(
-          value === "system" ? undefined : (value as ColorSchemeName)
+          value === "auto" ? undefined : (value as ColorSchemeName)
         );
         setTheme(
-          value === "system" ? systemColorScheme : (value as ColorSchemeName)
+          value === "auto" ? systemColorScheme : (value as ColorSchemeName)
         );
       })
       .catch(() => {
@@ -36,7 +36,7 @@ export const useAppThemeConfiguration = () => {
   useEffect(() => {
     AsyncStorage.getItem(THEME_PERSISTENCE_KEY)
       .then(value => {
-        if (value === "system") {
+        if (value === "auto") {
           setTheme(systemColorScheme);
         }
       })

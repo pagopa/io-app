@@ -19,11 +19,13 @@ import {
 } from "../../../../hooks/useAppThemeConfiguration";
 import {
   preferencesFontSet,
+  preferencesThemeSet,
   TypefaceChoice
 } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import {
   trackAppearancePreferenceScreenView,
+  trackAppearancePreferenceThemeUpdate,
   trackAppearancePreferenceTypefaceUpdate
 } from "../../common/analytics";
 
@@ -65,9 +67,11 @@ const AppearancePreferenceScreen = (): ReactElement => {
   };
 
   const handleColorModeChange = (choice: ColorModeChoice) => {
+    trackAppearancePreferenceThemeUpdate(choice, store.getState());
     AsyncStorage.setItem(THEME_PERSISTENCE_KEY, choice).finally(() => {
+      dispatch(preferencesThemeSet(choice));
       setSelectedColorMode(choice);
-      if (choice === "system") {
+      if (choice === "auto") {
         Appearance.setColorScheme(undefined);
         setTheme(systemColorScheme);
         return;
@@ -102,7 +106,7 @@ const AppearancePreferenceScreen = (): ReactElement => {
   // Options for the color mode
   const colorModeOptions = [
     {
-      id: "system" as ColorModeChoice,
+      id: "auto" as ColorModeChoice,
       value: I18n.t(
         "profile.preferences.list.appearance.theme.automatic.title"
       ),
