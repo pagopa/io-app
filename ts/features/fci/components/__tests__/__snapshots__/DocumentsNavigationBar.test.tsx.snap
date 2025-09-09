@@ -19,261 +19,273 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
       },
       {
         "alignItems": "center",
-        "backgroundColor": "#FFFFFF",
-        "borderColor": "#D2D6E3",
         "flexDirection": "row",
         "paddingBottom": 14,
         "paddingTop": 12,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#D2D6E3",
       },
     ]
   }
 >
   <View
-    accessibilityLabel="previous"
-    accessibilityRole="button"
-    accessibilityState={
-      {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": false,
-        "expanded": undefined,
-        "selected": undefined,
-      }
-    }
-    accessibilityValue={
-      {
-        "max": undefined,
-        "min": undefined,
-        "now": undefined,
-        "text": undefined,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    hitSlop={8}
-    onBlur={[Function]}
-    onClick={[Function]}
-    onFocus={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    testID="DocumentsNavigationBarLeftButtonTestID"
-  >
-    <View
-      style={
-        [
-          {
-            "alignItems": "center",
-            "justifyContent": "center",
-          },
-          {
-            "height": 24,
-            "width": 24,
-          },
-          false,
-        ]
-      }
-    >
-      <RNSVGSvgView
-        accessibilityElementsHidden={true}
-        accessibilityLabel=""
-        accessible={false}
-        align="xMidYMid"
-        animatedProps={
-          {
-            "color": undefined,
-          }
-        }
-        bbHeight={36}
-        bbWidth={36}
-        color="#0B3EE3"
-        focusable={false}
-        height={36}
-        importantForAccessibility="no-hide-descendants"
-        meetOrSlice={0}
-        minX={0}
-        minY={0}
-        style={
-          [
-            {
-              "backgroundColor": "transparent",
-              "borderWidth": 0,
-            },
-            {
-              "flex": 0,
-              "height": 36,
-              "width": 36,
-            },
-          ]
-        }
-        vbHeight={24}
-        vbWidth={24}
-        width={36}
-      >
-        <RNSVGGroup
-          fill={
-            {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
-        >
-          <RNSVGPath
-            clipRule={0}
-            d="M15.7071 5.29289c-.3905-.39052-1.0237-.39052-1.4142 0L8.29289 11.2929c-.39052.3905-.39052 1.0237 0 1.4142l6.00001 6c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L10.4142 12l5.2929-5.29289c.3905-.39053.3905-1.02369 0-1.41422Z"
-            fill={
-              {
-                "type": 2,
-              }
-            }
-            fillRule={0}
-            propList={
-              [
-                "fill",
-                "fillRule",
-              ]
-            }
-          />
-        </RNSVGGroup>
-      </RNSVGSvgView>
-    </View>
-  </View>
-  <Text
-    allowFontScaling={true}
-    dynamicTypeRamp="headline"
-    maxFontSizeMultiplier={1.5}
     style={
-      [
-        {},
-        {
-          "color": "#0E0F13",
-          "fontFamily": "Titillio",
-          "fontSize": 16,
-          "fontStyle": "normal",
-          "fontWeight": "600",
-          "lineHeight": 24,
-        },
-      ]
-    }
-  >
-    Documento 1 di 2
-  </Text>
-  <View
-    accessibilityLabel="next"
-    accessibilityRole="button"
-    accessibilityState={
       {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": false,
-        "expanded": undefined,
-        "selected": undefined,
+        "display": "flex",
+        "flexDirection": "row",
+        "gap": 8,
       }
     }
-    accessibilityValue={
-      {
-        "max": undefined,
-        "min": undefined,
-        "now": undefined,
-        "text": undefined,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    hitSlop={8}
-    onBlur={[Function]}
-    onClick={[Function]}
-    onFocus={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    testID="DocumentsNavigationBarRightButtonTestID"
   >
     <View
-      style={
-        [
-          {
-            "alignItems": "center",
-            "justifyContent": "center",
-          },
-          {
-            "height": 24,
-            "width": 24,
-          },
-          false,
-        ]
-      }
-    >
-      <RNSVGSvgView
-        accessibilityElementsHidden={true}
-        accessibilityLabel=""
-        accessible={false}
-        align="xMidYMid"
-        animatedProps={
-          {
-            "color": undefined,
-          }
+      accessibilityLabel="previous"
+      accessibilityRole="button"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": false,
+          "expanded": undefined,
+          "selected": undefined,
         }
-        bbHeight={36}
-        bbWidth={36}
-        color="#0B3EE3"
-        focusable={false}
-        height={36}
-        importantForAccessibility="no-hide-descendants"
-        meetOrSlice={0}
-        minX={0}
-        minY={0}
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      hitSlop={8}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="DocumentsNavigationBarLeftButtonTestID"
+    >
+      <View
         style={
           [
             {
-              "backgroundColor": "transparent",
-              "borderWidth": 0,
+              "alignItems": "center",
+              "justifyContent": "center",
             },
             {
-              "flex": 0,
-              "height": 36,
-              "width": 36,
+              "height": 24,
+              "width": 24,
             },
+            false,
           ]
         }
-        vbHeight={24}
-        vbWidth={24}
-        width={36}
       >
-        <RNSVGGroup
-          fill={
+        <RNSVGSvgView
+          accessibilityElementsHidden={true}
+          accessibilityLabel=""
+          accessible={false}
+          align="xMidYMid"
+          animatedProps={
             {
-              "payload": 4278190080,
-              "type": 0,
+              "color": undefined,
             }
           }
+          bbHeight={36}
+          bbWidth={36}
+          color="#0B3EE3"
+          focusable={false}
+          height={36}
+          importantForAccessibility="no-hide-descendants"
+          meetOrSlice={0}
+          minX={0}
+          minY={0}
+          style={
+            [
+              {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              {
+                "flex": 0,
+                "height": 36,
+                "width": 36,
+              },
+            ]
+          }
+          vbHeight={24}
+          vbWidth={24}
+          width={36}
         >
-          <RNSVGPath
-            clipRule={0}
-            d="M8.29289 5.29289c.39053-.39052 1.02369-.39052 1.41422 0l5.99999 6.00001c.3905.3905.3905 1.0237 0 1.4142l-5.99999 6c-.39053.3905-1.02369.3905-1.41422 0-.39052-.3905-.39052-1.0237 0-1.4142L13.5858 12 8.29289 6.70711c-.39052-.39053-.39052-1.02369 0-1.41422Z"
+          <RNSVGGroup
             fill={
               {
-                "type": 2,
+                "payload": 4278190080,
+                "type": 0,
               }
             }
-            fillRule={0}
-            propList={
-              [
-                "fill",
-                "fillRule",
-              ]
+          >
+            <RNSVGPath
+              clipRule={0}
+              d="M15.7071 5.29289c-.3905-.39052-1.0237-.39052-1.4142 0L8.29289 11.2929c-.39052.3905-.39052 1.0237 0 1.4142l6.00001 6c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L10.4142 12l5.2929-5.29289c.3905-.39053.3905-1.02369 0-1.41422Z"
+              fill={
+                {
+                  "type": 2,
+                }
+              }
+              fillRule={0}
+              propList={
+                [
+                  "fill",
+                  "fillRule",
+                ]
+              }
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+    </View>
+    <Text
+      allowFontScaling={true}
+      dynamicTypeRamp="headline"
+      maxFontSizeMultiplier={1.5}
+      style={
+        [
+          {},
+          {
+            "color": "#0E0F13",
+            "fontFamily": "Titillio",
+            "fontSize": 16,
+            "fontStyle": "normal",
+            "fontWeight": "600",
+            "lineHeight": 24,
+          },
+        ]
+      }
+    >
+      Documento 1 di 2
+    </Text>
+    <View
+      accessibilityLabel="next"
+      accessibilityRole="button"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": false,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      hitSlop={8}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="DocumentsNavigationBarRightButtonTestID"
+    >
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "justifyContent": "center",
+            },
+            {
+              "height": 24,
+              "width": 24,
+            },
+            false,
+          ]
+        }
+      >
+        <RNSVGSvgView
+          accessibilityElementsHidden={true}
+          accessibilityLabel=""
+          accessible={false}
+          align="xMidYMid"
+          animatedProps={
+            {
+              "color": undefined,
             }
-          />
-        </RNSVGGroup>
-      </RNSVGSvgView>
+          }
+          bbHeight={36}
+          bbWidth={36}
+          color="#0B3EE3"
+          focusable={false}
+          height={36}
+          importantForAccessibility="no-hide-descendants"
+          meetOrSlice={0}
+          minX={0}
+          minY={0}
+          style={
+            [
+              {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              {
+                "flex": 0,
+                "height": 36,
+                "width": 36,
+              },
+            ]
+          }
+          vbHeight={24}
+          vbWidth={24}
+          width={36}
+        >
+          <RNSVGGroup
+            fill={
+              {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+          >
+            <RNSVGPath
+              clipRule={0}
+              d="M8.29289 5.29289c.39053-.39052 1.02369-.39052 1.41422 0l5.99999 6.00001c.3905.3905.3905 1.0237 0 1.4142l-5.99999 6c-.39053.3905-1.02369.3905-1.41422 0-.39052-.3905-.39052-1.0237 0-1.4142L13.5858 12 8.29289 6.70711c-.39052-.39053-.39052-1.02369 0-1.41422Z"
+              fill={
+                {
+                  "type": 2,
+                }
+              }
+              fillRule={0}
+              propList={
+                [
+                  "fill",
+                  "fillRule",
+                ]
+              }
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
     </View>
   </View>
   <View
