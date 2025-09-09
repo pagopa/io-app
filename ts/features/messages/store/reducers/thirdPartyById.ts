@@ -20,8 +20,32 @@ import { UIMessageDetails } from "../../types";
 import { extractContentFromMessageSources } from "../../utils";
 import { isTestEnv } from "../../../../utils/environment";
 
+export const thirdPartyKinds = {
+  TPM: "TPM",
+  AAR: "AAR"
+} as const;
+
+type ThirdPartyKinds = typeof thirdPartyKinds;
+
+type StandardThirdPartyMessage = {
+  kind: ThirdPartyKinds["TPM"];
+} & ThirdPartyMessageWithContent;
+type EphemeralAARThirdPartyMessage = {
+  kind: ThirdPartyKinds["AAR"];
+  mandateId?: string;
+} & ThirdPartyMessageWithContent;
+
+export type ThirdPartyMessageUnion =
+  | StandardThirdPartyMessage
+  | EphemeralAARThirdPartyMessage;
+
+// const isEphemeralAARThirdPartyMessage = (
+//   message: ThirdPartyMessageUnion
+// ): message is EphemeralAARThirdPartyMessage =>
+//   message.kind === thirdPartyKinds.AAR;
+
 export type ThirdPartyById = IndexedById<
-  pot.Pot<ThirdPartyMessageWithContent, Error>
+  pot.Pot<ThirdPartyMessageUnion, Error>
 >;
 
 export const initialState: ThirdPartyById = {};

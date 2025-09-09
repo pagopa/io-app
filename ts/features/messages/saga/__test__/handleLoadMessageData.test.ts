@@ -20,7 +20,11 @@ import { serviceDetailsByIdPotSelector } from "../../../services/details/store/r
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
 import { messageDetailsByIdSelector } from "../../store/reducers/detailsById";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
-import { thirdPartyFromIdSelector } from "../../store/reducers/thirdPartyById";
+import {
+  thirdPartyFromIdSelector,
+  thirdPartyKinds,
+  ThirdPartyMessageUnion
+} from "../../store/reducers/thirdPartyById";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import { isPnRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isLoadingOrUpdatingInbox } from "../../store/reducers/allPaginated";
@@ -241,54 +245,58 @@ describe("getMessageDetails", () => {
   });
 });
 
+const thirdPartyKindsMock = Object.values(thirdPartyKinds);
+
 describe("getThirdPartyDataMessage", () => {
-  it("should dispatch a loadThirdPartyMessage.request and return the third party message when the related saga succeeds ", () => {
-    const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD";
-    const service = {
-      id: "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId,
-      name: "The name",
-      organization: {
-        fiscal_code: "OrgFisCod",
-        name: "Org name"
-      }
-    } as ServiceDetails;
-    const messageCategoryTag = "GENERIC";
-    const thirdPartyMessage = { id: "1" } as ThirdPartyMessageWithContent;
-    testSaga(
-      testable!.getThirdPartyDataMessage,
-      messageId,
-      false,
-      service,
-      messageCategoryTag
-    )
-      .next()
-      .put(
-        loadThirdPartyMessage.request({
-          id: messageId,
-          serviceId: service.id,
-          tag: messageCategoryTag
-        })
-      )
-      .next()
-      .take([loadThirdPartyMessage.success, loadThirdPartyMessage.failure])
-      .next(
-        loadThirdPartyMessage.success({
-          id: messageId,
-          content: thirdPartyMessage
-        })
-      )
-      .select(thirdPartyFromIdSelector, messageId)
-      .next(pot.some(thirdPartyMessage))
-      .call(
-        testable!.decodeAndTrackThirdPartyMessageDetailsIfNeeded,
+  thirdPartyKindsMock.forEach(kind =>
+    it(`should dispatch a loadThirdPartyMessage.request and return the third party message with kind='${kind}' when the related saga succeeds`, () => {
+      const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD";
+      const service = {
+        id: "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId,
+        name: "The name",
+        organization: {
+          fiscal_code: "OrgFisCod",
+          name: "Org name"
+        }
+      } as ServiceDetails;
+      const messageCategoryTag = "GENERIC";
+      const thirdPartyMessage = { kind, id: "1" } as ThirdPartyMessageUnion;
+      testSaga(
+        testable!.getThirdPartyDataMessage,
+        messageId,
         false,
-        thirdPartyMessage,
         service,
         messageCategoryTag
       )
-      .next(O.none)
-      .returns(thirdPartyMessage);
-  });
+        .next()
+        .put(
+          loadThirdPartyMessage.request({
+            id: messageId,
+            serviceId: service.id,
+            tag: messageCategoryTag
+          })
+        )
+        .next()
+        .take([loadThirdPartyMessage.success, loadThirdPartyMessage.failure])
+        .next(
+          loadThirdPartyMessage.success({
+            id: messageId,
+            content: thirdPartyMessage
+          })
+        )
+        .select(thirdPartyFromIdSelector, messageId)
+        .next(pot.some(thirdPartyMessage))
+        .call(
+          testable!.decodeAndTrackThirdPartyMessageDetailsIfNeeded,
+          false,
+          thirdPartyMessage,
+          service,
+          messageCategoryTag
+        )
+        .next(O.none)
+        .returns(thirdPartyMessage);
+    })
+  );
   it("should dispatch a loadThirdPartyMessage.request and return undefined when the related saga fails ", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD";
     const service = {

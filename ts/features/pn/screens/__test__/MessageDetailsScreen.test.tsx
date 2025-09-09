@@ -20,8 +20,11 @@ import { loadServiceDetail } from "../../../services/details/store/actions/detai
 import { service_1 } from "../../../messages/__mocks__/messages";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { thirdPartyMessage } from "../../__mocks__/pnMessage";
+import { thirdPartyKinds } from "../../../messages/store/reducers/thirdPartyById";
 
 jest.mock("../../components/MessageDetails");
+
+const thirdPartyKindsMock = Object.values(thirdPartyKinds);
 
 describe("MessageDetailsScreen", () => {
   it("should match the snapshot when there is an error", () => {
@@ -41,29 +44,31 @@ describe("MessageDetailsScreen", () => {
     expect(component).toMatchSnapshot();
   });
 
-  it("should match the snapshot when everything went fine", () => {
-    const sequenceOfActions: ReadonlyArray<Action> = [
-      applicationChangeState("active"),
-      loadMessageById.success(toUIMessage(message_1)),
-      loadServiceDetail.success(service_1),
-      loadMessageDetails.success(toUIMessageDetails(message_1)),
-      loadThirdPartyMessage.success({
-        id: message_1.id,
-        content: thirdPartyMessage
-      })
-    ];
+  thirdPartyKindsMock.forEach(kind =>
+    it(`should match the snapshot when everything went fine and kind='${kind}'`, () => {
+      const sequenceOfActions: ReadonlyArray<Action> = [
+        applicationChangeState("active"),
+        loadMessageById.success(toUIMessage(message_1)),
+        loadServiceDetail.success(service_1),
+        loadMessageDetails.success(toUIMessageDetails(message_1)),
+        loadThirdPartyMessage.success({
+          id: message_1.id,
+          content: { kind, ...thirdPartyMessage }
+        })
+      ];
 
-    const state: GlobalState = reproduceSequence(
-      {} as GlobalState,
-      appReducer,
-      sequenceOfActions
-    );
-    const mockStore = configureMockStore<GlobalState>();
-    const store: Store<GlobalState> = mockStore(state);
+      const state: GlobalState = reproduceSequence(
+        {} as GlobalState,
+        appReducer,
+        sequenceOfActions
+      );
+      const mockStore = configureMockStore<GlobalState>();
+      const store: Store<GlobalState> = mockStore(state);
 
-    const { component } = renderComponent(store);
-    expect(component).toMatchSnapshot();
-  });
+      const { component } = renderComponent(store);
+      expect(component).toMatchSnapshot();
+    })
+  );
 });
 
 const renderComponent = (store: Store<GlobalState>) => {

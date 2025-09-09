@@ -23,6 +23,7 @@ import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/Th
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
 import { serviceDetailsByIdSelector } from "../../services/details/store/reducers";
 import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
+import { thirdPartyKinds } from "../store/reducers/thirdPartyById";
 
 export function* handleThirdPartyMessage(
   getThirdPartyMessage: BackendClient["getThirdPartyMessage"],
@@ -57,7 +58,13 @@ export function* handleThirdPartyMessage(
       const thirdPartyMessage = result.right.value;
       yield* call(trackSuccess, thirdPartyMessage, serviceDetails, tag);
       yield* put(
-        loadThirdPartyMessage.success({ id, content: thirdPartyMessage })
+        loadThirdPartyMessage.success({
+          id,
+          content: {
+            kind: thirdPartyKinds.TPM,
+            ...thirdPartyMessage
+          }
+        })
       );
     } else {
       const reason = `Response status ${result.right.status} - ${

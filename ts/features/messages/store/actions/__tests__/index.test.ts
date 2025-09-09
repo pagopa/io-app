@@ -32,8 +32,11 @@ import { PaymentInfoResponse } from "../../../../../../definitions/backend/Payme
 import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
-import { ThirdPartyMessageWithContent } from "../../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { UIMessage, UIMessageDetails } from "../../../types";
+import {
+  thirdPartyKinds,
+  ThirdPartyMessageUnion
+} from "../../reducers/thirdPartyById";
 
 describe("index", () => {
   const messageId = "01JKAGGZTSQDR1GB5TYJ9PHXM6";
@@ -158,17 +161,21 @@ describe("index", () => {
     });
   });
   describe("loadThirdPartyMessage.success", () => {
-    it("should match expected type and payload", () => {
-      const content = {
-        id: messageId as string
-      } as ThirdPartyMessageWithContent;
-      const action = loadThirdPartyMessage.success({
-        id: messageId,
-        content
-      });
-      expect(action.type).toBe("THIRD_PARTY_MESSAGE_LOAD_SUCCESS");
-      expect(action.payload).toEqual({ id: messageId, content });
-    });
+    const thirdPartyKindsMock = Object.values(thirdPartyKinds);
+    thirdPartyKindsMock.forEach(kind =>
+      it(`should match expected type and payload and kind='${kind}'`, () => {
+        const content = {
+          kind,
+          id: messageId as string
+        } as ThirdPartyMessageUnion;
+        const action = loadThirdPartyMessage.success({
+          id: messageId,
+          content
+        });
+        expect(action.type).toBe("THIRD_PARTY_MESSAGE_LOAD_SUCCESS");
+        expect(action.payload).toEqual({ id: messageId, content });
+      })
+    );
   });
   describe("loadThirdPartyMessage.failure", () => {
     it("should match expected type and payload", () => {

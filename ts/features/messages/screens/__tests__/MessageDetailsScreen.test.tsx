@@ -1,10 +1,17 @@
 import { Action, Store, createStore } from "redux";
-import { MESSAGES_ROUTES } from "../../navigation/routes";
-import { GlobalState } from "../../../../store/reducers/types";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
+import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
-import { MessageDetailsScreen } from "../MessageDetailsScreen";
+import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { reproduceSequence } from "../../../../utils/tests";
+import {
+  messageWithExpiredPayment,
+  messageWithValidPayment,
+  message_1
+} from "../../../messages/__mocks__/message";
+import { service_1 } from "../../../messages/__mocks__/messages";
 import {
   loadMessageById,
   loadMessageDetails,
@@ -14,17 +21,11 @@ import {
   toUIMessage,
   toUIMessageDetails
 } from "../../../messages/store/reducers/transformers";
-import {
-  messageWithExpiredPayment,
-  messageWithValidPayment,
-  message_1
-} from "../../../messages/__mocks__/message";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
-import { service_1 } from "../../../messages/__mocks__/messages";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
+import { MESSAGES_ROUTES } from "../../navigation/routes";
+import { thirdPartyKinds } from "../../store/reducers/thirdPartyById";
 import { ATTACHMENT_CATEGORY } from "../../types/attachmentCategory";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { MessageDetailsScreen } from "../MessageDetailsScreen";
 
 export const thirdPartyMessage: ThirdPartyMessageWithContent = {
   ...message_1,
@@ -49,57 +50,68 @@ export const thirdPartyMessage: ThirdPartyMessageWithContent = {
   }
 };
 
+const thirdPartyKindsMock = Object.values(thirdPartyKinds);
+
 describe("MessageDetailsScreen", () => {
-  it("should display the attachment tag if there are attachments", () => {
-    const sequenceOfActions: ReadonlyArray<Action> = [
-      applicationChangeState("active"),
-      loadMessageById.success(toUIMessage(message_1)),
-      loadServiceDetail.success(service_1),
-      loadMessageDetails.success(toUIMessageDetails(messageWithExpiredPayment)),
-      loadThirdPartyMessage.success({
-        id: message_1.id,
-        content: thirdPartyMessage
-      })
-    ];
+  thirdPartyKindsMock.forEach(kind =>
+    it(`should display the attachment tag if there are attachments and kind='${kind}'`, () => {
+      const sequenceOfActions: ReadonlyArray<Action> = [
+        applicationChangeState("active"),
+        loadMessageById.success(toUIMessage(message_1)),
+        loadServiceDetail.success(service_1),
+        loadMessageDetails.success(
+          toUIMessageDetails(messageWithExpiredPayment)
+        ),
+        loadThirdPartyMessage.success({
+          id: message_1.id,
+          content: { kind, ...thirdPartyMessage }
+        })
+      ];
 
-    const state: GlobalState = reproduceSequence(
-      {} as GlobalState,
-      appReducer,
-      sequenceOfActions
-    );
-    const store: Store<GlobalState> = createStore(appReducer, state as any);
+      const state: GlobalState = reproduceSequence(
+        {} as GlobalState,
+        appReducer,
+        sequenceOfActions
+      );
+      const store: Store<GlobalState> = createStore(appReducer, state as any);
 
-    const { component } = renderComponent(store);
-    expect(component.queryByTestId("attachment-tag")).not.toBeNull();
-  });
+      const { component } = renderComponent(store);
+      expect(component.queryByTestId("attachment-tag")).not.toBeNull();
+    })
+  );
 
-  it("should NOT display the attachment tag if there are no attachments", () => {
-    const sequenceOfActions: ReadonlyArray<Action> = [
-      applicationChangeState("active"),
-      loadMessageById.success(toUIMessage(message_1)),
-      loadServiceDetail.success(service_1),
-      loadMessageDetails.success(toUIMessageDetails(messageWithExpiredPayment)),
-      loadThirdPartyMessage.success({
-        id: message_1.id,
-        content: {
-          ...thirdPartyMessage,
-          third_party_message: {
-            attachments: []
+  thirdPartyKindsMock.forEach(kind =>
+    it(`should NOT display the attachment tag if there are no attachments and kind='${kind}'`, () => {
+      const sequenceOfActions: ReadonlyArray<Action> = [
+        applicationChangeState("active"),
+        loadMessageById.success(toUIMessage(message_1)),
+        loadServiceDetail.success(service_1),
+        loadMessageDetails.success(
+          toUIMessageDetails(messageWithExpiredPayment)
+        ),
+        loadThirdPartyMessage.success({
+          id: message_1.id,
+          content: {
+            kind,
+            ...thirdPartyMessage,
+            third_party_message: {
+              attachments: []
+            }
           }
-        }
-      })
-    ];
+        })
+      ];
 
-    const state: GlobalState = reproduceSequence(
-      {} as GlobalState,
-      appReducer,
-      sequenceOfActions
-    );
-    const store: Store<GlobalState> = createStore(appReducer, state as any);
+      const state: GlobalState = reproduceSequence(
+        {} as GlobalState,
+        appReducer,
+        sequenceOfActions
+      );
+      const store: Store<GlobalState> = createStore(appReducer, state as any);
 
-    const { component } = renderComponent(store);
-    expect(component.queryByTestId("attachment-tag")).toBeNull();
-  });
+      const { component } = renderComponent(store);
+      expect(component.queryByTestId("attachment-tag")).toBeNull();
+    })
+  );
 
   it("should display the alert banner if the message's due date is expiring", () => {
     const next7Days = new Date(new Date().setDate(new Date().getDate() + 7));

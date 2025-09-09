@@ -1,9 +1,18 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Action } from "redux";
-import { appReducer } from "../../../../../store/reducers";
-import { ThirdPartyMessageWithContent } from "../../../../../../definitions/backend/ThirdPartyMessageWithContent";
-import { loadMessageDetails, loadThirdPartyMessage } from "../../actions";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
+import {
+  ThirdPartyMessage,
+  ThirdPartyMessageDetails
+} from "../../../../../../definitions/backend/ThirdPartyMessage";
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { reproduceSequence } from "../../../../../utils/tests";
+import { UIMessageDetails } from "../../../types";
+import { loadMessageDetails, loadThirdPartyMessage } from "../../actions";
+import { DetailsById } from "../detailsById";
 import {
   hasAttachmentsSelector,
   messageMarkdownSelector,
@@ -11,18 +20,12 @@ import {
   testable,
   ThirdPartyById,
   thirdPartyFromIdSelector,
-  thirdPartyMessageAttachments
+  thirdPartyKinds,
+  thirdPartyMessageAttachments,
+  ThirdPartyMessageUnion
 } from "../thirdPartyById";
-import { UIMessageDetails } from "../../../types";
-import {
-  ThirdPartyMessage,
-  ThirdPartyMessageDetails
-} from "../../../../../../definitions/backend/ThirdPartyMessage";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
-import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { reproduceSequence } from "../../../../../utils/tests";
-import { DetailsById } from "../detailsById";
+
+const thirdPartyKindsMock = Object.values(thirdPartyKinds);
 
 describe("thirdPartyFromIdSelector", () => {
   it("Should return pot none for an unmatching message id", () => {
@@ -34,24 +37,27 @@ describe("thirdPartyFromIdSelector", () => {
     );
     expect(thirdPartyMessageFromSelector).toStrictEqual(pot.none);
   });
-  it("Should return the third party message for a matching message id", () => {
-    const messageId = "m1";
-    const thirdPartyMessage = {
-      id: messageId as string
-    } as ThirdPartyMessageWithContent;
-    const loadThirdPartyMessageSuccess = loadThirdPartyMessage.success({
-      id: messageId,
-      content: thirdPartyMessage
-    });
-    const state = appReducer(undefined, loadThirdPartyMessageSuccess);
-    const thirdPartyMessageFromSelector = thirdPartyFromIdSelector(
-      state,
-      messageId
-    );
-    expect(thirdPartyMessageFromSelector).toStrictEqual(
-      pot.some(thirdPartyMessage)
-    );
-  });
+  thirdPartyKindsMock.forEach(kind =>
+    it(`Should return the third party message with kind='${kind}' for a matching message id`, () => {
+      const messageId = "m1";
+      const thirdPartyMessage = {
+        kind,
+        id: messageId as string
+      } as ThirdPartyMessageUnion;
+      const loadThirdPartyMessageSuccess = loadThirdPartyMessage.success({
+        id: messageId,
+        content: thirdPartyMessage
+      });
+      const state = appReducer(undefined, loadThirdPartyMessageSuccess);
+      const thirdPartyMessageFromSelector = thirdPartyFromIdSelector(
+        state,
+        messageId
+      );
+      expect(thirdPartyMessageFromSelector).toStrictEqual(
+        pot.some(thirdPartyMessage)
+      );
+    })
+  );
 });
 
 describe("messageTitleSelector", () => {
@@ -80,117 +86,132 @@ describe("messageTitleSelector", () => {
     const messageTitle = messageTitleSelector(state, messageId);
     expect(messageTitle).toBeUndefined();
   });
-  it("Should return undefined for a matching loaded third party message with no details", () => {
-    const messageId = "m1";
-    const content = {
-      id: messageId as string,
-      third_party_message: {}
-    } as ThirdPartyMessageWithContent;
-    const loadThirdPartyMessageSuccess = loadThirdPartyMessage.success({
-      id: messageId,
-      content
-    });
-    const state = appReducer(undefined, loadThirdPartyMessageSuccess);
-    const messageTitle = messageTitleSelector(state, messageId);
-    expect(messageTitle).toBeUndefined();
-  });
-  it("Should return undefined for a matching loaded third party message with bad typed details", () => {
-    const messageId = "m1";
-    const content = {
-      id: messageId as string,
-      third_party_message: {
-        details: {
-          randomProperty: 5
-        } as ThirdPartyMessageDetails
-      }
-    } as ThirdPartyMessageWithContent;
-    const loadThirdPartyMessageSuccess = loadThirdPartyMessage.success({
-      id: messageId,
-      content
-    });
-    const state = appReducer(undefined, loadThirdPartyMessageSuccess);
-    const messageTitle = messageTitleSelector(state, messageId);
-    expect(messageTitle).toBeUndefined();
-  });
-  it("Should return the message title for a matching loaded third party message with proper typed details", () => {
-    const messageId = "m1";
-    const subject = "More than ten characters message title";
-    const content = {
-      id: messageId as string,
-      third_party_message: {
-        details: {
-          subject,
-          markdown:
-            "This is a more than 80 characters message markdown length. The decoder needs this"
-        } as ThirdPartyMessageDetails
-      }
-    } as ThirdPartyMessageWithContent;
-    const loadThirdPartyMessageSuccess = loadThirdPartyMessage.success({
-      id: messageId,
-      content
-    });
-    const state = appReducer(undefined, loadThirdPartyMessageSuccess);
-    const messageTitle = messageTitleSelector(state, messageId);
-    expect(messageTitle).toBe(subject);
-  });
-  it("Should return the third party message title when there are both detailed and third party message", () => {
-    const messageId = "m1";
-    const thirdPartySubject = "More than ten characters message title";
-    const content = {
-      id: messageId as string,
-      third_party_message: {
-        details: {
-          subject: thirdPartySubject,
-          markdown:
-            "This is a more than 80 characters message markdown length. The decoder needs this"
-        } as ThirdPartyMessageDetails
-      }
-    } as ThirdPartyMessageWithContent;
-    const loadThirdPartyMessageSuccess = loadThirdPartyMessage.success({
-      id: messageId,
-      content
-    });
-    const initialState = appReducer(undefined, loadThirdPartyMessageSuccess);
-    const detailsSubject = "message subject";
-    const loadMessageDetailsSuccess = loadMessageDetails.success({
-      id: messageId,
-      subject: detailsSubject
-    } as UIMessageDetails);
-    const finalState = appReducer(initialState, loadMessageDetailsSuccess);
-    const messageTitle = messageTitleSelector(finalState, messageId);
-    expect(messageTitle).toBe(thirdPartySubject);
-  });
-  it("should return the message title when we have the detail and third party message with bad typed details", () => {
-    const messageId = "m1";
-    const content = {
-      id: messageId as string,
-      third_party_message: {
-        details: {
-          randomProperty: 5
-        } as ThirdPartyMessageDetails
-      }
-    } as ThirdPartyMessageWithContent;
-    const detailsSubject = "message subject";
-
-    const sequenceOfActions: ReadonlyArray<Action> = [
-      applicationChangeState("active"),
-      loadMessageDetails.success({
-        id: messageId,
-        subject: detailsSubject
-      } as UIMessageDetails),
-      loadThirdPartyMessage.success({
+  thirdPartyKindsMock.forEach(kind =>
+    it(`Should return undefined for a matching loaded third party message with no details and kind='${kind}'`, () => {
+      const messageId = "m1";
+      const content = {
+        kind,
+        id: messageId as string,
+        third_party_message: {}
+      } as ThirdPartyMessageUnion;
+      const loadThirdPartyMessageSuccess = loadThirdPartyMessage.success({
         id: messageId,
         content
-      })
-    ];
-    const state: GlobalState = reproduceSequence(
-      {} as GlobalState,
-      appReducer,
-      sequenceOfActions
-    );
-    const messageTitle = messageTitleSelector(state, messageId);
-    expect(messageTitle).toBe(detailsSubject);
-  });
+      });
+      const state = appReducer(undefined, loadThirdPartyMessageSuccess);
+      const messageTitle = messageTitleSelector(state, messageId);
+      expect(messageTitle).toBeUndefined();
+    })
+  );
+  thirdPartyKindsMock.forEach(kind =>
+    it(`Should return undefined for a matching loaded third party message with bad typed details and kind='${kind}'`, () => {
+      const messageId = "m1";
+      const content = {
+        kind,
+        id: messageId as string,
+        third_party_message: {
+          details: {
+            randomProperty: 5
+          } as ThirdPartyMessageDetails
+        }
+      } as ThirdPartyMessageUnion;
+      const loadThirdPartyMessageSuccess = loadThirdPartyMessage.success({
+        id: messageId,
+        content
+      });
+      const state = appReducer(undefined, loadThirdPartyMessageSuccess);
+      const messageTitle = messageTitleSelector(state, messageId);
+      expect(messageTitle).toBeUndefined();
+    })
+  );
+  thirdPartyKindsMock.forEach(kind =>
+    it(`Should return the message title for a matching loaded third party message with proper typed details and kind='${kind}'`, () => {
+      const messageId = "m1";
+      const subject = "More than ten characters message title";
+      const content = {
+        kind,
+        id: messageId as string,
+        third_party_message: {
+          details: {
+            subject,
+            markdown:
+              "This is a more than 80 characters message markdown length. The decoder needs this"
+          } as ThirdPartyMessageDetails
+        }
+      } as ThirdPartyMessageUnion;
+      const loadThirdPartyMessageSuccess = loadThirdPartyMessage.success({
+        id: messageId,
+        content
+      });
+      const state = appReducer(undefined, loadThirdPartyMessageSuccess);
+      const messageTitle = messageTitleSelector(state, messageId);
+      expect(messageTitle).toBe(subject);
+    })
+  );
+  thirdPartyKindsMock.forEach(kind =>
+    it(`Should return the third party message title when there are both detailed and third party message and kind='${kind}'`, () => {
+      const messageId = "m1";
+      const thirdPartySubject = "More than ten characters message title";
+      const content = {
+        kind,
+        id: messageId as string,
+        third_party_message: {
+          details: {
+            subject: thirdPartySubject,
+            markdown:
+              "This is a more than 80 characters message markdown length. The decoder needs this"
+          } as ThirdPartyMessageDetails
+        }
+      } as ThirdPartyMessageUnion;
+      const loadThirdPartyMessageSuccess = loadThirdPartyMessage.success({
+        id: messageId,
+        content
+      });
+      const initialState = appReducer(undefined, loadThirdPartyMessageSuccess);
+      const detailsSubject = "message subject";
+      const loadMessageDetailsSuccess = loadMessageDetails.success({
+        id: messageId,
+        subject: detailsSubject
+      } as UIMessageDetails);
+      const finalState = appReducer(initialState, loadMessageDetailsSuccess);
+      const messageTitle = messageTitleSelector(finalState, messageId);
+      expect(messageTitle).toBe(thirdPartySubject);
+    })
+  );
+  thirdPartyKindsMock.forEach(kind =>
+    it(`should return the message title when we have the detail and third party message with bad typed details and kind='${kind}'`, () => {
+      const messageId = "m1";
+      const content = {
+        kind,
+        id: messageId as string,
+        third_party_message: {
+          details: {
+            randomProperty: 5
+          } as ThirdPartyMessageDetails
+        }
+      } as ThirdPartyMessageUnion;
+      const detailsSubject = "message subject";
+
+      const sequenceOfActions: ReadonlyArray<Action> = [
+        applicationChangeState("active"),
+        loadMessageDetails.success({
+          id: messageId,
+          subject: detailsSubject
+        } as UIMessageDetails),
+        loadThirdPartyMessage.success({
+          id: messageId,
+          content
+        })
+      ];
+      const state: GlobalState = reproduceSequence(
+        {} as GlobalState,
+        appReducer,
+        sequenceOfActions
+      );
+      const messageTitle = messageTitleSelector(state, messageId);
+      expect(messageTitle).toBe(detailsSubject);
+    })
+  );
 });
 
 describe("messageMarkdownSelector", () => {
@@ -219,117 +240,132 @@ describe("messageMarkdownSelector", () => {
     const messageMarkdown = messageMarkdownSelector(state, messageId);
     expect(messageMarkdown).toBeUndefined();
   });
-  it("Should return undefined for a matching loaded third party message with no details", () => {
-    const messageId = "m1";
-    const content = {
-      id: messageId as string,
-      third_party_message: {}
-    } as ThirdPartyMessageWithContent;
-    const loadThirdPartyMessageSuccess = loadThirdPartyMessage.success({
-      id: messageId,
-      content
-    });
-    const state = appReducer(undefined, loadThirdPartyMessageSuccess);
-    const messageMarkdown = messageMarkdownSelector(state, messageId);
-    expect(messageMarkdown).toBeUndefined();
-  });
-  it("Should return undefined for a matching loaded third party message with bad typed details", () => {
-    const messageId = "m1";
-    const content = {
-      id: messageId as string,
-      third_party_message: {
-        details: {
-          randomProperty: 5
-        } as ThirdPartyMessageDetails
-      }
-    } as ThirdPartyMessageWithContent;
-    const loadThirdPartyMessageSuccess = loadThirdPartyMessage.success({
-      id: messageId,
-      content
-    });
-    const state = appReducer(undefined, loadThirdPartyMessageSuccess);
-    const messageMarkdown = messageMarkdownSelector(state, messageId);
-    expect(messageMarkdown).toBeUndefined();
-  });
-  it("Should return the message markdown for a matching loaded third party message with proper typed details", () => {
-    const messageId = "m1";
-    const markdown =
-      "This is a more than 80 characters message markdown length. The decoder needs this";
-    const content = {
-      id: messageId as string,
-      third_party_message: {
-        details: {
-          subject: "More than ten characters message title",
-          markdown
-        } as ThirdPartyMessageDetails
-      }
-    } as ThirdPartyMessageWithContent;
-    const loadThirdPartyMessageSuccess = loadThirdPartyMessage.success({
-      id: messageId,
-      content
-    });
-    const state = appReducer(undefined, loadThirdPartyMessageSuccess);
-    const messageMarkdown = messageMarkdownSelector(state, messageId);
-    expect(messageMarkdown).toBe(markdown);
-  });
-  it("Should return the third party message markdown when there are both detailed and third party message", () => {
-    const messageId = "m1";
-    const thirdPartyMarkdown =
-      "This is a more than 80 characters message markdown length. The decoder needs this";
-    const content = {
-      id: messageId as string,
-      third_party_message: {
-        details: {
-          subject: "More than ten characters message title",
-          markdown: thirdPartyMarkdown
-        } as ThirdPartyMessageDetails
-      }
-    } as ThirdPartyMessageWithContent;
-    const loadThirdPartyMessageSuccess = loadThirdPartyMessage.success({
-      id: messageId,
-      content
-    });
-    const initialState = appReducer(undefined, loadThirdPartyMessageSuccess);
-    const detailsMarkdown = "message markdown";
-    const loadMessageDetailsSuccess = loadMessageDetails.success({
-      id: messageId,
-      markdown: detailsMarkdown
-    } as UIMessageDetails);
-    const finalState = appReducer(initialState, loadMessageDetailsSuccess);
-    const messageMarkdown = messageMarkdownSelector(finalState, messageId);
-    expect(messageMarkdown).toBe(thirdPartyMarkdown);
-  });
-  it("should return the message markdown when we have the detail and third-party message with bad typed details", () => {
-    const messageId = "m1";
-    const content = {
-      id: messageId as string,
-      third_party_message: {
-        details: {
-          randomProperty: 5
-        } as ThirdPartyMessageDetails
-      }
-    } as ThirdPartyMessageWithContent;
-    const detailsMarkdown = "message markdown";
-
-    const sequenceOfActions: ReadonlyArray<Action> = [
-      applicationChangeState("active"),
-      loadMessageDetails.success({
-        id: messageId,
-        subject: detailsMarkdown
-      } as UIMessageDetails),
-      loadThirdPartyMessage.success({
+  thirdPartyKindsMock.forEach(kind =>
+    it(`Should return undefined for a matching loaded third party message with no details and kind='${kind}'`, () => {
+      const messageId = "m1";
+      const content = {
+        kind,
+        id: messageId as string,
+        third_party_message: {}
+      } as ThirdPartyMessageUnion;
+      const loadThirdPartyMessageSuccess = loadThirdPartyMessage.success({
         id: messageId,
         content
-      })
-    ];
-    const state: GlobalState = reproduceSequence(
-      {} as GlobalState,
-      appReducer,
-      sequenceOfActions
-    );
-    const messageTitle = messageTitleSelector(state, messageId);
-    expect(messageTitle).toBe(detailsMarkdown);
-  });
+      });
+      const state = appReducer(undefined, loadThirdPartyMessageSuccess);
+      const messageMarkdown = messageMarkdownSelector(state, messageId);
+      expect(messageMarkdown).toBeUndefined();
+    })
+  );
+  thirdPartyKindsMock.forEach(kind =>
+    it(`Should return undefined for a matching loaded third party message with bad typed details and kind='${kind}'`, () => {
+      const messageId = "m1";
+      const content = {
+        kind,
+        id: messageId as string,
+        third_party_message: {
+          details: {
+            randomProperty: 5
+          } as ThirdPartyMessageDetails
+        }
+      } as ThirdPartyMessageUnion;
+      const loadThirdPartyMessageSuccess = loadThirdPartyMessage.success({
+        id: messageId,
+        content
+      });
+      const state = appReducer(undefined, loadThirdPartyMessageSuccess);
+      const messageMarkdown = messageMarkdownSelector(state, messageId);
+      expect(messageMarkdown).toBeUndefined();
+    })
+  );
+  thirdPartyKindsMock.forEach(kind =>
+    it(`Should return the message markdown for a matching loaded third party message with proper typed details and kind='${kind}'`, () => {
+      const messageId = "m1";
+      const markdown =
+        "This is a more than 80 characters message markdown length. The decoder needs this";
+      const content = {
+        kind,
+        id: messageId as string,
+        third_party_message: {
+          details: {
+            subject: "More than ten characters message title",
+            markdown
+          } as ThirdPartyMessageDetails
+        }
+      } as ThirdPartyMessageUnion;
+      const loadThirdPartyMessageSuccess = loadThirdPartyMessage.success({
+        id: messageId,
+        content
+      });
+      const state = appReducer(undefined, loadThirdPartyMessageSuccess);
+      const messageMarkdown = messageMarkdownSelector(state, messageId);
+      expect(messageMarkdown).toBe(markdown);
+    })
+  );
+  thirdPartyKindsMock.forEach(kind =>
+    it(`Should return the third party message markdown when there are both detailed and third party message and kind='${kind}'`, () => {
+      const messageId = "m1";
+      const thirdPartyMarkdown =
+        "This is a more than 80 characters message markdown length. The decoder needs this";
+      const content = {
+        kind,
+        id: messageId as string,
+        third_party_message: {
+          details: {
+            subject: "More than ten characters message title",
+            markdown: thirdPartyMarkdown
+          } as ThirdPartyMessageDetails
+        }
+      } as ThirdPartyMessageUnion;
+      const loadThirdPartyMessageSuccess = loadThirdPartyMessage.success({
+        id: messageId,
+        content
+      });
+      const initialState = appReducer(undefined, loadThirdPartyMessageSuccess);
+      const detailsMarkdown = "message markdown";
+      const loadMessageDetailsSuccess = loadMessageDetails.success({
+        id: messageId,
+        markdown: detailsMarkdown
+      } as UIMessageDetails);
+      const finalState = appReducer(initialState, loadMessageDetailsSuccess);
+      const messageMarkdown = messageMarkdownSelector(finalState, messageId);
+      expect(messageMarkdown).toBe(thirdPartyMarkdown);
+    })
+  );
+  thirdPartyKindsMock.forEach(kind =>
+    it(`should return the message markdown when we have the detail and third-party message with bad typed details and kind='${kind}'`, () => {
+      const messageId = "m1";
+      const content = {
+        kind,
+        id: messageId as string,
+        third_party_message: {
+          details: {
+            randomProperty: 5
+          } as ThirdPartyMessageDetails
+        }
+      } as ThirdPartyMessageUnion;
+      const detailsMarkdown = "message markdown";
+
+      const sequenceOfActions: ReadonlyArray<Action> = [
+        applicationChangeState("active"),
+        loadMessageDetails.success({
+          id: messageId,
+          subject: detailsMarkdown
+        } as UIMessageDetails),
+        loadThirdPartyMessage.success({
+          id: messageId,
+          content
+        })
+      ];
+      const state: GlobalState = reproduceSequence(
+        {} as GlobalState,
+        appReducer,
+        sequenceOfActions
+      );
+      const messageTitle = messageTitleSelector(state, messageId);
+      expect(messageTitle).toBe(detailsMarkdown);
+    })
+  );
 });
 
 describe("thirdPartyMessageAttachments", () => {
@@ -343,172 +379,190 @@ describe("thirdPartyMessageAttachments", () => {
     expect(attachments).toBeDefined();
     expect(attachments.length).toBe(0);
   });
-  it("should return an empty array on a third party message with no attachments", () => {
-    const messageId = "01HNWRS7DP721KTC3SMCJ7G82E";
-    const loadedThirdPartyMessage = appReducer(
-      undefined,
-      loadThirdPartyMessage.success({
-        id: messageId,
-        content: {
-          third_party_message: {}
-        } as ThirdPartyMessageWithContent
-      })
-    );
-    const attachments = thirdPartyMessageAttachments(
-      loadedThirdPartyMessage,
-      messageId
-    );
-    expect(attachments).toBeDefined();
-    expect(attachments.length).toBe(0);
-  });
-  it("should return an empty array on a third party message with empty attachments", () => {
-    const messageId = "01HNWRS7DP721KTC3SMCJ7G82E";
-    const loadedThirdPartyMessage = appReducer(
-      undefined,
-      loadThirdPartyMessage.success({
-        id: messageId,
-        content: {
-          third_party_message: {
-            attachments: []
-          } as ThirdPartyMessage
-        } as ThirdPartyMessageWithContent
-      })
-    );
-    const attachments = thirdPartyMessageAttachments(
-      loadedThirdPartyMessage,
-      messageId
-    );
-    expect(attachments).toBeDefined();
-    expect(attachments.length).toBe(0);
-  });
-  it("should return the first attachment on a third party message with just one attachment", () => {
-    const messageId = "01HNWRS7DP721KTC3SMCJ7G82E";
-    const thirdPartyAttachment = {
-      id: "1",
-      url: "https://invalid.url"
-    } as ThirdPartyAttachment;
-    const loadedThirdPartyMessage = appReducer(
-      undefined,
-      loadThirdPartyMessage.success({
-        id: messageId,
-        content: {
-          third_party_message: {
-            attachments: [thirdPartyAttachment]
-          } as ThirdPartyMessage
-        } as ThirdPartyMessageWithContent
-      })
-    );
-    const attachments = thirdPartyMessageAttachments(
-      loadedThirdPartyMessage,
-      messageId
-    );
-    expect(attachments).toBeDefined();
-    expect(attachments.length).toBe(1);
-    expect(attachments[0]).toMatchObject(thirdPartyAttachment);
-  });
+  thirdPartyKindsMock.forEach(kind =>
+    it(`should return an empty array on a third party message with no attachments and kind='${kind}'`, () => {
+      const messageId = "01HNWRS7DP721KTC3SMCJ7G82E";
+      const loadedThirdPartyMessage = appReducer(
+        undefined,
+        loadThirdPartyMessage.success({
+          id: messageId,
+          content: {
+            kind,
+            third_party_message: {}
+          } as ThirdPartyMessageUnion
+        })
+      );
+      const attachments = thirdPartyMessageAttachments(
+        loadedThirdPartyMessage,
+        messageId
+      );
+      expect(attachments).toBeDefined();
+      expect(attachments.length).toBe(0);
+    })
+  );
+  thirdPartyKindsMock.forEach(kind =>
+    it(`should return an empty array on a third party message with empty attachments and kind='${kind}'`, () => {
+      const messageId = "01HNWRS7DP721KTC3SMCJ7G82E";
+      const loadedThirdPartyMessage = appReducer(
+        undefined,
+        loadThirdPartyMessage.success({
+          id: messageId,
+          content: {
+            kind,
+            third_party_message: {
+              attachments: []
+            } as ThirdPartyMessage
+          } as ThirdPartyMessageUnion
+        })
+      );
+      const attachments = thirdPartyMessageAttachments(
+        loadedThirdPartyMessage,
+        messageId
+      );
+      expect(attachments).toBeDefined();
+      expect(attachments.length).toBe(0);
+    })
+  );
+  thirdPartyKindsMock.forEach(kind =>
+    it(`should return the first attachment on a third party message with just one attachment kind='${kind}'`, () => {
+      const messageId = "01HNWRS7DP721KTC3SMCJ7G82E";
+      const thirdPartyAttachment = {
+        id: "1",
+        url: "https://invalid.url"
+      } as ThirdPartyAttachment;
+      const loadedThirdPartyMessage = appReducer(
+        undefined,
+        loadThirdPartyMessage.success({
+          id: messageId,
+          content: {
+            kind,
+            third_party_message: {
+              attachments: [thirdPartyAttachment]
+            } as ThirdPartyMessage
+          } as ThirdPartyMessageUnion
+        })
+      );
+      const attachments = thirdPartyMessageAttachments(
+        loadedThirdPartyMessage,
+        messageId
+      );
+      expect(attachments).toBeDefined();
+      expect(attachments.length).toBe(1);
+      expect(attachments[0]).toMatchObject(thirdPartyAttachment);
+    })
+  );
 });
 
 describe("hasAttachmentsSelector", () => {
-  it("should return false if there are no attachments", () => {
-    const messageId = "01HNWRS7DP721KTC3SMCJ7G82E";
-    const loadedThirdPartyMessage = appReducer(
-      undefined,
-      loadThirdPartyMessage.success({
-        id: messageId,
-        content: {
-          third_party_message: {}
-        } as ThirdPartyMessageWithContent
-      })
-    );
-    const hasAttachments = hasAttachmentsSelector(
-      loadedThirdPartyMessage,
-      messageId
-    );
-    expect(hasAttachments).toBe(false);
-  });
+  thirdPartyKindsMock.forEach(kind =>
+    it(`should return false if there are no attachments and kind='${kind}'`, () => {
+      const messageId = "01HNWRS7DP721KTC3SMCJ7G82E";
+      const loadedThirdPartyMessage = appReducer(
+        undefined,
+        loadThirdPartyMessage.success({
+          id: messageId,
+          content: {
+            kind,
+            third_party_message: {}
+          } as ThirdPartyMessageUnion
+        })
+      );
+      const hasAttachments = hasAttachmentsSelector(
+        loadedThirdPartyMessage,
+        messageId
+      );
+      expect(hasAttachments).toBe(false);
+    })
+  );
 
-  it("should return true if there are attachments", () => {
-    const messageId = "01HNWRS7DP721KTC3SMCJ7G82E";
-    const thirdPartyAttachment = {
-      id: "1",
-      url: "https://invalid.url"
-    } as ThirdPartyAttachment;
-    const loadedThirdPartyMessage = appReducer(
-      undefined,
-      loadThirdPartyMessage.success({
-        id: messageId,
-        content: {
-          third_party_message: {
-            attachments: [thirdPartyAttachment]
-          } as ThirdPartyMessage
-        } as ThirdPartyMessageWithContent
-      })
-    );
-    const hasAttachments = hasAttachmentsSelector(
-      loadedThirdPartyMessage,
-      messageId
-    );
-    expect(hasAttachments).toBe(true);
-  });
+  thirdPartyKindsMock.forEach(kind =>
+    it(`should return true if there are attachments and kind='${kind}'`, () => {
+      const messageId = "01HNWRS7DP721KTC3SMCJ7G82E";
+      const thirdPartyAttachment = {
+        id: "1",
+        url: "https://invalid.url"
+      } as ThirdPartyAttachment;
+      const loadedThirdPartyMessage = appReducer(
+        undefined,
+        loadThirdPartyMessage.success({
+          id: messageId,
+          content: {
+            kind,
+            third_party_message: {
+              attachments: [thirdPartyAttachment]
+            } as ThirdPartyMessage
+          } as ThirdPartyMessageUnion
+        })
+      );
+      const hasAttachments = hasAttachmentsSelector(
+        loadedThirdPartyMessage,
+        messageId
+      );
+      expect(hasAttachments).toBe(true);
+    })
+  );
 });
 
 describe("messageContentSelector", () => {
   const messageId = "01JKAPT00J32WEJ44NTRH05FVV";
   const remoteContentMarkdown =
     "A remote markdown which must be longer than eighty characters in order to be parsed properly";
-  const remoteContentMessage = {
-    id: messageId as string,
-    third_party_message: {
-      details: {
-        subject: "The subject which must be longer than 10 characters",
-        markdown: remoteContentMarkdown
-      }
-    } as ThirdPartyMessage
-  } as ThirdPartyMessageWithContent;
   const standardMessageMarkdown = "A standard markdown";
   const standardMessage = {
     id: messageId,
     markdown: standardMessageMarkdown
   } as UIMessageDetails;
-  it("should return data from third party message when both are defined", () => {
-    const state = {
-      entities: {
-        messages: {
-          detailsById: {
-            [messageId]: pot.some(standardMessage)
-          } as DetailsById,
-          thirdPartyById: {
-            [messageId]: pot.some(remoteContentMessage)
-          } as ThirdPartyById
+  thirdPartyKindsMock.forEach(kind => {
+    const remoteContentMessage = {
+      kind,
+      id: messageId as string,
+      third_party_message: {
+        details: {
+          subject: "The subject which must be longer than 10 characters",
+          markdown: remoteContentMarkdown
         }
-      }
-    } as GlobalState;
-
-    const messageContent = testable!.messageContentSelector(
-      state,
-      messageId,
-      input => input.markdown
-    );
-    expect(messageContent).toBe(remoteContentMarkdown);
-  });
-  it("should return data from third party message when only the third party message is defined", () => {
-    const state = {
-      entities: {
-        messages: {
-          detailsById: {},
-          thirdPartyById: {
-            [messageId]: pot.some(remoteContentMessage)
-          } as ThirdPartyById
+      } as ThirdPartyMessage
+    } as ThirdPartyMessageUnion;
+    it(`should return data from third party message when both are defined and kind='${kind}'`, () => {
+      const state = {
+        entities: {
+          messages: {
+            detailsById: {
+              [messageId]: pot.some(standardMessage)
+            } as DetailsById,
+            thirdPartyById: {
+              [messageId]: pot.some(remoteContentMessage)
+            } as ThirdPartyById
+          }
         }
-      }
-    } as GlobalState;
+      } as GlobalState;
 
-    const messageContent = testable!.messageContentSelector(
-      state,
-      messageId,
-      input => input.markdown
-    );
-    expect(messageContent).toBe(remoteContentMarkdown);
+      const messageContent = testable!.messageContentSelector(
+        state,
+        messageId,
+        input => input.markdown
+      );
+      expect(messageContent).toBe(remoteContentMarkdown);
+    });
+    it(`should return data from third party message when only the third party message is defined and kind='${kind}'`, () => {
+      const state = {
+        entities: {
+          messages: {
+            detailsById: {},
+            thirdPartyById: {
+              [messageId]: pot.some(remoteContentMessage)
+            } as ThirdPartyById
+          }
+        }
+      } as GlobalState;
+
+      const messageContent = testable!.messageContentSelector(
+        state,
+        messageId,
+        input => input.markdown
+      );
+      expect(messageContent).toBe(remoteContentMarkdown);
+    });
   });
   it("should return data from standard message when only the standard message is defined", () => {
     const state = {
