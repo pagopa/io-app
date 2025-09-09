@@ -23,9 +23,19 @@ jest.mock("../../../../../../store/hooks", () => ({
   useIOStore: jest.fn()
 }));
 
-jest.mock("../../../../../../hooks/useStatusAlertProps", () => ({
-  useStatusAlertProps: jest.fn()
-}));
+// Mock the useIOAlertVisible hook
+jest.mock(
+  "../../../../../../components/StatusMessages/IOAlertVisibleContext",
+  () => ({
+    ...jest.requireActual(
+      "../../../../../../components/StatusMessages/IOAlertVisibleContext"
+    ),
+    useIOAlertVisible: () => ({
+      isAlertVisible: false,
+      setAlertVisible: jest.fn()
+    })
+  })
+);
 
 const mockNavigate = jest.fn();
 const mockReplace = jest.fn();
