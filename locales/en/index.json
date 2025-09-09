@@ -4300,8 +4300,7 @@
         "eid": "Identità Digitale",
         "mdl": "Patente di guida",
         "dc": "Carta Europea della Disabilità",
-        "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
-        "dgc": "Attestati di Laurea, Dottorato e Master"
+        "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia"
       },
       "wallet": {
         "active": "Attivo",

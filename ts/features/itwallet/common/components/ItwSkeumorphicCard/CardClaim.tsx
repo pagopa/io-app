@@ -3,13 +3,15 @@ import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 
-import { ReactElement, ReactNode, memo, useMemo } from "react";
+import { memo, ReactElement, ReactNode, useMemo } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import { Either, Prettify } from "../../../../../types/helpers";
 import {
   ClaimValue,
   DrivingPrivilegesClaim,
+  DrivingPrivilegesValueRaw,
   ImageClaim,
+  NestedArrayClaim,
   PlaceOfBirthClaim,
   SimpleDateClaim,
   SimpleDateFormat
@@ -54,7 +56,7 @@ export type CardClaimProps = Prettify<
 >;
 
 /**
- * Default claim component, it decoded the provided value and renders the corresponging component
+ * Default claim component, it decoded the provided value and renders the corresponding component
  * @returns The corresponding component if a value is correctly decoded, otherwise null
  */
 const CardClaim = ({
@@ -71,6 +73,15 @@ const CardClaim = ({
         claim?.value,
         ClaimValue.decode,
         E.fold(constNull, decoded => {
+          if (
+            NestedArrayClaim.is(decoded) ||
+            DrivingPrivilegesValueRaw.is(decoded)
+          ) {
+            // If the claim is a NestedArrayClaim or DrivingPrivilegesValueRaw, we don't render it directly
+            // but we return null to skip rendering
+            return null;
+          }
+
           if (SimpleDateClaim.is(decoded)) {
             const formattedDate = decoded.toString(dateFormat);
             return <ClaimLabel {...labelProps}>{formattedDate}</ClaimLabel>;
