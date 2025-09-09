@@ -5,14 +5,14 @@ import {
   H6,
   IconButton,
   WithTestID,
-  ContentWrapper
+  ContentWrapper,
+  useIOTheme,
+  HStack
 } from "@pagopa/io-app-design-system";
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: IOColors.white,
     flexDirection: "row",
-    borderColor: IOColors["grey-200"],
     alignItems: "center",
     paddingTop: 12,
     paddingBottom: 14
@@ -51,7 +51,7 @@ const renderNavigationComponent = (
   { onPrevious, onNext, iconLeftDisabled, iconRightDisabled }: Props,
   title: string
 ) => (
-  <>
+  <HStack space={8}>
     {/* button left */}
     <IconButton
       onPress={onPrevious}
@@ -71,7 +71,7 @@ const renderNavigationComponent = (
       iconSize={24}
       accessibilityLabel="next"
     />
-  </>
+  </HStack>
 );
 
 /**
@@ -79,27 +79,40 @@ const renderNavigationComponent = (
  * @param props
  * @returns
  */
-const DocumentsNavigationBar = (props: Props) => (
-  <View style={[styles.shadow, styles.container]}>
-    {props.indicatorPosition === "left" && (
-      <>
-        {renderNavigationComponent(props, props.titleLeft)}
-        <View style={{ flex: 1 }} />
-        <ContentWrapper>
-          <H6>{props.titleRight}</H6>
-        </ContentWrapper>
-      </>
-    )}
-    {props.indicatorPosition === "right" && (
-      <>
-        <HSpacer />
-        <H6>{props.titleLeft}</H6>
-        <View style={{ flex: 1 }} />
-        {renderNavigationComponent(props, props.titleRight)}
-        <HSpacer />
-      </>
-    )}
-  </View>
-);
+const DocumentsNavigationBar = (props: Props) => {
+  const theme = useIOTheme();
+
+  const backgroundColor = IOColors[theme["appBackground-primary"]];
+  const borderColor = IOColors[theme["divider-default"]];
+
+  return (
+    <View
+      style={[
+        styles.shadow,
+        styles.container,
+        { backgroundColor, borderColor }
+      ]}
+    >
+      {props.indicatorPosition === "left" && (
+        <>
+          {renderNavigationComponent(props, props.titleLeft)}
+          <View style={{ flex: 1 }} />
+          <ContentWrapper>
+            <H6>{props.titleRight}</H6>
+          </ContentWrapper>
+        </>
+      )}
+      {props.indicatorPosition === "right" && (
+        <>
+          <HSpacer />
+          <H6>{props.titleLeft}</H6>
+          <View style={{ flex: 1 }} />
+          {renderNavigationComponent(props, props.titleRight)}
+          <HSpacer />
+        </>
+      )}
+    </View>
+  );
+};
 
 export default DocumentsNavigationBar;
