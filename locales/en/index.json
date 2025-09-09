@@ -4072,9 +4072,9 @@
           "selected": "Field selected",
           "unselected": "Field not selected"
         },
-        "required": "REQUIRED SIGNATURES",
-        "optional": "OPTIONAL SIGNATURES",
-        "unfair": "UNFAIR TERMS SIGNATURES"
+        "required": "Required signatures",
+        "optional": "Optional signatures",
+        "unfair": "Unfair terms signatures"
       },
       "title": "Firma con IO",
       "documentsBar": {
@@ -4087,7 +4087,7 @@
         "cancel": "Cancel",
         "confirm": "Ok",
         "alertText": "Do you want to change or update your e-mail address?",
-        "alertLink": "Go here",
+        "alertLink": "Edit email",
         "name": "Name",
         "familyName": "Surname",
         "birthDate": "Date of birth"
