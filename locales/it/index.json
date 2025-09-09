@@ -349,6 +349,11 @@
     "contextualHelp": {
       "title": "Problemi di inizializzazione?"
     },
+    "offline_access_banner": {
+      "title": "Ti servono i documenti?",
+      "content": "Non attendere, sono sempre disponibili, anche se non hai connessione!",
+      "action": "Vai ai documenti"
+    },
     "connection_lost": {
       "title": "Non hai una connessione a internet attiva",
       "description": "Controlla la tua connessione e riavvia l’app."
@@ -4068,9 +4073,9 @@
           "selected": "Campo selezionato",
           "unselected": "Campo non selezionato"
         },
-        "required": "FIRME OBBLIGATORIE",
-        "optional": "FIRME FACOLTATIVE",
-        "unfair": "FIRME CLAUSOLE VESSATORIE"
+        "required": "Firme obbligatorie",
+        "optional": "Firme facoltative",
+        "unfair": "Firme clausole vessatorie"
       },
       "title": "Firma con IO",
       "documentsBar": {
@@ -4083,7 +4088,7 @@
         "cancel": "Annulla",
         "confirm": "Ok, va bene",
         "alertText": "Vuoi modificare o aggiornare il tuo indirizzo e-mail?",
-        "alertLink": "Vai qui",
+        "alertLink": "Modifica email",
         "name": "Nome",
         "familyName": "Cognome",
         "birthDate": "Data di nascita"
@@ -5336,6 +5341,17 @@
             "title": "Servizi dell’app limitati",
             "content": "###### Cosa posso fare?\n\nQuando l’autenticazione non va a buon fine, oppure la connessione alla rete non è stabile, alcuni servizi dell’app potrebbero essere limitati.\n\nDocumenti su IO funziona **anche in questi casi** per un uso controllato, ma la validità dei tuoi documenti è aggiornata all’ultimo accesso in app con connessione a una rete.\n\nAttendi qualche minuto e ricarica l’app per continuare ad usare tutti i servizi di IO.",
             "footerAction": "Ricarica l'app IO"
+          }
+        },
+        "timeout": {
+          "alert": {
+            "content": "Hai bisogno di tornare alla versione completa di IO?",
+            "action": "Ricarica l’app IO"
+          },
+          "modal": {
+            "title": "",
+            "content": "",
+            "footerAction": ""
           }
         },
         "back_online": {
