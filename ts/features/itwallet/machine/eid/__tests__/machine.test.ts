@@ -1,6 +1,11 @@
 import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
-import { createActor, fromPromise, StateFrom } from "xstate";
+import {
+  createActor,
+  fromPromise,
+  StateFrom,
+  waitFor as waitForActor
+} from "xstate";
 import { idps } from "../../../../../utils/idps";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import {
@@ -1202,26 +1207,48 @@ describe("itwEidIssuanceMachine", () => {
       walletInstanceAttestation: { jwt: T_WIA }
     };
 
-    const actor = createActor(mockedMachine);
+    const baseSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
+
+    const snapshot: MachineSnapshot = {
+      ...baseSnapshot,
+      context: initialContext
+    };
+
+    const actor = createActor(mockedMachine, {
+      snapshot
+    });
+
     actor.start();
 
-    // eslint-disable-next-line functional/immutable-data
-    actor.getSnapshot().context = initialContext;
-
     hasValidWalletInstanceAttestation.mockImplementation(() => true);
-
-    await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
+    hasIntegrityKeyTag.mockImplementation(() => true);
+    verifyTrustFederation.mockImplementation(() => Promise.resolve());
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
+    expect(actor.getSnapshot().context).toStrictEqual(initialContext);
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
     actor.send({ type: "start", mode: "reissuance" });
 
-    expect(actor.getSnapshot().value).toStrictEqual({
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "TrustFederationVerification"
+    );
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+
+    const intermediateState1 = await waitForActor(actor, snapshot1 =>
+      snapshot1.matches({
+        UserIdentification: {
+          Identification: "L2"
+        }
+      })
+    );
+    expect(intermediateState1.value).toStrictEqual({
       UserIdentification: {
         Identification: "L2"
       }
     });
+
+    expect(verifyTrustFederation).toHaveBeenCalledTimes(1);
 
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...initialContext,

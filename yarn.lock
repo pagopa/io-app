@@ -3870,9 +3870,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-app-design-system@npm:5.8.1":
-  version: 5.8.1
-  resolution: "@pagopa/io-app-design-system@npm:5.8.1"
+"@pagopa/io-app-design-system@npm:5.9.0":
+  version: 5.9.0
+  resolution: "@pagopa/io-app-design-system@npm:5.9.0"
   dependencies:
     auto-changelog: ^2.4.0
     lodash: ^4.17.21
@@ -3893,7 +3893,7 @@ __metadata:
     react-native-reanimated: "*"
     react-native-safe-area-context: "*"
     react-native-svg: "*"
-  checksum: 6f18b985562c86bc0f14ecdc179fbf75cb7f13159a028e728ee71de81bd7057b5f1393d3f0e7374c120c6dbbce83271d84bbe35877c1b7ae8cf9b506c3a6d286
+  checksum: 5442096cebb034c335006a65547ec4c47049512bdce457cd08c1f81047ac1599f48ef58a5fb9fd20181c8aecc9dc94df4ef50c4ed205b4188b106243fe0ac569
   languageName: node
   linkType: hard
 
@@ -12954,7 +12954,7 @@ __metadata:
     "@babel/runtime": ^7.25.0
     "@gorhom/bottom-sheet": ^5.1.2
     "@jambit/eslint-plugin-typed-redux-saga": ^0.4.0
-    "@pagopa/io-app-design-system": 5.8.1
+    "@pagopa/io-app-design-system": 5.9.0
     "@pagopa/io-pagopa-commons": ^3.1.0
     "@pagopa/io-react-native-cie": ^1.1.0
     "@pagopa/io-react-native-cieid": ^0.3.5
@@ -13093,7 +13093,7 @@ __metadata:
     react-native-haptic-feedback: ^2.3.3
     react-native-image-pan-zoom: ^2.1.11
     react-native-image-picker: 7.2.3
-    react-native-keychain: ^9.2.2
+    react-native-keychain: ^10.0.0
     react-native-linear-gradient: ^2.5.6
     react-native-markdown-display: ^7.0.2
     react-native-masked-text: ^1.13.0
@@ -17681,10 +17681,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-keychain@npm:^9.2.2":
-  version: 9.2.2
-  resolution: "react-native-keychain@npm:9.2.2"
-  checksum: e361df1e792766bb4d3f60b850608979667357365328d36e1665a077728b8d68f7d33de0d31e3c666f115a0f9e1f53be48b4e678bf73f07aecefcca35766d98d
+"react-native-keychain@npm:^10.0.0":
+  version: 10.0.0
+  resolution: "react-native-keychain@npm:10.0.0"
+  checksum: 1055cc192df58cb110bd49df1264a401007a354ad28b93adefd740aeac0f746cdab86d7428887694a1b0949ef8d0dc85db8984e77db684d7b967180167b64d42
   languageName: node
   linkType: hard
 
