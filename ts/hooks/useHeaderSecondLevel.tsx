@@ -11,8 +11,8 @@ import {
   ContextualHelpPropsMarkdown
 } from "../components/screens/BaseScreenComponent";
 import { FAQsCategoriesType } from "../utils/faq";
+import { useIOAlertVisible } from "../components/StatusMessages/IOAlertVisibleContext";
 import { useStartSupportRequest } from "./useStartSupportRequest";
-import { useStatusAlertProps } from "./useStatusAlertProps";
 import { useOfflineToastGuard } from "./useOfflineToastGuard.ts";
 
 type SpecificHookProps = {
@@ -109,7 +109,7 @@ export const useHeaderSecondLevel = ({
   ignoreAccessibilityCheck,
   animatedRef
 }: HeaderSecondLevelHookProps) => {
-  const alertProps = useStatusAlertProps();
+  const { isAlertVisible } = useIOAlertVisible();
   const startSupportRequest = useOfflineToastGuard(
     useStartSupportRequest({
       faqCategories,
@@ -146,13 +146,13 @@ export const useHeaderSecondLevel = ({
       scrollValues,
       variant,
       backgroundColor,
-      ignoreSafeAreaMargin: !!alertProps,
+      ignoreSafeAreaMargin: isAlertVisible,
       ...enableDiscreteTransitionProps
     };
   }, [
+    isAlertVisible,
     enableDiscreteTransition,
     animatedRef,
-    alertProps,
     scrollValues,
     variant,
     backgroundColor
