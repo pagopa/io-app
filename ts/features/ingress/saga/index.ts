@@ -93,8 +93,5 @@ export function* isDeviceOfflineWithWalletSaga() {
   }
   const offlineAccessReason = yield* select(offlineAccessReasonSelector);
 
-  if (offlineAccessReason === OfflineAccessReasonEnum.TIMEOUT) {
-    return true;
-  }
-  return false;
+  return offlineAccessReason === OfflineAccessReasonEnum.TIMEOUT;
 }

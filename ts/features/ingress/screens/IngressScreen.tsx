@@ -87,7 +87,7 @@ export const IngressScreen = () => {
     };
   }, [dispatch]);
 
-  const navgateOnOfflineMiniApp = useCallback(
+  const navigateOnOfflineMiniApp = useCallback(
     (offlineReason: OfflineAccessReasonEnum) => {
       dispatch(setOfflineAccessReason(offlineReason));
       dispatch(
@@ -109,13 +109,13 @@ export const IngressScreen = () => {
       isConnected === false && isOfflineAccessAvailable;
 
     if (visualizeOfflineWallet) {
-      navgateOnOfflineMiniApp(OfflineAccessReasonEnum.DEVICE_OFFLINE);
+      navigateOnOfflineMiniApp(OfflineAccessReasonEnum.DEVICE_OFFLINE);
     }
   }, [
     dispatch,
     isConnected,
     isOfflineAccessAvailable,
-    navgateOnOfflineMiniApp
+    navigateOnOfflineMiniApp
   ]);
 
   if (isConnected === false && !isOfflineAccessAvailable) {
@@ -146,7 +146,7 @@ export const IngressScreen = () => {
             content: I18n.t("startup.offline_access_banner.content"),
             action: I18n.t("startup.offline_access_banner.action"),
             onPress: () =>
-              navgateOnOfflineMiniApp(OfflineAccessReasonEnum.TIMEOUT)
+              navigateOnOfflineMiniApp(OfflineAccessReasonEnum.TIMEOUT)
           }
         }}
       />
