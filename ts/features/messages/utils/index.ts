@@ -1,16 +1,16 @@
-import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
+import * as E from "fp-ts/lib/Either";
+import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { Dispatch } from "redux";
-import { RemoteContentDetails } from "../../../../definitions/backend/RemoteContentDetails";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
-import { Action } from "../../../store/actions/types";
-import { NetworkError, getNetworkError } from "../../../utils/errors";
-import { startPaymentFlowWithRptIdWorkaround } from "../../payments/checkout/tempWorkaround/pagoPaPaymentWorkaround";
-import { addUserSelectedPaymentRptId } from "../store/actions";
-import { ThirdPartyContent } from "../store/reducers/thirdPartyById";
 import { PaymentData, UIMessage, UIMessageDetails } from "../types";
+import { NetworkError, getNetworkError } from "../../../utils/errors";
+import { addUserSelectedPaymentRptId } from "../store/actions";
+import { Action } from "../../../store/actions/types";
+import { startPaymentFlowWithRptIdWorkaround } from "../../payments/checkout/tempWorkaround/pagoPaPaymentWorkaround";
+import { RemoteContentDetails } from "../../../../definitions/backend/RemoteContentDetails";
+import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
 
 export const gapBetweenItemsInAGrid = 8;
 
@@ -90,10 +90,10 @@ export const emptyMessageArray: ReadonlyArray<UIMessage> = [];
 export const extractContentFromMessageSources = <T>(
   extractionFunction: (input: RemoteContentDetails | UIMessageDetails) => T,
   messageDetails: UIMessageDetails | undefined,
-  thirdPartyMessage: ThirdPartyContent | undefined
+  thirdPartyMessage: ThirdPartyMessageWithContent | undefined
 ): T | undefined => {
   const thirdPartyMessageDetails =
-    thirdPartyMessage?.content.third_party_message.details;
+    thirdPartyMessage?.third_party_message.details;
   if (thirdPartyMessageDetails != null) {
     const decodedThirdPartyMessageDetails = RemoteContentDetails.decode(
       thirdPartyMessageDetails

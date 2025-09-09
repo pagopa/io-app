@@ -9,7 +9,6 @@ import { ThirdPartyMessageWithContent } from "../../../../../../definitions/back
 import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
 import { ATTACHMENT_CATEGORY } from "../../../types/attachmentCategory";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
-import { ThirdPartyContent } from "../../../store/reducers/thirdPartyById";
 
 describe("MessageDetailsAttachments", () => {
   const messageId = "01HNWYRT55GXGPXR16BW2MSBVY";
@@ -57,8 +56,7 @@ const renderScreen = (
   serviceId: ServiceId,
   attachmentCount: number = 0,
   disabled: boolean = false,
-  isPN: boolean = false,
-  type: ThirdPartyContent["type"] = "TPM"
+  isPN: boolean = false
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
 
@@ -73,13 +71,10 @@ const renderScreen = (
     loadThirdPartyMessage.success({
       id: messageId,
       content: {
-        type,
-        content: {
-          third_party_message: {
-            attachments
-          } as ThirdPartyMessage
-        } as ThirdPartyMessageWithContent
-      }
+        third_party_message: {
+          attachments
+        } as ThirdPartyMessage
+      } as ThirdPartyMessageWithContent
     })
   );
   const store = createStore(appReducer, finalState as any);

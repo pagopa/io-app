@@ -1,14 +1,13 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import I18n from "i18next";
 import { ComponentProps } from "react";
 import configureMockStore from "redux-mock-store";
+import I18n from "i18next";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { serviceId_1 } from "../../../messages/__mocks__/messages";
-import { thirdPartyTypes } from "../../../messages/store/reducers/thirdPartyById";
 import { thirdPartyMessage } from "../../__mocks__/pnMessage";
 import { toPNMessage } from "../../store/types/transformers";
 import { PNMessage } from "../../store/types/types";
@@ -16,48 +15,40 @@ import { MessageDetails } from "../MessageDetails";
 
 jest.mock("../MessageBottomMenu");
 
-const thirdPartyTypesMock = Object.values(thirdPartyTypes);
+const pnMessage = pipe(thirdPartyMessage, toPNMessage, O.toUndefined)!;
 
 describe("MessageDetails component", () => {
-  thirdPartyTypesMock.forEach(type => {
-    const pnMessage = pipe(
-      { type, content: thirdPartyMessage },
-      toPNMessage,
-      O.toUndefined
-    )!;
+  it("should match the snapshot with default props", () => {
+    const { component } = renderComponent(
+      generateComponentProperties(pnMessage)
+    );
+    expect(component).toMatchSnapshot();
+  });
 
-    it("should match the snapshot with default props", () => {
-      const { component } = renderComponent(
-        generateComponentProperties(pnMessage)
-      );
-      expect(component).toMatchSnapshot();
-    });
+  it("should display the legalMessage tag", () => {
+    const { component } = renderComponent(
+      generateComponentProperties(pnMessage)
+    );
+    expect(
+      component.queryByText(I18n.t("features.pn.details.badge.legalValue"))
+    ).not.toBeNull();
+  });
 
-    it("should display the legalMessage tag", () => {
-      const { component } = renderComponent(
-        generateComponentProperties(pnMessage)
-      );
-      expect(
-        component.queryByText(I18n.t("features.pn.details.badge.legalValue"))
-      ).not.toBeNull();
-    });
+  it("should display the attachment tag if there are attachments", () => {
+    const { component } = renderComponent(
+      generateComponentProperties(pnMessage)
+    );
+    expect(component.queryByTestId("attachment-tag")).not.toBeNull();
+  });
 
-    it("should display the attachment tag if there are attachments", () => {
-      const { component } = renderComponent(
-        generateComponentProperties(pnMessage)
-      );
-      expect(component.queryByTestId("attachment-tag")).not.toBeNull();
-    });
-
-    it("should NOT display the attachment tag if there are no attachments", () => {
-      const { component } = renderComponent(
-        generateComponentProperties({
-          ...pnMessage,
-          attachments: []
-        })
-      );
-      expect(component.queryByTestId("attachment-tag")).toBeNull();
-    });
+  it("should NOT display the attachment tag if there are no attachments", () => {
+    const { component } = renderComponent(
+      generateComponentProperties({
+        ...pnMessage,
+        attachments: []
+      })
+    );
+    expect(component.queryByTestId("attachment-tag")).toBeNull();
   });
 });
 
