@@ -1,0 +1,204 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: IO OpenID Provider
+
+servers:
+  - url: https://api-app.io.pagopa.it/api/v1/send
+security:
+  - Bearer: []
+
+paths:
+  /aar:
+    post:
+      operationId: checkQRCode
+      tags:
+        - QRCode
+      parameters:
+      - in: query
+        name: isTest
+        schema:
+          type: boolean
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QRCodeContent'
+      responses:
+        200:
+          description: Notification Details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AARData"
+        400:
+          description: Bad request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemJson"
+        403:
+          description: No Notification Access
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/AARDataNoAccess"
+        500:
+          description: Unexpected Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemJson"
+
+  /notification/{iun}:
+    get:
+      operationId: getNotification
+      tags:
+        - Notification
+      parameters:
+        - $ref: "#/components/parameters/iun"
+        - in: query
+          name: mandateId
+          schema:
+            type: string
+        - in: query
+          name: isTest
+          schema:
+            type: boolean
+        - in: header
+          name: x-pagopa-pn-io-src
+          schema:
+            type: string
+      responses:
+        200:
+          description: Notification Details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ThirdPartyMessage"
+        400:
+          description: Bad request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemJson"
+        403:
+          description: No Notification Access
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemJson"
+        500:
+          description: Unexpected Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemJson"
+                
+  /notification/attachment/{attachmentUrl}:
+    get:
+      operationId: getNotificationAttachment
+      tags:
+        - Notification
+      parameters:
+        - $ref: "#/components/parameters/attachmentUrl"
+        - in: query
+          name: mandateId
+          schema:
+            type: string
+        - in: query
+          name: attachmentIdx
+          schema:
+            type: string
+        - in: query
+          name: isTest
+          schema:
+            type: boolean
+        - in: header
+          name: x-pagopa-pn-io-src
+          schema:
+            type: string
+      responses:
+        200:
+          description: Notification Details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationAttachmentDownloadMetadataResponse"
+        400:
+          description: Bad request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemJson"
+        403:
+          description: No Notification Access
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemJson"
+        500:
+          description: Unexpected Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemJson"
+
+components:
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header
+  
+  parameters:
+    iun:
+      name: iun
+      in: path
+      required: true
+      schema:
+        type: string
+    attachmentUrl:
+      name: attachmentUrl
+      in: path
+      required: true
+      schema:
+        type: string
+
+  schemas:
+    QRCodeContent:
+      type: object
+      properties:
+        qrcode:
+          type: string
+      required:
+        - qrcode
+          
+    AARData:
+      type: object
+      properties:
+        denomination:
+          type: string
+        iun:
+          type: string
+        mandateId:
+          type: string
+      required:
+        - denomination
+        - iun
+
+    AARDataNoAccess:
+      type: object
+      properties:
+        denomination:
+          type: string
+        iun:
+          type: string
+  
+    NotificationAttachmentDownloadMetadataResponse:
+        $ref: "https://raw.githubusercontent.com/pagopa/io-backend/v16.17.0/openapi/consumed/api-piattaforma-notifiche.yaml#/components/schemas/NotificationAttachmentDownloadMetadataResponse"
+    ProblemJson:
+        $ref: "https://raw.githubusercontent.com/pagopa/io-functions-commons/v29.1.1/openapi/definitions.yaml#/ProblemJson"
+    ThirdPartyMessage:
+        $ref: "https://raw.githubusercontent.com/pagopa/io-backend/v16.17.0/openapi/consumed/api-piattaforma-notifiche.yaml#/components/schemas/ThirdPartyMessage"
