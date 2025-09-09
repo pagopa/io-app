@@ -1,9 +1,5 @@
-import {
-  createStackNavigator,
-  TransitionPresets
-} from "@react-navigation/stack";
+import { createStackNavigator } from "@react-navigation/stack";
 import { ComponentType, memo } from "react";
-import { Platform } from "react-native";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { isConnectedSelector } from "../../connectivity/store/selectors";
 import { ItwGenericErrorContent } from "../common/components/ItwGenericErrorContent";
@@ -18,10 +14,6 @@ import { ItwCiePreparationCardScreen } from "../identification/cie/screens/ItwCi
 import { ItwCiePreparationPinScreen } from "../identification/cie/screens/ItwCiePreparationPinScreen.tsx";
 import { ItwIdentificationCieWarningScreen } from "../identification/cie/screens/ItwIdentificationCieWarningScreen.tsx";
 import ItwCieIdLoginScreen from "../identification/cieId/screens/ItwCieIdLoginScreen.tsx";
-import { ItwCieExpiredOrInvalidScreen } from "../identification/cie/screens/ItwCieExpiredOrInvalidScreen.tsx";
-import { ItwCieUnexpectedErrorScreen } from "../identification/cie/screens/ItwCieUnexpectedErrorScreen.tsx";
-import { ItwCieWrongCardScreen } from "../identification/cie/screens/ItwCieWrongCardScreen.tsx";
-import { ItwCieWrongCiePinScreen } from "../identification/cie/screens/ItwCieWrongCiePinScreen.tsx";
 import { ItwL2IdentificationModeSelectionScreen } from "../identification/common/screens/ItwL2IdentificationModeSelectionScreen.tsx";
 import { ItwL3IdentificationModeSelectionScreen } from "../identification/common/screens/ItwL3IdentificationModeSelectionScreen.tsx";
 import { ItwIdentificationIdpSelectionScreen } from "../identification/spid/screens/ItwIdentificationIdpSelectionScreen.tsx";
@@ -177,33 +169,6 @@ const InnerNavigator = memo(() => {
         name={ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC}
         component={ItwActivateNfcScreen}
       />
-      <Stack.Group
-        screenOptions={{
-          gestureEnabled: false,
-          headerShown: false,
-          ...Platform.select({
-            ios: TransitionPresets.ModalSlideFromBottomIOS,
-            default: undefined
-          })
-        }}
-      >
-        <Stack.Screen
-          name={ITW_ROUTES.IDENTIFICATION.CIE.WRONG_PIN}
-          component={ItwCieWrongCiePinScreen}
-        />
-        <Stack.Screen
-          name={ITW_ROUTES.IDENTIFICATION.CIE.WRONG_CARD}
-          component={ItwCieWrongCardScreen}
-        />
-        <Stack.Screen
-          name={ITW_ROUTES.IDENTIFICATION.CIE.UNEXPECTED_ERROR}
-          component={ItwCieUnexpectedErrorScreen}
-        />
-        <Stack.Screen
-          name={ITW_ROUTES.IDENTIFICATION.CIE.CIE_EXPIRED_SCREEN}
-          component={ItwCieExpiredOrInvalidScreen}
-        />
-      </Stack.Group>
       {/* ISSUANCE */}
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.EID_PREVIEW}
