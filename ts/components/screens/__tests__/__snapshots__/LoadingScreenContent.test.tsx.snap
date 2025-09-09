@@ -390,6 +390,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                         <View
                           style={
                             {
+                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -399,8 +400,10 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                               {
                                 "alignItems": "center",
                                 "display": "flex",
+                                "flex": 1,
                                 "flexDirection": "column",
                                 "gap": 24,
+                                "justifyContent": "center",
                               }
                             }
                           >
@@ -612,11 +615,19 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                             >
                               Test Content Title
                             </Text>
+                            <Text>
+                              My test child
+                            </Text>
                           </View>
                         </View>
-                        <Text>
-                          My test child
-                        </Text>
+                        <View
+                          style={
+                            {
+                              "marginBottom": 16,
+                              "paddingHorizontal": 24,
+                            }
+                          }
+                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>
@@ -1021,6 +1032,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                         <View
                           style={
                             {
+                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -1030,8 +1042,10 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                               {
                                 "alignItems": "center",
                                 "display": "flex",
+                                "flex": 1,
                                 "flexDirection": "column",
                                 "gap": 24,
+                                "justifyContent": "center",
                               }
                             }
                           >
@@ -1243,11 +1257,19 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                             >
                               Test Content Title
                             </Text>
+                            <Text>
+                              My test child
+                            </Text>
                           </View>
                         </View>
-                        <Text>
-                          My test child
-                        </Text>
+                        <View
+                          style={
+                            {
+                              "marginBottom": 16,
+                              "paddingHorizontal": 24,
+                            }
+                          }
+                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>
@@ -1652,6 +1674,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                         <View
                           style={
                             {
+                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -1661,8 +1684,10 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                               {
                                 "alignItems": "center",
                                 "display": "flex",
+                                "flex": 1,
                                 "flexDirection": "column",
                                 "gap": 24,
+                                "justifyContent": "center",
                               }
                             }
                           >
@@ -1876,6 +1901,14 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                             </Text>
                           </View>
                         </View>
+                        <View
+                          style={
+                            {
+                              "marginBottom": 16,
+                              "paddingHorizontal": 24,
+                            }
+                          }
+                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>
@@ -2280,6 +2313,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                         <View
                           style={
                             {
+                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -2289,8 +2323,10 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                               {
                                 "alignItems": "center",
                                 "display": "flex",
+                                "flex": 1,
                                 "flexDirection": "column",
                                 "gap": 24,
+                                "justifyContent": "center",
                               }
                             }
                           >
@@ -2504,6 +2540,14 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                             </Text>
                           </View>
                         </View>
+                        <View
+                          style={
+                            {
+                              "marginBottom": 16,
+                              "paddingHorizontal": 24,
+                            }
+                          }
+                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>

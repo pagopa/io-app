@@ -49,7 +49,7 @@ import { startAndReturnIdentificationResult } from "../features/identification/s
 import { IdentificationResult } from "../features/identification/store/reducers";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
 import {
-  isDeviceOfflineWithWalletSaga,
+  shouldExitForOfflineAccess,
   watchSessionRefreshInOfflineSaga
 } from "../features/ingress/saga";
 import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
@@ -251,20 +251,19 @@ export function* initializeApplicationSaga(
   }
   // #LOLLIPOP_CHECK_BLOCK1_END
 
+  // OFFLINE WALLET MINI-APP CHECKS
+
   // Start watching for ITW sagas that do not require internet connection or a valid session
   yield* fork(watchItwOfflineSaga);
 
-  /**
-   * Prevents the saga from executing if the user opened the app while offline.
-   *
-   * - Calls `isDeviceOfflineWithWalletSaga` to determine if the device is offline,
-   *   the user has a valid IT Wallet instance, and offline access is enabled.
-   * - If this condition is met, it means the app started in offline mode,
-   *   so the function exits early (`return`), preventing unnecessary execution of subsequent logic.
-   * - This ensures that only relevant flows are triggered based on the app’s startup condition.
-   */
-  const isDeviceOfflineWithWallet = yield* call(isDeviceOfflineWithWalletSaga);
-  if (isDeviceOfflineWithWallet) {
+  // Before continuing with the startup flow, we check if the app started offline.
+  // In that case (offline wallet or timeout), we skip the saga to prevent triggering
+  // network-dependent logic unnecessarily.
+  const shouldExitFromStartupForOfflineAccess = yield* call(
+    shouldExitForOfflineAccess
+  );
+
+  if (shouldExitFromStartupForOfflineAccess) {
     return;
   }
 

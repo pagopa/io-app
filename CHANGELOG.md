@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.13.0-rc.3](https://github.com/pagopa/io-app/compare/3.13.0-rc.2...3.13.0-rc.3) (2025-09-08)
+
+
+### Features
+
+* [[IOBP-1898](https://pagopa.atlassian.net/browse/IOBP-1898)] Add show merchants button when webview url present ([#7323](https://github.com/pagopa/io-app/issues/7323)) ([bc8e2f4](https://github.com/pagopa/io-app/commit/bc8e2f451dcd6b922f91397bb0145f498cc216e0))
+* [[SIW-2842](https://pagopa.atlassian.net/browse/SIW-2842)] Enable IT-Wallet for whitelisted users with PID L3 ([#7260](https://github.com/pagopa/io-app/issues/7260)) ([9d0042e](https://github.com/pagopa/io-app/commit/9d0042e71ea0765c0269f126492bd5a7b8bea1d9))
+
+
+### Bug Fixes
+
+* [[IOPLT-1311](https://pagopa.atlassian.net/browse/IOPLT-1311)] Fixes link issue on markdown rendering ([#7310](https://github.com/pagopa/io-app/issues/7310)) ([5071ff3](https://github.com/pagopa/io-app/commit/5071ff3c3df2928054ee58a0951d7e2c331700bd))
+
+
+### Chores
+
+* [[IOBP-1927](https://pagopa.atlassian.net/browse/IOBP-1927)] Improved the CGN webview playground usability, added a default user agent ([#7261](https://github.com/pagopa/io-app/issues/7261)) ([d0c4336](https://github.com/pagopa/io-app/commit/d0c4336786a1d1a077d48278edd8bb28df3a07ed))
+
 ## [3.13.0-rc.2](https://github.com/pagopa/io-app/compare/3.13.0-rc.1...3.13.0-rc.2) (2025-09-05)
 
 

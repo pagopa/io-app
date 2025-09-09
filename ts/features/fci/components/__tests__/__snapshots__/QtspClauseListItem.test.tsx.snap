@@ -422,62 +422,30 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                             >
                               (1) Io sottoscritto/a dichiaro quanto indicato nel 
                             </Text>
-                            <View
+                            <Text
                               accessibilityRole="link"
-                              accessibilityState={
-                                {
-                                  "busy": undefined,
-                                  "checked": undefined,
-                                  "disabled": undefined,
-                                  "expanded": undefined,
-                                  "selected": undefined,
-                                }
+                              allowFontScaling={true}
+                              dynamicTypeRamp="body"
+                              maxFontSizeMultiplier={1.5}
+                              onPress={[Function]}
+                              style={
+                                [
+                                  {
+                                    "textDecorationLine": "underline",
+                                  },
+                                  {
+                                    "color": "#0B3EE3",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 24,
+                                  },
+                                ]
                               }
-                              accessibilityValue={
-                                {
-                                  "max": undefined,
-                                  "min": undefined,
-                                  "now": undefined,
-                                  "text": undefined,
-                                }
-                              }
-                              accessible={true}
-                              collapsable={false}
-                              focusable={true}
-                              onBlur={[Function]}
-                              onClick={[Function]}
-                              onFocus={[Function]}
-                              onResponderGrant={[Function]}
-                              onResponderMove={[Function]}
-                              onResponderRelease={[Function]}
-                              onResponderTerminate={[Function]}
-                              onResponderTerminationRequest={[Function]}
-                              onStartShouldSetResponder={[Function]}
                             >
-                              <Text
-                                accessibilityRole="link"
-                                allowFontScaling={true}
-                                dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {
-                                      "textDecorationLine": "underline",
-                                    },
-                                    {
-                                      "color": "#0B3EE3",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 24,
-                                    },
-                                  ]
-                                }
-                              >
-                                QUADRO E - AUTOCERTIFICAZIONE E SOTTOSCRIZIONE DA PARTE DEL TITOLARE.
-                              </Text>
-                            </View>
+                              QUADRO E - AUTOCERTIFICAZIONE E SOTTOSCRIZIONE DA PARTE DEL TITOLARE.
+                            </Text>
                             <Text
                               allowFontScaling={true}
                               dynamicTypeRamp="headline"

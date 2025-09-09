@@ -13,6 +13,7 @@ import {
   TextInput,
   View
 } from "react-native";
+import { WebViewSourceUri } from "react-native-webview/lib/WebViewTypes";
 import WebviewComponent from "../../../../components/WebviewComponent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
@@ -33,9 +34,12 @@ const styles = StyleSheet.create({
 });
 
 const CgnLandingPlayground = () => {
-  const [navigationURI, setNavigationUri] = useState("https://");
+  const [navigationURI, setNavigationUri] = useState("https://google.it");
   const [refererValue, setRefererValue] = useState("");
-  const [loadUri, setLoadUri] = useState("https://google.com");
+  const [source, setSource] = useState<WebViewSourceUri>({
+    uri: "https://google.it",
+    headers: undefined
+  });
   const [reloadKey, setReloadKey] = useState(0);
 
   useHeaderSecondLevel({
@@ -83,22 +87,23 @@ const CgnLandingPlayground = () => {
             variant="solid"
             label="Invia"
             onPress={() => {
-              setLoadUri(navigationURI);
+              setSource({
+                uri: navigationURI,
+                headers: {
+                  "X-PagoPa-CGN-Referer": refererValue
+                }
+              });
             }}
             accessibilityLabel={"Invia"}
           />
         </View>
         <VSpacer size={16} />
         <View style={{ flex: 1 }}>
-          {loadUri !== "" && (
+          {source && (
             <WebviewComponent
+              playgroundEnabled
               key={`${reloadKey}_webview`}
-              source={{
-                uri: loadUri,
-                headers: {
-                  "X-PagoPa-CGN-Referer": refererValue
-                }
-              }}
+              source={source}
             />
           )}
         </View>

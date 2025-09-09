@@ -106,6 +106,15 @@ const AlertWrapper = ({
       };
     }
 
+    if (offlineAccessReason === OfflineAccessReasonEnum.TIMEOUT) {
+      return {
+        content: I18n.t(`features.itWallet.offline.timeout.alert.content`),
+        action: I18n.t(`features.itWallet.offline.timeout.alert.action`),
+        variant: "info",
+        onPress: handleAppRestart
+      };
+    }
+
     return {
       content: I18n.t(
         `features.itWallet.offline.${offlineAccessReason}.alert.content`
@@ -170,6 +179,12 @@ const useOfflineAlertDetailModal = (
       handleAppRestart();
     }
   }, [handleAppRestart, navigateOnAuthPage, offlineAccessReason]);
+
+  // We cast to TranslationKeys because TypeScript cannot infer that the
+  // dynamic keys built with offlineAccessReason exist in the i18n catalog.
+  // This is safe in our case because the only enum value without modal.* keys
+  // is TIMEOUT, and for TIMEOUT the bottom sheet is never rendered.
+  // Therefore at runtime we never try to resolve missing translation keys.
 
   return useIOBottomSheetModal({
     title: I18n.t(
