@@ -2,6 +2,7 @@
  * An ingress screen to choose the real first screen the user must navigate to.
  */
 import {
+  Banner,
   ContentWrapper,
   H3,
   IOColors,
@@ -9,7 +10,7 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 
-import { ReactNode, useEffect } from "react";
+import { ComponentProps, ReactNode, useEffect } from "react";
 import { AccessibilityInfo, Platform, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LoadingIndicator } from "../../components/ui/LoadingIndicator";
@@ -33,6 +34,9 @@ type LoadingScreenContentProps = WithTestID<{
   children?: ReactNode;
   headerVisible?: boolean;
   animatedPictogramSource?: IOAnimatedPictograms;
+  banner?:
+    | { showBanner: true; props: ComponentProps<typeof Banner> }
+    | { showBanner?: false };
 }>;
 
 export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
@@ -42,7 +46,8 @@ export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
     children,
     headerVisible,
     testID,
-    animatedPictogramSource
+    animatedPictogramSource,
+    banner = { showBanner: false }
   } = props;
 
   useEffect(() => {
@@ -66,10 +71,10 @@ export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
       edges={headerVisible ? ["bottom"] : undefined}
       testID={testID}
     >
-      <ContentWrapper>
+      <ContentWrapper style={{ flex: 1 }}>
         <VStack
           space={SPACE_BETWEEN_SPINNER_AND_TEXT}
-          style={{ alignItems: "center" }}
+          style={{ alignItems: "center", flex: 1, justifyContent: "center" }}
         >
           <View
             accessible={false}
@@ -93,9 +98,12 @@ export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
           >
             {contentTitle}
           </H3>
+          {children}
         </VStack>
       </ContentWrapper>
-      {children}
+      <ContentWrapper style={{ marginBottom: 16 }}>
+        {banner.showBanner && <Banner {...banner.props} />}
+      </ContentWrapper>
     </SafeAreaView>
   );
 };
