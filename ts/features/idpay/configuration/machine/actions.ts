@@ -82,9 +82,7 @@ const createActionsImplementation = (
       args.context.failure,
       InitiativeFailure.decode,
       O.fromEither,
-      O.map(failure =>
-        I18n.t(`idpay.configuration.failureStates.${failure}` as any)
-      ),
+      O.map(failure => I18n.t(`idpay.configuration.failureStates.${failure}`)),
       O.map(IOToast.error)
     );
   };
