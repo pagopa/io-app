@@ -77,6 +77,7 @@ import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnbo
 import { watchAbortOnboardingSaga } from "../features/onboarding/saga/watchAbortOnboardingSaga";
 import { watchPaymentsSaga } from "../features/payments/common/saga";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
+import { watchSendAARSaga } from "../features/pn/aar/sagas/watchSendAARSaga";
 import { handlePendingMessageStateIfAllowed } from "../features/pushNotifications/sagas/common";
 import { notificationPermissionsListener } from "../features/pushNotifications/sagas/notificationPermissionsListener";
 import { profileAndSystemNotificationsPermissions } from "../features/pushNotifications/sagas/profileAndSystemNotificationsPermissions";
@@ -648,6 +649,7 @@ export function* initializeApplicationSaga(
   if (pnEnabled) {
     // Start watching for PN actions
     yield* fork(watchPnSaga, sessionToken);
+    yield* fork(watchSendAARSaga, sessionToken, keyInfo);
   }
 
   const idPayEnabled: ReturnType<typeof isIdPayEnabledSelector> = yield* select(
