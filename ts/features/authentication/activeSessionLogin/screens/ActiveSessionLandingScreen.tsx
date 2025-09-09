@@ -61,10 +61,10 @@ export const ActiveSessionLandingScreen = () => {
     isCieSupported
   } = useNavigateToLoginMethod();
 
-  // const handleNavigateToCieIdLoginScreen = useCallback(() => {
-  //   void trackCieIDLoginSelected(store.getState(), SPID_LEVEL);
-  //   navigateToCieIdLoginScreen(SPID_LEVEL);
-  // }, [navigateToCieIdLoginScreen]);
+  const handleNavigateToCieIdLoginScreen = useCallback(() => {
+    // void trackCieIDLoginSelected(store.getState(), SPID_LEVEL);
+    navigateToCieIdLoginScreen(SPID_LEVEL);
+  }, [navigateToCieIdLoginScreen]);
 
   useEffect(() => {
     if (!isActiveSessionLogin) {
@@ -107,7 +107,7 @@ export const ActiveSessionLandingScreen = () => {
               "authentication.landing.cie_bottom_sheet.module_cie_id.badge"
             )
           }}
-          onPress={() => navigateToCieIdLoginScreen(SPID_LEVEL)}
+          onPress={handleNavigateToCieIdLoginScreen}
         />
         <VSpacer size={24} />
         <Banner
@@ -152,9 +152,9 @@ export const ActiveSessionLandingScreen = () => {
       // void trackCieBottomSheetScreenView();
       present();
     } else {
-      navigateToCieIdLoginScreen(SPID_LEVEL);
+      handleNavigateToCieIdLoginScreen();
     }
-  }, [isCieSupported, present, navigateToCieIdLoginScreen]);
+  }, [isCieSupported, present, handleNavigateToCieIdLoginScreen]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
