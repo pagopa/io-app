@@ -3,6 +3,7 @@ import {
   ContentWrapper,
   H6,
   IOButton,
+  IOToast,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -13,7 +14,7 @@ import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useCallback } from "react";
-import { View } from "react-native";
+import { Linking, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import I18n from "i18next";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
@@ -315,6 +316,14 @@ const IdPayInitiativeDetailsScreenComponent = () => {
       )
     );
 
+  const handleOnShowMerchants = () => {
+    if (!initiative.webViewUrl) {
+      IOToast.error(I18n.t("global.genericError"));
+      return;
+    }
+    void Linking.openURL(initiative.webViewUrl);
+  };
+
   const getInitiativeFooterProps = (
     rewardType?: InitiativeRewardTypeEnum
   ): IOScrollViewActions | undefined => {
@@ -326,12 +335,24 @@ const IdPayInitiativeDetailsScreenComponent = () => {
         ) {
           return;
         }
+        const useBonusButton = {
+          label: I18n.t("idpay.initiative.discountDetails.authorizeButton"),
+          onPress: discountBottomSheet.present
+        };
+        const showMerchantsButton = {
+          label: I18n.t("idpay.initiative.discountDetails.secondaryCta"),
+          onPress: handleOnShowMerchants
+        };
+        if (!initiative.webViewUrl) {
+          return {
+            type: "SingleButton",
+            primary: useBonusButton
+          };
+        }
         return {
-          type: "SingleButton",
-          primary: {
-            label: I18n.t("idpay.initiative.discountDetails.authorizeButton"),
-            onPress: discountBottomSheet.present
-          }
+          type: "TwoButtons",
+          primary: useBonusButton,
+          secondary: showMerchantsButton
         };
       }
       case InitiativeRewardTypeEnum.EXPENSE:

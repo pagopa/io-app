@@ -11,7 +11,7 @@ import {
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useCallback, useLayoutEffect, useMemo } from "react";
+import { useCallback, useLayoutEffect } from "react";
 import I18n from "i18next";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
@@ -75,10 +75,7 @@ const ContentView = ({ eid }: ContentViewProps) => {
 
   const isL3 = isItwCredential(eid.credential);
 
-  const mixPanelCredential = useMemo(
-    () => (isL3 ? "ITW_PID" : "ITW_ID_V2"),
-    [isL3]
-  );
+  const mixPanelCredential = isL3 ? "ITW_PID" : "ITW_ID_V2";
 
   const theme = useIOTheme();
 

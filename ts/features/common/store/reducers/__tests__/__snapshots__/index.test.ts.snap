@@ -314,6 +314,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
   },
   "pn": {
+    "aarFlow": {
+      "type": "none",
+    },
     "activation": {
       "isActivating": false,
     },
