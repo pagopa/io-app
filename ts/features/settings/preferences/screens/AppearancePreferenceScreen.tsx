@@ -2,26 +2,32 @@ import {
   ListItemHeader,
   RadioGroup,
   useIONewTypeface,
+  useIOThemeContext,
   VStack
 } from "@pagopa/io-app-design-system";
-import { ReactElement, useState } from "react";
-import { View } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
+import { constVoid } from "fp-ts/lib/function";
 import I18n from "i18next";
+import { ReactElement, useState } from "react";
+import { Appearance, useColorScheme, View } from "react-native";
+import { FONT_PERSISTENCE_KEY } from "../../../../common/context/DSTypefaceContext";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { useIODispatch, useIOStore } from "../../../../store/hooks";
+import {
+  ColorModeChoice,
+  THEME_PERSISTENCE_KEY
+} from "../../../../hooks/useAppThemeConfiguration";
 import {
   preferencesFontSet,
+  preferencesThemeSet,
   TypefaceChoice
 } from "../../../../store/actions/persistedPreferences";
-import { FONT_PERSISTENCE_KEY } from "../../../../common/context/DSTypefaceContext";
+import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import {
   trackAppearancePreferenceScreenView,
+  trackAppearancePreferenceThemeUpdate,
   trackAppearancePreferenceTypefaceUpdate
 } from "../../common/analytics";
-
-type ColorModeChoice = "system" | "dark" | "light";
 
 /**
  * Display the appearance related settings
@@ -32,9 +38,20 @@ const AppearancePreferenceScreen = (): ReactElement => {
   const store = useIOStore();
   const dispatch = useIODispatch();
   const { newTypefaceEnabled, setNewTypefaceEnabled } = useIONewTypeface();
+  const { setTheme } = useIOThemeContext();
+  const systemColorScheme = useColorScheme();
+  const [selectedColorMode, setSelectedColorMode] =
+    useState<ColorModeChoice>("light");
 
   useFocusEffect(() => {
     trackAppearancePreferenceScreenView();
+    AsyncStorage.getItem(THEME_PERSISTENCE_KEY)
+      .then(value => {
+        if (value !== null && value !== undefined) {
+          setSelectedColorMode(value as ColorModeChoice);
+        }
+      })
+      .catch(constVoid);
   });
 
   const selectedTypeface: TypefaceChoice = newTypefaceEnabled
@@ -49,8 +66,20 @@ const AppearancePreferenceScreen = (): ReactElement => {
     });
   };
 
-  const [selectedColorMode, setSelectedColorMode] =
-    useState<ColorModeChoice>("light");
+  const handleColorModeChange = (choice: ColorModeChoice) => {
+    trackAppearancePreferenceThemeUpdate(choice, store.getState());
+    AsyncStorage.setItem(THEME_PERSISTENCE_KEY, choice).finally(() => {
+      dispatch(preferencesThemeSet(choice));
+      setSelectedColorMode(choice);
+      if (choice === "auto") {
+        Appearance.setColorScheme(undefined);
+        setTheme(systemColorScheme);
+        return;
+      }
+      Appearance.setColorScheme(choice);
+      setTheme(choice);
+    });
+  };
 
   // Options for typeface
   const typefaceOptions = [
@@ -77,24 +106,21 @@ const AppearancePreferenceScreen = (): ReactElement => {
   // Options for the color mode
   const colorModeOptions = [
     {
-      id: "system" as ColorModeChoice,
+      id: "auto" as ColorModeChoice,
       value: I18n.t(
         "profile.preferences.list.appearance.theme.automatic.title"
       ),
       description: I18n.t(
         "profile.preferences.list.appearance.theme.automatic.description"
-      ),
-      disabled: true
+      )
     },
     {
       id: "light" as ColorModeChoice,
-      value: I18n.t("profile.preferences.list.appearance.theme.light"),
-      disabled: true
+      value: I18n.t("profile.preferences.list.appearance.theme.light")
     },
     {
       id: "dark" as ColorModeChoice,
-      value: I18n.t("profile.preferences.list.appearance.theme.dark"),
-      disabled: true
+      value: I18n.t("profile.preferences.list.appearance.theme.dark")
     }
   ];
 
@@ -130,9 +156,7 @@ const AppearancePreferenceScreen = (): ReactElement => {
             endElement={{
               type: "badge",
               componentProps: {
-                text: I18n.t(
-                  "profile.preferences.list.appearance.theme.comingSoon"
-                ),
+                text: "Beta",
                 variant: "highlight"
               }
             }}
@@ -141,7 +165,7 @@ const AppearancePreferenceScreen = (): ReactElement => {
             type="radioListItem"
             items={colorModeOptions}
             selectedItem={selectedColorMode}
-            onPress={setSelectedColorMode}
+            onPress={handleColorModeChange}
           />
         </View>
       </VStack>
