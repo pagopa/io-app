@@ -14,7 +14,6 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
@@ -43,7 +42,6 @@ import {
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useDispatch } from "react-redux";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
@@ -67,31 +65,25 @@ import CieCardReadingAnimation, {
   ReadingState
 } from "../../../login/cie/components/CieCardReadingAnimation";
 import {
-  CieAuthenticationErrorPayload,
-  CieAuthenticationErrorReason,
-  cieAuthenticationError
+  // CieAuthenticationErrorPayload,
+  CieAuthenticationErrorReason
+  // cieAuthenticationError
 } from "../../../login/cie/store/actions";
 import { isCieLoginUatEnabledSelector } from "../../../login/cie/store/selectors";
 import { getCieUatEndpoint } from "../../../login/cie/utils/endpoints";
+import {
+  analyticActions,
+  VIBRATION,
+  WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY,
+  WAIT_TIMEOUT_NAVIGATION,
+  accessibityTimeout,
+  getTextForState,
+  TextForState
+} from "../../shared/utils";
 
 // The MP events related to this page have been commented on,
 // pending their correct integration into the flow.
 // Task: https://pagopa.atlassian.net/browse/IOPID-3343
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: IOColors.white
-  },
-  centerText: {
-    textAlign: "center"
-  },
-  contentContainer: {
-    flexGrow: 1,
-    alignContent: "center",
-    justifyContent: "center"
-  }
-});
 
 type setErrorParameter = {
   eventReason: CieAuthenticationErrorReason;
@@ -115,95 +107,6 @@ const getPictogramName = (state: ReadingState): IOPictograms => {
   }
 };
 
-// A subset of Cie Events (errors) which is of interest to analytics
-const analyticActions = new Map<CieAuthenticationErrorReason, string>([
-  // Reading interrupted before the sdk complete the reading
-  ["Transmission Error", I18n.t("authentication.cie.card.error.onTagLost")],
-  ["ON_TAG_LOST", I18n.t("authentication.cie.card.error.onTagLost")],
-  [
-    "TAG_ERROR_NFC_NOT_SUPPORTED",
-    I18n.t("authentication.cie.card.error.unknownCardContent")
-  ],
-  [
-    "ON_TAG_DISCOVERED_NOT_CIE",
-    I18n.t("authentication.cie.card.error.unknownCardContent")
-  ],
-  ["PIN Locked", I18n.t("authentication.cie.card.error.generic")],
-  ["ON_CARD_PIN_LOCKED", I18n.t("authentication.cie.card.error.generic")],
-  ["ON_PIN_ERROR", I18n.t("authentication.cie.card.error.tryAgain")],
-  ["PIN_INPUT_ERROR", ""],
-  ["CERTIFICATE_EXPIRED", I18n.t("authentication.cie.card.error.generic")],
-  ["CERTIFICATE_REVOKED", I18n.t("authentication.cie.card.error.generic")],
-  ["AUTHENTICATION_ERROR", I18n.t("authentication.cie.card.error.generic")],
-  [
-    "EXTENDED_APDU_NOT_SUPPORTED",
-    I18n.t("authentication.cie.nfc.apduNotSupported")
-  ],
-  [
-    "ON_NO_INTERNET_CONNECTION",
-    I18n.t("authentication.cie.card.error.tryAgain")
-  ],
-  ["STOP_NFC_ERROR", ""],
-  ["START_NFC_ERROR", ""]
-]);
-
-// the timeout we sleep until move to consent form screen when authentication goes well
-const WAIT_TIMEOUT_NAVIGATION = 1700 as Millisecond;
-const WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY = 5000 as Millisecond;
-const VIBRATION = 100 as Millisecond;
-const accessibityTimeout = 100 as Millisecond;
-
-type TextForState = {
-  title: string;
-  subtitle?: string;
-  content: string;
-};
-
-// some texts changes depending on current running Platform
-const getTextForState = (
-  state: ReadingState.waiting_card | ReadingState.error,
-  errorMessage: string = ""
-): TextForState => {
-  const texts: Record<
-    ReadingState.waiting_card | ReadingState.error,
-    TextForState
-  > = Platform.select({
-    ios: {
-      [ReadingState.waiting_card]: {
-        title: I18n.t("authentication.cie.card.titleiOS"),
-        subtitle: I18n.t("authentication.cie.card.layCardMessageHeaderiOS"),
-        // the native alert hides the screen content and shows a message it self
-        content: ""
-      },
-      [ReadingState.error]: {
-        title: I18n.t("authentication.cie.card.error.readerCardLostTitle"),
-        subtitle: "",
-        // the native alert hides the screen content and shows a message it self
-        content: ""
-      },
-      [ReadingState.reading]: {
-        title: I18n.t("authentication.cie.card.titleiOS"),
-        subtitle: I18n.t("authentication.cie.card.layCardMessageHeaderiOS"),
-        // the native alert hides the screen content and shows a message it self
-        content: ""
-      }
-    },
-    default: {
-      [ReadingState.waiting_card]: {
-        title: I18n.t("authentication.cie.card.title"),
-        subtitle: I18n.t("authentication.cie.card.layCardMessageHeader"),
-        content: I18n.t("authentication.cie.card.layCardMessageFooter")
-      },
-      [ReadingState.error]: {
-        title: I18n.t("authentication.cie.card.error.readerCardLostTitle"),
-        subtitle: I18n.t("authentication.cie.card.error.onTagLost"),
-        content: errorMessage
-      }
-    }
-  });
-  return texts[state];
-};
-
 /**
  * This screen shown while reading the card
  */
@@ -223,7 +126,6 @@ const ActiveSessionLoginCieCardReaderScreen = () => {
       >
     >();
   const theme = useIOTheme();
-  const dispatch = useDispatch();
 
   const { ciePin, authorizationUri } = route.params;
   const blueColorName = IOColors[theme["interactiveElem-default"]];
@@ -294,12 +196,12 @@ const ActiveSessionLoginCieCardReaderScreen = () => {
     announceUpdate();
   }, [readingState, errorMessage, isScreenReaderEnabledState, announceUpdate]);
 
-  const dispatchAnalyticEvent = useCallback(
-    (error: CieAuthenticationErrorPayload) => {
-      dispatch(cieAuthenticationError(error));
-    },
-    [dispatch]
-  );
+  // const dispatchAnalyticEvent = useCallback(
+  //   (error: CieAuthenticationErrorPayload) => {
+  //     dispatch(cieAuthenticationError(error));
+  //   },
+  //   [dispatch]
+  // );
 
   const setError = useCallback(
     ({
@@ -315,17 +217,17 @@ const ActiveSessionLoginCieCardReaderScreen = () => {
           O.getOrElse(() => "")
         );
 
-      dispatchAnalyticEvent({
-        reason: eventReason,
-        cieDescription
-      });
+      // dispatchAnalyticEvent({
+      //   reason: eventReason,
+      //   cieDescription
+      // });
 
       setErrorMessage(cieDescription);
       setReadingState(ReadingState.error);
       Vibration.vibrate(VIBRATION);
       navAction?.();
     },
-    [dispatchAnalyticEvent]
+    []
   );
 
   const handleCieSuccess = useCallback(
@@ -605,3 +507,18 @@ const Title = (props: { text: string; accessibilityLabel: string }) => {
 };
 
 export default ActiveSessionLoginCieCardReaderScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: IOColors.white
+  },
+  centerText: {
+    textAlign: "center"
+  },
+  contentContainer: {
+    flexGrow: 1,
+    alignContent: "center",
+    justifyContent: "center"
+  }
+});

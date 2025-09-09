@@ -165,7 +165,7 @@ export const ActiveSessionLandingScreen = () => {
           firstAction={{
             icon: "closeLarge",
             accessibilityLabel: I18n.t("global.buttons.close"),
-            onPress: () => navigation.goBack()
+            onPress: navigation.goBack
           }}
         />
       )

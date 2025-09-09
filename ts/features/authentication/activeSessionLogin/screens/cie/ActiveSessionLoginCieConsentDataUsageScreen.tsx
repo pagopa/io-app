@@ -12,7 +12,6 @@ import {
 } from "react-native-webview/lib/WebViewTypes";
 import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { useOnboardingAbortAlert } from "../../../../onboarding/hooks/useOnboardingAbortAlert";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch } from "../../../../../store/hooks";
 import { SessionToken } from "../../../../../types/SessionToken";
@@ -21,12 +20,11 @@ import { onLoginUriChanged } from "../../../common/utils/login";
 import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
 import {
   activeSessionLoginFailure,
-  activeSessionLoginSuccess
+  activeSessionLoginSuccess,
+  setFinishedActiveSessionLoginFlow
 } from "../../store/actions";
-import {
-  CieConsentDataUsageScreenNavigationParams,
-  LoaderComponent
-} from "../../../login/cie/screens/CieConsentDataUsageScreen";
+import { CieConsentDataUsageScreenNavigationParams } from "../../../login/cie/screens/CieConsentDataUsageScreen";
+import { LoaderComponent } from "../../shared/components/LoaderComponent";
 
 // The MP events related to this page have been commented on,
 // pending their correct integration into the flow.
@@ -47,7 +45,6 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
   const [errorCodeOrMessage, setErrorCodeOrMessage] = useState<
     string | undefined
   >();
-  const { showAlert } = useOnboardingAbortAlert();
   const navigation = useIONavigation();
 
   //   const loginSuccessDispatch = useCallback(
@@ -60,12 +57,6 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
   //   [dispatch]
   // );
 
-  const navigateToLandingScreen = useCallback(() => {
-    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.LANDING
-    });
-  }, [navigation]);
-
   const navigateToErrorScreen = useCallback(() => {
     navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
@@ -77,17 +68,15 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
     });
   }, [errorCodeOrMessage, navigation]);
 
-  const showAbortAlert = useCallback((): boolean => {
-    // if the screen is in error state, skip the confirmation alert to go back at the landing screen
-    if (hasError) {
-      navigateToLandingScreen();
-      return true;
-    }
-    showAlert(navigateToLandingScreen);
-    return true;
-  }, [hasError, navigateToLandingScreen, showAlert]);
+  const navigateBack = () => {
+    dispatch(setFinishedActiveSessionLoginFlow());
+    navigation.popToTop();
+  };
 
-  useHeaderSecondLevel({ title: "", goBack: showAbortAlert });
+  useHeaderSecondLevel({
+    title: "",
+    goBack: navigateBack
+  });
 
   const handleWebViewError = () => {
     setHasError(true);
