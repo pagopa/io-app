@@ -12,7 +12,7 @@ import {
   ClaimValue,
   DrivingPrivilegeClaimType,
   DrivingPrivilegesClaim,
-  DrivingPrivilegesValueRaw,
+  DrivingPrivilegesCustomClaim,
   EmptyStringClaim,
   extractFiscalCode,
   FiscalCodeClaim,
@@ -433,7 +433,10 @@ export const ItwCredentialClaim = ({
         if (PdfClaim.is(decoded)) {
           return <AttachmentsClaimItem name={claim.label} />;
         }
-        if (DrivingPrivilegesClaim.is(decoded)) {
+        if (
+          DrivingPrivilegesClaim.is(decoded) ||
+          DrivingPrivilegesCustomClaim.is(decoded)
+        ) {
           return decoded.map((elem, index) => (
             <Fragment key={`${index}_${claim.label}_${elem.driving_privilege}`}>
               {index !== 0 && <Divider />}
@@ -456,10 +459,7 @@ export const ItwCredentialClaim = ({
         if (NestedArrayClaim.is(decoded)) {
           const nestedParsedClaims = decoded.map(item => parseClaims(item));
           // We render the nested claims as a list if there are multiple items
-          // or if the claim is a DrivingPrivilegesValueRaw (to handle driving_privileges)
-          const shouldRenderAsList =
-            nestedParsedClaims.length > 1 ||
-            DrivingPrivilegesValueRaw.is(decoded);
+          const shouldRenderAsList = nestedParsedClaims.length > 1;
           if (shouldRenderAsList) {
             return (
               <>
@@ -531,11 +531,6 @@ export const ItwCredentialClaim = ({
               credentialType={credentialType}
             />
           ); // must be the last one to be checked due to overlap with IPatternStringTag
-        }
-
-        // We handle this case inside NestedArrayClaim section so we don't want to render anything here
-        if (DrivingPrivilegesValueRaw.is(decoded)) {
-          return null;
         }
 
         return <UnknownClaimItem label={claim.label} _claim={decoded} />;

@@ -287,6 +287,19 @@ const URL_REGEX = "^https?://";
 const FISCAL_CODE_WITH_PREFIX =
   "(TINIT-[A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z])";
 
+const LocaleName = t.union([t.string, t.record(t.string, t.string)]);
+
+/**
+ * Decoder for a nested array of claims.
+ * Each object in the array is a record of string keys and ParsedAttribute values.
+ * The ParsedAttribute is an object with a value and a name, where the name can be either a string or a record of locale and string.
+ */
+
+const ParsedAttribute = t.type({
+  value: t.string,
+  name: LocaleName
+});
+
 /**
  * io-ts decoder for the date claim field of the credential.
  * The date format is checked against the regex dateFormatRegex, which is currenlty mocked.
@@ -349,6 +362,77 @@ export type DrivingPrivilegesClaimType = t.TypeOf<
 >;
 
 /**
+ * Decoder for the raw driving privileges array, used to parse the new format of the mDL driving privileges.
+ * This is needed to support the new format of the mDL driving privileges, which is an array of objects with
+ * vehicle_category_code, issue_date and expiry_date fields.
+ */
+const DrivingPrivilegesItemRaw = t.type({
+  vehicle_category_code: t.type({
+    name: LocaleName,
+    value: t.string
+  }),
+  issue_date: t.type({
+    name: LocaleName,
+    value: SimpleDateClaim
+  }),
+  expiry_date: t.type({
+    name: LocaleName,
+    value: SimpleDateClaim
+  })
+});
+
+/**
+ * Array of driving privileges in the raw format
+ */
+export const DrivingPrivilegesValueRaw = t.array(DrivingPrivilegesItemRaw);
+
+export type DrivingPrivilegesValueRawType = t.TypeOf<
+  typeof DrivingPrivilegesValueRaw
+>;
+
+export const DrivingPrivilegesFromRaw = new t.Type<
+  DrivingPrivilegesClaimType,
+  DrivingPrivilegesValueRawType,
+  DrivingPrivilegesValueRawType
+>(
+  "DrivingPrivilegesFromRaw",
+  DrivingPrivilegesClaim.is,
+  (input, c) => {
+    try {
+      return t.success(
+        input.map(item => ({
+          driving_privilege: item.vehicle_category_code.value,
+          issue_date: item.issue_date.value,
+          expiry_date: item.expiry_date.value,
+          restrictions_conditions: null
+        }))
+      );
+    } catch (e) {
+      return t.failure(input, c);
+    }
+  },
+  output =>
+    output.map(item => ({
+      vehicle_category_code: {
+        name: "",
+        value: item.driving_privilege
+      },
+      issue_date: {
+        name: "",
+        value: item.issue_date
+      },
+      expiry_date: {
+        name: "",
+        value: item.expiry_date
+      }
+    }))
+);
+
+export const DrivingPrivilegesCustomClaim = DrivingPrivilegesValueRaw.pipe(
+  DrivingPrivilegesFromRaw
+);
+
+/**
  * Decoder for the fiscal code. This is needed since we have to remove the INIT prefix when rendering it.
  */
 export const FiscalCodeClaim = PatternString(FISCAL_CODE_WITH_PREFIX);
@@ -394,47 +478,10 @@ export const PdfClaim = PatternString(PDF_DATA_REGEX);
 export const SimpleListClaim = t.array(t.string);
 
 /**
- * Decoder for a nested array of claims.
- * Each object in the array is a record of string keys and ParsedAttribute values.
- * The ParsedAttribute is an object with a value and a name, where the name can be either a string or a record of locale and string.
- */
-const LocaleName = t.union([t.string, t.record(t.string, t.string)]);
-
-const ParsedAttribute = t.type({
-  value: t.string,
-  name: LocaleName
-});
-
-/**
  * Array of records of string keys and ParsedAttribute values.
  * This is used to parse nested claims.
  */
 export const NestedArrayClaim = t.array(t.record(t.string, ParsedAttribute));
-
-/**
- * Decoder for the raw driving privileges array, used to parse the new format of the mDL driving privileges.
- * This is needed to support the new format of the mDL driving privileges, which is an array of objects with
- * vehicle_category_code, issue_date and expiry_date fields.
- */
-const DrivingPrivilegesItemRaw = t.type({
-  vehicle_category_code: t.type({
-    name: LocaleName,
-    value: t.string
-  }),
-  issue_date: t.type({
-    name: LocaleName,
-    value: SimpleDateClaim
-  }),
-  expiry_date: t.type({
-    name: LocaleName,
-    value: SimpleDateClaim
-  })
-});
-
-/**
- * Array of driving privileges in the raw format
- */
-export const DrivingPrivilegesValueRaw = t.array(DrivingPrivilegesItemRaw);
 
 /**
  * Decoder type for the claim field of the credential.
@@ -445,10 +492,10 @@ export const DrivingPrivilegesValueRaw = t.array(DrivingPrivilegesItemRaw);
 export const ClaimValue = t.union([
   // Parse an object representing the place of birth
   PlaceOfBirthClaim,
+  // Parse a custom object representing a mDL driving privileges
+  DrivingPrivilegesCustomClaim,
   // Parse an object representing a mDL driving privileges
   DrivingPrivilegesClaim,
-  // Parse an array of objects representing driving privileges in the raw format
-  DrivingPrivilegesValueRaw,
   // Parse an array of nested claims (the nested claims needs to be re-parsed again)
   NestedArrayClaim,
   // Otherwise parse a date as string

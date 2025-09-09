@@ -2,6 +2,7 @@ import MockDate from "mockdate";
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import {
+  DrivingPrivilegesCustomClaim,
   DrivingPrivilegesValueRaw,
   extractFiscalCode,
   getCredentialExpireDate,
@@ -288,15 +289,35 @@ describe("NestedArrayClaim", () => {
     const res = NestedArrayClaim.decode(bad);
     expect(E.isLeft(res)).toBe(true);
   });
+});
 
-  it("fails when name is neither string nor record", () => {
-    const bad = [
+describe("DrivingPrivilegesCustomClaim", () => {
+  it("decodes an array of valid items", () => {
+    const good = [
       {
-        foo: { value: "ok", name: 42 as any }
+        vehicle_category_code: {
+          name: "Categoria",
+          value: "AB"
+        },
+        issue_date: {
+          name: {
+            "it-IT": "Data rilascio categoria",
+            "en-US": "Category issue date"
+          },
+          value: "2013-10-19"
+        },
+        expiry_date: {
+          name: {
+            "it-IT": "Data di scadenza della categoria",
+            "en-US": "Category expiry date"
+          },
+          value: "2034-04-04"
+        }
       }
     ];
-    const res = NestedArrayClaim.decode(bad);
-    expect(E.isLeft(res)).toBe(true);
+
+    const res = DrivingPrivilegesCustomClaim.decode(good);
+    expect(E.isRight(res)).toBe(true);
   });
 });
 
@@ -388,5 +409,15 @@ describe("DrivingPrivilegesValueRaw", () => {
     if (E.isRight(res)) {
       expect(res.right[0].vehicle_category_code.value).toBe("AM");
     }
+  });
+
+  it("fails when name is neither string nor record", () => {
+    const bad = [
+      {
+        foo: { value: "ok", name: 42 as any }
+      }
+    ];
+    const res = NestedArrayClaim.decode(bad);
+    expect(E.isLeft(res)).toBe(true);
   });
 });
