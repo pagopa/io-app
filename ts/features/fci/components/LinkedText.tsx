@@ -66,6 +66,7 @@ const LinkedText = (props: Props) => {
         <Body
           weight="Semibold"
           asLink
+          avoidPressable
           key={index}
           onPress={() =>
             onPress(getOrReplaceTagWithLink(url, props.replacementUrl))
