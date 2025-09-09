@@ -5629,6 +5629,7 @@
           "generateBarcode": "Genera un codice sconto"
         },
         "authorizeButton": "Usa il bonus",
+        "secondaryCta": "Mostra esercenti",
         "addExpenseButton": "Aggiungi spesa",
         "IDPayCode": {
           "banner": {
