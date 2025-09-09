@@ -5397,9 +5397,6 @@
             "content": "Se avevi attivato IT-Wallet, il portafoglio sarà resettato e tutti i documenti rimossi."
           }
         }
-      },
-      "loadingScreen": {
-        "title": "Ancora un po' di pazienza..."
       }
     }
   },

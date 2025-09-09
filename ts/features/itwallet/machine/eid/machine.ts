@@ -58,7 +58,6 @@ export const itwEidIssuanceMachine = setup({
     navigateToNfcInstructionsScreen: notImplemented,
     navigateToWalletRevocationScreen: notImplemented,
     navigateToCieWarningScreen: notImplemented,
-    navigateToExtendedLoadingScreen: notImplemented,
     closeIssuance: notImplemented,
 
     /**
@@ -236,12 +235,27 @@ export const itwEidIssuanceMachine = setup({
             target: "#itwEidIssuanceMachine.Failure"
           }
         ]
-      },
-      after: {
-        5000: {
-          actions: "navigateToExtendedLoadingScreen"
-        }
       }
+      // after: {
+      //   1000: [
+      //     {
+      //       guard: and([
+      //         "isReissuance",
+      //         "hasIntegrityKeyTag",
+      //         "hasValidWalletInstanceAttestation"
+      //       ]),
+      //       actions: "navigateToL2IdentificationScreen"
+      //     },
+      //     {
+      //       guard: and([
+      //         not("isReissuance"),
+      //         "hasIntegrityKeyTag",
+      //         "hasValidWalletInstanceAttestation"
+      //       ]),
+      //       actions: "navigateToIpzsPrivacyScreen"
+      //     }
+      //   ]
+      // }
     },
     WalletInstanceCreation: {
       description:

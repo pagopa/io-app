@@ -206,12 +206,6 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToExtendedLoadingScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.EXTENDED_LOADING_SCREEN
-    });
-  },
-
   closeIssuance: () => {
     navigation.popToTop();
   },

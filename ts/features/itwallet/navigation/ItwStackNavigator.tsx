@@ -66,7 +66,6 @@ import { ItwProximitySendDocumentsResponseScreen } from "../presentation/proximi
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
 import { useIOSelector } from "../../../store/hooks";
-import { ItwExtendedLoadingScreen } from "../common/screens/ItwExtendedLoadingScreen.tsx";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -290,11 +289,6 @@ const InnerNavigator = memo(() => {
         name={ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN}
         component={ItwIdentityNotMatchingScreen}
         options={{ gestureEnabled: false }}
-      />
-      <Stack.Screen
-        name={ITW_ROUTES.EXTENDED_LOADING_SCREEN}
-        component={ItwExtendedLoadingScreen}
-        options={{ headerShown: false, gestureEnabled: false }}
       />
       <Stack.Screen
         name={ITW_ROUTES.WALLET_REVOCATION_SCREEN}

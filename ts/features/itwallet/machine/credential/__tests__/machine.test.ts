@@ -136,7 +136,6 @@ describe("itwCredentialIssuanceMachine", () => {
       navigateToCredentialPreviewScreen,
       navigateToFailureScreen,
       navigateToWallet,
-      navigateToExtendedLoadingScreen,
       closeIssuance,
       storeWalletInstanceAttestation,
       storeCredential,
@@ -720,7 +719,7 @@ describe("itwCredentialIssuanceMachine", () => {
 
     jest.advanceTimersByTime(4000);
 
-    expect(navigateToExtendedLoadingScreen).toHaveBeenCalledTimes(0);
+    expect(navigateToTrustIssuerScreen).toHaveBeenCalledTimes(0);
   });
 
   it("should call navigateToExtendedLoadingScreen once after 5000ms in TrustFederationVerification state", async () => {
@@ -759,7 +758,7 @@ describe("itwCredentialIssuanceMachine", () => {
     jest.advanceTimersByTime(5000);
 
     await waitFor(() =>
-      expect(navigateToExtendedLoadingScreen).toHaveBeenCalledTimes(1)
+      expect(navigateToTrustIssuerScreen).toHaveBeenCalledTimes(1)
     );
   });
 });

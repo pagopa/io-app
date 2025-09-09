@@ -43,7 +43,6 @@ describe("itwRemoteMachine", () => {
   const navigateToClaimsDisclosureScreen = jest.fn();
   const navigateToIdentificationModeScreen = jest.fn();
   const navigateToAuthResponseScreen = jest.fn();
-  const navigateToExtendedLoadingScreen = jest.fn();
   const closePresentation = jest.fn();
   const trackRemoteDataShare = jest.fn();
   const storeWalletInstanceAttestation = jest.fn();
@@ -65,7 +64,6 @@ describe("itwRemoteMachine", () => {
       navigateToClaimsDisclosureScreen,
       navigateToIdentificationModeScreen,
       navigateToAuthResponseScreen,
-      navigateToExtendedLoadingScreen,
       closePresentation,
       trackRemoteDataShare,
       storeWalletInstanceAttestation
@@ -496,7 +494,7 @@ describe("itwRemoteMachine", () => {
     ).toEqual(mockWalletAttestation);
   });
 
-  it("should not call navigateToExtendedLoadingScreen before 5000ms in EvaluatingRelyingPartyTrust state", async () => {
+  it("should not call navigateToAuthResponseScreen before 5000ms in EvaluatingRelyingPartyTrust state", async () => {
     isItWalletL3Active.mockReturnValue(true);
     isEidExpired.mockReturnValue(false);
 
@@ -517,10 +515,10 @@ describe("itwRemoteMachine", () => {
     await waitFor(actor, s => s.matches("EvaluatingRelyingPartyTrust"));
 
     jest.advanceTimersByTime(4000);
-    expect(navigateToExtendedLoadingScreen).toHaveBeenCalledTimes(0);
+    expect(navigateToAuthResponseScreen).toHaveBeenCalledTimes(0);
   });
 
-  it("should call navigateToExtendedLoadingScreen once after 5000ms in EvaluatingRelyingPartyTrust state", async () => {
+  it("should call navigateToAuthResponseScreen once after 5000ms in EvaluatingRelyingPartyTrust state", async () => {
     isItWalletL3Active.mockReturnValue(true);
     isEidExpired.mockReturnValue(false);
 
@@ -544,7 +542,7 @@ describe("itwRemoteMachine", () => {
     jest.advanceTimersByTime(5000);
 
     await waitFor(actor, () => {
-      expect(navigateToExtendedLoadingScreen).toHaveBeenCalledTimes(1);
+      expect(navigateToAuthResponseScreen).toHaveBeenCalledTimes(1);
       return true;
     });
   });

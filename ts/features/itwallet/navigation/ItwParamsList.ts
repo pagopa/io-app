@@ -71,7 +71,6 @@ export type ItwParamsList = {
   [ITW_ROUTES.PRESENTATION.PID_DETAIL]: undefined;
   // OTHERS
   [ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN]: undefined;
-  [ITW_ROUTES.EXTENDED_LOADING_SCREEN]: undefined;
   [ITW_ROUTES.WALLET_REVOCATION_SCREEN]: undefined;
 } & ItwProximityParamsList &
   ItwPlaygroundParamsList;

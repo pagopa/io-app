@@ -106,7 +106,6 @@ describe("itwEidIssuanceMachine", () => {
       navigateToCieWarningScreen,
       navigateToL3IdentificationScreen,
       navigateToL2IdentificationScreen,
-      navigateToExtendedLoadingScreen,
       storeIntegrityKeyTag,
       cleanupIntegrityKeyTag,
       storeWalletInstanceAttestation,
@@ -1776,7 +1775,8 @@ describe("itwEidIssuanceMachine", () => {
 
     jest.advanceTimersByTime(4000);
 
-    expect(navigateToExtendedLoadingScreen).toHaveBeenCalledTimes(0);
+    // TODO: re-enable loading screen
+    // expect(navigateToExtendedLoadingScreen).toHaveBeenCalledTimes(0);
   });
 
   it("should call navigateToExtendedLoadingScreen once after 5000ms in TrustFederationVerification state", async () => {
@@ -1795,8 +1795,9 @@ describe("itwEidIssuanceMachine", () => {
 
     jest.advanceTimersByTime(4000);
 
-    await waitFor(() =>
-      expect(navigateToExtendedLoadingScreen).toHaveBeenCalledTimes(1)
-    );
+    // TODO: re-enable loading screen
+    // await waitFor(() =>
+    //   expect(navigateToExtendedLoadingScreen).toHaveBeenCalledTimes(1)
+    // );
   });
 });

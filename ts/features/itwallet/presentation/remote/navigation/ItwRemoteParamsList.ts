@@ -6,5 +6,4 @@ export type ItwRemoteParamsList = {
   [ITW_REMOTE_ROUTES.CLAIMS_DISCLOSURE]: undefined;
   [ITW_REMOTE_ROUTES.AUTH_RESPONSE]: undefined;
   [ITW_REMOTE_ROUTES.FAILURE]: undefined;
-  [ITW_REMOTE_ROUTES.EXTENDED_LOADING_SCREEN]: undefined;
 };
