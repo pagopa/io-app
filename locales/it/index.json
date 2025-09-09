@@ -348,6 +348,11 @@
     "contextualHelp": {
       "title": "Problemi di inizializzazione?"
     },
+    "offline_access_banner": {
+      "title": "Ti servono i documenti?",
+      "content": "Non attendere, sono sempre disponibili, anche se non hai connessione!",
+      "action": "Vai ai documenti"
+    },
     "connection_lost": {
       "title": "Non hai una connessione a internet attiva",
       "description": "Controlla la tua connessione e riavvia l’app."
@@ -4067,9 +4072,9 @@
           "selected": "Campo selezionato",
           "unselected": "Campo non selezionato"
         },
-        "required": "FIRME OBBLIGATORIE",
-        "optional": "FIRME FACOLTATIVE",
-        "unfair": "FIRME CLAUSOLE VESSATORIE"
+        "required": "Firme obbligatorie",
+        "optional": "Firme facoltative",
+        "unfair": "Firme clausole vessatorie"
       },
       "title": "Firma con IO",
       "documentsBar": {
@@ -4082,7 +4087,7 @@
         "cancel": "Annulla",
         "confirm": "Ok, va bene",
         "alertText": "Vuoi modificare o aggiornare il tuo indirizzo e-mail?",
-        "alertLink": "Vai qui",
+        "alertLink": "Modifica email",
         "name": "Nome",
         "familyName": "Cognome",
         "birthDate": "Data di nascita"
@@ -5337,6 +5342,17 @@
             "footerAction": "Ricarica l'app IO"
           }
         },
+        "timeout": {
+          "alert": {
+            "content": "Hai bisogno di tornare alla versione completa di IO?",
+            "action": "Ricarica l’app IO"
+          },
+          "modal": {
+            "title": "",
+            "content": "",
+            "footerAction": ""
+          }
+        },
         "back_online": {
           "alert": {
             "content": "Sei di nuovo online. Per usare tutti i servizi ",
@@ -5629,6 +5645,7 @@
           "generateBarcode": "Genera un codice sconto"
         },
         "authorizeButton": "Usa il bonus",
+        "secondaryCta": "Mostra esercenti",
         "addExpenseButton": "Aggiungi spesa",
         "IDPayCode": {
           "banner": {

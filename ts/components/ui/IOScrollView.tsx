@@ -44,9 +44,9 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue
 } from "react-native-reanimated";
-import { useStatusAlertProps } from "../../hooks/useStatusAlertProps";
 import { WithTestID } from "../../types/WithTestID";
 import { useFooterActionsMargin } from "../../hooks/useFooterActionsMargin";
+import { useIOAlertVisible } from "../StatusMessages/IOAlertVisibleContext";
 
 type ButtonBlockProps = Omit<
   IOButtonBlockSpecificProps,
@@ -82,7 +82,7 @@ type IOSCrollViewHeaderScrollValues = ComponentProps<
 type IOScrollView = WithTestID<
   PropsWithChildren<{
     headerConfig?: ComponentProps<typeof HeaderSecondLevel>;
-    actions?: IOScrollViewActions;
+    actions?: WithTestID<IOScrollViewActions>;
     debugMode?: boolean;
     animatedRef?: AnimatedRef<Animated.ScrollView>;
     snapOffset?: number;
@@ -169,7 +169,7 @@ export const IOScrollView = ({
   contentContainerStyle,
   testID
 }: IOScrollView) => {
-  const alertProps = useStatusAlertProps();
+  const { isAlertVisible } = useIOAlertVisible();
   const theme = useIOTheme();
 
   /* Navigation */
@@ -248,11 +248,11 @@ export const IOScrollView = ({
   }));
 
   const ignoreSafeAreaMargin = useMemo(() => {
-    if (alertProps !== undefined) {
+    if (isAlertVisible) {
       return true;
     }
     return headerConfig?.ignoreSafeAreaMargin;
-  }, [headerConfig?.ignoreSafeAreaMargin, alertProps]);
+  }, [headerConfig?.ignoreSafeAreaMargin, isAlertVisible]);
 
   /* Set custom header with `react-navigation` library using
      `useLayoutEffect` hook */
