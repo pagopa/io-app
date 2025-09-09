@@ -55,7 +55,6 @@ describe("itwEidIssuanceMachine", () => {
   const navigateToCieWarningScreen = jest.fn();
   const navigateToL3IdentificationScreen = jest.fn();
   const navigateToL2IdentificationScreen = jest.fn();
-  const navigateToExtendedLoadingScreen = jest.fn();
   const storeIntegrityKeyTag = jest.fn();
   const cleanupIntegrityKeyTag = jest.fn();
   const storeWalletInstanceAttestation = jest.fn();

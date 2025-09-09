@@ -104,7 +104,6 @@ describe("itwCredentialIssuanceMachine", () => {
   const navigateToCredentialPreviewScreen = jest.fn();
   const navigateToFailureScreen = jest.fn();
   const navigateToWallet = jest.fn();
-  const navigateToExtendedLoadingScreen = jest.fn();
   const closeIssuance = jest.fn();
   const storeWalletInstanceAttestation = jest.fn();
   const storeCredential = jest.fn();
