@@ -156,6 +156,10 @@ const ItwCredentialOnboardingSection = () => {
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL
           });
+        } else if (!isITWalletValid && isNewCredential(type)) {
+          navigation.navigate(ITW_ROUTES.MAIN, {
+            screen: ITW_ROUTES.ISSUANCE.IT_WALLET_INACTIVE
+          });
         } else {
           machineRef.send({
             type: "select-credential",
