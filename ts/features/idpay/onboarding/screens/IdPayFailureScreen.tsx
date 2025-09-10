@@ -69,7 +69,7 @@ const IdPayFailureScreen = () => {
         accessibilityLabel: I18n.t(
           `wallet.onboarding.outcome.BE_KO.secondaryAction`
         ),
-        onPress: () => present(OnboardingFailureEnum.GENERIC)
+        onPress: () => present(OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR)
       },
       enableAnimatedPictogram: true,
       loop: true
@@ -81,7 +81,7 @@ const IdPayFailureScreen = () => {
     failure: OnboardingFailureEnum
   ): OperationResultScreenContentProps => {
     switch (failure) {
-      case OnboardingFailureEnum.INITIATIVE_NOT_FOUND:
+      case OnboardingFailureEnum.ONBOARDING_INITIATIVE_NOT_FOUND:
         return {
           pictogram: "attention",
           title: I18n.t(
@@ -92,7 +92,7 @@ const IdPayFailureScreen = () => {
           ),
           action: defaultCloseAction
         };
-      case OnboardingFailureEnum.UNSATISFIED_REQUIREMENTS:
+      case OnboardingFailureEnum.ONBOARDING_UNSATISFIED_REQUIREMENTS:
         return {
           pictogram: "error",
           title: I18n.t(
@@ -105,7 +105,7 @@ const IdPayFailureScreen = () => {
           enableAnimatedPictogram: true,
           loop: false
         };
-      case OnboardingFailureEnum.USER_NOT_IN_WHITELIST:
+      case OnboardingFailureEnum.ONBOARDING_USER_NOT_IN_WHITELIST:
         return {
           pictogram: "error",
           title: I18n.t(
@@ -118,7 +118,7 @@ const IdPayFailureScreen = () => {
           enableAnimatedPictogram: true,
           loop: false
         };
-      case OnboardingFailureEnum.INITIATIVE_NOT_STARTED:
+      case OnboardingFailureEnum.ONBOARDING_INITIATIVE_NOT_STARTED:
         return {
           pictogram: "eventClose",
           title: I18n.t(
@@ -129,7 +129,7 @@ const IdPayFailureScreen = () => {
           ),
           action: defaultCloseAction
         };
-      case OnboardingFailureEnum.INITIATIVE_ENDED:
+      case OnboardingFailureEnum.ONBOARDING_INITIATIVE_ENDED:
         return {
           pictogram: "time",
           title: I18n.t(
@@ -140,7 +140,7 @@ const IdPayFailureScreen = () => {
           ),
           action: defaultCloseAction
         };
-      case OnboardingFailureEnum.BUDGET_EXHAUSTED:
+      case OnboardingFailureEnum.ONBOARDING_BUDGET_EXHAUSTED:
         return {
           pictogram: "fatalError",
           title: I18n.t(
@@ -153,7 +153,7 @@ const IdPayFailureScreen = () => {
           enableAnimatedPictogram: true,
           loop: false
         };
-      case OnboardingFailureEnum.USER_UNSUBSCRIBED:
+      case OnboardingFailureEnum.ONBOARDING_USER_UNSUBSCRIBED:
         return {
           pictogram: "error",
           title: I18n.t(
