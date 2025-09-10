@@ -1,11 +1,18 @@
-import { Effect } from "redux-saga/effects";
-import { call, take } from "typed-redux-saga/macro";
-import { testSaga } from "redux-saga-test-plan";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { handleLoadMessageData, testable } from "../handleLoadMessageData";
-import { UIMessage, UIMessageDetails } from "../../types";
-import { getPaginatedMessageById } from "../../store/reducers/paginatedById";
+import { testSaga } from "redux-saga-test-plan";
+import { Effect } from "redux-saga/effects";
+import { call, take } from "typed-redux-saga/macro";
+import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { ThirdPartyMessage } from "../../../../../definitions/backend/ThirdPartyMessage";
+import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
+import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
+import { isPnRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { loadServiceDetail } from "../../../services/details/store/actions/details";
+import { serviceDetailsByIdPotSelector } from "../../../services/details/store/reducers";
+import { trackMessageDataLoadFailure } from "../../analytics";
 import {
   cancelGetMessageDataAction,
   getMessageDataAction,
@@ -14,24 +21,16 @@ import {
   loadThirdPartyMessage,
   upsertMessageStatusAttributes
 } from "../../store/actions";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
-import { serviceDetailsByIdPotSelector } from "../../../services/details/store/reducers";
-import { loadServiceDetail } from "../../../services/details/store/actions/details";
+import { isLoadingOrUpdatingInbox } from "../../store/reducers/allPaginated";
 import { messageDetailsByIdSelector } from "../../store/reducers/detailsById";
-import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
+import { MessageGetStatusFailurePhaseType } from "../../store/reducers/messageGetStatus";
+import { getPaginatedMessageById } from "../../store/reducers/paginatedById";
 import {
   thirdPartyFromIdSelector,
-  thirdPartyKinds,
   ThirdPartyMessageUnion
 } from "../../store/reducers/thirdPartyById";
-import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
-import { isPnRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { isLoadingOrUpdatingInbox } from "../../store/reducers/allPaginated";
-import { ThirdPartyMessage } from "../../../../../definitions/backend/ThirdPartyMessage";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
-import { trackMessageDataLoadFailure } from "../../analytics";
-import { MessageGetStatusFailurePhaseType } from "../../store/reducers/messageGetStatus";
+import { UIMessage, UIMessageDetails } from "../../types";
+import { handleLoadMessageData, testable } from "../handleLoadMessageData";
 
 const fimsCTAFrontMatter =
   '---\nit:\n cta_1:\n  text: "Visualizza i documenti"\n  action: "iosso://https://relyingParty.url"\nen:\n cta_1:\n  text: "View documents"\n  action: "iosso://https://relyingParty.url"\n---';
@@ -245,58 +244,57 @@ describe("getMessageDetails", () => {
   });
 });
 
-const thirdPartyKindsMock = Object.values(thirdPartyKinds);
-
 describe("getThirdPartyDataMessage", () => {
-  thirdPartyKindsMock.forEach(kind =>
-    it(`should dispatch a loadThirdPartyMessage.request and return the third party message with kind='${kind}' when the related saga succeeds`, () => {
-      const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD";
-      const service = {
-        id: "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId,
-        name: "The name",
-        organization: {
-          fiscal_code: "OrgFisCod",
-          name: "Org name"
-        }
-      } as ServiceDetails;
-      const messageCategoryTag = "GENERIC";
-      const thirdPartyMessage = { kind, id: "1" } as ThirdPartyMessageUnion;
-      testSaga(
-        testable!.getThirdPartyDataMessage,
-        messageId,
+  it("should dispatch a loadThirdPartyMessage.request and return the third party message when the related saga succeeds", () => {
+    const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD";
+    const service = {
+      id: "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId,
+      name: "The name",
+      organization: {
+        fiscal_code: "OrgFisCod",
+        name: "Org name"
+      }
+    } as ServiceDetails;
+    const messageCategoryTag = "GENERIC";
+    const thirdPartyMessage = {
+      kind: "TPM",
+      id: "1"
+    } as ThirdPartyMessageUnion;
+    testSaga(
+      testable!.getThirdPartyDataMessage,
+      messageId,
+      false,
+      service,
+      messageCategoryTag
+    )
+      .next()
+      .put(
+        loadThirdPartyMessage.request({
+          id: messageId,
+          serviceId: service.id,
+          tag: messageCategoryTag
+        })
+      )
+      .next()
+      .take([loadThirdPartyMessage.success, loadThirdPartyMessage.failure])
+      .next(
+        loadThirdPartyMessage.success({
+          id: messageId,
+          content: thirdPartyMessage
+        })
+      )
+      .select(thirdPartyFromIdSelector, messageId)
+      .next(pot.some(thirdPartyMessage))
+      .call(
+        testable!.decodeAndTrackThirdPartyMessageDetailsIfNeeded,
         false,
+        thirdPartyMessage,
         service,
         messageCategoryTag
       )
-        .next()
-        .put(
-          loadThirdPartyMessage.request({
-            id: messageId,
-            serviceId: service.id,
-            tag: messageCategoryTag
-          })
-        )
-        .next()
-        .take([loadThirdPartyMessage.success, loadThirdPartyMessage.failure])
-        .next(
-          loadThirdPartyMessage.success({
-            id: messageId,
-            content: thirdPartyMessage
-          })
-        )
-        .select(thirdPartyFromIdSelector, messageId)
-        .next(pot.some(thirdPartyMessage))
-        .call(
-          testable!.decodeAndTrackThirdPartyMessageDetailsIfNeeded,
-          false,
-          thirdPartyMessage,
-          service,
-          messageCategoryTag
-        )
-        .next(O.none)
-        .returns(thirdPartyMessage);
-    })
-  );
+      .next(O.none)
+      .returns(thirdPartyMessage);
+  });
   it("should dispatch a loadThirdPartyMessage.request and return undefined when the related saga fails ", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD";
     const service = {

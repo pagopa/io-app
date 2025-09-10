@@ -78,16 +78,6 @@ export const loadThirdPartyMessage = createAsyncAction(
   { id: string; error: Error }
 >();
 
-export const loadEphemeralAARThirdPartyMessage = createAsyncAction(
-  "EPHEMERAL_AAR_THIRD_PARTY_MESSAGE_LOAD_REQUEST",
-  "EPHEMERAL_AAR_THIRD_PARTY_MESSAGE_LOAD_SUCCESS",
-  "EPHEMERAL_AAR_THIRD_PARTY_MESSAGE_LOAD_FAILURE"
-)<
-  { id: string; serviceId: ServiceId; tag: string },
-  { id: string; content: ThirdPartyMessageUnion },
-  { id: string; error: Error }
->();
-
 export const resetGetMessageDataAction = createAction(
   "GET_MESSAGE_DATA_RESET_REQUEST"
 );

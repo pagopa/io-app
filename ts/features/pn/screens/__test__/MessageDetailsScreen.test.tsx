@@ -1,11 +1,12 @@
-import configureMockStore from "redux-mock-store";
 import { Action, Store } from "redux";
-import PN_ROUTES from "../../navigation/routes";
-import { GlobalState } from "../../../../store/reducers/types";
+import configureMockStore from "redux-mock-store";
+import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
-import { MessageDetailsScreen } from "../MessageDetailsScreen";
+import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { reproduceSequence } from "../../../../utils/tests";
+import { message_1 } from "../../../messages/__mocks__/message";
+import { service_1 } from "../../../messages/__mocks__/messages";
 import {
   loadMessageById,
   loadMessageDetails,
@@ -15,16 +16,12 @@ import {
   toUIMessage,
   toUIMessageDetails
 } from "../../../messages/store/reducers/transformers";
-import { message_1 } from "../../../messages/__mocks__/message";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
-import { service_1 } from "../../../messages/__mocks__/messages";
-import { applicationChangeState } from "../../../../store/actions/application";
 import { thirdPartyMessage } from "../../__mocks__/pnMessage";
-import { thirdPartyKinds } from "../../../messages/store/reducers/thirdPartyById";
+import PN_ROUTES from "../../navigation/routes";
+import { MessageDetailsScreen } from "../MessageDetailsScreen";
 
 jest.mock("../../components/MessageDetails");
-
-const thirdPartyKindsMock = Object.values(thirdPartyKinds);
 
 describe("MessageDetailsScreen", () => {
   it("should match the snapshot when there is an error", () => {
@@ -44,31 +41,29 @@ describe("MessageDetailsScreen", () => {
     expect(component).toMatchSnapshot();
   });
 
-  thirdPartyKindsMock.forEach(kind =>
-    it(`should match the snapshot when everything went fine and kind='${kind}'`, () => {
-      const sequenceOfActions: ReadonlyArray<Action> = [
-        applicationChangeState("active"),
-        loadMessageById.success(toUIMessage(message_1)),
-        loadServiceDetail.success(service_1),
-        loadMessageDetails.success(toUIMessageDetails(message_1)),
-        loadThirdPartyMessage.success({
-          id: message_1.id,
-          content: { kind, ...thirdPartyMessage }
-        })
-      ];
+  it("should match the snapshot when everything went fine", () => {
+    const sequenceOfActions: ReadonlyArray<Action> = [
+      applicationChangeState("active"),
+      loadMessageById.success(toUIMessage(message_1)),
+      loadServiceDetail.success(service_1),
+      loadMessageDetails.success(toUIMessageDetails(message_1)),
+      loadThirdPartyMessage.success({
+        id: message_1.id,
+        content: { kind: "TPM", ...thirdPartyMessage }
+      })
+    ];
 
-      const state: GlobalState = reproduceSequence(
-        {} as GlobalState,
-        appReducer,
-        sequenceOfActions
-      );
-      const mockStore = configureMockStore<GlobalState>();
-      const store: Store<GlobalState> = mockStore(state);
+    const state: GlobalState = reproduceSequence(
+      {} as GlobalState,
+      appReducer,
+      sequenceOfActions
+    );
+    const mockStore = configureMockStore<GlobalState>();
+    const store: Store<GlobalState> = mockStore(state);
 
-      const { component } = renderComponent(store);
-      expect(component).toMatchSnapshot();
-    })
-  );
+    const { component } = renderComponent(store);
+    expect(component).toMatchSnapshot();
+  });
 });
 
 const renderComponent = (store: Store<GlobalState>) => {

@@ -34,7 +34,7 @@ import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
 import { UIMessage, UIMessageDetails } from "../../../types";
 import {
-  thirdPartyKinds,
+  thirdPartyKind,
   ThirdPartyMessageUnion
 } from "../../reducers/thirdPartyById";
 
@@ -161,7 +161,7 @@ describe("index", () => {
     });
   });
   describe("loadThirdPartyMessage.success", () => {
-    const thirdPartyKindsMock = Object.values(thirdPartyKinds);
+    const thirdPartyKindsMock = Object.values(thirdPartyKind);
     thirdPartyKindsMock.forEach(kind =>
       it(`should match expected type and payload and kind='${kind}'`, () => {
         const content = {

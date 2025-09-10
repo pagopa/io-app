@@ -20,12 +20,12 @@ import {
   testable,
   ThirdPartyById,
   thirdPartyFromIdSelector,
-  thirdPartyKinds,
+  thirdPartyKind,
   thirdPartyMessageAttachments,
   ThirdPartyMessageUnion
 } from "../thirdPartyById";
 
-const thirdPartyKindsMock = Object.values(thirdPartyKinds);
+const thirdPartyKindsMock = Object.values(thirdPartyKind);
 
 describe("thirdPartyFromIdSelector", () => {
   it("Should return pot none for an unmatching message id", () => {
