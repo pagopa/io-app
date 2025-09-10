@@ -44,6 +44,10 @@ export type CheckDetails = {
   readonly type: "check-details";
 };
 
+export type RetryConnectionEvent = {
+  readonly type: "retryConnection";
+};
+
 export type IdPayOnboardingEvents =
   | StartOnboarding
   | SelectMultiConsent
@@ -53,4 +57,5 @@ export type IdPayOnboardingEvents =
   | Back
   | Close
   | UpdatePushNotificationSetting
-  | CheckDetails;
+  | CheckDetails
+  | RetryConnectionEvent;
