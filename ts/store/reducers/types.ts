@@ -29,7 +29,7 @@ import { RemoteConfigState } from "./backendStatus/remoteConfig";
 import { StatusMessagesState } from "./backendStatus/statusMessages";
 import { SectionStatusState } from "./backendStatus/sectionStatus";
 import { BackedInfoState } from "./backendStatus/backendInfo";
-import { LinkingState } from "./linking";
+import { BackgroundLinkingState } from "./linking";
 
 export type GlobalState = Readonly<{
   appState: AppState;
@@ -61,7 +61,7 @@ export type GlobalState = Readonly<{
   startup: StartupState;
   lollipop: PersistedLollipopState;
   trialSystem: TrialSystemState;
-  linking: LinkingState;
+  backgroundLinking: BackgroundLinkingState;
 }>;
 
 export type PersistedGlobalState = GlobalState & PersistPartial;

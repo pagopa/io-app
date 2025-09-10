@@ -1,10 +1,10 @@
 import { storeLinkingUrl } from "../../actions/linking";
-import { linkingReducer } from "../linking";
+import { backgroundLinkingReducer } from "../linking";
 
 describe("test for linking reducer", () => {
   it("should return the initial state", () => {
     const expected = {};
-    const reducer = linkingReducer(undefined, {} as any);
+    const reducer = backgroundLinkingReducer(undefined, {} as any);
     expect(reducer).toEqual(expected);
   });
 
@@ -13,7 +13,7 @@ describe("test for linking reducer", () => {
     const expected = {
       linkingUrl: url
     };
-    const reducer = linkingReducer(undefined, storeLinkingUrl(url));
+    const reducer = backgroundLinkingReducer(undefined, storeLinkingUrl(url));
     expect(reducer).toEqual(expected);
   });
 });

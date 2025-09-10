@@ -48,7 +48,7 @@ describe("linkingSubscription", () => {
     mockCurrySubscription(mockListener);
 
     const testUrl = "https://example.com";
-    getEventListener(addEventListenerSpy)({ url: testUrl });
+    runEventListenerCallback(addEventListenerSpy, { url: testUrl });
 
     expect(mockListener).toHaveBeenCalledTimes(1);
     expect(mockListener).toHaveBeenCalledWith(testUrl);
@@ -73,9 +73,8 @@ describe("linkingSubscription", () => {
 
       expect(addEventListenerSpy).toHaveBeenCalledTimes(1);
 
-      getEventListener(addEventListenerSpy)({
-        url: "https://example.com"
-      });
+      const testUrl = "https://example.com";
+      runEventListenerCallback(addEventListenerSpy, { url: testUrl });
       if (isDisabled) {
         expect(mockDispatch).not.toHaveBeenCalledWith(
           resetMessageArchivingAction(undefined)
@@ -112,7 +111,7 @@ describe("linkingSubscription", () => {
 
         mockCurrySubscription(jest.fn());
 
-        getEventListener(addEventListenerSpy)({ url: testUrl });
+        runEventListenerCallback(addEventListenerSpy, { url: testUrl });
 
         if (isLoggedIn) {
           // When logged in, we do not store the URL for later processing
@@ -145,8 +144,15 @@ describe("linkingSubscription", () => {
 
 // --------------------- UTILS ---------------------
 
-const getEventListener = (spy: jest.SpyInstance) =>
-  spy.mock.calls[0][1] as (event: { url: string }) => void;
+const runEventListenerCallback = (
+  eventListenerSpy: jest.SpyInstance,
+  event: { url: string }
+) => {
+  const callback = eventListenerSpy.mock.calls[0][1] as (event: {
+    url: string;
+  }) => void;
+  callback(event);
+};
 
 const initializeTests = () => {
   const mockStore = configureMockStore<GlobalState>();

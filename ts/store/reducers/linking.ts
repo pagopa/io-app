@@ -2,14 +2,14 @@ import { getType } from "typesafe-actions";
 import { storeLinkingUrl } from "../actions/linking";
 import { Action } from "../actions/types";
 
-export type LinkingState = {
+export type BackgroundLinkingState = {
   linkingUrl?: string;
 };
 
-const INITIAL_STATE: LinkingState = {};
+const INITIAL_STATE: BackgroundLinkingState = {};
 
-export const linkingReducer = (
-  state: LinkingState = INITIAL_STATE,
+export const backgroundLinkingReducer = (
+  state: BackgroundLinkingState = INITIAL_STATE,
   action: Action
 ) => {
   switch (action.type) {
