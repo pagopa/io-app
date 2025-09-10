@@ -17,10 +17,19 @@ jest.mock("../../../../../store/hooks", () => ({
   useIOStore: jest.fn()
 }));
 
-// Mock the useStatusAlertProps hook
-jest.mock("../../../../../hooks/useStatusAlertProps", () => ({
-  useStatusAlertProps: jest.fn()
-}));
+// Mock the useIOAlertVisible hook
+jest.mock(
+  "../../../../../components/StatusMessages/IOAlertVisibleContext",
+  () => ({
+    ...jest.requireActual(
+      "../../../../../components/StatusMessages/IOAlertVisibleContext"
+    ),
+    useIOAlertVisible: () => ({
+      isAlertVisible: false,
+      setAlertVisible: jest.fn()
+    })
+  })
+);
 
 describe("LanguagesPreferencesScreen", () => {
   beforeAll(() => {

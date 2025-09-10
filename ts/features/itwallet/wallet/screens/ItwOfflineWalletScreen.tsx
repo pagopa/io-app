@@ -6,7 +6,6 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts"
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { trackItwOfflineWallet } from "../../analytics";
 import { ItwOfflineAccessGate } from "../components/ItwOfflineAccessGate.tsx";
-import { ItwOfflineAlertWrapper } from "../components/ItwOfflineAlertWrapper.tsx";
 import { ItwWalletCardsContainer } from "../components/ItwWalletCardsContainer";
 
 const OfflineWalletScreenContent = () => {
@@ -40,8 +39,6 @@ const OfflineWalletScreenContent = () => {
 
 export const ItwOfflineWalletScreen = () => (
   <ItwOfflineAccessGate>
-    <ItwOfflineAlertWrapper>
-      <OfflineWalletScreenContent />
-    </ItwOfflineAlertWrapper>
+    <OfflineWalletScreenContent />
   </ItwOfflineAccessGate>
 );

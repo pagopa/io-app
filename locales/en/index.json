@@ -349,6 +349,11 @@
     "contextualHelp": {
       "title": "Startup problems?"
     },
+    "offline_access_banner": {
+      "title": "Ti servono i documenti?",
+      "content": "Non attendere, sono sempre disponibili, anche se non hai connessione!",
+      "action": "Vai ai documenti"
+    },
     "connection_lost": {
       "title": "It looks like you don't have an active internet connection",
       "description": "Check your connection and restart the app."
@@ -1550,7 +1555,7 @@
       "fee": "Commissione",
       "feeAppliedBy": "Applicata da",
       "editButton": "Modifica",
-      "termsAndConditions": "By continuing, you accept the [Terms and Conditions of Use](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) and confirm that you have read the [Privacy Policy](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) of {{pspName}}.",
+      "termsAndConditions": "By continuing, you accept the [Terms and Conditions of Use](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/) and confirm that you have read the [Privacy Policy](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/) of {{pspName}}.",
       "a11y": {
         "announce": "Payment Summary"
       }
@@ -4068,9 +4073,9 @@
           "selected": "Field selected",
           "unselected": "Field not selected"
         },
-        "required": "REQUIRED SIGNATURES",
-        "optional": "OPTIONAL SIGNATURES",
-        "unfair": "UNFAIR TERMS SIGNATURES"
+        "required": "Required signatures",
+        "optional": "Optional signatures",
+        "unfair": "Unfair terms signatures"
       },
       "title": "Firma con IO",
       "documentsBar": {
@@ -4083,7 +4088,7 @@
         "cancel": "Cancel",
         "confirm": "Ok",
         "alertText": "Do you want to change or update your e-mail address?",
-        "alertLink": "Go here",
+        "alertLink": "Edit email",
         "name": "Name",
         "familyName": "Surname",
         "birthDate": "Date of birth"
@@ -5338,6 +5343,17 @@
             "footerAction": "Ricarica l'app IO"
           }
         },
+        "timeout": {
+          "alert": {
+            "content": "Hai bisogno di tornare alla versione completa di IO?",
+            "action": "Ricarica l’app IO"
+          },
+          "modal": {
+            "title": "",
+            "content": "",
+            "footerAction": ""
+          }
+        },
         "back_online": {
           "alert": {
             "content": "Sei di nuovo online. Per usare tutti i servizi ",
@@ -5649,7 +5665,8 @@
             "body": "If you forget the code, reset it under Settings > Security.",
             "cta": "Ok, chiudi"
           }
-        }
+        },
+        "secondaryCta": "Show merchants"
       },
       "beneficiaryDetails": {
         "infobox": {

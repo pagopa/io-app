@@ -37,8 +37,8 @@ import Animated, {
   withTiming
 } from "react-native-reanimated";
 import { useFooterActionsMargin } from "../../hooks/useFooterActionsMargin";
-import { useStatusAlertProps } from "../../hooks/useStatusAlertProps";
 import { WithTestID } from "../../types/WithTestID";
+import { useIOAlertVisible } from "../StatusMessages/IOAlertVisibleContext";
 
 type ButtonBlockProps = Omit<
   IOButtonBlockSpecificProps,
@@ -116,7 +116,7 @@ export const IOScrollViewWithReveal = ({
   hideAnchorAction,
   testID
 }: IOScrollViewWithRevealProps) => {
-  const alertProps = useStatusAlertProps();
+  const { isAlertVisible } = useIOAlertVisible();
   const theme = useIOTheme();
 
   /* Navigation */
@@ -184,11 +184,11 @@ export const IOScrollViewWithReveal = ({
   }));
 
   const ignoreSafeAreaMargin = useMemo(() => {
-    if (alertProps !== undefined) {
+    if (isAlertVisible) {
       return true;
     }
     return headerConfig?.ignoreSafeAreaMargin;
-  }, [headerConfig?.ignoreSafeAreaMargin, alertProps]);
+  }, [headerConfig?.ignoreSafeAreaMargin, isAlertVisible]);
 
   /* Set custom header with `react-navigation` library using
      `useLayoutEffect` hook */
