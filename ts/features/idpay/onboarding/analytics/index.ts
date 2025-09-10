@@ -88,3 +88,30 @@ export const trackIDPayOnboardingErrorHelp = (
     })
   );
 };
+
+export const trackIDPayIngressScreenLoading = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_INGRESS_SCREEN",
+    buildEventProperties("UX", "screen_view", props)
+  );
+};
+
+export const trackIDPayIngressScreenTimeout = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_INGRESS_TIMEOUT",
+    buildEventProperties("KO", "screen_view", props)
+  );
+};
+
+export const trackIDPayIngressScreenCTA = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_INGRESS_TIMEOUT_GO_TO_WEBSITE",
+    buildEventProperties("UX", "action", props)
+  );
+};
