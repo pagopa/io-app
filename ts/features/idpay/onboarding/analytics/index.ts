@@ -1,5 +1,7 @@
+import * as O from "fp-ts/lib/Option";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
+import { OnboardingFailureEnum } from "../types/OnboardingFailure";
 
 type DefaultOnboardingEventProperties = {
   initiativeName?: string;
@@ -48,5 +50,26 @@ export const trackIDPayOnboardingNotificationKO = (
   mixpanelTrack(
     "IDPAY_SERVICE_NOTIFICATION_DENIED",
     buildEventProperties("UX", "action", props)
+  );
+};
+
+const mapOptionToReason = (
+  reason: O.Option<OnboardingFailureEnum>
+): OnboardingFailureEnum =>
+  O.isSome(reason)
+    ? reason.value
+    : OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR;
+
+export const trackIDPayOnboardingFailure = (
+  props: DefaultOnboardingEventProperties & {
+    reason: O.Option<OnboardingFailureEnum>;
+  }
+) => {
+  mixpanelTrack(
+    "IDPAY_ONBOARDING_ERROR",
+    buildEventProperties("KO", "screen_view", {
+      ...props,
+      reason: mapOptionToReason(props.reason)
+    })
   );
 };

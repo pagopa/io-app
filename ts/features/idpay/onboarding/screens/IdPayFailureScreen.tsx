@@ -1,12 +1,14 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useMemo } from "react";
 import I18n from "i18next";
+import { useMemo } from "react";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import useIDPayFailureSupportModal from "../../common/hooks/useIDPayFailureSupportModal";
+import { trackIDPayOnboardingFailure } from "../analytics";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {
   selectInitiative,
@@ -26,6 +28,12 @@ const IdPayFailureScreen = () => {
   const initiativeId = pipe(
     initiative,
     O.map(i => i.initiativeId),
+    O.toUndefined
+  );
+
+  const initiativeName = pipe(
+    initiative,
+    O.map(i => i.initiativeName),
     O.toUndefined
   );
 
@@ -205,6 +213,14 @@ const IdPayFailureScreen = () => {
     O.map(mapFailureToContentProps),
     O.getOrElse(() => genericErrorProps)
   );
+
+  useOnFirstRender(() => {
+    trackIDPayOnboardingFailure({
+      initiativeId,
+      initiativeName,
+      reason: failureOption
+    });
+  });
 
   return (
     <>
