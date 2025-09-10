@@ -1,10 +1,15 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { useMemo } from "react";
 import I18n from "i18next";
+import { useMemo } from "react";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
+import { useIOSelector } from "../../../../store/hooks";
+import useIDPayFailureSupportModal from "../../common/hooks/useIDPayFailureSupportModal";
+import { idpayInitiativeDetailsSelector } from "../../details/store";
 import { IdPayPaymentMachineContext } from "../machine/provider";
 import { failureSelector, isCancelledSelector } from "../machine/selectors";
 import { PaymentFailureEnum } from "../types/PaymentFailure";
@@ -16,22 +21,57 @@ const IDPayPaymentResultScreen = () => {
   const failureOption = useSelector(failureSelector);
   const isCancelled = useSelector(isCancelledSelector);
 
+  const isGenericPaymentError = pipe(
+    failureOption,
+    O.map(failure => failure === PaymentFailureEnum.PAYMENT_GENERIC_ERROR),
+    O.getOrElse(() => false)
+  );
+
+  const initiativeDataPot = useIOSelector(idpayInitiativeDetailsSelector);
+  const initiative = pipe(
+    initiativeDataPot,
+    pot.toOption,
+    O.map(details => ({
+      initiativeId: details.initiativeId,
+      serviceId: details.serviceId
+    })),
+    O.toUndefined
+  );
+
+  const { bottomSheet, present } = useIDPayFailureSupportModal(
+    initiative?.serviceId ?? "",
+    initiative?.initiativeId
+  );
+
   const defaultCloseAction = useMemo(
     () => ({
-      label: I18n.t("global.buttons.close"),
-      accessibilityLabel: I18n.t("global.buttons.close"),
+      label: isGenericPaymentError
+        ? I18n.t("global.buttons.back")
+        : I18n.t("global.buttons.close"),
       onPress: () => machine.send({ type: "close" })
     }),
-    [machine]
+    [isGenericPaymentError, machine]
+  );
+
+  const secondaryAction = useMemo(
+    () => ({
+      label: I18n.t("idpay.support.supportTitle"),
+      onPress: () => present(PaymentFailureEnum.PAYMENT_GENERIC_ERROR)
+    }),
+    [present]
   );
 
   if (O.isSome(failureOption)) {
     return (
-      <OperationResultScreenContent
-        {...mapFailureToContentProps(failureOption.value)}
-        action={defaultCloseAction}
-        testID="paymentFailureScreenTestID"
-      />
+      <>
+        <OperationResultScreenContent
+          action={defaultCloseAction}
+          secondaryAction={isGenericPaymentError ? secondaryAction : undefined}
+          {...mapFailureToContentProps(failureOption.value)}
+          testID="paymentFailureScreenTestID"
+        />
+        {bottomSheet}
+      </>
     );
   }
 
@@ -135,6 +175,18 @@ const mapFailureToContentProps = (
         pictogram: "time",
         title: I18n.t("idpay.payment.result.failure.INVALID_DATE.title"),
         subtitle: I18n.t("idpay.payment.result.failure.INVALID_DATE.subtitle")
+      };
+    case PaymentFailureEnum.PAYMENT_GENERIC_ERROR:
+      return {
+        pictogram: "umbrella",
+        title: I18n.t(
+          "idpay.onboarding.failure.message.PAYMENT_GENERIC_ERROR.title"
+        ),
+        subtitle: I18n.t(
+          "idpay.onboarding.failure.message.PAYMENT_GENERIC_ERROR.subtitle"
+        ),
+        enableAnimatedPictogram: true,
+        loop: true
       };
     default:
       return genericErrorProps;
