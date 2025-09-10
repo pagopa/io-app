@@ -38,6 +38,22 @@ jest.mock(
   })
 );
 
+const mockNavigateToCieCardReaderScreen = jest.fn();
+
+jest.mock(
+  "../../../../activeSessionLogin/utils/useActiveSessionLoginNavigation",
+  () => () => ({
+    ...jest.requireActual(
+      "../../../../activeSessionLogin/utils/useActiveSessionLoginNavigation"
+    ),
+    navigateToCieCardReaderScreen: mockNavigateToCieCardReaderScreen
+  })
+);
+
+jest.mock("../../../../../../hooks/useStatusAlertProps", () => ({
+  useStatusAlertProps: jest.fn()
+}));
+
 const mockNavigate = jest.fn();
 const mockReplace = jest.fn();
 jest.mock("@react-navigation/native", () => {
