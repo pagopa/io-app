@@ -31,7 +31,6 @@ import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { itwRequestedCredentialsSelector } from "../../common/store/selectors/preferences";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 
