@@ -39,7 +39,7 @@ export const ItwPresentationPidDetailScreen = () => {
         <ItwPresentationPidScaffoldScreen credential={credential}>
           <ItwPresentationPidDetail credential={credential} />
           <VSpacer />
-          <ItwPresentationPidDetailFooter />
+          <ItwPresentationPidDetailFooter credential={credential} />
         </ItwPresentationPidScaffoldScreen>
       )
     )
