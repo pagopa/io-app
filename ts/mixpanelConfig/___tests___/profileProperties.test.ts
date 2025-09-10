@@ -27,6 +27,7 @@ const generateBaseProfileProperties = () => ({
   BIOMETRIC_TECHNOLOGY: "FACE_ID",
   CGN_STATUS: "not_active",
   FONT_PREFERENCE: "comfortable",
+  THEME_PREFERENCE: "light",
   ITW_CED_V2: "not_available",
   ITW_ID_V2: "not_available",
   ITW_PID: "not_available",

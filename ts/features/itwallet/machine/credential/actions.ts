@@ -28,10 +28,8 @@ import {
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
-import {
-  itwIsL3EnabledSelector,
-  itwRequestedCredentialsSelector
-} from "../../common/store/selectors/preferences";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { itwRequestedCredentialsSelector } from "../../common/store/selectors/preferences";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { Context } from "./context";
@@ -52,7 +50,7 @@ export const createCredentialIssuanceActionsImplementation = (
     const state = store.getState();
 
     return {
-      isWhiteListed: itwIsL3EnabledSelector(state),
+      isItWalletValid: itwLifecycleIsITWalletValidSelector(state),
       walletInstanceAttestation: itwWalletInstanceAttestationSelector(state)
     };
   }),

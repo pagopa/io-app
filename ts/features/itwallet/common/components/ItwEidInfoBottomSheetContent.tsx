@@ -1,5 +1,3 @@
-import { memo, Fragment, useEffect } from "react";
-import { View } from "react-native";
 import {
   Divider,
   H4,
@@ -11,22 +9,25 @@ import {
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
-import { useIOSelector } from "../../../../store/hooks";
-import {
-  itwCredentialsEidSelector,
-  itwCredentialsEidStatusSelector
-} from "../../credentials/store/selectors";
+import { Fragment, memo, useEffect } from "react";
+import { View } from "react-native";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { parseClaims, WellKnownClaim } from "../utils/itwClaimsUtils";
-import { ITW_ROUTES } from "../../navigation/routes";
-import { StoredCredential } from "../utils/itwTypesUtils";
+import { useIOSelector } from "../../../../store/hooks";
 import {
   mapPIDStatusToMixpanel,
   trackCredentialDetail,
   trackWalletStartDeactivation
 } from "../../analytics";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import {
+  itwCredentialsEidSelector,
+  itwCredentialsEidStatusSelector
+} from "../../credentials/store/selectors";
+import { ITW_ROUTES } from "../../navigation/routes";
+import { useItwStatusIconColor } from "../hooks/useItwStatusIconColor";
+import { parseClaims, WellKnownClaim } from "../utils/itwClaimsUtils";
+import { StoredCredential } from "../utils/itwTypesUtils";
 import { ItwCredentialClaim } from "./ItwCredentialClaim";
 import { ItwEidLifecycleAlert } from "./ItwEidLifecycleAlert";
 
@@ -36,18 +37,22 @@ type ItwEidInfoBottomSheetTitleProps = {
 
 export const ItwEidInfoBottomSheetTitle = ({
   isExpired
-}: ItwEidInfoBottomSheetTitleProps) => (
-  <HStack space={8} style={{ alignItems: "center" }}>
-    <Icon name="legalValue" color={isExpired ? "grey-300" : "blueIO-500"} />
-    <H4>
-      {I18n.t(
-        isExpired
-          ? "features.itWallet.presentation.bottomSheets.eidInfo.titleExpired"
-          : "features.itWallet.presentation.bottomSheets.eidInfo.title"
-      )}
-    </H4>
-  </HStack>
-);
+}: ItwEidInfoBottomSheetTitleProps) => {
+  const iconColor = useItwStatusIconColor(isExpired);
+
+  return (
+    <HStack space={8} style={{ alignItems: "center" }}>
+      <Icon name="legalValue" color={iconColor} />
+      <H4>
+        {I18n.t(
+          isExpired
+            ? "features.itWallet.presentation.bottomSheets.eidInfo.titleExpired"
+            : "features.itWallet.presentation.bottomSheets.eidInfo.title"
+        )}
+      </H4>
+    </HStack>
+  );
+};
 
 type ItwEidInfoBottomSheetContentProps = {
   navigation: ReturnType<typeof useIONavigation>;
