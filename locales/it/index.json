@@ -217,7 +217,8 @@
       "choose": "Scegli",
       "copy": "Copia",
       "selectAll": "Seleziona tutto",
-      "deselectAll": "Deseleziona tutto"
+      "deselectAll": "Deseleziona tutto",
+      "visitWebsite": "Vai al sito"
     },
     "navigator": {
       "messages": "Messaggi",
@@ -1557,7 +1558,7 @@
       "fee": "Commissione",
       "feeAppliedBy": "Applicata da",
       "editButton": "Modifica",
-      "termsAndConditions": "Proseguendo accetti i [Termini e condizioni d’uso](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) e confermi di aver letto l'[Informativa Privacy](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) di {{pspName}}"
+      "termsAndConditions": "Proseguendo accetti i [Termini e condizioni d’uso](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/) e confermi di aver letto l'[Informativa Privacy](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/) di {{pspName}}"
     }
   },
   "wallet": {
@@ -5895,6 +5896,9 @@
         "success": "Hai attivato le notifiche push",
         "advice": "Consigliato"
       },
+      "failToRetry": {
+        "contentTitle": "Stiamo per collegarti.\n Attendi qualche secondo..."
+      },
       "preferences": {
         "enableEmailBanner": {
           "title": "Non perderti aggiornamenti importanti",
@@ -5917,7 +5921,8 @@
         "INSTRUMENTS_LIST_LOAD_FAILURE": "Errore nel caricamento della lista strumenti",
         "INSTRUMENT_ENROLL_FAILURE": "Errore durante l'aggiunta del metodo di pagamento",
         "INSTRUMENT_DELETE_FAILURE": "Errore durante la rimozione del metodo di pagamento",
-        "SESSION_EXPIRED": "C'è stato un problema, riprova"
+        "SESSION_EXPIRED": "C'è stato un problema, riprova",
+        "TOO_MANY_REQUESTS": "Stiamo ricevendo troppe richieste, riprova più tardi"
       },
       "headerTitle": "Configura l'iniziativa",
       "intro": {
