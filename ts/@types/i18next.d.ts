@@ -1,7 +1,7 @@
 import index from "../../locales/it/index.json";
 
 const resources = {
-  index
+  translation: index
 } as const;
 
 declare module "i18next" {

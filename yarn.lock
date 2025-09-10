@@ -2978,6 +2978,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.23.2":
+  version: 7.28.4
+  resolution: "@babel/runtime@npm:7.28.4"
+  checksum: 934b0a0460f7d06637d93fcd1a44ac49adc33518d17253b5a0b55ff4cb90a45d8fe78bf034b448911dbec7aff2a90b918697559f78d21c99ff8dbadae9565b55
+  languageName: node
+  linkType: hard
+
 "@babel/runtime@npm:^7.27.6":
   version: 7.28.3
   resolution: "@babel/runtime@npm:7.28.3"
@@ -9141,6 +9148,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cross-fetch@npm:4.0.0":
+  version: 4.0.0
+  resolution: "cross-fetch@npm:4.0.0"
+  dependencies:
+    node-fetch: ^2.6.12
+  checksum: ecca4f37ffa0e8283e7a8a590926b66713a7ef7892757aa36c2d20ffa27b0ac5c60dcf453119c809abe5923fc0bae3702a4d896bfb406ef1077b0d0018213e24
+  languageName: node
+  linkType: hard
+
 "cross-spawn@npm:^6.0.5":
   version: 6.0.5
   resolution: "cross-spawn@npm:6.0.5"
@@ -12112,6 +12128,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"i18next-chained-backend@npm:^4.6.2":
+  version: 4.6.2
+  resolution: "i18next-chained-backend@npm:4.6.2"
+  dependencies:
+    "@babel/runtime": ^7.23.2
+  checksum: f2ba7b4b39f6e2f060c4e9c848e20c478810ea951f2fdc6aff79eb9c14353fead95ee42ee724566dd5f6f34329f3bdcab3a01e6efede55fec38b5820531f36a7
+  languageName: node
+  linkType: hard
+
+"i18next-http-backend@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "i18next-http-backend@npm:3.0.2"
+  dependencies:
+    cross-fetch: 4.0.0
+  checksum: 08522b4cadf000991b54513259b2b619cd2d58747dbf3af7c0f668895bcd18ab2ca1ead7581d0f2d5a222f039dc262ff52e6a74fd2d9d021c8218aa2fc42a18d
+  languageName: node
+  linkType: hard
+
 "i18next@npm:^25.4.2":
   version: 25.4.2
   resolution: "i18next@npm:25.4.2"
@@ -13052,6 +13086,8 @@ __metadata:
     hoist-non-react-statics: ^3.0.1
     husky: ^8.0.0
     i18next: ^25.4.2
+    i18next-chained-backend: ^4.6.2
+    i18next-http-backend: ^3.0.2
     io-ts: ^2.2.16
     jail-monkey: ^2.8.3
     jest: ^29.7.0
@@ -15990,6 +16026,20 @@ __metadata:
     encoding:
       optional: true
   checksum: 3bc1655203d47ee8e313c0d96664b9673a3d4dd8002740318e9d27d14ef306693a4b2ef8d6525775056fd912a19e23f3ac0d7111ad8925877b7567b29a625592
+  languageName: node
+  linkType: hard
+
+"node-fetch@npm:^2.6.12":
+  version: 2.7.0
+  resolution: "node-fetch@npm:2.7.0"
+  dependencies:
+    whatwg-url: ^5.0.0
+  peerDependencies:
+    encoding: ^0.1.0
+  peerDependenciesMeta:
+    encoding:
+      optional: true
+  checksum: d76d2f5edb451a3f05b15115ec89fc6be39de37c6089f1b6368df03b91e1633fd379a7e01b7ab05089a25034b2023d959b47e59759cb38d88341b2459e89d6e5
   languageName: node
   linkType: hard
 
