@@ -586,12 +586,6 @@ We're committed to providing a faster and more satisfying experience for our cit
 
 The perception of slowness is mainly due to the navigation architecture, which is actually handled by the `react-navigation` library. Our internal testing has shown that there's a pretty obvious difference between the default `Stack` navigation and the `NativeStack`, which uses native APIs underneath. The latter is currently only enabled in the **Design System** section, which isn't accessible to everyone because it's only visible when developer mode is enabled.
 
-#### Why is there no dark mode?
-
-We're actively developing a dark mode for the app that will be available in the coming months. The initial release will be a beta version to allow users to explore and provide feedback.
-
-You can follow the related activities by [filtering the PRs with the `Dark Mode` label](https://github.com/pagopa/io-app/pulls?q=is%3Apr+label%3A%22Dark+mode+%F0%9F%8C%9D%22)
-
 ---
 
 If you want to improve the `io-app-design-system` library, feel free to contribute by opening an issue with your suggestions or by directly opening a PR. Criticism is welcome and appreciated.
