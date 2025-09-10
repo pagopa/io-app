@@ -24,21 +24,19 @@ jest.mock("../../../../../../store/hooks", () => ({
   useIOStore: jest.fn()
 }));
 
-const mockNavigateToCieCardReaderScreen = jest.fn();
-
+// Mock the useIOAlertVisible hook
 jest.mock(
-  "../../../../activeSessionLogin/utils/useActiveSessionLoginNavigation",
-  () => () => ({
+  "../../../../../../components/StatusMessages/IOAlertVisibleContext",
+  () => ({
     ...jest.requireActual(
-      "../../../../activeSessionLogin/utils/useActiveSessionLoginNavigation"
+      "../../../../../../components/StatusMessages/IOAlertVisibleContext"
     ),
-    navigateToCieCardReaderScreen: mockNavigateToCieCardReaderScreen
+    useIOAlertVisible: () => ({
+      isAlertVisible: false,
+      setAlertVisible: jest.fn()
+    })
   })
 );
-
-jest.mock("../../../../../../hooks/useStatusAlertProps", () => ({
-  useStatusAlertProps: jest.fn()
-}));
 
 const mockNavigate = jest.fn();
 const mockReplace = jest.fn();
