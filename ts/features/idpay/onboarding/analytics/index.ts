@@ -115,3 +115,58 @@ export const trackIDPayIngressScreenCTA = (
     buildEventProperties("UX", "action", props)
   );
 };
+
+export const trackIDPayOnboardingAlert = (
+  props: DefaultOnboardingEventProperties & {
+    screen: "intent_declaration" | "multi_self_declaration";
+  }
+) => {
+  mixpanelTrack(
+    "IDPAY_ONBOARDING_ALERT",
+    buildEventProperties("KO", "screen_view", props)
+  );
+};
+
+export const trackIDPayOnboardingPDNDAcceptance = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_ONBOARDING_PDND_ACCEPTANCE",
+    buildEventProperties("UX", "screen_view", props)
+  );
+};
+
+export const trackIDPayOnboardingSelfDeclaration = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_ONBOARDING_INTENT_DECLARATION",
+    buildEventProperties("UX", "screen_view", props)
+  );
+};
+export const trackIDPayOnboardingMultiSelfDeclaration = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_ONBOARDING_MULTI_SELF_DECLARATION",
+    buildEventProperties("UX", "screen_view", props)
+  );
+};
+
+export const trackIDPayOnboardingConversionRate = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_ONBOARDING_UX_CONVERSION",
+    buildEventProperties("TECH", undefined, props)
+  );
+};
+
+export const trackIDPayOnboardingSuccess = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_ONBOARDING_UX_SUCCESS",
+    buildEventProperties("UX", "confirm", props)
+  );
+};
