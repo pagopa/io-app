@@ -13,7 +13,7 @@ import {
   itwSetWalletInstanceRemotelyActive,
   itwUnflagCredentialAsRequested,
   itwSetWalletUpgradeMDLDetailsBannerHidden,
-  itwSetEligibleToItwSimplifiedActivation
+  itwSetEligibleForItwSimplifiedActivation
 } from "../actions/preferences";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
@@ -159,7 +159,7 @@ const reducer = (
       };
     }
 
-    case getType(itwSetEligibleToItwSimplifiedActivation):
+    case getType(itwSetEligibleForItwSimplifiedActivation):
       return {
         ...state,
         isEligibleForItwSimplifiedActivation:

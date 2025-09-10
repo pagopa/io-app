@@ -14,7 +14,7 @@ import {
 } from "../../analytics";
 import {
   itwSetAuthLevel,
-  itwSetEligibleToItwSimplifiedActivation
+  itwSetEligibleForItwSimplifiedActivation
 } from "../../common/store/actions/preferences";
 import {
   itwCredentialsRemoveByType,
@@ -247,7 +247,7 @@ export const createEidIssuanceActionsImplementation = (
     store.dispatch(itwCredentialsStore([context.eid]));
 
     // TODO: remove after the official IT-Wallet release to all users
-    store.dispatch(itwSetEligibleToItwSimplifiedActivation());
+    store.dispatch(itwSetEligibleForItwSimplifiedActivation());
   },
 
   handleSessionExpired: () =>
