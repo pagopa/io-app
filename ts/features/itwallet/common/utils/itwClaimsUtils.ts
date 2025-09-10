@@ -478,10 +478,16 @@ export const PdfClaim = PatternString(PDF_DATA_REGEX);
 export const SimpleListClaim = t.array(t.string);
 
 /**
+ * Record of string keys and ParsedAttribute values.
+ * This is used to parse nested claims.
+ */
+export const NestedObjectClaim = t.record(t.string, ParsedAttribute);
+
+/**
  * Array of records of string keys and ParsedAttribute values.
  * This is used to parse nested claims.
  */
-export const NestedArrayClaim = t.array(t.record(t.string, ParsedAttribute));
+export const NestedArrayClaim = t.array(NestedObjectClaim);
 
 /**
  * Decoder type for the claim field of the credential.
@@ -496,6 +502,8 @@ export const ClaimValue = t.union([
   DrivingPrivilegesCustomClaim,
   // Parse an object representing a mDL driving privileges
   DrivingPrivilegesClaim,
+  // Parse an object representing a nested claim (the nested claim needs to be re-parsed again)
+  NestedObjectClaim,
   // Parse an array of nested claims (the nested claims needs to be re-parsed again)
   NestedArrayClaim,
   // Otherwise parse a date as string

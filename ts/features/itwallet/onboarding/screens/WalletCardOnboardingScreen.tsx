@@ -61,7 +61,8 @@ const availableCredentials = [
 // New credentials that can be actively requested and obtained by the user
 const newCredentials = [
   CredentialType.EDUCATION_DEGREE,
-  CredentialType.EDUCATION_ENROLLMENT
+  CredentialType.EDUCATION_ENROLLMENT,
+  CredentialType.RESIDENCY
 ] as const;
 
 type NewCredential = (typeof newCredentials)[number];
@@ -154,10 +155,6 @@ const ItwCredentialOnboardingSection = () => {
         if (isUpcomingCredential(type)) {
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL
-          });
-        } else if (!isITWalletValid && isNewCredential(type)) {
-          navigation.navigate(ITW_ROUTES.MAIN, {
-            screen: ITW_ROUTES.ISSUANCE.IT_WALLET_INACTIVE
           });
         } else {
           machineRef.send({

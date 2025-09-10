@@ -20,6 +20,7 @@ import {
   ImageClaim,
   isExpirationDateClaim,
   NestedArrayClaim,
+  NestedObjectClaim,
   parseClaims,
   PdfClaim,
   PlaceOfBirthClaim,
@@ -455,6 +456,25 @@ export const ItwCredentialClaim = ({
             O.getOrElseW(() => decoded)
           );
           return <PlainTextClaimItem label={claim.label} claim={fiscalCode} />;
+        }
+        if (NestedObjectClaim.is(decoded)) {
+          const nestedClaims = parseClaims(decoded);
+          return (
+            <>
+              {nestedClaims.map((nestedClaim, index) => (
+                <Fragment key={`${index}_${claim.id}_${nestedClaim.id}`}>
+                  {index > 0 && <Divider />}
+                  <ItwCredentialClaim
+                    claim={nestedClaim}
+                    hidden={hidden}
+                    isPreview={isPreview}
+                    credentialStatus={credentialStatus}
+                    credentialType={credentialType}
+                  />
+                </Fragment>
+              ))}
+            </>
+          );
         }
         if (NestedArrayClaim.is(decoded)) {
           const nestedParsedClaims = decoded.map(item => parseClaims(item));
