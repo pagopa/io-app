@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.13.0-rc.4](https://github.com/pagopa/io-app/compare/3.13.0-rc.3...3.13.0-rc.4) (2025-09-09)
+
+
+### Features
+
+* [[IOPID-3214](https://pagopa.atlassian.net/browse/IOPID-3214)] Offline wallet: startup timeout scenario ([#7282](https://github.com/pagopa/io-app/issues/7282)) ([f0d9368](https://github.com/pagopa/io-app/commit/f0d9368b39ad88d713f7479ea4d03e9f04916994))
+* [[IOPLT-1291](https://pagopa.atlassian.net/browse/IOPLT-1291)] Enable the theme switch on global app preferences ([#7290](https://github.com/pagopa/io-app/issues/7290)) ([9adcfa9](https://github.com/pagopa/io-app/commit/9adcfa9bc13f8019216597fd2d54e2b19c9ce2db)), closes [pagopa/io-app-design-system#488](https://github.com/pagopa/io-app-design-system/issues/488)
+
+
+### Bug Fixes
+
+* [[IOPLT-1290](https://pagopa.atlassian.net/browse/IOPLT-1290)] Refactor the `FCI` flow + Add support for dark mode ([#7237](https://github.com/pagopa/io-app/issues/7237)) ([6377c1b](https://github.com/pagopa/io-app/commit/6377c1ba768a520213c5e24b9f6c692e2ff20bbf))
+
 ## [3.13.0-rc.3](https://github.com/pagopa/io-app/compare/3.13.0-rc.2...3.13.0-rc.3) (2025-09-08)
 
 
