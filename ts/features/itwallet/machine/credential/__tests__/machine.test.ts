@@ -756,6 +756,7 @@ describe("itwCredentialIssuanceMachine", () => {
 
     jest.advanceTimersByTime(5000);
 
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
     await waitFor(() =>
       expect(navigateToTrustIssuerScreen).toHaveBeenCalledTimes(1)
     );

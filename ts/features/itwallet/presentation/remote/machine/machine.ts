@@ -166,11 +166,6 @@ export const itwRemoteMachine = setup({
           actions: "setFailure",
           target: "Failure"
         }
-      },
-      after: {
-        5000: {
-          actions: "navigateToAuthResponseScreen"
-        }
       }
     },
     GettingRequestObject: {
