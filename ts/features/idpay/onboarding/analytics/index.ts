@@ -23,3 +23,30 @@ export const trackIDPayOnboardingStart = (
     buildEventProperties("UX", "action", props)
   );
 };
+
+export const trackIDPayOnboardingNotificationPermission = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_SERVICE_NOTIFICATION_ACTIVATION",
+    buildEventProperties("UX", "screen_view", props)
+  );
+};
+
+export const trackIDPayOnboardingNotificationOK = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_SERVICE_NOTIFICATION_ACCEPTED",
+    buildEventProperties("UX", "action", props)
+  );
+};
+
+export const trackIDPayOnboardingNotificationKO = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_SERVICE_NOTIFICATION_DENIED",
+    buildEventProperties("UX", "action", props)
+  );
+};
