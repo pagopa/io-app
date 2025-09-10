@@ -12,7 +12,8 @@ import {
   itwSetReviewPending,
   itwSetWalletInstanceRemotelyActive,
   itwUnflagCredentialAsRequested,
-  itwSetWalletUpgradeMDLDetailsBannerHidden
+  itwSetWalletUpgradeMDLDetailsBannerHidden,
+  itwSetEligibleToItwSimplifiedActivation
 } from "../actions/preferences";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
@@ -41,6 +42,9 @@ export type ItwPreferencesState = {
   offlineBannerHidden?: boolean;
   // Indicates whether the IT-wallet upgrade banner in MDL details should be hidden
   walletUpgradeMDLDetailsBannerHidden?: boolean;
+  // Indicates whether the user can activate IT-Wallet with the simplified flow
+  // This happens when the user obtains an L3 PID and is not whitelisted
+  isEligibleToItwSimplifiedActivation?: boolean;
 };
 
 export const itwPreferencesInitialState: ItwPreferencesState = {
@@ -154,6 +158,13 @@ const reducer = (
         walletUpgradeMDLDetailsBannerHidden: action.payload
       };
     }
+
+    case getType(itwSetEligibleToItwSimplifiedActivation):
+      return {
+        ...state,
+        isEligibleToItwSimplifiedActivation:
+          state.authLevel === "L3" && !state.isFiscalCodeWhitelisted
+      };
 
     default:
       return state;
