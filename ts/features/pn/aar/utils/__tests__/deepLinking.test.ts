@@ -12,7 +12,8 @@ describe("DeepLinking utils", () => {
           .spyOn(REMOTE_CONFIG, "pnAARQRCodeRegexSelector")
           .mockImplementation(() => testRegex);
         const url = `https://example.com/${isValid ? "aar" : "INVALID"}/12345`;
-        expect(isSendAARLink({} as GlobalState, url)).toBe(isValid);
+        const result = isSendAARLink({} as GlobalState, url);
+        expect(result).toBe(isValid);
       });
     });
 
@@ -21,7 +22,8 @@ describe("DeepLinking utils", () => {
         .spyOn(REMOTE_CONFIG, "pnAARQRCodeRegexSelector")
         .mockImplementation(() => undefined);
       const url = "https://example.com/aar/12345";
-      expect(isSendAARLink({} as GlobalState, url)).toBe(false);
+      const result = isSendAARLink({} as GlobalState, url);
+      expect(result).toBe(false);
     });
   });
 });

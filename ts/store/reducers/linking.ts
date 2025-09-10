@@ -3,12 +3,10 @@ import { storeLinkingUrl } from "../actions/linking";
 import { Action } from "../actions/types";
 
 export type LinkingState = {
-  linkingUrl: string | null;
+  linkingUrl?: string;
 };
 
-const INITIAL_STATE: LinkingState = {
-  linkingUrl: null
-};
+const INITIAL_STATE: LinkingState = {};
 
 export const linkingReducer = (
   state: LinkingState = INITIAL_STATE,

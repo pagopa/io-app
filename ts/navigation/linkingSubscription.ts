@@ -27,8 +27,11 @@ export const linkingSubscription =
       }
 
       if (isLoggedIn(state.authentication)) {
-        // only when logged in we can both have access to the remote regex to check for
-        // AAR links and navigate to its respective screen
+        /*
+         only when logged in we can navigate to the AAR screen.
+         this check also gives us higher chances that the app has fully fetched the remote config
+         which contains the required regex to check if the link is a valid AAR link.
+         */
         if (isSendAARLink(state, url)) {
           NavigationService.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
             screen: PN_ROUTES.MAIN,

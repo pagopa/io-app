@@ -3,15 +3,17 @@ import { linkingReducer } from "../linking";
 
 describe("test for linking reducer", () => {
   it("should return the initial state", () => {
-    expect(linkingReducer(undefined, {} as any)).toEqual({
-      linkingUrl: null
-    });
+    const expected = {};
+    const reducer = linkingReducer(undefined, {} as any);
+    expect(reducer).toEqual(expected);
   });
 
   it("should handle storing a linking url", () => {
     const url = "https://example.com";
-    expect(linkingReducer(undefined, storeLinkingUrl(url))).toEqual({
+    const expected = {
       linkingUrl: url
-    });
+    };
+    const reducer = linkingReducer(undefined, storeLinkingUrl(url));
+    expect(reducer).toEqual(expected);
   });
 });

@@ -9,9 +9,8 @@ export const isSendAARLink = (state: GlobalState, url: string) =>
     pnAARQRCodeRegexSelector,
     O.fromNullable,
     O.map(aarQRCodeRegexString => new RegExp(aarQRCodeRegexString, "i")),
-    O.filter(aarQRCodeRegExp => aarQRCodeRegExp.test(url)),
     O.fold(
       () => false,
-      _ => true
+      regExp => regExp.test(url)
     )
   );
