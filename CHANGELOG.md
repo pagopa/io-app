@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.13.0-canary.7408](https://github.com/pagopa/io-app/compare/3.13.0-rc.4...3.13.0-canary.7408) (2025-09-10)
+
+
+### Features
+
+* [[IOBP-1857](https://pagopa.atlassian.net/browse/IOBP-1857)] IDPay `TOO_MANY_REQUESTS` error flow ([#7198](https://github.com/pagopa/io-app/issues/7198)) ([b1a9acc](https://github.com/pagopa/io-app/commit/b1a9accfeeaa0640649790b5f6cef042e26f5ba4))
+
+
+### Bug Fixes
+
+* applu suggestion and comment only tracking ([393e455](https://github.com/pagopa/io-app/commit/393e455bdd74f62d1440a066315549ba8057cf57))
+* apply minor fix, applied minor fixes, cleaned up code, remove unnecessary useCallback, and fixed tests ([f0356d0](https://github.com/pagopa/io-app/commit/f0356d093e18ad9dbcbc9f7eb58877a282d28e55))
+* apply suggestions ([af9952a](https://github.com/pagopa/io-app/commit/af9952a3a0631f20b2c6018b621e7b8bda6d20ea))
+* delete unsed vaue into the activeSessionLogin redux state ([2f22ec3](https://github.com/pagopa/io-app/commit/2f22ec32fa96b3af9b3a49270eb0d12bbf1b243d))
+
+
+### Chores
+
+* add logic to login using cie+pin in dev-server ([6cd4b0f](https://github.com/pagopa/io-app/commit/6cd4b0f3adab1366f24c5a57b2d76791b9b488b6))
+* add logic to perform login (happy path) with prod environment ([304c93c](https://github.com/pagopa/io-app/commit/304c93c2877bc9a423b8eb578a695563bdaa293f))
+* create new card reader screen and fix tests ([5cb33f6](https://github.com/pagopa/io-app/commit/5cb33f6e5b474cc17559b09b91207ef7bba4e04c))
+* delete CIE_PIN_ACTIVE_SESSION_LOGIN_SCREEN route and add logic to navigate from cie card read error pages ([144a301](https://github.com/pagopa/io-app/commit/144a301b1e1afc9a03c8afaf3eb42b162c79a115))
+* revert ciePinScreen, disable tracking on screens and add minor fix ([19efc7f](https://github.com/pagopa/io-app/commit/19efc7f7583d74928e79322553df12d7fbfe587e))
+
 ## [3.13.0-rc.4](https://github.com/pagopa/io-app/compare/3.13.0-rc.3...3.13.0-rc.4) (2025-09-09)
 
 
