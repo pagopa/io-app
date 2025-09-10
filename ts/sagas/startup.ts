@@ -8,7 +8,6 @@ import { channel } from "redux-saga";
 import {
   call,
   cancel,
-  delay,
   fork,
   put,
   select,
@@ -103,7 +102,6 @@ import {
   watchZendeskGetSessionSaga
 } from "../features/zendesk/saga";
 import { formatRequestedTokenString } from "../features/zendesk/utils";
-import { mixpanelTrack } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
 import {
   applicationInitialized,
@@ -133,6 +131,10 @@ import { getPin } from "../utils/keychain";
 import { watchActiveSessionLoginSaga } from "../features/authentication/activeSessionLogin/saga";
 import ROUTES from "../navigation/routes";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
+import {
+  waitForMainNavigator,
+  waitForNavigatorServiceInitialization
+} from "../navigation/saga/navigationServiceSagas";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
@@ -149,8 +151,6 @@ import { checkItWalletIdentitySaga } from "./startup/checkItWalletIdentitySaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
 
 export const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
-const navigatorPollingTime = 125 as Millisecond;
-const warningWaitNavigatorTime = 2000 as Millisecond;
 
 /**
  * Handles the application startup and the main application logic loop
@@ -745,72 +745,6 @@ export function* initializeApplicationSaga(
       actionsToWaitFor: []
     })
   );
-}
-
-/**
- * Wait until the {@link NavigationService} is initialized.
- * The NavigationService is initialized when is called {@link RootContainer} componentDidMount and the ref is set with setTopLevelNavigator
- * Consider moving this to a dedicated file.
- * TODO: https://pagopa.atlassian.net/browse/IOPID-3041
- */
-function* waitForNavigatorServiceInitialization() {
-  // eslint-disable-next-line functional/no-let
-  let isNavigatorReady: ReturnType<
-    typeof NavigationService.getIsNavigationReady
-  > = yield* call(NavigationService.getIsNavigationReady);
-
-  // eslint-disable-next-line functional/no-let
-  let timeoutLogged = false;
-
-  const startTime = performance.now();
-
-  // before continuing we must wait for the navigatorService to be ready
-  while (!isNavigatorReady) {
-    const elapsedTime = performance.now() - startTime;
-    if (!timeoutLogged && elapsedTime >= warningWaitNavigatorTime) {
-      timeoutLogged = true;
-
-      yield* call(mixpanelTrack, "NAVIGATION_SERVICE_INITIALIZATION_TIMEOUT");
-    }
-    yield* delay(navigatorPollingTime);
-    isNavigatorReady = yield* call(NavigationService.getIsNavigationReady);
-  }
-
-  const initTime = performance.now() - startTime;
-
-  yield* call(mixpanelTrack, "NAVIGATION_SERVICE_INITIALIZATION_COMPLETED", {
-    elapsedTime: initTime
-  });
-}
-
-// Consider moving this to a dedicated file
-// TODO: https://pagopa.atlassian.net/browse/IOPID-3041
-
-function* waitForMainNavigator() {
-  // eslint-disable-next-line functional/no-let
-  let isMainNavReady = yield* call(NavigationService.getIsMainNavigatorReady);
-
-  // eslint-disable-next-line functional/no-let
-  let timeoutLogged = false;
-  const startTime = performance.now();
-
-  // before continuing we must wait for the main navigator tack to be ready
-  while (!isMainNavReady) {
-    const elapsedTime = performance.now() - startTime;
-    if (!timeoutLogged && elapsedTime >= warningWaitNavigatorTime) {
-      timeoutLogged = true;
-
-      yield* call(mixpanelTrack, "MAIN_NAVIGATOR_STACK_READY_TIMEOUT");
-    }
-    yield* delay(navigatorPollingTime);
-    isMainNavReady = yield* call(NavigationService.getIsMainNavigatorReady);
-  }
-
-  const initTime = performance.now() - startTime;
-
-  yield* call(mixpanelTrack, "MAIN_NAVIGATOR_STACK_READY_OK", {
-    elapsedTime: initTime
-  });
 }
 
 export function* startupSaga(): IterableIterator<ReduxSagaEffect> {
