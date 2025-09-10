@@ -22,10 +22,12 @@ import {
   preferencesExperimentalDesignEnabled,
   preferencesFontSet,
   TypefaceChoice,
-  preferencesAarFeatureSetEnabled
+  preferencesAarFeatureSetEnabled,
+  preferencesThemeSet
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
 import { differentProfileLoggedIn } from "../actions/crossSessions";
+import { ColorModeChoice } from "../../hooks/useAppThemeConfiguration";
 import { GlobalState } from "./types";
 
 export type PersistedPreferencesState = Readonly<{
@@ -49,6 +51,7 @@ export type PersistedPreferencesState = Readonly<{
   // be sure to handle such case when reading and using this value
   isExperimentalDesignEnabled: boolean;
   fontPreference: TypefaceChoice;
+  themePreference: ColorModeChoice;
   isAarFeatureEnabled: boolean;
 }>;
 
@@ -65,9 +68,11 @@ export const initialPreferencesState: PersistedPreferencesState = {
   isIdPayTestEnabled: false,
   isExperimentalDesignEnabled: false,
   fontPreference: "comfortable",
+  themePreference: "light",
   isAarFeatureEnabled: false
 };
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 export default function preferencesReducer(
   state: PersistedPreferencesState = initialPreferencesState,
   action: Action
@@ -150,6 +155,13 @@ export default function preferencesReducer(
     };
   }
 
+  if (isActionOf(preferencesThemeSet, action)) {
+    return {
+      ...state,
+      themePreference: action.payload
+    };
+  }
+
   // when the current user is different from the previous logged one
   // reset the mixpanel opt-in preference
   if (isActionOf(differentProfileLoggedIn, action)) {
@@ -218,6 +230,9 @@ export const isExperimentalDesignEnabledSelector = (state: GlobalState) =>
 
 export const fontPreferenceSelector = (state: GlobalState): TypefaceChoice =>
   state.persistedPreferences.fontPreference ?? "comfortable";
+
+export const themePreferenceSelector = (state: GlobalState): ColorModeChoice =>
+  state.persistedPreferences.themePreference ?? "light";
 
 export const isAARLocalEnabled = (state: GlobalState) =>
   state.persistedPreferences.isAarFeatureEnabled;
