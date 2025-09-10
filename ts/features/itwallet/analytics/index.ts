@@ -26,6 +26,7 @@ import {
   itwCredentialsSelector
 } from "../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../lifecycle/store/selectors";
+import { isItwCredential } from "../common/utils/itwCredentialUtils";
 import { CredentialType } from "../common/utils/itwMocksUtils";
 import {
   ITW_ACTIONS_EVENTS,
@@ -1270,6 +1271,7 @@ export const getPIDMixpanelStatus = (
  * Returns the Mixpanel status for a credential type, considering IT Wallet.
  *
  * - If `isItwL3` is explicitly false, returns `"not_available"`.
+ * - If `isItwL3` is true and the credential exists but is not an ITW credential, returns `"not_available"`.
  * - Otherwise, retrieves the credential from the store and maps it to Mixpanel status.
  * - Returns `"not_available"` if the credential is missing.
  */
@@ -1277,14 +1279,20 @@ export const getMixpanelCredentialStatus = (
   type: CredentialType,
   state: GlobalState,
   isItwL3?: boolean
-): ItwCredentialMixpanelStatus =>
-  isItwL3 === false
-    ? "not_available"
-    : pipe(
-        O.fromNullable(itwCredentialsSelector(state)[type]),
-        O.map(cred => CREDENTIAL_STATUS_MAP[getCredentialStatus(cred)]),
-        O.getOrElse(() => "not_available" as ItwCredentialMixpanelStatus)
-      );
+): ItwCredentialMixpanelStatus => {
+  if (isItwL3 === false) return "not_available";
+
+  const credential = itwCredentialsSelector(state)[type];
+  if (isItwL3 && credential && !isItwCredential(credential.credential)) {
+    return "not_available";
+  }
+
+  return pipe(
+    O.fromNullable(credential),
+    O.map(cred => CREDENTIAL_STATUS_MAP[getCredentialStatus(cred)]),
+    O.getOrElse(() => "not_available" as ItwCredentialMixpanelStatus)
+  );
+};
 
 /**
  * Maps an PID status to its corresponding Mixpanel tracking status.
