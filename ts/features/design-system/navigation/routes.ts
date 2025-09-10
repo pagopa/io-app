@@ -90,6 +90,10 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "FORSCESCROLLDOWNVIEW_CUSTOM_SLOT",
       title: "ForceScrollDownView w/ Custom slot"
     },
+    FORSCESCROLLDOWNVIEW_TITLE_TRANSITION: {
+      route: "FORSCESCROLLDOWNVIEW_TITLE_TRANSITION",
+      title: "ForceScrollDownView w/ Title transition"
+    },
     BONUS_CARD_SCREEN: {
       route: "BONUS_CARD_SCREEN",
       title: "Bonus Card Screen"

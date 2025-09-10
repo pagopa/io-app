@@ -15,7 +15,6 @@ import {
 } from "../../../theme/navigations";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { DesignSystem } from "../DesignSystem";
-import { DSCollapsible } from "../core/DSCollapsible";
 import { DSAdvice } from "../core/DSAdvice";
 import { DSAlert } from "../core/DSAlert";
 import { DSAnimatedPictograms } from "../core/DSAnimatedPictograms";
@@ -24,6 +23,7 @@ import { DSBonusCardScreen } from "../core/DSBonusCardScreen";
 import { DSBottomSheet } from "../core/DSBottomSheet";
 import { DSButtons } from "../core/DSButtons";
 import { DSCards } from "../core/DSCards";
+import { DSCollapsible } from "../core/DSCollapsible";
 import { DSColors } from "../core/DSColors";
 import { DSDynamicBackground } from "../core/DSDynamicBackground";
 import { DSDynamicCardRotation } from "../core/DSDynamicCardRotation";
@@ -35,6 +35,7 @@ import { DSFooterActionsNotFixed } from "../core/DSFooterActionsNotFixed";
 import { DSFooterActionsSticky } from "../core/DSFooterActionsSticky";
 import { DSForceScrollDownView } from "../core/DSForceScrollDownView";
 import { DSForceScrollDownViewCustomSlot } from "../core/DSForceScrollDownViewCustomSlot";
+import { DSForceScrollDownViewTitleTransition } from "../core/DSForceScrollDownViewTitleTransition";
 import { DSFullScreenModal } from "../core/DSFullScreenModal";
 import { DSHapticFeedback } from "../core/DSHapticFeedback";
 import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
@@ -480,6 +481,19 @@ export const DesignSystemNavigator = () => {
           options={{
             headerTitle:
               DESIGN_SYSTEM_ROUTES.SCREENS.FORSCESCROLLDOWNVIEW_CUSTOM_SLOT
+                .title
+          }}
+        />
+
+        <Stack.Screen
+          name={
+            DESIGN_SYSTEM_ROUTES.SCREENS.FORSCESCROLLDOWNVIEW_TITLE_TRANSITION
+              .route
+          }
+          component={DSForceScrollDownViewTitleTransition}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.SCREENS.FORSCESCROLLDOWNVIEW_TITLE_TRANSITION
                 .title
           }}
         />
