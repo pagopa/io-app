@@ -9,7 +9,8 @@ export enum InitiativeFailureType {
   INSTRUMENTS_LIST_LOAD_FAILURE = "INSTRUMENTS_LIST_LOAD_FAILURE",
   INSTRUMENT_ENROLL_FAILURE = "INSTRUMENT_ENROLL_FAILURE",
   INSTRUMENT_DELETE_FAILURE = "INSTRUMENT_DELETE_FAILURE",
-  SESSION_EXPIRED = "SESSION_EXPIRED"
+  SESSION_EXPIRED = "SESSION_EXPIRED",
+  TOO_MANY_REQUESTS = "TOO_MANY_REQUESTS"
 }
 export type InitiativeFailure = t.TypeOf<typeof InitiativeFailure>;
 export const InitiativeFailure = enumType<InitiativeFailureType>(

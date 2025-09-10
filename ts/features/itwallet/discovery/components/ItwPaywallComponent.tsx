@@ -64,6 +64,7 @@ const markdownRules = {
     return (
       <Body
         asLink
+        avoidPressable
         color="white"
         weight="Semibold"
         key={getTxtNodeKey(link)}

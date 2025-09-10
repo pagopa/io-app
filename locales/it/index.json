@@ -217,7 +217,8 @@
       "choose": "Scegli",
       "copy": "Copia",
       "selectAll": "Seleziona tutto",
-      "deselectAll": "Deseleziona tutto"
+      "deselectAll": "Deseleziona tutto",
+      "visitWebsite": "Vai al sito"
     },
     "navigator": {
       "messages": "Messaggi",
@@ -347,6 +348,11 @@
     },
     "contextualHelp": {
       "title": "Problemi di inizializzazione?"
+    },
+    "offline_access_banner": {
+      "title": "Ti servono i documenti?",
+      "content": "Non attendere, sono sempre disponibili, anche se non hai connessione!",
+      "action": "Vai ai documenti"
     },
     "connection_lost": {
       "title": "Non hai una connessione a internet attiva",
@@ -1552,7 +1558,7 @@
       "fee": "Commissione",
       "feeAppliedBy": "Applicata da",
       "editButton": "Modifica",
-      "termsAndConditions": "Proseguendo accetti i [Termini e condizioni d’uso](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) e confermi di aver letto l'[Informativa Privacy](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) di {{pspName}}"
+      "termsAndConditions": "Proseguendo accetti i [Termini e condizioni d’uso](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/) e confermi di aver letto l'[Informativa Privacy](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/) di {{pspName}}"
     }
   },
   "wallet": {
@@ -4067,9 +4073,9 @@
           "selected": "Campo selezionato",
           "unselected": "Campo non selezionato"
         },
-        "required": "FIRME OBBLIGATORIE",
-        "optional": "FIRME FACOLTATIVE",
-        "unfair": "FIRME CLAUSOLE VESSATORIE"
+        "required": "Firme obbligatorie",
+        "optional": "Firme facoltative",
+        "unfair": "Firme clausole vessatorie"
       },
       "title": "Firma con IO",
       "documentsBar": {
@@ -4082,7 +4088,7 @@
         "cancel": "Annulla",
         "confirm": "Ok, va bene",
         "alertText": "Vuoi modificare o aggiornare il tuo indirizzo e-mail?",
-        "alertLink": "Vai qui",
+        "alertLink": "Modifica email",
         "name": "Nome",
         "familyName": "Cognome",
         "birthDate": "Data di nascita"
@@ -5345,6 +5351,17 @@
             "footerAction": "Ricarica l'app IO"
           }
         },
+        "timeout": {
+          "alert": {
+            "content": "Hai bisogno di tornare alla versione completa di IO?",
+            "action": "Ricarica l’app IO"
+          },
+          "modal": {
+            "title": "",
+            "content": "",
+            "footerAction": ""
+          }
+        },
         "back_online": {
           "alert": {
             "content": "Sei di nuovo online. Per usare tutti i servizi ",
@@ -5637,6 +5654,7 @@
           "generateBarcode": "Genera un codice sconto"
         },
         "authorizeButton": "Usa il bonus",
+        "secondaryCta": "Mostra esercenti",
         "addExpenseButton": "Aggiungi spesa",
         "IDPayCode": {
           "banner": {
@@ -5877,6 +5895,9 @@
         "success": "Hai attivato le notifiche push",
         "advice": "Consigliato"
       },
+      "failToRetry": {
+        "contentTitle": "Stiamo per collegarti.\n Attendi qualche secondo..."
+      },
       "preferences": {
         "enableEmailBanner": {
           "title": "Non perderti aggiornamenti importanti",
@@ -5899,7 +5920,8 @@
         "INSTRUMENTS_LIST_LOAD_FAILURE": "Errore nel caricamento della lista strumenti",
         "INSTRUMENT_ENROLL_FAILURE": "Errore durante l'aggiunta del metodo di pagamento",
         "INSTRUMENT_DELETE_FAILURE": "Errore durante la rimozione del metodo di pagamento",
-        "SESSION_EXPIRED": "C'è stato un problema, riprova"
+        "SESSION_EXPIRED": "C'è stato un problema, riprova",
+        "TOO_MANY_REQUESTS": "Stiamo ricevendo troppe richieste, riprova più tardi"
       },
       "headerTitle": "Configura l'iniziativa",
       "intro": {

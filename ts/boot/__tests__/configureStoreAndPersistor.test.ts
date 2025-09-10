@@ -26,7 +26,7 @@ describe("configureStoreAndPersistor", () => {
   describe("CURRENT_REDUX_STORE_VERSION", () => {
     it("should match expected value", () => {
       const version = testable!.CURRENT_REDUX_STORE_VERSION;
-      expect(version).toBe(47);
+      expect(version).toBe(48);
     });
   });
   describe("migrations", () => {
@@ -510,6 +510,71 @@ describe("configureStoreAndPersistor", () => {
         persistedPreferences: {
           ...persistedStateAt46.persistedPreferences,
           isAarFeatureEnabled: false
+        }
+      });
+    });
+    // Test for 47 to 48
+    it("should migrate from 47 to 48", () => {
+      const persistedStateAt47 = {
+        content: {
+          idps: remoteUndefined,
+          municipality: {
+            codiceCatastale: pot.none,
+            data: pot.none
+          },
+          contextualHelp: pot.none
+        },
+        crossSessions: {
+          hashedFiscalCode:
+            "6494e783ad296f016b2105f8fe7dc2979551a37d3a5c40624e2ee8eee64e8017"
+        },
+        installation: {
+          isFirstRunAfterInstall: false,
+          appVersionHistory: [
+            "3.3.0.8",
+            "3.4.0.5",
+            "3.5.0.8",
+            "3.6.0.9",
+            "3.7.0.7",
+            "3.8.0.9",
+            "3.9.0.6",
+            "3.10.0.6",
+            "3.11.0.4",
+            "3.12.0.7"
+          ]
+        },
+        onboarding: {
+          isFingerprintAcknowledged: false
+        },
+        persistedPreferences: {
+          isFingerprintEnabled: undefined,
+          preferredCalendar: undefined,
+          preferredLanguage: undefined,
+          wasServiceAlertDisplayedOnce: false,
+          isPagoPATestEnabled: false,
+          isCustomEmailChannelEnabled: pot.none,
+          continueWithRootOrJailbreak: false,
+          isMixpanelEnabled: null,
+          isPnTestEnabled: false,
+          isIdPayTestEnabled: false,
+          fontPreference: "comfortable",
+          isExperimentalDesignEnabled: false,
+          isAarFeatureEnabled: false
+        },
+        profile: pot.none,
+        _persist: {
+          version: 47,
+          rehydrated: false
+        }
+      };
+      const from47To48Migration = testable!.migrations[48];
+      expect(from47To48Migration).toBeDefined();
+      const globalStateAt48 = from47To48Migration(persistedStateAt47);
+      expect(globalStateAt48).toEqual({
+        ...persistedStateAt47,
+        persistedPreferences: {
+          ...persistedStateAt47.persistedPreferences,
+          themePreference: "light"
         }
       });
     });
