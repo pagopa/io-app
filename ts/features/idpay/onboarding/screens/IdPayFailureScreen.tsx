@@ -8,7 +8,10 @@ import {
 } from "../../../../components/screens/OperationResultScreenContent";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import useIDPayFailureSupportModal from "../../common/hooks/useIDPayFailureSupportModal";
-import { trackIDPayOnboardingFailure } from "../analytics";
+import {
+  trackIDPayOnboardingErrorHelp,
+  trackIDPayOnboardingFailure
+} from "../analytics";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {
   selectInitiative,
@@ -77,12 +80,21 @@ const IdPayFailureScreen = () => {
         accessibilityLabel: I18n.t(
           `wallet.onboarding.outcome.BE_KO.secondaryAction`
         ),
-        onPress: () => present(OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR)
+        onPress: () => {
+          trackIDPayOnboardingErrorHelp({
+            initiativeId,
+            initiativeName,
+            flow: "onboarding",
+            reason: failureOption
+          });
+
+          present(OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR);
+        }
       },
       enableAnimatedPictogram: true,
       loop: true
     }),
-    [machine, present]
+    [failureOption, initiativeId, initiativeName, machine, present]
   );
 
   const mapFailureToContentProps = (

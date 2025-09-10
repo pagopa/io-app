@@ -73,3 +73,18 @@ export const trackIDPayOnboardingFailure = (
     })
   );
 };
+
+export const trackIDPayOnboardingErrorHelp = (
+  props: DefaultOnboardingEventProperties & {
+    flow: "onboarding" | "authorization";
+    reason: O.Option<OnboardingFailureEnum>;
+  }
+) => {
+  mixpanelTrack(
+    "IDPAY_ERROR_HELP",
+    buildEventProperties("UX", "action", {
+      ...props,
+      reason: mapOptionToReason(props.reason)
+    })
+  );
+};
