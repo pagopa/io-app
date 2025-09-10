@@ -1,14 +1,14 @@
 import { createStore } from "redux";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
+import { ThirdPartyMessage } from "../../../../../../definitions/backend/ThirdPartyMessage";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { MessageDetailsAttachments } from "../MessageDetailsAttachments";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { loadThirdPartyMessage } from "../../../store/actions";
-import { ThirdPartyMessage } from "../../../../../../definitions/backend/ThirdPartyMessage";
-import { ThirdPartyMessageWithContent } from "../../../../../../definitions/backend/ThirdPartyMessageWithContent";
-import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
+import { ThirdPartyMessageUnion } from "../../../store/reducers/thirdPartyById";
 import { ATTACHMENT_CATEGORY } from "../../../types/attachmentCategory";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { MessageDetailsAttachments } from "../MessageDetailsAttachments";
 
 describe("MessageDetailsAttachments", () => {
   const messageId = "01HNWYRT55GXGPXR16BW2MSBVY";
@@ -56,7 +56,8 @@ const renderScreen = (
   serviceId: ServiceId,
   attachmentCount: number = 0,
   disabled: boolean = false,
-  isPN: boolean = false
+  isPN: boolean = false,
+  kind: ThirdPartyMessageUnion["kind"] = "TPM"
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
 
@@ -71,10 +72,11 @@ const renderScreen = (
     loadThirdPartyMessage.success({
       id: messageId,
       content: {
+        kind,
         third_party_message: {
           attachments
         } as ThirdPartyMessage
-      } as ThirdPartyMessageWithContent
+      } as ThirdPartyMessageUnion
     })
   );
   const store = createStore(appReducer, finalState as any);
