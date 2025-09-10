@@ -44,7 +44,7 @@ export type ItwPreferencesState = {
   walletUpgradeMDLDetailsBannerHidden?: boolean;
   // Indicates whether the user can activate IT-Wallet with the simplified flow
   // This happens when the user obtains an L3 PID and is not whitelisted
-  isEligibleToItwSimplifiedActivation?: boolean;
+  isEligibleForItwSimplifiedActivation?: boolean;
 };
 
 export const itwPreferencesInitialState: ItwPreferencesState = {
@@ -162,7 +162,7 @@ const reducer = (
     case getType(itwSetEligibleToItwSimplifiedActivation):
       return {
         ...state,
-        isEligibleToItwSimplifiedActivation:
+        isEligibleForItwSimplifiedActivation:
           state.authLevel === "L3" && !state.isFiscalCodeWhitelisted
       };
 
