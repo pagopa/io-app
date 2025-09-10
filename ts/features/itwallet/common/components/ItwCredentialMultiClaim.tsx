@@ -129,15 +129,18 @@ export const ItwCredentialMultiClaim = ({
     const singleItemClaims = nestedClaims[0];
     return (
       <>
-        {singleItemClaims.map(nestedClaim => (
-          <ItwCredentialClaim
-            key={nestedClaim.id}
-            claim={nestedClaim}
-            hidden={hidden}
-            isPreview={isPreview}
-            credentialStatus={credentialStatus}
-            credentialType={credentialType}
-          />
+        {singleItemClaims.map((nestedClaim, index) => (
+          <Fragment key={`${index}_${nestedClaim.id}_${nestedClaim.label}`}>
+            {index > 0 && <Divider />}
+            <ItwCredentialClaim
+              key={nestedClaim.id}
+              claim={nestedClaim}
+              hidden={hidden}
+              isPreview={isPreview}
+              credentialStatus={credentialStatus}
+              credentialType={credentialType}
+            />
+          </Fragment>
         ))}
       </>
     );
