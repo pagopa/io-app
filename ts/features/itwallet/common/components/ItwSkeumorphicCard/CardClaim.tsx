@@ -9,7 +9,7 @@ import { Either, Prettify } from "../../../../../types/helpers";
 import {
   ClaimValue,
   DrivingPrivilegesClaim,
-  DrivingPrivilegesValueRaw,
+  DrivingPrivilegesCustomClaim,
   ImageClaim,
   NestedArrayClaim,
   PlaceOfBirthClaim,
@@ -73,11 +73,8 @@ const CardClaim = ({
         claim?.value,
         ClaimValue.decode,
         E.fold(constNull, decoded => {
-          if (
-            NestedArrayClaim.is(decoded) ||
-            DrivingPrivilegesValueRaw.is(decoded)
-          ) {
-            // If the claim is a NestedArrayClaim or DrivingPrivilegesValueRaw, we don't render it directly
+          if (NestedArrayClaim.is(decoded)) {
+            // If the claim is a NestedArrayClaim, we don't render it directly
             // but we return null to skip rendering
             return null;
           }
@@ -89,7 +86,10 @@ const CardClaim = ({
             return (
               <ClaimImage base64={decoded} blur={labelProps.hidden ? 7 : 0} />
             );
-          } else if (DrivingPrivilegesClaim.is(decoded)) {
+          } else if (
+            DrivingPrivilegesClaim.is(decoded) ||
+            DrivingPrivilegesCustomClaim.is(decoded)
+          ) {
             const privileges = decoded.map(p => p.driving_privilege).join(" ");
             return <ClaimLabel {...labelProps}>{privileges}</ClaimLabel>;
           } else if (PlaceOfBirthClaim.is(decoded)) {

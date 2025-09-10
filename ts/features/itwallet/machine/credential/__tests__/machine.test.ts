@@ -425,7 +425,7 @@ describe("itwCredentialIssuanceMachine", () => {
     expect(navigateToWallet).toHaveBeenCalledTimes(0);
     expect(closeIssuance).toHaveBeenCalledTimes(1);
   });
-  // TODO: Fix this test
+  // TODO: SIW-2947 Fix this test
 
   /*  it("Should go to failure if wallet instance attestation obtainment fails", async () => {
     const actor = createActor(mockedMachine);
