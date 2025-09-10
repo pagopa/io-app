@@ -1,14 +1,23 @@
 import { Alert, View } from "react-native";
 import { ListItemAction } from "@pagopa/io-app-design-system";
+import { constNull } from "fp-ts/lib/function";
 import { memo } from "react";
 import I18n from "i18next";
+import { useItwStartCredentialSupportRequest } from "../hooks/useItwStartCredentialSupportRequest";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
-import { openNotAvailableToast } from "../../../common/utils/itwToastUtils.ts";
+import { useNotAvailableToastGuard } from "../../../common/hooks/useNotAvailableToastGuard.ts";
 
 const POWERED_BY_IT_WALLET = "Powered by IT-Wallet";
 
-const ItwPresentationPidDetailFooter = () => {
+type Props = {
+  credential: StoredCredential;
+};
+
+const ItwPresentationPidDetailFooter = ({ credential }: Props) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const startAndTrackSupportRequest =
+    useItwStartCredentialSupportRequest(credential);
 
   const requestAssistanceLabel = I18n.t(
     "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
@@ -43,14 +52,17 @@ const ItwPresentationPidDetailFooter = () => {
         icon="message"
         label={requestAssistanceLabel}
         accessibilityLabel={requestAssistanceLabel}
-        onPress={openNotAvailableToast}
+        onPress={useNotAvailableToastGuard(
+          startAndTrackSupportRequest,
+          credential
+        )}
       />
       <ListItemAction
         variant="primary"
         icon="website"
         label={POWERED_BY_IT_WALLET}
         accessibilityLabel={POWERED_BY_IT_WALLET}
-        onPress={openNotAvailableToast}
+        onPress={useNotAvailableToastGuard(constNull, credential)}
       />
       <ListItemAction
         variant="danger"

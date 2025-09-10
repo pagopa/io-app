@@ -22,9 +22,9 @@ import { getHeaderPropsByCredentialType } from "../../../common/utils/itwStyleUt
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
-import { openNotAvailableToast } from "../../../common/utils/itwToastUtils.ts";
 import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.ts";
 import { useStartSupportRequest } from "../../../../../hooks/useStartSupportRequest.ts";
+import { useNotAvailableToastGuard } from "../../../common/hooks/useNotAvailableToastGuard.ts";
 
 export type CredentialCtaProps = Omit<ButtonSolidProps, "fullWidth">;
 
@@ -53,6 +53,10 @@ const ItwPresentationDetailsScreenBase = ({
   const gradientOpacity = useSharedValue(1);
   const scrollTranslationY = useSharedValue(0);
   const startSupportRequest = useOfflineToastGuard(useStartSupportRequest({}));
+  const onIconPress = useNotAvailableToastGuard(
+    startSupportRequest,
+    credential
+  );
 
   const bottomMargin: number = useMemo(
     () =>
@@ -89,9 +93,7 @@ const ItwPresentationDetailsScreenBase = ({
           backAccessibilityLabel={I18n.t("global.buttons.back")}
           firstAction={{
             icon: "help",
-            onPress: itwFeaturesEnabled
-              ? openNotAvailableToast
-              : startSupportRequest,
+            onPress: onIconPress,
             accessibilityLabel: I18n.t(
               "global.accessibility.contextualHelp.open.label"
             )
@@ -105,6 +107,7 @@ const ItwPresentationDetailsScreenBase = ({
     headerProps,
     itwFeaturesEnabled,
     navigation,
+    onIconPress,
     startSupportRequest
   ]);
 

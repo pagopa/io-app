@@ -10,8 +10,7 @@ import { getCredentialDocumentNumber } from "../../../trustmark/utils";
 import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.ts";
 import { useItwStartCredentialSupportRequest } from "../hooks/useItwStartCredentialSupportRequest.tsx";
 import { useItwRemoveCredentialWithConfirm } from "../hooks/useItwRemoveCredentialWithConfirm";
-import { isItwCredential } from "../../../common/utils/itwCredentialUtils.ts";
-import { openNotAvailableToast } from "../../../common/utils/itwToastUtils.ts";
+import { useNotAvailableToastGuard } from "../../../common/hooks/useNotAvailableToastGuard.ts";
 
 type ItwPresentationDetailFooterProps = {
   credential: StoredCredential;
@@ -32,7 +31,6 @@ const ItwPresentationDetailsFooter = ({
     () => getCredentialActions(credential),
     [credential]
   );
-  const itwCredential = isItwCredential(credential.credential);
 
   return (
     <View>
@@ -47,9 +45,10 @@ const ItwPresentationDetailsFooter = ({
         accessibilityLabel={I18n.t(
           "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
         )}
-        onPress={
-          itwCredential ? openNotAvailableToast : startAndTrackSupportRequest
-        }
+        onPress={useNotAvailableToastGuard(
+          startAndTrackSupportRequest,
+          credential
+        )}
       />
       <ListItemAction
         testID="removeCredentialActionTestID"
