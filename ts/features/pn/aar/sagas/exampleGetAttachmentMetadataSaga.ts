@@ -9,33 +9,19 @@ import { SagaCallReturnType } from "../../../../types/utils";
 import { setAarFlowState } from "../store/actions";
 import { unknownToReason } from "../../../messages/utils";
 
-const extractAttachmentUrl = (
-  input: string
-): {
-  url: string;
-  attachmentIdx?: string;
-} => {
-  const slashRemovedInput = input.startsWith("/") ? input.substring(1) : input;
-
-  const regex = /attachmentIdx=([^\\s&]+)/i;
-
-  const match = slashRemovedInput.match(regex);
-
-  // If no match is found, return the original string and null.
-  if (!match) {
-    return { url: slashRemovedInput };
-  }
-
-  // The captured value, e.g., "12345"
-  const value = match[1];
-  // The full match, e.g., "attachmentIdx=12345"
-  const keyValuePair = match[0];
-
-  // Case: The parameter is the only one, preceded by '?'
-  // e.g., "...?attachmentIdx=123"
-  const withLeadingQuestion = `?${keyValuePair}`;
-  const modifiedString = slashRemovedInput.replace(withLeadingQuestion, "");
-  return { url: modifiedString, attachmentIdx: value };
+const encodeAttachmentUrl = (inputAttachmentUrl: string): string => {
+  const initialSlashRemovedInputAttachmentUrl = inputAttachmentUrl.startsWith(
+    "/"
+  )
+    ? inputAttachmentUrl.substring(1)
+    : inputAttachmentUrl;
+  const initialSlashRemovedInputAttachmentUrlBuffer = Buffer.from(
+    initialSlashRemovedInputAttachmentUrl,
+    "utf8"
+  );
+  const initialSlashRemovedInputAttachmentUrlBase64 =
+    initialSlashRemovedInputAttachmentUrlBuffer.toString("base64");
+  return encodeURIComponent(initialSlashRemovedInputAttachmentUrlBase64);
 };
 
 export function* exampleGetAttachmentMetadataSaga(
@@ -49,13 +35,12 @@ export function* exampleGetAttachmentMetadataSaga(
   // F24
   const unsafeAttachmentUrl =
     "/delivery/notifications/received/0000000000000000000002SEND/attachments/payment/F24?attachmentIdx=0";
-  const { url: attachmentUrl, attachmentIdx } =
-    extractAttachmentUrl(unsafeAttachmentUrl);
+  const urlEncodedBase64AttachmentUrl =
+    encodeAttachmentUrl(unsafeAttachmentUrl);
 
   const request = getAttachmentMetadataFactory({
     Bearer: `Bearer ${bearerToken}`,
-    attachmentUrl,
-    attachmentIdx,
+    urlEncodedBase64AttachmentUrl,
     "x-pagopa-pn-io-src": "QRCODE",
     mandateId: undefined,
     isTest: true

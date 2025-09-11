@@ -8,7 +8,7 @@ import { apiUrlPrefix } from "../../../../config";
 import { setAarFlowState } from "../store/actions";
 import { exampleCheckQRCodeSaga } from "./exampleCheckQRCodeSaga";
 import { exampleGetNotificationSaga } from "./exampleGetNotificationSaga";
-import { exampleGetAttachmentMetadataSaga } from "./exampleGetAttachmentMetadatSaga";
+import { exampleGetAttachmentMetadataSaga } from "./exampleGetAttachmentMetadataSaga";
 
 export function* watchSendAARSaga(
   bearerToken: SessionToken,
