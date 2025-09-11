@@ -8,7 +8,7 @@ import * as ARCHIVING_SELECTORS from "../../features/messages/store/reducers/arc
 import { resetMessageArchivingAction } from "../../features/messages/store/actions/archiving";
 import * as UTIL_GUARDS from "../../features/authentication/common/store/utils/guards";
 import * as DEEP_LINKING from "../../features/pn/aar/utils/deepLinking";
-import { storeLinkingUrl } from "../../store/actions/linking";
+import { storeLinkingUrl } from "../../features/linking/actions";
 import * as NAVIGATION_SRV from "../NavigationService";
 import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
 import PN_ROUTES from "../../features/pn/navigation/routes";

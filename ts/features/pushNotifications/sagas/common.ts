@@ -10,6 +10,11 @@ import { resetMessageArchivingAction } from "../../messages/store/actions/archiv
 import NavigationService from "../../../navigation/NavigationService";
 import { navigateToMessageRouterAction } from "../utils/navigation";
 import { trackNotificationPermissionsStatus } from "../analytics";
+import { storedLinkingUrlSelector } from "../../linking/reducers";
+import { isSendAARLink } from "../../pn/aar/utils/deepLinking";
+import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
+import PN_ROUTES from "../../pn/navigation/routes";
+import { clearLinkingUrl } from "../../linking/actions";
 
 export function* checkAndUpdateNotificationPermissionsIfNeeded(
   skipAnalyticsTracking: boolean = false
@@ -50,12 +55,41 @@ export function* updateNotificationPermissionsIfNeeded(
   }
 }
 
-export function* handlePendingMessageStateIfAllowed(
+/**
+ * this method is used to handle all actions that
+ * are triggered when the app is not running, and also need
+ * to be handled later on in the app's life cycle.
+ *
+ * two examples are Universal Links and Push Notifications, which
+ * can open the app from a closed state and need to be handled
+ * once the app has finished loading/initializing.
+ */
+export function* maybeHandlePendingBackgroundActions(
   shouldResetToMainNavigator: boolean = false
 ) {
+  // check if we have a stored linking URL to process
+  const storedLinkingUrl = yield* select(storedLinkingUrlSelector);
+  if (storedLinkingUrl !== undefined) {
+    const shouldNavigateToAAR = yield* select(isSendAARLink, storedLinkingUrl);
+    if (shouldNavigateToAAR) {
+      yield* call(
+        NavigationService.navigate,
+        MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
+        {
+          screen: PN_ROUTES.MAIN,
+          params: {
+            screen: PN_ROUTES.QR_SCAN_FLOW,
+            params: { aarUrl: storedLinkingUrl }
+          }
+        }
+      );
+      yield* put(clearLinkingUrl());
+      return;
+    }
+  }
+
   // Check if we have a pending notification message
   const pendingMessageState = yield* select(pendingMessageStateSelector);
-
   if (pendingMessageState) {
     // We have a pending notification message to handle
     const messageId = pendingMessageState.id;

@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`linking actions should create an action to store a linking url 1`] = `
-{
-  "meta": undefined,
-  "payload": "https://example.com",
-  "type": "STORE_LINKING_URL",
-}
-`;

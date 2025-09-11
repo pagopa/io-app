@@ -7,7 +7,7 @@ import { isArchivingDisabledSelector } from "../features/messages/store/reducers
 import { isSendAARLink } from "../features/pn/aar/utils/deepLinking";
 import PN_ROUTES from "../features/pn/navigation/routes";
 import { processUtmLink } from "../features/utmLink";
-import { storeLinkingUrl } from "../store/actions/linking";
+import { storeLinkingUrl } from "../features/linking/actions";
 import { GlobalState } from "../store/reducers/types";
 import NavigationService from "./NavigationService";
 
