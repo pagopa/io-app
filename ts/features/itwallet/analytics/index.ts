@@ -1247,7 +1247,6 @@ export const updatePropertiesWalletRevoked = (state: GlobalState) => {
 
 /**
  * Returns the PID status for Mixpanel analytics.
- *
  * - If `isL3` is true → we consider the status from the current L3 PID (IT Wallet).
  * - If `isL3` is false → we use the current eID status.
  */
@@ -1269,7 +1268,6 @@ export const getPIDMixpanelStatus = (
 
 /**
  * Returns the Mixpanel status for a credential type, considering IT Wallet.
- *
  * - If `isItwL3` is explicitly false, returns `"not_available"`.
  * - If `isItwL3` is true and the credential exists but is not an ITW credential, returns `"not_available"`.
  * - Otherwise, retrieves the credential from the store and maps it to Mixpanel status.
@@ -1280,8 +1278,9 @@ export const getMixpanelCredentialStatus = (
   state: GlobalState,
   isItwL3?: boolean
 ): ItwCredentialMixpanelStatus => {
-  if (isItwL3 === false) return "not_available";
-
+  if (isItwL3 === false) {
+    return "not_available";
+  }
   const credential = itwCredentialsSelector(state)[type];
   if (isItwL3 && credential && !isItwCredential(credential.credential)) {
     return "not_available";
