@@ -3,7 +3,6 @@ import { useCallback, useMemo } from "react";
 import {
   ContentWrapper,
   ListItemHeader,
-  ModuleNavigation,
   VStack,
   ModuleNavigationAlt
 } from "@pagopa/io-app-design-system";
