@@ -24,6 +24,8 @@ import { selectInitiative } from "../machine/selectors";
 import { IdPayOnboardingParamsList } from "../navigation/params";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
+  trackIDPayOnboardingAppUpdateConfirm,
+  trackIDPayOnboardingAppUpdateRequired,
   trackIDPayOnboardingIntro,
   trackIDPayOnboardingStart
 } from "../analytics";
@@ -148,7 +150,37 @@ const IdPayInitiativeDetailsScreenComponent = () => {
   );
 };
 
-export const IdPayInitiativeDetailsScreen = withAppRequiredUpdate(
-  IdPayInitiativeDetailsScreenComponent,
-  "idpay.onboarding"
-);
+export const IdPayInitiativeDetailsScreen = () => {
+  const { useSelector } = IdPayOnboardingMachineContext;
+  const initiative = useSelector(selectInitiative);
+
+  const initiativeName = pipe(
+    initiative,
+    O.map(i => i.initiativeName),
+    O.toUndefined
+  );
+
+  const initiativeId = pipe(
+    initiative,
+    O.map(i => i.initiativeId),
+    O.toUndefined
+  );
+
+  const WrappedComponent = withAppRequiredUpdate(
+    IdPayInitiativeDetailsScreenComponent,
+    "idpay.onboarding",
+    {
+      onConfirm: () =>
+        trackIDPayOnboardingAppUpdateConfirm({
+          initiativeName,
+          initiativeId
+        }),
+      onLanding: () =>
+        trackIDPayOnboardingAppUpdateRequired({
+          initiativeName,
+          initiativeId
+        })
+    }
+  );
+  return <WrappedComponent />;
+};

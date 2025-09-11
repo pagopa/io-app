@@ -220,3 +220,20 @@ export const trackIDPayOnboardingEmailActivationSuccess = () => {
     buildEventProperties("UX", "confirm")
   );
 };
+
+export const trackIDPayOnboardingAppUpdateRequired = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "APP_UPDATE_REQUESTED",
+    buildEventProperties("UX", "screen_view", { ...props, flow: "idpay" })
+  );
+};
+export const trackIDPayOnboardingAppUpdateConfirm = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "APP_UPDATE_REQUESTED",
+    buildEventProperties("UX", "action", { ...props, flow: "idpay" })
+  );
+};
