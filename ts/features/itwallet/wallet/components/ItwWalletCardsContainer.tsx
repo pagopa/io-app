@@ -37,8 +37,8 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     selectWalletCardsByCategory(state, "itw")
   );
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
-
   const isEidExpired = eidStatus === "jwtExpired";
+  const iconColor = useItwStatusIconColor(isEidExpired);
 
   useItwPendingReviewRequest();
 
@@ -70,8 +70,6 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   }, [navigation]);
 
   const sectionHeader = useMemo((): React.ReactElement => {
-    const iconColor = useItwStatusIconColor(isEidExpired);
-
     if (isNewItwRenderable) {
       return (
         <ItwWalletId
@@ -103,7 +101,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
       />
     );
   }, [
-    isEidExpired,
+    iconColor,
     isNewItwRenderable,
     eidInfoBottomSheet.present,
     eidStatus,
