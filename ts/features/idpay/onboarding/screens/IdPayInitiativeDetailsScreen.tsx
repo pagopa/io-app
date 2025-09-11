@@ -22,6 +22,13 @@ import { IdPayOnboardingServiceHeader } from "../components/IdPayOnboardingServi
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { selectInitiative } from "../machine/selectors";
 import { IdPayOnboardingParamsList } from "../navigation/params";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import {
+  trackIDPayOnboardingAppUpdateConfirm,
+  trackIDPayOnboardingAppUpdateRequired,
+  trackIDPayOnboardingIntro,
+  trackIDPayOnboardingStart
+} from "../analytics";
 
 export type InitiativeDetailsScreenParams = {
   serviceId?: string;
@@ -66,7 +73,10 @@ const IdPayInitiativeDetailsScreenComponent = () => {
   const isLoading = useSelector(isLoadingSelector);
 
   const handleGoBackPress = () => machine.send({ type: "close" });
-  const handleContinuePress = () => machine.send({ type: "next" });
+  const handleContinuePress = () => {
+    trackIDPayOnboardingStart({ initiativeName, initiativeId });
+    machine.send({ type: "next" });
+  };
 
   const onboardingPrivacyAdvice = pipe(
     initiative,
@@ -91,10 +101,26 @@ const IdPayInitiativeDetailsScreenComponent = () => {
     )
   );
 
+  const initiativeName = pipe(
+    initiative,
+    O.map(i => i.initiativeName),
+    O.toUndefined
+  );
+
+  const initiativeId = pipe(
+    initiative,
+    O.map(i => i.initiativeId),
+    O.toUndefined
+  );
+
   useHeaderSecondLevel({
     title: "",
     goBack: handleGoBackPress,
     supportRequest: true
+  });
+
+  useOnFirstRender(() => {
+    trackIDPayOnboardingIntro({ initiativeName, initiativeId });
   });
 
   return (
@@ -124,7 +150,37 @@ const IdPayInitiativeDetailsScreenComponent = () => {
   );
 };
 
-export const IdPayInitiativeDetailsScreen = withAppRequiredUpdate(
-  IdPayInitiativeDetailsScreenComponent,
-  "idpay.onboarding"
-);
+export const IdPayInitiativeDetailsScreen = () => {
+  const { useSelector } = IdPayOnboardingMachineContext;
+  const initiative = useSelector(selectInitiative);
+
+  const initiativeName = pipe(
+    initiative,
+    O.map(i => i.initiativeName),
+    O.toUndefined
+  );
+
+  const initiativeId = pipe(
+    initiative,
+    O.map(i => i.initiativeId),
+    O.toUndefined
+  );
+
+  const WrappedComponent = withAppRequiredUpdate(
+    IdPayInitiativeDetailsScreenComponent,
+    "idpay.onboarding",
+    {
+      onConfirm: () =>
+        trackIDPayOnboardingAppUpdateConfirm({
+          initiativeName,
+          initiativeId
+        }),
+      onLanding: () =>
+        trackIDPayOnboardingAppUpdateRequired({
+          initiativeName,
+          initiativeId
+        })
+    }
+  );
+  return <WrappedComponent />;
+};

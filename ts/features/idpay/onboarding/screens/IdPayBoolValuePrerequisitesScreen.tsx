@@ -4,26 +4,48 @@ import {
   ListItemSwitch,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { View } from "react-native";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
+import { View } from "react-native";
 import { _typeEnum as SelfConsentBoolTypeEnum } from "../../../../../definitions/idpay/SelfConsentBoolDTO";
+import { SelfCriteriaBoolDTO } from "../../../../../definitions/idpay/SelfCriteriaBoolDTO";
+import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { isLoadingSelector } from "../../common/machine/selectors";
+import {
+  trackIDPayOnboardingAlert,
+  trackIDPayOnboardingSelfDeclaration
+} from "../analytics";
 import IdPayOnboardingStepper from "../components/IdPayOnboardingStepper";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {
   areAllSelfDeclarationsToggledSelector,
   boolRequiredCriteriaSelector,
+  selectInitiative,
   selectSelfDeclarationBoolAnswers
 } from "../machine/selectors";
-import { SelfCriteriaBoolDTO } from "../../../../../definitions/idpay/SelfCriteriaBoolDTO";
-import IOMarkdown from "../../../../components/IOMarkdown";
 
 const IdPayBoolValuePrerequisitesScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
+
+  const initiative = useSelector(selectInitiative);
+
+  const initiativeName = pipe(
+    initiative,
+    O.map(i => i.initiativeName),
+    O.toUndefined
+  );
+
+  const initiativeId = pipe(
+    initiative,
+    O.map(i => i.initiativeId),
+    O.getOrElse(() => "")
+  );
 
   const isLoading = useSelector(isLoadingSelector);
 
@@ -38,6 +60,11 @@ const IdPayBoolValuePrerequisitesScreen = () => {
       IOToast.error(
         I18n.t("idpay.onboarding.boolPrerequisites.emptyValueError")
       );
+      trackIDPayOnboardingAlert({
+        screen: "intent_declaration",
+        initiativeId,
+        initiativeName
+      });
       return;
     }
     machine.send({ type: "next" });
@@ -65,6 +92,13 @@ const IdPayBoolValuePrerequisitesScreen = () => {
     criteria.code ? selfCriteriaBoolAnswers[criteria.code] ?? false : false;
 
   const selfCriteriaBoolSubtitle = selfCriteriaBool[0].subDescription;
+
+  useOnFirstRender(() =>
+    trackIDPayOnboardingSelfDeclaration({
+      initiativeId,
+      initiativeName
+    })
+  );
 
   return (
     <IOScrollViewWithLargeHeader

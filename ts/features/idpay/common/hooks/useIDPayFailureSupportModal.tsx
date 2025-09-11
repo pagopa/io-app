@@ -138,7 +138,9 @@ const useIDPayFailureSupportModal = (
   });
 
   const present = (failure: OnboardingFailureEnum) => {
-    setCurrentFaultCodeDetail(failure || OnboardingFailureEnum.GENERIC);
+    setCurrentFaultCodeDetail(
+      failure || OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR
+    );
     presentModal();
   };
 
