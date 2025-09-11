@@ -185,7 +185,7 @@ export const trackIDPayOnboardingNotificationActivation = (
 ) => {
   mixpanelTrack(
     "IDPAY_SYSTEM_NOTIFICATION_ACTIVATION",
-    buildEventProperties("UX", "action", props)
+    buildEventProperties("UX", "screen_view", props)
   );
 };
 
@@ -195,5 +195,14 @@ export const trackIDPayOnboardingNotificationAccepted = (
   mixpanelTrack(
     "IDPAY_SYSTEM_NOTIFICATION_ACCEPTED",
     buildEventProperties("UX", "action", props)
+  );
+};
+
+export const trackIDPayOnboardingNotificationSuccess = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_SYSTEM_NOTIFICATION_ACTIVATION_UX_SUCCESS",
+    buildEventProperties("UX", "confirm", props)
   );
 };

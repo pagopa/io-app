@@ -12,10 +12,12 @@ import { openSystemNotificationSettingsScreen } from "../../../pushNotifications
 import {
   trackIDPayOnboardingNotificationAccepted,
   trackIDPayOnboardingNotificationActivation,
-  trackIDPayOnboardingNotificationDenied
+  trackIDPayOnboardingNotificationDenied,
+  trackIDPayOnboardingNotificationSuccess
 } from "../analytics";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { selectInitiative } from "../machine/selectors";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 const IdPayEnableNotificationScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
@@ -51,7 +53,7 @@ const IdPayEnableNotificationScreen = () => {
       // if push notifications are enabled, close the screen
       if (isPushNotificationEnabled) {
         machine.send({ type: "close" });
-        trackIDPayOnboardingNotificationAccepted({
+        trackIDPayOnboardingNotificationSuccess({
           initiativeName,
           initiativeId
         });
@@ -59,6 +61,13 @@ const IdPayEnableNotificationScreen = () => {
       }
     }, [isPushNotificationEnabled, machine, initiativeName, initiativeId])
   );
+
+  useOnFirstRender(() => {
+    trackIDPayOnboardingNotificationActivation({
+      initiativeId,
+      initiativeName
+    });
+  });
 
   return (
     <OperationResultScreenContent
@@ -78,7 +87,7 @@ const IdPayEnableNotificationScreen = () => {
       action={{
         label: I18n.t("idpay.onboarding.enableNotification.action"),
         onPress: () => {
-          trackIDPayOnboardingNotificationActivation({
+          trackIDPayOnboardingNotificationAccepted({
             initiativeName,
             initiativeId
           });
