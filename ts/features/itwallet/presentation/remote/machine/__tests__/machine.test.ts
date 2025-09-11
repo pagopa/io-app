@@ -99,10 +99,6 @@ describe("itwRemoteMachine", () => {
     jest.clearAllMocks();
   });
 
-  beforeEach(() => {
-    jest.useFakeTimers();
-  });
-
   it("should initialize correctly", () => {
     const actor = createActor(mockedMachine);
     actor.start();
