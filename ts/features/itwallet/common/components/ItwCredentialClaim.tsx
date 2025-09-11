@@ -12,12 +12,15 @@ import {
   ClaimValue,
   DrivingPrivilegeClaimType,
   DrivingPrivilegesClaim,
+  DrivingPrivilegesCustomClaim,
   EmptyStringClaim,
   extractFiscalCode,
   FiscalCodeClaim,
   getSafeText,
   ImageClaim,
   isExpirationDateClaim,
+  NestedArrayClaim,
+  parseClaims,
   PdfClaim,
   PlaceOfBirthClaim,
   PlaceOfBirthClaimType,
@@ -30,6 +33,7 @@ import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { HIDDEN_CLAIM_TEXT } from "../utils/constants.ts";
 import { CREDENTIALS_MAP, trackCopyListItem } from "../../analytics";
+import { ItwCredentialMultiClaim } from "./ItwCredentialMultiClaim.tsx";
 
 /**
  * Component which renders a place of birth type claim.
@@ -315,6 +319,10 @@ const DrivingPrivilegesClaimItem = ({
  * Component which renders a claim.
  * It renders a different component based on the type of the claim.
  * @param claim - the claim to render
+ * @param hidden - a flag to hide the claim value
+ * @param isPreview - a flag to indicate if the claim is being rendered in preview mode
+ * @param credentialStatus - the status of the credential, used for expiration date claims
+ * @param credentialType - the type of the credential, used for analytics tracking
  */
 export const ItwCredentialClaim = ({
   claim,
@@ -359,7 +367,10 @@ export const ItwCredentialClaim = ({
         if (PdfClaim.is(decoded)) {
           return <AttachmentsClaimItem name={claim.label} />;
         }
-        if (DrivingPrivilegesClaim.is(decoded)) {
+        if (
+          DrivingPrivilegesClaim.is(decoded) ||
+          DrivingPrivilegesCustomClaim.is(decoded)
+        ) {
           return decoded.map((elem, index) => (
             <Fragment key={`${index}_${claim.label}_${elem.driving_privilege}`}>
               {index !== 0 && <Divider />}
@@ -378,6 +389,19 @@ export const ItwCredentialClaim = ({
             O.getOrElseW(() => decoded)
           );
           return <PlainTextClaimItem label={claim.label} claim={fiscalCode} />;
+        }
+        if (NestedArrayClaim.is(decoded)) {
+          const nestedParsedClaims = decoded.map(item => parseClaims(item));
+          return (
+            <ItwCredentialMultiClaim
+              claim={claim}
+              nestedClaims={nestedParsedClaims}
+              hidden={hidden}
+              isPreview={isPreview}
+              credentialStatus={credentialStatus}
+              credentialType={credentialType}
+            />
+          );
         }
         if (BoolClaim.is(decoded)) {
           return <BoolClaimItem label={claim.label} claim={decoded} />;

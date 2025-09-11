@@ -4165,7 +4165,8 @@
           "active": "Già presente",
           "unavailable": "Non disponibile",
           "requested": "In corso",
-          "upcoming": "In arrivo"
+          "upcoming": "In arrivo",
+          "new": "Novità"
         },
         "options": {
           "cgn": "Carta Giovani Nazionale",
@@ -4302,7 +4303,8 @@
         "mdl": "Patente di guida",
         "dc": "Carta Europea della Disabilità",
         "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
-        "dgc": "Attestati di Laurea, Dottorato e Master"
+        "ed": "Titoli accademici",
+        "ee": "Iscrizioni universitarie"
       },
       "wallet": {
         "active": "Attivo",
@@ -4821,6 +4823,12 @@
           "title": "Documento in arrivo",
           "subtitle": "Stiamo lavorando per rendere disponibili nuovi documenti in app IO.\nRiprova quandro vedrai il documento contrassegnato come \"Novità\".",
           "primaryAction": "Ho capito"
+        },
+        "invalidWallet": {
+          "title": "Ottieni IT-Wallet per continuare",
+          "subtitle": "Per aggiungere nuovi documenti al tuo Portafoglio di IO ottieni IT-Wallet: ti bastano la Carta di Identità Elettronica (CIE) e il suo PIN.",
+          "primaryAction": "Inizia",
+          "secondaryAction": "Non ora"
         },
         "cieNotRegistered": {
           "title": "Registra la CIE in app CieID per continuare",
