@@ -1,0 +1,361 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: IO OpenID Provider
+
+servers:
+  - url: https://api-app.io.pagopa.it/api/v1/send
+security:
+  - Bearer: []
+
+paths:
+  /aar:
+    post:
+      operationId: checkQRCode
+      tags:
+        - QRCode
+      parameters:
+      - in: query
+        name: isTest
+        schema:
+          type: boolean
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QRCodeContent'
+      responses:
+        200:
+          description: Notification Details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AARData"
+        400:
+          description: Bad request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemJson"
+        403:
+          description: No Notification Access
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/AARDataNoAccess"
+        500:
+          description: Unexpected Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemJson"
+
+  /notification/{iun}:
+    get:
+      operationId: getNotification
+      tags:
+        - Notification
+      parameters:
+        - $ref: "#/components/parameters/iun"
+        - in: query
+          name: mandateId
+          schema:
+            type: string
+        - in: query
+          name: isTest
+          schema:
+            type: boolean
+        - in: header
+          name: x-pagopa-pn-io-src
+          schema:
+            type: string
+      responses:
+        200:
+          description: Notification Details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ThirdPartyMessage"
+        400:
+          description: Bad request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemJson"
+        403:
+          description: No Notification Access
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemJson"
+        500:
+          description: Unexpected Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemJson"
+                
+  /notification/attachment/{attachmentUrl}:
+    get:
+      operationId: getNotificationAttachment
+      tags:
+        - Notification
+      parameters:
+        - $ref: "#/components/parameters/attachmentUrl"
+        - in: query
+          name: mandateId
+          schema:
+            type: string
+        - in: query
+          name: attachmentIdx
+          schema:
+            type: string
+        - in: query
+          name: isTest
+          schema:
+            type: boolean
+        - in: header
+          name: x-pagopa-pn-io-src
+          schema:
+            type: string
+      responses:
+        200:
+          description: Notification Details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationAttachmentDownloadMetadataResponse"
+        400:
+          description: Bad request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemJson"
+        403:
+          description: No Notification Access
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemJson"
+        500:
+          description: Unexpected Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemJson"
+
+components:
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header
+  
+  parameters:
+    iun:
+      name: iun
+      in: path
+      required: true
+      schema:
+        type: string
+    attachmentUrl:
+      name: attachmentUrl
+      in: path
+      required: true
+      schema:
+        type: string
+
+  schemas:
+    QRCodeContent:
+      type: object
+      properties:
+        qrcode:
+          type: string
+      required:
+        - qrcode
+          
+    AARData:
+      type: object
+      properties:
+        denomination:
+          type: string
+        iun:
+          type: string
+        mandateId:
+          type: string
+      required:
+        - denomination
+        - iun
+
+    AARDataNoAccess:
+      type: object
+      properties:
+        denomination:
+          type: string
+        iun:
+          type: string
+  
+    NotificationAttachmentDownloadMetadataResponse:
+        $ref: "https://raw.githubusercontent.com/pagopa/io-backend/v16.17.0/openapi/consumed/api-piattaforma-notifiche.yaml#/components/schemas/NotificationAttachmentDownloadMetadataResponse"
+    ProblemJson:
+        $ref: "https://raw.githubusercontent.com/pagopa/io-functions-commons/v29.1.1/openapi/definitions.yaml#/ProblemJson"
+    ThirdPartyMessage:
+      type: object
+      properties:
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ThirdPartyAttachment'
+        details:
+          $ref: '#/components/schemas/IOReceivedNotification'
+    ThirdPartyAttachment:
+      required:
+      - id
+      - url
+      type: object
+      properties:
+        id:
+          minLength: 1
+          type: string
+        content_type:
+          minLength: 1
+          type: string
+        name:
+          minLength: 1
+          type: string
+        url:
+          minLength: 1
+          type: string
+        category:
+          type: string
+          minLength: 2
+          maxLength: 30
+          pattern: '[A-Z0-9_]+'
+          default: DOCUMENT
+    IOReceivedNotification:
+      required:
+      - iun
+      - notificationStatusHistory
+      - recipients
+      - subject
+      type: object
+      properties:
+        subject:
+          type: string
+        iun:
+          type: string
+        recipients:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationRecipient'
+        notificationStatusHistory:
+          $ref: '#/components/schemas/NotificationStatusHistory'
+        abstract:
+          type: string
+        senderDenomination:
+          type: string
+        isCancelled:
+          type: boolean
+        completedPayments:
+          type: array
+          items:
+            type: string
+      description: Le informazioni riguardanti una richiesta di notifica accettata
+        e il processo di  inoltro della notifica verso i destinatari (Persone Fisiche
+        o Giuridiche).
+    NotificationRecipient:
+      required:
+      - denomination
+      - recipientType
+      - taxId
+      type: object
+      properties:
+        recipientType:
+          type: string
+          description: |
+            Tipologia di destinatario: Persona Fisica (PF) o Persona Giuridica (PG). * `PF` * `PG`
+        taxId:
+          $ref: '#/components/schemas/TaxId'
+        denomination:
+          $ref: '#/components/schemas/Denomination'
+        payment:
+          $ref: '#/components/schemas/NotificationPaymentInfo'
+      description: Informazioni sui destinatari
+    NotificationPaymentInfo:
+      title: Informazioni per effettuare il pagamento
+      required:
+      - creditorTaxId
+      - noticeCode
+      type: object
+      properties:
+        noticeCode:
+          $ref: '#/components/schemas/noticeCode'
+        creditorTaxId:
+          $ref: '#/components/schemas/paTaxId'
+      description: |-
+        Informazioni utili per effettuare il pagamento di una notifica, sono associate al destinatario perché le spese di notifica possono differire a seconda del canale di notifica utilizzato. <br/>
+          - _noticeCode_: "codice avviso pagoPA" di pagamento del sistema pagoPA, usato per pagamento online.<br/>
+          - _creditorTaxId_: codice fiscale dell'ente a cui fa riferimento il "codice avviso pagoPA". <br/>
+    noticeCode:
+      maxLength: 18
+      minLength: 18
+      pattern: ^\d+$
+      type: string
+      description: Payment notice number  numero avviso
+      example: "302000100000019421"
+    paTaxId:
+      maxLength: 11
+      minLength: 11
+      pattern: ^\d+$
+      type: string
+      description: Payment PA fiscal code
+      example: "77777777777"
+    NotificationStatusHistory:
+      type: array
+      description: elenco degli avanzamenti effettuati dal processo di notifica
+      items:
+        $ref: '#/components/schemas/NotificationStatusHistoryElement'
+    NotificationStatusHistoryElement:
+      required:
+      - activeFrom
+      - relatedTimelineElements
+      - status
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/NotificationStatus'
+        activeFrom:
+          type: string
+          description: data e ora di raggiungimento dello stato di avanzamento
+          format: date-time
+        relatedTimelineElements:
+          type: array
+          description: Eventi avvenuti nello stato
+          items:
+            $ref: '#/components/schemas/TimelineElementId'
+      description: elenco degli avanzamenti effettuati dal processo di notifica
+    NotificationStatus:
+      type: string
+      description: "stato di avanzamento del processo di notifica:\n  * `IN_VALIDATION`\
+        \ - notifica depositata in attesa di validazione\n  * `ACCEPTED` - notifica\
+        \ accettata \n  * `REFUSED` - notifica rifiutata\n  * `DELIVERING` - notifica\
+        \ in spedita\n  * `DELIVERED` - notifica ricevuta da tutti i destinatari\n\
+        \  * `VIEWED` - notifica presa visione per almeno un destinatario\n  * `EFFECTIVE_DATE`\
+        \ - notifica perfezionata per un destinatario\n  * `PAID` - notifica pagata\n\
+        \  * `UNREACHABLE` - notifica non recapitabile\n  * `CANCELLED` - notifica\
+        \ annullata dal mittente       \n"
+    TimelineElementId:
+      type: string
+    TaxId:
+      maxLength: 16
+      minLength: 11
+      pattern: "^([A-Z]{6}[0-9LMNPQRSTUV]{2}[A-Z]{1}[0-9LMNPQRSTUV]{2}[A-Z]{1}[0-9LMNPQRSTUV]{3}[A-Z]{1})|([0-9]{11})$"
+      type: string
+      description: C.F. persona fisica o persona giuridica (Partita iva)
+    Denomination:
+      maxLength: 80
+      minLength: 1
+      pattern: "^([\\x20-\\xFF]{1,80})$"
+      type: string
+      description: Denominazione ente o persona fisica / ragione sociale

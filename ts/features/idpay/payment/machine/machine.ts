@@ -186,6 +186,6 @@ const decodeFailure = flow(PaymentFailure.decode, O.fromEither);
 
 const isBlockingFalure = flow(
   decodeFailure,
-  O.map(failure => failure !== PaymentFailureEnum.TOO_MANY_REQUESTS),
+  O.map(failure => failure !== PaymentFailureEnum.PAYMENT_TOO_MANY_REQUESTS),
   O.getOrElse(() => false)
 );
