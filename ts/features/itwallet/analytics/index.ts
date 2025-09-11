@@ -61,14 +61,16 @@ const mixPanelCredentials = [
   "ITW_EE"
 ] as const;
 
+// Exclude ITW_ED and ITW_EE from MixPanelCredentialProperty since are not used in tracking properties/super properties
 type MixPanelCredentialProperty = Exclude<
   MixPanelCredential,
   "ITW_ED" | "ITW_EE"
 >;
 
-const mixPanelCredentialsProperties = mixPanelCredentials.filter(
-  (c): c is MixPanelCredentialProperty => c !== "ITW_ED" && c !== "ITW_EE"
-);
+// Type guard to exclude ITW_ED and ITW_EE from MixPanelCredential
+const isMixPanelCredentialProperty = (
+  c: MixPanelCredential
+): c is MixPanelCredentialProperty => c !== "ITW_ED" && c !== "ITW_EE";
 
 type TrackCredentialDetail = {
   credential: MixPanelCredential; // MixPanelCredential
@@ -1082,9 +1084,12 @@ export const trackItwAddCredentialNotTrustedIssuer = (
 // #region PROFILE PROPERTIES
 
 export const trackCredentialDeleteProperties = (
-  credential: MixPanelCredentialProperty,
+  credential: MixPanelCredential,
   state: GlobalState
 ) => {
+  if (!isMixPanelCredentialProperty(credential)) {
+    return;
+  }
   void updateMixpanelProfileProperties(state, {
     property: credential,
     value: "not_available"
@@ -1097,8 +1102,11 @@ export const trackCredentialDeleteProperties = (
 
 export const trackAddCredentialProfileAndSuperProperties = (
   state: GlobalState,
-  credential: MixPanelCredentialProperty
+  credential: MixPanelCredential
 ) => {
+  if (!isMixPanelCredentialProperty(credential)) {
+    return;
+  }
   void updateMixpanelProfileProperties(state, {
     property: credential,
     value: "valid"
@@ -1248,7 +1256,12 @@ export const updateITWStatusAndPIDProperties = (state: GlobalState) => {
  * @param state
  */
 export const updatePropertiesWalletRevoked = (state: GlobalState) => {
-  mixPanelCredentialsProperties.forEach(property => {
+  mixPanelCredentials.forEach(property => {
+    // Avoid updating non-credential properties
+    if (!isMixPanelCredentialProperty(property)) {
+      return;
+    }
+
     void updateMixpanelProfileProperties(state, {
       property,
       value: "not_available"
