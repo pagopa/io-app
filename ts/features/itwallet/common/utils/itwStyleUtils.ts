@@ -44,6 +44,20 @@ export const getThemeColorByCredentialType = (
         textColor: "#17406F",
         statusBarStyle: "light-content"
       };
+    case CredentialType.EDUCATION_DEGREE:
+      return {
+        backgroundColor: "#F2F1CE",
+        textColor: IOColors.black,
+        statusBarStyle: "dark-content",
+        variant: "neutral"
+      };
+    case CredentialType.EDUCATION_ENROLLMENT:
+      return {
+        backgroundColor: "#E0F2CE",
+        textColor: IOColors.black,
+        statusBarStyle: "dark-content",
+        variant: "neutral"
+      };
   }
 };
 
