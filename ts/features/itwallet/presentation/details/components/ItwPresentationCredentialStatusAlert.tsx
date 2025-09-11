@@ -34,7 +34,8 @@ type Props = {
 
 const excludedCredentialTypes = [
   CredentialType.PID,
-  CredentialType.DEGREE_CERTIFICATES
+  CredentialType.EDUCATION_DEGREE,
+  CredentialType.EDUCATION_ENROLLMENT
 ] as const;
 
 type ExcludedCredentialTypes = (typeof excludedCredentialTypes)[number];
