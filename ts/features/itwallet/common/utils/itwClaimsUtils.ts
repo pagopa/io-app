@@ -490,6 +490,11 @@ export const NestedObjectClaim = t.record(t.string, ParsedAttribute);
 export const NestedArrayClaim = t.array(NestedObjectClaim);
 
 /**
+ * Union type for nested claims, either an object or an array of objects.
+ */
+export const NestedClaim = t.union([NestedObjectClaim, NestedArrayClaim]);
+
+/**
  * Decoder type for the claim field of the credential.
  * It includes all the possible types of claims and fallbacks to string.
  * To add more custom objects to the union:

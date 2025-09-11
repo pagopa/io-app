@@ -35,12 +35,9 @@ export const ItwPresentationClaimsSection = ({
     [credential]
   );
 
-  console.log("parsedCredential", credential.parsedCredential);
   const claims = parseClaims(credential.parsedCredential, {
     exclude: [WellKnownClaim.unique_id, WellKnownClaim.content]
   });
-
-  console.log("claims", claims);
 
   const valuesHidden = useIOSelector(itwIsClaimValueHiddenSelector);
 
