@@ -89,3 +89,77 @@ export const trackIDPayDetailCodeGeneration = (
     buildEventProperties("UX", "action", props)
   );
 };
+
+export const trackIDPayDetailManualEntryLanding = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_AUTHORIZATION_MANUAL_ENTRY",
+    buildEventProperties("UX", "screen_view", props)
+  );
+};
+
+export const trackIDPayDetailManualEntryConfirm = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_AUTHORIZATION_MANUAL_ENTRY_CONFIRM",
+    buildEventProperties("UX", "action", props)
+  );
+};
+
+export const trackIDPayDetailAuthorizationSummary = (
+  props: DefaultOnboardingEventProperties & {
+    data_entry: "qr_code" | "manual";
+  }
+) => {
+  mixpanelTrack(
+    "IDPAY_AUTHORIZATION_SUMMARY",
+    buildEventProperties("UX", "screen_view", props)
+  );
+};
+
+export const trackIDPayDetailAuthorizationConversion = (
+  props: DefaultOnboardingEventProperties & {
+    data_entry: "qr_code" | "manual";
+  }
+) => {
+  mixpanelTrack(
+    "IDPAY_AUTHORIZATION_CONVERSION",
+    buildEventProperties("UX", "action", props)
+  );
+};
+
+export const trackIDPayDetailAuthorizationCancel = (
+  props: DefaultOnboardingEventProperties & {
+    data_entry: "qr_code" | "manual";
+  }
+) => {
+  mixpanelTrack(
+    "IDPAY_AUTHORIZATION_CANCEL",
+    buildEventProperties("UX", "action", props)
+  );
+};
+
+export const trackIDPayDetailAuthorizationUXSuccess = (
+  props: DefaultOnboardingEventProperties & {
+    data_entry: "qr_code" | "manual";
+  }
+) => {
+  mixpanelTrack(
+    "IDPAY_AUTHORIZATION_UX_SUCCESS",
+    buildEventProperties("UX", "confirm", props)
+  );
+};
+
+export const trackIDPayDetailAuthorizationError = (
+  props: DefaultOnboardingEventProperties & {
+    data_entry: "qr_code" | "manual";
+    reason?: string;
+  }
+) => {
+  mixpanelTrack(
+    "IDPAY_AUTHORIZATION_ERROR",
+    buildEventProperties("UX", "confirm", props)
+  );
+};
