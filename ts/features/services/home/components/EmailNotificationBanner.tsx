@@ -17,6 +17,12 @@ import {
 import { profileUpsert } from "../../../settings/common/store/actions";
 import { usePrevious } from "../../../../utils/hooks/usePrevious";
 import { setIdPayOnboardingSucceeded } from "../../../idpay/wallet/store/actions";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import {
+  trackIDPayOnboardingEmailActivationError,
+  trackIDPayOnboardingEmailActivationSuccess,
+  trackIDPayOnboardingEmailActivationUXSuccess
+} from "../../../idpay/onboarding/analytics";
 
 export const EmailNotificationBanner = () => {
   const dispatch = useIODispatch();
@@ -43,6 +49,7 @@ export const EmailNotificationBanner = () => {
     if (prevProfile && pot.isUpdating(prevProfile)) {
       if (pot.isError(profile)) {
         IOToast.error(I18n.t("global.genericError"));
+        trackIDPayOnboardingEmailActivationError();
         return;
       }
       if (pot.isSome(profile)) {
@@ -53,6 +60,7 @@ export const EmailNotificationBanner = () => {
             "idpay.onboarding.preferences.enableEmailBanner.successOutcome"
           )
         );
+        trackIDPayOnboardingEmailActivationUXSuccess();
         return;
       }
     }
@@ -61,6 +69,12 @@ export const EmailNotificationBanner = () => {
   const handleOnCloseBanner = () => {
     dispatch(setIdPayOnboardingSucceeded(false));
   };
+
+  useOnFirstRender(() => {
+    if (canShowBanner) {
+      trackIDPayOnboardingEmailActivationSuccess();
+    }
+  });
 
   if (!canShowBanner) {
     return null;

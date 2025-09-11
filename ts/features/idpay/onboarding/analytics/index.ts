@@ -206,3 +206,24 @@ export const trackIDPayOnboardingNotificationSuccess = (
     buildEventProperties("UX", "confirm", props)
   );
 };
+
+export const trackIDPayOnboardingEmailActivationError = () => {
+  mixpanelTrack(
+    "IDPAY_EMAIL_ACTIVATION_ERROR",
+    buildEventProperties("KO", "screen_view")
+  );
+};
+
+export const trackIDPayOnboardingEmailActivationSuccess = () => {
+  mixpanelTrack(
+    "IDPAY_EMAIL_ACTIVATION_UX_SUCCESS",
+    buildEventProperties("UX", "confirm")
+  );
+};
+
+export const trackIDPayOnboardingEmailActivationUXSuccess = () => {
+  mixpanelTrack(
+    "IDPAY_SYSTEM_NOTIFICATION_ACTIVATION_UX_SUCCESS",
+    buildEventProperties("UX", "confirm")
+  );
+};
