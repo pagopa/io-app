@@ -163,3 +163,36 @@ export const trackIDPayDetailAuthorizationError = (
     buildEventProperties("UX", "confirm", props)
   );
 };
+export const trackIDPayDetailCodeGenerationError = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_CODE_GENERATION_GENERIC_ERROR",
+    buildEventProperties("KO", "screen_view", props)
+  );
+};
+export const trackIDPayDetailCodeGenerationCopy = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_CODE_GENERATION_COPY_SUCCESS",
+    buildEventProperties("UX", "confirm", props)
+  );
+};
+export const trackIDPayDetailCodeGenerationConversion = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_CODE_GENERATION_UX_CONVERSION",
+    buildEventProperties("UX", "confirm", props)
+  );
+};
+
+export const trackIDPayDetailCodeAlreadyUsed = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_CODE_GENERATION_ALREADY_USED",
+    buildEventProperties("KO", "screen_view", props)
+  );
+};
