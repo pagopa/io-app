@@ -62,3 +62,30 @@ export const trackIDPayDetailInfoAction = (
     buildEventProperties("UX", "action", props)
   );
 };
+
+export const trackIDPayDetailBottomSheetLanding = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_AUTHORIZATION_BOTTOMSHEET",
+    buildEventProperties("UX", "screen_view", props)
+  );
+};
+
+export const trackIDPayDetailQRCodeScan = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_AUTHORIZATION_QRCODE_SCAN",
+    buildEventProperties("UX", "action", props)
+  );
+};
+
+export const trackIDPayDetailCodeGeneration = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_CODE_GENERATION",
+    buildEventProperties("UX", "action", props)
+  );
+};
