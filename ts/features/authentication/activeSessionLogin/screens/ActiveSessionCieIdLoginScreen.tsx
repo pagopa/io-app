@@ -113,7 +113,7 @@ const ActiveSessionCieIdLoginWebView = ({
 
   const handleLoginFailure = useCallback(
     (code?: string, message?: string) => {
-      if (code !== AUTH_ERRORS.NOT_SAME_CF) {
+      if (code !== AUTH_ERRORS.ERROR_1004) {
         dispatch(activeSessionLoginFailure());
       }
 
