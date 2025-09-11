@@ -52,17 +52,14 @@ const ItwPresentationPidDetailFooter = ({ credential }: Props) => {
         icon="message"
         label={requestAssistanceLabel}
         accessibilityLabel={requestAssistanceLabel}
-        onPress={useNotAvailableToastGuard(
-          startAndTrackSupportRequest,
-          credential
-        )}
+        onPress={useNotAvailableToastGuard(startAndTrackSupportRequest)}
       />
       <ListItemAction
         variant="primary"
         icon="website"
         label={POWERED_BY_IT_WALLET}
         accessibilityLabel={POWERED_BY_IT_WALLET}
-        onPress={useNotAvailableToastGuard(constNull, credential)}
+        onPress={useNotAvailableToastGuard(constNull)}
       />
       <ListItemAction
         variant="danger"

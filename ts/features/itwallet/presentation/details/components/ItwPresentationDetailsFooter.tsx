@@ -45,10 +45,7 @@ const ItwPresentationDetailsFooter = ({
         accessibilityLabel={I18n.t(
           "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
         )}
-        onPress={useNotAvailableToastGuard(
-          startAndTrackSupportRequest,
-          credential
-        )}
+        onPress={useNotAvailableToastGuard(startAndTrackSupportRequest)}
       />
       <ListItemAction
         testID="removeCredentialActionTestID"

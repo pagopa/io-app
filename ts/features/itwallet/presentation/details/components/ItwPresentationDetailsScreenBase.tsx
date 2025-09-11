@@ -53,10 +53,7 @@ const ItwPresentationDetailsScreenBase = ({
   const gradientOpacity = useSharedValue(1);
   const scrollTranslationY = useSharedValue(0);
   const startSupportRequest = useOfflineToastGuard(useStartSupportRequest({}));
-  const onIconPress = useNotAvailableToastGuard(
-    startSupportRequest,
-    credential
-  );
+  const onIconPress = useNotAvailableToastGuard(startSupportRequest);
 
   const bottomMargin: number = useMemo(
     () =>
