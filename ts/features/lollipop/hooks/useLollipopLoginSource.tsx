@@ -23,7 +23,7 @@ import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store
 import { cieFlowForDevServerEnabled } from "../../authentication/login/cie/utils";
 import { selectedIdentityProviderSelector } from "../../authentication/common/store/selectors";
 import { isActiveSessionLoginSelector } from "../../authentication/activeSessionLogin/store/selectors";
-import { profileFiscalCodeSelector } from "../../settings/common/store/selectors";
+import { hashedProfileFiscalCodeSelector } from "../../../store/reducers/crossSessions";
 
 export const useLollipopLoginSource = (
   onLollipopCheckFailure: () => void,
@@ -42,7 +42,7 @@ export const useLollipopLoginSource = (
   const isFastLogin = useIOSelector(isFastLoginEnabledSelector);
   const idp = useIOSelector(selectedIdentityProviderSelector);
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
-  const fiscalCode = useIOSelector(profileFiscalCodeSelector);
+  const hashedFiscalCode = useIOSelector(hashedProfileFiscalCodeSelector);
 
   const verifyLollipop = useCallback(
     (eventUrl: string, urlEncodedSamlRequest: string, publicKey: PublicKey) => {
@@ -109,7 +109,7 @@ export const useLollipopLoginSource = (
                   DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
                   isFastLogin,
                   cieFlowForDevServerEnabled ? idp?.id : undefined,
-                  isActiveSessionLogin ? fiscalCode : undefined
+                  isActiveSessionLogin ? hashedFiscalCode : undefined
                 )
               })
           )
@@ -119,7 +119,7 @@ export const useLollipopLoginSource = (
   }, [
     dispatch,
     ephemeralKeyTag,
-    fiscalCode,
+    hashedFiscalCode,
     idp?.id,
     isActiveSessionLogin,
     isFastLogin,
