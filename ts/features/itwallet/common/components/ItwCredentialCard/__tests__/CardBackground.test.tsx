@@ -4,10 +4,10 @@ import configureMockStore from "redux-mock-store";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { DigitalVersionBadge } from "../DigitalVersionBadge";
 import { CardColorScheme } from "../types";
+import { CardBackground } from "../CardBackground.tsx";
 
-describe("DigitalVersionBadge", () => {
+describe("CardBackground", () => {
   it.each([
     ["mDL", "default"],
     ["mDL", "faded"],
@@ -40,7 +40,7 @@ describe("DigitalVersionBadge", () => {
 
       const component = render(
         <Provider store={store}>
-          <DigitalVersionBadge
+          <CardBackground
             credentialType={credentialType}
             colorScheme={colorScheme as CardColorScheme}
           />

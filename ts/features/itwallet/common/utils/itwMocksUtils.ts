@@ -4,6 +4,8 @@ import mdl from "../../__mocks__/mdl.json";
 import mdlL3 from "../../__mocks__/L3/mdlL3.json";
 import tsL3 from "../../__mocks__/L3/tsL3.json";
 import dcL3 from "../../__mocks__/L3/dcL3.json";
+import edL3 from "../../__mocks__/L3/edL3.json";
+import eeL3 from "../../__mocks__/L3/eeL3.json";
 import statusAttestation from "../../__mocks__/statusAttestation.json";
 import ts from "../../__mocks__/ts.json";
 import { ParsedStatusAttestation, StoredCredential } from "./itwTypesUtils";
@@ -20,7 +22,8 @@ export enum CredentialType {
   EUROPEAN_DISABILITY_CARD = "EuropeanDisabilityCard",
   DRIVING_LICENSE = "mDL",
   PID = "PersonIdentificationData",
-  DEGREE_CERTIFICATES = "DegreeCertificates"
+  EDUCATION_DEGREE = "education_degree",
+  EDUCATION_ENROLLMENT = "education_enrollment"
 }
 
 export const ItwStoredCredentialsMocks = {
@@ -31,7 +34,9 @@ export const ItwStoredCredentialsMocks = {
   L3: {
     mdl: mdlL3 as unknown as StoredCredential,
     ts: tsL3 as unknown as StoredCredential,
-    dc: dcL3 as unknown as StoredCredential
+    dc: dcL3 as unknown as StoredCredential,
+    ed: edL3 as unknown as StoredCredential,
+    ee: eeL3 as unknown as StoredCredential
   }
 };
 
