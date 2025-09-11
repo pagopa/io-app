@@ -3,7 +3,7 @@ import {
   makeFontStyleObject,
   useIOExperimentalDesign
 } from "@pagopa/io-app-design-system";
-import { useMemo, memo } from "react";
+import { memo, useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar.tsx";
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils.ts";
