@@ -220,10 +220,3 @@ export const trackIDPayOnboardingEmailActivationSuccess = () => {
     buildEventProperties("UX", "confirm")
   );
 };
-
-export const trackIDPayOnboardingEmailActivationUXSuccess = () => {
-  mixpanelTrack(
-    "IDPAY_SYSTEM_NOTIFICATION_ACTIVATION_UX_SUCCESS",
-    buildEventProperties("UX", "confirm")
-  );
-};

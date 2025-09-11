@@ -1,28 +1,26 @@
 import { Banner, IOToast, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import I18n from "i18next";
+import { useEffect } from "react";
 import Animated, {
   FadeIn,
   FadeOut,
   LinearTransition
 } from "react-native-reanimated";
-import { useEffect } from "react";
-import I18n from "i18next";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { usePrevious } from "../../../../utils/hooks/usePrevious";
+import {
+  trackIDPayOnboardingEmailActivationError,
+  trackIDPayOnboardingEmailActivationSuccess
+} from "../../../idpay/onboarding/analytics";
+import { setIdPayOnboardingSucceeded } from "../../../idpay/wallet/store/actions";
 import { isIdPayOnboardingSucceededSelector } from "../../../idpay/wallet/store/reducers";
+import { profileUpsert } from "../../../settings/common/store/actions";
 import {
   isEmailEnabledSelector,
   profileSelector
 } from "../../../settings/common/store/selectors";
-import { profileUpsert } from "../../../settings/common/store/actions";
-import { usePrevious } from "../../../../utils/hooks/usePrevious";
-import { setIdPayOnboardingSucceeded } from "../../../idpay/wallet/store/actions";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import {
-  trackIDPayOnboardingEmailActivationError,
-  trackIDPayOnboardingEmailActivationSuccess,
-  trackIDPayOnboardingEmailActivationUXSuccess
-} from "../../../idpay/onboarding/analytics";
 
 export const EmailNotificationBanner = () => {
   const dispatch = useIODispatch();
@@ -60,7 +58,7 @@ export const EmailNotificationBanner = () => {
             "idpay.onboarding.preferences.enableEmailBanner.successOutcome"
           )
         );
-        trackIDPayOnboardingEmailActivationUXSuccess();
+        trackIDPayOnboardingEmailActivationSuccess();
         return;
       }
     }
@@ -69,12 +67,6 @@ export const EmailNotificationBanner = () => {
   const handleOnCloseBanner = () => {
     dispatch(setIdPayOnboardingSucceeded(false));
   };
-
-  useOnFirstRender(() => {
-    if (canShowBanner) {
-      trackIDPayOnboardingEmailActivationSuccess();
-    }
-  });
 
   if (!canShowBanner) {
     return null;
