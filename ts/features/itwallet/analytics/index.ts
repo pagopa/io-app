@@ -39,6 +39,8 @@ export type KoState = {
   cta_id: string;
 };
 
+type MixPanelCredential = (typeof mixPanelCredentials)[number];
+
 /**
  * This is the list of credentials that are tracked in MixPanel
  * ITW_ID_V2: PersonIdentificationData (obtained with Documenti su IO)
@@ -46,16 +48,27 @@ export type KoState = {
  * ITW_CED_V2: EuropeanDisabilityCard
  * ITW_TS_V2: EuropeanHealthInsuranceCard
  * ITW_PID: PID (obtained with IT Wallet)
+ * ITW_ED: ED (obtained with IT Wallet)
+ * ITW_EE: EE (obtained with IT Wallet)
  */
 const mixPanelCredentials = [
   "ITW_ID_V2",
   "ITW_PG_V2",
   "ITW_CED_V2",
   "ITW_TS_V2",
-  "ITW_PID"
+  "ITW_PID",
+  "ITW_ED",
+  "ITW_EE"
 ] as const;
 
-type MixPanelCredential = (typeof mixPanelCredentials)[number];
+type MixPanelCredentialProperty = Exclude<
+  MixPanelCredential,
+  "ITW_ED" | "ITW_EE"
+>;
+
+const mixPanelCredentialsProperties = mixPanelCredentials.filter(
+  (c): c is MixPanelCredentialProperty => c !== "ITW_ED" && c !== "ITW_EE"
+);
 
 type TrackCredentialDetail = {
   credential: MixPanelCredential; // MixPanelCredential
@@ -80,7 +93,8 @@ export const CREDENTIALS_MAP: Record<string, MixPanelCredential> = {
   mDL: "ITW_PG_V2",
   EuropeanDisabilityCard: "ITW_CED_V2",
   EuropeanHealthInsuranceCard: "ITW_TS_V2",
-  PID: "ITW_PID"
+  education_degree: "ITW_ED",
+  education_enrollment: "ITW_EE"
 };
 
 type BackToWallet = {
@@ -208,6 +222,11 @@ type ItwOfflineBanner = {
 
 export type ItwOfflineRicaricaAppIOSource = "bottom_sheet" | "banner";
 
+type ItwCredentialQualificationDetail = {
+  credential: MixPanelCredential;
+  credential_screen_type: "detail" | "preview";
+};
+
 /**
  * Actions that trigger the requirement for L3 upgrade.
  * This type represents the user action that was performed immediately before
@@ -215,7 +234,8 @@ export type ItwOfflineRicaricaAppIOSource = "bottom_sheet" | "banner";
  * Add new values when implementing additional flows that require L3 upgrade.
  */
 export enum ItwL3UpgradeTrigger {
-  REMOTE_QR_CODE = "remote_qr_code"
+  REMOTE_QR_CODE = "remote_qr_code",
+  ADD_CREDENTIAL = "add_credential"
 }
 
 export type ItwFlow = "L2" | "L3" | "not_available";
@@ -790,6 +810,15 @@ export const trackItwCredentialBottomSheetAction = (
   );
 };
 
+export function trackItwCredentialQualificationDetail(
+  properties: ItwCredentialQualificationDetail
+) {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_QUALIFICATION_DETAIL,
+    buildEventProperties("UX", "action", properties)
+  );
+}
+
 // #endregion ACTIONS
 
 // #region ERRORS
@@ -1039,12 +1068,21 @@ export const trackItwUserWithoutL3Requirements = (
   );
 };
 
+export const trackItwAddCredentialNotTrustedIssuer = (
+  properties: CredentialUnexpectedFailure
+) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_ADD_CREDENTIAL_NOT_TRUSTED_ISSUER,
+    buildEventProperties("KO", "screen_view", properties)
+  );
+};
+
 // #endregion ERRORS
 
 // #region PROFILE PROPERTIES
 
 export const trackCredentialDeleteProperties = (
-  credential: MixPanelCredential,
+  credential: MixPanelCredentialProperty,
   state: GlobalState
 ) => {
   void updateMixpanelProfileProperties(state, {
@@ -1059,7 +1097,7 @@ export const trackCredentialDeleteProperties = (
 
 export const trackAddCredentialProfileAndSuperProperties = (
   state: GlobalState,
-  credential: MixPanelCredential
+  credential: MixPanelCredentialProperty
 ) => {
   void updateMixpanelProfileProperties(state, {
     property: credential,
@@ -1210,7 +1248,7 @@ export const updateITWStatusAndPIDProperties = (state: GlobalState) => {
  * @param state
  */
 export const updatePropertiesWalletRevoked = (state: GlobalState) => {
-  mixPanelCredentials.forEach(property => {
+  mixPanelCredentialsProperties.forEach(property => {
     void updateMixpanelProfileProperties(state, {
       property,
       value: "not_available"
