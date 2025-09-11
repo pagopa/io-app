@@ -170,3 +170,30 @@ export const trackIDPayOnboardingSuccess = (
     buildEventProperties("UX", "confirm", props)
   );
 };
+
+export const trackIDPayOnboardingNotificationDenied = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_SYSTEM_NOTIFICATION_DENIED",
+    buildEventProperties("UX", "action", props)
+  );
+};
+
+export const trackIDPayOnboardingNotificationActivation = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_SYSTEM_NOTIFICATION_ACTIVATION",
+    buildEventProperties("UX", "action", props)
+  );
+};
+
+export const trackIDPayOnboardingNotificationAccepted = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_SYSTEM_NOTIFICATION_ACCEPTED",
+    buildEventProperties("UX", "action", props)
+  );
+};
