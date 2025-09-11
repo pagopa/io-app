@@ -4508,6 +4508,11 @@
             "title": "Verifica la tua identità",
             "description": "È un passaggio di sicurezza necessario per aggiungere i tuoi documenti digitali su IO.",
             "header": "Scegli come identificarti",
+            "reissuing": {
+              "title": "Scegli come identificarti",
+              "description": "È un passaggio necessario per continuare ad usare Documenti su IO.",
+              "section": "Verifica di identità"
+            },
             "method": {
               "spid": {
                 "title": "Usa SPID",

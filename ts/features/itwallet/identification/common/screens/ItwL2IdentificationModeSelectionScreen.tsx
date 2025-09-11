@@ -22,7 +22,7 @@ import {
   isCIEAuthenticationSupportedSelector,
   isL3FeaturesEnabledSelector
 } from "../../../machine/eid/selectors";
-import SpidLogo from "../../../../../img/features/itWallet/spid-logo.svg";
+import SpidLogo from "../../../../../../img/features/itWallet/spid-logo.svg";
 
 export type ItwL2IdentificationNavigationParams = {
   eidReissuing?: boolean;
@@ -53,6 +53,30 @@ export const ItwL2IdentificationModeSelectionScreen = (
       trackItWalletIDMethod("L2");
     }, [])
   );
+
+  const { title, description, section } = useMemo(() => {
+    if (eidReissuing) {
+      return {
+        title: I18n.t(
+          "features.itWallet.identification.mode.l2.reissuing.title"
+        ),
+        description: I18n.t(
+          "features.itWallet.identification.mode.l2.reissuing.description"
+        ),
+        section: I18n.t(
+          "features.itWallet.identification.mode.l2.reissuing.section"
+        )
+      };
+    } else {
+      return {
+        title: I18n.t("features.itWallet.identification.mode.l2.title"),
+        description: I18n.t(
+          "features.itWallet.identification.mode.l2.description"
+        ),
+        section: undefined
+      };
+    }
+  }, [eidReissuing]);
 
   const handleSpidPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "spid" });
@@ -95,18 +119,19 @@ export const ItwL2IdentificationModeSelectionScreen = (
   return (
     <IOScrollViewWithLargeHeader
       title={{
-        label: I18n.t("features.itWallet.identification.mode.l2.title")
+        section,
+        label: title
       }}
-      description={I18n.t(
-        "features.itWallet.identification.mode.l2.description"
-      )}
+      description={description}
       headerActionsProp={{ showHelp: true }}
     >
       <ContentWrapper>
-        <ListItemHeader
-          label={I18n.t("features.itWallet.identification.mode.l2.header")}
-        />
-        <VStack space={8}>
+        {!eidReissuing && (
+          <ListItemHeader
+            label={I18n.t("features.itWallet.identification.mode.l2.header")}
+          />
+        )}
+        <VStack space={8} style={{ marginTop: eidReissuing ? 24 : 0 }}>
           {isCieAuthenticationSupported &&
             !isCiePinDisabled &&
             !isL3FeaturesEnabled && (
@@ -147,14 +172,14 @@ export const ItwL2IdentificationModeSelectionScreen = (
               )}
               testID="Spid"
               {...(eidReissuing
-                ? { image: <SpidLogo width={32} height={32} /> }
+                ? { image: <SpidLogo width={50} height={24} /> }
                 : { icon: "spid" })}
               onPress={handleSpidPress}
             />
           )}
 
           {!isCieIdDisabled && (
-            <ModuleNavigation
+            <ModuleNavigationAlt
               title={I18n.t(
                 "features.itWallet.identification.mode.l2.method.cieId.title"
               )}
