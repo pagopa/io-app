@@ -1787,8 +1787,6 @@ describe("itwEidIssuanceMachine", () => {
     verifyTrustFederation.mockImplementation(
       () => new Promise(resolve => setTimeout(() => resolve({}), 6000))
     );
-    hasIntegrityKeyTag.mockImplementation(() => true);
-    hasValidWalletInstanceAttestation.mockImplementation(() => true);
 
     actor.start();
     actor.send({ type: "start", mode: "reissuance" });

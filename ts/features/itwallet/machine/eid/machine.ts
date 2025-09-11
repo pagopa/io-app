@@ -239,19 +239,11 @@ export const itwEidIssuanceMachine = setup({
       after: {
         5000: [
           {
-            guard: and([
-              "isReissuance",
-              "hasIntegrityKeyTag",
-              "hasValidWalletInstanceAttestation"
-            ]),
+            guard: "isReissuance",
             actions: "navigateToL2IdentificationScreen"
           },
           {
-            guard: and([
-              not("isReissuance"),
-              "hasIntegrityKeyTag",
-              "hasValidWalletInstanceAttestation"
-            ]),
+            guard: not("isReissuance"),
             actions: "navigateToIpzsPrivacyScreen"
           }
         ]
