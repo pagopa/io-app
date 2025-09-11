@@ -78,18 +78,13 @@ const ContentView = ({ payload }: { payload: ItwRemoteRequestPayload }) => {
     }, [payload, machineRef])
   );
 
-  return timeoutReached ? (
+  return (
     <ItwRemoteLoadingScreen
-      testID="timeout-loader"
+      {...(timeoutReached ? { testID: "timeout-loader", message: "" } : {})}
       title={I18n.t(
-        "features.itWallet.presentation.remote.loadingScreen.timeout"
-      )}
-      message=""
-    />
-  ) : (
-    <ItwRemoteLoadingScreen
-      title={I18n.t(
-        "features.itWallet.presentation.remote.loadingScreen.request"
+        timeoutReached
+          ? "features.itWallet.presentation.remote.loadingScreen.timeout"
+          : "features.itWallet.presentation.remote.loadingScreen.request"
       )}
     />
   );
