@@ -11,13 +11,14 @@ import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selec
  * support request.
  * @param fn The function to be wrapped
  */
-export const useNotAvailableToastGuard = (fn: (...args: Array<any>) => any) => {
+export const useNotAvailableToastGuard = (
+  fn: (...args: Array<any>) => void | Promise<void>
+) => {
   const toast = useIOToast();
   const isItwPid = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const guardFn = useCallback(() => {
     toast.info(I18n.t("features.itWallet.generic.featureUnavailable.title"));
-    return undefined;
   }, [toast]);
 
   return (...args: Array<any>) => (isItwPid ? guardFn() : fn(...args));
