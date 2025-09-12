@@ -382,11 +382,9 @@ const ActiveSessionLoginCieCardReaderScreen = () => {
       };
 
       try {
-        if (Platform.OS === "ios") {
-          await cieManager.start(startOptions);
-        } else {
-          await cieManager.start();
-        }
+        await cieManager.start(
+          Platform.OS === "ios" ? startOptions : undefined
+        );
         await cieManager.startListeningNFC();
         setReadingState(ReadingState.waiting_card);
       } catch (e) {
