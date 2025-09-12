@@ -2,7 +2,7 @@ import { call, put, select } from "typed-redux-saga/macro";
 import NavigationService from "../../../navigation/NavigationService";
 import { navigateToMainNavigatorAction } from "../../../store/actions/navigation";
 import { isTestEnv } from "../../../utils/environment";
-import { handleStoredLinkingUrlIfNeeded } from "../../linking/sagas/utils";
+import { handleStoredLinkingUrlIfNeeded } from "../../linking/sagas";
 import { resetMessageArchivingAction } from "../../messages/store/actions/archiving";
 import { isArchivingDisabledSelector } from "../../messages/store/reducers/archiving";
 import { trackNotificationPermissionsStatus } from "../analytics";

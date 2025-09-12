@@ -1,7 +1,7 @@
 import { testSaga } from "redux-saga-test-plan";
 import NavigationService from "../../../../navigation/NavigationService";
 import { navigateToMainNavigatorAction } from "../../../../store/actions/navigation";
-import { handleStoredLinkingUrlIfNeeded } from "../../../linking/sagas/utils";
+import { handleStoredLinkingUrlIfNeeded } from "../../../linking/sagas";
 import { resetMessageArchivingAction } from "../../../messages/store/actions/archiving";
 import { isArchivingDisabledSelector } from "../../../messages/store/reducers/archiving";
 import { trackNotificationPermissionsStatus } from "../../analytics";
