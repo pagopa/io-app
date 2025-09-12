@@ -22,7 +22,7 @@ export const ItwIssuanceInactiveITWalletScreen = () => {
 
   return (
     <OperationResultScreenContent
-      pictogram="workInProgress"
+      pictogram="identityRefresh"
       title={I18n.t("features.itWallet.issuance.invalidWallet.title")}
       subtitle={I18n.t("features.itWallet.issuance.invalidWallet.subtitle")}
       action={{
