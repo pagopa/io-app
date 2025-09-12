@@ -80,12 +80,12 @@ const IDPayPaymentResultScreen = () => {
         data_entry
       });
     }
-    if (O.some(failureOption)) {
+    if (O.isSome(failureOption)) {
       trackIDPayDetailAuthorizationError({
         initiativeName: initiative?.initiativeName,
         initiativeId: initiative?.initiativeId,
         data_entry,
-        reason: undefined
+        reason: failureOption.value
       });
     }
   });
