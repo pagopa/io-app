@@ -178,7 +178,7 @@ const DateClaimItem = ({
  * @param label - the label of the claim
  * @param _claim - the claim value of unknown type. We are not interested in its value but it's needed for the exaustive type checking.
  */
-const UnknownClaimItem = ({ label }: { label: string; _claim?: never }) => (
+const UnknownClaimItem = ({ label }: { label: string; _claim?: unknown }) => (
   <PlainTextClaimItem
     label={label}
     claim={I18n.t("features.itWallet.generic.placeholders.claimNotAvailable")}
@@ -316,6 +316,7 @@ const DrivingPrivilegesClaimItem = ({
     </>
   );
 };
+
 /**
  * Component which renders a claim.
  * It renders a different component based on the type of the claim.
@@ -391,23 +392,20 @@ export const ItwCredentialClaim = ({
           );
           return <PlainTextClaimItem label={claim.label} claim={fiscalCode} />;
         }
-        if (NestedObjectClaim.is(decoded)) {
-          const nestedClaims = parseClaims(decoded);
+        if (NestedObjectClaim.is(_decoded)) {
+          // Parse the single nested object into an array of claims
+          const singleNestedItemClaims = parseClaims(_decoded);
+          // Wrap in an array to match the expected type for ItwCredentialMultiClaim
+          const nestedParsedClaims = [singleNestedItemClaims];
           return (
-            <>
-              {nestedClaims.map((nestedClaim, index) => (
-                <Fragment key={`${index}_${claim.id}_${nestedClaim.id}`}>
-                  {index > 0 && <Divider />}
-                  <ItwCredentialClaim
-                    claim={nestedClaim}
-                    hidden={hidden}
-                    isPreview={isPreview}
-                    credentialStatus={credentialStatus}
-                    credentialType={credentialType}
-                  />
-                </Fragment>
-              ))}
-            </>
+            <ItwCredentialMultiClaim
+              claim={claim}
+              nestedClaims={nestedParsedClaims}
+              hidden={hidden}
+              isPreview={isPreview}
+              credentialStatus={credentialStatus}
+              credentialType={credentialType}
+            />
           );
         }
         if (NestedArrayClaim.is(decoded)) {
