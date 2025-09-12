@@ -28,6 +28,7 @@ import {
 } from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
 import { Store } from "./store/actions/types";
+import { useAppThemeConfiguration } from "./hooks/useAppThemeConfiguration";
 import { setLocale } from "./i18n";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -151,4 +152,15 @@ const mapDispatchToProps = {
   setScreenReaderEnabled
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RootContainer);
+const RootContainerClass = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RootContainer);
+
+const RootContainerFC = ({ store }: { store: Store }) => {
+  useAppThemeConfiguration();
+
+  return <RootContainerClass store={store} />;
+};
+
+export default RootContainerFC;

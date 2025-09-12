@@ -217,7 +217,8 @@
       "choose": "Scegli",
       "copy": "Copy",
       "selectAll": "Seleziona tutto",
-      "deselectAll": "Deseleziona tutto"
+      "deselectAll": "Deseleziona tutto",
+      "visitWebsite": "Vai al sito"
     },
     "navigator": {
       "messages": "Messages",
@@ -1554,7 +1555,7 @@
       "fee": "Commissione",
       "feeAppliedBy": "Applicata da",
       "editButton": "Modifica",
-      "termsAndConditions": "By continuing, you accept the [Terms and Conditions of Use](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) and confirm that you have read the [Privacy Policy](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) of {{pspName}}.",
+      "termsAndConditions": "By continuing, you accept the [Terms and Conditions of Use](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/) and confirm that you have read the [Privacy Policy](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/) of {{pspName}}.",
       "a11y": {
         "announce": "Payment Summary"
       }
@@ -4300,8 +4301,7 @@
         "eid": "Identità Digitale",
         "mdl": "Patente di guida",
         "dc": "Carta Europea della Disabilità",
-        "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
-        "dgc": "Attestati di Laurea, Dottorato e Master"
+        "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia"
       },
       "wallet": {
         "active": "Attivo",
@@ -5822,6 +5822,10 @@
           "ON_EVALUATION": {
             "title": "L’ente sta valutando la tua domanda d’adesione",
             "subtitle": "Quando pronto, riceverai l’esito tramite un messaggio in app."
+          },
+          "PAYMENT_GENERIC_ERROR": {
+            "title": "Non siamo riusciti a completare l’operazione",
+            "subtitle": "Siamo già a lavoro per risolvere.  Riprova tra un po’."
           }
         }
       },
@@ -5886,6 +5890,9 @@
         "success": "You activated Push notifications",
         "advice": "Consigliato"
       },
+      "failToRetry": {
+        "contentTitle": "Stiamo per collegarti.\n Attendi qualche secondo..."
+      },
       "preferences": {
         "enableEmailBanner": {
           "title": "Don't miss important updates",
@@ -5908,7 +5915,8 @@
         "INSTRUMENTS_LIST_LOAD_FAILURE": "Errore nel caricamento della lista strumenti",
         "INSTRUMENT_ENROLL_FAILURE": "Errore durante l'aggiunta del metodo di pagamento",
         "INSTRUMENT_DELETE_FAILURE": "Errore durante la rimozione del metodo di pagamento",
-        "SESSION_EXPIRED": "C'è stato un problema, riprova"
+        "SESSION_EXPIRED": "C'è stato un problema, riprova",
+        "TOO_MANY_REQUESTS": "Stiamo ricevendo troppe richieste, riprova più tardi"
       },
       "headerTitle": "Configure the initiative",
       "intro": {

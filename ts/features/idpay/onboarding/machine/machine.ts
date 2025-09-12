@@ -32,6 +32,7 @@ export const idPayOnboardingMachine = setup({
     navigateToMultiSelfDeclarationListScreen: notImplementedStub,
     navigateToCompletionScreen: notImplementedStub,
     navigateToFailureScreen: notImplementedStub,
+    navigateToFailureToRetryScreen: notImplementedStub,
     navigateToInitiativeMonitoringScreen: notImplementedStub,
     closeOnboarding: notImplementedStub,
     closeOnboardingSuccess: notImplementedStub,
@@ -93,6 +94,10 @@ export const idPayOnboardingMachine = setup({
       getInputFormSelfDeclarationFromContext(context).length - 1,
     isSessionExpired: ({ event }: { event: IdPayOnboardingEvents }) =>
       "error" in event && event.error === InitiativeFailureType.SESSION_EXPIRED,
+    isTooManyRequests: ({ event }: { event: IdPayOnboardingEvents }) =>
+      "error" in event &&
+      event.error === InitiativeFailureType.TOO_MANY_REQUESTS,
+
     shouldShowEnableNotificationOnClose: ({ context }) =>
       !context.isPushNotificationsEnabled,
     hasMessageConsent: ({ context }) => !context.hasInbox
@@ -205,13 +210,30 @@ export const idPayOnboardingMachine = setup({
       on: {
         next: {
           target: "LoadingCriteria"
-        }
+        },
+        onError: [
+          {
+            guard: "isTooManyRequests",
+            target: "TooManyRequests"
+          },
+          {
+            guard: "isSessionExpired",
+            target: "SessionExpired"
+          },
+          {
+            actions: assign(({ event }) => ({
+              failure: pipe(OnboardingFailure.decode(event.error), O.fromEither)
+            })),
+            target: "OnboardingFailure"
+          }
+        ]
       }
     },
 
     LoadingCriteria: {
       tags: [IdPayTags.Loading],
       invoke: {
+        id: "getRequiredCriteria",
         src: "getRequiredCriteria",
         input: ({ context }) => selectInitiativeId(context),
         onDone: {
@@ -221,6 +243,10 @@ export const idPayOnboardingMachine = setup({
           target: "EvaluatingRequiredCriteria"
         },
         onError: [
+          {
+            guard: "isTooManyRequests",
+            target: "TooManyRequests"
+          },
           {
             guard: "isSessionExpired",
             target: "SessionExpired"
@@ -551,6 +577,19 @@ export const idPayOnboardingMachine = setup({
             actions: "closeOnboardingSuccess"
           }
         ]
+      }
+    },
+
+    TooManyRequests: {
+      entry: "navigateToFailureToRetryScreen",
+      on: {
+        retryConnection: {
+          target: "LoadingCriteria"
+        },
+        back: {
+          actions: "closeOnboarding",
+          target: "Idle"
+        }
       }
     },
 

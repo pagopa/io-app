@@ -13,7 +13,8 @@ export enum OnboardingFailureEnum {
   USER_ONBOARDED = "ONBOARDED",
   NOT_ELIGIBLE = "NOT_ELIGIBLE",
   ON_EVALUATION = "ON_EVALUATION",
-  SESSION_EXPIRED = "SESSION_EXPIRED"
+  SESSION_EXPIRED = "SESSION_EXPIRED",
+  TOO_MANY_REQUESTS = "TOO_MANY_REQUESTS"
 }
 
 export type OnboardingFailure = t.TypeOf<typeof OnboardingFailure>;
