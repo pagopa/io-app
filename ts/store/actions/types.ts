@@ -65,6 +65,7 @@ import { PersistedPreferencesActions } from "./persistedPreferences";
 import { PreferencesActions } from "./preferences";
 import { SearchActions } from "./search";
 import { StartupActions } from "./startup";
+import { BackgroundLinkingActions } from "./linking";
 
 export type Action =
   | AnalyticsActions
@@ -121,7 +122,8 @@ export type Action =
   | UtmLinkActions
   | ConnectivityActions
   | LoginPreferencesActions
-  | AARFlowStateActions;
+  | AARFlowStateActions
+  | BackgroundLinkingActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
