@@ -23,7 +23,7 @@ import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import {
-  CREDENTIALS_MAP,
+  getMixPanelCredential,
   trackIssuanceCredentialScrollToBottom,
   trackItwExit,
   trackOpenItwTos
@@ -53,6 +53,7 @@ import { ItwRequestedClaimsList } from "../components/ItwRequestedClaimsList";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 
 export type ItwIssuanceCredentialTrustIssuerNavigationParams = {
   credentialType?: string;
@@ -137,6 +138,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const privacyUrl = useIOSelector(state =>
     generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isIssuing =
@@ -148,12 +150,14 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
     machineRef.send({ type: "confirm-trust-data" });
   };
 
+  const mixPanelCredential = getMixPanelCredential(credentialType, isItwL3);
+
   const dismissDialog = useItwDismissalDialog({
     handleDismiss: () => {
       machineRef.send({ type: "close" });
       trackItwExit({
         exit_page: route.name,
-        credential: CREDENTIALS_MAP[credentialType]
+        credential: mixPanelCredential
       });
     }
   });
@@ -175,7 +179,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const trackScrollToBottom = (crossed: boolean) => {
     if (crossed) {
       trackIssuanceCredentialScrollToBottom(
-        CREDENTIALS_MAP[credentialType],
+        mixPanelCredential,
         ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER
       );
     }
