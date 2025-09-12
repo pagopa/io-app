@@ -3,12 +3,21 @@ import { OperationResultScreenContent } from "../../../../components/screens/Ope
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../navigation/routes.ts";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
+import {
+  ItwL3UpgradeTrigger,
+  trackItwUpgradeL3Mandatory
+} from "../../analytics";
 
 export const ItwIssuanceInactiveITWalletScreen = () => {
   const navigation = useIONavigation();
 
   useHeaderSecondLevel({
     title: ""
+  });
+
+  useOnFirstRender(() => {
+    trackItwUpgradeL3Mandatory(ItwL3UpgradeTrigger.ADD_CREDENTIAL);
   });
 
   return (
