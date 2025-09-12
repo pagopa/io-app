@@ -9,6 +9,7 @@ import {
   trackAddCredentialUnexpectedFailure,
   trackCredentialInvalidStatusFailure,
   trackCredentialNotEntitledFailure,
+  trackItwAddCredentialNotTrustedIssuer,
   trackItWalletDeferredIssuing
 } from "../../analytics";
 
@@ -75,6 +76,14 @@ export const useCredentialEventsTracking = ({
         type: failure.type,
         credential,
         caused_by: "WalletProvider"
+      });
+    }
+
+    if (failure.type === CredentialIssuanceFailureType.UNTRUSTED_ISS) {
+      return trackItwAddCredentialNotTrustedIssuer({
+        reason: failure.reason,
+        type: failure.type,
+        credential
       });
     }
 

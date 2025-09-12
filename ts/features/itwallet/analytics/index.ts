@@ -39,6 +39,8 @@ export type KoState = {
   cta_id: string;
 };
 
+type MixPanelCredential = (typeof mixPanelCredentials)[number];
+
 /**
  * This is the list of credentials that are tracked in MixPanel
  * ITW_ID_V2: PersonIdentificationData (obtained with Documenti su IO)
@@ -46,20 +48,39 @@ export type KoState = {
  * ITW_CED_V2: EuropeanDisabilityCard
  * ITW_TS_V2: EuropeanHealthInsuranceCard
  * ITW_PID: PID (obtained with IT Wallet)
+ * ITW_ED: ED (obtained with IT Wallet)
+ * ITW_EE: EE (obtained with IT Wallet)
  */
 const mixPanelCredentials = [
   "ITW_ID_V2",
   "ITW_PG_V2",
   "ITW_CED_V2",
   "ITW_TS_V2",
-  "ITW_PID"
+  "ITW_PID",
+  "ITW_ED",
+  "ITW_EE"
 ] as const;
 
-type MixPanelCredential = (typeof mixPanelCredentials)[number];
+// Exclude ITW_ED and ITW_EE from MixPanelCredentialProperty since are not used in tracking properties/super properties
+type MixPanelCredentialProperty = Exclude<
+  MixPanelCredential,
+  "ITW_ED" | "ITW_EE"
+>;
+
+// Type guard to exclude ITW_ED and ITW_EE from MixPanelCredential
+const isMixPanelCredentialProperty = (
+  c: MixPanelCredential
+): c is MixPanelCredentialProperty => c !== "ITW_ED" && c !== "ITW_EE";
 
 type TrackCredentialDetail = {
   credential: MixPanelCredential; // MixPanelCredential
   credential_status: string; // ItwPg
+  credential_type?: "multiple" | "unique";
+};
+
+type TrackCredentialPreview = {
+  credential: MixPanelCredential; // MixPanelCredential
+  credential_type?: "multiple" | "unique";
 };
 
 export type OtherMixPanelCredential = "welfare" | "payment_method" | "CGN";
@@ -80,7 +101,8 @@ export const CREDENTIALS_MAP: Record<string, MixPanelCredential> = {
   mDL: "ITW_PG_V2",
   EuropeanDisabilityCard: "ITW_CED_V2",
   EuropeanHealthInsuranceCard: "ITW_TS_V2",
-  PID: "ITW_PID"
+  education_degree: "ITW_ED",
+  education_enrollment: "ITW_EE"
 };
 
 type BackToWallet = {
@@ -208,6 +230,11 @@ type ItwOfflineBanner = {
 
 export type ItwOfflineRicaricaAppIOSource = "bottom_sheet" | "banner";
 
+type ItwCredentialInfoDetails = {
+  credential: MixPanelCredential;
+  credential_screen_type: "detail" | "preview";
+};
+
 /**
  * Actions that trigger the requirement for L3 upgrade.
  * This type represents the user action that was performed immediately before
@@ -215,7 +242,8 @@ export type ItwOfflineRicaricaAppIOSource = "bottom_sheet" | "banner";
  * Add new values when implementing additional flows that require L3 upgrade.
  */
 export enum ItwL3UpgradeTrigger {
-  REMOTE_QR_CODE = "remote_qr_code"
+  REMOTE_QR_CODE = "remote_qr_code",
+  ADD_CREDENTIAL = "add_credential"
 }
 
 export type ItwFlow = "L2" | "L3" | "not_available";
@@ -259,10 +287,12 @@ export const trackShowCredentialsList = () => {
   );
 };
 
-export const trackCredentialPreview = (credential: MixPanelCredential) => {
+export const trackCredentialPreview = (
+  credentialPreview: TrackCredentialPreview
+) => {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_CREDENTIAL_PREVIEW,
-    buildEventProperties("UX", "screen_view", { credential })
+    buildEventProperties("UX", "screen_view", credentialPreview)
   );
 };
 
@@ -618,20 +648,20 @@ export function trackWalletShowBack(credential: MixPanelCredential) {
 }
 
 export function trackWalletCredentialShowIssuer(
-  credential: MixPanelCredential
+  properties: ItwCredentialInfoDetails
 ) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_SHOW_ISSUER,
-    buildEventProperties("UX", "action", { credential })
+    buildEventProperties("UX", "action", properties)
   );
 }
 
 export function trackWalletCredentialShowAuthSource(
-  credential: MixPanelCredential
+  properties: ItwCredentialInfoDetails
 ) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_SHOW_AUTH_SOURCE,
-    buildEventProperties("UX", "action", { credential })
+    buildEventProperties("UX", "action", properties)
   );
 }
 export function trackWalletCredentialSupport(credential: MixPanelCredential) {
@@ -789,6 +819,15 @@ export const trackItwCredentialBottomSheetAction = (
     buildEventProperties("UX", "action", properties)
   );
 };
+
+export function trackItwCredentialQualificationDetail(
+  properties: ItwCredentialInfoDetails
+) {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_QUALIFICATION_DETAIL,
+    buildEventProperties("UX", "action", properties)
+  );
+}
 
 // #endregion ACTIONS
 
@@ -1039,6 +1078,15 @@ export const trackItwUserWithoutL3Requirements = (
   );
 };
 
+export const trackItwAddCredentialNotTrustedIssuer = (
+  properties: CredentialUnexpectedFailure
+) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_ADD_CREDENTIAL_NOT_TRUSTED_ISSUER,
+    buildEventProperties("KO", "screen_view", properties)
+  );
+};
+
 // #endregion ERRORS
 
 // #region PROFILE PROPERTIES
@@ -1047,6 +1095,9 @@ export const trackCredentialDeleteProperties = (
   credential: MixPanelCredential,
   state: GlobalState
 ) => {
+  if (!isMixPanelCredentialProperty(credential)) {
+    return;
+  }
   void updateMixpanelProfileProperties(state, {
     property: credential,
     value: "not_available"
@@ -1061,6 +1112,9 @@ export const trackAddCredentialProfileAndSuperProperties = (
   state: GlobalState,
   credential: MixPanelCredential
 ) => {
+  if (!isMixPanelCredentialProperty(credential)) {
+    return;
+  }
   void updateMixpanelProfileProperties(state, {
     property: credential,
     value: "valid"
@@ -1211,6 +1265,11 @@ export const updateITWStatusAndPIDProperties = (state: GlobalState) => {
  */
 export const updatePropertiesWalletRevoked = (state: GlobalState) => {
   mixPanelCredentials.forEach(property => {
+    // Avoid updating non-credential properties
+    if (!isMixPanelCredentialProperty(property)) {
+      return;
+    }
+
     void updateMixpanelProfileProperties(state, {
       property,
       value: "not_available"

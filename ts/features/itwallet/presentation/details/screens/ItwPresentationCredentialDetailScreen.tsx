@@ -22,7 +22,10 @@ import {
   trackWalletCredentialShowTrustmark
 } from "../../../analytics";
 import { WellKnownClaim } from "../../../common/utils/itwClaimsUtils.ts";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import {
+  isMultiLevelCredential,
+  StoredCredential
+} from "../../../common/utils/itwTypesUtils.ts";
 import {
   itwCredentialSelector,
   itwCredentialStatusSelector
@@ -116,6 +119,7 @@ export const ItwPresentationCredentialDetail = ({
     ItwProximityMachineContext.useSelector(selectIsLoading);
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
+  const isMultilevel = isMultiLevelCredential(credential);
 
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
@@ -129,7 +133,8 @@ export const ItwPresentationCredentialDetail = ({
     if (status !== "jwtExpired") {
       trackCredentialDetail({
         credential: CREDENTIALS_MAP[credential.credentialType],
-        credential_status: CREDENTIAL_STATUS_MAP[status]
+        credential_status: CREDENTIAL_STATUS_MAP[status],
+        credential_type: isMultilevel ? "multiple" : "unique"
       });
     }
   });

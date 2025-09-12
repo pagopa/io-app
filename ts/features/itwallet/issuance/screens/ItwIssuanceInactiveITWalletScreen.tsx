@@ -3,6 +3,11 @@ import { OperationResultScreenContent } from "../../../../components/screens/Ope
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../navigation/routes.ts";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
+import {
+  ItwL3UpgradeTrigger,
+  trackItwUpgradeL3Mandatory
+} from "../../analytics";
 
 export const ItwIssuanceInactiveITWalletScreen = () => {
   const navigation = useIONavigation();
@@ -11,9 +16,13 @@ export const ItwIssuanceInactiveITWalletScreen = () => {
     title: ""
   });
 
+  useOnFirstRender(() => {
+    trackItwUpgradeL3Mandatory(ItwL3UpgradeTrigger.ADD_CREDENTIAL);
+  });
+
   return (
     <OperationResultScreenContent
-      pictogram="workInProgress"
+      pictogram="itWallet"
       title={I18n.t("features.itWallet.issuance.invalidWallet.title")}
       subtitle={I18n.t("features.itWallet.issuance.invalidWallet.subtitle")}
       action={{
