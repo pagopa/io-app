@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import { IOToast } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
@@ -13,7 +12,10 @@ import {
   trackSaveCredentialSuccess,
   updateITWStatusAndPIDProperties
 } from "../../analytics";
-import { itwSetAuthLevel } from "../../common/store/actions/preferences";
+import {
+  itwSetAuthLevel,
+  itwSetItwSimplifiedActivationRequired
+} from "../../common/store/actions/preferences";
 import {
   itwCredentialsRemoveByType,
   itwCredentialsStore
@@ -244,9 +246,11 @@ export const createEidIssuanceActionsImplementation = (
     // the eID is always removed before storing the new one. If no previous eID is present, the action is a no-op.
     store.dispatch(itwCredentialsRemoveByType(context.eid.credentialType));
     store.dispatch(itwCredentialsStore([context.eid]));
-  },
 
-  requestAssistance: () => {},
+    // TODO: [SIW-2964] Remove after the official IT-Wallet release to all users
+    // Remember to clear this property after the first activation
+    store.dispatch(itwSetItwSimplifiedActivationRequired());
+  },
 
   handleSessionExpired: () =>
     store.dispatch(checkCurrentSession.success({ isSessionValid: false })),
