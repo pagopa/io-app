@@ -2970,8 +2970,8 @@
         "retry": "Riprova"
       },
       "header": {
-        "subtitlePlural": "{{count}} servizi disponibili",
-        "subtitleSingular": "{{count}} servizio disponibile"
+        "subtitle_one": "{{count}} servizio disponibile",
+        "subtitle_other": "{{count}} servizi disponibili"
       }
     },
     "search": {
