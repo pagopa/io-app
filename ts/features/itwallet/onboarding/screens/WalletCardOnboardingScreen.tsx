@@ -61,7 +61,8 @@ const availableCredentials = [
 // New credentials that can be actively requested and obtained by the user
 const newCredentials = [
   CredentialType.EDUCATION_DEGREE,
-  CredentialType.EDUCATION_ENROLLMENT
+  CredentialType.EDUCATION_ENROLLMENT,
+  CredentialType.RESIDENCY
 ] as const;
 
 type NewCredential = (typeof newCredentials)[number];

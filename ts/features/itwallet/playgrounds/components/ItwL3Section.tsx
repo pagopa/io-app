@@ -114,6 +114,11 @@ export const ItwL3Section = () => {
         description="Navigate to the Education Enrollment detail screen"
         onPress={() => handleCredentialPress("ee")}
       />
+      <ListItemNav
+        value="Residency L3"
+        description="Navigate to the Residency detail screen"
+        onPress={() => handleCredentialPress("res")}
+      />
     </View>
   );
 };

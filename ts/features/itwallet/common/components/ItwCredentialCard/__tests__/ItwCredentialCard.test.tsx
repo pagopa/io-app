@@ -14,7 +14,8 @@ describe("ItwCredentialCard", () => {
     "EuropeanDisabilityCard",
     "mDL",
     "education_degree",
-    "education_enrollment"
+    "education_enrollment",
+    "residency"
   ])("should match snapshot when credential type is %p", type => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
 
