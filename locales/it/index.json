@@ -5834,8 +5834,8 @@
             "subtitle": "Quando pronto, riceverai l’esito tramite un messaggio in app."
           },
           "FAMILY_UNIT_ALREADY_JOINED": {
-            "title": "Un'altra persona del tuo nucleo familiare ha inviato la richiesta",
-            "subtitle": "È possibile inviare una sola richiesta per ogni nucleo familiare."
+            "title": "Un'altra persona della tua famiglia ha inviato la richiesta",
+            "subtitle": "È possibile inviare una sola richiesta per ogni famiglia anagrafica."
           },
           "ONBOARDING_WAITING_LIST": {
             "title": "Sei in lista d’attesa",
