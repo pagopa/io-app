@@ -27,6 +27,13 @@ import { idPayGenerateBarcode } from "../store/actions";
 import { calculateIdPayBarcodeSecondsToExpire } from "../utils";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import {
+  trackIDPayDetailCodeGenerationConversion,
+  trackIDPayDetailCodeGenerationCopy,
+  trackIDPayDetailCodeGenerationError
+} from "../../details/analytics";
+import { idpayInitiativeDetailsSelector } from "../../details/store";
 
 // -------------------- types --------------------
 
@@ -39,6 +46,8 @@ type IdPayBarcodeResultRouteProps = RouteProp<
 >;
 type SuccessContentProps = {
   barcode: TransactionBarCodeResponse;
+  initiativeId: string;
+  initiativeName?: string;
 };
 type BarcodeExpiredContentProps = {
   initiativeId: string;
@@ -49,9 +58,15 @@ type BarcodeExpiredContentProps = {
 const IdPayBarcodeResultScreen = () => {
   const route = useRoute<IdPayBarcodeResultRouteProps>();
   const { initiativeId } = route.params;
-  const navigation = useIONavigation();
   const barcodePot = useIOSelector(state =>
     idPayBarcodeByInitiativeIdSelector(state)(initiativeId)
+  );
+
+  const initiativeDataPot = useIOSelector(idpayInitiativeDetailsSelector);
+
+  const initiativeName = pot.getOrElse(
+    pot.map(initiativeDataPot, initiative => initiative.initiativeName),
+    undefined
   );
 
   useHeaderSecondLevel({
@@ -59,12 +74,6 @@ const IdPayBarcodeResultScreen = () => {
     canGoBack: true,
     supportRequest: true
   });
-
-  const navigateToInitiativeDetails = () =>
-    navigation.navigate(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
-      screen: IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING,
-      params: { initiativeId }
-    });
 
   if (pot.isLoading(barcodePot)) {
     return <LoadingScreen />;
@@ -74,32 +83,76 @@ const IdPayBarcodeResultScreen = () => {
     pot.toOption,
     O.fold(
       () => (
-        <OperationResultScreenContent
-          title={I18n.t("idpay.barCode.resultScreen.error.generic.body")}
-          action={{
-            label: I18n.t("global.buttons.close"),
-            accessibilityLabel: I18n.t("global.buttons.close"),
-            onPress: navigateToInitiativeDetails
-          }}
-          pictogram="umbrella"
-          enableAnimatedPictogram
-          loop
+        <FailureContent
+          initiativeId={initiativeId}
+          initiativeName={initiativeName}
         />
       ),
-      barcode => <SuccessContent barcode={barcode} />
+      barcode => (
+        <SuccessContent
+          barcode={barcode}
+          initiativeId={initiativeId}
+          initiativeName={initiativeName}
+        />
+      )
     )
   );
 };
 
 // -------------------- result screens --------------------
 
-const SuccessContent = ({ barcode }: SuccessContentProps) => {
+const FailureContent = ({
+  initiativeId,
+  initiativeName
+}: Omit<SuccessContentProps, "barcode">) => {
+  const navigation = useIONavigation();
+
+  const navigateToInitiativeDetails = () =>
+    navigation.navigate(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
+      screen: IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING,
+      params: { initiativeId }
+    });
+
+  useOnFirstRender(() => {
+    trackIDPayDetailCodeGenerationError({
+      initiativeId,
+      initiativeName
+    });
+  });
+
+  return (
+    <OperationResultScreenContent
+      title={I18n.t("idpay.barCode.resultScreen.error.generic.body")}
+      action={{
+        label: I18n.t("global.buttons.close"),
+        accessibilityLabel: I18n.t("global.buttons.close"),
+        onPress: navigateToInitiativeDetails
+      }}
+      pictogram="umbrella"
+      enableAnimatedPictogram
+      loop
+    />
+  );
+};
+
+const SuccessContent = ({
+  barcode,
+  initiativeId,
+  initiativeName
+}: SuccessContentProps) => {
   const trx = barcode.trxCode.toUpperCase();
+
+  useOnFirstRender(() => {
+    trackIDPayDetailCodeGenerationConversion({
+      initiativeId,
+      initiativeName
+    });
+  });
+
   const [isBarcodeExpired, setIsBarcodeExpired] = useState(false);
   // expire check is handled by the progress bar
   // to avoid unnecessary rerenders, which could also be on the
   // heavier side due to barcode generation
-
   const secondsTillExpire = useMemo(
     () => calculateIdPayBarcodeSecondsToExpire(barcode),
     [barcode]
@@ -120,7 +173,13 @@ const SuccessContent = ({ barcode }: SuccessContentProps) => {
           accessibilityLabel: I18n.t(
             "idpay.barCode.resultScreen.success.copyCodeCta"
           ),
-          onPress: () => clipboardSetStringWithFeedback(trx)
+          onPress: () => {
+            trackIDPayDetailCodeGenerationCopy({
+              initiativeId,
+              initiativeName
+            });
+            clipboardSetStringWithFeedback(trx);
+          }
         }
       }}
       title={{
