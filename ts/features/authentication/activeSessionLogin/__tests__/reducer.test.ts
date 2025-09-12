@@ -59,7 +59,6 @@ describe("activeSessionLoginReducer", () => {
       testableInitialState,
       activeSessionLoginSuccess(mockToken)
     );
-    expect(state.isActiveSessionLoginFailed).toBe(false);
     expect(state.isUserLoggedIn).toBe(true);
     expect(state.loginInfo?.token).toBe(mockToken);
   });
@@ -79,7 +78,6 @@ describe("activeSessionLoginReducer", () => {
   it("should reset state on consolidateActiveSessionLoginData", () => {
     const modifiedState: ActiveSessionLoginState = {
       isActiveSessionLogin: true,
-      isActiveSessionLoginFailed: true,
       isUserLoggedIn: true,
       loginInfo: {
         token: "token" as SessionToken,
@@ -108,7 +106,6 @@ describe("activeSessionLoginReducer", () => {
   it("should reset state on setFinishedActiveSessionLoginFlow", () => {
     const modifiedState: ActiveSessionLoginState = {
       isActiveSessionLogin: true,
-      isActiveSessionLoginFailed: true,
       isUserLoggedIn: true,
       loginInfo: {
         token: "token" as SessionToken,

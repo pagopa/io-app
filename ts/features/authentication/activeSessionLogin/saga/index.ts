@@ -1,4 +1,11 @@
-import { put, race, select, take, takeLatest } from "typed-redux-saga/macro";
+import {
+  fork,
+  put,
+  race,
+  select,
+  take,
+  takeLatest
+} from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import {
@@ -14,6 +21,7 @@ import {
   newTokenActiveSessionLoginSelector
 } from "../store/selectors";
 import { startApplicationInitialization } from "../../../../store/actions/application";
+import { watchCieAuthenticationSaga } from "../../login/cie/sagas/cie";
 
 export function* watchActiveSessionLoginSaga() {
   yield* takeLatest(
@@ -27,6 +35,8 @@ export function* handleActiveSessionLoginSaga(): Generator<
   void,
   any
 > {
+  yield* fork(watchCieAuthenticationSaga);
+
   const { success, failure } = yield* race({
     success: take(activeSessionLoginSuccess),
     failure: take(activeSessionLoginFailure)

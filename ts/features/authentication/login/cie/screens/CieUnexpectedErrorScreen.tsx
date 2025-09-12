@@ -1,27 +1,22 @@
 /**
  * A screen to alert the user about the number of attempts remains
  */
-import { useCallback } from "react";
 import I18n from "i18next";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import useActiveSessionLoginNavigation from "../../../activeSessionLogin/utils/useActiveSessionLoginNavigation";
 
 const CieUnexpectedErrorScreen = () => {
   const navigation = useIONavigation();
 
-  const navigateToCiePinScreen = useCallback(() => {
+  const { navigateToAuthenticationScreen } = useActiveSessionLoginNavigation();
+
+  const navigateToCiePinScreen = () => {
     navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
     });
-  }, [navigation]);
-
-  const navigateToAuthenticationScreen = useCallback(() => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: AUTHENTICATION_ROUTES.MAIN }]
-    });
-  }, [navigation]);
+  };
 
   const action = {
     label: I18n.t("global.buttons.retry"),
