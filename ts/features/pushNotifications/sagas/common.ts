@@ -55,7 +55,7 @@ export function* updateNotificationPermissionsIfNeeded(
 /**
  * this method is used to handle all actions that
  * are triggered when the app is resumed from scratch or transitions from
- * background to foregraond, and also need to be handled
+ * background to foreground, and also need to be handled
  * later on in the app's life cycle.
  *
  * two examples are Universal/App Links and Push Notifications, which
