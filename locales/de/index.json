@@ -2709,8 +2709,8 @@
         "retry": "Erneut versuchen"
       },
       "header": {
-        "subtitlePlural": "{{count}} Dienste verfügbar",
-        "subtitleSingular": "{{count}} Dienst verfügbar"
+        "subtitle_one": "{{count}} Dienst verfügbar",
+        "subtitle_other": "{{count}} Dienste verfügbar"
       }
     },
     "search": {
