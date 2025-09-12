@@ -141,7 +141,13 @@ export const itwCredentialIssuanceMachine = setup({
         src: "verifyTrustFederation",
         onDone: {
           target: "CheckingWalletInstanceAttestation"
-        }
+        },
+        onError: [
+          {
+            actions: "setFailure",
+            target: "#itwCredentialIssuanceMachine.Failure"
+          }
+        ]
       }
     },
     CheckingWalletInstanceAttestation: {

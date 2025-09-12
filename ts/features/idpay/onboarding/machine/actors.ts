@@ -250,6 +250,8 @@ const mapErrorCodeToFailure = (
       return OnboardingFailureEnum.FAMILY_UNIT_ALREADY_JOINED;
     case OnboardingErrorCodeEnum.ONBOARDING_WAITING_LIST:
       return OnboardingFailureEnum.ONBOARDING_WAITING_LIST;
+    case OnboardingErrorCodeEnum.ONBOARDING_TOO_MANY_REQUESTS:
+      return OnboardingFailureEnum.TOO_MANY_REQUESTS;
     default:
       return OnboardingFailureEnum.GENERIC;
   }

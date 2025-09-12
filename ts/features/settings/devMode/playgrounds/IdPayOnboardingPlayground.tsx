@@ -172,6 +172,11 @@ const testServices: ReadonlyArray<TestService> = [
     serviceId: "TESTSRV19",
     label: "KO - Famiglia già iscritta",
     willFail: true
+  },
+  {
+    serviceId: "TESTSRV20",
+    label: "KO - Troppe richieste",
+    willFail: true
   }
 ];
 
