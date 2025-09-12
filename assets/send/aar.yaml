@@ -96,19 +96,15 @@ paths:
               schema:
                 $ref: "#/components/schemas/ProblemJson"
                 
-  /notification/attachment/{attachmentUrl}:
+  /notification/attachment/{urlEncodedBase64AttachmentUrl}:
     get:
       operationId: getNotificationAttachment
       tags:
         - Notification
       parameters:
-        - $ref: "#/components/parameters/attachmentUrl"
+        - $ref: "#/components/parameters/urlEncodedBase64AttachmentUrl"
         - in: query
           name: mandateId
-          schema:
-            type: string
-        - in: query
-          name: attachmentIdx
           schema:
             type: string
         - in: query
@@ -159,8 +155,8 @@ components:
       required: true
       schema:
         type: string
-    attachmentUrl:
-      name: attachmentUrl
+    urlEncodedBase64AttachmentUrl:
+      name: urlEncodedBase64AttachmentUrl
       in: path
       required: true
       schema:
