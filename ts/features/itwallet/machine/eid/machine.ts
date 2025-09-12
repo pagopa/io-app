@@ -235,6 +235,18 @@ export const itwEidIssuanceMachine = setup({
             target: "#itwEidIssuanceMachine.Failure"
           }
         ]
+      },
+      after: {
+        5000: [
+          {
+            guard: "isReissuance",
+            actions: "navigateToL2IdentificationScreen"
+          },
+          {
+            guard: not("isReissuance"),
+            actions: "navigateToIpzsPrivacyScreen"
+          }
+        ]
       }
     },
     WalletInstanceCreation: {

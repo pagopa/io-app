@@ -148,6 +148,11 @@ export const itwCredentialIssuanceMachine = setup({
             target: "#itwCredentialIssuanceMachine.Failure"
           }
         ]
+      },
+      after: {
+        5000: {
+          actions: "navigateToTrustIssuerScreen"
+        }
       }
     },
     CheckingWalletInstanceAttestation: {

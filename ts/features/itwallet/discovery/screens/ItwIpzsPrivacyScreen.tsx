@@ -10,12 +10,18 @@ import { generateDynamicUrlSelector } from "../../../../store/reducers/backendSt
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
 import { trackOpenItwTosAccepted } from "../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
-import { isL3FeaturesEnabledSelector } from "../../machine/eid/selectors";
+import {
+  isL3FeaturesEnabledSelector,
+  selectIsLoading
+} from "../../machine/eid/selectors";
 import ItwPrivacyWebViewComponent from "../components/ItwPrivacyWebViewComponent";
+import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 
 const ItwIpzsPrivacyScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isLoadingMachine =
+    ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
 
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
@@ -44,6 +50,12 @@ const ItwIpzsPrivacyScreen = () => {
     canGoBack: true,
     supportRequest: true
   });
+
+  if (isLoadingMachine) {
+    return (
+      <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
+    );
+  }
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>

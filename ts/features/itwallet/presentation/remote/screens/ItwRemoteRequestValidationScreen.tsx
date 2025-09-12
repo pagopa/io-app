@@ -1,5 +1,5 @@
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import * as E from "fp-ts/lib/Either";
 import I18n from "i18next";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
@@ -58,19 +58,33 @@ const ItwRemoteRequestValidationScreen = ({ route }: ScreenProps) => {
 
 const ContentView = ({ payload }: { payload: ItwRemoteRequestPayload }) => {
   const machineRef = ItwRemoteMachineContext.useActorRef();
+  const [timeoutReached, setTimeoutReached] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
       // Reset the machine in case there is a pending presentation
       machineRef.send({ type: "reset" });
       machineRef.send({ type: "start", payload });
+
+      // Timeout to change copy after 5s
+      setTimeoutReached(false);
+      const timer = setTimeout(() => {
+        setTimeoutReached(true);
+      }, 5000);
+
+      return () => {
+        clearTimeout(timer);
+      };
     }, [payload, machineRef])
   );
 
   return (
     <ItwRemoteLoadingScreen
+      {...(timeoutReached ? { testID: "timeout-loader", message: "" } : {})}
       title={I18n.t(
-        "features.itWallet.presentation.remote.loadingScreen.request"
+        timeoutReached
+          ? "features.itWallet.presentation.remote.loadingScreen.timeout"
+          : "features.itWallet.presentation.remote.loadingScreen.request"
       )}
     />
   );
