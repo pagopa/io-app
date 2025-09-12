@@ -230,7 +230,7 @@ type ItwOfflineBanner = {
 
 export type ItwOfflineRicaricaAppIOSource = "bottom_sheet" | "banner";
 
-type ItwCredentialQualificationDetail = {
+type ItwCredentialInfoDetails = {
   credential: MixPanelCredential;
   credential_screen_type: "detail" | "preview";
 };
@@ -648,20 +648,20 @@ export function trackWalletShowBack(credential: MixPanelCredential) {
 }
 
 export function trackWalletCredentialShowIssuer(
-  credential: MixPanelCredential
+  properties: ItwCredentialInfoDetails
 ) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_SHOW_ISSUER,
-    buildEventProperties("UX", "action", { credential })
+    buildEventProperties("UX", "action", properties)
   );
 }
 
 export function trackWalletCredentialShowAuthSource(
-  credential: MixPanelCredential
+  properties: ItwCredentialInfoDetails
 ) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_SHOW_AUTH_SOURCE,
-    buildEventProperties("UX", "action", { credential })
+    buildEventProperties("UX", "action", properties)
   );
 }
 export function trackWalletCredentialSupport(credential: MixPanelCredential) {
@@ -821,7 +821,7 @@ export const trackItwCredentialBottomSheetAction = (
 };
 
 export function trackItwCredentialQualificationDetail(
-  properties: ItwCredentialQualificationDetail
+  properties: ItwCredentialInfoDetails
 ) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_QUALIFICATION_DETAIL,
