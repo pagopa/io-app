@@ -391,7 +391,8 @@ const ZendeskAskPermissions = () => {
       }}
       testID={"ZendeskAskPermissions"}
       description={I18n.t("support.askPermissions.body")}
-      ignoreSafeAreaMargin={true}
+      /* Avoid status bar overlapping on Android */
+      ignoreSafeAreaMargin={Platform.OS === "ios" ? true : false}
       actions={buttonConf}
     >
       <ContentWrapper>
