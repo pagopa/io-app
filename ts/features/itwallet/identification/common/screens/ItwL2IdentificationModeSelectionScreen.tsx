@@ -3,8 +3,8 @@ import { useCallback, useMemo } from "react";
 import {
   ContentWrapper,
   ListItemHeader,
-  ModuleNavigation,
-  VStack
+  VStack,
+  ModuleNavigationAlt
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
@@ -21,6 +21,7 @@ import {
   isCIEAuthenticationSupportedSelector,
   isL3FeaturesEnabledSelector
 } from "../../../machine/eid/selectors";
+import SpidLogo from "../../../../../../img/features/itWallet/spid-logo.svg";
 
 export type ItwL2IdentificationNavigationParams = {
   eidReissuing?: boolean;
@@ -37,6 +38,25 @@ export const ItwL2IdentificationModeSelectionScreen = (
 ) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const { eidReissuing } = props.route.params;
+
+  const baseTranslationPath = useMemo(
+    () =>
+      eidReissuing
+        ? "features.itWallet.identification.mode.l2.reissuing"
+        : "features.itWallet.identification.mode.l2",
+    [eidReissuing]
+  );
+
+  const { title, description, section } = useMemo(
+    () => ({
+      title: I18n.t(`${baseTranslationPath}.title`),
+      description: I18n.t(`${baseTranslationPath}.description`),
+      section: I18n.t(`${baseTranslationPath}.section`, {
+        defaultValue: ""
+      })
+    }),
+    [baseTranslationPath]
+  );
 
   useFocusEffect(
     useCallback(() => {
@@ -93,55 +113,66 @@ export const ItwL2IdentificationModeSelectionScreen = (
   return (
     <IOScrollViewWithLargeHeader
       title={{
-        label: I18n.t("features.itWallet.identification.mode.l2.title")
+        section,
+        label: title
       }}
-      description={I18n.t(
-        "features.itWallet.identification.mode.l2.description"
-      )}
+      description={description}
       headerActionsProp={{ showHelp: true }}
     >
       <ContentWrapper>
-        <ListItemHeader
-          label={I18n.t("features.itWallet.identification.mode.l2.header")}
-        />
-        <VStack space={8}>
-          {!isSpidDisabled && (
-            <ModuleNavigation
-              title={I18n.t(
-                "features.itWallet.identification.mode.l2.method.spid.title"
-              )}
-              subtitle={I18n.t(
-                "features.itWallet.identification.mode.l2.method.spid.subtitle"
-              )}
-              testID="Spid"
-              icon="spid"
-              onPress={handleSpidPress}
-            />
-          )}
+        {!eidReissuing && (
+          <ListItemHeader
+            label={I18n.t("features.itWallet.identification.mode.l2.header")}
+          />
+        )}
+        <VStack space={8} style={{ marginTop: eidReissuing ? 24 : 0 }}>
           {isCieAuthenticationSupported &&
             !isCiePinDisabled &&
             !isL3FeaturesEnabled && (
-              <ModuleNavigation
+              <ModuleNavigationAlt
                 title={I18n.t(
                   "features.itWallet.identification.mode.l2.method.ciePin.title"
                 )}
                 subtitle={I18n.t(
-                  "features.itWallet.identification.mode.l2.method.ciePin.subtitle"
+                  `${baseTranslationPath}.method.ciePin.subtitle`
                 )}
                 testID="CiePin"
-                icon="fiscalCodeIndividual"
+                icon={eidReissuing ? "securityPad" : "fiscalCodeIndividual"}
                 onPress={handleCiePinPress}
+                badge={
+                  eidReissuing
+                    ? {
+                        text: I18n.t(
+                          "features.itWallet.identification.mode.l2.reissuing.method.ciePin.badge"
+                        ),
+                        variant: "highlight",
+                        outline: false
+                      }
+                    : undefined
+                }
               />
             )}
+          {!isSpidDisabled && (
+            <ModuleNavigationAlt
+              title={I18n.t(
+                "features.itWallet.identification.mode.l2.method.spid.title"
+              )}
+              subtitle={I18n.t(`${baseTranslationPath}.method.spid.subtitle`)}
+              testID="Spid"
+              {...(eidReissuing
+                ? { image: <SpidLogo width={50} height={24} /> }
+                : { icon: "spid" })}
+              onPress={handleSpidPress}
+            />
+          )}
+
           {!isCieIdDisabled && (
-            <ModuleNavigation
+            <ModuleNavigationAlt
               title={I18n.t(
                 "features.itWallet.identification.mode.l2.method.cieId.title"
               )}
-              subtitle={I18n.t(
-                "features.itWallet.identification.mode.l2.method.cieId.subtitle"
-              )}
-              icon="device"
+              subtitle={I18n.t(`${baseTranslationPath}.method.cieId.subtitle`)}
+              icon={eidReissuing ? "cie" : "device"}
               testID="CieID"
               onPress={handleCieIdPress}
             />
