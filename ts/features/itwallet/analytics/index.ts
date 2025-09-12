@@ -75,6 +75,12 @@ const isMixPanelCredentialProperty = (
 type TrackCredentialDetail = {
   credential: MixPanelCredential; // MixPanelCredential
   credential_status: string; // ItwPg
+  credential_type?: "multiple" | "unique";
+};
+
+type TrackCredentialPreview = {
+  credential: MixPanelCredential; // MixPanelCredential
+  credential_type?: "multiple" | "unique";
 };
 
 export type OtherMixPanelCredential = "welfare" | "payment_method" | "CGN";
@@ -281,10 +287,12 @@ export const trackShowCredentialsList = () => {
   );
 };
 
-export const trackCredentialPreview = (credential: MixPanelCredential) => {
+export const trackCredentialPreview = (
+  credentialPreview: TrackCredentialPreview
+) => {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_CREDENTIAL_PREVIEW,
-    buildEventProperties("UX", "screen_view", { credential })
+    buildEventProperties("UX", "screen_view", credentialPreview)
   );
 };
 
