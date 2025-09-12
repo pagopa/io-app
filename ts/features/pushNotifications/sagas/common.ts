@@ -1,20 +1,17 @@
 import { call, put, select } from "typed-redux-saga/macro";
-import { areNotificationPermissionsEnabledSelector } from "../store/reducers/environment";
-import { updateSystemNotificationsEnabled } from "../store/actions/environment";
-import { checkNotificationPermissions } from "../utils";
-import { pendingMessageStateSelector } from "../store/reducers/pendingMessage";
-import { clearNotificationPendingMessage } from "../store/actions/pendingMessage";
-import { navigateToMainNavigatorAction } from "../../../store/actions/navigation";
-import { isArchivingDisabledSelector } from "../../messages/store/reducers/archiving";
-import { resetMessageArchivingAction } from "../../messages/store/actions/archiving";
 import NavigationService from "../../../navigation/NavigationService";
-import { navigateToMessageRouterAction } from "../utils/navigation";
+import { navigateToMainNavigatorAction } from "../../../store/actions/navigation";
+import { isTestEnv } from "../../../utils/environment";
+import { handleStoredLinkingUrlIfNeeded } from "../../linking/sagas/utils";
+import { resetMessageArchivingAction } from "../../messages/store/actions/archiving";
+import { isArchivingDisabledSelector } from "../../messages/store/reducers/archiving";
 import { trackNotificationPermissionsStatus } from "../analytics";
-import { storedLinkingUrlSelector } from "../../linking/reducers";
-import { isSendAARLink } from "../../pn/aar/utils/deepLinking";
-import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
-import PN_ROUTES from "../../pn/navigation/routes";
-import { clearLinkingUrl } from "../../linking/actions";
+import { updateSystemNotificationsEnabled } from "../store/actions/environment";
+import { clearNotificationPendingMessage } from "../store/actions/pendingMessage";
+import { areNotificationPermissionsEnabledSelector } from "../store/reducers/environment";
+import { pendingMessageStateSelector } from "../store/reducers/pendingMessage";
+import { checkNotificationPermissions } from "../utils";
+import { navigateToMessageRouterAction } from "../utils/navigation";
 
 export function* checkAndUpdateNotificationPermissionsIfNeeded(
   skipAnalyticsTracking: boolean = false
@@ -57,38 +54,30 @@ export function* updateNotificationPermissionsIfNeeded(
 
 /**
  * this method is used to handle all actions that
- * are triggered when the app is not running, and also need
- * to be handled later on in the app's life cycle.
+ * are triggered when the app is resumed from scratch or transitions from
+ * background to foregraond, and also need to be handled
+ * later on in the app's life cycle.
  *
- * two examples are Universal Links and Push Notifications, which
- * can open the app from a closed state and need to be handled
- * once the app has finished loading/initializing.
+ * two examples are Universal/App Links and Push Notifications, which
+ * can transition the app from background or from a closed state to foreground,
+ *  and need to be handled once the app has finished loading/initializing.
  */
 export function* maybeHandlePendingBackgroundActions(
   shouldResetToMainNavigator: boolean = false
 ) {
   // check if we have a stored linking URL to process
-  const storedLinkingUrl = yield* select(storedLinkingUrlSelector);
-  if (storedLinkingUrl !== undefined) {
-    const shouldNavigateToAAR = yield* select(isSendAARLink, storedLinkingUrl);
-    if (shouldNavigateToAAR) {
-      yield* call(
-        NavigationService.navigate,
-        MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
-        {
-          screen: PN_ROUTES.MAIN,
-          params: {
-            screen: PN_ROUTES.QR_SCAN_FLOW,
-            params: { aarUrl: storedLinkingUrl }
-          }
-        }
-      );
-      yield* put(clearLinkingUrl());
-      return;
-    }
+  if (yield* call(handleStoredLinkingUrlIfNeeded)) {
+    return;
   }
-
   // Check if we have a pending notification message
+  if (yield* call(handlePushNotificationIfNeeded, shouldResetToMainNavigator)) {
+    return;
+  }
+}
+
+function* handlePushNotificationIfNeeded(
+  shouldResetToMainNavigator: boolean = false
+) {
   const pendingMessageState = yield* select(pendingMessageStateSelector);
   if (pendingMessageState) {
     // We have a pending notification message to handle
@@ -120,5 +109,13 @@ export function* maybeHandlePendingBackgroundActions(
         fromNotification: true
       })
     );
+    return true;
   }
+  return false;
 }
+
+export const testable = isTestEnv
+  ? {
+      handlePushNotificationIfNeeded
+    }
+  : undefined;

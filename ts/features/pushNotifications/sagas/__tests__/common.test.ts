@@ -1,13 +1,9 @@
 import { testSaga } from "redux-saga-test-plan";
 import NavigationService from "../../../../navigation/NavigationService";
 import { navigateToMainNavigatorAction } from "../../../../store/actions/navigation";
-import { clearLinkingUrl } from "../../../linking/actions";
-import { storedLinkingUrlSelector } from "../../../linking/reducers";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import { handleStoredLinkingUrlIfNeeded } from "../../../linking/sagas/utils";
 import { resetMessageArchivingAction } from "../../../messages/store/actions/archiving";
 import { isArchivingDisabledSelector } from "../../../messages/store/reducers/archiving";
-import { isSendAARLink } from "../../../pn/aar/utils/deepLinking";
-import PN_ROUTES from "../../../pn/navigation/routes";
 import { trackNotificationPermissionsStatus } from "../../analytics";
 import { updateSystemNotificationsEnabled } from "../../store/actions/environment";
 import { clearNotificationPendingMessage } from "../../store/actions/pendingMessage";
@@ -21,52 +17,49 @@ import { navigateToMessageRouterAction } from "../../utils/navigation";
 import {
   checkAndUpdateNotificationPermissionsIfNeeded,
   maybeHandlePendingBackgroundActions,
+  testable,
   updateNotificationPermissionsIfNeeded
 } from "../common";
 
 describe("maybeHandlePendingBackgroundActions", () => {
-  describe("stored linkinkg url handling", () => {
-    const aarUrl = "https://example.com/aar";
-    it("should navigate to the AAR screen and clear the linking url state when there is a valid AAR url returned by the linking selector", () => {
-      testSaga(maybeHandlePendingBackgroundActions, false)
-        .next()
-        .select(storedLinkingUrlSelector)
-        .next(aarUrl)
-        .select(isSendAARLink, aarUrl)
-        .next(true)
-        .call(NavigationService.navigate, MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-          screen: PN_ROUTES.MAIN,
-          params: {
-            screen: PN_ROUTES.QR_SCAN_FLOW,
-            params: { aarUrl }
+  const pushHandler = testable?.handlePushNotificationIfNeeded;
+
+  describe("main functionality", () => {
+    const generateTestName = (
+      linkingUrlHandled: boolean,
+      pushNotifHandled: boolean
+    ) =>
+      `when a linking url is ${
+        linkingUrlHandled ? "not " : ""
+      }queued to be handled,and a push notification ${
+        pushNotifHandled ? "is" : "isn't"
+      } queued to be handled, it should terminate after handling the ${
+        linkingUrlHandled ? "push notification" : "linking url"
+      }`;
+
+    [true, false].forEach(linkingUrlHandled =>
+      [true, false].forEach(pushNotifHandled =>
+        it(generateTestName(linkingUrlHandled, pushNotifHandled), () => {
+          if (pushHandler === undefined) {
+            fail(
+              "testable export does not contain handlePushNotificationIfNeeded"
+            );
+          }
+          const saga = testSaga(maybeHandlePendingBackgroundActions, false)
+            .next()
+            .call(handleStoredLinkingUrlIfNeeded)
+            .next(linkingUrlHandled);
+          if (linkingUrlHandled) {
+            saga.isDone();
+          } else {
+            saga.call(pushHandler, false).next(pushNotifHandled).isDone();
           }
         })
-        .next()
-        .put(clearLinkingUrl())
-        .next()
-        .isDone();
-    });
-    it("should not do any navigation or clear the linking url state when there is an unrecognized url stored in the linking selector", () => {
-      testSaga(maybeHandlePendingBackgroundActions, false)
-        .next()
-        .select(storedLinkingUrlSelector)
-        .next(aarUrl)
-        .select(isSendAARLink, aarUrl)
-        .next(false)
-        .select(pendingMessageStateSelector); // this selector call marks the start of the next test suite
-      // from here on, the saga should behave as in the "handle pending notification messages" test suite
-    });
-    it("should do nothing if no linking url is stored", () => {
-      testSaga(maybeHandlePendingBackgroundActions, false)
-        .next()
-        .select(storedLinkingUrlSelector)
-        .next(undefined)
-        .select(pendingMessageStateSelector); // this selector call marks the start of the next test suite
-      // from here on, the saga should behave as in the "handle pending notification messages" test suite
-    });
+      )
+    );
   });
 
-  describe("handle pending notification messages", () => {
+  describe("handlePushNotificationIfNeeded", () => {
     const mockedPendingMessageState: PendingMessageState = {
       id: "M01",
       foreground: true
@@ -78,10 +71,11 @@ describe("maybeHandlePendingBackgroundActions", () => {
         fromNotification: true
       });
 
-      testSaga(maybeHandlePendingBackgroundActions, false)
+      if (pushHandler === undefined) {
+        fail("testable export does not contain handlePushNotificationIfNeeded");
+      }
+      testSaga(pushHandler, false)
         .next()
-        .select(storedLinkingUrlSelector)
-        .next(undefined)
         .select(pendingMessageStateSelector)
         .next(mockedPendingMessageState)
         .put(clearNotificationPendingMessage())
@@ -102,10 +96,11 @@ describe("maybeHandlePendingBackgroundActions", () => {
         fromNotification: true
       });
 
-      testSaga(maybeHandlePendingBackgroundActions, true)
+      if (pushHandler === undefined) {
+        fail("testable export does not contain pushHandler");
+      }
+      testSaga(pushHandler, true)
         .next()
-        .select(storedLinkingUrlSelector)
-        .next(undefined)
         .select(pendingMessageStateSelector)
         .next(mockedPendingMessageState)
         .put(clearNotificationPendingMessage())
@@ -128,10 +123,11 @@ describe("maybeHandlePendingBackgroundActions", () => {
         fromNotification: true
       });
 
-      testSaga(maybeHandlePendingBackgroundActions, false)
+      if (pushHandler === undefined) {
+        fail("testable export does not contain pushHandler");
+      }
+      testSaga(pushHandler, false)
         .next()
-        .select(storedLinkingUrlSelector)
-        .next(undefined)
         .select(pendingMessageStateSelector)
         .next(mockedPendingMessageState)
         .put(clearNotificationPendingMessage())
@@ -149,10 +145,11 @@ describe("maybeHandlePendingBackgroundActions", () => {
     });
 
     it("does nothing if there are not pending messages", () => {
-      testSaga(maybeHandlePendingBackgroundActions, false)
+      if (pushHandler === undefined) {
+        fail("testable export does not contain pushHandler");
+      }
+      testSaga(pushHandler, false)
         .next()
-        .select(storedLinkingUrlSelector)
-        .next(undefined)
         .select(pendingMessageStateSelector)
         .next(null)
         .next()
