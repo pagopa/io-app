@@ -39,6 +39,25 @@ export const ItwL2IdentificationModeSelectionScreen = (
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const { eidReissuing } = props.route.params;
 
+  const baseTranslationPath = useMemo(
+    () =>
+      eidReissuing
+        ? "features.itWallet.identification.mode.l2.reissuing"
+        : "features.itWallet.identification.mode.l2",
+    [eidReissuing]
+  );
+
+  const { title, description, section } = useMemo(
+    () => ({
+      title: I18n.t(`${baseTranslationPath}.title`),
+      description: I18n.t(`${baseTranslationPath}.description`),
+      section: I18n.t(`${baseTranslationPath}.section`, {
+        defaultValue: ""
+      })
+    }),
+    [baseTranslationPath]
+  );
+
   useFocusEffect(
     useCallback(() => {
       if (eidReissuing) {
@@ -52,30 +71,6 @@ export const ItwL2IdentificationModeSelectionScreen = (
       trackItWalletIDMethod("L2");
     }, [])
   );
-
-  const { title, description, section } = useMemo(() => {
-    if (eidReissuing) {
-      return {
-        title: I18n.t(
-          "features.itWallet.identification.mode.l2.reissuing.title"
-        ),
-        description: I18n.t(
-          "features.itWallet.identification.mode.l2.reissuing.description"
-        ),
-        section: I18n.t(
-          "features.itWallet.identification.mode.l2.reissuing.section"
-        )
-      };
-    } else {
-      return {
-        title: I18n.t("features.itWallet.identification.mode.l2.title"),
-        description: I18n.t(
-          "features.itWallet.identification.mode.l2.description"
-        ),
-        section: undefined
-      };
-    }
-  }, [eidReissuing]);
 
   const handleSpidPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "spid" });
@@ -139,9 +134,7 @@ export const ItwL2IdentificationModeSelectionScreen = (
                   "features.itWallet.identification.mode.l2.method.ciePin.title"
                 )}
                 subtitle={I18n.t(
-                  eidReissuing
-                    ? "features.itWallet.identification.mode.l2.method.ciePin.subtitle-reissuing"
-                    : "features.itWallet.identification.mode.l2.method.ciePin.subtitle"
+                  `${baseTranslationPath}.method.ciePin.subtitle`
                 )}
                 testID="CiePin"
                 icon={eidReissuing ? "securityPad" : "fiscalCodeIndividual"}
@@ -150,7 +143,7 @@ export const ItwL2IdentificationModeSelectionScreen = (
                   eidReissuing
                     ? {
                         text: I18n.t(
-                          "features.itWallet.identification.mode.l2.method.ciePin.badge"
+                          "features.itWallet.identification.mode.l2.reissuing.method.ciePin.badge"
                         ),
                         variant: "highlight",
                         outline: false
@@ -164,11 +157,7 @@ export const ItwL2IdentificationModeSelectionScreen = (
               title={I18n.t(
                 "features.itWallet.identification.mode.l2.method.spid.title"
               )}
-              subtitle={I18n.t(
-                eidReissuing
-                  ? "features.itWallet.identification.mode.l2.method.spid.subtitle-reissuing"
-                  : "features.itWallet.identification.mode.l2.method.spid.subtitle"
-              )}
+              subtitle={I18n.t(`${baseTranslationPath}.method.spid.subtitle`)}
               testID="Spid"
               {...(eidReissuing
                 ? { image: <SpidLogo width={50} height={24} /> }
@@ -182,11 +171,7 @@ export const ItwL2IdentificationModeSelectionScreen = (
               title={I18n.t(
                 "features.itWallet.identification.mode.l2.method.cieId.title"
               )}
-              subtitle={I18n.t(
-                eidReissuing
-                  ? "features.itWallet.identification.mode.l2.method.cieId.subtitle-reissuing"
-                  : "features.itWallet.identification.mode.l2.method.cieId.subtitle"
-              )}
+              subtitle={I18n.t(`${baseTranslationPath}.method.cieId.subtitle`)}
               icon={eidReissuing ? "cie" : "device"}
               testID="CieID"
               onPress={handleCieIdPress}

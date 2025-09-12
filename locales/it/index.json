@@ -4513,24 +4513,32 @@
             "reissuing": {
               "title": "Scegli come identificarti",
               "description": "È un passaggio necessario per continuare ad usare Documenti su IO.",
-              "section": "Verifica di identità"
+              "section": "Verifica di identità",
+              "method": {
+                "spid": {
+                  "subtitle": "Dovrai usare credenziali e app (o SMS)"
+                },
+                "ciePin": {
+                  "subtitle": "Dovrai usare la Carta di Identità Elettronica (CIE) e inserire il suo PIN di 8 cifre.",
+                  "badge": "scelta consigliata"
+                },
+                "cieId": {
+                  "subtitle": "Dovrai usare credenziali e app CieID"
+                }
+              }
             },
             "method": {
               "spid": {
                 "title": "Usa SPID",
-                "subtitle": "Necessarie credenziali e app (o SMS)",
-                "subtitle-reissuing": "Dovrai usare credenziali e app (o SMS)"
+                "subtitle": "Necessarie credenziali e app (o SMS)"
               },
               "ciePin": {
                 "title": "Usa CIE + PIN",
-                "subtitle": "Usa la Carta di Identità Elettronica e il suo PIN a 8 cifre",
-                "subtitle-reissuing": "Dovrai usare la Carta di Identità Elettronica (CIE) e inserire il suo PIN di 8 cifre.",
-                "badge": "scelta consigliata"
+                "subtitle": "Usa la Carta di Identità Elettronica e il suo PIN a 8 cifre"
               },
               "cieId": {
                 "title": "Usa l'app CieID",
-                "subtitle": "Necessarie credenziali e app CieID",
-                "subtitle-reissuing": "Dovrai usare credenziali e app CieID"
+                "subtitle": "Necessarie credenziali e app CieID"
               }
             }
           },
