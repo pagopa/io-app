@@ -4301,8 +4301,7 @@
         "eid": "Identità Digitale",
         "mdl": "Patente di guida",
         "dc": "Carta Europea della Disabilità",
-        "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
-        "dgc": "Attestati di Laurea, Dottorato e Master"
+        "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia"
       },
       "wallet": {
         "active": "Attivo",
@@ -5823,6 +5822,10 @@
           "ON_EVALUATION": {
             "title": "L’ente sta valutando la tua domanda d’adesione",
             "subtitle": "Quando pronto, riceverai l’esito tramite un messaggio in app."
+          },
+          "PAYMENT_GENERIC_ERROR": {
+            "title": "Non siamo riusciti a completare l’operazione",
+            "subtitle": "Siamo già a lavoro per risolvere.  Riprova tra un po’."
           }
         }
       },
