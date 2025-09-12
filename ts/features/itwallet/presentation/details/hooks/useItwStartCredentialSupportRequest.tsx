@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import {
   CREDENTIALS_MAP,
   trackWalletCredentialSupport
-} from "../../../analytics/index.ts";
+} from "../../../analytics";
 import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.ts";
 import { useStartSupportRequest } from "../../../../../hooks/useStartSupportRequest.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
