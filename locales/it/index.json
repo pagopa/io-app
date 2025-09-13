@@ -5573,6 +5573,14 @@
           "enrollment": "Errore nel collegamento dell'iniziativa, riprova.",
           "removal": "Errore nella rimozione dell'iniziativa, riprova."
         }
+      },
+      "initiativeOnboardedStatus": {
+        "ON_WAITING_LIST": {
+          "label": "Verifica in corso"
+        },
+        "ON_EVALUATION": {
+          "label": "Verifica in corso"
+        }
       }
     },
     "initiative": {
