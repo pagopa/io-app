@@ -36,6 +36,7 @@ import { featuredInstitutionsGet, featuredServicesGet } from "../store/actions";
 import { EmailNotificationBanner } from "../components/EmailNotificationBanner";
 import { getListItemAccessibilityLabelCount } from "../../../../utils/accessibility";
 import * as analytics from "../../common/analytics";
+import { IdPayInitiativeWaitingList } from "../../../idpay/wallet/components/IdPayInitiativeWaitingList";
 
 export const ServicesHomeScreen = () => {
   const dispatch = useIODispatch();
@@ -100,6 +101,7 @@ export const ServicesHomeScreen = () => {
         <EmailNotificationBanner />
         <Animated.View layout={LinearTransition.duration(300)}>
           <VStack space={16}>
+            <IdPayInitiativeWaitingList />
             <FeaturedServiceList />
             <FeaturedInstitutionList />
             <ListItemHeader
