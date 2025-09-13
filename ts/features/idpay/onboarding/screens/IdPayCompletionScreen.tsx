@@ -8,7 +8,10 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
-import { setIdPayOnboardingSucceeded } from "../../wallet/store/actions";
+import {
+  idPayInitiativeWaitingListGet,
+  setIdPayOnboardingSucceeded
+} from "../../wallet/store/actions";
 
 const IdPayCompletionScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
@@ -22,6 +25,7 @@ const IdPayCompletionScreen = () => {
 
   const handleClosePress = () => {
     dispatch(setIdPayOnboardingSucceeded(true));
+    dispatch(idPayInitiativeWaitingListGet.request());
     machine.send({ type: "close" });
   };
 
