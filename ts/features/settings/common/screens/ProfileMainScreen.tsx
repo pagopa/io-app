@@ -50,6 +50,7 @@ import {
   trackPressLogoutConfirmFromIO,
   trackPressLogoutFromIO
 } from "../analytics";
+import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
 
 const consecutiveTapRequired = 4;
 const RESET_COUNTER_TIMEOUT = 2000 as Millisecond;
@@ -177,6 +178,15 @@ const ProfileMainScreenFC = () => {
         onPress: () =>
           navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
             screen: SETTINGS_ROUTES.PROFILE_PREFERENCES_HOME
+          })
+      },
+      {
+        // IT Wallet
+        value: "IT-Wallet",
+        description: "Gestisci il tuo portafoglio digitale",
+        onPress: () =>
+          navigation.navigate(ITW_ROUTES.MAIN, {
+            screen: ITW_ROUTES.SETTINGS
           })
       },
       {
