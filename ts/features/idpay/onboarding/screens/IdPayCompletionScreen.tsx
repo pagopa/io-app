@@ -9,9 +9,12 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";
 import { isLoadingSelector } from "../../common/machine/selectors";
-import { setIdPayOnboardingSucceeded } from "../../wallet/store/actions";
 import { trackIDPayOnboardingSuccess } from "../analytics";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
+import {
+  idPayInitiativeWaitingListGet,
+  setIdPayOnboardingSucceeded
+} from "../../wallet/store/actions";
 import { selectInitiative } from "../machine/selectors";
 
 const IdPayCompletionScreen = () => {
@@ -39,6 +42,7 @@ const IdPayCompletionScreen = () => {
 
   const handleClosePress = () => {
     dispatch(setIdPayOnboardingSucceeded(true));
+    dispatch(idPayInitiativeWaitingListGet.request());
     machine.send({ type: "close" });
   };
 
