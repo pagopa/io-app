@@ -1,15 +1,12 @@
 import { FlatList } from "react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
-  Badge,
   Divider,
   ListItemHeader,
   ListItemInfo,
-  ListItemNav,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { constVoid } from "fp-ts/lib/function";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
@@ -52,10 +49,7 @@ export const IdPayInitiativeWaitingList = () => {
       renderItem={({ item }) => (
         <ListItemInfo
           icon="hourglass"
-          topElement={{
-            type: "badge",
-            componentProps: getInitiativeStatusBadge(item.status)
-          }}
+          topElement={getInitiativeStatusBadge(item.status)}
           value={item.initiativeName}
         />
       )}
@@ -65,15 +59,18 @@ export const IdPayInitiativeWaitingList = () => {
 
 const getInitiativeStatusBadge = (
   initiativeStatus: InitiativeOnboardingStatus
-): ComponentProps<typeof Badge> => {
+): ListItemInfo["topElement"] | undefined => {
   switch (initiativeStatus) {
     case InitiativeOnboardingStatus.ON_WAITING_LIST:
     case InitiativeOnboardingStatus.ON_EVALUATION: {
       return {
-        variant: "warning",
-        text: I18n.t(
-          "idpay.wallet.initiativeOnboardedStatus.ON_WAITING_LIST.label"
-        )
+        type: "badge",
+        componentProps: {
+          variant: "warning",
+          text: I18n.t(
+            "idpay.wallet.initiativeOnboardedStatus.ON_WAITING_LIST.label"
+          )
+        }
       };
     }
     default: {
