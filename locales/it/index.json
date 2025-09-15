@@ -5576,6 +5576,15 @@
           "enrollment": "Errore nel collegamento dell'iniziativa, riprova.",
           "removal": "Errore nella rimozione dell'iniziativa, riprova."
         }
+      },
+      "initiativeOnboardedStatus": {
+        "header": "Le mie richieste",
+        "ON_WAITING_LIST": {
+          "label": "Verifica in corso"
+        },
+        "ON_EVALUATION": {
+          "label": "Verifica in corso"
+        }
       }
     },
     "initiative": {
@@ -5854,7 +5863,7 @@
         "prerequisites": {
           "info": {
             "header": "Come avviene la verifica?",
-            "body": "Comunichiamo direttamente con l’Ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**. In questo modo non devi produrre alcuna autocertificazione.",
+            "body": "Comunichiamo direttamente con l’ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**. In questo modo non devi produrre alcuna autocertificazione.",
             "understoodCTA": "Ho capito"
           }
         },
@@ -5864,7 +5873,7 @@
           "ISEE": "ISEE",
           "BIRTHDAY": "Data di nascita",
           "RESIDENCE": "Residenza",
-          "FAMILY_UNIT": "Nucleo Familiare"
+          "FAMILY_UNIT": "Famiglia anagrafica"
         },
         "operator": {
           "EQ": "{{value}}",
