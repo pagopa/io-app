@@ -33,7 +33,9 @@ export const IdPayInitiativeWaitingList = () => {
   const renderListHeaderComponent = () => (
     <>
       <VSpacer size={16} />
-      <ListItemHeader label="Le mie richieste" />
+      <ListItemHeader
+        label={I18n.t("idpay.wallet.initiativeOnboardedStatus.header")}
+      />
     </>
   );
 

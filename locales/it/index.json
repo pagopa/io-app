@@ -5578,6 +5578,7 @@
         }
       },
       "initiativeOnboardedStatus": {
+        "header": "Le mie richieste",
         "ON_WAITING_LIST": {
           "label": "Verifica in corso"
         },
