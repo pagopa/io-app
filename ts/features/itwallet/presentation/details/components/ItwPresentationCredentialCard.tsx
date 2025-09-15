@@ -32,7 +32,7 @@ type Props = {
 const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const navigation = useIONavigation();
   const [isFlipped, setIsFlipped] = useState(false);
-  const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
@@ -40,10 +40,10 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
 
   const handleFlipButtonPress = useCallback(() => {
     trackWalletShowBack(
-      getMixPanelCredential(credential.credentialType, withL3Design)
+      getMixPanelCredential(credential.credentialType, isItwL3)
     );
     setIsFlipped(_ => !_);
-  }, [credential.credentialType, withL3Design]);
+  }, [credential.credentialType, isItwL3]);
 
   const valuesHidden = useIOSelector(itwIsClaimValueHiddenSelector);
   const itwFeaturesEnabled = useItwFeaturesEnabled(credential);
