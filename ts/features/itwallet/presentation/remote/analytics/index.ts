@@ -55,10 +55,10 @@ export function trackItwRemoteInvalidAuthResponseBottomSheet() {
   );
 }
 
-export function trackItwRemotePresentationCompleted(redirect_uri: boolean) {
+export function trackItwRemotePresentationCompleted(redirect_url: boolean) {
   void mixpanelTrack(
     ITW_REMOTE_SCREENVIEW_EVENTS.ITW_REMOTE_UX_SUCCESS,
-    buildEventProperties("UX", "screen_view", { redirect_uri })
+    buildEventProperties("UX", "screen_view", { redirect_url })
   );
 }
 
