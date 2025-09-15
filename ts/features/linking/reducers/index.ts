@@ -1,6 +1,7 @@
 import { getType } from "typesafe-actions";
-import { storeLinkingUrl } from "../actions/linking";
-import { Action } from "../actions/types";
+import { clearLinkingUrl, storeLinkingUrl } from "../actions";
+import { Action } from "../../../store/actions/types";
+import { GlobalState } from "../../../store/reducers/types";
 
 export type BackgroundLinkingState = {
   linkingUrl?: string;
@@ -18,6 +19,11 @@ export const backgroundLinkingReducer = (
         ...state,
         linkingUrl: action.payload
       };
+    case getType(clearLinkingUrl):
+      return INITIAL_STATE;
   }
   return state;
 };
+
+export const storedLinkingUrlSelector = (state: GlobalState) =>
+  state.features.backgroundLinking.linkingUrl;
