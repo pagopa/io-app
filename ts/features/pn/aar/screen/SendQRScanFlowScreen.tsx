@@ -1,8 +1,8 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
-import { SendQRScanRedirectComponent } from "../components/SendQRScanRedirectComponent";
+import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
 import { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
-import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
+import { SendQRScanFlowHandlerComponent } from "../components/SendQRScanRedirectComponent";
 
 export type SendQRScanFlowScreenProps = {
   aarUrl: string;
@@ -15,7 +15,7 @@ export const SendQRScanFlowScreen = () => {
   const { aarUrl } = route.params;
 
   const SendQRScanRedirectScreenWithUpdate = withAppRequiredUpdate(
-    SendQRScanRedirectComponent,
+    SendQRScanFlowHandlerComponent,
     "send"
   );
   return <SendQRScanRedirectScreenWithUpdate aarUrl={aarUrl} />;

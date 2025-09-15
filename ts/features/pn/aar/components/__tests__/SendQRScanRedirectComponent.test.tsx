@@ -7,7 +7,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as URLUTILS from "../../../../../utils/url";
-import { SendQRScanRedirectComponent } from "../SendQRScanRedirectComponent";
+import { SendQRScanFlowHandlerComponent } from "../SendQRScanRedirectComponent";
 import PN_ROUTES from "../../../navigation/routes";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
@@ -215,7 +215,7 @@ function renderComponent(
     })
   } as GlobalState;
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    () => <SendQRScanRedirectComponent aarUrl={aarUrl} />,
+    () => <SendQRScanFlowHandlerComponent aarUrl={aarUrl} />,
     PN_ROUTES.QR_SCAN_FLOW,
     {},
     createStore(appReducer, globalState as any)

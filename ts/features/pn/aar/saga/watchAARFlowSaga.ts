@@ -16,7 +16,11 @@ function* aARFlowMasterSaga(
 
   switch (nextState.type) {
     case sendAARFlowStates.fetchingQRData:
-      yield* fetchQrCodeSaga(nextState.qrCode, sendAARClient, sessionToken);
+      yield* fetchQrCodeSaga(
+        nextState.qrCode,
+        sendAARClient.checkQRCode,
+        sessionToken
+      );
       break;
   }
 }

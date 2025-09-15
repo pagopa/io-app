@@ -11,7 +11,7 @@ import {
 
 export function* fetchQrCodeSaga(
   qrcode: string,
-  sendAARClient: SendAARClient,
+  fetchQRCode: SendAARClient["checkQRCode"],
   sessionToken: SessionToken
 ) {
   const currentState = yield* select(currentAARFlowData);
@@ -21,7 +21,7 @@ export function* fetchQrCodeSaga(
   }
 
   const result = yield* call(() =>
-    sendAARClient.checkQRCode({
+    fetchQRCode({
       Bearer: sessionToken,
       body: {
         qrcode
@@ -31,21 +31,23 @@ export function* fetchQrCodeSaga(
 
   if (E.isRight(result)) {
     const data = result.right;
-    if (data.status === 200) {
-      const nextState: AARFlowState = {
-        type: sendAARFlowStates.fetchingNotificationData,
-        iun: data.value.iun,
-        fullNameDestinatario: data.value.denomination
-      };
-      yield* put(setAarFlowState(nextState));
-    } else if (data.status === 403) {
-      // TODO
-    } else {
-      const nextState: AARFlowState = {
-        type: "ko",
-        previousState: currentState
-      };
-      yield* put(setAarFlowState(nextState));
+    switch (data.status) {
+      case 200:
+        const { iun, denomination } = data.value;
+        const nextState: AARFlowState = {
+          type: sendAARFlowStates.fetchingNotificationData,
+          iun,
+          fullNameDestinatario: denomination
+        };
+        yield* put(setAarFlowState(nextState));
+        break;
+      default:
+        const errorState: AARFlowState = {
+          type: "ko",
+          previousState: currentState
+        };
+        yield* put(setAarFlowState(errorState));
+        break;
     }
   } else {
     const nextState: AARFlowState = {
