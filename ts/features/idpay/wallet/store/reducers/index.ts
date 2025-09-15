@@ -31,7 +31,7 @@ export type IdPayWalletState = {
   // this will be populated on selection and reset when not loading and
   // we have a response from BE
   onboardingSucceeded: boolean;
-  initiativeWaitinglist: pot.Pot<ListUsersOnboardingStatusDTO, NetworkError>;
+  initiativeWaitingList: pot.Pot<ListUsersOnboardingStatusDTO, NetworkError>;
 };
 
 const INITIAL_STATE: IdPayWalletState = {
@@ -39,7 +39,7 @@ const INITIAL_STATE: IdPayWalletState = {
   initiativesWithInstrument: pot.none,
   initiativesAwaitingStatusUpdate: {},
   onboardingSucceeded: false,
-  initiativeWaitinglist: pot.none
+  initiativeWaitingList: pot.none
 };
 
 const reducer = (
@@ -139,15 +139,15 @@ const reducer = (
     case getType(idPayInitiativeWaitingListGet.request):
       return {
         ...state,
-        initiativeWaitinglist: pot.toLoading(state.initiativeWaitinglist)
+        initiativeWaitingList: pot.toLoading(state.initiativeWaitingList)
       };
     case getType(idPayInitiativeWaitingListGet.success):
-      return { ...state, initiativeWaitinglist: pot.some(action.payload) };
+      return { ...state, initiativeWaitingList: pot.some(action.payload) };
     case getType(idPayInitiativeWaitingListGet.failure):
       return {
         ...state,
-        initiativeWaitinglist: pot.toError(
-          state.initiativeWaitinglist,
+        initiativeWaitingList: pot.toError(
+          state.initiativeWaitingList,
           action.payload
         )
       };
@@ -239,7 +239,7 @@ export const isIdPayOnboardingSucceededSelector = createSelector(
 
 export const idPayInitiativeWaitingListSelector = createSelector(
   selectIdPayWallet,
-  wallet => wallet.initiativeWaitinglist
+  wallet => wallet.initiativeWaitingList
 );
 
 export default reducer;

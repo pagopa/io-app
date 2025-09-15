@@ -35,7 +35,7 @@ const renderComponent = (paymentMethod: WalletInfo, isIdPayEnabled = false) => {
             onboardingSucceeded: false,
             initiativesAwaitingStatusUpdate: {},
             initiatives: pot.none,
-            initiativeWaitinglist: pot.none,
+            initiativeWaitingList: pot.none,
             initiativesWithInstrument: pot.some({
               brand: "",
               idWallet: "",
