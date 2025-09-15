@@ -114,6 +114,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "kind": "PotNone",
     },
     "wallet": {
+      "initiativeWaitinglist": {
+        "kind": "PotNone",
+      },
       "initiatives": {
         "kind": "PotNone",
       },
