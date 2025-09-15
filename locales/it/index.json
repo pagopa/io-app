@@ -4364,6 +4364,9 @@
         "walletNotAvailable": {
           "message": "Abbiamo avuto un problema nel recuperare i tuoi documenti.",
           "cta": "Chiudi e riapri l'app per riprovare."
+        },
+        "featureUnavailable": {
+          "title": "In arrivo: questa funzione sarà disponibile a breve"
         }
       },
       "verifiableCredentials": {
