@@ -3,6 +3,7 @@ import { useCallback, useMemo } from "react";
 import { View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import I18n from "i18next";
+import { useFocusEffect } from "@react-navigation/native";
 import { Institution } from "../../../../../definitions/services/Institution";
 import SectionStatusComponent from "../../../../components/SectionStatus";
 import { useHeaderFirstLevel } from "../../../../hooks/useHeaderFirstLevel";
@@ -15,6 +16,12 @@ import * as analytics from "../../common/analytics";
 
 export const ServicesHomeScreen = () => {
   const navigation = useIONavigation();
+
+  useFocusEffect(
+    useCallback(() => {
+      analytics.trackServicesHome();
+    }, [])
+  );
 
   /* CODE RELATED TO THE HEADER -- START */
 

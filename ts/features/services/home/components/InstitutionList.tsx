@@ -8,7 +8,6 @@ import {
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
-import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo } from "react";
 import { ListRenderItemInfo, View } from "react-native";
 import Animated, {
@@ -52,12 +51,6 @@ export const InstitutionList = ({
     isUpdating,
     refresh
   } = useInstitutionsFetcher();
-
-  useFocusEffect(
-    useCallback(() => {
-      analytics.trackServicesHome();
-    }, [])
-  );
 
   useEffect(() => {
     if (!isFirstRender && isError) {
