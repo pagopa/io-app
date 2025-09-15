@@ -13,7 +13,8 @@ import {
   itwSetWalletInstanceRemotelyActive,
   itwUnflagCredentialAsRequested,
   itwSetWalletUpgradeMDLDetailsBannerHidden,
-  itwSetItwSimplifiedActivationRequired
+  itwSetItwSimplifiedActivationRequired,
+  itwResetItwSimplifiedActivationRequired
 } from "../actions/preferences";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
@@ -165,6 +166,11 @@ const reducer = (
         isItwSimplifiedActivationRequired:
           state.authLevel === "L3" && !state.isFiscalCodeWhitelisted
       };
+
+    case getType(itwResetItwSimplifiedActivationRequired): {
+      const { isItwSimplifiedActivationRequired: _, ...rest } = state;
+      return rest;
+    }
 
     default:
       return state;

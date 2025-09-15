@@ -6,7 +6,10 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { isItwCredential } from "../../../common/utils/itwCredentialUtils";
 import { itwCredentialsEidSelector } from "../../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../../issuance/store/selectors";
-import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences";
+import {
+  itwIsL3EnabledSelector,
+  itwIsSimplifiedActivationRequired
+} from "../../../common/store/selectors/preferences";
 
 /**
  * The wallet instance is not active and there is no associated integrity key tag.
@@ -46,9 +49,17 @@ export const itwLifecycleIsITWalletValidSelector = createSelector(
   [
     itwIntegrityKeyTagSelector,
     itwCredentialsEidSelector,
-    itwIsL3EnabledSelector
+    itwIsL3EnabledSelector,
+    itwIsSimplifiedActivationRequired
   ],
-  (integrityKeyTagOption, eidOption, isWhitelisted) =>
+  (
+    integrityKeyTagOption,
+    eidOption,
+    isWhitelisted,
+    isSimplifiedActivationRequired
+  ) =>
+    isWhitelisted &&
+    !isSimplifiedActivationRequired &&
     pipe(
       sequenceS(O.Monad)({
         eid: eidOption,
@@ -56,5 +67,5 @@ export const itwLifecycleIsITWalletValidSelector = createSelector(
       }),
       O.map(({ eid }) => isItwCredential(eid.credential)),
       O.getOrElse(() => false)
-    ) && isWhitelisted
+    )
 );

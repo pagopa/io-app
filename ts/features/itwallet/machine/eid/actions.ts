@@ -13,6 +13,7 @@ import {
   updateITWStatusAndPIDProperties
 } from "../../analytics";
 import {
+  itwResetItwSimplifiedActivationRequired,
   itwSetAuthLevel,
   itwSetItwSimplifiedActivationRequired
 } from "../../common/store/actions/preferences";
@@ -278,5 +279,9 @@ export const createEidIssuanceActionsImplementation = (
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     // Save the auth level in the preferences
     store.dispatch(itwSetAuthLevel(context.identification?.level));
+  },
+
+  resetItwSimplifiedActivationRequired: () => {
+    store.dispatch(itwResetItwSimplifiedActivationRequired());
   }
 });

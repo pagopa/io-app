@@ -71,6 +71,7 @@ export const itwEidIssuanceMachine = setup({
     storeEidCredential: notImplemented,
     handleSessionExpired: notImplemented,
     resetWalletInstance: notImplemented,
+    resetItwSimplifiedActivationRequired: notImplemented,
 
     /**
      * Analytics
@@ -360,7 +361,8 @@ export const itwEidIssuanceMachine = setup({
           },
           {
             guard: and(["isUpgrade", "isEligibleForItwSimplifiedActivation"]),
-            target: "#itwEidIssuanceMachine.Success"
+            target: "#itwEidIssuanceMachine.Success",
+            actions: ["resetItwSimplifiedActivationRequired"]
           },
           { target: "UserIdentification" }
         ],
