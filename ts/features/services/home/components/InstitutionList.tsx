@@ -24,6 +24,7 @@ import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
 import { featuredInstitutionsGet, featuredServicesGet } from "../store/actions";
 import * as analytics from "../../common/analytics";
+import { IdPayInitiativeWaitingList } from "../../../idpay/wallet/components/IdPayInitiativeWaitingList";
 import { FeaturedInstitutionList } from "./FeaturedInstitutionList";
 import { FeaturedServiceList } from "./FeaturedServiceList";
 import { EmailNotificationBanner } from "./EmailNotificationBanner";
@@ -93,6 +94,7 @@ export const InstitutionList = ({
         <EmailNotificationBanner />
         <Animated.View layout={LinearTransition.duration(300)}>
           <VStack space={16}>
+            <IdPayInitiativeWaitingList />
             <FeaturedServiceList />
             <FeaturedInstitutionList />
             <ListItemHeader

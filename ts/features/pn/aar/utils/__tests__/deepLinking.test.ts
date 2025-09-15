@@ -1,6 +1,10 @@
+import * as NAV_SRV from "../../../../../navigation/NavigationService";
 import * as REMOTE_CONFIG from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { isSendAARLink } from "../deepLinking";
+import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
+import PN_ROUTES from "../../../navigation/routes";
+import * as REDUCERS from "../../store/reducers";
+import { isSendAARLink, navigateToSendAarFlow } from "../deepLinking";
 const testRegex = "^\\s*https:\\/\\/example\\.com\\/aar\\/.*";
 describe("DeepLinking utils", () => {
   describe("isSendAARLink", () => {
@@ -25,5 +29,38 @@ describe("DeepLinking utils", () => {
       const result = isSendAARLink({} as GlobalState, url);
       expect(result).toBe(false);
     });
+  });
+  describe("navigateToSendAarFlow", () => {
+    [true, false].forEach(isAAREnabled =>
+      it(`should ${
+        isAAREnabled ? "not " : ""
+      }navigate to the AAR screen when aar ${
+        isAAREnabled ? "is" : "isn't"
+      } enabled`, () => {
+        const mockNav = jest.fn();
+        const aarUrl = "www.example.com";
+        jest
+          .spyOn(REDUCERS, "isAAREnabled")
+          .mockImplementation(() => isAAREnabled);
+        jest.spyOn(NAV_SRV.default, "navigate").mockImplementation(mockNav);
+
+        navigateToSendAarFlow({} as GlobalState, aarUrl);
+        if (isAAREnabled) {
+          expect(mockNav).toHaveBeenCalledTimes(1);
+          expect(mockNav).toHaveBeenCalledWith(
+            MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
+            {
+              screen: PN_ROUTES.MAIN,
+              params: {
+                screen: PN_ROUTES.QR_SCAN_FLOW,
+                params: { aarUrl }
+              }
+            }
+          );
+        } else {
+          expect(mockNav).toHaveBeenCalledTimes(0);
+        }
+      })
+    );
   });
 });

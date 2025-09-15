@@ -5564,6 +5564,15 @@
           "enrollment": "Errore nel collegamento dell'iniziativa, riprova.",
           "removal": "Errore nella rimozione dell'iniziativa, riprova."
         }
+      },
+      "initiativeOnboardedStatus": {
+        "header": "My requests",
+        "ON_WAITING_LIST": {
+          "label": "On evaluation"
+        },
+        "ON_EVALUATION": {
+          "label": "On evaluation"
+        }
       }
     },
     "initiative": {
@@ -5842,7 +5851,7 @@
         "prerequisites": {
           "info": {
             "header": "Come avviene la verifica?",
-            "body": "Comunichiamo direttamente con l’Ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**. In questo modo non devi produrre alcuna autocertificazione.",
+            "body": "Comunichiamo direttamente con l’ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**. In questo modo non devi produrre alcuna autocertificazione.",
             "understoodCTA": "Ho capito"
           }
         },
