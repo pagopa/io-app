@@ -1,18 +1,15 @@
 import * as LINKING from "react-native";
 import configureMockStore from "redux-mock-store";
+import * as UTIL_GUARDS from "../../features/authentication/common/store/utils/guards";
+import { storeLinkingUrl } from "../../features/linking/actions";
+import { resetMessageArchivingAction } from "../../features/messages/store/actions/archiving";
+import * as ARCHIVING_SELECTORS from "../../features/messages/store/reducers/archiving";
+import * as DEEP_LINKING from "../../features/pn/aar/utils/deepLinking";
+import * as UTM_LINK from "../../features/utmLink";
 import { applicationChangeState } from "../../store/actions/application";
 import { appReducer } from "../../store/reducers";
 import { GlobalState } from "../../store/reducers/types";
 import { linkingSubscription } from "../linkingSubscription";
-import * as ARCHIVING_SELECTORS from "../../features/messages/store/reducers/archiving";
-import { resetMessageArchivingAction } from "../../features/messages/store/actions/archiving";
-import * as UTIL_GUARDS from "../../features/authentication/common/store/utils/guards";
-import * as DEEP_LINKING from "../../features/pn/aar/utils/deepLinking";
-import { storeLinkingUrl } from "../../store/actions/linking";
-import * as NAVIGATION_SRV from "../NavigationService";
-import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
-import PN_ROUTES from "../../features/pn/navigation/routes";
-import * as UTM_LINK from "../../features/utmLink";
 
 describe("linkingSubscription", () => {
   beforeEach(() => {
@@ -94,20 +91,25 @@ describe("linkingSubscription", () => {
       } logged in, and the link passed ${
         isAARLink ? "is" : "isn't"
       } a valid AAR link`, () => {
-        const { mockDispatch, mockCurrySubscription, addEventListenerSpy } =
-          initializeTests();
+        const {
+          store,
+          mockDispatch,
+          mockCurrySubscription,
+          addEventListenerSpy
+        } = initializeTests();
         const mockNav = jest.fn();
         const testUrl = `https://example.com/${isAARLink}/${isLoggedIn}`;
+        const mockState = store.getState();
 
+        jest
+          .spyOn(DEEP_LINKING, "navigateToSendAarFlow")
+          .mockImplementation(mockNav);
         jest
           .spyOn(UTIL_GUARDS, "isLoggedIn")
           .mockImplementation(() => isLoggedIn);
         jest
           .spyOn(DEEP_LINKING, "isSendAARLink")
           .mockImplementation(() => isAARLink);
-        jest
-          .spyOn(NAVIGATION_SRV.default, "navigate")
-          .mockImplementation(mockNav);
 
         mockCurrySubscription(jest.fn());
 
@@ -120,16 +122,7 @@ describe("linkingSubscription", () => {
           );
 
           if (isAARLink) {
-            expect(mockNav).toHaveBeenCalledWith(
-              MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
-              {
-                screen: PN_ROUTES.MAIN,
-                params: {
-                  screen: PN_ROUTES.QR_SCAN_FLOW,
-                  params: { aarUrl: testUrl }
-                }
-              }
-            );
+            expect(mockNav).toHaveBeenCalledWith(mockState, testUrl);
           } else {
             expect(mockNav).not.toHaveBeenCalled();
           }
