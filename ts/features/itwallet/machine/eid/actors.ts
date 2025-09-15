@@ -38,6 +38,7 @@ export type RequestEidActorParams = {
   identification: IdentificationContext | undefined;
   walletInstanceAttestation: string | undefined;
   authenticationContext: AuthenticationContext | undefined;
+  isL3: boolean | undefined;
 };
 
 export type StartAuthFlowActorParams = {
@@ -176,7 +177,7 @@ export const createEidIssuanceActorsImplementation = (
         walletAttestation: input.walletInstanceAttestation
       });
 
-      trackItwRequest(input.identification.mode, input.identification.level);
+      trackItwRequest(input.identification.mode, input.isL3 ? "L3" : "L2");
 
       return issuanceUtils.getPid({
         ...authParams,

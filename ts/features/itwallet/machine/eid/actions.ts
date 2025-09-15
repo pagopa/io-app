@@ -260,7 +260,7 @@ export const createEidIssuanceActionsImplementation = (
   trackWalletInstanceCreation: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
-    const isL3 = context.identification?.level === "L3";
+    const isL3 = context.isL3 && !context.isL2Fallback;
     trackSaveCredentialSuccess(isL3 ? "ITW_PID" : "ITW_ID_V2");
     updateITWStatusAndPIDProperties(store.getState());
   },
