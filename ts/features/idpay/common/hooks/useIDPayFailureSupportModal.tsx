@@ -36,7 +36,7 @@ const useIDPayFailureSupportModal = (
   initiativeId?: string
 ): IDPayFailureSupportModal => {
   const dispatch = useIODispatch();
-
+  const prefix = "IDPAY_";
   const [currentFaultCodeDetail, setCurrentFaultCodeDetail] =
     useState<string>("");
 
@@ -140,7 +140,8 @@ const useIDPayFailureSupportModal = (
 
   const present = (failure: OnboardingFailureEnum | PaymentFailureEnum) => {
     setCurrentFaultCodeDetail(
-      failure || OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR
+      `${prefix}${failure}` ||
+        `${prefix}${OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR}`
     );
     presentModal();
   };
