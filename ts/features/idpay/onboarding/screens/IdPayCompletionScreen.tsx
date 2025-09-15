@@ -1,5 +1,7 @@
-import { SafeAreaView } from "react-native";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
+import { SafeAreaView } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -7,14 +9,29 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";
 import { isLoadingSelector } from "../../common/machine/selectors";
-import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { setIdPayOnboardingSucceeded } from "../../wallet/store/actions";
+import { trackIDPayOnboardingSuccess } from "../analytics";
+import { IdPayOnboardingMachineContext } from "../machine/provider";
+import { selectInitiative } from "../machine/selectors";
 
 const IdPayCompletionScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
   const dispatch = useIODispatch();
 
+  const initiative = useSelector(selectInitiative);
+
+  const initiativeName = pipe(
+    initiative,
+    O.map(i => i.initiativeName),
+    O.toUndefined
+  );
+
+  const initiativeId = pipe(
+    initiative,
+    O.map(i => i.initiativeId),
+    O.getOrElse(() => "")
+  );
   const isLoading = useSelector(isLoadingSelector);
   const isPushNotificationEnabled = useIOSelector(
     areNotificationPermissionsEnabledSelector
@@ -36,6 +53,11 @@ const IdPayCompletionScreen = () => {
     machine.send({
       type: "update-notification-status",
       isPushNotificationEnabled
+    });
+
+    trackIDPayOnboardingSuccess({
+      initiativeId,
+      initiativeName
     });
   });
 
