@@ -1,13 +1,18 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useMemo } from "react";
 import I18n from "i18next";
+import { useMemo } from "react";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import { getInstructionsButtonConfig } from "../../../../components/ui/utils/buttons";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import useIDPayFailureSupportModal from "../../common/hooks/useIDPayFailureSupportModal";
+import {
+  trackIDPayOnboardingErrorHelp,
+  trackIDPayOnboardingFailure
+} from "../analytics";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {
   selectInitiative,
@@ -27,6 +32,12 @@ const IdPayFailureScreen = () => {
   const initiativeId = pipe(
     initiative,
     O.map(i => i.initiativeId),
+    O.toUndefined
+  );
+
+  const initiativeName = pipe(
+    initiative,
+    O.map(i => i.initiativeName),
     O.toUndefined
   );
 
@@ -82,19 +93,28 @@ const IdPayFailureScreen = () => {
         accessibilityLabel: I18n.t(
           `wallet.onboarding.outcome.BE_KO.secondaryAction`
         ),
-        onPress: () => present(OnboardingFailureEnum.GENERIC)
+        onPress: () => {
+          trackIDPayOnboardingErrorHelp({
+            initiativeId,
+            initiativeName,
+            flow: "onboarding",
+            reason: failureOption
+          });
+
+          present(OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR);
+        }
       },
       enableAnimatedPictogram: true,
       loop: true
     }),
-    [machine, present]
+    [failureOption, initiativeId, initiativeName, machine, present]
   );
 
   const mapFailureToContentProps = (
     failure: OnboardingFailureEnum
   ): OperationResultScreenContentProps => {
     switch (failure) {
-      case OnboardingFailureEnum.INITIATIVE_NOT_FOUND:
+      case OnboardingFailureEnum.ONBOARDING_INITIATIVE_NOT_FOUND:
         return {
           pictogram: "attention",
           title: I18n.t(
@@ -105,7 +125,7 @@ const IdPayFailureScreen = () => {
           ),
           action: defaultCloseAction
         };
-      case OnboardingFailureEnum.UNSATISFIED_REQUIREMENTS:
+      case OnboardingFailureEnum.ONBOARDING_UNSATISFIED_REQUIREMENTS:
         return {
           pictogram: "error",
           title: I18n.t(
@@ -118,7 +138,7 @@ const IdPayFailureScreen = () => {
           enableAnimatedPictogram: true,
           loop: false
         };
-      case OnboardingFailureEnum.USER_NOT_IN_WHITELIST:
+      case OnboardingFailureEnum.ONBOARDING_USER_NOT_IN_WHITELIST:
         return {
           pictogram: "error",
           title: I18n.t(
@@ -131,7 +151,7 @@ const IdPayFailureScreen = () => {
           enableAnimatedPictogram: true,
           loop: false
         };
-      case OnboardingFailureEnum.INITIATIVE_NOT_STARTED:
+      case OnboardingFailureEnum.ONBOARDING_INITIATIVE_NOT_STARTED:
         return {
           pictogram: "eventClose",
           title: I18n.t(
@@ -142,7 +162,7 @@ const IdPayFailureScreen = () => {
           ),
           action: defaultCloseAction
         };
-      case OnboardingFailureEnum.INITIATIVE_ENDED:
+      case OnboardingFailureEnum.ONBOARDING_INITIATIVE_ENDED:
         return {
           pictogram: "time",
           title: I18n.t(
@@ -153,7 +173,7 @@ const IdPayFailureScreen = () => {
           ),
           action: defaultCloseAction
         };
-      case OnboardingFailureEnum.BUDGET_EXHAUSTED:
+      case OnboardingFailureEnum.ONBOARDING_BUDGET_EXHAUSTED:
         return {
           pictogram: "fatalError",
           title: I18n.t(
@@ -166,7 +186,7 @@ const IdPayFailureScreen = () => {
           enableAnimatedPictogram: true,
           loop: false
         };
-      case OnboardingFailureEnum.USER_UNSUBSCRIBED:
+      case OnboardingFailureEnum.ONBOARDING_USER_UNSUBSCRIBED:
         return {
           pictogram: "error",
           title: I18n.t(
@@ -243,6 +263,14 @@ const IdPayFailureScreen = () => {
     O.map(mapFailureToContentProps),
     O.getOrElse(() => genericErrorProps)
   );
+
+  useOnFirstRender(() => {
+    trackIDPayOnboardingFailure({
+      initiativeId,
+      initiativeName,
+      reason: failureOption
+    });
+  });
 
   return (
     <>
