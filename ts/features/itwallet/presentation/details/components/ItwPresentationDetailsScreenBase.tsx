@@ -4,9 +4,10 @@ import {
   IOSpacer,
   IOSpacingScale,
   IOVisualCostants,
-  buttonSolidHeight
+  buttonSolidHeight,
+  HeaderSecondLevel
 } from "@pagopa/io-app-design-system";
-import { Fragment, ReactNode, useMemo } from "react";
+import { Fragment, ReactNode, useLayoutEffect, useMemo } from "react";
 import Animated, {
   Easing,
   useAnimatedRef,
@@ -16,10 +17,14 @@ import Animated, {
   withTiming
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
+import I18n from "i18next";
 import { getHeaderPropsByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
+import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.ts";
+import { useStartSupportRequest } from "../../../../../hooks/useStartSupportRequest.ts";
+import { useNotAvailableToastGuard } from "../../../common/hooks/useNotAvailableToastGuard.ts";
 
 export type CredentialCtaProps = Omit<ButtonSolidProps, "fullWidth">;
 
@@ -40,12 +45,15 @@ const ItwPresentationDetailsScreenBase = ({
   children,
   ctaProps
 }: ItwPresentationDetailsScreenBaseProps) => {
+  const navigation = useIONavigation();
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
   const safeAreaInsets = useSafeAreaInsets();
   const itwFeaturesEnabled = useItwFeaturesEnabled(credential);
 
   const gradientOpacity = useSharedValue(1);
   const scrollTranslationY = useSharedValue(0);
+  const startSupportRequest = useOfflineToastGuard(useStartSupportRequest({}));
+  const onIconPress = useNotAvailableToastGuard(startSupportRequest);
 
   const bottomMargin: number = useMemo(
     () =>
@@ -70,16 +78,35 @@ const ItwPresentationDetailsScreenBase = ({
     itwFeaturesEnabled
   );
 
-  useHeaderSecondLevel({
-    scrollValues: {
-      triggerOffset: scrollTriggerOffsetValue,
-      contentOffsetY: scrollTranslationY
-    },
-    supportRequest: true,
-    enableDiscreteTransition: true,
-    animatedRef: animatedScrollViewRef,
-    ...headerProps
-  });
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      header: () => (
+        <HeaderSecondLevel
+          {...headerProps}
+          enableDiscreteTransition
+          animatedRef={animatedScrollViewRef}
+          type="singleAction"
+          goBack={navigation.goBack}
+          backAccessibilityLabel={I18n.t("global.buttons.back")}
+          firstAction={{
+            icon: "help",
+            onPress: onIconPress,
+            accessibilityLabel: I18n.t(
+              "global.accessibility.contextualHelp.open.label"
+            )
+          }}
+        />
+      ),
+      headerShown: true
+    });
+  }, [
+    animatedScrollViewRef,
+    headerProps,
+    itwFeaturesEnabled,
+    navigation,
+    onIconPress,
+    startSupportRequest
+  ]);
 
   const scrollHandler = useAnimatedScrollHandler(
     ({ contentOffset, layoutMeasurement, contentSize }) => {

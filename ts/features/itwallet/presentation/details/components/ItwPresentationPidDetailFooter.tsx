@@ -1,12 +1,13 @@
 import { Alert, View } from "react-native";
 import { ListItemAction } from "@pagopa/io-app-design-system";
-import { constNull } from "fp-ts/lib/function";
 import { memo } from "react";
 import I18n from "i18next";
+import { constVoid } from "fp-ts/function";
 import { useItwStartCredentialSupportRequest } from "../hooks/useItwStartCredentialSupportRequest";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { trackWalletStartDeactivation } from "../../../analytics";
+import { useNotAvailableToastGuard } from "../../../common/hooks/useNotAvailableToastGuard.ts";
 
 const POWERED_BY_IT_WALLET = "Powered by IT-Wallet";
 
@@ -53,14 +54,14 @@ const ItwPresentationPidDetailFooter = ({ credential }: Props) => {
         icon="message"
         label={requestAssistanceLabel}
         accessibilityLabel={requestAssistanceLabel}
-        onPress={startAndTrackSupportRequest}
+        onPress={useNotAvailableToastGuard(startAndTrackSupportRequest)}
       />
       <ListItemAction
         variant="primary"
         icon="website"
         label={POWERED_BY_IT_WALLET}
         accessibilityLabel={POWERED_BY_IT_WALLET}
-        onPress={constNull}
+        onPress={useNotAvailableToastGuard(constVoid)}
       />
       <ListItemAction
         variant="danger"
