@@ -187,12 +187,3 @@ export const trackIDPayDetailCodeGenerationConversion = (
     buildEventProperties("UX", "confirm", props)
   );
 };
-
-export const trackIDPayDetailCodeAlreadyUsed = (
-  props: DefaultOnboardingEventProperties
-) => {
-  mixpanelTrack(
-    "IDPAY_CODE_GENERATION_ALREADY_USED",
-    buildEventProperties("KO", "screen_view", props)
-  );
-};
