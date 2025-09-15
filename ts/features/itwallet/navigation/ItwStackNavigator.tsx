@@ -341,11 +341,7 @@ const InnerNavigator = memo(() => {
           component={ItwL3CredentialDetailScreen}
         />
       </Stack.Group>
-      <Stack.Screen
-        name={ITW_ROUTES.SETTINGS}
-        component={ItwSettingsScreen}
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name={ITW_ROUTES.SETTINGS} component={ItwSettingsScreen} />
     </Stack.Navigator>
   );
 });
