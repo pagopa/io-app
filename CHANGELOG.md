@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.13.0-rc.6](https://github.com/pagopa/io-app/compare/3.13.0-rc.5...3.13.0-rc.6) (2025-09-12)
+
+
+### Features
+
+* [[IOCOM-2545](https://pagopa.atlassian.net/browse/IOCOM-2545)] handlePendingMessageState refactor ([#7342](https://github.com/pagopa/io-app/issues/7342)) ([2d1d0f3](https://github.com/pagopa/io-app/commit/2d1d0f321768d6650c5f336afd982a9cf4e7cda0))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2921](https://pagopa.atlassian.net/browse/SIW-2921),[SIW-2922](https://pagopa.atlassian.net/browse/SIW-2922),[SIW-2923](https://pagopa.atlassian.net/browse/SIW-2923)] Fix IT Wallet Mixpanel Events ([#7327](https://github.com/pagopa/io-app/issues/7327)) ([11c7ec2](https://github.com/pagopa/io-app/commit/11c7ec2ca539a259279ee4b7cf113278ed536924))
+* [[IOCOM-2589](https://pagopa.atlassian.net/browse/IOCOM-2589)] Update temporary AAR swagger ([#7343](https://github.com/pagopa/io-app/issues/7343)) ([847b5de](https://github.com/pagopa/io-app/commit/847b5de6f06634eb7290039bd71f67b7facb0b85))
+
 ## [3.13.0-rc.5](https://github.com/pagopa/io-app/compare/3.13.0-rc.4...3.13.0-rc.5) (2025-09-11)
 
 
