@@ -2971,8 +2971,8 @@
         "retry": "Retry"
       },
       "header": {
-        "subtitlePlural": "{{count}} available services",
-        "subtitleSingular": "{{count}} available service"
+        "subtitle_one": "{{count}} available service",
+        "subtitle_other": "{{count}} available services"
       }
     },
     "search": {
