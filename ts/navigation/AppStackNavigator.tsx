@@ -29,7 +29,7 @@ import { SETTINGS_ROUTES } from "../features/settings/common/navigation/routes";
 import { processUtmLink } from "../features/utmLink";
 import { startApplicationInitialization } from "../store/actions/application";
 import { setDebugCurrentRouteName } from "../store/actions/debug";
-import { storeLinkingUrl } from "../store/actions/linking";
+import { storeLinkingUrl } from "../features/linking/actions";
 import { useIODispatch, useIOSelector, useIOStore } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
 import { isCGNEnabledAfterLoadSelector } from "../store/reducers/backendStatus/remoteConfig";
