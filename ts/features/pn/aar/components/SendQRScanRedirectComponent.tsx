@@ -1,19 +1,20 @@
-import { useCallback, useEffect } from "react";
 import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+import { useCallback, useEffect } from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { openWebUrl } from "../../../../utils/url";
+import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-import PN_ROUTES from "../../navigation/routes";
-import { useIOStore } from "../../../../store/hooks";
-import { isPnServiceEnabled } from "../../reminderBanner/reducer/bannerDismiss";
 import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";
+import PN_ROUTES from "../../navigation/routes";
+import { isPnServiceEnabled } from "../../reminderBanner/reducer/bannerDismiss";
 import {
   trackSendQRCodeScanRedirect,
   trackSendQRCodeScanRedirectConfirmed,
   trackSendQRCodeScanRedirectDismissed
 } from "../analytics";
+import { setAarFlowState } from "../store/actions";
+import { sendAARFlowStates } from "../store/reducers";
 
 export type SendQRScanRedirectComponentProps = {
   aarUrl: string;
@@ -22,13 +23,14 @@ export const SendQRScanRedirectComponent = ({
   aarUrl
 }: SendQRScanRedirectComponentProps) => {
   const store = useIOStore();
+  const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
   const handleOpenSendScreen = useCallback(() => {
     // Analytics
     trackSendQRCodeScanRedirectConfirmed();
     // Open external browser (this is an async process)
-    openWebUrl(aarUrl);
+    // openWebUrl(aarUrl);
 
     const state = store.getState();
 
@@ -62,8 +64,13 @@ export const SendQRScanRedirectComponent = ({
 
     // Otherwise, both SEND service and notification permissions
     // are already enabled, so just remove the screen
-    navigation.popToTop();
-  }, [aarUrl, navigation, store]);
+    dispatch(
+      setAarFlowState({
+        type: sendAARFlowStates.displayingAARToS,
+        qrCode: aarUrl
+      })
+    );
+  }, [aarUrl, dispatch, navigation, store]);
 
   const handleCloseScreen = useCallback(() => {
     trackSendQRCodeScanRedirectDismissed();

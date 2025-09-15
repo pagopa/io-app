@@ -1,3 +1,5 @@
+import { SendAARLoadingScreenProps } from "../aar/screen/SendAARLoadingScreen";
+import { SendAARTosScreenProps } from "../aar/screen/SendAARTosScreen";
 import { SendQRScanFlowScreenProps } from "../aar/screen/SendQRScanFlowScreen";
 import { MessageAttachmentScreenRouteParams } from "../screens/MessageAttachmentScreen";
 import { MessageDetailsScreenRouteParams } from "../screens/MessageDetailsScreen";
@@ -14,4 +16,6 @@ export type PnParamsList = {
   [PN_ROUTES.QR_SCAN_FLOW]: SendQRScanFlowScreenProps;
   [PN_ROUTES.ENGAGEMENT_SCREEN]: undefined;
   [PN_ROUTES.QR_SCAN_PUSH_ENGAGEMENT]: undefined;
+  [PN_ROUTES.SEND_AAR_LOADING_SCREEN]: SendAARLoadingScreenProps;
+  [PN_ROUTES.SEND_AAR_TOS_SCREEN]: SendAARTosScreenProps;
 };
