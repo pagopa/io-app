@@ -1,34 +1,25 @@
-import { RouteProp, useRoute } from "@react-navigation/native";
 import { useEffect } from "react";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
-import { useIODispatch } from "../../../../store/hooks";
-import { PnParamsList } from "../../navigation/params";
-import PN_ROUTES from "../../navigation/routes";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { setAarFlowState } from "../store/actions";
-import { sendAARFlowStates } from "../store/reducers";
-
-export type SendAARLoadingScreenProps = {
-  qrcode: string;
-};
-
-type RouteProps = RouteProp<
-  PnParamsList,
-  typeof PN_ROUTES.SEND_AAR_LOADING_SCREEN
->;
+import { currentAARFlowData, sendAARFlowStates } from "../store/reducers";
 
 export const SendAARLoadingScreen = () => {
-  const route = useRoute<RouteProps>();
-  const { qrcode } = route.params;
   const dispatch = useIODispatch();
+  const flowData = useIOSelector(currentAARFlowData);
 
   useEffect(() => {
-    dispatch(
-      setAarFlowState({
-        type: sendAARFlowStates.fetchingQRData,
-        qrCode: qrcode
-      })
-    );
-  }, [dispatch, qrcode]);
+    const flowState = flowData.type;
+    if (flowState === sendAARFlowStates.displayingAARToS) {
+      // this skips the screen for now
+      dispatch(
+        setAarFlowState({
+          type: sendAARFlowStates.fetchingQRData,
+          qrCode: flowData.qrCode
+        })
+      );
+    }
+  }, [dispatch, flowData]);
 
   return <LoadingScreenContent contentTitle="" />;
 };

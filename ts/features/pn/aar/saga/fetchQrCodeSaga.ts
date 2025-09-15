@@ -5,7 +5,7 @@ import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
 import {
   AARFlowState,
-  currentAARFlowState,
+  currentAARFlowData,
   sendAARFlowStates
 } from "../store/reducers";
 
@@ -14,7 +14,7 @@ export function* fetchQrCodeSaga(
   sendAARClient: SendAARClient,
   sessionToken: SessionToken
 ) {
-  const currentState = yield* select(currentAARFlowState);
+  const currentState = yield* select(currentAARFlowData);
 
   if (currentState.type !== sendAARFlowStates.fetchingQRData) {
     return;

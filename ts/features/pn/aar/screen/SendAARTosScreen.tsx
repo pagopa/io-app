@@ -1,30 +1,38 @@
-import { ButtonSolid } from "@pagopa/io-app-design-system";
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { IOButton } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-import { PnParamsList } from "../../navigation/params";
-import PN_ROUTES from "../../navigation/routes";
+import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { setAarFlowState } from "../store/actions";
+import { currentAARFlowData, sendAARFlowStates } from "../store/reducers";
 
 export type SendAARTosScreenProps = {
   qrcode: string;
 };
 
-type RouteProps = RouteProp<PnParamsList, typeof PN_ROUTES.SEND_AAR_TOS_SCREEN>;
-
 export const SendAARTosScreen = () => {
-  const route = useRoute<RouteProps>();
-  const { qrcode } = route.params;
-  const navigation = useIONavigation();
+  const flowData = useIOSelector(currentAARFlowData);
+  const flowState = flowData.type;
+
+  switch (flowState) {
+    case sendAARFlowStates.none:
+    case sendAARFlowStates.fetchingQRData:
+      return <LoadingComponent />;
+    case sendAARFlowStates.displayingAARToS:
+      return <TosComponent qrCode={flowData.qrCode} />;
+  }
+};
+
+const LoadingComponent = () => <LoadingScreenContent contentTitle="" />;
+const TosComponent = ({ qrCode }: { qrCode: string }) => {
+  const dispatch = useIODispatch();
 
   const onButtonPress = () => {
-    navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-      screen: PN_ROUTES.MAIN,
-      params: {
-        screen: PN_ROUTES.SEND_AAR_LOADING_SCREEN,
-        params: { qrcode }
-      }
-    });
+    dispatch(
+      setAarFlowState({
+        type: sendAARFlowStates.fetchingQRData,
+        qrCode
+      })
+    );
   };
 
   return (
@@ -35,11 +43,7 @@ export const SendAARTosScreen = () => {
         padding: 30
       }}
     >
-      <ButtonSolid
-        accessibilityLabel="Avanti"
-        label={"Primary button"}
-        onPress={onButtonPress}
-      />
+      <IOButton label="Avanti" onPress={onButtonPress} />
     </View>
   );
 };
