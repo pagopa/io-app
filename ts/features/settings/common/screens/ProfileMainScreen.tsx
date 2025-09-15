@@ -59,6 +59,7 @@ const RESET_COUNTER_TIMEOUT = 2000 as Millisecond;
 
 type ProfileNavListItem = {
   value: string;
+  isHidden?: boolean;
 } & Pick<
   ComponentProps<typeof ListItemNav>,
   "description" | "testID" | "onPress"
@@ -184,20 +185,17 @@ const ProfileMainScreenFC = () => {
               screen: SETTINGS_ROUTES.PROFILE_PREFERENCES_HOME
             })
         },
-        isItwFeaturesAvailable
-          ? {
-              // IT Wallet
-              value: I18n.t("features.itWallet.settings.item.title"),
-              description: I18n.t(
-                "features.itWallet.settings.item.description"
-              ),
-              onPress: () =>
-                navigation.navigate(ITW_ROUTES.MAIN, {
-                  screen: ITW_ROUTES.SETTINGS
-                }),
-              testID: "itWalletSettingsButtonTestID"
-            }
-          : undefined,
+        {
+          // IT Wallet
+          value: I18n.t("features.itWallet.settings.item.title"),
+          description: I18n.t("features.itWallet.settings.item.description"),
+          onPress: () =>
+            navigation.navigate(ITW_ROUTES.MAIN, {
+              screen: ITW_ROUTES.SETTINGS
+            }),
+          isHidden: !isItwFeaturesAvailable,
+          testID: "itWalletSettingsButtonTestID"
+        },
         {
           // Security
           value: I18n.t("profile.main.security.title"),
@@ -225,7 +223,7 @@ const ProfileMainScreenFC = () => {
               screen: SETTINGS_ROUTES.PROFILE_ABOUT_APP
             })
         }
-      ].filter(isDefined),
+      ].filter(({ isHidden }) => !isHidden),
     [navigation, navigateToProfile, isItwFeaturesAvailable]
   );
 
