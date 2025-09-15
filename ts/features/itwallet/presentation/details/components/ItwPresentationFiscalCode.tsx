@@ -2,7 +2,6 @@ import {
   H3,
   IOAppMargin,
   IOColors,
-  useIOThemeContext,
   useScaleAnimation
 } from "@pagopa/io-app-design-system";
 import { memo } from "react";
@@ -43,7 +42,6 @@ const barcodeWidth = barcodeTotalWidth / ENCODED_FISCAL_CODE_LENGTH_CODE39;
 
 const ItwPresentationFiscalCode = () => {
   const navigation = useIONavigation();
-  const { themeType } = useIOThemeContext();
   const fiscalCode = useIOSelector(selectFiscalCodeFromEid);
 
   const handleOnPress = () => {
@@ -51,9 +49,6 @@ const ItwPresentationFiscalCode = () => {
       screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL
     });
   };
-
-  const backgroundColor =
-    themeType === "dark" ? IOColors["grey-100"] : IOColors.white;
 
   const { onPressIn, onPressOut, scaleAnimatedStyle } = useScaleAnimation();
 
@@ -77,10 +72,10 @@ const ItwPresentationFiscalCode = () => {
           width={barcodeWidth}
           height={80}
           format={"CODE39"} // CODE39 it's the encoding format used by the physical TS-CNS card
-          background={backgroundColor}
+          background={IOColors.white}
           lineColor={IOColors.black}
         />
-        <H3 style={styles.fiscalCode}>{fiscalCode}</H3>
+        <H3 style={styles.text}>{fiscalCode}</H3>
       </Animated.View>
     </Pressable>
   );
@@ -93,12 +88,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     rowGap: 0,
     borderColor: IOColors["grey-100"],
+    // Always white regardless of the theme
+    backgroundColor: IOColors.white,
     borderWidth: 1,
     borderRadius: 8,
     borderCurve: "continuous"
   },
-  fiscalCode: {
-    alignSelf: "center"
+  text: {
+    alignSelf: "center",
+    // Always black regardless of the theme
+    color: IOColors.black
   }
 });
 
