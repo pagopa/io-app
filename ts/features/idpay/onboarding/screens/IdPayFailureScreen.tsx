@@ -20,6 +20,9 @@ import {
   selectServiceId
 } from "../machine/selectors";
 import { OnboardingFailureEnum } from "../types/OnboardingFailure";
+import { useIOSelector } from "../../../../store/hooks";
+import { idPayInitiativeConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { getFullLocale } from "../../../../utils/locale";
 
 const IdPayFailureScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
@@ -28,6 +31,7 @@ const IdPayFailureScreen = () => {
   const failureOption = useSelector(selectOnboardingFailure);
   const serviceId = useSelector(selectServiceId);
   const initiative = useSelector(selectInitiative);
+  const locale = getFullLocale();
 
   const initiativeId = pipe(
     initiative,
@@ -46,8 +50,14 @@ const IdPayFailureScreen = () => {
     initiativeId
   );
 
-  const CAC_URL =
-    "https://assistenza.ioapp.it/hc/it/articles/35337442750225-Non-riesco-ad-aggiungere-un-metodo-di-pagamento";
+  const initiativeConfig = useIOSelector(
+    idPayInitiativeConfigSelector(initiativeId)
+  );
+
+  const accessDeniedAction =
+    initiativeConfig && initiativeConfig.url && initiativeConfig.url[locale]
+      ? getInstructionsButtonConfig(initiativeConfig.url[locale])
+      : undefined;
 
   const defaultCloseAction = useMemo(
     () => ({
@@ -239,7 +249,7 @@ const IdPayFailureScreen = () => {
             "idpay.onboarding.failure.message.FAMILY_UNIT_ALREADY_JOINED.subtitle"
           ),
           action: defaultBackAction,
-          secondaryAction: getInstructionsButtonConfig(CAC_URL)
+          secondaryAction: accessDeniedAction
         };
       case OnboardingFailureEnum.ONBOARDING_WAITING_LIST:
         return {
