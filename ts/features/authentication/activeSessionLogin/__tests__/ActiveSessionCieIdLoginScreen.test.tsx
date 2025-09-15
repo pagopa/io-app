@@ -13,7 +13,7 @@ import {
 } from "../store/actions";
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
 import { SessionToken } from "../../../../types/SessionToken";
-import ActiveSessionCieIdLoginScreen from "../screens/ActiveSessionCieIdLoginScreen";
+import ActiveSessionCieIdLoginScreen from "../screens/cieId/ActiveSessionCieIdLoginScreen";
 
 const API_PREFIX_URL = "http://example.com";
 const SPID_LEVEL = "SpidL2";

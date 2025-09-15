@@ -24,10 +24,11 @@ import {
   zendeskSupportStart
 } from "../../../zendesk/store/actions";
 import { OnboardingFailureEnum } from "../../onboarding/types/OnboardingFailure";
+import { PaymentFailureEnum } from "../../payment/types/PaymentFailure";
 
 type IDPayFailureSupportModal = {
   bottomSheet: JSX.Element;
-  present: (failure: OnboardingFailureEnum) => void;
+  present: (failure: OnboardingFailureEnum | PaymentFailureEnum) => void;
 };
 
 const useIDPayFailureSupportModal = (
@@ -137,8 +138,10 @@ const useIDPayFailureSupportModal = (
     title: ""
   });
 
-  const present = (failure: OnboardingFailureEnum) => {
-    setCurrentFaultCodeDetail(failure || OnboardingFailureEnum.GENERIC);
+  const present = (failure: OnboardingFailureEnum | PaymentFailureEnum) => {
+    setCurrentFaultCodeDetail(
+      failure || OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR
+    );
     presentModal();
   };
 

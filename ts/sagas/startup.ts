@@ -77,7 +77,7 @@ import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnbo
 import { watchAbortOnboardingSaga } from "../features/onboarding/saga/watchAbortOnboardingSaga";
 import { watchPaymentsSaga } from "../features/payments/common/saga";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
-import { handlePendingMessageStateIfAllowed } from "../features/pushNotifications/sagas/common";
+import { maybeHandlePendingBackgroundActions } from "../features/pushNotifications/sagas/common";
 import { notificationPermissionsListener } from "../features/pushNotifications/sagas/notificationPermissionsListener";
 import { profileAndSystemNotificationsPermissions } from "../features/pushNotifications/sagas/profileAndSystemNotificationsPermissions";
 import { pushNotificationTokenUpload } from "../features/pushNotifications/sagas/pushNotificationTokenUpload";
@@ -721,8 +721,8 @@ export function* initializeApplicationSaga(
   // Watch for checking the user email notifications preferences
   yield* fork(watchEmailNotificationPreferencesSaga);
 
-  // Check if we have a pending notification message
-  yield* call(handlePendingMessageStateIfAllowed, true);
+  // Check if we have any pending background action to be handled
+  yield* call(maybeHandlePendingBackgroundActions, true);
 
   // This tells the security advice bottomsheet that it can be shown
   yield* put(setSecurityAdviceReadyToShow(true));

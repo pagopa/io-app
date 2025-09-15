@@ -1,4 +1,4 @@
-import { HStack, IOText, Tag } from "@pagopa/io-app-design-system";
+import { HStack, Icon, IOText, Tag } from "@pagopa/io-app-design-system";
 import Color from "color";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
@@ -36,6 +36,11 @@ export type ItwCredentialCard = {
    * be displayed with a badge.
    */
   isItwCredential?: boolean;
+  /**
+   * Indicates if the credential is a multi-level credential,
+   * which affects the display of a specific badge on the card.
+   */
+  isMultiCredential?: boolean;
 };
 
 type StyleProps = {
@@ -47,7 +52,8 @@ type StyleProps = {
 export const ItwCredentialCard = ({
   credentialType,
   credentialStatus = "valid",
-  isItwCredential
+  isItwCredential,
+  isMultiCredential
 }: ItwCredentialCard) => {
   const typefacePreference = useIOSelector(fontPreferenceSelector);
   const isItwPid = useIOSelector(itwLifecycleIsITWalletValidSelector);
@@ -130,6 +136,9 @@ export const ItwCredentialCard = ({
             {getCredentialNameFromType(credentialType, "").toUpperCase()}
           </IOText>
           {statusTagProps && <Tag forceLightMode {...statusTagProps} />}
+          {isMultiCredential && (
+            <Icon name="multiCard" color="grey-850" size={24} />
+          )}
         </HStack>
       </View>
       <DigitalVersionBadge

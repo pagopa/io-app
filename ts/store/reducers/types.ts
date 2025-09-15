@@ -1,20 +1,24 @@
 import { PersistPartial } from "redux-persist";
 import { VersionInfoState } from "../../common/versionInfo/store/reducers/versionInfo";
 
-import { BonusState } from "../../features/bonus/common/store/reducers";
-import { PersistedFeaturesState } from "../../features/common/store/reducers";
-import { PersistedLollipopState } from "../../features/lollipop/store";
-import { TrialSystemState } from "../../features/trialSystem/store/reducers";
-import { PersistedNotificationsState } from "../../features/pushNotifications/store/reducers";
 import { PersistedAuthenticationState } from "../../features/authentication/common/store/reducers";
 import { CieState } from "../../features/authentication/login/cie/store/reducers/cie";
+import { BonusState } from "../../features/bonus/common/store/reducers";
+import { PersistedFeaturesState } from "../../features/common/store/reducers";
+import { PersistedIdentificationState } from "../../features/identification/store/reducers";
+import { PersistedLollipopState } from "../../features/lollipop/store";
+import { EmailValidationState } from "../../features/mailCheck/store/reducers/emailValidation";
+import { OnboardingState } from "../../features/onboarding/store/reducers";
+import { PersistedNotificationsState } from "../../features/pushNotifications/store/reducers";
 import { ProfileState } from "../../features/settings/common/store/reducers";
 import { UserDataProcessingState } from "../../features/settings/common/store/reducers/userDataProcessing";
-import { EmailValidationState } from "../../features/mailCheck/store/reducers/emailValidation";
-import { PersistedIdentificationState } from "../../features/identification/store/reducers";
-import { OnboardingState } from "../../features/onboarding/store/reducers";
+import { TrialSystemState } from "../../features/trialSystem/store/reducers";
 import { AppState } from "./appState";
 import { AssistanceToolsState } from "./assistanceTools";
+import { BackedInfoState } from "./backendStatus/backendInfo";
+import { RemoteConfigState } from "./backendStatus/remoteConfig";
+import { SectionStatusState } from "./backendStatus/sectionStatus";
+import { StatusMessagesState } from "./backendStatus/statusMessages";
 import { ContentState } from "./content";
 import { CrossSessionsState } from "./crossSessions";
 import { PersistedDebugState } from "./debug";
@@ -25,10 +29,6 @@ import { PersistedPreferencesState } from "./persistedPreferences";
 import { PreferencesState } from "./preferences";
 import { SearchState } from "./search";
 import { StartupState } from "./startup";
-import { RemoteConfigState } from "./backendStatus/remoteConfig";
-import { StatusMessagesState } from "./backendStatus/statusMessages";
-import { SectionStatusState } from "./backendStatus/sectionStatus";
-import { BackedInfoState } from "./backendStatus/backendInfo";
 
 export type GlobalState = Readonly<{
   appState: AppState;
