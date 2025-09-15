@@ -42,9 +42,6 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
   const dispatch = useIODispatch();
   const [hasError, setHasError] = useState<boolean>(false);
   const [isLoginSuccess, setIsLoginSuccess] = useState<boolean | undefined>();
-  const [errorCodeOrMessage, setErrorCodeOrMessage] = useState<
-    string | undefined
-  >();
   const navigation = useIONavigation();
 
   //   const loginSuccessDispatch = useCallback(
@@ -57,16 +54,19 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
   //   [dispatch]
   // );
 
-  const navigateToErrorScreen = useCallback(() => {
-    navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-      params: {
-        errorCodeOrMessage,
-        authMethod: "CIE",
-        authLevel: "L2"
-      }
-    });
-  }, [errorCodeOrMessage, navigation]);
+  const navigateToErrorScreen = useCallback(
+    (errorCodeOrMessageProp?: string) => {
+      navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
+        screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+        params: {
+          errorCodeOrMessage: errorCodeOrMessageProp,
+          authMethod: "CIE",
+          authLevel: "L2"
+        }
+      });
+    },
+    [navigation]
+  );
 
   const navigateBack = () => {
     dispatch(setFinishedActiveSessionLoginFlow());
@@ -108,8 +108,7 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
         dispatch(activeSessionLoginFailure());
       }
       setHasError(true);
-      setErrorCodeOrMessage(code || message);
-      navigateToErrorScreen();
+      navigateToErrorScreen(code || message);
       //   loginFailureDispatch(
       //     new Error(`login CIE failure with code ${code || message || "n/a"}`)
       //   );
