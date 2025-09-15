@@ -2,16 +2,29 @@ import {
   HeaderActionProps,
   HeaderSecondLevel
 } from "@pagopa/io-app-design-system";
-import { useEffect } from "react";
 import I18n from "i18next";
-import { openAppStoreUrl } from "../utils/url";
-import { useIONavigation } from "../navigation/params/AppParamsList";
+import { useEffect } from "react";
 import { useStartSupportRequest } from "../hooks/useStartSupportRequest";
+import { useIONavigation } from "../navigation/params/AppParamsList";
+import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
+import { openAppStoreUrl } from "../utils/url";
+import { RequiredUpdateMixPanelTracking } from "./helpers/withAppRequiredUpdate";
 import { OperationResultScreenContent } from "./screens/OperationResultScreenContent";
 
-export const UpdateAppAlert = () => {
+type Props = {
+  mixPanelTracking?: RequiredUpdateMixPanelTracking;
+};
+
+export const UpdateAppAlert = ({ mixPanelTracking }: Props) => {
   const navigation = useIONavigation();
   useOnlySupportRequestHeader();
+
+  useOnFirstRender(() => {
+    if (mixPanelTracking?.onLanding) {
+      mixPanelTracking.onLanding();
+    }
+  });
+
   return (
     <OperationResultScreenContent
       isHeaderVisible={true}
@@ -20,7 +33,12 @@ export const UpdateAppAlert = () => {
       pictogram="updateOS"
       action={{
         label: I18n.t("btnUpdateApp"),
-        onPress: () => openAppStoreUrl(),
+        onPress: () => {
+          if (mixPanelTracking?.onConfirm) {
+            mixPanelTracking.onConfirm();
+          }
+          void openAppStoreUrl();
+        },
         testID: "primary-update-app"
       }}
       secondaryAction={{
