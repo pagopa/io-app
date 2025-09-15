@@ -4886,7 +4886,7 @@
             "content": "Verifica la versione digitale del tuo documento entro il {{date}}."
           }
         },
-        "metadata": {
+        "authSource": {
           "anis": "ANIS - Anagrafe Nazionale dell'istruzione superiore",
           "mdi": "Ministero dell'Interno",
           "mef": "MEF - Ragioneria Generale dello Stato",

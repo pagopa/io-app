@@ -13,19 +13,19 @@ const ItwCredentialAuthSource: {
   [type: string]: string;
 } = {
   [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: I18n.t(
-    "features.itWallet.presentation.metadata.mef"
+    "features.itWallet.presentation.authSource.mef"
   ),
   [CredentialType.EUROPEAN_DISABILITY_CARD]: I18n.t(
-    "features.itWallet.presentation.metadata.inps"
+    "features.itWallet.presentation.authSource.inps"
   ),
   [CredentialType.DRIVING_LICENSE]: I18n.t(
-    "features.itWallet.presentation.metadata.mit"
+    "features.itWallet.presentation.authSource.mit"
   ),
   [CredentialType.EDUCATION_DEGREE]: I18n.t(
-    "features.itWallet.presentation.metadata.anis"
+    "features.itWallet.presentation.authSource.anis"
   ),
   [CredentialType.EDUCATION_ENROLLMENT]: I18n.t(
-    "features.itWallet.presentation.metadata.anis"
+    "features.itWallet.presentation.authSource.anis"
   )
 };
 
