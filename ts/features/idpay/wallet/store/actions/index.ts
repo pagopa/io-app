@@ -78,9 +78,9 @@ export const setIdPayOnboardingSucceeded = createStandardAction(
 )<boolean>();
 
 export const idPayInitiativeWaitingListGet = createAsyncAction(
-  "IDPAY_INITIATIVE_WAITINGLIST_REQUEST",
-  "IDPAY_INITIATIVE_WAITINGLIST_SUCCESS",
-  "IDPAY_INITIATIVE_WAITINGLIST_FAILURE"
+  "IDPAY_INITIATIVE_WAITING_LIST_REQUEST",
+  "IDPAY_INITIATIVE_WAITING_LIST_SUCCESS",
+  "IDPAY_INITIATIVE_WAITING_LIST_FAILURE"
 )<void, ListUsersOnboardingStatusDTO, NetworkError>();
 
 export type IdPayWalletActions =
