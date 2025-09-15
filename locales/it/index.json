@@ -5393,6 +5393,24 @@
           "action": "Ottieni IT-Wallet"
         }
       },
+      "settings": {
+        "item": {
+          "title": "IT-Wallet",
+          "description": "Gestisci il tuo portafoglio digitale"
+        },
+        "manage": {
+          "title": "IT-Wallet",
+          "content": {
+            "disabled": "È il tuo portafoglio digitale, un posto sicuro sull’app IO dove conservare e usare i tuoi documenti personali.\n\n\n###### Quali sono i vantaggi di IT-Wallet?\n- Ottieni la versione digitale e ufficiale dei tuoi documenti\n- Dimostri la tua identità per accedere ai servizi digitali della PA\n- Dimostri l’idoneità alla guida durante i controlli stradali\n- Usi la Tessera Sanitaria per acquistare farmaci e prenotare visite mediche Ottieni ora IT-Wallet: ti basta la tua Carta di Identità Elettronica (CIE).\n\nPer saperne di più, [visita il sito IT-Wallet]()",
+            "upgrade": "IT-Wallet permette funzionalità evolute e ancora più sicure per i tuoi documenti digitali.\n\n\n##### Quali sono i vantaggi di IT-xWallet?\n IT-Wallet permette funzionalità evolute e ancora più sicure per i tuoi documenti, con nuovi vantaggi e possibilità.\nQualche esempio?\n- Usi la tua Patente digitale come documento di riconosciment\n- Nuovi documenti disponibili in arrivo\n- Ti autentichi in pochi tocchi ai servizi digitali della PA\n- Verifichi i documenti tramite codice QR\nOttieni ora IT-Wallet: ti basta la tua Carta di Identità Elettronica (CIE).\nPer saperne di più, [visita il sito IT-Wallet]()",
+            "active": "Qui puoi gestire il tuo portafoglio digitale.\n\n\n###### Cosa posso fare con IT-Wallet?\n\n- Usi la Patente come documento di riconoscimento anche durante i controlli stradali.\n- Verifichi la Patente tramite codice QR.\n- Aggiungi nuovi documenti digitali ufficiali, come i titoli accademici, la residenza e presto molti altri.\nPer saperne di più, [visita il sito IT-Wallet]()"
+          },
+          "cta": {
+            "activate": "Ottieni IT-Wallet",
+            "disable": "Disattiva IT-Wallet"
+          }
+        }
+      },
       "playgrounds": {
         "environment": {
           "toggle": {
