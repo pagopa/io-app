@@ -1350,7 +1350,7 @@
       "fee": "Kommission ",
       "feeAppliedBy": "Angewandt von: ",
       "editButton": "Ändern",
-      "termsAndConditions": "Mit dem Fortfahren akzeptieren Sie die [Nutzungsbedingungen](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) und bestätigen, die [Datenschutzerklärung](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) von {{pspName}} gelesen zu haben.",
+      "termsAndConditions": "Mit dem Fortfahren akzeptieren Sie die [Nutzungsbedingungen](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/) und bestätigen, die [Datenschutzerklärung](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/) von {{pspName}} gelesen zu haben.",
       "a11y": {
         "announce": "Zusammenfassung Ihrer Zahlung"
       }
@@ -2709,8 +2709,8 @@
         "retry": "Erneut versuchen"
       },
       "header": {
-        "subtitlePlural": "{{count}} Dienste verfügbar",
-        "subtitleSingular": "{{count}} Dienst verfügbar"
+        "subtitle_one": "{{count}} Dienst verfügbar",
+        "subtitle_other": "{{count}} Dienste verfügbar"
       }
     },
     "search": {
@@ -4114,6 +4114,9 @@
         "deny": "Non attivare",
         "success": "Sie aktivierten Push -Benachrichtigungen",
         "advice": "Consigliato"
+      },
+      "failToRetry": {
+        "contentTitle": "Stiamo per collegarti.\n Attendi qualche secondo..."
       },
       "loading": {
         "subtitle": "Attendi qualche secondo",

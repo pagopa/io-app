@@ -110,57 +110,72 @@ const testServices: ReadonlyArray<TestService> = [
     label: "Iniziativa GUIDONIA"
   },
   {
-    serviceId: "TESTSRV17",
+    serviceId: "TESTSRV07",
     label: "Bonus Elettrodomestici"
   },
   {
-    serviceId: "TESTSRV07",
+    serviceId: "TESTSRV08",
     label: "KO - Generico",
     willFail: true
   },
   {
-    serviceId: "TESTSRV08",
+    serviceId: "TESTSRV09",
     label: "KO - Iniziativa non iniziata",
     willFail: true
   },
   {
-    serviceId: "TESTSRV09",
+    serviceId: "TESTSRV10",
     label: "KO - Iniziativa conclusa",
     willFail: true
   },
   {
-    serviceId: "TESTSRV10",
+    serviceId: "TESTSRV11",
     label: "KO - Budget terminato",
     willFail: true
   },
   {
-    serviceId: "TESTSRV11",
+    serviceId: "TESTSRV12",
     label: "KO - Requisiti non soddisfatti",
     willFail: true
   },
   {
-    serviceId: "TESTSRV12",
+    serviceId: "TESTSRV13",
     label: "KO - Non in whitelist",
     willFail: true
   },
   {
-    serviceId: "TESTSRV13",
+    serviceId: "TESTSRV14",
     label: "KO - In valutazione",
     willFail: true
   },
   {
-    serviceId: "TESTSRV14",
+    serviceId: "TESTSRV15",
     label: "KO - Non ammissibile",
     willFail: true
   },
   {
-    serviceId: "TESTSRV15",
+    serviceId: "TESTSRV16",
     label: "KO - Utente già ammesso",
     willFail: true
   },
   {
-    serviceId: "TESTSRV16",
+    serviceId: "TESTSRV17",
     label: "KO - Recesso",
+    willFail: true
+  },
+  {
+    serviceId: "TESTSRV18",
+    label: "KO - In lista d'attesa",
+    willFail: true
+  },
+  {
+    serviceId: "TESTSRV19",
+    label: "KO - Famiglia già iscritta",
+    willFail: true
+  },
+  {
+    serviceId: "TESTSRV20",
+    label: "KO - Troppe richieste",
     willFail: true
   }
 ];

@@ -4,6 +4,7 @@
 import { Calendar } from "react-native-calendar-events";
 import { ActionType, createStandardAction } from "typesafe-actions";
 import { Locales } from "../../../locales/locales";
+import { ColorModeChoice } from "../../hooks/useAppThemeConfiguration";
 
 export type TypefaceChoice = "comfortable" | "standard";
 
@@ -55,6 +56,10 @@ export const preferencesFontSet = createStandardAction(
   "PREFERENCES_DESIGN_SYSTEM_SET_ENABLED"
 )<TypefaceChoice>();
 
+export const preferencesThemeSet = createStandardAction(
+  "PREFERENCES_THEME_SET_ENABLED"
+)<ColorModeChoice>();
+
 export const preferencesAarFeatureSetEnabled = createStandardAction(
   "PREFERENCES_AAR_FEATURE_SET_ENABLED"
 )<{ isAarFeatureEnabled: boolean }>();
@@ -72,5 +77,6 @@ export type PersistedPreferencesActions = ActionType<
   | typeof preferencesIdPayTestSetEnabled
   | typeof preferencesExperimentalDesignEnabled
   | typeof preferencesFontSet
+  | typeof preferencesThemeSet
   | typeof preferencesAarFeatureSetEnabled
 >;

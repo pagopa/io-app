@@ -4,6 +4,7 @@ import {
   IOButton,
   IOColors,
   IOSkeleton,
+  useIOTheme,
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
@@ -17,6 +18,7 @@ type Props = {
 };
 
 const IdPayInitiativeRulesInfoBox = (props: Props) => {
+  const theme = useIOTheme();
   const { content } = props;
 
   const { bottomSheet, present } = useIOBottomSheetModal({
@@ -26,7 +28,13 @@ const IdPayInitiativeRulesInfoBox = (props: Props) => {
 
   return (
     <>
-      <View style={styles.infoBox}>
+      <View
+        style={[
+          styles.infoBox,
+          // TODO: add a new theme key for more visible card border
+          { borderColor: IOColors[theme["textInputBorder-default"]] }
+        ]}
+      >
         <H6>{I18n.t("idpay.initiative.beneficiaryDetails.infobox.title")}</H6>
         <VSpacer size={4} />
         <Body numberOfLines={3} ellipsizeMode="tail">
@@ -51,31 +59,38 @@ const IdPayInitiativeRulesInfoBox = (props: Props) => {
   );
 };
 
-const IdPayInitiativeRulesInfoBoxSkeleton = () => (
-  <View style={styles.infoBox}>
-    <IOSkeleton shape="rectangle" width={"40%"} height={24} radius={4} />
-    <VSpacer size={16} />
-    <VStack space={4}>
-      {Array.from({ length: 4 }).map((_, i) => (
-        <IOSkeleton
-          key={i}
-          shape="rectangle"
-          height={16}
-          width={"100%"}
-          radius={4}
-        />
-      ))}
-    </VStack>
-  </View>
-);
+const IdPayInitiativeRulesInfoBoxSkeleton = () => {
+  const theme = useIOTheme();
+
+  return (
+    <View
+      style={[
+        styles.infoBox,
+        { borderColor: IOColors[theme["textInputBorder-default"]] }
+      ]}
+    >
+      <IOSkeleton shape="rectangle" width={"40%"} height={24} radius={4} />
+      <VSpacer size={16} />
+      <VStack space={4}>
+        {Array.from({ length: 4 }).map((_, i) => (
+          <IOSkeleton
+            key={i}
+            shape="rectangle"
+            height={16}
+            width={"100%"}
+            radius={4}
+          />
+        ))}
+      </VStack>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   infoBox: {
-    borderColor: IOColors["grey-200"],
     borderWidth: 1,
     borderRadius: 8,
-    paddingHorizontal: 16,
-    paddingVertical: 20
+    padding: 16
   }
 });
 
