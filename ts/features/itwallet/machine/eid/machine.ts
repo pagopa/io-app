@@ -133,7 +133,8 @@ export const itwEidIssuanceMachine = setup({
     isReissuance: ({ context }) => context.mode === "reissuance",
     isUpgrade: ({ context }) => context.mode === "upgrade",
     isL3FeaturesEnabled: ({ context }) => context.isL3 || false,
-    isL2Fallback: ({ context }) => context.isL2Fallback || false
+    isL2Fallback: ({ context }) => context.isL2Fallback || false,
+    isEligibleForItwSimplifiedActivation: notImplemented
   }
 }).createMachine({
   id: "itwEidIssuanceMachine",
@@ -348,9 +349,21 @@ export const itwEidIssuanceMachine = setup({
         "This state handles the acceptance of the IPZS privacy policy",
       entry: "navigateToIpzsPrivacyScreen",
       on: {
-        "accept-ipzs-privacy": {
-          target: "UserIdentification"
-        },
+        "accept-ipzs-privacy": [
+          {
+            guard: and([
+              "isUpgrade",
+              "isEligibleForItwSimplifiedActivation",
+              "hasLegacyCredentials"
+            ]),
+            target: "#itwEidIssuanceMachine.CredentialsUpgrade"
+          },
+          {
+            guard: and(["isUpgrade", "isEligibleForItwSimplifiedActivation"]),
+            target: "#itwEidIssuanceMachine.Success"
+          },
+          { target: "UserIdentification" }
+        ],
         error: {
           actions: "setFailure",
           target: "#itwEidIssuanceMachine.Failure"
