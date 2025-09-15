@@ -1,10 +1,15 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { useMemo } from "react";
 import I18n from "i18next";
+import { useMemo } from "react";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
+import { useIOSelector } from "../../../../store/hooks";
+import useIDPayFailureSupportModal from "../../common/hooks/useIDPayFailureSupportModal";
+import { idpayInitiativeDetailsSelector } from "../../details/store";
 import { IdPayPaymentMachineContext } from "../machine/provider";
 import { failureSelector, isCancelledSelector } from "../machine/selectors";
 import { PaymentFailureEnum } from "../types/PaymentFailure";
@@ -16,22 +21,57 @@ const IDPayPaymentResultScreen = () => {
   const failureOption = useSelector(failureSelector);
   const isCancelled = useSelector(isCancelledSelector);
 
+  const isGenericPaymentError = pipe(
+    failureOption,
+    O.map(failure => failure === PaymentFailureEnum.PAYMENT_GENERIC_ERROR),
+    O.getOrElse(() => false)
+  );
+
+  const initiativeDataPot = useIOSelector(idpayInitiativeDetailsSelector);
+  const initiative = pipe(
+    initiativeDataPot,
+    pot.toOption,
+    O.map(details => ({
+      initiativeId: details.initiativeId,
+      serviceId: details.serviceId
+    })),
+    O.toUndefined
+  );
+
+  const { bottomSheet, present } = useIDPayFailureSupportModal(
+    initiative?.serviceId ?? "",
+    initiative?.initiativeId
+  );
+
   const defaultCloseAction = useMemo(
     () => ({
-      label: I18n.t("global.buttons.close"),
-      accessibilityLabel: I18n.t("global.buttons.close"),
+      label: isGenericPaymentError
+        ? I18n.t("global.buttons.back")
+        : I18n.t("global.buttons.close"),
       onPress: () => machine.send({ type: "close" })
     }),
-    [machine]
+    [isGenericPaymentError, machine]
+  );
+
+  const secondaryAction = useMemo(
+    () => ({
+      label: I18n.t("idpay.support.supportTitle"),
+      onPress: () => present(PaymentFailureEnum.PAYMENT_GENERIC_ERROR)
+    }),
+    [present]
   );
 
   if (O.isSome(failureOption)) {
     return (
-      <OperationResultScreenContent
-        {...mapFailureToContentProps(failureOption.value)}
-        action={defaultCloseAction}
-        testID="paymentFailureScreenTestID"
-      />
+      <>
+        <OperationResultScreenContent
+          action={defaultCloseAction}
+          secondaryAction={isGenericPaymentError ? secondaryAction : undefined}
+          {...mapFailureToContentProps(failureOption.value)}
+          testID="paymentFailureScreenTestID"
+        />
+        {bottomSheet}
+      </>
     );
   }
 
@@ -69,7 +109,7 @@ const mapFailureToContentProps = (
   failure: PaymentFailureEnum
 ): OperationResultScreenContentProps => {
   switch (failure) {
-    case PaymentFailureEnum.TRANSACTION_EXPIRED:
+    case PaymentFailureEnum.PAYMENT_TRANSACTION_EXPIRED:
       return {
         pictogram: "timing",
         title: I18n.t("idpay.payment.result.failure.TRANSACTION_EXPIRED.title"),
@@ -77,13 +117,13 @@ const mapFailureToContentProps = (
           "idpay.payment.result.failure.TRANSACTION_EXPIRED.subtitle"
         )
       };
-    case PaymentFailureEnum.USER_SUSPENDED:
+    case PaymentFailureEnum.PAYMENT_USER_SUSPENDED:
       return {
         pictogram: "attention",
         title: I18n.t("idpay.payment.result.failure.USER_SUSPENDED.title"),
         subtitle: I18n.t("idpay.payment.result.failure.USER_SUSPENDED.subtitle")
       };
-    case PaymentFailureEnum.USER_NOT_ONBOARDED:
+    case PaymentFailureEnum.PAYMENT_USER_NOT_ONBOARDED:
       return {
         pictogram: "error",
         title: I18n.t("idpay.payment.result.failure.USER_NOT_ONBOARDED.title"),
@@ -93,7 +133,7 @@ const mapFailureToContentProps = (
         enableAnimatedPictogram: true,
         loop: false
       };
-    case PaymentFailureEnum.USER_UNSUBSCRIBED:
+    case PaymentFailureEnum.PAYMENT_USER_UNSUBSCRIBED:
       return {
         pictogram: "error",
         title: I18n.t("idpay.payment.result.failure.USER_UNSUBSCRIBED.title"),
@@ -103,14 +143,14 @@ const mapFailureToContentProps = (
         enableAnimatedPictogram: true,
         loop: false
       };
-    case PaymentFailureEnum.ALREADY_AUTHORIZED:
+    case PaymentFailureEnum.PAYMENT_ALREADY_AUTHORIZED:
       return {
         pictogram: "success",
         title: I18n.t("idpay.payment.result.failure.ALREADY_AUTHORIZED.title"),
         enableAnimatedPictogram: true,
         loop: false
       };
-    case PaymentFailureEnum.BUDGET_EXHAUSTED:
+    case PaymentFailureEnum.PAYMENT_BUDGET_EXHAUSTED:
       return {
         pictogram: "fatalError",
         title: I18n.t("idpay.payment.result.failure.BUDGET_EXHAUSTED.title"),
@@ -120,7 +160,7 @@ const mapFailureToContentProps = (
         enableAnimatedPictogram: true,
         loop: false
       };
-    case PaymentFailureEnum.ALREADY_ASSIGNED:
+    case PaymentFailureEnum.PAYMENT_ALREADY_ASSIGNED:
       return {
         pictogram: "fatalError",
         title: I18n.t("idpay.payment.result.failure.ALREADY_ASSIGNED.title"),
@@ -130,11 +170,23 @@ const mapFailureToContentProps = (
         enableAnimatedPictogram: true,
         loop: false
       };
-    case PaymentFailureEnum.INVALID_DATE:
+    case PaymentFailureEnum.PAYMENT_INITIATIVE_INVALID_DATE:
       return {
         pictogram: "time",
         title: I18n.t("idpay.payment.result.failure.INVALID_DATE.title"),
         subtitle: I18n.t("idpay.payment.result.failure.INVALID_DATE.subtitle")
+      };
+    case PaymentFailureEnum.PAYMENT_GENERIC_ERROR:
+      return {
+        pictogram: "umbrella",
+        title: I18n.t(
+          "idpay.onboarding.failure.message.PAYMENT_GENERIC_ERROR.title"
+        ),
+        subtitle: I18n.t(
+          "idpay.onboarding.failure.message.PAYMENT_GENERIC_ERROR.subtitle"
+        ),
+        enableAnimatedPictogram: true,
+        loop: true
       };
     default:
       return genericErrorProps;

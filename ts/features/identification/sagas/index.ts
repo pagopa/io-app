@@ -24,7 +24,7 @@ import {
 import { PinString } from "../../../types/PinString";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
 import { deletePin, getPin } from "../../../utils/keychain";
-import { handlePendingMessageStateIfAllowed } from "../../pushNotifications/sagas/common";
+import { maybeHandlePendingBackgroundActions } from "../../pushNotifications/sagas/common";
 import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors/index";
 import { isDevEnv } from "../../../utils/environment";
 
@@ -141,8 +141,8 @@ function* startAndHandleIdentificationResult(
   if (identificationResult === IdentificationResult.pinreset) {
     yield* put(startApplicationInitialization());
   } else if (identificationResult === IdentificationResult.success) {
-    // Check if we have a pending notification message
-    yield* call(handlePendingMessageStateIfAllowed);
+    // Check if we have any pending background actions to handle
+    yield* call(maybeHandlePendingBackgroundActions);
   }
 }
 

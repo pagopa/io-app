@@ -183,9 +183,7 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
         styles.card,
         { backgroundColor, borderColor },
         props.isExpired && {
-          borderColor: errorBorderColor,
-          borderLeftWidth: 9,
-          paddingLeft: 7
+          borderColor: errorBorderColor
         }
       ]}
     >

@@ -20,7 +20,6 @@ import { ServiceMinified } from "../../../../../definitions/services/ServiceMini
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { ServicesHeaderSection } from "../../common/components/ServicesHeaderSection";
 import { ServiceListSkeleton } from "../../common/components/ServiceListSkeleton";
 import { useFirstRender } from "../../common/hooks/useFirstRender";
@@ -30,6 +29,7 @@ import { getLogoForInstitution } from "../../common/utils";
 import { InstitutionServicesFailure } from "../components/InstitutionServicesFailure";
 import { useServicesFetcher } from "../hooks/useServicesFetcher";
 import { paginatedServicesGet } from "../store/actions";
+import { getListItemAccessibilityLabelCount } from "../../../../utils/accessibility";
 import * as analytics from "../../common/analytics";
 
 export type InstitutionServicesScreenRouteParams = {
@@ -63,18 +63,14 @@ export const InstitutionServicesScreen = ({
   const scrollTranslationY = useSharedValue(0);
 
   const {
-    currentPage,
     data,
     fetchNextPage,
-    fetchPage,
     isError,
     isLoading,
     isUpdating,
     isRefreshing,
     refresh
   } = useServicesFetcher(institutionId);
-
-  useOnFirstRender(() => fetchPage(0));
 
   useFocusEffect(
     useCallback(() => {
@@ -136,18 +132,24 @@ export const InstitutionServicesScreen = ({
   );
 
   const handleEndReached = useCallback(() => {
-    fetchNextPage(currentPage + 1);
-  }, [currentPage, fetchNextPage]);
+    fetchNextPage();
+  }, [fetchNextPage]);
 
   const renderItem = useCallback(
-    ({ item }: ListRenderItemInfo<ServiceMinified>) => (
-      <ListItemNav
-        value={item.name}
-        onPress={() => navigateToServiceDetails(item)}
-        accessibilityLabel={item.name}
-      />
-    ),
-    [navigateToServiceDetails]
+    ({ item, index }: ListRenderItemInfo<ServiceMinified>) => {
+      const accessibilityLabel = `${
+        item.name
+      }${getListItemAccessibilityLabelCount(data?.count ?? 0, index)}`;
+
+      return (
+        <ListItemNav
+          accessibilityLabel={accessibilityLabel}
+          onPress={() => navigateToServiceDetails(item)}
+          value={item.name}
+        />
+      );
+    },
+    [data?.count, navigateToServiceDetails]
   );
 
   const renderListEmptyComponent = useCallback(() => {
@@ -164,30 +166,17 @@ export const InstitutionServicesScreen = ({
 
   const renderListHeaderComponent = useCallback(() => {
     if (isFirstRender || isLoading) {
-      return (
-        <>
-          <ServicesHeaderSection isLoading={true} />
-          <VSpacer size={16} />
-        </>
-      );
+      return <ServicesHeaderSection isLoading={true} />;
     }
 
     return (
-      <>
-        <ServicesHeaderSection
-          logoUri={getLogoForInstitution(institutionId)}
-          title={institutionName}
-          subTitle={I18n.t(
-            data?.count && data?.count > 1
-              ? "services.institution.header.subtitlePlural"
-              : "services.institution.header.subtitleSingular",
-            {
-              count: data?.count ?? 0
-            }
-          )}
-        />
-        <VSpacer size={16} />
-      </>
+      <ServicesHeaderSection
+        logoUri={getLogoForInstitution(institutionId)}
+        title={institutionName}
+        subTitle={I18n.t("services.institution.header.subtitle", {
+          count: data?.count ?? 0
+        })}
+      />
     );
   }, [data?.count, isFirstRender, isLoading, institutionId, institutionName]);
 
@@ -204,7 +193,7 @@ export const InstitutionServicesScreen = ({
   }, [isUpdating, isRefreshing]);
 
   if (!data && isError) {
-    return <InstitutionServicesFailure onRetry={() => fetchPage(0)} />;
+    return <InstitutionServicesFailure onRetry={refresh} />;
   }
 
   const refreshControlComponent = (
@@ -217,10 +206,11 @@ export const InstitutionServicesScreen = ({
 
   return (
     <Animated.FlatList
-      ItemSeparatorComponent={() => <Divider />}
+      ItemSeparatorComponent={Divider}
       ListEmptyComponent={renderListEmptyComponent}
       ListHeaderComponent={renderListHeaderComponent}
       ListHeaderComponentStyle={{
+        marginBottom: 16,
         marginHorizontal: -IOVisualCostants.appMarginDefault
       }}
       ListFooterComponent={renderListFooterComponent}

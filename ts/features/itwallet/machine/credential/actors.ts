@@ -22,7 +22,9 @@ export type GetWalletAttestationActorOutput = Awaited<
 >;
 
 export type RequestCredentialActorInput =
-  Partial<credentialIssuanceUtils.RequestCredentialParams>;
+  Partial<credentialIssuanceUtils.RequestCredentialParams> & {
+    skipMdocIssuance: boolean;
+  };
 
 export type RequestCredentialActorOutput = Awaited<
   ReturnType<typeof credentialIssuanceUtils.requestCredential>
@@ -93,7 +95,8 @@ export const createCredentialIssuanceActorsImplementation = (
     RequestCredentialActorOutput,
     RequestCredentialActorInput
   >(async ({ input }) => {
-    const { credentialType, walletInstanceAttestation } = input;
+    const { credentialType, walletInstanceAttestation, skipMdocIssuance } =
+      input;
 
     assert(credentialType, "credentialType is undefined");
     assert(walletInstanceAttestation, "walletInstanceAttestation is undefined");
@@ -101,7 +104,8 @@ export const createCredentialIssuanceActorsImplementation = (
     return await credentialIssuanceUtils.requestCredential({
       env,
       credentialType,
-      walletInstanceAttestation
+      walletInstanceAttestation,
+      skipMdocIssuance
     });
   });
 

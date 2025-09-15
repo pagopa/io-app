@@ -25,6 +25,7 @@ import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { EmptyState } from "../../common/components/EmptyState";
 import { ListItemSearchInstitution } from "../../common/components/ListItemSearchInstitution";
 import { ServiceListSkeleton } from "../../common/components/ServiceListSkeleton";
+import { getListItemAccessibilityLabelCount } from "../../../../utils/accessibility";
 import * as analytics from "../../common/analytics";
 
 const INPUT_PADDING: IOSpacingScale = 16;
@@ -47,15 +48,8 @@ export const SearchScreen = () => {
     [insets.top]
   );
 
-  const {
-    currentPage,
-    data,
-    fetchNextPage,
-    fetchPage,
-    isError,
-    isLoading,
-    isUpdating
-  } = useInstitutionsFetcher();
+  const { data, fetchNextPage, isError, isLoading, isUpdating, refresh } =
+    useInstitutionsFetcher();
 
   useFocusEffect(
     useCallback(() => {
@@ -85,7 +79,7 @@ export const SearchScreen = () => {
 
     if (text.length >= MIN_QUERY_LENGTH) {
       analytics.trackSearchInput();
-      fetchPage(0, text);
+      refresh(text);
     } else {
       dispatch(searchPaginatedInstitutionsGet.cancel());
     }
@@ -93,10 +87,10 @@ export const SearchScreen = () => {
 
   const handleEndReached = useCallback(() => {
     if (!!data && query.length >= MIN_QUERY_LENGTH) {
-      fetchNextPage(currentPage + 1, query);
+      fetchNextPage(query);
       analytics.trackSearchResultScroll();
     }
-  }, [currentPage, data, fetchNextPage, query]);
+  }, [data, fetchNextPage, query]);
 
   const navigateToInstitution = useCallback(
     ({ fiscal_code, id, name }: Institution) => {
@@ -118,18 +112,24 @@ export const SearchScreen = () => {
   );
 
   const renderItem = useCallback(
-    ({ item }: ListRenderItemInfo<Institution>) => (
-      <ListItemSearchInstitution
-        value={item.name}
-        numberOfLines={2}
-        onPress={() => navigateToInstitution(item)}
-        accessibilityLabel={item.name}
-        avatarProps={{
-          source: getLogoForInstitution(item.fiscal_code)
-        }}
-      />
-    ),
-    [navigateToInstitution]
+    ({ item, index }: ListRenderItemInfo<Institution>) => {
+      const accessibilityLabel = `${
+        item.name
+      }${getListItemAccessibilityLabelCount(data?.count ?? 0, index)}`;
+
+      return (
+        <ListItemSearchInstitution
+          accessibilityLabel={accessibilityLabel}
+          avatarProps={{
+            source: getLogoForInstitution(item.fiscal_code)
+          }}
+          numberOfLines={2}
+          onPress={() => navigateToInstitution(item)}
+          value={item.name}
+        />
+      );
+    },
+    [data?.count, navigateToInstitution]
   );
 
   const renderListFooterComponent = useCallback(() => {

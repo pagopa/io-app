@@ -8,8 +8,8 @@ import {
   StoreEnhancer as ReduxStoreEnhancer
 } from "redux";
 import { VersionInfoActions } from "../../common/versionInfo/store/actions/versionInfo";
-import { AppearanceSettingsActions } from "../../features/appearanceSettings/store/actions";
 import { AppFeedbackActions } from "../../features/appReviews/store/actions";
+import { AppearanceSettingsActions } from "../../features/appearanceSettings/store/actions";
 import { LoginInfoActions } from "../../features/authentication/activeSessionLogin/store/actions";
 import { AuthenticationActions } from "../../features/authentication/common/store/actions";
 import { FastLoginActions } from "../../features/authentication/fastLogin/store/actions";
@@ -28,6 +28,7 @@ import { IdPayActions } from "../../features/idpay/common/store/actions";
 import { IngressScreenActions } from "../../features/ingress/store/actions";
 import { ItwActions } from "../../features/itwallet/common/store/actions";
 import { LandingScreenBannerActions } from "../../features/landingScreenMultiBanner/store/actions";
+import { BackgroundLinkingActions } from "../../features/linking/actions";
 import { LollipopActions } from "../../features/lollipop/store/actions/lollipop";
 import { ProfileEmailValidationAction } from "../../features/mailCheck/store/actions/profileEmailValidationChange";
 import { MessagesActions } from "../../features/messages/store/actions";
@@ -121,7 +122,8 @@ export type Action =
   | UtmLinkActions
   | ConnectivityActions
   | LoginPreferencesActions
-  | AARFlowStateActions;
+  | AARFlowStateActions
+  | BackgroundLinkingActions;
 
 export type Dispatch = DispatchAPI<Action>;
 

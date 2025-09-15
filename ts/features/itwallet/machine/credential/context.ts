@@ -26,7 +26,7 @@ export type Context = {
   /**
    * Flag to indicate if the user has access to the L3 features.
    */
-  isWhiteListed: boolean;
+  isItWalletValid: boolean;
   /**
    * Used to indicate that the flow is coming from the asynchrnous issuance flow for the MDL.
    * TODO to be removed in [SIW-2839]
@@ -63,7 +63,7 @@ export type Context = {
 
 export const InitialContext: Context = {
   mode: "issuance",
-  isWhiteListed: false,
+  isItWalletValid: false,
   isAsyncContinuation: false,
   credentialType: undefined,
   wiaCryptoContext: undefined,

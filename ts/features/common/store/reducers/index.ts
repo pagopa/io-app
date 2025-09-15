@@ -80,6 +80,10 @@ import {
   activeSessionLoginReducer,
   ActiveSessionLoginState
 } from "../../../authentication/activeSessionLogin/store/reducer";
+import {
+  BackgroundLinkingState,
+  backgroundLinkingReducer
+} from "../../../linking/reducers";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
@@ -111,6 +115,7 @@ export type FeaturesState = {
   appFeedback: AppFeedbackState & PersistPartial;
   utmLink: UtmLinkState;
   connectivityStatus: ConnectivityState;
+  backgroundLinking: BackgroundLinkingState;
 };
 
 export type PersistedFeaturesState = FeaturesState & PersistPartial;
@@ -142,7 +147,8 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   landingBanners: landingScreenBannersReducer,
   appFeedback: appFeedbackPersistor,
   utmLink: utmLinkReducer,
-  connectivityStatus: connectivityStateReducer
+  connectivityStatus: connectivityStateReducer,
+  backgroundLinking: backgroundLinkingReducer
 });
 
 const CURRENT_REDUX_FEATURES_STORE_VERSION = 1;

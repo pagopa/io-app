@@ -5,11 +5,11 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
+import I18n from "i18next";
 import { Alert, View } from "react-native";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
-import I18n from "i18next";
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import { useOpenDeepLink } from "../../../hooks/useOpenDeepLink";
 import { mixpanelTrack } from "../../../mixpanel";
@@ -17,7 +17,7 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../store/hooks";
+import { useIOSelector, useIOStore } from "../../../store/hooks";
 import {
   barcodesScannerConfigSelector,
   isPnRemoteEnabledSelector
@@ -33,6 +33,7 @@ import { usePagoPaPayment } from "../../payments/checkout/hooks/usePagoPaPayment
 import { PaymentsCheckoutRoutes } from "../../payments/checkout/navigation/routes";
 import { paymentAnalyticsDataSelector } from "../../payments/history/store/selectors";
 import * as paymentsAnalytics from "../../payments/home/analytics";
+import { navigateToSendAarFlow } from "../../pn/aar/utils/deepLinking.ts";
 import * as analytics from "../analytics";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
 import { useIOBarcodeFileReader } from "../hooks/useIOBarcodeFileReader";
@@ -47,8 +48,6 @@ import {
 } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 import { getIOBarcodesByType } from "../utils/getBarcodesByType";
-import { MESSAGES_ROUTES } from "../../messages/navigation/routes.ts";
-import PN_ROUTES from "../../pn/navigation/routes.ts";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -56,6 +55,7 @@ const BarcodeScanScreen = () => {
   const isIdPayEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const isSendEnabled = useIOSelector(isPnRemoteEnabledSelector);
+  const store = useIOStore();
 
   const { startPaymentFlowWithRptId } = usePagoPaPayment();
 
@@ -167,15 +167,7 @@ const BarcodeScanScreen = () => {
         });
         break;
       case "SEND":
-        navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-          screen: PN_ROUTES.MAIN,
-          params: {
-            screen: PN_ROUTES.QR_SCAN_FLOW,
-            params: {
-              aarUrl: barcode.qrCodeContent
-            }
-          }
-        });
+        navigateToSendAarFlow(store.getState(), barcode.qrCodeContent);
         break;
     }
   };

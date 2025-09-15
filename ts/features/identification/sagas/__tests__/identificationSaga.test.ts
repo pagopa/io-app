@@ -15,7 +15,7 @@ import {
   checkCurrentSession,
   sessionInvalid
 } from "../../../authentication/common/store/actions";
-import { handlePendingMessageStateIfAllowed } from "../../../pushNotifications/sagas/common";
+import { maybeHandlePendingBackgroundActions } from "../../../pushNotifications/sagas/common";
 import { isFastLoginEnabledSelector } from "../../../authentication/fastLogin/store/selectors";
 import { startApplicationInitialization } from "../../../../store/actions/application";
 import { PinString } from "../../../../types/PinString";
@@ -182,7 +182,7 @@ describe("Identification Saga", () => {
       .next()
       .call(testableModule.waitIdentificationResult)
       .next("success")
-      .call(handlePendingMessageStateIfAllowed)
+      .call(maybeHandlePendingBackgroundActions)
       .next()
       .isDone();
   });
@@ -253,7 +253,7 @@ describe("Identification Saga", () => {
       .next()
       .call(testableModule.waitIdentificationResult)
       .next("success")
-      .call(handlePendingMessageStateIfAllowed)
+      .call(maybeHandlePendingBackgroundActions)
       .next()
       .isDone();
   });

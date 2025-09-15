@@ -10,6 +10,7 @@ import {
   WIA_KEYTAG
 } from "./itwCryptoContextUtils";
 import {
+  CredentialFormat,
   IssuerConfiguration,
   RequestObject,
   StoredCredential
@@ -21,6 +22,7 @@ export type RequestCredentialParams = {
   env: Env;
   credentialType: string;
   walletInstanceAttestation: string;
+  skipMdocIssuance: boolean;
 };
 
 /**
@@ -33,7 +35,8 @@ export type RequestCredentialParams = {
 export const requestCredential = async ({
   env,
   credentialType,
-  walletInstanceAttestation
+  walletInstanceAttestation,
+  skipMdocIssuance
 }: RequestCredentialParams) => {
   // Get WIA crypto context
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
@@ -45,7 +48,8 @@ export const requestCredential = async ({
 
   const credentialIds = getCredentialConfigurationIds(
     issuerConf,
-    credentialType
+    credentialType,
+    skipMdocIssuance
   );
 
   // Start user authorization
@@ -207,19 +211,26 @@ const getCredentialConfigurationIds = (
   issuerConfig: Awaited<
     ReturnType<Credential.Issuance.EvaluateIssuerTrust>
   >["issuerConf"],
-  credentialType: string
+  credentialType: string,
+  skipMdocIssuance: boolean
 ) => {
   const { credential_configurations_supported } =
     issuerConfig.openid_credential_issuer;
+
   const supportedConfigurationsByScope = Object.entries(
     credential_configurations_supported
-  ).reduce<Record<string, Array<string>>>(
-    (acc, [configId, config]) => ({
-      ...acc,
-      [config.scope]: [...(acc[config.scope] || []), configId]
-    }),
-    {}
-  );
+  )
+    .filter(
+      ([, config]) =>
+        !skipMdocIssuance || config.format !== CredentialFormat.MDOC
+    )
+    .reduce<Record<string, Array<string>>>(
+      (acc, [configId, config]) => ({
+        ...acc,
+        [config.scope]: [...(acc[config.scope] || []), configId]
+      }),
+      {}
+    );
 
   return supportedConfigurationsByScope[credentialType] || [];
 };

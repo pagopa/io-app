@@ -2,6 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useCallback, useEffect, useState } from "react";
 import { ScopeTypeEnum } from "../../../../../definitions/services/ScopeType";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { paginatedInstitutionsGet } from "../store/actions";
 import {
   paginatedInstitutionsCurrentPageSelector,
@@ -28,6 +29,8 @@ export const useInstitutionsFetcher = () => {
 
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
 
+  useOnFirstRender(() => fetchPage(0));
+
   useEffect(() => {
     if (isRefreshing && !isUpdating) {
       setIsRefreshing(false);
@@ -49,28 +52,25 @@ export const useInstitutionsFetcher = () => {
     [dispatch, isLoading, isUpdating]
   );
 
-  const fetchNextPage = useCallback(
-    (page: number) => {
-      if (isLastPage) {
+  const fetchNextPage = useCallback(() => {
+    if (isLastPage) {
+      return;
+    }
+    // If there was an error in the last page-loading, we prevent
+    // the page from reloading continuosly when the server endpoint keeps
+    // replying with an error. In such case we block the call and wait for
+    // a little bit before the request can be sent again
+    if (isError) {
+      const millisecondsAfterLastError =
+        new Date().getTime() - paginatedInstitutionsPot.error.time.getTime();
+
+      if (millisecondsAfterLastError < NEXT_PAGE_LOADING_WAIT_MILLISECONDS) {
         return;
       }
-      // If there was an error in the last page-loading, we prevent
-      // the page from reloading continuosly when the server endpoint keeps
-      // replying with an error. In such case we block the call and wait for
-      // a little bit before the request can be sent again
-      if (isError) {
-        const millisecondsAfterLastError =
-          new Date().getTime() - paginatedInstitutionsPot.error.time.getTime();
+    }
 
-        if (millisecondsAfterLastError < NEXT_PAGE_LOADING_WAIT_MILLISECONDS) {
-          return;
-        }
-      }
-
-      fetchPage(page);
-    },
-    [isError, isLastPage, paginatedInstitutionsPot, fetchPage]
-  );
+    fetchPage(currentPage + 1);
+  }, [currentPage, isError, isLastPage, paginatedInstitutionsPot, fetchPage]);
 
   const refresh = useCallback(() => {
     setIsRefreshing(true);
@@ -80,7 +80,6 @@ export const useInstitutionsFetcher = () => {
   return {
     currentPage,
     data: paginatedInstitutions,
-    fetchPage,
     fetchNextPage,
     isError,
     isLastPage,

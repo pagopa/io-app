@@ -11,8 +11,6 @@ export const InstitutionServicesFailure = ({
 }: InstitutionServicesFailureProps) => {
   const navigation = useIONavigation();
 
-  const handleBack = () => navigation.goBack();
-
   return (
     <OperationResultScreenContent
       testID="service-institution-failure"
@@ -22,7 +20,7 @@ export const InstitutionServicesFailure = ({
       action={{
         label: I18n.t("services.institution.failure.back"),
         accessibilityLabel: I18n.t("services.institution.failure.back"),
-        onPress: handleBack
+        onPress: () => navigation.goBack()
       }}
       secondaryAction={{
         label: I18n.t("services.institution.failure.retry"),

@@ -117,7 +117,9 @@ export const ItwCiePinScreen = () => {
               )}
               onPress={() => {
                 trackItWalletCiePinInfo(itw_flow);
-                pinInfoBottomSheet.present();
+                pinInfoBottomSheet.present({
+                  skipTracking: true
+                });
               }}
             />
             <VSpacer size={24} />

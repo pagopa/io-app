@@ -10,7 +10,7 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 import { View } from "react-native";
 import I18n from "i18next";
 import IOMarkdown from "../../../../../components/IOMarkdown";
@@ -189,14 +189,20 @@ export const ItwL3IdentificationModeSelectionScreen = () => {
  */
 const useCieIdBottomSheet = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  // Ref used to temporarily skip tracking when the bottom sheet is dismissed
+  const skipDismissTracking = useRef(false);
 
   const bottomSheet = useIOBottomSheetModal({
     title: I18n.t(
       "features.itWallet.identification.mode.l3.bottomSheet.cieId.title"
     ),
     onDismiss: () => {
-      // Track the dismissal of the bottom sheet also when the user closes it with the X button
-      trackItwContinueWithCieIDClose();
+      // Track the dismissal of the bottom sheet also when the user closes it with the X button unless tracking was suppressed
+      if (!skipDismissTracking.current) {
+        trackItwContinueWithCieIDClose();
+      }
+      // eslint-disable-next-line functional/immutable-data
+      skipDismissTracking.current = false;
     },
     component: (
       <VStack space={24}>
@@ -220,6 +226,8 @@ const useCieIdBottomSheet = () => {
                     type: "select-identification-mode",
                     mode: "cieId"
                   });
+                  // eslint-disable-next-line functional/immutable-data
+                  skipDismissTracking.current = true;
                   bottomSheet.dismiss();
                 }
               },

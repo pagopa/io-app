@@ -25,7 +25,8 @@ export const createCredentialUpgradeActorsImplementation = (env: Env) => ({
       await credentialIssuanceUtils.requestCredential({
         env,
         credentialType: credential.credentialType,
-        walletInstanceAttestation
+        walletInstanceAttestation,
+        skipMdocIssuance: false
       });
 
     const result = await credentialIssuanceUtils.obtainCredential({

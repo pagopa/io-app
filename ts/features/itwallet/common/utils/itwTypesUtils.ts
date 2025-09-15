@@ -4,6 +4,7 @@ import {
   Trust,
   WalletInstance
 } from "@pagopa/io-react-native-wallet";
+import { CredentialType } from "./itwMocksUtils.ts";
 
 /**
  * Alias type for the return type of the start issuance flow operation.
@@ -141,4 +142,36 @@ export type WalletInstanceAttestations = {
   jwt: string;
   [CredentialFormat.SD_JWT]?: string;
   [CredentialFormat.MDOC]?: string;
+};
+
+// A predefined list of credential types that are potentially multi-level.
+const MULTI_LEVEL_CREDENTIAL_TYPES = [
+  CredentialType.EDUCATION_DEGREE,
+  CredentialType.EDUCATION_ENROLLMENT
+];
+
+/**
+ * Checks if a given credential is "multi-level".
+ * A credential is multi-level if its type is in a predefined list
+ * and its parsed data contains at least one claim that is an array
+ * with more than one item.
+ *
+ * @param credential the stored credential to check.
+ * @returns `true` if the credential is multi-level, `false` otherwise.
+ */
+export const isMultiLevelCredential = (
+  credential: StoredCredential
+): boolean => {
+  const { credentialType, parsedCredential } = credential;
+  const isMultiLevel = MULTI_LEVEL_CREDENTIAL_TYPES.includes(
+    credentialType as CredentialType
+  );
+
+  if (!isMultiLevel || !parsedCredential) {
+    return false;
+  }
+
+  return Object.values(parsedCredential).some(
+    claim => Array.isArray(claim.value) && claim.value.length > 1
+  );
 };

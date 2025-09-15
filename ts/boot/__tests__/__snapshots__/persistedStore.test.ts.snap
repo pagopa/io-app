@@ -92,6 +92,7 @@ exports[`Check the addition for new fields to the persisted store. If one of thi
   "isPnTestEnabled": false,
   "preferredCalendar": undefined,
   "preferredLanguage": undefined,
+  "themePreference": "light",
   "wasServiceAlertDisplayedOnce": false,
 }
 `;

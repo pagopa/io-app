@@ -68,7 +68,7 @@ export const trackItwProximityDataShare = () => {
 
 export const trackItwProximityPresentationCompleted = () => {
   void mixpanelTrack(
-    ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_PROXIMITY_SUCCESS,
+    ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_PROXIMITY_UX_SUCCESS,
     buildEventProperties("UX", "screen_view")
   );
 };
