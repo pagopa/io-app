@@ -15,44 +15,48 @@ import {
 } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
 import { versionInfoReducer } from "../../common/versionInfo/store/reducers/versionInfo";
-import bonusReducer from "../../features/bonus/common/store/reducers";
-import { featuresPersistor } from "../../features/common/store/reducers";
-import { lollipopPersistor } from "../../features/lollipop/store";
-import { initialLollipopState } from "../../features/lollipop/store/reducers/lollipop";
+import { appearanceSettingsReducerInitialState } from "../../features/appearanceSettings/store/reducers";
+import { appFeedbackInitialState } from "../../features/appReviews/store/reducers";
 import {
   logoutFailure,
   logoutSuccess,
   sessionExpired
 } from "../../features/authentication/common/store/actions";
+import authenticationReducer, {
+  INITIAL_STATE as authenticationInitialState,
+  AuthenticationState
+} from "../../features/authentication/common/store/reducers";
+import { fastLoginOptInInitialState } from "../../features/authentication/fastLogin/store/reducers/optInReducer";
+import { cieReducer } from "../../features/authentication/login/cie/store/reducers";
+import { cieLoginInitialState } from "../../features/authentication/login/cie/store/reducers/cieLogin";
+import bonusReducer from "../../features/bonus/common/store/reducers";
+import { featuresPersistor } from "../../features/common/store/reducers";
+import {
+  fillShowLockModal,
+  INITIAL_STATE as identificationInitialState,
+  identificationReducer,
+  IdentificationState
+} from "../../features/identification/store/reducers";
+import { lollipopPersistor } from "../../features/lollipop/store";
+import { initialLollipopState } from "../../features/lollipop/store/reducers/lollipop";
+import emailValidationReducer from "../../features/mailCheck/store/reducers/emailValidation";
+import onboardingReducer from "../../features/onboarding/store/reducers";
+import { profileSettingsReducerInitialState } from "../../features/profileSettings/store/reducers";
+import { persistedNotificationsReducer } from "../../features/pushNotifications/store/reducers";
+import profileReducer from "../../features/settings/common/store/reducers";
+import userDataProcessingReducer from "../../features/settings/common/store/reducers/userDataProcessing";
+import { trialSystemActivationStatusReducer } from "../../features/trialSystem/store/reducers";
+import { whatsNewInitialState } from "../../features/whatsnew/store/reducers";
+import { isDevEnv } from "../../utils/environment";
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
-import { whatsNewInitialState } from "../../features/whatsnew/store/reducers";
-import { fastLoginOptInInitialState } from "../../features/authentication/fastLogin/store/reducers/optInReducer";
-import { isDevEnv } from "../../utils/environment";
-import { trialSystemActivationStatusReducer } from "../../features/trialSystem/store/reducers";
-import { persistedNotificationsReducer } from "../../features/pushNotifications/store/reducers";
-import { profileSettingsReducerInitialState } from "../../features/profileSettings/store/reducers";
-import { cieLoginInitialState } from "../../features/authentication/login/cie/store/reducers/cieLogin";
-import { appearanceSettingsReducerInitialState } from "../../features/appearanceSettings/store/reducers";
-import { appFeedbackInitialState } from "../../features/appReviews/store/reducers";
-import authenticationReducer, {
-  AuthenticationState,
-  INITIAL_STATE as authenticationInitialState
-} from "../../features/authentication/common/store/reducers";
-import { cieReducer } from "../../features/authentication/login/cie/store/reducers";
-import profileReducer from "../../features/settings/common/store/reducers";
-import userDataProcessingReducer from "../../features/settings/common/store/reducers/userDataProcessing";
-import emailValidationReducer from "../../features/mailCheck/store/reducers/emailValidation";
-import {
-  IdentificationState,
-  fillShowLockModal,
-  INITIAL_STATE as identificationInitialState,
-  identificationReducer
-} from "../../features/identification/store/reducers";
-import onboardingReducer from "../../features/onboarding/store/reducers";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
+import { backendInfoReducer } from "./backendStatus/backendInfo";
+import remoteConfigReducer from "./backendStatus/remoteConfig";
+import sectionStatusReducer from "./backendStatus/sectionStatus";
+import statusMessagesReducer from "./backendStatus/statusMessages";
 import contentReducer, {
   initialContentState as contentInitialContentState
 } from "./content";
@@ -71,11 +75,6 @@ import preferencesReducer from "./preferences";
 import searchReducer from "./search";
 import startupReducer from "./startup";
 import { GlobalState } from "./types";
-import remoteConfigReducer from "./backendStatus/remoteConfig";
-import statusMessagesReducer from "./backendStatus/statusMessages";
-import sectionStatusReducer from "./backendStatus/sectionStatus";
-import { backendInfoReducer } from "./backendStatus/backendInfo";
-import { backgroundLinkingReducer } from "./linking";
 
 // A custom configuration to store the authentication into the Keychain
 export const authenticationPersistConfig: PersistConfig = {
@@ -139,7 +138,6 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   bonus: bonusReducer,
   assistanceTools: assistanceToolsReducer,
   startup: startupReducer,
-  backgroundLinking: backgroundLinkingReducer,
   //
   // persisted state
   //

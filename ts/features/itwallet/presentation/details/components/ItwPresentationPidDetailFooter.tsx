@@ -6,6 +6,7 @@ import { constVoid } from "fp-ts/function";
 import { useItwStartCredentialSupportRequest } from "../hooks/useItwStartCredentialSupportRequest";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { trackWalletStartDeactivation } from "../../../analytics";
 import { useNotAvailableToastGuard } from "../../../common/hooks/useNotAvailableToastGuard.ts";
 
 const POWERED_BY_IT_WALLET = "Powered by IT-Wallet";
@@ -24,6 +25,7 @@ const ItwPresentationPidDetailFooter = ({ credential }: Props) => {
   );
 
   const handleRevokePress = () => {
+    trackWalletStartDeactivation("ITW_PID");
     Alert.alert(
       I18n.t("features.itWallet.presentation.itWalletId.dialog.revoke.title"),
       I18n.t("features.itWallet.presentation.itWalletId.dialog.revoke.message"),
