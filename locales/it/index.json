@@ -2970,8 +2970,8 @@
         "retry": "Riprova"
       },
       "header": {
-        "subtitlePlural": "{{count}} servizi disponibili",
-        "subtitleSingular": "{{count}} servizio disponibile"
+        "subtitle_one": "{{count}} servizio disponibile",
+        "subtitle_other": "{{count}} servizi disponibili"
       }
     },
     "search": {
@@ -4165,7 +4165,8 @@
           "active": "Già presente",
           "unavailable": "Non disponibile",
           "requested": "In corso",
-          "upcoming": "In arrivo"
+          "upcoming": "In arrivo",
+          "new": "Novità"
         },
         "options": {
           "cgn": "Carta Giovani Nazionale",
@@ -4302,7 +4303,8 @@
         "mdl": "Patente di guida",
         "dc": "Carta Europea della Disabilità",
         "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
-        "dgc": "Attestati di Laurea, Dottorato e Master"
+        "ed": "Titoli accademici",
+        "ee": "Iscrizioni universitarie"
       },
       "wallet": {
         "active": "Attivo",
@@ -4361,6 +4363,9 @@
         "walletNotAvailable": {
           "message": "Abbiamo avuto un problema nel recuperare i tuoi documenti.",
           "cta": "Chiudi e riapri l'app per riprovare."
+        },
+        "featureUnavailable": {
+          "title": "In arrivo: questa funzione sarà disponibile a breve"
         }
       },
       "verifiableCredentials": {
@@ -4821,6 +4826,12 @@
           "title": "Documento in arrivo",
           "subtitle": "Stiamo lavorando per rendere disponibili nuovi documenti in app IO.\nRiprova quandro vedrai il documento contrassegnato come \"Novità\".",
           "primaryAction": "Ho capito"
+        },
+        "invalidWallet": {
+          "title": "Ottieni IT-Wallet per continuare",
+          "subtitle": "Per aggiungere nuovi documenti al tuo Portafoglio di IO ottieni IT-Wallet: ti bastano la Carta di Identità Elettronica (CIE) e il suo PIN.",
+          "primaryAction": "Inizia",
+          "secondaryAction": "Non ora"
         },
         "cieNotRegistered": {
           "title": "Registra la CIE in app CieID per continuare",
@@ -5565,6 +5576,15 @@
           "enrollment": "Errore nel collegamento dell'iniziativa, riprova.",
           "removal": "Errore nella rimozione dell'iniziativa, riprova."
         }
+      },
+      "initiativeOnboardedStatus": {
+        "header": "Le mie richieste",
+        "ON_WAITING_LIST": {
+          "label": "Verifica in corso"
+        },
+        "ON_EVALUATION": {
+          "label": "Verifica in corso"
+        }
       }
     },
     "initiative": {
@@ -5823,6 +5843,10 @@
           "ON_EVALUATION": {
             "title": "L’ente sta valutando la tua domanda d’adesione",
             "subtitle": "Quando pronto, riceverai l’esito tramite un messaggio in app."
+          },
+          "PAYMENT_GENERIC_ERROR": {
+            "title": "Non siamo riusciti a completare l’operazione",
+            "subtitle": "Siamo già a lavoro per risolvere.  Riprova tra un po’."
           }
         }
       },
@@ -5839,7 +5863,7 @@
         "prerequisites": {
           "info": {
             "header": "Come avviene la verifica?",
-            "body": "Comunichiamo direttamente con l’Ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**. In questo modo non devi produrre alcuna autocertificazione.",
+            "body": "Comunichiamo direttamente con l’ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**. In questo modo non devi produrre alcuna autocertificazione.",
             "understoodCTA": "Ho capito"
           }
         },
@@ -5849,7 +5873,7 @@
           "ISEE": "ISEE",
           "BIRTHDAY": "Data di nascita",
           "RESIDENCE": "Residenza",
-          "FAMILY_UNIT": "Nucleo Familiare"
+          "FAMILY_UNIT": "Famiglia anagrafica"
         },
         "operator": {
           "EQ": "{{value}}",

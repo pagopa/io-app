@@ -2970,8 +2970,8 @@
         "retry": "Retry"
       },
       "header": {
-        "subtitlePlural": "{{count}} available services",
-        "subtitleSingular": "{{count}} available service"
+        "subtitle_one": "{{count}} available service",
+        "subtitle_other": "{{count}} available services"
       }
     },
     "search": {
@@ -4301,8 +4301,7 @@
         "eid": "Identità Digitale",
         "mdl": "Patente di guida",
         "dc": "Carta Europea della Disabilità",
-        "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
-        "dgc": "Attestati di Laurea, Dottorato e Master"
+        "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia"
       },
       "wallet": {
         "active": "Attivo",
@@ -5565,6 +5564,15 @@
           "enrollment": "Errore nel collegamento dell'iniziativa, riprova.",
           "removal": "Errore nella rimozione dell'iniziativa, riprova."
         }
+      },
+      "initiativeOnboardedStatus": {
+        "header": "My requests",
+        "ON_WAITING_LIST": {
+          "label": "On evaluation"
+        },
+        "ON_EVALUATION": {
+          "label": "On evaluation"
+        }
       }
     },
     "initiative": {
@@ -5823,6 +5831,10 @@
           "ON_EVALUATION": {
             "title": "L’ente sta valutando la tua domanda d’adesione",
             "subtitle": "Quando pronto, riceverai l’esito tramite un messaggio in app."
+          },
+          "PAYMENT_GENERIC_ERROR": {
+            "title": "Non siamo riusciti a completare l’operazione",
+            "subtitle": "Siamo già a lavoro per risolvere.  Riprova tra un po’."
           }
         }
       },
@@ -5839,7 +5851,7 @@
         "prerequisites": {
           "info": {
             "header": "Come avviene la verifica?",
-            "body": "Comunichiamo direttamente con l’Ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**. In questo modo non devi produrre alcuna autocertificazione.",
+            "body": "Comunichiamo direttamente con l’ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**. In questo modo non devi produrre alcuna autocertificazione.",
             "understoodCTA": "Ho capito"
           }
         },
