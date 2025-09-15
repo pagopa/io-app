@@ -93,7 +93,7 @@ const ContentView = ({ eid }: ContentViewProps) => {
           isL3 ? "L3" : "L2"
         );
       }
-    }, [identification, mixPanelCredential])
+    }, [identification, mixPanelCredential, isL3])
   );
 
   useDebugInfo({
