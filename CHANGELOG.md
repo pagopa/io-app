@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.13.0-canary.7446](https://github.com/pagopa/io-app/compare/3.13.0-rc.6...3.13.0-canary.7446) (2025-09-15)
+
+
+### Features
+
+* [[IOBP-1908](https://pagopa.atlassian.net/browse/IOBP-1908)] IDPay onboarding Mixpanel events ([#7333](https://github.com/pagopa/io-app/issues/7333)) ([1ff162d](https://github.com/pagopa/io-app/commit/1ff162dc048bd3638dcbc2b603553524874d1a2f))
+* [[IOBP-1976](https://pagopa.atlassian.net/browse/IOBP-1976),[IOBP-1984](https://pagopa.atlassian.net/browse/IOBP-1984)] Add IDPay user waiting list statuses inside the Services home screen ([#7349](https://github.com/pagopa/io-app/issues/7349)) ([09e5a45](https://github.com/pagopa/io-app/commit/09e5a4520857a3f3abf31083b9d07edbc0979a2a))
+* **IT Wallet:** [[SIW-2904](https://pagopa.atlassian.net/browse/SIW-2904)] Implement feature unavailable toast ([#7334](https://github.com/pagopa/io-app/issues/7334)) ([942347b](https://github.com/pagopa/io-app/commit/942347b28fc9e7d67ac14d922ee340c17bfb9b7c))
+
+
+### Bug Fixes
+
+* [[IOPLT-1336](https://pagopa.atlassian.net/browse/IOPLT-1336)] Remove footer gradient from `ItwPresentationDetailsScreenBase` + Fix barcode ([#7347](https://github.com/pagopa/io-app/issues/7347)) ([da04434](https://github.com/pagopa/io-app/commit/da04434da8b5d3e6b68820cbba9edc54734531bb))
+
 ## [3.13.0-rc.6](https://github.com/pagopa/io-app/compare/3.13.0-rc.5...3.13.0-rc.6) (2025-09-12)
 
 
