@@ -17,21 +17,17 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import I18n from "i18next";
 import SectionStatusComponent from "../../../../components/SectionStatus";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import {
-  useIODispatch,
-  useIOSelector,
-  useIOStore
-} from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import {
-  loginCieWizardSelected,
-  trackCieBottomSheetScreenView,
-  trackCieIDLoginSelected,
-  trackCieLoginSelected
-  // trackCiePinLoginSelected,
-  // trackSpidLoginSelected
-} from "../../common/analytics";
+// import {
+//   loginCieWizardSelected,
+//   trackCieBottomSheetScreenView,
+//   trackCieIDLoginSelected,
+//   trackCieLoginSelected,
+//   trackCiePinLoginSelected,
+//    trackSpidLoginSelected
+// } from "../../common/analytics";
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
 
 import { isCieLoginUatEnabledSelector } from "../../login/cie/store/selectors";
@@ -45,35 +41,30 @@ const SPACE_BETWEEN_BUTTONS = 8;
 const SPACE_AROUND_BUTTON_LINK = 16;
 const SPID_LEVEL: SpidLevel = "SpidL2";
 
+// The MP events related to this page have been commented on,
+// pending their correct integration into the flow.
+// Task: https://pagopa.atlassian.net/browse/IOPID-3343
+
 export const ActiveSessionLandingScreen = () => {
-  const store = useIOStore();
   const insets = useSafeAreaInsets();
   const dispatch = useIODispatch();
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
 
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   const {
-    // This code is commented because the CIE+PIN and SPID
-    // active session login flow will be implemented in this tasks:
-    // CIE + PIN -> https://pagopa.atlassian.net/browse/IOPID-2928
-    // SPID -> https://pagopa.atlassian.net/browse/IOPID-2929
+    // This code is commented because the SPID
+    // active session login flow will be implemented in this task:
+    // https://pagopa.atlassian.net/browse/IOPID-2929
     // navigateToIdpSelection,
-    // navigateToCiePinInsertion,
+    navigateToCiePinInsertion,
     navigateToCieIdLoginScreen,
     isCieSupported
   } = useNavigateToLoginMethod();
-  // This code is commented because the CIE+PIN active
-  // sessionlogin flow will be implemented in this task:
-  // https://pagopa.atlassian.net/browse/IOPID-2928
-  // const handleNavigateToCiePinScreen = useCallback(() => {
-  //   void trackCiePinLoginSelected(store.getState());
-  //   navigateToCiePinInsertion();
-  // }, [store, navigateToCiePinInsertion]);
 
   const handleNavigateToCieIdLoginScreen = useCallback(() => {
-    void trackCieIDLoginSelected(store.getState(), SPID_LEVEL);
+    // void trackCieIDLoginSelected(store.getState(), SPID_LEVEL);
     navigateToCieIdLoginScreen(SPID_LEVEL);
-  }, [store, navigateToCieIdLoginScreen]);
+  }, [navigateToCieIdLoginScreen]);
 
   useEffect(() => {
     if (!isActiveSessionLogin) {
@@ -89,10 +80,7 @@ export const ActiveSessionLandingScreen = () => {
     title: I18n.t("authentication.landing.cie_bottom_sheet.title"),
     component: (
       <View>
-        {/* This code is commented because the CIE+PIN active
-        session login flow will be implemented in this task:
-        https://pagopa.atlassian.net/browse/IOPID-2928 */}
-        {/* <ModuleNavigation
+        <ModuleNavigation
           title={I18n.t(
             "authentication.landing.cie_bottom_sheet.module_cie_pin.title"
           )}
@@ -101,8 +89,8 @@ export const ActiveSessionLandingScreen = () => {
           )}
           icon="fiscalCodeIndividual"
           testID="bottom-sheet-login-with-cie-pin"
-          onPress={handleNavigateToCiePinScreen}
-        /> */}
+          onPress={navigateToCiePinInsertion}
+        />
         <VSpacer size={8} />
         <ModuleNavigation
           title={I18n.t(
@@ -124,7 +112,7 @@ export const ActiveSessionLandingScreen = () => {
         <VSpacer size={24} />
         <Banner
           onPress={() => {
-            void loginCieWizardSelected();
+            // void loginCieWizardSelected();
 
             navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
               screen: AUTHENTICATION_ROUTES.CIE_ID_WIZARD
@@ -159,14 +147,14 @@ export const ActiveSessionLandingScreen = () => {
   );
 
   const navigateToCiePinScreen = useCallback(() => {
-    void trackCieLoginSelected();
+    // void trackCieLoginSelected();
     if (isCieSupported) {
-      void trackCieBottomSheetScreenView();
+      // void trackCieBottomSheetScreenView();
       present();
     } else {
       handleNavigateToCieIdLoginScreen();
     }
-  }, [present, isCieSupported, handleNavigateToCieIdLoginScreen]);
+  }, [isCieSupported, present, handleNavigateToCieIdLoginScreen]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -177,7 +165,7 @@ export const ActiveSessionLandingScreen = () => {
           firstAction={{
             icon: "closeLarge",
             accessibilityLabel: I18n.t("global.buttons.close"),
-            onPress: () => navigation.goBack()
+            onPress: navigation.goBack
           }}
         />
       )

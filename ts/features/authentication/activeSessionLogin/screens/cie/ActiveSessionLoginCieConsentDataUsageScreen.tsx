@@ -3,35 +3,38 @@
  * to backend and proceed with the onboarding process
  */
 import { Route, useRoute } from "@react-navigation/native";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import WebView from "react-native-webview";
 import {
   WebViewHttpErrorEvent,
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
-import { trackLoginCieDataSharingError } from "../../../common/analytics/cieAnalytics";
 import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { useOnboardingAbortAlert } from "../../../../onboarding/hooks/useOnboardingAbortAlert";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch } from "../../../../../store/hooks";
 import { SessionToken } from "../../../../../types/SessionToken";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { loginFailure, loginSuccess } from "../../../common/store/actions";
 import { onLoginUriChanged } from "../../../common/utils/login";
-import { LoaderComponent } from "../../../activeSessionLogin/shared/components/LoaderComponent";
+import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
+import {
+  activeSessionLoginFailure,
+  activeSessionLoginSuccess,
+  setFinishedActiveSessionLoginFlow
+} from "../../store/actions";
+import { CieConsentDataUsageScreenNavigationParams } from "../../../login/cie/screens/CieConsentDataUsageScreen";
+import { LoaderComponent } from "../../shared/components/LoaderComponent";
 
-export type CieConsentDataUsageScreenNavigationParams = {
-  cieConsentUri: string;
-  errorCodeDebugMode?: string;
-};
+// The MP events related to this page have been commented on,
+// pending their correct integration into the flow.
+// Task: https://pagopa.atlassian.net/browse/IOPID-3343
 
-const CieConsentDataUsageScreen = () => {
+const ActiveSessionLoginCieConsentDataUsageScreen = () => {
   const route =
     useRoute<
       Route<
-        typeof AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE,
+        typeof AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE_ACTIVE_SESSION_LOGIN,
         CieConsentDataUsageScreenNavigationParams
       >
     >();
@@ -39,70 +42,78 @@ const CieConsentDataUsageScreen = () => {
   const dispatch = useIODispatch();
   const [hasError, setHasError] = useState<boolean>(false);
   const [isLoginSuccess, setIsLoginSuccess] = useState<boolean | undefined>();
-  const [errorCodeOrMessage, setErrorCodeOrMessage] = useState<
-    string | undefined
-  >();
-  const { showAlert } = useOnboardingAbortAlert();
   const navigation = useIONavigation();
-  const loginSuccessDispatch = useCallback(
-    (token: SessionToken) => dispatch(loginSuccess({ token, idp: "cie" })),
-    [dispatch]
-  );
 
-  const loginFailureDispatch = useCallback(
-    (error: Error) => dispatch(loginFailure({ error, idp: "cie" })),
-    [dispatch]
-  );
+  //   const loginSuccessDispatch = useCallback(
+  //     (token: SessionToken) => dispatch(loginSuccess({ token, idp: "cie" })),
+  //     [dispatch]
+  //   );
 
-  const navigateToLandingScreen = useCallback(() => {
-    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.LANDING
-    });
-  }, [navigation]);
+  // const loginFailureDispatch = useCallback(
+  //   (error: Error) => dispatch(loginFailure({ error, idp: "cie" })),
+  //   [dispatch]
+  // );
 
-  const showAbortAlert = useCallback((): boolean => {
-    // if the screen is in error state, skip the confirmation alert to go back at the landing screen
-    if (hasError) {
-      navigateToLandingScreen();
-      return true;
-    }
-    showAlert(navigateToLandingScreen);
-    return true;
-  }, [hasError, navigateToLandingScreen, showAlert]);
-
-  useHeaderSecondLevel({ title: "", goBack: showAbortAlert });
-
-  const handleWebViewError = useCallback(() => setHasError(true), []);
-
-  const handleHttpError = useCallback(
-    (event: WebViewHttpErrorEvent) => {
-      loginFailureDispatch(
-        new Error(
-          `HTTP error ${event.nativeEvent.description} with Authorization uri`
-        )
-      );
+  const navigateToErrorScreen = useCallback(
+    (errorCodeOrMessageProp?: string) => {
+      navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
+        screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
+        params: {
+          errorCodeOrMessage: errorCodeOrMessageProp,
+          authMethod: "CIE",
+          authLevel: "L2"
+        }
+      });
     },
-    [loginFailureDispatch]
+    [navigation]
   );
+
+  const navigateBack = () => {
+    dispatch(setFinishedActiveSessionLoginFlow());
+    navigation.popToTop();
+  };
+
+  useHeaderSecondLevel({
+    title: "",
+    goBack: navigateBack
+  });
+
+  const handleWebViewError = () => {
+    setHasError(true);
+    navigateToErrorScreen();
+  };
+
+  const handleHttpError = (_: WebViewHttpErrorEvent) => {
+    // loginFailureDispatch(
+    //   new Error(
+    //     `HTTP error ${event.nativeEvent.description} with Authorization uri`
+    //   )
+    // );
+    dispatch(activeSessionLoginFailure());
+  };
 
   const handleLoginSuccess = useCallback(
     (token: SessionToken) => {
       setIsLoginSuccess(true);
       setHasError(false);
-      loginSuccessDispatch(token);
+      //   loginSuccessDispatch(token);
+      dispatch(activeSessionLoginSuccess(token));
     },
-    [loginSuccessDispatch]
+    [dispatch]
   );
 
   const handleLoginFailure = useCallback(
     (code?: string, message?: string) => {
+      if (code !== AUTH_ERRORS.NOT_SAME_CF) {
+        dispatch(activeSessionLoginFailure());
+      }
       setHasError(true);
-      setErrorCodeOrMessage(code);
-      loginFailureDispatch(
-        new Error(`login CIE failure with code ${code || message || "n/a"}`)
-      );
+      navigateToErrorScreen(code || message);
+      //   loginFailureDispatch(
+      //     new Error(`login CIE failure with code ${code || message || "n/a"}`)
+      //   );
     },
-    [loginFailureDispatch]
+    [dispatch, navigateToErrorScreen]
   );
 
   const handleShouldStartLoading = useCallback(
@@ -119,24 +130,11 @@ const CieConsentDataUsageScreen = () => {
     [handleLoginFailure, handleLoginSuccess]
   );
 
-  useEffect(() => {
-    if (hasError && errorCodeOrMessage === "22") {
-      trackLoginCieDataSharingError();
-    }
-  }, [errorCodeOrMessage, hasError]);
-
-  useEffect(() => {
-    if (hasError) {
-      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.AUTH_ERROR_SCREEN,
-        params: {
-          errorCodeOrMessage,
-          authMethod: "CIE",
-          authLevel: "L2"
-        }
-      });
-    }
-  }, [errorCodeOrMessage, hasError, navigation]);
+  //   useEffect(() => {
+  //     if (hasError && errorCodeOrMessage === "22") {
+  //       trackLoginCieDataSharingError();
+  //     }
+  //   }, [errorCodeOrMessage, hasError]);
 
   if (isLoginSuccess) {
     return <LoaderComponent />;
@@ -163,4 +161,4 @@ const CieConsentDataUsageScreen = () => {
   return null;
 };
 
-export default CieConsentDataUsageScreen;
+export default ActiveSessionLoginCieConsentDataUsageScreen;
