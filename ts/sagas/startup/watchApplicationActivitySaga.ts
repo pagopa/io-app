@@ -10,7 +10,7 @@ import {
   StartupStatusEnum,
   isStartupLoaded
 } from "../../store/reducers/startup";
-import { handlePendingMessageStateIfAllowed } from "../../features/pushNotifications/sagas/common";
+import { maybeHandlePendingBackgroundActions } from "../../features/pushNotifications/sagas/common";
 import { areTwoMinElapsedFromLastActivity } from "../../features/authentication/fastLogin/store/actions/sessionRefreshActions";
 import { isFastLoginEnabledSelector } from "../../features/authentication/fastLogin/store/selectors";
 
@@ -56,7 +56,7 @@ export function* watchApplicationActivitySaga(): IterableIterator<ReduxSagaEffec
       }
 
       if (lastState.appState !== "active" && newApplicationState === "active") {
-        yield* fork(handlePendingMessageStateIfAllowed);
+        yield* fork(maybeHandlePendingBackgroundActions);
 
         // Screens requiring identification when the app pass from background/inactive to active state
         const whiteList: ReadonlyArray<string> = [];
