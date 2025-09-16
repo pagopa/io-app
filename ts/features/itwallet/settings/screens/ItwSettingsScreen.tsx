@@ -16,22 +16,20 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { trackWalletStartDeactivation } from "../../analytics";
 import { ItwEidLifecycleAlert } from "../../common/components/ItwEidLifecycleAlert";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
-import {
-  itwLifecycleIsITWalletValidSelector,
-  itwLifecycleIsValidSelector
-} from "../../lifecycle/store/selectors";
+import { itwIsSimplifiedActivationRequiredSelector } from "../../common/store/selectors/preferences";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { ITW_ROUTES } from "../../navigation/routes";
 
 const ItwSettingsScreen = () => {
   const navigation = useIONavigation();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
-  const isItwValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
+  const isWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isUpgradeAvailable = useIOSelector(
+    itwIsSimplifiedActivationRequiredSelector
+  );
 
-  const handleRevokePress = useCallback(() => {
+  const handleRevokeOnPress = useCallback(() => {
     trackWalletStartDeactivation("ITW_PID");
     Alert.alert(
       I18n.t("features.itWallet.presentation.itWalletId.dialog.revoke.title"),
@@ -54,24 +52,25 @@ const ItwSettingsScreen = () => {
     );
   }, [machineRef]);
 
-  const handleGetItwPress = useCallback(
+  const handleObtainItwOnPress = useCallback(
     () =>
       navigation.navigate(ITW_ROUTES.MAIN, {
         screen: ITW_ROUTES.DISCOVERY.INFO,
-        params: { isL3: isL3Enabled }
+        params: { isL3: isUpgradeAvailable }
       }),
-    [navigation, isL3Enabled]
+    [navigation, isUpgradeAvailable]
   );
 
   const ctaProps: ButtonSolidProps = useMemo(() => {
-    if (isItwValid) {
+    if (isWalletValid && !isUpgradeAvailable) {
       return {
         label: I18n.t("features.itWallet.settings.manage.cta.disable"),
         accessibilityLabel: I18n.t(
           "features.itWallet.settings.manage.cta.disable"
         ),
         color: "danger",
-        onPress: handleRevokePress
+        onPress: handleRevokeOnPress,
+        testID: "itwRevokeButtonTestID"
       };
     }
     return {
@@ -79,9 +78,15 @@ const ItwSettingsScreen = () => {
       accessibilityLabel: I18n.t(
         "features.itWallet.settings.manage.cta.activate"
       ),
-      onPress: handleGetItwPress
+      onPress: handleObtainItwOnPress,
+      testID: "itwObtainButtonTestID"
     };
-  }, [isItwValid, handleRevokePress, handleGetItwPress]);
+  }, [
+    isWalletValid,
+    isUpgradeAvailable,
+    handleRevokeOnPress,
+    handleObtainItwOnPress
+  ]);
 
   return (
     <IOScrollViewWithLargeHeader
@@ -95,8 +100,8 @@ const ItwSettingsScreen = () => {
         <VStack space={24}>
           <IOMarkdown
             content={
-              isItwValid
-                ? I18n.t("features.itWallet.settings.manage.content.active")
+              isWalletValid && isUpgradeAvailable
+                ? I18n.t("features.itWallet.settings.manage.content.upgrade")
                 : isWalletValid
                 ? I18n.t("features.itWallet.settings.manage.content.upgrade")
                 : I18n.t("features.itWallet.settings.manage.content.disabled")
@@ -104,7 +109,9 @@ const ItwSettingsScreen = () => {
             // TODO [SIW-2632] remove this rule and add IT Wallet url to I18n locales
             rules={generateLinkRuleWithCallback()}
           />
-          <ItwEidLifecycleAlert navigation={navigation} />
+          {isWalletValid && !isUpgradeAvailable && (
+            <ItwEidLifecycleAlert navigation={navigation} />
+          )}
         </VStack>
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>
