@@ -392,20 +392,23 @@ export const ItwCredentialClaim = ({
           );
           return <PlainTextClaimItem label={claim.label} claim={fiscalCode} />;
         }
-        if (NestedObjectClaim.is(_decoded)) {
-          // Parse the single nested object into an array of claims
-          const singleNestedItemClaims = parseClaims(_decoded);
-          // Wrap in an array to match the expected type for ItwCredentialMultiClaim
-          const nestedParsedClaims = [singleNestedItemClaims];
+        if (NestedObjectClaim.is(decoded)) {
+          const nestedClaims = parseClaims(decoded);
           return (
-            <ItwCredentialMultiClaim
-              claim={claim}
-              nestedClaims={nestedParsedClaims}
-              hidden={hidden}
-              isPreview={isPreview}
-              credentialStatus={credentialStatus}
-              credentialType={credentialType}
-            />
+            <>
+              {nestedClaims.map((nestedClaim, index) => (
+                <Fragment key={`${index}_${claim.id}_${nestedClaim.id}`}>
+                  {index > 0 && <Divider />}
+                  <ItwCredentialClaim
+                    claim={nestedClaim}
+                    hidden={hidden}
+                    isPreview={isPreview}
+                    credentialStatus={credentialStatus}
+                    credentialType={credentialType}
+                  />
+                </Fragment>
+              ))}
+            </>
           );
         }
         if (NestedArrayClaim.is(decoded)) {
