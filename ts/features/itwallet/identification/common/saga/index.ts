@@ -9,9 +9,9 @@ import { itwHasNfcFeature } from "../store/actions";
 
 export function* checkHasNfcFeatureSaga(): Generator<ReduxSagaEffect, void> {
   try {
-    const hasNFCFeature: SagaCallReturnType<typeof CieUtils.hasNfcFeature> =
+    const hasNfcFeature: SagaCallReturnType<typeof CieUtils.hasNfcFeature> =
       yield* call(CieUtils.hasNfcFeature);
-    yield* put(itwHasNfcFeature.success(hasNFCFeature));
+    yield* put(itwHasNfcFeature.success(hasNfcFeature));
   } catch (e) {
     yield* put(itwHasNfcFeature.failure(convertUnknownToError(e)));
   }
