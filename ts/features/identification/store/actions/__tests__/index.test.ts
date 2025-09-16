@@ -1,4 +1,5 @@
 import { PinString } from "../../../../../types/PinString";
+import { IdentificationBackActionType } from "../../reducers";
 import * as actions from "../index";
 
 const payload = {
@@ -8,7 +9,8 @@ const payload = {
   identificationGenericData: { message: "Test" },
   identificationCancelData: { label: "Cancel", onCancel: jest.fn() },
   identificationSuccessData: { onSuccess: jest.fn() },
-  shufflePad: false
+  shufflePad: false,
+  identificationContext: IdentificationBackActionType.DEFAULT
 };
 
 describe("identification actions", () => {
@@ -19,7 +21,8 @@ describe("identification actions", () => {
       payload.identificationGenericData,
       payload.identificationCancelData,
       payload.identificationSuccessData,
-      payload.shufflePad
+      payload.shufflePad,
+      payload.identificationContext
     );
     const { pin, ...payloadWithoutPin } = payload;
     expect(action).toEqual({
@@ -36,7 +39,8 @@ describe("identification actions", () => {
       payload.identificationGenericData,
       payload.identificationCancelData,
       payload.identificationSuccessData,
-      payload.shufflePad
+      payload.shufflePad,
+      payload.identificationContext
     );
     expect(action).toEqual({ type: "IDENTIFICATION_START", payload });
   });
