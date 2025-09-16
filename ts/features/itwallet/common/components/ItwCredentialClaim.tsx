@@ -392,8 +392,8 @@ export const ItwCredentialClaim = ({
           );
           return <PlainTextClaimItem label={claim.label} claim={fiscalCode} />;
         }
-        if (NestedObjectClaim.is(decoded)) {
-          const nestedClaims = parseClaims(decoded);
+        if (NestedObjectClaim.is(_decoded)) {
+          const nestedClaims = parseClaims(_decoded);
           return (
             <>
               {nestedClaims.map((nestedClaim, index) => (
