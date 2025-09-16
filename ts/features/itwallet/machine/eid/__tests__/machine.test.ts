@@ -76,11 +76,15 @@ describe("itwEidIssuanceMachine", () => {
   const hasIntegrityKeyTag = jest.fn();
   const isL3FeaturesEnabled = jest.fn();
   const isL2Fallback = jest.fn();
+  const isEligibleForItwSimplifiedActivation = jest.fn();
   const resetWalletInstance = jest.fn();
   const trackWalletInstanceCreation = jest.fn();
   const trackWalletInstanceRevocation = jest.fn();
   const revokeWalletInstance = jest.fn();
   const storeAuthLevel = jest.fn();
+  const flagItwSimplifiedActivationRequired = jest.fn();
+  const unflagItwSimplifiedActivationRequired = jest.fn();
+  const loadPidIntoContext = jest.fn();
 
   const mockedMachine = itwEidIssuanceMachine.provide({
     actions: {
@@ -114,7 +118,10 @@ describe("itwEidIssuanceMachine", () => {
       resetWalletInstance,
       trackWalletInstanceCreation,
       trackWalletInstanceRevocation,
-      storeAuthLevel
+      storeAuthLevel,
+      flagItwSimplifiedActivationRequired,
+      unflagItwSimplifiedActivationRequired,
+      loadPidIntoContext
     },
     actors: {
       verifyTrustFederation: fromPromise<void>(verifyTrustFederation),
@@ -141,7 +148,8 @@ describe("itwEidIssuanceMachine", () => {
       hasValidWalletInstanceAttestation,
       hasIntegrityKeyTag,
       isL3FeaturesEnabled,
-      isL2Fallback
+      isL2Fallback,
+      isEligibleForItwSimplifiedActivation
     }
   });
 
@@ -1757,5 +1765,65 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "add-to-wallet" });
 
     expect(actor.getSnapshot().value).toStrictEqual("Success");
+  });
+
+  it("Should start the simplified activation flow without credentials", async () => {
+    hasIntegrityKeyTag.mockImplementation(() => true);
+    hasValidWalletInstanceAttestation.mockImplementation(() => true);
+    isEligibleForItwSimplifiedActivation.mockImplementation(() => true);
+
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    // Start
+    actor.send({ type: "start", isL3: true, mode: "upgrade" });
+    expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
+
+    // Accept Wallet Provider TOS
+    actor.send({ type: "accept-tos" });
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "TrustFederationVerification"
+    );
+    await waitFor(() => {
+      expect(verifyTrustFederation).toHaveBeenCalledTimes(1);
+    });
+    expect(actor.getSnapshot().value).toStrictEqual("IpzsPrivacyAcceptance");
+
+    // Accept Credential Issuer privacy policy
+    actor.send({ type: "accept-ipzs-privacy" });
+    expect(actor.getSnapshot().value).toStrictEqual("Success");
+  });
+
+  // TODO: to complete
+  it.skip("Should start the simplified activation flow with credentials upgrade only", onDone => {
+    isEligibleForItwSimplifiedActivation.mockImplementation(() => true);
+
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: "IpzsPrivacyAcceptance",
+      context: {
+        mode: "upgrade",
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA },
+        isL3: true,
+        legacyCredentials: [
+          ItwStoredCredentialsMocks.mdl
+        ] as ReadonlyArray<StoredCredential>
+      }
+    });
+
+    const actor = createActor(mockedMachine, { snapshot });
+
+    actor.start();
+    actor.subscribe(snapshot => {
+      if (snapshot.matches("CredentialsUpgrade")) {
+        onDone();
+      }
+    });
+
+    actor.send({ type: "accept-ipzs-privacy" });
+    expect(loadPidIntoContext).toHaveBeenCalledTimes(1);
   });
 });
