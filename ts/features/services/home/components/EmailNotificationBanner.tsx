@@ -7,8 +7,10 @@ import Animated, {
   FadeOut,
   LinearTransition
 } from "react-native-reanimated";
+import { mixpanelTrack } from "../../../../mixpanel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { buildEventProperties } from "../../../../utils/analytics";
 import { usePrevious } from "../../../../utils/hooks/usePrevious";
 import {
   trackIDPayOnboardingEmailActivationError,
@@ -21,6 +23,7 @@ import {
   isEmailEnabledSelector,
   profileSelector
 } from "../../../settings/common/store/selectors";
+import { SERVICES_ROUTES } from "../../common/navigation/routes";
 
 export const EmailNotificationBanner = () => {
   const dispatch = useIODispatch();
@@ -35,7 +38,18 @@ export const EmailNotificationBanner = () => {
   const canShowBanner =
     isIdPayEnabled && isIdPayOnboardingSucceeded && !isEmailChannelEnabled;
 
+  const mixPanelTracking = (type: "TAP_BANNER" | "CLOSE_BANNER") =>
+    mixpanelTrack(
+      type,
+      buildEventProperties("UX", "action", {
+        banner_id: "IDPAY_EMAIL_ACTIVATION",
+        banner_page: SERVICES_ROUTES.SERVICES_HOME
+      })
+    );
+
   const handleOnEnableEmailChannel = () => {
+    mixPanelTracking("TAP_BANNER");
+
     dispatch(
       profileUpsert.request({
         is_email_enabled: true
@@ -65,6 +79,7 @@ export const EmailNotificationBanner = () => {
   }, [profile, prevProfile, canShowBanner, dispatch]);
 
   const handleOnCloseBanner = () => {
+    mixPanelTracking("CLOSE_BANNER");
     dispatch(setIdPayOnboardingSucceeded(false));
   };
 
