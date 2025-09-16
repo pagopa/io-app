@@ -1,10 +1,11 @@
 import { BiometricsValidType, Body } from "@pagopa/io-app-design-system";
-import { View } from "react-native";
+import { BackHandler, Platform, View } from "react-native";
 import { TxtParagraphNode } from "@textlint/ast-node-types";
 import I18n from "i18next";
 import IOMarkdown from "../../../components/IOMarkdown";
 import { Renderer } from "../../../components/IOMarkdown/types";
 import { getTxtNodeKey } from "../../../components/IOMarkdown/renderRules";
+import { IdentificationBackActionType } from "../store/reducers";
 
 export const FAIL_ATTEMPTS_TO_SHOW_ALERT = 4;
 
@@ -118,5 +119,24 @@ export const IdentificationInstructionsComponent = (props: {
       );
     default:
       return instructionComponent;
+  }
+};
+
+export const handleAndroidBackNavigation = (
+  identificationContext: IdentificationBackActionType | undefined,
+  defaultCloseAction: () => void
+) => {
+  if (Platform.OS === "android") {
+    switch (identificationContext) {
+      case IdentificationBackActionType.CLOSE_APP:
+        // In CLOSE_APP context, the back button should close the app
+        BackHandler.exitApp();
+        break;
+      case IdentificationBackActionType.DEFAULT:
+      default:
+        // In DEFAULT context, the back button should do the normal behavior
+        defaultCloseAction();
+        break;
+    }
   }
 };
