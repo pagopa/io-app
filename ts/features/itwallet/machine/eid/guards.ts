@@ -59,7 +59,7 @@ export const createEidIssuanceGuardsImplementation = (
     const state = store.getState();
     const pid = O.toUndefined(itwCredentialsEidSelector(state));
     return (
-      pid &&
+      !!pid &&
       itwIsSimplifiedActivationRequired(state) && // The flag for simplified activation is enabled
       itwIsL3EnabledSelector(state) && // The user has been whitelisted to officially activate IT-Wallet
       isItwCredential(pid.credential) && // Extra check to ensure the PID is a valid L3 credential

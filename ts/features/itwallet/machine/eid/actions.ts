@@ -288,7 +288,13 @@ export const createEidIssuanceActionsImplementation = (
     store.dispatch(itwUnflagItwSimplifiedActivationRequired());
   },
 
-  loadPidIntoContext: assign((): Partial<Context> => {
+  loadPidIntoContext: assign<
+    Context,
+    EidIssuanceEvents,
+    unknown,
+    EidIssuanceEvents,
+    any
+  >(() => {
     const pid = itwCredentialsEidSelector(store.getState());
     return { eid: O.toUndefined(pid) };
   })
