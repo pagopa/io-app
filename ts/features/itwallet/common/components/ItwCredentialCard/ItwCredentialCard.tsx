@@ -1,4 +1,4 @@
-import { HStack, IOText, Tag } from "@pagopa/io-app-design-system";
+import { HStack, Icon, IOText, Tag } from "@pagopa/io-app-design-system";
 import Color from "color";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
@@ -17,7 +17,6 @@ import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/se
 import { CardBackground } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
 import { CardColorScheme } from "./types";
-import { ItwCardMultiCredentialBadge } from "./ItwCardMultiCredentialBadge.tsx";
 
 export type ItwCredentialCard = {
   /**
@@ -137,7 +136,9 @@ export const ItwCredentialCard = ({
             {getCredentialNameFromType(credentialType, "").toUpperCase()}
           </IOText>
           {statusTagProps && <Tag forceLightMode {...statusTagProps} />}
-          {isMultiCredential && <ItwCardMultiCredentialBadge />}
+          {isMultiCredential && (
+            <Icon name="multiCard" color="grey-850" size={24} />
+          )}
         </HStack>
       </View>
       <DigitalVersionBadge
