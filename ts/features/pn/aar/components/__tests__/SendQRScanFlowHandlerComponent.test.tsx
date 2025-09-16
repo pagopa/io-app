@@ -1,17 +1,19 @@
-import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
+import * as O from "fp-ts/lib/Option";
 import { createStore } from "redux";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { applicationChangeState } from "../../../../../store/actions/application";
+import * as hooks from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as URLUTILS from "../../../../../utils/url";
-import { SendQRScanFlowHandlerComponent } from "../SendQRScanRedirectComponent";
-import PN_ROUTES from "../../../navigation/routes";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
+import PN_ROUTES from "../../../navigation/routes";
 import * as analytics from "../../analytics";
+import { sendAARFlowStates } from "../../store/reducers";
+import { SendQRScanFlowHandlerComponent } from "../SendQRScanFlowHandlerComponent";
 
 const sendNotificationServiceId = "01G40DWQGKY5GRWSNM4303VNRP" as ServiceId;
 const aarUrl = "https://example.com";
@@ -31,7 +33,7 @@ jest.mock("@react-navigation/native", () => {
   };
 });
 
-describe("SendQRScanRedirectComponent", () => {
+describe("SendQRScanFlowHandlerComponent", () => {
   const mockOpenWebUrl = jest.fn();
 
   const spiedOnMockedTrackSendQRCodeScanRedirect = jest
@@ -168,9 +170,42 @@ describe("SendQRScanRedirectComponent", () => {
   });
 });
 
+describe("SendQRScanFlowHandlerComponent - AAR phase toggle (snapshot)", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  const mockQrCode =
+    "https://cittadini.notifichedigitali.it/io?aar=MDAwMDAwMDAwMDAwMDAwMDAwMDAwMVNFTkRfUEYtMTU4ODM3ZDItMWI4OS00NGYxLWFhMjQtOGVhOTEzZjkyZGI0X2NiYzk2YjdjLTI0MmUtNGIzZi1hZGYwLTE5NGJmNjY4ZGJhNw==";
+
+  const globalState = {
+    features: {
+      pn: {
+        aarFlow: {
+          type: sendAARFlowStates.displayingAARToS,
+          qrCode: mockQrCode
+        }
+      }
+    }
+  } as GlobalState;
+
+  [true, false].forEach(isAarPhase2 => {
+    it(`should render the correct UI (snapshot) when isAarPhase2 is ${isAarPhase2}`, () => {
+      jest
+        .spyOn(hooks, "useIOSelector")
+        .mockImplementation(selector => selector(globalState));
+
+      const { toJSON } = renderComponent(undefined, undefined, isAarPhase2);
+
+      expect(toJSON()).toMatchSnapshot();
+    });
+  });
+});
+
 function renderComponent(
   sendServiceActive: boolean = true,
-  notificationPermissionsEnabled: boolean = true
+  notificationPermissionsEnabled: boolean = true,
+  isAarPhase2: boolean = false
 ) {
   const baseState = appReducer(undefined, applicationChangeState("active"));
   const globalState = {
@@ -215,7 +250,12 @@ function renderComponent(
     })
   } as GlobalState;
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    () => <SendQRScanFlowHandlerComponent aarUrl={aarUrl} />,
+    () => (
+      <SendQRScanFlowHandlerComponent
+        aarUrl={aarUrl}
+        isAarPhase2={isAarPhase2}
+      />
+    ),
     PN_ROUTES.QR_SCAN_FLOW,
     {},
     createStore(appReducer, globalState as any)

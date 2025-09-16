@@ -1,5 +1,5 @@
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 
 export const SendAARLoadingComponent = () => (
-  <LoadingScreenContent contentTitle="" />
+  <LoadingScreenContent contentTitle="" testID="LoadingScreenContent" />
 );

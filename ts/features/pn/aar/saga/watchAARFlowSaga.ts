@@ -7,7 +7,7 @@ import { setAarFlowState } from "../store/actions";
 import { sendAARFlowStates } from "../store/reducers";
 import { fetchQrCodeSaga } from "./fetchQrCodeSaga";
 
-function* aARFlowMasterSaga(
+export function* aARFlowMasterSaga(
   sendAARClient: SendAARClient,
   sessionToken: SessionToken,
   action: ReturnType<typeof setAarFlowState>

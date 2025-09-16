@@ -26,25 +26,24 @@ import {
 } from "./SendAARTosComponent";
 import { SendAARLoadingComponent } from "./SendAARLoadingComponent";
 
-export type SendQRScanRedirectComponentProps = {
+export type SendQRScanFlowHandlerComponentProps = {
   aarUrl: string;
 };
 
 export const SendQRScanFlowHandlerComponent = ({
-  aarUrl
-}: SendQRScanRedirectComponentProps) => {
+  aarUrl,
   /**
    * this is purely a temporary addition in order
    * to differentiate between phase 1 and 2 of the AAR flow.
    * will be removed once we update to phase 2
    * */
-  const IS_AAR_PHASE_2 = false;
-  return IS_AAR_PHASE_2 ? (
+  isAarPhase2 = false
+}: SendQRScanFlowHandlerComponentProps & { isAarPhase2?: boolean }) =>
+  isAarPhase2 ? (
     <SendAARInitialFlowScreen qrCode={aarUrl} />
   ) : (
     <SendQrScanRedirect aarUrl={aarUrl} />
   );
-};
 
 const SendAARInitialFlowScreen = ({ qrCode }: SendAARTosComponentProps) => {
   const flowData = useIOSelector(currentAARFlowData);
@@ -69,7 +68,9 @@ const SendAARInitialFlowScreen = ({ qrCode }: SendAARTosComponentProps) => {
       return <SendAARLoadingComponent />;
   }
 };
-const SendQrScanRedirect = ({ aarUrl }: SendQRScanRedirectComponentProps) => {
+const SendQrScanRedirect = ({
+  aarUrl
+}: SendQRScanFlowHandlerComponentProps) => {
   const store = useIOStore();
   const navigation = useIONavigation();
 
