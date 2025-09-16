@@ -6,6 +6,7 @@ import {
 import { InitiativesWithInstrumentDTO } from "../../../../../../definitions/idpay/InitiativesWithInstrumentDTO";
 import { WalletDTO } from "../../../../../../definitions/idpay/WalletDTO";
 import { NetworkError } from "../../../../../utils/errors";
+import { ListUsersOnboardingStatusDTO } from "../../../../../../definitions/idpay/ListUsersOnboardingStatusDTO";
 
 export type IdPayInitiativesFromInstrumentPayloadType = {
   idWallet: string;
@@ -76,6 +77,12 @@ export const setIdPayOnboardingSucceeded = createStandardAction(
   "IDPAY_ONBOARDING_SUCCEEDED_SET"
 )<boolean>();
 
+export const idPayInitiativeWaitingListGet = createAsyncAction(
+  "IDPAY_INITIATIVE_WAITING_LIST_REQUEST",
+  "IDPAY_INITIATIVE_WAITING_LIST_SUCCESS",
+  "IDPAY_INITIATIVE_WAITING_LIST_FAILURE"
+)<void, ListUsersOnboardingStatusDTO, NetworkError>();
+
 export type IdPayWalletActions =
   | ActionType<typeof idPayWalletGet>
   | ActionType<typeof idPayInitiativesFromInstrumentGet>
@@ -83,4 +90,5 @@ export type IdPayWalletActions =
   | ActionType<typeof idpayInitiativesInstrumentDelete>
   | ActionType<typeof idPayInitiativesFromInstrumentRefreshStart>
   | ActionType<typeof idPayInitiativesFromInstrumentRefreshStop>
-  | ActionType<typeof setIdPayOnboardingSucceeded>;
+  | ActionType<typeof setIdPayOnboardingSucceeded>
+  | ActionType<typeof idPayInitiativeWaitingListGet>;

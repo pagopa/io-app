@@ -18,6 +18,7 @@ jest.mock("../../utils/cie", () => ({
 
 // Mock the useIOSelector hook
 jest.mock("../../../../../../store/hooks", () => ({
+  ...jest.requireActual("../../../../../../store/hooks"),
   useIOSelector: jest.fn(),
   useIODispatch: jest.fn(),
   useIOStore: jest.fn()
@@ -36,6 +37,22 @@ jest.mock(
     })
   })
 );
+
+const mockNavigateToCieCardReaderScreen = jest.fn();
+
+jest.mock(
+  "../../../../activeSessionLogin/utils/useActiveSessionLoginNavigation",
+  () => () => ({
+    ...jest.requireActual(
+      "../../../../activeSessionLogin/utils/useActiveSessionLoginNavigation"
+    ),
+    navigateToCieCardReaderScreen: mockNavigateToCieCardReaderScreen
+  })
+);
+
+jest.mock("../../../../../../hooks/useStatusAlertProps", () => ({
+  useStatusAlertProps: jest.fn()
+}));
 
 const mockNavigate = jest.fn();
 const mockReplace = jest.fn();
@@ -125,13 +142,10 @@ describe("ActivateNfcScreen", () => {
 
       fireEvent.press(secondaryActionButton);
 
-      expect(mockReplace).toHaveBeenCalledWith(
-        AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN,
-        {
-          ciePin: "123456",
-          authorizationUri: "https://example.com"
-        }
-      );
+      expect(mockNavigateToCieCardReaderScreen).toHaveBeenCalledWith({
+        ciePin: "123456",
+        authorizationUri: "https://example.com"
+      });
     });
 
     test("shows alert when NFC is disabled and secondary action button is pressed", () => {
