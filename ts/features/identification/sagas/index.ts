@@ -98,7 +98,7 @@ export function* startAndReturnIdentificationResult(
   identificationCancelData?: IdentificationCancelData,
   identificationSuccessData?: IdentificationSuccessData,
   shufflePad: boolean = false,
-  identificationContext: IdentificationBackActionType = IdentificationBackActionType.CLOSE_APP
+  identificationContext: IdentificationBackActionType = IdentificationBackActionType.DEFAULT
 ): Generator<
   ReduxSagaEffect,
   SagaCallReturnType<typeof waitIdentificationResult>,
