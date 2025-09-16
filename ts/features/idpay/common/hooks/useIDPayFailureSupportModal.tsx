@@ -138,11 +138,15 @@ const useIDPayFailureSupportModal = (
     title: ""
   });
 
+  const formatFaultCode = (
+    failure: OnboardingFailureEnum | PaymentFailureEnum
+  ) => {
+    const code = failure ?? OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR;
+    return `${prefix}${code}`;
+  };
+
   const present = (failure: OnboardingFailureEnum | PaymentFailureEnum) => {
-    setCurrentFaultCodeDetail(
-      `${prefix}${failure}` ||
-        `${prefix}${OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR}`
-    );
+    setCurrentFaultCodeDetail(formatFaultCode(failure));
     presentModal();
   };
 
