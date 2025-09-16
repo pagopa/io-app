@@ -1,5 +1,5 @@
 import { testSaga } from "redux-saga-test-plan";
-import cieManager from "@pagopa/react-native-cie";
+import { CieUtils } from "@pagopa/io-react-native-cie";
 import { itwHasNfcFeature } from "../../store/actions";
 import { checkHasNfcFeatureSaga } from "..";
 
@@ -9,7 +9,7 @@ describe("checkHasNfcFeatureSaga", () => {
     arg => {
       testSaga(checkHasNfcFeatureSaga)
         .next()
-        .call(cieManager.hasNFCFeature)
+        .call(CieUtils.hasNfcFeature)
         .next(arg)
         .put(itwHasNfcFeature.success(arg))
         .next()
