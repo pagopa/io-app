@@ -72,6 +72,8 @@ export const itwEidIssuanceMachine = setup({
     handleSessionExpired: notImplemented,
     resetWalletInstance: notImplemented,
     resetItwSimplifiedActivationRequired: notImplemented,
+    flagItwSimplifiedActivationRequired: notImplemented,
+    unflagItwSimplifiedActivationRequired: notImplemented,
 
     /**
      * Analytics
@@ -85,6 +87,7 @@ export const itwEidIssuanceMachine = setup({
      */
 
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
+    loadPidIntoContext: notImplemented,
     /**
      * Save the final redirect url in the machine context for later reuse.
      * This action is the same for the three identification methods.
@@ -352,17 +355,8 @@ export const itwEidIssuanceMachine = setup({
       on: {
         "accept-ipzs-privacy": [
           {
-            guard: and([
-              "isUpgrade",
-              "isEligibleForItwSimplifiedActivation",
-              "hasLegacyCredentials"
-            ]),
-            target: "#itwEidIssuanceMachine.CredentialsUpgrade"
-          },
-          {
             guard: and(["isUpgrade", "isEligibleForItwSimplifiedActivation"]),
-            target: "#itwEidIssuanceMachine.Success",
-            actions: ["resetItwSimplifiedActivationRequired"]
+            target: "EvaluatingSimplifiedActivationFlow"
           },
           { target: "UserIdentification" }
         ],
@@ -372,6 +366,19 @@ export const itwEidIssuanceMachine = setup({
         },
         back: "#itwEidIssuanceMachine.TosAcceptance"
       }
+    },
+    EvaluatingSimplifiedActivationFlow: {
+      entry: "unflagItwSimplifiedActivationRequired",
+      always: [
+        {
+          guard: "hasLegacyCredentials",
+          actions: "loadPidIntoContext",
+          target: "#itwEidIssuanceMachine.CredentialsUpgrade"
+        },
+        {
+          target: "#itwEidIssuanceMachine.Success"
+        }
+      ]
     },
     UserIdentification: {
       description:
@@ -836,7 +843,11 @@ export const itwEidIssuanceMachine = setup({
         DisplayingPreview: {
           on: {
             "add-to-wallet": {
-              actions: ["storeEidCredential", "trackWalletInstanceCreation"],
+              actions: [
+                "storeEidCredential",
+                "trackWalletInstanceCreation",
+                "flagItwSimplifiedActivationRequired"
+              ],
               target: "Completed"
             },
             close: {

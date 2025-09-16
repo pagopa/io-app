@@ -42,8 +42,10 @@ export const itwLifecycleIsOperationalOrValid = (state: GlobalState) =>
   itwLifecycleIsValidSelector(state);
 
 /**
- * The wallet instance is a **valid IT-Wallet instance**. This means the eID
- * is a PID L3 credential, that is only issued in the context of IT-Wallet.
+ * The wallet instance is a **valid IT-Wallet instance**. The following requirements must be met:
+ * - The user is allowed to use IT-Wallet (whitelisted)
+ * - The PID is an L3 credential
+ * - It is NOT necessary to activate IT-Wallet with the simplified flow
  */
 export const itwLifecycleIsITWalletValidSelector = createSelector(
   [

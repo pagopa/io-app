@@ -13,15 +13,18 @@ import {
   updateITWStatusAndPIDProperties
 } from "../../analytics";
 import {
-  itwResetItwSimplifiedActivationRequired,
   itwSetAuthLevel,
-  itwSetItwSimplifiedActivationRequired
+  itwFlagItwSimplifiedActivationRequired,
+  itwUnflagItwSimplifiedActivationRequired
 } from "../../common/store/actions/preferences";
 import {
   itwCredentialsRemoveByType,
   itwCredentialsStore
 } from "../../credentials/store/actions";
-import { itwCredentialsSelector } from "../../credentials/store/selectors";
+import {
+  itwCredentialsEidSelector,
+  itwCredentialsSelector
+} from "../../credentials/store/selectors";
 import {
   itwRemoveIntegrityKeyTag,
   itwStoreIntegrityKeyTag
@@ -247,10 +250,6 @@ export const createEidIssuanceActionsImplementation = (
     // the eID is always removed before storing the new one. If no previous eID is present, the action is a no-op.
     store.dispatch(itwCredentialsRemoveByType(context.eid.credentialType));
     store.dispatch(itwCredentialsStore([context.eid]));
-
-    // TODO: [SIW-2964] Remove after the official IT-Wallet release to all users
-    // Remember to clear this property after the first activation
-    store.dispatch(itwSetItwSimplifiedActivationRequired());
   },
 
   handleSessionExpired: () =>
@@ -281,7 +280,16 @@ export const createEidIssuanceActionsImplementation = (
     store.dispatch(itwSetAuthLevel(context.identification?.level));
   },
 
-  resetItwSimplifiedActivationRequired: () => {
-    store.dispatch(itwResetItwSimplifiedActivationRequired());
-  }
+  flagItwSimplifiedActivationRequired: () => {
+    store.dispatch(itwFlagItwSimplifiedActivationRequired());
+  },
+
+  unflagItwSimplifiedActivationRequired: () => {
+    store.dispatch(itwUnflagItwSimplifiedActivationRequired());
+  },
+
+  loadPidIntoContext: assign((): Partial<Context> => {
+    const pid = itwCredentialsEidSelector(store.getState());
+    return { eid: O.toUndefined(pid) };
+  })
 });
