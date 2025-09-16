@@ -1,110 +1,162 @@
 import { testSaga } from "redux-saga-test-plan";
+import NavigationService from "../../../../navigation/NavigationService";
+import { navigateToMainNavigatorAction } from "../../../../store/actions/navigation";
+import { handleStoredLinkingUrlIfNeeded } from "../../../linking/sagas";
+import { resetMessageArchivingAction } from "../../../messages/store/actions/archiving";
+import { isArchivingDisabledSelector } from "../../../messages/store/reducers/archiving";
+import { trackNotificationPermissionsStatus } from "../../analytics";
+import { updateSystemNotificationsEnabled } from "../../store/actions/environment";
+import { clearNotificationPendingMessage } from "../../store/actions/pendingMessage";
+import { areNotificationPermissionsEnabledSelector } from "../../store/reducers/environment";
 import {
   PendingMessageState,
   pendingMessageStateSelector
 } from "../../store/reducers/pendingMessage";
+import { checkNotificationPermissions } from "../../utils";
+import { navigateToMessageRouterAction } from "../../utils/navigation";
 import {
   checkAndUpdateNotificationPermissionsIfNeeded,
-  handlePendingMessageStateIfAllowed,
+  maybeHandlePendingBackgroundActions,
+  testable,
   updateNotificationPermissionsIfNeeded
 } from "../common";
-import { navigateToMessageRouterAction } from "../../utils/navigation";
-import { clearNotificationPendingMessage } from "../../store/actions/pendingMessage";
-import { isArchivingDisabledSelector } from "../../../messages/store/reducers/archiving";
-import NavigationService from "../../../../navigation/NavigationService";
-import { navigateToMainNavigatorAction } from "../../../../store/actions/navigation";
-import { resetMessageArchivingAction } from "../../../messages/store/actions/archiving";
-import { areNotificationPermissionsEnabledSelector } from "../../store/reducers/environment";
-import { updateSystemNotificationsEnabled } from "../../store/actions/environment";
-import { checkNotificationPermissions } from "../../utils";
-import { trackNotificationPermissionsStatus } from "../../analytics";
 
-describe("handlePendingMessageStateIfAllowed", () => {
-  const mockedPendingMessageState: PendingMessageState = {
-    id: "M01",
-    foreground: true
-  };
+describe("maybeHandlePendingBackgroundActions", () => {
+  const pushHandler = testable?.handlePushNotificationIfNeeded;
 
-  it("make the app navigate to the message detail when the user press on a notification", () => {
-    const dispatchNavigationActionParameter = navigateToMessageRouterAction({
-      messageId: mockedPendingMessageState.id,
-      fromNotification: true
-    });
+  describe("main functionality", () => {
+    const generateTestName = (
+      linkingUrlHandled: boolean,
+      pushNotifHandled: boolean
+    ) =>
+      `when a linking url is ${
+        linkingUrlHandled ? "not " : ""
+      }queued to be handled,and a push notification ${
+        pushNotifHandled ? "is" : "isn't"
+      } queued to be handled, it should terminate after handling the ${
+        linkingUrlHandled ? "push notification" : "linking url"
+      }`;
 
-    testSaga(handlePendingMessageStateIfAllowed, false)
-      .next()
-      .select(pendingMessageStateSelector)
-      .next(mockedPendingMessageState)
-      .put(clearNotificationPendingMessage())
-      .next()
-      .select(isArchivingDisabledSelector)
-      .next(true)
-      .call(
-        NavigationService.dispatchNavigationAction,
-        dispatchNavigationActionParameter
+    [true, false].forEach(linkingUrlHandled =>
+      [true, false].forEach(pushNotifHandled =>
+        it(generateTestName(linkingUrlHandled, pushNotifHandled), () => {
+          if (pushHandler === undefined) {
+            fail(
+              "testable export does not contain handlePushNotificationIfNeeded"
+            );
+          }
+          const saga = testSaga(maybeHandlePendingBackgroundActions, false)
+            .next()
+            .call(handleStoredLinkingUrlIfNeeded)
+            .next(linkingUrlHandled);
+          if (linkingUrlHandled) {
+            saga.isDone();
+          } else {
+            saga.call(pushHandler, false).next(pushNotifHandled).isDone();
+          }
+        })
       )
-      .next()
-      .isDone();
+    );
   });
 
-  it("make the app navigate to the message detail when the user press on a notification, resetting the navigation stack before", () => {
-    const dispatchNavigationActionParameter = navigateToMessageRouterAction({
-      messageId: mockedPendingMessageState.id,
-      fromNotification: true
+  describe("handlePushNotificationIfNeeded", () => {
+    const mockedPendingMessageState: PendingMessageState = {
+      id: "M01",
+      foreground: true
+    };
+
+    it("make the app navigate to the message detail when the user press on a notification", () => {
+      const dispatchNavigationActionParameter = navigateToMessageRouterAction({
+        messageId: mockedPendingMessageState.id,
+        fromNotification: true
+      });
+
+      if (pushHandler === undefined) {
+        fail("testable export does not contain handlePushNotificationIfNeeded");
+      }
+      testSaga(pushHandler, false)
+        .next()
+        .select(pendingMessageStateSelector)
+        .next(mockedPendingMessageState)
+        .put(clearNotificationPendingMessage())
+        .next()
+        .select(isArchivingDisabledSelector)
+        .next(true)
+        .call(
+          NavigationService.dispatchNavigationAction,
+          dispatchNavigationActionParameter
+        )
+        .next()
+        .isDone();
     });
 
-    testSaga(handlePendingMessageStateIfAllowed, true)
-      .next()
-      .select(pendingMessageStateSelector)
-      .next(mockedPendingMessageState)
-      .put(clearNotificationPendingMessage())
-      .next()
-      .call(navigateToMainNavigatorAction)
-      .next()
-      .select(isArchivingDisabledSelector)
-      .next(true)
-      .call(
-        NavigationService.dispatchNavigationAction,
-        dispatchNavigationActionParameter
-      )
-      .next()
-      .isDone();
-  });
+    it("make the app navigate to the message detail when the user press on a notification, resetting the navigation stack before", () => {
+      const dispatchNavigationActionParameter = navigateToMessageRouterAction({
+        messageId: mockedPendingMessageState.id,
+        fromNotification: true
+      });
 
-  it("make the app navigate to the message detail when the user press on a notification, resetting the message archiving/restoring if such is disabled", () => {
-    const dispatchNavigationActionParameter = navigateToMessageRouterAction({
-      messageId: mockedPendingMessageState.id,
-      fromNotification: true
+      if (pushHandler === undefined) {
+        fail("testable export does not contain pushHandler");
+      }
+      testSaga(pushHandler, true)
+        .next()
+        .select(pendingMessageStateSelector)
+        .next(mockedPendingMessageState)
+        .put(clearNotificationPendingMessage())
+        .next()
+        .call(navigateToMainNavigatorAction)
+        .next()
+        .select(isArchivingDisabledSelector)
+        .next(true)
+        .call(
+          NavigationService.dispatchNavigationAction,
+          dispatchNavigationActionParameter
+        )
+        .next()
+        .isDone();
     });
 
-    testSaga(handlePendingMessageStateIfAllowed, false)
-      .next()
-      .select(pendingMessageStateSelector)
-      .next(mockedPendingMessageState)
-      .put(clearNotificationPendingMessage())
-      .next()
-      .select(isArchivingDisabledSelector)
-      .next(false)
-      .put(resetMessageArchivingAction(undefined))
-      .next()
-      .call(
-        NavigationService.dispatchNavigationAction,
-        dispatchNavigationActionParameter
-      )
-      .next()
-      .isDone();
-  });
+    it("make the app navigate to the message detail when the user press on a notification, resetting the message archiving/restoring if such is disabled", () => {
+      const dispatchNavigationActionParameter = navigateToMessageRouterAction({
+        messageId: mockedPendingMessageState.id,
+        fromNotification: true
+      });
 
-  it("does nothing if there are not pending messages", () => {
-    testSaga(handlePendingMessageStateIfAllowed, false)
-      .next()
-      .select(pendingMessageStateSelector)
-      .next(null)
-      .next()
-      .isDone();
+      if (pushHandler === undefined) {
+        fail("testable export does not contain pushHandler");
+      }
+      testSaga(pushHandler, false)
+        .next()
+        .select(pendingMessageStateSelector)
+        .next(mockedPendingMessageState)
+        .put(clearNotificationPendingMessage())
+        .next()
+        .select(isArchivingDisabledSelector)
+        .next(false)
+        .put(resetMessageArchivingAction(undefined))
+        .next()
+        .call(
+          NavigationService.dispatchNavigationAction,
+          dispatchNavigationActionParameter
+        )
+        .next()
+        .isDone();
+    });
+
+    it("does nothing if there are not pending messages", () => {
+      if (pushHandler === undefined) {
+        fail("testable export does not contain pushHandler");
+      }
+      testSaga(pushHandler, false)
+        .next()
+        .select(pendingMessageStateSelector)
+        .next(null)
+        .next()
+        .isDone();
+    });
   });
 });
-
 describe("updateNotificationPermissionsIfNeeded", () => {
   it("should not call the analytics event and not dispatch 'updateSystemNotificationsEnabled' when system permissions are 'false' and in-memory data are 'false'", () => {
     testSaga(updateNotificationPermissionsIfNeeded, false)

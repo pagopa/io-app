@@ -17,7 +17,6 @@ import { sessionCorrupted } from "../../../common/store/actions";
 
 export type ActiveSessionLoginState = {
   isActiveSessionLogin: boolean;
-  isActiveSessionLoginFailed: boolean;
   isUserLoggedIn: boolean;
   loginInfo?: {
     idp?: SpidIdp;
@@ -29,7 +28,6 @@ export type ActiveSessionLoginState = {
 
 const initialState: ActiveSessionLoginState = {
   isActiveSessionLogin: false,
-  isActiveSessionLoginFailed: false,
   isUserLoggedIn: false
 };
 
@@ -41,7 +39,6 @@ export const activeSessionLoginReducer = (
     case getType(activeSessionLoginSuccess):
       return {
         ...state,
-        isActiveSessionLoginFailed: false,
         isUserLoggedIn: true,
         loginInfo: {
           ...state.loginInfo,
