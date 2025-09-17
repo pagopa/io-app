@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.13.0-rc.8](https://github.com/pagopa/io-app/compare/3.13.0-rc.7...3.13.0-rc.8) (2025-09-16)
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2961](https://pagopa.atlassian.net/browse/SIW-2961)] Store whether IT-Wallet can be activated with the simplified flow ([#7337](https://github.com/pagopa/io-app/issues/7337)) ([661f535](https://github.com/pagopa/io-app/commit/661f5356488036e10ea76c1dcea7c6428cd5aaf8))
+
 ## [3.13.0-rc.7](https://github.com/pagopa/io-app/compare/3.13.0-rc.6...3.13.0-rc.7) (2025-09-15)
 
 
