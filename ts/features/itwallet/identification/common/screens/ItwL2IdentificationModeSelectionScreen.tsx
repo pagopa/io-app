@@ -22,6 +22,7 @@ import {
   isL3FeaturesEnabledSelector
 } from "../../../machine/eid/selectors";
 import SpidLogo from "../../../../../../img/features/itWallet/spid-logo.svg";
+import CiePin from "../../../../../../img/features/itWallet/cie+pin.svg";
 
 export type ItwL2IdentificationNavigationParams = {
   eidReissuing?: boolean;
@@ -51,9 +52,7 @@ export const ItwL2IdentificationModeSelectionScreen = (
     () => ({
       title: I18n.t(`${baseTranslationPath}.title`),
       description: I18n.t(`${baseTranslationPath}.description`),
-      section: I18n.t(`${baseTranslationPath}.section`, {
-        defaultValue: ""
-      })
+      section: I18n.t(`${baseTranslationPath}.section`)
     }),
     [baseTranslationPath]
   );
@@ -120,36 +119,27 @@ export const ItwL2IdentificationModeSelectionScreen = (
       headerActionsProp={{ showHelp: true }}
     >
       <ContentWrapper>
-        {!eidReissuing && (
-          <ListItemHeader
-            label={I18n.t("features.itWallet.identification.mode.l2.header")}
-          />
-        )}
-        <VStack space={8} style={{ marginTop: eidReissuing ? 24 : 0 }}>
+        <VStack space={8}>
           {isCieAuthenticationSupported &&
             !isCiePinDisabled &&
-            !isL3FeaturesEnabled && (
+            (isL3FeaturesEnabled || eidReissuing) && (
               <ModuleNavigationAlt
-                title={I18n.t(
-                  "features.itWallet.identification.mode.l2.method.ciePin.title"
-                )}
+                title={I18n.t(`${baseTranslationPath}.method.ciePin.title`, {
+                  defaultValue: ""
+                })}
                 subtitle={I18n.t(
                   `${baseTranslationPath}.method.ciePin.subtitle`
                 )}
                 testID="CiePin"
-                icon={eidReissuing ? "securityPad" : "fiscalCodeIndividual"}
+                image={<CiePin width={28} height={32} />}
                 onPress={handleCiePinPress}
-                badge={
-                  eidReissuing
-                    ? {
-                        text: I18n.t(
-                          "features.itWallet.identification.mode.l2.reissuing.method.ciePin.badge"
-                        ),
-                        variant: "highlight",
-                        outline: false
-                      }
-                    : undefined
-                }
+                badge={{
+                  text: I18n.t(`${baseTranslationPath}.method.ciePin.badge`, {
+                    defaultValue: ""
+                  }),
+                  variant: "highlight",
+                  outline: false
+                }}
               />
             )}
           {!isSpidDisabled && (
@@ -159,20 +149,16 @@ export const ItwL2IdentificationModeSelectionScreen = (
               )}
               subtitle={I18n.t(`${baseTranslationPath}.method.spid.subtitle`)}
               testID="Spid"
-              {...(eidReissuing
-                ? { image: <SpidLogo width={50} height={24} /> }
-                : { icon: "spid" })}
+              image={<SpidLogo width={50} height={24} />}
               onPress={handleSpidPress}
             />
           )}
 
           {!isCieIdDisabled && (
             <ModuleNavigationAlt
-              title={I18n.t(
-                "features.itWallet.identification.mode.l2.method.cieId.title"
-              )}
+              title={I18n.t(`${baseTranslationPath}.method.cieId.title`)}
               subtitle={I18n.t(`${baseTranslationPath}.method.cieId.subtitle`)}
-              icon={eidReissuing ? "cie" : "device"}
+              icon={"cie"}
               testID="CieID"
               onPress={handleCieIdPress}
             />
