@@ -15,8 +15,8 @@ import {
 } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import {
-  CREDENTIALS_MAP,
   CREDENTIAL_STATUS_MAP,
+  getMixPanelCredential,
   trackCredentialDetail,
   trackWalletCredentialShowFAC_SIMILE,
   trackWalletCredentialShowTrustmark
@@ -46,6 +46,7 @@ import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventSc
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { itwSetReviewPending } from "../../../common/store/actions/preferences.ts";
 import { itwIsPendingReviewSelector } from "../../../common/store/selectors/preferences.ts";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { identificationRequest } from "../../../../identification/store/actions/index.ts";
 import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
 import { ItwProximityMachineContext } from "../../proximity/machine/provider.tsx";
@@ -116,9 +117,13 @@ export const ItwPresentationCredentialDetail = ({
     ItwProximityMachineContext.useSelector(selectIsLoading);
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
-
+  const isL3Credential = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
+  );
+  const mixPanelCredential = getMixPanelCredential(
+    credential.credentialType,
+    isL3Credential
   );
   const itwFeaturesEnabled = useItwFeaturesEnabled(credential);
 
@@ -128,7 +133,7 @@ export const ItwPresentationCredentialDetail = ({
   useFocusEffect(() => {
     if (status !== "jwtExpired") {
       trackCredentialDetail({
-        credential: CREDENTIALS_MAP[credential.credentialType],
+        credential: mixPanelCredential,
         credential_status: CREDENTIAL_STATUS_MAP[status]
       });
     }
@@ -138,9 +143,7 @@ export const ItwPresentationCredentialDetail = ({
    * Show the credential trustmark screen after user identification
    */
   const handleTrustmarkPress = () => {
-    trackWalletCredentialShowTrustmark(
-      CREDENTIALS_MAP[credential.credentialType]
-    );
+    trackWalletCredentialShowTrustmark(mixPanelCredential);
     dispatch(
       identificationRequest(
         false,
@@ -191,7 +194,7 @@ export const ItwPresentationCredentialDetail = ({
         label: I18n.t("features.itWallet.presentation.ctas.openPdf"),
         icon: "docPaymentTitle",
         onPress: () => {
-          if (CREDENTIALS_MAP[credentialType] === "ITW_TS_V2") {
+          if (mixPanelCredential === "ITW_TS_V2") {
             trackWalletCredentialShowFAC_SIMILE();
           }
 
@@ -211,7 +214,8 @@ export const ItwPresentationCredentialDetail = ({
     itwFeaturesEnabled,
     navigation,
     isCheckingPermissions,
-    itwProximityMachineRef
+    itwProximityMachineRef,
+    mixPanelCredential
   ]);
 
   if (status === "unknown") {
