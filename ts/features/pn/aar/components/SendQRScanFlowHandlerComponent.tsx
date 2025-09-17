@@ -1,26 +1,66 @@
-import { useCallback, useEffect } from "react";
 import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+import { useCallback, useEffect } from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import {
+  useIODispatch,
+  useIOSelector,
+  useIOStore
+} from "../../../../store/hooks";
 import { openWebUrl } from "../../../../utils/url";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-import PN_ROUTES from "../../navigation/routes";
-import { useIOStore } from "../../../../store/hooks";
-import { isPnServiceEnabled } from "../../reminderBanner/reducer/bannerDismiss";
 import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";
+import PN_ROUTES from "../../navigation/routes";
+import { isPnServiceEnabled } from "../../reminderBanner/reducer/bannerDismiss";
 import {
   trackSendQRCodeScanRedirect,
   trackSendQRCodeScanRedirectConfirmed,
   trackSendQRCodeScanRedirectDismissed
 } from "../analytics";
+import { setAarFlowState } from "../store/actions";
+import { currentAARFlowData, sendAARFlowStates } from "../store/reducers";
+import { isSendAARPhase2Enabled } from "../utils/generic";
+import { SendAARLoadingComponent } from "./SendAARLoadingComponent";
+import { SendAARTosComponent } from "./SendAARTosComponent";
 
-export type SendQRScanRedirectComponentProps = {
+export type SendQRScanHandlerScreenProps = {
   aarUrl: string;
 };
-export const SendQRScanRedirectComponent = ({
+
+export const SendQRScanFlowHandlerComponent = ({
   aarUrl
-}: SendQRScanRedirectComponentProps) => {
+}: SendQRScanHandlerScreenProps) =>
+  isSendAARPhase2Enabled() ? (
+    <SendAARInitialFlowScreen aarUrl={aarUrl} />
+  ) : (
+    <SendQrScanRedirect aarUrl={aarUrl} />
+  );
+
+const SendAARInitialFlowScreen = ({ aarUrl }: SendQRScanHandlerScreenProps) => {
+  const flowData = useIOSelector(currentAARFlowData);
+  const flowState = flowData.type;
+  const dispatch = useIODispatch();
+
+  useEffect(() => {
+    if (flowState === sendAARFlowStates.none) {
+      dispatch(
+        setAarFlowState({
+          type: sendAARFlowStates.displayingAARToS,
+          qrCode: aarUrl
+        })
+      );
+    }
+  }, [dispatch, aarUrl, flowState]);
+
+  switch (flowState) {
+    case sendAARFlowStates.displayingAARToS:
+      return <SendAARTosComponent qrCode={flowData.qrCode} />;
+    default:
+      return <SendAARLoadingComponent />;
+  }
+};
+const SendQrScanRedirect = ({ aarUrl }: SendQRScanHandlerScreenProps) => {
   const store = useIOStore();
   const navigation = useIONavigation();
 
