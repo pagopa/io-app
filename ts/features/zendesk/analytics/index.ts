@@ -13,6 +13,7 @@ import {
   zendeskSupportStart
 } from "../store/actions";
 import { mixpanelTrack } from "../../../mixpanel";
+import { buildEventProperties } from "../../../utils/analytics";
 
 const trackZendesk = (action: Action): void => {
   switch (action.type) {
@@ -49,3 +50,33 @@ const trackZendesk = (action: Action): void => {
 const emptyTracking = (__: Action) => constVoid();
 
 export default zendeskEnabled ? trackZendesk : emptyTracking;
+
+export const trackZendeskCaCBannerShow = (cacUrl: string) =>
+  mixpanelTrack(
+    "BANNER",
+    buildEventProperties("UX", "screen_view", {
+      banner_id: "CONTEXTUAL_HELP",
+      banner_page: "CONTEXTUAL_HELP_CAC",
+      banner_landing: cacUrl
+    })
+  );
+
+export const trackZendeskCaCBannerTap = (cacUrl: string) => {
+  mixpanelTrack(
+    "TAP_BANNER",
+    buildEventProperties("UX", "action", {
+      banner_id: "CONTEXTUAL_HELP",
+      banner_page: "CONTEXTUAL_HELP_CAC",
+      banner_landing: cacUrl
+    })
+  );
+
+  mixpanelTrack(
+    "HC_CTA_TAPPED",
+    buildEventProperties("UX", "action", {
+      hc_source: "CONTEXTUAL_HELP",
+      hc_id: "CONTEXTUAL_HELP_CAC",
+      hc_landing_url: cacUrl
+    })
+  );
+};
