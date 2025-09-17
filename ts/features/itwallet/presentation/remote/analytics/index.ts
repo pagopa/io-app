@@ -1,6 +1,11 @@
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { buildEventProperties } from "../../../../../utils/analytics";
-import { CREDENTIALS_MAP, ItwScreenFlowContext } from "../../../analytics";
+import {
+  CREDENTIALS_MAP,
+  ItwScreenFlowContext,
+  MixPanelCredential,
+  MixPanelCredentialVersion
+} from "../../../analytics";
 import { ITW_ERRORS_EVENTS } from "../../../analytics/enum";
 import { RemoteFailureType } from "../machine/failure";
 import {
@@ -28,6 +33,12 @@ type ItwRemoteDataShare = {
   data_type: "required" | "optional";
   request_type: "unique_purpose" | "multiple_purpose" | "no_purpose";
 };
+
+// Type guard to check if an unknown object is a Record of MixPanelCredentialVersion to MixPanelCredential
+const isCredentialRecord = (
+  c: unknown
+): c is Record<MixPanelCredentialVersion, MixPanelCredential> =>
+  typeof c === "object" && c !== null && "V3" in c;
 
 // #region SCREEN VIEW EVENTS
 
@@ -182,7 +193,9 @@ export const getOrderedCredential = (
 ): string =>
   Object.keys(CREDENTIALS_MAP)
     .filter(credentialType => missingCredentials.includes(credentialType))
-    .map(credentialType => CREDENTIALS_MAP[credentialType].V3)
+    .map(credentialType => CREDENTIALS_MAP[credentialType])
+    .filter(isCredentialRecord)
+    .map(credential => credential.V3)
     .join(" - ");
 
 /**
