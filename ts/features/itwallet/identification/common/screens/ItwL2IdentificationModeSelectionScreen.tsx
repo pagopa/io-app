@@ -18,10 +18,12 @@ import { IOStackNavigationRouteProps } from "../../../../../navigation/params/Ap
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import {
   isCIEAuthenticationSupportedSelector,
-  isL3FeaturesEnabledSelector
+  isL3FeaturesEnabledSelector,
+  selectIsLoading
 } from "../../../machine/eid/selectors";
 import SpidLogo from "../../../../../../img/features/itWallet/spid-logo.svg";
 import CiePin from "../../../../../../img/features/itWallet/cie+pin.svg";
+import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 
 export type ItwL2IdentificationNavigationParams = {
   eidReissuing?: boolean;
@@ -37,6 +39,7 @@ export const ItwL2IdentificationModeSelectionScreen = (
   props: ItwL2IdentificationModeSelectionScreenProps
 ) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const { eidReissuing } = props.route.params;
 
   const baseTranslationPath = useMemo(
@@ -107,6 +110,12 @@ export const ItwL2IdentificationModeSelectionScreen = (
     () => disabledIdentificationMethods.includes("CiePin"),
     [disabledIdentificationMethods]
   );
+
+  if (isLoading) {
+    return (
+      <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
+    );
+  }
 
   return (
     <IOScrollViewWithLargeHeader
