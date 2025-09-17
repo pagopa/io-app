@@ -4,7 +4,7 @@ import {
   Credential
 } from "@pagopa/io-react-native-wallet";
 import { v4 as uuidv4 } from "uuid";
-import { CryptoContext } from "@pagopa/io-react-native-jwt";
+import { type CryptoContext } from "@pagopa/io-react-native-jwt";
 import {
   DPOP_KEYTAG,
   regenerateCryptoKey,
