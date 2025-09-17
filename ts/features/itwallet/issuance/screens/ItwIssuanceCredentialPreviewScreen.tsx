@@ -27,7 +27,10 @@ import {
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import {
+  isMultiLevelCredential,
+  StoredCredential
+} from "../../common/utils/itwTypesUtils";
 import {
   selectCredentialOption,
   selectCredentialTypeOption
@@ -82,6 +85,7 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const dispatch = useIODispatch();
   const route = useRoute();
+  const isMultilevel = isMultiLevelCredential(credential);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const mixPanelCredential = useMemo(
@@ -90,8 +94,12 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
   );
 
   useFocusEffect(() => {
-    trackCredentialPreview(mixPanelCredential);
+    trackCredentialPreview({
+      credential: mixPanelCredential,
+      credential_type: isMultilevel ? "multiple" : "unique"
+    });
   });
+
   const dismissDialog = useItwDismissalDialog({
     handleDismiss: () => {
       machineRef.send({ type: "close" });

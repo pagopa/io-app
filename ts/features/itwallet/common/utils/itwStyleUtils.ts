@@ -58,6 +58,13 @@ export const getThemeColorByCredentialType = (
         statusBarStyle: "dark-content",
         variant: "neutral"
       };
+    case CredentialType.RESIDENCY:
+      return {
+        backgroundColor: "#F2E4CE",
+        textColor: IOColors.black,
+        statusBarStyle: "dark-content",
+        variant: "neutral"
+      };
   }
 };
 
