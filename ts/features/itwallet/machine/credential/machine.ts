@@ -250,12 +250,8 @@ export const itwCredentialIssuanceMachine = setup({
               codeVerifier: context.codeVerifier,
               requestedCredential: context.requestedCredential,
               issuerConf: context.issuerConf,
-              // To bypass the issuance problems with the async MDL flow we also use `reissuing` for IT-Wallet & whitelisted users
-              // [SIW-2839] This will be removed when the async flow will be discontinued
               operationType:
-                context.mode === "upgrade" || context.isItWalletValid
-                  ? "reissuing"
-                  : undefined
+                context.mode === "upgrade" ? "reissuing" : undefined
             }),
             onDone: {
               target: "ObtainingStatusAttestation",
