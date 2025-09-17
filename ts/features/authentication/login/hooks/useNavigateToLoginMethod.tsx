@@ -79,7 +79,11 @@ const useNavigateToLoginMethod = () => {
   }, [withIsFastLoginOptInCheck, navigate]);
 
   const navigateToCiePinInsertion = useCallback(() => {
-    dispatch(idpSelected(IdpCIE));
+    if (isActiveSessionLogin) {
+      dispatch(setIdpSelectedActiveSessionLogin(IdpCIE));
+    } else {
+      dispatch(idpSelected(IdpCIE));
+    }
 
     withIsFastLoginOptInCheck(
       () => {
@@ -89,7 +93,7 @@ const useNavigateToLoginMethod = () => {
       },
       { identifier: Identifier.CIE }
     );
-  }, [withIsFastLoginOptInCheck, navigate, dispatch]);
+  }, [dispatch, isActiveSessionLogin, withIsFastLoginOptInCheck, navigate]);
 
   const navigateToCieIdLoginScreen = useCallback(
     (spidLevel: SpidLevel = "SpidL2") => {
