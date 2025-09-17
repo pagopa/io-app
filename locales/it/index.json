@@ -4304,7 +4304,8 @@
         "dc": "Carta Europea della Disabilità",
         "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
         "ed": "Titoli accademici",
-        "ee": "Iscrizioni universitarie"
+        "ee": "Iscrizioni universitarie",
+        "res": "Residenza"
       },
       "wallet": {
         "active": "Attivo",

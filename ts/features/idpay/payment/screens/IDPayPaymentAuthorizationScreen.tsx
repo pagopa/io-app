@@ -27,13 +27,21 @@ import {
 import { IdPayPaymentMachineContext } from "../machine/provider";
 import {
   areButtonsDisabledSelector,
+  dataEntrySelector,
   isAuthorizingSelector,
   transactionDataSelector
 } from "../machine/selectors";
 import { IdPayPaymentParamsList } from "../navigation/params";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import {
+  trackIDPayDetailAuthorizationCancel,
+  trackIDPayDetailAuthorizationConversion,
+  trackIDPayDetailAuthorizationSummary
+} from "../../details/analytics";
 
 export type IDPayPaymentAuthorizationScreenRouteParams = {
   trxCode?: string;
+  data_entry?: "qr_code" | "manual";
 };
 
 type IDPayPaymentAuthorizationRouteProps = RouteProp<
@@ -51,7 +59,13 @@ const IDPayPaymentAuthorizationScreen = () => {
     pipe(
       params.trxCode,
       O.fromNullable,
-      O.map(code => machine.send({ type: "authorize-payment", trxCode: code }))
+      O.map(code =>
+        machine.send({
+          type: "authorize-payment",
+          trxCode: code,
+          data_entry: params.data_entry
+        })
+      )
     );
   }, [params, machine]);
 
@@ -60,10 +74,18 @@ const IDPayPaymentAuthorizationScreen = () => {
   const isAuthorizing = useSelector(isAuthorizingSelector);
   const areButtonsDisabled = useSelector(areButtonsDisabledSelector);
   const showSkeletons = isLoading && !transactionData;
+  const data_entry = useSelector(dataEntrySelector);
 
   const handleCancel = () => {
     if (areButtonsDisabled) {
       return;
+    }
+    if (O.isSome(transactionData)) {
+      trackIDPayDetailAuthorizationCancel({
+        initiativeId: transactionData?.value.initiativeId,
+        initiativeName: transactionData?.value.initiativeName,
+        data_entry
+      });
     }
     machine.send({ type: "close" });
   };
@@ -82,11 +104,31 @@ const IDPayPaymentAuthorizationScreen = () => {
           onCancel: () => undefined
         },
         {
-          onSuccess: () => machine.send({ type: "next" })
+          onSuccess: () => {
+            if (O.isSome(transactionData)) {
+              trackIDPayDetailAuthorizationConversion({
+                initiativeId: transactionData.value.initiativeId,
+                initiativeName: transactionData.value.initiativeName,
+                data_entry
+              });
+            }
+            machine.send({ type: "next" });
+          }
         }
       )
     );
   };
+
+  // get the name of the previous screen to track the entry point
+  useOnFirstRender(() => {
+    if (O.isSome(transactionData) && !showSkeletons) {
+      trackIDPayDetailAuthorizationSummary({
+        initiativeId: transactionData.value.initiativeId,
+        initiativeName: transactionData.value.initiativeName,
+        data_entry
+      });
+    }
+  });
 
   const renderContent = () => {
     if (O.isSome(transactionData) && !showSkeletons) {
