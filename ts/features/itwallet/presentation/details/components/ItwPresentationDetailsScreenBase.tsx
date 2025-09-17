@@ -1,21 +1,18 @@
 import {
   ButtonSolidProps,
   FooterActions,
-  HeaderSecondLevel,
-  useFooterActionsMeasurements
+  useFooterActionsMeasurements,
+  useIOToast
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { Fragment, ReactNode, useLayoutEffect } from "react";
+import { Fragment, ReactNode } from "react";
 import Animated, {
   useAnimatedRef,
   useAnimatedScrollHandler,
   useSharedValue
 } from "react-native-reanimated";
-import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.ts";
-import { useStartSupportRequest } from "../../../../../hooks/useStartSupportRequest.ts";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
-import { useNotAvailableToastGuard } from "../../../common/hooks/useNotAvailableToastGuard.ts";
 import { getHeaderPropsByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 
@@ -34,13 +31,10 @@ const ItwPresentationDetailsScreenBase = ({
   children,
   ctaProps
 }: ItwPresentationDetailsScreenBaseProps) => {
-  const navigation = useIONavigation();
   const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
   const itwFeaturesEnabled = useItwFeaturesEnabled(credential);
-
+  const toast = useIOToast();
   const scrollTranslationY = useSharedValue(0);
-  const startSupportRequest = useOfflineToastGuard(useStartSupportRequest({}));
-  const onIconPress = useNotAvailableToastGuard(startSupportRequest);
 
   const { footerActionsMeasurements, handleFooterActionsMeasurements } =
     useFooterActionsMeasurements();
@@ -50,35 +44,27 @@ const ItwPresentationDetailsScreenBase = ({
     itwFeaturesEnabled
   );
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      header: () => (
-        <HeaderSecondLevel
-          {...headerProps}
-          enableDiscreteTransition
-          animatedRef={animatedScrollViewRef}
-          type="singleAction"
-          goBack={navigation.goBack}
-          backAccessibilityLabel={I18n.t("global.buttons.back")}
-          firstAction={{
-            icon: "help",
-            onPress: onIconPress,
-            accessibilityLabel: I18n.t(
-              "global.accessibility.contextualHelp.open.label"
-            )
-          }}
-        />
-      ),
-      headerShown: true
-    });
-  }, [
-    animatedScrollViewRef,
-    headerProps,
-    itwFeaturesEnabled,
-    navigation,
-    onIconPress,
-    startSupportRequest
-  ]);
+  // Support requests ifor ITW credentials are temporarily disabled until
+  // final releaase.
+  const onStartSupportRequest = () => {
+    if (itwFeaturesEnabled) {
+      toast.info(I18n.t("features.itWallet.generic.featureUnavailable.title"));
+      return false;
+    }
+    return true;
+  };
+
+  useHeaderSecondLevel({
+    scrollValues: {
+      triggerOffset: scrollTriggerOffsetValue,
+      contentOffsetY: scrollTranslationY
+    },
+    supportRequest: true,
+    onStartSupportRequest,
+    enableDiscreteTransition: true,
+    animatedRef: animatedScrollViewRef,
+    ...headerProps
+  });
 
   const scrollHandler = useAnimatedScrollHandler(({ contentOffset }) => {
     // eslint-disable-next-line functional/immutable-data
