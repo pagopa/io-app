@@ -26,6 +26,9 @@ const ItwCredentialAuthSource: {
   ),
   [CredentialType.EDUCATION_ENROLLMENT]: I18n.t(
     "features.itWallet.presentation.authSource.anis"
+  ),
+  [CredentialType.RESIDENCY]: I18n.t(
+    "features.itWallet.presentation.authSource.mdi"
   )
 };
 
