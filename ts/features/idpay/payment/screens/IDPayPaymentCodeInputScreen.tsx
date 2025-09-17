@@ -1,15 +1,23 @@
 import { TextInput } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useState } from "react";
 import I18n from "i18next";
+import { useState } from "react";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { isLoadingSelector } from "../../common/machine/selectors";
+import {
+  trackIDPayDetailManualEntryConfirm,
+  trackIDPayDetailManualEntryLanding
+} from "../../details/analytics";
+import { idpayInitiativeDetailsSelector } from "../../details/store";
 import { IDPayTransactionCode } from "../common/types";
 import { IdPayPaymentMachineContext } from "../machine/provider";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 type InputState = {
   value?: string;
@@ -28,12 +36,41 @@ const IDPayPaymentCodeInputScreen = () => {
   const isInputValid = pipe(inputState.code, O.map(E.isRight), O.toUndefined);
   const isLoading = useSelector(isLoadingSelector);
 
+  const initiativeDataPot = useIOSelector(idpayInitiativeDetailsSelector);
+
+  const initiativeId = pot.getOrElse(
+    pot.map(initiativeDataPot, initiative => initiative.initiativeId),
+    undefined
+  );
+
+  const initiativeName = pot.getOrElse(
+    pot.map(initiativeDataPot, initiative => initiative.initiativeName),
+    undefined
+  );
+
+  useOnFirstRender(() => {
+    trackIDPayDetailManualEntryLanding({
+      initiativeId,
+      initiativeName
+    });
+  });
+
   const navigateToPaymentAuthorization = () =>
     pipe(
       inputState.code,
       O.filter(E.isRight),
       O.map(trxCode => trxCode.right),
-      O.map(trxCode => machine.send({ type: "authorize-payment", trxCode }))
+      O.map(trxCode => {
+        trackIDPayDetailManualEntryConfirm({
+          initiativeId,
+          initiativeName
+        });
+        machine.send({
+          type: "authorize-payment",
+          trxCode,
+          data_entry: "manual"
+        });
+      })
     );
 
   return (

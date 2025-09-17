@@ -240,6 +240,18 @@ export const itwEidIssuanceMachine = setup({
             target: "#itwEidIssuanceMachine.Failure"
           }
         ]
+      },
+      after: {
+        5000: [
+          {
+            guard: "isReissuance",
+            actions: "navigateToL2IdentificationScreen"
+          },
+          {
+            guard: not("isReissuance"),
+            actions: "navigateToIpzsPrivacyScreen"
+          }
+        ]
       }
     },
     WalletInstanceCreation: {
@@ -806,7 +818,8 @@ export const itwEidIssuanceMachine = setup({
             input: ({ context }) => ({
               identification: context.identification,
               authenticationContext: context.authenticationContext,
-              walletInstanceAttestation: context.walletInstanceAttestation?.jwt
+              walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
+              isL3: context.isL3 && !context.isL2Fallback
             }),
             onDone: {
               actions: assign(({ event }) => ({ eid: event.output })),
