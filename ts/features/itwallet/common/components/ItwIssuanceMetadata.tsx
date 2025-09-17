@@ -6,13 +6,14 @@ import I18n from "i18next";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import { StoredCredential } from "../utils/itwTypesUtils";
 import {
-  CREDENTIALS_MAP,
+  getMixPanelCredential,
   trackWalletCredentialShowAuthSource,
   trackWalletCredentialShowIssuer
 } from "../../analytics";
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
 import { useIOSelector } from "../../../../store/hooks";
 import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 
 type ItwIssuanceMetadataProps = {
   credential: StoredCredential;
@@ -103,6 +104,11 @@ export const ItwIssuanceMetadata = ({
   const privacyUrl = useIOSelector(state =>
     generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const mixPanelCredential = getMixPanelCredential(
+    credential.credentialType,
+    isItwL3
+  );
 
   const releaserNameBottomSheet: ItwMetadataIssuanceListItemProps["bottomSheet"] =
     useMemo(
@@ -117,11 +123,12 @@ export const ItwIssuanceMetadata = ({
           }
         ),
         onPress: () =>
-          trackWalletCredentialShowIssuer(
-            CREDENTIALS_MAP[credential.credentialType]
-          )
+          trackWalletCredentialShowIssuer({
+            credential: mixPanelCredential,
+            credential_screen_type: isPreview ? "preview" : "detail"
+          })
       }),
-      [credential.credentialType, privacyUrl]
+      [isPreview, mixPanelCredential, privacyUrl]
     );
 
   const authSourceBottomSheet: ItwMetadataIssuanceListItemProps["bottomSheet"] =
@@ -134,11 +141,12 @@ export const ItwIssuanceMetadata = ({
           "features.itWallet.issuance.credentialPreview.bottomSheet.authSource.subtitle"
         ),
         onPress: () =>
-          trackWalletCredentialShowAuthSource(
-            CREDENTIALS_MAP[credential.credentialType]
-          )
+          trackWalletCredentialShowAuthSource({
+            credential: mixPanelCredential,
+            credential_screen_type: isPreview ? "preview" : "detail"
+          })
       }),
-      [credential.credentialType]
+      [isPreview, mixPanelCredential]
     );
 
   return (
