@@ -3852,11 +3852,11 @@
           "cta": "Attiva notifiche push",
           "toast": "Hai attivato le notifiche push"
         },
-        "flow":{
-            "fetchingQrData":{
-              "loadingText":"Recupero delle informazioni in corso" 
-            }
-        } 
+        "flow": {
+          "fetchingQrData": {
+            "loadingText": "Recupero delle informazioni in corso"
+          }
+        }
       },
       "reminderBanner": {
         "title": "Risparmia sui costi di notifica!",
