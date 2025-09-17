@@ -83,15 +83,10 @@ export const createRemoteActorsImplementation = (
         env.WALLET_TA_BASE_URL
       );
 
-    const trustAnchorKey = trustAnchorEntityConfig.payload.jwks.keys[0];
-
-    // Ensure that the trust anchor key is suitable for building the trust chain
-    assert(trustAnchorKey, "No suitable key found in Trust Anchor JWKS.");
-
     // Create the trust chain for the Relying Party
     const builtChainJwts = await Trust.Build.buildTrustChain(
       qrCodePayload.client_id,
-      trustAnchorKey
+      trustAnchorEntityConfig
     );
 
     // Perform full validation on the built chainW
