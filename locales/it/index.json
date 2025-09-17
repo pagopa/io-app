@@ -3851,6 +3851,11 @@
           "body": "Attiva le notifiche push: se leggi subito le comunicazioni a valore legale, potresti risparmiare sui costi di raccomandata.",
           "cta": "Attiva notifiche push",
           "toast": "Hai attivato le notifiche push"
+        },
+        "flow": {
+          "fetchingQrData": {
+            "loadingText": "Recupero delle informazioni in corso"
+          }
         }
       },
       "reminderBanner": {
@@ -4304,7 +4309,8 @@
         "dc": "Carta Europea della Disabilità",
         "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
         "ed": "Titoli accademici",
-        "ee": "Iscrizioni universitarie"
+        "ee": "Iscrizioni universitarie",
+        "res": "Residenza"
       },
       "wallet": {
         "active": "Attivo",
@@ -4885,6 +4891,13 @@
           "verificationExpiring": {
             "content": "Verifica la versione digitale del tuo documento entro il {{date}}."
           }
+        },
+        "authSource": {
+          "anis": "ANIS - Anagrafe Nazionale dell'istruzione superiore",
+          "mdi": "Ministero dell'Interno",
+          "mef": "MEF - Ragioneria Generale dello Stato",
+          "inps": "Istituto Nazionale di Previdenza Sociale",
+          "mit": "MIT - Direzione Generale per la Motorizzazione"
         },
         "bottomSheets": {
           "eidInfo": {
