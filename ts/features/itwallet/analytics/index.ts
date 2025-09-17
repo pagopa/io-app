@@ -57,6 +57,7 @@ export type MixPanelCredentialVersion = "V2" | "V3";
  * ITW_CED_V3: EuropeanDisabilityCard (obtained with IT Wallet)
  * ITW_ED: ED (obtained with IT Wallet)
  * ITW_EE: EE (obtained with IT Wallet)
+ * UNKNOWN: placeholder used when a credential exists in the app but is not yet tracked on Mixpanel
  */
 export const mixPanelCredentials = [
   "ITW_ID_V2",
@@ -68,19 +69,21 @@ export const mixPanelCredentials = [
   "ITW_TS_V3",
   "ITW_CED_V3",
   "ITW_ED",
-  "ITW_EE"
+  "ITW_EE",
+  "UNKNOWN"
 ] as const;
 
-// Exclude ITW_ED and ITW_EE from MixPanelCredentialProperty since are not used in tracking properties/super properties
+// Exclude ITW_ED, ITW_EE and UNKNOWN from MixPanelCredentialProperty since are not used in tracking properties/super properties
 type MixPanelCredentialProperty = Exclude<
   MixPanelCredential,
-  "ITW_ED" | "ITW_EE"
+  "ITW_ED" | "ITW_EE" | "UNKNOWN"
 >;
 
-// Type guard to exclude ITW_ED and ITW_EE from MixPanelCredential
+// Type guard to exclude ITW_ED, ITW_EE and UNKNOWN from MixPanelCredential
 const isMixPanelCredentialProperty = (
   c: MixPanelCredential
-): c is MixPanelCredentialProperty => c !== "ITW_ED" && c !== "ITW_EE";
+): c is MixPanelCredentialProperty =>
+  c !== "ITW_ED" && c !== "ITW_EE" && c !== "UNKNOWN";
 
 export type MixPanelCredential = (typeof mixPanelCredentials)[number];
 
@@ -1201,7 +1204,8 @@ export const trackItwRequest = (method?: ItwIdMethod, itw_flow?: ItwFlow) => {
 
 export const trackItwRequestSuccess = (
   method?: ItwIdMethod,
-  status?: ItwStatus
+  status?: ItwStatus,
+  itw_flow?: ItwFlow
 ) => {
   if (method) {
     void mixpanelTrack(
@@ -1209,7 +1213,7 @@ export const trackItwRequestSuccess = (
       buildEventProperties("TECH", undefined, {
         ITW_ID_method: method,
         ITW_ID_V2: status,
-        itw_flow: status
+        itw_flow
       })
     );
   }
@@ -1393,13 +1397,21 @@ export const trackOfflineAccessReason = (
   }
 };
 
-// Returns the appropriate MixPanel credential key based on the credential type.
-// If the IT Wallet is active, returns the V3 key; otherwise, returns the V2 key.
+/**
+ * Returns the appropriate Mixpanel credential key based on the credential type.
+ * - If the IT Wallet is active, returns the V3 key.
+ * - Otherwise, returns the V2 key.
+ * - If the credential type does not exist in CREDENTIALS_MAP, returns "UNKNOWN" as a fallback value.
+ */
 export function getMixPanelCredential(
   credentialType: string,
   isItwL3: boolean
 ): MixPanelCredential {
   const credential = CREDENTIALS_MAP[credentialType];
+
+  if (!credential) {
+    return "UNKNOWN";
+  }
 
   // Handle case when there is only one version of the credential
   if (typeof credential === "string") {

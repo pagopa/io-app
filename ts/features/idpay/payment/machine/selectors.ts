@@ -21,3 +21,7 @@ export const transactionDataSelector = (snapshot: MachineSnapshot) =>
 
 export const areButtonsDisabledSelector = (snapshot: MachineSnapshot) =>
   snapshot.hasTag(IdPayTags.DisableButtons);
+
+export const dataEntrySelector = (
+  snapshot: MachineSnapshot
+): "qr_code" | "manual" => snapshot.context.data_entry || "qr_code";
