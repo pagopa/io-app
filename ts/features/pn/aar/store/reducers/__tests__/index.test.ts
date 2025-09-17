@@ -2,6 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import {
   aarFlowReducer,
   AARFlowState,
+  currentAARFlowData,
   INITIAL_AAR_FLOW_STATE,
   isAAREnabled,
   isValidAARStateTransition,
@@ -134,6 +135,51 @@ describe("isAAREnabled selector", () => {
 
       const isAarFeatureEnabled = isAAREnabled(state);
       expect(isAarFeatureEnabled).toBe(expected);
+    });
+  });
+
+  describe("currentAARFlowData selector", () => {
+    it("should return the correct AAR flow state from the global state", () => {
+      const mockAARState: AARFlowState = {
+        type: "fetchingNotificationData",
+        iun: "1234567890",
+        fullNameDestinatario: "Mario Rossi"
+      };
+
+      const mockState = {
+        features: {
+          pn: {
+            aarFlow: mockAARState
+          }
+        }
+      } as unknown as GlobalState;
+
+      const result = currentAARFlowData(mockState);
+      expect(result).toEqual(mockAARState);
+    });
+
+    it("should return undefined if aarFlow is not present", () => {
+      const mockState = {
+        features: {
+          pn: {}
+        }
+      } as unknown as GlobalState;
+
+      const result = currentAARFlowData(mockState);
+      expect(result).toBeUndefined();
+    });
+
+    it("should return INITIAL_AAR_FLOW_STATE when explicitly set", () => {
+      const mockState = {
+        features: {
+          pn: {
+            aarFlow: INITIAL_AAR_FLOW_STATE
+          }
+        }
+      } as unknown as GlobalState;
+
+      const result = currentAARFlowData(mockState);
+      expect(result).toEqual(INITIAL_AAR_FLOW_STATE);
     });
   });
 });
