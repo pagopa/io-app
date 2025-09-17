@@ -175,15 +175,14 @@ export const trackItwRemoteDeepLinkFailure = (reason: Error) => {
  *
  * Example:
  * Input: ["mDL", "EuropeanHealthInsuranceCard"]
- * Output: "ITW_PG_V2 - ITW_TS_V2"
+ * Output: "ITW_PG_V3 - ITW_TS_V3"
  */
-// TODO: this function should be updated when new L3 credentials are added
 export const getOrderedCredential = (
   missingCredentials: Array<string>
 ): string =>
   Object.keys(CREDENTIALS_MAP)
     .filter(credentialType => missingCredentials.includes(credentialType))
-    .map(credentialType => CREDENTIALS_MAP[credentialType])
+    .map(credentialType => CREDENTIALS_MAP[credentialType].V3)
     .join(" - ");
 
 /**
