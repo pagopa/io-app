@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import { Divider } from "@pagopa/io-app-design-system";
 import { ClaimDisplayFormat } from "../utils/itwClaimsUtils.ts";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils.ts";
+import { HIDDEN_CLAIM_TEXT } from "../utils/constants.ts";
 import { ItwNestedClaimsListItem } from "./ItwNestedClaimsListItem.tsx";
 import { ItwCredentialClaim } from "./ItwCredentialClaim.tsx";
 
@@ -98,7 +99,7 @@ export const ItwCredentialMultiClaim = ({
   credentialStatus
 }: ItwCredentialMultiClaimProps) => {
   // We render the nested claims as a list if there are multiple items
-  const shouldRenderAsList = nestedClaims.length > 1;
+  const shouldRenderAsList = nestedClaims.length > 0;
   if (shouldRenderAsList) {
     return (
       <>
@@ -107,14 +108,17 @@ export const ItwCredentialMultiClaim = ({
             claim.id,
             singleItemClaims
           );
+
+          const displaySummaryValue = hidden ? HIDDEN_CLAIM_TEXT : summaryValue;
+
           return (
             <Fragment key={`${index}_${claim.id}_${claim.label}`}>
               {index > 0 && <Divider />}
               <ItwNestedClaimsListItem
-                itemTitle={summaryValue}
+                itemTitle={displaySummaryValue}
                 itemClaims={singleItemClaims}
                 summaryLabel={summaryLabel}
-                summaryValue={summaryValue}
+                summaryValue={displaySummaryValue}
                 hidden={hidden}
                 isPreview={isPreview}
                 credentialStatus={credentialStatus}
