@@ -66,12 +66,11 @@ export const createEidIssuanceActorsImplementation = (
       await Trust.Build.getTrustAnchorEntityConfiguration(
         env.WALLET_TA_BASE_URL
       );
-    const trustAnchorKey = trustAnchorEntityConfig.payload.jwks.keys[0];
 
     // Create the trust chain for the PID provider
     const builtChainJwts = await Trust.Build.buildTrustChain(
       env.WALLET_PID_PROVIDER_BASE_URL,
-      trustAnchorKey
+      trustAnchorEntityConfig
     );
 
     // Perform full validation on the built chain
