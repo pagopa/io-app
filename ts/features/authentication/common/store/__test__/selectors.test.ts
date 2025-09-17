@@ -2,7 +2,6 @@ import * as O from "fp-ts/lib/Option";
 import {
   authenticationStateSelector,
   loggedOutWithIdpAuthSelector,
-  isLogoutRequested,
   fimsTokenSelector,
   sessionInfoSelector,
   formattedExpirationDateSelector,
@@ -14,6 +13,7 @@ import {
 } from "../selectors";
 import { format } from "../../../../../utils/dates";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { isLogoutRequested } from "../utils/guards";
 
 const mockIdp = { entityId: "idp1", isTestIdp: false };
 
@@ -62,8 +62,11 @@ describe("authentication selectors", () => {
   });
 
   it("should return true if kind is LogoutRequested", () => {
-    const state = { authentication: { kind: "LogoutRequested" } } as any;
-    expect(isLogoutRequested(state)).toBe(true);
+    const state = { authentication: { kind: "LogoutRequested" } } as Pick<
+      GlobalState,
+      "authentication"
+    >;
+    expect(isLogoutRequested(state.authentication)).toBe(true);
   });
 
   it("should return fims token if logged in with session info", () => {

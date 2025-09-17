@@ -37,7 +37,6 @@ import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducer
 import { isFastLoginEnabledSelector } from "../../features/authentication/fastLogin/store/selectors";
 import { refreshSessionToken } from "../../features/authentication/fastLogin/store/actions/tokenRefreshActions";
 import { remoteConfigSelector } from "../../store/reducers/backendStatus/remoteConfig";
-import { watchLogoutSaga } from "../../features/authentication/common/saga/watchLogoutSaga";
 import { cancellAllLocalNotifications } from "../../features/pushNotifications/utils";
 import { handleApplicationStartupTransientError } from "../../features/startup/sagas";
 import { startupTransientErrorInitialState } from "../../store/reducers/startup";
@@ -80,7 +79,9 @@ jest.mock("react-native-share", () => ({
 }));
 
 jest.mock("../../api/backend", () => ({
-  BackendClient: jest.fn().mockReturnValue({})
+  BackendClient: jest.fn().mockReturnValue({
+    isSameClient: jest.fn()
+  })
 }));
 
 const profile: InitializedProfile = {
@@ -133,8 +134,6 @@ describe("initializeApplicationSaga", () => {
       .fork(watchSessionExpiredOrCorruptedSaga)
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
-      .next()
-      .fork(watchLogoutSaga, undefined)
       .next()
       .next(200) // checkSession
       .next()
@@ -194,8 +193,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
-      .fork(watchLogoutSaga, undefined)
-      .next()
       .call(checkSession, undefined, formatRequestedTokenString())
       .next(401)
       .select(isFastLoginEnabledSelector)
@@ -247,8 +244,6 @@ describe("initializeApplicationSaga", () => {
       .fork(watchSessionExpiredOrCorruptedSaga)
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
-      .next()
-      .fork(watchLogoutSaga, undefined)
       .next()
       .call(checkSession, undefined, formatRequestedTokenString())
       .next(401)
@@ -306,8 +301,6 @@ describe("initializeApplicationSaga", () => {
       .fork(watchSessionExpiredOrCorruptedSaga)
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
-      .next()
-      .fork(watchLogoutSaga, undefined)
       .next()
       .next(200) // check session
       .next()
@@ -379,8 +372,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
-      .fork(watchLogoutSaga, undefined)
-      .next()
       .next(200) // check session
       .next()
       .next()
@@ -437,8 +428,6 @@ describe("initializeApplicationSaga", () => {
       .fork(watchSessionExpiredOrCorruptedSaga)
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
-      .next()
-      .fork(watchLogoutSaga, undefined)
       .next()
       .next(200) // check session
       .next()
