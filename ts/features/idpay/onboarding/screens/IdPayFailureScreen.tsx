@@ -210,7 +210,7 @@ const IdPayFailureScreen = () => {
           enableAnimatedPictogram: true,
           loop: false
         };
-      case OnboardingFailureEnum.USER_ONBOARDED:
+      case OnboardingFailureEnum.ONBOARDING_ALREADY_ONBOARDED:
         return {
           pictogram: "success",
           title: I18n.t(
@@ -229,7 +229,7 @@ const IdPayFailureScreen = () => {
           ),
           action: defaultCloseAction
         };
-      case OnboardingFailureEnum.ON_EVALUATION:
+      case OnboardingFailureEnum.ONBOARDING_ON_EVALUATION:
         return {
           pictogram: "pending",
           title: I18n.t("idpay.onboarding.failure.message.ON_EVALUATION.title"),
@@ -239,7 +239,7 @@ const IdPayFailureScreen = () => {
           action: defaultCloseAction
         };
 
-      case OnboardingFailureEnum.FAMILY_UNIT_ALREADY_JOINED:
+      case OnboardingFailureEnum.ONBOARDING_FAMILY_UNIT_ALREADY_JOINED:
         return {
           pictogram: "accessDenied",
           title: I18n.t(

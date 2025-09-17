@@ -215,11 +215,11 @@ const mapOnboardingStatusToFailure = (
   switch (status) {
     case OnboardingStatusEnum.ONBOARDING_OK:
     case OnboardingStatusEnum.SUSPENDED:
-      return OnboardingFailureEnum.USER_ONBOARDED;
+      return OnboardingFailureEnum.ONBOARDING_ALREADY_ONBOARDED;
     case OnboardingStatusEnum.ELIGIBLE_KO:
       return OnboardingFailureEnum.NOT_ELIGIBLE;
     case OnboardingStatusEnum.ON_EVALUATION:
-      return OnboardingFailureEnum.ON_EVALUATION;
+      return OnboardingFailureEnum.ONBOARDING_ON_EVALUATION;
     case OnboardingStatusEnum.UNSUBSCRIBED:
       return OnboardingFailureEnum.ONBOARDING_USER_UNSUBSCRIBED;
     case OnboardingStatusEnum.ONBOARDING_KO:
@@ -253,7 +253,7 @@ const mapErrorCodeToFailure = (
     case OnboardingErrorCodeEnum.ONBOARDING_USER_UNSUBSCRIBED:
       return OnboardingFailureEnum.ONBOARDING_USER_UNSUBSCRIBED;
     case OnboardingErrorCodeEnum.ONBOARDING_FAMILY_UNIT_ALREADY_JOINED:
-      return OnboardingFailureEnum.FAMILY_UNIT_ALREADY_JOINED;
+      return OnboardingFailureEnum.ONBOARDING_FAMILY_UNIT_ALREADY_JOINED;
     case OnboardingErrorCodeEnum.ONBOARDING_WAITING_LIST:
       return OnboardingFailureEnum.ONBOARDING_WAITING_LIST;
     case OnboardingErrorCodeEnum.ONBOARDING_TOO_MANY_REQUESTS:
