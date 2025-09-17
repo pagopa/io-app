@@ -4513,6 +4513,7 @@
           "l2": {
             "title": "Verifica la tua identità con SPID o CieID",
             "description": "È un passaggio di sicurezza necessario per associare i documenti digitali alla tua identità.",
+            "header": "Scegli come identificarti",
             "section": "Ottieni Documenti su IO",
             "reissuing": {
               "title": "Scegli come identificarti",
