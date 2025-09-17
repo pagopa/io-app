@@ -78,7 +78,7 @@ import { checkAcknowledgedFingerprintSaga } from "../features/onboarding/saga/bi
 import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnboardingSaga";
 import { watchAbortOnboardingSaga } from "../features/onboarding/saga/watchAbortOnboardingSaga";
 import { watchPaymentsSaga } from "../features/payments/common/saga";
-import { watchAARFlowSaga } from "../features/pn/aar/saga/watchAARFlowSaga";
+import { watchAarFlowSaga } from "../features/pn/aar/saga/watchAARFlowSaga";
 import { isAAREnabled } from "../features/pn/aar/store/reducers";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { maybeHandlePendingBackgroundActions } from "../features/pushNotifications/sagas/common";
@@ -647,16 +647,14 @@ export function* initializeApplicationSaga(
     isPnRemoteEnabledSelector
   );
 
-  const aAREnabled: ReturnType<typeof isAAREnabled> = yield* select(
-    isAAREnabled
-  );
+  const aAREnabled = yield* select(isAAREnabled);
 
   if (pnEnabled) {
     // Start watching for PN actions
     yield* fork(watchPnSaga, sessionToken);
 
     if (aAREnabled) {
-      yield* fork(watchAARFlowSaga, sessionToken, keyInfo);
+      yield* fork(watchAarFlowSaga, sessionToken, keyInfo);
     }
   }
 

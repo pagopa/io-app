@@ -20,32 +20,24 @@ import {
 } from "../analytics";
 import { setAarFlowState } from "../store/actions";
 import { currentAARFlowData, sendAARFlowStates } from "../store/reducers";
-import {
-  SendAARTosComponent,
-  SendAARTosComponentProps
-} from "./SendAARTosComponent";
+import { isSendAARPhase2Enabled } from "../utils/generic";
 import { SendAARLoadingComponent } from "./SendAARLoadingComponent";
+import { SendAARTosComponent } from "./SendAARTosComponent";
 
-export type SendQRScanFlowHandlerComponentProps = {
+export type SendQRScanHandlerScreenProps = {
   aarUrl: string;
 };
 
 export const SendQRScanFlowHandlerComponent = ({
-  aarUrl,
-  /**
-   * this is purely a temporary addition in order
-   * to differentiate between phase 1 and 2 of the AAR flow.
-   * will be removed once we update to phase 2
-   * */
-  isAarPhase2 = false
-}: SendQRScanFlowHandlerComponentProps & { isAarPhase2?: boolean }) =>
-  isAarPhase2 ? (
-    <SendAARInitialFlowScreen qrCode={aarUrl} />
+  aarUrl
+}: SendQRScanHandlerScreenProps) =>
+  isSendAARPhase2Enabled() ? (
+    <SendAARInitialFlowScreen aarUrl={aarUrl} />
   ) : (
     <SendQrScanRedirect aarUrl={aarUrl} />
   );
 
-const SendAARInitialFlowScreen = ({ qrCode }: SendAARTosComponentProps) => {
+const SendAARInitialFlowScreen = ({ aarUrl }: SendQRScanHandlerScreenProps) => {
   const flowData = useIOSelector(currentAARFlowData);
   const flowState = flowData.type;
   const dispatch = useIODispatch();
@@ -55,11 +47,11 @@ const SendAARInitialFlowScreen = ({ qrCode }: SendAARTosComponentProps) => {
       dispatch(
         setAarFlowState({
           type: sendAARFlowStates.displayingAARToS,
-          qrCode
+          qrCode: aarUrl
         })
       );
     }
-  }, [dispatch, qrCode, flowState]);
+  }, [dispatch, aarUrl, flowState]);
 
   switch (flowState) {
     case sendAARFlowStates.displayingAARToS:
@@ -68,9 +60,7 @@ const SendAARInitialFlowScreen = ({ qrCode }: SendAARTosComponentProps) => {
       return <SendAARLoadingComponent />;
   }
 };
-const SendQrScanRedirect = ({
-  aarUrl
-}: SendQRScanFlowHandlerComponentProps) => {
+const SendQrScanRedirect = ({ aarUrl }: SendQRScanHandlerScreenProps) => {
   const store = useIOStore();
   const navigation = useIONavigation();
 

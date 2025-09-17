@@ -23,6 +23,7 @@ export const SendAARTosComponent = ({ qrCode }: SendAARTosComponentProps) => {
 
   return (
     <View
+      testID="AAR_TOS"
       style={{
         flex: 1,
         justifyContent: "flex-end",

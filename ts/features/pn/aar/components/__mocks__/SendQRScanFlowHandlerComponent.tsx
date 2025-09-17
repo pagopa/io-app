@@ -1,9 +1,9 @@
 import { View } from "react-native";
-import { SendQRScanFlowHandlerComponentProps } from "../SendQRScanFlowHandlerComponent";
+import { SendQRScanHandlerScreenProps } from "../SendQRScanFlowHandlerComponent";
 
 export const SendQRScanFlowHandlerComponent = ({
   aarUrl
-}: SendQRScanFlowHandlerComponentProps) => (
+}: SendQRScanHandlerScreenProps) => (
   <View>
     <View>{"Mock SendQRScanFlowHandlerComponent"}</View>
     <View>{aarUrl}</View>

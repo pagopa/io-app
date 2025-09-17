@@ -1,4 +1,5 @@
 import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import { call, put, select } from "typed-redux-saga/macro";
 import { SessionToken } from "../../../../types/SessionToken";
 import { SendAARClient } from "../api/client";
@@ -9,9 +10,9 @@ import {
   sendAARFlowStates
 } from "../store/reducers";
 
-export function* fetchQrCodeSaga(
+export function* fetchAARQrCodeSaga(
   qrcode: string,
-  fetchQRCode: SendAARClient["checkQRCode"],
+  fetchQRCode: SendAARClient["aarQRCodeCheck"],
   sessionToken: SessionToken
 ) {
   const currentState = yield* select(currentAARFlowData);
@@ -19,41 +20,49 @@ export function* fetchQrCodeSaga(
   if (currentState.type !== sendAARFlowStates.fetchingQRData) {
     return;
   }
-
-  const result = yield* call(() =>
-    fetchQRCode({
+  try {
+    const result = yield* call(fetchQRCode, {
       Bearer: sessionToken,
       body: {
-        qrcode
+        aarQrCodeValue: qrcode
       }
-    })
-  );
+    });
 
-  if (E.isRight(result)) {
-    const data = result.right;
-    switch (data.status) {
-      case 200:
-        const { iun, denomination } = data.value;
-        const nextState: AARFlowState = {
-          type: sendAARFlowStates.fetchingNotificationData,
-          iun,
-          fullNameDestinatario: denomination
-        };
-        yield* put(setAarFlowState(nextState));
-        break;
-      default:
-        const errorState: AARFlowState = {
-          type: "ko",
-          previousState: currentState
-        };
-        yield* put(setAarFlowState(errorState));
-        break;
-    }
-  } else {
-    const nextState: AARFlowState = {
-      type: "ko",
-      previousState: currentState
-    };
-    yield* put(setAarFlowState(nextState));
+    const resultAction = pipe(
+      result,
+      E.fold(
+        _error =>
+          setAarFlowState({
+            type: sendAARFlowStates.ko,
+            previousState: currentState
+          }),
+        data => {
+          switch (data.status) {
+            case 200:
+              const { iun, recipientInfo } = data.value;
+              const nextState: AARFlowState = {
+                type: sendAARFlowStates.fetchingNotificationData,
+                iun,
+                fullNameDestinatario: recipientInfo.denomination
+              };
+              return setAarFlowState(nextState);
+            default:
+              const errorState: AARFlowState = {
+                type: sendAARFlowStates.ko,
+                previousState: currentState
+              };
+              return setAarFlowState(errorState);
+          }
+        }
+      )
+    );
+    yield* put(resultAction);
+  } catch (e) {
+    yield* put(
+      setAarFlowState({
+        type: sendAARFlowStates.ko,
+        previousState: currentState
+      })
+    );
   }
 }
