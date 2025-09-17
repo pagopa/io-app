@@ -2,7 +2,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useMemo } from "react";
 import {
   ContentWrapper,
-  ListItemHeader,
   VStack,
   ModuleNavigationAlt
 } from "@pagopa/io-app-design-system";
