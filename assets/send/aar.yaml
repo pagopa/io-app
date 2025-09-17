@@ -21,22 +21,28 @@ paths:
         Restituisce i dati di una notifica AAR SEND
       operationId: getAARNotification
       parameters:
-        - $ref: '#/components/parameters/pathIun'
-        - $ref: '#/components/parameters/queryMandateId'
-        - $ref: '#/components/parameters/headerIoSource'
+        - $ref: "#/components/parameters/pathIun"
+        - $ref: "#/components/parameters/queryMandateId"
+        - $ref: "#/components/parameters/headerIoSource"
       responses:
         "200":
           description: OK
           content:
             application/io+json:
               schema:
-                $ref: '#/components/schemas/ThirdPartyMessage'
+                $ref: "#/components/schemas/ThirdPartyMessage"
+        "400":
+          description: Bad request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemJson"
         "500":
           description: Bad request
           content:
             application/problem+json:
               schema:
-                $ref: '#/components/schemas/ProblemJson'
+                $ref: "#/components/schemas/ProblemJson"
   /aar/qr-code-check:
     post:
       tags:
@@ -49,12 +55,12 @@ paths:
           name: isTest
           schema:
             type: boolean
-        - $ref: '#/components/parameters/headerIoSource'
+        - $ref: "#/components/parameters/headerIoSource"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RequestCheckQrMandateDto'
+              $ref: "#/components/schemas/RequestCheckQrMandateDto"
         required: true
       responses:
         "200":
@@ -62,28 +68,34 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AARQRCodeCheckResponse'
+                $ref: "#/components/schemas/AARQRCodeCheckResponse"
         "403":
           description: Mandate not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AARQRCodeCheckResponse'
+                $ref: "#/components/schemas/AARQRCodeCheckResponse"
+        "400":
+          description: Bad request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemJson"
         "500":
           description: Internal Server Error
           content:
             application/problem+json:
               schema:
-                $ref: '#/components/schemas/ProblemJson'
+                $ref: "#/components/schemas/ProblemJson"
   /aar/attachments/{urlEncodedBase64AttachmentUrl}:
     get:
       operationId: getNotificationAttachment
       tags:
         - SEND AAR Attachments
       parameters:
-        - $ref: '#/components/parameters/urlEncodedBase64AttachmentUrl'
-        - $ref: '#/components/parameters/queryMandateId'
-        - $ref: '#/components/parameters/headerIoSource'
+        - $ref: "#/components/parameters/urlEncodedBase64AttachmentUrl"
+        - $ref: "#/components/parameters/queryMandateId"
+        - $ref: "#/components/parameters/headerIoSource"
         - in: query
           name: isTest
           schema:
@@ -94,13 +106,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NotificationAttachmentDownloadMetadataResponse'
+                $ref: "#/components/schemas/NotificationAttachmentDownloadMetadataResponse"
+        "400":
+          description: Bad request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemJson"
         500:
           description: Unexpected Error
           content:
             application/problem+json:
               schema:
-                $ref: '#/components/schemas/ProblemJson'
+                $ref: "#/components/schemas/ProblemJson"
 
 components:
   parameters:
@@ -137,7 +155,6 @@ components:
         format: uuid
   schemas:
     NotificationAttachmentDownloadMetadataResponse:
-      title: Url e metadati per il download di un allegato di una notifica
       description: |-
         I due campi più importanti sono __url__ e __retryAfter__. <br/>
           - __url__ è presente se il file è pronto per essere scaricato ed indica l'url a cui fare GET.
@@ -181,9 +198,9 @@ components:
         attachments:
           type: array
           items:
-            $ref: '#/components/schemas/ThirdPartyAttachment'
+            $ref: "#/components/schemas/ThirdPartyAttachment"
         details:
-          $ref: '#/components/schemas/IOReceivedNotification'
+          $ref: "#/components/schemas/IOReceivedNotification"
     RequestCheckQrMandateDto:
       description: Le informazioni fornite per verificare l'AAR-QR-CodeValue
       type: object
@@ -213,9 +230,9 @@ components:
           description: identificativo della delega
           type: string
         recipientInfo:
-          description: Informazioni anagrafiche dell'utente destinatario della notifica
-          $ref: '#/components/schemas/UserInfo'
-    UserInfo:
+          $ref: "#/components/schemas/UserInfo"
+    UserInfo:   
+      description: Informazioni anagrafiche dell'utente destinatario della notifica
       type: object
       required:
         - denomination
@@ -257,7 +274,7 @@ components:
             for engineers (usually not suited for non technical stakeholders and
             not localized); example: Service Unavailable
         status:
-          $ref: '#/components/schemas/HttpStatusCode'
+          $ref: "#/components/schemas/HttpStatusCode"
         detail:
           type: string
           description: |-
@@ -274,7 +291,7 @@ components:
           type: array
           minItems: 1
           items:
-            $ref: '#components/schemas/AARError'
+            $ref: "#/components/schemas/AARError"
         traceId:
           description: Internal support identifier associated to error
           example: 123e4567-e89b-12d3-a456-426614174000
@@ -284,7 +301,7 @@ components:
         - status
         - description
         - errors
-    ThirdPartyAttachment:  
+    ThirdPartyAttachment:
       type: object
       properties:
         id:
@@ -322,9 +339,9 @@ components:
         recipients:
           type: array
           items:
-            $ref: '#/components/schemas/NotificationRecipient'
+            $ref: "#/components/schemas/NotificationRecipient"
         notificationStatusHistory:
-          $ref: '#/components/schemas/NotificationStatusHistory'
+          $ref: "#/components/schemas/NotificationStatusHistory"
         abstract:
           type: string
         senderDenomination:
@@ -369,9 +386,9 @@ components:
           pattern: >-
             ^([A-Z]{6}[0-9LMNPQRSTUV]{2}[A-Z]{1}[0-9LMNPQRSTUV]{2}[A-Z]{1}[0-9LMNPQRSTUV]{3}[A-Z]{1})|([0-9]{11})$
         denomination:
-          $ref: '#/components/schemas/Denomination'
+          $ref: "#/components/schemas/Denomination"
         payment:
-          $ref: '#/components/schemas/NotificationPaymentInfo'
+          $ref: "#/components/schemas/NotificationPaymentInfo"
     Denomination:
       description: >-
         Denominazione ente o persona fisica / ragione sociale. La
@@ -383,7 +400,6 @@ components:
       minLength: 1
       pattern: ^.*$
     NotificationPaymentInfo:
-      title: Informazioni per effettuare il pagamento
       description: >-
         Informazioni utili per effettuare il pagamento di una
         notifica, sono associate al destinatario perché le spese
@@ -397,14 +413,14 @@ components:
         - creditorTaxId
       properties:
         noticeCode:
-          $ref: '#/components/schemas/noticeCode'
+          $ref: "#/components/schemas/NoticeCode"
         creditorTaxId:
-          $ref: '#/components/schemas/paTaxId'
+          $ref: "#/components/schemas/PaTaxId"
     NotificationStatusHistory:
       description: elenco degli avanzamenti effettuati dal processo di notifica
       type: array
       items:
-        $ref: '#/components/schemas/NotificationStatusHistoryElement'
+        $ref: "#/components/schemas/NotificationStatusHistoryElement"
     NotificationStatusHistoryElement:
       description: elenco degli avanzamenti effettuati dal processo di notifica
       type: object
@@ -438,14 +454,14 @@ components:
           description: Eventi avvenuti nello stato
           items:
             type: string
-    noticeCode:
+    NoticeCode:
       maxLength: 18
       minLength: 18
       pattern: ^\d+$
       type: string
       description: Payment notice number  numero avviso
       example: "302000100000019421"
-    paTaxId:
+    PaTaxId:
       maxLength: 11
       minLength: 11
       pattern: ^\d+$
