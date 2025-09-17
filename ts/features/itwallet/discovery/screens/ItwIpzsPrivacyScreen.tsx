@@ -5,9 +5,6 @@ import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { useIOSelector } from "../../../../store/hooks";
-import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
 import { trackOpenItwTosAccepted } from "../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
@@ -27,9 +24,8 @@ const ItwIpzsPrivacyScreen = () => {
     isL3FeaturesEnabledSelector
   );
 
-  const privacyUrl = useIOSelector(state =>
-    generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
-  );
+  // TODO [SIW-2992] add this url to remote config
+  const privacyUrl = "https://util.wallet.ipzs.it/privacy.html";
 
   const handleContinuePress = () => {
     trackOpenItwTosAccepted(isL3 ? "L3" : "L2");
@@ -91,6 +87,7 @@ const ItwIpzsPrivacyScreen = () => {
           <IOMarkdown
             content={I18n.t("features.itWallet.discovery.ipzsPrivacy.warning")}
           />
+          <VSpacer size={16} />
         </ContentWrapper>
         <ItwPrivacyWebViewComponent
           source={{
