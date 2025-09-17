@@ -90,9 +90,13 @@ const ContentView = ({ eid }: ContentViewProps) => {
         credential_type: "unique"
       });
       if (identification) {
-        trackItwRequestSuccess(identification?.mode, identification?.level);
+        trackItwRequestSuccess(
+          identification?.mode,
+          identification?.level,
+          isL3 ? "L3" : "L2"
+        );
       }
-    }, [identification, mixPanelCredential])
+    }, [identification, mixPanelCredential, isL3])
   );
 
   useDebugInfo({
