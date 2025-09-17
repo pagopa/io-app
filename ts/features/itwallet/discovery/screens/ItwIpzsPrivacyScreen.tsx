@@ -18,7 +18,7 @@ const ItwIpzsPrivacyScreen = () => {
     isL3FeaturesEnabledSelector
   );
 
-  // TODO [SIW-2992] remote this url using io-services-metadata
+  // TODO [SIW-2992] add this url to remote config
   const privacyUrl = "https://util.wallet.ipzs.it/privacy.html";
 
   const handleContinuePress = () => {
