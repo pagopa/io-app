@@ -7,9 +7,11 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList.
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import {
-  CREDENTIALS_MAP,
+  getMixPanelCredential,
   trackItwCredentialNeedsVerification
 } from "../../../analytics";
+import { useIOSelector } from "../../../../../store/hooks";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 
 type Props = {
   credential: StoredCredential;
@@ -20,6 +22,7 @@ export const ItwPresentationCredentialVerificationExpired = ({
 }: Props) => {
   const navigation = useIONavigation();
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   useHeaderSecondLevel({
     title: "",
@@ -28,7 +31,7 @@ export const ItwPresentationCredentialVerificationExpired = ({
 
   useOnFirstRender(() => {
     trackItwCredentialNeedsVerification(
-      CREDENTIALS_MAP[credential.credentialType]
+      getMixPanelCredential(credential.credentialType, isItwL3)
     );
   });
 
