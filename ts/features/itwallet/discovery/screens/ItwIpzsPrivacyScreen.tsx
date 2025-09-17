@@ -75,6 +75,7 @@ const ItwIpzsPrivacyScreen = () => {
           <IOMarkdown
             content={I18n.t("features.itWallet.discovery.ipzsPrivacy.warning")}
           />
+          <VSpacer size={16} />
         </ContentWrapper>
         <ItwPrivacyWebViewComponent
           source={{
