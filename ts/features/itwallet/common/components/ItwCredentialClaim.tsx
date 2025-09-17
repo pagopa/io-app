@@ -36,6 +36,13 @@ import { CREDENTIALS_MAP, trackCopyListItem } from "../../analytics";
 import { ItwCredentialMultiClaim } from "./ItwCredentialMultiClaim.tsx";
 
 /**
+ * Helper function to get the accessibility text for hidden claims.
+ * @returns the localized accessibility text for hidden claims
+ */
+const getHiddenClaimAccessibilityText = () =>
+  I18n.t("features.itWallet.presentation.credentialDetails.hiddenClaim");
+
+/**
  * Component which renders a place of birth type claim.
  * @param label - the label of the claim
  * @param claim - the claim value
@@ -50,11 +57,18 @@ const PlaceOfBirthClaimItem = ({
   claim: PlaceOfBirthClaimType;
   hidden?: boolean;
 }) => {
-  const value = hidden
-    ? HIDDEN_CLAIM_TEXT
-    : `${claim.locality} (${claim.country})`;
+  const realValue = `${claim.locality} (${claim.country})`;
+  const displayValue = hidden ? HIDDEN_CLAIM_TEXT : realValue;
+  const accessibilityStateText = hidden
+    ? getHiddenClaimAccessibilityText()
+    : realValue;
+
   return (
-    <ListItemInfo label={label} value={value} accessibilityLabel={value} />
+    <ListItemInfo
+      label={label}
+      value={displayValue}
+      accessibilityLabel={`${label} ${accessibilityStateText}`}
+    />
   );
 };
 
@@ -73,17 +87,19 @@ const BoolClaimItem = ({
   claim: boolean;
   hidden?: boolean;
 }) => {
-  const value = hidden
-    ? HIDDEN_CLAIM_TEXT
-    : I18n.t(
-        `features.itWallet.presentation.credentialDetails.boolClaim.${claim}`
-      );
+  const realValue = I18n.t(
+    `features.itWallet.presentation.credentialDetails.boolClaim.${claim}`
+  );
+  const displayValue = hidden ? HIDDEN_CLAIM_TEXT : realValue;
+  const accessibilityStateText = hidden
+    ? getHiddenClaimAccessibilityText()
+    : realValue;
 
   return (
     <ListItemInfo
       label={label}
-      value={value}
-      accessibilityLabel={`${label}: ${value}`}
+      value={displayValue}
+      accessibilityLabel={`${label}: ${accessibilityStateText}`}
     />
   );
 };
@@ -111,6 +127,9 @@ const PlainTextClaimItem = ({
 }) => {
   const safeValue = getSafeText(claim);
   const displayValue = hidden ? HIDDEN_CLAIM_TEXT : safeValue;
+  const accessibilityStateText = hidden
+    ? getHiddenClaimAccessibilityText()
+    : safeValue;
 
   const handleLongPress = () => {
     clipboardSetStringWithFeedback(safeValue);
@@ -128,13 +147,7 @@ const PlainTextClaimItem = ({
       label={label}
       value={displayValue}
       onLongPress={isCopyable && !hidden ? handleLongPress : undefined}
-      accessibilityLabel={`${label} ${
-        hidden
-          ? I18n.t(
-              "features.itWallet.presentation.credentialDetails.hiddenClaim"
-            )
-          : displayValue
-      }`}
+      accessibilityLabel={`${label} ${accessibilityStateText}`}
     />
   );
 };
@@ -143,7 +156,7 @@ const PlainTextClaimItem = ({
  * Component which renders a date type claim with an optional icon and expiration badge.
  * @param label - the label of the claim
  * @param claim - the value of the claim
- * @param status - the status of the credential, used to show an expiration badge
+ * @param status - the status of the claim, used to show an expiration badge
  * @param hidden - a flag to hide the claim value
  */
 const DateClaimItem = ({
@@ -158,7 +171,11 @@ const DateClaimItem = ({
   hidden?: boolean;
 }) => {
   // Remove the timezone offset to display the date in its original format
-  const value = hidden ? HIDDEN_CLAIM_TEXT : claim.toString("DD/MM/YYYY");
+  const realValue = claim.toString("DD/MM/YYYY");
+  const displayValue = hidden ? HIDDEN_CLAIM_TEXT : realValue;
+  const accessibilityStateText = hidden
+    ? getHiddenClaimAccessibilityText()
+    : realValue;
 
   const endElement: ListItemInfo["endElement"] = useMemo(() => {
     if (hidden) {
@@ -190,10 +207,10 @@ const DateClaimItem = ({
 
   return (
     <ListItemInfo
-      key={`${label}-${value}`}
+      key={`${label}-${displayValue}`}
       label={label}
-      value={value}
-      accessibilityLabel={`${label} ${value}`}
+      value={displayValue}
+      accessibilityLabel={`${label} ${accessibilityStateText}`}
       endElement={endElement}
     />
   );
@@ -352,7 +369,11 @@ const DrivingPrivilegesClaimItem = ({
     )
   });
 
-  const displayValue = hidden ? HIDDEN_CLAIM_TEXT : claim.driving_privilege;
+  const realValue = claim.driving_privilege;
+  const displayValue = hidden ? HIDDEN_CLAIM_TEXT : realValue;
+  const accessibilityStateText = hidden
+    ? getHiddenClaimAccessibilityText()
+    : realValue;
 
   const endElement: ListItemInfo["endElement"] =
     detailsButtonVisible && !hidden
@@ -372,13 +393,12 @@ const DrivingPrivilegesClaimItem = ({
         label={label}
         value={displayValue}
         endElement={endElement}
-        accessibilityLabel={`${label} ${displayValue}`}
+        accessibilityLabel={`${label} ${accessibilityStateText}`}
       />
       {privilegeBottomSheet.bottomSheet}
     </>
   );
 };
-
 /**
  * Component which renders a claim.
  * It renders a different component based on the type of the claim.

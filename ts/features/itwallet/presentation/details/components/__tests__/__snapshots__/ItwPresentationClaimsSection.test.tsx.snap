@@ -522,7 +522,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           </View>
                         </View>
                         <View
-                          accessibilityLabel="******"
+                          accessibilityLabel="Luogo di Nascita Nascosto"
                           accessible={true}
                           style={
                             {
@@ -708,7 +708,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Data di Nascita ******"
+                          accessibilityLabel="Data di Nascita Nascosto"
                           accessible={true}
                           style={
                             {
@@ -1080,7 +1080,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           }
                         />
                         <View
-                          accessibilityLabel="Data di Scadenza ******"
+                          accessibilityLabel="Data di Scadenza Nascosto"
                           accessible={true}
                           style={
                             {
@@ -2444,7 +2444,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                           </View>
                         </View>
                         <View
-                          accessibilityLabel="Rome (IT)"
+                          accessibilityLabel="Luogo di Nascita Rome (IT)"
                           accessible={true}
                           style={
                             {
