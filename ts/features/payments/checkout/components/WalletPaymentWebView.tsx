@@ -49,7 +49,7 @@ const WalletPaymentWebView = ({
         }
         const intent = getIntentFallbackUrl(event.url);
         if (O.isSome(intent)) {
-          void Linking.openURL(intent.value);
+          void Linking.openURL(decodeURIComponent(intent.value));
           return false;
         }
         return !event.url.startsWith(WALLET_WEBVIEW_OUTCOME_SCHEMA);
