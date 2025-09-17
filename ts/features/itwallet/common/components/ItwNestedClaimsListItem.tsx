@@ -4,6 +4,13 @@ import I18n from "i18next";
 import { ClaimDisplayFormat } from "../utils/itwClaimsUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils.ts";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
+import {
+  CREDENTIALS_MAP,
+  getMixPanelCredential,
+  trackItwCredentialQualificationDetail
+} from "../../analytics";
+import { useIOSelector } from "../../../../store/hooks.ts";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialClaim } from "./ItwCredentialClaim.tsx";
 
 type ItwNestedClaimsListItemProps = {
@@ -39,6 +46,7 @@ export const ItwNestedClaimsListItem = ({
   credentialStatus,
   credentialType
 }: ItwNestedClaimsListItemProps) => {
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const itemBottomSheet = useIOBottomSheetModal({
     title: itemTitle,
     component: (
@@ -59,6 +67,16 @@ export const ItwNestedClaimsListItem = ({
     )
   });
 
+  const onBottomSheetOpen = () => {
+    itemBottomSheet.present();
+    if (credentialType && CREDENTIALS_MAP[credentialType]) {
+      trackItwCredentialQualificationDetail({
+        credential: getMixPanelCredential(credentialType, isItwL3),
+        credential_screen_type: isPreview ? "preview" : "detail"
+      });
+    }
+  };
+
   return (
     <>
       <ListItemInfo
@@ -68,7 +86,7 @@ export const ItwNestedClaimsListItem = ({
           type: "buttonLink",
           componentProps: {
             label: I18n.t("global.buttons.show"),
-            onPress: () => itemBottomSheet.present(),
+            onPress: () => onBottomSheetOpen(),
             accessibilityLabel: I18n.t("global.buttons.show")
           }
         }}

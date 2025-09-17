@@ -55,7 +55,10 @@ export const idPayPaymentMachine = setup({
         "authorize-payment": {
           guard: "assertTransactionCode",
           target: "PreAuthorizing",
-          actions: assign(({ event }) => ({ trxCode: event.trxCode }))
+          actions: assign(({ event }) => ({
+            trxCode: event.trxCode,
+            data_entry: event.data_entry
+          }))
         }
       }
     },
