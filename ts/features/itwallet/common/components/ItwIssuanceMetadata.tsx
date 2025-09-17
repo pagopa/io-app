@@ -122,9 +122,13 @@ export const ItwIssuanceMetadata = ({
             privacyUrl
           }
         ),
-        onPress: () => trackWalletCredentialShowIssuer(mixPanelCredential)
+        onPress: () =>
+          trackWalletCredentialShowIssuer({
+            credential: mixPanelCredential,
+            credential_screen_type: isPreview ? "preview" : "detail"
+          })
       }),
-      [privacyUrl, mixPanelCredential]
+      [isPreview, mixPanelCredential, privacyUrl]
     );
 
   const authSourceBottomSheet: ItwMetadataIssuanceListItemProps["bottomSheet"] =
@@ -136,9 +140,13 @@ export const ItwIssuanceMetadata = ({
         contentBody: I18n.t(
           "features.itWallet.issuance.credentialPreview.bottomSheet.authSource.subtitle"
         ),
-        onPress: () => trackWalletCredentialShowAuthSource(mixPanelCredential)
+        onPress: () =>
+          trackWalletCredentialShowAuthSource({
+            credential: mixPanelCredential,
+            credential_screen_type: isPreview ? "preview" : "detail"
+          })
       }),
-      [mixPanelCredential]
+      [isPreview, mixPanelCredential]
     );
 
   return (
