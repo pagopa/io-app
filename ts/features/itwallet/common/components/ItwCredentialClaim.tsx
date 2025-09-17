@@ -20,6 +20,7 @@ import {
   ImageClaim,
   isExpirationDateClaim,
   NestedArrayClaim,
+  NestedObjectClaim,
   parseClaims,
   PdfClaim,
   PlaceOfBirthClaim,
@@ -32,7 +33,9 @@ import {
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { HIDDEN_CLAIM_TEXT } from "../utils/constants.ts";
-import { CREDENTIALS_MAP, trackCopyListItem } from "../../analytics";
+import { getMixPanelCredential, trackCopyListItem } from "../../analytics";
+import { useIOSelector } from "../../../../store/hooks";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialMultiClaim } from "./ItwCredentialMultiClaim.tsx";
 
 /**
@@ -90,12 +93,13 @@ const PlainTextClaimItem = ({
   credentialType?: string;
 }) => {
   const safeValue = getSafeText(claim);
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const handleLongPress = () => {
     clipboardSetStringWithFeedback(safeValue);
     if (credentialType) {
       trackCopyListItem({
-        credential: CREDENTIALS_MAP[credentialType],
+        credential: getMixPanelCredential(credentialType, isItwL3),
         item_copied: label
       });
     }
@@ -177,7 +181,7 @@ const DateClaimItem = ({
  * @param label - the label of the claim
  * @param _claim - the claim value of unknown type. We are not interested in its value but it's needed for the exaustive type checking.
  */
-const UnknownClaimItem = ({ label }: { label: string; _claim?: never }) => (
+const UnknownClaimItem = ({ label }: { label: string; _claim?: unknown }) => (
   <PlainTextClaimItem
     label={label}
     claim={I18n.t("features.itWallet.generic.placeholders.claimNotAvailable")}
@@ -315,6 +319,7 @@ const DrivingPrivilegesClaimItem = ({
     </>
   );
 };
+
 /**
  * Component which renders a claim.
  * It renders a different component based on the type of the claim.
@@ -389,6 +394,25 @@ export const ItwCredentialClaim = ({
             O.getOrElseW(() => decoded)
           );
           return <PlainTextClaimItem label={claim.label} claim={fiscalCode} />;
+        }
+        if (NestedObjectClaim.is(_decoded)) {
+          const nestedClaims = parseClaims(_decoded);
+          return (
+            <>
+              {nestedClaims.map((nestedClaim, index) => (
+                <Fragment key={`${index}_${claim.id}_${nestedClaim.id}`}>
+                  {index > 0 && <Divider />}
+                  <ItwCredentialClaim
+                    claim={nestedClaim}
+                    hidden={hidden}
+                    isPreview={isPreview}
+                    credentialStatus={credentialStatus}
+                    credentialType={credentialType}
+                  />
+                </Fragment>
+              ))}
+            </>
+          );
         }
         if (NestedArrayClaim.is(decoded)) {
           const nestedParsedClaims = decoded.map(item => parseClaims(item));

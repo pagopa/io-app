@@ -443,6 +443,11 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
     this.setState({ isScreenReaderEnabled: srEnabled });
   }
 
+  public async componentWillUnmount() {
+    await cieManager.stopListeningNFC();
+    cieManager.removeAllListeners();
+  }
+
   private handleCancel = () =>
     this.props.navigation.reset({
       index: 0,
