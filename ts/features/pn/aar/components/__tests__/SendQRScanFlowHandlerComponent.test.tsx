@@ -61,9 +61,6 @@ describe("SendQRScanFlowHandlerComponent", () => {
   });
 
   it("should match snapshot and track the screen view", () => {
-    jest
-      .spyOn(GENERIC_UTILS, "isSendAARPhase2Enabled")
-      .mockImplementation(() => false);
     const { toJSON } = renderComponent();
 
     expect(toJSON()).toMatchSnapshot();
