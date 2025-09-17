@@ -593,7 +593,7 @@ exports[`SendAARLoadingComponent should match snapshot 1`] = `
                               </View>
                             </View>
                             <Text
-                              accessibilityLabel=""
+                              accessibilityLabel="Recupero delle informazioni in corso"
                               allowFontScaling={true}
                               dynamicTypeRamp="title2"
                               maxFontSizeMultiplier={1.5}
@@ -613,7 +613,9 @@ exports[`SendAARLoadingComponent should match snapshot 1`] = `
                                   },
                                 ]
                               }
-                            />
+                            >
+                              Recupero delle informazioni in corso
+                            </Text>
                           </View>
                         </View>
                         <View
