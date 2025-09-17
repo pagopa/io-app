@@ -6,8 +6,11 @@ import { ItwCredentialStatus } from "../utils/itwTypesUtils.ts";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
 import {
   CREDENTIALS_MAP,
+  getMixPanelCredential,
   trackItwCredentialQualificationDetail
 } from "../../analytics";
+import { useIOSelector } from "../../../../store/hooks.ts";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialClaim } from "./ItwCredentialClaim.tsx";
 
 type ItwNestedClaimsListItemProps = {
@@ -43,6 +46,7 @@ export const ItwNestedClaimsListItem = ({
   credentialStatus,
   credentialType
 }: ItwNestedClaimsListItemProps) => {
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const itemBottomSheet = useIOBottomSheetModal({
     title: itemTitle,
     component: (
@@ -67,7 +71,7 @@ export const ItwNestedClaimsListItem = ({
     itemBottomSheet.present();
     if (credentialType && CREDENTIALS_MAP[credentialType]) {
       trackItwCredentialQualificationDetail({
-        credential: CREDENTIALS_MAP[credentialType],
+        credential: getMixPanelCredential(credentialType, isItwL3),
         credential_screen_type: isPreview ? "preview" : "detail"
       });
     }

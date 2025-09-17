@@ -43,7 +43,7 @@ export type KoState = {
   cta_id: string;
 };
 
-type MixPanelCredentialVersion = "V2" | "V3";
+export type MixPanelCredentialVersion = "V2" | "V3";
 
 /**
  * This is the list of credentials that are tracked in MixPanel
