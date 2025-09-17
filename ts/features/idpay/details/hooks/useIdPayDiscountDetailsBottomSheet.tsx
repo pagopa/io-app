@@ -1,4 +1,5 @@
 import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import {
@@ -6,11 +7,18 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { IdPayBarcodeRoutes } from "../../barcode/navigation/routes";
+import { idPayBarcodeSecondsTillExpireSelector } from "../../barcode/store";
 import { idPayGenerateBarcode } from "../../barcode/store/actions";
 import { IdPayPaymentRoutes } from "../../payment/navigation/routes";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import { idPayBarcodeSecondsTillExpireSelector } from "../../barcode/store";
-import { IdPayBarcodeRoutes } from "../../barcode/navigation/routes";
+import {
+  trackIDPayDetailBottomSheetLanding,
+  trackIDPayDetailCodeGeneration,
+  trackIDPayDetailQRCodeScan
+} from "../analytics";
+import { idpayInitiativeDetailsSelector } from "../store";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 export const useIdPayDiscountDetailsBottomSheet = (initiativeId: string) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -35,6 +43,19 @@ export const useIdPayDiscountDetailsBottomSheet = (initiativeId: string) => {
     });
   };
 
+  const initiativeDataPot = useIOSelector(idpayInitiativeDetailsSelector);
+  const initiativeName = pot.getOrElse(
+    pot.map(initiativeDataPot, initiative => initiative.initiativeName),
+    undefined
+  );
+
+  useOnFirstRender(() => {
+    trackIDPayDetailBottomSheetLanding({
+      initiativeId,
+      initiativeName
+    });
+  });
+
   const DiscountInitiativeBottomSheetContent = () => (
     <>
       <ListItemNav
@@ -45,6 +66,10 @@ export const useIdPayDiscountDetailsBottomSheet = (initiativeId: string) => {
         onPress={() => {
           bottomSheet.dismiss();
           navigateToPaymentAuthorization();
+          trackIDPayDetailQRCodeScan({
+            initiativeId,
+            initiativeName
+          });
         }}
         accessibilityLabel={I18n.t(
           "idpay.initiative.discountDetails.bottomSheetOptions.scanQr"
@@ -56,7 +81,13 @@ export const useIdPayDiscountDetailsBottomSheet = (initiativeId: string) => {
         value={I18n.t(
           "idpay.initiative.discountDetails.bottomSheetOptions.generateBarcode"
         )}
-        onPress={barcodePressHandler}
+        onPress={() => {
+          barcodePressHandler();
+          trackIDPayDetailCodeGeneration({
+            initiativeId,
+            initiativeName
+          });
+        }}
         accessibilityLabel={I18n.t(
           "idpay.initiative.discountDetails.bottomSheetOptions.generateBarcode"
         )}

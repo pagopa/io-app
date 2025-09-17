@@ -21,6 +21,7 @@ import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserData
 import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
 import { BackendClient } from "../api/backend";
 import { apiUrlPrefix, zendeskEnabled } from "../config";
+import { watchActiveSessionLoginSaga } from "../features/authentication/activeSessionLogin/saga";
 import { authenticationSaga } from "../features/authentication/common/saga/authenticationSaga";
 import { loadSessionInformationSaga } from "../features/authentication/common/saga/loadSessionInformationSaga";
 import {
@@ -69,12 +70,15 @@ import { watchEmailNotificationPreferencesSaga } from "../features/mailCheck/sag
 import { checkEmailSaga } from "../features/mailCheck/sagas/checkEmailSaga";
 import { watchEmailValidationSaga } from "../features/mailCheck/sagas/emailValidationPollingSaga";
 import { watchProfileEmailValidationChangedSaga } from "../features/mailCheck/sagas/watchProfileEmailValidationChangedSaga";
+import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { watchMessagesSaga } from "../features/messages/saga";
 import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
 import { checkAcknowledgedFingerprintSaga } from "../features/onboarding/saga/biometric/checkAcknowledgedFingerprintSaga";
 import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnboardingSaga";
 import { watchAbortOnboardingSaga } from "../features/onboarding/saga/watchAbortOnboardingSaga";
 import { watchPaymentsSaga } from "../features/payments/common/saga";
+import { watchAarFlowSaga } from "../features/pn/aar/saga/watchAARFlowSaga";
+import { isAAREnabled } from "../features/pn/aar/store/reducers";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { maybeHandlePendingBackgroundActions } from "../features/pushNotifications/sagas/common";
 import { notificationPermissionsListener } from "../features/pushNotifications/sagas/notificationPermissionsListener";
@@ -104,6 +108,7 @@ import {
 import { formatRequestedTokenString } from "../features/zendesk/utils";
 import { mixpanelTrack } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
+import ROUTES from "../navigation/routes";
 import {
   applicationInitialized,
   startApplicationInitialization
@@ -129,9 +134,6 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { getPin } from "../utils/keychain";
-import { watchActiveSessionLoginSaga } from "../features/authentication/activeSessionLogin/saga";
-import ROUTES from "../navigation/routes";
-import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { backendClientManager } from "../api/backendClientManager";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -627,9 +629,15 @@ export function* initializeApplicationSaga(
     isPnRemoteEnabledSelector
   );
 
+  const aAREnabled = yield* select(isAAREnabled);
+
   if (pnEnabled) {
     // Start watching for PN actions
     yield* fork(watchPnSaga, sessionToken);
+
+    if (aAREnabled) {
+      yield* fork(watchAarFlowSaga, sessionToken, keyInfo);
+    }
   }
 
   const idPayEnabled: ReturnType<typeof isIdPayEnabledSelector> = yield* select(

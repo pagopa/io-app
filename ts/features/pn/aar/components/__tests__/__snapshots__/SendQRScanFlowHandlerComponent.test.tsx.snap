@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SendQRScanRedirectComponent should match snapshot and track the screen view 1`] = `
+exports[`SendQRScanFlowHandlerComponent should match snapshot and track the screen view 1`] = `
 <View
   style={
     {
