@@ -10,40 +10,43 @@ import {
   WebViewHttpErrorEvent
 } from "react-native-webview/lib/WebViewTypes";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useLollipopLoginSource } from "../../../lollipop/hooks/useLollipopLoginSource";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { SessionToken } from "../../../../types/SessionToken";
-import { IdpSuccessfulAuthentication } from "../../common/components/IdpSuccessfulAuthentication";
-import { onLoginUriChanged } from "../../common/utils/login";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { useLollipopLoginSource } from "../../../../lollipop/hooks/useLollipopLoginSource";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { SessionToken } from "../../../../../types/SessionToken";
+import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
+import { onLoginUriChanged } from "../../../common/utils/login";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 
-import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
-import { remoteApiLoginUrlPrefixSelector } from "../../loginPreferences/store/selectors";
-import { getCieIDLoginUri, isAuthenticationUrl } from "../../login/cie/utils";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
+import {
+  getCieIDLoginUri,
+  isAuthenticationUrl
+} from "../../../login/cie/utils";
 import {
   IO_LOGIN_CIE_URL_SCHEME,
   CIE_ID_ERROR,
   CIE_ID_ERROR_MESSAGE,
   IO_LOGIN_CIE_SOURCE_APP
-} from "../../login/cie/utils/cie";
-import { activeSessionUserLoggedSelector } from "../store/selectors";
+} from "../../../login/cie/utils/cie";
+import { activeSessionUserLoggedSelector } from "../../store/selectors";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess,
   setFinishedActiveSessionLoginFlow
-} from "../store/actions";
-import { AUTH_ERRORS } from "../../common/components/AuthErrorComponent";
-import { AuthenticationParamsList } from "../../common/navigation/params/AuthenticationParamsList";
-import { originSchemasWhiteList } from "../../common/utils/originSchemasWhiteList";
+} from "../../store/actions";
+import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
+import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
 
-import { sessionCorrupted } from "../../common/store/actions";
-import { LoadingOverlay } from "../../login/cie/shared/LoadingSpinnerOverlay";
+import { sessionCorrupted } from "../../../common/store/actions";
+import { LoadingOverlay } from "../../../login/cie/shared/LoadingSpinnerOverlay";
 import {
   CieIdLoginProps,
   WHITELISTED_DOMAINS,
   defaultUserAgent
-} from "../../login/cie/shared/utils";
+} from "../../../login/cie/shared/utils";
 
 const ActiveSessionCieIdLoginWebView = ({
   spidLevel,

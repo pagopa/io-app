@@ -2,6 +2,63 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.13.0-rc.8](https://github.com/pagopa/io-app/compare/3.13.0-rc.7...3.13.0-rc.8) (2025-09-16)
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2961](https://pagopa.atlassian.net/browse/SIW-2961)] Store whether IT-Wallet can be activated with the simplified flow ([#7337](https://github.com/pagopa/io-app/issues/7337)) ([661f535](https://github.com/pagopa/io-app/commit/661f5356488036e10ea76c1dcea7c6428cd5aaf8))
+
+## [3.13.0-rc.7](https://github.com/pagopa/io-app/compare/3.13.0-rc.6...3.13.0-rc.7) (2025-09-15)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2952](https://pagopa.atlassian.net/browse/SIW-2952)] Replace custom multi credential icon with DS icon ([#7351](https://github.com/pagopa/io-app/issues/7351)) ([cf5abe0](https://github.com/pagopa/io-app/commit/cf5abe0cb3d214e05f2c007cc1033dec242663a3))
+* [[IOBP-1908](https://pagopa.atlassian.net/browse/IOBP-1908)] IDPay onboarding Mixpanel events ([#7333](https://github.com/pagopa/io-app/issues/7333)) ([1ff162d](https://github.com/pagopa/io-app/commit/1ff162dc048bd3638dcbc2b603553524874d1a2f))
+* [[IOBP-1976](https://pagopa.atlassian.net/browse/IOBP-1976),[IOBP-1984](https://pagopa.atlassian.net/browse/IOBP-1984)] Add IDPay user waiting list statuses inside the Services home screen ([#7349](https://github.com/pagopa/io-app/issues/7349)) ([09e5a45](https://github.com/pagopa/io-app/commit/09e5a4520857a3f3abf31083b9d07edbc0979a2a))
+* [[IOPID-2928](https://pagopa.atlassian.net/browse/IOPID-2928)] Active Session Login: CIE + PIN flow ([#7311](https://github.com/pagopa/io-app/issues/7311)) ([20dd433](https://github.com/pagopa/io-app/commit/20dd43329e63efc4366e5fe53e9e17e702109307))
+* **IT Wallet:** [[SIW-2904](https://pagopa.atlassian.net/browse/SIW-2904)] Implement feature unavailable toast ([#7334](https://github.com/pagopa/io-app/issues/7334)) ([942347b](https://github.com/pagopa/io-app/commit/942347b28fc9e7d67ac14d922ee340c17bfb9b7c))
+
+
+### Bug Fixes
+
+* [[IOPLT-1336](https://pagopa.atlassian.net/browse/IOPLT-1336)] Remove footer gradient from `ItwPresentationDetailsScreenBase` + Fix barcode ([#7347](https://github.com/pagopa/io-app/issues/7347)) ([da04434](https://github.com/pagopa/io-app/commit/da04434da8b5d3e6b68820cbba9edc54734531bb))
+
+
+### Chores
+
+* [[IOBP-1914](https://pagopa.atlassian.net/browse/IOBP-1914)] IDPay email banner mixpanel tap events ([#7346](https://github.com/pagopa/io-app/issues/7346)) ([be01909](https://github.com/pagopa/io-app/commit/be01909a1476a22212bf3f92c0bab73a80cb5c9b))
+
+## [3.13.0-rc.6](https://github.com/pagopa/io-app/compare/3.13.0-rc.5...3.13.0-rc.6) (2025-09-12)
+
+
+### Features
+
+* [[IOCOM-2545](https://pagopa.atlassian.net/browse/IOCOM-2545)] handlePendingMessageState refactor ([#7342](https://github.com/pagopa/io-app/issues/7342)) ([2d1d0f3](https://github.com/pagopa/io-app/commit/2d1d0f321768d6650c5f336afd982a9cf4e7cda0))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2921](https://pagopa.atlassian.net/browse/SIW-2921),[SIW-2922](https://pagopa.atlassian.net/browse/SIW-2922),[SIW-2923](https://pagopa.atlassian.net/browse/SIW-2923)] Fix IT Wallet Mixpanel Events ([#7327](https://github.com/pagopa/io-app/issues/7327)) ([11c7ec2](https://github.com/pagopa/io-app/commit/11c7ec2ca539a259279ee4b7cf113278ed536924))
+* [[IOCOM-2589](https://pagopa.atlassian.net/browse/IOCOM-2589)] Update temporary AAR swagger ([#7343](https://github.com/pagopa/io-app/issues/7343)) ([847b5de](https://github.com/pagopa/io-app/commit/847b5de6f06634eb7290039bd71f67b7facb0b85))
+
+## [3.13.0-rc.5](https://github.com/pagopa/io-app/compare/3.13.0-rc.4...3.13.0-rc.5) (2025-09-11)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2523](https://pagopa.atlassian.net/browse/SIW-2523),[SIW-2854](https://pagopa.atlassian.net/browse/SIW-2854),[SIW-2706](https://pagopa.atlassian.net/browse/SIW-2706)] Add support for Education Degrees and Education Enrollments credentials ([#7259](https://github.com/pagopa/io-app/issues/7259)) ([2f923e2](https://github.com/pagopa/io-app/commit/2f923e2f1983e9c35458544b089c1271c976b768))
+* [[IOBP-1857](https://pagopa.atlassian.net/browse/IOBP-1857)] IDPay `TOO_MANY_REQUESTS` error flow ([#7198](https://github.com/pagopa/io-app/issues/7198)) ([b1a9acc](https://github.com/pagopa/io-app/commit/b1a9accfeeaa0640649790b5f6cef042e26f5ba4))
+* [[IOCOM-2585](https://pagopa.atlassian.net/browse/IOCOM-2585)] Temporary swagger for AAR phase 2 ([#7329](https://github.com/pagopa/io-app/issues/7329)) ([e9f9fa2](https://github.com/pagopa/io-app/commit/e9f9fa228ebd8b5dec63a5141f08ff055818de05))
+
+
+### Bug Fixes
+
+* [[IOPLT-1331](https://pagopa.atlassian.net/browse/IOPLT-1331)] Remove extra thick border from `PaymentCard` expired state ([#7335](https://github.com/pagopa/io-app/issues/7335)) ([2b10404](https://github.com/pagopa/io-app/commit/2b1040403d46c15577ab6e250f46b9561c49d82b))
+* **IT Wallet:** [[SIW-2950](https://pagopa.atlassian.net/browse/SIW-2950)] Move `useItwStatusIconColor` outside `useMemo` ([#7330](https://github.com/pagopa/io-app/issues/7330)) ([b2043c5](https://github.com/pagopa/io-app/commit/b2043c5dc45f4498cddd49dfba63add225801413))
+* [[IOPAE-1741](https://pagopa.atlassian.net/browse/IOPAE-1741)] Improve accessibility for Service Lists ([#7315](https://github.com/pagopa/io-app/issues/7315)) ([d703a93](https://github.com/pagopa/io-app/commit/d703a934b7718880b29b4d9a110e0d5d2eb7f8d1))
+
 ## [3.13.0-rc.4](https://github.com/pagopa/io-app/compare/3.13.0-rc.3...3.13.0-rc.4) (2025-09-09)
 
 

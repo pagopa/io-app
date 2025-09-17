@@ -4,7 +4,7 @@ import {
   CredentialIssuanceFailureType
 } from "../../machine/credential/failure";
 import {
-  CREDENTIALS_MAP,
+  getMixPanelCredential,
   trackAddCredentialFailure,
   trackAddCredentialUnexpectedFailure,
   trackCredentialInvalidStatusFailure,
@@ -15,6 +15,7 @@ import {
 
 type Params = {
   failure: CredentialIssuanceFailure;
+  isItwL3: boolean;
   credentialType?: string;
   invalidErrorCode?: string;
 };
@@ -24,6 +25,7 @@ type Params = {
  */
 export const useCredentialEventsTracking = ({
   failure,
+  isItwL3,
   credentialType,
   invalidErrorCode
 }: Params) => {
@@ -32,7 +34,7 @@ export const useCredentialEventsTracking = ({
       return;
     }
 
-    const credential = CREDENTIALS_MAP[credentialType];
+    const credential = getMixPanelCredential(credentialType, isItwL3);
 
     if (failure.type === CredentialIssuanceFailureType.ASYNC_ISSUANCE) {
       return trackItWalletDeferredIssuing(credential);
@@ -94,5 +96,5 @@ export const useCredentialEventsTracking = ({
         credential
       });
     }
-  }, [credentialType, failure, invalidErrorCode]);
+  }, [credentialType, failure, invalidErrorCode, isItwL3]);
 };

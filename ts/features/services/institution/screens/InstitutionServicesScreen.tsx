@@ -166,30 +166,17 @@ export const InstitutionServicesScreen = ({
 
   const renderListHeaderComponent = useCallback(() => {
     if (isFirstRender || isLoading) {
-      return (
-        <>
-          <ServicesHeaderSection isLoading={true} />
-          <VSpacer size={16} />
-        </>
-      );
+      return <ServicesHeaderSection isLoading={true} />;
     }
 
     return (
-      <>
-        <ServicesHeaderSection
-          logoUri={getLogoForInstitution(institutionId)}
-          title={institutionName}
-          subTitle={I18n.t(
-            data?.count && data?.count > 1
-              ? "services.institution.header.subtitlePlural"
-              : "services.institution.header.subtitleSingular",
-            {
-              count: data?.count ?? 0
-            }
-          )}
-        />
-        <VSpacer size={16} />
-      </>
+      <ServicesHeaderSection
+        logoUri={getLogoForInstitution(institutionId)}
+        title={institutionName}
+        subTitle={I18n.t("services.institution.header.subtitle", {
+          count: data?.count ?? 0
+        })}
+      />
     );
   }, [data?.count, isFirstRender, isLoading, institutionId, institutionName]);
 
@@ -223,6 +210,7 @@ export const InstitutionServicesScreen = ({
       ListEmptyComponent={renderListEmptyComponent}
       ListHeaderComponent={renderListHeaderComponent}
       ListHeaderComponentStyle={{
+        marginBottom: 16,
         marginHorizontal: -IOVisualCostants.appMarginDefault
       }}
       ListFooterComponent={renderListFooterComponent}

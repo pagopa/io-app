@@ -1,15 +1,15 @@
 import { Linking } from "react-native";
 import { Action, Dispatch, Store } from "redux";
 import { isLoggedIn } from "../features/authentication/common/store/utils/guards";
-import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
+import { storeLinkingUrl } from "../features/linking/actions";
 import { resetMessageArchivingAction } from "../features/messages/store/actions/archiving";
 import { isArchivingDisabledSelector } from "../features/messages/store/reducers/archiving";
-import { isSendAARLink } from "../features/pn/aar/utils/deepLinking";
-import PN_ROUTES from "../features/pn/navigation/routes";
+import {
+  isSendAARLink,
+  navigateToSendAarFlow
+} from "../features/pn/aar/utils/deepLinking";
 import { processUtmLink } from "../features/utmLink";
-import { storeLinkingUrl } from "../store/actions/linking";
 import { GlobalState } from "../store/reducers/types";
-import NavigationService from "./NavigationService";
 
 export const linkingSubscription =
   (dispatch: Dispatch<Action>, store: Store<Readonly<GlobalState>>) =>
@@ -29,13 +29,7 @@ export const linkingSubscription =
       if (isLoggedIn(state.authentication)) {
         // only when logged in we can navigate to the AAR screen.
         if (isSendAARLink(state, url)) {
-          NavigationService.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-            screen: PN_ROUTES.MAIN,
-            params: {
-              screen: PN_ROUTES.QR_SCAN_FLOW,
-              params: { aarUrl: url }
-            }
-          });
+          navigateToSendAarFlow(state, url);
         }
       } else {
         // If we are not logged in, we store the URL to be processed later
