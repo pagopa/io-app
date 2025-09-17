@@ -32,7 +32,9 @@ import {
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { HIDDEN_CLAIM_TEXT } from "../utils/constants.ts";
-import { CREDENTIALS_MAP, trackCopyListItem } from "../../analytics";
+import { getMixPanelCredential, trackCopyListItem } from "../../analytics";
+import { useIOSelector } from "../../../../store/hooks";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialMultiClaim } from "./ItwCredentialMultiClaim.tsx";
 
 /**
@@ -90,12 +92,13 @@ const PlainTextClaimItem = ({
   credentialType?: string;
 }) => {
   const safeValue = getSafeText(claim);
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const handleLongPress = () => {
     clipboardSetStringWithFeedback(safeValue);
     if (credentialType) {
       trackCopyListItem({
-        credential: CREDENTIALS_MAP[credentialType],
+        credential: getMixPanelCredential(credentialType, isItwL3),
         item_copied: label
       });
     }

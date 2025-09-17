@@ -14,11 +14,11 @@ import LoadingScreenContent from "../../../../components/screens/LoadingScreenCo
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { identificationRequest } from "../../../identification/store/actions";
-import { useIODispatch } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import {
-  CREDENTIALS_MAP,
+  getMixPanelCredential,
   trackCredentialPreview,
   trackIssuanceCredentialScrollToBottom,
   trackItwExit,
@@ -32,6 +32,7 @@ import {
   selectCredentialOption,
   selectCredentialTypeOption
 } from "../../machine/credential/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
@@ -81,10 +82,11 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const dispatch = useIODispatch();
   const route = useRoute();
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const mixPanelCredential = useMemo(
-    () => CREDENTIALS_MAP[credentialType],
-    [credentialType]
+    () => getMixPanelCredential(credentialType, isItwL3),
+    [credentialType, isItwL3]
   );
 
   useFocusEffect(() => {
