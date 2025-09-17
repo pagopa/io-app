@@ -498,8 +498,8 @@ export const ItwCredentialClaim = ({
             />
           );
         }
-        if (NestedObjectClaim.is(_decoded)) {
-          const nestedClaims = parseClaims(_decoded);
+        if (NestedObjectClaim.is(decoded)) {
+          const nestedClaims = parseClaims(decoded);
           return (
             <>
               {nestedClaims.map((nestedClaim, index) => (
