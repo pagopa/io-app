@@ -19,6 +19,8 @@ import { reproduceSequence } from "../../../../../../utils/tests.ts";
 
 type ActorRef = ReturnType<typeof ItwRemoteMachineContext.useActorRef>;
 
+jest.useFakeTimers();
+
 describe("ItwRemoteRequestValidationScreen", () => {
   it("it should render the screen correctly", () => {
     const component = renderComponent();
@@ -91,6 +93,31 @@ describe("ItwRemoteRequestValidationScreen", () => {
       expect(mockSend).not.toHaveBeenCalled();
       expect(getByTestId("loader")).toBeTruthy();
     });
+  });
+
+  it("should change the loading text after timeout", async () => {
+    const validPayload: ItwRemoteRequestPayload = {
+      client_id: "abc123xy",
+      request_uri: "https://example.com/callback",
+      state: "hyqizm592",
+      request_uri_method: "get"
+    };
+
+    const mockSend = jest.fn();
+
+    jest
+      .spyOn(ItwRemoteMachineContext, "useActorRef")
+      .mockReturnValue({ send: mockSend } as unknown as ActorRef);
+
+    const { getByTestId } = renderComponent(validPayload);
+
+    expect(getByTestId("loader")).toBeTruthy();
+
+    await act(async () => {
+      jest.advanceTimersByTime(5000);
+    });
+
+    expect(getByTestId("timeout-loader")).toBeTruthy();
   });
 });
 
