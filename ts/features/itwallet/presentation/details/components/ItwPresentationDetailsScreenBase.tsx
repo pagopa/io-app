@@ -76,7 +76,7 @@ const ItwPresentationDetailsScreenBase = ({
       <Animated.ScrollView
         ref={animatedScrollViewRef}
         contentContainerStyle={{
-          paddingBottom: footerActionsMeasurements.safeBottomAreaHeight
+          paddingBottom: footerActionsMeasurements.safeBottomAreaHeight || 24
         }}
         onScroll={scrollHandler}
         scrollEventThrottle={8}
