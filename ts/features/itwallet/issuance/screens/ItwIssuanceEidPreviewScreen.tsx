@@ -85,7 +85,10 @@ const ContentView = ({ eid }: ContentViewProps) => {
 
   useFocusEffect(
     useCallback(() => {
-      trackCredentialPreview(mixPanelCredential);
+      trackCredentialPreview({
+        credential: mixPanelCredential,
+        credential_type: "unique"
+      });
       if (identification) {
         trackItwRequestSuccess(
           identification?.mode,
