@@ -44,8 +44,8 @@ const ItwPresentationDetailsScreenBase = ({
     itwFeaturesEnabled
   );
 
-  // Support requests ifor ITW credentials are temporarily disabled until
-  // final releaase.
+  // Support requests for ITW credentials are temporarily disabled until
+  // final release.
   const onStartSupportRequest = () => {
     if (itwFeaturesEnabled) {
       toast.info(I18n.t("features.itWallet.generic.featureUnavailable.title"));
