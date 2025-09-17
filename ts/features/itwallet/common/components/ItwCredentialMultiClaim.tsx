@@ -99,7 +99,7 @@ export const ItwCredentialMultiClaim = ({
   credentialStatus
 }: ItwCredentialMultiClaimProps) => {
   // We render the nested claims as a list if there are multiple items
-  const shouldRenderAsList = nestedClaims.length > 0;
+  const shouldRenderAsList = nestedClaims.length > 1;
   if (shouldRenderAsList) {
     return (
       <>
