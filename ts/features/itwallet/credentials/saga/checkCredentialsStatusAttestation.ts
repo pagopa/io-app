@@ -10,13 +10,16 @@ import {
   StatusAttestationError
 } from "../../common/utils/itwCredentialStatusAttestationUtils";
 import { ReduxSagaEffect } from "../../../../types/utils";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import {
+  itwLifecycleIsITWalletValidSelector,
+  itwLifecycleIsValidSelector
+} from "../../lifecycle/store/selectors";
 import { itwCredentialsStore } from "../store/actions";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
-  CREDENTIALS_MAP,
+  getMixPanelCredential,
   trackItwStatusCredentialAttestationFailure
 } from "../../analytics";
 import { selectItwEnv } from "../../common/store/selectors/environment";
@@ -28,6 +31,11 @@ export function* updateCredentialStatusAttestationSaga(
   credential: StoredCredential
 ): Generator<ReduxSagaEffect, StoredCredential> {
   const env = yield* select(selectItwEnv);
+  const isItwL3 = yield* select(itwLifecycleIsITWalletValidSelector);
+  const mixpanelCredential = getMixPanelCredential(
+    credential.credentialType,
+    isItwL3
+  );
   try {
     const { parsedStatusAttestation, statusAttestation } = yield* call(
       getCredentialStatusAttestation,
@@ -52,7 +60,7 @@ export function* updateCredentialStatusAttestationSaga(
       );
 
       trackItwStatusCredentialAttestationFailure({
-        credential: CREDENTIALS_MAP[credential.credentialType],
+        credential: mixpanelCredential,
         credential_status: errorCode || "invalid"
       });
 
@@ -63,7 +71,7 @@ export function* updateCredentialStatusAttestationSaga(
     }
     // We do not have enough information on the status, the error was unexpected
     trackItwStatusCredentialAttestationFailure({
-      credential: CREDENTIALS_MAP[credential.credentialType],
+      credential: mixpanelCredential,
       credential_status: "unknown",
       reason: e instanceof Error ? e.message : e
     });
