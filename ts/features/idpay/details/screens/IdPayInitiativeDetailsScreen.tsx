@@ -53,6 +53,13 @@ import {
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
 import { IdPayCardStatus } from "../utils";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import {
+  trackIDPayDetailAuthorizationStart,
+  trackIDPayDetailInfoAction,
+  trackIDPayDetailLanding,
+  trackIDPayDetailRetailersClick
+} from "../analytics";
 
 export type IdPayInitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -73,6 +80,13 @@ const IdPayInitiativeDetailsScreenComponent = () => {
   const initiativeDataPot = useIOSelector(idpayInitiativeDetailsSelector);
 
   const navigateToBeneficiaryDetails = () => {
+    trackIDPayDetailInfoAction({
+      initiativeId,
+      initiativeName: pot.getOrElse(
+        pot.map(initiativeDataPot, initiative => initiative.initiativeName),
+        undefined
+      )
+    });
     navigation.push(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
       screen: IDPayDetailsRoutes.IDPAY_DETAILS_BENEFICIARY,
       params: {
@@ -118,6 +132,16 @@ const IdPayInitiativeDetailsScreenComponent = () => {
   const initiativeNeedsConfiguration = useIOSelector(
     initiativeNeedsConfigurationSelector
   );
+
+  useOnFirstRender(() => {
+    if (pot.isSome(initiativeDataPot)) {
+      trackIDPayDetailLanding({
+        initiativeName,
+        initiativeId,
+        status: initiative.voucherStatus
+      });
+    }
+  });
 
   if (!pot.isSome(initiativeDataPot)) {
     return (
@@ -321,6 +345,10 @@ const IdPayInitiativeDetailsScreenComponent = () => {
       IOToast.error(I18n.t("global.genericError"));
       return;
     }
+    trackIDPayDetailRetailersClick({
+      initiativeId,
+      initiativeName: initiative.initiativeName
+    });
     void Linking.openURL(initiative.webViewUrl);
   };
 
@@ -337,7 +365,13 @@ const IdPayInitiativeDetailsScreenComponent = () => {
         }
         const useBonusButton = {
           label: I18n.t("idpay.initiative.discountDetails.authorizeButton"),
-          onPress: discountBottomSheet.present
+          onPress: () => {
+            discountBottomSheet.present();
+            trackIDPayDetailAuthorizationStart({
+              initiativeId,
+              initiativeName: initiative.initiativeName
+            });
+          }
         };
         const showMerchantsButton = {
           label: I18n.t("idpay.initiative.discountDetails.secondaryCta"),
