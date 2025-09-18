@@ -21,6 +21,7 @@ import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserData
 import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
 import { BackendClient } from "../api/backend";
 import { apiUrlPrefix, zendeskEnabled } from "../config";
+import { watchActiveSessionLoginSaga } from "../features/authentication/activeSessionLogin/saga";
 import { authenticationSaga } from "../features/authentication/common/saga/authenticationSaga";
 import { loadSessionInformationSaga } from "../features/authentication/common/saga/loadSessionInformationSaga";
 import {
@@ -28,7 +29,7 @@ import {
   watchCheckSessionSaga
 } from "../features/authentication/common/saga/watchCheckSessionSaga";
 import { watchLogoutSaga } from "../features/authentication/common/saga/watchLogoutSaga";
-import { watchSessionExpiredOrCorruptedSaga } from "../features/authentication/common/saga/watchSessionExpiredSaga";
+import { watchForceLogoutSaga } from "../features/authentication/common/saga/watchForceLogoutSaga";
 import { sessionExpired } from "../features/authentication/common/store/actions";
 import {
   sessionInfoSelector,
@@ -73,12 +74,15 @@ import { watchEmailNotificationPreferencesSaga } from "../features/mailCheck/sag
 import { checkEmailSaga } from "../features/mailCheck/sagas/checkEmailSaga";
 import { watchEmailValidationSaga } from "../features/mailCheck/sagas/emailValidationPollingSaga";
 import { watchProfileEmailValidationChangedSaga } from "../features/mailCheck/sagas/watchProfileEmailValidationChangedSaga";
+import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { watchMessagesSaga } from "../features/messages/saga";
 import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
 import { checkAcknowledgedFingerprintSaga } from "../features/onboarding/saga/biometric/checkAcknowledgedFingerprintSaga";
 import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnboardingSaga";
 import { watchAbortOnboardingSaga } from "../features/onboarding/saga/watchAbortOnboardingSaga";
 import { watchPaymentsSaga } from "../features/payments/common/saga";
+import { watchAarFlowSaga } from "../features/pn/aar/saga/watchAARFlowSaga";
+import { isAAREnabled } from "../features/pn/aar/store/reducers";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { maybeHandlePendingBackgroundActions } from "../features/pushNotifications/sagas/common";
 import { notificationPermissionsListener } from "../features/pushNotifications/sagas/notificationPermissionsListener";
@@ -94,7 +98,6 @@ import {
   watchProfileUpsertRequestsSaga
 } from "../features/settings/common/sagas/profile";
 import { watchUserDataProcessingSaga } from "../features/settings/common/sagas/userDataProcessing";
-import { resetProfileState } from "../features/settings/common/store/actions";
 import { loadUserDataProcessing } from "../features/settings/common/store/actions/userDataProcessing";
 import { profileSelector } from "../features/settings/common/store/selectors";
 import { isProfileFirstOnBoarding } from "../features/settings/common/store/utils/guards";
@@ -108,6 +111,7 @@ import {
 import { formatRequestedTokenString } from "../features/zendesk/utils";
 import { mixpanelTrack } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
+import ROUTES from "../navigation/routes";
 import {
   applicationInitialized,
   startApplicationInitialization
@@ -133,9 +137,6 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { getPin } from "../utils/keychain";
-import { watchActiveSessionLoginSaga } from "../features/authentication/activeSessionLogin/saga";
-import ROUTES from "../navigation/routes";
-import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
@@ -173,6 +174,7 @@ export function* initializeApplicationSaga(
   const handleSessionExpiration = !!(
     startupAction?.payload && startupAction.payload.handleSessionExpiration
   );
+
   const showIdentificationModal =
     startupAction?.payload?.showIdentificationModalAtStartup ?? true;
 
@@ -221,19 +223,6 @@ export function* initializeApplicationSaga(
    * TODO: https://pagopa.atlassian.net/browse/IOPID-3040
    */
   yield* fork(watchProfileEmailValidationChangedSaga, lastEmailValidated);
-
-  // Reset the profile cached in redux: at each startup we want to load a fresh
-  // user profile.
-  // Might be removable: https://github.com/pagopa/io-app/pull/398/files#diff-8a5b2f3967d681b976fe673762bd1061f5b430130c880c1195b76af06362cf31
-  // It was likely used by the old ingress screen to track check progress
-  // If removed, ensure the condition `if (O.isNone(maybeUserProfile))` is preserved,
-  // as it plays a key role in detecting uninitialized profiles.
-  // TODO: https://pagopa.atlassian.net/browse/IOPID-3042
-
-  if (!handleSessionExpiration) {
-    yield* put(resetProfileState()); // Consider identifying all scenarios where the profile should be reset (e.g. Wallet offline).
-    // It might be worth consolidating them into a single function
-  }
 
   // We need to generate a key in the application startup flow
   // to use this information on old app version already logged in users.
@@ -327,7 +316,7 @@ export function* initializeApplicationSaga(
   const keyInfo = yield* call(getKeyInfo);
 
   // Watches for session expiration or corruption and resets the application state accordingly
-  yield* fork(watchSessionExpiredOrCorruptedSaga);
+  yield* fork(watchForceLogoutSaga);
   yield* fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel);
 
   // Instantiate a backend client from the session token
@@ -658,9 +647,15 @@ export function* initializeApplicationSaga(
     isPnRemoteEnabledSelector
   );
 
+  const aAREnabled = yield* select(isAAREnabled);
+
   if (pnEnabled) {
     // Start watching for PN actions
     yield* fork(watchPnSaga, sessionToken);
+
+    if (aAREnabled) {
+      yield* fork(watchAarFlowSaga, sessionToken, keyInfo);
+    }
   }
 
   const idPayEnabled: ReturnType<typeof isIdPayEnabledSelector> = yield* select(

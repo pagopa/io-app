@@ -10,6 +10,7 @@ import {
   getFiscalCodeFromCredential,
   ImageClaim,
   NestedArrayClaim,
+  NestedObjectClaim,
   SimpleDateClaim,
   SimpleListClaim
 } from "../itwClaimsUtils";
@@ -287,6 +288,50 @@ describe("NestedArrayClaim", () => {
       }
     ];
     const res = NestedArrayClaim.decode(bad);
+    expect(E.isLeft(res)).toBe(true);
+  });
+});
+
+describe("NestedObjectClaim", () => {
+  it("decodes a non-empty object (name as string and as record)", () => {
+    const input = {
+      firstName: { value: "John", name: "First Name" },
+      lastName: {
+        value: "Doe",
+        name: { "it-IT": "Cognome", "en-US": "Last Name" }
+      }
+    };
+    const res = NestedObjectClaim.decode(input);
+    expect(E.isRight(res)).toBe(true);
+
+    if (E.isRight(res)) {
+      expect(res.right.firstName.value).toBe("John");
+      expect((res.right.lastName.name as any)["it-IT"]).toBe("Cognome");
+    }
+  });
+
+  it("decodes an empty object", () => {
+    const res = NestedObjectClaim.decode({});
+    expect(E.isRight(res)).toBe(true);
+    if (E.isRight(res)) {
+      expect(res.right).toEqual({});
+    }
+  });
+
+  it("fails when a value is not a string or record", () => {
+    const input = {
+      firstName: { value: 123 as any, name: "First Name" }
+    };
+    const res = NestedObjectClaim.decode(input);
+    expect(E.isLeft(res)).toBe(true);
+  });
+
+  it("input when a required key is missing value or name", () => {
+    const input = {
+      firstName: { name: "First Name" }
+    };
+
+    const res = NestedObjectClaim.decode(input);
     expect(E.isLeft(res)).toBe(true);
   });
 });

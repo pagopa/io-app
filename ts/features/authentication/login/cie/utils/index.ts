@@ -11,7 +11,7 @@ export const getCieIDLoginUri = (
   isUat: boolean,
   apiLoginUrlPrefix: string
 ) =>
-  `${apiLoginUrlPrefix}/login?entityID=${
+  `${apiLoginUrlPrefix}/api/auth/v1/login?entityID=${
     isUat ? "xx_servizicie_coll" : "xx_servizicie"
   }&authLevel=${spidLevel}`;
 

@@ -4,9 +4,7 @@ import { CodeEnum } from "../../../../../definitions/idpay/OnboardingErrorDTO";
 
 enum OnboardingStatusEnum {
   SESSION_EXPIRED = "SESSION_EXPIRED",
-  USER_ONBOARDED = "USER_ONBOARDED",
-  NOT_ELIGIBLE = "NOT_ELIGIBLE",
-  ON_EVALUATION = "ON_EVALUATION"
+  NOT_ELIGIBLE = "NOT_ELIGIBLE"
 }
 
 export type OnboardingFailureEnum = OnboardingStatusEnum | CodeEnum;
