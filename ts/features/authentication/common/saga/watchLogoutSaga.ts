@@ -15,7 +15,7 @@ import { convertUnknownToError } from "../../../../utils/errors";
 import { resetAssistanceData } from "../../../../utils/supportAssistance";
 import { StartupStatusEnum } from "../../../../store/reducers/startup";
 import { resetMixpanelSaga } from "../../../../sagas/mixpanel";
-import { backendClientManager } from "../../../../api/backendClientManager";
+import { backendClientManager } from "../../../../api/BackendClientManager";
 import { apiUrlPrefix } from "../../../../config";
 import { bareSessionTokenSelector } from "../store/selectors";
 import { authenticationSaga } from "./authenticationSaga";

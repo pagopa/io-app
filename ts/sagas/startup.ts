@@ -134,7 +134,7 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { getPin } from "../utils/keychain";
-import { backendClientManager } from "../api/backendClientManager";
+import { backendClientManager } from "../api/BackendClientManager";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
