@@ -6,14 +6,17 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/Option";
-import React, { useMemo } from "react";
 import I18n from "i18next";
+import React, { useMemo } from "react";
+import { pipe } from "fp-ts/lib/function";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
 } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
+import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
+import { identificationRequest } from "../../../../identification/store/actions/index.ts";
 import {
   CREDENTIAL_STATUS_MAP,
   getMixPanelCredential,
@@ -21,7 +24,12 @@ import {
   trackWalletCredentialShowFAC_SIMILE,
   trackWalletCredentialShowTrustmark
 } from "../../../analytics";
+import ItwCredentialNotFound from "../../../common/components/ItwCredentialNotFound.tsx";
+import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
+import { itwSetReviewPending } from "../../../common/store/actions/preferences.ts";
+import { itwIsPendingReviewSelector } from "../../../common/store/selectors/preferences.ts";
 import { WellKnownClaim } from "../../../common/utils/itwClaimsUtils.ts";
+import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import {
   isMultiLevelCredential,
   StoredCredential
@@ -30,12 +38,22 @@ import {
   itwCredentialSelector,
   itwCredentialStatusSelector
 } from "../../../credentials/store/selectors";
+import {
+  itwLifecycleIsITWalletValidSelector,
+  itwLifecycleIsValidSelector
+} from "../../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
+import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
+import { trackItwProximityShowQrCode } from "../../proximity/analytics";
+import { useItwPresentQRCode } from "../../proximity/hooks/useItwPresentQRCode.tsx";
+import { ItwProximityMachineContext } from "../../proximity/machine/provider.tsx";
+import { selectIsLoading } from "../../proximity/machine/selectors.ts";
 import { ItwPresentationAdditionalInfoSection } from "../components/ItwPresentationAdditionalInfoSection.tsx";
 import { ItwPresentationClaimsSection } from "../components/ItwPresentationClaimsSection.tsx";
 import { ItwPresentationCredentialInfoAlert } from "../components/ItwPresentationCredentialInfoAlert.tsx";
 import { ItwPresentationCredentialStatusAlert } from "../components/ItwPresentationCredentialStatusAlert.tsx";
+import { ItwPresentationCredentialUnknownStatus } from "../components/ItwPresentationCredentialUnknownStatus.tsx";
 import { ItwPresentationCredentialVerificationExpired } from "../components/ItwPresentationCredentialVerificationExpired.tsx";
 import { ItwPresentationDetailsFooter } from "../components/ItwPresentationDetailsFooter.tsx";
 import { ItwPresentationDetailsHeader } from "../components/ItwPresentationDetailsHeader.tsx";
@@ -43,20 +61,8 @@ import {
   CredentialCtaProps,
   ItwPresentationDetailsScreenBase
 } from "../components/ItwPresentationDetailsScreenBase.tsx";
-import ItwCredentialNotFound from "../../../common/components/ItwCredentialNotFound.tsx";
-import { ItwPresentationCredentialUnknownStatus } from "../components/ItwPresentationCredentialUnknownStatus.tsx";
-import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
-import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
-import { itwSetReviewPending } from "../../../common/store/actions/preferences.ts";
-import { itwIsPendingReviewSelector } from "../../../common/store/selectors/preferences.ts";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
-import { identificationRequest } from "../../../../identification/store/actions/index.ts";
-import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
-import { ItwProximityMachineContext } from "../../proximity/machine/provider.tsx";
-import { selectIsLoading } from "../../proximity/machine/selectors.ts";
-import { useItwPresentQRCode } from "../../proximity/hooks/useItwPresentQRCode.tsx";
-import { trackItwProximityShowQrCode } from "../../proximity/analytics";
-import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
+import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
+import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils.ts";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -70,12 +76,17 @@ type Props = IOStackNavigationRouteProps<
 /**
  * Component that renders the credential detail screen.
  */
-export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
+export const ItwPresentationCredentialDetailScreen = ({
+  navigation,
+  route
+}: Props) => {
   const dispatch = useIODispatch();
   const { bottomSheet } = useItwPresentQRCode();
   const { credentialType } = route.params;
   const credentialOption = useIOSelector(itwCredentialSelector(credentialType));
   const isPendingReview = useIOSelector(itwIsPendingReviewSelector);
+
+  const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -91,6 +102,35 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
       }
     }, [credentialType, isPendingReview, dispatch])
   );
+
+  if (!isWalletValid) {
+    const ns = "features.itWallet.issuance.walletInstanceNotActive" as const;
+    return (
+      <OperationResultScreenContent
+        title={I18n.t(`${ns}.title`)}
+        subtitle={[
+          { text: I18n.t(`${ns}.body`) },
+          {
+            text: I18n.t(`${ns}.bodyBold`),
+            weight: "Semibold"
+          }
+        ]}
+        pictogram="itWallet"
+        action={{
+          label: I18n.t(`${ns}.primaryAction`),
+          onPress: () =>
+            navigation.replace(ITW_ROUTES.MAIN, {
+              screen: ITW_ROUTES.DISCOVERY.INFO,
+              params: {}
+            })
+        }}
+        secondaryAction={{
+          label: I18n.t(`${ns}.secondaryAction`),
+          onPress: () => navigation.popToTop()
+        }}
+      />
+    );
+  }
 
   if (O.isNone(credentialOption)) {
     // If the credential is not found, we render a screen that allows the user to request that credential.
