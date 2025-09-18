@@ -2,7 +2,7 @@
 import { Nullable } from "@pagopa/io-app-design-system";
 import { BackendClient } from "./backend";
 
-class BackendClientManager {
+export default class BackendClientManager {
   private client: Nullable<BackendClient> = null;
 
   getBackendClient(...args: Parameters<typeof BackendClient>): BackendClient {
