@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.13.0-rc.9](https://github.com/pagopa/io-app/compare/3.13.0-rc.8...3.13.0-rc.9) (2025-09-18)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2949](https://pagopa.atlassian.net/browse/SIW-2949)] Add Residency to Mixpanel tracking ([#7370](https://github.com/pagopa/io-app/issues/7370)) ([4873334](https://github.com/pagopa/io-app/commit/48733343e308ab3caf6e6dfdb28f9d384607b7d3))
+* [[IOCOM-2548](https://pagopa.atlassian.net/browse/IOCOM-2548),[IOCOM-2591](https://pagopa.atlassian.net/browse/IOCOM-2591)] SEND AAR master saga implementation and basic loading screen ([#7350](https://github.com/pagopa/io-app/issues/7350)) ([9193cb7](https://github.com/pagopa/io-app/commit/9193cb73ef3f8c0d199efe0721ffcbb346d53f78))
+* **IT Wallet:** [[SIW-2707](https://pagopa.atlassian.net/browse/SIW-2707)] Add Residency credential ([#7332](https://github.com/pagopa/io-app/issues/7332)) ([a557973](https://github.com/pagopa/io-app/commit/a55797342637212d4c43f73680dbb53514bad03f))
+* **IT Wallet:** [[SIW-2793](https://pagopa.atlassian.net/browse/SIW-2793)] ED and EE credentials mixpanel tracking ([#7344](https://github.com/pagopa/io-app/issues/7344)) ([44bc669](https://github.com/pagopa/io-app/commit/44bc6696176329a3891b3f6151f82e72ce94b45b))
+* **IT Wallet:** [[SIW-2850](https://pagopa.atlassian.net/browse/SIW-2850)] Introduce an intermediate screen after a 5-second wait ([#7324](https://github.com/pagopa/io-app/issues/7324)) ([657d849](https://github.com/pagopa/io-app/commit/657d849001cf42d04ddf7b93c533733215f48695))
+* **IT Wallet:** [[SIW-2909](https://pagopa.atlassian.net/browse/SIW-2909)] Mixpanel tracking for V3 credentials ([#7316](https://github.com/pagopa/io-app/issues/7316)) ([011daed](https://github.com/pagopa/io-app/commit/011daed8b8e050c7a25fb2666875f57e78da2549))
+* **IT Wallet:** [[SIW-2927](https://pagopa.atlassian.net/browse/SIW-2927)] Add temporary ItwCredentialAuthSource to display new credentials `authSource` ([#7352](https://github.com/pagopa/io-app/issues/7352)) ([3aefbb3](https://github.com/pagopa/io-app/commit/3aefbb38cdd7e694702d0ede05d68d943908c489))
+* **IT Wallet:** [[SIW-2934](https://pagopa.atlassian.net/browse/SIW-2934)] Improve non-federated entity detection while checking trust federation ([#7358](https://github.com/pagopa/io-app/issues/7358)) ([aa7c4ca](https://github.com/pagopa/io-app/commit/aa7c4caebffc270473e76b6ab8a227824d71816d))
+* **IT Wallet:** [[SIW-2988](https://pagopa.atlassian.net/browse/SIW-2988)] Refactor hidden claims to support nested credentials ([#7364](https://github.com/pagopa/io-app/issues/7364)) ([938be6b](https://github.com/pagopa/io-app/commit/938be6bb4f86eac1015cdeaece7d4f817cc73bfb))
+* [[IOBP-1949](https://pagopa.atlassian.net/browse/IOBP-1949)] IDPay detail Mixpanel events ([#7341](https://github.com/pagopa/io-app/issues/7341)) ([6c01f29](https://github.com/pagopa/io-app/commit/6c01f299f1c6729b158779d6350c67eb0a4f3778))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2981](https://pagopa.atlassian.net/browse/SIW-2981)] Request mDL credentials sequentially to bypass async issuance problems ([#7366](https://github.com/pagopa/io-app/issues/7366)) ([4c410b4](https://github.com/pagopa/io-app/commit/4c410b4a2b04990dc426fa02be73e17d156c206c))
+* [[IOBP-1948](https://pagopa.atlassian.net/browse/IOBP-1948)] Android payment webview intent linking ([#7369](https://github.com/pagopa/io-app/issues/7369)) ([12ae493](https://github.com/pagopa/io-app/commit/12ae493d3496cb1c468fa8a2acfeee23e8a0897d))
+* **IT Wallet:** [[SIW-2942](https://pagopa.atlassian.net/browse/SIW-2942),[SIW-2885](https://pagopa.atlassian.net/browse/SIW-2885)] Update IPZS privacy webview ([#7367](https://github.com/pagopa/io-app/issues/7367)) ([c0774dd](https://github.com/pagopa/io-app/commit/c0774dd6fa41253210b04f8101a398e34be42fd1))
+* **IT Wallet:** [[SIW-2966](https://pagopa.atlassian.net/browse/SIW-2966)] eID/PID issuing events property tracking ([#7353](https://github.com/pagopa/io-app/issues/7353)) ([0d48c99](https://github.com/pagopa/io-app/commit/0d48c99ac9e8b6ac03873188bcaa159387c0ca40))
+* [[IOBP-1993](https://pagopa.atlassian.net/browse/IOBP-1993)] Disable CGN landing page webview caching ([#7365](https://github.com/pagopa/io-app/issues/7365)) ([66af742](https://github.com/pagopa/io-app/commit/66af74203cc11a76d0c098166b743c183f3ca624))
+* **IT Wallet:** [[SIW-2991](https://pagopa.atlassian.net/browse/SIW-2991)] Fix bottom margin in credential details screen ([#7361](https://github.com/pagopa/io-app/issues/7361)) ([2386c48](https://github.com/pagopa/io-app/commit/2386c48c39813e6c648f851f3f3287329bd135c3))
+* [[IOPID-3403](https://pagopa.atlassian.net/browse/IOPID-3403),[IOPID-3404](https://pagopa.atlassian.net/browse/IOPID-3404),[IOPID-3419](https://pagopa.atlassian.net/browse/IOPID-3419)] `javax.net.ssl.SSLHandshakeException` on different SDK provider and iOS Crash ([#7359](https://github.com/pagopa/io-app/issues/7359)) ([00b92d3](https://github.com/pagopa/io-app/commit/00b92d3f240ec0561f8facb9eff5d95fe324c46c))
+* **IT Wallet:** [[SIW-3000](https://pagopa.atlassian.net/browse/SIW-3000)] Fix header top margin within credential details screen ([#7363](https://github.com/pagopa/io-app/issues/7363)) ([1e95750](https://github.com/pagopa/io-app/commit/1e957507d5946299b8a16754d06bb9d28b2af448))
+
+
+### Chores
+
+* [[IOBP-1901](https://pagopa.atlassian.net/browse/IOBP-1901)] Handle new IDPay backend errors types ([#7221](https://github.com/pagopa/io-app/issues/7221)) ([a5fda52](https://github.com/pagopa/io-app/commit/a5fda5214717b6950c560fc69e81b707a0906ac4))
+* [[IOBP-1969](https://pagopa.atlassian.net/browse/IOBP-1969)] Add Mixpanel events for help center CaC banner ([#7368](https://github.com/pagopa/io-app/issues/7368)) ([6cb0af6](https://github.com/pagopa/io-app/commit/6cb0af6cb5dd2760d7b0e80f77b8f2488830ca55))
+* [[IOBP-1995](https://pagopa.atlassian.net/browse/IOBP-1995)] Add `ListItemInfo` with badge as top element examples ([#7371](https://github.com/pagopa/io-app/issues/7371)) ([2d65224](https://github.com/pagopa/io-app/commit/2d652244c923133f33183638143ea1235cae7af0))
+* [[IOPID-3332](https://pagopa.atlassian.net/browse/IOPID-3332)] Update active session login flow with final error code and header name ([#7340](https://github.com/pagopa/io-app/issues/7340)) ([d512245](https://github.com/pagopa/io-app/commit/d512245666c1cefab8d20d72bc66b1cd9be59820))
+
 ## [3.13.0-rc.8](https://github.com/pagopa/io-app/compare/3.13.0-rc.7...3.13.0-rc.8) (2025-09-16)
 
 
