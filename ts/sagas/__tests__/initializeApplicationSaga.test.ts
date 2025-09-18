@@ -5,7 +5,6 @@ import { InitializedProfile } from "../../../definitions/backend/InitializedProf
 import mockedProfile from "../../__mocks__/initializedProfile";
 
 import { sessionExpired } from "../../features/authentication/common/store/actions";
-import { resetProfileState } from "../../features/settings/common/store/actions";
 import {
   sessionInfoSelector,
   sessionTokenSelector
@@ -111,8 +110,6 @@ describe("initializeApplicationSaga", () => {
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
       .next()
-      .put(resetProfileState())
-      .next()
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
@@ -170,8 +167,6 @@ describe("initializeApplicationSaga", () => {
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
       .next(pot.some(profile))
-      .put(resetProfileState())
-      .next()
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
@@ -224,8 +219,6 @@ describe("initializeApplicationSaga", () => {
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
       .next(pot.some(profile))
-      .put(resetProfileState())
-      .next()
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
@@ -283,8 +276,6 @@ describe("initializeApplicationSaga", () => {
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
       .next(pot.some(profile))
-      .put(resetProfileState())
-      .next()
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
@@ -355,8 +346,6 @@ describe("initializeApplicationSaga", () => {
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
       .next(pot.some(profile))
-      .put(resetProfileState())
-      .next()
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
@@ -414,8 +403,6 @@ describe("initializeApplicationSaga", () => {
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
       .next(pot.some(profile))
-      .put(resetProfileState())
-      .next()
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
