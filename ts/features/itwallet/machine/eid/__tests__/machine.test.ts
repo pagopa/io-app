@@ -1835,6 +1835,7 @@ describe("itwEidIssuanceMachine", () => {
     // Accept Credential Issuer privacy policy
     actor.send({ type: "accept-ipzs-privacy" });
     expect(actor.getSnapshot().value).toStrictEqual("Success");
+    expect(clearSimplifiedActivationRequirements).toHaveBeenCalledTimes(1);
   });
 
   it("Should start the simplified activation flow with credentials upgrade only", onDone => {
@@ -1868,6 +1869,7 @@ describe("itwEidIssuanceMachine", () => {
     });
 
     actor.send({ type: "accept-ipzs-privacy" });
+    expect(clearSimplifiedActivationRequirements).toHaveBeenCalledTimes(1);
     expect(loadPidIntoContext).toHaveBeenCalledTimes(1);
   });
 });
