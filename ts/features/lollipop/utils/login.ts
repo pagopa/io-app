@@ -101,7 +101,8 @@ export const regenerateKeyGetRedirectsAndVerifySaml = (
   isMixpanelEnabled: boolean | null,
   isFastLogin: boolean,
   dispatch: AppDispatch,
-  idpId?: string
+  idpId?: string,
+  hashedFiscalCode?: string
 ) =>
   pipe(
     TE.tryCatch(
@@ -122,7 +123,8 @@ export const regenerateKeyGetRedirectsAndVerifySaml = (
                     publicKey,
                     DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
                     isFastLogin,
-                    idpId
+                    idpId,
+                    hashedFiscalCode ?? undefined
                   );
                   return getRedirects(loginUri, headers, "SAMLRequest");
                 },

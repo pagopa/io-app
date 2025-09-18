@@ -114,20 +114,19 @@ export const getLollipopLoginHeaders = (
   hashAlgorithm: string,
   isFastLogin: boolean,
   idpId?: string,
-  fiscalCode?: string
+  hashedFiscalCode?: string
 ) => ({
   "x-pagopa-lollipop-pub-key": Buffer.from(JSON.stringify(publicKey)).toString(
     "base64"
   ),
   "x-pagopa-lollipop-pub-key-hash-algo": hashAlgorithm,
   "x-pagopa-app-version": isLocalEnv ? getAppVersion() : undefined,
-  // The `x-pagopa-fiscal-code` header is used to indicate that
-  // the user is performing an active session login.
-  // Its value contains the fiscal code of the already authenticated user,
-  // allowing the backend to perform the necessary validations.
-  // TODO: edit name x-pagopa-fiscal-code when it will be definitive
-  // https://pagopa.atlassian.net/browse/IOPID-3332
-  "x-pagopa-fiscal-code": isLocalEnv ? fiscalCode : undefined,
+  // The `x-pagopa-current-user` header contains the
+  // fiscal code hashed using the sha256 algorithm.
+  // It is used by the backend to verify, during an active session login,
+  // that the user is logging in with the same fiscal code.
+  // If a different fiscal code is used, error 1004 (AUTH_ERRORS.ERROR_1004) will be triggered.
+  "x-pagopa-current-user": hashedFiscalCode ?? undefined,
   "x-pagopa-login-type": isFastLogin ? "LV" : undefined,
   "x-pagopa-idp-id": idpId
 });
