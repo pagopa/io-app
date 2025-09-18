@@ -71,9 +71,8 @@ export const itwEidIssuanceMachine = setup({
     storeEidCredential: notImplemented,
     handleSessionExpired: notImplemented,
     resetWalletInstance: notImplemented,
-    resetItwSimplifiedActivationRequired: notImplemented,
-    flagItwSimplifiedActivationRequired: notImplemented,
-    unflagItwSimplifiedActivationRequired: notImplemented,
+    freezeSimplifiedActivationRequirements: notImplemented,
+    clearSimplifiedActivationRequirements: notImplemented,
 
     /**
      * Analytics
@@ -380,7 +379,8 @@ export const itwEidIssuanceMachine = setup({
       }
     },
     EvaluatingSimplifiedActivationFlow: {
-      entry: "unflagItwSimplifiedActivationRequired",
+      description: "State that manages the wallet's simplified activation flow",
+      entry: "clearSimplifiedActivationRequirements",
       always: [
         {
           guard: "hasLegacyCredentials",
@@ -859,7 +859,7 @@ export const itwEidIssuanceMachine = setup({
               actions: [
                 "storeEidCredential",
                 "trackWalletInstanceCreation",
-                "flagItwSimplifiedActivationRequired"
+                "freezeSimplifiedActivationRequirements"
               ],
               target: "Completed"
             },

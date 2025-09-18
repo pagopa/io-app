@@ -14,8 +14,8 @@ import {
 } from "../../analytics";
 import {
   itwSetAuthLevel,
-  itwFlagItwSimplifiedActivationRequired,
-  itwUnflagItwSimplifiedActivationRequired
+  itwFreezeSimplifiedActivationRequirements,
+  itwClearSimplifiedActivationRequirements
 } from "../../common/store/actions/preferences";
 import {
   itwCredentialsRemoveByType,
@@ -280,12 +280,12 @@ export const createEidIssuanceActionsImplementation = (
     store.dispatch(itwSetAuthLevel(context.identification?.level));
   },
 
-  flagItwSimplifiedActivationRequired: () => {
-    store.dispatch(itwFlagItwSimplifiedActivationRequired());
+  freezeSimplifiedActivationRequirements: () => {
+    store.dispatch(itwFreezeSimplifiedActivationRequirements());
   },
 
-  unflagItwSimplifiedActivationRequired: () => {
-    store.dispatch(itwUnflagItwSimplifiedActivationRequired());
+  clearSimplifiedActivationRequirements: () => {
+    store.dispatch(itwClearSimplifiedActivationRequirements());
   },
 
   loadPidIntoContext: assign<
