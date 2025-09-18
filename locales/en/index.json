@@ -218,6 +218,7 @@
       "copy": "Copy",
       "selectAll": "Seleziona tutto",
       "deselectAll": "Deseleziona tutto",
+      "whatCanYouDo": "What can you do?",
       "visitWebsite": "Vai al sito"
     },
     "navigator": {
@@ -3851,6 +3852,11 @@
           "body": "Attiva le notifiche push: se leggi subito le comunicazioni a valore legale, potresti risparmiare sui costi di raccomandata.",
           "cta": "Attiva notifiche push",
           "toast": "Hai attivato le notifiche push"
+        },
+        "flow": {
+          "fetchingQrData": {
+            "loadingText": "Recupero delle informazioni in corso"
+          }
         }
       },
       "reminderBanner": {
@@ -5831,6 +5837,14 @@
           "ON_EVALUATION": {
             "title": "L’ente sta valutando la tua domanda d’adesione",
             "subtitle": "Quando pronto, riceverai l’esito tramite un messaggio in app."
+          },
+          "FAMILY_UNIT_ALREADY_JOINED": {
+            "title": "Un'altra persona della tua famiglia ha inviato la richiesta",
+            "subtitle": "È possibile inviare una sola richiesta per ogni famiglia anagrafica."
+          },
+          "ONBOARDING_WAITING_LIST": {
+            "title": "Sei in lista d’attesa",
+            "subtitle": "La tua richiesta è in coda. Ti contatteremo se saranno disponibili nuove risorse."
           },
           "PAYMENT_GENERIC_ERROR": {
             "title": "Non siamo riusciti a completare l’operazione",
