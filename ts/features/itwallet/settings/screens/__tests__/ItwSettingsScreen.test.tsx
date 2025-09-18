@@ -7,7 +7,6 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
-import * as preferencesSelectors from "../../../common/store/selectors/preferences";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import * as analytics from "../../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
@@ -31,9 +30,6 @@ describe("ItwSettingsScreen", () => {
     // By default, wallet invalid and no simplified activation
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-      .mockReturnValue(false);
-    jest
-      .spyOn(preferencesSelectors, "itwIsSimplifiedActivationRequiredSelector")
       .mockReturnValue(false);
 
     // Mock actor ref
@@ -68,17 +64,14 @@ describe("ItwSettingsScreen", () => {
     fireEvent.press(getByTestId("itwObtainButtonTestID"));
     expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
-      params: { isL3: false }
+      params: { isL3: true }
     });
   });
 
-  it("shows Revoke CTA, opens alert and confirms sends revoke event when wallet is valid and no upgrade", () => {
+  it("shows Revoke CTA, opens alert and confirms sends revoke event when wallet is valid", () => {
     jest
       .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
       .mockReturnValue(true);
-    jest
-      .spyOn(preferencesSelectors, "itwIsSimplifiedActivationRequiredSelector")
-      .mockReturnValue(false);
     jest
       .spyOn(credentials, "itwCredentialsEidSelector")
       .mockReturnValue(O.some(ItwStoredCredentialsMocks.eid));
@@ -117,34 +110,6 @@ describe("ItwSettingsScreen", () => {
     };
     expect(actorRefValue.send).toHaveBeenCalledWith({
       type: "revoke-wallet-instance"
-    });
-  });
-
-  it("shows Obtain CTA and navigates with isL3=true when wallet is valid but upgrade available", () => {
-    jest
-      .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
-      .mockReturnValue(true);
-    jest
-      .spyOn(preferencesSelectors, "itwIsSimplifiedActivationRequiredSelector")
-      .mockReturnValue(true);
-    jest
-      .spyOn(credentials, "itwCredentialsEidSelector")
-      .mockReturnValue(O.some(ItwStoredCredentialsMocks.eid));
-    jest
-      .spyOn(credentials, "itwCredentialsEidStatusSelector")
-      .mockReturnValue("valid");
-
-    const { getByTestId, queryByTestId } = renderComponent();
-
-    expect(getByTestId("itwObtainButtonTestID")).toBeTruthy();
-    expect(queryByTestId("itwRevokeButtonTestID")).toBeNull();
-    // In this scenario alert component is not shown
-    expect(queryByTestId("ItwEidLifecycleAlertMock")).toBeNull();
-
-    fireEvent.press(getByTestId("itwObtainButtonTestID"));
-    expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.DISCOVERY.INFO,
-      params: { isL3: true }
     });
   });
 });

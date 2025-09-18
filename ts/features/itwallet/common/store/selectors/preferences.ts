@@ -96,11 +96,3 @@ export const itwIsWalletUpgradeMDLDetailsBannerHiddenSelector = (
 ) =>
   state.features.itWallet.preferences.walletUpgradeMDLDetailsBannerHidden ??
   false;
-
-/**
- * Returns whether the user should activate IT-Wallet with the simplified flow,
- * even if he/she already has a valid L3 PID (obtained outside the whitelist).
- */
-export const itwIsSimplifiedActivationRequiredSelector = (state: GlobalState) =>
-  state.features.itWallet.preferences.isItwSimplifiedActivationRequired ??
-  false;
