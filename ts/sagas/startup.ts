@@ -28,7 +28,7 @@ import {
   checkSession,
   watchCheckSessionSaga
 } from "../features/authentication/common/saga/watchCheckSessionSaga";
-import { watchSessionExpiredOrCorruptedSaga } from "../features/authentication/common/saga/watchSessionExpiredSaga";
+import { watchForceLogoutSaga } from "../features/authentication/common/saga/watchForceLogoutSaga";
 import { sessionExpired } from "../features/authentication/common/store/actions";
 import {
   sessionInfoSelector,
@@ -326,7 +326,7 @@ export function* initializeApplicationSaga(
   const keyInfo = yield* call(getKeyInfo);
 
   // Watches for session expiration or corruption and resets the application state accordingly
-  yield* fork(watchSessionExpiredOrCorruptedSaga);
+  yield* fork(watchForceLogoutSaga);
   yield* fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel);
 
   // Instantiate a backend client from the session token

@@ -18,15 +18,13 @@ export enum AUTH_ERRORS {
   ERROR_25 = "25",
   ERROR_1001 = "1001", // This error is tracked as generic error
   ERROR_1002 = "1002", // This error is tracked as generic error
+  ERROR_1004 = "1004", // active session login - different fiscal code
   MISSING_SAML_RESPONSE = "Missing SAMLResponse in ACS",
   MISSING_IDP_ISSUER = "Error: Missing idpIssuer inside configuration", // This error is tracked as generic error
   CIEID_IOS_OPERATION_CANCELED_MESSAGE = "Operazione_annullata_dall'utente",
   CIEID_IOS_INVALID_OPERATION_MESSAGE = "Operazione_non_valida",
   CIEID_OPERATION_CANCEL = "CIEID_OPERATION_CANCEL",
-  GENERIC_ERROR = "GENERIC_ERROR",
-  // TODO: edit code NOT_SAME_CF when it will be definitive
-  // https://pagopa.atlassian.net/browse/IOPID-3332
-  NOT_SAME_CF = "NOT_SAME_CF"
+  GENERIC_ERROR = "GENERIC_ERROR"
 }
 
 export type AuthErrorComponentProps = {
@@ -155,7 +153,7 @@ const AuthErrorComponent = ({
   switch (errorCodeOrMessage) {
     case AUTH_ERRORS.ERROR_1002:
       return <UnlockAccessComponent authLevel={authLevel} />;
-    case AUTH_ERRORS.NOT_SAME_CF:
+    case AUTH_ERRORS.ERROR_1004:
       return <DifferentCFErrorScreen />;
     default:
       return <OperationResultScreenContent {...errorDetails} />;
