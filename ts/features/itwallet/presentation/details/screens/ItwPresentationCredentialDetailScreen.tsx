@@ -81,7 +81,21 @@ export const ItwPresentationCredentialDetailScreen = ({
   const dispatch = useIODispatch();
   const { bottomSheet } = useItwPresentQRCode();
   const { credentialType } = route.params;
-  const credentialOption = useIOSelector(itwCredentialSelector(credentialType));
+
+  /**
+   * Since the driver’s license is mapped as mDL but from the deeplink provided by iPatente
+   * come in as presentation/credential-detail/MDL, it is necessary to enforce a lowercase
+   * check for this case so the correct key is resolved.
+   */
+  const normalizedCredentialType =
+    credentialType.toLowerCase() ===
+    CredentialType.DRIVING_LICENSE.toLowerCase()
+      ? CredentialType.DRIVING_LICENSE
+      : credentialType;
+
+  const credentialOption = useIOSelector(
+    itwCredentialSelector(normalizedCredentialType)
+  );
   const isPendingReview = useIOSelector(itwIsPendingReviewSelector);
 
   const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
@@ -93,7 +107,8 @@ export const ItwPresentationCredentialDetailScreen = ({
        * It is set to true only the first time the driving license detail is viewed.
        */
       if (
-        credentialType === CredentialType.DRIVING_LICENSE &&
+        credentialType.toLowerCase() ===
+          CredentialType.DRIVING_LICENSE.toLowerCase() &&
         isPendingReview === undefined
       ) {
         dispatch(itwSetReviewPending(true));
@@ -134,7 +149,6 @@ export const ItwPresentationCredentialDetailScreen = ({
     // If the credential is not found, we render a screen that allows the user to request that credential.
     return <ItwCredentialNotFound credentialType={credentialType} />;
   }
-
   return (
     <>
       <ItwPresentationCredentialDetail credential={credentialOption.value} />
@@ -216,7 +230,8 @@ export const ItwPresentationCredentialDetail = ({
     const contentClaim = parsedCredential[WellKnownClaim.content];
 
     if (
-      credentialType === CredentialType.DRIVING_LICENSE &&
+      credentialType.toLowerCase() ===
+        CredentialType.DRIVING_LICENSE.toLowerCase() &&
       itwFeaturesEnabled
     ) {
       return {
