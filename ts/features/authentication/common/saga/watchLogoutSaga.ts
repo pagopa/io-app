@@ -18,15 +18,15 @@ import { resetMixpanelSaga } from "../../../../sagas/mixpanel";
 import { backendClientManager } from "../../../../api/BackendClientManager";
 import { apiUrlPrefix } from "../../../../config";
 import { bareSessionTokenSelector } from "../store/selectors";
-import { authenticationSaga } from "./authenticationSaga";
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export function* logoutSaga({ payload }: ActionType<typeof logoutRequest>) {
-  const previousSessionToken = yield* select(bareSessionTokenSelector);
-  const sessionToken = previousSessionToken
-    ? previousSessionToken
-    : yield* call(authenticationSaga);
+  const sessionToken = yield* select(bareSessionTokenSelector);
   const keyInfo = yield* call(getKeyInfo);
+
+  if (!sessionToken) {
+    return;
+  }
 
   const { logout } = backendClientManager.getBackendClient(
     apiUrlPrefix,
