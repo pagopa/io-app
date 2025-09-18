@@ -8,9 +8,9 @@ import {
 } from "../saga/navigation";
 
 jest.mock("../NavigationService");
-jest.mock("../analytics/navigationService");
+jest.mock("../analytics/navigation");
 
-describe("navigationServiceSagas", () => {
+describe("Navigation sagas", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
