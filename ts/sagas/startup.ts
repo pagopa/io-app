@@ -95,7 +95,6 @@ import {
   watchProfileUpsertRequestsSaga
 } from "../features/settings/common/sagas/profile";
 import { watchUserDataProcessingSaga } from "../features/settings/common/sagas/userDataProcessing";
-import { resetProfileState } from "../features/settings/common/store/actions";
 import { loadUserDataProcessing } from "../features/settings/common/store/actions/userDataProcessing";
 import { profileSelector } from "../features/settings/common/store/selectors";
 import { isProfileFirstOnBoarding } from "../features/settings/common/store/utils/guards";
@@ -172,6 +171,7 @@ export function* initializeApplicationSaga(
   const handleSessionExpiration = !!(
     startupAction?.payload && startupAction.payload.handleSessionExpiration
   );
+
   const showIdentificationModal =
     startupAction?.payload?.showIdentificationModalAtStartup ?? true;
 
@@ -220,19 +220,6 @@ export function* initializeApplicationSaga(
    * TODO: https://pagopa.atlassian.net/browse/IOPID-3040
    */
   yield* fork(watchProfileEmailValidationChangedSaga, lastEmailValidated);
-
-  // Reset the profile cached in redux: at each startup we want to load a fresh
-  // user profile.
-  // Might be removable: https://github.com/pagopa/io-app/pull/398/files#diff-8a5b2f3967d681b976fe673762bd1061f5b430130c880c1195b76af06362cf31
-  // It was likely used by the old ingress screen to track check progress
-  // If removed, ensure the condition `if (O.isNone(maybeUserProfile))` is preserved,
-  // as it plays a key role in detecting uninitialized profiles.
-  // TODO: https://pagopa.atlassian.net/browse/IOPID-3042
-
-  if (!handleSessionExpiration) {
-    yield* put(resetProfileState()); // Consider identifying all scenarios where the profile should be reset (e.g. Wallet offline).
-    // It might be worth consolidating them into a single function
-  }
 
   // We need to generate a key in the application startup flow
   // to use this information on old app version already logged in users.
