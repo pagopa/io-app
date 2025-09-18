@@ -6,7 +6,7 @@ import {
   trackMainNavigatorStackReadyTimeout,
   trackNavigationServiceInitializationCompleted,
   trackNavigationServiceInitializationTimeout
-} from "../analytics/navigationService";
+} from "../analytics/navigation";
 
 const navigatorPollingTime = 125 as Millisecond;
 const warningWaitNavigatorTime = 2000 as Millisecond;

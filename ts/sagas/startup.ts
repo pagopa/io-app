@@ -134,7 +134,7 @@ import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import {
   waitForMainNavigator,
   waitForNavigatorServiceInitialization
-} from "../navigation/saga/navigationServiceSagas";
+} from "../navigation/saga/navigation";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
