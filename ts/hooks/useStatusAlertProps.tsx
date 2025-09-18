@@ -227,12 +227,12 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
         break;
 
       case "mini_app_timeout":
-        setBottomSheet(itwOfflineModal?.bottomSheet);
+        setBottomSheet(undefined);
         setConnectivityAlert({
           variant: "info",
           content: I18n.t(`features.itWallet.offline.timeout.alert.content`),
           action: I18n.t(`features.itWallet.offline.timeout.alert.action`),
-          onPress: openItwOfflineBottomSheet
+          onPress: handleAppRestart
         });
         setAlertVisible(true);
         break;
