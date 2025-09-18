@@ -117,6 +117,8 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
   );
 
   const derivedConnectivityState = useDerivedConnectivityState();
+  const prevDerivedConnectivityState = usePrevious(derivedConnectivityState);
+
   const currentStatusMessage = useIOSelector(statusMessageByRouteSelector);
   const currentRoute = useIOSelector(currentRouteSelector);
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
@@ -153,46 +155,19 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
   const handleAppRestart = useAppRestartAction("banner");
 
   useEffect(() => {
-    if (isAlertVisible) {
-      switch (derivedConnectivityState) {
-        case "initial":
-        case "blacklisted":
-          setBottomSheet(undefined);
-          setAlertVisible(false);
-          setConnectivityAlert(undefined);
-          break;
-
-        case "back_online":
-          setBottomSheet(undefined);
-          setConnectivityAlert({
-            variant: "success",
-            content: I18n.t("global.offline.connectionRestored")
-          });
-
-          void mixpanelTrack(
-            "ONLINE_BANNER",
-            buildEventProperties("TECH", undefined, {
-              screen: currentRoute
-            })
-          );
-
-          /**
-           * Removes the "back online" alert after 3 seconds only if the app is not
-           * in the offline mode
-           */
-          setTimeout(() => {
-            setAlertVisible(false);
-            setConnectivityAlert(undefined);
-          }, 3000);
-          break;
-
-        default:
-          break;
-      }
+    if (derivedConnectivityState === prevDerivedConnectivityState) {
+      // Skip if no change on the derived state
       return;
     }
 
     switch (derivedConnectivityState) {
+      case "initial":
+      case "blacklisted":
+        setAlertVisible(false);
+        setBottomSheet(undefined);
+        setConnectivityAlert(undefined);
+        break;
+
       case "mini_app_device_offline":
         setBottomSheet(itwOfflineModal?.bottomSheet);
         setConnectivityAlert({
@@ -279,11 +254,36 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
         );
         break;
 
-      default:
+      case "back_online":
+        setBottomSheet(undefined);
+        setConnectivityAlert({
+          variant: "success",
+          content: I18n.t("global.offline.connectionRestored")
+        });
+
+        void mixpanelTrack(
+          "ONLINE_BANNER",
+          buildEventProperties("TECH", undefined, {
+            screen: currentRoute
+          })
+        );
+
+        /**
+         * Removes the "back online" alert after 3 seconds only if the app is not
+         * in the offline mode
+         */
+        setTimeout(() => {
+          setAlertVisible(false);
+          setConnectivityAlert(undefined);
+        }, 3000);
+        break;
+
+      case "online":
         break;
     }
   }, [
     derivedConnectivityState,
+    prevDerivedConnectivityState,
     handleAppRestart,
     openItwOfflineBottomSheet,
     setAlertVisible,
