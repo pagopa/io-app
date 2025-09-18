@@ -132,7 +132,7 @@ export const SearchScreen = () => {
     [data?.count, navigateToInstitution]
   );
 
-  const renderListFooterComponent = useCallback(() => {
+  const ListFooterComponent = useMemo(() => {
     if (isUpdating) {
       return <ServiceListSkeleton />;
     }
@@ -140,7 +140,7 @@ export const SearchScreen = () => {
     return <VSpacer size={16} />;
   }, [isUpdating]);
 
-  const renderListEmptyComponent = useCallback(() => {
+  const ListEmptyComponent = useMemo(() => {
     if (query.length < MIN_QUERY_LENGTH) {
       return (
         <EmptyState
@@ -167,7 +167,7 @@ export const SearchScreen = () => {
     return null;
   }, [isLoading, query, data?.institutions]);
 
-  const renderListHeaderComponent = useCallback(() => {
+  const ListHeaderComponent = useMemo(() => {
     if ((data?.count ?? 0) > 0) {
       return (
         <ListItemHeader
@@ -204,9 +204,9 @@ export const SearchScreen = () => {
       </ContentWrapper>
       <FlashList
         ItemSeparatorComponent={Divider}
-        ListEmptyComponent={renderListEmptyComponent}
-        ListFooterComponent={renderListFooterComponent}
-        ListHeaderComponent={renderListHeaderComponent}
+        ListEmptyComponent={ListEmptyComponent}
+        ListFooterComponent={ListFooterComponent}
+        ListHeaderComponent={ListHeaderComponent}
         contentContainerStyle={{
           paddingHorizontal: IOVisualCostants.appMarginDefault
         }}
