@@ -8,7 +8,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/Option";
 import I18n from "i18next";
 import React, { useMemo } from "react";
-import { pipe } from "fp-ts/lib/function";
+import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import {
   IOStackNavigationRouteProps,
@@ -61,8 +61,6 @@ import {
   CredentialCtaProps,
   ItwPresentationDetailsScreenBase
 } from "../components/ItwPresentationDetailsScreenBase.tsx";
-import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
-import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils.ts";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
