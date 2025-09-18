@@ -1,6 +1,7 @@
 import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
 import {
+  assign,
   createActor,
   fromPromise,
   StateFrom,
@@ -82,8 +83,8 @@ describe("itwEidIssuanceMachine", () => {
   const trackWalletInstanceRevocation = jest.fn();
   const revokeWalletInstance = jest.fn();
   const storeAuthLevel = jest.fn();
-  const flagItwSimplifiedActivationRequired = jest.fn();
-  const unflagItwSimplifiedActivationRequired = jest.fn();
+  const freezeSimplifiedActivationRequirements = jest.fn();
+  const clearSimplifiedActivationRequirements = jest.fn();
   const loadPidIntoContext = jest.fn();
 
   const mockedMachine = itwEidIssuanceMachine.provide({
@@ -119,9 +120,9 @@ describe("itwEidIssuanceMachine", () => {
       trackWalletInstanceCreation,
       trackWalletInstanceRevocation,
       storeAuthLevel,
-      flagItwSimplifiedActivationRequired,
-      unflagItwSimplifiedActivationRequired,
-      loadPidIntoContext
+      freezeSimplifiedActivationRequirements,
+      clearSimplifiedActivationRequirements,
+      loadPidIntoContext: assign(loadPidIntoContext)
     },
     actors: {
       verifyTrustFederation: fromPromise<void>(verifyTrustFederation),
@@ -1836,9 +1837,9 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("Success");
   });
 
-  // TODO: to complete
-  it.skip("Should start the simplified activation flow with credentials upgrade only", onDone => {
+  it("Should start the simplified activation flow with credentials upgrade only", onDone => {
     isEligibleForItwSimplifiedActivation.mockImplementation(() => true);
+    loadPidIntoContext.mockReturnValue({ eid: {} });
 
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
@@ -1855,12 +1856,13 @@ describe("itwEidIssuanceMachine", () => {
         ] as ReadonlyArray<StoredCredential>
       }
     });
-
     const actor = createActor(mockedMachine, { snapshot });
 
     actor.start();
-    actor.subscribe(snapshot => {
-      if (snapshot.matches("CredentialsUpgrade")) {
+
+    // eslint-disable-next-line sonarjs/no-identical-functions
+    actor.subscribe(snap => {
+      if (snap.matches("CredentialsUpgrade")) {
         onDone();
       }
     });
