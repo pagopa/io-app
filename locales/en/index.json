@@ -3853,6 +3853,20 @@
           "toast": "Hai attivato le notifiche push"
         },
         "flow": {
+          "aarTos": {
+            "title": "Stai per aprire la notifica SEND",
+            "body": {
+              "firstPart":"Le notifiche SEND sono comunicazioni a valore legale inviate da un ente, come esiti di pratiche, rimborsi o multe.\n\nPremendo ",
+              "goToNotification":"Vai alla notifica SEND",
+              "youDeclareThat": " dichiari di aver letto e compreso l’",
+              "privacy": "Informativa Privacy",
+              "andThe": " e i ",
+              "tos": "Termini e Condizioni d’uso",
+              "lineEnding": "."
+            },
+            "primaryAction": "Vai alla notifica SEND",
+            "secondaryAction": "Chiudi"
+          },
           "fetchingQrData": {
             "loadingText": "Recupero delle informazioni in corso"
           }
