@@ -6,6 +6,7 @@ import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
+import { getInstructionsButtonConfig } from "../../../../components/ui/utils/buttons";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import useIDPayFailureSupportModal from "../../common/hooks/useIDPayFailureSupportModal";
 import {
@@ -19,6 +20,9 @@ import {
   selectServiceId
 } from "../machine/selectors";
 import { OnboardingFailureEnum } from "../types/OnboardingFailure";
+import { useIOSelector } from "../../../../store/hooks";
+import { idPayInitiativeConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { getFullLocale } from "../../../../utils/locale";
 
 const IdPayFailureScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
@@ -27,6 +31,7 @@ const IdPayFailureScreen = () => {
   const failureOption = useSelector(selectOnboardingFailure);
   const serviceId = useSelector(selectServiceId);
   const initiative = useSelector(selectInitiative);
+  const locale = getFullLocale();
 
   const initiativeId = pipe(
     initiative,
@@ -45,10 +50,28 @@ const IdPayFailureScreen = () => {
     initiativeId
   );
 
+  const initiativeConfig = useIOSelector(
+    idPayInitiativeConfigSelector(initiativeId)
+  );
+
+  const accessDeniedAction =
+    initiativeConfig && initiativeConfig.url && initiativeConfig.url[locale]
+      ? getInstructionsButtonConfig(initiativeConfig.url[locale])
+      : undefined;
+
   const defaultCloseAction = useMemo(
     () => ({
       label: I18n.t("global.buttons.close"),
       accessibilityLabel: I18n.t("global.buttons.close"),
+      onPress: () => machine.send({ type: "close" })
+    }),
+    [machine]
+  );
+
+  const defaultBackAction = useMemo(
+    () => ({
+      label: I18n.t("global.buttons.back"),
+      accessibilityLabel: I18n.t("global.buttons.back"),
       onPress: () => machine.send({ type: "close" })
     }),
     [machine]
@@ -187,7 +210,7 @@ const IdPayFailureScreen = () => {
           enableAnimatedPictogram: true,
           loop: false
         };
-      case OnboardingFailureEnum.USER_ONBOARDED:
+      case OnboardingFailureEnum.ONBOARDING_ALREADY_ONBOARDED:
         return {
           pictogram: "success",
           title: I18n.t(
@@ -206,7 +229,7 @@ const IdPayFailureScreen = () => {
           ),
           action: defaultCloseAction
         };
-      case OnboardingFailureEnum.ON_EVALUATION:
+      case OnboardingFailureEnum.ONBOARDING_ON_EVALUATION:
         return {
           pictogram: "pending",
           title: I18n.t("idpay.onboarding.failure.message.ON_EVALUATION.title"),
@@ -215,6 +238,31 @@ const IdPayFailureScreen = () => {
           ),
           action: defaultCloseAction
         };
+
+      case OnboardingFailureEnum.ONBOARDING_FAMILY_UNIT_ALREADY_JOINED:
+        return {
+          pictogram: "accessDenied",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.FAMILY_UNIT_ALREADY_JOINED.title"
+          ),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.FAMILY_UNIT_ALREADY_JOINED.subtitle"
+          ),
+          action: defaultBackAction,
+          secondaryAction: accessDeniedAction
+        };
+      case OnboardingFailureEnum.ONBOARDING_WAITING_LIST:
+        return {
+          pictogram: "eventClose",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.ONBOARDING_WAITING_LIST.title"
+          ),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.ONBOARDING_WAITING_LIST.subtitle"
+          ),
+          action: defaultCloseAction
+        };
+
       default:
         return genericErrorProps;
     }
