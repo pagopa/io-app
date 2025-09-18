@@ -58,7 +58,14 @@ type AlertProps = {
   bottomSheet?: JSX.Element;
 };
 
-const useDerivedConnectivityState = () => {
+/**
+ * Helper hook to derive the connectivity state based on the current connectivity status,
+ * the offline access reason, the current route and the startup status, which helps to reduce
+ * the complexity of the main hook.
+ *
+ * @returns the derived connectivity state based on the current connectivity status,
+ */
+export const useDerivedConnectivityState = () => {
   const currentRoute = useIOSelector(currentRouteSelector);
   const isConnected = useIOSelector(isConnectedSelector);
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
@@ -154,6 +161,9 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
 
   const handleAppRestart = useAppRestartAction("banner");
 
+  /**
+   * Effect to handle the connectivity state changes and update the alert and bottom sheet accordingly.
+   */
   useEffect(() => {
     if (derivedConnectivityState === prevDerivedConnectivityState) {
       // Skip if no change on the derived state
