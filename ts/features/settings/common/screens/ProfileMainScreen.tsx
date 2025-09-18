@@ -52,7 +52,6 @@ import {
 } from "../analytics";
 import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
 import { itwIsL3EnabledSelector } from "../../../itwallet/common/store/selectors/preferences";
-import { isDefined } from "../../../../utils/guards";
 
 const consecutiveTapRequired = 4;
 const RESET_COUNTER_TIMEOUT = 2000 as Millisecond;
