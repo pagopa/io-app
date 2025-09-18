@@ -21,8 +21,8 @@ import {
   isL3FeaturesEnabledSelector,
   selectIsLoading
 } from "../../../machine/eid/selectors";
-import SpidLogo from "../../../../../../img/features/itWallet/spid-logo.svg";
-import CiePin from "../../../../../../img/features/itWallet/cie+pin.svg";
+import SpidLogo from "../../../../../../img/features/itWallet/identification/spid_logo.svg";
+import CiePin from "../../../../../../img/features/itWallet/identification/cie_pin.svg";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 
 export type ItwL2IdentificationNavigationParams = {
