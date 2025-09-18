@@ -59,7 +59,7 @@ describe("DifferentCFErrorScreen", () => {
       getByText(I18n.t("authentication.auth_errors.not_same_cf.button"))
     );
 
-    expect(mockDispatch).toHaveBeenCalledTimes(2);
+    expect(mockDispatch).toHaveBeenCalledTimes(1);
 
     expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.LANDING
