@@ -123,7 +123,7 @@ export const aarFlowReducer = (
     case getType(setAarFlowState):
       return isValidAARStateTransition(state.type, action.payload.type)
         ? action.payload
-        : state;
+        : { ...state };
 
     case getType(terminateAarFlow):
       return INITIAL_AAR_FLOW_STATE;
@@ -136,3 +136,5 @@ export const isAAREnabled = (state: GlobalState): boolean =>
 
 export const currentAARFlowData = (state: GlobalState) =>
   state.features.pn.aarFlow;
+export const currentAARFlowStateType = (state: GlobalState) =>
+  state.features.pn.aarFlow.type;

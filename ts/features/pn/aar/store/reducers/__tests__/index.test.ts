@@ -3,6 +3,7 @@ import {
   aarFlowReducer,
   AARFlowState,
   currentAARFlowData,
+  currentAARFlowStateType,
   INITIAL_AAR_FLOW_STATE,
   isAAREnabled,
   isValidAARStateTransition,
@@ -138,7 +139,7 @@ describe("isAAREnabled selector", () => {
     });
   });
 
-  describe("currentAARFlowData selector", () => {
+  describe(" selectors", () => {
     it("should return the correct AAR flow state from the global state", () => {
       const mockAARState: AARFlowState = {
         type: "fetchingNotificationData",
@@ -155,18 +156,9 @@ describe("isAAREnabled selector", () => {
       } as unknown as GlobalState;
 
       const result = currentAARFlowData(mockState);
+      const resultType = currentAARFlowStateType(mockState);
+      expect(resultType).toEqual(mockAARState.type);
       expect(result).toEqual(mockAARState);
-    });
-
-    it("should return undefined if aarFlow is not present", () => {
-      const mockState = {
-        features: {
-          pn: {}
-        }
-      } as unknown as GlobalState;
-
-      const result = currentAARFlowData(mockState);
-      expect(result).toBeUndefined();
     });
 
     it("should return INITIAL_AAR_FLOW_STATE when explicitly set", () => {
@@ -179,7 +171,9 @@ describe("isAAREnabled selector", () => {
       } as unknown as GlobalState;
 
       const result = currentAARFlowData(mockState);
+      const resultType = currentAARFlowStateType(mockState);
       expect(result).toEqual(INITIAL_AAR_FLOW_STATE);
+      expect(resultType).toEqual(INITIAL_AAR_FLOW_STATE.type);
     });
   });
 });

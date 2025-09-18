@@ -10,7 +10,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import * as URL_UTILS from "../../../../../utils/url";
 import PN_ROUTES from "../../../navigation/routes";
 import { setAarFlowState } from "../../store/actions";
-import { sendAARFlowStates } from "../../store/reducers";
+import * as REDUCER from "../../store/reducers";
 import { SendAARTosComponent } from "../SendAARTosComponent";
 
 const qrCodeMock = "TEST";
@@ -20,6 +20,8 @@ const mockPrivacyUrls = {
 };
 
 const privacyUrlSpy = jest.spyOn(REMOTE_CONFIG, "pnPrivacyUrlsSelector");
+const flowDataSpy = jest.spyOn(REDUCER, "currentAARFlowData");
+const { sendAARFlowStates } = REDUCER;
 describe("SendAARTosComponent", () => {
   const mockDispatch = jest.fn();
   const mockOpenWebUrl = jest
@@ -75,11 +77,31 @@ describe("SendAARTosComponent", () => {
       expect(mockOpenWebUrl).toHaveBeenCalledWith(mockPrivacyUrls[testId]);
     });
   });
+  it("should go into a ko state if navigated to with an invalid aar state", () => {
+    expect(mockDispatch).toHaveBeenCalledTimes(0);
+    renderComponent(qrCodeMock, false);
+    expect(mockDispatch).toHaveBeenCalledTimes(1);
+    expect(mockDispatch).toHaveBeenCalledWith(
+      setAarFlowState({
+        type: sendAARFlowStates.ko,
+        previousState: {
+          type: sendAARFlowStates.fetchingQRData,
+          qrCode: qrCodeMock
+        }
+      })
+    );
+  });
 });
-const renderComponent = (qr: string) => {
+const renderComponent = (qr: string, isRightState = true) => {
+  flowDataSpy.mockImplementation(() => ({
+    type: isRightState
+      ? sendAARFlowStates.displayingAARToS
+      : sendAARFlowStates.fetchingQRData,
+    qrCode: qr
+  }));
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    () => <SendAARTosComponent qrCode={qr} />,
+    () => <SendAARTosComponent />,
     PN_ROUTES.QR_SCAN_FLOW,
     {},
     createStore(appReducer, globalState as any)

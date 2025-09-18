@@ -19,7 +19,7 @@ import {
   trackSendQRCodeScanRedirectDismissed
 } from "../analytics";
 import { setAarFlowState } from "../store/actions";
-import { currentAARFlowData, sendAARFlowStates } from "../store/reducers";
+import { currentAARFlowStateType, sendAARFlowStates } from "../store/reducers";
 import { isSendAARPhase2Enabled } from "../utils/generic";
 import { SendAARLoadingComponent } from "./SendAARLoadingComponent";
 import { SendAARTosComponent } from "./SendAARTosComponent";
@@ -38,8 +38,7 @@ export const SendQRScanFlowHandlerComponent = ({
   );
 
 const SendAARInitialFlowScreen = ({ aarUrl }: SendQRScanHandlerScreenProps) => {
-  const flowData = useIOSelector(currentAARFlowData);
-  const flowState = flowData.type;
+  const flowState = useIOSelector(currentAARFlowStateType);
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
@@ -62,7 +61,7 @@ const SendAARInitialFlowScreen = ({ aarUrl }: SendQRScanHandlerScreenProps) => {
 
   switch (flowState) {
     case sendAARFlowStates.displayingAARToS:
-      return <SendAARTosComponent qrCode={flowData.qrCode} />;
+      return <SendAARTosComponent />;
     default:
       return <SendAARLoadingComponent />;
   }

@@ -1,29 +1,40 @@
 import { BodyProps } from "@pagopa/io-app-design-system";
 import i18n from "i18next";
+import { useEffect } from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { pnPrivacyUrlsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { openWebUrl } from "../../../../utils/url";
 import { setAarFlowState } from "../store/actions";
-import { sendAARFlowStates } from "../store/reducers";
+import { currentAARFlowData, sendAARFlowStates } from "../store/reducers";
 
-type SendAARTosComponentProps = {
-  qrCode: string;
-};
-
-export const SendAARTosComponent = ({ qrCode }: SendAARTosComponentProps) => {
+export const SendAARTosComponent = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const tosConfig = useIOSelector(pnPrivacyUrlsSelector);
+  const flowData = useIOSelector(currentAARFlowData);
+
+  useEffect(() => {
+    if (flowData.type !== sendAARFlowStates.displayingAARToS) {
+      dispatch(
+        setAarFlowState({
+          type: sendAARFlowStates.ko,
+          previousState: flowData
+        })
+      );
+    }
+  }, [flowData, dispatch]);
 
   const onButtonPress = () => {
-    dispatch(
-      setAarFlowState({
-        type: sendAARFlowStates.fetchingQRData,
-        qrCode
-      })
-    );
+    if (flowData.type === sendAARFlowStates.displayingAARToS) {
+      dispatch(
+        setAarFlowState({
+          type: sendAARFlowStates.fetchingQRData,
+          qrCode: flowData.qrCode
+        })
+      );
+    }
   };
 
   const bodyPropsArray: Array<BodyProps> = [
