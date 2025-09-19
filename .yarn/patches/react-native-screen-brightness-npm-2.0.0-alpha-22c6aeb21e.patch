@@ -1,0 +1,11 @@
+diff --git a/android/build.gradle b/android/build.gradle
+index 97e0d445e6e030658e368e979080e6d73bfb5f70..3dd14ce21255b1ed3b122da9c92ef9fb157d74a8 100644
+--- a/android/build.gradle
++++ b/android/build.gradle
+@@ -35,5 +35,5 @@ repositories {
+ 
+ dependencies {
+     implementation 'com.facebook.react:react-native:+'
+-    implementation 'androidx.core:core:1.+'
++    implementation 'androidx.core:core:1.5.0'
+ }
