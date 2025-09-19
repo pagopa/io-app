@@ -13,8 +13,22 @@ import { startupLoadSuccess } from "../../../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../../../store/reducers/startup";
 import { startApplicationInitialization } from "../../../../../store/actions/application";
 import * as error from "../../../../../utils/errors";
+import { bareSessionTokenSelector } from "../../store/selectors";
+import { SessionToken } from "../../../../../types/SessionToken";
+import { KeyInfo } from "../../../../lollipop/utils/crypto";
+import { getKeyInfo } from "../../../../lollipop/saga";
 
-const logout = jest.fn();
+const sessionToken: SessionToken = "FAKE_SESSION_TOKEN" as SessionToken;
+const defaultKeyInfo: KeyInfo = {
+  keyTag: "FAKE_KEY_TAG",
+  publicKey: {
+    crv: "P_256",
+    kty: "EC",
+    x: "nDbpq45jXUKfWxodyvec3F1e+r0oTSqhakbauVmB59Y=",
+    y: "CtI6Cozk4O5OJ4Q6WyjiUw9/K6TyU0aDdssd25YHZxg="
+  },
+  publicKeyThumbprint: "FAKE_THUMBPRINT"
+};
 
 const logoutRequestAct = logoutRequest({ withApiCall: true });
 const logoutSuccessAct = logoutSuccess();
@@ -30,18 +44,24 @@ jest.mock("../../../../lollipop/saga", () => ({
   // eslint-disable-next-line object-shorthand, require-yield
   deleteCurrentLollipopKeyAndGenerateNewKeyTag: function* () {
     return;
+  },
+  // eslint-disable-next-line object-shorthand, require-yield
+  getKeyInfo: function* () {
+    return;
   }
 }));
 
 describe("logoutSaga", () => {
-  const mockLogoutFn = jest.fn();
   const baseAction = logoutRequest({ withApiCall: true });
 
   it("handles successful logout (status 200)", () => {
-    testSaga(logoutSaga, mockLogoutFn, baseAction)
+    testSaga(logoutSaga, baseAction)
       .next()
-      .call(mockLogoutFn, {})
-      .next(E.right({ status: 200 }))
+      .select(bareSessionTokenSelector)
+      .next(sessionToken)
+      .call(getKeyInfo)
+      .next(defaultKeyInfo)
+      .next(E.right({ status: 200 })) // Logout success
       .put(logoutSuccess())
       .next()
       .call(resetMixpanelSaga)
@@ -54,9 +74,12 @@ describe("logoutSaga", () => {
   });
 
   it("handles logout with 500 and title", () => {
-    testSaga(logoutSaga, mockLogoutFn, baseAction)
+    testSaga(logoutSaga, baseAction)
       .next()
-      .call(mockLogoutFn, {})
+      .select(bareSessionTokenSelector)
+      .next(sessionToken)
+      .call(getKeyInfo)
+      .next(defaultKeyInfo)
       .next(E.right({ status: 500, value: { title: "Error title" } }))
       .put(logoutFailure({ error: new Error("Error title") }))
       .next()
@@ -70,9 +93,12 @@ describe("logoutSaga", () => {
   });
 
   it("handles logout with 500 without title", () => {
-    testSaga(logoutSaga, mockLogoutFn, baseAction)
+    testSaga(logoutSaga, baseAction)
       .next()
-      .call(mockLogoutFn, {})
+      .select(bareSessionTokenSelector)
+      .next(sessionToken)
+      .call(getKeyInfo)
+      .next(defaultKeyInfo)
       .next(E.right({ status: 500, value: {} }))
       .put(logoutFailure({ error: new Error("Unknown error") }))
       .next()
@@ -95,9 +121,12 @@ describe("logoutSaga", () => {
     const leftResponse = E.left([validationError]);
     const expectedError = new Error(readableReport([validationError]));
 
-    testSaga(logoutSaga, mockLogoutFn, baseAction)
+    testSaga(logoutSaga, baseAction)
       .next()
-      .call(mockLogoutFn, {})
+      .select(bareSessionTokenSelector)
+      .next(sessionToken)
+      .call(getKeyInfo)
+      .next(defaultKeyInfo)
       .next(leftResponse)
       .put(logoutFailure({ error: expectedError }))
       .next()
@@ -114,9 +143,12 @@ describe("logoutSaga", () => {
     const thrownError = new Error("Unexpected error");
     jest.spyOn(error, "convertUnknownToError").mockReturnValue(thrownError);
 
-    testSaga(logoutSaga, mockLogoutFn, baseAction)
+    testSaga(logoutSaga, baseAction)
       .next()
-      .call(mockLogoutFn, {})
+      .select(bareSessionTokenSelector)
+      .next(sessionToken)
+      .call(getKeyInfo)
+      .next(defaultKeyInfo)
       .throw(thrownError)
       .put(logoutFailure({ error: thrownError }))
       .next()
@@ -132,8 +164,12 @@ describe("logoutSaga", () => {
   it("handles logout withApiCall: false", () => {
     const action = logoutRequest({ withApiCall: false });
 
-    testSaga(logoutSaga, mockLogoutFn, action)
+    testSaga(logoutSaga, action)
       .next()
+      .select(bareSessionTokenSelector)
+      .next(sessionToken)
+      .call(getKeyInfo)
+      .next(defaultKeyInfo)
       .put(logoutSuccess())
       .next()
       .call(resetMixpanelSaga)
@@ -148,17 +184,17 @@ describe("logoutSaga", () => {
 
 describe("watchLogoutSaga", () => {
   it("should execute the normal logout flow cancelling the saga", () => {
-    testSaga(watchLogoutSaga, logout)
+    testSaga(watchLogoutSaga)
       .next()
-      .takeLatest(getType(logoutRequest), logoutSaga, logout)
+      .takeLatest(getType(logoutRequest), logoutSaga)
       .next(logoutSuccessAct)
       .isDone();
   });
 
   it("should execute a failed logout flow cancelling the saga", () => {
-    testSaga(watchLogoutSaga, logout)
+    testSaga(watchLogoutSaga)
       .next()
-      .takeLatest(getType(logoutRequest), logoutSaga, logout)
+      .takeLatest(getType(logoutRequest), logoutSaga)
       .next(logoutRequestAct)
       .next(logoutFailureAct)
       .isDone();

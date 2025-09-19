@@ -3,7 +3,8 @@ import {
   LoggedOutWithIdp,
   LoggedInWithoutSessionInfo,
   LoggedInWithSessionInfo,
-  LoggedOutWithoutIdp
+  LoggedOutWithoutIdp,
+  LogoutRequested
 } from "../models";
 
 export function isLoggedOutWithIdp(
@@ -30,6 +31,12 @@ export function isLoggedIn(
   return (
     isLoggedInWithoutSessionInfo(state) || isLoggedInWithSessionInfo(state)
   );
+}
+
+export function isLogoutRequested(
+  state: AuthenticationState
+): state is LogoutRequested {
+  return state.kind === "LogoutRequested";
 }
 
 export function isSessionExpired(

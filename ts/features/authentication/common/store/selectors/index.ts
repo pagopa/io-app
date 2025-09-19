@@ -1,11 +1,13 @@
 import { createSelector } from "reselect";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { Optional } from "@pagopa/io-app-design-system";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   isLoggedIn,
   isLoggedInWithSessionInfo,
   isLoggedOutWithIdp,
+  isLogoutRequested,
   isSessionCorrupted,
   isSessionExpired
 } from "../utils/guards";
@@ -23,9 +25,6 @@ export const loggedOutWithIdpAuthSelector = createSelector(
   authState => (isLoggedOutWithIdp(authState) ? authState : undefined)
 );
 
-export const isLogoutRequested = (state: GlobalState) =>
-  state.authentication.kind === "LogoutRequested";
-
 export const isSessionExpiredSelector = (state: GlobalState) =>
   !isLoggedIn(state.authentication) && isSessionExpired(state.authentication);
 
@@ -36,6 +35,13 @@ export const sessionTokenSelector = (
   state: GlobalState
 ): SessionToken | undefined =>
   isLoggedIn(state.authentication)
+    ? state.authentication.sessionToken
+    : undefined;
+
+export const bareSessionTokenSelector = (
+  state: GlobalState
+): Optional<SessionToken> =>
+  isLogoutRequested(state.authentication)
     ? state.authentication.sessionToken
     : undefined;
 

@@ -1,10 +1,12 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 
-import { call, put, takeLatest } from "typed-redux-saga/macro";
+import { call, put, takeLatest, select } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-import { BackendClient } from "../../../../api/backend";
-import { deleteCurrentLollipopKeyAndGenerateNewKeyTag } from "../../../lollipop/saga";
+import {
+  deleteCurrentLollipopKeyAndGenerateNewKeyTag,
+  getKeyInfo
+} from "../../../lollipop/saga";
 import { startApplicationInitialization } from "../../../../store/actions/application";
 import { logoutFailure, logoutRequest, logoutSuccess } from "../store/actions";
 import { startupLoadSuccess } from "../../../../store/actions/startup";
@@ -13,17 +15,30 @@ import { convertUnknownToError } from "../../../../utils/errors";
 import { resetAssistanceData } from "../../../../utils/supportAssistance";
 import { StartupStatusEnum } from "../../../../store/reducers/startup";
 import { resetMixpanelSaga } from "../../../../sagas/mixpanel";
+import { backendClientManager } from "../../../../api/BackendClientManager";
+import { apiUrlPrefix } from "../../../../config";
+import { bareSessionTokenSelector } from "../store/selectors";
 
-export function* logoutSaga(
-  logout: ReturnType<typeof BackendClient>["logout"],
-  logoutAction: ActionType<typeof logoutRequest>
-) {
-  const { withApiCall } = logoutAction.payload;
+// eslint-disable-next-line sonarjs/cognitive-complexity
+export function* logoutSaga({ payload }: ActionType<typeof logoutRequest>) {
+  const sessionToken = yield* select(bareSessionTokenSelector);
+  const keyInfo = yield* call(getKeyInfo);
+
+  if (!sessionToken) {
+    return;
+  }
+
+  const { logout } = backendClientManager.getBackendClient(
+    apiUrlPrefix,
+    sessionToken,
+    keyInfo
+  );
+
   // Issue a logout request to the backend, asking to delete the session
   // FIXME: if there's no connectivity to the backend, this request will
   //        block for a while.
   try {
-    if (withApiCall) {
+    if (payload.withApiCall) {
       const response: SagaCallReturnType<typeof logout> = yield* call(
         logout,
         {}
@@ -71,8 +86,6 @@ export function* logoutSaga(
 /**
  * Handles the logout flow
  */
-export function* watchLogoutSaga(
-  logout: ReturnType<typeof BackendClient>["logout"]
-) {
-  yield* takeLatest(getType(logoutRequest), logoutSaga, logout);
+export function* watchLogoutSaga() {
+  yield* takeLatest(getType(logoutRequest), logoutSaga);
 }

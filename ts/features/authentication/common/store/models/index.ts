@@ -45,6 +45,7 @@ export type LoggedInWithSessionInfo = Readonly<{
 export type LogoutRequested = Readonly<{
   kind: "LogoutRequested";
   idp: SpidIdp;
+  sessionToken: SessionToken;
   reason: LoggedOutReason;
 }>;
 
