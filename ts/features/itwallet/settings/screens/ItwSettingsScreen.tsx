@@ -8,13 +8,17 @@ import { TxtLinkNode } from "@textlint/ast-node-types";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { Alert, View } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { linkNodeToReactNative } from "../../../../components/IOMarkdown/renderRules";
 import { Renderer } from "../../../../components/IOMarkdown/types";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { trackWalletStartDeactivation } from "../../analytics";
+import {
+  trackItwTapUpgradeBanner,
+  trackWalletStartDeactivation
+} from "../../analytics";
 import { ItwEidLifecycleAlert } from "../../common/components/ItwEidLifecycleAlert";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
@@ -24,6 +28,7 @@ const ItwSettingsScreen = () => {
   const navigation = useIONavigation();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const { name: routeName } = useRoute();
 
   const handleRevokeOnPress = useCallback(() => {
     trackWalletStartDeactivation("ITW_PID");
@@ -48,14 +53,13 @@ const ItwSettingsScreen = () => {
     );
   }, [machineRef]);
 
-  const handleObtainItwOnPress = useCallback(
-    () =>
-      navigation.navigate(ITW_ROUTES.MAIN, {
-        screen: ITW_ROUTES.DISCOVERY.INFO,
-        params: { isL3: true }
-      }),
-    [navigation]
-  );
+  const handleObtainItwOnPress = useCallback(() => {
+    trackItwTapUpgradeBanner(routeName);
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.DISCOVERY.INFO,
+      params: { isL3: true }
+    });
+  }, [navigation, routeName]);
 
   const ctaProps: ButtonSolidProps = useMemo(
     () => ({
