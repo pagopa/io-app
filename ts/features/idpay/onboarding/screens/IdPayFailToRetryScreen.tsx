@@ -1,7 +1,8 @@
 /* eslint-disable functional/immutable-data */
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import { voidType } from "io-ts";
 import { memo, useEffect, useRef, useState } from "react";
 import { AccessibilityInfo, View } from "react-native";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
@@ -9,8 +10,14 @@ import { OperationResultScreenContent } from "../../../../components/screens/Ope
 import ModalSectionStatusComponent from "../../../../components/SectionStatus/modal";
 import { useIODispatch } from "../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { trackIngressServicesSlowDown } from "../../../ingress/analytics";
 import { setIsBlockingScreen } from "../../../ingress/store/actions";
+import {
+  trackIDPayIngressScreenCTA,
+  trackIDPayIngressScreenLoading,
+  trackIDPayIngressScreenTimeout
+} from "../analytics";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
@@ -25,6 +32,19 @@ export const IdPayFailToRetryScreen = () => {
   );
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
+
+  const initiative = useSelector(state => state.context.initiative);
+  const initiativeName = pipe(
+    initiative,
+    O.map(i => i.initiativeName),
+    O.toUndefined
+  );
+
+  const initiativeId = pipe(
+    initiative,
+    O.map(i => i.initiativeId),
+    O.toUndefined
+  );
 
   const state = useSelector(state => state);
 
@@ -67,6 +87,13 @@ export const IdPayFailToRetryScreen = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, machine]);
 
+  useOnFirstRender(() =>
+    trackIDPayIngressScreenLoading({
+      initiativeId,
+      initiativeName
+    })
+  );
+
   if (showBlockingScreen) {
     return <IngressScreenBlockingError />;
   }
@@ -89,12 +116,32 @@ export const IdPayFailToRetryScreen = () => {
 
 const IngressScreenBlockingError = memo(() => {
   const operationRef = useRef<View>(null);
-  const { useActorRef } = IdPayOnboardingMachineContext;
+  const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
+  const initiative = useSelector(state => state.context.initiative);
+
+  const initiativeId = pipe(
+    initiative,
+    O.map(i => i.initiativeId),
+    O.toUndefined
+  );
+
+  const initiativeName = pipe(
+    initiative,
+    O.map(i => i.initiativeName),
+    O.toUndefined
+  );
 
   useEffect(() => {
     setAccessibilityFocus(operationRef);
   }, []);
+
+  useOnFirstRender(() =>
+    trackIDPayIngressScreenTimeout({
+      initiativeId,
+      initiativeName
+    })
+  );
 
   return (
     <OperationResultScreenContent
@@ -109,7 +156,12 @@ const IngressScreenBlockingError = memo(() => {
       }}
       secondaryAction={{
         label: I18n.t("global.buttons.visitWebsite"),
-        onPress: () => voidType
+        onPress: () => {
+          trackIDPayIngressScreenCTA({
+            initiativeId,
+            initiativeName
+          });
+        }
       }}
     />
   );

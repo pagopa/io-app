@@ -21,7 +21,7 @@ const ItwPrivacyWebViewComponent = ({ source, onLoadEnd, onError }: Props) => {
 
   const handleWebViewMessage = (event: WebViewMessageEvent) => {
     const height = parseInt(event.nativeEvent.data, 10);
-    setContentHeight(height * 100);
+    setContentHeight(height);
   };
   return (
     <WebView

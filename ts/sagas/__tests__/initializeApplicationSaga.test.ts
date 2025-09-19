@@ -5,7 +5,6 @@ import { InitializedProfile } from "../../../definitions/backend/InitializedProf
 import mockedProfile from "../../__mocks__/initializedProfile";
 
 import { sessionExpired } from "../../features/authentication/common/store/actions";
-import { resetProfileState } from "../../features/settings/common/store/actions";
 import {
   sessionInfoSelector,
   sessionTokenSelector
@@ -53,7 +52,7 @@ import {
   shouldExitForOfflineAccess,
   watchSessionRefreshInOfflineSaga
 } from "../../features/ingress/saga";
-import { watchSessionExpiredOrCorruptedSaga } from "../../features/authentication/common/saga/watchSessionExpiredSaga";
+import { watchForceLogoutSaga } from "../../features/authentication/common/saga/watchForceLogoutSaga";
 
 const aSessionToken = "a_session_token" as SessionToken;
 const aSessionInfo = O.some({
@@ -111,8 +110,6 @@ describe("initializeApplicationSaga", () => {
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
       .next()
-      .put(resetProfileState())
-      .next()
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
@@ -130,7 +127,7 @@ describe("initializeApplicationSaga", () => {
       .next(aSessionToken)
       .next(trackKeychainFailures)
       .next(getKeyInfo)
-      .fork(watchSessionExpiredOrCorruptedSaga)
+      .fork(watchForceLogoutSaga)
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
@@ -170,8 +167,6 @@ describe("initializeApplicationSaga", () => {
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
       .next(pot.some(profile))
-      .put(resetProfileState())
-      .next()
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
@@ -190,7 +185,7 @@ describe("initializeApplicationSaga", () => {
       .next(aSessionToken)
       .next(trackKeychainFailures)
       .next(getKeyInfo)
-      .fork(watchSessionExpiredOrCorruptedSaga)
+      .fork(watchForceLogoutSaga)
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
@@ -224,8 +219,6 @@ describe("initializeApplicationSaga", () => {
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
       .next(pot.some(profile))
-      .put(resetProfileState())
-      .next()
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
@@ -244,7 +237,7 @@ describe("initializeApplicationSaga", () => {
       .next(aSessionToken)
       .next(trackKeychainFailures)
       .next(getKeyInfo)
-      .fork(watchSessionExpiredOrCorruptedSaga)
+      .fork(watchForceLogoutSaga)
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
@@ -283,8 +276,6 @@ describe("initializeApplicationSaga", () => {
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
       .next(pot.some(profile))
-      .put(resetProfileState())
-      .next()
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
@@ -303,7 +294,7 @@ describe("initializeApplicationSaga", () => {
       .next(aSessionToken)
       .next(trackKeychainFailures)
       .next(getKeyInfo)
-      .fork(watchSessionExpiredOrCorruptedSaga)
+      .fork(watchForceLogoutSaga)
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
@@ -355,8 +346,6 @@ describe("initializeApplicationSaga", () => {
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
       .next(pot.some(profile))
-      .put(resetProfileState())
-      .next()
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
@@ -375,7 +364,7 @@ describe("initializeApplicationSaga", () => {
       .next(aSessionToken)
       .next(trackKeychainFailures)
       .next(getKeyInfo)
-      .fork(watchSessionExpiredOrCorruptedSaga)
+      .fork(watchForceLogoutSaga)
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
@@ -414,8 +403,6 @@ describe("initializeApplicationSaga", () => {
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
       .next(pot.some(profile))
-      .put(resetProfileState())
-      .next()
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
@@ -434,7 +421,7 @@ describe("initializeApplicationSaga", () => {
       .next(aSessionToken)
       .next(trackKeychainFailures)
       .next(getKeyInfo)
-      .fork(watchSessionExpiredOrCorruptedSaga)
+      .fork(watchForceLogoutSaga)
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()

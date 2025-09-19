@@ -420,6 +420,27 @@ export const idPayDetailsRequiresAppUpdateSelector = (state: GlobalState) =>
       })
   );
 
+export const idPayInitiativeConfigSelector = (initiativeId?: string) =>
+  createSelector(remoteConfigSelector, remoteConfig =>
+    pipe(
+      remoteConfig,
+      O.chainNullableK(config =>
+        initiativeId
+          ? config.idPay.initiative_config_map?.[initiativeId]
+          : undefined
+      ),
+      O.filter(initiativeConfig =>
+        isVersionSupported(
+          Platform.OS === "ios"
+            ? initiativeConfig.min_app_version?.ios
+            : initiativeConfig.min_app_version?.android,
+          getAppVersion()
+        )
+      ),
+      O.toUndefined
+    )
+  );
+
 export const absolutePortalLinksFallback = {
   io_web: "https://ioapp.it/",
   io_showcase: "https://io.italia.it/"

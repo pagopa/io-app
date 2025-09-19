@@ -11,8 +11,17 @@ import { useIOSelector } from "../../../../store/hooks";
 import useIDPayFailureSupportModal from "../../common/hooks/useIDPayFailureSupportModal";
 import { idpayInitiativeDetailsSelector } from "../../details/store";
 import { IdPayPaymentMachineContext } from "../machine/provider";
-import { failureSelector, isCancelledSelector } from "../machine/selectors";
+import {
+  dataEntrySelector,
+  failureSelector,
+  isCancelledSelector
+} from "../machine/selectors";
 import { PaymentFailureEnum } from "../types/PaymentFailure";
+import {
+  trackIDPayDetailAuthorizationError,
+  trackIDPayDetailAuthorizationUXSuccess
+} from "../../details/analytics";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 const IDPayPaymentResultScreen = () => {
   const { useActorRef, useSelector } = IdPayPaymentMachineContext;
@@ -20,6 +29,7 @@ const IDPayPaymentResultScreen = () => {
 
   const failureOption = useSelector(failureSelector);
   const isCancelled = useSelector(isCancelledSelector);
+  const data_entry = useSelector(dataEntrySelector);
 
   const isGenericPaymentError = pipe(
     failureOption,
@@ -33,7 +43,8 @@ const IDPayPaymentResultScreen = () => {
     pot.toOption,
     O.map(details => ({
       initiativeId: details.initiativeId,
-      serviceId: details.serviceId
+      serviceId: details.serviceId,
+      initiativeName: details.initiativeName
     })),
     O.toUndefined
   );
@@ -60,6 +71,24 @@ const IDPayPaymentResultScreen = () => {
     }),
     [present]
   );
+
+  useOnFirstRender(() => {
+    if (!isCancelled && !O.isSome(failureOption)) {
+      trackIDPayDetailAuthorizationUXSuccess({
+        initiativeName: initiative?.initiativeName,
+        initiativeId: initiative?.initiativeId,
+        data_entry
+      });
+    }
+    if (O.isSome(failureOption)) {
+      trackIDPayDetailAuthorizationError({
+        initiativeName: initiative?.initiativeName,
+        initiativeId: initiative?.initiativeId,
+        data_entry,
+        reason: failureOption.value
+      });
+    }
+  });
 
   if (O.isSome(failureOption)) {
     return (

@@ -148,6 +148,7 @@ describe("itwEidIssuanceMachine", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     jest.resetAllMocks();
+    jest.useFakeTimers();
   });
 
   it("Should fail if trust federation verification fails", async () => {
@@ -1757,5 +1758,46 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "add-to-wallet" });
 
     expect(actor.getSnapshot().value).toStrictEqual("Success");
+  });
+
+  it("should call navigateToIpzsPrivacyScreen once after 5000ms in TrustFederationVerification state", async () => {
+    const actor = createActor(mockedMachine);
+    verifyTrustFederation.mockImplementation(
+      () => new Promise(resolve => setTimeout(() => resolve({}), 6000))
+    );
+    hasIntegrityKeyTag.mockImplementation(() => true);
+    hasValidWalletInstanceAttestation.mockImplementation(() => true);
+
+    actor.start();
+    actor.send({ type: "start" });
+    actor.send({ type: "accept-tos" });
+
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "TrustFederationVerification"
+    );
+
+    jest.advanceTimersByTime(6000);
+
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    expect(navigateToIpzsPrivacyScreen).toHaveBeenCalledTimes(1);
+  });
+
+  it("should call navigateToL2IdentificationScreen once after 5000ms in TrustFederationVerification state", async () => {
+    const actor = createActor(mockedMachine);
+    verifyTrustFederation.mockImplementation(
+      () => new Promise(resolve => setTimeout(() => resolve({}), 6000))
+    );
+
+    actor.start();
+    actor.send({ type: "start", mode: "reissuance" });
+
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "TrustFederationVerification"
+    );
+
+    jest.advanceTimersByTime(6000);
+
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
+    expect(navigateToL2IdentificationScreen).toHaveBeenCalledTimes(1);
   });
 });

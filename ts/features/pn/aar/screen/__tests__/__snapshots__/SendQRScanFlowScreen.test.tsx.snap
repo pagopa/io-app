@@ -1341,7 +1341,7 @@ exports[`SendQRScanFlowScreen should match snapshot when no app update is requir
                     >
                       <View>
                         <View>
-                          Mock SendQRScanRedirectComponent
+                          Mock SendQRScanFlowHandlerComponent
                         </View>
                         <View>
                           https://test-url.com

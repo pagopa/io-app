@@ -16,6 +16,11 @@ export type AppUpdateFeatureKey =
   | "idpay.initiative_details"
   | "send";
 
+export type RequiredUpdateMixPanelTracking = {
+  onConfirm: () => void;
+  onLanding: () => void;
+};
+
 // Map key -> selector function (it must return true if the app needs to be updated, false otherwise)
 // If you need to check for app update on a specific feature, add a new key here and the selector function
 const featureUpdateSelectorMap: Record<
@@ -32,15 +37,20 @@ const featureUpdateSelectorMap: Record<
  * HOC that shows UpdateAppModal if the feature requires an app update, otherwise shows the wrapped component.
  * @param WrappedComponent - The component to wrap
  * @param featureKey - The key of the feature to check
+ * @param mixPanelTracking - Optional MixPanel tracking function to be called when the update modal is shown it must be an object with two properties:
+ *  - onConfirm: function to be called when the user confirms to update the app
+ *  - onLanding: function to be called when the user lands on the update screen
+ * @returns The wrapped component or the UpdateAppModal if the feature requires an app update
  */
 export function withAppRequiredUpdate<P>(
   WrappedComponent: ComponentType<P>,
-  featureKey: AppUpdateFeatureKey
+  featureKey: AppUpdateFeatureKey,
+  mixPanelTracking?: RequiredUpdateMixPanelTracking
 ): ComponentType<P> {
   return (props: any) => {
     const requiresUpdate = useIOSelector(featureUpdateSelectorMap[featureKey]);
     if (requiresUpdate) {
-      return <UpdateAppAlert />;
+      return <UpdateAppAlert mixPanelTracking={mixPanelTracking} />;
     }
     return <WrappedComponent {...props} />;
   };

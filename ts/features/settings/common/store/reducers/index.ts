@@ -17,6 +17,7 @@ import { Action } from "../../../../../store/actions/types";
 import { ProfileError } from "../types";
 import { isProfileFirstOnBoarding } from "../utils/guards";
 import { isDevEnv } from "../../../../../utils/environment";
+import { loginSuccess } from "../../../../authentication/common/store/actions";
 
 export type ProfileState = pot.Pot<InitializedProfile, ProfileError>;
 
@@ -28,6 +29,7 @@ const reducer = (
 ): ProfileState => {
   switch (action.type) {
     case getType(resetProfileState):
+    case getType(loginSuccess):
       return pot.none;
 
     case getType(profileLoadRequest):

@@ -4,8 +4,7 @@ import {
   IOAppMargin,
   IOColors,
   IOVisualCostants,
-  BodySmall,
-  useIOTheme
+  BodySmall
 } from "@pagopa/io-app-design-system";
 import { useLayoutEffect, memo, useCallback } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
@@ -62,7 +61,6 @@ const barcodeWidth = windowWidth * 0.35;
  */
 const ItwPresentationCredentialFiscalCodeModal = () => {
   const navigation = useIONavigation();
-  const theme = useIOTheme();
   const safeAreaInsets = useSafeAreaInsets();
 
   /**
@@ -112,7 +110,7 @@ const ItwPresentationCredentialFiscalCodeModal = () => {
         ]}
       >
         <View style={styles.container}>
-          <BodySmall weight="Semibold" style={{ alignSelf: "center" }}>
+          <BodySmall weight="Semibold" style={styles.text}>
             {nameSurname}
           </BodySmall>
           <Barcode
@@ -120,10 +118,10 @@ const ItwPresentationCredentialFiscalCodeModal = () => {
             width={barcodeHeigth} // Since it is rotated by 90 degrees, we use the height as width
             height={barcodeWidth} // and the width as height
             format={"CODE39"} // CODE39 it's the encoding format used by the physical TS-CNS card
-            background={IOColors[theme["appBackground-primary"]]}
-            lineColor={IOColors[theme["textBody-default"]]}
+            background={IOColors.white}
+            lineColor={IOColors.black}
           />
-          <H3 style={{ alignSelf: "center" }}>{fiscalCode}</H3>
+          <H3 style={styles.text}>{fiscalCode}</H3>
         </View>
       </View>
     </View>
@@ -141,11 +139,18 @@ const styles = StyleSheet.create({
     paddingVertical: 32,
     rowGap: 4,
     borderColor: IOColors["grey-100"],
+    // Always white regardless of the theme
+    backgroundColor: IOColors.white,
     borderWidth: 1,
     borderRadius: 8
   },
   landscape: {
     transform: [{ rotate: "90deg" }]
+  },
+  text: {
+    alignSelf: "center",
+    // Always black regardless of the theme
+    color: IOColors.black
   }
 });
 

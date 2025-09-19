@@ -133,3 +133,6 @@ export const aarFlowReducer = (
 
 export const isAAREnabled = (state: GlobalState): boolean =>
   isAARLocalEnabled(state) && isAARRemoteEnabled(state);
+
+export const currentAARFlowData = (state: GlobalState) =>
+  state.features.pn.aarFlow;

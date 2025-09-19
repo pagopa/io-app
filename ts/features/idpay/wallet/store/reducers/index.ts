@@ -11,12 +11,14 @@ import { isIdPayEnabledSelector } from "../../../../../store/reducers/backendSta
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import {
+  idPayInitiativeWaitingListGet,
   idPayInitiativesFromInstrumentGet,
   idPayWalletGet,
   idpayInitiativesInstrumentDelete,
   idpayInitiativesInstrumentEnroll,
   setIdPayOnboardingSucceeded
 } from "../actions";
+import { ListUsersOnboardingStatusDTO } from "../../../../../../definitions/idpay/ListUsersOnboardingStatusDTO";
 
 export type IdPayWalletState = {
   initiatives: pot.Pot<WalletDTO, NetworkError>;
@@ -29,13 +31,15 @@ export type IdPayWalletState = {
   // this will be populated on selection and reset when not loading and
   // we have a response from BE
   onboardingSucceeded: boolean;
+  initiativeWaitingList: pot.Pot<ListUsersOnboardingStatusDTO, NetworkError>;
 };
 
 const INITIAL_STATE: IdPayWalletState = {
   initiatives: pot.none,
   initiativesWithInstrument: pot.none,
   initiativesAwaitingStatusUpdate: {},
-  onboardingSucceeded: false
+  onboardingSucceeded: false,
+  initiativeWaitingList: pot.none
 };
 
 const reducer = (
@@ -132,6 +136,21 @@ const reducer = (
         ...state,
         onboardingSucceeded: action.payload
       };
+    case getType(idPayInitiativeWaitingListGet.request):
+      return {
+        ...state,
+        initiativeWaitingList: pot.toLoading(state.initiativeWaitingList)
+      };
+    case getType(idPayInitiativeWaitingListGet.success):
+      return { ...state, initiativeWaitingList: pot.some(action.payload) };
+    case getType(idPayInitiativeWaitingListGet.failure):
+      return {
+        ...state,
+        initiativeWaitingList: pot.toError(
+          state.initiativeWaitingList,
+          action.payload
+        )
+      };
   }
   return state;
 };
@@ -216,6 +235,11 @@ export const idPayInitiativeFromInstrumentPotSelector = (
 export const isIdPayOnboardingSucceededSelector = createSelector(
   selectIdPayWallet,
   wallet => wallet.onboardingSucceeded
+);
+
+export const idPayInitiativeWaitingListSelector = createSelector(
+  selectIdPayWallet,
+  wallet => wallet.initiativeWaitingList
 );
 
 export default reducer;

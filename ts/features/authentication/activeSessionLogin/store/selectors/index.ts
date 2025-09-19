@@ -26,9 +26,6 @@ export const isActiveSessionLoginEnabledSelector = createSelector(
 export const isActiveSessionLoginSelector = (state: GlobalState) =>
   state.features.loginFeatures.activeSessionLogin.isActiveSessionLogin ?? false;
 
-export const activeSessionLoginFailedSelector = (state: GlobalState) =>
-  state.features.loginFeatures.activeSessionLogin.isActiveSessionLoginFailed;
-
 export const activeSessionUserLoggedSelector = (state: GlobalState) =>
   state.features.loginFeatures.activeSessionLogin.isUserLoggedIn;
 

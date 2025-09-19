@@ -446,6 +446,29 @@ const renderListItemInfo = () => (
     />
     <Divider />
     <ListItemInfo label="Label" value={"Value"} icon="gallery" />
+    <ListItemInfo
+      topElement={{
+        type: "badge",
+        componentProps: {
+          text: "Verifica in corso",
+          variant: "warning"
+        }
+      }}
+      value="With badge"
+      icon="hourglass"
+    />
+    <ListItemInfo
+      topElement={{
+        type: "badge",
+        componentProps: {
+          text: "Pagato",
+          variant: "success"
+        }
+      }}
+      value="With badge & label"
+      label="Label"
+      icon="gallery"
+    />
   </DSComponentViewerBox>
 );
 

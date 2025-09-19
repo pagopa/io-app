@@ -2,7 +2,6 @@
  * A screen to display, by a webview, the consent to send user sensitive data
  * to backend and proceed with the onboarding process
  */
-import { VSpacer } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
 import { useCallback, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -11,7 +10,6 @@ import {
   WebViewHttpErrorEvent,
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
-import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { trackLoginCieDataSharingError } from "../../../common/analytics/cieAnalytics";
 import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
@@ -22,17 +20,12 @@ import { SessionToken } from "../../../../../types/SessionToken";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
 import { onLoginUriChanged } from "../../../common/utils/login";
+import { LoaderComponent } from "../../../activeSessionLogin/shared/components/LoaderComponent";
 
 export type CieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
   errorCodeDebugMode?: string;
 };
-
-const LoaderComponent = () => (
-  <LoadingSpinnerOverlay loadingOpacity={1.0} isLoading={true}>
-    <VSpacer size={16} />
-  </LoadingSpinnerOverlay>
-);
 
 const CieConsentDataUsageScreen = () => {
   const route =

@@ -83,6 +83,7 @@ const WebviewComponent = ({ source, playgroundEnabled }: Props) => {
             androidMicrophoneAccessDisabled={true}
             allowsInlineMediaPlayback={true}
             mediaPlaybackRequiresUserAction={true}
+            cacheEnabled={false}
             style={{ flex: 1 }}
             ref={ref}
             onLoadEnd={() => setLoading(false)}

@@ -2,7 +2,7 @@ import { addSeconds, differenceInSeconds, isPast } from "date-fns";
 import { assign, fromPromise, not, setup } from "xstate";
 import { ItwTags } from "../../machine/tags";
 import {
-  CREDENTIALS_MAP,
+  getMixPanelCredential,
   trackItwTrustmarkRenewFailure
 } from "../../analytics";
 import {
@@ -61,7 +61,9 @@ export const itwTrustmarkMachine = setup({
     }),
     showRetryFailureToast: notImplemented,
     trackTrustmarkFailure: ({ context }) => {
-      trackItwTrustmarkRenewFailure(CREDENTIALS_MAP[context.credentialType]);
+      trackItwTrustmarkRenewFailure(
+        getMixPanelCredential(context.credentialType, false)
+      );
     }
   },
   actors: {

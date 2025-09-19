@@ -10,7 +10,10 @@ import {
   useIONavigation
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { CREDENTIALS_MAP, trackItwHasAlreadyCredential } from "../../analytics";
+import {
+  getMixPanelCredential,
+  trackItwHasAlreadyCredential
+} from "../../analytics";
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
 import { itwCredentialSelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
@@ -93,11 +96,11 @@ const InnerComponent = () => {
     useCallback(() => {
       if (isCredentialValid) {
         trackItwHasAlreadyCredential({
-          credential: CREDENTIALS_MAP[credentialType],
+          credential: getMixPanelCredential(credentialType, isWalletValid),
           credential_status: "valid"
         });
       }
-    }, [credentialType, isCredentialValid])
+    }, [credentialType, isCredentialValid, isWalletValid])
   );
 
   if (!isWalletValid) {

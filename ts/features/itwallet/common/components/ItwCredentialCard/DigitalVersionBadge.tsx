@@ -59,6 +59,10 @@ const getColorPropsByScheme = (
     education_enrollment: {
       foreground: "#403C36",
       background: ["#ECECEC", "#E0F2CE"]
+    },
+    residency: {
+      foreground: "#403C36",
+      background: ["#ECECEC", "#F2E4CE"]
     }
   };
 

@@ -5,12 +5,14 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { Fragment, useState } from "react";
 import I18n from "i18next";
+import { Fragment, useState } from "react";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { trackIDPayOnboardingPDNDAcceptance } from "../analytics";
 import IdPayOnboardingStepper from "../components/IdPayOnboardingStepper";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { pdndCriteriaSelector, selectInitiative } from "../machine/selectors";
@@ -63,6 +65,19 @@ export const IdPayPDNDPrerequisitesScreen = () => {
   });
 
   const pdndCriteria = useSelector(pdndCriteriaSelector);
+
+  const initiativeId = pipe(
+    initiative,
+    O.map(i => i.initiativeId),
+    O.getOrElse(() => "")
+  );
+
+  useOnFirstRender(() =>
+    trackIDPayOnboardingPDNDAcceptance({
+      initiativeId,
+      initiativeName
+    })
+  );
 
   return (
     <IOScrollViewWithLargeHeader

@@ -11,6 +11,7 @@ import { PreferredLanguageEnum } from "../../../../../definitions/backend/Prefer
 import { IDPayClient } from "../../common/api/client";
 import {
   IdPayInitiativesFromInstrumentPayloadType,
+  idPayInitiativeWaitingListGet,
   idPayInitiativesFromInstrumentGet,
   idPayInitiativesFromInstrumentRefreshStart,
   idPayInitiativesFromInstrumentRefreshStop,
@@ -25,6 +26,7 @@ import {
 import { handleGetIDPayWallet } from "./handleGetWallet";
 import { handleInitiativeInstrumentDelete } from "./handleInitiativeInstrumentDelete";
 import { handleInitiativeInstrumentEnrollment } from "./handleInitiativeInstrumentEnrollment";
+import { handleGetInitiativeWaitingList } from "./handleGetInitiativeWaitingList";
 
 /**
  * Handle the IDPay Wallet requests
@@ -63,6 +65,14 @@ export function* watchIDPayWalletSaga(
     idpayInitiativesInstrumentDelete.request,
     handleInitiativeInstrumentDelete,
     idPayClient.deleteInstrument,
+    bearerToken,
+    preferredLanguage
+  );
+
+  yield* takeEvery(
+    idPayInitiativeWaitingListGet.request,
+    handleGetInitiativeWaitingList,
+    idPayClient.onboardingInitiativeUserStatus,
     bearerToken,
     preferredLanguage
   );

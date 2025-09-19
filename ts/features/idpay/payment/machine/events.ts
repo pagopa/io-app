@@ -1,6 +1,7 @@
 export type AuthorizePayment = {
   readonly type: "authorize-payment";
   readonly trxCode: string;
+  readonly data_entry?: "qr_code" | "manual";
 };
 
 export type Next = {

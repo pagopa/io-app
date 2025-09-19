@@ -15,6 +15,7 @@ type ItwCredentialClaimsListProps = {
  * This component renders the list of claims for a credential.
  * It dinamically renders the list of claims passed as claims prop in the order they are passed.
  * @param data - the {@link StoredCredential} of the credential.
+ * @param releaserVisible - if true, the releaser metadata is shown at the end of the list (default: true).
  */
 const ItwCredentialPreviewClaimsList = ({
   data,
@@ -23,12 +24,18 @@ const ItwCredentialPreviewClaimsList = ({
   const claims = parseClaims(data.parsedCredential, {
     exclude: [WellKnownClaim.unique_id, WellKnownClaim.link_qr_code]
   });
+  const { credentialType } = data;
 
   return (
     <View>
       {claims.map((elem, index) => (
         <View key={index}>
-          <ItwCredentialClaim claim={elem} isPreview={true} hidden={false} />
+          <ItwCredentialClaim
+            claim={elem}
+            isPreview={true}
+            hidden={false}
+            credentialType={credentialType}
+          />
           {index < claims.length - 1 && <Divider />}
         </View>
       ))}

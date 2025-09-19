@@ -4,7 +4,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 
-import { ComponentProps, useLayoutEffect, useMemo } from "react";
+import { ComponentProps, useCallback, useLayoutEffect, useMemo } from "react";
 import I18n from "i18next";
 import {
   ContextualHelpProps,
@@ -61,6 +61,7 @@ type WithAdditionalActions =
 type PropsWithSupport = SpecificHookProps &
   HeaderHookManagedProps & {
     supportRequest: true;
+    onStartSupportRequest?: () => boolean;
     faqCategories?: ReadonlyArray<FAQsCategoriesType>;
     contextualHelp?: ContextualHelpProps;
     contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
@@ -69,6 +70,7 @@ type PropsWithSupport = SpecificHookProps &
 type PropsWithoutSupport = SpecificHookProps &
   HeaderHookManagedProps & {
     supportRequest?: false;
+    onStartSupportRequest?: never;
     faqCategories?: never;
     contextualHelp?: never;
     contextualHelpMarkdown?: never;
@@ -99,6 +101,7 @@ export const useHeaderSecondLevel = ({
   headerShown = true,
   canGoBack = true,
   supportRequest,
+  onStartSupportRequest = () => true,
   secondAction,
   thirdAction,
   transparent = false,
@@ -117,6 +120,13 @@ export const useHeaderSecondLevel = ({
       contextualHelp
     })
   );
+
+  // Conditionally run startSupportRequest allowing overrides with onStartSupportRequest
+  const handleStartSupportRequest = useCallback(() => {
+    if (onStartSupportRequest()) {
+      startSupportRequest();
+    }
+  }, [onStartSupportRequest, startSupportRequest]);
 
   const navigation = useNavigation();
 
@@ -167,7 +177,7 @@ export const useHeaderSecondLevel = ({
 
     const helpAction: HeaderActionProps = {
       icon: "help",
-      onPress: startSupportRequest,
+      onPress: handleStartSupportRequest,
       accessibilityLabel: I18n.t(
         "global.accessibility.contextualHelp.open.label"
       )
@@ -197,7 +207,7 @@ export const useHeaderSecondLevel = ({
       type: "singleAction",
       firstAction: helpAction
     };
-  }, [supportRequest, startSupportRequest, secondAction, thirdAction]);
+  }, [supportRequest, handleStartSupportRequest, secondAction, thirdAction]);
 
   const headerComponentProps = useMemo(
     () => ({

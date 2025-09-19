@@ -8,7 +8,7 @@ import { SendQRScanFlowScreen } from "../SendQRScanFlowScreen";
 import PN_ROUTES from "../../../navigation/routes";
 import * as device from "../../../../../utils/device";
 
-jest.mock("../../components/SendQRScanRedirectComponent");
+jest.mock("../../components/SendQRScanFlowHandlerComponent");
 
 describe("SendQRScanFlowScreen", () => {
   const mockAarUrl = "https://test-url.com";
