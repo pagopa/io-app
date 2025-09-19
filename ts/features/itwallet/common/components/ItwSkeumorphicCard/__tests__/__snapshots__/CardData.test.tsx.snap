@@ -134,7 +134,7 @@ exports[`CardData should match snapshot for DC back data 1`] = `
               }
               stroke={
                 {
-                  "payload": 4278190080,
+                  "payload": 4279111443,
                   "type": 0,
                 }
               }
