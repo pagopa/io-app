@@ -96,3 +96,10 @@ export const itwIsWalletUpgradeMDLDetailsBannerHiddenSelector = (
 ) =>
   state.features.itWallet.preferences.walletUpgradeMDLDetailsBannerHidden ??
   false;
+
+/**
+ * Returns whether the user has the requirements for IT-Wallet simplified activation.
+ */
+export const itwIsSimplifiedActivationRequired = (state: GlobalState) =>
+  state.features.itWallet.preferences.isItwSimplifiedActivationRequired ??
+  false;

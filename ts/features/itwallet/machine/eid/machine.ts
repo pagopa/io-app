@@ -71,6 +71,8 @@ export const itwEidIssuanceMachine = setup({
     storeEidCredential: notImplemented,
     handleSessionExpired: notImplemented,
     resetWalletInstance: notImplemented,
+    freezeSimplifiedActivationRequirements: notImplemented,
+    clearSimplifiedActivationRequirements: notImplemented,
 
     /**
      * Analytics
@@ -84,6 +86,7 @@ export const itwEidIssuanceMachine = setup({
      */
 
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
+    loadPidIntoContext: notImplemented,
     /**
      * Save the final redirect url in the machine context for later reuse.
      * This action is the same for the three identification methods.
@@ -133,7 +136,8 @@ export const itwEidIssuanceMachine = setup({
     isReissuance: ({ context }) => context.mode === "reissuance",
     isUpgrade: ({ context }) => context.mode === "upgrade",
     isL3FeaturesEnabled: ({ context }) => context.isL3 || false,
-    isL2Fallback: ({ context }) => context.isL2Fallback || false
+    isL2Fallback: ({ context }) => context.isL2Fallback || false,
+    isEligibleForItwSimplifiedActivation: notImplemented
   }
 }).createMachine({
   id: "itwEidIssuanceMachine",
@@ -360,15 +364,33 @@ export const itwEidIssuanceMachine = setup({
         "This state handles the acceptance of the IPZS privacy policy",
       entry: "navigateToIpzsPrivacyScreen",
       on: {
-        "accept-ipzs-privacy": {
-          target: "UserIdentification"
-        },
+        "accept-ipzs-privacy": [
+          {
+            guard: and(["isUpgrade", "isEligibleForItwSimplifiedActivation"]),
+            target: "EvaluatingSimplifiedActivationFlow"
+          },
+          { target: "UserIdentification" }
+        ],
         error: {
           actions: "setFailure",
           target: "#itwEidIssuanceMachine.Failure"
         },
         back: "#itwEidIssuanceMachine.TosAcceptance"
       }
+    },
+    EvaluatingSimplifiedActivationFlow: {
+      description: "State that manages the wallet's simplified activation flow",
+      entry: "clearSimplifiedActivationRequirements",
+      always: [
+        {
+          guard: "hasLegacyCredentials",
+          actions: "loadPidIntoContext",
+          target: "#itwEidIssuanceMachine.CredentialsUpgrade"
+        },
+        {
+          target: "#itwEidIssuanceMachine.Success"
+        }
+      ]
     },
     UserIdentification: {
       description:
@@ -834,7 +856,11 @@ export const itwEidIssuanceMachine = setup({
         DisplayingPreview: {
           on: {
             "add-to-wallet": {
-              actions: ["storeEidCredential", "trackWalletInstanceCreation"],
+              actions: [
+                "storeEidCredential",
+                "trackWalletInstanceCreation",
+                "freezeSimplifiedActivationRequirements"
+              ],
               target: "Completed"
             },
             close: {
