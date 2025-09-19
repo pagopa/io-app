@@ -67,9 +67,54 @@ export const SendAARTosComponent = () => {
     },
     { text: i18n.t("features.pn.aar.flow.aarTos.body.lineEnding") }
   ];
+  const bodyPropsArray: Array<BodyProps> = [
+    {
+      text: i18n.t("features.pn.aar.flow.aarTos.body.firstPart")
+    },
+    {
+      text: i18n.t("features.pn.aar.flow.aarTos.body.goToNotification"),
+      weight: "Semibold"
+    },
+    {
+      text: i18n.t("features.pn.aar.flow.aarTos.body.youDeclareThat")
+    },
+    {
+      asLink: true,
+      weight: "Semibold",
+      avoidPressable: true,
+      text: i18n.t("features.pn.aar.flow.aarTos.body.privacy"),
+      onPress: () => openWebUrl(tosConfig.privacy),
+      testID: "privacy"
+    },
+    { text: i18n.t("features.pn.aar.flow.aarTos.body.andThe") },
+    {
+      asLink: true,
+      weight: "Semibold",
+      avoidPressable: true,
+      text: i18n.t("features.pn.aar.flow.aarTos.body.tos"),
+      onPress: () => openWebUrl(tosConfig.tos),
+      testID: "tos"
+    },
+    { text: i18n.t("features.pn.aar.flow.aarTos.body.lineEnding") }
+  ];
   return (
     <OperationResultScreenContent
+    <OperationResultScreenContent
       testID="AAR_TOS"
+      title={i18n.t("features.pn.aar.flow.aarTos.title")}
+      pictogram="doc"
+      subtitle={bodyPropsArray}
+      action={{
+        label: i18n.t("features.pn.aar.flow.aarTos.primaryAction"),
+        onPress: onButtonPress,
+        testID: "primary_button"
+      }}
+      secondaryAction={{
+        label: i18n.t("features.pn.aar.flow.aarTos.secondaryAction"),
+        onPress: navigation.popToTop,
+        testID: "secondary_button"
+      }}
+    />
       title={i18n.t("features.pn.aar.flow.aarTos.title")}
       pictogram="doc"
       subtitle={bodyPropsArray}

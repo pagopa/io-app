@@ -1,12 +1,16 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 import * as APP_PARAMS from "../../../../../navigation/params/AppParamsList";
+import * as APP_PARAMS from "../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../store/actions/application";
+import * as HOOKS from "../../../../../store/hooks";
 import * as HOOKS from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
 import * as REMOTE_CONFIG from "../../../../../store/reducers/backendStatus/remoteConfig";
+import * as REMOTE_CONFIG from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import * as URL_UTILS from "../../../../../utils/url";
 import * as URL_UTILS from "../../../../../utils/url";
 import PN_ROUTES from "../../../navigation/routes";
 import { setAarFlowState } from "../../store/actions";
@@ -33,11 +37,21 @@ describe("SendAARTosComponent", () => {
     privacyUrlSpy.mockImplementation(() => mockPrivacyUrls);
   });
   afterEach(() => {
+  const mockOpenWebUrl = jest
+    .spyOn(URL_UTILS, "openWebUrl")
+    .mockImplementation();
+
+  beforeAll(() => {
+    jest.spyOn(HOOKS, "useIODispatch").mockImplementation(() => mockDispatch);
+    privacyUrlSpy.mockImplementation(() => mockPrivacyUrls);
+  });
+  afterEach(() => {
     jest.clearAllMocks();
   });
 
   it("dispatches the correct action when the button is pressed", () => {
     const { getByTestId } = renderComponent(qrCodeMock);
+    const button = getByTestId("primary_button");
     const button = getByTestId("primary_button");
     fireEvent.press(button);
 
@@ -47,6 +61,20 @@ describe("SendAARTosComponent", () => {
         qrCode: qrCodeMock
       })
     );
+  });
+  it("quits out of the flow on secondary button press", () => {
+    const mockPopToTop = jest.fn();
+    jest.spyOn(APP_PARAMS, "useIONavigation").mockImplementation(
+      () =>
+        ({
+          popToTop: mockPopToTop
+        } as unknown as ReturnType<typeof APP_PARAMS.useIONavigation>)
+    );
+    const { getByTestId } = renderComponent(qrCodeMock);
+    const button = getByTestId("secondary_button");
+    expect(mockPopToTop).not.toHaveBeenCalled();
+    fireEvent.press(button);
+    expect(mockPopToTop).toHaveBeenCalledTimes(1);
   });
   it("quits out of the flow on secondary button press", () => {
     const mockPopToTop = jest.fn();
