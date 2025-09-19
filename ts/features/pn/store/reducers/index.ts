@@ -9,7 +9,8 @@ import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { isUserSelectedPaymentSelector } from "../../../messages/store/reducers/payments";
 import { thirdPartyFromIdSelector } from "../../../messages/store/reducers/thirdPartyById";
-import { aarFlowReducer, AARFlowState } from "../../aar/store/reducers";
+import { aarFlowReducer } from "../../aar/store/reducers";
+import { AARFlowState } from "../../aar/utils/stateUtils";
 import {
   persistedPnBannerDismissReducer,
   PnBannerDismissState

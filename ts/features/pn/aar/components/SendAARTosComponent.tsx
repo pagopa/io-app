@@ -1,30 +1,14 @@
 import { BodyProps } from "@pagopa/io-app-design-system";
 import i18n from "i18next";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useIOSelector } from "../../../../store/hooks";
 import { pnPrivacyUrlsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { openWebUrl } from "../../../../utils/url";
-import { setAarFlowState } from "../store/actions";
-import { sendAARFlowStates } from "../store/reducers";
+import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
 
-type SendAARTosComponentProps = {
-  qrCode: string;
-};
-
-export const SendAARTosComponent = ({ qrCode }: SendAARTosComponentProps) => {
-  const dispatch = useIODispatch();
-  const navigation = useIONavigation();
+export const SendAARTosComponent = () => {
   const tosConfig = useIOSelector(pnPrivacyUrlsSelector);
-
-  const onButtonPress = () => {
-    dispatch(
-      setAarFlowState({
-        type: sendAARFlowStates.fetchingQRData,
-        qrCode
-      })
-    );
-  };
+  const { goToNextState, terminateFlow } = useSendAarFlowManager();
 
   const bodyPropsArray: Array<BodyProps> = [
     {
@@ -64,12 +48,12 @@ export const SendAARTosComponent = ({ qrCode }: SendAARTosComponentProps) => {
       subtitle={bodyPropsArray}
       action={{
         label: i18n.t("features.pn.aar.flow.aarTos.primaryAction"),
-        onPress: onButtonPress,
+        onPress: goToNextState,
         testID: "primary_button"
       }}
       secondaryAction={{
         label: i18n.t("features.pn.aar.flow.aarTos.secondaryAction"),
-        onPress: navigation.popToTop,
+        onPress: terminateFlow,
         testID: "secondary_button"
       }}
     />

@@ -1,5 +1,5 @@
 import { setAarFlowState, terminateAarFlow } from "..";
-import { AARFlowState, sendAARFlowStates } from "../../reducers";
+import { AARFlowState, sendAARFlowStates } from "../../../utils/stateUtils";
 
 describe("AARFlowStateActions", () => {
   const payload: AARFlowState = {

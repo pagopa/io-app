@@ -1,5 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { AARFlowState } from "../reducers";
+import { AARFlowState } from "../../utils/stateUtils";
 
 export const setAarFlowState =
   createStandardAction("SET_AAR_FLOW_STATE")<AARFlowState>();

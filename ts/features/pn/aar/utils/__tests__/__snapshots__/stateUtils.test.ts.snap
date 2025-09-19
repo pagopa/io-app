@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`stateUtils snapshots flowStates 1`] = `
+{
+  "displayingAARToS": "displayingAARToS",
+  "displayingNotificationData": "displayingNotificationData",
+  "fetchingNotificationData": "fetchingNotificationData",
+  "fetchingQRData": "fetchingQRData",
+  "ko": "ko",
+  "none": "none",
+  "notAddresseeFinal": "notAddresseeFinal",
+}
+`;
+
+exports[`stateUtils snapshots validTransitions 1`] = `
+Map {
+  "none" => Set {
+    "displayingAARToS",
+  },
+  "displayingAARToS" => Set {
+    "fetchingQRData",
+  },
+  "fetchingQRData" => Set {
+    "fetchingNotificationData",
+    "ko",
+  },
+  "fetchingNotificationData" => Set {
+    "displayingNotificationData",
+    "notAddresseeFinal",
+    "ko",
+  },
+  "displayingNotificationData" => Set {},
+  "notAddresseeFinal" => Set {},
+  "ko" => Set {
+    "fetchingQRData",
+    "fetchingNotificationData",
+  },
+}
+`;

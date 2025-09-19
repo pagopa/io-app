@@ -4,9 +4,9 @@ import { SessionToken } from "../../../../../types/SessionToken";
 import { KeyInfo } from "../../../../lollipop/utils/crypto";
 import * as SEND_CLIENT from "../../api/client";
 import { setAarFlowState } from "../../store/actions";
-import { sendAARFlowStates } from "../../store/reducers";
 import * as FETCH_QR_SAGA from "../fetchQrCodeSaga";
 import { aarFlowMasterSaga, watchAarFlowSaga } from "../watchAARFlowSaga";
+import { sendAARFlowStates } from "../../utils/stateUtils";
 
 describe("watchAarFlowSaga", () => {
   const mockSessionToken = "mock-session-token" as SessionToken;
