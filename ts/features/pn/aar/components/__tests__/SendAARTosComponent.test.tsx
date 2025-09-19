@@ -1,29 +1,42 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
+import * as APP_PARAMS from "../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import * as hooks from "../../../../../store/hooks";
+import * as HOOKS from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
+import * as REMOTE_CONFIG from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import * as URL_UTILS from "../../../../../utils/url";
 import PN_ROUTES from "../../../navigation/routes";
 import { setAarFlowState } from "../../store/actions";
 import { sendAARFlowStates } from "../../store/reducers";
 import { SendAARTosComponent } from "../SendAARTosComponent";
 
-jest.mock("../../../../../store/hooks");
-
 const qrCodeMock = "TEST";
+const mockPrivacyUrls = {
+  tos: "TOS_URL",
+  privacy: "PRIV_URL"
+};
+
+const privacyUrlSpy = jest.spyOn(REMOTE_CONFIG, "pnPrivacyUrlsSelector");
 describe("SendAARTosComponent", () => {
   const mockDispatch = jest.fn();
+  const mockOpenWebUrl = jest
+    .spyOn(URL_UTILS, "openWebUrl")
+    .mockImplementation();
 
-  beforeEach(() => {
+  beforeAll(() => {
+    jest.spyOn(HOOKS, "useIODispatch").mockImplementation(() => mockDispatch);
+    privacyUrlSpy.mockImplementation(() => mockPrivacyUrls);
+  });
+  afterEach(() => {
     jest.clearAllMocks();
-    (hooks.useIODispatch as jest.Mock).mockReturnValue(mockDispatch);
   });
 
   it("dispatches the correct action when the button is pressed", () => {
     const { getByTestId } = renderComponent(qrCodeMock);
-    const button = getByTestId("primary-button");
+    const button = getByTestId("primary_button");
     fireEvent.press(button);
 
     expect(mockDispatch).toHaveBeenCalledWith(
@@ -33,9 +46,34 @@ describe("SendAARTosComponent", () => {
       })
     );
   });
+  it("quits out of the flow on secondary button press", () => {
+    const mockPopToTop = jest.fn();
+    jest.spyOn(APP_PARAMS, "useIONavigation").mockImplementation(
+      () =>
+        ({
+          popToTop: mockPopToTop
+        } as unknown as ReturnType<typeof APP_PARAMS.useIONavigation>)
+    );
+    const { getByTestId } = renderComponent(qrCodeMock);
+    const button = getByTestId("secondary_button");
+    expect(mockPopToTop).not.toHaveBeenCalled();
+    fireEvent.press(button);
+    expect(mockPopToTop).toHaveBeenCalledTimes(1);
+  });
   it("should match snapshot", () => {
     const { toJSON } = renderComponent(qrCodeMock);
     expect(toJSON()).toMatchSnapshot();
+  });
+  (["privacy", "tos"] as const).forEach(testId => {
+    it(`should open the ${testId} url on press`, () => {
+      const { getByTestId } = renderComponent(qrCodeMock);
+      const link = getByTestId(testId);
+      expect(mockOpenWebUrl).toHaveBeenCalledTimes(0);
+      fireEvent(link, "press");
+
+      expect(mockOpenWebUrl).toHaveBeenCalledTimes(1);
+      expect(mockOpenWebUrl).toHaveBeenCalledWith(mockPrivacyUrls[testId]);
+    });
   });
 });
 const renderComponent = (qr: string) => {
