@@ -21,9 +21,7 @@ export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => {
         [isItwValid
           ? ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN
           : ITW_ROUTES.DISCOVERY.INFO]: "discovery/info",
-        [isItwValid
-          ? ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL
-          : ITW_ROUTES.ISSUANCE.CREDENTIAL_ASYNC_FLOW_CONTINUATION]: {
+        [ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL]: {
           path: "presentation/credential-detail/:credentialType"
         }
       }
