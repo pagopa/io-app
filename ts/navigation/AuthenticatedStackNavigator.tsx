@@ -42,6 +42,7 @@ import CheckEmailNavigator from "../features/mailCheck/navigation/CheckEmailNavi
 import { MessagesStackNavigator } from "../features/messages/navigation/MessagesNavigator";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { MessagesSearchScreen } from "../features/messages/screens/MessagesSearchScreen";
+import OnboardingNavigator from "../features/onboarding/navigation/OnboardingNavigator.tsx";
 import { PageNotFound } from "../features/pageNotFound/screens/index.tsx";
 import { WalletBarcodeNavigator } from "../features/payments/barcode/navigation/navigator";
 import { PaymentsBarcodeRoutes } from "../features/payments/barcode/navigation/routes";
@@ -70,7 +71,6 @@ import {
   isIdPayEnabledSelector
 } from "../store/reducers/backendStatus/remoteConfig";
 import { isGestureEnabled } from "../utils/navigation";
-import OnboardingNavigator from "../features/onboarding/navigation/OnboardingNavigator.tsx";
 import { AppParamsList } from "./params/AppParamsList";
 import ROUTES from "./routes";
 import { MainTabNavigator } from "./TabNavigator";
@@ -236,7 +236,8 @@ const AuthenticatedStackNavigator = () => {
       <Stack.Group
         screenOptions={{
           headerShown: false,
-          presentation: "modal"
+          /* Avoid buggy modal behavior on Android */
+          presentation: Platform.OS === "ios" ? "modal" : "card"
         }}
       >
         <Stack.Screen
