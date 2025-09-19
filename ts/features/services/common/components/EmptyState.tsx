@@ -30,7 +30,9 @@ export const EmptyState = ({
   <View testID={testID}>
     <VStack style={{ alignItems: "center" }} space={24}>
       <Pictogram name={pictogram} size={120} />
-      <H6 style={styles.text}>{title}</H6>
+      <H6 accessibilityRole="header" style={styles.text}>
+        {title}
+      </H6>
     </VStack>
     {subtitle && (
       <>
