@@ -260,7 +260,7 @@ const DcBackData = ({ claims }: DataComponentProps) => (
             top: `10%`
           }}
         >
-          <QrCodeImage value={qrCode} size={"30%"} />
+          <QrCodeImage value={qrCode} size={"28.5%"} />
         </CardClaimContainer>
       )}
     />
