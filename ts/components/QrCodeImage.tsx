@@ -1,6 +1,10 @@
-import { IOSkeleton } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  IOSkeleton,
+  IOSpacingScale
+} from "@pagopa/io-app-design-system";
 import { memo, useMemo } from "react";
-import { useWindowDimensions, View } from "react-native";
+import { StyleSheet, useWindowDimensions, View } from "react-native";
 import QRCode, { QRCodeProps } from "react-native-qrcode-svg";
 
 export type QrCodeImageProps = {
@@ -20,6 +24,7 @@ export type QrCodeImageProps = {
 };
 
 const defaultAccessibilityLabel = "QR Code";
+const boxPadding: IOSpacingScale = 8;
 
 /**
  * This components renders a QR Code which resolves in the provided value
@@ -33,12 +38,14 @@ const QrCodeImage = ({
   onError
 }: QrCodeImageProps) => {
   const { width } = useWindowDimensions();
+
   const realSize = useMemo<number>(() => {
+    const padding = boxPadding * 2;
     if (typeof size === "number") {
-      return size;
+      return size - padding;
     }
 
-    return (parseFloat(size) / 100.0) * width;
+    return (parseFloat(size) / 100.0) * width - padding;
   }, [size, width]);
 
   return value ? (
@@ -46,6 +53,7 @@ const QrCodeImage = ({
       accessible={true}
       accessibilityRole="image"
       accessibilityLabel={accessibilityLabel}
+      style={styles.whiteFrame}
     >
       <QRCode
         value={value}
@@ -59,6 +67,15 @@ const QrCodeImage = ({
     <IOSkeleton shape="square" size={realSize} radius={16} />
   );
 };
+
+const styles = StyleSheet.create({
+  whiteFrame: {
+    // Enforing white to allow the QR code to be scanned with dark mode
+    backgroundColor: IOColors.white,
+    padding: boxPadding,
+    borderRadius: 8
+  }
+});
 
 const MemoizedQrCodeImage = memo(QrCodeImage);
 export { MemoizedQrCodeImage as QrCodeImage };
