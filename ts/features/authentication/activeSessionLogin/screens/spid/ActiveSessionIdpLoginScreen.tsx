@@ -59,6 +59,8 @@ import {
 } from "../../store/selectors";
 import { ErrorType as SpidLoginErrorType } from "../../../login/idp/store/types";
 
+// TODO: consider changing the loader to unify it and use the same one for both CIE and SPID
+
 const styles = StyleSheet.create({
   refreshIndicatorContainer: {
     position: "absolute",
@@ -102,7 +104,7 @@ const ActiveSessionIdpLoginScreen = () => {
     _isEqual
   );
 
-  // const { requestState } = useIOSelector(standardLoginRequestInfoSelector);
+  const [isFinishingLogin, setIsFinishingLogin] = useState(false);
   const [requestState, setRequestState] = useState<
     pot.Pot<true, SpidLoginErrorType>
   >(pot.none);
@@ -159,6 +161,7 @@ const ActiveSessionIdpLoginScreen = () => {
 
   const handleLoginFailure = useCallback(
     (code?: string, message?: string) => {
+      setIsFinishingLogin(true);
       if (code !== AUTH_ERRORS.ERROR_1004) {
         dispatch(activeSessionLoginFailure());
       }
@@ -197,6 +200,7 @@ const ActiveSessionIdpLoginScreen = () => {
 
   const handleLoginSuccess = useCallback(
     (token: SessionToken) => {
+      setIsFinishingLogin(true);
       handleSendAssistanceLog(choosenTool, `login success`);
       if (idp) {
         dispatch(activeSessionLoginSuccess(token));
@@ -270,7 +274,11 @@ const ActiveSessionIdpLoginScreen = () => {
   const renderMask = () => {
     // in order to prevent graphic glitches when navigating
     // to the error screen the spinner is shown also when the login has failed
-    if (pot.isLoading(requestState) || pot.isError(requestState)) {
+    if (
+      pot.isLoading(requestState) ||
+      pot.isError(requestState) ||
+      isFinishingLogin
+    ) {
       return (
         <View style={styles.refreshIndicatorContainer}>
           <LoadingIndicator testID="loading-indicator" />
@@ -335,7 +343,7 @@ const ActiveSessionIdpLoginScreen = () => {
   const content = useMemo(
     () => (
       <WebView
-        testID="webview-idp-login-screen"
+        testID="webview-active-session-idp-login-screen"
         cacheEnabled={false}
         androidCameraAccessDisabled
         androidMicrophoneAccessDisabled
