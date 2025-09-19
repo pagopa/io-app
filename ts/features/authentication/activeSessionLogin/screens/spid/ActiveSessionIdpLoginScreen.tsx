@@ -19,13 +19,13 @@ import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
 } from "../../../../../hooks/useHeaderSecondLevel";
-import { mixpanelTrack } from "../../../../../mixpanel";
+// import { mixpanelTrack } from "../../../../../mixpanel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { idpContextualHelpDataFromIdSelector } from "../../../../../store/reducers/content";
 import { SessionToken } from "../../../../../types/SessionToken";
-import { trackSpidLoginError } from "../../../../../utils/analytics";
+// import { trackSpidLoginError } from "../../../../../utils/analytics";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import {
   assistanceToolRemoteConfig,
@@ -37,7 +37,7 @@ import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
 import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import {
-  loginFailure,
+  // loginFailure,
   idpLoginUrlChanged
 } from "../../../common/store/actions";
 import {
@@ -47,8 +47,6 @@ import {
 } from "../../../common/utils/login";
 import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
 import { usePosteIDApp2AppEducational } from "../../../login/idp/hooks/usePosteIDApp2AppEducational";
-import { setStandardLoginRequestState } from "../../../login/idp/store/actions";
-import { standardLoginRequestInfoSelector } from "../../../login/idp/store/selectors";
 import { getSpidErrorCodeDescription } from "../../../login/idp/utils/spidErrorCode";
 import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
 import {
@@ -75,6 +73,10 @@ const styles = StyleSheet.create({
   webViewWrapper: { flex: 1 }
 });
 
+// The MP events related to this page have been commented on,
+// pending their correct integration into the flow.
+// Task: https://pagopa.atlassian.net/browse/IOPID-3343
+
 /**
  * A screen that allows the user to login with an IDP.
  * The IDP page is opened in a WebView
@@ -85,11 +87,9 @@ const ActiveSessionIdpLoginScreen = () => {
   // ensuring the re-execution of the `useLollipopLoginSource` hook.
   const { replace } = useIONavigation();
 
-  const idpSelectedActiveSessionLogin = useIOSelector(
-    idpSelectedActiveSessionLoginSelector
-  );
+  const selectedIdp = useIOSelector(idpSelectedActiveSessionLoginSelector);
   const selectedIdpTextData = useIOSelector(
-    idpContextualHelpDataFromIdSelector(idpSelectedActiveSessionLogin?.id),
+    idpContextualHelpDataFromIdSelector(selectedIdp?.id),
     _isEqual
   );
 
@@ -102,28 +102,24 @@ const ActiveSessionIdpLoginScreen = () => {
     _isEqual
   );
 
-  const { requestState } = useIOSelector(standardLoginRequestInfoSelector);
+  // const { requestState } = useIOSelector(standardLoginRequestInfoSelector);
+  const [requestState, setRequestState] = useState<
+    pot.Pot<true, SpidLoginErrorType>
+  >(pot.none);
   const [errorCodeOrMessage, setErrorCodeOrMessage] = useState<
     string | undefined
   >(undefined);
   const [loginTrace, setLoginTrace] = useState<string | undefined>(undefined);
   const posteIdBottomsheet = usePosteIDApp2AppEducational({
-    selectedIdp: idpSelectedActiveSessionLogin,
+    selectedIdp,
     requestState
   });
-
-  const setRequestState = useCallback(
-    (req: pot.Pot<true, SpidLoginErrorType>) => {
-      dispatch(setStandardLoginRequestState(req));
-    },
-    [dispatch]
-  );
 
   const handleOnLollipopCheckFailure = useCallback(() => {
     setRequestState(pot.noneError(SpidLoginErrorType.LOGIN_ERROR));
   }, [setRequestState]);
 
-  const idpId = idpSelectedActiveSessionLogin?.id;
+  const idpId = selectedIdp?.id;
 
   const remoteApiLoginUrlPrefix = useIOSelector(
     remoteApiLoginUrlPrefixSelector
@@ -140,14 +136,14 @@ const ActiveSessionIdpLoginScreen = () => {
   );
 
   const idp = useMemo(() => {
-    const selected = idpSelectedActiveSessionLogin;
+    const selected = selectedIdp;
 
     return selected?.id as keyof IdpData;
-  }, [idpSelectedActiveSessionLogin]);
+  }, [selectedIdp]);
 
   const handleLoadingError = useCallback(
     (error: WebViewErrorEvent | WebViewHttpErrorEvent): void => {
-      trackSpidLoginError(idpSelectedActiveSessionLogin?.id, error);
+      // trackSpidLoginError(selectedIdp?.id, error);
       const webViewHttpError = error as WebViewHttpErrorEvent;
       if (webViewHttpError.nativeEvent.statusCode) {
         const { statusCode, url } = webViewHttpError.nativeEvent;
@@ -158,23 +154,24 @@ const ActiveSessionIdpLoginScreen = () => {
         setRequestState(pot.noneError(SpidLoginErrorType.LOADING_ERROR));
       }
     },
-    [idpSelectedActiveSessionLogin?.id, setRequestState]
+    [setRequestState]
   );
 
   const handleLoginFailure = useCallback(
     (code?: string, message?: string) => {
       if (code !== AUTH_ERRORS.ERROR_1004) {
         dispatch(activeSessionLoginFailure());
-      } else {
-        dispatch(
-          loginFailure({
-            error: new Error(
-              `login failure with code ${code || message || "n/a"}`
-            ),
-            idp
-          })
-        );
       }
+      // else {
+      //   dispatch(
+      //     loginFailure({
+      //       error: new Error(
+      //         `login failure with code ${code || message || "n/a"}`
+      //       ),
+      //       idp
+      //     })
+      //   );
+      // }
 
       const logText = pipe(
         O.fromNullable(code || message),
@@ -195,7 +192,7 @@ const ActiveSessionIdpLoginScreen = () => {
       setRequestState(pot.noneError(SpidLoginErrorType.LOGIN_ERROR));
       setErrorCodeOrMessage(code || message);
     },
-    [dispatch, idp, choosenTool, setRequestState]
+    [dispatch, choosenTool, setRequestState]
   );
 
   const handleLoginSuccess = useCallback(
@@ -241,9 +238,9 @@ const ActiveSessionIdpLoginScreen = () => {
       // if an intent is coming from the IDP login form, extract the fallbackUrl and use it in Linking.openURL
       const idpIntent = getIntentFallbackUrl(url);
       if (O.isSome(idpIntent)) {
-        void mixpanelTrack("SPID_LOGIN_INTENT", {
-          idp: idpSelectedActiveSessionLogin
-        });
+        // void mixpanelTrack("SPID_LOGIN_INTENT", {
+        //   idp: selectedIdp
+        // });
         void Linking.openURL(idpIntent.value);
         return false;
       }
@@ -265,8 +262,8 @@ const ActiveSessionIdpLoginScreen = () => {
       shouldBlockUrlNavigationWhileCheckingLollipop,
       handleLoginFailure,
       handleLoginSuccess,
-      idp,
-      idpSelectedActiveSessionLogin
+      idp
+      // selectedIdp
     ]
   );
 
@@ -322,18 +319,14 @@ const ActiveSessionIdpLoginScreen = () => {
       !activeSessionUserLogged
         ? {
             title: `${I18n.t("authentication.idp_login.headerTitle")} - ${
-              idpSelectedActiveSessionLogin?.name
+              selectedIdp?.name
             }`,
             supportRequest: true,
             contextualHelp,
             faqCategories: ["authentication_SPID"]
           }
         : { title: "", canGoBack: false },
-    [
-      activeSessionUserLogged,
-      idpSelectedActiveSessionLogin?.name,
-      contextualHelp
-    ]
+    [activeSessionUserLogged, selectedIdp?.name, contextualHelp]
   );
 
   useHeaderSecondLevel(headerProps);
@@ -373,7 +366,7 @@ const ActiveSessionIdpLoginScreen = () => {
   // the hook that retrieves the LolliPOP public key has
   // failed because there was no login-url to use OR when
   // the LolliPOP checks are running
-  if (!idpSelectedActiveSessionLogin || !webviewSource) {
+  if (!selectedIdp || !webviewSource) {
     // This internal if handles the case where the initial
     // login-url was not available and so the hook that
     // retrieves the public key cannot produce a valid output
