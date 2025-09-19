@@ -1,15 +1,10 @@
 import * as O from "fp-ts/lib/Option";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
-import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
-import mockedProfile from "../../__mocks__/initializedProfile";
-
 import { sessionExpired } from "../../features/authentication/common/store/actions";
 import {
   sessionInfoSelector,
   sessionTokenSelector
 } from "../../features/authentication/common/store/selectors";
-import { profileSelector } from "../../features/settings/common/store/selectors";
 import { SessionToken } from "../../types/SessionToken";
 import { previousInstallationDataDeleteSaga } from "../installation";
 import {
@@ -25,7 +20,6 @@ import {
   initializeApplicationSaga,
   testWaitForNavigatorServiceInitialization
 } from "../startup";
-import { watchProfileEmailValidationChangedSaga } from "../../features/mailCheck/sagas/watchProfileEmailValidationChangedSaga";
 import { checkAppHistoryVersionSaga } from "../startup/appVersionHistorySaga";
 import {
   checkLollipopSessionAssertionAndInvalidateIfNeeded,
@@ -82,12 +76,6 @@ jest.mock("../../api/backend", () => ({
   BackendClient: jest.fn().mockReturnValue({})
 }));
 
-const profile: InitializedProfile = {
-  ...mockedProfile,
-  is_email_enabled: false,
-  is_email_validated: undefined
-};
-
 describe("initializeApplicationSaga", () => {
   it("should call handleTransientError if check session response is 200 but session is none", () => {
     testSaga(initializeApplicationSaga)
@@ -105,10 +93,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next()
       .fork(notificationPermissionsListener)
-      .next()
-      .select(profileSelector)
-      .next(pot.some(profile))
-      .fork(watchProfileEmailValidationChangedSaga, O.none)
       .next()
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
@@ -163,10 +147,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .fork(notificationPermissionsListener)
       .next()
-      .select(profileSelector)
-      .next(pot.some(profile))
-      .fork(watchProfileEmailValidationChangedSaga, O.none)
-      .next(pot.some(profile))
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
@@ -174,7 +154,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
-
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
       .select(remoteConfigSelector)
@@ -215,10 +194,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .fork(notificationPermissionsListener)
       .next()
-      .select(profileSelector)
-      .next(pot.some(profile))
-      .fork(watchProfileEmailValidationChangedSaga, O.none)
-      .next(pot.some(profile))
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
@@ -226,7 +201,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
-
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
       .select(remoteConfigSelector)
@@ -272,10 +246,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .fork(notificationPermissionsListener)
       .next()
-      .select(profileSelector)
-      .next(pot.some(profile))
-      .fork(watchProfileEmailValidationChangedSaga, O.none)
-      .next(pot.some(profile))
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
@@ -283,7 +253,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
-
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
       .select(remoteConfigSelector)
@@ -342,10 +311,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .fork(notificationPermissionsListener)
       .next()
-      .select(profileSelector)
-      .next(pot.some(profile))
-      .fork(watchProfileEmailValidationChangedSaga, O.none)
-      .next(pot.some(profile))
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
@@ -353,7 +318,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
-
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
       .select(remoteConfigSelector)
@@ -399,10 +363,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .fork(notificationPermissionsListener)
       .next()
-      .select(profileSelector)
-      .next(pot.some(profile))
-      .fork(watchProfileEmailValidationChangedSaga, O.none)
-      .next(pot.some(profile))
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
@@ -410,7 +370,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(shouldExitForOfflineAccess)
       .next()
-
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
       .select(remoteConfigSelector)
