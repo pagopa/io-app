@@ -264,3 +264,5 @@ export const navigateToSPIDLogin = () =>
       screen: AUTHENTICATION_ROUTES.IDP_LOGIN
     })
   );
+
+// evaluate to delete unsed functions

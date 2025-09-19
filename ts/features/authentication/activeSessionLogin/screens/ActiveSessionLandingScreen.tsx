@@ -52,10 +52,7 @@ export const ActiveSessionLandingScreen = () => {
 
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   const {
-    // This code is commented because the SPID
-    // active session login flow will be implemented in this task:
-    // https://pagopa.atlassian.net/browse/IOPID-2929
-    // navigateToIdpSelection,
+    navigateToIdpSelection,
     navigateToCiePinInsertion,
     navigateToCieIdLoginScreen,
     isCieSupported
@@ -193,10 +190,8 @@ export const ActiveSessionLandingScreen = () => {
           testID="landing-button-login-cie"
         />
         <VSpacer size={SPACE_BETWEEN_BUTTONS} />
-        {/* This code is commented because the SPID active
-        session login flow will be implemented in this task:
-        https://pagopa.atlassian.net/browse/IOPID-2929 */}
-        {/* <IOButton
+
+        <IOButton
           fullWidth
           variant="solid"
           color="primary"
@@ -206,11 +201,11 @@ export const ActiveSessionLandingScreen = () => {
           label={I18n.t("authentication.landing.loginSpid")}
           icon="spid"
           onPress={() => {
-            void trackSpidLoginSelected();
+            // void trackSpidLoginSelected();
             navigateToIdpSelection();
           }}
           testID="landing-button-login-spid"
-        /> */}
+        />
         <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
         {insets.bottom !== 0 && <VSpacer size={SPACE_AROUND_BUTTON_LINK} />}
         {bottomSheet}
