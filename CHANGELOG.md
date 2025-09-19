@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.13.0-rc.10](https://github.com/pagopa/io-app/compare/3.13.0-rc.9...3.13.0-rc.10) (2025-09-18)
+
+
+### Features
+
+* [[IOPID-2649](https://pagopa.atlassian.net/browse/IOPID-2649)] Remove `cie_id` FF definition from the generated content definition file  ([#7357](https://github.com/pagopa/io-app/issues/7357)) ([4c77084](https://github.com/pagopa/io-app/commit/4c77084d885ba117b224937b010973ffd9d5d903))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-3005](https://pagopa.atlassian.net/browse/SIW-3005)] Fix offline wallet header for `session_expired` access reason ([#7373](https://github.com/pagopa/io-app/issues/7373)) ([f79c4b6](https://github.com/pagopa/io-app/commit/f79c4b6d1d81da9066ce3e2367730fb5b73c9ae8))
+
 ## [3.13.0-rc.9](https://github.com/pagopa/io-app/compare/3.13.0-rc.8...3.13.0-rc.9) (2025-09-18)
 
 
