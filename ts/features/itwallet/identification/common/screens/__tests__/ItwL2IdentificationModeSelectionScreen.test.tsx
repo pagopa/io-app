@@ -35,11 +35,20 @@ describe("ItwL2IdentificationModeSelectionScreen", () => {
   });
 
   describe("L2IdentificationView (L3 disabled)", () => {
-    it("should show all authentication methods when none are disabled", () => {
+    it("should show CieID and Spid authentication methods in L2", () => {
       const component = renderComponent();
 
       expect(component.queryByTestId("CieID")).not.toBeNull();
       expect(component.queryByTestId("Spid")).not.toBeNull();
+      expect(component.queryByTestId("CiePin")).toBeNull();
+    });
+
+    it("should show all authentication methods in reissuing", () => {
+      const component = renderComponent(false, true);
+
+      expect(component.queryByTestId("CieID")).not.toBeNull();
+      expect(component.queryByTestId("Spid")).not.toBeNull();
+      expect(component.queryByTestId("CiePin")).not.toBeNull();
     });
 
     it("should not show SPID method when it is disabled", () => {
