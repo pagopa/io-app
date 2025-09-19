@@ -1,6 +1,6 @@
 import { KeyInfo } from "../../features/lollipop/utils/crypto";
 import { SessionToken } from "../../types/SessionToken";
-import BackendClientManager from "../BackendClientManager";
+import { TestBackendClientManager } from "../BackendClientManager";
 
 const exampleUrl = "http://www.example.com";
 const exampleSessionToken: SessionToken = "session_token" as SessionToken;
@@ -15,7 +15,7 @@ const exampleKeyInfo: KeyInfo = {
   }
 };
 
-describe(BackendClientManager, () => {
+describe("BackendClientManager", () => {
   it.each([
     {
       description:
@@ -48,7 +48,8 @@ describe(BackendClientManager, () => {
       keyInfo2: { ...exampleKeyInfo, keyTag: "DIFFERENT_KEY_TAG" }
     }
   ])("$description", ({ token1, keyInfo1, token2, keyInfo2 }) => {
-    const backendClientManager = new BackendClientManager();
+    const backendClientManager =
+      new TestBackendClientManager.BackendClientManager!();
     const client1 = backendClientManager.getBackendClient(
       exampleUrl,
       token1,

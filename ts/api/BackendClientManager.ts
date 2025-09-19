@@ -1,8 +1,9 @@
-/* eslint-disable functional/immutable-data */
 import { Nullable } from "@pagopa/io-app-design-system";
+import { isDevEnv } from "./../utils/environment";
+/* eslint-disable functional/immutable-data */
 import { BackendClient } from "./backend";
 
-export default class BackendClientManager {
+class BackendClientManager {
   private client: Nullable<BackendClient> = null;
 
   getBackendClient(...args: Parameters<typeof BackendClient>): BackendClient {
@@ -16,3 +17,9 @@ export default class BackendClientManager {
 }
 
 export const backendClientManager = new BackendClientManager();
+
+export const TestBackendClientManager = isDevEnv
+  ? {
+      BackendClientManager
+    }
+  : {};
