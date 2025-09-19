@@ -12,7 +12,7 @@ PODS:
   - hermes-engine (0.78.2):
     - hermes-engine/Pre-built (= 0.78.2)
   - hermes-engine/Pre-built (0.78.2)
-  - IoReactNativeCie (1.1.1):
+  - IoReactNativeCie (1.1.2):
     - CieSDK (~> 0.1.11)
     - DoubleConversion
     - glog
@@ -2634,7 +2634,7 @@ SPEC CHECKSUMS:
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
   glog: eb93e2f488219332457c3c4eafd2738ddc7e80b8
   hermes-engine: 2771b98fb813fdc6f92edd7c9c0035ecabf9fee7
-  IoReactNativeCie: 34bf4a1de74c5e08e64a5f50871757960c26253a
+  IoReactNativeCie: 6e0a926d1dd883a0eaa1fb3f06bcdcf8ba92fc58
   IoReactNativeIso18013: d4252d62254440257b3fbf3075fc96cb19ea417f
   IOWalletCBOR: 92742ef1cbd1b627ba153d0c7c11b81ad22f45cc
   IOWalletProximity: 1836d6b5df0a64a97e09f355d15d5155f086f830
