@@ -1,6 +1,18 @@
+/* eslint-disable functional/immutable-data */
+import { Nullable } from "@pagopa/io-app-design-system";
 import { BackendClient } from "./backend";
-import { BackendClientManagerModel } from "./models/BackendClientManager.model";
 
-class BackendClientManager extends BackendClientManagerModel {}
+export default class BackendClientManager {
+  private client: Nullable<BackendClient> = null;
 
-export const backendClientManager = new BackendClientManager(BackendClient);
+  getBackendClient(...args: Parameters<typeof BackendClient>): BackendClient {
+    const [, token, keyInfo] = args;
+    if (this.client !== null && this.client.isSameClient(token, keyInfo)) {
+      return this.client;
+    }
+
+    return (this.client = BackendClient(...args));
+  }
+}
+
+export const backendClientManager = new BackendClientManager();
