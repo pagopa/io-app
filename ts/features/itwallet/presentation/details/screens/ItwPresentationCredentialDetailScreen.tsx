@@ -74,10 +74,8 @@ type Props = IOStackNavigationRouteProps<
 /**
  * Component that renders the credential detail screen.
  */
-export const ItwPresentationCredentialDetailScreen = ({
-  navigation,
-  route
-}: Props) => {
+export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
+  const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const { bottomSheet } = useItwPresentQRCode();
   const { credentialType } = route.params;
