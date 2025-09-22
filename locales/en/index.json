@@ -5861,7 +5861,7 @@
             "subtitle": "La tua richiesta è in coda. Ti contatteremo se saranno disponibili nuove risorse."
           },
           "PAYMENT_GENERIC_ERROR": {
-            "title": "Non siamo riusciti a completare l’operazione",
+            "title": "Non è possibile completare la richiesta per questa iniziativa",
             "subtitle": "Siamo già a lavoro per risolvere.  Riprova tra un po’."
           }
         }
