@@ -4,7 +4,7 @@ import { SessionToken } from "../../../../types/SessionToken";
 import { KeyInfo } from "../../../lollipop/utils/crypto";
 import { SendAARClient, createSendAARClientWithLollipop } from "../api/client";
 import { setAarFlowState } from "../store/actions";
-import { sendAARFlowStates } from "../store/reducers";
+import { sendAARFlowStates } from "../utils/stateUtils";
 import { fetchAARQrCodeSaga } from "./fetchQrCodeSaga";
 
 export function* aarFlowMasterSaga(
