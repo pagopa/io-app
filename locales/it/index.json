@@ -5421,6 +5421,21 @@
           "action": "Ottieni IT-Wallet"
         }
       },
+      "settings": {
+        "item": {
+          "title": "IT-Wallet",
+          "description": "Gestisci il tuo portafoglio digitale"
+        },
+        "manage": {
+          "title": "IT-Wallet",
+          "description": "È il tuo portafoglio digitale ufficiale.",
+          "content": "###### Cosa puoi fare con IT-Wallet?\n - Ottieni la versione digitale dei tuoi documenti personali, titoli, attestati\n - Dimostri identità e idoneità alla guida con la Patente digitale\n - Accedi ai servizi digitali della PA in pochi passaggi\n - Usi la Tessera Sanitaria per acquistare farmaci e prenotare visite mediche\n Per saperne di più, [visita il sito IT-Wallet]()",
+          "cta": {
+            "obtain": "Ottieni IT-Wallet",
+            "revoke": "Disattiva IT-Wallet"
+          }
+        }
+      },
       "playgrounds": {
         "environment": {
           "toggle": {
@@ -5882,7 +5897,7 @@
           },
           "PAYMENT_GENERIC_ERROR": {
             "title": "Non siamo riusciti a completare l’operazione",
-            "subtitle": "Siamo già a lavoro per risolvere.  Riprova tra un po’."
+            "subtitle": "Siamo già a lavoro per risolvere. Riprova tra un po’."
           }
         }
       },
