@@ -3870,6 +3870,14 @@
           },
           "fetchingQrData": {
             "loadingText": "Recupero delle informazioni in corso"
+          },
+          "ko": {
+            "notAddresseeFinal": {
+              "title": "La comunicazione non è destinata a te",
+              "body": "Per accedere alle notifiche SEND per conto di un’altra persona, è necessario che chi ha ricevuto la comunicazione ti deleghi tramite il sito web di SEND.",
+              "primaryAction": "Come attivare una delega",
+              "secondaryAction": "Chiudi"
+            }
           }
         }
       },

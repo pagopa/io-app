@@ -1,4 +1,5 @@
 import { act, renderHook } from "@testing-library/react-native";
+import * as URL_UTILS from "../../../../../utils/url";
 import { terminateAarFlow } from "../../store/actions";
 import {
   AARFlowState,
@@ -7,11 +8,14 @@ import {
   sendAARFlowStates
 } from "../../utils/stateUtils";
 import { useSendAarFlowManager } from "../useSendAarFlowManager";
+
 const mockPopToTop = jest.fn();
 const mockReset = jest.fn();
 const mockNavigate = jest.fn();
 const mockDispatch = jest.fn();
 const mockSelector = jest.fn();
+const mockOpenWebUrl = jest.spyOn(URL_UTILS, "openWebUrl").mockImplementation();
+const mockDelegateUrl = "http://www.test.io";
 
 jest.mock("../../../../../navigation/params/AppParamsList", () => ({
   useIONavigation: () => ({
@@ -55,16 +59,23 @@ describe("useSendAarFlowManager", () => {
       act(() => {
         result.current.goToNextState();
       });
-      if (stateKind === "displayingAARToS") {
-        const isValid = isValidAARStateTransition(
-          stateKind,
-          mockDispatch.mock.calls[0][0].payload.type as AARFlowStateName
-        );
-        expect(mockDispatch).toHaveBeenCalledTimes(1);
-        expect(isValid).toBe(true);
-      } else {
-        // this branch is here solely to make sure all transitions are tested
-        expect(mockDispatch).not.toHaveBeenCalled();
+      switch (stateKind) {
+        case sendAARFlowStates.displayingAARToS:
+        case sendAARFlowStates.ko:
+          const isValid = isValidAARStateTransition(
+            stateKind,
+            mockDispatch.mock.calls[0][0].payload.type as AARFlowStateName
+          );
+          expect(mockDispatch).toHaveBeenCalledTimes(1);
+          expect(isValid).toBe(true);
+          break;
+        case sendAARFlowStates.notAddresseeFinal:
+          expect(mockOpenWebUrl).toHaveBeenCalledTimes(1);
+          expect(mockOpenWebUrl).toHaveBeenCalledWith(mockDelegateUrl);
+          break;
+        default:
+          expect(mockDispatch).not.toHaveBeenCalled();
+          break;
       }
     });
   });
