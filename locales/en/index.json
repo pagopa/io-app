@@ -5884,7 +5884,7 @@
           }
         },
         "title": "Per continuare dobbiamo verificare questi dati",
-        "subtitle": "Per accedere all’iniziativa {{service}}, verificheremo con alcuni enti se hai i requisiti.",
+        "subtitle": "Per accedere all’iniziativa {{service}}, consulteremo altri enti per verificare se hai i requisiti previsti",
         "code": {
           "ISEE": "ISEE",
           "BIRTHDAY": "Data di nascita",
