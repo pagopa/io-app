@@ -848,8 +848,15 @@ export const itwEidIssuanceMachine = setup({
       },
       onDone: [
         {
-          guard: and(["hasLegacyCredentials", or(["isReissuance", "isUpgrade"])]),
+          guard: and([
+            "hasLegacyCredentials",
+            or(["isReissuance", "isUpgrade"])
+          ]),
           target: "#itwEidIssuanceMachine.CredentialsUpgrade"
+        },
+        {
+          guard: "isReissuance",
+          actions: ["navigateToWallet"]
         },
         {
           target: "#itwEidIssuanceMachine.Success"
