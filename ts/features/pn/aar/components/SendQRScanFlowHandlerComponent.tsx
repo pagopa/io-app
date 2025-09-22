@@ -41,6 +41,13 @@ const SendAARInitialFlowScreen = ({ aarUrl }: SendQRScanHandlerScreenProps) => {
   const flowData = useIOSelector(currentAARFlowData);
   const flowState = flowData.type;
   const dispatch = useIODispatch();
+  const navigation = useIONavigation();
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerShown: false
+    });
+  }, [navigation]);
 
   useEffect(() => {
     if (flowState === sendAARFlowStates.none) {
@@ -60,10 +67,33 @@ const SendAARInitialFlowScreen = ({ aarUrl }: SendQRScanHandlerScreenProps) => {
       return <SendAARLoadingComponent />;
   }
 };
+
 const SendQrScanRedirect = ({ aarUrl }: SendQRScanHandlerScreenProps) => {
   const store = useIOStore();
   const navigation = useIONavigation();
 
+  const handleCloseScreen = useCallback(() => {
+    trackSendQRCodeScanRedirectDismissed();
+    navigation.popToTop();
+  }, [navigation]);
+
+  useEffect(() => {
+    navigation.setOptions({
+      header: () => (
+        <HeaderSecondLevel
+          title=""
+          type="singleAction"
+          firstAction={{
+            icon: "closeMedium",
+            onPress: handleCloseScreen,
+            accessibilityLabel: I18n.t("global.buttons.close"),
+            testID: "header-close"
+          }}
+        />
+      )
+    });
+    trackSendQRCodeScanRedirect();
+  }, [handleCloseScreen, navigation]);
   const handleOpenSendScreen = useCallback(() => {
     // Analytics
     trackSendQRCodeScanRedirectConfirmed();
@@ -104,29 +134,6 @@ const SendQrScanRedirect = ({ aarUrl }: SendQRScanHandlerScreenProps) => {
     // are already enabled, so just remove the screen
     navigation.popToTop();
   }, [aarUrl, navigation, store]);
-
-  const handleCloseScreen = useCallback(() => {
-    trackSendQRCodeScanRedirectDismissed();
-    navigation.popToTop();
-  }, [navigation]);
-
-  useEffect(() => {
-    navigation.setOptions({
-      header: () => (
-        <HeaderSecondLevel
-          title=""
-          type="singleAction"
-          firstAction={{
-            icon: "closeMedium",
-            onPress: handleCloseScreen,
-            accessibilityLabel: I18n.t("global.buttons.close"),
-            testID: "header-close"
-          }}
-        />
-      )
-    });
-    trackSendQRCodeScanRedirect();
-  }, [handleCloseScreen, navigation]);
 
   return (
     <OperationResultScreenContent
