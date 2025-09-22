@@ -2,13 +2,10 @@ import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { SessionToken } from "../../../../../types/SessionToken";
 import { setAarFlowState } from "../../store/actions";
-import {
-  AARFlowState,
-  currentAARFlowData,
-  sendAARFlowStates
-} from "../../store/reducers";
+import { currentAARFlowData } from "../../store/reducers";
 import { fetchAARQrCodeSaga } from "../fetchQrCodeSaga";
 import { SendAARClient } from "../../api/client";
+import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
 
 describe("fetchQrCodeSaga", () => {
   const aQRCode = "TESTTEST";
