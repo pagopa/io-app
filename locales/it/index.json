@@ -5564,7 +5564,7 @@
         },
         "error": {
           "generic": {
-            "body": "In questo momento non è possibile generare un codice"
+            "body": "Non è stato possibile generare un codice. Riprova tra un po’."
           }
         },
         "loading": {
