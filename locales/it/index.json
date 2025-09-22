@@ -5710,7 +5710,7 @@
           "generateBarcode": "Genera un codice sconto"
         },
         "authorizeButton": "Usa il bonus",
-        "secondaryCta": "Mostra esercenti",
+        "secondaryCta": "Mostra venditori",
         "addExpenseButton": "Aggiungi spesa",
         "IDPayCode": {
           "banner": {
