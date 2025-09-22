@@ -66,5 +66,6 @@ export type ItwParamsList = {
   // OTHERS
   [ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN]: undefined;
   [ITW_ROUTES.WALLET_REVOCATION_SCREEN]: undefined;
+  [ITW_ROUTES.SETTINGS]: undefined;
 } & ItwProximityParamsList &
   ItwPlaygroundParamsList;
