@@ -9,9 +9,7 @@ import { ItwAlreadyActiveScreen } from "../discovery/screens/ItwAlreadyActiveScr
 import { ItwDiscoveryInfoScreen } from "../discovery/screens/ItwDiscoveryInfoScreen";
 import ItwIpzsPrivacyScreen from "../discovery/screens/ItwIpzsPrivacyScreen";
 import { ItwActivateNfcScreen } from "../identification/cie/screens/ItwActivateNfcScreen.tsx";
-import { ItwCieCardReaderL2Screen } from "../identification/cie/screens/ItwCieCardReaderL2Screen.tsx";
 import { ItwCieCardReaderScreen as ItwCieCardReaderL3Screen } from "../identification/cie/screens/ItwCieCardReaderScreen";
-import { ItwCieExpiredOrInvalidScreen } from "../identification/cie/screens/ItwCieExpiredOrInvalidScreen.tsx";
 import { ItwCiePinScreen } from "../identification/cie/screens/ItwCiePinScreen.tsx";
 import { ItwCiePreparationCardScreen } from "../identification/cie/screens/ItwCiePreparationCardScreen.tsx";
 import { ItwCiePreparationPinScreen } from "../identification/cie/screens/ItwCiePreparationPinScreen.tsx";
