@@ -116,7 +116,6 @@ export const installationReducer = (
     case getType(sessionInvalid):
     case getType(logoutRequest): // even if the logout fails
     case getType(clearCache):
-      // check error on firma con IO
       return {
         ...state,
         registeredToken: undefined,
