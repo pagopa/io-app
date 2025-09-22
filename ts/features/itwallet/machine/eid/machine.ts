@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { and, assertEvent, assign, fromPromise, not, setup } from "xstate";
+import { and, assertEvent, assign, fromPromise, not, or, setup } from "xstate";
 import { assert } from "../../../../utils/assert.ts";
 import { trackItWalletIntroScreen } from "../../analytics";
 import {
@@ -848,11 +848,7 @@ export const itwEidIssuanceMachine = setup({
       },
       onDone: [
         {
-          guard: "isReissuance",
-          actions: ["navigateToWallet"]
-        },
-        {
-          guard: and(["hasLegacyCredentials", "isUpgrade"]),
+          guard: and(["hasLegacyCredentials", or(["isReissuance", "isUpgrade"])]),
           target: "#itwEidIssuanceMachine.CredentialsUpgrade"
         },
         {
@@ -873,11 +869,13 @@ export const itwEidIssuanceMachine = setup({
             context.walletInstanceAttestation,
             "Wallet instance attestation must be defined"
           );
+          assert(context.mode, "Issuance mode must be defined");
 
           return {
             pid: context.eid,
             walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
-            credentials: context.legacyCredentials
+            credentials: context.legacyCredentials,
+            issuanceMode: context.mode
           };
         },
         onDone: {
