@@ -4,11 +4,8 @@ import { call, put, select } from "typed-redux-saga/macro";
 import { SessionToken } from "../../../../types/SessionToken";
 import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
-import {
-  AARFlowState,
-  currentAARFlowData,
-  sendAARFlowStates
-} from "../store/reducers";
+import { currentAARFlowData } from "../store/reducers";
+import { AARFlowState, sendAARFlowStates } from "../utils/stateUtils";
 
 export function* fetchAARQrCodeSaga(
   qrcode: string,
