@@ -26,7 +26,6 @@ import {
   checkSession,
   watchCheckSessionSaga
 } from "../features/authentication/common/saga/watchCheckSessionSaga";
-import { watchLogoutSaga } from "../features/authentication/common/saga/watchLogoutSaga";
 import { watchForceLogoutSaga } from "../features/authentication/common/saga/watchForceLogoutSaga";
 import { sessionExpired } from "../features/authentication/common/store/actions";
 import {
@@ -129,6 +128,7 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { getPin } from "../utils/keychain";
+import { backendClientManager } from "../api/BackendClientManager";
 import {
   waitForMainNavigator,
   waitForNavigatorServiceInitialization
@@ -298,28 +298,10 @@ export function* initializeApplicationSaga(
   yield* fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel);
 
   // Instantiate a backend client from the session token
-  const backendClient: ReturnType<typeof BackendClient> = BackendClient(
-    apiUrlPrefix,
-    sessionToken,
-    keyInfo
-  );
+  const backendClient: ReturnType<typeof BackendClient> =
+    backendClientManager.getBackendClient(apiUrlPrefix, sessionToken, keyInfo);
 
   // The following functions all rely on backendClient
-
-  // Now this saga (watchLogoutSaga) is launched using `fork` instead of `spawn`,
-  // meaning it is tied to the lifecycle of the parent saga (`startupSaga`).
-
-  // watchLogoutSaga is launched using `fork` so that it will be cancelled
-  // if the parent saga (`startupSaga`) is cancelled or restarted
-  // (e.g. on session expiration or when coming back online).
-
-  // Originally the logic with spawn was introduced in this PR: https://github.com/pagopa/io-app/pull/1417
-  // to ensure the logout listener remained active independently.
-  // Now changed to `fork` to better align with the parent lifecycle.
-
-  // Watch for requests to logout
-  // This saga handles user state cleanup during logout.
-  yield* fork(watchLogoutSaga, backendClient.logout);
 
   if (zendeskEnabled) {
     yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);
