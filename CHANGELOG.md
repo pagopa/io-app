@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.13.0-canary.7493](https://github.com/pagopa/io-app/compare/3.13.0-rc.10...3.13.0-canary.7493) (2025-09-23)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2759](https://pagopa.atlassian.net/browse/SIW-2759)] Add simplified ITW activation flow ([#7362](https://github.com/pagopa/io-app/issues/7362)) ([0ad1e9f](https://github.com/pagopa/io-app/commit/0ad1e9f04c4f5bd730c7712af88d5b303f48a451))
+* **IT Wallet:** [[SIW-2945](https://pagopa.atlassian.net/browse/SIW-2945)] Add IT Wallet settings screen ([#7355](https://github.com/pagopa/io-app/issues/7355)) ([70bb278](https://github.com/pagopa/io-app/commit/70bb27818b2e662d5efbf351009eb9bdf04380b3))
+* custom navigation Android bar color ([2814498](https://github.com/pagopa/io-app/commit/28144980a91b0f95fd487fddf1870d6f5027175c))
+
+
+### Bug Fixes
+
+* [[IOPAE-1730](https://pagopa.atlassian.net/browse/IOPAE-1730)] Add accessibility `header` role to `EmptyState` ([#7374](https://github.com/pagopa/io-app/issues/7374)) ([d2aa08a](https://github.com/pagopa/io-app/commit/d2aa08ac7d278a0e6ce49a29ef51e3325edd83fc))
+
 ## [3.13.0-rc.10](https://github.com/pagopa/io-app/compare/3.13.0-rc.9...3.13.0-rc.10) (2025-09-18)
 
 
