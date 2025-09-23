@@ -27,7 +27,10 @@ import {
 import ItwCredentialNotFound from "../../../common/components/ItwCredentialNotFound.tsx";
 import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
 import { itwSetReviewPending } from "../../../common/store/actions/preferences.ts";
-import { itwIsPendingReviewSelector } from "../../../common/store/selectors/preferences.ts";
+import {
+  itwIsL3EnabledSelector,
+  itwIsPendingReviewSelector
+} from "../../../common/store/selectors/preferences.ts";
 import { WellKnownClaim } from "../../../common/utils/itwClaimsUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import {
@@ -80,6 +83,8 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   const { bottomSheet } = useItwPresentQRCode();
   const { credentialType } = route.params;
 
+  const isL3 = useIOSelector(itwIsL3EnabledSelector);
+
   /**
    * Since the driver’s license is mapped as mDL but from the deeplink provided by iPatente
    * come in as presentation/credential-detail/MDL, it is necessary to enforce a lowercase
@@ -130,7 +135,9 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
           onPress: () =>
             navigation.replace(ITW_ROUTES.MAIN, {
               screen: ITW_ROUTES.DISCOVERY.INFO,
-              params: {}
+              params: {
+                isL3
+              }
             })
         }}
         secondaryAction={{
@@ -143,7 +150,7 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
 
   if (O.isNone(credentialOption)) {
     // If the credential is not found, we render a screen that allows the user to request that credential.
-    return <ItwCredentialNotFound credentialType={credentialType} />;
+    return <ItwCredentialNotFound credentialType={normalizedCredentialType} />;
   }
   return (
     <>
