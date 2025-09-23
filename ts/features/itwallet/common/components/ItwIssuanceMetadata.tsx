@@ -91,7 +91,7 @@ export const ItwIssuanceMetadata = ({
 }: ItwIssuanceMetadataProps) => {
   const releaserName =
     credential.issuerConf.federation_entity.organization_name;
-  const itwCredential = isItwCredential(credential.credential);
+  const itwCredential = isItwCredential(credential);
   const privacyUrl = useIOSelector(state =>
     generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
