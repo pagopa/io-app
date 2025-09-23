@@ -8,7 +8,6 @@ import { channel } from "redux-saga";
 import {
   call,
   cancel,
-  delay,
   fork,
   put,
   select,
@@ -28,7 +27,6 @@ import {
   checkSession,
   watchCheckSessionSaga
 } from "../features/authentication/common/saga/watchCheckSessionSaga";
-import { watchLogoutSaga } from "../features/authentication/common/saga/watchLogoutSaga";
 import { watchForceLogoutSaga } from "../features/authentication/common/saga/watchForceLogoutSaga";
 import { sessionExpired } from "../features/authentication/common/store/actions";
 import {
@@ -106,7 +104,6 @@ import {
   watchZendeskGetSessionSaga
 } from "../features/zendesk/saga";
 import { formatRequestedTokenString } from "../features/zendesk/utils";
-import { mixpanelTrack } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
 import {
@@ -134,6 +131,11 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { getPin } from "../utils/keychain";
+import { backendClientManager } from "../api/BackendClientManager";
+import {
+  waitForMainNavigator,
+  waitForNavigatorServiceInitialization
+} from "../navigation/saga/navigation";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
@@ -150,8 +152,6 @@ import { checkItWalletIdentitySaga } from "./startup/checkItWalletIdentitySaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
 
 export const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
-const navigatorPollingTime = 125 as Millisecond;
-const warningWaitNavigatorTime = 2000 as Millisecond;
 
 /**
  * Handles the application startup and the main application logic loop
@@ -317,28 +317,10 @@ export function* initializeApplicationSaga(
   yield* fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel);
 
   // Instantiate a backend client from the session token
-  const backendClient: ReturnType<typeof BackendClient> = BackendClient(
-    apiUrlPrefix,
-    sessionToken,
-    keyInfo
-  );
+  const backendClient: ReturnType<typeof BackendClient> =
+    backendClientManager.getBackendClient(apiUrlPrefix, sessionToken, keyInfo);
 
   // The following functions all rely on backendClient
-
-  // Now this saga (watchLogoutSaga) is launched using `fork` instead of `spawn`,
-  // meaning it is tied to the lifecycle of the parent saga (`startupSaga`).
-
-  // watchLogoutSaga is launched using `fork` so that it will be cancelled
-  // if the parent saga (`startupSaga`) is cancelled or restarted
-  // (e.g. on session expiration or when coming back online).
-
-  // Originally the logic with spawn was introduced in this PR: https://github.com/pagopa/io-app/pull/1417
-  // to ensure the logout listener remained active independently.
-  // Now changed to `fork` to better align with the parent lifecycle.
-
-  // Watch for requests to logout
-  // This saga handles user state cleanup during logout.
-  yield* fork(watchLogoutSaga, backendClient.logout);
 
   if (zendeskEnabled) {
     yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);
@@ -740,72 +722,6 @@ export function* initializeApplicationSaga(
       actionsToWaitFor: []
     })
   );
-}
-
-/**
- * Wait until the {@link NavigationService} is initialized.
- * The NavigationService is initialized when is called {@link RootContainer} componentDidMount and the ref is set with setTopLevelNavigator
- * Consider moving this to a dedicated file.
- * TODO: https://pagopa.atlassian.net/browse/IOPID-3041
- */
-function* waitForNavigatorServiceInitialization() {
-  // eslint-disable-next-line functional/no-let
-  let isNavigatorReady: ReturnType<
-    typeof NavigationService.getIsNavigationReady
-  > = yield* call(NavigationService.getIsNavigationReady);
-
-  // eslint-disable-next-line functional/no-let
-  let timeoutLogged = false;
-
-  const startTime = performance.now();
-
-  // before continuing we must wait for the navigatorService to be ready
-  while (!isNavigatorReady) {
-    const elapsedTime = performance.now() - startTime;
-    if (!timeoutLogged && elapsedTime >= warningWaitNavigatorTime) {
-      timeoutLogged = true;
-
-      yield* call(mixpanelTrack, "NAVIGATION_SERVICE_INITIALIZATION_TIMEOUT");
-    }
-    yield* delay(navigatorPollingTime);
-    isNavigatorReady = yield* call(NavigationService.getIsNavigationReady);
-  }
-
-  const initTime = performance.now() - startTime;
-
-  yield* call(mixpanelTrack, "NAVIGATION_SERVICE_INITIALIZATION_COMPLETED", {
-    elapsedTime: initTime
-  });
-}
-
-// Consider moving this to a dedicated file
-// TODO: https://pagopa.atlassian.net/browse/IOPID-3041
-
-function* waitForMainNavigator() {
-  // eslint-disable-next-line functional/no-let
-  let isMainNavReady = yield* call(NavigationService.getIsMainNavigatorReady);
-
-  // eslint-disable-next-line functional/no-let
-  let timeoutLogged = false;
-  const startTime = performance.now();
-
-  // before continuing we must wait for the main navigator tack to be ready
-  while (!isMainNavReady) {
-    const elapsedTime = performance.now() - startTime;
-    if (!timeoutLogged && elapsedTime >= warningWaitNavigatorTime) {
-      timeoutLogged = true;
-
-      yield* call(mixpanelTrack, "MAIN_NAVIGATOR_STACK_READY_TIMEOUT");
-    }
-    yield* delay(navigatorPollingTime);
-    isMainNavReady = yield* call(NavigationService.getIsMainNavigatorReady);
-  }
-
-  const initTime = performance.now() - startTime;
-
-  yield* call(mixpanelTrack, "MAIN_NAVIGATOR_STACK_READY_OK", {
-    elapsedTime: initTime
-  });
 }
 
 export function* startupSaga(): IterableIterator<ReduxSagaEffect> {

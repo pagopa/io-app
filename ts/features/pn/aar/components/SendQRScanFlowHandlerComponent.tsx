@@ -3,11 +3,7 @@ import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import {
-  useIODispatch,
-  useIOSelector,
-  useIOStore
-} from "../../../../store/hooks";
+import { useIOStore } from "../../../../store/hooks";
 import { openWebUrl } from "../../../../utils/url";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";
@@ -18,11 +14,8 @@ import {
   trackSendQRCodeScanRedirectConfirmed,
   trackSendQRCodeScanRedirectDismissed
 } from "../analytics";
-import { setAarFlowState } from "../store/actions";
-import { currentAARFlowData, sendAARFlowStates } from "../store/reducers";
+import { SendAARInitialFlowScreen } from "../screen/SendAARInitialFlowScreen";
 import { isSendAARPhase2Enabled } from "../utils/generic";
-import { SendAARLoadingComponent } from "./SendAARLoadingComponent";
-import { SendAARTosComponent } from "./SendAARTosComponent";
 
 export type SendQRScanHandlerScreenProps = {
   aarUrl: string;
@@ -32,38 +25,37 @@ export const SendQRScanFlowHandlerComponent = ({
   aarUrl
 }: SendQRScanHandlerScreenProps) =>
   isSendAARPhase2Enabled() ? (
-    <SendAARInitialFlowScreen aarUrl={aarUrl} />
+    <SendAARInitialFlowScreen qrCode={aarUrl} />
   ) : (
     <SendQrScanRedirect aarUrl={aarUrl} />
   );
 
-const SendAARInitialFlowScreen = ({ aarUrl }: SendQRScanHandlerScreenProps) => {
-  const flowData = useIOSelector(currentAARFlowData);
-  const flowState = flowData.type;
-  const dispatch = useIODispatch();
-
-  useEffect(() => {
-    if (flowState === sendAARFlowStates.none) {
-      dispatch(
-        setAarFlowState({
-          type: sendAARFlowStates.displayingAARToS,
-          qrCode: aarUrl
-        })
-      );
-    }
-  }, [dispatch, aarUrl, flowState]);
-
-  switch (flowState) {
-    case sendAARFlowStates.displayingAARToS:
-      return <SendAARTosComponent qrCode={flowData.qrCode} />;
-    default:
-      return <SendAARLoadingComponent />;
-  }
-};
 const SendQrScanRedirect = ({ aarUrl }: SendQRScanHandlerScreenProps) => {
   const store = useIOStore();
   const navigation = useIONavigation();
 
+  const handleCloseScreen = useCallback(() => {
+    trackSendQRCodeScanRedirectDismissed();
+    navigation.popToTop();
+  }, [navigation]);
+
+  useEffect(() => {
+    navigation.setOptions({
+      header: () => (
+        <HeaderSecondLevel
+          title=""
+          type="singleAction"
+          firstAction={{
+            icon: "closeMedium",
+            onPress: handleCloseScreen,
+            accessibilityLabel: I18n.t("global.buttons.close"),
+            testID: "header-close"
+          }}
+        />
+      )
+    });
+    trackSendQRCodeScanRedirect();
+  }, [handleCloseScreen, navigation]);
   const handleOpenSendScreen = useCallback(() => {
     // Analytics
     trackSendQRCodeScanRedirectConfirmed();
@@ -104,29 +96,6 @@ const SendQrScanRedirect = ({ aarUrl }: SendQRScanHandlerScreenProps) => {
     // are already enabled, so just remove the screen
     navigation.popToTop();
   }, [aarUrl, navigation, store]);
-
-  const handleCloseScreen = useCallback(() => {
-    trackSendQRCodeScanRedirectDismissed();
-    navigation.popToTop();
-  }, [navigation]);
-
-  useEffect(() => {
-    navigation.setOptions({
-      header: () => (
-        <HeaderSecondLevel
-          title=""
-          type="singleAction"
-          firstAction={{
-            icon: "closeMedium",
-            onPress: handleCloseScreen,
-            accessibilityLabel: I18n.t("global.buttons.close"),
-            testID: "header-close"
-          }}
-        />
-      )
-    });
-    trackSendQRCodeScanRedirect();
-  }, [handleCloseScreen, navigation]);
 
   return (
     <OperationResultScreenContent

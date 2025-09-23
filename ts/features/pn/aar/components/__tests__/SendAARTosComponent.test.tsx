@@ -1,47 +1,91 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import * as hooks from "../../../../../store/hooks";
+import * as HOOKS from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
+import * as REMOTE_CONFIG from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import * as URL_UTILS from "../../../../../utils/url";
 import PN_ROUTES from "../../../navigation/routes";
-import { setAarFlowState } from "../../store/actions";
-import { sendAARFlowStates } from "../../store/reducers";
+import * as FLOW_MANAGER from "../../hooks/useSendAarFlowManager";
+import * as REDUCER from "../../store/reducers";
+import { sendAARFlowStates } from "../../utils/stateUtils";
 import { SendAARTosComponent } from "../SendAARTosComponent";
 
-jest.mock("../../../../../store/hooks");
-
 const qrCodeMock = "TEST";
-describe("SendAARTosComponent", () => {
-  const mockDispatch = jest.fn();
+const mockPrivacyUrls = {
+  tos: "TOS_URL",
+  privacy: "PRIV_URL"
+};
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-    (hooks.useIODispatch as jest.Mock).mockReturnValue(mockDispatch);
+const privacyUrlSpy = jest.spyOn(REMOTE_CONFIG, "pnPrivacyUrlsSelector");
+const flowDataSpy = jest.spyOn(REDUCER, "currentAARFlowData");
+const managerSpy = jest.spyOn(FLOW_MANAGER, "useSendAarFlowManager");
+describe("SendAARTosComponent", () => {
+  const mockGoNextState = jest.fn();
+  const mockTerminateFlow = jest.fn();
+  const mockDispatch = jest.fn();
+  const mockOpenWebUrl = jest
+    .spyOn(URL_UTILS, "openWebUrl")
+    .mockImplementation();
+
+  beforeAll(() => {
+    jest.spyOn(HOOKS, "useIODispatch").mockImplementation(() => mockDispatch);
+    privacyUrlSpy.mockImplementation(() => mockPrivacyUrls);
+    managerSpy.mockImplementation(() => ({
+      currentFlowData: { type: "none" },
+      goToNextState: mockGoNextState,
+      terminateFlow: mockTerminateFlow
+    }));
   });
 
-  it("dispatches the correct action when the button is pressed", () => {
-    const { getByTestId } = renderComponent(qrCodeMock);
-    const button = getByTestId("primary-button");
-    fireEvent.press(button);
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
-    expect(mockDispatch).toHaveBeenCalledWith(
-      setAarFlowState({
-        type: sendAARFlowStates.fetchingQRData,
-        qrCode: qrCodeMock
-      })
-    );
+  it("goes to the next state when the button is pressed", () => {
+    const { getByTestId } = renderComponent(qrCodeMock);
+    const button = getByTestId("primary_button");
+    expect(mockGoNextState).toHaveBeenCalledTimes(0);
+    fireEvent.press(button);
+    expect(mockGoNextState).toHaveBeenCalledTimes(1);
+  });
+  it("quits out of the flow on secondary button press", () => {
+    const { getByTestId } = renderComponent(qrCodeMock);
+
+    const button = getByTestId("secondary_button");
+    expect(mockTerminateFlow).toHaveBeenCalledTimes(0);
+    fireEvent.press(button);
+    expect(mockTerminateFlow).toHaveBeenCalledTimes(1);
   });
   it("should match snapshot", () => {
     const { toJSON } = renderComponent(qrCodeMock);
     expect(toJSON()).toMatchSnapshot();
   });
+  (["privacy", "tos"] as const).forEach(testId => {
+    it(`should open the ${testId} url on press`, () => {
+      const { getByTestId } = renderComponent(qrCodeMock);
+      const link = getByTestId(testId);
+      expect(mockOpenWebUrl).toHaveBeenCalledTimes(0);
+      fireEvent(link, "press");
+
+      expect(mockOpenWebUrl).toHaveBeenCalledTimes(1);
+      expect(mockOpenWebUrl).toHaveBeenCalledWith(mockPrivacyUrls[testId]);
+    });
+  });
 });
-const renderComponent = (qr: string) => {
+
+const renderComponent = (qr: string, isRightState = true) => {
+  flowDataSpy.mockImplementation(() => ({
+    type: isRightState
+      ? sendAARFlowStates.displayingAARToS
+      : sendAARFlowStates.fetchingQRData,
+    qrCode: qr
+  }));
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    () => <SendAARTosComponent qrCode={qr} />,
+    () => <SendAARTosComponent />,
     PN_ROUTES.QR_SCAN_FLOW,
     {},
     createStore(appReducer, globalState as any)
