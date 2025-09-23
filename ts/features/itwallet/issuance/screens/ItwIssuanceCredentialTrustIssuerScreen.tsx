@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 import {
   ContentWrapper,
   FeatureInfo,
@@ -135,6 +135,7 @@ type ContentViewProps = {
  */
 const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const route = useRoute();
+  const hasScrolledToBottom = useRef(false);
   const privacyUrl = useIOSelector(state =>
     generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
@@ -176,12 +177,16 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
     source: getCredentialNameFromType(eid.credentialType)
   }));
 
+  // Added hasScrolledToBottom ref to avoid sending multiple scroll-to-bottom events when navigating between screens
   const trackScrollToBottom = (crossed: boolean) => {
-    if (crossed) {
+    if (crossed && !hasScrolledToBottom.current) {
+      hasScrolledToBottom.current = true;
       trackIssuanceCredentialScrollToBottom(
         mixPanelCredential,
         ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER
       );
+    } else if (!crossed && hasScrolledToBottom.current) {
+      hasScrolledToBottom.current = false;
     }
   };
 
