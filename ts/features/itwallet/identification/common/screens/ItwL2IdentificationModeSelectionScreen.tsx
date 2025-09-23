@@ -130,7 +130,7 @@ export const ItwL2IdentificationModeSelectionScreen = (
         <VStack space={8}>
           {isCieAuthenticationSupported &&
             !isCiePinDisabled &&
-            (isL3FeaturesEnabled || eidReissuing) && (
+            (!isL3FeaturesEnabled || eidReissuing) && (
               <ModuleNavigationAlt
                 title={I18n.t(`${baseTranslationPath}.method.ciePin.title`, {
                   defaultValue: ""
