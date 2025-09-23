@@ -1,8 +1,7 @@
-import { createStore } from "redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { fireEvent, waitFor } from "@testing-library/react-native";
+import { act, fireEvent } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
-import * as GENERIC_UTILS from "../../utils/generic";
+import { createStore } from "redux";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
@@ -12,10 +11,9 @@ import * as URLUTILS from "../../../../../utils/url";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import PN_ROUTES from "../../../navigation/routes";
 import * as ANALYTICS from "../../analytics";
-import * as REDUCER from "../../store/reducers";
+import * as INITIAL_FLOW from "../../screen/SendAARInitialFlowScreen";
+import * as GENERIC_UTILS from "../../utils/generic";
 import { SendQRScanFlowHandlerComponent } from "../SendQRScanFlowHandlerComponent";
-import * as HOOKS from "../../../../../store/hooks";
-import { setAarFlowState } from "../../store/actions";
 
 const sendNotificationServiceId = "01G40DWQGKY5GRWSNM4303VNRP" as ServiceId;
 const aarUrl = "https://example.com";
@@ -177,52 +175,24 @@ describe("SendQRScanFlowHandlerComponent", () => {
 });
 
 describe("SendQRScanFlowHandlerComponent - AAR phase toggle", () => {
-  const selectorSpy = jest.spyOn(REDUCER, "currentAARFlowData");
+  const componentMock = jest.fn();
+  const componentSpy = jest
+    .spyOn(INITIAL_FLOW, "SendAARInitialFlowScreen")
+    .mockImplementation(componentMock);
 
   beforeEach(() => {
     jest.clearAllMocks();
-    enablePhase2();
-  });
-  [
-    [
-      REDUCER.sendAARFlowStates.displayingAARToS,
-      "should render the tos Screen"
-    ] as const,
-    [
-      REDUCER.sendAARFlowStates.fetchingQRData,
-      "should render the tos Screen"
-    ] as const
-  ].forEach(([state, title]) => {
-    it(`${title} when the state is ${state}`, async () => {
-      selectorSpy.mockReturnValue({
-        type: state,
-        qrCode: "TEST"
-      } as ReturnType<typeof REDUCER.currentAARFlowData>);
-      const { findByTestId } = renderComponent(true, true);
-      if (state === "displayingAARToS") {
-        const data = await waitFor(() => findByTestId("AAR_TOS"));
-        expect(data).toBeDefined();
-      } else {
-        const data = await waitFor(() => findByTestId("LoadingScreenContent"));
-        expect(data).toBeDefined();
-      }
+    act(() => {
+      enablePhase2();
     });
   });
-  it('should initialize the aar flow state if it is "none" ', () => {
-    const mockDispatch = jest.fn();
-    selectorSpy.mockReturnValue({
-      type: REDUCER.sendAARFlowStates.none,
-      qrCode: "TEST"
-    } as ReturnType<typeof REDUCER.currentAARFlowData>);
-    jest.spyOn(HOOKS, "useIODispatch").mockImplementation(() => mockDispatch);
-    renderComponent();
-    expect(mockDispatch).toHaveBeenCalledWith(
-      setAarFlowState({
-        type: REDUCER.sendAARFlowStates.displayingAARToS,
-        qrCode: aarUrl
-      })
-    );
-    expect(mockDispatch).toHaveBeenCalledTimes(1);
+
+  it("should render the initial flow screen if phase 2 is enabled", () => {
+    expect(componentSpy).not.toHaveBeenCalled();
+    renderComponent(true, true);
+    expect(componentMock.mock.calls[0][0]).toEqual({
+      qrCode: aarUrl
+    });
   });
 });
 

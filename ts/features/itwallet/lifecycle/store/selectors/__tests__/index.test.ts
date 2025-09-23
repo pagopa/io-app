@@ -20,14 +20,14 @@ const eID =
   "eyJhbGciOiJFUzI1NiIsInR5cCI6InZjK3NkLWp3dCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ik1hcmlvIFJvc3NpIiwiaWF0IjoxNTE2MjM5MDIyfQ.LAx3X4EpfB8aJj7n8vAk5zX-bYjjmx7Do02NX0p2feO2-TtRTL1DrPZmfBfPCKgyGlteMAv-EZow8bEaOtjcYw";
 
 describe("IT Wallet lifecycle selectors", () => {
-  it("Correctly defines the INSTALLED state", () => {
+  it("should define the INSTALLED state", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     expect(itwLifecycleIsInstalledSelector(globalState)).toEqual(true);
     expect(itwLifecycleIsOperationalSelector(globalState)).toEqual(false);
     expect(itwLifecycleIsValidSelector(globalState)).toEqual(false);
   });
 
-  it("Correctly defines the OPERATIONAL state", () => {
+  it("should define the OPERATIONAL state", () => {
     const globalState = reproduceSequence({} as GlobalState, appReducer, [
       applicationChangeState("active"),
       itwStoreIntegrityKeyTag("9556271b-2e1c-414d-b9a5-50ed8c2743e3")
@@ -37,7 +37,7 @@ describe("IT Wallet lifecycle selectors", () => {
     expect(itwLifecycleIsValidSelector(globalState)).toEqual(false);
   });
 
-  it("Correctly defines the VALID state", () => {
+  it("should define the VALID state", () => {
     const globalState = reproduceSequence({} as GlobalState, appReducer, [
       applicationChangeState("active"),
       itwStoreIntegrityKeyTag("9556271b-2e1c-414d-b9a5-50ed8c2743e3"),
@@ -54,20 +54,27 @@ describe("IT Wallet lifecycle selectors", () => {
     expect(itwLifecycleIsValidSelector(globalState)).toEqual(true);
   });
 
-  it.each([
-    [PID, true, true], // IT-Wallet
-    [PID, false, false], // Documenti su IO
-    [eID, false, false] // Documenti su IO
-  ] as Array<
-    [
-      string, // credential
-      boolean, // isWhitelisted
-      boolean // isITWallet
-    ]
-  >)(
-    "Correctly checks if is a valid IT-Wallet instance with %s",
-    (credential, isWhitelisted, isITWallet) => {
-      const globalState = reproduceSequence({} as GlobalState, appReducer, [
+  it.each`
+    credential | isWhitelisted | simplifiedActivation | expected
+    ${PID}     | ${true}       | ${false}             | ${true}
+    ${PID}     | ${true}       | ${true}              | ${false}
+    ${PID}     | ${false}      | ${false}             | ${false}
+    ${PID}     | ${false}      | ${true}              | ${false}
+    ${eID}     | ${false}      | ${false}             | ${false}
+  `(
+    "should define a valid IT-Wallet instance for whitelist: $isWhitelisted and simplifiedActivation: $simplifiedActivation",
+    ({ credential, isWhitelisted, simplifiedActivation, expected }) => {
+      const initialState = {
+        features: {
+          itWallet: {
+            preferences: {
+              isItwSimplifiedActivationRequired: simplifiedActivation
+            }
+          }
+        }
+      } as GlobalState;
+
+      const globalState = reproduceSequence(initialState, appReducer, [
         applicationChangeState("active"),
         itwStoreIntegrityKeyTag("9556271b-2e1c-414d-b9a5-50ed8c2743e3"),
         itwSetFiscalCodeWhitelisted(isWhitelisted),
@@ -84,7 +91,7 @@ describe("IT Wallet lifecycle selectors", () => {
       expect(itwLifecycleIsOperationalSelector(globalState)).toEqual(false);
       expect(itwLifecycleIsValidSelector(globalState)).toEqual(true);
       expect(itwLifecycleIsITWalletValidSelector(globalState)).toEqual(
-        isITWallet
+        expected
       );
     }
   );
