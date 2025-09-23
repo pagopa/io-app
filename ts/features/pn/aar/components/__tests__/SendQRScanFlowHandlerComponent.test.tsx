@@ -1,17 +1,19 @@
-import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { fireEvent } from "@testing-library/react-native";
+import { act, fireEvent } from "@testing-library/react-native";
+import * as O from "fp-ts/lib/Option";
 import { createStore } from "redux";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as URLUTILS from "../../../../../utils/url";
-import { SendQRScanRedirectComponent } from "../SendQRScanRedirectComponent";
-import PN_ROUTES from "../../../navigation/routes";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
-import * as analytics from "../../analytics";
+import PN_ROUTES from "../../../navigation/routes";
+import * as ANALYTICS from "../../analytics";
+import * as INITIAL_FLOW from "../../screen/SendAARInitialFlowScreen";
+import * as GENERIC_UTILS from "../../utils/generic";
+import { SendQRScanFlowHandlerComponent } from "../SendQRScanFlowHandlerComponent";
 
 const sendNotificationServiceId = "01G40DWQGKY5GRWSNM4303VNRP" as ServiceId;
 const aarUrl = "https://example.com";
@@ -30,22 +32,26 @@ jest.mock("@react-navigation/native", () => {
     })
   };
 });
+const phase2Spy = jest.spyOn(GENERIC_UTILS, "isSendAARPhase2Enabled");
+const enablePhase2 = () => phase2Spy.mockImplementation(() => true);
+const disablePhase2 = () => phase2Spy.mockImplementation(() => false);
 
-describe("SendQRScanRedirectComponent", () => {
+describe("SendQRScanFlowHandlerComponent", () => {
   const mockOpenWebUrl = jest.fn();
 
   const spiedOnMockedTrackSendQRCodeScanRedirect = jest
-    .spyOn(analytics, "trackSendQRCodeScanRedirect")
+    .spyOn(ANALYTICS, "trackSendQRCodeScanRedirect")
     .mockImplementation();
   const spiedOnMockedTrackSendQRCodeScanRedirectConfirmed = jest
-    .spyOn(analytics, "trackSendQRCodeScanRedirectConfirmed")
+    .spyOn(ANALYTICS, "trackSendQRCodeScanRedirectConfirmed")
     .mockImplementation();
   const spiedOnMockedTrackSendQRCodeScanRedirectDismissed = jest
-    .spyOn(analytics, "trackSendQRCodeScanRedirectDismissed")
+    .spyOn(ANALYTICS, "trackSendQRCodeScanRedirectDismissed")
     .mockImplementation();
 
   beforeAll(() => {
     jest.spyOn(URLUTILS, "openWebUrl").mockImplementation(mockOpenWebUrl);
+    disablePhase2();
   });
 
   afterEach(() => {
@@ -168,6 +174,28 @@ describe("SendQRScanRedirectComponent", () => {
   });
 });
 
+describe("SendQRScanFlowHandlerComponent - AAR phase toggle", () => {
+  const componentMock = jest.fn();
+  const componentSpy = jest
+    .spyOn(INITIAL_FLOW, "SendAARInitialFlowScreen")
+    .mockImplementation(componentMock);
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    act(() => {
+      enablePhase2();
+    });
+  });
+
+  it("should render the initial flow screen if phase 2 is enabled", () => {
+    expect(componentSpy).not.toHaveBeenCalled();
+    renderComponent(true, true);
+    expect(componentMock.mock.calls[0][0]).toEqual({
+      qrCode: aarUrl
+    });
+  });
+});
+
 function renderComponent(
   sendServiceActive: boolean = true,
   notificationPermissionsEnabled: boolean = true
@@ -215,7 +243,7 @@ function renderComponent(
     })
   } as GlobalState;
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    () => <SendQRScanRedirectComponent aarUrl={aarUrl} />,
+    () => <SendQRScanFlowHandlerComponent aarUrl={aarUrl} />,
     PN_ROUTES.QR_SCAN_FLOW,
     {},
     createStore(appReducer, globalState as any)
