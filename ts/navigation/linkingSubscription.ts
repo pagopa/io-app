@@ -6,7 +6,7 @@ import { resetMessageArchivingAction } from "../features/messages/store/actions/
 import { isArchivingDisabledSelector } from "../features/messages/store/reducers/archiving";
 import {
   isSendAARLink,
-  navigateToSendAarFlow
+  navigateToSendAarFlowIfEnabled
 } from "../features/pn/aar/utils/deepLinking";
 import { processUtmLink } from "../features/utmLink";
 import { GlobalState } from "../store/reducers/types";
@@ -29,7 +29,7 @@ export const linkingSubscription =
       if (isLoggedIn(state.authentication)) {
         // only when logged in we can navigate to the AAR screen.
         if (isSendAARLink(state, url)) {
-          navigateToSendAarFlow(state, url);
+          navigateToSendAarFlowIfEnabled(state, url);
         }
       } else {
         // If we are not logged in, we store the URL to be processed later
