@@ -16,7 +16,10 @@ import {
 } from "../../analytics";
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
 import { itwCredentialSelector } from "../../credentials/store/selectors";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import {
+  itwLifecycleIsITWalletValidSelector,
+  itwLifecycleIsValidSelector
+} from "../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
@@ -84,6 +87,7 @@ const InnerComponent = () => {
   const navigation = useIONavigation();
   const credentialOption = useIOSelector(itwCredentialSelector(credentialType));
   const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const isCredentialValid = pipe(
     credentialOption,
@@ -96,11 +100,11 @@ const InnerComponent = () => {
     useCallback(() => {
       if (isCredentialValid) {
         trackItwHasAlreadyCredential({
-          credential: getMixPanelCredential(credentialType, isWalletValid),
+          credential: getMixPanelCredential(credentialType, isItwL3),
           credential_status: "valid"
         });
       }
-    }, [credentialType, isCredentialValid, isWalletValid])
+    }, [credentialType, isCredentialValid, isItwL3])
   );
 
   if (!isWalletValid) {
