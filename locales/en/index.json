@@ -57,16 +57,12 @@
     ],
     "meridian": ["am", "pm"],
     "time": {
-      "minutes": {
-        "zero": "0 minutes",
-        "one": "1 minute",
-        "other": "{{count}} minutes"
-      },
-      "seconds": {
-        "zero": "0 seconds",
-        "one": "1 second",
-        "other": "{{count}} seconds"
-      }
+      "minutes_zero": "0 minutes",
+      "minutes_one": "1 minute",
+      "minutes_other": "{{count}} minutes",
+      "seconds_zero": "0 seconds",
+      "seconds_one": "1 second",
+      "seconds_other": "{{count}} seconds"
     }
   },
   "global": {
@@ -221,7 +217,9 @@
       "choose": "Scegli",
       "copy": "Copy",
       "selectAll": "Seleziona tutto",
-      "deselectAll": "Deseleziona tutto"
+      "deselectAll": "Deseleziona tutto",
+      "whatCanYouDo": "What can you do?",
+      "visitWebsite": "Vai al sito"
     },
     "navigator": {
       "messages": "Messages",
@@ -351,6 +349,11 @@
     },
     "contextualHelp": {
       "title": "Startup problems?"
+    },
+    "offline_access_banner": {
+      "title": "Ti servono i documenti?",
+      "content": "Non attendere, sono sempre disponibili, anche se non hai connessione!",
+      "action": "Vai ai documenti"
     },
     "connection_lost": {
       "title": "It looks like you don't have an active internet connection",
@@ -1553,7 +1556,7 @@
       "fee": "Commissione",
       "feeAppliedBy": "Applicata da",
       "editButton": "Modifica",
-      "termsAndConditions": "By continuing, you accept the [Terms and Conditions of Use](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) and confirm that you have read the [Privacy Policy](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) of {{pspName}}.",
+      "termsAndConditions": "By continuing, you accept the [Terms and Conditions of Use](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/) and confirm that you have read the [Privacy Policy](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/) of {{pspName}}.",
       "a11y": {
         "announce": "Payment Summary"
       }
@@ -2968,8 +2971,8 @@
         "retry": "Retry"
       },
       "header": {
-        "subtitlePlural": "{{count}} available services",
-        "subtitleSingular": "{{count}} available service"
+        "subtitle_one": "{{count}} available service",
+        "subtitle_other": "{{count}} available services"
       }
     },
     "search": {
@@ -3588,11 +3591,9 @@
           "categories": "Categories",
           "cta": {
             "cancel": "Remove",
-            "confirm": {
-              "zero": "Apply filters",
-              "one": "Apply filters ({{count}})",
-              "other": "Apply filters ({{count}})"
-            }
+            "confirm_zero": "Apply filters",
+            "confirm_one": "Apply filters ({{count}})",
+            "confirm_other": "Apply filters ({{count}})"
           },
           "order": {
             "byDistance": "By proximity to your location",
@@ -3757,14 +3758,10 @@
         "code": {
           "title": "Your discount code",
           "validUntil": "Still valid for",
-          "minutes": {
-            "one": "1 minute",
-            "other": "{{minutes}} minutes"
-          },
-          "seconds": {
-            "one": "1 second",
-            "other": "{{seconds}} seconds"
-          }
+          "minutes_one": "1 minute",
+          "minutes_other": "{{minutes}} minutes",
+          "seconds_one": "1 second",
+          "seconds_other": "{{seconds}} seconds"
         }
       }
     },
@@ -3855,6 +3852,25 @@
           "body": "Attiva le notifiche push: se leggi subito le comunicazioni a valore legale, potresti risparmiare sui costi di raccomandata.",
           "cta": "Attiva notifiche push",
           "toast": "Hai attivato le notifiche push"
+        },
+        "flow": {
+          "aarTos": {
+            "title": "Stai per aprire la notifica SEND",
+            "body": {
+              "firstPart": "Le notifiche SEND sono comunicazioni a valore legale inviate da un ente, come esiti di pratiche, rimborsi o multe.\n\nPremendo ",
+              "goToNotification": "Vai alla notifica SEND",
+              "youDeclareThat": " dichiari di aver letto e compreso l’",
+              "privacy": "Informativa Privacy",
+              "andThe": " e i ",
+              "tos": "Termini e Condizioni d’uso",
+              "lineEnding": "."
+            },
+            "primaryAction": "Vai alla notifica SEND",
+            "secondaryAction": "Chiudi"
+          },
+          "fetchingQrData": {
+            "loadingText": "Recupero delle informazioni in corso"
+          }
         }
       },
       "reminderBanner": {
@@ -4077,9 +4093,9 @@
           "selected": "Field selected",
           "unselected": "Field not selected"
         },
-        "required": "REQUIRED SIGNATURES",
-        "optional": "OPTIONAL SIGNATURES",
-        "unfair": "UNFAIR TERMS SIGNATURES"
+        "required": "Required signatures",
+        "optional": "Optional signatures",
+        "unfair": "Unfair terms signatures"
       },
       "title": "Firma con IO",
       "documentsBar": {
@@ -4092,7 +4108,7 @@
         "cancel": "Cancel",
         "confirm": "Ok",
         "alertText": "Do you want to change or update your e-mail address?",
-        "alertLink": "Go here",
+        "alertLink": "Edit email",
         "name": "Name",
         "familyName": "Surname",
         "birthDate": "Date of birth"
@@ -4305,8 +4321,7 @@
         "eid": "Identità Digitale",
         "mdl": "Patente di guida",
         "dc": "Carta Europea della Disabilità",
-        "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
-        "dgc": "Attestati di Laurea, Dottorato e Master"
+        "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia"
       },
       "wallet": {
         "active": "Attivo",
@@ -5029,26 +5044,18 @@
             }
           },
           "missingCredentialsScreen": {
-            "title": {
-              "one": "Manca un documento per continuare",
-              "other": "Mancano alcuni documenti per continuare"
-            },
+            "title_one": "Manca un documento per continuare",
+            "title_other": "Mancano alcuni documenti per continuare",
             "subtitle": "Aggiungi {{credentialNames}} al Portafoglio e poi riprova.",
-            "primaryAction": {
-              "one": "Aggiungi documento al Portafoglio",
-              "other": "Aggiungi documenti al Portafoglio"
-            },
+            "primaryAction_one": "Aggiungi documento al Portafoglio",
+            "primaryAction_other": "Aggiungi documenti al Portafoglio",
             "secondaryAction": "Non ora"
           },
           "invalidCredentialsScreen": {
-            "title": {
-              "one": "Non puoi continuare con la richiesta perché {{credentialName}} non è valida",
-              "other": "Non puoi continuare con la richiesta perché alcuni documenti non risultano validi"
-            },
-            "subtitle": {
-              "one": "Assicurati di essere in possesso del documento richiesto valido e poi riprova.",
-              "other": "Assicurati di essere in possesso dei documenti richiesti validi e poi riprova."
-            },
+            "title_one": "Non puoi continuare con la richiesta perché {{credentialName}} non è valida",
+            "title_other": "Non puoi continuare con la richiesta perché alcuni documenti non risultano validi",
+            "subtitle_one": "Assicurati di essere in possesso del documento richiesto valido e poi riprova.",
+            "subtitle_other": "Assicurati di essere in possesso dei documenti richiesti validi e poi riprova.",
             "primaryAction": "Ho capito"
           },
           "deepLinkValidationErrorScreen": {
@@ -5355,6 +5362,17 @@
             "footerAction": "Ricarica l'app IO"
           }
         },
+        "timeout": {
+          "alert": {
+            "content": "Hai bisogno di tornare alla versione completa di IO?",
+            "action": "Ricarica l’app IO"
+          },
+          "modal": {
+            "title": "",
+            "content": "",
+            "footerAction": ""
+          }
+        },
         "back_online": {
           "alert": {
             "content": "Sei di nuovo online. Per usare tutti i servizi ",
@@ -5566,6 +5584,15 @@
           "enrollment": "Errore nel collegamento dell'iniziativa, riprova.",
           "removal": "Errore nella rimozione dell'iniziativa, riprova."
         }
+      },
+      "initiativeOnboardedStatus": {
+        "header": "My requests",
+        "ON_WAITING_LIST": {
+          "label": "On evaluation"
+        },
+        "ON_EVALUATION": {
+          "label": "On evaluation"
+        }
       }
     },
     "initiative": {
@@ -5612,10 +5639,8 @@
               "showMore": "Vedi tutte",
               "header": "Impostazioni",
               "associatedPaymentMethods": "Metodi di pagamento associati",
-              "methods": {
-                "one": "1 metodo",
-                "other": "{{count}} metodi"
-              },
+              "methods_one": "1 metodo",
+              "methods_other": "{{count}} metodi",
               "selectedIBAN": "IBAN per l'accredito",
               "actionsRequired": "Azioni richieste"
             },
@@ -5668,7 +5693,8 @@
             "body": "If you forget the code, reset it under Settings > Security.",
             "cta": "Ok, chiudi"
           }
-        }
+        },
+        "secondaryCta": "Show merchants"
       },
       "beneficiaryDetails": {
         "infobox": {
@@ -5825,6 +5851,18 @@
           "ON_EVALUATION": {
             "title": "L’ente sta valutando la tua domanda d’adesione",
             "subtitle": "Quando pronto, riceverai l’esito tramite un messaggio in app."
+          },
+          "FAMILY_UNIT_ALREADY_JOINED": {
+            "title": "Un'altra persona della tua famiglia ha inviato la richiesta",
+            "subtitle": "È possibile inviare una sola richiesta per ogni famiglia anagrafica."
+          },
+          "ONBOARDING_WAITING_LIST": {
+            "title": "Sei in lista d’attesa",
+            "subtitle": "La tua richiesta è in coda. Ti contatteremo se saranno disponibili nuove risorse."
+          },
+          "PAYMENT_GENERIC_ERROR": {
+            "title": "Non siamo riusciti a completare l’operazione",
+            "subtitle": "Siamo già a lavoro per risolvere.  Riprova tra un po’."
           }
         }
       },
@@ -5841,7 +5879,7 @@
         "prerequisites": {
           "info": {
             "header": "Come avviene la verifica?",
-            "body": "Comunichiamo direttamente con l’Ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**. In questo modo non devi produrre alcuna autocertificazione.",
+            "body": "Comunichiamo direttamente con l’ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**. In questo modo non devi produrre alcuna autocertificazione.",
             "understoodCTA": "Ho capito"
           }
         },
@@ -5889,6 +5927,9 @@
         "success": "You activated Push notifications",
         "advice": "Consigliato"
       },
+      "failToRetry": {
+        "contentTitle": "Stiamo per collegarti.\n Attendi qualche secondo..."
+      },
       "preferences": {
         "enableEmailBanner": {
           "title": "Don't miss important updates",
@@ -5911,7 +5952,8 @@
         "INSTRUMENTS_LIST_LOAD_FAILURE": "Errore nel caricamento della lista strumenti",
         "INSTRUMENT_ENROLL_FAILURE": "Errore durante l'aggiunta del metodo di pagamento",
         "INSTRUMENT_DELETE_FAILURE": "Errore durante la rimozione del metodo di pagamento",
-        "SESSION_EXPIRED": "C'è stato un problema, riprova"
+        "SESSION_EXPIRED": "C'è stato un problema, riprova",
+        "TOO_MANY_REQUESTS": "Stiamo ricevendo troppe richieste, riprova più tardi"
       },
       "headerTitle": "Configure the initiative",
       "intro": {

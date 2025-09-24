@@ -1,21 +1,29 @@
 import { IOToast, RadioGroup, VSpacer } from "@pagopa/io-app-design-system";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import PagerView from "react-native-pager-view";
-import I18n from "i18next";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import IdPayOnboardingStepper from "../components/IdPayOnboardingStepper";
-import { IdPayOnboardingMachineContext } from "../machine/provider";
-import {
-  multiRequiredCriteriaSelector,
-  selectCurrentMultiSelfDeclarationPage
-} from "../machine/selectors";
 import {
   SelfCriteriaMultiDTO,
   _typeEnum as SelfCriteriaMultiTypeEnum
 } from "../../../../../definitions/idpay/SelfCriteriaMultiDTO";
 import IOMarkdown from "../../../../components/IOMarkdown";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import {
+  trackIDPayOnboardingAlert,
+  trackIDPayOnboardingMultiSelfDeclaration
+} from "../analytics";
+import IdPayOnboardingStepper from "../components/IdPayOnboardingStepper";
+import { IdPayOnboardingMachineContext } from "../machine/provider";
+import {
+  multiRequiredCriteriaSelector,
+  selectCurrentMultiSelfDeclarationPage,
+  selectInitiative
+} from "../machine/selectors";
 
 const IdPayMultiValuePrerequisitesScreen = () => {
   const pagerRef = useRef<PagerView>(null);
@@ -31,6 +39,28 @@ const IdPayMultiValuePrerequisitesScreen = () => {
     pagerRef.current?.setPage(currentPage);
   }, [pagerRef, currentPage]);
 
+  const initiative =
+    IdPayOnboardingMachineContext.useSelector(selectInitiative);
+
+  const initiativeName = pipe(
+    initiative,
+    O.map(i => i.initiativeName),
+    O.toUndefined
+  );
+
+  const initiativeId = pipe(
+    initiative,
+    O.map(i => i.initiativeId),
+    O.getOrElse(() => "")
+  );
+
+  useOnFirstRender(() =>
+    trackIDPayOnboardingMultiSelfDeclaration({
+      initiativeId,
+      initiativeName
+    })
+  );
+
   return (
     <PagerView
       ref={pagerRef}
@@ -42,6 +72,8 @@ const IdPayMultiValuePrerequisitesScreen = () => {
         <View key={index}>
           <MultiValuePrerequisiteItemScreenContent
             selfDeclaration={selfDelcaration}
+            initiativeId={initiativeId}
+            initiativeName={initiativeName}
           />
         </View>
       ))}
@@ -51,10 +83,14 @@ const IdPayMultiValuePrerequisitesScreen = () => {
 
 type MultiValuePrerequisiteItemScreenContentProps = {
   selfDeclaration: SelfCriteriaMultiDTO;
+  initiativeId?: string;
+  initiativeName?: string;
 };
 
 const MultiValuePrerequisiteItemScreenContent = ({
-  selfDeclaration
+  selfDeclaration,
+  initiativeId,
+  initiativeName
 }: MultiValuePrerequisiteItemScreenContentProps) => {
   const machine = IdPayOnboardingMachineContext.useActorRef();
 
@@ -67,6 +103,11 @@ const MultiValuePrerequisiteItemScreenContent = ({
       IOToast.error(
         I18n.t("idpay.onboarding.boolPrerequisites.emptyValueError")
       );
+      trackIDPayOnboardingAlert({
+        screen: "multi_self_declaration",
+        initiativeId,
+        initiativeName
+      });
       return;
     }
     const value = selfDeclaration.value?.[selectedValueIndex].description;

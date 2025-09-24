@@ -18,6 +18,15 @@ describe("DigitalVersionBadge", () => {
     ["EuropeanHealthInsuranceCard", "default"],
     ["EuropeanHealthInsuranceCard", "faded"],
     ["EuropeanHealthInsuranceCard", "greyscale"],
+    ["education_degree", "default"],
+    ["education_degree", "faded"],
+    ["education_degree", "greyscale"],
+    ["education_enrollment", "default"],
+    ["education_enrollment", "faded"],
+    ["education_enrollment", "greyscale"],
+    ["residency", "default"],
+    ["residency", "faded"],
+    ["residency", "greyscale"],
     ["InvalidCredentialType", "default"]
   ])(
     "should render correctly %s in state %s",

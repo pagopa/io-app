@@ -43,6 +43,11 @@ export const createActionsImplementation = (
       screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE
     });
 
+  const navigateToFailureToRetryScreen = () =>
+    navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE_TO_RETRY
+    });
+
   const navigateToInitiativeMonitoringScreen = (args: {
     context: Context.Context;
   }) => {
@@ -97,6 +102,7 @@ export const createActionsImplementation = (
     navigateToMultiSelfDeclarationListScreen,
     navigateToCompletionScreen,
     navigateToFailureScreen,
+    navigateToFailureToRetryScreen,
     navigateToInitiativeMonitoringScreen,
     navigateToInputFormScreen,
     navigateToEnableNotificationScreen,

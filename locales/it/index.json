@@ -57,16 +57,12 @@
     ],
     "meridian": ["am", "pm"],
     "time": {
-      "minutes": {
-        "zero": "0 minuti",
-        "one": "1 minuto",
-        "other": "{{count}} minuti"
-      },
-      "seconds": {
-        "zero": "0 secondi",
-        "one": "1 secondo",
-        "other": "{{count}} secondi"
-      }
+      "minutes_zero": "0 minuti",
+      "minutes_one": "1 minuto",
+      "minutes_other": "{{count}} minuti",
+      "seconds_zero": "0 secondi",
+      "seconds_one": "1 secondo",
+      "seconds_other": "{{count}} secondi"
     }
   },
   "global": {
@@ -221,7 +217,9 @@
       "choose": "Scegli",
       "copy": "Copia",
       "selectAll": "Seleziona tutto",
-      "deselectAll": "Deseleziona tutto"
+      "deselectAll": "Deseleziona tutto",
+      "whatCanYouDo": "Cosa puoi fare?",
+      "visitWebsite": "Vai al sito"
     },
     "navigator": {
       "messages": "Messaggi",
@@ -351,6 +349,11 @@
     },
     "contextualHelp": {
       "title": "Problemi di inizializzazione?"
+    },
+    "offline_access_banner": {
+      "title": "Ti servono i documenti?",
+      "content": "Non attendere, sono sempre disponibili, anche se non hai connessione!",
+      "action": "Vai ai documenti"
     },
     "connection_lost": {
       "title": "Non hai una connessione a internet attiva",
@@ -1556,7 +1559,7 @@
       "fee": "Commissione",
       "feeAppliedBy": "Applicata da",
       "editButton": "Modifica",
-      "termsAndConditions": "Proseguendo accetti i [Termini e condizioni d’uso](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) e confermi di aver letto l'[Informativa Privacy](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) di {{pspName}}"
+      "termsAndConditions": "Proseguendo accetti i [Termini e condizioni d’uso](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/) e confermi di aver letto l'[Informativa Privacy](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/) di {{pspName}}"
     }
   },
   "wallet": {
@@ -2968,8 +2971,8 @@
         "retry": "Riprova"
       },
       "header": {
-        "subtitlePlural": "{{count}} servizi disponibili",
-        "subtitleSingular": "{{count}} servizio disponibile"
+        "subtitle_one": "{{count}} servizio disponibile",
+        "subtitle_other": "{{count}} servizi disponibili"
       }
     },
     "search": {
@@ -3588,11 +3591,9 @@
           "categories": "Categorie",
           "cta": {
             "cancel": "Rimuovi",
-            "confirm": {
-              "zero": "Applica filtri",
-              "one": "Applica filtri ({{count}})",
-              "other": "Applica filtri ({{count}})"
-            }
+            "confirm_zero": "Applica filtri",
+            "confirm_one": "Applica filtri ({{count}})",
+            "confirm_other": "Applica filtri ({{count}})"
           },
           "order": {
             "byDistance": "Per vicinanza alla tua posizione",
@@ -3757,14 +3758,10 @@
         "code": {
           "title": "Il tuo codice sconto",
           "validUntil": "Valido ancora per",
-          "minutes": {
-            "one": "1 minuto",
-            "other": "{{minutes}} minuti"
-          },
-          "seconds": {
-            "one": "1 secondo",
-            "other": "{{seconds}} secondi"
-          }
+          "minutes_one": "1 minuto",
+          "minutes_other": "{{minutes}} minuti",
+          "seconds_one": "1 secondo",
+          "seconds_other": "{{seconds}} secondi"
         }
       }
     },
@@ -3855,6 +3852,25 @@
           "body": "Attiva le notifiche push: se leggi subito le comunicazioni a valore legale, potresti risparmiare sui costi di raccomandata.",
           "cta": "Attiva notifiche push",
           "toast": "Hai attivato le notifiche push"
+        },
+        "flow": {
+          "aarTos": {
+            "title": "Stai per aprire la notifica SEND",
+            "body": {
+              "firstPart": "Le notifiche SEND sono comunicazioni a valore legale inviate da un ente, come esiti di pratiche, rimborsi o multe.\n\nPremendo ",
+              "goToNotification": "Vai alla notifica SEND",
+              "youDeclareThat": " dichiari di aver letto e compreso l’",
+              "privacy": "Informativa Privacy",
+              "andThe": " e i ",
+              "tos": "Termini e Condizioni d’uso",
+              "lineEnding": "."
+            },
+            "primaryAction": "Vai alla notifica SEND",
+            "secondaryAction": "Chiudi"
+          },
+          "fetchingQrData": {
+            "loadingText": "Recupero delle informazioni in corso"
+          }
         }
       },
       "reminderBanner": {
@@ -4077,9 +4093,9 @@
           "selected": "Campo selezionato",
           "unselected": "Campo non selezionato"
         },
-        "required": "FIRME OBBLIGATORIE",
-        "optional": "FIRME FACOLTATIVE",
-        "unfair": "FIRME CLAUSOLE VESSATORIE"
+        "required": "Firme obbligatorie",
+        "optional": "Firme facoltative",
+        "unfair": "Firme clausole vessatorie"
       },
       "title": "Firma con IO",
       "documentsBar": {
@@ -4092,7 +4108,7 @@
         "cancel": "Annulla",
         "confirm": "Ok, va bene",
         "alertText": "Vuoi modificare o aggiornare il tuo indirizzo e-mail?",
-        "alertLink": "Vai qui",
+        "alertLink": "Modifica email",
         "name": "Nome",
         "familyName": "Cognome",
         "birthDate": "Data di nascita"
@@ -4169,7 +4185,8 @@
           "active": "Già presente",
           "unavailable": "Non disponibile",
           "requested": "In corso",
-          "upcoming": "In arrivo"
+          "upcoming": "In arrivo",
+          "new": "Novità"
         },
         "options": {
           "cgn": "Carta Giovani Nazionale",
@@ -4306,7 +4323,9 @@
         "mdl": "Patente di guida",
         "dc": "Carta Europea della Disabilità",
         "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
-        "dgc": "Attestati di Laurea, Dottorato e Master"
+        "ed": "Titoli accademici",
+        "ee": "Iscrizioni universitarie",
+        "res": "Residenza"
       },
       "wallet": {
         "active": "Attivo",
@@ -4365,6 +4384,9 @@
         "walletNotAvailable": {
           "message": "Abbiamo avuto un problema nel recuperare i tuoi documenti.",
           "cta": "Chiudi e riapri l'app per riprovare."
+        },
+        "featureUnavailable": {
+          "title": "In arrivo: questa funzione sarà disponibile a breve"
         }
       },
       "verifiableCredentials": {
@@ -4826,6 +4848,12 @@
           "subtitle": "Stiamo lavorando per rendere disponibili nuovi documenti in app IO.\nRiprova quandro vedrai il documento contrassegnato come \"Novità\".",
           "primaryAction": "Ho capito"
         },
+        "invalidWallet": {
+          "title": "Ottieni IT-Wallet per continuare",
+          "subtitle": "Per aggiungere nuovi documenti al tuo Portafoglio di IO ottieni IT-Wallet: ti bastano la Carta di Identità Elettronica (CIE) e il suo PIN.",
+          "primaryAction": "Inizia",
+          "secondaryAction": "Non ora"
+        },
         "cieNotRegistered": {
           "title": "Registra la CIE in app CieID per continuare",
           "subtitle": "Per ottenere IT-Wallet, completa prima la registrazione della tua CIE in app CieID e poi riprova."
@@ -4878,6 +4906,13 @@
           "verificationExpiring": {
             "content": "Verifica la versione digitale del tuo documento entro il {{date}}."
           }
+        },
+        "authSource": {
+          "anis": "ANIS - Anagrafe Nazionale dell'istruzione superiore",
+          "mdi": "Ministero dell'Interno",
+          "mef": "MEF - Ragioneria Generale dello Stato",
+          "inps": "Istituto Nazionale di Previdenza Sociale",
+          "mit": "MIT - Direzione Generale per la Motorizzazione"
         },
         "bottomSheets": {
           "eidInfo": {
@@ -5017,6 +5052,7 @@
           "loadingScreen": {
             "request": "Stiamo facendo alcune verifiche di sicurezza",
             "response": "Stiamo comunicando i tuoi dati a {{relyingParty}}",
+            "timeout": "Ancora un attimo di pazienza...",
             "subtitle": "Attendi qualche secondo..."
           },
           "walletInactiveScreen": {
@@ -5029,26 +5065,18 @@
             }
           },
           "missingCredentialsScreen": {
-            "title": {
-              "one": "Manca un documento per continuare",
-              "other": "Mancano alcuni documenti per continuare"
-            },
+            "title_one": "Manca un documento per continuare",
+            "title_other": "Mancano alcuni documenti per continuare",
             "subtitle": "Aggiungi {{credentialNames}} al Portafoglio e poi riprova.",
-            "primaryAction": {
-              "one": "Aggiungi documento al Portafoglio",
-              "other": "Aggiungi documenti al Portafoglio"
-            },
+            "primaryAction_one": "Aggiungi documento al Portafoglio",
+            "primaryAction_other": "Aggiungi documenti al Portafoglio",
             "secondaryAction": "Non ora"
           },
           "invalidCredentialsScreen": {
-            "title": {
-              "one": "Non puoi continuare con la richiesta perché {{credentialName}} non è valida",
-              "other": "Non puoi continuare con la richiesta perché alcuni documenti non risultano validi"
-            },
-            "subtitle": {
-              "one": "Assicurati di essere in possesso del documento richiesto valido e poi riprova.",
-              "other": "Assicurati di essere in possesso dei documenti richiesti validi e poi riprova."
-            },
+            "title_one": "Non puoi continuare con la richiesta perché {{credentialName}} non è valida",
+            "title_other": "Non puoi continuare con la richiesta perché alcuni documenti non risultano validi",
+            "subtitle_one": "Assicurati di essere in possesso del documento richiesto valido e poi riprova.",
+            "subtitle_other": "Assicurati di essere in possesso dei documenti richiesti validi e poi riprova.",
             "primaryAction": "Ho capito"
           },
           "deepLinkValidationErrorScreen": {
@@ -5355,6 +5383,17 @@
             "footerAction": "Ricarica l'app IO"
           }
         },
+        "timeout": {
+          "alert": {
+            "content": "Hai bisogno di tornare alla versione completa di IO?",
+            "action": "Ricarica l’app IO"
+          },
+          "modal": {
+            "title": "",
+            "content": "",
+            "footerAction": ""
+          }
+        },
         "back_online": {
           "alert": {
             "content": "Sei di nuovo online. Per usare tutti i servizi ",
@@ -5381,6 +5420,21 @@
           "title": "IT-Wallet per i tuoi documenti",
           "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**.\nGarantito dallo Stato, accessibile solo a te.",
           "action": "Ottieni IT-Wallet"
+        }
+      },
+      "settings": {
+        "item": {
+          "title": "IT-Wallet",
+          "description": "Gestisci il tuo portafoglio digitale"
+        },
+        "manage": {
+          "title": "IT-Wallet",
+          "description": "È il tuo portafoglio digitale ufficiale.",
+          "content": "###### Cosa puoi fare con IT-Wallet?\n - Ottieni la versione digitale dei tuoi documenti personali, titoli, attestati\n - Dimostri identità e idoneità alla guida con la Patente digitale\n - Accedi ai servizi digitali della PA in pochi passaggi\n - Usi la Tessera Sanitaria per acquistare farmaci e prenotare visite mediche\n Per saperne di più, [visita il sito IT-Wallet]()",
+          "cta": {
+            "obtain": "Ottieni IT-Wallet",
+            "revoke": "Disattiva IT-Wallet"
+          }
         }
       },
       "playgrounds": {
@@ -5566,6 +5620,15 @@
           "enrollment": "Errore nel collegamento dell'iniziativa, riprova.",
           "removal": "Errore nella rimozione dell'iniziativa, riprova."
         }
+      },
+      "initiativeOnboardedStatus": {
+        "header": "Le mie richieste",
+        "ON_WAITING_LIST": {
+          "label": "Verifica in corso"
+        },
+        "ON_EVALUATION": {
+          "label": "Verifica in corso"
+        }
       }
     },
     "initiative": {
@@ -5612,10 +5675,8 @@
               "showMore": "Vedi tutte",
               "header": "Impostazioni",
               "associatedPaymentMethods": "Metodi di pagamento associati",
-              "methods": {
-                "one": "1 metodo",
-                "other": "{{count}} metodi"
-              },
+              "methods_one": "1 metodo",
+              "methods_other": "{{count}} metodi",
               "selectedIBAN": "IBAN per l'accredito",
               "actionsRequired": "Azioni richieste"
             },
@@ -5649,6 +5710,7 @@
           "generateBarcode": "Genera un codice sconto"
         },
         "authorizeButton": "Usa il bonus",
+        "secondaryCta": "Mostra esercenti",
         "addExpenseButton": "Aggiungi spesa",
         "IDPayCode": {
           "banner": {
@@ -5825,6 +5887,18 @@
           "ON_EVALUATION": {
             "title": "L’ente sta valutando la tua domanda d’adesione",
             "subtitle": "Quando pronto, riceverai l’esito tramite un messaggio in app."
+          },
+          "FAMILY_UNIT_ALREADY_JOINED": {
+            "title": "Un'altra persona della tua famiglia ha inviato la richiesta",
+            "subtitle": "È possibile inviare una sola richiesta per ogni famiglia anagrafica."
+          },
+          "ONBOARDING_WAITING_LIST": {
+            "title": "Sei in lista d’attesa",
+            "subtitle": "La tua richiesta è in coda. Ti contatteremo se saranno disponibili nuove risorse."
+          },
+          "PAYMENT_GENERIC_ERROR": {
+            "title": "Non siamo riusciti a completare l’operazione",
+            "subtitle": "Siamo già a lavoro per risolvere. Riprova tra un po’."
           }
         }
       },
@@ -5841,7 +5915,7 @@
         "prerequisites": {
           "info": {
             "header": "Come avviene la verifica?",
-            "body": "Comunichiamo direttamente con l’Ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**. In questo modo non devi produrre alcuna autocertificazione.",
+            "body": "Comunichiamo direttamente con l’ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**. In questo modo non devi produrre alcuna autocertificazione.",
             "understoodCTA": "Ho capito"
           }
         },
@@ -5851,7 +5925,7 @@
           "ISEE": "ISEE",
           "BIRTHDAY": "Data di nascita",
           "RESIDENCE": "Residenza",
-          "FAMILY_UNIT": "Nucleo Familiare"
+          "FAMILY_UNIT": "Famiglia anagrafica"
         },
         "operator": {
           "EQ": "{{value}}",
@@ -5889,6 +5963,9 @@
         "success": "Hai attivato le notifiche push",
         "advice": "Consigliato"
       },
+      "failToRetry": {
+        "contentTitle": "Stiamo per collegarti.\n Attendi qualche secondo..."
+      },
       "preferences": {
         "enableEmailBanner": {
           "title": "Non perderti aggiornamenti importanti",
@@ -5911,7 +5988,8 @@
         "INSTRUMENTS_LIST_LOAD_FAILURE": "Errore nel caricamento della lista strumenti",
         "INSTRUMENT_ENROLL_FAILURE": "Errore durante l'aggiunta del metodo di pagamento",
         "INSTRUMENT_DELETE_FAILURE": "Errore durante la rimozione del metodo di pagamento",
-        "SESSION_EXPIRED": "C'è stato un problema, riprova"
+        "SESSION_EXPIRED": "C'è stato un problema, riprova",
+        "TOO_MANY_REQUESTS": "Stiamo ricevendo troppe richieste, riprova più tardi"
       },
       "headerTitle": "Configura l'iniziativa",
       "intro": {

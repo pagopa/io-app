@@ -45,6 +45,14 @@ export const itwSetWalletUpgradeMDLDetailsBannerHidden = createStandardAction(
   "ITW_SET_WALLET_UPGRADE_MDL_DETAILS_BANNER_HIDDEN"
 )<boolean>();
 
+export const itwFreezeSimplifiedActivationRequirements = createStandardAction(
+  "ITW_FREEZE_SIMPLIFIED_ACTIVATION_REQUIREMENTS"
+)<void>();
+
+export const itwClearSimplifiedActivationRequirements = createStandardAction(
+  "ITW_CLEAR_SIMPLIFIED_ACTIVATION_REQUIREMENTS"
+)<void>();
+
 export type ItwPreferencesActions =
   | ActionType<typeof itwCloseFeedbackBanner>
   | ActionType<typeof itwCloseDiscoveryBanner>
@@ -56,4 +64,6 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwSetWalletInstanceRemotelyActive>
   | ActionType<typeof itwSetFiscalCodeWhitelisted>
   | ActionType<typeof itwSetOfflineBannerHidden>
-  | ActionType<typeof itwSetWalletUpgradeMDLDetailsBannerHidden>;
+  | ActionType<typeof itwSetWalletUpgradeMDLDetailsBannerHidden>
+  | ActionType<typeof itwFreezeSimplifiedActivationRequirements>
+  | ActionType<typeof itwClearSimplifiedActivationRequirements>;

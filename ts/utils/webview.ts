@@ -12,9 +12,19 @@ export const ON_SCROLL_END_LISTENER = `window.onscroll=function(){
     }
 };`;
 
+/**
+ * This script listens to load and resize events to get the height
+ * and also has a fallback timeout to send the height after 300ms
+ */
 export const GET_CONTENT_HEIGHT_SCRIPT = `
-    window.ReactNativeWebView.postMessage(Math.max(document.documentElement.clientHeight, document.documentElement.scrollHeight, document.body.clientHeight, document.body.scrollHeight));
-  `;
+function sendHeight() {
+  const height = document.body.scrollHeight;
+  window.ReactNativeWebView.postMessage(height);
+}
+window.addEventListener("load", sendHeight);
+window.addEventListener("resize", sendHeight);
+setTimeout(sendHeight, 300); // fallback
+`;
 
 const endTrue = "true;";
 // ensure the injected JS into the webview contains the right closure. If not it will be added.

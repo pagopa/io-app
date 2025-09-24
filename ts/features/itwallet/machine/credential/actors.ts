@@ -22,7 +22,9 @@ export type GetWalletAttestationActorOutput = Awaited<
 >;
 
 export type RequestCredentialActorInput =
-  Partial<credentialIssuanceUtils.RequestCredentialParams>;
+  Partial<credentialIssuanceUtils.RequestCredentialParams> & {
+    skipMdocIssuance: boolean;
+  };
 
 export type RequestCredentialActorOutput = Awaited<
   ReturnType<typeof credentialIssuanceUtils.requestCredential>
@@ -53,12 +55,11 @@ export const createCredentialIssuanceActorsImplementation = (
       await Trust.Build.getTrustAnchorEntityConfiguration(
         env.WALLET_TA_BASE_URL
       );
-    const trustAnchorKey = trustAnchorEntityConfig.payload.jwks.keys[0];
 
     // Create the trust chain for the PID provider
     const builtChainJwts = await Trust.Build.buildTrustChain(
       env.WALLET_EAA_PROVIDER_BASE_URL,
-      trustAnchorKey
+      trustAnchorEntityConfig
     );
 
     // Perform full validation on the built chain
@@ -93,7 +94,8 @@ export const createCredentialIssuanceActorsImplementation = (
     RequestCredentialActorOutput,
     RequestCredentialActorInput
   >(async ({ input }) => {
-    const { credentialType, walletInstanceAttestation } = input;
+    const { credentialType, walletInstanceAttestation, skipMdocIssuance } =
+      input;
 
     assert(credentialType, "credentialType is undefined");
     assert(walletInstanceAttestation, "walletInstanceAttestation is undefined");
@@ -101,7 +103,8 @@ export const createCredentialIssuanceActorsImplementation = (
     return await credentialIssuanceUtils.requestCredential({
       env,
       credentialType,
-      walletInstanceAttestation
+      walletInstanceAttestation,
+      skipMdocIssuance
     });
   });
 

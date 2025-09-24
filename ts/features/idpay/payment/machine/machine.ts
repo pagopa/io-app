@@ -55,7 +55,10 @@ export const idPayPaymentMachine = setup({
         "authorize-payment": {
           guard: "assertTransactionCode",
           target: "PreAuthorizing",
-          actions: assign(({ event }) => ({ trxCode: event.trxCode }))
+          actions: assign(({ event }) => ({
+            trxCode: event.trxCode,
+            data_entry: event.data_entry
+          }))
         }
       }
     },
@@ -186,6 +189,6 @@ const decodeFailure = flow(PaymentFailure.decode, O.fromEither);
 
 const isBlockingFalure = flow(
   decodeFailure,
-  O.map(failure => failure !== PaymentFailureEnum.TOO_MANY_REQUESTS),
+  O.map(failure => failure !== PaymentFailureEnum.PAYMENT_TOO_MANY_REQUESTS),
   O.getOrElse(() => false)
 );

@@ -6,31 +6,32 @@ import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { ItwCredentialStatus } from "../../../utils/itwTypesUtils";
 import { ItwCredentialCard } from "../ItwCredentialCard";
-import * as selectors from "../../../store/selectors";
+import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
 
 describe("ItwCredentialCard", () => {
-  it.each(["EuropeanHealthInsuranceCard", "EuropeanDisabilityCard", "mDL"])(
-    "should match snapshot when credential type is %p",
-    type => {
-      const globalState = appReducer(
-        undefined,
-        applicationChangeState("active")
-      );
+  it.each([
+    "EuropeanHealthInsuranceCard",
+    "EuropeanDisabilityCard",
+    "mDL",
+    "education_degree",
+    "education_enrollment",
+    "residency"
+  ])("should match snapshot when credential type is %p", type => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
 
-      const mockStore = configureMockStore<GlobalState>();
-      const store: ReturnType<typeof mockStore> = mockStore({
-        ...globalState
-      } as GlobalState);
+    const mockStore = configureMockStore<GlobalState>();
+    const store: ReturnType<typeof mockStore> = mockStore({
+      ...globalState
+    } as GlobalState);
 
-      const component = render(
-        <Provider store={store}>
-          <ItwCredentialCard credentialType={type} />
-        </Provider>
-      );
+    const component = render(
+      <Provider store={store}>
+        <ItwCredentialCard credentialType={type} />
+      </Provider>
+    );
 
-      expect(component).toMatchSnapshot();
-    }
-  );
+    expect(component).toMatchSnapshot();
+  });
 
   it.each([
     "valid",
@@ -69,7 +70,7 @@ describe("ItwCredentialCard", () => {
     } as GlobalState);
 
     jest
-      .spyOn(selectors, "itwShouldRenderNewItWalletSelector")
+      .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
       .mockReturnValue(true);
 
     const component = render(

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import { IOToast } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
@@ -13,12 +12,19 @@ import {
   trackSaveCredentialSuccess,
   updateITWStatusAndPIDProperties
 } from "../../analytics";
-import { itwSetAuthLevel } from "../../common/store/actions/preferences";
+import {
+  itwSetAuthLevel,
+  itwFreezeSimplifiedActivationRequirements,
+  itwClearSimplifiedActivationRequirements
+} from "../../common/store/actions/preferences";
 import {
   itwCredentialsRemoveByType,
   itwCredentialsStore
 } from "../../credentials/store/actions";
-import { itwCredentialsSelector } from "../../credentials/store/selectors";
+import {
+  itwCredentialsEidSelector,
+  itwCredentialsSelector
+} from "../../credentials/store/selectors";
 import {
   itwRemoveIntegrityKeyTag,
   itwStoreIntegrityKeyTag
@@ -28,6 +34,7 @@ import { itwLifecycleWalletReset } from "../../lifecycle/store/actions";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -245,8 +252,6 @@ export const createEidIssuanceActionsImplementation = (
     store.dispatch(itwCredentialsStore([context.eid]));
   },
 
-  requestAssistance: () => {},
-
   handleSessionExpired: () =>
     store.dispatch(checkCurrentSession.success({ isSessionValid: false })),
 
@@ -259,15 +264,13 @@ export const createEidIssuanceActionsImplementation = (
   trackWalletInstanceCreation: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
-    const isL3 = context.identification?.level === "L3";
+    const isL3 = context.isL3 && !context.isL2Fallback;
     trackSaveCredentialSuccess(isL3 ? "ITW_PID" : "ITW_ID_V2");
     updateITWStatusAndPIDProperties(store.getState());
   },
-  trackWalletInstanceRevocation: ({
-    context
-  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
-    const isL3 = context.identification?.level === "L3";
-    trackItwDeactivated(store.getState(), isL3 ? "ITW_PID" : "ITW_ID_V2");
+  trackWalletInstanceRevocation: () => {
+    const isItwL3 = itwLifecycleIsITWalletValidSelector(store.getState());
+    trackItwDeactivated(store.getState(), isItwL3 ? "ITW_PID" : "ITW_ID_V2");
   },
 
   storeAuthLevel: ({
@@ -275,5 +278,24 @@ export const createEidIssuanceActionsImplementation = (
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     // Save the auth level in the preferences
     store.dispatch(itwSetAuthLevel(context.identification?.level));
-  }
+  },
+
+  freezeSimplifiedActivationRequirements: () => {
+    store.dispatch(itwFreezeSimplifiedActivationRequirements());
+  },
+
+  clearSimplifiedActivationRequirements: () => {
+    store.dispatch(itwClearSimplifiedActivationRequirements());
+  },
+
+  loadPidIntoContext: assign<
+    Context,
+    EidIssuanceEvents,
+    unknown,
+    EidIssuanceEvents,
+    any
+  >(() => {
+    const pid = itwCredentialsEidSelector(store.getState());
+    return { eid: O.toUndefined(pid) };
+  })
 });

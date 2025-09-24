@@ -3,13 +3,15 @@ import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 
-import { ReactElement, ReactNode, memo, useMemo } from "react";
+import { memo, ReactElement, ReactNode, useMemo } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import { Either, Prettify } from "../../../../../types/helpers";
 import {
   ClaimValue,
   DrivingPrivilegesClaim,
+  DrivingPrivilegesCustomClaim,
   ImageClaim,
+  NestedClaim,
   PlaceOfBirthClaim,
   SimpleDateClaim,
   SimpleDateFormat
@@ -54,7 +56,7 @@ export type CardClaimProps = Prettify<
 >;
 
 /**
- * Default claim component, it decoded the provided value and renders the corresponging component
+ * Default claim component, it decoded the provided value and renders the corresponding component
  * @returns The corresponding component if a value is correctly decoded, otherwise null
  */
 const CardClaim = ({
@@ -71,6 +73,12 @@ const CardClaim = ({
         claim?.value,
         ClaimValue.decode,
         E.fold(constNull, decoded => {
+          if (NestedClaim.is(decoded)) {
+            // If the claim is a NestedArrayClaim or NestedObjectClaim, we don't render it directly
+            // but we return null to skip rendering
+            return null;
+          }
+
           if (SimpleDateClaim.is(decoded)) {
             const formattedDate = decoded.toString(dateFormat);
             return <ClaimLabel {...labelProps}>{formattedDate}</ClaimLabel>;
@@ -78,7 +86,10 @@ const CardClaim = ({
             return (
               <ClaimImage base64={decoded} blur={labelProps.hidden ? 7 : 0} />
             );
-          } else if (DrivingPrivilegesClaim.is(decoded)) {
+          } else if (
+            DrivingPrivilegesClaim.is(decoded) ||
+            DrivingPrivilegesCustomClaim.is(decoded)
+          ) {
             const privileges = decoded.map(p => p.driving_privilege).join(" ");
             return <ClaimLabel {...labelProps}>{privileges}</ClaimLabel>;
           } else if (PlaceOfBirthClaim.is(decoded)) {

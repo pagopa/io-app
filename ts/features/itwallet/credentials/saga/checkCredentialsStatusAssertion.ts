@@ -10,13 +10,16 @@ import {
   StatusAssertionError
 } from "../../common/utils/itwCredentialStatusAssertionUtils";
 import { ReduxSagaEffect } from "../../../../types/utils";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import {
+  itwLifecycleIsITWalletValidSelector,
+  itwLifecycleIsValidSelector
+} from "../../lifecycle/store/selectors";
 import { itwCredentialsStore } from "../store/actions";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
-  CREDENTIALS_MAP,
+  getMixPanelCredential,
   trackItwStatusCredentialAssertionFailure
 } from "../../analytics";
 import { selectItwEnv } from "../../common/store/selectors/environment";
@@ -28,6 +31,11 @@ export function* updateCredentialStatusAssertionSaga(
   credential: StoredCredential
 ): Generator<ReduxSagaEffect, StoredCredential> {
   const env = yield* select(selectItwEnv);
+  const isItwL3 = yield* select(itwLifecycleIsITWalletValidSelector);
+  const mixpanelCredential = getMixPanelCredential(
+    credential.credentialType,
+    isItwL3
+  );
   try {
     const { parsedStatusAssertion, statusAssertion } = yield* call(
       getCredentialStatusAssertion,
@@ -52,7 +60,7 @@ export function* updateCredentialStatusAssertionSaga(
       );
 
       trackItwStatusCredentialAssertionFailure({
-        credential: CREDENTIALS_MAP[credential.credentialType],
+        credential: mixpanelCredential,
         credential_status: errorCode || "invalid"
       });
 
@@ -63,7 +71,7 @@ export function* updateCredentialStatusAssertionSaga(
     }
     // We do not have enough information on the status, the error was unexpected
     trackItwStatusCredentialAssertionFailure({
-      credential: CREDENTIALS_MAP[credential.credentialType],
+      credential: mixpanelCredential,
       credential_status: "unknown",
       reason: e instanceof Error ? e.message : e
     });

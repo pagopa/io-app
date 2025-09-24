@@ -141,6 +141,17 @@ export const itwCredentialIssuanceMachine = setup({
         src: "verifyTrustFederation",
         onDone: {
           target: "CheckingWalletInstanceAttestation"
+        },
+        onError: [
+          {
+            actions: "setFailure",
+            target: "#itwCredentialIssuanceMachine.Failure"
+          }
+        ]
+      },
+      after: {
+        5000: {
+          actions: "navigateToTrustIssuerScreen"
         }
       }
     },
@@ -192,7 +203,8 @@ export const itwCredentialIssuanceMachine = setup({
         src: "requestCredential",
         input: ({ context }) => ({
           credentialType: context.credentialType,
-          walletInstanceAttestation: context.walletInstanceAttestation?.jwt
+          walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
+          skipMdocIssuance: !context.isItWalletValid // Do not request mDoc credentials for non IT-Wallet instances
         }),
         onDone: {
           target: "DisplayingTrustIssuer",
@@ -243,12 +255,8 @@ export const itwCredentialIssuanceMachine = setup({
               codeVerifier: context.codeVerifier,
               requestedCredential: context.requestedCredential,
               issuerConf: context.issuerConf,
-              // If we are upgrading the credential to the new format or the user has access to the
-              // L3 features we need to pass the operationType header with the value "reissuing"
               operationType:
-                context.mode === "upgrade" || context.isWhiteListed
-                  ? "reissuing"
-                  : undefined
+                context.mode === "upgrade" ? "reissuing" : undefined
             }),
             onDone: {
               target: "ObtainingStatusAssertion",

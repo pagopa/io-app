@@ -3870,9 +3870,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-app-design-system@npm:5.8.1":
-  version: 5.8.1
-  resolution: "@pagopa/io-app-design-system@npm:5.8.1"
+"@pagopa/io-app-design-system@npm:5.11.1":
+  version: 5.11.1
+  resolution: "@pagopa/io-app-design-system@npm:5.11.1"
   dependencies:
     auto-changelog: ^2.4.0
     lodash: ^4.17.21
@@ -3893,7 +3893,7 @@ __metadata:
     react-native-reanimated: "*"
     react-native-safe-area-context: "*"
     react-native-svg: "*"
-  checksum: 6f18b985562c86bc0f14ecdc179fbf75cb7f13159a028e728ee71de81bd7057b5f1393d3f0e7374c120c6dbbce83271d84bbe35877c1b7ae8cf9b506c3a6d286
+  checksum: 3783399999ebf6f6b7b9feaaa6ae1909b219685c67b1c5ba808124f848ff219c0a292f17f83ca5ee21378613df7c57d1f291b4c6113a65c6ca3c4612b37f3921
   languageName: node
   linkType: hard
 
@@ -3908,15 +3908,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-cie@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@pagopa/io-react-native-cie@npm:1.1.0"
+"@pagopa/io-react-native-cie@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@pagopa/io-react-native-cie@npm:1.1.1"
   dependencies:
     zod: ^3.24.4
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: bb710bd00442755fbc5a0c1279922c929ae447f56465216941efba4a17d5166f463efa1d577c584e1aafbd2d24e6e1065c15859c86573a5543472b535dce0543
+  checksum: aab5c184ad8d92fb48530d0a0dbfdea80e4358367c25af4b17e5f6b88d5dd05c8825174a30277769b29a118b4093266c1effccfb2a31fd03a6f94e12ed8984e9
   languageName: node
   linkType: hard
 
@@ -4029,9 +4029,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-wallet@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "@pagopa/io-react-native-wallet@npm:2.0.0"
+"@pagopa/io-react-native-wallet@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "@pagopa/io-react-native-wallet@npm:2.1.1"
   dependencies:
     dcql: ^0.2.21
     js-base64: ^3.7.7
@@ -4049,7 +4049,7 @@ __metadata:
     "@pagopa/io-react-native-jwt": "*"
     react: "*"
     react-native: "*"
-  checksum: b18800655c4040a8c0bd1bd874f98a567f740173b8681fc6aa9d2bab62086b3c54264dc6772c6eda6f80f2d7bc9ec11dd556bd87e1d9b702276ebdaf41509171
+  checksum: fea9bf247ecb7d1f5e9d0715db5a5c8a5747aeb0d0b4045f02941474bb71b0500041cb4f4f69083cf04990d783a10cf87a99644704242bcbc70488f5fd657d38
   languageName: node
   linkType: hard
 
@@ -4087,10 +4087,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/react-native-cie@npm:^1.4.2":
-  version: 1.4.2
-  resolution: "@pagopa/react-native-cie@npm:1.4.2"
-  checksum: f56778630c4512c627298614d2c84e9a7b6976dec7085124294e7ef631d07dd35f9c39b730edf9bf4b01bfe44ef5610cded3266b42cd35b996a0e23668717979
+"@pagopa/react-native-cie@npm:^1.4.3":
+  version: 1.4.3
+  resolution: "@pagopa/react-native-cie@npm:1.4.3"
+  checksum: 2d94303c185b03e914cd0902867123a041b5477ef339b78a62470aff70a8ccb217fae77af722ffba6c011b5d4b8ca81c694751e136f4292413b05e6cef0d14d0
   languageName: node
   linkType: hard
 
@@ -12954,9 +12954,9 @@ __metadata:
     "@babel/runtime": ^7.25.0
     "@gorhom/bottom-sheet": ^5.1.2
     "@jambit/eslint-plugin-typed-redux-saga": ^0.4.0
-    "@pagopa/io-app-design-system": 5.8.1
+    "@pagopa/io-app-design-system": 5.11.1
     "@pagopa/io-pagopa-commons": ^3.1.0
-    "@pagopa/io-react-native-cie": ^1.1.0
+    "@pagopa/io-react-native-cie": ^1.1.1
     "@pagopa/io-react-native-cieid": ^0.3.5
     "@pagopa/io-react-native-crypto": ^1.2.3
     "@pagopa/io-react-native-http-client": 1.0.5
@@ -12965,11 +12965,11 @@ __metadata:
     "@pagopa/io-react-native-jwt": ^2.1.0
     "@pagopa/io-react-native-login-utils": ^1.1.0
     "@pagopa/io-react-native-secure-storage": ^0.2.1
-    "@pagopa/io-react-native-wallet": ^2.0.0
+    "@pagopa/io-react-native-wallet": ^2.1.1
     "@pagopa/io-react-native-wallet-legacy": "npm:@pagopa/io-react-native-wallet@0.30.0"
     "@pagopa/io-react-native-zendesk": ^0.3.30
     "@pagopa/openapi-codegen-ts": ^14.0.1
-    "@pagopa/react-native-cie": ^1.4.2
+    "@pagopa/react-native-cie": ^1.4.3
     "@pagopa/ts-commons": ^10.15.0
     "@react-native-async-storage/async-storage": ^2.0.0
     "@react-native-clipboard/clipboard": ^1.14.0
@@ -13093,7 +13093,7 @@ __metadata:
     react-native-haptic-feedback: ^2.3.3
     react-native-image-pan-zoom: ^2.1.11
     react-native-image-picker: 7.2.3
-    react-native-keychain: ^9.2.2
+    react-native-keychain: ^10.0.0
     react-native-linear-gradient: ^2.5.6
     react-native-markdown-display: ^7.0.2
     react-native-masked-text: ^1.13.0
@@ -17681,10 +17681,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-keychain@npm:^9.2.2":
-  version: 9.2.2
-  resolution: "react-native-keychain@npm:9.2.2"
-  checksum: e361df1e792766bb4d3f60b850608979667357365328d36e1665a077728b8d68f7d33de0d31e3c666f115a0f9e1f53be48b4e678bf73f07aecefcca35766d98d
+"react-native-keychain@npm:^10.0.0":
+  version: 10.0.0
+  resolution: "react-native-keychain@npm:10.0.0"
+  checksum: 1055cc192df58cb110bd49df1264a401007a354ad28b93adefd740aeac0f746cdab86d7428887694a1b0949ef8d0dc85db8984e77db684d7b967180167b64d42
   languageName: node
   linkType: hard
 

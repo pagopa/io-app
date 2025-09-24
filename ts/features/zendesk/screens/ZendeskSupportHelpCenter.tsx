@@ -1,5 +1,6 @@
 import {
   AccordionItem,
+  Banner,
   Body,
   ContentWrapper,
   FeatureInfo,
@@ -16,6 +17,8 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
+import _ from "lodash";
 import {
   useCallback,
   useEffect,
@@ -23,11 +26,8 @@ import {
   useMemo,
   useState
 } from "react";
-
 import { FlatList, ListRenderItemInfo } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
-import _ from "lodash";
-import I18n from "i18next";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import IOMarkdown from "../../../components/IOMarkdown";
 import { ContextualHelpProps } from "../../../components/screens/BaseScreenComponent";
@@ -48,19 +48,29 @@ import {
 } from "../../../navigation/params/AppParamsList";
 import { loadContextualHelpData } from "../../../store/actions/content";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { getContextualHelpDataFromRouteSelector } from "../../../store/reducers/content";
 import {
-  isProfileEmailValidatedSelector,
-  profileSelector
-} from "../../settings/common/store/selectors";
+  caCBannerConfigSelector,
+  isCaCBannerEnabledSelector
+} from "../../../store/reducers/backendStatus/remoteConfig";
+import { getContextualHelpDataFromRouteSelector } from "../../../store/reducers/content";
 import { FAQType, getFAQsFromCategories } from "../../../utils/faq";
+import { usePrevious } from "../../../utils/hooks/usePrevious";
+import {
+  fallbackForLocalizedMessageKeys,
+  getFullLocale
+} from "../../../utils/locale";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
 import {
   addTicketCustomField,
   zendeskFciId
 } from "../../../utils/supportAssistance";
 import { openWebUrl } from "../../../utils/url";
+import { isLoggedIn } from "../../authentication/common/store/utils/guards";
 import { fciSignatureRequestIdSelector } from "../../fci/store/reducers/fciSignatureRequest";
+import {
+  isProfileEmailValidatedSelector,
+  profileSelector
+} from "../../settings/common/store/selectors";
 import { ZendeskParamsList } from "../navigation/params";
 import ZENDESK_ROUTES from "../navigation/routes";
 import {
@@ -76,8 +86,11 @@ import {
   ZendeskTokenStatusEnum
 } from "../store/reducers";
 import { handleContactSupport } from "../utils";
-import { usePrevious } from "../../../utils/hooks/usePrevious";
-import { isLoggedIn } from "../../authentication/common/store/utils/guards";
+import {
+  trackZendeskCaCBannerShow,
+  trackZendeskCaCBannerTap
+} from "../analytics";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 
 type FaqManagerProps = Pick<
   ZendeskStartPayload,
@@ -160,6 +173,29 @@ const FaqManager = (props: FaqManagerProps) => {
     />
   );
 
+  const isCacBannerEnabled = useIOSelector(isCaCBannerEnabledSelector);
+  const bannerCaCConfig = useIOSelector(caCBannerConfigSelector);
+  const locale = getFullLocale();
+  const localeFallback = fallbackForLocalizedMessageKeys(locale);
+
+  useOnFirstRender(() => {
+    if (isCacBannerEnabled && bannerCaCConfig && bannerCaCConfig.action) {
+      trackZendeskCaCBannerShow(bannerCaCConfig.action.url?.[localeFallback]);
+    }
+  });
+
+  const handleBannerPress = () => {
+    if (!bannerCaCConfig?.action) {
+      return;
+    }
+
+    trackZendeskCaCBannerTap(bannerCaCConfig.action.url?.[localeFallback]);
+
+    return openWebUrl(bannerCaCConfig.action.url?.[localeFallback], () =>
+      IOToast.error(I18n.t("global.jserror.title"))
+    );
+  };
+
   return (
     <>
       {!isStringNullyOrEmpty(contextualHelpData.title) && (
@@ -173,9 +209,20 @@ const FaqManager = (props: FaqManagerProps) => {
         <>
           <VSpacer size={16} />
           <IOMarkdown content={contextualHelpData.content} />
-          <VSpacer size={16} />
         </>
       )}
+      <VSpacer size={16} />
+      {isCacBannerEnabled && (
+        <Banner
+          pictogramName="help"
+          color="neutral"
+          title={bannerCaCConfig?.title?.[localeFallback]}
+          content={bannerCaCConfig?.description?.[localeFallback]}
+          action={bannerCaCConfig?.action?.label?.[localeFallback] ?? ""}
+          onPress={handleBannerPress}
+        />
+      )}
+      <VSpacer size={16} />
       {contextualHelpData.faqs && (
         <FlatList
           ListHeaderComponent={<VSpacer size={8} />}

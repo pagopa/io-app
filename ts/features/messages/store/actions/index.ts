@@ -4,14 +4,21 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { UIMessage, UIMessageDetails } from "../../types";
-import { MessageGetStatusFailurePhaseType } from "../reducers/messageGetStatus";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { UIMessage, UIMessageDetails } from "../../types";
 import { MessageListCategory } from "../../types/messageListCategory";
+import { MessageGetStatusFailurePhaseType } from "../reducers/messageGetStatus";
+import { ThirdPartyMessageUnion } from "../reducers/thirdPartyById";
+import {
+  interruptMessageArchivingProcessingAction,
+  removeScheduledMessageArchivingAction,
+  resetMessageArchivingAction,
+  startProcessingMessageArchivingAction,
+  toggleScheduledMessageArchivingAction
+} from "./archiving";
 import {
   errorPreconditionStatusAction,
   idlePreconditionStatusAction,
@@ -21,13 +28,6 @@ import {
   shownPreconditionStatusAction,
   updateRequiredPreconditionStatusAction
 } from "./preconditions";
-import {
-  resetMessageArchivingAction,
-  interruptMessageArchivingProcessingAction,
-  removeScheduledMessageArchivingAction,
-  startProcessingMessageArchivingAction,
-  toggleScheduledMessageArchivingAction
-} from "./archiving";
 
 export type RequestGetMessageDataActionType = {
   messageId: string;
@@ -74,7 +74,7 @@ export const loadThirdPartyMessage = createAsyncAction(
   "THIRD_PARTY_MESSAGE_LOAD_FAILURE"
 )<
   { id: string; serviceId: ServiceId; tag: string },
-  { id: string; content: ThirdPartyMessageWithContent },
+  { id: string; content: ThirdPartyMessageUnion },
   { id: string; error: Error }
 >();
 

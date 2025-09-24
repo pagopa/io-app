@@ -54,7 +54,9 @@ export const createActorsImplementation = (
                   return Promise.reject(mapErrorCodeToFailure(value.code));
               }
             }),
-            E.getOrElse(() => Promise.reject(PaymentFailureEnum.GENERIC))
+            E.getOrElse(() =>
+              Promise.reject(PaymentFailureEnum.PAYMENT_GENERIC_ERROR)
+            )
           )
         )
       );
@@ -92,7 +94,9 @@ export const createActorsImplementation = (
                   return Promise.reject(mapErrorCodeToFailure(value.code));
               }
             }),
-            E.getOrElse(() => Promise.reject(PaymentFailureEnum.GENERIC))
+            E.getOrElse(() =>
+              Promise.reject(PaymentFailureEnum.PAYMENT_GENERIC_ERROR)
+            )
           )
         )
       );
@@ -129,7 +133,9 @@ export const createActorsImplementation = (
                 return Promise.reject(mapErrorCodeToFailure(value.code));
             }
           }),
-          E.getOrElse(() => Promise.reject(PaymentFailureEnum.GENERIC))
+          E.getOrElse(() =>
+            Promise.reject(PaymentFailureEnum.PAYMENT_GENERIC_ERROR)
+          )
         )
       )
     );
@@ -153,23 +159,26 @@ export const mapErrorCodeToFailure = (
   switch (code) {
     case TransactionErrorCodeEnum.PAYMENT_TRANSACTION_EXPIRED:
     case TransactionErrorCodeEnum.PAYMENT_NOT_FOUND_OR_EXPIRED:
-      return PaymentFailureEnum.TRANSACTION_EXPIRED;
+      return PaymentFailureEnum.PAYMENT_TRANSACTION_EXPIRED;
     case TransactionErrorCodeEnum.PAYMENT_USER_SUSPENDED:
-      return PaymentFailureEnum.USER_SUSPENDED;
+      return PaymentFailureEnum.PAYMENT_USER_SUSPENDED;
     case TransactionErrorCodeEnum.PAYMENT_USER_NOT_ONBOARDED:
-      return PaymentFailureEnum.USER_NOT_ONBOARDED;
+      return PaymentFailureEnum.PAYMENT_USER_NOT_ONBOARDED;
     case TransactionErrorCodeEnum.PAYMENT_USER_UNSUBSCRIBED:
-      return PaymentFailureEnum.USER_UNSUBSCRIBED;
+      return PaymentFailureEnum.PAYMENT_USER_UNSUBSCRIBED;
     case TransactionErrorCodeEnum.PAYMENT_ALREADY_AUTHORIZED:
-      return PaymentFailureEnum.ALREADY_AUTHORIZED;
+      return PaymentFailureEnum.PAYMENT_ALREADY_AUTHORIZED;
     case TransactionErrorCodeEnum.PAYMENT_BUDGET_EXHAUSTED:
-      return PaymentFailureEnum.BUDGET_EXHAUSTED;
+      return PaymentFailureEnum.PAYMENT_BUDGET_EXHAUSTED;
     case TransactionErrorCodeEnum.PAYMENT_ALREADY_ASSIGNED:
-      return PaymentFailureEnum.ALREADY_ASSIGNED;
+      return PaymentFailureEnum.PAYMENT_ALREADY_ASSIGNED;
     case TransactionErrorCodeEnum.PAYMENT_INITIATIVE_INVALID_DATE:
-      return PaymentFailureEnum.INVALID_DATE;
+      return PaymentFailureEnum.PAYMENT_INITIATIVE_INVALID_DATE;
+    case TransactionErrorCodeEnum.PAYMENT_GENERIC_ERROR:
+    case TransactionErrorCodeEnum.PAYMENT_MERCHANT_NOT_ONBOARDED:
+    case TransactionErrorCodeEnum.PAYMENT_NOT_ALLOWED_FOR_TRX_STATUS:
     default:
-      return PaymentFailureEnum.GENERIC;
+      return PaymentFailureEnum.PAYMENT_GENERIC_ERROR;
   }
 };
 
@@ -179,7 +188,7 @@ export const mapErrorCodeToFailure = (
  */
 const mapFetchError = (error: unknown): PaymentFailure => {
   if (error === "max-retries") {
-    return PaymentFailureEnum.TOO_MANY_REQUESTS;
+    return PaymentFailureEnum.PAYMENT_TOO_MANY_REQUESTS;
   }
-  return PaymentFailureEnum.GENERIC;
+  return PaymentFailureEnum.PAYMENT_GENERIC_ERROR;
 };

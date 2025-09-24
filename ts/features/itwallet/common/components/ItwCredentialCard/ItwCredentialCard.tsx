@@ -1,4 +1,4 @@
-import { HStack, IOText, Tag } from "@pagopa/io-app-design-system";
+import { HStack, Icon, IOText, Tag } from "@pagopa/io-app-design-system";
 import Color from "color";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
@@ -13,7 +13,7 @@ import {
 } from "../../utils/itwCredentialUtils";
 import { getThemeColorByCredentialType } from "../../utils/itwStyleUtils";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
-import { itwShouldRenderNewItWalletSelector } from "../../store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { CardBackground } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
 import { CardColorScheme } from "./types";
@@ -36,6 +36,11 @@ export type ItwCredentialCard = {
    * be displayed with a badge.
    */
   isItwCredential?: boolean;
+  /**
+   * Indicates if the credential is a multi-level credential,
+   * which affects the display of a specific badge on the card.
+   */
+  isMultiCredential?: boolean;
 };
 
 type StyleProps = {
@@ -47,11 +52,12 @@ type StyleProps = {
 export const ItwCredentialCard = ({
   credentialType,
   credentialStatus = "valid",
-  isItwCredential
+  isItwCredential,
+  isMultiCredential
 }: ItwCredentialCard) => {
   const typefacePreference = useIOSelector(fontPreferenceSelector);
-  const isNewItwRenderable = useIOSelector(itwShouldRenderNewItWalletSelector);
-  const needsItwUpgrade = isNewItwRenderable && !isItwCredential;
+  const isItwPid = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const needsItwUpgrade = isItwPid && !isItwCredential;
 
   const borderColorMap = useBorderColorByStatus();
 
@@ -130,6 +136,9 @@ export const ItwCredentialCard = ({
             {getCredentialNameFromType(credentialType, "").toUpperCase()}
           </IOText>
           {statusTagProps && <Tag forceLightMode {...statusTagProps} />}
+          {isMultiCredential && (
+            <Icon name="multiCard" color="grey-850" size={24} />
+          )}
         </HStack>
       </View>
       <DigitalVersionBadge

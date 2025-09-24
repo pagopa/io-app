@@ -37,7 +37,7 @@ export const createActorsImplementation = (
       const data: Promise<InitiativeDataDTO> = pipe(
         dataResponse,
         E.fold(
-          _ => Promise.reject(OnboardingFailureEnum.GENERIC),
+          _ => Promise.reject(OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR),
           ({ status, value }) => {
             switch (status) {
               case 200:
@@ -45,7 +45,9 @@ export const createActorsImplementation = (
               case 401:
                 return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
               default:
-                return Promise.reject(OnboardingFailureEnum.GENERIC);
+                return Promise.reject(
+                  OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR
+                );
             }
           }
         )
@@ -71,7 +73,7 @@ export const createActorsImplementation = (
     const data: Promise<O.Option<OnboardingStatusEnum>> = pipe(
       statusResponse,
       E.fold(
-        _ => Promise.reject(OnboardingFailureEnum.GENERIC),
+        _ => Promise.reject(OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR),
         ({ status, value }) => {
           switch (status) {
             case 200:
@@ -90,7 +92,9 @@ export const createActorsImplementation = (
             case 401:
               return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
             default:
-              return Promise.reject(OnboardingFailureEnum.GENERIC);
+              return Promise.reject(
+                OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR
+              );
           }
         }
       )
@@ -115,7 +119,7 @@ export const createActorsImplementation = (
     const dataPromise: Promise<O.Option<InitiativeBeneficiaryRuleDTO>> = pipe(
       response,
       E.fold(
-        _ => Promise.reject(OnboardingFailureEnum.GENERIC),
+        _ => Promise.reject(OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR),
         ({ status, value }) => {
           switch (status) {
             case 200:
@@ -142,11 +146,11 @@ export const createActorsImplementation = (
       } = params.input;
 
       if (O.isNone(initiative) || O.isNone(requiredCriteria)) {
-        return Promise.reject(OnboardingFailureEnum.GENERIC);
+        return Promise.reject(OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR);
       }
 
       if (requiredCriteria === undefined) {
-        return Promise.reject(OnboardingFailureEnum.GENERIC);
+        return Promise.reject(OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR);
       }
 
       const consentsArray = [
@@ -172,7 +176,7 @@ export const createActorsImplementation = (
       const dataPromise: Promise<undefined> = pipe(
         response,
         E.fold(
-          _ => Promise.reject(OnboardingFailureEnum.GENERIC),
+          _ => Promise.reject(OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR),
           ({ status }) => {
             switch (status) {
               case 202:
@@ -180,7 +184,9 @@ export const createActorsImplementation = (
               case 401:
                 return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
               default:
-                return Promise.reject(OnboardingFailureEnum.GENERIC);
+                return Promise.reject(
+                  OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR
+                );
             }
           }
         )
@@ -209,15 +215,15 @@ const mapOnboardingStatusToFailure = (
   switch (status) {
     case OnboardingStatusEnum.ONBOARDING_OK:
     case OnboardingStatusEnum.SUSPENDED:
-      return OnboardingFailureEnum.USER_ONBOARDED;
+      return OnboardingFailureEnum.ONBOARDING_ALREADY_ONBOARDED;
     case OnboardingStatusEnum.ELIGIBLE_KO:
       return OnboardingFailureEnum.NOT_ELIGIBLE;
     case OnboardingStatusEnum.ON_EVALUATION:
-      return OnboardingFailureEnum.ON_EVALUATION;
+      return OnboardingFailureEnum.ONBOARDING_ON_EVALUATION;
     case OnboardingStatusEnum.UNSUBSCRIBED:
-      return OnboardingFailureEnum.USER_UNSUBSCRIBED;
+      return OnboardingFailureEnum.ONBOARDING_USER_UNSUBSCRIBED;
     case OnboardingStatusEnum.ONBOARDING_KO:
-      return OnboardingFailureEnum.GENERIC;
+      return OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR;
     default:
       return undefined;
   }
@@ -233,20 +239,26 @@ const mapErrorCodeToFailure = (
 ): OnboardingFailure => {
   switch (code) {
     case OnboardingErrorCodeEnum.ONBOARDING_INITIATIVE_NOT_FOUND:
-      return OnboardingFailureEnum.INITIATIVE_NOT_FOUND;
+      return OnboardingFailureEnum.ONBOARDING_INITIATIVE_NOT_FOUND;
     case OnboardingErrorCodeEnum.ONBOARDING_UNSATISFIED_REQUIREMENTS:
-      return OnboardingFailureEnum.UNSATISFIED_REQUIREMENTS;
+      return OnboardingFailureEnum.ONBOARDING_UNSATISFIED_REQUIREMENTS;
     case OnboardingErrorCodeEnum.ONBOARDING_USER_NOT_IN_WHITELIST:
-      return OnboardingFailureEnum.USER_NOT_IN_WHITELIST;
+      return OnboardingFailureEnum.ONBOARDING_USER_NOT_IN_WHITELIST;
     case OnboardingErrorCodeEnum.ONBOARDING_INITIATIVE_NOT_STARTED:
-      return OnboardingFailureEnum.INITIATIVE_NOT_STARTED;
+      return OnboardingFailureEnum.ONBOARDING_INITIATIVE_NOT_STARTED;
     case OnboardingErrorCodeEnum.ONBOARDING_INITIATIVE_ENDED:
-      return OnboardingFailureEnum.INITIATIVE_ENDED;
+      return OnboardingFailureEnum.ONBOARDING_INITIATIVE_ENDED;
     case OnboardingErrorCodeEnum.ONBOARDING_BUDGET_EXHAUSTED:
-      return OnboardingFailureEnum.BUDGET_EXHAUSTED;
+      return OnboardingFailureEnum.ONBOARDING_BUDGET_EXHAUSTED;
     case OnboardingErrorCodeEnum.ONBOARDING_USER_UNSUBSCRIBED:
-      return OnboardingFailureEnum.USER_UNSUBSCRIBED;
+      return OnboardingFailureEnum.ONBOARDING_USER_UNSUBSCRIBED;
+    case OnboardingErrorCodeEnum.ONBOARDING_FAMILY_UNIT_ALREADY_JOINED:
+      return OnboardingFailureEnum.ONBOARDING_FAMILY_UNIT_ALREADY_JOINED;
+    case OnboardingErrorCodeEnum.ONBOARDING_WAITING_LIST:
+      return OnboardingFailureEnum.ONBOARDING_WAITING_LIST;
+    case OnboardingErrorCodeEnum.ONBOARDING_TOO_MANY_REQUESTS:
+      return OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS;
     default:
-      return OnboardingFailureEnum.GENERIC;
+      return OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR;
   }
 };

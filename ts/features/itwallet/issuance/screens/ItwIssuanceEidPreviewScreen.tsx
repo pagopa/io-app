@@ -11,7 +11,7 @@ import {
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useCallback, useLayoutEffect, useMemo } from "react";
+import { useCallback, useLayoutEffect } from "react";
 import I18n from "i18next";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
@@ -30,6 +30,7 @@ import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisable
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
+  isL3FeaturesEnabledSelector,
   selectEidOption,
   selectIdentification
 } from "../../machine/eid/selectors";
@@ -69,26 +70,33 @@ const ContentView = ({ eid }: ContentViewProps) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const identification =
     ItwEidIssuanceMachineContext.useSelector(selectIdentification);
+  const isL3FeaturesEnabled = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const route = useRoute();
 
-  const isL3 = isItwCredential(eid.credential);
+  const isL3 = isL3FeaturesEnabled && isItwCredential(eid.credential);
 
-  const mixPanelCredential = useMemo(
-    () => (isL3 ? "ITW_PID" : "ITW_ID_V2"),
-    [isL3]
-  );
+  const mixPanelCredential = isL3 ? "ITW_PID" : "ITW_ID_V2";
 
   const theme = useIOTheme();
 
   useFocusEffect(
     useCallback(() => {
-      trackCredentialPreview(mixPanelCredential);
+      trackCredentialPreview({
+        credential: mixPanelCredential,
+        credential_type: "unique"
+      });
       if (identification) {
-        trackItwRequestSuccess(identification?.mode, identification?.level);
+        trackItwRequestSuccess(
+          identification?.mode,
+          identification?.level,
+          isL3 ? "L3" : "L2"
+        );
       }
-    }, [identification, mixPanelCredential])
+    }, [identification, mixPanelCredential, isL3])
   );
 
   useDebugInfo({

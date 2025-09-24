@@ -1350,7 +1350,7 @@
       "fee": "Kommission ",
       "feeAppliedBy": "Angewandt von: ",
       "editButton": "Ändern",
-      "termsAndConditions": "Mit dem Fortfahren akzeptieren Sie die [Nutzungsbedingungen](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) und bestätigen, die [Datenschutzerklärung](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/) von {{pspName}} gelesen zu haben.",
+      "termsAndConditions": "Mit dem Fortfahren akzeptieren Sie die [Nutzungsbedingungen](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/) und bestätigen, die [Datenschutzerklärung](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/) von {{pspName}} gelesen zu haben.",
       "a11y": {
         "announce": "Zusammenfassung Ihrer Zahlung"
       }
@@ -2709,8 +2709,8 @@
         "retry": "Erneut versuchen"
       },
       "header": {
-        "subtitlePlural": "{{count}} Dienste verfügbar",
-        "subtitleSingular": "{{count}} Dienst verfügbar"
+        "subtitle_one": "{{count}} Dienst verfügbar",
+        "subtitle_other": "{{count}} Dienste verfügbar"
       }
     },
     "search": {
@@ -2942,11 +2942,9 @@
           "categories": "Kategorien",
           "cta": {
             "cancel": "Entfernen",
-            "confirm": {
-              "zero": "Filter anwenden",
-              "one": "({{count}}) Filter anwenden",
-              "other": "({{count}}) Filter anwenden"
-            }
+            "confirm_zero": "Filter anwenden",
+            "confirm_one": "({{count}}) Filter anwenden",
+            "confirm_other": "({{count}}) Filter anwenden"
           },
           "order": {
             "byDistance": "Nach der Nähe zu deinem Standort",
@@ -3106,14 +3104,10 @@
         "code": {
           "title": "Dein Rabattcode",
           "validUntil": "Noch gültig für",
-          "minutes": {
-            "one": "1 Minute",
-            "other": "{{minutes}} Minuten"
-          },
-          "seconds": {
-            "one": "1 Sekunde",
-            "other": "{{seconds}} Sekunden"
-          }
+          "minutes_one": "1 Minute",
+          "minutes_other": "{{minutes}} Minuten",
+          "seconds_one": "1 Sekunde",
+          "seconds_other": "{{seconds}} Sekunden"
         }
       }
     },
@@ -4120,6 +4114,9 @@
         "deny": "Non attivare",
         "success": "Sie aktivierten Push -Benachrichtigungen",
         "advice": "Consigliato"
+      },
+      "failToRetry": {
+        "contentTitle": "Stiamo per collegarti.\n Attendi qualche secondo..."
       },
       "loading": {
         "subtitle": "Attendi qualche secondo",

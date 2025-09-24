@@ -9,6 +9,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
   "appearanceSettings": {
     "showAppearanceBanner": true,
   },
+  "backgroundLinking": {},
   "connectivityStatus": {
     "isConnected": undefined,
   },
@@ -113,6 +114,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "kind": "PotNone",
     },
     "wallet": {
+      "initiativeWaitingList": {
+        "kind": "PotNone",
+      },
       "initiatives": {
         "kind": "PotNone",
       },
@@ -165,7 +169,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
   "loginFeatures": {
     "activeSessionLogin": {
       "isActiveSessionLogin": false,
-      "isActiveSessionLoginFailed": false,
       "isUserLoggedIn": false,
     },
     "cieLogin": {
@@ -315,6 +318,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
   },
   "pn": {
+    "aarFlow": {
+      "type": "none",
+    },
     "activation": {
       "isActivating": false,
     },

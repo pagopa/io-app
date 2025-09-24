@@ -44,6 +44,7 @@ export const ShareDataComponent = memo(({ trackAction }: FeatureProps) => {
         <Body
           weight="Semibold"
           asLink
+          avoidPressable
           onPress={handleOnPress}
           testID="additionalInformation"
         >

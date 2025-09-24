@@ -1,4 +1,4 @@
-import { useMemo, memo } from "react";
+import { memo, useMemo } from "react";
 import { Badge, IOIcons, ModuleCredential } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
@@ -13,13 +13,16 @@ type Props = {
   isRequested: boolean;
   isSelectedCredential: boolean;
   isUpcoming: boolean;
+  isNew: boolean;
 };
 
 const credentialIconByType: Record<string, IOIcons> = {
   [CredentialType.DRIVING_LICENSE]: "car",
   [CredentialType.EUROPEAN_DISABILITY_CARD]: "accessibility",
   [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: "healthCard",
-  [CredentialType.DEGREE_CERTIFICATES]: "messageLegal"
+  [CredentialType.EDUCATION_DEGREE]: "messageLegal",
+  [CredentialType.EDUCATION_ENROLLMENT]: "messageLegal",
+  [CredentialType.RESIDENCY]: "messageLegal"
 };
 
 const activeBadge: Badge = {
@@ -42,6 +45,11 @@ const upcomingBadge: Badge = {
   text: I18n.t("features.wallet.onboarding.badge.upcoming")
 };
 
+const newBadge: Badge = {
+  variant: "default",
+  text: I18n.t("features.wallet.onboarding.badge.new")
+};
+
 const ItwOnboardingModuleCredential = ({
   type,
   onPress,
@@ -49,6 +57,7 @@ const ItwOnboardingModuleCredential = ({
   isDisabled,
   isRequested,
   isUpcoming,
+  isNew,
   isSelectedCredential,
   isCredentialIssuancePending
 }: Props) => {
@@ -65,8 +74,11 @@ const ItwOnboardingModuleCredential = ({
     if (isUpcoming) {
       return upcomingBadge;
     }
+    if (isNew) {
+      return newBadge;
+    }
     return undefined;
-  }, [isActive, isDisabled, isRequested, isUpcoming]);
+  }, [isActive, isDisabled, isNew, isRequested, isUpcoming]);
 
   const handleOnPress = () => {
     onPress(type);
