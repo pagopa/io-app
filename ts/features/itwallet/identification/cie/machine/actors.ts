@@ -1,6 +1,9 @@
-import { fromCallback, fromPromise } from "xstate";
 import { CieManager } from "@pagopa/io-react-native-cie";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import HapticFeedback, {
+  HapticFeedbackTypes
+} from "react-native-haptic-feedback";
+import { fromCallback, fromPromise } from "xstate";
 import { assert } from "../../../../../utils/assert";
 import { EnvType } from "../../../common/utils/environment";
 import { cieUatEndpoint } from "../utils/endpoints";
@@ -40,13 +43,35 @@ export const cieMachineActors = {
         // Start listening for NFC events
         CieManager.addListener("onEvent", event => {
           sendBack({ type: "cie-read-event", event });
+          // Trigger a light haptic feedback on the start of the reading
+          // when the tag is discovered
+          if (event.name === "ON_TAG_DISCOVERED") {
+            HapticFeedback.trigger(HapticFeedbackTypes.impactLight);
+          }
         }),
         // Start listening for errors
         CieManager.addListener("onError", error => {
           sendBack({ type: "cie-read-error", error });
+          // Trigger a warning haptic feedback on TAG_LOST error
+          // or an error haptic feedback for all the other errors
+          HapticFeedback.trigger(
+            error.name === "TAG_LOST"
+              ? HapticFeedbackTypes.notificationWarning
+              : HapticFeedbackTypes.notificationError
+          );
         }),
         // Start listening for success
         CieManager.addListener("onSuccess", uri => {
+          // On Android we do not receive a final event with progress = 1
+          // This mocks allows to have a consistent behavior across platforms
+          sendBack({
+            type: "cie-read-event",
+            event: { name: "READ_SUCCESS", progress: 1 }
+          });
+
+          // Trigger a success haptic feedback
+          HapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
+
           // Before proceeding to the next step, give some time to read the success message
           setTimeout(
             () => sendBack({ type: "cie-read-success", authorizationUrl: uri }),
