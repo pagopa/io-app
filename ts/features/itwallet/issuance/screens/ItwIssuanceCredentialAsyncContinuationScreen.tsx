@@ -1,9 +1,9 @@
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import * as t from "io-ts";
 import { useCallback } from "react";
-import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import {
   IOStackNavigationRouteProps,
@@ -14,13 +14,13 @@ import {
   getMixPanelCredential,
   trackItwHasAlreadyCredential
 } from "../../analytics";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { itwCredentialSelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import { ItwIssuanceCredentialTrustIssuerScreen } from "./ItwIssuanceCredentialTrustIssuerScreen";
 
 export type ItwIssuanceCredentialAsyncContinuationNavigationParams = {
@@ -106,14 +106,17 @@ const InnerComponent = () => {
   );
 
   if (!isWalletValid) {
-    const ns = "features.itWallet.issuance.walletInstanceNotActive" as const;
+    const ns = "features.itWallet.issuance.walletInstanceNotActive";
+
+    const copy = isL3 ? `${ns}.itWallet` : `${ns}.documentiSuIo`;
+
     return (
       <OperationResultScreenContent
-        title={I18n.t(`${ns}.title`)}
+        title={I18n.t(`${copy}.title`)}
         subtitle={[
-          { text: I18n.t(`${ns}.body`) },
+          { text: I18n.t(`${copy}.body`) },
           {
-            text: I18n.t(`${ns}.bodyBold`),
+            text: I18n.t(`${copy}.bodyBold`),
             weight: "Semibold"
           }
         ]}

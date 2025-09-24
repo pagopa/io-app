@@ -118,14 +118,17 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   );
 
   if (!isWalletValid) {
-    const ns = "features.itWallet.issuance.walletInstanceNotActive" as const;
+    const ns = "features.itWallet.issuance.walletInstanceNotActive";
+
+    const copy = isL3 ? `${ns}.itWallet` : `${ns}.documentiSuIo`;
+
     return (
       <OperationResultScreenContent
-        title={I18n.t(`${ns}.title`)}
+        title={I18n.t(`${copy}.title`)}
         subtitle={[
-          { text: I18n.t(`${ns}.body`) },
+          { text: I18n.t(`${copy}.body`) },
           {
-            text: I18n.t(`${ns}.bodyBold`),
+            text: I18n.t(`${copy}.bodyBold`),
             weight: "Semibold"
           }
         ]}
