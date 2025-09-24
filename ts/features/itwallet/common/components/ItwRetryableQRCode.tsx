@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { StyleSheet, View } from "react-native";
+import { Appearance, StyleSheet, View } from "react-native";
 import { memo } from "react";
 import {
   Body,
@@ -73,7 +73,8 @@ const ItwRetryableQRCode = ({
     );
   }
 
-  return <QrCodeImage {...qrCodeProps} />;
+  const colorScheme = Appearance.getColorScheme();
+  return <QrCodeImage {...qrCodeProps} inverted={colorScheme === "dark"} />;
 };
 
 const styles = StyleSheet.create({

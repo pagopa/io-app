@@ -102,7 +102,7 @@ describe("linkingSubscription", () => {
         const mockState = store.getState();
 
         jest
-          .spyOn(DEEP_LINKING, "navigateToSendAarFlow")
+          .spyOn(DEEP_LINKING, "navigateToSendAarFlowIfEnabled")
           .mockImplementation(mockNav);
         jest
           .spyOn(UTIL_GUARDS, "isLoggedIn")
