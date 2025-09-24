@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "3.13.0-rc.10",
+  "version": "3.14.0-rc.2",
   "private": true,
   "scripts": {
     "start": "react-native start",
