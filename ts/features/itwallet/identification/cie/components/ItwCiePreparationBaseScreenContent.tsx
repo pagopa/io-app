@@ -47,6 +47,23 @@ export const ItwCiePreparationBaseScreenContent = ({ type }: Props) => {
     }
   }, [type]);
 
+  const infoButton = useMemo(() => {
+    switch (type) {
+      case "can":
+        return null;
+      default:
+        return (
+          <IOButton
+            variant="link"
+            label={I18n.t(
+              `features.itWallet.identification.cie.prepare.${type}.buttonLink`
+            )}
+            onPress={() => infoBottomSheet.present()}
+          />
+        );
+    }
+  }, [type, infoBottomSheet]);
+
   useFocusEffect(
     useCallback(() => {
       const trackingMap: Record<CiePreparationType, () => void> = {
@@ -81,13 +98,7 @@ export const ItwCiePreparationBaseScreenContent = ({ type }: Props) => {
       }}
     >
       <ContentWrapper>
-        <IOButton
-          variant="link"
-          label={I18n.t(
-            `features.itWallet.identification.cie.prepare.${type}.buttonLink`
-          )}
-          onPress={() => infoBottomSheet.present()}
-        />
+        {infoButton}
         <View style={[styles.imageContainer, { height: imageHeightContainer }]}>
           <Image
             accessibilityIgnoresInvertColors
