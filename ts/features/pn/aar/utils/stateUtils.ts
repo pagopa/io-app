@@ -47,7 +47,7 @@ type ErrorState = {
 type ValueOf<T> = T[keyof T];
 type RetriableError = ValueOf<typeof retriableErrors>;
 
-type ErrorKind = ValueOf<typeof aarErrors>;
+export type ErrorKind = ValueOf<typeof aarErrors>;
 export type AARFlowStateName =
   SendAARFlowStatesType[keyof SendAARFlowStatesType];
 

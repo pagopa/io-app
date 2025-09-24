@@ -3,28 +3,19 @@ import { OperationResultScreenContent } from "../../../../../components/screens/
 import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
 
 export const SendAARErrorComponent = () => {
-  const { goToNextState, terminateFlow } = useSendAarFlowManager();
+  const { terminateFlow } = useSendAarFlowManager();
 
   return (
     <OperationResultScreenContent
       testID="SEND_AAR_ERROR"
       isHeaderVisible
       pictogram="accessDenied"
-      title={I18n.t("features.pn.aar.flow.ko.notAddresseeFinal.title")}
-      subtitle={I18n.t("features.pn.aar.flow.ko.notAddresseeFinal.body")}
+      title="Lorem Ipsum"
+      subtitle="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
       action={{
-        label: I18n.t(
-          "features.pn.aar.flow.ko.notAddresseeFinal.primaryAction"
-        ),
+        label: I18n.t("features.pn.aar.flow.ko.GENERIC.primaryAction"),
         onPress: terminateFlow,
-        testID: "primary-action"
-      }}
-      secondaryAction={{
-        label: I18n.t(
-          "features.pn.aar.flow.ko.notAddresseeFinal.secondaryAction"
-        ),
-        onPress: goToNextState,
-        testID: "secondary-action"
+        testID: "primary_button"
       }}
     />
   );

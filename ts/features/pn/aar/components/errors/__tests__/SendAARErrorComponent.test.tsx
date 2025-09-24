@@ -1,85 +1,42 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../../store/actions/application";
-import * as hooks from "../../../../../../store/hooks";
+import * as HOOKS from "../../../../../../store/hooks";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import PN_ROUTES from "../../../../navigation/routes";
-import { setAarFlowState } from "../../../store/actions";
-import { AARFlowState } from "../../../utils/stateUtils";
+import * as FLOW_MANAGER from "../../../hooks/useSendAarFlowManager";
 import { SendAARErrorComponent } from "../../errors/SendAARErrorComponent";
 
-jest.mock("../../../../../store/hooks");
-
-const mockPopToTop = jest.fn();
-
-jest.mock("@react-navigation/native", () => {
-  const navigationModule = jest.requireActual("@react-navigation/native");
-  return {
-    ...navigationModule,
-    useNavigation: () => ({
-      ...navigationModule.useNavigation(),
-      popToTop: mockPopToTop
-    })
-  };
-});
+const managerSpy = jest.spyOn(FLOW_MANAGER, "useSendAarFlowManager");
 
 describe("SendAARErrorComponent", () => {
+  const mockGoNextState = jest.fn();
+  const mockTerminateFlow = jest.fn();
   const mockDispatch = jest.fn();
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-    (hooks.useIODispatch as jest.Mock).mockReturnValue(mockDispatch);
-    (hooks.useIOSelector as jest.Mock).mockReturnValue(undefined);
+  beforeAll(() => {
+    jest.spyOn(HOOKS, "useIODispatch").mockImplementation(() => mockDispatch);
+    managerSpy.mockImplementation(() => ({
+      currentFlowData: { type: "none" },
+      goToNextState: mockGoNextState,
+      terminateFlow: mockTerminateFlow
+    }));
   });
 
-  (
-    [
-      {
-        type: "ko",
-        previousState: {
-          type: "fetchingQRData",
-          qrCode: "TEST"
-        },
-        errorKind: "GENERIC"
-      },
-      {
-        type: "ko",
-        previousState: {
-          type: "fetchingNotificationData",
-          iun: "0001",
-          fullNameDestinatario: "Mario Rossi"
-        },
-        errorKind: "GENERIC"
-      }
-    ] as ReadonlyArray<Extract<AARFlowState, { type: "ko" }>>
-  ).forEach(state =>
-    it(`dispatches the action with payload='${JSON.stringify(
-      state
-    )}' when the primary button is pressed`, () => {
-      (hooks.useIOSelector as jest.Mock).mockReturnValue(state);
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
-      const { getByTestId } = renderComponent();
-      const button = getByTestId("primary-action");
-
-      expect(mockDispatch).toHaveBeenCalledTimes(0);
-      fireEvent.press(button);
-      expect(mockDispatch).toHaveBeenCalledWith(
-        setAarFlowState(state.previousState)
-      );
-    })
-  );
-
+  it("quits out of the flow on primary button press", () => {
+    const { getByTestId } = renderComponent();
+    const button = getByTestId("primary_button");
+    expect(mockTerminateFlow).toHaveBeenCalledTimes(0);
+    fireEvent.press(button);
+    expect(mockTerminateFlow).toHaveBeenCalledTimes(1);
+  });
   it("should match snapshot", () => {
-    (hooks.useIOSelector as jest.Mock).mockReturnValue({
-      type: "ko",
-      previousState: {
-        type: "fetchingQRData",
-        qrCode: "TEST"
-      }
-    });
-
     const { toJSON } = renderComponent();
     expect(toJSON()).toMatchSnapshot();
   });

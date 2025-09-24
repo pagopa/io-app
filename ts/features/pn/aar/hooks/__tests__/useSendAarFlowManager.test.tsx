@@ -1,6 +1,8 @@
 import { act, renderHook } from "@testing-library/react-native";
+import { sendAARDelegateUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import * as URL_UTILS from "../../../../../utils/url";
 import { terminateAarFlow } from "../../store/actions";
+import { currentAARFlowData } from "../../store/reducers";
 import {
   AARFlowState,
   AARFlowStateName,
@@ -15,7 +17,7 @@ const mockNavigate = jest.fn();
 const mockDispatch = jest.fn();
 const mockSelector = jest.fn();
 const mockOpenWebUrl = jest.spyOn(URL_UTILS, "openWebUrl").mockImplementation();
-const mockDelegateUrl = "http://www.test.io";
+const mockDelegateUrl = "https://www.test.io";
 
 jest.mock("../../../../../navigation/params/AppParamsList", () => ({
   useIONavigation: () => ({
@@ -61,7 +63,6 @@ describe("useSendAarFlowManager", () => {
       });
       switch (stateKind) {
         case sendAARFlowStates.displayingAARToS:
-        case sendAARFlowStates.ko:
           const isValid = isValidAARStateTransition(
             stateKind,
             mockDispatch.mock.calls[0][0].payload.type as AARFlowStateName
@@ -69,19 +70,32 @@ describe("useSendAarFlowManager", () => {
           expect(mockDispatch).toHaveBeenCalledTimes(1);
           expect(isValid).toBe(true);
           break;
-        case sendAARFlowStates.notAddresseeFinal:
-          expect(mockOpenWebUrl).toHaveBeenCalledTimes(1);
-          expect(mockOpenWebUrl).toHaveBeenCalledWith(mockDelegateUrl);
-          break;
         default:
           expect(mockDispatch).not.toHaveBeenCalled();
           break;
       }
     });
   });
+  it(`should open a weburl when calling "goToNextState" when the state type is 'notAddresseeFinal'`, () => {
+    mockSelector.mockImplementation(selector => {
+      if (selector === currentAARFlowData) {
+        return { type: sendAARFlowStates.notAddresseeFinal } as AARFlowState;
+      }
+      if (selector === sendAARDelegateUrlSelector) {
+        return mockDelegateUrl;
+      }
+      return undefined;
+    });
+    const { result } = renderHook(useSendAarFlowManager);
+    act(() => {
+      result.current.goToNextState();
+    });
+    expect(mockOpenWebUrl).toHaveBeenCalledTimes(1);
+    expect(mockOpenWebUrl).toHaveBeenCalledWith(mockDelegateUrl);
+  });
   it('should return "currentFlowData" as a 1/1 of the selector`s value', () => {
     const value: AARFlowState = {
-      type: "displayingNotificationData",
+      type: sendAARFlowStates.displayingNotificationData,
       fullNameDestinatario: "mario rossi",
       notification: {},
       mandateId: "mandateID"
@@ -91,5 +105,20 @@ describe("useSendAarFlowManager", () => {
     const { result } = renderHook(useSendAarFlowManager);
 
     expect(result.current.currentFlowData).toEqual(value);
+  });
+  it('should return "currentFlowErrorKind" as a 1/1 of the selector`s value', () => {
+    const value: AARFlowState = {
+      type: sendAARFlowStates.ko,
+      previousState: {
+        type: "fetchingQRData",
+        qrCode: "test"
+      },
+      errorKind: "NOTIFICATION_EXPIRED"
+    };
+    mockSelector.mockImplementation(() => value);
+
+    const { result } = renderHook(useSendAarFlowManager);
+
+    expect(result.current.currentFlowErrorKind).toEqual(value);
   });
 });

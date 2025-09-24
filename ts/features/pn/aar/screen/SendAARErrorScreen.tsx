@@ -3,7 +3,7 @@ import { SendAARNotAddresseeComponent } from "../components/errors/SendAARNotAdd
 import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
 import { sendAARFlowStates } from "../utils/stateUtils";
 
-export const SendQRScanFlowScreen = () => {
+export const SendAARErrorScreen = () => {
   const { currentFlowData } = useSendAarFlowManager();
 
   switch (currentFlowData.type) {
