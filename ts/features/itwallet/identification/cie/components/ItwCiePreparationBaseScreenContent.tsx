@@ -1,18 +1,19 @@
-import { Dimensions, Image, StyleSheet, View } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
 import { ContentWrapper, IOButton } from "@pagopa/io-app-design-system";
-import { useCallback, useMemo } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import { constNull } from "fp-ts/lib/function";
 import I18n from "i18next";
+import { useCallback, useMemo } from "react";
+import { Dimensions, Image, StyleSheet, View } from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
-import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
-import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
-import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   trackItwCiePinTutorialCie,
   trackItwCiePinTutorialPin
 } from "../../../analytics";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
+import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
 
-export type CiePreparationType = "card" | "pin";
+export type CiePreparationType = "card" | "pin" | "can";
 
 type Props = { type: CiePreparationType };
 
@@ -39,6 +40,8 @@ export const ItwCiePreparationBaseScreenContent = ({ type }: Props) => {
         return require("../../../../../../img/features/itWallet/identification/itw_cie_nfc.gif");
       case "pin":
         return require("../../../../../../img/features/itWallet/identification/itw_cie_pin.gif");
+      case "can":
+        return require("../../../../../../img/features/itWallet/identification/cie_can.png");
       default:
         return undefined;
     }
@@ -48,7 +51,8 @@ export const ItwCiePreparationBaseScreenContent = ({ type }: Props) => {
     useCallback(() => {
       const trackingMap: Record<CiePreparationType, () => void> = {
         card: () => trackItwCiePinTutorialCie(itw_flow),
-        pin: () => trackItwCiePinTutorialPin(itw_flow)
+        pin: () => trackItwCiePinTutorialPin(itw_flow),
+        can: constNull
       };
 
       trackingMap[type]?.();
