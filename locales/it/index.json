@@ -4600,6 +4600,12 @@
               "content": "Dovrai poggiare il retro del telefono sulla CIE, su una superficie stabile, e tenerli fermi per la lettura.",
               "cta": "Inizia lettura CIE",
               "buttonLink": "Cos’è la CIE?"
+            },
+            "can": {
+              "title": "Prepara la tua Carta di Identità Elettronica (CIE)",
+              "content": "Dovrai usarla e inserire il suo codice a 6 cifre (CAN) che trovi stampato sul fronte in basso a destra.",
+              "buttonLink": "Cos’è il PIN della CIE?",
+              "cta": "Continua"
             }
           },
           "inputPin": {
