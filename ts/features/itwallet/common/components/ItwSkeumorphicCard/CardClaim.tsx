@@ -11,7 +11,7 @@ import {
   DrivingPrivilegesClaim,
   DrivingPrivilegesCustomClaim,
   ImageClaim,
-  NestedArrayClaim,
+  NestedClaim,
   PlaceOfBirthClaim,
   SimpleDateClaim,
   SimpleDateFormat
@@ -73,8 +73,8 @@ const CardClaim = ({
         claim?.value,
         ClaimValue.decode,
         E.fold(constNull, decoded => {
-          if (NestedArrayClaim.is(decoded)) {
-            // If the claim is a NestedArrayClaim, we don't render it directly
+          if (NestedClaim.is(decoded)) {
+            // If the claim is a NestedArrayClaim or NestedObjectClaim, we don't render it directly
             // but we return null to skip rendering
             return null;
           }

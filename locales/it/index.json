@@ -218,6 +218,7 @@
       "copy": "Copia",
       "selectAll": "Seleziona tutto",
       "deselectAll": "Deseleziona tutto",
+      "whatCanYouDo": "Cosa puoi fare?",
       "visitWebsite": "Vai al sito"
     },
     "navigator": {
@@ -3851,6 +3852,25 @@
           "body": "Attiva le notifiche push: se leggi subito le comunicazioni a valore legale, potresti risparmiare sui costi di raccomandata.",
           "cta": "Attiva notifiche push",
           "toast": "Hai attivato le notifiche push"
+        },
+        "flow": {
+          "aarTos": {
+            "title": "Stai per aprire la notifica SEND",
+            "body": {
+              "firstPart": "Le notifiche SEND sono comunicazioni a valore legale inviate da un ente, come esiti di pratiche, rimborsi o multe.\n\nPremendo ",
+              "goToNotification": "Vai alla notifica SEND",
+              "youDeclareThat": " dichiari di aver letto e compreso l’",
+              "privacy": "Informativa Privacy",
+              "andThe": " e i ",
+              "tos": "Termini e Condizioni d’uso",
+              "lineEnding": "."
+            },
+            "primaryAction": "Vai alla notifica SEND",
+            "secondaryAction": "Chiudi"
+          },
+          "fetchingQrData": {
+            "loadingText": "Recupero delle informazioni in corso"
+          }
         }
       },
       "reminderBanner": {
@@ -4304,7 +4324,8 @@
         "dc": "Carta Europea della Disabilità",
         "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
         "ed": "Titoli accademici",
-        "ee": "Iscrizioni universitarie"
+        "ee": "Iscrizioni universitarie",
+        "res": "Residenza"
       },
       "wallet": {
         "active": "Attivo",
@@ -4886,6 +4907,13 @@
             "content": "Verifica la versione digitale del tuo documento entro il {{date}}."
           }
         },
+        "authSource": {
+          "anis": "ANIS - Anagrafe Nazionale dell'istruzione superiore",
+          "mdi": "Ministero dell'Interno",
+          "mef": "MEF - Ragioneria Generale dello Stato",
+          "inps": "Istituto Nazionale di Previdenza Sociale",
+          "mit": "MIT - Direzione Generale per la Motorizzazione"
+        },
         "bottomSheets": {
           "eidInfo": {
             "title": "Documenti su IO:\nidentità verificata",
@@ -5024,6 +5052,7 @@
           "loadingScreen": {
             "request": "Stiamo facendo alcune verifiche di sicurezza",
             "response": "Stiamo comunicando i tuoi dati a {{relyingParty}}",
+            "timeout": "Ancora un attimo di pazienza...",
             "subtitle": "Attendi qualche secondo..."
           },
           "walletInactiveScreen": {
@@ -5391,6 +5420,21 @@
           "title": "IT-Wallet per i tuoi documenti",
           "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**.\nGarantito dallo Stato, accessibile solo a te.",
           "action": "Ottieni IT-Wallet"
+        }
+      },
+      "settings": {
+        "item": {
+          "title": "IT-Wallet",
+          "description": "Gestisci il tuo portafoglio digitale"
+        },
+        "manage": {
+          "title": "IT-Wallet",
+          "description": "È il tuo portafoglio digitale ufficiale.",
+          "content": "###### Cosa puoi fare con IT-Wallet?\n - Ottieni la versione digitale dei tuoi documenti personali, titoli, attestati\n - Dimostri identità e idoneità alla guida con la Patente digitale\n - Accedi ai servizi digitali della PA in pochi passaggi\n - Usi la Tessera Sanitaria per acquistare farmaci e prenotare visite mediche\n Per saperne di più, [visita il sito IT-Wallet]()",
+          "cta": {
+            "obtain": "Ottieni IT-Wallet",
+            "revoke": "Disattiva IT-Wallet"
+          }
         }
       },
       "playgrounds": {
@@ -5844,9 +5888,17 @@
             "title": "L’ente sta valutando la tua domanda d’adesione",
             "subtitle": "Quando pronto, riceverai l’esito tramite un messaggio in app."
           },
+          "FAMILY_UNIT_ALREADY_JOINED": {
+            "title": "Un'altra persona della tua famiglia ha inviato la richiesta",
+            "subtitle": "È possibile inviare una sola richiesta per ogni famiglia anagrafica."
+          },
+          "ONBOARDING_WAITING_LIST": {
+            "title": "Sei in lista d’attesa",
+            "subtitle": "La tua richiesta è in coda. Ti contatteremo se saranno disponibili nuove risorse."
+          },
           "PAYMENT_GENERIC_ERROR": {
             "title": "Non siamo riusciti a completare l’operazione",
-            "subtitle": "Siamo già a lavoro per risolvere.  Riprova tra un po’."
+            "subtitle": "Siamo già a lavoro per risolvere. Riprova tra un po’."
           }
         }
       },

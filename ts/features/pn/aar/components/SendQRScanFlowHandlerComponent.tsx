@@ -1,29 +1,61 @@
-import { useCallback, useEffect } from "react";
 import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+import { useCallback, useEffect } from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useIOStore } from "../../../../store/hooks";
 import { openWebUrl } from "../../../../utils/url";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-import PN_ROUTES from "../../navigation/routes";
-import { useIOStore } from "../../../../store/hooks";
-import { isPnServiceEnabled } from "../../reminderBanner/reducer/bannerDismiss";
 import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";
+import PN_ROUTES from "../../navigation/routes";
+import { isPnServiceEnabled } from "../../reminderBanner/reducer/bannerDismiss";
 import {
   trackSendQRCodeScanRedirect,
   trackSendQRCodeScanRedirectConfirmed,
   trackSendQRCodeScanRedirectDismissed
 } from "../analytics";
+import { SendAARInitialFlowScreen } from "../screen/SendAARInitialFlowScreen";
+import { isSendAARPhase2Enabled } from "../utils/generic";
 
-export type SendQRScanRedirectComponentProps = {
+export type SendQRScanHandlerScreenProps = {
   aarUrl: string;
 };
-export const SendQRScanRedirectComponent = ({
+
+export const SendQRScanFlowHandlerComponent = ({
   aarUrl
-}: SendQRScanRedirectComponentProps) => {
+}: SendQRScanHandlerScreenProps) =>
+  isSendAARPhase2Enabled() ? (
+    <SendAARInitialFlowScreen qrCode={aarUrl} />
+  ) : (
+    <SendQrScanRedirect aarUrl={aarUrl} />
+  );
+
+const SendQrScanRedirect = ({ aarUrl }: SendQRScanHandlerScreenProps) => {
   const store = useIOStore();
   const navigation = useIONavigation();
 
+  const handleCloseScreen = useCallback(() => {
+    trackSendQRCodeScanRedirectDismissed();
+    navigation.popToTop();
+  }, [navigation]);
+
+  useEffect(() => {
+    navigation.setOptions({
+      header: () => (
+        <HeaderSecondLevel
+          title=""
+          type="singleAction"
+          firstAction={{
+            icon: "closeMedium",
+            onPress: handleCloseScreen,
+            accessibilityLabel: I18n.t("global.buttons.close"),
+            testID: "header-close"
+          }}
+        />
+      )
+    });
+    trackSendQRCodeScanRedirect();
+  }, [handleCloseScreen, navigation]);
   const handleOpenSendScreen = useCallback(() => {
     // Analytics
     trackSendQRCodeScanRedirectConfirmed();
@@ -64,29 +96,6 @@ export const SendQRScanRedirectComponent = ({
     // are already enabled, so just remove the screen
     navigation.popToTop();
   }, [aarUrl, navigation, store]);
-
-  const handleCloseScreen = useCallback(() => {
-    trackSendQRCodeScanRedirectDismissed();
-    navigation.popToTop();
-  }, [navigation]);
-
-  useEffect(() => {
-    navigation.setOptions({
-      header: () => (
-        <HeaderSecondLevel
-          title=""
-          type="singleAction"
-          firstAction={{
-            icon: "closeMedium",
-            onPress: handleCloseScreen,
-            accessibilityLabel: I18n.t("global.buttons.close"),
-            testID: "header-close"
-          }}
-        />
-      )
-    });
-    trackSendQRCodeScanRedirect();
-  }, [handleCloseScreen, navigation]);
 
   return (
     <OperationResultScreenContent
