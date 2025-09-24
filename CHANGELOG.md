@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.14.0-rc.0](https://github.com/pagopa/io-app/compare/3.13.0-rc.10...3.14.0-rc.0) (2025-09-24)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2759](https://pagopa.atlassian.net/browse/SIW-2759)] Add simplified ITW activation flow ([#7362](https://github.com/pagopa/io-app/issues/7362)) ([0ad1e9f](https://github.com/pagopa/io-app/commit/0ad1e9f04c4f5bd730c7712af88d5b303f48a451))
+* **IT Wallet:** [[SIW-2945](https://pagopa.atlassian.net/browse/SIW-2945)] Add IT Wallet settings screen ([#7355](https://github.com/pagopa/io-app/issues/7355)) ([70bb278](https://github.com/pagopa/io-app/commit/70bb27818b2e662d5efbf351009eb9bdf04380b3))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-3040](https://pagopa.atlassian.net/browse/SIW-3040)] Inverts QR Codes colors to improve readability when dark mode is active ([#7382](https://github.com/pagopa/io-app/issues/7382)) ([066ee8c](https://github.com/pagopa/io-app/commit/066ee8c43d0fa7bba2f1144b4968d7a4e45df50a))
+* [[IOPAE-1730](https://pagopa.atlassian.net/browse/IOPAE-1730)] Add accessibility `header` role to `EmptyState` ([#7374](https://github.com/pagopa/io-app/issues/7374)) ([d2aa08a](https://github.com/pagopa/io-app/commit/d2aa08ac7d278a0e6ce49a29ef51e3325edd83fc))
+
 ## [3.13.0-rc.10](https://github.com/pagopa/io-app/compare/3.13.0-rc.9...3.13.0-rc.10) (2025-09-18)
 
 
