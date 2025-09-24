@@ -8,7 +8,6 @@ import { currentAARFlowData } from "../store/reducers";
 import { AARFlowState, sendAARFlowStates } from "../utils/stateUtils";
 
 export function* fetchAARQrCodeSaga(
-  qrcode: string,
   fetchQRCode: SendAARClient["aarQRCodeCheck"],
   sessionToken: SessionToken
 ) {
@@ -21,7 +20,7 @@ export function* fetchAARQrCodeSaga(
     const result = yield* call(fetchQRCode, {
       Bearer: sessionToken,
       body: {
-        aarQrCodeValue: qrcode
+        aarQrCodeValue: currentState.qrCode
       }
     });
 

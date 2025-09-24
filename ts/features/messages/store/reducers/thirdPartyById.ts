@@ -1,12 +1,16 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { getType } from "typesafe-actions";
-import { pipe } from "fp-ts/lib/function";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
-import { toUndefinedOptional } from "../../../../utils/pot";
+import { pipe } from "fp-ts/lib/function";
+import _ from "lodash";
+import { getType } from "typesafe-actions";
+import { HasPreconditionEnum } from "../../../../../definitions/backend/HasPrecondition";
+import { MessageBodyMarkdown } from "../../../../../definitions/backend/MessageBodyMarkdown";
+import { MessageSubject } from "../../../../../definitions/backend/MessageSubject";
+import { RemoteContentDetails } from "../../../../../definitions/backend/RemoteContentDetails";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
-import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
-import { loadThirdPartyMessage, reloadAllMessages } from "../actions";
 import { Action } from "../../../../store/actions/types";
 import { IndexedById } from "../../../../store/helpers/indexer";
 import {
@@ -15,29 +19,19 @@ import {
   toSome
 } from "../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../store/reducers/types";
-import { RemoteContentDetails } from "../../../../../definitions/backend/RemoteContentDetails";
+import { isTestEnv } from "../../../../utils/environment";
+import { toUndefinedOptional } from "../../../../utils/pot";
+import {
+  populateStoresWithEphemeralAarMessageData,
+  terminateAarFlow
+} from "../../../pn/aar/store/actions";
 import { UIMessageDetails } from "../../types";
 import { extractContentFromMessageSources } from "../../utils";
-import { isTestEnv } from "../../../../utils/environment";
-
-export const thirdPartyKind = {
-  TPM: "TPM",
-  AAR: "AAR"
-} as const;
-
-type ThirdPartyKind = typeof thirdPartyKind;
-
-type StandardThirdPartyMessage = {
-  kind: ThirdPartyKind["TPM"];
-} & ThirdPartyMessageWithContent;
-type EphemeralAARThirdPartyMessage = {
-  kind: ThirdPartyKind["AAR"];
-  mandateId?: string;
-} & ThirdPartyMessageWithContent;
-
-export type ThirdPartyMessageUnion =
-  | StandardThirdPartyMessage
-  | EphemeralAARThirdPartyMessage;
+import {
+  ThirdPartyMessageUnion,
+  isEphemeralAARThirdPartyMessage
+} from "../../utils/thirdPartyById";
+import { loadThirdPartyMessage, reloadAllMessages } from "../actions";
 
 export type ThirdPartyById = IndexedById<
   pot.Pot<ThirdPartyMessageUnion, Error>
@@ -63,6 +57,60 @@ export const thirdPartyByIdReducer = (
       return toError(action.payload.id, state, action.payload.error);
     case getType(reloadAllMessages.request):
       return initialState;
+    case getType(populateStoresWithEphemeralAarMessageData):
+      const { messageData, serviceData, mandateId } = action.payload;
+      const { details } = messageData;
+
+      return pipe(
+        sequenceS(O.Monad)({
+          // we use sequenceS to make sure that the required data is not undefined
+          iun: O.fromNullable(details?.iun as NonEmptyString | undefined),
+          abstract: O.fromNullable(
+            details?.abstract as MessageBodyMarkdown | undefined
+          ),
+          subject: O.fromNullable(
+            details?.subject as MessageSubject | undefined
+          ),
+          recipients: O.fromNullable(details?.recipients)
+        }),
+        O.fold(
+          () => ({
+            // ignore the action if invalid data has been passed
+            ...state
+          }),
+          ({ iun, abstract, subject, recipients }) =>
+            toSome(iun, state, {
+              kind: "AAR",
+              mandateId,
+              created_at: new Date(),
+              third_party_message: messageData,
+              id: iun,
+              fiscal_code: recipients[0].taxId,
+              sender_service_id: serviceData.id,
+              content: {
+                third_party_data: {
+                  has_attachments: true,
+                  has_precondition: HasPreconditionEnum.ALWAYS,
+                  id: iun
+                },
+                markdown: abstract,
+                subject
+              }
+            })
+        )
+      );
+
+    case getType(terminateAarFlow):
+      const newState = _.pickBy(state, (value, _key) =>
+        pipe(
+          value,
+          O.fromNullable,
+          O.flatMap(pot.toOption),
+          O.filter(isEphemeralAARThirdPartyMessage),
+          O.isSome
+        )
+      );
+      return { ...newState };
   }
   return state;
 };

@@ -23,7 +23,7 @@ import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/Th
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
 import { serviceDetailsByIdSelector } from "../../services/details/store/reducers";
 import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
-import { thirdPartyKind } from "../store/reducers/thirdPartyById";
+import { thirdPartyKind } from "../utils/thirdPartyById";
 
 export function* handleThirdPartyMessage(
   getThirdPartyMessage: BackendClient["getThirdPartyMessage"],

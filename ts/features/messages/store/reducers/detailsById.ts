@@ -8,6 +8,7 @@ import { clearCache } from "../../../settings/common/store/actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { UIMessageDetails } from "../../types";
+import { populateStoresWithEphemeralAarMessageData } from "../../../pn/aar/store/actions";
 
 /**
  * A list of messages and pagination data.
@@ -50,6 +51,10 @@ export const detailsByIdReducer = (
         [action.payload.id]: pot.noneError(error.message || "UNKNOWN")
       };
     }
+    // case getType(populateStoresWithEphemeralAarMessageData): {
+    //   const { mandateId, messageData, serviceData } = action.payload;
+    //   return state;
+    // }
 
     case getType(clearCache):
     case getType(reloadAllMessages.request):
