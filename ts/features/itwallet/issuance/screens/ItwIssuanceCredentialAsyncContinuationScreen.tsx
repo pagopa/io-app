@@ -20,6 +20,7 @@ import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import { ItwIssuanceCredentialTrustIssuerScreen } from "./ItwIssuanceCredentialTrustIssuerScreen";
 
 export type ItwIssuanceCredentialAsyncContinuationNavigationParams = {
@@ -84,6 +85,7 @@ const InnerComponent = () => {
   const navigation = useIONavigation();
   const credentialOption = useIOSelector(itwCredentialSelector(credentialType));
   const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
+  const isL3 = useIOSelector(itwIsL3EnabledSelector);
 
   const isCredentialValid = pipe(
     credentialOption,
@@ -121,7 +123,9 @@ const InnerComponent = () => {
           onPress: () =>
             navigation.replace(ITW_ROUTES.MAIN, {
               screen: ITW_ROUTES.DISCOVERY.INFO,
-              params: {}
+              params: {
+                isL3
+              }
             })
         }}
         secondaryAction={{
