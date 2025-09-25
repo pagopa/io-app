@@ -1,8 +1,9 @@
 import { useIOThemeContext } from "@pagopa/io-app-design-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Appearance, ColorSchemeName, useColorScheme } from "react-native";
-import { useEffect } from "react";
 import { constVoid } from "fp-ts/lib/function";
+import { useEffect } from "react";
+import { Appearance, ColorSchemeName, useColorScheme } from "react-native";
+import { updateNavigationBarColor } from "../features/settings/preferences/screens/AppearancePreferenceScreen";
 import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
 
 export const THEME_PERSISTENCE_KEY = "selectedAppThemeConfiguration";
@@ -18,18 +19,21 @@ export const useAppThemeConfiguration = () => {
         if (value === undefined || value === null) {
           Appearance.setColorScheme("light");
           setTheme("light");
+          updateNavigationBarColor("light");
           return;
         }
-        Appearance.setColorScheme(
-          value === "auto" ? undefined : (value as ColorSchemeName)
-        );
-        setTheme(
-          value === "auto" ? systemColorScheme : (value as ColorSchemeName)
-        );
+        const themeValue =
+          value === "auto" ? undefined : (value as ColorSchemeName);
+        const resolvedTheme =
+          value === "auto" ? systemColorScheme : (value as ColorSchemeName);
+        Appearance.setColorScheme(themeValue);
+        setTheme(resolvedTheme);
+        updateNavigationBarColor(resolvedTheme);
       })
       .catch(() => {
         Appearance.setColorScheme("light");
         setTheme("light");
+        updateNavigationBarColor("light");
       });
   });
 
@@ -38,6 +42,7 @@ export const useAppThemeConfiguration = () => {
       .then(value => {
         if (value === "auto") {
           setTheme(systemColorScheme);
+          updateNavigationBarColor(systemColorScheme);
         }
       })
       .catch(constVoid);
