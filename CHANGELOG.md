@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.14.0-rc.3](https://github.com/pagopa/io-app/compare/3.13.0-rc.10...3.14.0-rc.3) (2025-09-25)
+
+
+### Bug Fixes
+
+* [[IOBP-2017](https://pagopa.atlassian.net/browse/IOBP-2017)] CGN wrong header display ([#7394](https://github.com/pagopa/io-app/issues/7394)) ([0a7edab](https://github.com/pagopa/io-app/commit/0a7edabfd236bf8895d74e66402863ff97398a67))
+* [[IOCOM-2617](https://pagopa.atlassian.net/browse/IOCOM-2617)] removal of SEND AAR flow  feature flag check for phase 1 ([#7393](https://github.com/pagopa/io-app/issues/7393)) ([c06aea6](https://github.com/pagopa/io-app/commit/c06aea61e5261d2626081caf15f1a359579a6249))
+
+
+### Chores
+
+* **release:** 3.14.0-rc.2 ([d11a503](https://github.com/pagopa/io-app/commit/d11a50335484c6e33f741c62cae0a6b9bc77b190))
+
+## [3.14.0-rc.2](https://github.com/pagopa/io-app/compare/3.14.0-rc.1...3.14.0-rc.2) (2025-09-24)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2356](https://pagopa.atlassian.net/browse/SIW-2356),[SIW-3001](https://pagopa.atlassian.net/browse/SIW-3001),[SIW-3053](https://pagopa.atlassian.net/browse/SIW-3053)] Dedicated error message for an outdated IPZS driver’s license notification ([#7378](https://github.com/pagopa/io-app/issues/7378)) ([d401267](https://github.com/pagopa/io-app/commit/d401267fd9919afb1f9042771053eef6535a51b7))
+* **IT Wallet:** [[SIW-2827](https://pagopa.atlassian.net/browse/SIW-2827)] View the available authentication methods to reactivate Documents on IO ([#7338](https://github.com/pagopa/io-app/issues/7338)) ([a8946df](https://github.com/pagopa/io-app/commit/a8946dfeefda70dd3800009b39d501eb93dd7aac))
+* **IT Wallet:** [[SIW-2928](https://pagopa.atlassian.net/browse/SIW-2928)] Add haptic feedback for CIE read flow ([#7380](https://github.com/pagopa/io-app/issues/7380)) ([cf85f80](https://github.com/pagopa/io-app/commit/cf85f80ac0ccd981abf1386c157fd7a0281c8bde))
+
+
+### Bug Fixes
+
+* [[IOBP-2017](https://pagopa.atlassian.net/browse/IOBP-2017)] CGN wrong header display ([#7394](https://github.com/pagopa/io-app/issues/7394)) ([6997e96](https://github.com/pagopa/io-app/commit/6997e9603a38719e94d428fe1b01de0e8cffe117))
+* **IT Wallet:** [[SIW-3051](https://pagopa.atlassian.net/browse/SIW-3051)] Fix `parseCredentialSdJwt` to support nested optional claims ([#7388](https://github.com/pagopa/io-app/issues/7388)) ([57a1721](https://github.com/pagopa/io-app/commit/57a1721619c710ae5274591e7f9e23ded56a6657))
+* [[IOCOM-2617](https://pagopa.atlassian.net/browse/IOCOM-2617)] removal of SEND AAR flow  feature flag check for phase 1 ([#7393](https://github.com/pagopa/io-app/issues/7393)) ([614e0b9](https://github.com/pagopa/io-app/commit/614e0b97668ebae5d19854d55b41fadd35571744))
+
 ## [3.14.0-rc.1](https://github.com/pagopa/io-app/compare/3.14.0-rc.0...3.14.0-rc.1) (2025-09-24)
 
 ## [3.14.0-rc.0](https://github.com/pagopa/io-app/compare/3.13.0-rc.10...3.14.0-rc.0) (2025-09-24)
