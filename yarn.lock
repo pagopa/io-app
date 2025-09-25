@@ -9337,13 +9337,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-and-time@npm:0.9.0":
-  version: 0.9.0
-  resolution: "date-and-time@npm:0.9.0"
-  checksum: 41ce2b1a3224668e4e6ddacc44d8372e71ad06076cbbbf19c86e7a08964b3753b1c5f28b038a41cd9311d01b37cdd8d78dac9c965083ffd364394c62504b4d7e
-  languageName: node
-  linkType: hard
-
 "date-fns@npm:^1.29.0":
   version: 1.30.1
   resolution: "date-fns@npm:1.30.1"
@@ -13096,7 +13089,6 @@ __metadata:
     react-native-keychain: ^10.0.0
     react-native-linear-gradient: ^2.5.6
     react-native-markdown-display: ^7.0.2
-    react-native-masked-text: ^1.13.0
     react-native-notifications-utils: ^0.3.0
     react-native-pager-view: ^6.4.1
     react-native-pdf: 6.7.7
@@ -17722,16 +17714,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-masked-text@npm:^1.13.0":
-  version: 1.13.0
-  resolution: "react-native-masked-text@npm:1.13.0"
-  dependencies:
-    date-and-time: 0.9.0
-    tinymask: 1.0.2
-  checksum: d1ccd591a5262c322333d56e2c4ac7e2729e8cddc55225f5495e55904506935797c6d165ca8a36185627ff1845e5a29accbab6a63ec9d6712a6a1e9613f391ee
-  languageName: node
-  linkType: hard
-
 "react-native-notifications-utils@npm:^0.3.0":
   version: 0.3.0
   resolution: "react-native-notifications-utils@npm:0.3.0"
@@ -20234,13 +20216,6 @@ __metadata:
   version: 1.3.3
   resolution: "tiny-invariant@npm:1.3.3"
   checksum: 5e185c8cc2266967984ce3b352a4e57cb89dad5a8abb0dea21468a6ecaa67cd5bb47a3b7a85d08041008644af4f667fb8b6575ba38ba5fb00b3b5068306e59fe
-  languageName: node
-  linkType: hard
-
-"tinymask@npm:1.0.2":
-  version: 1.0.2
-  resolution: "tinymask@npm:1.0.2"
-  checksum: adc4d8c20e005cc2f9f8770996543ef0be5ef21ac7ce79ea00584f3c04bf47bf423fbd1dadc39ef42b9d5dd1cdae2f2eb162bbe07e6e2b2c78d58f78e1c62252
   languageName: node
   linkType: hard
 
