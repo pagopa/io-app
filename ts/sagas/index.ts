@@ -10,6 +10,7 @@ import { zendeskEnabled } from "../config";
 import { watchUtmLinkSaga } from "../features/utmLink/saga";
 import connectivityStatusSaga from "../features/connectivity/saga";
 import { watchIdentification } from "../features/identification/sagas";
+import { watchLogoutSaga } from "../features/authentication/common/saga/watchLogoutSaga";
 import backendStatusSaga from "./backendStatus";
 import { watchContentSaga } from "./contentLoaders";
 import { loadSystemPreferencesSaga } from "./preferences";
@@ -32,6 +33,7 @@ export default function* root() {
     call(watchTokenRefreshSaga),
     call(watchPendingActionsSaga),
     call(watchUtmLinkSaga),
+    call(watchLogoutSaga),
     zendeskEnabled ? call(watchZendeskSupportSaga) : undefined
   ]);
 }
