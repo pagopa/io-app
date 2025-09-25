@@ -91,14 +91,16 @@ export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
               <LoadingIndicator />
             )}
           </View>
-          <H3
-            style={{ textAlign: "center" }}
-            color={theme["textHeading-secondary"]}
-            accessibilityLabel={contentTitle}
-          >
-            {contentTitle}
-          </H3>
-          {children}
+          <VStack space={8}>
+            <H3
+              style={{ textAlign: "center" }}
+              color={theme["textHeading-secondary"]}
+              accessibilityLabel={contentTitle}
+            >
+              {contentTitle}
+            </H3>
+            {children}
+          </VStack>
         </VStack>
       </ContentWrapper>
       <ContentWrapper style={{ marginBottom: 16 }}>
