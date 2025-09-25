@@ -17,7 +17,7 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
-import { useIOSelector, useIOStore } from "../../../store/hooks";
+import { useIOSelector } from "../../../store/hooks";
 import {
   barcodesScannerConfigSelector,
   isPnRemoteEnabledSelector
@@ -28,12 +28,13 @@ import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { FCI_ROUTES } from "../../fci/navigation/routes";
 import { IdPayPaymentRoutes } from "../../idpay/payment/navigation/routes";
 import { ITW_REMOTE_ROUTES } from "../../itwallet/presentation/remote/navigation/routes.ts";
+import { MESSAGES_ROUTES } from "../../messages/navigation/routes.ts";
 import { PaymentsBarcodeRoutes } from "../../payments/barcode/navigation/routes";
 import { usePagoPaPayment } from "../../payments/checkout/hooks/usePagoPaPayment";
 import { PaymentsCheckoutRoutes } from "../../payments/checkout/navigation/routes";
 import { paymentAnalyticsDataSelector } from "../../payments/history/store/selectors";
 import * as paymentsAnalytics from "../../payments/home/analytics";
-import { navigateToSendAarFlow } from "../../pn/aar/utils/deepLinking.ts";
+import PN_ROUTES from "../../pn/navigation/routes.ts";
 import * as analytics from "../analytics";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
 import { useIOBarcodeFileReader } from "../hooks/useIOBarcodeFileReader";
@@ -55,7 +56,6 @@ const BarcodeScanScreen = () => {
   const isIdPayEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const isSendEnabled = useIOSelector(isPnRemoteEnabledSelector);
-  const store = useIOStore();
 
   const { startPaymentFlowWithRptId } = usePagoPaPayment();
 
@@ -167,7 +167,13 @@ const BarcodeScanScreen = () => {
         });
         break;
       case "SEND":
-        navigateToSendAarFlow(store.getState(), barcode.qrCodeContent);
+        navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+          screen: PN_ROUTES.MAIN,
+          params: {
+            screen: PN_ROUTES.QR_SCAN_FLOW,
+            params: { aarUrl: barcode.qrCodeContent }
+          }
+        });
         break;
     }
   };
