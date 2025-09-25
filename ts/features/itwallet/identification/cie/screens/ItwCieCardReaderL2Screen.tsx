@@ -36,6 +36,7 @@ import {
   trackItWalletCieCardReading,
   trackItWalletCieCardReadingFailure,
   trackItWalletCieCardReadingSuccess,
+  trackItWalletCieCardReadingUnexpectedFailure,
   trackItWalletErrorCardReading
 } from "../../../analytics";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
@@ -50,6 +51,8 @@ import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import * as Cie from "../../cie/components/WebView";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { ItwCieMachineContext } from "../machine/provider";
+import { selectReadProgress } from "../machine/selectors";
 
 // the timeout we sleep until move to consent form screen when authentication goes well
 const WAIT_TIMEOUT_NAVIGATION = 1700 as Millisecond;
@@ -139,13 +142,15 @@ const getTextForState = (
 
 const getMixpanelHandler = (
   state: ReadingState,
-  itw_flow: ItwFlow
+  itw_flow: ItwFlow,
+  cie_reading_progress: number
 ): ((...args: Array<unknown>) => void) => {
   const events: Record<ReadingState, (...args: Array<unknown>) => void> = {
     [ReadingState.waiting_card]: () => null,
     [ReadingState.reading]: () => null,
     [ReadingState.completed]: () => null,
-    [ReadingState.error]: () => trackItWalletErrorCardReading(itw_flow)
+    [ReadingState.error]: () =>
+      trackItWalletErrorCardReading(itw_flow, cie_reading_progress)
   };
   return events[state];
 };
@@ -162,6 +167,7 @@ export const ItwCieCardReaderL2Screen = () => {
     isL3FeaturesEnabledSelector
   );
   const itw_flow = isL3Enabled ? "L3" : "L2";
+  const readProgress = ItwCieMachineContext.useSelector(selectReadProgress);
 
   useFocusEffect(
     useCallback(() => {
@@ -224,12 +230,22 @@ export const ItwCieCardReaderL2Screen = () => {
 
     switch (error.type) {
       case Cie.CieErrorType.WEB_VIEW_ERROR:
+        trackItWalletCieCardReadingUnexpectedFailure({
+          reason: error.message,
+          cie_reading_progress: readProgress
+        });
         break;
       case Cie.CieErrorType.NFC_ERROR:
         if (error.message === "APDU not supported") {
           trackItWalletCieCardReadingFailure({
+            reason: "ADPU not supported",
+            itw_flow,
+            cie_reading_progress: readProgress
+          });
+        } else {
+          trackItWalletCieCardReadingUnexpectedFailure({
             reason: error.message,
-            itw_flow
+            cie_reading_progress: readProgress
           });
         }
         setReadingState(ReadingState.error);
@@ -243,7 +259,8 @@ export const ItwCieCardReaderL2Screen = () => {
       case Cie.CieErrorType.TAG_NOT_VALID:
         trackItWalletCieCardReadingFailure({
           reason: "unknown card",
-          itw_flow
+          itw_flow,
+          cie_reading_progress: readProgress
         });
         navigation.navigate(ITW_ROUTES.IDENTIFICATION.CIE.WRONG_CARD);
         break;
@@ -251,9 +268,26 @@ export const ItwCieCardReaderL2Screen = () => {
         navigation.navigate(ITW_ROUTES.IDENTIFICATION.CIE.CIE_EXPIRED_SCREEN);
         break;
       case Cie.CieErrorType.GENERIC:
+        trackItWalletCieCardReadingUnexpectedFailure({
+          reason: error.message,
+          cie_reading_progress: readProgress
+        });
+        navigation.navigate(ITW_ROUTES.IDENTIFICATION.CIE.UNEXPECTED_ERROR);
+        break;
       case Cie.CieErrorType.AUTHENTICATION_ERROR:
+        trackItWalletCieCardReadingFailure({
+          reason: "authentication error",
+          itw_flow,
+          cie_reading_progress: readProgress
+        });
+        navigation.navigate(ITW_ROUTES.IDENTIFICATION.CIE.UNEXPECTED_ERROR);
+        break;
       default:
-        trackItWalletCieCardReadingFailure({ reason: "KO", itw_flow });
+        trackItWalletCieCardReadingFailure({
+          reason: "KO",
+          itw_flow,
+          cie_reading_progress: readProgress
+        });
         navigation.navigate(ITW_ROUTES.IDENTIFICATION.CIE.UNEXPECTED_ERROR);
         break;
     }
@@ -291,7 +325,7 @@ export const ItwCieCardReaderL2Screen = () => {
       isScreenReaderEnabled
     );
 
-    getMixpanelHandler(readingState, itw_flow)();
+    getMixpanelHandler(readingState, itw_flow, readProgress)();
 
     return (
       <ScrollView

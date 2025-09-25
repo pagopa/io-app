@@ -6,19 +6,26 @@ import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { useItwPreventNavigationEvent } from "../../../common/hooks/useItwPreventNavigationEvent";
 import { trackItWalletCieCardVerifyFailure } from "../../../analytics";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
+import { ItwCieMachineContext } from "../machine/provider";
+import { selectReadProgress } from "../machine/selectors";
 
 export const ItwCieExpiredOrInvalidScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isL3Enabled = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
+  const readProgress = ItwCieMachineContext.useSelector(selectReadProgress);
 
   useItwPreventNavigationEvent();
 
   useFocusEffect(
     useCallback(() => {
-      trackItWalletCieCardVerifyFailure(isL3Enabled ? "L3" : "L2");
-    }, [isL3Enabled])
+      trackItWalletCieCardVerifyFailure({
+        itw_flow: isL3Enabled ? "L3" : "L2",
+        reason: "certificate expired",
+        cie_reading_progress: readProgress
+      });
+    }, [isL3Enabled, readProgress])
   );
 
   const handleClose = useCallback(() => {

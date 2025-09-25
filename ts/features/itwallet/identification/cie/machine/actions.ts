@@ -71,9 +71,10 @@ export const cieMachineActions = {
   },
 
   trackError: ({
-    context: { failure, isL3 }
+    context: { failure, isL3, readProgress }
   }: ActionArgs<CieContext, CieEvents, CieEvents>) => {
     const itw_flow: ItwFlow = isL3 ? "L3" : "L2";
+    const progress = readProgress ?? 0;
 
     if (isNfcError(failure)) {
       switch (failure.name) {
@@ -82,35 +83,51 @@ export const cieMachineActions = {
         case "NOT_A_CIE":
           trackItWalletCieCardReadingFailure({
             reason: "unknown card",
-            itw_flow
+            itw_flow,
+            cie_reading_progress: progress
           });
           return;
         case "APDU_ERROR":
           trackItWalletCieCardReadingFailure({
-            reason: failure.message,
-            itw_flow
+            reason: "ADPU not supported",
+            itw_flow,
+            cie_reading_progress: progress
           });
           return;
         case "WRONG_PIN":
           if (failure.attemptsLeft > 1) {
-            trackItWalletErrorPin(itw_flow);
+            trackItWalletErrorPin(itw_flow, progress);
           } else {
-            trackItWalletSecondErrorPin(itw_flow);
+            trackItWalletSecondErrorPin(itw_flow, progress);
           }
           return;
         case "CARD_BLOCKED":
-          trackItWalletLastErrorPin(itw_flow);
+          trackItWalletLastErrorPin(itw_flow, progress);
           return;
         case "CERTIFICATE_EXPIRED":
+          trackItWalletCieCardVerifyFailure({
+            itw_flow,
+            reason: "certificate expired",
+            cie_reading_progress: progress
+          });
+          return;
         case "CERTIFICATE_REVOKED":
-          trackItWalletCieCardVerifyFailure(itw_flow);
+          trackItWalletCieCardVerifyFailure({
+            itw_flow,
+            reason: "certificate revoked",
+            cie_reading_progress: progress
+          });
           return;
         case "CANCELLED_BY_USER":
-          trackItWalletCardReadingClose();
+          trackItWalletCardReadingClose(progress);
           return;
       }
     }
 
-    trackItWalletCieCardReadingFailure({ reason: "KO", itw_flow });
+    trackItWalletCieCardReadingFailure({
+      reason: "KO",
+      itw_flow,
+      cie_reading_progress: progress
+    });
   }
 };

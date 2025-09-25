@@ -180,10 +180,34 @@ type TrackITWalletIDMethodSelected = {
 
 type TrackITWalletSpidIDPSelected = { idp: string };
 
-type TrackItWalletCieCardReadingFailure = {
-  reason: string | undefined;
+type TrackItWalletCieCardVerifyFailure = {
+  reason: CieCardVerifyFailureReason;
   itw_flow: ItwFlow;
+  cie_reading_progress: number;
 };
+
+type TrackItWalletCieCardReadingFailure = {
+  reason: CieCardReadingFailureReason;
+  itw_flow: ItwFlow;
+  cie_reading_progress: number;
+};
+
+type TrackItWalletCieCardReadingUnexpectedFailure = {
+  reason: string | undefined;
+  cie_reading_progress: number;
+};
+
+export type CieCardVerifyFailureReason =
+  | "certificate revoked"
+  | "certificate expired";
+export type CieCardReadingFailureReason =
+  | "KO"
+  | "unknown card"
+  | "ADPU not supported"
+  | "start NFC error"
+  | "stop NFC error"
+  | "no internet connection"
+  | "authentication error";
 
 export type ItwCredentialMixpanelStatus =
   | "not_available"
@@ -852,45 +876,59 @@ export function trackItwCredentialQualificationDetail(
 
 // #region ERRORS
 
-export function trackItWalletErrorCardReading(itw_flow: ItwFlow) {
+export function trackItWalletErrorCardReading(
+  itw_flow: ItwFlow,
+  cie_reading_progress: number
+) {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_CIE_CARD_READING_ERROR,
-    buildEventProperties("UX", "error", { itw_flow })
+    buildEventProperties("UX", "error", { itw_flow, cie_reading_progress })
   );
 }
 
-export function trackItWalletErrorPin(itw_flow: ItwFlow) {
+export function trackItWalletErrorPin(
+  itw_flow: ItwFlow,
+  cie_reading_progress: number
+) {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_CIE_PIN_ERROR,
-    buildEventProperties("UX", "error", { itw_flow })
+    buildEventProperties("UX", "error", { itw_flow, cie_reading_progress })
   );
 }
 
-export function trackItWalletSecondErrorPin(itw_flow: ItwFlow) {
+export function trackItWalletSecondErrorPin(
+  itw_flow: ItwFlow,
+  cie_reading_progress: number
+) {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_CIE_PIN_SECOND_ERROR,
-    buildEventProperties("UX", "error", { itw_flow })
+    buildEventProperties("UX", "error", { itw_flow, cie_reading_progress })
   );
 }
 
-export function trackItWalletLastErrorPin(itw_flow: ItwFlow) {
+export function trackItWalletLastErrorPin(
+  itw_flow: ItwFlow,
+  cie_reading_progress: number
+) {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_CIE_PIN_LAST_ERROR,
-    buildEventProperties("UX", "error", { itw_flow })
+    buildEventProperties("UX", "error", { itw_flow, cie_reading_progress })
   );
 }
 
-export function trackItWalletCardReadingClose() {
+export function trackItWalletCardReadingClose(cie_reading_progress: number) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CIE_CARD_READING_CLOSE,
-    buildEventProperties("UX", "error")
+    buildEventProperties("UX", "error", { cie_reading_progress })
   );
 }
 
-export function trackItWalletCieCardVerifyFailure(itw_flow: ItwFlow) {
+export function trackItWalletCieCardVerifyFailure(
+  properties: TrackItWalletCieCardVerifyFailure
+) {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_CIE_CARD_VERIFY_FAILURE,
-    buildEventProperties("UX", "error", { itw_flow })
+    buildEventProperties("UX", "error", properties)
   );
 }
 
@@ -900,6 +938,15 @@ export function trackItWalletCieCardReadingFailure(
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_CIE_CARD_READING_FAILURE,
     buildEventProperties("UX", "error", properties)
+  );
+}
+
+export function trackItWalletCieCardReadingUnexpectedFailure(
+  properties: TrackItWalletCieCardReadingUnexpectedFailure
+) {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_CIE_CARD_READING_UNEXPECTED_FAILURE,
+    buildEventProperties("KO", "error", properties)
   );
 }
 

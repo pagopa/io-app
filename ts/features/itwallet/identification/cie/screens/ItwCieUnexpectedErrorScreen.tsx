@@ -9,19 +9,23 @@ import { useItwPreventNavigationEvent } from "../../../common/hooks/useItwPreven
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { trackItWalletCieCardReadingFailure } from "../../../analytics";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
+import { ItwCieMachineContext } from "../machine/provider";
+import { selectReadProgress } from "../machine/selectors";
 
 export const ItwCieUnexpectedErrorScreen = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isL3Enabled = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
+  const readProgress = ItwCieMachineContext.useSelector(selectReadProgress);
 
   useItwPreventNavigationEvent();
 
   useOnFirstRender(() =>
     trackItWalletCieCardReadingFailure({
       reason: "KO",
-      itw_flow: isL3Enabled ? "L3" : "L2"
+      itw_flow: isL3Enabled ? "L3" : "L2",
+      cie_reading_progress: readProgress ?? 0
     })
   );
 

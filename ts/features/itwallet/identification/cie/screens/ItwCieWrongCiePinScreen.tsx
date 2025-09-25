@@ -21,6 +21,8 @@ import {
   trackItWalletSecondErrorPin
 } from "../../../analytics";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
+import { ItwCieMachineContext } from "../machine/provider";
+import { selectReadProgress } from "../machine/selectors";
 
 export type ItwCieWrongCiePinScreenNavigationParams = {
   remainingCount: number;
@@ -50,6 +52,7 @@ export const ItwCieWrongCiePinScreen = () => {
     isL3FeaturesEnabledSelector
   );
   const itw_flow = isL3Enabled ? "L3" : "L2";
+  const readProgress = ItwCieMachineContext.useSelector(selectReadProgress);
 
   useItwPreventNavigationEvent();
 
@@ -66,17 +69,17 @@ export const ItwCieWrongCiePinScreen = () => {
     (key: number) => {
       switch (key) {
         case 2:
-          trackItWalletErrorPin(itw_flow);
+          trackItWalletErrorPin(itw_flow, readProgress ?? 0);
           break;
         case 1:
-          trackItWalletSecondErrorPin(itw_flow);
+          trackItWalletSecondErrorPin(itw_flow, readProgress ?? 0);
           break;
         case 0:
-          trackItWalletLastErrorPin(itw_flow);
+          trackItWalletLastErrorPin(itw_flow, readProgress ?? 0);
           break;
       }
     },
-    [itw_flow]
+    [itw_flow, readProgress]
   );
 
   const handleRetry = useCallback(() => {
