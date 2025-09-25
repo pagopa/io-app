@@ -33,9 +33,9 @@ const ItwPlayground = () => {
     <ScrollView contentContainerStyle={{ paddingBottom: 64 }}>
       <ContentWrapper>
         <VStack space={8}>
-          <ItwL3Section />
           <ItwLifecycleSection />
           <ItwEnvironmentSection />
+          <ItwL3Section />
           <ItwIdentificationSection />
           <ItwSkeumorphicCredentialSection />
           <ItwBannerSection />
