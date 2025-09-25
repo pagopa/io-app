@@ -9,11 +9,10 @@ import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors"
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
-import { CiePreparationType } from "../components/ItwCiePreparationScreenContent";
-export type CieWarningType = "noPin" | "noCie";
+import { CieWarningType } from "../utils/types";
 
 export type ItwIdentificationCieWarningScreenNavigationParams = {
-  type: CiePreparationType;
+  type: CieWarningType;
 };
 
 type ScreenProps = IOStackNavigationRouteProps<
@@ -21,7 +20,7 @@ type ScreenProps = IOStackNavigationRouteProps<
   "ITW_IDENTIFICATION_CIE_WARNING"
 >;
 
-const cieFaqUrls: Record<CiePreparationType, string> = {
+const cieFaqUrls: Record<CieWarningType, string> = {
   pin: "https://assistenza.ioapp.it/hc/it/articles/30724125085713-Ho-dimenticato-il-PIN-della-CIE",
   // TODO: update the URL when the new one is available
   card: "https://assistenza.ioapp.it/hc/it/articles/30724116346129-Cos-%C3%A8-la-CIE-e-come-richiederla"

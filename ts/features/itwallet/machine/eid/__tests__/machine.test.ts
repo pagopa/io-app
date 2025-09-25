@@ -13,7 +13,6 @@ import {
   StoredCredential,
   WalletInstanceAttestations
 } from "../../../common/utils/itwTypesUtils";
-import { CiePreparationType } from "../../../identification/cie/components/ItwCiePreparationScreenContent";
 import { ItwTags } from "../../tags";
 import {
   GetWalletAttestationActorParams,
@@ -28,6 +27,7 @@ import {
 } from "../context";
 import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
 import { itwCredentialUpgradeMachine } from "../../upgrade/machine";
+import { CieWarningType } from "../../../identification/cie/utils/types";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
@@ -1567,7 +1567,7 @@ describe("itwEidIssuanceMachine", () => {
       }
     });
 
-    const testWarningType: CiePreparationType = "card";
+    const testWarningType: CieWarningType = "card";
 
     actor.send({ type: "go-to-cie-warning", warning: testWarningType });
 
@@ -1667,7 +1667,7 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(navigateToCiePinPreparationScreen).toHaveBeenCalledTimes(1);
 
-    const testWarningType: CiePreparationType = "card";
+    const testWarningType: CieWarningType = "card";
 
     actor.send({ type: "go-to-cie-warning", warning: testWarningType });
 

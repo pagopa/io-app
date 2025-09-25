@@ -15,12 +15,12 @@ import {
 } from "../../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
-import { CiePreparationType } from "../components/ItwCiePreparationScreenContent";
+import { CieWarningType } from "../utils/types";
 
-type Props = { type: CiePreparationType; showSecondaryAction?: boolean };
+type Props = { type: CieWarningType; showSecondaryAction?: boolean };
 
 const trackBottomSheetView = (
-  type: CiePreparationType,
+  type: CieWarningType,
   screenName: string,
   itw_flow: ItwFlow
 ) => {

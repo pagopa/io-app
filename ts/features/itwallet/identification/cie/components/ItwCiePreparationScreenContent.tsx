@@ -1,83 +1,38 @@
-import { ContentWrapper, IOButton } from "@pagopa/io-app-design-system";
-import { useFocusEffect } from "@react-navigation/native";
-import I18n from "i18next";
-import { useCallback, useMemo } from "react";
-import { Dimensions, Image, StyleSheet, View } from "react-native";
-import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
+import { ContentWrapper, VStack } from "@pagopa/io-app-design-system";
+import { PropsWithChildren } from "react";
 import {
-  trackItwCiePinTutorialCie,
-  trackItwCiePinTutorialPin
-} from "../../../analytics";
-import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
-import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
-import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
+  Dimensions,
+  Image,
+  ImageSourcePropType,
+  StyleSheet,
+  View
+} from "react-native";
+import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
+import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 
-export type CiePreparationType = "card" | "pin";
+type Props = {
+  title: string;
+  description: string;
+  imageSrc: ImageSourcePropType;
+  actions?: IOScrollViewActions;
+};
 
-type Props = { type: CiePreparationType };
-
-export const ItwCiePreparationScreenContent = ({ type }: Props) => {
-  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const isL3FeaturesEnabled = ItwEidIssuanceMachineContext.useSelector(
-    isL3FeaturesEnabledSelector
-  );
-  const itw_flow = isL3FeaturesEnabled ? "L3" : "L2";
-  const infoBottomSheet = useCieInfoBottomSheet({
-    type,
-    showSecondaryAction: isL3FeaturesEnabled
-  });
-
-  const imageSrc = useMemo(() => {
-    switch (type) {
-      case "card":
-        return require("../../../../../../img/features/itWallet/identification/itw_cie_nfc.gif");
-      case "pin":
-        return require("../../../../../../img/features/itWallet/identification/itw_cie_pin.gif");
-      default:
-        return undefined;
-    }
-  }, [type]);
-
-  useFocusEffect(
-    useCallback(() => {
-      const trackingMap: Record<CiePreparationType, () => void> = {
-        card: () => trackItwCiePinTutorialCie(itw_flow),
-        pin: () => trackItwCiePinTutorialPin(itw_flow)
-      };
-
-      trackingMap[type]?.();
-    }, [type, itw_flow])
-  );
-
-  return (
-    <IOScrollViewWithLargeHeader
-      title={{
-        label: I18n.t(
-          `features.itWallet.identification.cie.prepare.${type}.title`
-        )
-      }}
-      description={I18n.t(
-        `features.itWallet.identification.cie.prepare.${type}.content`
-      )}
-      headerActionsProp={{ showHelp: true }}
-      actions={{
-        type: "SingleButton",
-        primary: {
-          label: I18n.t(
-            `features.itWallet.identification.cie.prepare.${type}.cta`
-          ),
-          onPress: () => machineRef.send({ type: "next" })
-        }
-      }}
-    >
-      <ContentWrapper>
-        <IOButton
-          variant="link"
-          label={I18n.t(
-            `features.itWallet.identification.cie.prepare.${type}.buttonLink`
-          )}
-          onPress={() => infoBottomSheet.present()}
-        />
+export const ItwCiePreparationScreenContent = ({
+  title,
+  description,
+  imageSrc,
+  actions,
+  children
+}: PropsWithChildren<Props>) => (
+  <IOScrollViewWithLargeHeader
+    title={{ label: title }}
+    description={description}
+    headerActionsProp={{ showHelp: true }}
+    actions={actions}
+  >
+    <ContentWrapper>
+      <VStack space={16}>
+        {children}
         <View style={styles.imageContainer}>
           <Image
             accessibilityIgnoresInvertColors
@@ -86,18 +41,16 @@ export const ItwCiePreparationScreenContent = ({ type }: Props) => {
             style={styles.image}
           />
         </View>
-        {infoBottomSheet.bottomSheet}
-      </ContentWrapper>
-    </IOScrollViewWithLargeHeader>
-  );
-};
+      </VStack>
+    </ContentWrapper>
+  </IOScrollViewWithLargeHeader>
+);
 
 const screenHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
   imageContainer: {
     width: "100%",
-    marginTop: 15,
     // Define image container height as 50% of screen height
     height: screenHeight * 0.5
   },
