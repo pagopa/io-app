@@ -13,13 +13,24 @@ export const ItwIdentificationSection = () => {
     });
   }, [navigation]);
 
+  const navigateToCanInputScreen = useCallback(() => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.CAN_SCREEN
+    });
+  }, [navigation]);
+
   return (
     <View>
       <ListItemHeader label="IT Wallet Identification" />
       <ListItemNav
-        value="CAN Preparation screen"
+        value="CIE CAN Preparation screen"
         description="Navigate to the CAN instructions screen"
         onPress={navigateToCanPreparationScreen}
+      />
+      <ListItemNav
+        value="CIE CAN Input screen"
+        description="Navigate to the CAN input screen"
+        onPress={navigateToCanInputScreen}
       />
     </View>
   );
