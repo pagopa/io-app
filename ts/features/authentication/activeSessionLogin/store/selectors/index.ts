@@ -36,7 +36,8 @@ export const newTokenActiveSessionLoginSelector = (state: GlobalState) =>
   state.features.loginFeatures.activeSessionLogin?.loginInfo?.token;
 
 export const fastLoginOptInActiveSessionLoginSelector = (state: GlobalState) =>
-  state.features.loginFeatures.activeSessionLogin?.loginInfo?.fastLoginOptIn;
+  state.features.loginFeatures.activeSessionLogin?.loginInfo?.fastLoginOptIn ??
+  false;
 
 export const activeSessionLoginInfoSelector = (state: GlobalState) =>
   state.features.loginFeatures.activeSessionLogin?.loginInfo;
