@@ -106,19 +106,4 @@ describe("useSendAarFlowManager", () => {
 
     expect(result.current.currentFlowData).toEqual(value);
   });
-  it('should return "currentFlowErrorKind" as a 1/1 of the selector`s value', () => {
-    const value: AARFlowState = {
-      type: sendAARFlowStates.ko,
-      previousState: {
-        type: "fetchingQRData",
-        qrCode: "test"
-      },
-      errorKind: "NOTIFICATION_EXPIRED"
-    };
-    mockSelector.mockImplementation(() => value);
-
-    const { result } = renderHook(useSendAarFlowManager);
-
-    expect(result.current.currentFlowErrorKind).toEqual(value);
-  });
 });

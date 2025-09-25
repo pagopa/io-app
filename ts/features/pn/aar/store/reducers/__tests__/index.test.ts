@@ -2,7 +2,6 @@ import * as O from "fp-ts/lib/Option";
 import {
   aarFlowReducer,
   currentAARFlowData,
-  currentAARFlowErrorKind,
   currentAARFlowStateType,
   INITIAL_AAR_FLOW_STATE,
   isAAREnabled
@@ -10,10 +9,8 @@ import {
 import { GlobalState } from "../../../../../../store/reducers/types";
 import * as appVersion from "../../../../../../utils/appVersion";
 import {
-  aarErrors,
   AARFlowState,
-  isValidAARStateTransition,
-  sendAARFlowStates
+  isValidAARStateTransition
 } from "../../../utils/stateUtils";
 import {
   sendAarMockStateFactory,
@@ -127,40 +124,5 @@ describe("isAAREnabled selector", () => {
       expect(result).toEqual(INITIAL_AAR_FLOW_STATE);
       expect(resultType).toEqual(INITIAL_AAR_FLOW_STATE.type);
     });
-
-    it(`currentAARFlowErrorKind should return undefined when aarFlow.type!=='ko'`, () => {
-      const mockState = {
-        features: {
-          pn: {
-            aarFlow: {
-              type: sendAARFlowStates.fetchingQRData,
-              qrCode: "test"
-            } as AARFlowState
-          }
-        }
-      } as unknown as GlobalState;
-
-      const resultErrorKind = currentAARFlowErrorKind(mockState);
-      expect(resultErrorKind).toBeUndefined();
-    });
-
-    Object.values(aarErrors).forEach(errorKind =>
-      it(`currentAARFlowErrorKind should return ${errorKind} when aarFlow={ type: 'ko', errorKind: '${errorKind}' }`, () => {
-        const mockState = {
-          features: {
-            pn: {
-              aarFlow: {
-                type: sendAARFlowStates.ko,
-                previousState: {},
-                errorKind
-              } as AARFlowState
-            }
-          }
-        } as unknown as GlobalState;
-
-        const resultErrorKind = currentAARFlowErrorKind(mockState);
-        expect(resultErrorKind).toEqual(errorKind);
-      })
-    );
   });
 });

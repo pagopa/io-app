@@ -48,6 +48,7 @@ export const PnStackNavigator = () => (
     <Stack.Screen
       name={PN_ROUTES.SEND_AAR_ERROR}
       component={SendAARErrorScreen}
+      options={{ headerShown: false }}
     />
   </Stack.Navigator>
 );

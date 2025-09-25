@@ -47,7 +47,7 @@ type ErrorState = {
 type ValueOf<T> = T[keyof T];
 type RetriableError = ValueOf<typeof retriableErrors>;
 
-export type ErrorKind = ValueOf<typeof aarErrors>;
+type ErrorKind = ValueOf<typeof aarErrors>;
 export type AARFlowStateName =
   SendAARFlowStatesType[keyof SendAARFlowStatesType];
 
@@ -93,13 +93,16 @@ export const validAARStatusTransitions = new Map<
   ],
   [
     sendAARFlowStates.fetchingQRData,
-    new Set([sendAARFlowStates.fetchingNotificationData, sendAARFlowStates.ko])
+    new Set([
+      sendAARFlowStates.fetchingNotificationData,
+      sendAARFlowStates.notAddresseeFinal,
+      sendAARFlowStates.ko
+    ])
   ],
   [
     sendAARFlowStates.fetchingNotificationData,
     new Set([
       sendAARFlowStates.displayingNotificationData,
-      sendAARFlowStates.notAddresseeFinal,
       sendAARFlowStates.ko
     ])
   ],

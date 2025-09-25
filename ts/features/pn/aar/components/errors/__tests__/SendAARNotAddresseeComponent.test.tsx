@@ -1,7 +1,6 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../../store/actions/application";
-import * as HOOKS from "../../../../../../store/hooks";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
@@ -13,10 +12,8 @@ const managerSpy = jest.spyOn(FLOW_MANAGER, "useSendAarFlowManager");
 describe("SendAARTosComponent", () => {
   const mockGoNextState = jest.fn();
   const mockTerminateFlow = jest.fn();
-  const mockDispatch = jest.fn();
 
   beforeAll(() => {
-    jest.spyOn(HOOKS, "useIODispatch").mockImplementation(() => mockDispatch);
     managerSpy.mockImplementation(() => ({
       currentFlowData: { type: "none" },
       goToNextState: mockGoNextState,

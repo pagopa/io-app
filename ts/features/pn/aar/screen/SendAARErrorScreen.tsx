@@ -6,10 +6,9 @@ import { sendAARFlowStates } from "../utils/stateUtils";
 export const SendAARErrorScreen = () => {
   const { currentFlowData } = useSendAarFlowManager();
 
-  switch (currentFlowData.type) {
-    case sendAARFlowStates.notAddresseeFinal:
-      return <SendAARNotAddresseeComponent />;
-    default:
-      return <SendAARErrorComponent />;
+  if (currentFlowData.type === sendAARFlowStates.notAddresseeFinal) {
+    return <SendAARNotAddresseeComponent />;
+  } else {
+    return <SendAARErrorComponent />;
   }
 };

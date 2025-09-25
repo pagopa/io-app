@@ -4,10 +4,9 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { sendAARDelegateUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { openWebUrl } from "../../../../utils/url";
 import { setAarFlowState, terminateAarFlow } from "../store/actions";
-import { currentAARFlowData, currentAARFlowErrorKind } from "../store/reducers";
+import { currentAARFlowData } from "../store/reducers";
 import {
   AARFlowState,
-  ErrorKind,
   isAarErrorRetriable,
   sendAARFlowStates
 } from "../utils/stateUtils";
@@ -16,7 +15,6 @@ type SendAarFlowManager = {
   terminateFlow: () => void;
   goToNextState: () => void;
   currentFlowData: AARFlowState;
-  currentFlowErrorKind?: ErrorKind;
 };
 
 export type SendAarFlowHandlerType = {
@@ -28,7 +26,6 @@ export const useSendAarFlowManager = (): SendAarFlowManager => {
   const dispatch = useIODispatch();
   const currentFlowData = useIOSelector(currentAARFlowData);
   const delegateUrl = useIOSelector(sendAARDelegateUrlSelector);
-  const currentFlowErrorKind = useIOSelector(currentAARFlowErrorKind);
 
   const handleTerminateFlow = useCallback(() => {
     dispatch(terminateAarFlow());
@@ -59,7 +56,6 @@ export const useSendAarFlowManager = (): SendAarFlowManager => {
   return {
     terminateFlow: handleTerminateFlow,
     goToNextState,
-    currentFlowData,
-    currentFlowErrorKind
+    currentFlowData
   };
 };

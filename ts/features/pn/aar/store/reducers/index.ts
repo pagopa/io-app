@@ -5,8 +5,7 @@ import { isAARLocalEnabled } from "../../../../../store/reducers/persistedPrefer
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   AARFlowState,
-  isValidAARStateTransition,
-  sendAARFlowStates
+  isValidAARStateTransition
 } from "../../utils/stateUtils";
 import { setAarFlowState, terminateAarFlow } from "../actions";
 
@@ -39,7 +38,3 @@ export const currentAARFlowData = (state: GlobalState) =>
   state.features.pn.aarFlow;
 export const currentAARFlowStateType = (state: GlobalState) =>
   state.features.pn.aarFlow.type;
-export const currentAARFlowErrorKind = (state: GlobalState) =>
-  state.features.pn.aarFlow.type === sendAARFlowStates.ko
-    ? state.features.pn.aarFlow.errorKind
-    : undefined;
