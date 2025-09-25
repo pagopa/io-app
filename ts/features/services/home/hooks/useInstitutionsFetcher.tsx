@@ -8,7 +8,7 @@ import {
   paginatedInstitutionsCurrentPageSelector,
   paginatedInstitutionsLastPageSelector,
   paginatedInstitutionsPotSelector
-} from "../store/reducers";
+} from "../store/selectors";
 
 const LIMIT: number = 10;
 const NEXT_PAGE_LOADING_WAIT_MILLISECONDS: number = 1000;

@@ -17,7 +17,7 @@ import { ServiceDetails } from "../../../../../../definitions/services/ServiceDe
 import * as mixpanel from "../../../../../mixpanel";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
-import * as serviceSelectors from "../../../../services/details/store/reducers";
+import * as serviceSelectors from "../../../../services/details/store/selectors";
 import * as fimsAuthenticationSelectors from "../../../singleSignOn/store/selectors";
 
 const referenceCtaLabel = "cta label";

@@ -15,7 +15,7 @@ import {
   pnMessagingServiceIdSelector
 } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../store/reducers/types";
-import { servicePreferenceByChannelPotSelector } from "../../../services/details/store/reducers";
+import { servicePreferenceByChannelPotSelector } from "../../../services/details/store/selectors";
 import { dismissPnActivationReminderBanner } from "../../store/actions";
 import { isDevEnv, isTestEnv } from "../../../../utils/environment";
 

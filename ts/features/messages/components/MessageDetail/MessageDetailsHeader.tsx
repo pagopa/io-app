@@ -4,7 +4,7 @@ import { ImageSourcePropType, StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useIOSelector } from "../../../../store/hooks";
 import { logosForService } from "../../../services/common/utils";
-import { serviceDetailsByIdSelector } from "../../../services/details/store/reducers";
+import { serviceDetailsByIdSelector } from "../../../services/details/store/selectors";
 import { OrganizationHeader } from "./OrganizationHeader";
 
 const styles = StyleSheet.create({

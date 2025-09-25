@@ -13,11 +13,11 @@ import { readablePrivacyReport } from "../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { trackPNPushSettings } from "../../../pn/analytics";
 import { upsertServicePreference } from "../store/actions/preference";
+import { ServicePreferencePot } from "../store/reducers";
 import {
-  ServicePreferencePot,
   serviceMetadataInfoSelector,
   servicePreferencePotByIdSelector
-} from "../store/reducers";
+} from "../store/selectors";
 import { isServicePreferenceResponseSuccess } from "../types/ServicePreferenceResponse";
 import { mapKinds } from "./handleGetServicePreference";
 

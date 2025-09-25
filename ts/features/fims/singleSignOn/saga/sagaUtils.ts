@@ -16,7 +16,7 @@ import {
   fimsRelyingPartyDomainSelector,
   relyingPartyServiceIdSelector
 } from "../store/selectors";
-import { serviceDetailsByIdSelector } from "../../../services/details/store/reducers";
+import { serviceDetailsByIdSelector } from "../../../services/details/store/selectors";
 import { refreshSessionToken } from "../../../authentication/fastLogin/store/actions/tokenRefreshActions";
 import NavigationService from "../../../../navigation/NavigationService";
 import { oidcProviderDomainSelector } from "../../../../store/reducers/backendStatus/remoteConfig";

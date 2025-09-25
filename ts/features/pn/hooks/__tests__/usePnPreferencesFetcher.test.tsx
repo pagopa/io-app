@@ -6,7 +6,7 @@ import { useIODispatch } from "../../../../store/hooks";
 import { appReducer } from "../../../../store/reducers";
 import { NetworkError } from "../../../../utils/errors";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { servicePreferencePotByIdSelector } from "../../../services/details/store/reducers";
+import { servicePreferencePotByIdSelector } from "../../../services/details/store/selectors";
 import {
   ServicePreferenceResponse,
   WithServiceID
@@ -18,8 +18,8 @@ jest.mock("../../../../store/hooks", () => ({
   ...jest.requireActual("../../../../store/hooks"),
   useIODispatch: jest.fn()
 }));
-jest.mock("../../../services/details/store/reducers/", () => ({
-  ...jest.requireActual("../../../services/details/store/reducers/"),
+jest.mock("../../../services/details/store/selectors", () => ({
+  ...jest.requireActual("../../../services/details/store/selectors"),
   servicePreferencePotByIdSelector: jest.fn()
 }));
 jest.mock("react", () => ({

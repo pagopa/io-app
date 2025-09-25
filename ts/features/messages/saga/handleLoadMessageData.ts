@@ -19,7 +19,7 @@ import {
 } from "../store/actions";
 import { getPaginatedMessageById } from "../store/reducers/paginatedById";
 import { UIMessage, UIMessageDetails } from "../types";
-import { serviceDetailsByIdPotSelector } from "../../services/details/store/reducers";
+import { serviceDetailsByIdPotSelector } from "../../services/details/store/selectors";
 import { loadServiceDetail } from "../../services/details/store/actions/details";
 import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
 import { thirdPartyFromIdSelector } from "../store/reducers/thirdPartyById";
