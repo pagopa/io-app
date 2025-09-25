@@ -592,30 +592,40 @@ exports[`SendAARLoadingComponent should match snapshot 1`] = `
                                 </View>
                               </View>
                             </View>
-                            <Text
-                              accessibilityLabel="Recupero delle informazioni in corso"
-                              allowFontScaling={true}
-                              dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.5}
+                            <View
                               style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#2B2E38",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 22,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 33,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 8,
+                                }
                               }
                             >
-                              Recupero delle informazioni in corso
-                            </Text>
+                              <Text
+                                accessibilityLabel="Recupero delle informazioni in corso"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="title2"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#2B2E38",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 22,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 33,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                Recupero delle informazioni in corso
+                              </Text>
+                            </View>
                           </View>
                         </View>
                         <View
