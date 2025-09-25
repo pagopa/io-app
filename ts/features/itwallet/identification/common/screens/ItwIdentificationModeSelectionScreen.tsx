@@ -229,7 +229,10 @@ export const ItwIdentificationModeSelectionScreen = (
             )}
           </VStack>
           {isL3 && !eidReissuing && (
-            <View style={{ flexDirection: "row", justifyContent: "center" }}>
+            <View
+              style={{ flexDirection: "row", justifyContent: "center" }}
+              testID={"noCieButton"}
+            >
               <IOButton
                 variant="link"
                 textAlign="center"

@@ -172,11 +172,11 @@ export const itwEidIssuanceMachine = setup({
       target: "#itwEidIssuanceMachine.Idle",
       actions: [
         assign(() => ({ ...InitialContext })),
-        raise(({ event }) => ({
+        raise(({ event, context }) => ({
           type: "start",
           mode: event.mode,
           isL3: event.isL3,
-          isL2Fallback: event.isL2Fallback
+          isL2Fallback: event.isL2Fallback ?? context.isL2Fallback
         }))
       ]
     }
@@ -186,10 +186,10 @@ export const itwEidIssuanceMachine = setup({
       description: "The machine is in idle, ready to start the issuance flow",
       on: {
         start: {
-          actions: assign(({ event }) => ({
+          actions: assign(({ event, context }) => ({
             mode: event.mode,
             isL3: event.isL3,
-            isL2Fallback: event.isL2Fallback
+            isL2Fallback: event.isL2Fallback ?? context.isL2Fallback
           })),
           target: "EvaluatingIssuanceMode"
         },

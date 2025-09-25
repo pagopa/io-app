@@ -10,7 +10,7 @@ import { ItwEidIssuanceMachineContext } from "../../../../machine/eid/provider";
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import {
   ItwIdentificationModeSelectionScreen,
-  ItwL2IdentificationModeSelectionScreenProps
+  ItwIdentificationModeSelectionScreenProps
 } from "../ItwIdentificationModeSelectionScreen.tsx";
 
 jest.mock("../../../../../../config", () => ({
@@ -35,12 +35,13 @@ describe("ItwIdentificationModeSelectionScreen", () => {
   });
 
   describe("L2IdentificationView (L3 disabled)", () => {
-    it("should show all authentication methods in L2", () => {
+    it("should show all authentication methods in L2 except for CiePin", () => {
       const component = renderComponent();
 
       expect(component.queryByTestId("CieID")).not.toBeNull();
       expect(component.queryByTestId("Spid")).not.toBeNull();
-      expect(component.queryByTestId("CiePin")).not.toBeNull();
+      expect(component.queryByTestId("CiePin")).toBeNull();
+      expect(component.queryByTestId("noCieButton")).toBeNull();
     });
 
     it("should show all authentication methods in reissuing", () => {
@@ -48,6 +49,25 @@ describe("ItwIdentificationModeSelectionScreen", () => {
 
       expect(component.queryByTestId("CieID")).not.toBeNull();
       expect(component.queryByTestId("Spid")).not.toBeNull();
+      expect(component.queryByTestId("CiePin")).not.toBeNull();
+      expect(component.queryByTestId("noCieButton")).toBeNull();
+    });
+
+    it("should show all authentication methods in L3 except for SPID", () => {
+      const component = renderComponent(true, false);
+
+      expect(component.queryByTestId("CieID")).not.toBeNull();
+      expect(component.queryByTestId("Spid")).toBeNull();
+      expect(component.queryByTestId("CiePin")).not.toBeNull();
+      expect(component.queryByTestId("noCieButton")).not.toBeNull();
+    });
+
+    it("should show all authentication methods in L3 reissuing mode except for SPID", () => {
+      const component = renderComponent(true, false);
+
+      expect(component.queryByTestId("noCieButton")).not.toBeNull();
+      expect(component.queryByTestId("CieID")).not.toBeNull();
+      expect(component.queryByTestId("Spid")).toBeNull();
       expect(component.queryByTestId("CiePin")).not.toBeNull();
     });
 
@@ -87,19 +107,19 @@ const renderComponent = (isL3 = false, eidReissuing = false) => {
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
   const WrappedComponent = (
-    props: ItwL2IdentificationModeSelectionScreenProps
+    props: ItwIdentificationModeSelectionScreenProps
   ) => {
     const logic = itwEidIssuanceMachine.provide({
       actions: {
         onInit: jest.fn(),
-        navigateToL2IdentificationScreen: () => undefined
+        navigateToIdentificationScreen: () => undefined
       }
     });
 
     const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
     const snapshot: typeof initialSnapshot = {
       ...initialSnapshot,
-      value: { UserIdentification: { Identification: "L2" } },
+      value: { UserIdentification: { Identification: isL3 ? "L3" : "L2" } },
       context: {
         ...initialSnapshot.context,
         isL3,
@@ -122,7 +142,7 @@ const renderComponent = (isL3 = false, eidReissuing = false) => {
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     WrappedComponent,
-    ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L2,
+    ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
     { eidReissuing },
     store
   );
