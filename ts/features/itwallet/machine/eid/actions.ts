@@ -74,15 +74,9 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToL3IdentificationScreen: () => {
+  navigateToIdentificationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L3
-    });
-  },
-
-  navigateToL2IdentificationScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L2,
+      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
       params: { eidReissuing: false }
     });
   },

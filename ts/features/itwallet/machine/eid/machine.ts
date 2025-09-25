@@ -1,5 +1,14 @@
 import _ from "lodash";
-import { and, assertEvent, assign, fromPromise, not, setup } from "xstate";
+import {
+  and,
+  assertEvent,
+  assign,
+  fromPromise,
+  not,
+  or,
+  raise,
+  setup
+} from "xstate";
 import { assert } from "../../../../utils/assert.ts";
 import { trackItWalletIntroScreen } from "../../analytics";
 import {
@@ -40,8 +49,7 @@ export const itwEidIssuanceMachine = setup({
 
     navigateToTosScreen: notImplemented,
     navigateToIpzsPrivacyScreen: notImplemented,
-    navigateToL2IdentificationScreen: notImplemented,
-    navigateToL3IdentificationScreen: notImplemented,
+    navigateToIdentificationScreen: notImplemented,
     navigateToIdpSelectionScreen: notImplemented,
     navigateToSpidLoginScreen: notImplemented,
     navigateToCieIdLoginScreen: notImplemented,
@@ -158,6 +166,19 @@ export const itwEidIssuanceMachine = setup({
     // This action should only be used in the playground
     reset: {
       target: "#itwEidIssuanceMachine.Idle"
+    },
+    // This action restart the machine in L2 mode
+    restart: {
+      target: "#itwEidIssuanceMachine.Idle",
+      actions: [
+        assign(() => ({ ...InitialContext })),
+        raise(({ event }) => ({
+          type: "start",
+          mode: event.mode,
+          isL3: event.isL3,
+          isL2Fallback: event.isL2Fallback
+        }))
+      ]
     }
   },
   states: {
@@ -167,7 +188,8 @@ export const itwEidIssuanceMachine = setup({
         start: {
           actions: assign(({ event }) => ({
             mode: event.mode,
-            isL3: event.isL3
+            isL3: event.isL3,
+            isL2Fallback: event.isL2Fallback
           })),
           target: "EvaluatingIssuanceMode"
         },
@@ -223,8 +245,8 @@ export const itwEidIssuanceMachine = setup({
             target: "WalletInstanceAttestationObtainment"
           },
           {
-            // When reissuing, if both integrity key tag and wallet instance attestation are valid,
-            guard: "isReissuance",
+            // When reissuing or fallback to L2, if both integrity key tag and wallet instance attestation are valid,
+            guard: or(["isReissuance", "isL2Fallback"]),
             target: "UserIdentification.Identification.L2"
           },
           {
@@ -243,8 +265,8 @@ export const itwEidIssuanceMachine = setup({
       after: {
         5000: [
           {
-            guard: "isReissuance",
-            actions: "navigateToL2IdentificationScreen"
+            guard: or(["isReissuance", "isL2Fallback"]),
+            actions: "navigateToIdentificationScreen"
           },
           {
             guard: not("isReissuance"),
@@ -322,7 +344,7 @@ export const itwEidIssuanceMachine = setup({
         }),
         onDone: [
           {
-            guard: "isReissuance",
+            guard: or(["isReissuance", "isL2Fallback"]),
             actions: [
               assign(({ event }) => ({
                 walletInstanceAttestation: event.output
@@ -415,7 +437,7 @@ export const itwEidIssuanceMachine = setup({
             },
             L2: {
               description: "Navigates to the L2 identification screen",
-              entry: "navigateToL2IdentificationScreen",
+              entry: "navigateToIdentificationScreen",
               on: {
                 "select-identification-mode": [
                   {
@@ -439,7 +461,7 @@ export const itwEidIssuanceMachine = setup({
                 ],
                 back: [
                   {
-                    guard: "isReissuance",
+                    guard: or(["isReissuance", "isL2Fallback"]),
                     target: "#itwEidIssuanceMachine.Idle"
                   },
                   {
@@ -456,7 +478,7 @@ export const itwEidIssuanceMachine = setup({
             L3: {
               description: "Navigates to the L3 identification screen",
               entry: [
-                "navigateToL3IdentificationScreen",
+                "navigateToIdentificationScreen",
                 assign({
                   isL2Fallback: false
                 })

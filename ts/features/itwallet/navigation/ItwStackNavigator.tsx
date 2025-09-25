@@ -24,8 +24,7 @@ import { ItwCieWrongCardScreen } from "../identification/cie/screens/ItwCieWrong
 import { ItwCieWrongCiePinScreen } from "../identification/cie/screens/ItwCieWrongCiePinScreen.tsx";
 import { ItwIdentificationCieWarningScreen } from "../identification/cie/screens/ItwIdentificationCieWarningScreen.tsx";
 import ItwCieIdLoginScreen from "../identification/cieId/screens/ItwCieIdLoginScreen.tsx";
-import { ItwL2IdentificationModeSelectionScreen } from "../identification/common/screens/ItwL2IdentificationModeSelectionScreen.tsx";
-import { ItwL3IdentificationModeSelectionScreen } from "../identification/common/screens/ItwL3IdentificationModeSelectionScreen.tsx";
+import { ItwIdentificationModeSelectionScreen } from "../identification/common/screens/ItwIdentificationModeSelectionScreen.tsx";
 import { ItwIdentificationIdpSelectionScreen } from "../identification/spid/screens/ItwIdentificationIdpSelectionScreen.tsx";
 import ItwSpidIdpLoginScreen from "../identification/spid/screens/ItwSpidIdpLoginScreen.tsx";
 import { ItwIssuanceCredentialAsyncContinuationScreen } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
@@ -135,12 +134,8 @@ const InnerNavigator = memo(() => {
       />
       {/* IDENTIFICATION */}
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L2}
-        component={ItwL2IdentificationModeSelectionScreen}
-      />
-      <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L3}
-        component={ItwL3IdentificationModeSelectionScreen}
+        name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION}
+        component={ItwIdentificationModeSelectionScreen}
       />
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE_WARNING}

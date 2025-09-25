@@ -9,6 +9,14 @@ export type Start = {
   type: "start";
   mode?: EidIssuanceMode;
   isL3?: boolean;
+  isL2Fallback?: boolean;
+};
+
+export type Restart = {
+  type: "restart";
+  mode?: EidIssuanceMode;
+  isL3?: boolean;
+  isL2Fallback?: boolean;
 };
 
 export type AcceptTos = {
@@ -121,4 +129,5 @@ export type EidIssuanceEvents =
   | GoToCieWarning
   | Next
   | GoToL2IdentificationMode
+  | Restart
   | Reset;

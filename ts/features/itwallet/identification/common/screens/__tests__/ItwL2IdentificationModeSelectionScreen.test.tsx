@@ -9,15 +9,15 @@ import { itwEidIssuanceMachine } from "../../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../../machine/eid/provider";
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import {
-  ItwL2IdentificationModeSelectionScreen,
+  ItwIdentificationModeSelectionScreen,
   ItwL2IdentificationModeSelectionScreenProps
-} from "../../../common/screens/ItwL2IdentificationModeSelectionScreen";
+} from "../ItwIdentificationModeSelectionScreen.tsx";
 
 jest.mock("../../../../../../config", () => ({
   itwEnabled: true
 }));
 
-describe("ItwL2IdentificationModeSelectionScreen", () => {
+describe("ItwIdentificationModeSelectionScreen", () => {
   beforeEach(() => {
     // Default mock for no disabled methods
     jest
@@ -115,7 +115,7 @@ const renderComponent = (isL3 = false, eidReissuing = false) => {
         logic={logic}
         options={{ snapshot }}
       >
-        <ItwL2IdentificationModeSelectionScreen {...props} />
+        <ItwIdentificationModeSelectionScreen {...props} />
       </ItwEidIssuanceMachineContext.Provider>
     );
   };
