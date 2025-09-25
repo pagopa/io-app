@@ -35,6 +35,7 @@ import { DSFooterActionsNotFixed } from "../core/DSFooterActionsNotFixed";
 import { DSFooterActionsSticky } from "../core/DSFooterActionsSticky";
 import { DSForceScrollDownView } from "../core/DSForceScrollDownView";
 import { DSForceScrollDownViewCustomSlot } from "../core/DSForceScrollDownViewCustomSlot";
+import { DSForceScrollDownViewTitleTransition } from "../core/DSForceScrollDownViewTitleTransition";
 import { DSFullScreenModal } from "../core/DSFullScreenModal";
 import { DSHapticFeedback } from "../core/DSHapticFeedback";
 import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
@@ -481,6 +482,19 @@ export const DesignSystemNavigator = () => {
           options={{
             headerTitle:
               DESIGN_SYSTEM_ROUTES.SCREENS.FORSCESCROLLDOWNVIEW_CUSTOM_SLOT
+                .title
+          }}
+        />
+
+        <Stack.Screen
+          name={
+            DESIGN_SYSTEM_ROUTES.SCREENS.FORSCESCROLLDOWNVIEW_TITLE_TRANSITION
+              .route
+          }
+          component={DSForceScrollDownViewTitleTransition}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.SCREENS.FORSCESCROLLDOWNVIEW_TITLE_TRANSITION
                 .title
           }}
         />
