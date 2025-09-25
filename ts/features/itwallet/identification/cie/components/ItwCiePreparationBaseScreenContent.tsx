@@ -1,6 +1,5 @@
 import { ContentWrapper, IOButton } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { constNull } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
@@ -13,7 +12,7 @@ import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
 
-export type CiePreparationType = "card" | "pin" | "can";
+export type CiePreparationType = "card" | "pin";
 
 type Props = { type: CiePreparationType };
 
@@ -40,36 +39,16 @@ export const ItwCiePreparationBaseScreenContent = ({ type }: Props) => {
         return require("../../../../../../img/features/itWallet/identification/itw_cie_nfc.gif");
       case "pin":
         return require("../../../../../../img/features/itWallet/identification/itw_cie_pin.gif");
-      case "can":
-        return require("../../../../../../img/features/itWallet/identification/cie_can.png");
       default:
         return undefined;
     }
   }, [type]);
 
-  const infoButton = useMemo(() => {
-    switch (type) {
-      case "can":
-        return null;
-      default:
-        return (
-          <IOButton
-            variant="link"
-            label={I18n.t(
-              `features.itWallet.identification.cie.prepare.${type}.buttonLink`
-            )}
-            onPress={() => infoBottomSheet.present()}
-          />
-        );
-    }
-  }, [type, infoBottomSheet]);
-
   useFocusEffect(
     useCallback(() => {
       const trackingMap: Record<CiePreparationType, () => void> = {
         card: () => trackItwCiePinTutorialCie(itw_flow),
-        pin: () => trackItwCiePinTutorialPin(itw_flow),
-        can: constNull
+        pin: () => trackItwCiePinTutorialPin(itw_flow)
       };
 
       trackingMap[type]?.();
@@ -98,7 +77,13 @@ export const ItwCiePreparationBaseScreenContent = ({ type }: Props) => {
       }}
     >
       <ContentWrapper>
-        {infoButton}
+        <IOButton
+          variant="link"
+          label={I18n.t(
+            `features.itWallet.identification.cie.prepare.${type}.buttonLink`
+          )}
+          onPress={() => infoBottomSheet.present()}
+        />
         <View style={[styles.imageContainer, { height: imageHeightContainer }]}>
           <Image
             accessibilityIgnoresInvertColors
