@@ -43,8 +43,8 @@ const ItwPlayground = () => {
             <VStack space={8}>
               <ItwL3Section />
               <ItwLifecycleSection />
-              <ItwReissuanceSection />
               <ItwEnvironmentSection />
+              <ItwReissuanceSection />
               <ItwSkeumorphicCredentialSection />
               <ItwBannerSection />
               <ItwClaimsList />
