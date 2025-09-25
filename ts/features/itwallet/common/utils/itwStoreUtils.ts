@@ -56,13 +56,9 @@ export const pollForStoreValue = <T>({
  * Determines whether a failure reason should be serialized.
  * Returns true if reason is absent or an empty object.
  */
-export const shouldSerializeReason = (failure: { reason?: unknown }) => {
-  return (
-    !failure.reason ||
-    (typeof failure.reason === "object" &&
-      Object.keys(failure.reason).length === 0)
-  );
-};
+export const shouldSerializeReason = (failure: { reason?: unknown }) =>
+  !failure.reason || (typeof failure.reason === "object" && Object.keys(failure.reason).length === 0);
+
 
 /**
  * Serialize failure reasons that are instances of {@link Error}, to be safely stored and displayed.
