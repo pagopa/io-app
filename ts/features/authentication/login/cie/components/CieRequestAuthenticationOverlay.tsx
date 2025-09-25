@@ -39,7 +39,7 @@ import { isCieLoginUatEnabledSelector } from "../store/selectors";
 import { cieFlowForDevServerEnabled } from "../utils";
 import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
 import {
-  fastLoginOptInActiveSessionLoginSelector,
+  isActiveSessionFastLoginEnabledSelector,
   isActiveSessionLoginSelector
 } from "../../../activeSessionLogin/store/selectors";
 import { hashedProfileFiscalCodeSelector } from "../../../../../store/reducers/crossSessions";
@@ -161,8 +161,8 @@ const CieWebView = (props: Props) => {
   const ephemeralKeyTag = useIOSelector(ephemeralKeyTagSelector);
   const isFastLogin = useIOSelector(isFastLoginEnabledSelector);
   const idp = useIOSelector(selectedIdentityProviderSelector);
-  const fastLoginOptInActiveSessionLogin = useIOSelector(
-    fastLoginOptInActiveSessionLoginSelector
+  const isActiveSessionFastLogin = useIOSelector(
+    isActiveSessionFastLoginEnabledSelector
   );
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
   const hashedFiscalCode = useIOSelector(hashedProfileFiscalCodeSelector);
@@ -269,9 +269,7 @@ const CieWebView = (props: Props) => {
             loginUri,
             ephemeralKeyTag,
             mixpanelEnabled,
-            isActiveSessionLogin
-              ? fastLoginOptInActiveSessionLogin
-              : isFastLogin,
+            isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
             dispatch,
             idp?.id,
             isActiveSessionLogin ? hashedFiscalCode : undefined

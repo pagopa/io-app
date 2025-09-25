@@ -14,7 +14,7 @@ import {
 import { handleTestLogin } from "../testLoginSaga";
 import { ephemeralPublicKeySelector } from "../../../../lollipop/store/reducers/lollipop";
 import {
-  fastLoginOptInActiveSessionLoginSelector,
+  isActiveSessionFastLoginEnabledSelector,
   isActiveSessionLoginSelector
 } from "../../../activeSessionLogin/store/selectors";
 
@@ -50,7 +50,7 @@ describe("handleTestLogin saga", () => {
       .next(false)
       .select(ephemeralPublicKeySelector)
       .next(undefined)
-      .select(fastLoginOptInActiveSessionLoginSelector)
+      .select(isActiveSessionFastLoginEnabledSelector)
       .next(false)
       .select(isActiveSessionLoginSelector)
       .next(false)
@@ -76,7 +76,7 @@ describe("handleTestLogin saga", () => {
       .next(false)
       .select(ephemeralPublicKeySelector)
       .next(undefined)
-      .select(fastLoginOptInActiveSessionLoginSelector)
+      .select(isActiveSessionFastLoginEnabledSelector)
       .next(false)
       .select(isActiveSessionLoginSelector)
       .next(false)
@@ -104,7 +104,7 @@ describe("handleTestLogin saga", () => {
       .next(false)
       .select(ephemeralPublicKeySelector)
       .next(undefined)
-      .select(fastLoginOptInActiveSessionLoginSelector)
+      .select(isActiveSessionFastLoginEnabledSelector)
       .next(false)
       .select(isActiveSessionLoginSelector)
       .next(false)
@@ -127,7 +127,7 @@ describe("handleTestLogin saga", () => {
       .next(false)
       .select(ephemeralPublicKeySelector)
       .next(undefined)
-      .select(fastLoginOptInActiveSessionLoginSelector)
+      .select(isActiveSessionFastLoginEnabledSelector)
       .next(false)
       .select(isActiveSessionLoginSelector)
       .next(false)
@@ -149,7 +149,7 @@ describe("handleTestLogin saga", () => {
       .next(true)
       .select(ephemeralPublicKeySelector)
       .next(fakePublicKey)
-      .select(fastLoginOptInActiveSessionLoginSelector)
+      .select(isActiveSessionFastLoginEnabledSelector)
       .next(false)
       .select(isActiveSessionLoginSelector)
       .next(false)
@@ -182,7 +182,7 @@ describe("handleTestLogin saga", () => {
       .next(false)
       .select(ephemeralPublicKeySelector)
       .next(undefined)
-      .select(fastLoginOptInActiveSessionLoginSelector)
+      .select(isActiveSessionFastLoginEnabledSelector)
       .next(false)
       .select(isActiveSessionLoginSelector)
       .next(false)

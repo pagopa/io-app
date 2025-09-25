@@ -18,7 +18,7 @@ import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
 import { ephemeralPublicKeySelector } from "../../../lollipop/store/reducers/lollipop";
 import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../../../lollipop/utils/login";
 import {
-  fastLoginOptInActiveSessionLoginSelector,
+  isActiveSessionFastLoginEnabledSelector,
   isActiveSessionLoginSelector
 } from "../../activeSessionLogin/store/selectors";
 
@@ -33,13 +33,13 @@ export function* handleTestLogin({
   const backendPublicClient = BackendPublicClient(apiUrlPrefix);
   const isFastLoginSelected = yield* select(isFastLoginEnabledSelector);
   const maybeEphemeralPublicKey = yield* select(ephemeralPublicKeySelector);
-  const fastLoginOptInActiveSessionLogin = yield* select(
-    fastLoginOptInActiveSessionLoginSelector
+  const isActiveSessionFastLogin = yield* select(
+    isActiveSessionFastLoginEnabledSelector
   );
   const isActiveSessionLogin = yield* select(isActiveSessionLoginSelector);
   const isFL = maybeEphemeralPublicKey
     ? isActiveSessionLogin
-      ? fastLoginOptInActiveSessionLogin
+      ? isActiveSessionFastLogin
       : isFastLoginSelected
     : undefined;
   function postTestLogin(

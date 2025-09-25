@@ -64,7 +64,7 @@ import { nativeLoginRequestInfoSelector } from "../store/selectors";
 import { getSpidErrorCodeDescription } from "../utils/spidErrorCode";
 import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
 import {
-  fastLoginOptInActiveSessionLoginSelector,
+  isActiveSessionFastLoginEnabledSelector,
   isActiveSessionLoginSelector
 } from "../../../activeSessionLogin/store/selectors";
 
@@ -127,8 +127,8 @@ export const AuthSessionPage = () => {
   const requestInfo = useIOSelector(nativeLoginRequestInfoSelector);
   const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
-  const fastLoginOptInActiveSessionLogin = useIOSelector(
-    fastLoginOptInActiveSessionLoginSelector
+  const isActiveSessionFastLogin = useIOSelector(
+    isActiveSessionFastLoginEnabledSelector
   );
 
   const setRequestInfo = useCallback(
@@ -308,7 +308,7 @@ export const AuthSessionPage = () => {
           loginUri,
           ephemeralKeyTag,
           mixpanelEnabled,
-          isActiveSessionLogin ? fastLoginOptInActiveSessionLogin : isFastLogin,
+          isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
           dispatch
         ),
       TE.fold(
