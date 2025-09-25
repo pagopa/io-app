@@ -8,9 +8,12 @@ import {
   ItwL3UpgradeTrigger,
   trackItwUpgradeL3Mandatory
 } from "../../analytics";
+import { useIOSelector } from "../../../../store/hooks.ts";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences.ts";
 
 export const ItwIssuanceInactiveITWalletScreen = () => {
   const navigation = useIONavigation();
+  const isL3 = useIOSelector(itwIsL3EnabledSelector);
 
   useHeaderSecondLevel({
     title: ""
@@ -30,7 +33,7 @@ export const ItwIssuanceInactiveITWalletScreen = () => {
         onPress: () =>
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.DISCOVERY.INFO,
-            params: {}
+            params: { isL3 }
           })
       }}
       secondaryAction={{
