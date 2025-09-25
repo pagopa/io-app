@@ -4431,9 +4431,18 @@
             "action": "Inizia"
           }
         },
-        "title": "La versione digitale dei tuoi documenti, su IO",
-        "content": "Aggiungi la versione digitale dei tuoi documenti personali al Portafoglio dell'app! \n\n Hanno lo **stesso valore legale** di quelli fisici, in specifici contesti d'uso. \n\n ###### È facile e veloce \n Continua per attivare la nuova funzionalità in meno di 3 minuti: oltre **6 Milioni** di persone stanno già usando i **Documenti su IO**!",
-        "tos": "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d’uso]({{tos_url}}).",
+        "title": "Inizia con Documenti su IO",
+        "content": "Se non puoi ancora ottenere IT-Wallet perché non hai la CIE, il suo PIN o il tuo dispositivo non lo supporta, attiva Documenti su IO:",
+        "featureHighlights": {
+          "1": "Ottieni una versione digitale dei documenti con funzionalità ridotte e disponibile per un tempo limitato",
+          "2": "Hai a disposizione la Patente di guida, la Tessera sanitaria - Tessera europea di assicurazione malattia e la Carta Europea della Disabilità",
+          "3": "Puoi usare la tua Patente su IO per dimostrare la tua idoneità alla guida"
+        },
+        "contentBottom": "###### Ricorda\n\nPotrai sempre ottenere IT-Wallet in futuro: hai bisogno di un dispositivo con tecnologia NFC e della tua Carta di Identità Elettronica (CIE).",
+        "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d'uso]({{tos_url}}).",
+        "actions": {
+          "continue": "Continua con SPID o CieID"
+        },
         "dismissalDialog": {
           "title": "Vuoi rinunciare ai documenti digitali su IO?",
           "body": "Potrai attivarli in qualsiasi altro momento, se cambi idea.",
@@ -4461,6 +4470,10 @@
               "cancel": "Chiudi"
             }
           }
+        },
+        "legacy": {
+          "title": "La versione digitale dei tuoi documenti, su IO",
+          "content": "Aggiungi la versione digitale dei tuoi documenti personali al Portafoglio dell'app! \n\n Hanno lo **stesso valore legale** di quelli fisici, in specifici contesti d'uso. \n\n ###### È facile e veloce \n Continua per attivare la nuova funzionalità in meno di 3 minuti: oltre **6 Milioni** di persone stanno già usando i **Documenti su IO**!"
         },
         "paywall": {
           "badge": "Novità",
