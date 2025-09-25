@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.14.0-rc.3](https://github.com/pagopa/io-app/compare/3.13.0-rc.10...3.14.0-rc.3) (2025-09-25)
+
+
+### Bug Fixes
+
+* [[IOBP-2017](https://pagopa.atlassian.net/browse/IOBP-2017)] CGN wrong header display ([#7394](https://github.com/pagopa/io-app/issues/7394)) ([0a7edab](https://github.com/pagopa/io-app/commit/0a7edabfd236bf8895d74e66402863ff97398a67))
+* [[IOCOM-2617](https://pagopa.atlassian.net/browse/IOCOM-2617)] removal of SEND AAR flow  feature flag check for phase 1 ([#7393](https://github.com/pagopa/io-app/issues/7393)) ([c06aea6](https://github.com/pagopa/io-app/commit/c06aea61e5261d2626081caf15f1a359579a6249))
+
+
+### Chores
+
+* **release:** 3.14.0-rc.2 ([d11a503](https://github.com/pagopa/io-app/commit/d11a50335484c6e33f741c62cae0a6b9bc77b190))
+
 ## [3.14.0-rc.2](https://github.com/pagopa/io-app/compare/3.14.0-rc.1...3.14.0-rc.2) (2025-09-24)
 
 
