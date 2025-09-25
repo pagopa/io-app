@@ -1,8 +1,8 @@
 import { VStack } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
+import I18n from "i18next";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
-import I18n from "i18next";
 import { AnimatedImage } from "../../../../../components/AnimatedImage";
 import IOMarkdown from "../../../../../components/IOMarkdown";
 import { renderActionButtons } from "../../../../../components/ui/IOScrollView";
@@ -15,7 +15,7 @@ import {
 } from "../../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
-import { CiePreparationType } from "../components/ItwCiePreparationBaseScreenContent";
+import { CiePreparationType } from "../components/ItwCiePreparationScreenContent";
 
 type Props = { type: CiePreparationType; showSecondaryAction?: boolean };
 

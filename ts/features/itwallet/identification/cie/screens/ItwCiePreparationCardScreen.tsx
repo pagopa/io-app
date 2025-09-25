@@ -1,5 +1,5 @@
-import { ItwCiePreparationBaseScreenContent } from "../components/ItwCiePreparationBaseScreenContent";
+import { ItwCiePreparationScreenContent } from "../components/ItwCiePreparationScreenContent";
 
 export const ItwCiePreparationCardScreen = () => (
-  <ItwCiePreparationBaseScreenContent type="card" />
+  <ItwCiePreparationScreenContent type="card" />
 );

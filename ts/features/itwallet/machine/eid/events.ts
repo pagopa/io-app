@@ -1,6 +1,6 @@
 import { ErrorActorEvent } from "xstate";
 import { SpidIdp } from "../../../../utils/idps";
-import { CiePreparationType } from "../../identification/cie/components/ItwCiePreparationBaseScreenContent";
+import { CiePreparationType } from "../../identification/cie/components/ItwCiePreparationScreenContent";
 import { EidIssuanceMode } from "./context";
 
 export type IdentificationMode = "spid" | "ciePin" | "cieId";

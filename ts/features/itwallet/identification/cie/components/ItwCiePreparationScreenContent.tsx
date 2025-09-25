@@ -16,10 +16,7 @@ export type CiePreparationType = "card" | "pin";
 
 type Props = { type: CiePreparationType };
 
-// Get the screen height to calculate a responsive image container height
-const screenHeight = Dimensions.get("window").height;
-
-export const ItwCiePreparationBaseScreenContent = ({ type }: Props) => {
+export const ItwCiePreparationScreenContent = ({ type }: Props) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isL3FeaturesEnabled = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
@@ -29,9 +26,6 @@ export const ItwCiePreparationBaseScreenContent = ({ type }: Props) => {
     type,
     showSecondaryAction: isL3FeaturesEnabled
   });
-
-  // Define image container height as 50% of screen height
-  const imageHeightContainer = screenHeight * 0.5;
 
   const imageSrc = useMemo(() => {
     switch (type) {
@@ -84,7 +78,7 @@ export const ItwCiePreparationBaseScreenContent = ({ type }: Props) => {
           )}
           onPress={() => infoBottomSheet.present()}
         />
-        <View style={[styles.imageContainer, { height: imageHeightContainer }]}>
+        <View style={styles.imageContainer}>
           <Image
             accessibilityIgnoresInvertColors
             source={imageSrc}
@@ -98,10 +92,14 @@ export const ItwCiePreparationBaseScreenContent = ({ type }: Props) => {
   );
 };
 
+const screenHeight = Dimensions.get("window").height;
+
 const styles = StyleSheet.create({
   imageContainer: {
     width: "100%",
-    marginTop: 15
+    marginTop: 15,
+    // Define image container height as 50% of screen height
+    height: screenHeight * 0.5
   },
   image: {
     width: "100%",

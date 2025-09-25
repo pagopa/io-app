@@ -1,5 +1,5 @@
-import { Linking } from "react-native";
 import I18n from "i18next";
+import { Linking } from "react-native";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
@@ -9,7 +9,7 @@ import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors"
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
-import { CiePreparationType } from "../components/ItwCiePreparationBaseScreenContent";
+import { CiePreparationType } from "../components/ItwCiePreparationScreenContent";
 export type CieWarningType = "noPin" | "noCie";
 
 export type ItwIdentificationCieWarningScreenNavigationParams = {

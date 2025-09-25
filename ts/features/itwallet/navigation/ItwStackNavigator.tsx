@@ -18,6 +18,7 @@ import { ItwCieCardReaderScreen as ItwCieCardReaderL3Screen } from "../identific
 import { ItwCieExpiredOrInvalidScreen } from "../identification/cie/screens/ItwCieExpiredOrInvalidScreen.tsx";
 import { ItwCiePinScreen } from "../identification/cie/screens/ItwCiePinScreen.tsx";
 import { ItwCiePreparationCanScreen } from "../identification/cie/screens/ItwCiePreparationCanScreen.tsx";
+import { ItwCiePreparationCardAltScreen } from "../identification/cie/screens/ItwCiePreparationCardAltScreen.tsx";
 import { ItwCiePreparationCardScreen } from "../identification/cie/screens/ItwCiePreparationCardScreen.tsx";
 import { ItwCiePreparationPinScreen } from "../identification/cie/screens/ItwCiePreparationPinScreen.tsx";
 import { ItwCieUnexpectedErrorScreen } from "../identification/cie/screens/ItwCieUnexpectedErrorScreen.tsx";
@@ -171,6 +172,10 @@ const InnerNavigator = memo(() => {
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE.CAN_PREPARATION_SCREEN}
         component={ItwCiePreparationCanScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION_ALT_SCREEN}
+        component={ItwCiePreparationCardAltScreen}
       />
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN}

@@ -13,7 +13,7 @@ import {
   StoredCredential,
   WalletInstanceAttestations
 } from "../../../common/utils/itwTypesUtils";
-import { CiePreparationType } from "../../../identification/cie/components/ItwCiePreparationBaseScreenContent";
+import { CiePreparationType } from "../../../identification/cie/components/ItwCiePreparationScreenContent";
 import { ItwTags } from "../../tags";
 import {
   GetWalletAttestationActorParams,

@@ -13,6 +13,12 @@ export const ItwIdentificationSection = () => {
     });
   }, [navigation]);
 
+  const navigateToCardPreparationScreen = useCallback(() => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION_ALT_SCREEN
+    });
+  }, [navigation]);
+
   return (
     <View>
       <ListItemHeader label="IT Wallet Identification" />
@@ -20,6 +26,11 @@ export const ItwIdentificationSection = () => {
         value="CAN Preparation screen"
         description="Navigate to the CAN instructions screen"
         onPress={navigateToCanPreparationScreen}
+      />
+      <ListItemNav
+        value="Card Preparation screen"
+        description="Navigate to the card preparation screen"
+        onPress={navigateToCardPreparationScreen}
       />
     </View>
   );
