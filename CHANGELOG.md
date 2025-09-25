@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.15.0-rc.0](https://github.com/pagopa/io-app/compare/3.14.0-rc.2...3.15.0-rc.0) (2025-09-25)
+
+
+### Bug Fixes
+
+* [[IOPLT-1348](https://pagopa.atlassian.net/browse/IOPLT-1348)] Fix `LoadingScreenContent` loose spacing ([#7401](https://github.com/pagopa/io-app/issues/7401)) ([d52899b](https://github.com/pagopa/io-app/commit/d52899bc9f19c6e05b9f8f0f87f82d345377af54))
+
+
+### Chores
+
+* [[IOPLT-1342](https://pagopa.atlassian.net/browse/IOPLT-1342)] Remove `react-native-responsive-screen` ([#7390](https://github.com/pagopa/io-app/issues/7390)) ([54d731b](https://github.com/pagopa/io-app/commit/54d731bdd038dc811b32d791e1863006db6ace67))
+* **release:** 3.14.0-rc.3 ([6af667d](https://github.com/pagopa/io-app/commit/6af667d9ffc90e448a4e77083859d77fdae291a8))
+* [[IOPID-2929](https://pagopa.atlassian.net/browse/IOPID-2929)] Active Session Login: Spid Flow ([#7376](https://github.com/pagopa/io-app/issues/7376)) ([aeab171](https://github.com/pagopa/io-app/commit/aeab17161f67362926654a2a1e8f48dc29b9916c))
+
 ## [3.14.0-rc.3](https://github.com/pagopa/io-app/compare/3.13.0-rc.10...3.14.0-rc.3) (2025-09-25)
 
 
