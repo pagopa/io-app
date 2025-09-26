@@ -1,5 +1,8 @@
 import { useEffect } from "react";
-import { serializeFailureReason } from "../../../common/utils/itwStoreUtils";
+import {
+  serializeFailureReason,
+  shouldSerializeReason
+} from "../../../common/utils/itwStoreUtils";
 import { ProximityFailure, ProximityFailureType } from "../machine/failure";
 import {
   trackItwProximityRPGenericFailure,
@@ -35,13 +38,8 @@ export const useItwProximityEventsTracking = ({ failure }: Params) => {
         return trackItwProximityTimeout(serializedFailure);
 
       case ProximityFailureType.UNEXPECTED:
-        const shouldSerializeReason =
-          !failure.reason ||
-          (typeof failure.reason === "object" &&
-            Object.keys(failure.reason).length === 0);
-
         return trackItwProximityUnexpectedFailure(
-          shouldSerializeReason ? serializedFailure : failure
+          shouldSerializeReason(failure) ? serializedFailure : failure
         );
       case ProximityFailureType.UNTRUSTED_RP:
         return trackItwProximityUnofficialVerifier(serializedFailure);
