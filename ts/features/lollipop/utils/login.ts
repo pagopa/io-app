@@ -11,9 +11,10 @@ import URLParse from "url-parse";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import pako from "pako";
 import { last } from "fp-ts/lib/Array";
-import { getLollipopLoginHeaders, handleRegenerateEphemeralKey } from "..";
+import { handleRegenerateEphemeralKey } from "..";
 import { AppDispatch } from "../../../App";
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
+import { getLoginHeaders } from "../../authentication/common/utils/login";
 import { toBase64EncodedThumbprint } from "./crypto";
 
 export const DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT = "SHA-256";
@@ -119,12 +120,12 @@ export const regenerateKeyGetRedirectsAndVerifySaml = (
             pipe(
               TE.tryCatch(
                 () => {
-                  const headers = getLollipopLoginHeaders(
+                  const headers = getLoginHeaders(
                     publicKey,
                     DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
                     isFastLogin,
                     idpId,
-                    hashedFiscalCode ?? undefined
+                    hashedFiscalCode
                   );
                   return getRedirects(loginUri, headers, "SAMLRequest");
                 },

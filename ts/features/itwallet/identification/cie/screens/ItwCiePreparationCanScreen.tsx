@@ -17,7 +17,7 @@ export const ItwCiePreparationCanScreen = () => (
       type: "SingleButton",
       primary: {
         label: I18n.t(`features.itWallet.identification.cie.prepare.can.cta`),
-        onPress: constNull
+        onPress: constNull // TODO [SIW-3045] continue with CAN authentication
       }
     }}
   >

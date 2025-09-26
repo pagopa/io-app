@@ -1037,8 +1037,7 @@
         "description": "To login, you must have the app installed on your device.",
         "primary_action_label": "Get the app",
         "link_error": "We could not direct you to the store. Open it manually and search for CieID"
-      },
-      "feature_not_already_implemented": "Questa funzionalità è attualmente in fase di sviluppo e non ancora disponibile."
+      }
     },
     "cie": {
       "genericTitle": "Login with CIE",
@@ -4826,9 +4825,16 @@
           "primaryAction": "Vai al documento"
         },
         "walletInstanceNotActive": {
-          "title": "Attiva Documenti su IO per continuare",
-          "body": "Per aggiungere i tuoi documenti al Portafoglio è necessario attivare ",
-          "bodyBold": "Documenti su IO",
+          "documentiSuIo": {
+            "title": "Attiva Documenti su IO per continuare",
+            "body": "Per aggiungere i tuoi documenti al Portafoglio è necessario attivare ",
+            "bodyBold": "Documenti su IO"
+          },
+          "itWallet": {
+            "title": "Ottieni IT-Wallet per continuare",
+            "body": "Per aggiungere nuovi documenti al tuo Portafoglio di IO ottieni IT-Wallet: ti basta avere con te la Carta di Identità Elettronica (CIE).",
+            "bodyBold": ""
+          },
           "primaryAction": "Inizia",
           "secondaryAction": "Non ora"
         },
