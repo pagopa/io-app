@@ -31,7 +31,8 @@ export function* fetchAARQrCodeSaga(
         _error =>
           setAarFlowState({
             type: sendAARFlowStates.ko,
-            previousState: currentState
+            previousState: currentState,
+            errorKind: "GENERIC"
           }),
         data => {
           switch (data.status) {
@@ -43,10 +44,20 @@ export function* fetchAARQrCodeSaga(
                 fullNameDestinatario: recipientInfo.denomination
               };
               return setAarFlowState(nextState);
+            case 403:
+              const notAddresseeFinalState: AARFlowState = {
+                type: sendAARFlowStates.notAddresseeFinal,
+                iun: data.value.iun,
+                fullNameDestinatario: data.value.recipientInfo.denomination,
+                qrCode: qrcode
+              };
+              return setAarFlowState(notAddresseeFinalState);
+
             default:
               const errorState: AARFlowState = {
                 type: sendAARFlowStates.ko,
-                previousState: currentState
+                previousState: currentState,
+                errorKind: "GENERIC"
               };
               return setAarFlowState(errorState);
           }
@@ -58,7 +69,8 @@ export function* fetchAARQrCodeSaga(
     yield* put(
       setAarFlowState({
         type: sendAARFlowStates.ko,
-        previousState: currentState
+        previousState: currentState,
+        errorKind: "GENERIC"
       })
     );
   }

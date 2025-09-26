@@ -31,7 +31,7 @@ export const sendAarMockStateFactory: Record<
   }),
   ko: () => ({
     type: "ko",
-    errorKind: "CIE REJECTED",
+    errorKind: "CANCELED",
     previousState: { type: "none" }
   })
 };

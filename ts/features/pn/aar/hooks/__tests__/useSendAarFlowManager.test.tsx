@@ -1,5 +1,8 @@
 import { act, renderHook } from "@testing-library/react-native";
+import { sendAARDelegateUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import * as URL_UTILS from "../../../../../utils/url";
 import { terminateAarFlow } from "../../store/actions";
+import { currentAARFlowData } from "../../store/reducers";
 import {
   AARFlowState,
   AARFlowStateName,
@@ -7,11 +10,14 @@ import {
   sendAARFlowStates
 } from "../../utils/stateUtils";
 import { useSendAarFlowManager } from "../useSendAarFlowManager";
+
 const mockPopToTop = jest.fn();
 const mockReset = jest.fn();
 const mockNavigate = jest.fn();
 const mockDispatch = jest.fn();
 const mockSelector = jest.fn();
+const mockOpenWebUrl = jest.spyOn(URL_UTILS, "openWebUrl").mockImplementation();
+const mockDelegateUrl = "https://www.test.io";
 
 jest.mock("../../../../../navigation/params/AppParamsList", () => ({
   useIONavigation: () => ({
@@ -55,22 +61,41 @@ describe("useSendAarFlowManager", () => {
       act(() => {
         result.current.goToNextState();
       });
-      if (stateKind === "displayingAARToS") {
-        const isValid = isValidAARStateTransition(
-          stateKind,
-          mockDispatch.mock.calls[0][0].payload.type as AARFlowStateName
-        );
-        expect(mockDispatch).toHaveBeenCalledTimes(1);
-        expect(isValid).toBe(true);
-      } else {
-        // this branch is here solely to make sure all transitions are tested
-        expect(mockDispatch).not.toHaveBeenCalled();
+      switch (stateKind) {
+        case sendAARFlowStates.displayingAARToS:
+          const isValid = isValidAARStateTransition(
+            stateKind,
+            mockDispatch.mock.calls[0][0].payload.type as AARFlowStateName
+          );
+          expect(mockDispatch).toHaveBeenCalledTimes(1);
+          expect(isValid).toBe(true);
+          break;
+        default:
+          expect(mockDispatch).not.toHaveBeenCalled();
+          break;
       }
     });
   });
+  it(`should open a weburl when calling "goToNextState" when the state type is 'notAddresseeFinal'`, () => {
+    mockSelector.mockImplementation(selector => {
+      if (selector === currentAARFlowData) {
+        return { type: sendAARFlowStates.notAddresseeFinal } as AARFlowState;
+      }
+      if (selector === sendAARDelegateUrlSelector) {
+        return mockDelegateUrl;
+      }
+      return undefined;
+    });
+    const { result } = renderHook(useSendAarFlowManager);
+    act(() => {
+      result.current.goToNextState();
+    });
+    expect(mockOpenWebUrl).toHaveBeenCalledTimes(1);
+    expect(mockOpenWebUrl).toHaveBeenCalledWith(mockDelegateUrl);
+  });
   it('should return "currentFlowData" as a 1/1 of the selector`s value', () => {
     const value: AARFlowState = {
-      type: "displayingNotificationData",
+      type: sendAARFlowStates.displayingNotificationData,
       fullNameDestinatario: "mario rossi",
       notification: {},
       mandateId: "mandateID"

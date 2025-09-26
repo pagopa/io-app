@@ -9,14 +9,14 @@ import {
 import { GlobalState } from "../../../../../../store/reducers/types";
 import * as appVersion from "../../../../../../utils/appVersion";
 import {
+  AARFlowState,
+  isValidAARStateTransition
+} from "../../../utils/stateUtils";
+import {
   sendAarMockStateFactory,
   sendAarMockStates,
   sendAarStateNames
 } from "../../../utils/testUtils";
-import {
-  AARFlowState,
-  isValidAARStateTransition
-} from "../../../utils/stateUtils";
 import { setAarFlowState, terminateAarFlow } from "../../actions";
 
 describe("aarFlowReducer and related functions", () => {
