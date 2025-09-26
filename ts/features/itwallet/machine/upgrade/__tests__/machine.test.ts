@@ -37,7 +37,8 @@ describe("itwCredentialUpgradeMachine", () => {
       input: {
         walletInstanceAttestation: "attestation",
         pid: makeCredential(),
-        credentials: []
+        credentials: [],
+        issuanceMode: "upgrade"
       }
     });
     actor.start();
@@ -77,7 +78,8 @@ describe("itwCredentialUpgradeMachine", () => {
       input: {
         walletInstanceAttestation: "attestation",
         pid: makeCredential(),
-        credentials
+        credentials,
+        issuanceMode: "upgrade"
       }
     });
     actor.start();
@@ -121,7 +123,8 @@ describe("itwCredentialUpgradeMachine", () => {
       input: {
         walletInstanceAttestation: "attestation",
         pid: makeCredential(),
-        credentials
+        credentials,
+        issuanceMode: "upgrade"
       }
     });
     actor.start();
