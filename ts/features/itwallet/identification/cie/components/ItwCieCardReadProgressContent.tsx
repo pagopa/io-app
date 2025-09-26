@@ -38,7 +38,13 @@ const useProgressContentProps = (): CieCardReadContentProps => {
     onPress: () => {
       // On Android, we need to track the manual close when the user taps on the close button
       // On iOS this event is tracked by the machine, which receives the CANCELLED_BY_USER event from the SDK
-      Platform.select({ android: trackItWalletCardReadingClose })?.();
+      Platform.select({
+        android: () => {
+          // progress is a number between 0 and 1, mixpanel needs a number between 0 and 100
+          const percentage = Number((progress * 100).toFixed(0));
+          return trackItWalletCardReadingClose(percentage);
+        }
+      })?.();
       issuanceActor.send({ type: "close" });
     }
   };
