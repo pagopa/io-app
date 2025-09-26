@@ -3607,9 +3607,16 @@
           "primaryAction": "Gehe zum Dokument"
         },
         "walletInstanceNotActive": {
-          "title": "Aktiviere Dokumente in IO, um fortzufahren",
-          "body": "Um deine Dokumente zum Konto hinzuzufügen, musst du Folgendes aktivieren: ",
-          "bodyBold": "Dokumente in IO",
+          "documentiSuIo": {
+            "title": "Aktiviere Dokumente in IO, um fortzufahren",
+            "body": "Um deine Dokumente zum Konto hinzuzufügen, musst du Folgendes aktivieren: ",
+            "bodyBold": "Dokumente in IO"
+          },
+          "itWallet": {
+            "title": "Ottieni IT-Wallet per continuare",
+            "body": "Per aggiungere nuovi documenti al tuo Portafoglio di IO ottieni IT-Wallet: ti basta avere con te la Carta di Identità Elettronica (CIE).",
+            "bodyBold": ""
+          },
           "primaryAction": "Start",
           "secondaryAction": "Jetzt nicht"
         },

@@ -182,15 +182,9 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToCieReadCardL2Screen: () => {
+  navigateToCieReadCardScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN.L2
-    });
-  },
-
-  navigateToCieReadCardL3Screen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN.L3
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN
     });
   },
 
