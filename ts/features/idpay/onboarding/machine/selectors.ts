@@ -2,9 +2,10 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
-import { InitiativeBeneficiaryRuleDTO } from "../../../../../definitions/idpay/InitiativeBeneficiaryRuleDTO";
+import { OnboardingInitiativeDTO } from "../../../../../definitions/idpay/OnboardingInitiativeDTO";
 import { SelfCriteriaBoolDTO } from "../../../../../definitions/idpay/SelfCriteriaBoolDTO";
 import { SelfCriteriaMultiDTO } from "../../../../../definitions/idpay/SelfCriteriaMultiDTO";
+import { SelfCriteriaMultiTypeDTO } from "../../../../../definitions/idpay/SelfCriteriaMultiTypeDTO";
 import { SelfCriteriaTextDTO } from "../../../../../definitions/idpay/SelfCriteriaTextDTO";
 import * as Context from "./context";
 import { IdPayOnboardingMachine } from "./machine";
@@ -33,26 +34,40 @@ export const selectInitiative = (snapshot: MachineSnapshot) =>
 export const selectServiceId = (snapshot: MachineSnapshot) =>
   snapshot.context.serviceId;
 
-const filterCriteria = <T>(
-  criteria: O.Option<InitiativeBeneficiaryRuleDTO>,
-  filterFunc:
-    | typeof SelfCriteriaMultiDTO
-    | typeof SelfCriteriaBoolDTO
-    | typeof SelfCriteriaTextDTO
-) =>
+const filterMultiCriteria = <T>(criteria: O.Option<OnboardingInitiativeDTO>) =>
   pipe(
     criteria,
     O.fold(
       () => [],
-      some => some.selfDeclarationCriteria?.filter(filterFunc.is)
+      some =>
+        some.beneficiaryRule?.selfDeclarationCriteria?.filter(
+          el =>
+            el &&
+            (SelfCriteriaMultiTypeDTO.is(el) || SelfCriteriaMultiDTO.is(el))
+        )
     )
   ) as Array<T>;
 
 export const multiRequiredCriteriaSelector = createSelector(
   selectRequiredCriteria,
   requiredCriteria =>
-    filterCriteria<SelfCriteriaMultiDTO>(requiredCriteria, SelfCriteriaMultiDTO)
+    filterMultiCriteria<SelfCriteriaMultiTypeDTO | SelfCriteriaMultiDTO>(
+      requiredCriteria
+    )
 );
+
+const filterCriteria = <T>(
+  criteria: O.Option<OnboardingInitiativeDTO>,
+  filterFunc: typeof SelfCriteriaBoolDTO | typeof SelfCriteriaTextDTO
+) =>
+  pipe(
+    criteria,
+    O.fold(
+      () => [],
+      some =>
+        some.beneficiaryRule?.selfDeclarationCriteria?.filter(filterFunc.is)
+    )
+  ) as Array<T>;
 
 export const boolRequiredCriteriaSelector = createSelector(
   selectRequiredCriteria,
@@ -67,7 +82,19 @@ export const pdndCriteriaSelector = createSelector(
       requiredCriteria,
       O.fold(
         () => [],
-        some => some.automatedCriteria
+        some => some.beneficiaryRule?.automatedCriteria ?? []
+      )
+    )
+);
+
+export const familyUnitCompositionCriteriaSelector = createSelector(
+  selectRequiredCriteria,
+  requiredCriteria =>
+    pipe(
+      requiredCriteria,
+      O.fold(
+        () => undefined,
+        some => some.general?.familyUnitComposition
       )
     )
 );
@@ -83,19 +110,19 @@ export const stepperCountSelector = createSelector(
   boolRequiredCriteriaSelector,
   textRequiredCriteriaSelector,
   pdndCriteriaSelector,
-  (multiCriteria, boolCriteria, textCriteria, pdndCriteria) =>
-    boolCriteria.length +
+  familyUnitCompositionCriteriaSelector,
+  (multiCriteria, boolCriteria, textCriteria, pdndCriteria, familyCriteria) =>
+    (boolCriteria.length > 0 ? 1 : 0) +
     multiCriteria.length +
     textCriteria.length +
-    (pdndCriteria ? 1 : 0)
+    (pdndCriteria.length > 0 || familyCriteria ? 1 : 0)
 );
 
 export const getMultiSelfDeclarationListFromContext = (
   context: Context.Context
 ) =>
-  filterCriteria<SelfCriteriaMultiDTO>(
-    context.requiredCriteria,
-    SelfCriteriaMultiDTO
+  filterMultiCriteria<SelfCriteriaMultiTypeDTO | SelfCriteriaMultiDTO>(
+    context.requiredCriteria
   );
 
 export const getBooleanSelfDeclarationListFromContext = (

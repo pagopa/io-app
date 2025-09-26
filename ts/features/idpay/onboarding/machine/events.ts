@@ -1,5 +1,6 @@
-import { SelfConsentMultiDTO } from "../../../../../definitions/idpay/SelfConsentMultiDTO";
 import { SelfConsentBoolDTO } from "../../../../../definitions/idpay/SelfConsentBoolDTO";
+import { SelfConsentMultiDTO } from "../../../../../definitions/idpay/SelfConsentMultiDTO";
+import { SelfConsentMultiTypeDTO } from "../../../../../definitions/idpay/SelfConsentMultiTypeDTO";
 import { SelfConsentTextDTO } from "../../../../../definitions/idpay/SelfConsentTextDTO";
 
 export type StartOnboarding = {
@@ -15,7 +16,7 @@ export type ToggleBoolCriteria = {
 
 export type SelectMultiConsent = {
   readonly type: "select-multi-consent";
-  readonly data: SelfConsentMultiDTO;
+  readonly data: SelfConsentMultiDTO | SelfConsentMultiTypeDTO;
 };
 
 export type InputTextCriteria = {

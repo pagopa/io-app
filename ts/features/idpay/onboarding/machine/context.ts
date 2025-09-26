@@ -1,18 +1,22 @@
 import * as O from "fp-ts/lib/Option";
 import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
+import { OnboardingInitiativeDTO } from "../../../../../definitions/idpay/OnboardingInitiativeDTO";
 import { StatusEnum } from "../../../../../definitions/idpay/OnboardingStatusDTO";
-import { InitiativeBeneficiaryRuleDTO } from "../../../../../definitions/idpay/InitiativeBeneficiaryRuleDTO";
 import { SelfConsentMultiDTO } from "../../../../../definitions/idpay/SelfConsentMultiDTO";
-import { OnboardingFailure } from "../types/OnboardingFailure";
+import { SelfConsentMultiTypeDTO } from "../../../../../definitions/idpay/SelfConsentMultiTypeDTO";
 import { SelfConsentTextDTO } from "../../../../../definitions/idpay/SelfConsentTextDTO";
+import { OnboardingFailure } from "../types/OnboardingFailure";
 
 export type Context = {
   readonly serviceId: string;
   readonly initiative: O.Option<InitiativeDataDTO>;
   readonly onboardingStatus: O.Option<StatusEnum>;
-  readonly requiredCriteria: O.Option<InitiativeBeneficiaryRuleDTO>;
+  readonly requiredCriteria: O.Option<OnboardingInitiativeDTO>;
   readonly selfDeclarationsMultiPage: number;
-  readonly selfDeclarationsMultiAnwsers: Record<number, SelfConsentMultiDTO>;
+  readonly selfDeclarationsMultiAnswers: Record<
+    number,
+    SelfConsentMultiDTO | SelfConsentMultiTypeDTO
+  >;
   readonly selfDeclarationsBoolAnswers: Record<string, boolean>;
   readonly failure: O.Option<OnboardingFailure>;
   readonly activeTextConsentPage: number;
@@ -28,7 +32,7 @@ export const InitialContext: Context = {
   onboardingStatus: O.none,
   requiredCriteria: O.none,
   selfDeclarationsMultiPage: 0,
-  selfDeclarationsMultiAnwsers: {},
+  selfDeclarationsMultiAnswers: {},
   selfDeclarationsBoolAnswers: {},
   failure: O.none,
   activeTextConsentPage: 0,

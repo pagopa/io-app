@@ -3,8 +3,8 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { and, assertEvent, assign, fromPromise, setup } from "xstate";
 import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
+import { OnboardingInitiativeDTO } from "../../../../../definitions/idpay/OnboardingInitiativeDTO";
 import { StatusEnum as OnboardingStatusEnum } from "../../../../../definitions/idpay/OnboardingStatusDTO";
-import { InitiativeBeneficiaryRuleDTO } from "../../../../../definitions/idpay/InitiativeBeneficiaryRuleDTO";
 import { IdPayTags } from "../../common/machine/tags";
 import { InitiativeFailureType } from "../../configuration/types/failure";
 import { OnboardingFailure } from "../types/OnboardingFailure";
@@ -51,7 +51,7 @@ export const idPayOnboardingMachine = setup({
       O.Option<string>
     >(notImplementedStub),
     getRequiredCriteria: fromPromise<
-      O.Option<InitiativeBeneficiaryRuleDTO>,
+      O.Option<OnboardingInitiativeDTO>,
       O.Option<string>
     >(notImplementedStub),
     acceptRequiredCriteria: fromPromise<undefined, Context>(notImplementedStub)
@@ -64,15 +64,20 @@ export const idPayOnboardingMachine = setup({
     hasPdndCriteria: ({ context }) =>
       pipe(
         context.requiredCriteria,
-        O.map(({ automatedCriteria }) => (automatedCriteria?.length || 0) > 0),
+        O.map(
+          ({ beneficiaryRule, general }) =>
+            (beneficiaryRule?.automatedCriteria?.length || 0) > 0 ||
+            // since familyUnitComposition can also display Family Unit criteria if it's ANPR
+            general?.familyUnitComposition !== undefined
+        ),
         O.getOrElse(() => false)
       ),
     hasSelfDecalrationList: ({ context }) =>
       pipe(
         context.requiredCriteria,
         O.map(
-          ({ selfDeclarationCriteria }) =>
-            (selfDeclarationCriteria?.length || 0) > 0
+          ({ beneficiaryRule }) =>
+            (beneficiaryRule?.selfDeclarationCriteria?.length || 0) > 0
         ),
         O.getOrElse(() => false)
       ),
@@ -375,9 +380,15 @@ export const idPayOnboardingMachine = setup({
               on: {
                 "select-multi-consent": {
                   actions: assign(({ context, event }) => ({
-                    currentStep: context.currentStep + 1,
-                    selfDeclarationsMultiAnwsers: {
-                      ...context.selfDeclarationsMultiAnwsers,
+                    currentStep:
+                      context.currentStep +
+                      // should only increment if there are text input forms after
+                      (getInputFormSelfDeclarationFromContext(context)
+                        .length === 0
+                        ? 0
+                        : 1),
+                    selfDeclarationsMultiAnswers: {
+                      ...context.selfDeclarationsMultiAnswers,
                       [context.selfDeclarationsMultiPage]: event.data
                     }
                   })),
@@ -413,6 +424,15 @@ export const idPayOnboardingMachine = setup({
                   {
                     guard: "isFirstMultiConsentPage",
                     target: "#idpay-onboarding.DisplayingInitiativeInfo",
+                    actions: assign(({ context }) => ({
+                      selfDeclarationsMultiPage: Math.max(
+                        0,
+                        +context.selfDeclarationsMultiPage - 1
+                      ),
+                      currentStep: context.currentStep - 1
+                    }))
+                  },
+                  {
                     actions: assign(({ context }) => ({
                       selfDeclarationsMultiPage: Math.max(
                         0,
