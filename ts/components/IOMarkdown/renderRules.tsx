@@ -480,9 +480,9 @@ export const linkNodeToReactNative = (
   options: { onPress: () => void; size?: ParagraphSize },
   render: Renderer
 ) => {
-  const Component = options.size === "small" ? BodySmall : Body;
+  const BodyComponent = options.size === "small" ? BodySmall : Body;
   return (
-    <Component
+    <BodyComponent
       weight="Semibold"
       asLink
       avoidPressable
@@ -490,7 +490,7 @@ export const linkNodeToReactNative = (
       onPress={options.onPress}
     >
       {link.children.map(render)}
-    </Component>
+    </BodyComponent>
   );
 };
 
@@ -512,11 +512,11 @@ export const paragraphNodeToReactNative = (
     options.screenReaderEnabled
   );
   const nodeKey = getTxtNodeKey(paragraph);
-  const Component = options.size === "small" ? BodySmall : Body;
+  const BodyComponent = options.size === "small" ? BodySmall : Body;
 
   return (
     <Fragment key={nodeKey}>
-      <Component>{paragraph.children.map(render)}</Component>
+      <BodyComponent>{paragraph.children.map(render)}</BodyComponent>
       {generateAccesibilityLinkViewsIfNeeded(
         allLinkData,
         nodeKey,
