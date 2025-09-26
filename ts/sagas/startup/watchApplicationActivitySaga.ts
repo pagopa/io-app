@@ -13,6 +13,7 @@ import {
 import { maybeHandlePendingBackgroundActions } from "../../features/pushNotifications/sagas/common";
 import { areTwoMinElapsedFromLastActivity } from "../../features/authentication/fastLogin/store/actions/sessionRefreshActions";
 import { isFastLoginEnabledSelector } from "../../features/authentication/fastLogin/store/selectors";
+import { IdentificationBackActionType } from "../../features/identification/store/reducers";
 
 /**
  * Listen to APP_STATE_CHANGE_ACTION and:
@@ -74,7 +75,17 @@ export function* watchApplicationActivitySaga(): IterableIterator<ReduxSagaEffec
            * screen being displayed for a while before the IdentificationScreen when the user
            * focuses again on the app
            */
-          yield* put(identificationRequest());
+          yield* put(
+            identificationRequest(
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              IdentificationBackActionType.CLOSE_APP
+            )
+          );
         } else {
           const currentTimestamp = Date.now();
           const timeSinceLastStateChange =
@@ -96,7 +107,17 @@ export function* watchApplicationActivitySaga(): IterableIterator<ReduxSagaEffec
               );
             }
             // The app was in background for a long time, request identification
-            yield* put(identificationRequest());
+            yield* put(
+              identificationRequest(
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                IdentificationBackActionType.CLOSE_APP
+              )
+            );
             // refresh session token
           }
         }

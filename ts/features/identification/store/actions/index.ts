@@ -7,6 +7,7 @@ import {
 import { PinString } from "../../../../types/PinString";
 import {
   IdentificationCancelData,
+  IdentificationBackActionType,
   IdentificationGenericData,
   IdentificationSuccessData
 } from "../reducers";
@@ -24,7 +25,8 @@ export const identificationRequest = createAction(
       identificationGenericData?: IdentificationGenericData,
       identificationCancelData?: IdentificationCancelData,
       identificationSuccessData?: IdentificationSuccessData,
-      shufflePad: boolean = false
+      shufflePad: boolean = false,
+      identificationContext: IdentificationBackActionType = IdentificationBackActionType.DEFAULT
     ) =>
       resolve({
         canResetPin,
@@ -32,7 +34,8 @@ export const identificationRequest = createAction(
         identificationGenericData,
         identificationCancelData,
         identificationSuccessData,
-        shufflePad
+        shufflePad,
+        identificationContext
       })
 );
 
@@ -49,7 +52,8 @@ export const identificationStart = createAction(
       identificationGenericData?: IdentificationGenericData,
       identificationCancelData?: IdentificationCancelData,
       identificationSuccessData?: IdentificationSuccessData,
-      shufflePad: boolean = false
+      shufflePad: boolean = false,
+      identificationContext: IdentificationBackActionType = IdentificationBackActionType.DEFAULT
     ) =>
       resolve({
         pin,
@@ -58,7 +62,8 @@ export const identificationStart = createAction(
         identificationGenericData,
         identificationCancelData,
         identificationSuccessData,
-        shufflePad
+        shufflePad,
+        identificationContext
       })
 );
 
