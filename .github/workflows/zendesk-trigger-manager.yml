@@ -1,0 +1,150 @@
+name: Zendesk Trigger Manager
+
+on:
+  workflow_dispatch:
+    inputs:
+      # Input #1: Choice of the action to perform
+      action:
+        description: "Choose the action to perform"
+        required: true
+        type: choice
+        options:
+          - "View Trigger Status"
+          - "Update App Version"
+        default: "View Trigger Status"
+      # Input #2: App version string, needed only for the update
+      app_version:
+        description: "App version (e.g., 3.15.0.1) - Required only for update"
+        required: false
+
+# Restrict all permissions for the GITHUB_TOKEN for security hardening
+permissions: {}
+
+jobs:
+  get-trigger-status:
+    # Run this job only if the user chose 'View Trigger Status'
+    if: github.event.inputs.action == 'View Trigger Status'
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - name: Check Zendesk Trigger Status
+        id: check_status
+        run: |
+          # Executes the API call to Zendesk using curl
+          # The URL is dynamically built using secrets from the 'prod' environment
+          # The authentication token is read from GitHub secrets
+          response=$(curl -s "https://${{ secrets.ZENDESK_DOMAIN }}.zendesk.com/api/v2/triggers/${{ secrets.ZENDESK_TRIGGER_ID }}.json" \
+            -H "Authorization: Bearer ${{ secrets.ZENDESK_OAUTH_TOKEN }}")
+
+          # Check if the response contains an error
+          if echo "$response" | jq -e '.error' > /dev/null; then
+            echo "::error::Error received from Zendesk:"
+            echo "$response"
+            exit 1
+          fi
+
+          # Extract the required data from the JSON response using jq
+          IS_ACTIVE=$(echo "$response" | jq '.trigger.active')
+          APP_VERSION_TAG=$(echo "$response" | jq -r '.trigger.conditions.all[] | select(.field=="current_tags") | .value')
+
+          # Print the results
+          echo "TRIGGER STATUS:"
+          echo "---------------"
+          echo "Active: $IS_ACTIVE"
+          echo "Current App Version (tag): $APP_VERSION_TAG"
+
+          # Write the results to the Job Summary page
+          echo "### Zendesk Trigger Status" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Active:** \`$IS_ACTIVE\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **App Version Tag:** \`$APP_VERSION_TAG\`" >> $GITHUB_STEP_SUMMARY
+
+  update-trigger-app-version:
+    # Run this job only if the user chose 'Update App Version'
+    if: github.event.inputs.action == 'Update App Version'
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - name: Check if App Version is provided
+        if: github.event.inputs.app_version == ''
+        run: |
+          echo "::error::App version is mandatory to perform the update."
+          exit 1
+
+      - name: Generate payload for update
+        id: generate_payload
+        # Pass secrets and inputs as environment variables to the script for safer handling
+        env:
+          APP_VERSION: ${{ github.event.inputs.app_version }}
+          ZENDESK_BRAND_ID: ${{ secrets.ZENDESK_BRAND_ID }}
+          ZENDESK_WEBHOOK_ID: ${{ secrets.ZENDESK_WEBHOOK_ID }}
+        run: |
+          # Use jq to safely build the JSON payload from environment variables.
+          # This prevents shell injection vulnerabilities from the workflow inputs.
+          jq -n \
+            --arg version "$APP_VERSION" \
+            --arg brand_id "$ZENDESK_BRAND_ID" \
+            --arg webhook_id "$ZENDESK_WEBHOOK_ID" \
+            '{
+              "trigger": {
+                "conditions": {
+                  "all": [
+                    { "field": "current_tags", "operator": "includes", "value": $version },
+                    { "field": "update_type", "operator": "is", "value": "Create" },
+                    { "field": "brand_id", "operator": "is", "value": $brand_id }
+                  ],
+                  "any": []
+                },
+                "actions": [
+                  {
+                    "field": "notification_webhook",
+                    "value": [
+                      $webhook_id,
+                      "{\n  \"channel\": \"#prod_io_segnalazioni_rollout\",\n  \"text\": \"*NUOVA SEGNALAZIONE*\\nlink: {{ticket.url}}\\n{{ticket.description}}\",\n  \"unfurl_links\": false,\n  \"unfurl_media\": false\n}"
+                    ]
+                  }
+                ]
+              }
+            }' > payload.json
+
+          echo "Generated payload:"
+          cat payload.json
+
+      - name: Update Zendesk Trigger
+        run: |
+          # Executes the PUT API call to update the trigger
+          # Sends the payload.json file as the request body
+          response=$(curl -s -w "\n%{http_code}" -X PUT "https://${{ secrets.ZENDESK_DOMAIN }}.zendesk.com/api/v2/triggers/${{ secrets.ZENDESK_TRIGGER_ID }}.json" \
+            -H "Authorization: Bearer ${{ secrets.ZENDESK_OAUTH_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d @payload.json)
+
+          # Extract the body and status code from the response
+          http_code=$(echo "$response" | tail -n1)
+          body=$(echo "$response" | sed '$d')
+
+          # Check the HTTP status code to determine the outcome
+          if [ "$http_code" -eq 200 ]; then
+            echo "::notice::Trigger successfully updated to version ${{ github.event.inputs.app_version }}!"
+            
+            # Extract and display the updated status and version tag from the response body
+            IS_ACTIVE=$(echo "$body" | jq '.trigger.active')
+            APP_VERSION_TAG=$(echo "$body" | jq -r '.trigger.conditions.all[] | select(.field=="current_tags") | .value')
+
+            echo "" # Add a blank line for readability
+            echo "UPDATED TRIGGER STATUS:"
+            echo "-----------------------"
+            echo "Active: $IS_ACTIVE"
+            echo "Current App Version (tag): $APP_VERSION_TAG"
+
+            # Write the results to the Job Summary page
+            echo "### Zendesk Trigger Status" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "- **Active:** \`$IS_ACTIVE\`" >> $GITHUB_STEP_SUMMARY
+            echo "- **App Version Tag:** \`$APP_VERSION_TAG\`" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "::error::Error while updating the trigger. Status code: $http_code"
+            echo "Response from Zendesk:"
+            echo "$body"
+            exit 1
+          fi
