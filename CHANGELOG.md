@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.14.0-canary.7465](https://github.com/pagopa/io-app/compare/3.14.0-rc.2...3.14.0-canary.7465) (2025-09-26)
+
+
+### Bug Fixes
+
+* header fast login in active session login flow ([70e84b9](https://github.com/pagopa/io-app/commit/70e84b94facfd089618932ad452a373a5dd5161e))
+
+
+### Chores
+
+* **release:** 3.14.0-rc.3 ([6af667d](https://github.com/pagopa/io-app/commit/6af667d9ffc90e448a4e77083859d77fdae291a8))
+* [[IOPID-2929](https://pagopa.atlassian.net/browse/IOPID-2929)] Active Session Login: Spid Flow ([#7376](https://github.com/pagopa/io-app/issues/7376)) ([aeab171](https://github.com/pagopa/io-app/commit/aeab17161f67362926654a2a1e8f48dc29b9916c))
+* apply fix on undefined headers value and refactor headers function ([e5b6515](https://github.com/pagopa/io-app/commit/e5b65154b306d7d20c88d34c4ecae5ea69ae39b3))
+
 ## [3.14.0-rc.3](https://github.com/pagopa/io-app/compare/3.13.0-rc.10...3.14.0-rc.3) (2025-09-25)
 
 
