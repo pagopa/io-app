@@ -176,7 +176,16 @@ exports[`CardData should match snapshot for DC front data 1`] = `
         },
       ]
     }
-  />
+  >
+    <View
+      onLayout={[Function]}
+      style={
+        {
+          "flex": 1,
+        }
+      }
+    />
+  </View>
   <View
     style={
       [
@@ -595,7 +604,16 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         },
       ]
     }
-  />
+  >
+    <View
+      onLayout={[Function]}
+      style={
+        {
+          "flex": 1,
+        }
+      }
+    />
+  </View>
   <View
     style={
       [
