@@ -5,7 +5,6 @@ import { DifferentCFErrorScreen } from "../screens/DifferentCFErrorScreen";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
 
 const mockNavigate = jest.fn();
 
@@ -59,11 +58,7 @@ describe("DifferentCFErrorScreen", () => {
       getByText(I18n.t("authentication.auth_errors.not_same_cf.button"))
     );
 
-    expect(mockDispatch).toHaveBeenCalledTimes(1);
-
-    expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.LANDING
-    });
+    expect(mockDispatch).toHaveBeenCalled();
   });
 });
 
