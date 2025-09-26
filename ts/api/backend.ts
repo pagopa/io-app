@@ -341,7 +341,9 @@ export function BackendClient(
     ),
     deleteUserDataProcessingRequest: withBearerToken(
       createFetchRequestForApi(deleteUserDataProcessingT, options)
-    )
+    ),
+    isSameClient: (sessionToken: SessionToken, keyInfo?: KeyInfo) =>
+      _.isEqual(_keyInfo, keyInfo) && token === sessionToken
   };
 }
 

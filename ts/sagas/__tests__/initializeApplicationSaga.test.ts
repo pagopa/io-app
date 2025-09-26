@@ -36,7 +36,6 @@ import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducer
 import { isFastLoginEnabledSelector } from "../../features/authentication/fastLogin/store/selectors";
 import { refreshSessionToken } from "../../features/authentication/fastLogin/store/actions/tokenRefreshActions";
 import { remoteConfigSelector } from "../../store/reducers/backendStatus/remoteConfig";
-import { watchLogoutSaga } from "../../features/authentication/common/saga/watchLogoutSaga";
 import { cancellAllLocalNotifications } from "../../features/pushNotifications/utils";
 import { handleApplicationStartupTransientError } from "../../features/startup/sagas";
 import { startupTransientErrorInitialState } from "../../store/reducers/startup";
@@ -52,7 +51,10 @@ import {
   shouldExitForOfflineAccess,
   watchSessionRefreshInOfflineSaga
 } from "../../features/ingress/saga";
-import { watchForceLogoutSaga } from "../../features/authentication/common/saga/watchForceLogoutSaga";
+import {
+  watchForceLogoutOnDifferentCF,
+  watchForceLogoutSaga
+} from "../../features/authentication/common/saga/watchForceLogoutSaga";
 
 const aSessionToken = "a_session_token" as SessionToken;
 const aSessionInfo = O.some({
@@ -79,7 +81,9 @@ jest.mock("react-native-share", () => ({
 }));
 
 jest.mock("../../api/backend", () => ({
-  BackendClient: jest.fn().mockReturnValue({})
+  BackendClient: jest.fn().mockReturnValue({
+    isSameClient: jest.fn()
+  })
 }));
 
 const profile: InitializedProfile = {
@@ -129,9 +133,9 @@ describe("initializeApplicationSaga", () => {
       .next(getKeyInfo)
       .fork(watchForceLogoutSaga)
       .next()
-      .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
+      .fork(watchForceLogoutOnDifferentCF)
       .next()
-      .fork(watchLogoutSaga, undefined)
+      .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
       .next(200) // checkSession
       .next()
@@ -187,9 +191,9 @@ describe("initializeApplicationSaga", () => {
       .next(getKeyInfo)
       .fork(watchForceLogoutSaga)
       .next()
-      .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
+      .fork(watchForceLogoutOnDifferentCF)
       .next()
-      .fork(watchLogoutSaga, undefined)
+      .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
       .call(checkSession, undefined, formatRequestedTokenString())
       .next(401)
@@ -239,9 +243,9 @@ describe("initializeApplicationSaga", () => {
       .next(getKeyInfo)
       .fork(watchForceLogoutSaga)
       .next()
-      .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
+      .fork(watchForceLogoutOnDifferentCF)
       .next()
-      .fork(watchLogoutSaga, undefined)
+      .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
       .call(checkSession, undefined, formatRequestedTokenString())
       .next(401)
@@ -296,9 +300,9 @@ describe("initializeApplicationSaga", () => {
       .next(getKeyInfo)
       .fork(watchForceLogoutSaga)
       .next()
-      .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
+      .fork(watchForceLogoutOnDifferentCF)
       .next()
-      .fork(watchLogoutSaga, undefined)
+      .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
       .next(200) // check session
       .next()
@@ -366,9 +370,9 @@ describe("initializeApplicationSaga", () => {
       .next(getKeyInfo)
       .fork(watchForceLogoutSaga)
       .next()
-      .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
+      .fork(watchForceLogoutOnDifferentCF)
       .next()
-      .fork(watchLogoutSaga, undefined)
+      .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
       .next(200) // check session
       .next()
@@ -423,9 +427,9 @@ describe("initializeApplicationSaga", () => {
       .next(getKeyInfo)
       .fork(watchForceLogoutSaga)
       .next()
-      .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
+      .fork(watchForceLogoutOnDifferentCF)
       .next()
-      .fork(watchLogoutSaga, undefined)
+      .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
       .next(200) // check session
       .next()
