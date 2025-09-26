@@ -154,22 +154,6 @@ export const ItwIdentificationModeSelectionScreen = (
     [disabledIdentificationMethods]
   );
 
-  const isCieFlowAllowed = (() => {
-    if (!isCieAuthenticationSupported || isCiePinDisabled) {
-      return false;
-    }
-    switch (true) {
-      case isL3FeaturesEnabled:
-        return true;
-
-      case !isL3FeaturesEnabled && eidReissuing:
-        return true;
-
-      default:
-        return false;
-    }
-  })();
-
   if (isLoading) {
     return (
       <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
@@ -188,7 +172,7 @@ export const ItwIdentificationModeSelectionScreen = (
       <ContentWrapper>
         <VStack space={24}>
           <VStack space={8}>
-            {isCieFlowAllowed && (
+            {!(!isCieAuthenticationSupported || isCiePinDisabled) && (
               <ModuleNavigationAlt
                 title={I18n.t(`${ns}.method.ciePin.title`, {
                   defaultValue: ""
