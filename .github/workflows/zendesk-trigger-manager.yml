@@ -13,8 +13,9 @@ on:
           - "Update App Version"
         default: "View Trigger Status"
       # Input #2: App version string, needed only for the update
+      # To "disable" the trigger for a specific version, set a non-existing version
       app_version:
-        description: "App version (e.g., 3.15.0.1) - Required only for update"
+        description: "App version (e.g., 3.15.0.1) - Required only for update\nTo disable the trigger for a specific version, set a non-existing version."
         required: false
 
 # Restrict all permissions for the GITHUB_TOKEN for security hardening
