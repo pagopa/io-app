@@ -1037,8 +1037,7 @@
         "description": "Per accedere, devi avere l'app installata sul tuo dispositivo.",
         "primary_action_label": "Scarica CieID",
         "link_error": "Non siamo riusciti a indirizzarti allo store. Aprilo manualmente e cerca CieID"
-      },
-      "feature_not_already_implemented": "Questa funzionalità è attualmente in fase di sviluppo e non ancora disponibile."
+      }
     },
     "cie": {
       "genericTitle": "Entra con CIE",
@@ -4653,6 +4652,12 @@
               "content": "Dovrai poggiare il retro del telefono sulla CIE, su una superficie stabile, e tenerli fermi per la lettura.",
               "cta": "Inizia lettura CIE",
               "buttonLink": "Cos’è la CIE?"
+            },
+            "can": {
+              "title": "Prepara la tua Carta di Identità Elettronica (CIE)",
+              "content": "Dovrai usarla e inserire il suo codice a 6 cifre (CAN) che trovi stampato sul fronte in basso a destra.",
+              "buttonLink": "Cos’è il PIN della CIE?",
+              "cta": "Continua"
             }
           },
           "inputPin": {
@@ -4886,9 +4891,16 @@
           "primaryAction": "Vai al documento"
         },
         "walletInstanceNotActive": {
-          "title": "Attiva Documenti su IO per continuare",
-          "body": "Per aggiungere i tuoi documenti al Portafoglio è necessario attivare ",
-          "bodyBold": "Documenti su IO",
+          "documentiSuIo": {
+            "title": "Attiva Documenti su IO per continuare",
+            "body": "Per aggiungere i tuoi documenti al Portafoglio è necessario attivare ",
+            "bodyBold": "Documenti su IO"
+          },
+          "itWallet": {
+            "title": "Ottieni IT-Wallet per continuare",
+            "body": "Per aggiungere nuovi documenti al tuo Portafoglio di IO ottieni IT-Wallet: ti basta avere con te la Carta di Identità Elettronica (CIE).",
+            "bodyBold": ""
+          },
           "primaryAction": "Inizia",
           "secondaryAction": "Non ora"
         },
