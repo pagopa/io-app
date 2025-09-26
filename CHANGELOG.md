@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.15.0-rc.1](https://github.com/pagopa/io-app/compare/3.15.0-rc.0...3.15.0-rc.1) (2025-09-26)
+
+
+### Chores
+
+* [[IOPID-3444](https://pagopa.atlassian.net/browse/IOPID-3444),[IOPID-3445](https://pagopa.atlassian.net/browse/IOPID-3445)] Refactor login headers logic and fix undefined header in test login ([#7396](https://github.com/pagopa/io-app/issues/7396)) ([d0f6fa6](https://github.com/pagopa/io-app/commit/d0f6fa69388ecbbb02bc582a209ac77d386ea815))
+
 ## [3.15.0-rc.0](https://github.com/pagopa/io-app/compare/3.14.0-rc.2...3.15.0-rc.0) (2025-09-25)
 
 
