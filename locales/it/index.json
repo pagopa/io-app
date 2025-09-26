@@ -1037,8 +1037,7 @@
         "description": "Per accedere, devi avere l'app installata sul tuo dispositivo.",
         "primary_action_label": "Scarica CieID",
         "link_error": "Non siamo riusciti a indirizzarti allo store. Aprilo manualmente e cerca CieID"
-      },
-      "feature_not_already_implemented": "Questa funzionalità è attualmente in fase di sviluppo e non ancora disponibile."
+      }
     },
     "cie": {
       "genericTitle": "Entra con CIE",
@@ -4531,21 +4530,43 @@
         },
         "mode": {
           "l2": {
-            "title": "Verifica la tua identità",
-            "description": "È un passaggio di sicurezza necessario per aggiungere i tuoi documenti digitali su IO.",
+            "title": "Verifica la tua identità con SPID o CieID",
+            "description": "È un passaggio di sicurezza necessario per associare i documenti digitali alla tua identità.",
             "header": "Scegli come identificarti",
+            "section": "Ottieni Documenti su IO",
+            "reissuing": {
+              "title": "Scegli come identificarti",
+              "description": "È un passaggio necessario per continuare ad usare Documenti su IO.",
+              "section": "Verifica di identità",
+              "method": {
+                "ciePin": {
+                  "title": "Continua con CIE + PIN",
+                  "subtitle": "Dovrai usare la Carta di Identità Elettronica (CIE) e inserire il suo PIN di 8 cifre.",
+                  "badge": "scelta consigliata"
+                },
+                "cieId": {
+                  "title": "Continua con l'app CieID",
+                  "subtitle": "Dovrai usare credenziali e app CieID"
+                },
+                "spid": {
+                  "title": "Continua con SPID",
+                  "subtitle": "Dovrai usare credenziali e app (o SMS)"
+                }
+              }
+            },
             "method": {
               "spid": {
-                "title": "Usa SPID",
-                "subtitle": "Necessarie credenziali e app (o SMS)"
+                "title": "Continua con SPID",
+                "subtitle": "Dovrai usare credenziali e app (o SMS)"
               },
               "ciePin": {
                 "title": "Usa CIE + PIN",
-                "subtitle": "Usa la Carta di Identità Elettronica e il suo PIN a 8 cifre"
+                "subtitle": "Usa la Carta di Identità Elettronica e il suo PIN a 8 cifre",
+                "badge": "scelta consigliata"
               },
               "cieId": {
-                "title": "Usa l'app CieID",
-                "subtitle": "Necessarie credenziali e app CieID"
+                "title": "Continua con CieID",
+                "subtitle": "Dovrai usare credenziali e app CieID"
               }
             }
           },
@@ -4839,9 +4860,16 @@
           "primaryAction": "Vai al documento"
         },
         "walletInstanceNotActive": {
-          "title": "Attiva Documenti su IO per continuare",
-          "body": "Per aggiungere i tuoi documenti al Portafoglio è necessario attivare ",
-          "bodyBold": "Documenti su IO",
+          "documentiSuIo": {
+            "title": "Attiva Documenti su IO per continuare",
+            "body": "Per aggiungere i tuoi documenti al Portafoglio è necessario attivare ",
+            "bodyBold": "Documenti su IO"
+          },
+          "itWallet": {
+            "title": "Ottieni IT-Wallet per continuare",
+            "body": "Per aggiungere nuovi documenti al tuo Portafoglio di IO ottieni IT-Wallet: ti basta avere con te la Carta di Identità Elettronica (CIE).",
+            "bodyBold": ""
+          },
           "primaryAction": "Inizia",
           "secondaryAction": "Non ora"
         },

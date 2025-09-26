@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { IOToast } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import useNavigateToLoginMethod, {
@@ -74,27 +73,21 @@ const CieIdErrorScreen = () => {
         label: primaryActionLabel,
         accessibilityLabel: primaryActionLabel,
         onPress: () => {
-          if (isActiveSessionLogin) {
-            IOToast.info(
-              I18n.t("authentication.cie_id.feature_not_already_implemented")
-            );
+          if (isCieSupported) {
+            void trackCieIdErrorCiePinSelected();
+            // Since this screen will only be accessible after the user has already
+            // made their choice on the Opt-In screen, we can navigate directly to it
+            dispatch(idpSelected(IdpCIE));
+            navigate(AUTHENTICATION_ROUTES.MAIN, {
+              screen: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
+            });
           } else {
-            if (isCieSupported) {
-              void trackCieIdErrorCiePinSelected();
-              // Since this screen will only be accessible after the user has already
-              // made their choice on the Opt-In screen, we can navigate directly to it
-              dispatch(idpSelected(IdpCIE));
-              navigate(AUTHENTICATION_ROUTES.MAIN, {
-                screen: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
-              });
-            } else {
-              void trackCieIdErrorSpidSelected();
-              // Since this screen will only be accessible after the user has already
-              // made their choice on the Opt-In screen, we can navigate directly to it
-              navigate(AUTHENTICATION_ROUTES.MAIN, {
-                screen: AUTHENTICATION_ROUTES.IDP_SELECTION
-              });
-            }
+            void trackCieIdErrorSpidSelected();
+            // Since this screen will only be accessible after the user has already
+            // made their choice on the Opt-In screen, we can navigate directly to it
+            navigate(AUTHENTICATION_ROUTES.MAIN, {
+              screen: AUTHENTICATION_ROUTES.IDP_SELECTION
+            });
           }
         }
       }}
