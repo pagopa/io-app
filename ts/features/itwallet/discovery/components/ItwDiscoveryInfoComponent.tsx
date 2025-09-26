@@ -17,7 +17,7 @@ import { trackItwIntroBack, trackOpenItwTos } from "../../analytics/index.ts";
 import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig.ts";
 import { selectIsLoading } from "../../machine/eid/selectors.ts";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider.tsx";
-import { generateLinkRuleWithCallback } from "../../common/utils/markdown.tsx";
+import { generateItwIOMarkdownRules } from "../../common/utils/markdown.tsx";
 import { IOScrollView } from "../../../../components/ui/IOScrollView.tsx";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel.tsx";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp.tsx";
@@ -117,7 +117,10 @@ export const ItwDiscoveryInfoComponent = () => {
           content={I18n.t("features.itWallet.discovery.tos", {
             tos_url
           })}
-          rules={generateLinkRuleWithCallback(trackOpenItwTos)}
+          rules={generateItwIOMarkdownRules({
+            linkCallback: trackOpenItwTos,
+            paragraphSize: "small"
+          })}
         />
       </ContentWrapper>
     </IOScrollView>
