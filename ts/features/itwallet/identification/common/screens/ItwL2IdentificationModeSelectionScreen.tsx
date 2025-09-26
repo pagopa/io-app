@@ -3,7 +3,8 @@ import { useCallback, useMemo } from "react";
 import {
   ContentWrapper,
   VStack,
-  ModuleNavigationAlt
+  ModuleNavigationAlt,
+  ListItemHeader
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
@@ -50,11 +51,12 @@ export const ItwL2IdentificationModeSelectionScreen = (
     [eidReissuing]
   );
 
-  const { title, description, section } = useMemo(
+  const { title, description, section, subtitle } = useMemo(
     () => ({
       title: I18n.t(`${baseTranslationPath}.title`),
       description: I18n.t(`${baseTranslationPath}.description`),
-      section: I18n.t(`${baseTranslationPath}.section`)
+      section: I18n.t(`${baseTranslationPath}.section`),
+      subtitle: I18n.t(`${baseTranslationPath}.subtitle`)
     }),
     [baseTranslationPath]
   );
@@ -127,6 +129,7 @@ export const ItwL2IdentificationModeSelectionScreen = (
       headerActionsProp={{ showHelp: true }}
     >
       <ContentWrapper>
+        <ListItemHeader label={subtitle} />
         <VStack space={8}>
           {isCieAuthenticationSupported &&
             !isCiePinDisabled &&

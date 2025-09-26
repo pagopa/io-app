@@ -4530,14 +4530,16 @@
         },
         "mode": {
           "l2": {
-            "title": "Verifica la tua identità con SPID o CieID",
-            "description": "È un passaggio di sicurezza necessario per associare i documenti digitali alla tua identità.",
+            "title": "Verifica la tua identità",
+            "description": "È un passaggio necessario per garantire la sicurezza dei tuoi dati.",
             "header": "Scegli come identificarti",
-            "section": "Ottieni Documenti su IO",
+            "section": "",
+            "subtitle": "Scegli come identificarti",
             "reissuing": {
               "title": "Scegli come identificarti",
               "description": "È un passaggio necessario per continuare ad usare Documenti su IO.",
               "section": "Verifica di identità",
+              "subtitle": "",
               "method": {
                 "ciePin": {
                   "title": "Continua con CIE + PIN",
