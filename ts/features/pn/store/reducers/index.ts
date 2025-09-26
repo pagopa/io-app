@@ -18,18 +18,22 @@ import {
 import { getRptIdStringFromPayment } from "../../utils/rptId";
 import { toPNMessage } from "../types/transformers";
 import { PNMessage } from "../types/types";
+import { persistedPnLoginEngagementReducer } from "../../loginEngagement/store/reducers";
+import { PNLoginEngagementState } from "../../loginEngagement/store/types";
 import { pnActivationReducer, PnActivationState } from "./activation";
 
 export type PnState = {
   activation: PnActivationState;
   bannerDismiss: PnBannerDismissState & PersistPartial;
   aarFlow: AARFlowState;
+  loginEngagement: PNLoginEngagementState & PersistPartial;
 };
 
 export const pnReducer = combineReducers<PnState, Action>({
   activation: pnActivationReducer,
   bannerDismiss: persistedPnBannerDismissReducer,
-  aarFlow: aarFlowReducer
+  aarFlow: aarFlowReducer,
+  loginEngagement: persistedPnLoginEngagementReducer
 });
 
 export const pnMessageFromIdSelector = createSelector(
