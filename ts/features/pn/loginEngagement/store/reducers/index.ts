@@ -38,7 +38,7 @@ const persistConfig: PersistConfig = {
   storage: AsyncStorage,
   version: CURRENT_STORE_VERSION,
   migrate: createMigrate(migrations, { debug: isDevEnv }),
-  whitelist: ["hasSendEngagmentScreenBeenDismissed"]
+  whitelist: ["hasSendEngagementScreenBeenDismissed"]
 };
 
 export const persistedPnLoginEngagementReducer = persistReducer(
