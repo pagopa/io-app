@@ -14,7 +14,7 @@ export const ItwL2Section = () => {
 
   return (
     <View>
-      <ListItemHeader label="Documenti su IO (L2)" />
+      <ListItemHeader label="Documenti su IO (L2) screens" />
       <ListItemNav
         value="Discovery L2"
         description="Navigate to the new Discovery L2 info screen"
