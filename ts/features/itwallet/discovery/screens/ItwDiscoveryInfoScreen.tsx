@@ -2,12 +2,12 @@ import { useCallback } from "react";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { trackItWalletActivationStart } from "../../analytics/index.ts";
+import { itwHasNfcFeatureSelector } from "../../identification/common/store/selectors/index.ts";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider.tsx";
 import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
 import { ItwLegacyDiscoveryInfoComponent } from "../components/ItwLegacyDiscoveryInfoComponent.tsx";
 import { ItwNfcNotSupportedComponent } from "../components/ItwNfcNotSupportedComponent.tsx";
-import { ItwPaywallComponent } from "../components/ItwPaywallComponent.tsx";
-import { itwHasNfcFeatureSelector } from "../../identification/common/store/selectors/index.ts";
+import { ItwPaywallComponent } from "../components/ItwPaywallComponent";
 
 export type ItwDiscoveryInfoScreenNavigationParams = {
   isL3?: boolean;
