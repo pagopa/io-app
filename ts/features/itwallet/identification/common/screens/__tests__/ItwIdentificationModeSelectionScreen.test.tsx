@@ -62,10 +62,10 @@ describe("ItwIdentificationModeSelectionScreen", () => {
       expect(component.queryByTestId("noCieButton")).not.toBeNull();
     });
 
-    it("should show all authentication methods in L3 reissuing mode except for SPID", () => {
-      const component = renderComponent(true, false);
+    it("should show all authentication and no noCieButton methods in L3 reissuing mode except for SPID", () => {
+      const component = renderComponent(true, true);
 
-      expect(component.queryByTestId("noCieButton")).not.toBeNull();
+      expect(component.queryByTestId("noCieButton")).toBeNull();
       expect(component.queryByTestId("CieID")).not.toBeNull();
       expect(component.queryByTestId("Spid")).toBeNull();
       expect(component.queryByTestId("CiePin")).not.toBeNull();

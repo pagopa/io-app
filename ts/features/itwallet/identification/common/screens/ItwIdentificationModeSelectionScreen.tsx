@@ -229,15 +229,13 @@ export const ItwIdentificationModeSelectionScreen = (
             )}
           </VStack>
           {isL3 && !eidReissuing && (
-            <View
-              style={{ flexDirection: "row", justifyContent: "center" }}
-              testID={"noCieButton"}
-            >
+            <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <IOButton
                 variant="link"
                 textAlign="center"
                 label={I18n.t("features.itWallet.identification.mode.l3.noCie")}
                 onPress={handleNoCiePress}
+                testID={"noCieButton"}
               />
             </View>
           )}
