@@ -74,7 +74,8 @@ export const cieMachineActions = {
     context: { failure, isL3, readProgress }
   }: ActionArgs<CieContext, CieEvents, CieEvents>) => {
     const itw_flow: ItwFlow = isL3 ? "L3" : "L2";
-    const progress = readProgress ?? 0;
+    // readProgress is a number between 0 and 1, mixpanel needs a number between 0 and 100
+    const progress = Number(((readProgress ?? 0) * 100).toFixed(0));
 
     if (isNfcError(failure)) {
       switch (failure.name) {
