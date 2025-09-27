@@ -1,14 +1,7 @@
-import {
-  BodySmall,
-  ContentWrapper,
-  FeatureInfo,
-  H3,
-  VSpacer,
-  VStack
-} from "@pagopa/io-app-design-system";
+import { ContentWrapper, H1, VSpacer } from "@pagopa/io-app-design-system";
 import { StyleSheet } from "react-native";
 import I18n from "i18next";
-import { constNull } from "fp-ts/lib/function";
+import { useCallback } from "react";
 import { AnimatedImage } from "../../../../components/AnimatedImage.tsx";
 import IOMarkdown from "../../../../components/IOMarkdown/index.tsx";
 import { useIOSelector } from "../../../../store/hooks.ts";
@@ -21,8 +14,9 @@ import { generateItwIOMarkdownRules } from "../../common/utils/markdown.tsx";
 import { IOScrollView } from "../../../../components/ui/IOScrollView.tsx";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel.tsx";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp.tsx";
-import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
-import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
+import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog.tsx";
+import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum.ts";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 
 export type ItwDiscoveryInfoComponentProps = {
   onContinuePress: () => void;
@@ -32,11 +26,25 @@ export type ItwDiscoveryInfoComponentProps = {
  * This is the component that shows the information about the discovery process
  * about the activation of the DIW. It uses a markdown component to render
  * the content of the screen.
+ *
+ * @deprecated Superseded by the new `ItwDiscoveryInfoComponent`
  */
-export const ItwDiscoveryInfoComponent = () => {
+export const ItwLegacyDiscoveryInfoComponent = ({
+  onContinuePress
+}: ItwDiscoveryInfoComponentProps) => {
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const itwActivationDisabled = useIOSelector(itwIsActivationDisabledSelector);
   const { tos_url } = useIOSelector(tosConfigSelector);
+
+  useOnFirstRender(
+    useCallback(() => {
+      machineRef.send({
+        type: "start",
+        isL3: false
+      });
+    }, [machineRef])
+  );
 
   const dismissalDialog = useItwDismissalDialog({
     customLabels: {
@@ -71,11 +79,9 @@ export const ItwDiscoveryInfoComponent = () => {
         primary: {
           loading: isLoading,
           disabled: itwActivationDisabled,
-          label: I18n.t("features.itWallet.discovery.actions.continue"),
-          accessibilityLabel: I18n.t(
-            "features.itWallet.discovery.actions.continue"
-          ),
-          onPress: constNull
+          label: I18n.t("global.buttons.continue"),
+          accessibilityLabel: I18n.t("global.buttons.continue"),
+          onPress: onContinuePress
         }
       }}
     >
@@ -85,42 +91,17 @@ export const ItwDiscoveryInfoComponent = () => {
       />
       <VSpacer size={24} />
       <ContentWrapper>
-        <VStack space={8}>
-          <H3 style={styles.textCenter}>
-            {I18n.t("features.itWallet.discovery.title")}
-          </H3>
-          <BodySmall style={styles.textCenter}>
-            {I18n.t("features.itWallet.discovery.content")}
-          </BodySmall>
-        </VStack>
-        <VSpacer size={24} />
-        <VStack space={24}>
-          <FeatureInfo
-            pictogramProps={{ name: "timing" }}
-            body={I18n.t("features.itWallet.discovery.featureHighlights.1")}
-          />
-          <FeatureInfo
-            pictogramProps={{ name: "itWallet" }}
-            body={I18n.t("features.itWallet.discovery.featureHighlights.2")}
-          />
-          <FeatureInfo
-            pictogramProps={{ name: "cie" }}
-            body={I18n.t("features.itWallet.discovery.featureHighlights.3")}
-          />
-        </VStack>
+        <H1>{I18n.t("features.itWallet.discovery.legacy.title")}</H1>
         <VSpacer size={24} />
         <IOMarkdown
-          content={I18n.t("features.itWallet.discovery.contentBottom")}
+          content={I18n.t("features.itWallet.discovery.legacy.content")}
         />
         <VSpacer size={24} />
         <IOMarkdown
           content={I18n.t("features.itWallet.discovery.tos", {
             tos_url
           })}
-          rules={generateItwIOMarkdownRules({
-            linkCallback: trackOpenItwTos,
-            paragraphSize: "small"
-          })}
+          rules={generateItwIOMarkdownRules({ linkCallback: trackOpenItwTos })}
         />
       </ContentWrapper>
     </IOScrollView>
@@ -128,6 +109,5 @@ export const ItwDiscoveryInfoComponent = () => {
 };
 
 const styles = StyleSheet.create({
-  hero: { resizeMode: "cover", width: "100%" },
-  textCenter: { textAlign: "center" }
+  hero: { resizeMode: "cover", width: "100%" }
 });

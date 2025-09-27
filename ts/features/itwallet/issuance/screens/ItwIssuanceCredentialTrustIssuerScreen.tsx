@@ -39,7 +39,7 @@ import {
   RequestObject,
   StoredCredential
 } from "../../common/utils/itwTypesUtils";
-import { generateLinkRuleWithCallback } from "../../common/utils/markdown";
+import { generateItwIOMarkdownRules } from "../../common/utils/markdown";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import {
   selectCredentialTypeOption,
@@ -250,7 +250,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
           content={I18n.t("features.itWallet.issuance.credentialAuth.tos", {
             privacyUrl
           })}
-          rules={generateLinkRuleWithCallback(trackOpenItwTos)}
+          rules={generateItwIOMarkdownRules({ linkCallback: trackOpenItwTos })}
         />
       </ContentWrapper>
     </ForceScrollDownView>
