@@ -5,11 +5,14 @@
 
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 
-import { AccessibilityInfo, Modal, StyleSheet, View } from "react-native";
 import {
+  IOColors,
   IOVisualCostants,
-  ToastNotification
+  ToastNotification,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
+import { AccessibilityInfo, Modal, StyleSheet, View } from "react-native";
 import Animated, {
   Easing,
   SequencedTransition,
@@ -17,11 +20,10 @@ import Animated, {
   SlideOutUp
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import I18n from "i18next";
-import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
-import { openAppStoreUrl } from "../../utils/url";
 import { OperationResultScreenContent } from "../../components/screens/OperationResultScreenContent";
 import { Dismissable } from "../../components/ui/Dismissable";
+import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
+import { openAppStoreUrl } from "../../utils/url";
 import { trackForcedUpdateScreen, trackUpdateAppButton } from "./analytics";
 
 const UpdateAppModal: FC = () => {
@@ -61,8 +63,10 @@ const UpdateAppModal: FC = () => {
     setIsError(false);
   }, []);
 
+  const theme = useIOTheme();
+
   return (
-    <Modal>
+    <Modal backdropColor={IOColors[theme["appBackground-primary"]]}>
       <OperationResultScreenContent
         pictogram="updateOS"
         title={title}
