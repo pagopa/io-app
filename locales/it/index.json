@@ -5508,6 +5508,12 @@
             "title": "Disattiva IT-Wallet L3",
             "content": "Se avevi attivato IT-Wallet, il portafoglio sarà resettato e tutti i documenti rimossi."
           }
+        },
+        "reissuing": {
+          "alert": {
+            "title": "Avvio reissuing eID",
+            "content": "Stai per avviare il reissuing dell'eID e delle credenziali al momento ottenute."
+          }
         }
       }
     }
