@@ -5971,6 +5971,16 @@
           "RESIDENCE": "Residenza",
           "FAMILY_UNIT": "Famiglia anagrafica"
         },
+        "familyUnitCode": {
+          "INPS": {
+            "title": "INPS",
+            "description": "INPS"
+          },
+          "ANPR": {
+            "title": "Famiglia anagrafica",
+            "description": "Ministero dell’Interno"
+          }
+        },
         "operator": {
           "EQ": "{{value}}",
           "NOT_EQ": "Non è {{value}}",
