@@ -133,7 +133,11 @@ export const IdPayPDNDPrerequisitesScreen = () => {
               `idpay.onboarding.PDNDPrerequisites.familyUnitCode.${familyUnitCriteria}.description`
             )}
             onPress={() => {
-              setAuthority(familyUnitCriteria);
+              setAuthority(
+                I18n.t(
+                  `idpay.onboarding.PDNDPrerequisites.familyUnitCode.${familyUnitCriteria}.description`
+                )
+              );
               present();
             }}
           />
