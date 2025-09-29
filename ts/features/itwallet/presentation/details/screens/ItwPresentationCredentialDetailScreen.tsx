@@ -6,33 +6,57 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/Option";
-import React, { useMemo } from "react";
 import I18n from "i18next";
+import React, { useMemo } from "react";
+import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
 } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
+import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
+import { identificationRequest } from "../../../../identification/store/actions/index.ts";
 import {
-  CREDENTIALS_MAP,
   CREDENTIAL_STATUS_MAP,
+  getMixPanelCredential,
   trackCredentialDetail,
   trackWalletCredentialShowFAC_SIMILE,
   trackWalletCredentialShowTrustmark
 } from "../../../analytics";
+import ItwCredentialNotFound from "../../../common/components/ItwCredentialNotFound.tsx";
+import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
+import { itwSetReviewPending } from "../../../common/store/actions/preferences.ts";
+import {
+  itwIsL3EnabledSelector,
+  itwIsPendingReviewSelector
+} from "../../../common/store/selectors/preferences.ts";
 import { WellKnownClaim } from "../../../common/utils/itwClaimsUtils.ts";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
+import {
+  isMultiLevelCredential,
+  StoredCredential
+} from "../../../common/utils/itwTypesUtils.ts";
 import {
   itwCredentialSelector,
   itwCredentialStatusSelector
 } from "../../../credentials/store/selectors";
+import {
+  itwLifecycleIsITWalletValidSelector,
+  itwLifecycleIsValidSelector
+} from "../../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
+import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
+import { trackItwProximityShowQrCode } from "../../proximity/analytics";
+import { useItwPresentQRCode } from "../../proximity/hooks/useItwPresentQRCode.tsx";
+import { ItwProximityMachineContext } from "../../proximity/machine/provider.tsx";
+import { selectIsLoading } from "../../proximity/machine/selectors.ts";
 import { ItwPresentationAdditionalInfoSection } from "../components/ItwPresentationAdditionalInfoSection.tsx";
 import { ItwPresentationClaimsSection } from "../components/ItwPresentationClaimsSection.tsx";
 import { ItwPresentationCredentialInfoAlert } from "../components/ItwPresentationCredentialInfoAlert.tsx";
 import { ItwPresentationCredentialStatusAlert } from "../components/ItwPresentationCredentialStatusAlert.tsx";
+import { ItwPresentationCredentialUnknownStatus } from "../components/ItwPresentationCredentialUnknownStatus.tsx";
 import { ItwPresentationCredentialVerificationExpired } from "../components/ItwPresentationCredentialVerificationExpired.tsx";
 import { ItwPresentationDetailsFooter } from "../components/ItwPresentationDetailsFooter.tsx";
 import { ItwPresentationDetailsHeader } from "../components/ItwPresentationDetailsHeader.tsx";
@@ -40,19 +64,6 @@ import {
   CredentialCtaProps,
   ItwPresentationDetailsScreenBase
 } from "../components/ItwPresentationDetailsScreenBase.tsx";
-import ItwCredentialNotFound from "../../../common/components/ItwCredentialNotFound.tsx";
-import { ItwPresentationCredentialUnknownStatus } from "../components/ItwPresentationCredentialUnknownStatus.tsx";
-import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
-import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
-import { itwSetReviewPending } from "../../../common/store/actions/preferences.ts";
-import { itwIsPendingReviewSelector } from "../../../common/store/selectors/preferences.ts";
-import { identificationRequest } from "../../../../identification/store/actions/index.ts";
-import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
-import { ItwProximityMachineContext } from "../../proximity/machine/provider.tsx";
-import { selectIsLoading } from "../../proximity/machine/selectors.ts";
-import { useItwPresentQRCode } from "../../proximity/hooks/useItwPresentQRCode.tsx";
-import { trackItwProximityShowQrCode } from "../../proximity/analytics";
-import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -67,11 +78,29 @@ type Props = IOStackNavigationRouteProps<
  * Component that renders the credential detail screen.
  */
 export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
+  const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const { bottomSheet } = useItwPresentQRCode();
   const { credentialType } = route.params;
-  const credentialOption = useIOSelector(itwCredentialSelector(credentialType));
+
+  const isL3 = useIOSelector(itwIsL3EnabledSelector);
+
+  /**
+   * Since the driver’s license is mapped as mDL but from the deeplink provided by iPatente
+   * come in as presentation/credential-detail/MDL, it is necessary to enforce a lowercase
+   * check for this case so the correct key is resolved.
+   */
+  const normalizedCredentialType = credentialType.replace(
+    /^mdl$/i,
+    CredentialType.DRIVING_LICENSE
+  );
+
+  const credentialOption = useIOSelector(
+    itwCredentialSelector(normalizedCredentialType)
+  );
   const isPendingReview = useIOSelector(itwIsPendingReviewSelector);
+
+  const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -80,19 +109,52 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
        * It is set to true only the first time the driving license detail is viewed.
        */
       if (
-        credentialType === CredentialType.DRIVING_LICENSE &&
+        normalizedCredentialType === CredentialType.DRIVING_LICENSE &&
         isPendingReview === undefined
       ) {
         dispatch(itwSetReviewPending(true));
       }
-    }, [credentialType, isPendingReview, dispatch])
+    }, [normalizedCredentialType, isPendingReview, dispatch])
   );
+
+  if (!isWalletValid) {
+    const ns = "features.itWallet.issuance.walletInstanceNotActive";
+
+    const copy = isL3 ? `${ns}.itWallet` : `${ns}.documentiSuIo`;
+
+    return (
+      <OperationResultScreenContent
+        title={I18n.t(`${copy}.title`)}
+        subtitle={[
+          { text: I18n.t(`${copy}.body`) },
+          {
+            text: I18n.t(`${copy}.bodyBold`),
+            weight: "Semibold"
+          }
+        ]}
+        pictogram="itWallet"
+        action={{
+          label: I18n.t(`${ns}.primaryAction`),
+          onPress: () =>
+            navigation.replace(ITW_ROUTES.MAIN, {
+              screen: ITW_ROUTES.DISCOVERY.INFO,
+              params: {
+                isL3
+              }
+            })
+        }}
+        secondaryAction={{
+          label: I18n.t(`${ns}.secondaryAction`),
+          onPress: () => navigation.popToTop()
+        }}
+      />
+    );
+  }
 
   if (O.isNone(credentialOption)) {
     // If the credential is not found, we render a screen that allows the user to request that credential.
-    return <ItwCredentialNotFound credentialType={credentialType} />;
+    return <ItwCredentialNotFound credentialType={normalizedCredentialType} />;
   }
-
   return (
     <>
       <ItwPresentationCredentialDetail credential={credentialOption.value} />
@@ -116,9 +178,14 @@ export const ItwPresentationCredentialDetail = ({
     ItwProximityMachineContext.useSelector(selectIsLoading);
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
-
+  const isMultilevel = isMultiLevelCredential(credential);
+  const isL3Credential = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
+  );
+  const mixPanelCredential = getMixPanelCredential(
+    credential.credentialType,
+    isL3Credential
   );
   const itwFeaturesEnabled = useItwFeaturesEnabled(credential);
 
@@ -128,8 +195,9 @@ export const ItwPresentationCredentialDetail = ({
   useFocusEffect(() => {
     if (status !== "jwtExpired") {
       trackCredentialDetail({
-        credential: CREDENTIALS_MAP[credential.credentialType],
-        credential_status: CREDENTIAL_STATUS_MAP[status]
+        credential: mixPanelCredential,
+        credential_status: CREDENTIAL_STATUS_MAP[status],
+        credential_type: isMultilevel ? "multiple" : "unique"
       });
     }
   });
@@ -138,9 +206,7 @@ export const ItwPresentationCredentialDetail = ({
    * Show the credential trustmark screen after user identification
    */
   const handleTrustmarkPress = () => {
-    trackWalletCredentialShowTrustmark(
-      CREDENTIALS_MAP[credential.credentialType]
-    );
+    trackWalletCredentialShowTrustmark(mixPanelCredential);
     dispatch(
       identificationRequest(
         false,
@@ -191,7 +257,7 @@ export const ItwPresentationCredentialDetail = ({
         label: I18n.t("features.itWallet.presentation.ctas.openPdf"),
         icon: "docPaymentTitle",
         onPress: () => {
-          if (CREDENTIALS_MAP[credentialType] === "ITW_TS_V2") {
+          if (mixPanelCredential === "ITW_TS_V2") {
             trackWalletCredentialShowFAC_SIMILE();
           }
 
@@ -211,7 +277,8 @@ export const ItwPresentationCredentialDetail = ({
     itwFeaturesEnabled,
     navigation,
     isCheckingPermissions,
-    itwProximityMachineRef
+    itwProximityMachineRef,
+    mixPanelCredential
   ]);
 
   if (status === "unknown") {

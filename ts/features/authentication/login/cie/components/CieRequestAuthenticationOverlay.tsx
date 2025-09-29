@@ -38,6 +38,11 @@ import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { isCieLoginUatEnabledSelector } from "../store/selectors";
 import { cieFlowForDevServerEnabled } from "../utils";
 import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
+import {
+  isActiveSessionFastLoginEnabledSelector,
+  isActiveSessionLoginSelector
+} from "../../../activeSessionLogin/store/selectors";
+import { hashedProfileFiscalCodeSelector } from "../../../../../store/reducers/crossSessions";
 
 // to make sure the server recognizes the client as valid iPhone device (iOS only) we use a custom header
 // on Android it is not required
@@ -156,6 +161,11 @@ const CieWebView = (props: Props) => {
   const ephemeralKeyTag = useIOSelector(ephemeralKeyTagSelector);
   const isFastLogin = useIOSelector(isFastLoginEnabledSelector);
   const idp = useIOSelector(selectedIdentityProviderSelector);
+  const isActiveSessionFastLogin = useIOSelector(
+    isActiveSessionFastLoginEnabledSelector
+  );
+  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
+  const hashedFiscalCode = useIOSelector(hashedProfileFiscalCodeSelector);
 
   const webView = createRef<WebView>();
   const { onSuccess } = props;
@@ -259,9 +269,10 @@ const CieWebView = (props: Props) => {
             loginUri,
             ephemeralKeyTag,
             mixpanelEnabled,
-            isFastLogin,
+            isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
             dispatch,
-            idp?.id
+            idp?.id,
+            isActiveSessionLogin ? hashedFiscalCode : undefined
           )
       ),
       TE.fold(

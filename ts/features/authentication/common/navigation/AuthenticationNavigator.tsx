@@ -33,7 +33,10 @@ import CieIdNotInstalledScreen from "../../login/cie/screens/CieIdNotInstalledSc
 import CieIdAuthUrlError from "../../login/cie/screens/CieIdAuthUrlError";
 import CloseButton from "../../../../navigation/components/CloseButton";
 import { ActiveSessionLandingScreen } from "../../activeSessionLogin/screens/ActiveSessionLandingScreen";
-import ActiveSessionCieIdLoginScreen from "../../activeSessionLogin/screens/ActiveSessionCieIdLoginScreen";
+import ActiveSessionCieIdLoginScreen from "../../activeSessionLogin/screens/cieId/ActiveSessionCieIdLoginScreen";
+import ActiveSessionLoginCieCardReaderScreen from "../../activeSessionLogin/screens/cie/ActiveSessionLoginCieCardReaderScreen";
+import ActiveSessionLoginCieConsentDataUsageScreen from "../../activeSessionLogin/screens/cie/ActiveSessionLoginCieConsentDataUsageScreen";
+import ActiveSessionIdpLoginScreen from "../../activeSessionLogin/screens/spid/ActiveSessionIdpLoginScreen";
 import { AUTHENTICATION_ROUTES } from "./routes";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 
@@ -102,6 +105,10 @@ const AuthenticationStackNavigator = () => (
       name={AUTHENTICATION_ROUTES.IDP_LOGIN}
       component={IdpLoginScreen}
     />
+    <Stack.Screen
+      name={AUTHENTICATION_ROUTES.IDP_LOGIN_ACTIVE_SESSION_LOGIN}
+      component={ActiveSessionIdpLoginScreen}
+    />
 
     <Stack.Screen
       name={AUTHENTICATION_ROUTES.AUTH_SESSION}
@@ -142,8 +149,19 @@ const AuthenticationStackNavigator = () => (
     />
 
     <Stack.Screen
+      name={AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN_ACTIVE_SESSION_LOGIN}
+      component={ActiveSessionLoginCieCardReaderScreen}
+    />
+
+    <Stack.Screen
       name={AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE}
       component={CieConsentDataUsageScreen}
+      options={{ headerShown: true }}
+    />
+
+    <Stack.Screen
+      name={AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE_ACTIVE_SESSION_LOGIN}
+      component={ActiveSessionLoginCieConsentDataUsageScreen}
       options={{ headerShown: true }}
     />
 

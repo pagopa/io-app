@@ -86,6 +86,11 @@ import {
   ZendeskTokenStatusEnum
 } from "../store/reducers";
 import { handleContactSupport } from "../utils";
+import {
+  trackZendeskCaCBannerShow,
+  trackZendeskCaCBannerTap
+} from "../analytics";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 
 type FaqManagerProps = Pick<
   ZendeskStartPayload,
@@ -173,11 +178,19 @@ const FaqManager = (props: FaqManagerProps) => {
   const locale = getFullLocale();
   const localeFallback = fallbackForLocalizedMessageKeys(locale);
 
+  useOnFirstRender(() => {
+    if (isCacBannerEnabled && bannerCaCConfig && bannerCaCConfig.action) {
+      trackZendeskCaCBannerShow(bannerCaCConfig.action.url?.[localeFallback]);
+    }
+  });
+
   const handleBannerPress = () => {
     if (!bannerCaCConfig?.action) {
       return;
     }
-    // TODO: IOBP-1969 add trackHelpCenterCtaTapped for tracking into Mixpanel
+
+    trackZendeskCaCBannerTap(bannerCaCConfig.action.url?.[localeFallback]);
+
     return openWebUrl(bannerCaCConfig.action.url?.[localeFallback], () =>
       IOToast.error(I18n.t("global.jserror.title"))
     );

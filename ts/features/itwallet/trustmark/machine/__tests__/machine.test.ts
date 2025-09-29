@@ -289,7 +289,7 @@ describe("itwTrustmarkMachine", () => {
     );
 
     const actor = createActor(mockedMachine, {
-      input: { credentialType: "MDL" }
+      input: { credentialType: "mDL" }
     });
 
     /**
@@ -300,7 +300,7 @@ describe("itwTrustmarkMachine", () => {
 
     expect(actor.getSnapshot().value).toStrictEqual("RefreshingTrustmark");
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
-      credentialType: "MDL",
+      credentialType: "mDL",
       walletInstanceAttestation: { jwt: "T_WIA" },
       credential: ItwStoredCredentialsMocks.mdl
     });
@@ -324,7 +324,7 @@ describe("itwTrustmarkMachine", () => {
 
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
-      credentialType: "MDL",
+      credentialType: "mDL",
       walletInstanceAttestation: { jwt: "T_WIA" },
       credential: ItwStoredCredentialsMocks.mdl,
       attempts: 1,

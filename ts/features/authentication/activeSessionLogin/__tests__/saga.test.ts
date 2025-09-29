@@ -1,5 +1,5 @@
 import { expectSaga, testSaga } from "redux-saga-test-plan";
-import { select, race, take } from "typed-redux-saga/macro";
+import { select, race, take, fork } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 import {
   activeSessionLoginSuccess,
@@ -9,7 +9,7 @@ import {
   setStartActiveSessionLogin
 } from "../store/actions";
 import {
-  fastLoginOptInActiveSessionLoginSelector,
+  isActiveSessionFastLoginEnabledSelector,
   idpSelectedActiveSessionLoginSelector,
   newTokenActiveSessionLoginSelector
 } from "../store/selectors";
@@ -19,6 +19,7 @@ import {
   watchActiveSessionLoginSaga
 } from "../saga";
 import { SessionToken } from "../../../../types/SessionToken";
+import { watchCieAuthenticationSaga } from "../../login/cie/sagas/cie";
 
 const mockToken = "mock-token" as SessionToken;
 const mockIdp = {
@@ -42,7 +43,7 @@ describe("handleActiveSessionLoginSaga", () => {
         ],
         [select(newTokenActiveSessionLoginSelector), mockToken],
         [select(idpSelectedActiveSessionLoginSelector), mockIdp],
-        [select(fastLoginOptInActiveSessionLoginSelector), mockOptIn]
+        [select(isActiveSessionFastLoginEnabledSelector), mockOptIn]
       ])
       .put(
         consolidateActiveSessionLoginData({
@@ -63,6 +64,7 @@ describe("handleActiveSessionLoginSaga", () => {
   it("should handle login failure and not dispatch anything", () =>
     expectSaga(handleActiveSessionLoginSaga)
       .provide([
+        [fork(watchCieAuthenticationSaga), null],
         [
           race({
             success: take(activeSessionLoginSuccess),
@@ -73,7 +75,7 @@ describe("handleActiveSessionLoginSaga", () => {
       ])
       .run()
       .then(result => {
-        expect(result.effects.put).toBeUndefined(); // Nessun effetto put viene chiamato
+        expect(result.effects.put).toBeUndefined();
       }));
 });
 

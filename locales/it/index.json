@@ -218,6 +218,7 @@
       "copy": "Copia",
       "selectAll": "Seleziona tutto",
       "deselectAll": "Deseleziona tutto",
+      "whatCanYouDo": "Cosa puoi fare?",
       "visitWebsite": "Vai al sito"
     },
     "navigator": {
@@ -1036,8 +1037,7 @@
         "description": "Per accedere, devi avere l'app installata sul tuo dispositivo.",
         "primary_action_label": "Scarica CieID",
         "link_error": "Non siamo riusciti a indirizzarti allo store. Aprilo manualmente e cerca CieID"
-      },
-      "feature_not_already_implemented": "Questa funzionalità è attualmente in fase di sviluppo e non ancora disponibile."
+      }
     },
     "cie": {
       "genericTitle": "Entra con CIE",
@@ -3851,6 +3851,25 @@
           "body": "Attiva le notifiche push: se leggi subito le comunicazioni a valore legale, potresti risparmiare sui costi di raccomandata.",
           "cta": "Attiva notifiche push",
           "toast": "Hai attivato le notifiche push"
+        },
+        "flow": {
+          "aarTos": {
+            "title": "Stai per aprire la notifica SEND",
+            "body": {
+              "firstPart": "Le notifiche SEND sono comunicazioni a valore legale inviate da un ente, come esiti di pratiche, rimborsi o multe.\n\nPremendo ",
+              "goToNotification": "Vai alla notifica SEND",
+              "youDeclareThat": " dichiari di aver letto e compreso l’",
+              "privacy": "Informativa Privacy",
+              "andThe": " e i ",
+              "tos": "Termini e Condizioni d’uso",
+              "lineEnding": "."
+            },
+            "primaryAction": "Vai alla notifica SEND",
+            "secondaryAction": "Chiudi"
+          },
+          "fetchingQrData": {
+            "loadingText": "Recupero delle informazioni in corso"
+          }
         }
       },
       "reminderBanner": {
@@ -4304,7 +4323,8 @@
         "dc": "Carta Europea della Disabilità",
         "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
         "ed": "Titoli accademici",
-        "ee": "Iscrizioni universitarie"
+        "ee": "Iscrizioni universitarie",
+        "res": "Residenza"
       },
       "wallet": {
         "active": "Attivo",
@@ -4363,6 +4383,9 @@
         "walletNotAvailable": {
           "message": "Abbiamo avuto un problema nel recuperare i tuoi documenti.",
           "cta": "Chiudi e riapri l'app per riprovare."
+        },
+        "featureUnavailable": {
+          "title": "In arrivo: questa funzione sarà disponibile a breve"
         }
       },
       "verifiableCredentials": {
@@ -4507,21 +4530,43 @@
         },
         "mode": {
           "l2": {
-            "title": "Verifica la tua identità",
-            "description": "È un passaggio di sicurezza necessario per aggiungere i tuoi documenti digitali su IO.",
+            "title": "Verifica la tua identità con SPID o CieID",
+            "description": "È un passaggio di sicurezza necessario per associare i documenti digitali alla tua identità.",
             "header": "Scegli come identificarti",
+            "section": "Ottieni Documenti su IO",
+            "reissuing": {
+              "title": "Scegli come identificarti",
+              "description": "È un passaggio necessario per continuare ad usare Documenti su IO.",
+              "section": "Verifica di identità",
+              "method": {
+                "ciePin": {
+                  "title": "Continua con CIE + PIN",
+                  "subtitle": "Dovrai usare la Carta di Identità Elettronica (CIE) e inserire il suo PIN di 8 cifre.",
+                  "badge": "scelta consigliata"
+                },
+                "cieId": {
+                  "title": "Continua con l'app CieID",
+                  "subtitle": "Dovrai usare credenziali e app CieID"
+                },
+                "spid": {
+                  "title": "Continua con SPID",
+                  "subtitle": "Dovrai usare credenziali e app (o SMS)"
+                }
+              }
+            },
             "method": {
               "spid": {
-                "title": "Usa SPID",
-                "subtitle": "Necessarie credenziali e app (o SMS)"
+                "title": "Continua con SPID",
+                "subtitle": "Dovrai usare credenziali e app (o SMS)"
               },
               "ciePin": {
                 "title": "Usa CIE + PIN",
-                "subtitle": "Usa la Carta di Identità Elettronica e il suo PIN a 8 cifre"
+                "subtitle": "Usa la Carta di Identità Elettronica e il suo PIN a 8 cifre",
+                "badge": "scelta consigliata"
               },
               "cieId": {
-                "title": "Usa l'app CieID",
-                "subtitle": "Necessarie credenziali e app CieID"
+                "title": "Continua con CieID",
+                "subtitle": "Dovrai usare credenziali e app CieID"
               }
             }
           },
@@ -4576,6 +4621,12 @@
               "content": "Dovrai poggiare il retro del telefono sulla CIE, su una superficie stabile, e tenerli fermi per la lettura.",
               "cta": "Inizia lettura CIE",
               "buttonLink": "Cos’è la CIE?"
+            },
+            "can": {
+              "title": "Prepara la tua Carta di Identità Elettronica (CIE)",
+              "content": "Dovrai usarla e inserire il suo codice a 6 cifre (CAN) che trovi stampato sul fronte in basso a destra.",
+              "buttonLink": "Cos’è il PIN della CIE?",
+              "cta": "Continua"
             }
           },
           "inputPin": {
@@ -4809,9 +4860,16 @@
           "primaryAction": "Vai al documento"
         },
         "walletInstanceNotActive": {
-          "title": "Attiva Documenti su IO per continuare",
-          "body": "Per aggiungere i tuoi documenti al Portafoglio è necessario attivare ",
-          "bodyBold": "Documenti su IO",
+          "documentiSuIo": {
+            "title": "Attiva Documenti su IO per continuare",
+            "body": "Per aggiungere i tuoi documenti al Portafoglio è necessario attivare ",
+            "bodyBold": "Documenti su IO"
+          },
+          "itWallet": {
+            "title": "Ottieni IT-Wallet per continuare",
+            "body": "Per aggiungere nuovi documenti al tuo Portafoglio di IO ottieni IT-Wallet: ti basta avere con te la Carta di Identità Elettronica (CIE).",
+            "bodyBold": ""
+          },
           "primaryAction": "Inizia",
           "secondaryAction": "Non ora"
         },
@@ -4882,6 +4940,13 @@
           "verificationExpiring": {
             "content": "Verifica la versione digitale del tuo documento entro il {{date}}."
           }
+        },
+        "authSource": {
+          "anis": "ANIS - Anagrafe Nazionale dell'istruzione superiore",
+          "mdi": "Ministero dell'Interno",
+          "mef": "MEF - Ragioneria Generale dello Stato",
+          "inps": "Istituto Nazionale di Previdenza Sociale",
+          "mit": "MIT - Direzione Generale per la Motorizzazione"
         },
         "bottomSheets": {
           "eidInfo": {
@@ -5021,6 +5086,7 @@
           "loadingScreen": {
             "request": "Stiamo facendo alcune verifiche di sicurezza",
             "response": "Stiamo comunicando i tuoi dati a {{relyingParty}}",
+            "timeout": "Ancora un attimo di pazienza...",
             "subtitle": "Attendi qualche secondo..."
           },
           "walletInactiveScreen": {
@@ -5390,6 +5456,21 @@
           "action": "Ottieni IT-Wallet"
         }
       },
+      "settings": {
+        "item": {
+          "title": "IT-Wallet",
+          "description": "Gestisci il tuo portafoglio digitale"
+        },
+        "manage": {
+          "title": "IT-Wallet",
+          "description": "È il tuo portafoglio digitale ufficiale.",
+          "content": "###### Cosa puoi fare con IT-Wallet?\n - Ottieni la versione digitale dei tuoi documenti personali, titoli, attestati\n - Dimostri identità e idoneità alla guida con la Patente digitale\n - Accedi ai servizi digitali della PA in pochi passaggi\n - Usi la Tessera Sanitaria per acquistare farmaci e prenotare visite mediche\n Per saperne di più, [visita il sito IT-Wallet]()",
+          "cta": {
+            "obtain": "Ottieni IT-Wallet",
+            "revoke": "Disattiva IT-Wallet"
+          }
+        }
+      },
       "playgrounds": {
         "environment": {
           "toggle": {
@@ -5517,7 +5598,7 @@
         },
         "error": {
           "generic": {
-            "body": "In questo momento non è possibile generare un codice"
+            "body": "Non è stato possibile generare un codice. Riprova tra un po’."
           }
         },
         "loading": {
@@ -5572,6 +5653,15 @@
         "errorToasts": {
           "enrollment": "Errore nel collegamento dell'iniziativa, riprova.",
           "removal": "Errore nella rimozione dell'iniziativa, riprova."
+        }
+      },
+      "initiativeOnboardedStatus": {
+        "header": "Le mie richieste",
+        "ON_WAITING_LIST": {
+          "label": "Verifica in corso"
+        },
+        "ON_EVALUATION": {
+          "label": "Verifica in corso"
         }
       }
     },
@@ -5654,7 +5744,7 @@
           "generateBarcode": "Genera un codice sconto"
         },
         "authorizeButton": "Usa il bonus",
-        "secondaryCta": "Mostra esercenti",
+        "secondaryCta": "Mostra venditori",
         "addExpenseButton": "Aggiungi spesa",
         "IDPayCode": {
           "banner": {
@@ -5810,7 +5900,7 @@
             "subtitle": "Consulta le regole dell’iniziativa per scoprire quando sarà possibile aderire all’iniziativa."
           },
           "INITIATIVE_ENDED": {
-            "title": "Le iscrizioni sono terminate",
+            "title": "Le adesioni sono terminate",
             "subtitle": "Non è più possibile aderire all’iniziativa."
           },
           "BUDGET_EXHAUSTED": {
@@ -5829,12 +5919,20 @@
             "subtitle": "Per maggiori informazioni, contatta l’ente promotore."
           },
           "ON_EVALUATION": {
-            "title": "L’ente sta valutando la tua domanda d’adesione",
+            "title": "La tua richiesta è in fase di valutazione",
             "subtitle": "Quando pronto, riceverai l’esito tramite un messaggio in app."
           },
+          "FAMILY_UNIT_ALREADY_JOINED": {
+            "title": "Un'altra persona della tua famiglia ha inviato la richiesta",
+            "subtitle": "È possibile inviare una sola richiesta per ogni famiglia anagrafica."
+          },
+          "ONBOARDING_WAITING_LIST": {
+            "title": "Sei in lista d’attesa",
+            "subtitle": "La tua richiesta è in coda. Ti contatteremo se saranno disponibili nuove risorse."
+          },
           "PAYMENT_GENERIC_ERROR": {
-            "title": "Non siamo riusciti a completare l’operazione",
-            "subtitle": "Siamo già a lavoro per risolvere.  Riprova tra un po’."
+            "title": "Non è possibile completare la richiesta per questa iniziativa",
+            "subtitle": "Siamo già a lavoro per risolvere. Riprova tra un po’."
           }
         }
       },
@@ -5851,17 +5949,17 @@
         "prerequisites": {
           "info": {
             "header": "Come avviene la verifica?",
-            "body": "Comunichiamo direttamente con l’Ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**. In questo modo non devi produrre alcuna autocertificazione.",
+            "body": "Comunichiamo direttamente con l’ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**. In questo modo non devi produrre alcuna autocertificazione.",
             "understoodCTA": "Ho capito"
           }
         },
         "title": "Per continuare dobbiamo verificare questi dati",
-        "subtitle": "Per accedere all’iniziativa {{service}}, verificheremo con alcuni enti se hai i requisiti.",
+        "subtitle": "Per accedere all’iniziativa {{service}}, consulteremo altri enti per verificare se hai i requisiti previsti",
         "code": {
           "ISEE": "ISEE",
           "BIRTHDAY": "Data di nascita",
           "RESIDENCE": "Residenza",
-          "FAMILY_UNIT": "Nucleo Familiare"
+          "FAMILY_UNIT": "Famiglia anagrafica"
         },
         "operator": {
           "EQ": "{{value}}",
@@ -6096,8 +6194,8 @@
         },
         "failure": {
           "GENERIC": {
-            "title": "Il codice non è valido",
-            "subtitle": "Se si tratta di un errore, chiedi all’esercente di crearne uno nuovo."
+            "title": "Non è stato possibile procedere con l'iniziativa richiesta",
+            "subtitle": "Siamo già a lavoro per risolvere.  Riprova tra un po’."
           },
           "TRANSACTION_EXPIRED": {
             "title": "Il codice è scaduto",

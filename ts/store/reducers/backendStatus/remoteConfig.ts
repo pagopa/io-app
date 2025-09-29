@@ -393,31 +393,56 @@ export const isIdPayCiePaymentCodeEnabledSelector = (state: GlobalState) =>
   );
 
 export const idPayOnboardingRequiresAppUpdateSelector = (state: GlobalState) =>
-  pipe(
-    state,
-    remoteConfigSelector,
-    remoteConfig =>
-      !isPropertyWithMinAppVersionEnabled({
-        remoteConfig,
-        mainLocalFlag: true,
-        configPropertyName: "idPay",
-        optionalLocalFlag: true,
-        optionalConfig: "onboarding"
-      })
-  );
+  isIdPayLocallyEnabledSelector(state)
+    ? false
+    : pipe(
+        state,
+        remoteConfigSelector,
+        remoteConfig =>
+          !isPropertyWithMinAppVersionEnabled({
+            remoteConfig,
+            mainLocalFlag: true,
+            configPropertyName: "idPay",
+            optionalLocalFlag: true,
+            optionalConfig: "onboarding"
+          })
+      );
 
 export const idPayDetailsRequiresAppUpdateSelector = (state: GlobalState) =>
-  pipe(
-    state,
-    remoteConfigSelector,
-    remoteConfig =>
-      !isPropertyWithMinAppVersionEnabled({
-        remoteConfig,
-        mainLocalFlag: true,
-        configPropertyName: "idPay",
-        optionalLocalFlag: true,
-        optionalConfig: "initiative_details"
-      })
+  isIdPayLocallyEnabledSelector(state)
+    ? false
+    : pipe(
+        state,
+        remoteConfigSelector,
+        remoteConfig =>
+          !isPropertyWithMinAppVersionEnabled({
+            remoteConfig,
+            mainLocalFlag: true,
+            configPropertyName: "idPay",
+            optionalLocalFlag: true,
+            optionalConfig: "initiative_details"
+          })
+      );
+
+export const idPayInitiativeConfigSelector = (initiativeId?: string) =>
+  createSelector(remoteConfigSelector, remoteConfig =>
+    pipe(
+      remoteConfig,
+      O.chainNullableK(config =>
+        initiativeId
+          ? config.idPay.initiative_config_map?.[initiativeId]
+          : undefined
+      ),
+      O.filter(initiativeConfig =>
+        isVersionSupported(
+          Platform.OS === "ios"
+            ? initiativeConfig.min_app_version?.ios
+            : initiativeConfig.min_app_version?.android,
+          getAppVersion()
+        )
+      ),
+      O.toUndefined
+    )
   );
 
 export const absolutePortalLinksFallback = {

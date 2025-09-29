@@ -10,8 +10,6 @@ import {
   trackLollipopKeyGenerationSuccess
 } from "../../utils/analytics";
 import { AppDispatch } from "../../App";
-import { getAppVersion } from "../../utils/appVersion";
-import { isLocalEnv } from "../../utils/environment";
 import { SignatureAlgorithm } from "./httpSignature/types/SignatureAlgorithms";
 import { SignatureComponents } from "./httpSignature/types/SignatureComponents";
 import { toCryptoError } from "./utils/crypto";
@@ -108,26 +106,3 @@ export const taskRegenerateKey = (keyTag: string) =>
     TE.tryCatch(() => deleteKey(keyTag), toCryptoError),
     TE.chain(() => TE.tryCatch(() => generate(keyTag), toCryptoError))
   );
-
-export const getLollipopLoginHeaders = (
-  publicKey: PublicKey,
-  hashAlgorithm: string,
-  isFastLogin: boolean,
-  idpId?: string,
-  fiscalCode?: string
-) => ({
-  "x-pagopa-lollipop-pub-key": Buffer.from(JSON.stringify(publicKey)).toString(
-    "base64"
-  ),
-  "x-pagopa-lollipop-pub-key-hash-algo": hashAlgorithm,
-  "x-pagopa-app-version": isLocalEnv ? getAppVersion() : undefined,
-  // The `x-pagopa-fiscal-code` header is used to indicate that
-  // the user is performing an active session login.
-  // Its value contains the fiscal code of the already authenticated user,
-  // allowing the backend to perform the necessary validations.
-  // TODO: edit name x-pagopa-fiscal-code when it will be definitive
-  // https://pagopa.atlassian.net/browse/IOPID-3332
-  "x-pagopa-fiscal-code": isLocalEnv ? fiscalCode : undefined,
-  "x-pagopa-login-type": isFastLogin ? "LV" : undefined,
-  "x-pagopa-idp-id": idpId
-});

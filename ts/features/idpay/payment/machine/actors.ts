@@ -174,6 +174,9 @@ export const mapErrorCodeToFailure = (
       return PaymentFailureEnum.PAYMENT_ALREADY_ASSIGNED;
     case TransactionErrorCodeEnum.PAYMENT_INITIATIVE_INVALID_DATE:
       return PaymentFailureEnum.PAYMENT_INITIATIVE_INVALID_DATE;
+    case TransactionErrorCodeEnum.PAYMENT_GENERIC_ERROR:
+    case TransactionErrorCodeEnum.PAYMENT_MERCHANT_NOT_ONBOARDED:
+    case TransactionErrorCodeEnum.PAYMENT_NOT_ALLOWED_FOR_TRX_STATUS:
     default:
       return PaymentFailureEnum.PAYMENT_GENERIC_ERROR;
   }

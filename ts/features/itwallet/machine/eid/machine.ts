@@ -53,8 +53,7 @@ export const itwEidIssuanceMachine = setup({
     navigateToCiePreparationScreen: notImplemented,
     navigateToCiePinPreparationScreen: notImplemented,
     navigateToCiePinScreen: notImplemented,
-    navigateToCieReadCardL2Screen: notImplemented,
-    navigateToCieReadCardL3Screen: notImplemented,
+    navigateToCieReadCardScreen: notImplemented,
     navigateToNfcInstructionsScreen: notImplemented,
     navigateToWalletRevocationScreen: notImplemented,
     navigateToCieWarningScreen: notImplemented,
@@ -71,6 +70,8 @@ export const itwEidIssuanceMachine = setup({
     storeEidCredential: notImplemented,
     handleSessionExpired: notImplemented,
     resetWalletInstance: notImplemented,
+    freezeSimplifiedActivationRequirements: notImplemented,
+    clearSimplifiedActivationRequirements: notImplemented,
 
     /**
      * Analytics
@@ -84,6 +85,7 @@ export const itwEidIssuanceMachine = setup({
      */
 
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
+    loadPidIntoContext: notImplemented,
     /**
      * Save the final redirect url in the machine context for later reuse.
      * This action is the same for the three identification methods.
@@ -133,7 +135,8 @@ export const itwEidIssuanceMachine = setup({
     isReissuance: ({ context }) => context.mode === "reissuance",
     isUpgrade: ({ context }) => context.mode === "upgrade",
     isL3FeaturesEnabled: ({ context }) => context.isL3 || false,
-    isL2Fallback: ({ context }) => context.isL2Fallback || false
+    isL2Fallback: ({ context }) => context.isL2Fallback || false,
+    isEligibleForItwSimplifiedActivation: notImplemented
   }
 }).createMachine({
   id: "itwEidIssuanceMachine",
@@ -233,6 +236,18 @@ export const itwEidIssuanceMachine = setup({
           {
             actions: "setFailure",
             target: "#itwEidIssuanceMachine.Failure"
+          }
+        ]
+      },
+      after: {
+        5000: [
+          {
+            guard: "isReissuance",
+            actions: "navigateToL2IdentificationScreen"
+          },
+          {
+            guard: not("isReissuance"),
+            actions: "navigateToIpzsPrivacyScreen"
           }
         ]
       }
@@ -348,15 +363,33 @@ export const itwEidIssuanceMachine = setup({
         "This state handles the acceptance of the IPZS privacy policy",
       entry: "navigateToIpzsPrivacyScreen",
       on: {
-        "accept-ipzs-privacy": {
-          target: "UserIdentification"
-        },
+        "accept-ipzs-privacy": [
+          {
+            guard: and(["isUpgrade", "isEligibleForItwSimplifiedActivation"]),
+            target: "EvaluatingSimplifiedActivationFlow"
+          },
+          { target: "UserIdentification" }
+        ],
         error: {
           actions: "setFailure",
           target: "#itwEidIssuanceMachine.Failure"
         },
         back: "#itwEidIssuanceMachine.TosAcceptance"
       }
+    },
+    EvaluatingSimplifiedActivationFlow: {
+      description: "State that manages the wallet's simplified activation flow",
+      entry: "clearSimplifiedActivationRequirements",
+      always: [
+        {
+          guard: "hasLegacyCredentials",
+          actions: "loadPidIntoContext",
+          target: "#itwEidIssuanceMachine.CredentialsUpgrade"
+        },
+        {
+          target: "#itwEidIssuanceMachine.Success"
+        }
+      ]
     },
     UserIdentification: {
       description:
@@ -661,17 +694,10 @@ export const itwEidIssuanceMachine = setup({
                 "This state handles the CIE preparation screen, where the user is informed about the CIE card",
               entry: "navigateToCiePreparationScreen",
               on: {
-                next: [
-                  {
-                    guard: "isL3FeaturesEnabled",
-                    actions: "navigateToCieReadCardL3Screen",
-                    target: "StartingCieAuthFlow"
-                  },
-                  {
-                    actions: "navigateToCieReadCardL2Screen",
-                    target: "StartingCieAuthFlow"
-                  }
-                ],
+                next: {
+                  actions: "navigateToCieReadCardScreen",
+                  target: "StartingCieAuthFlow"
+                },
                 "go-to-cie-warning": {
                   target: "CieWarning.PreparationCie"
                 },
@@ -784,7 +810,8 @@ export const itwEidIssuanceMachine = setup({
             input: ({ context }) => ({
               identification: context.identification,
               authenticationContext: context.authenticationContext,
-              walletInstanceAttestation: context.walletInstanceAttestation?.jwt
+              walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
+              isL3: context.isL3 && !context.isL2Fallback
             }),
             onDone: {
               actions: assign(({ event }) => ({ eid: event.output })),
@@ -821,7 +848,11 @@ export const itwEidIssuanceMachine = setup({
         DisplayingPreview: {
           on: {
             "add-to-wallet": {
-              actions: ["storeEidCredential", "trackWalletInstanceCreation"],
+              actions: [
+                "storeEidCredential",
+                "trackWalletInstanceCreation",
+                "freezeSimplifiedActivationRequirements"
+              ],
               target: "Completed"
             },
             close: {
