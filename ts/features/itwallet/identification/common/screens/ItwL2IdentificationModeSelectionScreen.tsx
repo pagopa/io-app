@@ -144,13 +144,6 @@ export const ItwL2IdentificationModeSelectionScreen = (
                 testID="CiePin"
                 image={<CiePin width={28} height={32} />}
                 onPress={handleCiePinPress}
-                badge={{
-                  text: I18n.t(`${baseTranslationPath}.method.ciePin.badge`, {
-                    defaultValue: ""
-                  }),
-                  variant: "highlight",
-                  outline: false
-                }}
               />
             )}
           {!isSpidDisabled && (
