@@ -2,11 +2,15 @@ import MockDate from "mockdate";
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import {
+  DrivingPrivilegesCustomClaim,
+  DrivingPrivilegesValueRaw,
   extractFiscalCode,
   getCredentialExpireDate,
   getCredentialExpireDays,
   getFiscalCodeFromCredential,
   ImageClaim,
+  NestedArrayClaim,
+  NestedObjectClaim,
   SimpleDateClaim,
   SimpleListClaim
 } from "../itwClaimsUtils";
@@ -248,5 +252,217 @@ describe("SimpleListClaim", () => {
     [123, false]
   ])("should evaluate a claim of %p as %p", (data, expected) => {
     expect(SimpleListClaim.is(data)).toBe(expected);
+  });
+});
+
+describe("NestedArrayClaim", () => {
+  it("decodes a non-empty array (name as string and as record)", () => {
+    const input = [
+      {
+        foo: { value: "bar", name: "Foo" },
+        baz: { value: "qux", name: { "it-IT": "Baz", "en-US": "Baz" } }
+      }
+    ];
+
+    const res = NestedArrayClaim.decode(input);
+    expect(E.isRight(res)).toBe(true);
+    if (E.isRight(res)) {
+      expect(res.right).toHaveLength(1);
+      expect(res.right[0].foo.value).toBe("bar");
+      expect((res.right[0].baz.name as any)["it-IT"]).toBe("Baz");
+    }
+  });
+
+  it("decodes an empty array", () => {
+    const res = NestedArrayClaim.decode([]);
+    expect(E.isRight(res)).toBe(true);
+    if (E.isRight(res)) {
+      expect(res.right).toEqual([]);
+    }
+  });
+
+  it("fails when a value is not a string", () => {
+    const bad = [
+      {
+        foo: { value: 123 as any, name: "Foo" }
+      }
+    ];
+    const res = NestedArrayClaim.decode(bad);
+    expect(E.isLeft(res)).toBe(true);
+  });
+});
+
+describe("NestedObjectClaim", () => {
+  it("decodes a non-empty object (name as string and as record)", () => {
+    const input = {
+      firstName: { value: "John", name: "First Name" },
+      lastName: {
+        value: "Doe",
+        name: { "it-IT": "Cognome", "en-US": "Last Name" }
+      }
+    };
+    const res = NestedObjectClaim.decode(input);
+    expect(E.isRight(res)).toBe(true);
+
+    if (E.isRight(res)) {
+      expect(res.right.firstName.value).toBe("John");
+      expect((res.right.lastName.name as any)["it-IT"]).toBe("Cognome");
+    }
+  });
+
+  it("decodes an empty object", () => {
+    const res = NestedObjectClaim.decode({});
+    expect(E.isRight(res)).toBe(true);
+    if (E.isRight(res)) {
+      expect(res.right).toEqual({});
+    }
+  });
+
+  it("fails when a value is not a string or record", () => {
+    const input = {
+      firstName: { value: 123 as any, name: "First Name" }
+    };
+    const res = NestedObjectClaim.decode(input);
+    expect(E.isLeft(res)).toBe(true);
+  });
+
+  it("input when a required key is missing value or name", () => {
+    const input = {
+      firstName: { name: "First Name" }
+    };
+
+    const res = NestedObjectClaim.decode(input);
+    expect(E.isLeft(res)).toBe(true);
+  });
+});
+
+describe("DrivingPrivilegesCustomClaim", () => {
+  it("decodes an array of valid items", () => {
+    const good = [
+      {
+        vehicle_category_code: {
+          name: "Categoria",
+          value: "AB"
+        },
+        issue_date: {
+          name: {
+            "it-IT": "Data rilascio categoria",
+            "en-US": "Category issue date"
+          },
+          value: "2013-10-19"
+        },
+        expiry_date: {
+          name: {
+            "it-IT": "Data di scadenza della categoria",
+            "en-US": "Category expiry date"
+          },
+          value: "2034-04-04"
+        }
+      }
+    ];
+
+    const res = DrivingPrivilegesCustomClaim.decode(good);
+    expect(E.isRight(res)).toBe(true);
+  });
+});
+
+describe("DrivingPrivilegesValueRaw", () => {
+  const validItem = (
+    cat: string,
+    issue = "2013-10-19",
+    expiry = "2034-04-04"
+  ) => ({
+    vehicle_category_code: {
+      name: { "it-IT": "Categoria", "en-US": "Category code" },
+      value: cat
+    },
+    issue_date: {
+      name: {
+        "it-IT": "Data rilascio categoria",
+        "en-US": "Category issue date"
+      },
+      value: issue
+    },
+    expiry_date: {
+      name: {
+        "it-IT": "Data di scadenza della categoria",
+        "en-US": "Category expiry date"
+      },
+      value: expiry
+    }
+  });
+
+  it("decodes an array of valid items (name as record)", () => {
+    const input = [validItem("AM"), validItem("B")];
+    const res = DrivingPrivilegesValueRaw.decode(input);
+    expect(E.isRight(res)).toBe(true);
+    if (E.isRight(res)) {
+      expect(res.right).toHaveLength(2);
+      expect(res.right[0].vehicle_category_code.value).toBe("AM");
+      expect(res.right[1].vehicle_category_code.value).toBe("B");
+    }
+  });
+
+  it("decodes when name is a simple string", () => {
+    const input = [
+      {
+        vehicle_category_code: { name: "Categoria", value: "AM" },
+        issue_date: { name: "Data rilascio categoria", value: "2013-10-19" },
+        expiry_date: {
+          name: "Data di scadenza della categoria",
+          value: "2034-04-04"
+        }
+      }
+    ];
+    const res = DrivingPrivilegesValueRaw.decode(input);
+    expect(E.isRight(res)).toBe(true);
+    if (E.isRight(res)) {
+      const date = res.right[0].issue_date.value;
+      expect(date.getFullYear()).toBe(2013);
+      expect(date.getMonth()).toBe(9);
+      expect(date.getDate()).toBe(19);
+    }
+  });
+
+  it("fails when a required key is missing", () => {
+    const bad = [
+      {
+        vehicle_category_code: { name: "Categoria", value: "AM" },
+        issue_date: { name: "Data rilascio categoria", value: "2013-10-19" }
+        // expiry_date missing
+      } as any
+    ];
+    const res = DrivingPrivilegesValueRaw.decode(bad);
+    expect(E.isLeft(res)).toBe(true);
+  });
+
+  it("fails when date format is invalid", () => {
+    const bad = [validItem("AM", "19-10-2013", "2034/04/04")];
+    const res = DrivingPrivilegesValueRaw.decode(bad as any);
+    expect(E.isLeft(res)).toBe(true);
+  });
+
+  it("allows extra fields on items (t.type is not exact by default)", () => {
+    const input = [
+      {
+        ...validItem("AM"),
+        extra: "ignored"
+      }
+    ];
+    const res = DrivingPrivilegesValueRaw.decode(input);
+    expect(E.isRight(res)).toBe(true);
+    if (E.isRight(res)) {
+      expect(res.right[0].vehicle_category_code.value).toBe("AM");
+    }
+  });
+
+  it("fails when name is neither string nor record", () => {
+    const bad = [
+      {
+        foo: { value: "ok", name: 42 as any }
+      }
+    ];
+    const res = NestedArrayClaim.decode(bad);
+    expect(E.isLeft(res)).toBe(true);
   });
 });

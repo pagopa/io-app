@@ -9,9 +9,9 @@ import {
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { BackendStatus } from "../../definitions/content/BackendStatus";
 import { defaultRetryingFetch } from "../utils/fetch";
-import { getLollipopLoginHeaders } from "../features/lollipop";
 import { AccessToken } from "../../definitions/session_manager/AccessToken";
 import { PasswordLogin } from "../../definitions/session_manager/PasswordLogin";
+import { getLoginHeaders } from "../features/authentication/common/utils/login";
 
 type PostTestLoginT = IPostApiRequestType<
   PasswordLogin,
@@ -68,18 +68,13 @@ export function BackendPublicClient(
     idpId?: string
   ): PostTestLoginT => ({
     method: "post",
-    url: () => `/test-login`,
+    url: () => `/api/auth/v1/test-login`,
     query: _ => ({}),
     headers:
       publicKey && hashAlgorithm
         ? () => ({
             "Content-Type": "application/json",
-            ...getLollipopLoginHeaders(
-              publicKey,
-              hashAlgorithm,
-              !!isFastLogin,
-              idpId
-            )
+            ...getLoginHeaders(publicKey, hashAlgorithm, !!isFastLogin, idpId)
           })
         : ApiHeaderJson,
     body: (passwordLogin: PasswordLogin) => JSON.stringify(passwordLogin),

@@ -1,4 +1,5 @@
 import { SnapshotFrom } from "xstate";
+import { IdPayTags } from "../../common/machine/tags";
 import { idPayPaymentMachine } from "./machine";
 
 type MachineSnapshot = SnapshotFrom<typeof idPayPaymentMachine>;
@@ -17,3 +18,10 @@ export const failureSelector = (snapshot: MachineSnapshot) =>
 
 export const transactionDataSelector = (snapshot: MachineSnapshot) =>
   snapshot.context.transactionData;
+
+export const areButtonsDisabledSelector = (snapshot: MachineSnapshot) =>
+  snapshot.hasTag(IdPayTags.DisableButtons);
+
+export const dataEntrySelector = (
+  snapshot: MachineSnapshot
+): "qr_code" | "manual" => snapshot.context.data_entry || "qr_code";

@@ -390,6 +390,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                         <View
                           style={
                             {
+                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -399,8 +400,10 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                               {
                                 "alignItems": "center",
                                 "display": "flex",
+                                "flex": 1,
                                 "flexDirection": "column",
                                 "gap": 24,
+                                "justifyContent": "center",
                               }
                             }
                           >
@@ -410,8 +413,8 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                               importantForAccessibility="no-hide-descendants"
                             >
                               <View
-                                accessibilityHint="Wait for the content load"
-                                accessibilityLabel="Loading"
+                                accessibilityHint="Attendi il caricamento del contenuto"
+                                accessibilityLabel="Caricamento in corso"
                                 accessibilityRole="progressbar"
                                 accessible={true}
                                 style={
@@ -588,35 +591,53 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                 </View>
                               </View>
                             </View>
-                            <Text
-                              accessibilityLabel="Test Content Title"
-                              allowFontScaling={true}
-                              dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.5}
+                            <View
                               style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#2B2E38",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 22,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 33,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 8,
+                                }
                               }
                             >
-                              Test Content Title
-                            </Text>
+                              <Text
+                                accessibilityLabel="Test Content Title"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="title2"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#2B2E38",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 22,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 33,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                Test Content Title
+                              </Text>
+                              <Text>
+                                My test child
+                              </Text>
+                            </View>
                           </View>
                         </View>
-                        <Text>
-                          My test child
-                        </Text>
+                        <View
+                          style={
+                            {
+                              "marginBottom": 16,
+                              "paddingHorizontal": 24,
+                            }
+                          }
+                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>
@@ -1021,6 +1042,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                         <View
                           style={
                             {
+                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -1030,8 +1052,10 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                               {
                                 "alignItems": "center",
                                 "display": "flex",
+                                "flex": 1,
                                 "flexDirection": "column",
                                 "gap": 24,
+                                "justifyContent": "center",
                               }
                             }
                           >
@@ -1041,8 +1065,8 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                               importantForAccessibility="no-hide-descendants"
                             >
                               <View
-                                accessibilityHint="Wait for the content load"
-                                accessibilityLabel="Loading"
+                                accessibilityHint="Attendi il caricamento del contenuto"
+                                accessibilityLabel="Caricamento in corso"
                                 accessibilityRole="progressbar"
                                 accessible={true}
                                 style={
@@ -1219,35 +1243,53 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                 </View>
                               </View>
                             </View>
-                            <Text
-                              accessibilityLabel="Test Content Title"
-                              allowFontScaling={true}
-                              dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.5}
+                            <View
                               style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#2B2E38",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 22,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 33,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 8,
+                                }
                               }
                             >
-                              Test Content Title
-                            </Text>
+                              <Text
+                                accessibilityLabel="Test Content Title"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="title2"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#2B2E38",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 22,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 33,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                Test Content Title
+                              </Text>
+                              <Text>
+                                My test child
+                              </Text>
+                            </View>
                           </View>
                         </View>
-                        <Text>
-                          My test child
-                        </Text>
+                        <View
+                          style={
+                            {
+                              "marginBottom": 16,
+                              "paddingHorizontal": 24,
+                            }
+                          }
+                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>
@@ -1652,6 +1694,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                         <View
                           style={
                             {
+                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -1661,8 +1704,10 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                               {
                                 "alignItems": "center",
                                 "display": "flex",
+                                "flex": 1,
                                 "flexDirection": "column",
                                 "gap": 24,
+                                "justifyContent": "center",
                               }
                             }
                           >
@@ -1672,8 +1717,8 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                               importantForAccessibility="no-hide-descendants"
                             >
                               <View
-                                accessibilityHint="Wait for the content load"
-                                accessibilityLabel="Loading"
+                                accessibilityHint="Attendi il caricamento del contenuto"
+                                accessibilityLabel="Caricamento in corso"
                                 accessibilityRole="progressbar"
                                 accessible={true}
                                 style={
@@ -1850,32 +1895,50 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                 </View>
                               </View>
                             </View>
-                            <Text
-                              accessibilityLabel="Test Content Title"
-                              allowFontScaling={true}
-                              dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.5}
+                            <View
                               style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#2B2E38",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 22,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 33,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 8,
+                                }
                               }
                             >
-                              Test Content Title
-                            </Text>
+                              <Text
+                                accessibilityLabel="Test Content Title"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="title2"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#2B2E38",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 22,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 33,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                Test Content Title
+                              </Text>
+                            </View>
                           </View>
                         </View>
+                        <View
+                          style={
+                            {
+                              "marginBottom": 16,
+                              "paddingHorizontal": 24,
+                            }
+                          }
+                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>
@@ -2280,6 +2343,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                         <View
                           style={
                             {
+                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -2289,8 +2353,10 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                               {
                                 "alignItems": "center",
                                 "display": "flex",
+                                "flex": 1,
                                 "flexDirection": "column",
                                 "gap": 24,
+                                "justifyContent": "center",
                               }
                             }
                           >
@@ -2300,8 +2366,8 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                               importantForAccessibility="no-hide-descendants"
                             >
                               <View
-                                accessibilityHint="Wait for the content load"
-                                accessibilityLabel="Loading"
+                                accessibilityHint="Attendi il caricamento del contenuto"
+                                accessibilityLabel="Caricamento in corso"
                                 accessibilityRole="progressbar"
                                 accessible={true}
                                 style={
@@ -2478,32 +2544,50 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                 </View>
                               </View>
                             </View>
-                            <Text
-                              accessibilityLabel="Test Content Title"
-                              allowFontScaling={true}
-                              dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.5}
+                            <View
                               style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#2B2E38",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 22,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 33,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 8,
+                                }
                               }
                             >
-                              Test Content Title
-                            </Text>
+                              <Text
+                                accessibilityLabel="Test Content Title"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="title2"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#2B2E38",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 22,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 33,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                Test Content Title
+                              </Text>
+                            </View>
                           </View>
                         </View>
+                        <View
+                          style={
+                            {
+                              "marginBottom": 16,
+                              "paddingHorizontal": 24,
+                            }
+                          }
+                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>

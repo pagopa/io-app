@@ -3,21 +3,19 @@ import {
   ModuleSummary,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { Fragment, useState } from "react";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../i18n";
-import { useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import { serviceDetailsByIdPotSelector } from "../../../services/details/store/reducers";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { trackIDPayOnboardingPDNDAcceptance } from "../analytics";
 import IdPayOnboardingStepper from "../components/IdPayOnboardingStepper";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
-import { pdndCriteriaSelector, selectServiceId } from "../machine/selectors";
+import { pdndCriteriaSelector, selectInitiative } from "../machine/selectors";
 import { getPDNDCriteriaDescription } from "../utils/strings";
 
 export const IdPayPDNDPrerequisitesScreen = () => {
@@ -25,17 +23,13 @@ export const IdPayPDNDPrerequisitesScreen = () => {
   const machine = useActorRef();
 
   const [authority, setAuthority] = useState<string | undefined>();
-  const serviceId = useSelector(selectServiceId);
 
-  const serviceName = pipe(
-    useIOSelector(state =>
-      serviceDetailsByIdPotSelector(state, serviceId as ServiceId)
-    ),
-    pot.toOption,
-    O.fold(
-      () => I18n.t("idpay.onboarding.PDNDPrerequisites.fallbackInitiativeName"),
-      service => service.name
-    )
+  const initiative = useSelector(selectInitiative);
+
+  const initiativeName = pipe(
+    initiative,
+    O.map(i => i.initiativeName),
+    O.toUndefined
   );
 
   const continueOnPress = () => machine.send({ type: "next" });
@@ -72,6 +66,19 @@ export const IdPayPDNDPrerequisitesScreen = () => {
 
   const pdndCriteria = useSelector(pdndCriteriaSelector);
 
+  const initiativeId = pipe(
+    initiative,
+    O.map(i => i.initiativeId),
+    O.getOrElse(() => "")
+  );
+
+  useOnFirstRender(() =>
+    trackIDPayOnboardingPDNDAcceptance({
+      initiativeId,
+      initiativeName
+    })
+  );
+
   return (
     <IOScrollViewWithLargeHeader
       topElement={<IdPayOnboardingStepper />}
@@ -81,7 +88,7 @@ export const IdPayPDNDPrerequisitesScreen = () => {
         section: I18n.t("idpay.onboarding.navigation.header")
       }}
       description={I18n.t("idpay.onboarding.PDNDPrerequisites.subtitle", {
-        service: serviceName
+        service: initiativeName
       })}
       actions={{
         type: "SingleButton",
@@ -94,18 +101,20 @@ export const IdPayPDNDPrerequisitesScreen = () => {
       contextualHelp={emptyContextualHelp}
       headerActionsProp={{ showHelp: true }}
     >
-      {pdndCriteria.map((criteria, index) => (
+      {pdndCriteria?.map((criteria, index) => (
         <Fragment key={index}>
-          <ModuleSummary
-            label={I18n.t(
-              `idpay.onboarding.PDNDPrerequisites.code.${criteria.code}`
-            )}
-            description={getPDNDCriteriaDescription(criteria)}
-            onPress={() => {
-              setAuthority(criteria.authority);
-              present();
-            }}
-          />
+          {criteria.code && (
+            <ModuleSummary
+              label={I18n.t(
+                `idpay.onboarding.PDNDPrerequisites.code.${criteria.code}`
+              )}
+              description={getPDNDCriteriaDescription(criteria)}
+              onPress={() => {
+                setAuthority(criteria.authority);
+                present();
+              }}
+            />
+          )}
           <VSpacer size={16} />
         </Fragment>
       ))}

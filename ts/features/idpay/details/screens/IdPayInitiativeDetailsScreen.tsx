@@ -3,6 +3,7 @@ import {
   ContentWrapper,
   H6,
   IOButton,
+  IOToast,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -13,18 +14,19 @@ import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useCallback } from "react";
-import { StyleSheet, View } from "react-native";
+import { Linking, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
+import I18n from "i18next";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import {
   InitiativeDTO,
-  InitiativeRewardTypeEnum
+  InitiativeRewardTypeEnum,
+  VoucherStatusEnum
 } from "../../../../../definitions/idpay/InitiativeDTO";
 import { BonusCardScreenComponent } from "../../../../components/BonusCard";
 import { BonusCardCounter } from "../../../../components/BonusCard/BonusCardCounter";
 import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
-import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -50,7 +52,14 @@ import {
   initiativeNeedsConfigurationSelector
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
-import { getInitiativeStatus, IdPayCardStatus } from "../utils";
+import { IdPayCardStatus } from "../utils";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import {
+  trackIDPayDetailAuthorizationStart,
+  trackIDPayDetailInfoAction,
+  trackIDPayDetailLanding,
+  trackIDPayDetailRetailersClick
+} from "../analytics";
 
 export type IdPayInitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -71,6 +80,13 @@ const IdPayInitiativeDetailsScreenComponent = () => {
   const initiativeDataPot = useIOSelector(idpayInitiativeDetailsSelector);
 
   const navigateToBeneficiaryDetails = () => {
+    trackIDPayDetailInfoAction({
+      initiativeId,
+      initiativeName: pot.getOrElse(
+        pot.map(initiativeDataPot, initiative => initiative.initiativeName),
+        undefined
+      )
+    });
     navigation.push(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
       screen: IDPayDetailsRoutes.IDPAY_DETAILS_BENEFICIARY,
       params: {
@@ -116,6 +132,16 @@ const IdPayInitiativeDetailsScreenComponent = () => {
   const initiativeNeedsConfiguration = useIOSelector(
     initiativeNeedsConfigurationSelector
   );
+
+  useOnFirstRender(() => {
+    if (pot.isSome(initiativeDataPot)) {
+      trackIDPayDetailLanding({
+        initiativeName,
+        initiativeId,
+        status: initiative.voucherStatus
+      });
+    }
+  });
 
   if (!pot.isSome(initiativeDataPot)) {
     return (
@@ -253,7 +279,15 @@ const IdPayInitiativeDetailsScreenComponent = () => {
             case InitiativeRewardTypeEnum.REFUND:
               if (initiativeNeedsConfiguration) {
                 return (
-                  <View style={styles.newInitiativeMessageContainer}>
+                  <View
+                    style={{
+                      alignItems: "center",
+                      justifyContent: "center",
+                      padding: 32,
+                      flex: 1,
+                      flexGrow: 1
+                    }}
+                  >
                     <Pictogram name="empty" size={72} />
                     <VSpacer size={16} />
                     <H6>
@@ -306,23 +340,53 @@ const IdPayInitiativeDetailsScreenComponent = () => {
       )
     );
 
+  const handleOnShowMerchants = () => {
+    if (!initiative.webViewUrl) {
+      IOToast.error(I18n.t("global.genericError"));
+      return;
+    }
+    trackIDPayDetailRetailersClick({
+      initiativeId,
+      initiativeName: initiative.initiativeName
+    });
+    void Linking.openURL(initiative.webViewUrl);
+  };
+
   const getInitiativeFooterProps = (
     rewardType?: InitiativeRewardTypeEnum
   ): IOScrollViewActions | undefined => {
     switch (rewardType) {
       case InitiativeRewardTypeEnum.DISCOUNT: {
         if (
-          getInitiativeStatus({ initiative, now: new Date() }) === "EXPIRED" ||
-          getInitiativeStatus({ initiative, now: new Date() }) === "REMOVED"
+          initiative.voucherStatus === VoucherStatusEnum.EXPIRED ||
+          initiative.voucherStatus === VoucherStatusEnum.USED
         ) {
           return;
         }
-        return {
-          type: "SingleButton",
-          primary: {
-            label: I18n.t("idpay.initiative.discountDetails.authorizeButton"),
-            onPress: discountBottomSheet.present
+        const useBonusButton = {
+          label: I18n.t("idpay.initiative.discountDetails.authorizeButton"),
+          onPress: () => {
+            discountBottomSheet.present();
+            trackIDPayDetailAuthorizationStart({
+              initiativeId,
+              initiativeName: initiative.initiativeName
+            });
           }
+        };
+        const showMerchantsButton = {
+          label: I18n.t("idpay.initiative.discountDetails.secondaryCta"),
+          onPress: handleOnShowMerchants
+        };
+        if (!initiative.webViewUrl) {
+          return {
+            type: "SingleButton",
+            primary: useBonusButton
+          };
+        }
+        return {
+          type: "TwoButtons",
+          primary: useBonusButton,
+          secondary: showMerchantsButton
         };
       }
       case InitiativeRewardTypeEnum.EXPENSE:
@@ -359,7 +423,7 @@ const IdPayInitiativeDetailsScreenComponent = () => {
       logoUris={[{ uri: logoURL }]}
       name={initiativeName || ""}
       organizationName={organizationName || ""}
-      status={<IdPayCardStatus now={new Date()} initiative={initiative} />}
+      status={<IdPayCardStatus initiative={initiative} />}
       counters={getInitiativeCounters(initiative)}
       actions={getInitiativeFooterProps(initiativeRewardType)}
     >
@@ -374,15 +438,5 @@ const IdPayInitiativeDetailsScreen = withAppRequiredUpdate(
   IdPayInitiativeDetailsScreenComponent,
   "idpay.initiative_details"
 );
-
-const styles = StyleSheet.create({
-  newInitiativeMessageContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 32,
-    flex: 1,
-    flexGrow: 1
-  }
-});
 
 export { IdPayInitiativeDetailsScreen };

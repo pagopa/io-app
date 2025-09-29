@@ -1,17 +1,15 @@
 import {
-  Body,
   Divider,
-  FooterActionsInline,
-  H2,
   IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useState, useEffect, ComponentProps } from "react";
-import { FlatList, ScrollView, View } from "react-native";
+import I18n from "i18next";
+import { ComponentProps, useEffect, useState } from "react";
+import { FlatList } from "react-native";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../../i18n";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -86,12 +84,6 @@ const FciQtspClausesScreen = () => {
     });
   };
 
-  useHeaderSecondLevel({
-    title: I18n.t("features.fci.title"),
-    contextualHelp: emptyContextualHelp,
-    supportRequest: true
-  });
-
   if (fciPollFilledDocumentError && !isPollFilledDocumentReady) {
     return (
       <GenericErrorComponent
@@ -107,92 +99,76 @@ const FciQtspClausesScreen = () => {
   }
 
   const renderClausesFields = () => (
-    <View style={{ flex: 1 }}>
-      <View
-        style={{
-          flex: 1,
-          paddingBottom: IOVisualCostants.appMarginDefault
-        }}
-      >
-        <FlatList
-          data={qtspClausesSelector}
-          keyExtractor={(_, index) => `${index}`}
-          ItemSeparatorComponent={() => <Divider />}
-          renderItem={({ item }) => (
-            <QtspClauseListItem
-              clause={item}
-              onChange={value =>
-                value
-                  ? setClausesChecked(clausesChecked + 1)
-                  : setClausesChecked(clausesChecked - 1)
-              }
-              onLinkPress={openUrl}
-            />
-          )}
-          ListFooterComponent={
-            <>
-              <Divider />
-              <VSpacer size={24} />
-              <LinkedText
-                text={qtspPrivacyTextSelector}
-                replacementUrl={qtspPrivacyUrlSelector}
-                onPress={openUrl}
-              />
-            </>
+    <FlatList
+      contentContainerStyle={{
+        paddingHorizontal: IOVisualCostants.appMarginDefault
+      }}
+      scrollEnabled={false}
+      data={qtspClausesSelector}
+      keyExtractor={(_, index) => `${index}`}
+      ItemSeparatorComponent={() => <Divider />}
+      renderItem={({ item }) => (
+        <QtspClauseListItem
+          clause={item}
+          onChange={value =>
+            value
+              ? setClausesChecked(clausesChecked + 1)
+              : setClausesChecked(clausesChecked - 1)
           }
-          keyboardShouldPersistTaps={"handled"}
-          testID={"FciQtspClausesListTestID"}
+          onLinkPress={openUrl}
         />
-      </View>
-    </View>
+      )}
+      ListFooterComponent={
+        <>
+          <Divider />
+          <VSpacer size={24} />
+          <LinkedText
+            text={qtspPrivacyTextSelector}
+            replacementUrl={qtspPrivacyUrlSelector}
+            onPress={openUrl}
+          />
+        </>
+      }
+      keyboardShouldPersistTaps={"handled"}
+      testID={"FciQtspClausesListTestID"}
+    />
   );
 
-  const cancelButtonProps: ComponentProps<
-    typeof FooterActionsInline
-  >["startAction"] = {
-    color: "primary",
-    onPress: showAbort,
-    label: I18n.t("global.buttons.cancel")
-  };
-
-  const continueButtonProps: ComponentProps<
-    typeof FooterActionsInline
-  >["endAction"] = {
-    color: "primary",
-    disabled: clausesChecked !== qtspClausesSelector.length,
-    label: I18n.t("global.buttons.continue"),
-    onPress: () => {
-      if (isServiceActive) {
-        trackFciUxConversion(fciEnvironment);
-        dispatch(fciStartSigningRequest());
-      } else {
-        showCheckService();
+  const actions: ComponentProps<typeof IOScrollView>["actions"] = {
+    type: "TwoButtons",
+    primary: {
+      disabled: clausesChecked !== qtspClausesSelector.length,
+      label: I18n.t("global.buttons.continue"),
+      onPress: () => {
+        if (isServiceActive) {
+          trackFciUxConversion(fciEnvironment);
+          dispatch(fciStartSigningRequest());
+        } else {
+          showCheckService();
+        }
       }
+    },
+    secondary: {
+      onPress: showAbort,
+      label: I18n.t("global.buttons.cancel")
     }
   };
 
   return (
-    <>
-      <View style={{ flex: 1 }} testID={"FciQtspClausesTestID"}>
-        {/* TODO: Replace with `IOScrollView` and `FooterActions` component. */}
-        <ScrollView
-          contentContainerStyle={{
-            paddingHorizontal: IOVisualCostants.appMarginDefault
-          }}
-        >
-          <H2>{I18n.t("features.fci.qtspTos.title")}</H2>
-          <VSpacer size={16} />
-          <Body>{I18n.t("features.fci.qtspTos.subTitle")}</Body>
-          {renderClausesFields()}
-        </ScrollView>
-        <FooterActionsInline
-          startAction={cancelButtonProps}
-          endAction={continueButtonProps}
-        />
-      </View>
+    <IOScrollViewWithLargeHeader
+      testID={"FciQtspClausesTestID"}
+      title={{
+        label: I18n.t("features.fci.qtspTos.title")
+      }}
+      description={I18n.t("features.fci.qtspTos.subTitle")}
+      actions={actions}
+      contextualHelp={emptyContextualHelp}
+      headerActionsProp={{ showHelp: true }}
+    >
+      {renderClausesFields()}
       {fciAbortSignature}
       {fciCheckService}
-    </>
+    </IOScrollViewWithLargeHeader>
   );
 };
 export default FciQtspClausesScreen;

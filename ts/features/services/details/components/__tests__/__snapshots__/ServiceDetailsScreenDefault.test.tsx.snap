@@ -274,9 +274,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                               },
                               {},
                               {
-                                "backgroundColor": "#F4F5F8",
-                              },
-                              {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
                               },
@@ -301,7 +298,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -467,7 +464,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -1151,9 +1148,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                               },
                               {},
                               {
-                                "backgroundColor": "#F4F5F8",
-                              },
-                              {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
                               },
@@ -1178,7 +1172,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1344,7 +1338,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -2171,9 +2165,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                               },
                               {},
                               {
-                                "backgroundColor": "#F4F5F8",
-                              },
-                              {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
                               },
@@ -2198,7 +2189,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -2364,7 +2355,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

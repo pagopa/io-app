@@ -3,8 +3,8 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { Platform, View } from "react-native";
 import { Banner, useIOToast, VSpacer } from "@pagopa/io-app-design-system";
 import _ from "lodash";
+import I18n from "i18next";
 import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
-import I18n from "../../../../../i18n";
 import { idpSelected } from "../../../common/store/actions";
 import { idpsRemoteValueSelector } from "../../../../../store/reducers/content";
 import { idps as idpsFallback, SpidIdp } from "../../../../../utils/idps";
@@ -33,6 +33,8 @@ import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { openWebUrl } from "../../../../../utils/url";
 import { helpCenterHowToLoginWithSpidUrl } from "../../../../../config";
 import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
+import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
+import { setIdpSelectedActiveSessionLogin } from "../../../activeSessionLogin/store/actions";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.idp_selection.contextualHelpTitle",
@@ -66,6 +68,7 @@ const IdpSelectionScreen = (): ReactElement => {
   const isNativeLoginFeatureFlagEnabled = useIOSelector(
     isNativeLoginEnabledSelector
   );
+  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
   const { error } = useIOToast();
   const { name: routeName } = useRoute();
 
@@ -113,17 +116,31 @@ const IdpSelectionScreen = (): ReactElement => {
     isNativeLoginFeatureFlagEnabled;
 
   const onIdpSelected = (idp: SpidIdp) => {
-    setSelectedIdp(idp);
-    handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
-    void trackLoginSpidIdpSelected(idp.id, store.getState());
-    if (isNativeLoginEnabled()) {
-      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.AUTH_SESSION
-      });
+    if (isActiveSessionLogin) {
+      dispatch(setIdpSelectedActiveSessionLogin(idp));
+      handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
+      if (isNativeLoginEnabled()) {
+        navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+          screen: AUTHENTICATION_ROUTES.AUTH_SESSION
+        });
+      } else {
+        navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+          screen: AUTHENTICATION_ROUTES.IDP_LOGIN_ACTIVE_SESSION_LOGIN
+        });
+      }
     } else {
-      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-        screen: AUTHENTICATION_ROUTES.IDP_LOGIN
-      });
+      setSelectedIdp(idp);
+      handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
+      void trackLoginSpidIdpSelected(idp.id, store.getState());
+      if (isNativeLoginEnabled()) {
+        navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+          screen: AUTHENTICATION_ROUTES.AUTH_SESSION
+        });
+      } else {
+        navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+          screen: AUTHENTICATION_ROUTES.IDP_LOGIN
+        });
+      }
     }
   };
 

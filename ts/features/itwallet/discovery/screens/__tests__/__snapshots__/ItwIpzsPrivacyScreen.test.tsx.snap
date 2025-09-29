@@ -246,8 +246,8 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                             }
                           >
                             <View
-                              accessibilityHint="Wait for the content load"
-                              accessibilityLabel="Loading"
+                              accessibilityHint="Attendi il caricamento del contenuto"
+                              accessibilityLabel="Caricamento in corso"
                               accessibilityRole="progressbar"
                               accessible={true}
                               style={
@@ -452,7 +452,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                   ]
                                 }
                               >
-                                Wait a few seconds..
+                                Attendi qualche secondo...
                               </Text>
                             </View>
                           </View>
@@ -572,6 +572,13 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                     .
                                   </Text>
                                 </View>
+                                <View
+                                  style={
+                                    {
+                                      "height": 16,
+                                    }
+                                  }
+                                />
                               </View>
                               <View
                                 style={
@@ -592,7 +599,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                   fraudulentWebsiteWarningEnabled={true}
                                   hasOnFileDownload={false}
                                   hasOnOpenWindowEvent={false}
-                                  injectedJavaScript="const meta = document.createElement('meta');meta.setAttribute('content', 'width=device-width, initial-scale=0.99, maximum-scale=0.99, user-scalable=0');meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta);;window.ReactNativeWebView.postMessage(Math.max(document.documentElement.clientHeight, document.documentElement.scrollHeight, document.body.clientHeight, document.body.scrollHeight));true;"
+                                  injectedJavaScript="const meta = document.createElement('meta');meta.setAttribute('content', 'width=device-width, initial-scale=0.99, maximum-scale=0.99, user-scalable=0');meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta);;function sendHeight() {const height = document.body.scrollHeight;window.ReactNativeWebView.postMessage(height);}window.addEventListener("load", sendHeight);window.addEventListener("resize", sendHeight);setTimeout(sendHeight, 300); // fallback;true;"
                                   injectedJavaScriptBeforeContentLoadedForMainFrameOnly={true}
                                   injectedJavaScriptForMainFrameOnly={true}
                                   javaScriptEnabled={true}
@@ -600,7 +607,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                   messagingModuleName=""
                                   newSource={
                                     {
-                                      "uri": "https://io.italia.it/informativa-ipzs",
+                                      "uri": "https://util.wallet.ipzs.it/privacy.html",
                                     }
                                   }
                                   onContentProcessDidTerminate={[Function]}
@@ -614,7 +621,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                   scrollEnabled={false}
                                   source={
                                     {
-                                      "uri": "https://io.italia.it/informativa-ipzs",
+                                      "uri": "https://util.wallet.ipzs.it/privacy.html",
                                     }
                                   }
                                   style={
@@ -922,9 +929,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                               {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                              },
-                              {
-                                "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },
                             ]
@@ -948,7 +952,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1114,7 +1118,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -1511,8 +1515,8 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                             }
                           >
                             <View
-                              accessibilityHint="Wait for the content load"
-                              accessibilityLabel="Loading"
+                              accessibilityHint="Attendi il caricamento del contenuto"
+                              accessibilityLabel="Caricamento in corso"
                               accessibilityRole="progressbar"
                               accessible={true}
                               style={
@@ -1717,7 +1721,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                   ]
                                 }
                               >
-                                Wait a few seconds..
+                                Attendi qualche secondo...
                               </Text>
                             </View>
                           </View>
@@ -1837,6 +1841,13 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                     .
                                   </Text>
                                 </View>
+                                <View
+                                  style={
+                                    {
+                                      "height": 16,
+                                    }
+                                  }
+                                />
                               </View>
                               <View
                                 style={
@@ -1857,7 +1868,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                   fraudulentWebsiteWarningEnabled={true}
                                   hasOnFileDownload={false}
                                   hasOnOpenWindowEvent={false}
-                                  injectedJavaScript="const meta = document.createElement('meta');meta.setAttribute('content', 'width=device-width, initial-scale=0.99, maximum-scale=0.99, user-scalable=0');meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta);;window.ReactNativeWebView.postMessage(Math.max(document.documentElement.clientHeight, document.documentElement.scrollHeight, document.body.clientHeight, document.body.scrollHeight));true;"
+                                  injectedJavaScript="const meta = document.createElement('meta');meta.setAttribute('content', 'width=device-width, initial-scale=0.99, maximum-scale=0.99, user-scalable=0');meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta);;function sendHeight() {const height = document.body.scrollHeight;window.ReactNativeWebView.postMessage(height);}window.addEventListener("load", sendHeight);window.addEventListener("resize", sendHeight);setTimeout(sendHeight, 300); // fallback;true;"
                                   injectedJavaScriptBeforeContentLoadedForMainFrameOnly={true}
                                   injectedJavaScriptForMainFrameOnly={true}
                                   javaScriptEnabled={true}
@@ -1865,7 +1876,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                   messagingModuleName=""
                                   newSource={
                                     {
-                                      "uri": "https://io.italia.it/informativa-ipzs",
+                                      "uri": "https://util.wallet.ipzs.it/privacy.html",
                                     }
                                   }
                                   onContentProcessDidTerminate={[Function]}
@@ -1879,7 +1890,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                   scrollEnabled={false}
                                   source={
                                     {
-                                      "uri": "https://io.italia.it/informativa-ipzs",
+                                      "uri": "https://util.wallet.ipzs.it/privacy.html",
                                     }
                                   }
                                   style={
@@ -2187,9 +2198,6 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                               {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                              },
-                              {
-                                "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },
                             ]
@@ -2213,7 +2221,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -2379,7 +2387,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

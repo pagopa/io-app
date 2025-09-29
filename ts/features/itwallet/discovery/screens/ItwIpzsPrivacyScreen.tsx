@@ -1,29 +1,31 @@
 import { ContentWrapper, H2, VSpacer } from "@pagopa/io-app-design-system";
 import { useState } from "react";
+import I18n from "i18next";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../../i18n";
-import { useIOSelector } from "../../../../store/hooks";
-import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
 import { trackOpenItwTosAccepted } from "../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
-import { isL3FeaturesEnabledSelector } from "../../machine/eid/selectors";
+import {
+  isL3FeaturesEnabledSelector,
+  selectIsLoading
+} from "../../machine/eid/selectors";
 import ItwPrivacyWebViewComponent from "../components/ItwPrivacyWebViewComponent";
+import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 
 const ItwIpzsPrivacyScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isLoadingMachine =
+    ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
 
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
 
-  const privacyUrl = useIOSelector(state =>
-    generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
-  );
+  // TODO [SIW-2992] add this url to remote config
+  const privacyUrl = "https://util.wallet.ipzs.it/privacy.html";
 
   const handleContinuePress = () => {
     trackOpenItwTosAccepted(isL3 ? "L3" : "L2");
@@ -44,6 +46,12 @@ const ItwIpzsPrivacyScreen = () => {
     canGoBack: true,
     supportRequest: true
   });
+
+  if (isLoadingMachine) {
+    return (
+      <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
+    );
+  }
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
@@ -79,6 +87,7 @@ const ItwIpzsPrivacyScreen = () => {
           <IOMarkdown
             content={I18n.t("features.itWallet.discovery.ipzsPrivacy.warning")}
           />
+          <VSpacer size={16} />
         </ContentWrapper>
         <ItwPrivacyWebViewComponent
           source={{

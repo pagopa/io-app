@@ -2,12 +2,12 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { Alert } from "react-native";
 import { channel } from "redux-saga";
 import {
   call,
   cancel,
-  delay,
   fork,
   put,
   select,
@@ -20,14 +20,17 @@ import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserData
 import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
 import { BackendClient } from "../api/backend";
 import { apiUrlPrefix, zendeskEnabled } from "../config";
+import { watchActiveSessionLoginSaga } from "../features/authentication/activeSessionLogin/saga";
 import { authenticationSaga } from "../features/authentication/common/saga/authenticationSaga";
 import { loadSessionInformationSaga } from "../features/authentication/common/saga/loadSessionInformationSaga";
 import {
   checkSession,
   watchCheckSessionSaga
 } from "../features/authentication/common/saga/watchCheckSessionSaga";
-import { watchLogoutSaga } from "../features/authentication/common/saga/watchLogoutSaga";
-import { watchSessionExpiredSaga } from "../features/authentication/common/saga/watchSessionExpiredSaga";
+import {
+  watchForceLogoutOnDifferentCF,
+  watchForceLogoutSaga
+} from "../features/authentication/common/saga/watchForceLogoutSaga";
 import { sessionExpired } from "../features/authentication/common/store/actions";
 import {
   sessionInfoSelector,
@@ -48,7 +51,7 @@ import { startAndReturnIdentificationResult } from "../features/identification/s
 import { IdentificationResult } from "../features/identification/store/reducers";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
 import {
-  isDeviceOfflineWithWalletSaga,
+  shouldExitForOfflineAccess,
   watchSessionRefreshInOfflineSaga
 } from "../features/ingress/saga";
 import { isBlockingScreenSelector } from "../features/ingress/store/selectors";
@@ -69,14 +72,17 @@ import { watchEmailNotificationPreferencesSaga } from "../features/mailCheck/sag
 import { checkEmailSaga } from "../features/mailCheck/sagas/checkEmailSaga";
 import { watchEmailValidationSaga } from "../features/mailCheck/sagas/emailValidationPollingSaga";
 import { watchProfileEmailValidationChangedSaga } from "../features/mailCheck/sagas/watchProfileEmailValidationChangedSaga";
+import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { watchMessagesSaga } from "../features/messages/saga";
 import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
 import { checkAcknowledgedFingerprintSaga } from "../features/onboarding/saga/biometric/checkAcknowledgedFingerprintSaga";
 import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnboardingSaga";
 import { watchAbortOnboardingSaga } from "../features/onboarding/saga/watchAbortOnboardingSaga";
 import { watchPaymentsSaga } from "../features/payments/common/saga";
+import { watchAarFlowSaga } from "../features/pn/aar/saga/watchAARFlowSaga";
+import { isAAREnabled } from "../features/pn/aar/store/reducers";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
-import { handlePendingMessageStateIfAllowed } from "../features/pushNotifications/sagas/common";
+import { maybeHandlePendingBackgroundActions } from "../features/pushNotifications/sagas/common";
 import { notificationPermissionsListener } from "../features/pushNotifications/sagas/notificationPermissionsListener";
 import { profileAndSystemNotificationsPermissions } from "../features/pushNotifications/sagas/profileAndSystemNotificationsPermissions";
 import { pushNotificationTokenUpload } from "../features/pushNotifications/sagas/pushNotificationTokenUpload";
@@ -90,7 +96,6 @@ import {
   watchProfileUpsertRequestsSaga
 } from "../features/settings/common/sagas/profile";
 import { watchUserDataProcessingSaga } from "../features/settings/common/sagas/userDataProcessing";
-import { resetProfileState } from "../features/settings/common/store/actions";
 import { loadUserDataProcessing } from "../features/settings/common/store/actions/userDataProcessing";
 import { profileSelector } from "../features/settings/common/store/selectors";
 import { isProfileFirstOnBoarding } from "../features/settings/common/store/utils/guards";
@@ -102,9 +107,8 @@ import {
   watchZendeskGetSessionSaga
 } from "../features/zendesk/saga";
 import { formatRequestedTokenString } from "../features/zendesk/utils";
-import I18n from "../i18n";
-import { mixpanelTrack } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
+import ROUTES from "../navigation/routes";
 import {
   applicationInitialized,
   startApplicationInitialization
@@ -130,6 +134,11 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { getPin } from "../utils/keychain";
+import { backendClientManager } from "../api/BackendClientManager";
+import {
+  waitForMainNavigator,
+  waitForNavigatorServiceInitialization
+} from "../navigation/saga/navigation";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
@@ -146,8 +155,6 @@ import { checkItWalletIdentitySaga } from "./startup/checkItWalletIdentitySaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
 
 export const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
-const navigatorPollingTime = 125 as Millisecond;
-const warningWaitNavigatorTime = 2000 as Millisecond;
 
 /**
  * Handles the application startup and the main application logic loop
@@ -167,8 +174,13 @@ export function* initializeApplicationSaga(
   const handleSessionExpiration = !!(
     startupAction?.payload && startupAction.payload.handleSessionExpiration
   );
+
   const showIdentificationModal =
     startupAction?.payload?.showIdentificationModalAtStartup ?? true;
+
+  const isActiveLoginSuccessProp =
+    startupAction?.payload?.isActiveLoginSuccess ?? false;
+
   // Remove explicitly previous session data. This is done as completion of two
   // use cases:
   // 1. Logout with data reset
@@ -212,19 +224,6 @@ export function* initializeApplicationSaga(
    */
   yield* fork(watchProfileEmailValidationChangedSaga, lastEmailValidated);
 
-  // Reset the profile cached in redux: at each startup we want to load a fresh
-  // user profile.
-  // Might be removable: https://github.com/pagopa/io-app/pull/398/files#diff-8a5b2f3967d681b976fe673762bd1061f5b430130c880c1195b76af06362cf31
-  // It was likely used by the old ingress screen to track check progress
-  // If removed, ensure the condition `if (O.isNone(maybeUserProfile))` is preserved,
-  // as it plays a key role in detecting uninitialized profiles.
-  // TODO: https://pagopa.atlassian.net/browse/IOPID-3042
-
-  if (!handleSessionExpiration) {
-    yield* put(resetProfileState()); // Consider identifying all scenarios where the profile should be reset (e.g. Wallet offline).
-    // It might be worth consolidating them into a single function
-  }
-
   // We need to generate a key in the application startup flow
   // to use this information on old app version already logged in users.
   // Here we are blocking the application startup, but we have the
@@ -244,20 +243,19 @@ export function* initializeApplicationSaga(
   }
   // #LOLLIPOP_CHECK_BLOCK1_END
 
+  // OFFLINE WALLET MINI-APP CHECKS
+
   // Start watching for ITW sagas that do not require internet connection or a valid session
   yield* fork(watchItwOfflineSaga);
 
-  /**
-   * Prevents the saga from executing if the user opened the app while offline.
-   *
-   * - Calls `isDeviceOfflineWithWalletSaga` to determine if the device is offline,
-   *   the user has a valid IT Wallet instance, and offline access is enabled.
-   * - If this condition is met, it means the app started in offline mode,
-   *   so the function exits early (`return`), preventing unnecessary execution of subsequent logic.
-   * - This ensures that only relevant flows are triggered based on the app’s startup condition.
-   */
-  const isDeviceOfflineWithWallet = yield* call(isDeviceOfflineWithWalletSaga);
-  if (isDeviceOfflineWithWallet) {
+  // Before continuing with the startup flow, we check if the app started offline.
+  // In that case (offline wallet or timeout), we skip the saga to prevent triggering
+  // network-dependent logic unnecessarily.
+  const shouldExitFromStartupForOfflineAccess = yield* call(
+    shouldExitForOfflineAccess
+  );
+
+  if (shouldExitFromStartupForOfflineAccess) {
     return;
   }
 
@@ -304,39 +302,29 @@ export function* initializeApplicationSaga(
       ? previousSessionToken
       : yield* call(authenticationSaga);
 
+  // TODO: review this logic in order to make it more simple and clear
+  if (isActiveLoginSuccessProp) {
+    NavigationService.navigate(ROUTES.MAIN, {
+      screen: MESSAGES_ROUTES.MESSAGES_HOME
+    });
+  }
+
   // BE CAREFUL where you get lollipop keyInfo.
   // They MUST be placed after authenticationSaga, because they are regenerated with each login attempt.
   // Get keyInfo for lollipop
 
   const keyInfo = yield* call(getKeyInfo);
 
-  // Handles the expiration of the session token
-  yield* fork(watchSessionExpiredSaga);
+  // Watches for session expiration or corruption and resets the application state accordingly
+  yield* fork(watchForceLogoutSaga);
+  yield* fork(watchForceLogoutOnDifferentCF);
   yield* fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel);
 
   // Instantiate a backend client from the session token
-  const backendClient: ReturnType<typeof BackendClient> = BackendClient(
-    apiUrlPrefix,
-    sessionToken,
-    keyInfo
-  );
+  const backendClient: ReturnType<typeof BackendClient> =
+    backendClientManager.getBackendClient(apiUrlPrefix, sessionToken, keyInfo);
 
   // The following functions all rely on backendClient
-
-  // Now this saga (watchLogoutSaga) is launched using `fork` instead of `spawn`,
-  // meaning it is tied to the lifecycle of the parent saga (`startupSaga`).
-
-  // watchLogoutSaga is launched using `fork` so that it will be cancelled
-  // if the parent saga (`startupSaga`) is cancelled or restarted
-  // (e.g. on session expiration or when coming back online).
-
-  // Originally the logic with spawn was introduced in this PR: https://github.com/pagopa/io-app/pull/1417
-  // to ensure the logout listener remained active independently.
-  // Now changed to `fork` to better align with the parent lifecycle.
-
-  // Watch for requests to logout
-  // This saga handles user state cleanup during logout.
-  yield* fork(watchLogoutSaga, backendClient.logout);
 
   if (zendeskEnabled) {
     yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);
@@ -614,9 +602,11 @@ export function* initializeApplicationSaga(
   yield* call(checkItWalletIdentitySaga);
 
   yield* put(startupLoadSuccess(StartupStatusEnum.AUTHENTICATED));
-  //
   // User is autenticated, session token is valid
-  //
+
+  // active session login watcher
+  yield* fork(watchActiveSessionLoginSaga);
+
   // Start wathing new wallet sagas
   yield* fork(watchWalletSaga);
 
@@ -630,9 +620,15 @@ export function* initializeApplicationSaga(
     isPnRemoteEnabledSelector
   );
 
+  const aAREnabled = yield* select(isAAREnabled);
+
   if (pnEnabled) {
     // Start watching for PN actions
     yield* fork(watchPnSaga, sessionToken);
+
+    if (aAREnabled) {
+      yield* fork(watchAarFlowSaga, sessionToken, keyInfo);
+    }
   }
 
   const idPayEnabled: ReturnType<typeof isIdPayEnabledSelector> = yield* select(
@@ -719,8 +715,8 @@ export function* initializeApplicationSaga(
   // Watch for checking the user email notifications preferences
   yield* fork(watchEmailNotificationPreferencesSaga);
 
-  // Check if we have a pending notification message
-  yield* call(handlePendingMessageStateIfAllowed, true);
+  // Check if we have any pending background action to be handled
+  yield* call(maybeHandlePendingBackgroundActions, true);
 
   // This tells the security advice bottomsheet that it can be shown
   yield* put(setSecurityAdviceReadyToShow(true));
@@ -730,72 +726,6 @@ export function* initializeApplicationSaga(
       actionsToWaitFor: []
     })
   );
-}
-
-/**
- * Wait until the {@link NavigationService} is initialized.
- * The NavigationService is initialized when is called {@link RootContainer} componentDidMount and the ref is set with setTopLevelNavigator
- * Consider moving this to a dedicated file.
- * TODO: https://pagopa.atlassian.net/browse/IOPID-3041
- */
-function* waitForNavigatorServiceInitialization() {
-  // eslint-disable-next-line functional/no-let
-  let isNavigatorReady: ReturnType<
-    typeof NavigationService.getIsNavigationReady
-  > = yield* call(NavigationService.getIsNavigationReady);
-
-  // eslint-disable-next-line functional/no-let
-  let timeoutLogged = false;
-
-  const startTime = performance.now();
-
-  // before continuing we must wait for the navigatorService to be ready
-  while (!isNavigatorReady) {
-    const elapsedTime = performance.now() - startTime;
-    if (!timeoutLogged && elapsedTime >= warningWaitNavigatorTime) {
-      timeoutLogged = true;
-
-      yield* call(mixpanelTrack, "NAVIGATION_SERVICE_INITIALIZATION_TIMEOUT");
-    }
-    yield* delay(navigatorPollingTime);
-    isNavigatorReady = yield* call(NavigationService.getIsNavigationReady);
-  }
-
-  const initTime = performance.now() - startTime;
-
-  yield* call(mixpanelTrack, "NAVIGATION_SERVICE_INITIALIZATION_COMPLETED", {
-    elapsedTime: initTime
-  });
-}
-
-// Consider moving this to a dedicated file
-// TODO: https://pagopa.atlassian.net/browse/IOPID-3041
-
-function* waitForMainNavigator() {
-  // eslint-disable-next-line functional/no-let
-  let isMainNavReady = yield* call(NavigationService.getIsMainNavigatorReady);
-
-  // eslint-disable-next-line functional/no-let
-  let timeoutLogged = false;
-  const startTime = performance.now();
-
-  // before continuing we must wait for the main navigator tack to be ready
-  while (!isMainNavReady) {
-    const elapsedTime = performance.now() - startTime;
-    if (!timeoutLogged && elapsedTime >= warningWaitNavigatorTime) {
-      timeoutLogged = true;
-
-      yield* call(mixpanelTrack, "MAIN_NAVIGATOR_STACK_READY_TIMEOUT");
-    }
-    yield* delay(navigatorPollingTime);
-    isMainNavReady = yield* call(NavigationService.getIsMainNavigatorReady);
-  }
-
-  const initTime = performance.now() - startTime;
-
-  yield* call(mixpanelTrack, "MAIN_NAVIGATOR_STACK_READY_OK", {
-    elapsedTime: initTime
-  });
 }
 
 export function* startupSaga(): IterableIterator<ReduxSagaEffect> {

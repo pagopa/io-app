@@ -1,16 +1,17 @@
 import {
-  FooterActionsInline,
+  Divider,
+  FooterActions,
   H2,
-  H4,
-  IconButton,
-  IOColors,
   IOVisualCostants,
+  ListItemHeader,
+  useFooterActionsMeasurements,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Route, StackActions, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { constFalse, increment, pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import {
   ComponentProps,
   useContext,
@@ -18,7 +19,7 @@ import {
   useMemo,
   useState
 } from "react";
-import { ScrollView, SectionList, View } from "react-native";
+import { SectionList, View } from "react-native";
 import {
   Clause,
   TypeEnum as ClausesTypeEnum
@@ -28,7 +29,6 @@ import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
 import { SignatureField } from "../../../../../definitions/fci/SignatureField";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -83,6 +83,9 @@ const FciSignatureFieldsScreen = () => {
   const [isClausesChecked, setIsClausesChecked] = useState(false);
   const [isError, setIsError] = useState(false);
   const { showModal, hideModal } = useContext(LightModalContext);
+
+  const { footerActionsMeasurements, handleFooterActionsMeasurements } =
+    useFooterActionsMeasurements();
 
   // get signatureFields for the current document
   const docSignatures = useMemo(
@@ -170,41 +173,50 @@ const FciSignatureFieldsScreen = () => {
 
   const renderSectionHeader = (info: { section: { title: string } }) => {
     const clauseLabel = getClauseLabel(info.section.title as Clause["type"]);
-    return (
-      <View
-        style={{
-          backgroundColor: IOColors.white,
-          flexDirection: "row"
-        }}
-      >
-        <H4>{clauseLabel}</H4>
 
-        {/*
-          Show info icon and signature field info only for unfair clauses
-          NOTE: this could be a temporary solution, since we could have
-          an improved user experience.
-        */}
-        {info.section.title === ClausesTypeEnum.UNFAIR && (
-          <>
-            <IconButton
-              icon={"info"}
-              onPress={presentInfo}
-              accessibilityLabel={I18n.t("global.buttons.info")}
-            />
-            {fciSignaturefieldInfo}
-          </>
-        )}
-      </View>
+    const isUnfairClause = info.section.title === ClausesTypeEnum.UNFAIR;
+
+    return (
+      <>
+        <VSpacer size={12} />
+        <ListItemHeader
+          label={clauseLabel}
+          endElement={
+            isUnfairClause
+              ? {
+                  type: "iconButton",
+                  componentProps: {
+                    icon: "info",
+                    accessibilityLabel: I18n.t("global.buttons.info"),
+                    onPress: presentInfo
+                  }
+                }
+              : undefined
+          }
+        />
+        {isUnfairClause && fciSignaturefieldInfo}
+      </>
     );
   };
 
   const renderSignatureFields = () => (
     <SectionList
+      stickySectionHeadersEnabled={false}
+      contentContainerStyle={{
+        paddingHorizontal: IOVisualCostants.appMarginDefault
+      }}
+      ListHeaderComponent={() => (
+        <>
+          <H2>{I18n.t("features.fci.signatureFields.title")}</H2>
+          <VSpacer size={32} />
+        </>
+      )}
       sections={getSectionListData(
         orderSignatureFields(signatureFieldsSelector)
       )}
       keyExtractor={(item, index) => `${item.clause.title}${index}`}
       testID={"FciSignatureFieldsSectionListTestID"}
+      ItemSeparatorComponent={() => <Divider />}
       renderItem={({ item }) => (
         <SignatureFieldItem
           title={item.clause.title}
@@ -225,38 +237,34 @@ const FciSignatureFieldsScreen = () => {
     />
   );
 
-  const cancelButtonProps: ComponentProps<
-    typeof FooterActionsInline
-  >["startAction"] = {
-    color: "primary",
-    onPress: present,
-    label: I18n.t("global.buttons.cancel")
-  };
-
-  const continueButtonProps: ComponentProps<
-    typeof FooterActionsInline
-  >["endAction"] = {
-    color: "primary",
-    disabled: !isClausesChecked,
-    onPress: () => {
-      if (currentDoc < documentsSelector.length - 1) {
-        navigation.dispatch(
-          StackActions.push(FCI_ROUTES.DOCUMENTS, {
-            attrs: undefined,
-            currentDoc: increment(currentDoc)
-          })
-        );
-      } else {
-        trackFciStartSignature(fciEnvironment);
-        navigation.navigate(FCI_ROUTES.MAIN, {
-          screen: FCI_ROUTES.USER_DATA_SHARE
-        });
-      }
+  const actions: ComponentProps<typeof FooterActions>["actions"] = {
+    type: "TwoButtons",
+    primary: {
+      disabled: !isClausesChecked,
+      onPress: () => {
+        if (currentDoc < documentsSelector.length - 1) {
+          navigation.dispatch(
+            StackActions.push(FCI_ROUTES.DOCUMENTS, {
+              attrs: undefined,
+              currentDoc: increment(currentDoc)
+            })
+          );
+        } else {
+          trackFciStartSignature(fciEnvironment);
+          navigation.navigate(FCI_ROUTES.MAIN, {
+            screen: FCI_ROUTES.USER_DATA_SHARE
+          });
+        }
+      },
+      label:
+        currentDoc < documentsSelector.length - 1
+          ? I18n.t("global.buttons.continue")
+          : "Firma"
     },
-    label:
-      currentDoc < documentsSelector.length - 1
-        ? I18n.t("global.buttons.continue")
-        : "Firma"
+    secondary: {
+      onPress: present,
+      label: I18n.t("global.buttons.cancel")
+    }
   };
 
   useHeaderSecondLevel({
@@ -277,20 +285,17 @@ const FciSignatureFieldsScreen = () => {
   }
 
   return (
-    <View style={{ flex: 1 }} testID={"FciSignatureFieldsTestID"}>
-      {/* TODO: Replace with `IOScrollView` and `FooterActions` component. */}
-      <ScrollView
-        contentContainerStyle={{
-          paddingHorizontal: IOVisualCostants.appMarginDefault
-        }}
-      >
-        <H2>{I18n.t("features.fci.signatureFields.title")}</H2>
-        <VSpacer size={32} />
-        {renderSignatureFields()}
-      </ScrollView>
-      <FooterActionsInline
-        startAction={cancelButtonProps}
-        endAction={continueButtonProps}
+    <View
+      style={{
+        flex: 1,
+        paddingBottom: footerActionsMeasurements.safeBottomAreaHeight
+      }}
+      testID={"FciSignatureFieldsTestID"}
+    >
+      {renderSignatureFields()}
+      <FooterActions
+        onMeasure={handleFooterActionsMeasurements}
+        actions={actions}
       />
       {fciAbortSignature}
     </View>

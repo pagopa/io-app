@@ -1,10 +1,17 @@
 import { Action, Store, createStore } from "redux";
-import { MESSAGES_ROUTES } from "../../navigation/routes";
-import { GlobalState } from "../../../../store/reducers/types";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
+import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
-import { MessageDetailsScreen } from "../MessageDetailsScreen";
+import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { reproduceSequence } from "../../../../utils/tests";
+import {
+  messageWithExpiredPayment,
+  messageWithValidPayment,
+  message_1
+} from "../../../messages/__mocks__/message";
+import { service_1 } from "../../../messages/__mocks__/messages";
 import {
   loadMessageById,
   loadMessageDetails,
@@ -14,18 +21,10 @@ import {
   toUIMessage,
   toUIMessageDetails
 } from "../../../messages/store/reducers/transformers";
-import {
-  messageWithExpiredPayment,
-  messageWithValidPayment,
-  message_1
-} from "../../../messages/__mocks__/message";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
-import { service_1 } from "../../../messages/__mocks__/messages";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
+import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { ATTACHMENT_CATEGORY } from "../../types/attachmentCategory";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
-import { UIMessageId } from "../../types";
+import { MessageDetailsScreen } from "../MessageDetailsScreen";
 
 export const thirdPartyMessage: ThirdPartyMessageWithContent = {
   ...message_1,
@@ -58,8 +57,8 @@ describe("MessageDetailsScreen", () => {
       loadServiceDetail.success(service_1),
       loadMessageDetails.success(toUIMessageDetails(messageWithExpiredPayment)),
       loadThirdPartyMessage.success({
-        id: message_1.id as UIMessageId,
-        content: thirdPartyMessage
+        id: message_1.id,
+        content: { kind: "TPM", ...thirdPartyMessage }
       })
     ];
 
@@ -81,8 +80,9 @@ describe("MessageDetailsScreen", () => {
       loadServiceDetail.success(service_1),
       loadMessageDetails.success(toUIMessageDetails(messageWithExpiredPayment)),
       loadThirdPartyMessage.success({
-        id: message_1.id as UIMessageId,
+        id: message_1.id,
         content: {
+          kind: "TPM",
           ...thirdPartyMessage,
           third_party_message: {
             attachments: []

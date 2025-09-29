@@ -44,13 +44,34 @@ export const getThemeColorByCredentialType = (
         textColor: "#17406F",
         statusBarStyle: "light-content"
       };
+    case CredentialType.EDUCATION_DEGREE:
+      return {
+        backgroundColor: "#F2F1CE",
+        textColor: IOColors.black,
+        statusBarStyle: "dark-content",
+        variant: "neutral"
+      };
+    case CredentialType.EDUCATION_ENROLLMENT:
+      return {
+        backgroundColor: "#E0F2CE",
+        textColor: IOColors.black,
+        statusBarStyle: "dark-content",
+        variant: "neutral"
+      };
+    case CredentialType.RESIDENCY:
+      return {
+        backgroundColor: "#F2E4CE",
+        textColor: IOColors.black,
+        statusBarStyle: "dark-content",
+        variant: "neutral"
+      };
   }
 };
 
 export const getHeaderPropsByCredentialType = (
   credentialType: string,
   withL3Design: boolean
-): HeaderSecondLevelHookProps => {
+) => {
   const { backgroundColor, variant } = getThemeColorByCredentialType(
     credentialType,
     withL3Design
@@ -58,7 +79,6 @@ export const getHeaderPropsByCredentialType = (
 
   return {
     title: getCredentialNameFromType(credentialType, "", withL3Design),
-    supportRequest: true,
     variant: variant ?? "contrast",
     backgroundColor
   };

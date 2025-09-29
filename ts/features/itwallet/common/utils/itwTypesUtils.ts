@@ -1,15 +1,10 @@
+import { type Credential as LegacyCredential } from "@pagopa/io-react-native-wallet-legacy";
 import {
-  AuthorizationDetail as _legacy_AuthorizationDetail,
-  Credential as _legacy_Credential,
-  Trust as _legacy_Trust,
-  WalletInstance as _legacy_WalletInstance
-} from "@pagopa/io-react-native-wallet";
-import {
-  AuthorizationDetail,
   Credential,
   Trust,
   WalletInstance
-} from "@pagopa/io-react-native-wallet-v2";
+} from "@pagopa/io-react-native-wallet";
+import { CredentialType } from "./itwMocksUtils.ts";
 
 /**
  * Alias type for the return type of the start issuance flow operation.
@@ -35,51 +30,46 @@ export type RpEntityConfiguration =
 
 /**
  * Alias for the IssuerConfiguration type v0.7.1
- * TODO: [SIW-2530]: remove the legacy type
  */
 export type LegacyIssuerConfiguration = Awaited<
-  ReturnType<_legacy_Credential.Issuance.EvaluateIssuerTrust>
+  ReturnType<LegacyCredential.Issuance.EvaluateIssuerTrust>
 >["issuerConf"];
 
 /**
  * Alias for the IssuerConfiguration type
  */
-export type IssuerConfiguration =
-  | Awaited<ReturnType<Credential.Issuance.EvaluateIssuerTrust>>["issuerConf"]
-  | LegacyIssuerConfiguration;
+export type IssuerConfiguration = Awaited<
+  ReturnType<Credential.Issuance.EvaluateIssuerTrust>
+>["issuerConf"];
 
 /**
- * Alias for the AuthorizationDetail type
- * TODO: [SIW-2530]: remove the legacy type
+ * Alias for the SupportedCredentialConfiguration type
  */
-export type CredentialAuthDetail =
-  | AuthorizationDetail
-  | _legacy_AuthorizationDetail;
+export type MdocSupportedCredentialConfiguration = Extract<
+  IssuerConfiguration["openid_credential_issuer"]["credential_configurations_supported"][string],
+  { format: "mso_mdoc" }
+>;
 
 /**
  * Alias for the AccessToken type
- * TODO: [SIW-2530]: remove the legacy type
  */
 export type CredentialAccessToken = Awaited<
-  ReturnType<
-    | Credential.Issuance.AuthorizeAccess
-    | _legacy_Credential.Issuance.AuthorizeAccess
-  >
+  ReturnType<Credential.Issuance.AuthorizeAccess>
 >["accessToken"];
 
 /**
  * Alias for the ParseCredential type
  */
 export type ParsedCredential = Awaited<
-  ReturnType<typeof Credential.Issuance.verifyAndParseCredential>
+  ReturnType<Credential.Issuance.VerifyAndParseCredential>
 >["parsedCredential"];
 
 /**
  * Alias for the ParsedStatusAttestation type
  */
 export type ParsedStatusAttestation = Awaited<
-  ReturnType<typeof _legacy_Credential.Status.verifyAndParseStatusAttestation>
->["parsedStatusAttestation"]["payload"];
+  ReturnType<Credential.Status.VerifyAndParseStatusAssertion>
+>["parsedStatusAssertion"]["payload"];
 
 /**
  * Alias for the WalletInstanceStatus type
@@ -116,7 +106,7 @@ export type StoredCredential = {
   parsedCredential: ParsedCredential;
   credentialType: string;
   credentialId: string;
-  issuerConf: IssuerConfiguration;
+  issuerConf: IssuerConfiguration | LegacyIssuerConfiguration; // The Wallet might still contain older credentials
   storedStatusAttestation?: StoredStatusAttestation;
   /**
    * The SD-JWT issuance and expiration dates in ISO format.
@@ -152,4 +142,36 @@ export type WalletInstanceAttestations = {
   jwt: string;
   [CredentialFormat.SD_JWT]?: string;
   [CredentialFormat.MDOC]?: string;
+};
+
+// A predefined list of credential types that are potentially multi-level.
+const MULTI_LEVEL_CREDENTIAL_TYPES = [
+  CredentialType.EDUCATION_DEGREE,
+  CredentialType.EDUCATION_ENROLLMENT
+];
+
+/**
+ * Checks if a given credential is "multi-level".
+ * A credential is multi-level if its type is in a predefined list
+ * and its parsed data contains at least one claim that is an array
+ * with more than one item.
+ *
+ * @param credential the stored credential to check.
+ * @returns `true` if the credential is multi-level, `false` otherwise.
+ */
+export const isMultiLevelCredential = (
+  credential: StoredCredential
+): boolean => {
+  const { credentialType, parsedCredential } = credential;
+  const isMultiLevel = MULTI_LEVEL_CREDENTIAL_TYPES.includes(
+    credentialType as CredentialType
+  );
+
+  if (!isMultiLevel || !parsedCredential) {
+    return false;
+  }
+
+  return Object.values(parsedCredential).some(
+    claim => Array.isArray(claim.value) && claim.value.length > 1
+  );
 };

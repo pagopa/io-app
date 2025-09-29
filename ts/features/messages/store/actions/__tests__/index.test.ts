@@ -32,11 +32,14 @@ import { PaymentInfoResponse } from "../../../../../../definitions/backend/Payme
 import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
-import { ThirdPartyMessageWithContent } from "../../../../../../definitions/backend/ThirdPartyMessageWithContent";
-import { UIMessage, UIMessageDetails, UIMessageId } from "../../../types";
+import { UIMessage, UIMessageDetails } from "../../../types";
+import {
+  thirdPartyKind,
+  ThirdPartyMessageUnion
+} from "../../reducers/thirdPartyById";
 
 describe("index", () => {
-  const messageId = "01JKAGGZTSQDR1GB5TYJ9PHXM6" as UIMessageId;
+  const messageId = "01JKAGGZTSQDR1GB5TYJ9PHXM6";
   const serviceId = "01JKAGWVQRFE1P8QAHZS743M90" as ServiceId;
   const tag = "A tag";
   const message = { title: "The title" } as UIMessage;
@@ -158,17 +161,21 @@ describe("index", () => {
     });
   });
   describe("loadThirdPartyMessage.success", () => {
-    it("should match expected type and payload", () => {
-      const content = {
-        id: messageId as string
-      } as ThirdPartyMessageWithContent;
-      const action = loadThirdPartyMessage.success({
-        id: messageId,
-        content
-      });
-      expect(action.type).toBe("THIRD_PARTY_MESSAGE_LOAD_SUCCESS");
-      expect(action.payload).toEqual({ id: messageId, content });
-    });
+    const thirdPartyKindsMock = Object.values(thirdPartyKind);
+    thirdPartyKindsMock.forEach(kind =>
+      it(`should match expected type and payload and kind='${kind}'`, () => {
+        const content = {
+          kind,
+          id: messageId as string
+        } as ThirdPartyMessageUnion;
+        const action = loadThirdPartyMessage.success({
+          id: messageId,
+          content
+        });
+        expect(action.type).toBe("THIRD_PARTY_MESSAGE_LOAD_SUCCESS");
+        expect(action.payload).toEqual({ id: messageId, content });
+      })
+    );
   });
   describe("loadThirdPartyMessage.failure", () => {
     it("should match expected type and payload", () => {
@@ -508,13 +515,15 @@ describe("index", () => {
         const action = downloadAttachment.request({
           attachment,
           messageId,
-          skipMixpanelTrackingOnFailure: skipTracking
+          skipMixpanelTrackingOnFailure: skipTracking,
+          serviceId
         });
         expect(action.type).toBe("DOWNLOAD_ATTACHMENT_REQUEST");
         expect(action.payload).toEqual({
           attachment,
           messageId,
-          skipMixpanelTrackingOnFailure: skipTracking
+          skipMixpanelTrackingOnFailure: skipTracking,
+          serviceId
         });
       });
     });

@@ -1,15 +1,18 @@
 import { ComponentProps, memo } from "react";
 import { View } from "react-native";
+import { addPadding } from "@pagopa/io-react-native-jwt";
 import {
   ClaimsSelector,
   ListItemHeader,
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import {
   ClaimDisplayFormat,
   ImageClaim,
+  StringClaim,
+  WellKnownClaim,
   getClaimDisplayValue,
   getSafeText
 } from "../../../common/utils/itwClaimsUtils";
@@ -25,6 +28,17 @@ const mapClaims = (
       return {
         id: c.id,
         value: displayValue,
+        description: c.label,
+        type: "image"
+      };
+    }
+    if (
+      c.id.includes(WellKnownClaim.portrait) &&
+      StringClaim.is(displayValue)
+    ) {
+      return {
+        id: c.id,
+        value: `data:image/jpeg;base64,${addPadding(displayValue)}`,
         description: c.label,
         type: "image"
       };

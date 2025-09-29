@@ -21,10 +21,13 @@ import {
   preferencesIdPayTestSetEnabled,
   preferencesExperimentalDesignEnabled,
   preferencesFontSet,
-  TypefaceChoice
+  TypefaceChoice,
+  preferencesAarFeatureSetEnabled,
+  preferencesThemeSet
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
 import { differentProfileLoggedIn } from "../actions/crossSessions";
+import { ColorModeChoice } from "../../hooks/useAppThemeConfiguration";
 import { GlobalState } from "./types";
 
 export type PersistedPreferencesState = Readonly<{
@@ -48,6 +51,8 @@ export type PersistedPreferencesState = Readonly<{
   // be sure to handle such case when reading and using this value
   isExperimentalDesignEnabled: boolean;
   fontPreference: TypefaceChoice;
+  themePreference: ColorModeChoice;
+  isAarFeatureEnabled: boolean;
 }>;
 
 export const initialPreferencesState: PersistedPreferencesState = {
@@ -62,9 +67,12 @@ export const initialPreferencesState: PersistedPreferencesState = {
   isPnTestEnabled: false,
   isIdPayTestEnabled: false,
   isExperimentalDesignEnabled: false,
-  fontPreference: "comfortable"
+  fontPreference: "comfortable",
+  themePreference: "light",
+  isAarFeatureEnabled: false
 };
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 export default function preferencesReducer(
   state: PersistedPreferencesState = initialPreferencesState,
   action: Action
@@ -147,6 +155,13 @@ export default function preferencesReducer(
     };
   }
 
+  if (isActionOf(preferencesThemeSet, action)) {
+    return {
+      ...state,
+      themePreference: action.payload
+    };
+  }
+
   // when the current user is different from the previous logged one
   // reset the mixpanel opt-in preference
   if (isActionOf(differentProfileLoggedIn, action)) {
@@ -161,6 +176,13 @@ export default function preferencesReducer(
     return {
       ...state,
       isIdPayTestEnabled: action.payload.isIdPayTestEnabled
+    };
+  }
+
+  if (isActionOf(preferencesAarFeatureSetEnabled, action)) {
+    return {
+      ...state,
+      isAarFeatureEnabled: action.payload.isAarFeatureEnabled
     };
   }
 
@@ -208,6 +230,12 @@ export const isExperimentalDesignEnabledSelector = (state: GlobalState) =>
 
 export const fontPreferenceSelector = (state: GlobalState): TypefaceChoice =>
   state.persistedPreferences.fontPreference ?? "comfortable";
+
+export const themePreferenceSelector = (state: GlobalState): ColorModeChoice =>
+  state.persistedPreferences.themePreference ?? "light";
+
+export const isAARLocalEnabled = (state: GlobalState) =>
+  state.persistedPreferences.isAarFeatureEnabled;
 
 // returns the preferred language as an Option from the persisted store
 export const preferredLanguageSelector = createSelector<

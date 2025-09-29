@@ -1,12 +1,13 @@
 import { useMemo } from "react";
+import I18n from "i18next";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../../i18n";
 import UnlockAccessComponent, {
   UnlockAccessProps
 } from "../../login/unlockAccess/components/UnlockAccessComponent";
+import { DifferentCFErrorScreen } from "../../activeSessionLogin/screens/DifferentCFErrorScreen";
 
 export enum AUTH_ERRORS {
   ERROR_19 = "19",
@@ -17,6 +18,7 @@ export enum AUTH_ERRORS {
   ERROR_25 = "25",
   ERROR_1001 = "1001", // This error is tracked as generic error
   ERROR_1002 = "1002", // This error is tracked as generic error
+  ERROR_1004 = "1004", // active session login - different fiscal code
   MISSING_SAML_RESPONSE = "Missing SAMLResponse in ACS",
   MISSING_IDP_ISSUER = "Error: Missing idpIssuer inside configuration", // This error is tracked as generic error
   CIEID_IOS_OPERATION_CANCELED_MESSAGE = "Operazione_annullata_dall'utente",
@@ -148,11 +150,14 @@ const AuthErrorComponent = ({
   const errorDetails =
     errorsObject[errorCodeOrMessage] || errorsObject[AUTH_ERRORS.GENERIC_ERROR];
 
-  return errorCodeOrMessage === AUTH_ERRORS.ERROR_1002 ? (
-    <UnlockAccessComponent authLevel={authLevel} />
-  ) : (
-    <OperationResultScreenContent {...errorDetails} />
-  );
+  switch (errorCodeOrMessage) {
+    case AUTH_ERRORS.ERROR_1002:
+      return <UnlockAccessComponent authLevel={authLevel} />;
+    case AUTH_ERRORS.ERROR_1004:
+      return <DifferentCFErrorScreen />;
+    default:
+      return <OperationResultScreenContent {...errorDetails} />;
+  }
 };
 
 export default AuthErrorComponent;

@@ -9,8 +9,8 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { truncate } from "lodash";
+import I18n from "i18next";
 import { Locales } from "../../../../../locales/locales";
-import I18n from "../../../../i18n";
 import { JsonFromString } from "./ItwCodecUtils";
 import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
 
@@ -61,17 +61,16 @@ export enum WellKnownClaim {
   /**
    * Claim that contains the family name, if applicable for the credential
    */
-  family_name = "family_name"
+  family_name = "family_name",
+  /**
+   * Claim that contains the portrait image
+   */
+  portrait = "portrait",
+  /**
+   * Claim that contains the driving privilege within the new nested structure
+   */
+  driving_privileges = "driving_privileges"
 }
-
-/**
- * Type for each claim to be displayed.
- */
-export type ClaimDisplayFormat = {
-  id: string;
-  label: string;
-  value: unknown;
-};
 
 /**
  * Type for disclosable claims.
@@ -82,11 +81,37 @@ export type DisclosureClaim = {
 };
 
 /**
- * Parses the claims from the credential.
- * For each Record entry it maps the key and the attribute value to a label and a value.
+ * Flat claim that contains a primitive value or an array of primitives
+ */
+export type FlatClaimDisplayFormat = {
+  id: string;
+  label: string;
+  value: unknown;
+};
+
+/**
+ * Nested claim that contains an array of objects (ParsedCredential)
+ */
+export type NestedArrayClaimDisplayFormat = {
+  id: string;
+  label: string;
+  value: Array<ParsedCredential>;
+};
+
+/**
+ * Union type for claim display format, either flat or nested
+ */
+export type ClaimDisplayFormat =
+  | FlatClaimDisplayFormat
+  | NestedArrayClaimDisplayFormat;
+
+/**
+ * Parses the claims from the credential, including nested claims.
+ * For each Record entry, it maps the key and the attribute value to a label and a value.
+ * If a claim's value is an array of objects, it recursively parses each object.
  * The label is taken from the attribute name which is either a string or a record of locale and string.
- * If the type of the attribute name is string then when take it's value because locales have not been set.
- * If the type of the attribute name is record then we take the value of the locale that matches the current locale.
+ * If the type of the attribute name is string then we take its value because locales have not been set.
+ * If the type of the attribute name is a record then we take the value of the locale that matches the current locale.
  * If there's no locale that matches the current locale then we take the attribute key as the name.
  * The value is taken from the attribute value.
  * @param parsedCredential - the parsed credential.
@@ -98,6 +123,7 @@ export const parseClaims = (
   options: { exclude?: Array<string> } = {}
 ): Array<ClaimDisplayFormat> => {
   const { exclude = [] } = options;
+
   return Object.entries(parsedCredential)
     .filter(([key]) => !exclude.includes(key))
     .map(([key, attribute]) => {
@@ -106,7 +132,11 @@ export const parseClaims = (
           ? attribute.name
           : attribute.name?.[getClaimsFullLocale()] || key;
 
-      return { label: attributeName, value: attribute.value, id: key };
+      return {
+        id: key,
+        label: attributeName,
+        value: attribute.value
+      };
     });
 };
 
@@ -219,7 +249,7 @@ const localeToClaimsLocales = new Map<Locales, ClaimsLocales>([
  * @returns a enum value for the claims locale.
  */
 export const getClaimsFullLocale = (): ClaimsLocales =>
-  localeToClaimsLocales.get(I18n.currentLocale()) ?? ClaimsLocales.it;
+  localeToClaimsLocales.get(I18n.language as Locales) ?? ClaimsLocales.it;
 
 /**
  *
@@ -256,6 +286,19 @@ const URL_REGEX = "^https?://";
  */
 const FISCAL_CODE_WITH_PREFIX =
   "(TINIT-[A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z])";
+
+const LocaleName = t.union([t.string, t.record(t.string, t.string)]);
+
+/**
+ * Decoder for a nested array of claims.
+ * Each object in the array is a record of string keys and ParsedAttribute values.
+ * The ParsedAttribute is an object with a value and a name, where the name can be either a string or a record of locale and string.
+ */
+
+const ParsedAttribute = t.type({
+  value: t.string,
+  name: LocaleName
+});
 
 /**
  * io-ts decoder for the date claim field of the credential.
@@ -319,6 +362,77 @@ export type DrivingPrivilegesClaimType = t.TypeOf<
 >;
 
 /**
+ * Decoder for the raw driving privileges array, used to parse the new format of the mDL driving privileges.
+ * This is needed to support the new format of the mDL driving privileges, which is an array of objects with
+ * vehicle_category_code, issue_date and expiry_date fields.
+ */
+const DrivingPrivilegesItemRaw = t.type({
+  vehicle_category_code: t.type({
+    name: LocaleName,
+    value: t.string
+  }),
+  issue_date: t.type({
+    name: LocaleName,
+    value: SimpleDateClaim
+  }),
+  expiry_date: t.type({
+    name: LocaleName,
+    value: SimpleDateClaim
+  })
+});
+
+/**
+ * Array of driving privileges in the raw format
+ */
+export const DrivingPrivilegesValueRaw = t.array(DrivingPrivilegesItemRaw);
+
+export type DrivingPrivilegesValueRawType = t.TypeOf<
+  typeof DrivingPrivilegesValueRaw
+>;
+
+export const DrivingPrivilegesFromRaw = new t.Type<
+  DrivingPrivilegesClaimType,
+  DrivingPrivilegesValueRawType,
+  DrivingPrivilegesValueRawType
+>(
+  "DrivingPrivilegesFromRaw",
+  DrivingPrivilegesClaim.is,
+  (input, c) => {
+    try {
+      return t.success(
+        input.map(item => ({
+          driving_privilege: item.vehicle_category_code.value,
+          issue_date: item.issue_date.value,
+          expiry_date: item.expiry_date.value,
+          restrictions_conditions: null
+        }))
+      );
+    } catch (e) {
+      return t.failure(input, c);
+    }
+  },
+  output =>
+    output.map(item => ({
+      vehicle_category_code: {
+        name: "",
+        value: item.driving_privilege
+      },
+      issue_date: {
+        name: "",
+        value: item.issue_date
+      },
+      expiry_date: {
+        name: "",
+        value: item.expiry_date
+      }
+    }))
+);
+
+export const DrivingPrivilegesCustomClaim = DrivingPrivilegesValueRaw.pipe(
+  DrivingPrivilegesFromRaw
+);
+
+/**
  * Decoder for the fiscal code. This is needed since we have to remove the INIT prefix when rendering it.
  */
 export const FiscalCodeClaim = PatternString(FISCAL_CODE_WITH_PREFIX);
@@ -364,6 +478,23 @@ export const PdfClaim = PatternString(PDF_DATA_REGEX);
 export const SimpleListClaim = t.array(t.string);
 
 /**
+ * Record of string keys and ParsedAttribute values.
+ * This is used to parse nested claims.
+ */
+export const NestedObjectClaim = t.record(t.string, ParsedAttribute);
+
+/**
+ * Array of records of string keys and ParsedAttribute values.
+ * This is used to parse nested claims.
+ */
+export const NestedArrayClaim = t.array(NestedObjectClaim);
+
+/**
+ * Union type for nested claims, either an object or an array of objects.
+ */
+export const NestedClaim = t.union([NestedObjectClaim, NestedArrayClaim]);
+
+/**
  * Decoder type for the claim field of the credential.
  * It includes all the possible types of claims and fallbacks to string.
  * To add more custom objects to the union:
@@ -372,8 +503,14 @@ export const SimpleListClaim = t.array(t.string);
 export const ClaimValue = t.union([
   // Parse an object representing the place of birth
   PlaceOfBirthClaim,
+  // Parse a custom object representing a mDL driving privileges
+  DrivingPrivilegesCustomClaim,
   // Parse an object representing a mDL driving privileges
   DrivingPrivilegesClaim,
+  // Parse an object representing a nested claim (the nested claim needs to be re-parsed again)
+  NestedObjectClaim,
+  // Parse an array of nested claims (the nested claims needs to be re-parsed again)
+  NestedArrayClaim,
   // Otherwise parse a date as string
   SimpleDateClaim,
   // Otherwise parse an image

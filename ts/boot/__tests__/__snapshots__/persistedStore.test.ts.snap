@@ -80,6 +80,7 @@ exports[`Check the addition for new fields to the persisted store. If one of thi
 {
   "continueWithRootOrJailbreak": false,
   "fontPreference": "comfortable",
+  "isAarFeatureEnabled": false,
   "isCustomEmailChannelEnabled": {
     "kind": "PotNone",
   },
@@ -91,6 +92,7 @@ exports[`Check the addition for new fields to the persisted store. If one of thi
   "isPnTestEnabled": false,
   "preferredCalendar": undefined,
   "preferredLanguage": undefined,
+  "themePreference": "light",
   "wasServiceAlertDisplayedOnce": false,
 }
 `;

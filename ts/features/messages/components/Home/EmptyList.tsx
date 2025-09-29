@@ -2,6 +2,7 @@ import { useCallback, useMemo } from "react";
 import { constUndefined, pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
 import { ButtonSolidProps, IOPictograms } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import {
   useIODispatch,
   useIOSelector,
@@ -9,7 +10,6 @@ import {
 } from "../../../../store/hooks";
 import { emptyListReasonSelector } from "../../store/reducers/allPaginated";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../../i18n";
 import { reloadAllMessages } from "../../store/actions";
 import { pageSize } from "../../../../config";
 import { MessageListCategory } from "../../types/messageListCategory";

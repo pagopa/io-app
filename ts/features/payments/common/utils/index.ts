@@ -6,7 +6,7 @@ import {
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import _ from "lodash";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import { WalletApplicationStatusEnum } from "../../../../../definitions/pagopa/walletv3/WalletApplicationStatus";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
@@ -128,7 +128,7 @@ export const isPaymentSupported = (
 };
 
 export const WALLET_PAYMENT_TERMS_AND_CONDITIONS_URL =
-  "https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/";
+  "https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/";
 
 /**
  * Function that returns a sorted list of psp based on the given sortType

@@ -4,11 +4,11 @@ import { ReactElement } from "react";
 import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import I18n from "i18next";
 import image from "../../../img/servicesStatus/error-detail-icon.png";
-import I18n from "../../i18n";
 import { navigateBack } from "../../store/actions/navigation";
 import { InfoScreenComponent } from "../infoScreen/InfoScreenComponent";
-import { renderInfoRasterImage } from "../infoScreen/imageRendering";
+import { InfoRasterImage } from "../infoScreen/imageRendering";
 import BaseScreenComponent from "../screens/BaseScreenComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
@@ -31,7 +31,7 @@ const WorkunitGenericFailure = (props: Props): ReactElement => {
     <BaseScreenComponent headerTitle={headerTitle} goBack={true}>
       <SafeAreaView style={{ flex: 1 }} testID={"WorkunitGenericFailure"}>
         <InfoScreenComponent
-          image={renderInfoRasterImage(image)}
+          image={<InfoRasterImage image={image} />}
           title={title}
         />
       </SafeAreaView>

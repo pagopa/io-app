@@ -1,10 +1,17 @@
+import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
-import I18n from "../../../../../i18n.ts";
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider.tsx";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
+import {
+  getMixPanelCredential,
+  trackItwCredentialNeedsVerification
+} from "../../../analytics";
+import { useIOSelector } from "../../../../../store/hooks";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 
 type Props = {
   credential: StoredCredential;
@@ -15,16 +22,24 @@ export const ItwPresentationCredentialVerificationExpired = ({
 }: Props) => {
   const navigation = useIONavigation();
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   useHeaderSecondLevel({
     title: "",
     headerShown: false
   });
 
+  useOnFirstRender(() => {
+    trackItwCredentialNeedsVerification(
+      getMixPanelCredential(credential.credentialType, isItwL3)
+    );
+  });
+
   const beginCredentialIssuance = () => {
     machineRef.send({
       type: "select-credential",
-      credentialType: credential.credentialType
+      credentialType: credential.credentialType,
+      mode: "reissuance"
     });
   };
 

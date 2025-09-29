@@ -12,7 +12,7 @@ import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
 import { useCallback, useEffect, useMemo } from "react";
 import { AppState, SafeAreaView, StyleSheet, View } from "react-native";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import { mixpanelTrack } from "../../../../../mixpanel";
 
 import {
@@ -63,6 +63,10 @@ import { setNativeLoginRequestInfo } from "../store/actions";
 import { nativeLoginRequestInfoSelector } from "../store/selectors";
 import { getSpidErrorCodeDescription } from "../utils/spidErrorCode";
 import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
+import {
+  isActiveSessionFastLoginEnabledSelector,
+  isActiveSessionLoginSelector
+} from "../../../activeSessionLogin/store/selectors";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -122,6 +126,10 @@ export const AuthSessionPage = () => {
   const dispatch = useIODispatch();
   const requestInfo = useIOSelector(nativeLoginRequestInfoSelector);
   const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
+  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
+  const isActiveSessionFastLogin = useIOSelector(
+    isActiveSessionFastLoginEnabledSelector
+  );
 
   const setRequestInfo = useCallback(
     (reqInfo: RequestInfo) => {
@@ -300,7 +308,7 @@ export const AuthSessionPage = () => {
           loginUri,
           ephemeralKeyTag,
           mixpanelEnabled,
-          isFastLogin,
+          isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
           dispatch
         ),
       TE.fold(

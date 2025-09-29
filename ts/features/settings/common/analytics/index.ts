@@ -8,6 +8,7 @@ import { profileLoadSuccess } from "../store/actions";
 import { GlobalState } from "../../../../store/reducers/types";
 import { FlowType, buildEventProperties } from "../../../../utils/analytics";
 import { SETTINGS_ROUTES } from "../navigation/routes";
+import { ColorModeChoice } from "../../../../hooks/useAppThemeConfiguration";
 
 export async function trackProfileLoadSuccess(state: GlobalState) {
   await updateMixpanelSuperProperties(state);
@@ -258,6 +259,22 @@ export function trackAppearancePreferenceTypefaceUpdate(
   );
   void updateMixpanelProfileProperties(state, {
     property: "FONT_PREFERENCE",
+    value: choice
+  });
+}
+
+export function trackAppearancePreferenceThemeUpdate(
+  choice: ColorModeChoice,
+  state: GlobalState
+) {
+  void mixpanelTrack(
+    "SETTINGS_PREFERENCES_UI_THEME_UPDATE",
+    buildEventProperties("UX", "action", {
+      current_theme: choice
+    })
+  );
+  void updateMixpanelProfileProperties(state, {
+    property: "THEME_PREFERENCE",
     value: choice
   });
 }

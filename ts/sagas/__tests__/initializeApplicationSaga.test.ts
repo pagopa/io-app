@@ -5,7 +5,6 @@ import { InitializedProfile } from "../../../definitions/backend/InitializedProf
 import mockedProfile from "../../__mocks__/initializedProfile";
 
 import { sessionExpired } from "../../features/authentication/common/store/actions";
-import { resetProfileState } from "../../features/settings/common/store/actions";
 import {
   sessionInfoSelector,
   sessionTokenSelector
@@ -26,7 +25,6 @@ import {
   initializeApplicationSaga,
   testWaitForNavigatorServiceInitialization
 } from "../startup";
-import { watchSessionExpiredSaga } from "../../features/authentication/common/saga/watchSessionExpiredSaga";
 import { watchProfileEmailValidationChangedSaga } from "../../features/mailCheck/sagas/watchProfileEmailValidationChangedSaga";
 import { checkAppHistoryVersionSaga } from "../startup/appVersionHistorySaga";
 import {
@@ -38,7 +36,6 @@ import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducer
 import { isFastLoginEnabledSelector } from "../../features/authentication/fastLogin/store/selectors";
 import { refreshSessionToken } from "../../features/authentication/fastLogin/store/actions/tokenRefreshActions";
 import { remoteConfigSelector } from "../../store/reducers/backendStatus/remoteConfig";
-import { watchLogoutSaga } from "../../features/authentication/common/saga/watchLogoutSaga";
 import { cancellAllLocalNotifications } from "../../features/pushNotifications/utils";
 import { handleApplicationStartupTransientError } from "../../features/startup/sagas";
 import { startupTransientErrorInitialState } from "../../store/reducers/startup";
@@ -51,9 +48,13 @@ import { checkPublicKeyAndBlockIfNeeded } from "../../features/lollipop/navigati
 import { userFromSuccessLoginSelector } from "../../features/authentication/loginInfo/store/selectors";
 import { watchItwOfflineSaga } from "../../features/itwallet/common/saga";
 import {
-  isDeviceOfflineWithWalletSaga,
+  shouldExitForOfflineAccess,
   watchSessionRefreshInOfflineSaga
 } from "../../features/ingress/saga";
+import {
+  watchForceLogoutOnDifferentCF,
+  watchForceLogoutSaga
+} from "../../features/authentication/common/saga/watchForceLogoutSaga";
 
 const aSessionToken = "a_session_token" as SessionToken;
 const aSessionInfo = O.some({
@@ -80,7 +81,9 @@ jest.mock("react-native-share", () => ({
 }));
 
 jest.mock("../../api/backend", () => ({
-  BackendClient: jest.fn().mockReturnValue({})
+  BackendClient: jest.fn().mockReturnValue({
+    isSameClient: jest.fn()
+  })
 }));
 
 const profile: InitializedProfile = {
@@ -111,14 +114,12 @@ describe("initializeApplicationSaga", () => {
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
       .next()
-      .put(resetProfileState())
-      .next()
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
       .fork(watchItwOfflineSaga)
       .next()
-      .call(isDeviceOfflineWithWalletSaga)
+      .call(shouldExitForOfflineAccess)
       .next()
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
@@ -130,11 +131,11 @@ describe("initializeApplicationSaga", () => {
       .next(aSessionToken)
       .next(trackKeychainFailures)
       .next(getKeyInfo)
-      .fork(watchSessionExpiredSaga)
+      .fork(watchForceLogoutSaga)
+      .next()
+      .fork(watchForceLogoutOnDifferentCF)
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
-      .next()
-      .fork(watchLogoutSaga, undefined)
       .next()
       .next(200) // checkSession
       .next()
@@ -170,15 +171,14 @@ describe("initializeApplicationSaga", () => {
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
       .next(pot.some(profile))
-      .put(resetProfileState())
-      .next()
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
       .fork(watchItwOfflineSaga)
       .next()
-      .call(isDeviceOfflineWithWalletSaga)
+      .call(shouldExitForOfflineAccess)
       .next()
+
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
       .select(remoteConfigSelector)
@@ -189,11 +189,11 @@ describe("initializeApplicationSaga", () => {
       .next(aSessionToken)
       .next(trackKeychainFailures)
       .next(getKeyInfo)
-      .fork(watchSessionExpiredSaga)
+      .fork(watchForceLogoutSaga)
+      .next()
+      .fork(watchForceLogoutOnDifferentCF)
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
-      .next()
-      .fork(watchLogoutSaga, undefined)
       .next()
       .call(checkSession, undefined, formatRequestedTokenString())
       .next(401)
@@ -223,15 +223,14 @@ describe("initializeApplicationSaga", () => {
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
       .next(pot.some(profile))
-      .put(resetProfileState())
-      .next()
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
       .fork(watchItwOfflineSaga)
       .next()
-      .call(isDeviceOfflineWithWalletSaga)
+      .call(shouldExitForOfflineAccess)
       .next()
+
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
       .select(remoteConfigSelector)
@@ -242,11 +241,11 @@ describe("initializeApplicationSaga", () => {
       .next(aSessionToken)
       .next(trackKeychainFailures)
       .next(getKeyInfo)
-      .fork(watchSessionExpiredSaga)
+      .fork(watchForceLogoutSaga)
+      .next()
+      .fork(watchForceLogoutOnDifferentCF)
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
-      .next()
-      .fork(watchLogoutSaga, undefined)
       .next()
       .call(checkSession, undefined, formatRequestedTokenString())
       .next(401)
@@ -281,15 +280,14 @@ describe("initializeApplicationSaga", () => {
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
       .next(pot.some(profile))
-      .put(resetProfileState())
-      .next()
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
       .fork(watchItwOfflineSaga)
       .next()
-      .call(isDeviceOfflineWithWalletSaga)
+      .call(shouldExitForOfflineAccess)
       .next()
+
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
       .select(remoteConfigSelector)
@@ -300,11 +298,11 @@ describe("initializeApplicationSaga", () => {
       .next(aSessionToken)
       .next(trackKeychainFailures)
       .next(getKeyInfo)
-      .fork(watchSessionExpiredSaga)
+      .fork(watchForceLogoutSaga)
+      .next()
+      .fork(watchForceLogoutOnDifferentCF)
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
-      .next()
-      .fork(watchLogoutSaga, undefined)
       .next()
       .next(200) // check session
       .next()
@@ -352,15 +350,14 @@ describe("initializeApplicationSaga", () => {
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
       .next(pot.some(profile))
-      .put(resetProfileState())
-      .next()
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
       .fork(watchItwOfflineSaga)
       .next()
-      .call(isDeviceOfflineWithWalletSaga)
+      .call(shouldExitForOfflineAccess)
       .next()
+
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
       .select(remoteConfigSelector)
@@ -371,11 +368,11 @@ describe("initializeApplicationSaga", () => {
       .next(aSessionToken)
       .next(trackKeychainFailures)
       .next(getKeyInfo)
-      .fork(watchSessionExpiredSaga)
+      .fork(watchForceLogoutSaga)
+      .next()
+      .fork(watchForceLogoutOnDifferentCF)
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
-      .next()
-      .fork(watchLogoutSaga, undefined)
       .next()
       .next(200) // check session
       .next()
@@ -410,15 +407,14 @@ describe("initializeApplicationSaga", () => {
       .next(pot.some(profile))
       .fork(watchProfileEmailValidationChangedSaga, O.none)
       .next(pot.some(profile))
-      .put(resetProfileState())
-      .next()
       .next(generateLollipopKeySaga)
       .call(checkPublicKeyAndBlockIfNeeded) // is device unsupported?
       .next(false) // the device is supported
       .fork(watchItwOfflineSaga)
       .next()
-      .call(isDeviceOfflineWithWalletSaga)
+      .call(shouldExitForOfflineAccess)
       .next()
+
       .fork(watchSessionRefreshInOfflineSaga)
       .next()
       .select(remoteConfigSelector)
@@ -429,11 +425,11 @@ describe("initializeApplicationSaga", () => {
       .next(aSessionToken)
       .next(trackKeychainFailures)
       .next(getKeyInfo)
-      .fork(watchSessionExpiredSaga)
+      .fork(watchForceLogoutSaga)
+      .next()
+      .fork(watchForceLogoutOnDifferentCF)
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
-      .next()
-      .fork(watchLogoutSaga, undefined)
       .next()
       .next(200) // check session
       .next()

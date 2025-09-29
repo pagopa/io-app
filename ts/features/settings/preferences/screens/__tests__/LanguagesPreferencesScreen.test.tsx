@@ -1,7 +1,7 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 import { Alert } from "react-native";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
@@ -17,10 +17,19 @@ jest.mock("../../../../../store/hooks", () => ({
   useIOStore: jest.fn()
 }));
 
-// Mock the useStatusAlertProps hook
-jest.mock("../../../../../hooks/useStatusAlertProps", () => ({
-  useStatusAlertProps: jest.fn()
-}));
+// Mock the useIOAlertVisible hook
+jest.mock(
+  "../../../../../components/StatusMessages/IOAlertVisibleContext",
+  () => ({
+    ...jest.requireActual(
+      "../../../../../components/StatusMessages/IOAlertVisibleContext"
+    ),
+    useIOAlertVisible: () => ({
+      isAlertVisible: false,
+      setAlertVisible: jest.fn()
+    })
+  })
+);
 
 describe("LanguagesPreferencesScreen", () => {
   beforeAll(() => {

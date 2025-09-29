@@ -1,15 +1,14 @@
 import { ItwDiscoveryInfoScreenNavigationParams } from "../discovery/screens/ItwDiscoveryInfoScreen";
-import { ItwCieWrongCiePinScreenNavigationParams } from "../identification/screens/cie/ItwCieWrongCiePinScreen.tsx";
+import { ItwIdentificationCieWarningScreenNavigationParams } from "../identification/cie/screens/ItwIdentificationCieWarningScreen.tsx";
+import { ItwL2IdentificationNavigationParams } from "../identification/common/screens/ItwL2IdentificationModeSelectionScreen.tsx";
 import { ItwIssuanceCredentialAsyncContinuationNavigationParams } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
 import { ItwIssuanceCredentialTrustIssuerNavigationParams } from "../issuance/screens/ItwIssuanceCredentialTrustIssuerScreen";
+import { ItwPlaygroundParamsList } from "../playgrounds/navigation/ItwPlaygroundParamsList.ts";
 import { ItwPresentationCredentialAttachmentNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialAttachmentScreen";
 import { ItwPresentationCredentialCardModalNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialCardModal";
 import { ItwPresentationCredentialDetailNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialDetailScreen";
-import { ItwCredentialTrustmarkScreenNavigationParams } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
-import { ItwIdentificationCieWarningScreenNavigationParams } from "../identification/screens/ItwIdentificationCieWarningScreen";
-import { ItwL2IdentificationNavigationParams } from "../identification/screens/ItwL2IdentificationModeSelectionScreen";
 import { ItwProximityParamsList } from "../presentation/proximity/navigation/ItwProximityParamsList.ts";
-import { ItwPlaygroundParamsList } from "../playgrounds/navigation/ItwPlaygroundParamsList.ts";
+import { ItwCredentialTrustmarkScreenNavigationParams } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ITW_ROUTES } from "./routes";
 
 export type ItwParamsList = {
@@ -37,14 +36,10 @@ export type ItwParamsList = {
   [ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION_SCREEN]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE.PIN_PREPARATION_SCREEN]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN]: undefined;
-  [ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN.L2]: undefined;
-  [ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN.L3]: undefined;
-  [ITW_ROUTES.IDENTIFICATION.CIE
-    .WRONG_PIN]: ItwCieWrongCiePinScreenNavigationParams;
-  [ITW_ROUTES.IDENTIFICATION.CIE.WRONG_CARD]: undefined;
-  [ITW_ROUTES.IDENTIFICATION.CIE.UNEXPECTED_ERROR]: undefined;
+  [ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC]: undefined;
-  [ITW_ROUTES.IDENTIFICATION.CIE.CIE_EXPIRED_SCREEN]: undefined;
+  // IDENTIFICATION L2+
+  [ITW_ROUTES.IDENTIFICATION.CIE.CAN_PREPARATION_SCREEN]: undefined;
   // ISSUANCE
   [ITW_ROUTES.ISSUANCE.EID_PREVIEW]: undefined;
   [ITW_ROUTES.ISSUANCE.EID_RESULT]: undefined;
@@ -57,6 +52,7 @@ export type ItwParamsList = {
   [ITW_ROUTES.ISSUANCE
     .CREDENTIAL_ASYNC_FLOW_CONTINUATION]: ItwIssuanceCredentialAsyncContinuationNavigationParams;
   [ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL]: undefined;
+  [ITW_ROUTES.ISSUANCE.IT_WALLET_INACTIVE]: undefined;
   // PRESENTATION
   [ITW_ROUTES.PRESENTATION
     .CREDENTIAL_DETAIL]: ItwPresentationCredentialDetailNavigationParams;
@@ -72,5 +68,6 @@ export type ItwParamsList = {
   // OTHERS
   [ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN]: undefined;
   [ITW_ROUTES.WALLET_REVOCATION_SCREEN]: undefined;
+  [ITW_ROUTES.SETTINGS]: undefined;
 } & ItwProximityParamsList &
   ItwPlaygroundParamsList;

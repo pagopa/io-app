@@ -1,22 +1,51 @@
-import { Divider, IOToast, ListItemSwitch } from "@pagopa/io-app-design-system";
+import {
+  Divider,
+  IOToast,
+  ListItemSwitch,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { View } from "react-native";
-import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/SelfDeclarationBoolDTO";
+import { _typeEnum as SelfConsentBoolTypeEnum } from "../../../../../definitions/idpay/SelfConsentBoolDTO";
+import { SelfCriteriaBoolDTO } from "../../../../../definitions/idpay/SelfCriteriaBoolDTO";
+import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { isLoadingSelector } from "../../common/machine/selectors";
+import {
+  trackIDPayOnboardingAlert,
+  trackIDPayOnboardingSelfDeclaration
+} from "../analytics";
 import IdPayOnboardingStepper from "../components/IdPayOnboardingStepper";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {
   areAllSelfDeclarationsToggledSelector,
   boolRequiredCriteriaSelector,
+  selectInitiative,
   selectSelfDeclarationBoolAnswers
 } from "../machine/selectors";
 
 const IdPayBoolValuePrerequisitesScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
+
+  const initiative = useSelector(selectInitiative);
+
+  const initiativeName = pipe(
+    initiative,
+    O.map(i => i.initiativeName),
+    O.toUndefined
+  );
+
+  const initiativeId = pipe(
+    initiative,
+    O.map(i => i.initiativeId),
+    O.getOrElse(() => "")
+  );
 
   const isLoading = useSelector(isLoadingSelector);
 
@@ -28,7 +57,14 @@ const IdPayBoolValuePrerequisitesScreen = () => {
 
   const continueOnPress = () => {
     if (!areAllSelfCriteriaBoolAccepted) {
-      IOToast.error("Scegli un’opzione per continuare");
+      IOToast.error(
+        I18n.t("idpay.onboarding.boolPrerequisites.emptyValueError")
+      );
+      trackIDPayOnboardingAlert({
+        screen: "intent_declaration",
+        initiativeId,
+        initiativeName
+      });
       return;
     }
     machine.send({ type: "next" });
@@ -37,14 +73,32 @@ const IdPayBoolValuePrerequisitesScreen = () => {
   const goBackOnPress = () => machine.send({ type: "back" });
 
   const toggleCriteria =
-    (criteria: SelfDeclarationBoolDTO) => (value: boolean) =>
+    (criteria: SelfCriteriaBoolDTO) => (value: boolean) => {
+      if (!criteria.code) {
+        return;
+      }
+
       machine.send({
         type: "toggle-bool-criteria",
-        criteria: { ...criteria, value }
+        criteria: {
+          _type: SelfConsentBoolTypeEnum.boolean,
+          code: criteria.code,
+          accepted: value
+        }
       });
+    };
 
-  const getSelfCriteriaBoolAnswer = (criteria: SelfDeclarationBoolDTO) =>
-    selfCriteriaBoolAnswers[criteria.code] ?? false;
+  const getSelfCriteriaBoolAnswer = (criteria: SelfCriteriaBoolDTO) =>
+    criteria.code ? selfCriteriaBoolAnswers[criteria.code] ?? false : false;
+
+  const selfCriteriaBoolSubtitle = selfCriteriaBool[0].subDescription;
+
+  useOnFirstRender(() =>
+    trackIDPayOnboardingSelfDeclaration({
+      initiativeId,
+      initiativeName
+    })
+  );
 
   return (
     <IOScrollViewWithLargeHeader
@@ -66,10 +120,16 @@ const IdPayBoolValuePrerequisitesScreen = () => {
       includeContentMargins
     >
       <LoadingSpinnerOverlay isLoading={isLoading}>
+        {selfCriteriaBoolSubtitle && (
+          <>
+            <IOMarkdown content={selfCriteriaBoolSubtitle} />
+            <VSpacer size={16} />
+          </>
+        )}
         {selfCriteriaBool.map((criteria, index) => (
           <View key={criteria.code}>
             <ListItemSwitch
-              label={criteria.description}
+              label={criteria.description ?? ""}
               onSwitchValueChange={toggleCriteria(criteria)}
               value={getSelfCriteriaBoolAnswer(criteria)}
             />

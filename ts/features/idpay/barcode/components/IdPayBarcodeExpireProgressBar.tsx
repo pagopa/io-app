@@ -2,7 +2,7 @@ import { BodySmall, VSpacer } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
 import { useState, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { ProgressBar } from "../../../bonus/common/components/ProgressBar";
 
 type Props = {
@@ -42,12 +42,10 @@ export const IdPayBarcodeExpireProgressBar = ({
       <ProgressBar progressPercentage={seconds / secondsExpirationTotal} />
       <VSpacer size={8} />
       <View style={styles.centeredRow}>
-        <BodySmall weight="Regular" color="black">
+        <BodySmall weight="Regular">
           {I18n.t("idpay.barCode.resultScreen.success.expiresIn")}
         </BodySmall>
-        <BodySmall weight="Semibold" color="black">
-          {formattedSecondsToExpiration}
-        </BodySmall>
+        <BodySmall weight="Semibold">{formattedSecondsToExpiration}</BodySmall>
       </View>
     </View>
   );

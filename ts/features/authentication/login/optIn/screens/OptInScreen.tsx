@@ -14,11 +14,15 @@ import {
   useFocusEffect,
   useRoute
 } from "@react-navigation/native";
+import I18n from "i18next";
 import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import I18n from "../../../../../i18n";
 import { setFastLoginOptIn } from "../../../fastLogin/store/actions/optInActions";
-import { useIODispatch, useIOStore } from "../../../../../store/hooks";
+import {
+  useIODispatch,
+  useIOSelector,
+  useIOStore
+} from "../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import {
   trackLoginSessionOptIn,
@@ -29,11 +33,13 @@ import {
 import { useSecuritySuggestionsBottomSheet } from "../../../../../hooks/useSecuritySuggestionBottomSheet";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import { CieIdLoginProps } from "../../cie/components/CieIdLoginWebView";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { useDetectSmallScreen } from "../../../../../hooks/useDetectSmallScreen";
 import { IOScrollView } from "../../../../../components/ui/IOScrollView";
+import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
+import { setFastLoginOptSessionLogin } from "../../../activeSessionLogin/store/actions";
+import { CieIdLoginProps } from "../../cie/shared/utils";
 
 export enum Identifier {
   SPID = "SPID",
@@ -55,13 +61,6 @@ export type ChosenIdentifier =
       params: CieIdLoginProps;
     };
 
-const authScreensMap = {
-  CIE: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN,
-  SPID: AUTHENTICATION_ROUTES.IDP_SELECTION,
-  CIE_ID: AUTHENTICATION_ROUTES.CIE_ID_LOGIN,
-  TEST: AUTHENTICATION_ROUTES.IDP_TEST
-};
-
 const OptInScreen = () => {
   useHeaderSecondLevel({
     title: "",
@@ -71,6 +70,7 @@ const OptInScreen = () => {
 
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   const dispatch = useIODispatch();
+  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
   const {
     securitySuggestionBottomSheet,
     presentSecuritySuggestionBottomSheet
@@ -79,6 +79,15 @@ const OptInScreen = () => {
     useRoute<Route<"AUTHENTICATION_OPT_IN", ChosenIdentifier>>();
   const navigation = useIONavigation();
   const store = useIOStore();
+
+  const authScreensMap = {
+    CIE: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN,
+    SPID: AUTHENTICATION_ROUTES.IDP_SELECTION,
+    CIE_ID: isActiveSessionLogin
+      ? AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN
+      : AUTHENTICATION_ROUTES.CIE_ID_LOGIN,
+    TEST: AUTHENTICATION_ROUTES.IDP_TEST
+  };
 
   const { isDeviceScreenSmall } = useDetectSmallScreen();
 
@@ -107,7 +116,11 @@ const OptInScreen = () => {
       void trackLoginSessionOptIn30(store.getState());
     }
     navigation.navigate(AUTHENTICATION_ROUTES.MAIN, getNavigationParams());
-    dispatch(setFastLoginOptIn({ enabled: isLV }));
+    if (isActiveSessionLogin) {
+      dispatch(setFastLoginOptSessionLogin(isLV));
+    } else {
+      dispatch(setFastLoginOptIn({ enabled: isLV }));
+    }
   };
 
   return (

@@ -9,6 +9,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
   "appearanceSettings": {
     "showAppearanceBanner": true,
   },
+  "backgroundLinking": {},
   "connectivityStatus": {
     "isConnected": undefined,
   },
@@ -113,6 +114,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "kind": "PotNone",
     },
     "wallet": {
+      "initiativeWaitingList": {
+        "kind": "PotNone",
+      },
       "initiatives": {
         "kind": "PotNone",
       },
@@ -146,6 +150,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "preferences": {
       "requestedCredentials": {},
     },
+    "securePreferences": {
+      "offlineAccessCounter": 0,
+    },
     "walletInstance": {
       "attestation": undefined,
       "status": {
@@ -160,6 +167,10 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "SEND_ACTIVATION_REMINDER": true,
   },
   "loginFeatures": {
+    "activeSessionLogin": {
+      "isActiveSessionLogin": false,
+      "isUserLoggedIn": false,
+    },
     "cieLogin": {
       "isCieIDTourGuideEnabled": true,
       "useUat": false,
@@ -307,6 +318,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
   },
   "pn": {
+    "aarFlow": {
+      "type": "none",
+    },
     "activation": {
       "isActivating": false,
     },

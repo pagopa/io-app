@@ -2,10 +2,10 @@
 /**
  * An ingress screen to choose the real first screen the user must navigate to.
  */
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { AccessibilityInfo, View } from "react-native";
-import I18n from "../../../i18n";
+import I18n from "i18next";
 import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { trackIngressScreen } from "../../settings/common/analytics";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
@@ -42,7 +42,10 @@ export const IngressScreen = () => {
   );
 
   const [showBlockingScreen, setShowBlockingScreen] = useState(false);
-  const [contentTitle, setContentTitle] = useState(I18n.t("startup.title"));
+  const [showBanner, setShowBanner] = useState(false);
+  const [contentTitle, setContentTitle] = useState<string>(
+    I18n.t("startup.title")
+  );
 
   useEffect(() => {
     // Since the screen is shown for a very short time,
@@ -66,6 +69,7 @@ export const IngressScreen = () => {
     timeouts.push(
       setTimeout(() => {
         setContentTitle(I18n.t("startup.title2"));
+        setShowBanner(true);
         timeouts.shift();
       }, TIMEOUT_CHANGE_LABEL)
     );
@@ -83,14 +87,9 @@ export const IngressScreen = () => {
     };
   }, [dispatch]);
 
-  useEffect(() => {
-    const visualizeOfflineWallet =
-      isConnected === false && isOfflineAccessAvailable;
-
-    if (visualizeOfflineWallet) {
-      // This dispatch could be placed inside `onSuccess`,
-      // but executing it here ensures the startup saga stops immediately.
-      dispatch(setOfflineAccessReason(OfflineAccessReasonEnum.DEVICE_OFFLINE));
+  const navigateOnOfflineMiniApp = useCallback(
+    (offlineReason: OfflineAccessReasonEnum) => {
+      dispatch(setOfflineAccessReason(offlineReason));
       dispatch(
         identificationRequest(false, false, undefined, undefined, {
           onSuccess: () => {
@@ -101,8 +100,23 @@ export const IngressScreen = () => {
           }
         })
       );
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    const visualizeOfflineWallet =
+      isConnected === false && isOfflineAccessAvailable;
+
+    if (visualizeOfflineWallet) {
+      navigateOnOfflineMiniApp(OfflineAccessReasonEnum.DEVICE_OFFLINE);
     }
-  }, [dispatch, isConnected, isOfflineAccessAvailable]);
+  }, [
+    dispatch,
+    isConnected,
+    isOfflineAccessAvailable,
+    navigateOnOfflineMiniApp
+  ]);
 
   if (isConnected === false && !isOfflineAccessAvailable) {
     return <IngressScreenNoInternetConnection />;
@@ -123,6 +137,18 @@ export const IngressScreen = () => {
         testID="ingress-screen-loader-id"
         contentTitle={contentTitle}
         animatedPictogramSource="waiting"
+        banner={{
+          showBanner: isOfflineAccessAvailable && showBanner,
+          props: {
+            pictogramName: "identityCheck",
+            color: "neutral",
+            title: I18n.t("startup.offline_access_banner.title"),
+            content: I18n.t("startup.offline_access_banner.content"),
+            action: I18n.t("startup.offline_access_banner.action"),
+            onPress: () =>
+              navigateOnOfflineMiniApp(OfflineAccessReasonEnum.TIMEOUT)
+          }
+        }}
       />
     </>
   );

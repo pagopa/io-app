@@ -22,13 +22,13 @@ import {
   WebViewNavigationEvent,
   WebViewSource
 } from "react-native-webview/lib/WebViewTypes";
+import I18n from "i18next";
 import { withLoadingSpinner } from "../../../../../components/helpers/withLoadingSpinner";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { selectedIdentityProviderSelector } from "../../../../../features/authentication/common/store/selectors";
 import { ephemeralKeyTagSelector } from "../../../../../features/lollipop/store/reducers/lollipop";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../../../../../features/lollipop/utils/login";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
-import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { isMixpanelEnabled } from "../../../../../store/reducers/persistedPreferences";
 import { trackSpidLoginError } from "../../../../../utils/analytics";
@@ -38,6 +38,11 @@ import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { isCieLoginUatEnabledSelector } from "../store/selectors";
 import { cieFlowForDevServerEnabled } from "../utils";
 import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
+import {
+  isActiveSessionFastLoginEnabledSelector,
+  isActiveSessionLoginSelector
+} from "../../../activeSessionLogin/store/selectors";
+import { hashedProfileFiscalCodeSelector } from "../../../../../store/reducers/crossSessions";
 
 // to make sure the server recognizes the client as valid iPhone device (iOS only) we use a custom header
 // on Android it is not required
@@ -156,6 +161,11 @@ const CieWebView = (props: Props) => {
   const ephemeralKeyTag = useIOSelector(ephemeralKeyTagSelector);
   const isFastLogin = useIOSelector(isFastLoginEnabledSelector);
   const idp = useIOSelector(selectedIdentityProviderSelector);
+  const isActiveSessionFastLogin = useIOSelector(
+    isActiveSessionFastLoginEnabledSelector
+  );
+  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
+  const hashedFiscalCode = useIOSelector(hashedProfileFiscalCodeSelector);
 
   const webView = createRef<WebView>();
   const { onSuccess } = props;
@@ -206,7 +216,10 @@ const CieWebView = (props: Props) => {
       return false;
     }
 
-    if (cieFlowForDevServerEnabled && url.indexOf("token=") !== -1) {
+    // On the dev-server, the ACS endpoint is /idp-login.
+    // Intercepting it allows us to extract the authentication result
+    // (token or error) after a successful CIE login.
+    if (cieFlowForDevServerEnabled && url.indexOf("idp-login") !== -1) {
       setInternalState(state => generateFoundAuthUrlState(url, state));
       return false;
     }
@@ -256,9 +269,10 @@ const CieWebView = (props: Props) => {
             loginUri,
             ephemeralKeyTag,
             mixpanelEnabled,
-            isFastLogin,
+            isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
             dispatch,
-            idp?.id
+            idp?.id,
+            isActiveSessionLogin ? hashedFiscalCode : undefined
           )
       ),
       TE.fold(

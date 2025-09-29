@@ -1,21 +1,12 @@
 /**
  * A screen to alert the user about the number of attempts remains
  */
-import { useCallback } from "react";
-import I18n from "../../../../../i18n";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import useActiveSessionLoginNavigation from "../../../activeSessionLogin/utils/useActiveSessionLoginNavigation";
 
 const CieExtendedApduNotSupportedScreen = () => {
-  const navigation = useIONavigation();
-
-  const navigateToAuthenticationScreen = useCallback(() => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: AUTHENTICATION_ROUTES.MAIN }]
-    });
-  }, [navigation]);
+  const { navigateToAuthenticationScreen } = useActiveSessionLoginNavigation();
 
   const action = {
     label: I18n.t("global.buttons.close"),

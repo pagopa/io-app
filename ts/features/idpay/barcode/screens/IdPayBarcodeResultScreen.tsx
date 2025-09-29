@@ -1,10 +1,8 @@
 import {
   Body,
-  BodySmall,
   H3,
   IOColors,
   IOVisualCostants,
-  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -14,20 +12,28 @@ import { pipe } from "fp-ts/lib/function";
 import { useState, useMemo } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
+import I18n from "i18next";
 import { TransactionBarCodeResponse } from "../../../../../definitions/idpay/TransactionBarCodeResponse";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { formatNumberCurrencyCents } from "../../common/utils/strings";
 import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IdPayBarcodeExpireProgressBar } from "../components/IdPayBarcodeExpireProgressBar";
 import { IdPayBarcodeParamsList } from "../navigation/params";
 import { idPayBarcodeByInitiativeIdSelector } from "../store";
 import { idPayGenerateBarcode } from "../store/actions";
 import { calculateIdPayBarcodeSecondsToExpire } from "../utils";
+import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import {
+  trackIDPayDetailCodeGenerationConversion,
+  trackIDPayDetailCodeGenerationCopy,
+  trackIDPayDetailCodeGenerationError
+} from "../../details/analytics";
+import { idpayInitiativeDetailsSelector } from "../../details/store";
 
 // -------------------- types --------------------
 
@@ -39,8 +45,9 @@ type IdPayBarcodeResultRouteProps = RouteProp<
   "IDPAY_BARCODE_RESULT"
 >;
 type SuccessContentProps = {
-  goBack: () => void;
   barcode: TransactionBarCodeResponse;
+  initiativeId: string;
+  initiativeName?: string;
 };
 type BarcodeExpiredContentProps = {
   initiativeId: string;
@@ -51,16 +58,22 @@ type BarcodeExpiredContentProps = {
 const IdPayBarcodeResultScreen = () => {
   const route = useRoute<IdPayBarcodeResultRouteProps>();
   const { initiativeId } = route.params;
-  const navigation = useIONavigation();
   const barcodePot = useIOSelector(state =>
     idPayBarcodeByInitiativeIdSelector(state)(initiativeId)
   );
 
-  const navigateToInitiativeDetails = () =>
-    navigation.navigate(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
-      screen: IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING,
-      params: { initiativeId }
-    });
+  const initiativeDataPot = useIOSelector(idpayInitiativeDetailsSelector);
+
+  const initiativeName = pot.getOrElse(
+    pot.map(initiativeDataPot, initiative => initiative.initiativeName),
+    undefined
+  );
+
+  useHeaderSecondLevel({
+    title: "",
+    canGoBack: true,
+    supportRequest: true
+  });
 
   if (pot.isLoading(barcodePot)) {
     return <LoadingScreen />;
@@ -70,22 +83,16 @@ const IdPayBarcodeResultScreen = () => {
     pot.toOption,
     O.fold(
       () => (
-        <OperationResultScreenContent
-          title={I18n.t("idpay.barCode.resultScreen.error.generic.body")}
-          action={{
-            label: I18n.t("global.buttons.close"),
-            accessibilityLabel: I18n.t("global.buttons.close"),
-            onPress: navigateToInitiativeDetails
-          }}
-          pictogram="umbrella"
-          enableAnimatedPictogram
-          loop
+        <FailureContent
+          initiativeId={initiativeId}
+          initiativeName={initiativeName}
         />
       ),
       barcode => (
         <SuccessContent
           barcode={barcode}
-          goBack={navigateToInitiativeDetails}
+          initiativeId={initiativeId}
+          initiativeName={initiativeName}
         />
       )
     )
@@ -94,14 +101,58 @@ const IdPayBarcodeResultScreen = () => {
 
 // -------------------- result screens --------------------
 
-const SuccessContent = ({ goBack, barcode }: SuccessContentProps) => {
-  const theme = useIOTheme();
+const FailureContent = ({
+  initiativeId,
+  initiativeName
+}: Omit<SuccessContentProps, "barcode">) => {
+  const navigation = useIONavigation();
+
+  const navigateToInitiativeDetails = () =>
+    navigation.navigate(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
+      screen: IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING,
+      params: { initiativeId }
+    });
+
+  useOnFirstRender(() => {
+    trackIDPayDetailCodeGenerationError({
+      initiativeId,
+      initiativeName
+    });
+  });
+
+  return (
+    <OperationResultScreenContent
+      title={I18n.t("idpay.barCode.resultScreen.error.generic.body")}
+      action={{
+        label: I18n.t("global.buttons.close"),
+        accessibilityLabel: I18n.t("global.buttons.close"),
+        onPress: navigateToInitiativeDetails
+      }}
+      pictogram="umbrella"
+      enableAnimatedPictogram
+      loop
+    />
+  );
+};
+
+const SuccessContent = ({
+  barcode,
+  initiativeId,
+  initiativeName
+}: SuccessContentProps) => {
   const trx = barcode.trxCode.toUpperCase();
+
+  useOnFirstRender(() => {
+    trackIDPayDetailCodeGenerationConversion({
+      initiativeId,
+      initiativeName
+    });
+  });
+
   const [isBarcodeExpired, setIsBarcodeExpired] = useState(false);
   // expire check is handled by the progress bar
   // to avoid unnecessary rerenders, which could also be on the
   // heavier side due to barcode generation
-
   const secondsTillExpire = useMemo(
     () => calculateIdPayBarcodeSecondsToExpire(barcode),
     [barcode]
@@ -114,18 +165,21 @@ const SuccessContent = ({ goBack, barcode }: SuccessContentProps) => {
     <IOScrollViewWithLargeHeader
       includeContentMargins
       actions={{
-        type: "TwoButtons",
+        type: "SingleButton",
         primary: {
-          label: I18n.t("idpay.barCode.resultScreen.success.saveImageCta"),
+          icon: "copy",
+          iconPosition: "end",
+          label: I18n.t("idpay.barCode.resultScreen.success.copyCodeCta"),
           accessibilityLabel: I18n.t(
-            "idpay.barCode.resultScreen.success.saveImageCta"
+            "idpay.barCode.resultScreen.success.copyCodeCta"
           ),
-          onPress: () => null
-        },
-        secondary: {
-          label: I18n.t("global.buttons.close"),
-          accessibilityLabel: I18n.t("global.buttons.close"),
-          onPress: goBack
+          onPress: () => {
+            trackIDPayDetailCodeGenerationCopy({
+              initiativeId,
+              initiativeName
+            });
+            clipboardSetStringWithFeedback(trx);
+          }
         }
       }}
       title={{
@@ -136,14 +190,6 @@ const SuccessContent = ({ goBack, barcode }: SuccessContentProps) => {
       })}
     >
       <View style={styles.barcodeContainer}>
-        <View style={{ flexDirection: "row", alignSelf: "center" }}>
-          <BodySmall weight="Regular" color={theme["textBody-default"]}>
-            {I18n.t("idpay.barCode.resultScreen.success.validUpTo")}
-          </BodySmall>
-          <BodySmall weight="Semibold" color={theme["textBody-default"]}>
-            {formatNumberCurrencyCents(barcode.residualBudgetCents)}
-          </BodySmall>
-        </View>
         <VSpacer size={4} />
         <Barcode format="CODE128" value={trx} />
         <H3 style={{ alignSelf: "center" }}>{trx}</H3>

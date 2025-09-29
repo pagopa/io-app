@@ -2,10 +2,10 @@ import { VStack } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
+import I18n from "i18next";
 import { AnimatedImage } from "../../../../../components/AnimatedImage";
 import IOMarkdown from "../../../../../components/IOMarkdown";
 import { renderActionButtons } from "../../../../../components/ui/IOScrollView";
-import I18n from "../../../../../i18n";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import {
   ItwFlow,
@@ -133,8 +133,12 @@ export const useCieInfoBottomSheet = ({
 
   return {
     ...bottomSheet,
-    present: () => {
-      trackBottomSheetView(type, routeName, itw_flow);
+    // When opening the bottom sheet, track the view event by default.
+    // Pass { skipTracking: true } to skip sending the analytics event.
+    present: (options?: { skipTracking: boolean }) => {
+      if (!options?.skipTracking) {
+        trackBottomSheetView(type, routeName, itw_flow);
+      }
       bottomSheet.present();
     }
   };

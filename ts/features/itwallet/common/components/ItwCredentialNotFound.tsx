@@ -1,6 +1,6 @@
 import { useEffect } from "react";
+import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../../i18n";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useItwDisableGestureNavigation } from "../hooks/useItwDisableGestureNavigation";
@@ -21,6 +21,7 @@ const ItwCredentialNotFound = ({
   const navigateToCredential = () => {
     machineRef.send({
       type: "select-credential",
+      mode: "issuance",
       credentialType
     });
   };

@@ -40,7 +40,7 @@ export const idPayPaymentMachine = setup({
         O.map(failure => failure === PaymentFailureEnum.SESSION_EXPIRED),
         O.getOrElse(() => false)
       ),
-    asserTransactionCode: ({ event }) => {
+    assertTransactionCode: ({ event }) => {
       assertEvent(event, "authorize-payment");
       return pipe(event.trxCode, IDPayTransactionCode.decode, E.isRight);
     }
@@ -51,12 +51,14 @@ export const idPayPaymentMachine = setup({
   initial: "Idle",
   states: {
     Idle: {
-      tags: [IdPayTags.Loading],
       on: {
         "authorize-payment": {
-          guard: "asserTransactionCode",
+          guard: "assertTransactionCode",
           target: "PreAuthorizing",
-          actions: assign(({ event }) => ({ trxCode: event.trxCode }))
+          actions: assign(({ event }) => ({
+            trxCode: event.trxCode,
+            data_entry: event.data_entry
+          }))
         }
       }
     },
@@ -97,7 +99,7 @@ export const idPayPaymentMachine = setup({
     },
 
     Cancelling: {
-      tags: [IdPayTags.Loading],
+      tags: [IdPayTags.Loading, IdPayTags.DisableButtons],
       invoke: {
         id: "deletePayment",
         src: "deletePayment",
@@ -122,7 +124,7 @@ export const idPayPaymentMachine = setup({
     },
 
     Authorizing: {
-      tags: [IdPayTags.Loading],
+      tags: [IdPayTags.Loading, IdPayTags.DisableButtons],
       invoke: {
         id: "authorizePayment",
         src: "authorizePayment",
@@ -187,6 +189,6 @@ const decodeFailure = flow(PaymentFailure.decode, O.fromEither);
 
 const isBlockingFalure = flow(
   decodeFailure,
-  O.map(failure => failure !== PaymentFailureEnum.TOO_MANY_REQUESTS),
+  O.map(failure => failure !== PaymentFailureEnum.PAYMENT_TOO_MANY_REQUESTS),
   O.getOrElse(() => false)
 );

@@ -274,9 +274,6 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is active 1`
                               },
                               {},
                               {
-                                "backgroundColor": "#F4F5F8",
-                              },
-                              {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
                               },
@@ -301,7 +298,7 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is active 1`
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -467,7 +464,7 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is active 1`
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -892,9 +889,6 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is not enabl
                               },
                               {},
                               {
-                                "backgroundColor": "#F4F5F8",
-                              },
-                              {
                                 "backgroundColor": undefined,
                                 "borderColor": undefined,
                               },
@@ -919,7 +913,7 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is not enabl
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1085,7 +1079,7 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is not enabl
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

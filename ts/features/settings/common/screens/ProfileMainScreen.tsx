@@ -26,11 +26,11 @@ import {
   ScrollView
 } from "react-native";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
+import I18n from "i18next";
 import AppVersion from "../../../../components/AppVersion";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
-import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { setDebugModeEnabled } from "../../../../store/actions/debug";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -50,12 +50,15 @@ import {
   trackPressLogoutConfirmFromIO,
   trackPressLogoutFromIO
 } from "../analytics";
+import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
+import { itwIsL3EnabledSelector } from "../../../itwallet/common/store/selectors/preferences";
 
 const consecutiveTapRequired = 4;
 const RESET_COUNTER_TIMEOUT = 2000 as Millisecond;
 
 type ProfileNavListItem = {
   value: string;
+  isHidden?: boolean;
 } & Pick<
   ComponentProps<typeof ListItemNav>,
   "description" | "testID" | "onPress"
@@ -79,6 +82,7 @@ const ProfileMainScreenFC = () => {
   );
   const [tapsOnAppVersion, setTapsOnAppVersion] = useState(0);
   const idResetTap = useRef<number>(undefined);
+  const isItwFeaturesAvailable = useIOSelector(itwIsL3EnabledSelector);
 
   const handleContinue = useCallback(() => {
     trackPressLogoutConfirmFromIO();
@@ -162,52 +166,64 @@ const ProfileMainScreenFC = () => {
   );
 
   const profileNavListItems = useMemo<ReadonlyArray<ProfileNavListItem>>(
-    () => [
-      {
-        // Data
-        value: I18n.t("profile.main.data.title"),
-        description: I18n.t("profile.main.data.description"),
-        onPress: navigateToProfile,
-        testID: "profileDataButton"
-      },
-      {
-        // Preferences
-        value: I18n.t("profile.main.preferences.title"),
-        description: I18n.t("profile.main.preferences.description"),
-        onPress: () =>
-          navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
-            screen: SETTINGS_ROUTES.PROFILE_PREFERENCES_HOME
-          })
-      },
-      {
-        // Security
-        value: I18n.t("profile.main.security.title"),
-        description: I18n.t("profile.main.security.description"),
-        onPress: () =>
-          navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
-            screen: SETTINGS_ROUTES.PROFILE_SECURITY
-          })
-      },
-      {
-        // Privacy
-        value: I18n.t("profile.main.privacy.title"),
-        description: I18n.t("profile.main.privacy.description"),
-        onPress: () =>
-          navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
-            screen: SETTINGS_ROUTES.PROFILE_PRIVACY_MAIN
-          })
-      },
-      {
-        // Info about IO app
-        value: I18n.t("profile.main.appInfo.title"),
-        description: I18n.t("profile.main.appInfo.description"),
-        onPress: () =>
-          navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
-            screen: SETTINGS_ROUTES.PROFILE_ABOUT_APP
-          })
-      }
-    ],
-    [navigation, navigateToProfile]
+    () =>
+      [
+        {
+          // Data
+          value: I18n.t("profile.main.data.title"),
+          description: I18n.t("profile.main.data.description"),
+          onPress: navigateToProfile,
+          testID: "profileDataButton"
+        },
+        {
+          // Preferences
+          value: I18n.t("profile.main.preferences.title"),
+          description: I18n.t("profile.main.preferences.description"),
+          onPress: () =>
+            navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+              screen: SETTINGS_ROUTES.PROFILE_PREFERENCES_HOME
+            })
+        },
+        {
+          // IT Wallet
+          value: I18n.t("features.itWallet.settings.item.title"),
+          description: I18n.t("features.itWallet.settings.item.description"),
+          onPress: () =>
+            navigation.navigate(ITW_ROUTES.MAIN, {
+              screen: ITW_ROUTES.SETTINGS
+            }),
+          isHidden: !isItwFeaturesAvailable,
+          testID: "itWalletSettingsButtonTestID"
+        },
+        {
+          // Security
+          value: I18n.t("profile.main.security.title"),
+          description: I18n.t("profile.main.security.description"),
+          onPress: () =>
+            navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+              screen: SETTINGS_ROUTES.PROFILE_SECURITY
+            })
+        },
+        {
+          // Privacy
+          value: I18n.t("profile.main.privacy.title"),
+          description: I18n.t("profile.main.privacy.description"),
+          onPress: () =>
+            navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+              screen: SETTINGS_ROUTES.PROFILE_PRIVACY_MAIN
+            })
+        },
+        {
+          // Info about IO app
+          value: I18n.t("profile.main.appInfo.title"),
+          description: I18n.t("profile.main.appInfo.description"),
+          onPress: () =>
+            navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+              screen: SETTINGS_ROUTES.PROFILE_ABOUT_APP
+            })
+        }
+      ].filter(({ isHidden }) => !isHidden),
+    [navigation, navigateToProfile, isItwFeaturesAvailable]
   );
 
   const keyExtractor = useCallback(

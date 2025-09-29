@@ -18,10 +18,16 @@ import {
 } from "../utils/login";
 import { LollipopCheckStatus } from "../types/LollipopCheckStatus";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
-import { getLollipopLoginHeaders, handleRegenerateEphemeralKey } from "..";
+import { handleRegenerateEphemeralKey } from "..";
 import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors";
 import { cieFlowForDevServerEnabled } from "../../authentication/login/cie/utils";
 import { selectedIdentityProviderSelector } from "../../authentication/common/store/selectors";
+import {
+  isActiveSessionFastLoginEnabledSelector,
+  isActiveSessionLoginSelector
+} from "../../authentication/activeSessionLogin/store/selectors";
+import { hashedProfileFiscalCodeSelector } from "../../../store/reducers/crossSessions";
+import { getLoginHeaders } from "../../authentication/common/utils/login";
 
 export const useLollipopLoginSource = (
   onLollipopCheckFailure: () => void,
@@ -39,6 +45,11 @@ export const useLollipopLoginSource = (
   const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
   const isFastLogin = useIOSelector(isFastLoginEnabledSelector);
   const idp = useIOSelector(selectedIdentityProviderSelector);
+  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
+  const hashedFiscalCode = useIOSelector(hashedProfileFiscalCodeSelector);
+  const isActiveSessionFastLogin = useIOSelector(
+    isActiveSessionFastLoginEnabledSelector
+  );
 
   const verifyLollipop = useCallback(
     (eventUrl: string, urlEncodedSamlRequest: string, publicKey: PublicKey) => {
@@ -100,11 +111,12 @@ export const useLollipopLoginSource = (
             key =>
               setWebviewSource({
                 uri: loginUri,
-                headers: getLollipopLoginHeaders(
+                headers: getLoginHeaders(
                   key,
                   DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
-                  isFastLogin,
-                  cieFlowForDevServerEnabled ? idp?.id : undefined
+                  isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
+                  cieFlowForDevServerEnabled ? idp?.id : undefined,
+                  isActiveSessionLogin ? hashedFiscalCode : undefined
                 )
               })
           )
@@ -114,7 +126,10 @@ export const useLollipopLoginSource = (
   }, [
     dispatch,
     ephemeralKeyTag,
+    isActiveSessionFastLogin,
+    hashedFiscalCode,
     idp?.id,
+    isActiveSessionLogin,
     isFastLogin,
     loginUri,
     mixpanelEnabled

@@ -5,6 +5,7 @@ import {
   HSpacer,
   IOColors,
   IOSkeleton,
+  useIOThemeContext,
   VSpacer
 } from "@pagopa/io-app-design-system";
 
@@ -16,10 +17,6 @@ import {
   useMemo
 } from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
-import {
-  heightPercentageToDP,
-  widthPercentageToDP
-} from "react-native-responsive-screen";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { BonusCardCounter } from "./BonusCardCounter";
@@ -29,6 +26,7 @@ import { BonusCardStatus } from "./BonusCardStatus";
 type BaseProps = {
   // For devices with small screens you may need to hide the logo to get more space
   hideLogo?: boolean;
+  isCGNType?: ReactNode;
 };
 
 type ContentProps = {
@@ -54,6 +52,9 @@ const BonusCardContent = (props: BonusCard) => {
     setAccessibilityFocus(bonusNameHeadingRef);
   }, [bonusNameHeadingRef]);
 
+  const { themeType } = useIOThemeContext();
+  const isDark = themeType === "dark";
+
   if (props.isLoading) {
     return <BonusCardSkeleton {...props} />;
   }
@@ -65,8 +66,11 @@ const BonusCardContent = (props: BonusCard) => {
     organizationName,
     status,
     counters,
-    cardFooter
+    cardFooter,
+    isCGNType
   } = props;
+
+  const idPayColors = isDark ? "blueIO-50" : "blueItalia-850";
 
   return (
     <View style={styles.content} testID="BonusCardContentTestID">
@@ -83,7 +87,7 @@ const BonusCardContent = (props: BonusCard) => {
       <H2
         ref={bonusNameHeadingRef}
         role="heading"
-        color="blueItalia-850"
+        color={!isCGNType ? idPayColors : "blueItalia-850"}
         style={{ textAlign: "center" }}
       >
         {name}
@@ -91,7 +95,7 @@ const BonusCardContent = (props: BonusCard) => {
       <VSpacer size={4} />
       <BodySmall
         weight="Regular"
-        color="blueItalia-850"
+        color={!isCGNType ? idPayColors : "blueItalia-850"}
         style={{ textAlign: "center", marginHorizontal: 16 }}
       >
         {organizationName}
@@ -137,7 +141,9 @@ export const BonusCard = (props: BonusCard) => {
     <View style={[styles.container, { paddingTop }]}>
       {!props.isLoading && props.cardBackground ? (
         <>
-          <View style={styles.cardBackground}>{props.cardBackground}</View>
+          <View style={{ ...StyleSheet.absoluteFillObject }}>
+            {props.cardBackground}
+          </View>
           <BonusCardShape key={shapeKey} mode="draw-on-top" />
         </>
       ) : (
@@ -207,10 +213,5 @@ const styles = StyleSheet.create({
   logos: {
     flexDirection: "row",
     columnGap: 8
-  },
-  cardBackground: {
-    position: "absolute",
-    width: widthPercentageToDP(100) - 16,
-    height: heightPercentageToDP(100)
   }
 });

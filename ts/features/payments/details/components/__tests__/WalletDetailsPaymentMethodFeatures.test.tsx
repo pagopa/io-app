@@ -2,9 +2,9 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { render } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
+import I18n from "i18next";
 import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { WalletStatusEnum } from "../../../../../../definitions/pagopa/walletv3/WalletStatus";
-import I18n from "../../../../../i18n";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { Store } from "../../../../../store/actions/types";
 import { appReducer } from "../../../../../store/reducers";
@@ -35,6 +35,7 @@ const renderComponent = (paymentMethod: WalletInfo, isIdPayEnabled = false) => {
             onboardingSucceeded: false,
             initiativesAwaitingStatusUpdate: {},
             initiatives: pot.none,
+            initiativeWaitingList: pot.none,
             initiativesWithInstrument: pot.some({
               brand: "",
               idWallet: "",

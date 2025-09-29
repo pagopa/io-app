@@ -1,11 +1,12 @@
-import configureMockStore from "redux-mock-store";
 import { Action, Store } from "redux";
-import PN_ROUTES from "../../navigation/routes";
-import { GlobalState } from "../../../../store/reducers/types";
+import configureMockStore from "redux-mock-store";
+import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
-import { MessageDetailsScreen } from "../MessageDetailsScreen";
+import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { reproduceSequence } from "../../../../utils/tests";
+import { message_1 } from "../../../messages/__mocks__/message";
+import { service_1 } from "../../../messages/__mocks__/messages";
 import {
   loadMessageById,
   loadMessageDetails,
@@ -15,12 +16,10 @@ import {
   toUIMessage,
   toUIMessageDetails
 } from "../../../messages/store/reducers/transformers";
-import { message_1 } from "../../../messages/__mocks__/message";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
-import { service_1 } from "../../../messages/__mocks__/messages";
-import { UIMessageId } from "../../../messages/types";
-import { applicationChangeState } from "../../../../store/actions/application";
 import { thirdPartyMessage } from "../../__mocks__/pnMessage";
+import PN_ROUTES from "../../navigation/routes";
+import { MessageDetailsScreen } from "../MessageDetailsScreen";
 
 jest.mock("../../components/MessageDetails");
 
@@ -49,8 +48,8 @@ describe("MessageDetailsScreen", () => {
       loadServiceDetail.success(service_1),
       loadMessageDetails.success(toUIMessageDetails(message_1)),
       loadThirdPartyMessage.success({
-        id: message_1.id as UIMessageId,
-        content: thirdPartyMessage
+        id: message_1.id,
+        content: { kind: "TPM", ...thirdPartyMessage }
       })
     ];
 

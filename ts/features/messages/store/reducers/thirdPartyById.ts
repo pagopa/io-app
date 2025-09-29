@@ -16,12 +16,31 @@ import {
 } from "../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../store/reducers/types";
 import { RemoteContentDetails } from "../../../../../definitions/backend/RemoteContentDetails";
-import { UIMessageDetails, UIMessageId } from "../../types";
+import { UIMessageDetails } from "../../types";
 import { extractContentFromMessageSources } from "../../utils";
 import { isTestEnv } from "../../../../utils/environment";
 
+export const thirdPartyKind = {
+  TPM: "TPM",
+  AAR: "AAR"
+} as const;
+
+type ThirdPartyKind = typeof thirdPartyKind;
+
+type StandardThirdPartyMessage = {
+  kind: ThirdPartyKind["TPM"];
+} & ThirdPartyMessageWithContent;
+type EphemeralAARThirdPartyMessage = {
+  kind: ThirdPartyKind["AAR"];
+  mandateId?: string;
+} & ThirdPartyMessageWithContent;
+
+export type ThirdPartyMessageUnion =
+  | StandardThirdPartyMessage
+  | EphemeralAARThirdPartyMessage;
+
 export type ThirdPartyById = IndexedById<
-  pot.Pot<ThirdPartyMessageWithContent, Error>
+  pot.Pot<ThirdPartyMessageUnion, Error>
 >;
 
 export const initialState: ThirdPartyById = {};
@@ -48,18 +67,12 @@ export const thirdPartyByIdReducer = (
   return state;
 };
 
-/**
- * From UIMessageId to the third party content pot
- */
 export const thirdPartyFromIdSelector = (
   state: GlobalState,
-  ioMessageId: UIMessageId
+  ioMessageId: string
 ) => state.entities.messages.thirdPartyById[ioMessageId] ?? pot.none;
 
-export const messageTitleSelector = (
-  state: GlobalState,
-  ioMessageId: UIMessageId
-) =>
+export const messageTitleSelector = (state: GlobalState, ioMessageId: string) =>
   messageContentSelector(
     state,
     ioMessageId,
@@ -69,7 +82,7 @@ export const messageTitleSelector = (
 
 export const messageMarkdownSelector = (
   state: GlobalState,
-  ioMessageId: UIMessageId
+  ioMessageId: string
 ) =>
   messageContentSelector(
     state,
@@ -80,12 +93,12 @@ export const messageMarkdownSelector = (
 
 export const hasAttachmentsSelector = (
   state: GlobalState,
-  ioMessageId: UIMessageId
+  ioMessageId: string
 ) => pipe(thirdPartyMessageAttachments(state, ioMessageId), RA.isNonEmpty);
 
 export const thirdPartyMessageAttachments = (
   state: GlobalState,
-  ioMessageId: UIMessageId
+  ioMessageId: string
 ): ReadonlyArray<ThirdPartyAttachment> =>
   pipe(
     thirdPartyFromIdSelector(state, ioMessageId),
@@ -98,7 +111,7 @@ export const thirdPartyMessageAttachments = (
 
 const messageContentSelector = <T>(
   state: GlobalState,
-  ioMessageId: UIMessageId,
+  ioMessageId: string,
   extractionFunction: (input: RemoteContentDetails | UIMessageDetails) => T
 ) => {
   const messageDetails = toUndefinedOptional(

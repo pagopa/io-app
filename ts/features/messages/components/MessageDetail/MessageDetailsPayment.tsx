@@ -1,14 +1,17 @@
-import { ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
-import { UIMessageId } from "../../types";
+import {
+  ListItemHeader,
+  useIOTheme,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { useIOSelector } from "../../../../store/hooks";
 import { messagePaymentDataSelector } from "../../store/reducers/detailsById";
-import I18n from "../../../../i18n";
 import { getRptIdStringFromPaymentData } from "../../utils";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { MessagePaymentItem } from "./MessagePaymentItem";
 
 type MessageDetailsPaymentProps = {
-  messageId: UIMessageId;
+  messageId: string;
   serviceId: ServiceId;
 };
 
@@ -16,6 +19,8 @@ export const MessageDetailsPayment = ({
   messageId,
   serviceId
 }: MessageDetailsPaymentProps) => {
+  const theme = useIOTheme();
+
   const paymentData = useIOSelector(state =>
     messagePaymentDataSelector(state, messageId)
   );
@@ -32,7 +37,7 @@ export const MessageDetailsPayment = ({
       <ListItemHeader
         label={I18n.t("features.messages.payments.title")}
         iconName={"productPagoPA"}
-        iconColor={"blueItalia-500"}
+        iconColor={theme["italyBrand-default"]}
       />
       <MessagePaymentItem
         hideExpirationDate

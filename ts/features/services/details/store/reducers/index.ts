@@ -14,6 +14,7 @@ import { isStrictSome } from "../../../../../utils/pot";
 import { EnabledChannels } from "../../../../../utils/profile";
 import {
   logoutSuccess,
+  sessionCorrupted,
   sessionExpired
 } from "../../../../authentication/common/store/actions";
 import { ServiceKind } from "../../components/ServiceDetailsScreenComponent";
@@ -33,6 +34,7 @@ export type ServicePreferencePot = pot.Pot<
   ServicePreferenceResponse,
   WithServiceID<NetworkError>
 >;
+
 export type ServicesDetailsState = {
   dataById: Record<string, pot.Pot<ServiceDetails, Error>>;
   preferencesById: Record<string, ServicePreferencePot>;
@@ -142,6 +144,7 @@ const servicesDetailsReducer = (
 
     case getType(logoutSuccess):
     case getType(sessionExpired):
+    case getType(sessionCorrupted):
       return INITIAL_STATE;
   }
   return state;
@@ -215,9 +218,9 @@ export const servicePreferencePotByIdSelector = (
   }
   return state.features.services.details.preferencesById[id] ?? pot.none;
 };
+
 export const servicePreferenceResponseSuccessByIdSelector = createSelector(
   servicePreferencePotByIdSelector,
-
   servicePreferencePot =>
     pipe(
       servicePreferencePot,
@@ -262,7 +265,6 @@ type PreferenceByChannelSelectorType = (
  * @param channel - The channel of the preference to select
  * @returns The preference value for the specified channel or undefined
  */
-
 export const servicePreferenceByChannelPotSelector: PreferenceByChannelSelectorType =
   createSelector(
     [

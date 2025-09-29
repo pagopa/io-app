@@ -7,7 +7,7 @@ const fakeGlobalState = {
   remoteConfig: O.some({
     pn: {
       aarQRCodeRegex:
-        "^\\s*https:\\/\\/(dev\\.|test\\.|hotfix\\.|uat\\.)?cittadini\\.notifichedigitali\\.it(\\/[^?]*)?\\?aar=[^\\s]+"
+        "^\\s*https:\\/\\/(cittadini|login)\\.(uat\\.)?notifichedigitali\\.it(\\/[^?]*)?\\?aar=[^\\s]+"
     }
   })
 } as GlobalState;
@@ -166,23 +166,50 @@ describe("test decodeIOBarcode function", () => {
 
   describe("test SEND AAR barcode type", () => {
     const testUrls: Array<[string, boolean]> = [
-      ["https://dev.cittadini.notifichedigitali.it/?aar=whatever", true],
-      ["https://test.cittadini.notifichedigitali.it/?aar=whatever", true],
-      ["https://hotfix.cittadini.notifichedigitali.it/?aar=whatever", true],
-      ["https://uat.cittadini.notifichedigitali.it/?aar=whatever", true],
+      // "CITTADINI" domain
+      ["https://cittadini.uat.notifichedigitali.it/?aar=whatever", true],
       ["https://cittadini.notifichedigitali.it/?aar=whatever", true],
       [
         "https://cittadini.notifichedigitali.it/notifications/detail?aar=12345",
         true
       ],
       [
-        "  https://dev.cittadini.notifichedigitali.it/some/path?aar=abc123  ",
+        "  https://cittadini.uat.notifichedigitali.it/some/path?aar=abc123  ",
         true
       ],
+      ["https://cittadini.test.notifichedigitali.it/?aar=whatever", false],
+      ["https://cittadini.hotfix.notifichedigitali.it/?aar=whatever", false],
+      ["https://cittadini.dev.notifichedigitali.it/?aar=whatever", false],
+      // "LOGIN" domain
+      ["https://login.uat.notifichedigitali.it/?aar=whatever", true],
+      [
+        "https://login.notifichedigitali.it/notifications/detail?aar=12345",
+        true
+      ],
+      ["  https://login.uat.notifichedigitali.it/some/path?aar=abc123  ", true],
+      ["https://login.notifichedigitali.it/?aar=whatever", true],
+
+      ["https://login.test.notifichedigitali.it/?aar=whatever", false],
+      ["https://login.hotfix.notifichedigitali.it/?aar=whatever", false],
+      ["https://login.dev.notifichedigitali.it/?aar=whatever", false],
+      ["https://login.stage.notifichedigitali.it/?aar=whatever", false],
+      // invalid cases
+
       ["https://cittadini.notifichedigitali.it/?aar=", false],
       ["https://cittadini.notifichedigitali.it/?aar= ", false],
+      ["https://login.notifichedigitali.it/?aar=", false],
+      ["https://login.notifichedigitali.it/?aar= ", false],
       ["https://other-domain.it/?aar=whatever", false],
-      ["https://stage.cittadini.notifichedigitali.it/?aar=whatever", false]
+      ["https://cittadini.state.notifichedigitali.it/?aar=whatever", false],
+      // wrong subdomain placement
+      ["https://dev.cittadini.notifichedigitali.it/?aar=whatever", false],
+      ["https://test.cittadini.notifichedigitali.it/?aar=whatever", false],
+      ["https://hotfix.cittadini.notifichedigitali.it/?aar=whatever", false],
+      ["https://uat.cittadini.notifichedigitali.it/?aar=whatever", false],
+      ["https://dev.login.notifichedigitali.it/?aar=whatever", false],
+      ["https://test.login.notifichedigitali.it/?aar=whatever", false],
+      ["https://hotfix.login.notifichedigitali.it/?aar=whatever", false],
+      ["https://uat.login.notifichedigitali.it/?aar=whatever", false]
     ];
     testUrls.forEach(([data, shouldMatch]) => {
       it(`should ${

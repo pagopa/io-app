@@ -5,7 +5,7 @@ import {
   WebViewHttpErrorEvent,
   WebViewSourceUri
 } from "react-native-webview/lib/WebViewTypes";
-import I18n from "../i18n";
+import I18n from "i18next";
 import { mixpanelTrack } from "../mixpanel";
 import { resetDebugData, setDebugData } from "../store/actions/debug";
 import { useIODispatch } from "../store/hooks";
@@ -14,9 +14,10 @@ import { OperationResultScreenContent } from "./screens/OperationResultScreenCon
 
 type Props = {
   source: WebViewSourceUri;
+  playgroundEnabled?: boolean;
 };
 
-const WebviewComponent = ({ source }: Props) => {
+const WebviewComponent = ({ source, playgroundEnabled }: Props) => {
   const dispatch = useIODispatch();
   const [loading, setLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
@@ -39,6 +40,10 @@ const WebviewComponent = ({ source }: Props) => {
     [dispatch]
   );
 
+  useEffect(() => {
+    setHasError(false);
+  }, [source]);
+
   const handleError = (event: WebViewErrorEvent | WebViewHttpErrorEvent) => {
     void mixpanelTrack("CGN_LANDING_PAGE_LOAD_ERROR", {
       uri: source.uri,
@@ -58,7 +63,7 @@ const WebviewComponent = ({ source }: Props) => {
 
   return (
     <>
-      {hasError ? (
+      {hasError && !playgroundEnabled ? (
         <OperationResultScreenContent
           testID="webview-error"
           pictogram="umbrella"
@@ -78,6 +83,7 @@ const WebviewComponent = ({ source }: Props) => {
             androidMicrophoneAccessDisabled={true}
             allowsInlineMediaPlayback={true}
             mediaPlaybackRequiresUserAction={true}
+            cacheEnabled={false}
             style={{ flex: 1 }}
             ref={ref}
             onLoadEnd={() => setLoading(false)}

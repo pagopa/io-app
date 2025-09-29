@@ -231,6 +231,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                         <View
                           style={
                             {
+                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -240,8 +241,10 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                               {
                                 "alignItems": "center",
                                 "display": "flex",
+                                "flex": 1,
                                 "flexDirection": "column",
                                 "gap": 24,
+                                "justifyContent": "center",
                               }
                             }
                           >
@@ -251,8 +254,8 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                               importantForAccessibility="no-hide-descendants"
                             >
                               <View
-                                accessibilityHint="Wait for the content load"
-                                accessibilityLabel="Loading"
+                                accessibilityHint="Attendi il caricamento del contenuto"
+                                accessibilityLabel="Caricamento in corso"
                                 accessibilityRole="progressbar"
                                 accessible={true}
                                 style={
@@ -429,67 +432,85 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                 </View>
                               </View>
                             </View>
-                            <Text
-                              accessibilityLabel="Loading message details"
-                              allowFontScaling={true}
-                              dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.5}
+                            <View
                               style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#2B2E38",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 22,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 33,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 8,
+                                }
                               }
                             >
-                              Loading message details
-                            </Text>
+                              <Text
+                                accessibilityLabel="Stiamo caricando il messaggio"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="title2"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#2B2E38",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 22,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 33,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                Stiamo caricando il messaggio
+                              </Text>
+                              <View
+                                style={
+                                  {
+                                    "alignItems": "center",
+                                  }
+                                }
+                              >
+                                <View
+                                  style={
+                                    {
+                                      "height": 8,
+                                    }
+                                  }
+                                />
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Attendi qualche secondo
+                                </Text>
+                              </View>
+                            </View>
                           </View>
                         </View>
                         <View
                           style={
                             {
-                              "alignItems": "center",
+                              "marginBottom": 16,
+                              "paddingHorizontal": 24,
                             }
                           }
-                        >
-                          <View
-                            style={
-                              {
-                                "height": 8,
-                              }
-                            }
-                          />
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="body"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            Wait a few moments
-                          </Text>
-                        </View>
+                        />
                       </RNCSafeAreaView>
                     </View>
                     <View
@@ -512,9 +533,6 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -540,7 +558,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -706,7 +724,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -1088,6 +1106,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                         <View
                           style={
                             {
+                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -1097,8 +1116,10 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                               {
                                 "alignItems": "center",
                                 "display": "flex",
+                                "flex": 1,
                                 "flexDirection": "column",
                                 "gap": 24,
+                                "justifyContent": "center",
                               }
                             }
                           >
@@ -1108,8 +1129,8 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                               importantForAccessibility="no-hide-descendants"
                             >
                               <View
-                                accessibilityHint="Wait for the content load"
-                                accessibilityLabel="Loading"
+                                accessibilityHint="Attendi il caricamento del contenuto"
+                                accessibilityLabel="Caricamento in corso"
                                 accessibilityRole="progressbar"
                                 accessible={true}
                                 style={
@@ -1286,67 +1307,85 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                 </View>
                               </View>
                             </View>
-                            <Text
-                              accessibilityLabel="Loading message details"
-                              allowFontScaling={true}
-                              dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.5}
+                            <View
                               style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#2B2E38",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 22,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 33,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 8,
+                                }
                               }
                             >
-                              Loading message details
-                            </Text>
+                              <Text
+                                accessibilityLabel="Stiamo caricando il messaggio"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="title2"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#2B2E38",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 22,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 33,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                Stiamo caricando il messaggio
+                              </Text>
+                              <View
+                                style={
+                                  {
+                                    "alignItems": "center",
+                                  }
+                                }
+                              >
+                                <View
+                                  style={
+                                    {
+                                      "height": 8,
+                                    }
+                                  }
+                                />
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Attendi qualche secondo
+                                </Text>
+                              </View>
+                            </View>
                           </View>
                         </View>
                         <View
                           style={
                             {
-                              "alignItems": "center",
+                              "marginBottom": 16,
+                              "paddingHorizontal": 24,
                             }
                           }
-                        >
-                          <View
-                            style={
-                              {
-                                "height": 8,
-                              }
-                            }
-                          />
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="body"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            Wait a few moments
-                          </Text>
-                        </View>
+                        />
                       </RNCSafeAreaView>
                     </View>
                     <View
@@ -1369,9 +1408,6 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -1397,7 +1433,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1563,7 +1599,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -2158,7 +2194,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                 ]
                               }
                             >
-                              There is a temporary problem, please try again.
+                              C'è un problema temporaneo, riprova.
                             </Text>
                             <View
                               style={
@@ -2176,7 +2212,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Retry"
+                                  accessibilityLabel="Riprova"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -2292,7 +2328,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                           ]
                                         }
                                       >
-                                        Retry
+                                        Riprova
                                       </Text>
                                     </View>
                                   </View>
@@ -2315,7 +2351,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Cancel"
+                                  accessibilityLabel="Annulla"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -2436,7 +2472,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                           ]
                                         }
                                       >
-                                        Cancel
+                                        Annulla
                                       </Text>
                                     </View>
                                   </View>
@@ -2469,9 +2505,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                               {},
                               {
                                 "backgroundColor": "#FFFFFF",
-                              },
-                              {
-                                "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
                               },
                             ]
@@ -2495,7 +2528,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -2661,7 +2694,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -3043,6 +3076,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                         <View
                           style={
                             {
+                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -3052,8 +3086,10 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                               {
                                 "alignItems": "center",
                                 "display": "flex",
+                                "flex": 1,
                                 "flexDirection": "column",
                                 "gap": 24,
+                                "justifyContent": "center",
                               }
                             }
                           >
@@ -3063,8 +3099,8 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                               importantForAccessibility="no-hide-descendants"
                             >
                               <View
-                                accessibilityHint="Wait for the content load"
-                                accessibilityLabel="Loading"
+                                accessibilityHint="Attendi il caricamento del contenuto"
+                                accessibilityLabel="Caricamento in corso"
                                 accessibilityRole="progressbar"
                                 accessible={true}
                                 style={
@@ -3241,67 +3277,85 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                 </View>
                               </View>
                             </View>
-                            <Text
-                              accessibilityLabel="Loading message details"
-                              allowFontScaling={true}
-                              dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.5}
+                            <View
                               style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#2B2E38",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 22,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 33,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 8,
+                                }
                               }
                             >
-                              Loading message details
-                            </Text>
+                              <Text
+                                accessibilityLabel="Stiamo caricando il messaggio"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="title2"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#2B2E38",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 22,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 33,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                Stiamo caricando il messaggio
+                              </Text>
+                              <View
+                                style={
+                                  {
+                                    "alignItems": "center",
+                                  }
+                                }
+                              >
+                                <View
+                                  style={
+                                    {
+                                      "height": 8,
+                                    }
+                                  }
+                                />
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Attendi qualche secondo
+                                </Text>
+                              </View>
+                            </View>
                           </View>
                         </View>
                         <View
                           style={
                             {
-                              "alignItems": "center",
+                              "marginBottom": 16,
+                              "paddingHorizontal": 24,
                             }
                           }
-                        >
-                          <View
-                            style={
-                              {
-                                "height": 8,
-                              }
-                            }
-                          />
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="body"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            Wait a few moments
-                          </Text>
-                        </View>
+                        />
                       </RNCSafeAreaView>
                     </View>
                     <View
@@ -3324,9 +3378,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -3352,7 +3403,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -3518,7 +3569,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -3900,6 +3951,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                         <View
                           style={
                             {
+                              "flex": 1,
                               "paddingHorizontal": 24,
                             }
                           }
@@ -3909,8 +3961,10 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                               {
                                 "alignItems": "center",
                                 "display": "flex",
+                                "flex": 1,
                                 "flexDirection": "column",
                                 "gap": 24,
+                                "justifyContent": "center",
                               }
                             }
                           >
@@ -3920,8 +3974,8 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                               importantForAccessibility="no-hide-descendants"
                             >
                               <View
-                                accessibilityHint="Wait for the content load"
-                                accessibilityLabel="Loading"
+                                accessibilityHint="Attendi il caricamento del contenuto"
+                                accessibilityLabel="Caricamento in corso"
                                 accessibilityRole="progressbar"
                                 accessible={true}
                                 style={
@@ -4098,67 +4152,85 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                 </View>
                               </View>
                             </View>
-                            <Text
-                              accessibilityLabel="Loading message details"
-                              allowFontScaling={true}
-                              dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.5}
+                            <View
                               style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#2B2E38",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 22,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 33,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 8,
+                                }
                               }
                             >
-                              Loading message details
-                            </Text>
+                              <Text
+                                accessibilityLabel="Stiamo caricando il messaggio"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="title2"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#2B2E38",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 22,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 33,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                Stiamo caricando il messaggio
+                              </Text>
+                              <View
+                                style={
+                                  {
+                                    "alignItems": "center",
+                                  }
+                                }
+                              >
+                                <View
+                                  style={
+                                    {
+                                      "height": 8,
+                                    }
+                                  }
+                                />
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Attendi qualche secondo
+                                </Text>
+                              </View>
+                            </View>
                           </View>
                         </View>
                         <View
                           style={
                             {
-                              "alignItems": "center",
+                              "marginBottom": 16,
+                              "paddingHorizontal": 24,
                             }
                           }
-                        >
-                          <View
-                            style={
-                              {
-                                "height": 8,
-                              }
-                            }
-                          />
-                          <Text
-                            allowFontScaling={true}
-                            dynamicTypeRamp="body"
-                            maxFontSizeMultiplier={1.5}
-                            style={
-                              [
-                                {},
-                                {
-                                  "color": "#555C70",
-                                  "fontFamily": "Titillio",
-                                  "fontSize": 16,
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                  "lineHeight": 24,
-                                },
-                              ]
-                            }
-                          >
-                            Wait a few moments
-                          </Text>
-                        </View>
+                        />
                       </RNCSafeAreaView>
                     </View>
                     <View
@@ -4181,9 +4253,6 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                 "borderColor": "rgba(210,214,227,0)",
                               },
                               {},
-                              {
-                                "backgroundColor": "#FFFFFF",
-                              },
                               {
                                 "backgroundColor": "#FFFFFF",
                                 "borderColor": "transparent",
@@ -4209,7 +4278,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                             }
                           >
                             <View
-                              accessibilityLabel="Back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -4375,7 +4444,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                               }
                             >
                               <View
-                                accessibilityLabel="Contextual Help"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {

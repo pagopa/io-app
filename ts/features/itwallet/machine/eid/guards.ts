@@ -5,6 +5,13 @@ import { profileFiscalCodeSelector } from "../../../settings/common/store/select
 import { ItwSessionExpiredError } from "../../api/client";
 import { isWalletInstanceAttestationValid } from "../../common/utils/itwAttestationUtils";
 import { getFiscalCodeFromCredential } from "../../common/utils/itwClaimsUtils";
+import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
+import { isItwCredential } from "../../common/utils/itwCredentialUtils";
+import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
+import {
+  itwIsL3EnabledSelector,
+  itwIsSimplifiedActivationRequired
+} from "../../common/store/selectors/preferences";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -40,9 +47,23 @@ export const createEidIssuanceGuardsImplementation = (
   hasValidWalletInstanceAttestation: ({ context }: { context: Context }) =>
     pipe(
       O.fromNullable(context.walletInstanceAttestation?.jwt),
-      O.map(wia =>
-        isWalletInstanceAttestationValid(wia, context.isL3FeaturesEnabled)
-      ),
+      O.map(isWalletInstanceAttestationValid),
       O.getOrElse(() => false)
-    )
+    ),
+
+  /**
+   * Check whether the user already has a valid L3 PID obtained from a previous issuance
+   * while not being whitelisted, to activate IT-Wallet without re-authenticating.
+   */
+  isEligibleForItwSimplifiedActivation: () => {
+    const state = store.getState();
+    const pid = O.toUndefined(itwCredentialsEidSelector(state));
+    return (
+      !!pid &&
+      itwIsSimplifiedActivationRequired(state) && // The flag for simplified activation is enabled
+      itwIsL3EnabledSelector(state) && // The user has been whitelisted to officially activate IT-Wallet
+      isItwCredential(pid.credential) && // Extra check to ensure the PID is a valid L3 credential
+      getCredentialStatus(pid) === "valid"
+    );
+  }
 });

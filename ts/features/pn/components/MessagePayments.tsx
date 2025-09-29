@@ -3,6 +3,7 @@ import {
   IOSkeleton,
   ListItemHeader,
   ModulePaymentNotice,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { CommonActions, useNavigation } from "@react-navigation/native";
@@ -11,13 +12,12 @@ import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { MutableRefObject } from "react";
 import { StyleSheet, View } from "react-native";
+import I18n from "i18next";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import { MessagePaymentItem } from "../../messages/components/MessageDetail/MessagePaymentItem";
 import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
-import { UIMessageId } from "../../messages/types";
 import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
 import { trackPNShowAllPayments } from "../analytics";
 import PN_ROUTES from "../navigation/routes";
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
 });
 
 type MessagePaymentsProps = {
-  messageId: UIMessageId;
+  messageId: string;
   isCancelled: boolean;
   payments: ReadonlyArray<NotificationPaymentInfo> | undefined;
   completedPaymentNoticeCodes: ReadonlyArray<string> | undefined;
@@ -101,6 +101,10 @@ export const MessagePayments = ({
   serviceId
 }: MessagePaymentsProps) => {
   const navigation = useNavigation();
+  const theme = useIOTheme();
+
+  const pagoPAIconColor = theme["italyBrand-default"];
+
   const paymentsButtonStatus = useIOSelector(state =>
     paymentsButtonStateSelector(
       state,
@@ -124,7 +128,7 @@ export const MessagePayments = ({
         <ListItemHeader
           label={I18n.t("features.pn.details.paymentSection.title")}
           iconName={"productPagoPA"}
-          iconColor={"blueIO-500"}
+          iconColor={pagoPAIconColor}
         />
         {completedPaymentNoticeCodes &&
           completedPaymentNoticeCodes.map(
@@ -165,7 +169,7 @@ export const MessagePayments = ({
       <ListItemHeader
         label={I18n.t("features.pn.details.paymentSection.title")}
         iconName={"productPagoPA"}
-        iconColor={"blueIO-500"}
+        iconColor={pagoPAIconColor}
       />
       {payments && (
         <>

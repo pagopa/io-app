@@ -1,14 +1,18 @@
 import { useRef, useState } from "react";
 import WebView from "react-native-webview";
+import { Linking } from "react-native";
+import * as O from "fp-ts/lib/Option";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { isDevEnv } from "../../../../utils/environment";
 import { WALLET_WEBVIEW_OUTCOME_SCHEMA } from "../../common/utils/const";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 import { PaymentStartWebViewPayload } from "../store/actions/orchestration";
+import { getIntentFallbackUrl } from "../../../authentication/common/utils/login";
 
 const originSchemasWhiteList = [
   "https://*",
   `${WALLET_WEBVIEW_OUTCOME_SCHEMA}://*`,
+  "intent://*",
   "about:*",
   ...(isDevEnv ? ["http://*"] : [])
 ];
@@ -42,6 +46,11 @@ const WalletPaymentWebView = ({
         }
         if (event.url === "about:blank" && event.isTopFrame) {
           onCancel?.(WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER);
+        }
+        const intent = getIntentFallbackUrl(event.url);
+        if (O.isSome(intent)) {
+          void Linking.openURL(decodeURIComponent(intent.value));
+          return false;
         }
         return !event.url.startsWith(WALLET_WEBVIEW_OUTCOME_SCHEMA);
       }}

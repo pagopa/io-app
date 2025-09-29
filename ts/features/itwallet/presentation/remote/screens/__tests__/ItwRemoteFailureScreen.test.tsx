@@ -1,7 +1,7 @@
 import { createActor } from "xstate";
 import { createStore } from "redux";
-import { Credential, Errors } from "@pagopa/io-react-native-wallet";
-import { FederationError } from "@pagopa/io-react-native-wallet-v2/src/trust/errors";
+import { Credential, Errors, Trust } from "@pagopa/io-react-native-wallet";
+import { constTrue } from "fp-ts/lib/function";
 import { RemoteFailure, RemoteFailureType } from "../../machine/failure";
 import { itwRemoteMachine } from "../../machine/machine";
 import { ItwRemoteMachineContext } from "../../machine/provider";
@@ -11,24 +11,25 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import { ITW_REMOTE_ROUTES } from "../../navigation/routes";
 import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
+import * as preferencesSelectors from "../../../../common/store/selectors/preferences";
 
 describe("ItwRemoteFailureScreen", () => {
   test.each<RemoteFailure>([
     {
       type: RemoteFailureType.INVALID_CREDENTIALS_STATUS,
-      reason: { invalidCredentials: ["MDL"] }
+      reason: { invalidCredentials: ["mDL"] }
     },
     {
       type: RemoteFailureType.INVALID_CREDENTIALS_STATUS,
-      reason: { invalidCredentials: ["MDL", "EuropeanDisabilityCard"] }
+      reason: { invalidCredentials: ["mDL", "EuropeanDisabilityCard"] }
     },
     {
       type: RemoteFailureType.MISSING_CREDENTIALS,
-      reason: { missingCredentials: ["MDL"] }
+      reason: { missingCredentials: ["mDL"] }
     },
     {
       type: RemoteFailureType.MISSING_CREDENTIALS,
-      reason: { missingCredentials: ["MDL", "EuropeanDisabilityCard"] }
+      reason: { missingCredentials: ["mDL", "EuropeanDisabilityCard"] }
     },
     { type: RemoteFailureType.WALLET_INACTIVE, reason: "" },
     { type: RemoteFailureType.EID_EXPIRED, reason: "" },
@@ -47,9 +48,12 @@ describe("ItwRemoteFailureScreen", () => {
     },
     {
       type: RemoteFailureType.UNTRUSTED_RP,
-      reason: new Error() as FederationError
+      reason: new Error() as Trust.Errors.FederationError
     }
   ])("should render failure screen for $type", failure => {
+    jest
+      .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
+      .mockImplementation(constTrue);
     expect(renderComponent(failure)).toMatchSnapshot();
   });
 });

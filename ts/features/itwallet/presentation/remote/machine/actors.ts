@@ -4,7 +4,7 @@ import {
   createCryptoContextFor,
   Credential,
   Trust
-} from "@pagopa/io-react-native-wallet-v2";
+} from "@pagopa/io-react-native-wallet";
 import {
   DcqlQuery,
   EnrichedPresentationDetails,
@@ -31,8 +31,6 @@ import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/st
 import { WIA_KEYTAG } from "../../../common/utils/itwCryptoContextUtils";
 import { itwCredentialsAllSelector } from "../../../credentials/store/selectors";
 import { InvalidCredentialsStatusError } from "./failure";
-
-const NEW_API_ENABLED = true; // TODO: [SIW-2530] Remove after transitioning to API 1.0
 
 type CredentialsSdJwt =
   Parameters<Credential.Presentation.EvaluateDcqlQuery>[0];
@@ -85,15 +83,10 @@ export const createRemoteActorsImplementation = (
         env.WALLET_TA_BASE_URL
       );
 
-    const trustAnchorKey = trustAnchorEntityConfig.payload.jwks.keys[0];
-
-    // Ensure that the trust anchor key is suitable for building the trust chain
-    assert(trustAnchorKey, "No suitable key found in Trust Anchor JWKS.");
-
     // Create the trust chain for the Relying Party
     const builtChainJwts = await Trust.Build.buildTrustChain(
       qrCodePayload.client_id,
-      trustAnchorKey
+      trustAnchorEntityConfig
     );
 
     // Perform full validation on the built chainW
@@ -242,7 +235,7 @@ export const createRemoteActorsImplementation = (
     assert(sessionToken, "sessionToken is undefined");
     assert(integrityKeyTag, "integrityKeyTag is undefined");
 
-    return getAttestation(env, integrityKeyTag, sessionToken, NEW_API_ENABLED);
+    return getAttestation(env, integrityKeyTag, sessionToken);
   });
 
   return {

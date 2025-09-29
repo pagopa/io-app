@@ -1,14 +1,14 @@
 import { HeaderFirstLevel } from "@pagopa/io-app-design-system";
 import { useEffect } from "react";
+import I18n from "i18next";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
-import I18n from "../../../../i18n";
-import { ItwWalletCardsContainer } from "../components/ItwWalletCardsContainer";
-import { withOfflineAlert } from "../../common/helpers/withOfflineAlert";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { trackItwOfflineWallet } from "../../analytics";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
+import { ItwOfflineAccessGate } from "../components/ItwOfflineAccessGate.tsx";
+import { ItwWalletCardsContainer } from "../components/ItwWalletCardsContainer";
 
-const ItwOfflineWalletScreen = () => {
+const OfflineWalletScreenContent = () => {
   const navigation = useIONavigation();
 
   useOnFirstRender(() => {
@@ -37,8 +37,8 @@ const ItwOfflineWalletScreen = () => {
   );
 };
 
-const ItwOfflineWalletScreenWithAlert = withOfflineAlert(
-  ItwOfflineWalletScreen
+export const ItwOfflineWalletScreen = () => (
+  <ItwOfflineAccessGate>
+    <OfflineWalletScreenContent />
+  </ItwOfflineAccessGate>
 );
-
-export { ItwOfflineWalletScreenWithAlert as ItwOfflineWalletScreen };

@@ -7,6 +7,8 @@ import { StyleSheet, View } from "react-native";
 import { QrCodeImage } from "../../../../../components/QrCodeImage";
 import {
   DrivingPrivilegesClaim,
+  DrivingPrivilegesClaimType,
+  DrivingPrivilegesCustomClaim,
   StringClaim
 } from "../../utils/itwClaimsUtils";
 import { ParsedCredential, StoredCredential } from "../../utils/itwTypesUtils";
@@ -124,58 +126,68 @@ const MdlBackData = ({ claims, valuesHidden }: DataComponentProps) => {
     {} as Record<string, number>
   );
 
+  const renderData = (privileges: DrivingPrivilegesClaimType) =>
+    privileges.map(
+      ({
+        driving_privilege,
+        issue_date,
+        expiry_date,
+        restrictions_conditions
+      }) => (
+        <Fragment key={`driving_privilege_row_${driving_privilege}`}>
+          <CardClaimContainer
+            position={{
+              left: `41.5%`,
+              top: `${privilegesTableRows[driving_privilege] || 0}%`
+            }}
+          >
+            <ClaimLabel fontSize={9} hidden={valuesHidden}>
+              {issue_date.toString("DD/MM/YY")}
+            </ClaimLabel>
+          </CardClaimContainer>
+          <CardClaimContainer
+            key={`driving_privilege_${driving_privilege}`}
+            position={{
+              left: `55%`,
+              top: `${privilegesTableRows[driving_privilege] || 0}%`
+            }}
+          >
+            <ClaimLabel fontSize={9} hidden={valuesHidden}>
+              {expiry_date.toString("DD/MM/YY")}
+            </ClaimLabel>
+          </CardClaimContainer>
+          {restrictions_conditions && (
+            <CardClaimContainer
+              key={`driving_privilege_restricted_conditions_${driving_privilege}`}
+              position={{
+                left: `68.5%`,
+                top: `${privilegesTableRows[driving_privilege] || 0}%`
+              }}
+            >
+              <ClaimLabel fontSize={9}>{restrictions_conditions}</ClaimLabel>
+            </CardClaimContainer>
+          )}
+        </Fragment>
+      )
+    );
   return (
     <View testID="mdlBackDataTestID" style={styles.container}>
+      {/*
+      This is the renderer of the new MDL back driving privileges data
+       */}
+      <CardClaimRenderer
+        claim={claims["driving_privileges"]}
+        is={DrivingPrivilegesCustomClaim.is}
+        component={renderData}
+      />
+      {/*
+      This is the renderer of the old MDL back driving privileges data
+      TODO: remove this when the old MDL will not be supported anymore
+       */}
       <CardClaimRenderer
         claim={claims["driving_privileges_details"]}
         is={DrivingPrivilegesClaim.is}
-        component={privileges =>
-          privileges.map(
-            ({
-              driving_privilege,
-              issue_date,
-              expiry_date,
-              restrictions_conditions
-            }) => (
-              <Fragment key={`driving_privilege_row_${driving_privilege}`}>
-                <CardClaimContainer
-                  position={{
-                    left: `41.5%`,
-                    top: `${privilegesTableRows[driving_privilege] || 0}%`
-                  }}
-                >
-                  <ClaimLabel fontSize={9} hidden={valuesHidden}>
-                    {issue_date.toString("DD/MM/YY")}
-                  </ClaimLabel>
-                </CardClaimContainer>
-                <CardClaimContainer
-                  key={`driving_privilege_${driving_privilege}`}
-                  position={{
-                    left: `55%`,
-                    top: `${privilegesTableRows[driving_privilege] || 0}%`
-                  }}
-                >
-                  <ClaimLabel fontSize={9} hidden={valuesHidden}>
-                    {expiry_date.toString("DD/MM/YY")}
-                  </ClaimLabel>
-                </CardClaimContainer>
-                {restrictions_conditions && (
-                  <CardClaimContainer
-                    key={`driving_privilege_restricted_conditions_${driving_privilege}`}
-                    position={{
-                      left: `68.5%`,
-                      top: `${privilegesTableRows[driving_privilege] || 0}%`
-                    }}
-                  >
-                    <ClaimLabel fontSize={9}>
-                      {restrictions_conditions}
-                    </ClaimLabel>
-                  </CardClaimContainer>
-                )}
-              </Fragment>
-            )
-          )
-        }
+        component={renderData}
       />
       <CardClaim
         claim={claims["restrictions_conditions"]}
@@ -259,7 +271,7 @@ const dataComponentMap: Record<
   string,
   Record<CardSide, ElementType<DataComponentProps>>
 > = {
-  MDL: { front: MdlFrontData, back: MdlBackData },
+  mDL: { front: MdlFrontData, back: MdlBackData },
   EuropeanDisabilityCard: { front: DcFrontData, back: DcBackData }
 };
 

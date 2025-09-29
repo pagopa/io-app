@@ -9,15 +9,24 @@ import { CardColorScheme } from "../types";
 
 describe("DigitalVersionBadge", () => {
   it.each([
-    ["MDL", "default"],
-    ["MDL", "faded"],
-    ["MDL", "greyscale"],
+    ["mDL", "default"],
+    ["mDL", "faded"],
+    ["mDL", "greyscale"],
     ["EuropeanDisabilityCard", "default"],
     ["EuropeanDisabilityCard", "faded"],
     ["EuropeanDisabilityCard", "greyscale"],
     ["EuropeanHealthInsuranceCard", "default"],
     ["EuropeanHealthInsuranceCard", "faded"],
     ["EuropeanHealthInsuranceCard", "greyscale"],
+    ["education_degree", "default"],
+    ["education_degree", "faded"],
+    ["education_degree", "greyscale"],
+    ["education_enrollment", "default"],
+    ["education_enrollment", "faded"],
+    ["education_enrollment", "greyscale"],
+    ["residency", "default"],
+    ["residency", "faded"],
+    ["residency", "greyscale"],
     ["InvalidCredentialType", "default"]
   ])(
     "should render correctly %s in state %s",

@@ -1,7 +1,7 @@
 import { Body, VSpacer } from "@pagopa/io-app-design-system";
 import { memo } from "react";
+import I18n from "i18next";
 import { tosConfigSelector } from "../../../../../tos/store/selectors";
-import I18n from "../../../../../../i18n";
 import { useIOSelector } from "../../../../../../store/hooks";
 import { openWebUrl } from "../../../../../../utils/url";
 import { TrackingInfo } from "../../../../common/analytics/mixpanel/mixpanelAnalytics";
@@ -44,6 +44,7 @@ export const ShareDataComponent = memo(({ trackAction }: FeatureProps) => {
         <Body
           weight="Semibold"
           asLink
+          avoidPressable
           onPress={handleOnPress}
           testID="additionalInformation"
         >

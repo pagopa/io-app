@@ -40,8 +40,8 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
       }
     >
       <View
-        accessibilityHint="Wait for the content load"
-        accessibilityLabel="Loading"
+        accessibilityHint="Attendi il caricamento del contenuto"
+        accessibilityLabel="Caricamento in corso"
         accessibilityRole="progressbar"
         accessible={true}
         style={
@@ -246,7 +246,7 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
             ]
           }
         >
-          Wait a few seconds..
+          Attendi qualche secondo...
         </Text>
       </View>
     </View>
@@ -279,7 +279,7 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
         allowsPictureInPictureMediaPlayback={true}
         androidCameraAccessDisabled={true}
         androidMicrophoneAccessDisabled={true}
-        cacheEnabled={true}
+        cacheEnabled={false}
         fraudulentWebsiteWarningEnabled={true}
         hasOnFileDownload={false}
         hasOnOpenWindowEvent={false}

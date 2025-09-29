@@ -11,7 +11,6 @@ import { IdPayBeneficiaryDetailsContent } from "../components/IdPayBeneficiaryDe
 import { IDPayDetailsParamsList } from "../navigation";
 import {
   idPayBeneficiaryDetailsSelector,
-  idPayOnboardingStatusSelector,
   idpayInitiativeDetailsSelector
 } from "../store";
 import {
@@ -44,13 +43,11 @@ const IdPayBeneficiaryDetailsScreen = () => {
 
   const beneficiaryDetailsPot = useIOSelector(idPayBeneficiaryDetailsSelector);
   const initiativeDetailsPot = useIOSelector(idpayInitiativeDetailsSelector);
-  const idPayOnboardingStatusPot = useIOSelector(idPayOnboardingStatusSelector);
 
   const content = pipe(
     sequenceS(O.Monad)({
       initiativeDetails: pipe(initiativeDetailsPot, pot.toOption),
-      beneficiaryDetails: pipe(beneficiaryDetailsPot, pot.toOption),
-      onboardingStatus: pipe(idPayOnboardingStatusPot, pot.toOption)
+      beneficiaryDetails: pipe(beneficiaryDetailsPot, pot.toOption)
     }),
     O.fold(
       () => <IdPayBeneficiaryDetailsContent isLoading={true} />,

@@ -8,7 +8,7 @@ import { useState, useLayoutEffect, memo, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useFocusEffect } from "@react-navigation/native";
-import I18n from "../../../../../i18n.ts";
+import I18n from "i18next";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
 import { useMaxBrightness } from "../../../../../utils/brightness.ts";
 import {
@@ -22,12 +22,16 @@ import {
 } from "../../../common/utils/itwTypesUtils.ts";
 import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
 import { ItwPresentationCredentialCardFlipButton } from "../components/ItwPresentationCredentialCardFlipButton.tsx";
-import { CREDENTIALS_MAP, trackCredentialCardModal } from "../../../analytics";
+import {
+  getMixPanelCredential,
+  trackCredentialCardModal
+} from "../../../analytics";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
 import { itwSetClaimValuesHidden } from "../../../common/store/actions/preferences.ts";
 import { ItwPresentationCredentialCardHideValuesButton } from "../components/ItwPresentationCredentialCardHideValuesButton.tsx";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 
 export type ItwPresentationCredentialCardModalNavigationParams = {
   credential: StoredCredential;
@@ -48,6 +52,7 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
   const [isFlipped, setFlipped] = useState(false);
   const theme = useIOTheme();
   const valuesHidden = useIOSelector(itwIsClaimValueHiddenSelector);
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const dispatch = useIODispatch();
 
   usePreventScreenCapture();
@@ -55,8 +60,10 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
 
   useFocusEffect(
     useCallback(() => {
-      trackCredentialCardModal(CREDENTIALS_MAP[credential.credentialType]);
-    }, [credential.credentialType])
+      trackCredentialCardModal(
+        getMixPanelCredential(credential.credentialType, isItwL3)
+      );
+    }, [credential.credentialType, isItwL3])
   );
 
   useLayoutEffect(() => {

@@ -16,24 +16,25 @@ import { idpSelector } from "../features/authentication/common/store/selectors";
 import { tosVersionSelector } from "../features/settings/common/store/selectors/index.ts";
 import { checkNotificationPermissions } from "../features/pushNotifications/utils";
 import {
-  getCredentialMixpanelStatus,
+  getMixpanelCredentialStatus,
+  getPIDMixpanelStatus,
   ItwCredentialMixpanelStatus,
-  ItwId,
-  ItwStatus,
-  mapEidStatusToMixpanel
+  ItwPIDStatus,
+  ItwStatus
 } from "../features/itwallet/analytics";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import { itwAuthLevelSelector } from "../features/itwallet/common/store/selectors/preferences.ts";
-import { fontPreferenceSelector } from "../store/reducers/persistedPreferences.ts";
+import {
+  fontPreferenceSelector,
+  themePreferenceSelector
+} from "../store/reducers/persistedPreferences.ts";
 import {
   booleanOrUndefinedToPNServiceStatus,
   PNServiceStatus
 } from "../features/pn/analytics/index.ts";
 import { isPnServiceEnabled } from "../features/pn/reminderBanner/reducer/bannerDismiss.ts";
-import {
-  itwCredentialsEidStatusSelector,
-  itwCredentialsSelector
-} from "../features/itwallet/credentials/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../features/itwallet/lifecycle/store/selectors";
+import { CredentialType } from "../features/itwallet/common/utils/itwMocksUtils";
 import {
   cgnStatusHandler,
   loginSessionConfigHandler,
@@ -51,11 +52,16 @@ type ProfileProperties = {
   BIOMETRIC_TECHNOLOGY: BiometricsType;
   CGN_STATUS: TrackCgnStatus;
   FONT_PREFERENCE: string;
+  THEME_PREFERENCE: string;
   ITW_STATUS_V2: ItwStatus;
-  ITW_ID_V2: ItwId;
-  ITW_PG_V2: ItwCredentialMixpanelStatus;
-  ITW_TS_V2: ItwCredentialMixpanelStatus;
-  ITW_CED_V2: ItwCredentialMixpanelStatus;
+  ITW_ID_V2?: ItwPIDStatus;
+  ITW_PID: ItwPIDStatus;
+  ITW_PG_V2?: ItwCredentialMixpanelStatus;
+  ITW_TS_V2?: ItwCredentialMixpanelStatus;
+  ITW_CED_V2?: ItwCredentialMixpanelStatus;
+  ITW_PG_V3: ItwCredentialMixpanelStatus;
+  ITW_TS_V3: ItwCredentialMixpanelStatus;
+  ITW_CED_V3: ItwCredentialMixpanelStatus;
   LOGIN_METHOD: string;
   LOGIN_SESSION: LoginSessionDuration;
   NOTIFICATION_CONFIGURATION: NotificationPreferenceConfiguration;
@@ -83,15 +89,9 @@ export const updateMixpanelProfileProperties = async (
     const BIOMETRIC_TECHNOLOGY = await getBiometricsType();
     const CGN_STATUS = cgnStatusHandler(state);
     const FONT_PREFERENCE = fontPreferenceSelector(state);
-
-    const ITW_ID_V2 = idStatusHandler(state);
-    const ITW_PG_V2 = credentialStatusHandler("MDL", state);
-    const ITW_TS_V2 = credentialStatusHandler(
-      "EuropeanHealthInsuranceCard",
-      state
-    );
-    const ITW_CED_V2 = credentialStatusHandler("EuropeanDisabilityCard", state);
+    const THEME_PREFERENCE = themePreferenceSelector(state);
     const ITW_STATUS_V2 = walletStatusHandler(state);
+    const ITW_PID = getPIDMixpanelStatus(state, true);
     const LOGIN_METHOD = loginMethodHandler(state);
     const LOGIN_SESSION = loginSessionConfigHandler(state);
     const NOTIFICATION_CONFIGURATION = notificationConfigurationHandler(state);
@@ -105,15 +105,48 @@ export const updateMixpanelProfileProperties = async (
     const TRACKING = mixpanelOptInHandler(state);
     const WELFARE_STATUS = welfareStatusHandler(state);
 
+    const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
+    const ITW_PG_V3 = getMixpanelCredentialStatus(
+      CredentialType.DRIVING_LICENSE,
+      state,
+      isItwL3
+    );
+    const ITW_TS_V3 = getMixpanelCredentialStatus(
+      CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
+      state,
+      isItwL3
+    );
+    const ITW_CED_V3 = getMixpanelCredentialStatus(
+      CredentialType.EUROPEAN_DISABILITY_CARD,
+      state,
+      isItwL3
+    );
+
     const profilePropertiesObject: ProfileProperties = {
       BIOMETRIC_TECHNOLOGY,
       CGN_STATUS,
       FONT_PREFERENCE,
-      ITW_CED_V2,
-      ITW_ID_V2,
-      ITW_PG_V2,
+      THEME_PREFERENCE,
       ITW_STATUS_V2,
-      ITW_TS_V2,
+      ...(!isItwL3 && {
+        ITW_ID_V2: getPIDMixpanelStatus(state, false),
+        ITW_PG_V2: getMixpanelCredentialStatus(
+          CredentialType.DRIVING_LICENSE,
+          state
+        ),
+        ITW_TS_V2: getMixpanelCredentialStatus(
+          CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
+          state
+        ),
+        ITW_CED_V2: getMixpanelCredentialStatus(
+          CredentialType.EUROPEAN_DISABILITY_CARD,
+          state
+        )
+      }),
+      ITW_PID,
+      ITW_PG_V3,
+      ITW_CED_V3,
+      ITW_TS_V3,
       LOGIN_METHOD,
       LOGIN_SESSION,
       NOTIFICATION_CONFIGURATION,
@@ -161,19 +194,4 @@ const tosVersionHandler = (state: GlobalState): number | string => {
 const walletStatusHandler = (state: GlobalState): ItwStatus => {
   const authLevel = itwAuthLevelSelector(state);
   return authLevel ?? "not_active";
-};
-
-const idStatusHandler = (state: GlobalState): ItwId => {
-  const eidStatus = itwCredentialsEidStatusSelector(state);
-  return eidStatus !== undefined
-    ? mapEidStatusToMixpanel(eidStatus)
-    : "not_available";
-};
-
-const credentialStatusHandler = (
-  type: string,
-  state: GlobalState
-): ItwCredentialMixpanelStatus => {
-  const credentialsByType = itwCredentialsSelector(state);
-  return getCredentialMixpanelStatus(credentialsByType[type]);
 };

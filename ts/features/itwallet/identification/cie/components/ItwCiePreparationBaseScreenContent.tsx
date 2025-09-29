@@ -1,16 +1,16 @@
-import { Dimensions, Image, StyleSheet, View } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
 import { ContentWrapper, IOButton } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
+import I18n from "i18next";
 import { useCallback, useMemo } from "react";
+import { Dimensions, Image, StyleSheet, View } from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
-import I18n from "../../../../../i18n";
-import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
-import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
-import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   trackItwCiePinTutorialCie,
   trackItwCiePinTutorialPin
 } from "../../../analytics";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
+import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
 
 export type CiePreparationType = "card" | "pin";
 

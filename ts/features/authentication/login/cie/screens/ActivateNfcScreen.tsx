@@ -1,28 +1,21 @@
 import { ListItemInfo } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Route, useNavigation, useRoute } from "@react-navigation/native";
+import { Route, useRoute } from "@react-navigation/native";
 import { useCallback } from "react";
 import { Alert } from "react-native";
+import I18n from "i18next";
 import { IOScrollViewWithListItems } from "../../../../../components/ui/IOScrollViewWithListItems";
-import I18n from "../../../../../i18n";
-import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
 import { isNfcEnabledSelector } from "../store/selectors";
 import * as cieUtils from "../utils/cie";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import useActiveSessionLoginNavigation from "../../../activeSessionLogin/utils/useActiveSessionLoginNavigation";
 import { CieCardReaderScreenNavigationParams } from "./CieCardReaderScreen";
 
 const ActivateNfcScreen = () => {
   const isEnabled = useIOSelector(isNfcEnabledSelector);
   const isNfcEnabled = pot.getOrElse(isEnabled, false);
-  const navigation =
-    useNavigation<
-      IOStackNavigationProp<
-        AuthenticationParamsList,
-        typeof AUTHENTICATION_ROUTES.CIE_ACTIVATE_NFC_SCREEN
-      >
-    >();
+
   const route =
     useRoute<
       Route<
@@ -32,6 +25,7 @@ const ActivateNfcScreen = () => {
     >();
 
   const { ciePin, authorizationUri } = route.params;
+  const { navigateToCieCardReaderScreen } = useActiveSessionLoginNavigation();
 
   const openSettings = useCallback(async () => {
     await cieUtils.openNFCSettings();
@@ -39,10 +33,7 @@ const ActivateNfcScreen = () => {
 
   const onContinue = useCallback(async () => {
     if (isNfcEnabled) {
-      navigation.replace(AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN, {
-        ciePin,
-        authorizationUri
-      });
+      navigateToCieCardReaderScreen({ ciePin, authorizationUri });
     } else {
       Alert.alert(I18n.t("authentication.cie.nfc.activeNfcAlert"), "", [
         {
@@ -55,7 +46,13 @@ const ActivateNfcScreen = () => {
         }
       ]);
     }
-  }, [authorizationUri, ciePin, isNfcEnabled, navigation, openSettings]);
+  }, [
+    authorizationUri,
+    ciePin,
+    isNfcEnabled,
+    navigateToCieCardReaderScreen,
+    openSettings
+  ]);
 
   const renderItems: Array<ListItemInfo> = [
     {

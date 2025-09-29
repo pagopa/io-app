@@ -6,11 +6,12 @@ import { Route, useRoute } from "@react-navigation/native";
 import { IOPictograms } from "@pagopa/io-app-design-system";
 import { Linking } from "react-native";
 import { constNull } from "fp-ts/lib/function";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { WithTestID } from "../../../../../types/WithTestID";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import useActiveSessionLoginNavigation from "../../../activeSessionLogin/utils/useActiveSessionLoginNavigation";
 
 export type CieWrongCiePinScreenNavigationParams = {
   remainingCount: number;
@@ -27,16 +28,11 @@ const CieWrongCiePinScreen = () => {
     >();
   const { remainingCount } = route.params;
 
+  const { navigateToAuthenticationScreen } = useActiveSessionLoginNavigation();
+
   const navigateToCiePinScreen = useCallback(() => {
     navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
-    });
-  }, [navigation]);
-
-  const navigateToAuthenticationScreen = useCallback(() => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: AUTHENTICATION_ROUTES.MAIN }]
     });
   }, [navigation]);
 
@@ -164,11 +160,8 @@ const CieWrongCiePinScreen = () => {
     ]
   );
 
-  const getMessage = useCallback(
-    (key: number) =>
-      key in messages ? messages[key] : defaultMessageThatShouldNeverHappen,
-    [defaultMessageThatShouldNeverHappen, messages]
-  );
+  const getMessage = (key: number) =>
+    key in messages ? messages[key] : defaultMessageThatShouldNeverHappen;
 
   return <OperationResultScreenContent {...getMessage(remainingCount)} />;
 };

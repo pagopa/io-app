@@ -1,17 +1,22 @@
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import * as t from "io-ts";
 import { useCallback } from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../../i18n";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { CREDENTIALS_MAP, trackItwHasAlreadyCredential } from "../../analytics";
+import {
+  getMixPanelCredential,
+  trackItwHasAlreadyCredential
+} from "../../analytics";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { itwCredentialSelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
@@ -40,6 +45,8 @@ const getCredentialType = (params: unknown) =>
   );
 
 /**
+ * @deprecated [SIW-2839] This screen is going to be removed soon along with the async issuance
+ *
  * Landing screen to resume the async issuance flow from a deep link.
  * We can not assume the route params will be of the expected shape,
  * so we guard against invalid values in this screen.
@@ -63,15 +70,22 @@ export const ItwIssuanceCredentialAsyncContinuationScreen = ({
           }}
         />
       ),
-      value => <InnerComponent credentialType={value} />
+      () => <InnerComponent />
     )
   );
 };
 
-const InnerComponent = ({ credentialType }: { credentialType: string }) => {
+const InnerComponent = () => {
+  /**
+   * Since only MDL supports the async flow, we can safely hardcode the credential type.
+   * The credential type received as a route param is validated before this component,
+   * so it is possible to directly use the correct type for the issuance flow.
+   */
+  const credentialType = CredentialType.DRIVING_LICENSE;
   const navigation = useIONavigation();
   const credentialOption = useIOSelector(itwCredentialSelector(credentialType));
   const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
+  const isL3 = useIOSelector(itwIsL3EnabledSelector);
 
   const isCredentialValid = pipe(
     credentialOption,
@@ -84,22 +98,25 @@ const InnerComponent = ({ credentialType }: { credentialType: string }) => {
     useCallback(() => {
       if (isCredentialValid) {
         trackItwHasAlreadyCredential({
-          credential: CREDENTIALS_MAP[credentialType],
+          credential: getMixPanelCredential(credentialType, isWalletValid),
           credential_status: "valid"
         });
       }
-    }, [credentialType, isCredentialValid])
+    }, [credentialType, isCredentialValid, isWalletValid])
   );
 
   if (!isWalletValid) {
-    const ns = "features.itWallet.issuance.walletInstanceNotActive" as const;
+    const ns = "features.itWallet.issuance.walletInstanceNotActive";
+
+    const copy = isL3 ? `${ns}.itWallet` : `${ns}.documentiSuIo`;
+
     return (
       <OperationResultScreenContent
-        title={I18n.t(`${ns}.title`)}
+        title={I18n.t(`${copy}.title`)}
         subtitle={[
-          { text: I18n.t(`${ns}.body`) },
+          { text: I18n.t(`${copy}.body`) },
           {
-            text: I18n.t(`${ns}.bodyBold`),
+            text: I18n.t(`${copy}.bodyBold`),
             weight: "Semibold"
           }
         ]}
@@ -109,7 +126,9 @@ const InnerComponent = ({ credentialType }: { credentialType: string }) => {
           onPress: () =>
             navigation.replace(ITW_ROUTES.MAIN, {
               screen: ITW_ROUTES.DISCOVERY.INFO,
-              params: {}
+              params: {
+                isL3
+              }
             })
         }}
         secondaryAction={{

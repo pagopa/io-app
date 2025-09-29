@@ -28,6 +28,7 @@ import Animated, {
   useScrollViewOffset,
   useSharedValue
 } from "react-native-reanimated";
+import I18n from "i18next";
 import ItwHero from "../../../../../img/features/itWallet/l3/itw_hero.svg";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import {
@@ -38,7 +39,6 @@ import { Renderer } from "../../../../components/IOMarkdown/types";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import { IOScrollViewWithReveal } from "../../../../components/ui/IOScrollViewWithReveal";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -49,6 +49,8 @@ import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { trackItwDiscoveryPlus, trackItwIntroBack } from "../../analytics";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors/index.ts";
 
 const markdownRules = {
   Paragraph(paragraph: TxtParagraphNode, render: Renderer) {
@@ -62,6 +64,7 @@ const markdownRules = {
     return (
       <Body
         asLink
+        avoidPressable
         color="white"
         weight="Semibold"
         key={getTxtNodeKey(link)}
@@ -85,8 +88,35 @@ const intersectionRatio: number = 0.3;
 export const ItwPaywallComponent = ({
   onContinuePress
 }: ItwPaywallComponentProps) => {
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const theme = useIOTheme();
+
   const { tos_url } = useIOSelector(tosConfigSelector);
+  const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
+
+  const backgroundColor = IOColors[theme["appBackground-accent"]];
+
+  useOnFirstRender(() => {
+    machineRef.send({
+      type: "start",
+      isL3: true,
+      mode: isWalletValid ? "upgrade" : "issuance"
+    });
+  });
+
+  useHeaderSecondLevel({
+    backgroundColor,
+    contextualHelp: emptyContextualHelp,
+    supportRequest: true,
+    title: "",
+    variant: "contrast",
+    goBack: () => {
+      trackItwIntroBack("L3");
+      dismissalDialog.show();
+    }
+  });
+
   const dismissalDialog = useItwDismissalDialog({
     customLabels: {
       title: I18n.t(
@@ -105,7 +135,6 @@ export const ItwPaywallComponent = ({
       itw_flow: "L3"
     }
   });
-  const theme = useIOTheme();
 
   const [productHighlightsLayout, setProductHighlightsLayout] = useState({
     y: 0,
@@ -136,20 +165,6 @@ export const ItwPaywallComponent = ({
     setAccessibilityFocus(productHighlightsRef);
     trackItwDiscoveryPlus();
   }, [animatedRef, productHighlightsLayout]);
-
-  const backgroundColor = IOColors[theme["appBackground-accent"]];
-
-  useHeaderSecondLevel({
-    backgroundColor,
-    contextualHelp: emptyContextualHelp,
-    supportRequest: true,
-    title: "",
-    variant: "contrast",
-    goBack: () => {
-      trackItwIntroBack("L3");
-      dismissalDialog.show();
-    }
-  });
 
   return (
     <IOScrollViewWithReveal

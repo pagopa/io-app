@@ -2,7 +2,7 @@ import { IOToast } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
 import { put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import I18n from "../../../../i18n";
+import I18n from "i18next";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { TransactionClient } from "../../common/api/client";
