@@ -4633,6 +4633,10 @@
             "title": "Inserisci il PIN della CIE",
             "buttonLink": "Dove trovo il PIN della CIE?"
           },
+          "inputCan": {
+            "title": "Inserisci il codice a 6 cifre che trovi in basso a destra della tua CIE",
+            "subtitle": "È il codice a 6 cifre (CAN) che trovi stampato sul fronte della tua Carta di Identità Elettronica, in basso a destra."
+          },
           "readingCard": {
             "android": {
               "idle": {
