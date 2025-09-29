@@ -5,11 +5,7 @@ import { sendAARDelegateUrlSelector } from "../../../../store/reducers/backendSt
 import { openWebUrl } from "../../../../utils/url";
 import { setAarFlowState, terminateAarFlow } from "../store/actions";
 import { currentAARFlowData } from "../store/reducers";
-import {
-  AARFlowState,
-  isAarErrorRetriable,
-  sendAARFlowStates
-} from "../utils/stateUtils";
+import { AARFlowState, sendAARFlowStates } from "../utils/stateUtils";
 
 type SendAarFlowManager = {
   terminateFlow: () => void;
@@ -44,11 +40,6 @@ export const useSendAarFlowManager = (): SendAarFlowManager => {
         break;
       case sendAARFlowStates.notAddresseeFinal:
         openWebUrl(delegateUrl);
-        break;
-      case sendAARFlowStates.ko:
-        if (isAarErrorRetriable(currentFlowData.errorKind)) {
-          dispatch(setAarFlowState(currentFlowData.previousState));
-        }
         break;
     }
   };

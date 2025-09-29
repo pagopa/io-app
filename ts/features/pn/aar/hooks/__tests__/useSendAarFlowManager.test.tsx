@@ -57,6 +57,16 @@ describe("useSendAarFlowManager", () => {
           } as AARFlowState)
       );
 
+      mockSelector.mockImplementation(selector => {
+        if (selector === currentAARFlowData) {
+          return { type: stateKind } as AARFlowState;
+        }
+        if (selector === sendAARDelegateUrlSelector) {
+          return mockDelegateUrl;
+        }
+        return undefined;
+      });
+
       const { result } = renderHook(useSendAarFlowManager);
       act(() => {
         result.current.goToNextState();
@@ -70,28 +80,16 @@ describe("useSendAarFlowManager", () => {
           expect(mockDispatch).toHaveBeenCalledTimes(1);
           expect(isValid).toBe(true);
           break;
+        case sendAARFlowStates.notAddresseeFinal:
+          expect(mockOpenWebUrl).toHaveBeenCalledTimes(1);
+          expect(mockOpenWebUrl).toHaveBeenCalledWith(mockDelegateUrl);
+          break;
         default:
+          expect(mockOpenWebUrl).not.toHaveBeenCalled();
           expect(mockDispatch).not.toHaveBeenCalled();
           break;
       }
     });
-  });
-  it(`should open a weburl when calling "goToNextState" when the state type is 'notAddresseeFinal'`, () => {
-    mockSelector.mockImplementation(selector => {
-      if (selector === currentAARFlowData) {
-        return { type: sendAARFlowStates.notAddresseeFinal } as AARFlowState;
-      }
-      if (selector === sendAARDelegateUrlSelector) {
-        return mockDelegateUrl;
-      }
-      return undefined;
-    });
-    const { result } = renderHook(useSendAarFlowManager);
-    act(() => {
-      result.current.goToNextState();
-    });
-    expect(mockOpenWebUrl).toHaveBeenCalledTimes(1);
-    expect(mockOpenWebUrl).toHaveBeenCalledWith(mockDelegateUrl);
   });
   it('should return "currentFlowData" as a 1/1 of the selector`s value', () => {
     const value: AARFlowState = {

@@ -32,7 +32,8 @@ export function* fetchAARQrCodeSaga(
           setAarFlowState({
             type: sendAARFlowStates.ko,
             previousState: currentState,
-            errorKind: "GENERIC"
+            errorKind: "GENERIC",
+            errorCodes: []
           }),
         data => {
           switch (data.status) {
@@ -57,7 +58,8 @@ export function* fetchAARQrCodeSaga(
               const errorState: AARFlowState = {
                 type: sendAARFlowStates.ko,
                 previousState: currentState,
-                errorKind: "GENERIC"
+                errorKind: "GENERIC",
+                errorCodes: data.value.errors?.map(x => x.code) ?? []
               };
               return setAarFlowState(errorState);
           }
@@ -70,7 +72,8 @@ export function* fetchAARQrCodeSaga(
       setAarFlowState({
         type: sendAARFlowStates.ko,
         previousState: currentState,
-        errorKind: "GENERIC"
+        errorKind: "GENERIC",
+        errorCodes: []
       })
     );
   }

@@ -42,6 +42,7 @@ type ErrorState = {
   type: SendAARFlowStatesType["ko"];
   errorKind: ErrorKind;
   previousState: AARFlowState;
+  errorCodes: Array<string>;
 };
 
 type ValueOf<T> = T[keyof T];
@@ -71,6 +72,9 @@ export const isAarErrorRetriable = (
   error: ErrorKind
 ): error is RetriableError =>
   retriableErrors[error as RetriableError] !== undefined;
+
+export const isAarErrorState = (state: AARFlowState): state is ErrorState =>
+  state.type === sendAARFlowStates.ko;
 
 export const sendAARFlowStates = {
   none: "none",
