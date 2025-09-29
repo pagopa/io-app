@@ -18,7 +18,7 @@ import {
   testable
 } from "../handlePaymentStatusForAnalyticsTracking";
 
-import { serviceDetailsByIdSelector } from "../../../services/details/store/reducers";
+import { serviceDetailsByIdSelector } from "../../../services/details/store/selectors";
 import { trackPaymentStatus } from "../../analytics";
 
 const messageId = "01JWX68NS39VA6YVWX0R10E3VM";
