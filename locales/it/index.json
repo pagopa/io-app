@@ -4530,10 +4530,10 @@
         },
         "mode": {
           "l2": {
-            "title": "Verifica la tua identità con SPID o CieID",
-            "description": "È un passaggio di sicurezza necessario per associare i documenti digitali alla tua identità.",
+            "title": "Verifica la tua identità",
+            "description": "È un passaggio necessario per garantire la sicurezza dei tuoi dati.",
             "header": "Scegli come identificarti",
-            "section": "Ottieni Documenti su IO",
+            "section": "",
             "reissuing": {
               "title": "Scegli come identificarti",
               "description": "È un passaggio necessario per continuare ad usare Documenti su IO.",
@@ -4621,11 +4621,21 @@
               "content": "Dovrai poggiare il retro del telefono sulla CIE, su una superficie stabile, e tenerli fermi per la lettura.",
               "cta": "Inizia lettura CIE",
               "buttonLink": "Cos’è la CIE?"
+            },
+            "can": {
+              "title": "Prepara la tua Carta di Identità Elettronica (CIE)",
+              "content": "Dovrai usarla e inserire il suo codice a 6 cifre (CAN) che trovi stampato sul fronte in basso a destra.",
+              "buttonLink": "Cos’è il PIN della CIE?",
+              "cta": "Continua"
             }
           },
           "inputPin": {
             "title": "Inserisci il PIN della CIE",
             "buttonLink": "Dove trovo il PIN della CIE?"
+          },
+          "inputCan": {
+            "title": "Inserisci il codice a 6 cifre che trovi in basso a destra della tua CIE",
+            "subtitle": "È il codice a 6 cifre (CAN) che trovi stampato sul fronte della tua Carta di Identità Elettronica, in basso a destra."
           },
           "readingCard": {
             "android": {
@@ -5496,6 +5506,12 @@
             "title": "Disattiva IT-Wallet L3",
             "content": "Se avevi attivato IT-Wallet, il portafoglio sarà resettato e tutti i documenti rimossi."
           }
+        },
+        "reissuing": {
+          "alert": {
+            "title": "Avvio reissuing eID",
+            "content": "Stai per avviare il reissuing dell'eID e delle credenziali al momento ottenute."
+          }
         }
       }
     }
@@ -5592,7 +5608,7 @@
         },
         "error": {
           "generic": {
-            "body": "In questo momento non è possibile generare un codice"
+            "body": "Non è stato possibile generare un codice. Riprova tra un po’."
           }
         },
         "loading": {
@@ -5668,12 +5684,16 @@
           "expiresOn": "Scade il {{expiryDate}}",
           "toRefund": "Da rimborsare",
           "statusLabels": {
-            "REFUNDABLE": "Attiva",
-            "NOT_REFUNDABLE": "Attiva",
-            "NOT_REFUNDABLE_ONLY_IBAN": "Attiva",
-            "NOT_REFUNDABLE_ONLY_INSTRUMENT": "Attiva",
-            "UNSUBSCRIBED": "Rimossa",
-            "SUSPENDED": "In pausa"
+            "REFUNDABLE": "Attivo",
+            "NOT_REFUNDABLE": "Attivo",
+            "NOT_REFUNDABLE_ONLY_IBAN": "Attivo",
+            "NOT_REFUNDABLE_ONLY_INSTRUMENT": "Attivo",
+            "UNSUBSCRIBED": "Rimosso",
+            "SUSPENDED": "In pausa",
+            "USED": "Utilizzato",
+            "EXPIRED": "Scaduto",
+            "ACTIVE": "Attivo",
+            "EXPIRING": "In scadenza"
           }
         },
         "initiativeDetailsScreen": {
@@ -5738,7 +5758,7 @@
           "generateBarcode": "Genera un codice sconto"
         },
         "authorizeButton": "Usa il bonus",
-        "secondaryCta": "Mostra esercenti",
+        "secondaryCta": "Mostra venditori",
         "addExpenseButton": "Aggiungi spesa",
         "IDPayCode": {
           "banner": {
@@ -5894,7 +5914,7 @@
             "subtitle": "Consulta le regole dell’iniziativa per scoprire quando sarà possibile aderire all’iniziativa."
           },
           "INITIATIVE_ENDED": {
-            "title": "Le iscrizioni sono terminate",
+            "title": "Le adesioni sono terminate",
             "subtitle": "Non è più possibile aderire all’iniziativa."
           },
           "BUDGET_EXHAUSTED": {
@@ -5913,7 +5933,7 @@
             "subtitle": "Per maggiori informazioni, contatta l’ente promotore."
           },
           "ON_EVALUATION": {
-            "title": "L’ente sta valutando la tua domanda d’adesione",
+            "title": "La tua richiesta è in fase di valutazione",
             "subtitle": "Quando pronto, riceverai l’esito tramite un messaggio in app."
           },
           "FAMILY_UNIT_ALREADY_JOINED": {
@@ -5925,7 +5945,7 @@
             "subtitle": "La tua richiesta è in coda. Ti contatteremo se saranno disponibili nuove risorse."
           },
           "PAYMENT_GENERIC_ERROR": {
-            "title": "Non siamo riusciti a completare l’operazione",
+            "title": "Non è possibile completare la richiesta per questa iniziativa",
             "subtitle": "Siamo già a lavoro per risolvere. Riprova tra un po’."
           }
         }
@@ -5948,12 +5968,22 @@
           }
         },
         "title": "Per continuare dobbiamo verificare questi dati",
-        "subtitle": "Per accedere all’iniziativa {{service}}, verificheremo con alcuni enti se hai i requisiti.",
+        "subtitle": "Per accedere all’iniziativa {{service}}, consulteremo altri enti per verificare se hai i requisiti previsti",
         "code": {
           "ISEE": "ISEE",
           "BIRTHDAY": "Data di nascita",
           "RESIDENCE": "Residenza",
           "FAMILY_UNIT": "Famiglia anagrafica"
+        },
+        "familyUnitCode": {
+          "INPS": {
+            "title": "INPS",
+            "description": "INPS"
+          },
+          "ANPR": {
+            "title": "Famiglia anagrafica",
+            "description": "Ministero dell’Interno"
+          }
         },
         "operator": {
           "EQ": "{{value}}",
@@ -6188,8 +6218,8 @@
         },
         "failure": {
           "GENERIC": {
-            "title": "Il codice non è valido",
-            "subtitle": "Se si tratta di un errore, chiedi all’esercente di crearne uno nuovo."
+            "title": "Non è stato possibile procedere con l'iniziativa richiesta",
+            "subtitle": "Siamo già a lavoro per risolvere.  Riprova tra un po’."
           },
           "TRANSACTION_EXPIRED": {
             "title": "Il codice è scaduto",

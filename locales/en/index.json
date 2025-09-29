@@ -5534,7 +5534,7 @@
         },
         "error": {
           "generic": {
-            "body": "In questo momento non è possibile generare un codice"
+            "body": "Non è stato possibile generare un codice. Riprova tra un po’."
           }
         },
         "loading": {
@@ -5615,7 +5615,11 @@
             "NOT_REFUNDABLE_ONLY_IBAN": "Active",
             "NOT_REFUNDABLE_ONLY_INSTRUMENT": "Active",
             "UNSUBSCRIBED": "Removed",
-            "SUSPENDED": "Paused"
+            "SUSPENDED": "Paused",
+            "USED": "Used",
+            "EXPIRED": "Expired",
+            "ACTIVE": "Active",
+            "EXPIRING": "Expiring"
           }
         },
         "initiativeDetailsScreen": {
@@ -5700,7 +5704,7 @@
             "cta": "Ok, chiudi"
           }
         },
-        "secondaryCta": "Show merchants"
+        "secondaryCta": "Mostra venditori"
       },
       "beneficiaryDetails": {
         "infobox": {
@@ -5836,7 +5840,7 @@
             "subtitle": "Consulta le regole dell’iniziativa per scoprire quando sarà possibile aderire all’iniziativa."
           },
           "INITIATIVE_ENDED": {
-            "title": "Le iscrizioni sono terminate",
+            "title": "Le adesioni sono terminate",
             "subtitle": "Non è più possibile aderire all’iniziativa."
           },
           "BUDGET_EXHAUSTED": {
@@ -5855,7 +5859,7 @@
             "subtitle": "Per maggiori informazioni, contatta l’ente promotore."
           },
           "ON_EVALUATION": {
-            "title": "L’ente sta valutando la tua domanda d’adesione",
+            "title": "La tua richiesta è in fase di valutazione",
             "subtitle": "Quando pronto, riceverai l’esito tramite un messaggio in app."
           },
           "FAMILY_UNIT_ALREADY_JOINED": {
@@ -5867,7 +5871,7 @@
             "subtitle": "La tua richiesta è in coda. Ti contatteremo se saranno disponibili nuove risorse."
           },
           "PAYMENT_GENERIC_ERROR": {
-            "title": "Non siamo riusciti a completare l’operazione",
+            "title": "Non è possibile completare la richiesta per questa iniziativa",
             "subtitle": "Siamo già a lavoro per risolvere.  Riprova tra un po’."
           }
         }
@@ -5890,12 +5894,22 @@
           }
         },
         "title": "Per continuare dobbiamo verificare questi dati",
-        "subtitle": "Per accedere all’iniziativa {{service}}, verificheremo con alcuni enti se hai i requisiti.",
+        "subtitle": "Per accedere all’iniziativa {{service}}, consulteremo altri enti per verificare se hai i requisiti previsti",
         "code": {
           "ISEE": "ISEE",
           "BIRTHDAY": "Data di nascita",
           "RESIDENCE": "Residenza",
           "FAMILY_UNIT": "Family Unit"
+        },
+        "familyUnitCode": {
+          "INPS": {
+            "title": "INPS",
+            "description": "INPS"
+          },
+          "ANPR": {
+            "title": "Family Unit",
+            "description": "Ministero dell’Interno"
+          }
         },
         "operator": {
           "EQ": "{{value}}",
@@ -6130,8 +6144,8 @@
         },
         "failure": {
           "GENERIC": {
-            "title": "Il codice non è valido",
-            "subtitle": "Se si tratta di un errore, chiedi all’esercente di crearne uno nuovo."
+            "title": "Non è stato possibile procedere con l'iniziativa richiesta",
+            "subtitle": "Siamo già a lavoro per risolvere.  Riprova tra un po’."
           },
           "TRANSACTION_EXPIRED": {
             "title": "Il codice è scaduto",
