@@ -14,6 +14,7 @@ export const ItwReissuanceSection = () => {
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const navigation = useIONavigation();
 
+  // TODO [SIW-3091]: Remove isItwL3 from the condition when the L3 PID reissuance flow is ready
   if (!isWalletValid || isItwL3) {
     return null;
   }
