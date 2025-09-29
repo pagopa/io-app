@@ -4534,12 +4534,10 @@
             "description": "È un passaggio necessario per garantire la sicurezza dei tuoi dati.",
             "header": "Scegli come identificarti",
             "section": "",
-            "subtitle": "Scegli come identificarti",
             "reissuing": {
               "title": "Scegli come identificarti",
               "description": "È un passaggio necessario per continuare ad usare Documenti su IO.",
               "section": "Verifica di identità",
-              "subtitle": "",
               "method": {
                 "ciePin": {
                   "title": "Continua con CIE + PIN",
