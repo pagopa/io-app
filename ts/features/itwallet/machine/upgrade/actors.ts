@@ -34,6 +34,7 @@ export const createCredentialUpgradeActorsImplementation = (env: Env) => ({
         env,
         credentialType: credential.credentialType,
         walletInstanceAttestation,
+        // TODO [SIW-3091]: Update when the L3 PID reissuance flow is ready
         skipMdocIssuance: !isUpgrade
       });
 
