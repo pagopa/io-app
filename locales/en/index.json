@@ -5615,7 +5615,11 @@
             "NOT_REFUNDABLE_ONLY_IBAN": "Active",
             "NOT_REFUNDABLE_ONLY_INSTRUMENT": "Active",
             "UNSUBSCRIBED": "Removed",
-            "SUSPENDED": "Paused"
+            "SUSPENDED": "Paused",
+            "USED": "Used",
+            "EXPIRED": "Expired",
+            "ACTIVE": "Active",
+            "EXPIRING": "Expiring"
           }
         },
         "initiativeDetailsScreen": {
