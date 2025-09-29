@@ -1,6 +1,20 @@
 import * as O from "fp-ts/lib/Option";
-import { extractLoginResult, getIntentFallbackUrl } from "../login";
+import { PublicKey } from "@pagopa/io-react-native-crypto";
+import {
+  extractLoginResult,
+  getIntentFallbackUrl,
+  getLoginHeaders
+} from "../login";
 import { SessionToken } from "../../../../../types/SessionToken";
+
+jest.mock("../../../../../utils/environment", () => ({
+  isLocalEnv: true
+}));
+
+jest.mock("react-native-device-info", () => ({
+  getReadableVersion: jest.fn().mockReturnValue("1.2.3.4"),
+  getVersion: jest.fn().mockReturnValue("1.2.3.4")
+}));
 
 describe("hook the login outcome from the url", () => {
   const remoteHost = "https://somedomain.com/somepath";
@@ -114,4 +128,33 @@ describe("getIntentFallbackUrl", () => {
       expect(result).toEqual(expectedResult);
     }
   );
+});
+
+describe("getLoginHeaders", () => {
+  it("should return correct headers", () => {
+    const publicKey: PublicKey = {
+      kty: "EC",
+      crv: "P-256",
+      x: "x-coordinate",
+      y: "y-coordinate"
+    };
+    const hashAlgorithm = "SHA256";
+    const isFastLogin = true;
+    const idpId = "idp123";
+
+    const headers = getLoginHeaders(
+      publicKey,
+      hashAlgorithm,
+      isFastLogin,
+      idpId
+    );
+
+    expect(headers).toEqual({
+      "x-pagopa-lollipop-pub-key": expect.any(String),
+      "x-pagopa-lollipop-pub-key-hash-algo": hashAlgorithm,
+      "x-pagopa-app-version": expect.any(String),
+      "x-pagopa-login-type": "LV",
+      "x-pagopa-idp-id": idpId
+    });
+  });
 });
