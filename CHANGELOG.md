@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.15.0-rc.2](https://github.com/pagopa/io-app/compare/3.15.0-rc.1...3.15.0-rc.2) (2025-09-26)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-3060](https://pagopa.atlassian.net/browse/SIW-3060)] Add CIE preparation screen for CAN ([#7398](https://github.com/pagopa/io-app/issues/7398)) ([f120712](https://github.com/pagopa/io-app/commit/f12071269cc6874b0de51f20425adf464edba11d)), closes [1#diff-2a2cc635f26942545dea3c3355f1f13368bf78610156f929b794b56d913e4a8](https://github.com/pagopa/1/issues/diff-2a2cc635f26942545dea3c3355f1f13368bf78610156f929b794b56d913e4a8)
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2866](https://pagopa.atlassian.net/browse/SIW-2866)] Add new CIE SDK in L2 identification flow ([#7273](https://github.com/pagopa/io-app/issues/7273)) ([76d76e2](https://github.com/pagopa/io-app/commit/76d76e2663ae1a738689e4e8a536c04269c2b336))
+
 ## [3.15.0-rc.1](https://github.com/pagopa/io-app/compare/3.15.0-rc.0...3.15.0-rc.1) (2025-09-26)
 
 
