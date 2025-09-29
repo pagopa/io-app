@@ -6,7 +6,7 @@ import {
   startPaymentStatusTracking,
   updatePaymentForMessage
 } from "../store/actions";
-import { serviceDetailsByIdSelector } from "../../services/details/store/reducers";
+import { serviceDetailsByIdSelector } from "../../services/details/store/selectors";
 import {
   isExpiredPaymentFromDetailV2Enum,
   isOngoingPaymentFromDetailV2Enum,

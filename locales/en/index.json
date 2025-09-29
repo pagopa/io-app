@@ -5615,7 +5615,11 @@
             "NOT_REFUNDABLE_ONLY_IBAN": "Active",
             "NOT_REFUNDABLE_ONLY_INSTRUMENT": "Active",
             "UNSUBSCRIBED": "Removed",
-            "SUSPENDED": "Paused"
+            "SUSPENDED": "Paused",
+            "USED": "Used",
+            "EXPIRED": "Expired",
+            "ACTIVE": "Active",
+            "EXPIRING": "Expiring"
           }
         },
         "initiativeDetailsScreen": {
@@ -5896,6 +5900,16 @@
           "BIRTHDAY": "Data di nascita",
           "RESIDENCE": "Residenza",
           "FAMILY_UNIT": "Family Unit"
+        },
+        "familyUnitCode": {
+          "INPS": {
+            "title": "INPS",
+            "description": "INPS"
+          },
+          "ANPR": {
+            "title": "Family Unit",
+            "description": "Ministero dell’Interno"
+          }
         },
         "operator": {
           "EQ": "{{value}}",
