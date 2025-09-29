@@ -3,13 +3,14 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import { ScrollView } from "react-native";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { ItwBannerSection } from "../components/ItwBannerSection";
+import { ItwClaimsList } from "../components/ItwClaimsList";
+import { ItwEnvironmentSection } from "../components/ItwEnvironmentSection";
+import { ItwIdentificationSection } from "../components/ItwIdentificationSection";
 import { ItwL3Section } from "../components/ItwL3Section";
 import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
 import { ItwSkeumorphicCredentialSection } from "../components/ItwSkeumorphicCredentialSection";
-import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
-import { ItwEnvironmentSection } from "../components/ItwEnvironmentSection";
-import { ItwClaimsList } from "../components/ItwClaimsList";
 
 /**
  * ITW Playground screen
@@ -32,9 +33,10 @@ const ItwPlayground = () => {
     <ScrollView contentContainerStyle={{ paddingBottom: 64 }}>
       <ContentWrapper>
         <VStack space={8}>
-          <ItwL3Section />
           <ItwLifecycleSection />
           <ItwEnvironmentSection />
+          <ItwL3Section />
+          <ItwIdentificationSection />
           <ItwSkeumorphicCredentialSection />
           <ItwBannerSection />
           <ItwClaimsList />
