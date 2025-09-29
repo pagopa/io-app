@@ -1,6 +1,5 @@
 import {
   ContentWrapper,
-  ListItemHeader,
   ModuleNavigationAlt,
   VStack
 } from "@pagopa/io-app-design-system";
@@ -51,12 +50,11 @@ export const ItwL2IdentificationModeSelectionScreen = (
     [eidReissuing]
   );
 
-  const { title, description, section, subtitle } = useMemo(
+  const { title, description, section } = useMemo(
     () => ({
       title: I18n.t(`${baseTranslationPath}.title`),
       description: I18n.t(`${baseTranslationPath}.description`),
-      section: I18n.t(`${baseTranslationPath}.section`),
-      subtitle: I18n.t(`${baseTranslationPath}.subtitle`)
+      section: I18n.t(`${baseTranslationPath}.section`)
     }),
     [baseTranslationPath]
   );
@@ -129,7 +127,6 @@ export const ItwL2IdentificationModeSelectionScreen = (
       headerActionsProp={{ showHelp: true }}
     >
       <ContentWrapper>
-        <ListItemHeader label={subtitle} />
         <VStack space={8}>
           {isCieAuthenticationSupported &&
             !isCiePinDisabled &&
