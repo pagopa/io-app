@@ -11119,13 +11119,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18n-js@npm:3.0.11":
-  version: 3.0.11
-  resolution: "i18n-js@npm:3.0.11"
-  checksum: 2fe94bf00f507068a3e9ac632a93d10d9aa7d254bbec33108311f0ee992a9d262fc68b4e48fd14d5fcffc539f6e58d78bfff24252266ebfd493df09618b440f4
-  languageName: node
-  linkType: hard
-
 "i18next@npm:^25.4.2":
   version: 25.4.2
   resolution: "i18next@npm:25.4.2"
@@ -12085,7 +12078,6 @@ __metadata:
     react-native-gesture-handler: ^2.25.0
     react-native-get-random-values: ^1.11.0
     react-native-haptic-feedback: ^2.3.3
-    react-native-i18n: ^2.0.15
     react-native-image-picker: 7.2.3
     react-native-keychain: ^10.0.0
     react-native-linear-gradient: ^2.5.6
@@ -16350,15 +16342,6 @@ __metadata:
   peerDependencies:
     react-native: ">=0.60.0"
   checksum: 5ff12aaf44fa1cad8ab3d9c58046a11c631c6622955120294060efc51c625203ee4cd7ccb565663c12b27552ebbb7034a386000d9da738b9eea5ff62d58b14c0
-  languageName: node
-  linkType: hard
-
-"react-native-i18n@npm:^2.0.15":
-  version: 2.0.15
-  resolution: "react-native-i18n@npm:2.0.15"
-  dependencies:
-    i18n-js: 3.0.11
-  checksum: 8ea3500556c6a55a8e3a0fc838217a9d27bf541e2d6d9cefe5293889859af8fb494d1b8b25de7e80f6086023128814af9b22b6636aa2733443ae1c7118338420
   languageName: node
   linkType: hard
 

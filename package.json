@@ -128,7 +128,6 @@
     "react-native-fs": "^2.18.0",
     "react-native-gesture-handler": "^2.25.0",
     "react-native-haptic-feedback": "^2.3.3",
-    "react-native-i18n": "^2.0.15",
     "react-native-image-picker": "7.2.3",
     "react-native-keychain": "^10.0.0",
     "react-native-linear-gradient": "^2.5.6",
