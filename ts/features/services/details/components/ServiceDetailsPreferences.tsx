@@ -21,7 +21,7 @@ import {
   isLoadingServicePreferenceSelector,
   serviceMetadataInfoSelector,
   servicePreferenceResponseSuccessByIdSelector
-} from "../store/reducers";
+} from "../store/selectors";
 
 type PreferenceSwitchListItem = {
   condition?: boolean;

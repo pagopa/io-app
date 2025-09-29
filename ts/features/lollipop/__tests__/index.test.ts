@@ -6,8 +6,7 @@ import {
   toSignatureComponents,
   getSignAlgorithm,
   chainSignPromises,
-  handleRegenerateEphemeralKey,
-  getLollipopLoginHeaders
+  handleRegenerateEphemeralKey
 } from "..";
 
 jest.mock("react-native-device-info", () => ({
@@ -133,34 +132,5 @@ describe("handleRegenerateEphemeralKey", () => {
     expect(dispatch).toHaveBeenCalledWith(
       expect.objectContaining({ type: "LOLLIPOP_REMOVE_EPHEMERAL_PUBLIC_KEY" })
     );
-  });
-});
-
-describe("getLollipopLoginHeaders", () => {
-  it("should return correct headers", () => {
-    const publicKey: PublicKey = {
-      kty: "EC",
-      crv: "P-256",
-      x: "x-coordinate",
-      y: "y-coordinate"
-    };
-    const hashAlgorithm = "SHA256";
-    const isFastLogin = true;
-    const idpId = "idp123";
-
-    const headers = getLollipopLoginHeaders(
-      publicKey,
-      hashAlgorithm,
-      isFastLogin,
-      idpId
-    );
-
-    expect(headers).toEqual({
-      "x-pagopa-lollipop-pub-key": expect.any(String),
-      "x-pagopa-lollipop-pub-key-hash-algo": hashAlgorithm,
-      "x-pagopa-app-version": expect.any(String),
-      "x-pagopa-login-type": "LV",
-      "x-pagopa-idp-id": idpId
-    });
   });
 });
