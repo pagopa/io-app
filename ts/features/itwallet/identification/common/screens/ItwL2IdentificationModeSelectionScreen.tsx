@@ -1,30 +1,29 @@
-import { useFocusEffect } from "@react-navigation/native";
-import { useCallback, useMemo } from "react";
 import {
   ContentWrapper,
-  VStack,
   ModuleNavigationAlt,
-  ListItemHeader
+  VStack
 } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { useCallback, useMemo } from "react";
+import CiePin from "../../../../../../img/features/itWallet/identification/cie_pin.svg";
+import SpidLogo from "../../../../../../img/features/itWallet/identification/spid_logo.svg";
+import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
+import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
+import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../../store/hooks";
 import {
   trackItWalletIDMethod,
   trackItWalletIDMethodSelected
 } from "../../../analytics";
-import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
-import { useIOSelector } from "../../../../../store/hooks";
 import { itwDisabledIdentificationMethodsSelector } from "../../../common/store/selectors/remoteConfig";
-import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
-import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   isCIEAuthenticationSupportedSelector,
   isL3FeaturesEnabledSelector,
   selectIsLoading
 } from "../../../machine/eid/selectors";
-import SpidLogo from "../../../../../../img/features/itWallet/identification/spid_logo.svg";
-import CiePin from "../../../../../../img/features/itWallet/identification/cie_pin.svg";
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
+import { ItwParamsList } from "../../../navigation/ItwParamsList";
 
 export type ItwL2IdentificationNavigationParams = {
   eidReissuing?: boolean;
@@ -51,12 +50,11 @@ export const ItwL2IdentificationModeSelectionScreen = (
     [eidReissuing]
   );
 
-  const { title, description, section, subtitle } = useMemo(
+  const { title, description, section } = useMemo(
     () => ({
       title: I18n.t(`${baseTranslationPath}.title`),
       description: I18n.t(`${baseTranslationPath}.description`),
-      section: I18n.t(`${baseTranslationPath}.section`),
-      subtitle: I18n.t(`${baseTranslationPath}.subtitle`)
+      section: I18n.t(`${baseTranslationPath}.section`)
     }),
     [baseTranslationPath]
   );
@@ -129,7 +127,6 @@ export const ItwL2IdentificationModeSelectionScreen = (
       headerActionsProp={{ showHelp: true }}
     >
       <ContentWrapper>
-        <ListItemHeader label={subtitle} />
         <VStack space={8}>
           {isCieAuthenticationSupported &&
             !isCiePinDisabled &&
@@ -144,13 +141,20 @@ export const ItwL2IdentificationModeSelectionScreen = (
                 testID="CiePin"
                 image={<CiePin width={28} height={32} />}
                 onPress={handleCiePinPress}
-                badge={{
-                  text: I18n.t(`${baseTranslationPath}.method.ciePin.badge`, {
-                    defaultValue: ""
-                  }),
-                  variant: "highlight",
-                  outline: false
-                }}
+                badge={
+                  eidReissuing
+                    ? {
+                        text: I18n.t(
+                          `${baseTranslationPath}.method.ciePin.badge`,
+                          {
+                            defaultValue: ""
+                          }
+                        ),
+                        variant: "highlight",
+                        outline: false
+                      }
+                    : undefined
+                }
               />
             )}
           {!isSpidDisabled && (
