@@ -2381,6 +2381,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.27.6":
+  version: 7.28.4
+  resolution: "@babel/runtime@npm:7.28.4"
+  checksum: 934b0a0460f7d06637d93fcd1a44ac49adc33518d17253b5a0b55ff4cb90a45d8fe78bf034b448911dbec7aff2a90b918697559f78d21c99ff8dbadae9565b55
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.24.7, @babel/template@npm:^7.3.3":
   version: 7.24.7
   resolution: "@babel/template@npm:7.24.7"
@@ -11112,6 +11119,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"i18n-js@npm:3.0.11":
+  version: 3.0.11
+  resolution: "i18n-js@npm:3.0.11"
+  checksum: 2fe94bf00f507068a3e9ac632a93d10d9aa7d254bbec33108311f0ee992a9d262fc68b4e48fd14d5fcffc539f6e58d78bfff24252266ebfd493df09618b440f4
+  languageName: node
+  linkType: hard
+
 "i18next@npm:^25.4.2":
   version: 25.4.2
   resolution: "i18next@npm:25.4.2"
@@ -12083,7 +12097,6 @@ __metadata:
     react-native-push-notification: ^8.1.1
     react-native-qrcode-svg: ^6.3.12
     react-native-reanimated: ^3.17.5
-    react-native-responsive-screen: ^1.4.1
     react-native-safe-area-context: ^5.4.0
     react-native-screen-brightness: ^2.0.0-alpha
     react-native-screens: ^4.10.0
@@ -16499,15 +16512,6 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: fe667e4764f691b2e752eaedb7527fd8ac251637ae9e7dd9ab124abae85627839b5daea064befc5e09ca710ef673d5501ed11286eb39dfcb04f5d57b2d47e49c
-  languageName: node
-  linkType: hard
-
-"react-native-responsive-screen@npm:^1.4.1":
-  version: 1.4.1
-  resolution: "react-native-responsive-screen@npm:1.4.1"
-  peerDependencies:
-    react-native: ">=0.35"
-  checksum: ca90b9d1bbbc627f052a3fbce099d2f666dafb09c5fa9eb575a9ef471957e8fdc276000cb3420e467b147ddeff1d42866df8bbaeaa002817e2875f3847eb9bf9
   languageName: node
   linkType: hard
 
