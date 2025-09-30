@@ -10,7 +10,7 @@ import { upsertServicePreference } from "../../../services/details/store/actions
 import {
   isErrorServicePreferenceSelector,
   servicePreferenceResponseSuccessByIdSelector
-} from "../../../services/details/store/reducers";
+} from "../../../services/details/store/selectors";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { selectInitiative } from "../machine/selectors";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";

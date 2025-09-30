@@ -3,6 +3,7 @@ import {
   ContentWrapper,
   H2,
   IOButtonBlockSpecificProps,
+  useIOThemeContext,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as AR from "fp-ts/lib/Array";
@@ -152,8 +153,14 @@ const BonusInformationComponent = (props: Props) => {
     O.chain(urls => AR.lookup(0, [...urls]))
   );
 
+  const { themeType } = useIOThemeContext();
+  const isDark = themeType === "dark";
+
   const maybeBonusTos = maybeNotNullyString(bonusTypeLocalizedContent.tos_url);
-  const maybeHeroImage = maybeNotNullyString(bonusType.hero_image);
+  const maybeHeroImage =
+    isDark && bonusType.hero_image_dark
+      ? maybeNotNullyString(bonusType.hero_image_dark)
+      : maybeNotNullyString(bonusType.hero_image);
 
   const actions: IOScrollViewActions = props.secondaryAction
     ? {

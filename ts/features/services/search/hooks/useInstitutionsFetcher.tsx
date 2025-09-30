@@ -8,7 +8,7 @@ import {
   paginatedInstitutionsCurrentPageSelector,
   paginatedInstitutionsLastPageSelector,
   paginatedInstitutionsSelector
-} from "../store/reducers";
+} from "../store/selectors";
 
 const LIMIT: number = 20;
 
