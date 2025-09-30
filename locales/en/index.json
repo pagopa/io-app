@@ -5456,7 +5456,10 @@
         "seeReports": "Current requests"
       },
       "supportComponent": {
-        "title": "Need help?",
+        "title": "You didn't find the answer you were looking for?",
+        "messageProblem": "If you have a problem with a message or service, **contact the institution directly**. You will find their contact details in the message.",
+        "appProblem": "If you are experiencing an **issue with the app or one of its features**, please select ‘Open a request’.",
+        "checkRequests": "If you want to **check requests that have already been sent**, click on “Pending requests”.",
         "subtitle": "Take a look at the FAQs: if you don't find the answer you're looking for, submit a request. If you've already submitted a request and want to check its status or add details, select “Current requests“.",
         "adviceMessage": "If your problem concerns the content of a message or the service of an institution, contact the latter. You can find the contact details within the message or in the tab of the service concerned."
       }
