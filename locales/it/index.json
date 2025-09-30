@@ -5530,7 +5530,10 @@
         "seeReports": "Richieste in corso"
       },
       "supportComponent": {
-        "title": "Hai bisogno d’aiuto?",
+        "title": "Non hai trovato la risposta che cercavi?",
+        "messageProblem": "Se hai un problema con il contenuto di un messaggio o un servizio, **contatta direttamente l’ente responsabile**: trovi i riferimenti nel messaggio.",
+        "appProblem": "Se hai un **problema con l’app o una sua funzionalità**, premi “Apri una richiesta”.",
+        "checkRequests": "Se vuoi **controllare le richieste già inviate**, premi su “Richieste in corso”.",
         "subtitle": "Dai un’occhiata alle FAQ: se non trovi la risposta che cerchi, apri una richiesta. Se hai già aperto una richiesta e vuoi verificarne lo stato o aggiungere dettagli, seleziona “Richieste in corso”.",
         "adviceMessage": "Se il tuo problema riguarda il contenuto di un messaggio o il servizio di un ente, contatta quest’ultimo: trovi i riferimenti nel messaggio o nella scheda del servizio."
       }
