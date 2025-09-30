@@ -74,6 +74,9 @@ jobs:
       ZENDESK_DOMAIN: ${{ secrets.ZENDESK_DOMAIN }}
       ZENDESK_TRIGGER_ID: ${{ secrets.ZENDESK_TRIGGER_ID }}
       ZENDESK_OAUTH_TOKEN: ${{ secrets.ZENDESK_OAUTH_TOKEN }}
+    outputs:
+      is_active: ${{ steps.update_trigger.outputs.is_active }}
+      app_version: ${{ steps.update_trigger.outputs.app_version }}
     steps:
       - name: Check if App Version is provided
         run: |
@@ -174,8 +177,8 @@ jobs:
         continue-on-error: true
         env:
           IO_APP_SLACK_HELPER_BOT_TOKEN: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}
-          IS_ACTIVE: ${{ steps.update_trigger.outputs.is_active }}
-          APP_VERSION_TAG: ${{ steps.update_trigger.outputs.app_version }}
+          IS_ACTIVE: ${{ needs.update-trigger-app-version.outputs.is_active }}
+          APP_VERSION_TAG: ${{ needs.update-trigger-app-version.outputs.app_version }}
         run: |
           echo "IS_ACTIVE=$IS_ACTIVE"
           echo "APP_VERSION_TAG=$APP_VERSION_TAG"
