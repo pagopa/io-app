@@ -327,13 +327,30 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
           action:
             firstAlert.label_cta?.[localeFallback] ||
             I18n.t("global.sectionStatus.moreInfo"),
-          onPress: () => openWebUrl(url[localeFallback])
+          onPress: () => {
+            mixpanelTrack(
+              "TAP_REMOTE_BANNER",
+              buildEventProperties("UX", "action", {
+                banner_page: currentRoute,
+                banner_landing: url[localeFallback]
+              })
+            );
+            openWebUrl(url[localeFallback]);
+          }
         })
       )
     );
 
     setAlertVisible(currentStatusMessage.length > 0);
-
+    mixpanelTrack(
+      "REMOTE_BANNER",
+      buildEventProperties("UX", "screen_view", {
+        banner_page: currentRoute,
+        banner_landing: firstAlert.web_url
+          ? firstAlert.web_url[localeFallback]
+          : undefined
+      })
+    );
     return {
       alertProps: {
         content: firstAlert.message[localeFallback],
@@ -346,6 +363,7 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
     currentStatusMessage,
     setAlertVisible,
     localeFallback,
-    bottomSheet
+    bottomSheet,
+    currentRoute
   ]);
 };
