@@ -22,6 +22,7 @@ import {
   startPaymentStatusTracking,
   upsertMessageStatusAttributes
 } from "../store/actions";
+import { KeyInfo } from "../../lollipop/utils/crypto";
 import { retryDataAfterFastLoginSessionExpirationSelector } from "../store/reducers/messageGetStatus";
 import { BackendClient } from "../../../api/backend";
 import { retrievingDataPreconditionStatusAction } from "../store/actions/preconditions";
@@ -53,7 +54,8 @@ import { handlePaymentUpdateRequests } from "./handlePaymentUpdateRequests";
  */
 export function* watchMessagesSaga(
   backendClient: BackendClient,
-  bearerToken: SessionToken
+  bearerToken: SessionToken,
+  keyInfo: KeyInfo
 ): SagaIterator {
   yield* takeLatest(
     loadNextPageMessages.request,
@@ -113,7 +115,8 @@ export function* watchMessagesSaga(
   yield* takeLatest(
     downloadAttachment.request,
     handleDownloadAttachment,
-    bearerToken
+    bearerToken,
+    keyInfo
   );
 
   // handle the request for updating a message's payment

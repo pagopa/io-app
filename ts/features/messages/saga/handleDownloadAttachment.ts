@@ -6,15 +6,15 @@ import {
   delay,
   put,
   race,
+  select,
   take
 } from "typed-redux-saga/macro";
-import RNFS from "react-native-fs";
 import ReactNativeBlobUtil from "react-native-blob-util";
-import { v4 as uuid } from "uuid";
 import { pipe } from "fp-ts/lib/function";
 import * as E from "fp-ts/lib/Either";
 import { NumberFromString } from "@pagopa/ts-commons/lib/numbers";
 import I18n from "i18next";
+import { ReduxSagaEffect } from "../../../types/utils";
 import { fetchTimeout } from "../../../config";
 import { SessionToken } from "../../../types/SessionToken";
 import { getError } from "../../../utils/errors";
@@ -29,32 +29,14 @@ import {
   trackThirdPartyMessageAttachmentUnavailable
 } from "../analytics";
 import { getHeaderByKey } from "../utils/strings";
-import { attachmentDisplayName } from "../store/reducers/transformers";
+import {
+  isEphemeralAARThirdPartyMessage,
+  thirdPartyMessageSelector
+} from "../store/reducers/thirdPartyById";
+import { KeyInfo } from "../../lollipop/utils/crypto";
+import { attachmentDisplayName, pdfSavePath } from "../utils/attachments";
+import { downloadAARAttachmentSaga } from "../../pn/aar/saga/downloadAARAttachmentSaga";
 import { handleRequestInit } from "./handleRequestInit";
-
-export const AttachmentsDirectoryPath =
-  RNFS.CachesDirectoryPath + "/attachments";
-
-/**
- * Builds the save path for the given attachment
- * @param attachment
- */
-export const pdfSavePath = (
-  messageId: string,
-  attachmentId: string,
-  name: string
-) => {
-  // Trim leading/trailing whitespace
-  // Basic sanitization: remove characters not allowed in filenames (common for most OS)
-  // Characters removed: / \ : * ? " < > |
-  const sanitizedFileName = name.trim().replace(/[/\\:*?"<>|]/g, "");
-  const sanitizedFileNameWithExtension = !sanitizedFileName
-    .toLowerCase()
-    .endsWith(".pdf")
-    ? `${sanitizedFileName}.pdf`
-    : sanitizedFileName;
-  return `${AttachmentsDirectoryPath}/${messageId}/${attachmentId}/${sanitizedFileNameWithExtension}`;
-};
 
 const getDelayMilliseconds = (headers: Record<string, string>) =>
   pipe(
@@ -84,6 +66,7 @@ function trackFailureEvent(
 
 export function* downloadAttachmentWorker(
   bearerToken: SessionToken,
+  keyInfo: KeyInfo,
   action: ActionType<typeof downloadAttachment.request>
 ): SagaIterator {
   const { attachment, messageId, skipMixpanelTrackingOnFailure, serviceId } =
@@ -103,7 +86,7 @@ export function* downloadAttachmentWorker(
         attachment,
         messageId,
         bearerToken,
-        uuid()
+        keyInfo
       );
 
       const result = yield* call(
@@ -170,8 +153,14 @@ export function* downloadAttachmentWorker(
  */
 export function* handleDownloadAttachment(
   bearerToken: SessionToken,
+  keyInfo: KeyInfo,
   action: ActionType<typeof downloadAttachment.request>
 ) {
+  const messageId = action.payload.messageId;
+  const { ephemeralAARThirdPartyMessage, mandateId } = yield* call(
+    computeThirdPartyMessageData,
+    messageId
+  );
   // cancelPreviousAttachmentDownload is required in order to
   // cancel any previous download that was going on (since the
   // cancelling can either be triggered by requesting a different
@@ -179,7 +168,33 @@ export function* handleDownloadAttachment(
   // and/or which one it is, on PN attachments - or manually by the
   // user on generic attachments).
   yield* race({
-    polling: call(downloadAttachmentWorker, bearerToken, action),
+    polling: ephemeralAARThirdPartyMessage
+      ? call(downloadAARAttachmentSaga, bearerToken, keyInfo, mandateId, action)
+      : call(downloadAttachmentWorker, bearerToken, keyInfo, action),
     cancelAction: take(cancelPreviousAttachmentDownload)
   });
+}
+
+export function* computeThirdPartyMessageData(messageId: string): Generator<
+  ReduxSagaEffect,
+  {
+    ephemeralAARThirdPartyMessage: boolean;
+    mandateId: string | undefined;
+  },
+  ReturnType<typeof thirdPartyMessageSelector>
+> {
+  const thirdPartyMessage = yield* select(thirdPartyMessageSelector, messageId);
+  if (
+    thirdPartyMessage != null &&
+    isEphemeralAARThirdPartyMessage(thirdPartyMessage)
+  ) {
+    return {
+      ephemeralAARThirdPartyMessage: true,
+      mandateId: thirdPartyMessage.mandateId
+    };
+  }
+  return {
+    ephemeralAARThirdPartyMessage: false,
+    mandateId: undefined
+  };
 }

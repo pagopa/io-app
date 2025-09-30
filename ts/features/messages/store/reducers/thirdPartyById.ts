@@ -35,6 +35,23 @@ type EphemeralAARThirdPartyMessage = {
   mandateId?: string;
 } & ThirdPartyMessageWithContent;
 
+export const isEphemeralAARThirdPartyMessage = (
+  message: ThirdPartyMessageUnion
+): message is EphemeralAARThirdPartyMessage =>
+  message.kind === thirdPartyKind.AAR;
+
+export const isThirdParyMessageAarSelector = (
+  state: GlobalState,
+  ioMessageId: string
+) => {
+  const thirdPartyMessagePot = thirdPartyFromIdSelector(state, ioMessageId);
+  const thirdPartyMessage = pot.getOrElse(thirdPartyMessagePot, undefined);
+  return (
+    thirdPartyMessage != null &&
+    isEphemeralAARThirdPartyMessage(thirdPartyMessage)
+  );
+};
+
 export type ThirdPartyMessageUnion =
   | StandardThirdPartyMessage
   | EphemeralAARThirdPartyMessage;
@@ -71,6 +88,14 @@ export const thirdPartyFromIdSelector = (
   state: GlobalState,
   ioMessageId: string
 ) => state.entities.messages.thirdPartyById[ioMessageId] ?? pot.none;
+
+export const thirdPartyMessageSelector = (
+  state: GlobalState,
+  ioMessageId: string
+) => {
+  const thirdPartyMessagePot = thirdPartyFromIdSelector(state, ioMessageId);
+  return pot.toUndefined(thirdPartyMessagePot);
+};
 
 export const messageTitleSelector = (state: GlobalState, ioMessageId: string) =>
   messageContentSelector(
