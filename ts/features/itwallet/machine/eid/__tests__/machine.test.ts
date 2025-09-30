@@ -1209,7 +1209,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
   });
 
-  it("Should obtain an eID (SPID), reissuing mode", async () => {
+  it("Should obtain an eID (SPID), reissuing mode with no credentials reissuing", async () => {
     // The wallet instance and attestation already exist
     const initialContext = {
       ...InitialContext,

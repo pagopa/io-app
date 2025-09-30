@@ -11,6 +11,7 @@ import { ItwIdentificationSection } from "../components/ItwIdentificationSection
 import { ItwL3Section } from "../components/ItwL3Section";
 import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
 import { ItwSkeumorphicCredentialSection } from "../components/ItwSkeumorphicCredentialSection";
+import { ItwReissuanceSection } from "../components/ItwEidReissuance";
 import { ItwL2Section } from "../components/ItwL2Section";
 
 /**
@@ -39,6 +40,7 @@ const ItwPlayground = () => {
           <ItwL3Section />
           <ItwL2Section />
           <ItwIdentificationSection />
+          <ItwReissuanceSection />
           <ItwSkeumorphicCredentialSection />
           <ItwBannerSection />
           <ItwClaimsList />

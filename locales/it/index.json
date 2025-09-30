@@ -4543,10 +4543,10 @@
         },
         "mode": {
           "l2": {
-            "title": "Verifica la tua identità con SPID o CieID",
-            "description": "È un passaggio di sicurezza necessario per associare i documenti digitali alla tua identità.",
+            "title": "Verifica la tua identità",
+            "description": "È un passaggio necessario per garantire la sicurezza dei tuoi dati.",
             "header": "Scegli come identificarti",
-            "section": "Ottieni Documenti su IO",
+            "section": "",
             "reissuing": {
               "title": "Scegli come identificarti",
               "description": "È un passaggio necessario per continuare ad usare Documenti su IO.",
@@ -4645,6 +4645,10 @@
           "inputPin": {
             "title": "Inserisci il PIN della CIE",
             "buttonLink": "Dove trovo il PIN della CIE?"
+          },
+          "inputCan": {
+            "title": "Inserisci il codice a 6 cifre che trovi in basso a destra della tua CIE",
+            "subtitle": "È il codice a 6 cifre (CAN) che trovi stampato sul fronte della tua Carta di Identità Elettronica, in basso a destra."
           },
           "readingCard": {
             "android": {
@@ -5515,6 +5519,12 @@
             "title": "Disattiva IT-Wallet L3",
             "content": "Se avevi attivato IT-Wallet, il portafoglio sarà resettato e tutti i documenti rimossi."
           }
+        },
+        "reissuing": {
+          "alert": {
+            "title": "Avvio reissuing eID",
+            "content": "Stai per avviare il reissuing dell'eID e delle credenziali al momento ottenute."
+          }
         }
       }
     }
@@ -5533,7 +5543,10 @@
         "seeReports": "Richieste in corso"
       },
       "supportComponent": {
-        "title": "Hai bisogno d’aiuto?",
+        "title": "Non hai trovato la risposta che cercavi?",
+        "messageProblem": "Se hai un problema con il contenuto di un messaggio o un servizio, **contatta direttamente l’ente responsabile**: trovi i riferimenti nel messaggio.",
+        "appProblem": "Se hai un **problema con l’app o una sua funzionalità**, premi “Apri una richiesta”.",
+        "checkRequests": "Se vuoi **controllare le richieste già inviate**, premi su “Richieste in corso”.",
         "subtitle": "Dai un’occhiata alle FAQ: se non trovi la risposta che cerchi, apri una richiesta. Se hai già aperto una richiesta e vuoi verificarne lo stato o aggiungere dettagli, seleziona “Richieste in corso”.",
         "adviceMessage": "Se il tuo problema riguarda il contenuto di un messaggio o il servizio di un ente, contatta quest’ultimo: trovi i riferimenti nel messaggio o nella scheda del servizio."
       }
@@ -5687,12 +5700,16 @@
           "expiresOn": "Scade il {{expiryDate}}",
           "toRefund": "Da rimborsare",
           "statusLabels": {
-            "REFUNDABLE": "Attiva",
-            "NOT_REFUNDABLE": "Attiva",
-            "NOT_REFUNDABLE_ONLY_IBAN": "Attiva",
-            "NOT_REFUNDABLE_ONLY_INSTRUMENT": "Attiva",
-            "UNSUBSCRIBED": "Rimossa",
-            "SUSPENDED": "In pausa"
+            "REFUNDABLE": "Attivo",
+            "NOT_REFUNDABLE": "Attivo",
+            "NOT_REFUNDABLE_ONLY_IBAN": "Attivo",
+            "NOT_REFUNDABLE_ONLY_INSTRUMENT": "Attivo",
+            "UNSUBSCRIBED": "Rimosso",
+            "SUSPENDED": "In pausa",
+            "USED": "Utilizzato",
+            "EXPIRED": "Scaduto",
+            "ACTIVE": "Attivo",
+            "EXPIRING": "In scadenza"
           }
         },
         "initiativeDetailsScreen": {
@@ -5973,6 +5990,16 @@
           "BIRTHDAY": "Data di nascita",
           "RESIDENCE": "Residenza",
           "FAMILY_UNIT": "Famiglia anagrafica"
+        },
+        "familyUnitCode": {
+          "INPS": {
+            "title": "INPS",
+            "description": "INPS"
+          },
+          "ANPR": {
+            "title": "Famiglia anagrafica",
+            "description": "Ministero dell’Interno"
+          }
         },
         "operator": {
           "EQ": "{{value}}",

@@ -10,6 +10,7 @@ import { ItwDiscoveryInfoScreen } from "../discovery/screens/ItwDiscoveryInfoScr
 import { ItwDiscoveryInfoComponent } from "../discovery/components/ItwDiscoveryInfoComponent.tsx";
 import ItwIpzsPrivacyScreen from "../discovery/screens/ItwIpzsPrivacyScreen";
 import { ItwActivateNfcScreen } from "../identification/cie/screens/ItwActivateNfcScreen.tsx";
+import { ItwCieCanScreen } from "../identification/cie/screens/ItwCieCanScreen.tsx";
 import { ItwCieCardReaderScreen as ItwCieCardReaderL3Screen } from "../identification/cie/screens/ItwCieCardReaderScreen";
 import { ItwCiePinScreen } from "../identification/cie/screens/ItwCiePinScreen.tsx";
 import { ItwCiePreparationCanScreen } from "../identification/cie/screens/ItwCiePreparationCanScreen.tsx";
@@ -151,7 +152,7 @@ const InnerNavigator = memo(() => {
         name={ITW_ROUTES.IDENTIFICATION.CIE_ID.LOGIN}
         component={ItwCieIdLoginScreen}
       />
-      {/* IDENTIFICATION CIE + PIN */}
+      {/* IDENTIFICATION CIE */}
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION_SCREEN}
         component={ItwCiePreparationCardScreen}
@@ -167,6 +168,10 @@ const InnerNavigator = memo(() => {
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN}
         component={ItwCiePinScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.IDENTIFICATION.CIE.CAN_SCREEN}
+        component={ItwCieCanScreen}
       />
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN}
