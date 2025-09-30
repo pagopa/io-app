@@ -4,7 +4,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import PN_ROUTES from "../../../navigation/routes";
 import * as REDUCERS from "../../store/reducers";
-import { isSendAARLink, navigateToSendAarFlow } from "../deepLinking";
+import { isSendAARLink, navigateToSendAarFlowIfEnabled } from "../deepLinking";
 const testRegex = "^\\s*https:\\/\\/example\\.com\\/aar\\/.*";
 describe("DeepLinking utils", () => {
   describe("isSendAARLink", () => {
@@ -44,7 +44,7 @@ describe("DeepLinking utils", () => {
           .mockImplementation(() => isAAREnabled);
         jest.spyOn(NAV_SRV.default, "navigate").mockImplementation(mockNav);
 
-        navigateToSendAarFlow({} as GlobalState, aarUrl);
+        navigateToSendAarFlowIfEnabled({} as GlobalState, aarUrl);
         if (isAAREnabled) {
           expect(mockNav).toHaveBeenCalledTimes(1);
           expect(mockNav).toHaveBeenCalledWith(

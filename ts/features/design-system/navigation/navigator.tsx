@@ -55,6 +55,7 @@ import { DSLegacyAdvice } from "../core/DSLegacyAdvice";
 import { DSLegacyButtons } from "../core/DSLegacyButtons";
 import { DSListItems } from "../core/DSListItems";
 import { DSLoaders } from "../core/DSLoaders";
+import { DSLoadingScreen } from "../core/DSLoadingScreen";
 import { DSLogos } from "../core/DSLogos";
 import { DSModules } from "../core/DSModules";
 import { DSNumberPad } from "../core/DSNumberPad";
@@ -501,6 +502,14 @@ export const DesignSystemNavigator = () => {
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.SCREENS.BONUS_CARD_SCREEN.route}
           component={DSBonusCardScreen}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.LOADING_SCREEN.route}
+          component={DSLoadingScreen}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.SCREENS.LOADING_SCREEN.title
+          }}
         />
 
         <Stack.Screen
