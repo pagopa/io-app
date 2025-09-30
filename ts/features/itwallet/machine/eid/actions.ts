@@ -77,7 +77,7 @@ export const createEidIssuanceActionsImplementation = (
   navigateToIdentificationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
-      params: { eidReissuing: false }
+      params: { eidReissuing: context.mode === "reissuance" }
     });
   },
 
@@ -176,15 +176,9 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToCieReadCardL2Screen: () => {
+  navigateToCieReadCardScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN.L2
-    });
-  },
-
-  navigateToCieReadCardL3Screen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN.L3
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN
     });
   },
 

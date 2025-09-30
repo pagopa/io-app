@@ -49,8 +49,7 @@ describe("itwEidIssuanceMachine", () => {
   const navigateToCiePreparationScreen = jest.fn();
   const navigateToCiePinPreparationScreen = jest.fn();
   const navigateToCiePinScreen = jest.fn();
-  const navigateToCieReadCardL2Screen = jest.fn();
-  const navigateToCieReadCardL3Screen = jest.fn();
+  const navigateToCieReadCardScreen = jest.fn();
   const navigateToNfcInstructionsScreen = jest.fn();
   const navigateToCieIdLoginScreen = jest.fn();
   const navigateToCieWarningScreen = jest.fn();
@@ -102,8 +101,7 @@ describe("itwEidIssuanceMachine", () => {
       navigateToCiePreparationScreen,
       navigateToCiePinPreparationScreen,
       navigateToCiePinScreen,
-      navigateToCieReadCardL2Screen,
-      navigateToCieReadCardL3Screen,
+      navigateToCieReadCardScreen,
       navigateToNfcInstructionsScreen,
       navigateToCieIdLoginScreen,
       navigateToCieWarningScreen,
@@ -1220,7 +1218,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
   });
 
-  it("Should obtain an eID (SPID), reissuing mode", async () => {
+  it("Should obtain an eID (SPID), reissuing mode with no credentials reissuing", async () => {
     // The wallet instance and attestation already exist
     const initialContext = {
       ...InitialContext,

@@ -36,7 +36,7 @@ import { MessageDetailsPayment } from "../components/MessageDetail/MessageDetail
 import { userSelectedPaymentRptIdSelector } from "../store/reducers/payments";
 import { MessageDetailsStickyFooter } from "../components/MessageDetail/MessageDetailsStickyFooter";
 import { MessageDetailsScrollViewAdditionalSpace } from "../components/MessageDetail/MessageDetailsScrollViewAdditionalSpace";
-import { serviceMetadataByIdSelector } from "../../services/details/store/reducers";
+import { serviceMetadataByIdSelector } from "../../services/details/store/selectors";
 import { extractPNOptInMessageInfoIfAvailable } from "../../pn/utils";
 import {
   trackPNOptInMessageCTADisplaySuccess,

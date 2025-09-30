@@ -61,8 +61,7 @@ export const itwEidIssuanceMachine = setup({
     navigateToCiePreparationScreen: notImplemented,
     navigateToCiePinPreparationScreen: notImplemented,
     navigateToCiePinScreen: notImplemented,
-    navigateToCieReadCardL2Screen: notImplemented,
-    navigateToCieReadCardL3Screen: notImplemented,
+    navigateToCieReadCardScreen: notImplemented,
     navigateToNfcInstructionsScreen: notImplemented,
     navigateToWalletRevocationScreen: notImplemented,
     navigateToCieWarningScreen: notImplemented,
@@ -717,17 +716,10 @@ export const itwEidIssuanceMachine = setup({
                 "This state handles the CIE preparation screen, where the user is informed about the CIE card",
               entry: "navigateToCiePreparationScreen",
               on: {
-                next: [
-                  {
-                    guard: "isL3FeaturesEnabled",
-                    actions: "navigateToCieReadCardL3Screen",
-                    target: "StartingCieAuthFlow"
-                  },
-                  {
-                    actions: "navigateToCieReadCardL2Screen",
-                    target: "StartingCieAuthFlow"
-                  }
-                ],
+                next: {
+                  actions: "navigateToCieReadCardScreen",
+                  target: "StartingCieAuthFlow"
+                },
                 "go-to-cie-warning": {
                   target: "CieWarning.PreparationCie"
                 },
@@ -896,12 +888,15 @@ export const itwEidIssuanceMachine = setup({
       },
       onDone: [
         {
-          guard: "isReissuance",
-          actions: ["navigateToWallet"]
+          guard: and([
+            "hasLegacyCredentials",
+            or(["isReissuance", "isUpgrade"])
+          ]),
+          target: "#itwEidIssuanceMachine.CredentialsUpgrade"
         },
         {
-          guard: and(["hasLegacyCredentials", "isUpgrade"]),
-          target: "#itwEidIssuanceMachine.CredentialsUpgrade"
+          guard: "isReissuance",
+          actions: ["navigateToWallet"]
         },
         {
           target: "#itwEidIssuanceMachine.Success"
@@ -921,11 +916,13 @@ export const itwEidIssuanceMachine = setup({
             context.walletInstanceAttestation,
             "Wallet instance attestation must be defined"
           );
+          assert(context.mode, "Issuance mode must be defined");
 
           return {
             pid: context.eid,
             walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
-            credentials: context.legacyCredentials
+            credentials: context.legacyCredentials,
+            issuanceMode: context.mode
           };
         },
         onDone: {

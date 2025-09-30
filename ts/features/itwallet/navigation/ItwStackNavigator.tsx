@@ -1,9 +1,5 @@
-import {
-  createStackNavigator,
-  TransitionPresets
-} from "@react-navigation/stack";
+import { createStackNavigator } from "@react-navigation/stack";
 import { ComponentType, memo } from "react";
-import { Platform } from "react-native";
 import { useIOSelector } from "../../../store/hooks";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { isConnectedSelector } from "../../connectivity/store/selectors";
@@ -13,15 +9,12 @@ import { ItwAlreadyActiveScreen } from "../discovery/screens/ItwAlreadyActiveScr
 import { ItwDiscoveryInfoScreen } from "../discovery/screens/ItwDiscoveryInfoScreen";
 import ItwIpzsPrivacyScreen from "../discovery/screens/ItwIpzsPrivacyScreen";
 import { ItwActivateNfcScreen } from "../identification/cie/screens/ItwActivateNfcScreen.tsx";
-import { ItwCieCardReaderL2Screen } from "../identification/cie/screens/ItwCieCardReaderL2Screen.tsx";
+import { ItwCieCanScreen } from "../identification/cie/screens/ItwCieCanScreen.tsx";
 import { ItwCieCardReaderScreen as ItwCieCardReaderL3Screen } from "../identification/cie/screens/ItwCieCardReaderScreen";
-import { ItwCieExpiredOrInvalidScreen } from "../identification/cie/screens/ItwCieExpiredOrInvalidScreen.tsx";
 import { ItwCiePinScreen } from "../identification/cie/screens/ItwCiePinScreen.tsx";
+import { ItwCiePreparationCanScreen } from "../identification/cie/screens/ItwCiePreparationCanScreen.tsx";
 import { ItwCiePreparationCardScreen } from "../identification/cie/screens/ItwCiePreparationCardScreen.tsx";
 import { ItwCiePreparationPinScreen } from "../identification/cie/screens/ItwCiePreparationPinScreen.tsx";
-import { ItwCieUnexpectedErrorScreen } from "../identification/cie/screens/ItwCieUnexpectedErrorScreen.tsx";
-import { ItwCieWrongCardScreen } from "../identification/cie/screens/ItwCieWrongCardScreen.tsx";
-import { ItwCieWrongCiePinScreen } from "../identification/cie/screens/ItwCieWrongCiePinScreen.tsx";
 import { ItwIdentificationCieWarningScreen } from "../identification/cie/screens/ItwIdentificationCieWarningScreen.tsx";
 import ItwCieIdLoginScreen from "../identification/cieId/screens/ItwCieIdLoginScreen.tsx";
 import { ItwIdentificationModeSelectionScreen } from "../identification/common/screens/ItwIdentificationModeSelectionScreen.tsx";
@@ -153,7 +146,7 @@ const InnerNavigator = memo(() => {
         name={ITW_ROUTES.IDENTIFICATION.CIE_ID.LOGIN}
         component={ItwCieIdLoginScreen}
       />
-      {/* IDENTIFICATION CIE + PIN */}
+      {/* IDENTIFICATION CIE */}
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION_SCREEN}
         component={ItwCiePreparationCardScreen}
@@ -163,16 +156,19 @@ const InnerNavigator = memo(() => {
         component={ItwCiePreparationPinScreen}
       />
       <Stack.Screen
+        name={ITW_ROUTES.IDENTIFICATION.CIE.CAN_PREPARATION_SCREEN}
+        component={ItwCiePreparationCanScreen}
+      />
+      <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN}
         component={ItwCiePinScreen}
       />
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN.L2}
-        component={ItwCieCardReaderL2Screen}
-        options={hiddenHeader}
+        name={ITW_ROUTES.IDENTIFICATION.CIE.CAN_SCREEN}
+        component={ItwCieCanScreen}
       />
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN.L3}
+        name={ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN}
         component={ItwCieCardReaderL3Screen}
         options={hiddenHeader}
       />
@@ -180,33 +176,6 @@ const InnerNavigator = memo(() => {
         name={ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC}
         component={ItwActivateNfcScreen}
       />
-      <Stack.Group
-        screenOptions={{
-          gestureEnabled: false,
-          headerShown: false,
-          ...Platform.select({
-            ios: TransitionPresets.ModalSlideFromBottomIOS,
-            default: undefined
-          })
-        }}
-      >
-        <Stack.Screen
-          name={ITW_ROUTES.IDENTIFICATION.CIE.WRONG_PIN}
-          component={ItwCieWrongCiePinScreen}
-        />
-        <Stack.Screen
-          name={ITW_ROUTES.IDENTIFICATION.CIE.WRONG_CARD}
-          component={ItwCieWrongCardScreen}
-        />
-        <Stack.Screen
-          name={ITW_ROUTES.IDENTIFICATION.CIE.UNEXPECTED_ERROR}
-          component={ItwCieUnexpectedErrorScreen}
-        />
-        <Stack.Screen
-          name={ITW_ROUTES.IDENTIFICATION.CIE.CIE_EXPIRED_SCREEN}
-          component={ItwCieExpiredOrInvalidScreen}
-        />
-      </Stack.Group>
       {/* ISSUANCE */}
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.EID_PREVIEW}
