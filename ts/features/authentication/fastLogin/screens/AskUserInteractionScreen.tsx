@@ -1,5 +1,9 @@
 import { Modal } from "react-native";
-import { IOPictograms } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  IOPictograms,
+  useIOTheme
+} from "@pagopa/io-app-design-system";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 
@@ -22,8 +26,10 @@ export type Props = {
 const AskUserInteractionScreen = (props: Props) => {
   useAvoidHardwareBackButton();
 
+  const theme = useIOTheme();
+
   return (
-    <Modal>
+    <Modal backdropColor={IOColors[theme["appBackground-primary"]]}>
       <OperationResultScreenContent
         pictogram={props.pictogramName}
         title={props.title}
