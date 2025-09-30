@@ -124,43 +124,13 @@ jobs:
           echo "Generated payload:"
           cat payload.json
 
-      - name: Update Zendesk Trigger
-        id: update_trigger
-        run: |
-          # Executes the PUT API call to update the trigger
-          # Sends the payload.json file as the request body
-          response=$(curl -s -w "\n%{http_code}" -X PUT "https://$ZENDESK_DOMAIN.zendesk.com/api/v2/triggers/$ZENDESK_TRIGGER_ID.json" \
-            -H "Authorization: Bearer $ZENDESK_OAUTH_TOKEN" \
-            -H "Content-Type: application/json" \
-            -d @payload.json)
-
-          # Extract the body and status code from the response
-          http_code=$(echo "$response" | tail -n1)
-          body=$(echo "$response" | sed '$d')
-
-          # Check the HTTP status code to determine the outcome
-          if [ "$http_code" -eq 200 ]; then
-            echo "::notice::Trigger successfully updated to version $APP_VERSION!"
-            
-            # Extract and display the updated status and version tag from the response body
-            IS_ACTIVE=$(echo "$body" | jq '.trigger.active')
-            APP_VERSION_TAG=$(echo "$body" | jq -r '.trigger.conditions.all[] | select(.field=="current_tags") | .value')
-
-            # Write the results to the Job Summary page
-            echo "### :white_check_mark: Zendesk Trigger Status" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "- **Active:** \`$IS_ACTIVE\`" >> $GITHUB_STEP_SUMMARY
-            echo "- **App Version Tag:** \`$APP_VERSION_TAG\`" >> $GITHUB_STEP_SUMMARY
-
-            # Set outputs for use in subsequent steps
-            echo "is_active=$IS_ACTIVE" >> "$GITHUB_OUTPUT"
-            echo "app_version=$APP_VERSION_TAG" >> "$GITHUB_OUTPUT"            
-          else
-            echo "::error::Error while updating the trigger. Status code: $http_code"
-            echo "Response from Zendesk:"
-            echo "$body"
-            exit 1
-          fi
+  send-slack-notification:
+    # Run this job only if the user chose 'Update App Version'
+    if: github.event.inputs.action == 'Update App Version' && success()
+    runs-on: ubuntu-latest
+    needs: update-trigger-app-version
+    environment: dev
+    steps:
       - name: Send Slack Notification on Success
         if: success()
         continue-on-error: true
