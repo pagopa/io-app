@@ -70,7 +70,11 @@ export const getProximityDetails = (
       return {
         credentialType: credential.credentialType,
         claimsToDisplay: parseClaims(parsedCredential, {
-          exclude: [WellKnownClaim.unique_id]
+          exclude: [
+            WellKnownClaim.unique_id,
+            WellKnownClaim["org.iso.18013.5.1.IT:sub"],
+            WellKnownClaim["org.iso.18013.5.1.IT:verification"]
+          ]
         })
       };
     }
