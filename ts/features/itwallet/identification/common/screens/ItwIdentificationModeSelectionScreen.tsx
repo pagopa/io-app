@@ -181,13 +181,17 @@ export const ItwIdentificationModeSelectionScreen = (
                 testID="CiePin"
                 image={<CiePin width={28} height={32} />}
                 onPress={handleCiePinPress}
-                badge={{
-                  text: I18n.t(`${ns}.method.ciePin.badge`, {
-                    defaultValue: ""
-                  }),
-                  variant: "highlight",
-                  outline: false
-                }}
+                badge={
+                  isL3 || eidReissuing
+                    ? {
+                        text: I18n.t(`${ns}.method.ciePin.badge`, {
+                          defaultValue: ""
+                        }),
+                        variant: "highlight",
+                        outline: false
+                      }
+                    : undefined
+                }
               />
             )}
             {!isSpidDisabled && (
