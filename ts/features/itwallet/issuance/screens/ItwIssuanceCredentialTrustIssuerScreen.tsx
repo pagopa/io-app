@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import {
   ContentWrapper,
   FeatureInfo,
@@ -13,10 +12,12 @@ import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
+import { useCallback } from "react";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
@@ -30,6 +31,7 @@ import {
 } from "../../analytics";
 import { ItwDataExchangeIcons } from "../../common/components/ItwDataExchangeIcons";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
+import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
@@ -41,19 +43,17 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import { generateLinkRuleWithCallback } from "../../common/utils/markdown";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
   selectCredentialTypeOption,
   selectIsIssuing,
   selectIsLoading,
   selectRequestedCredentialOption
 } from "../../machine/credential/selectors";
-import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
+import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwRequestedClaimsList } from "../components/ItwRequestedClaimsList";
-import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
-import { ItwParamsList } from "../../navigation/ItwParamsList";
-import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 
 export type ItwIssuanceCredentialTrustIssuerNavigationParams = {
   credentialType?: string;
@@ -214,6 +214,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
             credentialName: getCredentialNameFromType(credentialType)
           })}
         </H2>
+        <VSpacer size={16} />
         <IOMarkdown
           content={I18n.t(
             "features.itWallet.issuance.credentialAuth.subtitle",
@@ -222,7 +223,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
             }
           )}
         />
-        <VSpacer size={8} />
+        <VSpacer size={24} />
         <ListItemHeader
           label={I18n.t(
             "features.itWallet.issuance.credentialAuth.requiredClaims"
