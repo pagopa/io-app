@@ -73,9 +73,6 @@ export const isAarErrorRetriable = (
 ): error is RetriableError =>
   retriableErrors[error as RetriableError] !== undefined;
 
-export const isAarErrorState = (state: AARFlowState): state is ErrorState =>
-  state.type === sendAARFlowStates.ko;
-
 export const sendAARFlowStates = {
   none: "none",
   displayingAARToS: "displayingAARToS",

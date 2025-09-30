@@ -7,52 +7,37 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { useMemo } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
+import { isTestEnv } from "../../../../../utils/environment";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
-import { isAarErrorState } from "../../utils/stateUtils";
+import { sendAARFlowStates } from "../../utils/stateUtils";
 
-export const SendAARErrorComponent = () => {
-  const { terminateFlow, currentFlowData } = useSendAarFlowManager();
-
-  const errorCodes = useMemo(
-    () => (isAarErrorState(currentFlowData) ? currentFlowData.errorCodes : []),
-    [currentFlowData]
-  );
-
-  const {
-    bottomSheet,
-    present: presentModal,
-    dismiss
-  } = useIOBottomSheetModal({
-    component: (
+const bottomComponent = (errorCodes: Array<string>) => (
+  <>
+    <Body>{I18n.t("features.pn.aar.flow.ko.GENERIC.detail.subTitle")}</Body>
+    <VSpacer size={16} />
+    <ListItemHeader
+      label={I18n.t("features.pn.aar.flow.ko.GENERIC.detail.supportTitle")}
+    />
+    <ListItemAction
+      label={I18n.t("features.pn.aar.flow.ko.GENERIC.detail.chat")}
+      accessibilityLabel={I18n.t("features.pn.aar.flow.ko.GENERIC.detail.chat")}
+      onPress={() => undefined}
+      variant="primary"
+      icon="chat"
+    />
+    <VSpacer size={24} />
+    {!!errorCodes.length && (
       <>
-        <Body>{I18n.t("features.pn.aar.flow.ko.GENERIC.detail.subTitle")}</Body>
-        <VSpacer size={16} />
-        <ListItemHeader
-          label={I18n.t("features.pn.aar.flow.ko.GENERIC.detail.supportTitle")}
-        />
-        <ListItemAction
-          label={I18n.t("features.pn.aar.flow.ko.GENERIC.detail.chat")}
-          accessibilityLabel={I18n.t(
-            "features.pn.aar.flow.ko.GENERIC.detail.chat"
-          )}
-          onPress={() => {
-            dismiss();
-            // zendeskAssistanceLogAndStart();
-          }}
-          variant="primary"
-          icon="chat"
-        />
-        <VSpacer size={24} />
         <ListItemHeader
           label={I18n.t(
             "features.pn.aar.flow.ko.GENERIC.detail.additionalDataTitle"
           )}
+          testID="error_code_section_header"
         />
         <ListItemInfoCopy
           label={I18n.t("features.pn.aar.flow.ko.GENERIC.detail.errorCode")}
@@ -60,13 +45,27 @@ export const SendAARErrorComponent = () => {
             "features.pn.aar.flow.ko.GENERIC.detail.errorCode"
           )}
           icon="ladybug"
-          value={errorCodes.join("\n")}
-          numberOfLines={errorCodes.length}
+          value={errorCodes.join(", ")}
+          numberOfLines={1}
           onPress={() => clipboardSetStringWithFeedback(errorCodes.join(", "))}
+          testID="error_code_value"
         />
         <VSpacer size={24} />
       </>
-    ),
+    )}
+  </>
+);
+
+export const SendAARErrorComponent = () => {
+  const { terminateFlow, currentFlowData } = useSendAarFlowManager();
+
+  const errorCodes =
+    currentFlowData.type === sendAARFlowStates.ko
+      ? currentFlowData.errorCodes
+      : [];
+
+  const { bottomSheet, present } = useIOBottomSheetModal({
+    component: bottomComponent(errorCodes),
     title: ""
   });
 
@@ -90,7 +89,7 @@ export const SendAARErrorComponent = () => {
             }}
             secondaryAction={{
               label: I18n.t("features.pn.aar.flow.ko.GENERIC.secondaryAction"),
-              onPress: presentModal,
+              onPress: present,
               testID: "secondary_button"
             }}
           />
@@ -108,3 +107,5 @@ const styles = StyleSheet.create({
     flexGrow: 1
   }
 });
+
+export const testable = isTestEnv ? { bottomComponent } : undefined;

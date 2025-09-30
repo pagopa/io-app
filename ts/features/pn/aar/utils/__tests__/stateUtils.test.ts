@@ -1,13 +1,12 @@
 import {
   aarErrors,
   isAarErrorRetriable,
-  isAarErrorState,
   isValidAARStateTransition,
   sendAARFlowStates,
   testable,
   validAARStatusTransitions
 } from "../stateUtils";
-import { sendAarMockStates, sendAarStateNames } from "../testUtils";
+import { sendAarStateNames } from "../testUtils";
 
 const { finalErrors, retriableErrors } = testable!;
 
@@ -42,14 +41,6 @@ describe("stateUtils", () => {
       it(`should return false for final (non-retriable) error: ${value}`, () => {
         const error = aarErrors[value];
         expect(isAarErrorRetriable(error)).toBe(false);
-      });
-    });
-  });
-  describe("isAarErrorState", () => {
-    sendAarMockStates.forEach(state => {
-      const isError = state.type === sendAARFlowStates.ko;
-      it(`should return '${isError}' when state have type='${state.type}'`, () => {
-        expect(isAarErrorState(state)).toBe(isError);
       });
     });
   });
