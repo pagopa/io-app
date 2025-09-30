@@ -80,10 +80,12 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToL2IdentificationScreen: () => {
+  navigateToL2IdentificationScreen: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L2,
-      params: { eidReissuing: false }
+      params: { eidReissuing: context.mode === "reissuance" }
     });
   },
 
