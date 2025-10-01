@@ -49,6 +49,28 @@ const mapClaims = (
     };
   });
 
+const RequestedCredentialsBlock = ({
+  credentials
+}: {
+  credentials: EnrichedPresentationDetails;
+}) => (
+  <VStack space={24}>
+    {credentials
+      .filter(c => c.claimsToDisplay.length > 0)
+      .map(c => (
+        <ClaimsSelector
+          key={c.id}
+          title={pipe(c.vct, getCredentialTypeByVct, credentialType =>
+            getCredentialNameFromType(credentialType, "", true)
+          )}
+          items={mapClaims(c.claimsToDisplay)}
+          defaultExpanded
+          selectionEnabled={false}
+        />
+      ))}
+  </VStack>
+);
+
 const ItwRemotePresentationDetails = () => {
   const theme = useIOTheme();
 
@@ -73,26 +95,6 @@ const ItwRemotePresentationDetails = () => {
     });
   };
 
-  const renderCredentialsBlock = (credentials: EnrichedPresentationDetails) => (
-    <VStack space={24}>
-      {credentials
-        .filter(c => c.claimsToDisplay.length > 0)
-        .map(c => (
-          <ClaimsSelector
-            key={c.id}
-            title={pipe(
-              c.vct,
-              getCredentialTypeByVct,
-              getCredentialNameFromType
-            )}
-            items={mapClaims(c.claimsToDisplay)}
-            defaultExpanded
-            selectionEnabled={false}
-          />
-        ))}
-    </VStack>
-  );
-
   return (
     <VStack space={24}>
       {required.map(({ purpose, credentials }) => (
@@ -111,7 +113,7 @@ const ItwRemotePresentationDetails = () => {
                 : undefined
             }
           />
-          {renderCredentialsBlock(credentials)}
+          <RequestedCredentialsBlock credentials={credentials} />
         </View>
       ))}
 
@@ -131,7 +133,7 @@ const ItwRemotePresentationDetails = () => {
                 : undefined
             }
           />
-          {renderCredentialsBlock(credentials)}
+          <RequestedCredentialsBlock credentials={credentials} />
           <VSpacer size={16} />
           <Alert
             variant="info"

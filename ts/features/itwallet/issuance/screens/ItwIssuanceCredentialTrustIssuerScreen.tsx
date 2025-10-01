@@ -173,7 +173,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   });
   const requiredClaims = claims.map(claim => ({
     claim,
-    source: getCredentialNameFromType(eid.credentialType)
+    source: getCredentialNameFromType(eid.credentialType, "", isItwL3)
   }));
 
   const trackScrollToBottom = (crossed: boolean) => {
