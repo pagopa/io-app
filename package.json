@@ -46,10 +46,7 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{ts,tsx}": [
-      "prettier --write",
-      "eslint -c .eslintrc.js --fix"
-    ]
+    "*.{ts,tsx}": ["prettier --write", "eslint -c .eslintrc.js --fix"]
   },
   "dependencies": {
     "@babel/plugin-transform-class-properties": "^7.25.9",
@@ -283,7 +280,6 @@
     "react-native-screen-brightness@^2.0.0-alpha": "patch:react-native-screen-brightness@npm%3A2.0.0-alpha#./.yarn/patches/react-native-screen-brightness-npm-2.0.0-alpha-22c6aeb21e.patch",
     "react-native-webview@^13.13.5": "patch:react-native-webview@npm%3A13.13.5#./.yarn/patches/react-native-webview-npm-13.13.5-802657184f.patch",
     "react-native-reanimated@^3.17.5": "patch:react-native-reanimated@npm%3A3.17.5#./.yarn/patches/react-native-reanimated-npm-3.17.5-134bd4e99e.patch",
-    "react-native-reanimated@3.17.1": "patch:react-native-reanimated@npm%3A3.17.5#./.yarn/patches/react-native-reanimated-npm-3.17.5-134bd4e99e.patch",
     "react-native-pdf@6.7.7": "patch:react-native-pdf@npm%3A6.7.7#./.yarn/patches/react-native-pdf-npm-6.7.7-7aa1e3a631.patch"
   },
   "react-native": {
