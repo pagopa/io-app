@@ -1,11 +1,14 @@
 import { IOToast, IOVisualCostants } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+import { useRef } from "react";
 import { useIOSelector } from "../../../../../store/hooks";
 import { getDeviceId } from "../../../../../utils/device";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
-import BonusInformationComponent from "../../../common/components/BonusInformationComponent";
+import BonusInformationComponent, {
+  BonusInformationComponentRef
+} from "../../../common/components/BonusInformationComponent";
 import { availableBonusTypesSelectorFromId } from "../../../common/store/selectors";
 import { ID_CDC_TYPE } from "../../../common/utils";
 import * as analytics from "../../analytics";
@@ -16,7 +19,8 @@ const CdcBonusRequestInformationTos = () => {
   const { startFIMSAuthenticationFlow } =
     useFIMSRemoteServiceConfiguration("cdc-onboarding");
   const ctaConfig = useIOSelector(cdcCtaConfigSelector);
-
+  const bonusInformationComponentRef =
+    useRef<BonusInformationComponentRef>(null);
   useOnFirstRender(() => {
     analytics.trackCdcRequestIntro();
   });
@@ -36,6 +40,7 @@ const CdcBonusRequestInformationTos = () => {
     }
     analytics.trackCdcRequestIntroContinue();
     startFIMSAuthenticationFlow(I18n.t("bonus.cdc.request"), url.toString());
+    bonusInformationComponentRef.current?.scrollTo(0);
   };
 
   return (
@@ -43,6 +48,7 @@ const CdcBonusRequestInformationTos = () => {
       bonus={cdcInfo}
       contextualHelp={emptyContextualHelp}
       primaryCtaText={I18n.t("global.buttons.continue")}
+      ref={bonusInformationComponentRef}
       onConfirm={onStartCdcFlow}
       imageStyle={{
         aspectRatio: 2,
