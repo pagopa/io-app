@@ -13,7 +13,7 @@ import * as REDUCER from "../../store/reducers";
 import { sendAARFlowStates } from "../../utils/stateUtils";
 import { SendAARInitialFlowScreen } from "../SendAARInitialFlowScreen";
 
-const mockPush = jest.fn();
+const mockReplace = jest.fn();
 const mockSetOptions = jest.fn();
 
 jest.mock("@react-navigation/native", () => {
@@ -22,7 +22,7 @@ jest.mock("@react-navigation/native", () => {
     ...actualNav,
     useNavigation: () => ({
       ...actualNav.useNavigation?.(),
-      push: mockPush,
+      replace: mockReplace,
       setOptions: mockSetOptions
     })
   };
@@ -95,13 +95,13 @@ describe("SendAARInitialFlowScreen", () => {
 
   [sendAARFlowStates.ko, sendAARFlowStates.notAddresseeFinal].forEach(
     errorState => {
-      it(`should push to error screen when flowState is '${errorState}'`, async () => {
+      it(`should replace to error screen when flowState is '${errorState}'`, async () => {
         selectorSpy.mockReturnValue(errorState);
         dispatchSpy.mockReturnValue(mockDispatch);
         renderComponent();
 
         await waitFor(() => {
-          expect(mockPush).toHaveBeenCalledWith(
+          expect(mockReplace).toHaveBeenCalledWith(
             MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
             {
               screen: PN_ROUTES.MAIN,

@@ -1,14 +1,11 @@
 import {
   Body,
-  ContentWrapper,
   ListItemAction,
   ListItemHeader,
   ListItemInfoCopy,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { ScrollView, StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import { isTestEnv } from "../../../../../utils/environment";
@@ -70,42 +67,27 @@ export const SendAARErrorComponent = () => {
   });
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView
-        scrollEnabled={false}
-        contentContainerStyle={styles.scrollViewContentContainer}
-      >
-        <ContentWrapper>
-          <OperationResultScreenContent
-            testID="SEND_AAR_ERROR"
-            isHeaderVisible
-            pictogram="umbrella"
-            title={I18n.t("features.pn.aar.flow.ko.GENERIC.title")}
-            subtitle={I18n.t("features.pn.aar.flow.ko.GENERIC.body")}
-            action={{
-              label: I18n.t("features.pn.aar.flow.ko.GENERIC.primaryAction"),
-              onPress: terminateFlow,
-              testID: "primary_button"
-            }}
-            secondaryAction={{
-              label: I18n.t("features.pn.aar.flow.ko.GENERIC.secondaryAction"),
-              onPress: present,
-              testID: "secondary_button"
-            }}
-          />
-        </ContentWrapper>
-      </ScrollView>
+    <>
+      <OperationResultScreenContent
+        testID="SEND_AAR_ERROR"
+        isHeaderVisible
+        pictogram="umbrella"
+        title={I18n.t("features.pn.aar.flow.ko.GENERIC.title")}
+        subtitle={I18n.t("features.pn.aar.flow.ko.GENERIC.body")}
+        action={{
+          label: I18n.t("features.pn.aar.flow.ko.GENERIC.primaryAction"),
+          onPress: terminateFlow,
+          testID: "primary_button"
+        }}
+        secondaryAction={{
+          label: I18n.t("features.pn.aar.flow.ko.GENERIC.secondaryAction"),
+          onPress: present,
+          testID: "secondary_button"
+        }}
+      />
       {bottomSheet}
-    </SafeAreaView>
+    </>
   );
 };
-
-const styles = StyleSheet.create({
-  scrollViewContentContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    flexGrow: 1
-  }
-});
 
 export const testable = isTestEnv ? { bottomComponent } : undefined;

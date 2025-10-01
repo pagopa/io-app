@@ -42,7 +42,7 @@ export const SendAARInitialFlowScreen = ({
       flowState === sendAARFlowStates.notAddresseeFinal ||
       flowState === sendAARFlowStates.ko
     ) {
-      navigation.push(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+      navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
         screen: PN_ROUTES.MAIN,
         params: {
           screen: PN_ROUTES.SEND_AAR_ERROR

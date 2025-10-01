@@ -7,7 +7,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import PN_ROUTES from "../../../navigation/routes";
 import * as ERROR_COMPONENT from "../../components/errors/SendAARErrorComponent";
 import * as NOT_ADDRESSEE_COMPONENT from "../../components/errors/SendAARNotAddresseeComponent";
-import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
+import { sendAARFlowStates } from "../../utils/stateUtils";
 import { SendAARErrorScreen } from "../SendAARErrorScreen";
 
 jest.mock("../../components/errors/SendAARNotAddresseeComponent.tsx");
@@ -30,23 +30,16 @@ describe("SendAARErrorScreen", () => {
     jest.clearAllMocks();
   });
 
-  it("should render the SendAARErrorComponent if currentFlowData==='notAddresseeFinal'", () => {
-    (HOOKS.useIOSelector as jest.Mock).mockReturnValue({
-      type: sendAARFlowStates.notAddresseeFinal,
-      fullNameDestinatario: "Mario Rossi",
-      iun: "000001",
-      qrCode: "test"
-    } as AARFlowState);
+  it("should render the SendAARErrorComponent if flowType==='notAddresseeFinal'", () => {
+    (HOOKS.useIOSelector as jest.Mock).mockReturnValue(
+      sendAARFlowStates.notAddresseeFinal
+    );
     expect(notAddresseeComponentSpy).not.toHaveBeenCalled();
     renderScreen();
     expect(notAddresseeComponentSpy).toHaveBeenCalled();
   });
-  it("should render the SendAARErrorComponent if currentFlowData!=='notAddresseeFinal'", () => {
-    (HOOKS.useIOSelector as jest.Mock).mockReturnValue({
-      type: "ko",
-      previousState: {},
-      errorKind: "GENERIC"
-    } as AARFlowState);
+  it("should render the SendAARErrorComponent if flowType!=='notAddresseeFinal'", () => {
+    (HOOKS.useIOSelector as jest.Mock).mockReturnValue(sendAARFlowStates.ko);
     expect(errorComponentSpy).not.toHaveBeenCalled();
     renderScreen();
     expect(errorComponentSpy).toHaveBeenCalled();

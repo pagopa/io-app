@@ -1,16 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`stateUtils snapshots aarErrors 1`] = `
-{
-  "CANCELED": "CANCELED",
-  "GENERIC": "GENERIC",
-  "NOTIFICATION_EXPIRED": "NOTIFICATION_EXPIRED",
-  "NOT_FOUND": "NOT_FOUND",
-  "RETRIABLE_NOTIFICATION_FETCH": "RETRIABLE_NOTIFICATION_FETCH",
-  "RETRIABLE_QR_FETCH": "RETRIABLE_QR_FETCH",
-}
-`;
-
 exports[`stateUtils snapshots flowStates 1`] = `
 {
   "displayingAARToS": "displayingAARToS",

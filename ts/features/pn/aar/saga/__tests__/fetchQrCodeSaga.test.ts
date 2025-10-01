@@ -13,7 +13,6 @@ describe("fetchQrCodeSaga", () => {
   const getMockKoState = (prevState: AARFlowState): AARFlowState => ({
     type: "ko",
     previousState: prevState,
-    errorKind: "GENERIC",
     errorCodes: []
   });
   const mockFetchingQrState: AARFlowState = {

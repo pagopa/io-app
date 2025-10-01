@@ -1,5 +1,4 @@
 import { ThirdPartyMessage } from "../../../../../definitions/pn/ThirdPartyMessage";
-import { isTestEnv } from "../../../../utils/environment";
 
 export type SendAARFlowStatesType = typeof sendAARFlowStates;
 
@@ -40,38 +39,12 @@ type FinalNotAddressee = {
 
 type ErrorState = {
   type: SendAARFlowStatesType["ko"];
-  errorKind: ErrorKind;
   previousState: AARFlowState;
   errorCodes: Array<string>;
 };
 
-type ValueOf<T> = T[keyof T];
-type RetriableError = ValueOf<typeof retriableErrors>;
-
-type ErrorKind = ValueOf<typeof aarErrors>;
 export type AARFlowStateName =
   SendAARFlowStatesType[keyof SendAARFlowStatesType];
-
-const retriableErrors = {
-  RETRIABLE_NOTIFICATION_FETCH: "RETRIABLE_NOTIFICATION_FETCH",
-  RETRIABLE_QR_FETCH: "RETRIABLE_QR_FETCH"
-} as const;
-const finalErrors = {
-  GENERIC: "GENERIC",
-  NOTIFICATION_EXPIRED: "NOTIFICATION_EXPIRED",
-  NOT_FOUND: "NOT_FOUND",
-  CANCELED: "CANCELED"
-} as const;
-
-export const aarErrors = {
-  ...retriableErrors,
-  ...finalErrors
-};
-
-export const isAarErrorRetriable = (
-  error: ErrorKind
-): error is RetriableError =>
-  retriableErrors[error as RetriableError] !== undefined;
 
 export const sendAARFlowStates = {
   none: "none",
@@ -132,7 +105,3 @@ export type AARFlowState =
   | DisplayingNotification
   | FinalNotAddressee
   | ErrorState;
-
-export const testable = isTestEnv
-  ? { retriableErrors, finalErrors }
-  : undefined;

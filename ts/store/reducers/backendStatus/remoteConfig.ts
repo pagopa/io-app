@@ -740,14 +740,10 @@ export const caCBannerConfigSelector = (state: GlobalState) =>
 
 const fallbackSendAARDelegateUrl =
   "https://assistenza.notifichedigitali.it/hc/it/articles/32453819931537-Delegare-qualcuno-a-visualizzare-le-tue-notifiche";
-export const sendAARDelegateUrlSelector = createSelector(
-  remoteConfigSelector,
-  remoteConfig =>
-    pipe(
-      remoteConfig,
-      O.map(
-        config => config.pn.aar?.delegate_url ?? fallbackSendAARDelegateUrl
-      ),
-      O.getOrElse(() => fallbackSendAARDelegateUrl)
-    )
-);
+export const sendAARDelegateUrlSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    remoteConfigSelector,
+    O.chainNullableK(config => config.pn.aar?.delegate_url),
+    O.getOrElse(() => fallbackSendAARDelegateUrl)
+  );

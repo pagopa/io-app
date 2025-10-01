@@ -1,12 +1,13 @@
+import { useIOSelector } from "../../../../store/hooks";
 import { SendAARErrorComponent } from "../components/errors/SendAARErrorComponent";
 import { SendAARNotAddresseeComponent } from "../components/errors/SendAARNotAddresseeComponent";
-import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
+import { currentAARFlowStateType } from "../store/reducers";
 import { sendAARFlowStates } from "../utils/stateUtils";
 
 export const SendAARErrorScreen = () => {
-  const { currentFlowData } = useSendAarFlowManager();
+  const flowType = useIOSelector(currentAARFlowStateType);
 
-  if (currentFlowData.type === sendAARFlowStates.notAddresseeFinal) {
+  if (flowType === sendAARFlowStates.notAddresseeFinal) {
     return <SendAARNotAddresseeComponent />;
   } else {
     return <SendAARErrorComponent />;

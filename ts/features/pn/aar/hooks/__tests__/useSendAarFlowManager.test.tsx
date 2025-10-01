@@ -1,8 +1,5 @@
 import { act, renderHook } from "@testing-library/react-native";
-import { sendAARDelegateUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import * as URL_UTILS from "../../../../../utils/url";
 import { terminateAarFlow } from "../../store/actions";
-import { currentAARFlowData } from "../../store/reducers";
 import {
   AARFlowState,
   AARFlowStateName,
@@ -16,8 +13,6 @@ const mockReset = jest.fn();
 const mockNavigate = jest.fn();
 const mockDispatch = jest.fn();
 const mockSelector = jest.fn();
-const mockOpenWebUrl = jest.spyOn(URL_UTILS, "openWebUrl").mockImplementation();
-const mockDelegateUrl = "https://www.test.io";
 
 jest.mock("../../../../../navigation/params/AppParamsList", () => ({
   useIONavigation: () => ({
@@ -57,16 +52,6 @@ describe("useSendAarFlowManager", () => {
           } as AARFlowState)
       );
 
-      mockSelector.mockImplementation(selector => {
-        if (selector === currentAARFlowData) {
-          return { type: stateKind } as AARFlowState;
-        }
-        if (selector === sendAARDelegateUrlSelector) {
-          return mockDelegateUrl;
-        }
-        return undefined;
-      });
-
       const { result } = renderHook(useSendAarFlowManager);
       act(() => {
         result.current.goToNextState();
@@ -80,12 +65,7 @@ describe("useSendAarFlowManager", () => {
           expect(mockDispatch).toHaveBeenCalledTimes(1);
           expect(isValid).toBe(true);
           break;
-        case sendAARFlowStates.notAddresseeFinal:
-          expect(mockOpenWebUrl).toHaveBeenCalledTimes(1);
-          expect(mockOpenWebUrl).toHaveBeenCalledWith(mockDelegateUrl);
-          break;
         default:
-          expect(mockOpenWebUrl).not.toHaveBeenCalled();
           expect(mockDispatch).not.toHaveBeenCalled();
           break;
       }

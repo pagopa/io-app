@@ -1,9 +1,17 @@
 import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
+import { useIOSelector } from "../../../../../store/hooks";
+import { sendAARDelegateUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { openWebUrl } from "../../../../../utils/url";
 import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
 
 export const SendAARNotAddresseeComponent = () => {
-  const { goToNextState, terminateFlow } = useSendAarFlowManager();
+  const { terminateFlow } = useSendAarFlowManager();
+  const delegateUrl = useIOSelector(sendAARDelegateUrlSelector);
+
+  const handlePrimaryButton = () => {
+    openWebUrl(delegateUrl);
+  };
 
   return (
     <OperationResultScreenContent
@@ -16,7 +24,7 @@ export const SendAARNotAddresseeComponent = () => {
         label: I18n.t(
           "features.pn.aar.flow.ko.notAddresseeFinal.primaryAction"
         ),
-        onPress: goToNextState,
+        onPress: handlePrimaryButton,
         icon: "instruction",
         testID: "primary_button"
       }}
