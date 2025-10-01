@@ -69,17 +69,7 @@ export enum WellKnownClaim {
   /**
    * Claim that contains the driving privilege within the new nested structure
    */
-  driving_privileges = "driving_privileges",
-  /**
-   * Claim that contains the subject of the credential.
-   * This is used to display the subject of the mdoc credential.
-   */
-  "org.iso.18013.5.1.IT:sub" = "org.iso.18013.5.1.IT:sub",
-  /**
-   * Claim that contains the verification status of the credential.
-   * This is used to display the verification status of the mdoc credential.
-   */
-  "org.iso.18013.5.1.IT:verification" = "org.iso.18013.5.1.IT:verification"
+  driving_privileges = "driving_privileges"
 }
 
 /**
