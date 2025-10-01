@@ -17,6 +17,7 @@ import {
   pdfSavePath
 } from "../../../messages/utils/attachments";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { trackSendAARAttachmentDownloadFailure } from "../analytics";
 
 export function* downloadAARAttachmentSaga(
   bearerToken: SessionToken,
@@ -54,7 +55,7 @@ export function* downloadAARAttachmentSaga(
     );
   } catch (e) {
     const reason = unknownToReason(e);
-    // TODO mixpanel
+    trackSendAARAttachmentDownloadFailure(reason);
     yield* put(
       downloadAttachment.failure({
         attachment,
@@ -175,9 +176,13 @@ function* downloadAttachmentFromPrevalidatedUrl(
   });
   const result = yield* call(config.fetch, "get", prevalidatedAttachmentUrl);
 
-  const { status } = result.info();
+  const { status, state, respType, timeout } = result.info();
   if (status === 200) {
     return result.path();
   }
-  throw Error(`${status}`); // TODO more data
+  throw Error(
+    `Download from prevalidated url failed: ${
+      timeout ? "Timeout " : ""
+    }${status} ${state} ${respType}`
+  );
 }
