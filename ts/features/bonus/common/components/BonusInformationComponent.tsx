@@ -9,7 +9,12 @@ import {
 import * as AR from "fp-ts/lib/Array";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React, { ComponentProps, useContext, useImperativeHandle } from "react";
+import {
+  ComponentProps,
+  forwardRef,
+  useContext,
+  useImperativeHandle
+} from "react";
 import { Image, ImageStyle, StyleProp } from "react-native";
 import Animated, {
   useAnimatedRef,
@@ -105,7 +110,7 @@ const imageHeight: number = 270;
 /**
  * A screen to explain how the bonus activation works and how it will be assigned
  */
-const BonusInformationComponent = React.forwardRef((props: Props, ref) => {
+const BonusInformationComponent = forwardRef((props: Props, ref) => {
   const { showModal, hideModal } = useContext(LightModalContext);
   const bonusType = props.bonus;
   const { imageStyle: imageProps } = props;
