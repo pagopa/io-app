@@ -101,8 +101,7 @@ export const itwCredentialIssuanceMachine = setup({
           target: "EvaluateFlow",
           actions: assign(({ event }) => ({
             credentialType: event.credentialType,
-            mode: event.mode,
-            isAsyncContinuation: event.isAsyncContinuation ?? false // TODO to be removed in [SIW-2839]
+            mode: event.mode
           }))
         }
       }
@@ -224,10 +223,6 @@ export const itwCredentialIssuanceMachine = setup({
     DisplayingTrustIssuer: {
       entry: ["trackCredentialIssuingDataShare"],
       always: {
-        // If we are in the async continuation flow means we are already showing the trust issuer screen
-        // but on a different route. We need to avoid a navigation to show a "double" navigation animation.
-        // TODO to be removed in [SIW-2839]
-        guard: ({ context }) => !context.isAsyncContinuation,
         actions: "navigateToTrustIssuerScreen"
       },
       on: {

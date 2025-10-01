@@ -148,67 +148,6 @@ export const obtainCredential = async ({
     }
   );
 
-  // TODO: [SIW-2839] remove this entire `if` block after the async issuance dismissal
-  if (
-    credentialType === "mDL" &&
-    !operationType &&
-    accessToken.authorization_details.length > 1
-  ) {
-    const sdJwtCredId = extractCredentialIdFromEC(
-      issuerConf,
-      "mDL",
-      CredentialFormat.SD_JWT
-    );
-    const sdJwtAuthDetails = accessToken.authorization_details.find(
-      auth => auth.credential_configuration_id === sdJwtCredId
-    );
-    if (!sdJwtAuthDetails) {
-      throw new Error("Missing authorization details for SD-JWT mDL");
-    }
-
-    // A 201 status code (async issuance) thrown here is caught in the machine and leads to the async failure screen.
-    // The code requesting the mDoc credential is never reached.
-    const sdJwtCredential = await requestAndParseCredential({
-      accessToken,
-      clientId,
-      credentialType,
-      authDetails: sdJwtAuthDetails,
-      env,
-      dPopCryptoContext,
-      issuerConf
-    });
-
-    // If we get here it means no error was thrown, so the response must be a 200 OK. We can request the mdoc in reissuing mode.
-    const mdocCredId = extractCredentialIdFromEC(
-      issuerConf,
-      "mDL",
-      CredentialFormat.MDOC
-    );
-    const mdocAuthDetails = accessToken.authorization_details.find(
-      auth => auth.credential_configuration_id === mdocCredId
-    );
-    if (!mdocAuthDetails) {
-      return {
-        credentials: [sdJwtCredential]
-      };
-    }
-
-    const mdocCredential = await requestAndParseCredential({
-      accessToken,
-      clientId,
-      credentialType,
-      authDetails: mdocAuthDetails,
-      env,
-      dPopCryptoContext,
-      issuerConf,
-      operationType: "reissuing"
-    });
-
-    return {
-      credentials: [mdocCredential, sdJwtCredential]
-    };
-  }
-
   const credentials = await Promise.all(
     accessToken.authorization_details.map(authDetails =>
       requestAndParseCredential({
@@ -324,19 +263,4 @@ const requestAndParseCredential = async ({
       issuedAt: issuedAt?.toISOString()
     }
   };
-};
-
-const extractCredentialIdFromEC = (
-  issuerConf: IssuerConfiguration,
-  credentialType: string,
-  format: CredentialFormat
-) => {
-  const { credential_configurations_supported } =
-    issuerConf.openid_credential_issuer;
-  const credentialConfig = Object.entries(
-    credential_configurations_supported
-  ).find(
-    ([, config]) => config.scope === credentialType && config.format === format
-  );
-  return credentialConfig ? credentialConfig[0] : undefined;
 };

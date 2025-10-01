@@ -1,7 +1,6 @@
 import { ItwDiscoveryInfoScreenNavigationParams } from "../discovery/screens/ItwDiscoveryInfoScreen";
 import { ItwIdentificationCieWarningScreenNavigationParams } from "../identification/cie/screens/ItwIdentificationCieWarningScreen.tsx";
 import { ItwL2IdentificationNavigationParams } from "../identification/common/screens/ItwL2IdentificationModeSelectionScreen.tsx";
-import { ItwIssuanceCredentialAsyncContinuationNavigationParams } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
 import { ItwIssuanceCredentialTrustIssuerNavigationParams } from "../issuance/screens/ItwIssuanceCredentialTrustIssuerScreen";
 import { ItwPlaygroundParamsList } from "../playgrounds/navigation/ItwPlaygroundParamsList.ts";
 import { ItwPresentationCredentialAttachmentNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialAttachmentScreen";
@@ -50,8 +49,6 @@ export type ItwParamsList = {
     | undefined;
   [ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW]: undefined;
   [ITW_ROUTES.ISSUANCE.CREDENTIAL_FAILURE]: undefined;
-  [ITW_ROUTES.ISSUANCE
-    .CREDENTIAL_ASYNC_FLOW_CONTINUATION]: ItwIssuanceCredentialAsyncContinuationNavigationParams;
   [ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL]: undefined;
   [ITW_ROUTES.ISSUANCE.IT_WALLET_INACTIVE]: undefined;
   // PRESENTATION

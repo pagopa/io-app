@@ -212,7 +212,7 @@ const trackDataShareEvent = (
   isAccepted = false
 ) => {
   if (context.credentialType) {
-    const { credentialType, isAsyncContinuation } = context;
+    const { credentialType } = context;
     const requestedCredentials = itwRequestedCredentialsSelector(
       store.getState()
     );
@@ -237,13 +237,14 @@ const trackDataShareEvent = (
       O.fromPredicate(() => credentialType === CredentialType.DRIVING_LICENSE)(
         credentialType
       ),
-      O.map(() => {
-        if (isAsyncContinuation) {
+      O.map(() =>
+        // TODO: is the following code still necessary?
+        /*  if (isAsyncContinuation) {
           // TODO to be removed in [SIW-2839]
           return isMdlRequested ? "async_continuation" : "old_message_request";
-        }
-        return isMdlRequested ? "request_in_progress" : "initial_request";
-      }),
+        } */
+        isMdlRequested ? "request_in_progress" : "initial_request"
+      ),
       O.fold(
         () => ({ credential }),
         phase => ({ credential, phase })
