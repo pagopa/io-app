@@ -5,6 +5,7 @@ import {
   H4,
   HStack,
   IOColors,
+  IOText,
   LabelMini,
   VStack,
   WithTestID,
@@ -226,24 +227,26 @@ const StaticContent = (props: Props) => {
     () => ({
       Paragraph(paragraph: TxtParagraphNode, render: Renderer) {
         return (
-          <LabelMini
-            key={getTxtNodeKey(paragraph)}
+          <IOText
             color="white"
+            key={getTxtNodeKey(paragraph)}
             weight="Regular"
+            size={14}
           >
             {paragraph.children.map(render)}
-          </LabelMini>
+          </IOText>
         );
       },
       Strong(strong: TxtStrongNode, render: Renderer) {
         return (
-          <LabelMini
+          <IOText
             key={getTxtNodeKey(strong)}
             color="white"
             weight="Semibold"
+            size={14}
           >
             {strong.children.map(render)}
-          </LabelMini>
+          </IOText>
         );
       }
     }),
