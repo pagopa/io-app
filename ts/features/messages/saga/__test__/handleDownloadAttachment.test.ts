@@ -1,12 +1,10 @@
+import { PublicKey } from "@pagopa/io-react-native-crypto";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import {
-  downloadAttachmentWorker,
-  pdfSavePath
-} from "../handleDownloadAttachment";
+import { downloadAttachmentWorker } from "../handleDownloadAttachment";
 import { SessionToken } from "../../../../types/SessionToken";
 import { downloadAttachment } from "../../store/actions";
 import { mockPdfAttachment } from "../../__mocks__/attachment";
@@ -15,17 +13,26 @@ import {
   lollipopKeyTagSelector,
   lollipopPublicKeySelector
 } from "../../../lollipop/store/reducers/lollipop";
+import { KeyInfo } from "../../../lollipop/utils/crypto";
+import { pdfSavePath } from "../../utils/attachments";
 
 const messageId = "01JTT75QYSHWBTNTFM3CZZ17SH";
 const savePath = "/tmp/attachment.pdf";
 const serviceId = "service0000001" as ServiceId;
-const someKeyTag = O.some("a12e9221-c056-4bbc-8623-ca92df29361e");
-const somePublicKey = O.some({
+const keyTag = "a12e9221-c056-4bbc-8623-ca92df29361e";
+const someKeyTag = O.some(keyTag);
+const publicKey: PublicKey = {
   crv: "P-256",
   x: "dyLTwacs5ej/nnXIvCMexUBkmdh6ArJ4GPKjHob61mE=",
   kty: "EC",
   y: "Tz0xNv++cOeLVapU/BhBS0FJydIcNcV25/ALb1HVu+s="
-});
+};
+const somePublicKey = O.some(publicKey);
+const keyInfo: KeyInfo = {
+  keyTag,
+  publicKey,
+  publicKeyThumbprint: "w24n4sygj6zH-wLh0kGoQSl6QzA_LSQNRuKLUuJMYdo"
+};
 
 jest.mock("react-native-blob-util", () => ({
   config: jest.fn().mockImplementation(() => ({
@@ -47,6 +54,7 @@ describe("downloadAttachment given an attachment", () => {
       expectSaga(
         downloadAttachmentWorker,
         "token" as SessionToken,
+        keyInfo,
         downloadAttachment.request({
           attachment,
           messageId,
@@ -82,6 +90,7 @@ describe("downloadAttachment given an attachment", () => {
       expectSaga(
         downloadAttachmentWorker,
         "token" as SessionToken,
+        keyInfo,
         downloadAttachment.request({
           attachment,
           messageId,
@@ -118,6 +127,7 @@ describe("downloadAttachment given an attachment", () => {
       expectSaga(
         downloadAttachmentWorker,
         "token" as SessionToken,
+        keyInfo,
         downloadAttachment.request({
           attachment,
           messageId,

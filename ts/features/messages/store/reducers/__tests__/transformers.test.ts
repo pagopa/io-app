@@ -1,8 +1,8 @@
 import { CreatedMessageWithContentAndAttachments } from "../../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
 import { message_1 } from "../../../__mocks__/message";
-
-import { attachmentDisplayName, toUIMessageDetails } from "../transformers";
+import { attachmentDisplayName } from "../../../utils/attachments";
+import { toUIMessageDetails } from "../transformers";
 
 const inputWithoutDueDate: CreatedMessageWithContentAndAttachments = {
   ...message_1,

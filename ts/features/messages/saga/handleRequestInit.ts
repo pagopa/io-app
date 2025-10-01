@@ -4,7 +4,7 @@ import { LollipopConfig } from "../../lollipop";
 import { lollipopRequestInit } from "../../lollipop/utils/fetch";
 import { isTestEnv } from "../../../utils/environment";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
-import { attachmentDownloadUrl } from "../store/reducers/transformers";
+import { attachmentDownloadUrl } from "../utils/attachments";
 import { KeyInfo } from "../../lollipop/utils/crypto";
 
 type HeaderType = Record<string, string>;
