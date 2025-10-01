@@ -121,7 +121,7 @@ const BackgroundGradient = () => {
   }, [progress]);
 
   return (
-    <Canvas
+    <View
       style={styles.gradient}
       onLayout={event => {
         setDimensions({
@@ -130,24 +130,26 @@ const BackgroundGradient = () => {
         });
       }}
     >
-      <RoundedRect x={0} y={0} width={width} height={height} r={16}>
-        <Blend mode="lighten">
-          <AnimatedLinearGradient
-            progress={progress}
-            width={width}
-            height={height}
-            rangeFactor={0.5}
-          />
-          <AnimatedLinearGradient
-            progress={progress}
-            width={width}
-            height={height}
-            rangeFactor={1.5}
-            reverse={true}
-          />
-        </Blend>
-      </RoundedRect>
-    </Canvas>
+      <Canvas style={StyleSheet.absoluteFill}>
+        <RoundedRect x={0} y={0} width={width} height={height} r={16}>
+          <Blend mode="lighten">
+            <AnimatedLinearGradient
+              progress={progress}
+              width={width}
+              height={height}
+              rangeFactor={0.5}
+            />
+            <AnimatedLinearGradient
+              progress={progress}
+              width={width}
+              height={height}
+              rangeFactor={1.5}
+              reverse={true}
+            />
+          </Blend>
+        </RoundedRect>
+      </Canvas>
+    </View>
   );
 };
 

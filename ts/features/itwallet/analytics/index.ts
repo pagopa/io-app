@@ -1393,7 +1393,7 @@ export const getMixpanelCredentialStatus = (
     return "not_available";
   }
   const credential = itwCredentialsSelector(state)[type];
-  if (isItwL3 && credential && !isItwCredential(credential.credential)) {
+  if (isItwL3 && credential && !isItwCredential(credential)) {
     return "not_available";
   }
 
