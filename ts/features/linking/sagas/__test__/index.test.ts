@@ -2,7 +2,7 @@ import { testSaga } from "redux-saga-test-plan";
 import { handleStoredLinkingUrlIfNeeded } from "..";
 import {
   isSendAARLink,
-  navigateToSendAarFlow
+  navigateToSendAarFlowIfEnabled
 } from "../../../pn/aar/utils/deepLinking";
 import { clearLinkingUrl } from "../../actions";
 import { storedLinkingUrlSelector } from "../../reducers";
@@ -22,7 +22,7 @@ describe("handleStoredLinkingUrlIfNeeded", () => {
       .next(state)
       .put(clearLinkingUrl())
       .next()
-      .call(navigateToSendAarFlow, state, aarUrl)
+      .call(navigateToSendAarFlowIfEnabled, state, aarUrl)
       .next()
       .isDone();
   });

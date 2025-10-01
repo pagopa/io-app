@@ -62,7 +62,7 @@ export const createEidIssuanceGuardsImplementation = (
       !!pid &&
       itwIsSimplifiedActivationRequired(state) && // The flag for simplified activation is enabled
       itwIsL3EnabledSelector(state) && // The user has been whitelisted to officially activate IT-Wallet
-      isItwCredential(pid.credential) && // Extra check to ensure the PID is a valid L3 credential
+      isItwCredential(pid) && // Extra check to ensure the PID is a valid L3 credential
       getCredentialStatus(pid) === "valid"
     );
   }

@@ -3,14 +3,16 @@
  * not work properly. This is due to avoid user tries to access features or services potentially can't work
  * as expected
  */
-import { useMemo, memo } from "react";
+import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
+import _ from "lodash";
+import { memo, useMemo } from "react";
 import { Modal } from "react-native";
 import { useSelector } from "react-redux";
-import _ from "lodash";
-import I18n from "i18next";
 import { OperationResultScreenContent } from "../../components/screens/OperationResultScreenContent";
 import { backendInfoMessageSelector } from "../../store/reducers/backendStatus/backendInfo";
 import { getFullLocale } from "../../utils/locale";
+
 const SystemOffModal = () => {
   const backendInfoMessage = useSelector(backendInfoMessageSelector, _.isEqual);
   const locale = getFullLocale();
@@ -21,8 +23,10 @@ const SystemOffModal = () => {
     return `${message ? message + "\n" : ""}${I18n.t("systemsOff.closeApp")}`;
   }, [locale, backendInfoMessage]);
 
+  const theme = useIOTheme();
+
   return (
-    <Modal>
+    <Modal backdropColor={IOColors[theme["appBackground-primary"]]}>
       <OperationResultScreenContent
         pictogram="umbrella"
         title={I18n.t("systemsOff.title")}
