@@ -6,7 +6,6 @@ import {
   HStack,
   IOColors,
   IOText,
-  LabelMini,
   VStack,
   WithTestID,
   useScaleAnimation

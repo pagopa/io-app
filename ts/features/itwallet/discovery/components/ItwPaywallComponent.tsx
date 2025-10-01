@@ -342,7 +342,7 @@ const ProductHighlights = () => {
       content: I18n.t(
         "features.itWallet.discovery.paywall.productHighlights.3.content"
       ),
-      icon: "website",
+      icon: "navQrWallet",
       title: I18n.t(
         "features.itWallet.discovery.paywall.productHighlights.3.title"
       )
@@ -351,7 +351,7 @@ const ProductHighlights = () => {
       content: I18n.t(
         "features.itWallet.discovery.paywall.productHighlights.4.content"
       ),
-      icon: "navQrWallet",
+      icon: "website",
       title: I18n.t(
         "features.itWallet.discovery.paywall.productHighlights.4.title"
       )
