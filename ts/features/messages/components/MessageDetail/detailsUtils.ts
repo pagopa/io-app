@@ -1,6 +1,6 @@
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { GlobalState } from "../../../../store/reducers/types";
-import { serviceDetailsByIdSelector } from "../../../services/details/store/reducers";
+import { serviceDetailsByIdSelector } from "../../../services/details/store/selectors";
 import { trackCTAPressed, trackPaymentStart } from "../../analytics";
 import { CTA } from "../../../../types/LocalizedCTAs";
 import {
