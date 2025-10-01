@@ -4488,9 +4488,9 @@
           "primaryAction": "Ottieni IT-Wallet",
           "dismissalDialog": {
             "title": "Vuoi rinunciare ai vantaggi di IT-Wallet?",
-            "body": "Otterrai una versione digitale dei tuoi documenti con funzionalità ridotte.",
-            "confirm": "Si, rinuncia",
-            "cancel": "No, torna indietro"
+            "body": "Potrai ottenere IT-Wallet in qualsiasi altro momento, se cambi idea.",
+            "confirm": "Sì, rinuncia",
+            "cancel": "No, continua"
           }
         },
         "offlineBanner": {
