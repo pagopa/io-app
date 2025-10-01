@@ -13,7 +13,7 @@ import {
   featuredInstitutionsSelector,
   isErrorFeaturedInstitutionsSelector,
   isLoadingFeaturedInstitutionsSelector
-} from "../store/reducers";
+} from "../store/selectors";
 import {
   FeaturedInstitutionsCarousel,
   FeaturedInstitutionsCarouselSkeleton

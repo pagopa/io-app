@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.15.0-rc.3](https://github.com/pagopa/io-app/compare/3.15.0-rc.1...3.15.0-rc.3) (2025-09-29)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-3989](https://pagopa.atlassian.net/browse/SIW-3989)] Remove "Recommended" badge from CIE+PIN identification method ([#7416](https://github.com/pagopa/io-app/issues/7416)) ([583551c](https://github.com/pagopa/io-app/commit/583551c67516ff1934afc1d0ab6ca9978b23c6a2))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-3077](https://pagopa.atlassian.net/browse/SIW-3077)] Fix copy for "Documenti su IO" ([#7410](https://github.com/pagopa/io-app/issues/7410)) ([99cde20](https://github.com/pagopa/io-app/commit/99cde20c181464fdaaa4efa852f973387097356b))
+* **release:** 3.15.0-rc.2 ([1eca5d1](https://github.com/pagopa/io-app/commit/1eca5d1c38cff8f88189f970160e1a58639f6c3f))
+
 ## [3.15.0-rc.2](https://github.com/pagopa/io-app/compare/3.15.0-rc.1...3.15.0-rc.2) (2025-09-26)
 
 
