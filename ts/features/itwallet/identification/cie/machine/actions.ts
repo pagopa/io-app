@@ -2,6 +2,7 @@ import { CieManager } from "@pagopa/io-react-native-cie";
 import { ActionArgs } from "xstate";
 import I18n from "i18next";
 import {
+  CieCardReadingFailureReason,
   ItwFlow,
   trackItWalletCardReadingClose,
   trackItWalletCieCardReadingFailure,
@@ -83,14 +84,14 @@ export const cieMachineActions = {
           return;
         case "NOT_A_CIE":
           trackItWalletCieCardReadingFailure({
-            reason: "unknown card",
+            reason: CieCardReadingFailureReason.unknownCard,
             itw_flow,
             cie_reading_progress: progress
           });
           return;
         case "APDU_ERROR":
           trackItWalletCieCardReadingFailure({
-            reason: "ADPU not supported",
+            reason: CieCardReadingFailureReason.apduNotSupported,
             itw_flow,
             cie_reading_progress: progress
           });
@@ -126,7 +127,7 @@ export const cieMachineActions = {
     }
 
     trackItWalletCieCardReadingFailure({
-      reason: "KO",
+      reason: CieCardReadingFailureReason.KO,
       itw_flow,
       cie_reading_progress: progress
     });
