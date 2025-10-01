@@ -357,7 +357,7 @@ const ProductHighlights = () => {
       content: I18n.t(
         "features.itWallet.discovery.paywall.productHighlights.4.content"
       ),
-      icon: "website",
+      icon: "euStars",
       title: I18n.t(
         "features.itWallet.discovery.paywall.productHighlights.4.title"
       )
