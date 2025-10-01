@@ -453,7 +453,7 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is false 1`]
                                 >
                                   Continua
                                 </Text>
-                                 dichiari di aver letto e compreso l’
+                                 dichiari di aver letto e compreso l'
                                 <Text
                                   accessibilityRole="link"
                                   allowFontScaling={true}
@@ -476,7 +476,7 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is false 1`]
                                     ]
                                   }
                                 >
-                                  Informativa Privacy e i Termini e Condizioni d’uso
+                                  Informativa Privacy e i Termini e Condizioni d'uso
                                 </Text>
                                 .
                               </Text>

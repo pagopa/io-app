@@ -39,7 +39,7 @@ import {
   RequestObject,
   StoredCredential
 } from "../../common/utils/itwTypesUtils";
-import { generateLinkRuleWithCallback } from "../../common/utils/markdown";
+import { generateItwIOMarkdownRules } from "../../common/utils/markdown";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import {
   selectCredentialTypeOption,
@@ -173,7 +173,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   });
   const requiredClaims = claims.map(claim => ({
     claim,
-    source: getCredentialNameFromType(eid.credentialType)
+    source: getCredentialNameFromType(eid.credentialType, "", isItwL3)
   }));
 
   const trackScrollToBottom = (crossed: boolean) => {
@@ -250,7 +250,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
           content={I18n.t("features.itWallet.issuance.credentialAuth.tos", {
             privacyUrl
           })}
-          rules={generateLinkRuleWithCallback(trackOpenItwTos)}
+          rules={generateItwIOMarkdownRules({ linkCallback: trackOpenItwTos })}
         />
       </ContentWrapper>
     </ForceScrollDownView>

@@ -2,6 +2,7 @@ import {
   Banner,
   Body,
   BodyMonospace,
+  BodySmall,
   Divider,
   H1,
   H2,
@@ -53,6 +54,8 @@ import {
   LinkData
 } from "./markdownRenderer";
 import { IOMarkdownRenderRules, Renderer } from "./types";
+
+export type ParagraphSize = "small" | "default";
 
 const BULLET_ITEM_FULL = "\u2022";
 const BULLET_ITEM_EMPTY = "\u25E6";
@@ -184,33 +187,10 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
     render: Renderer,
     screenReaderEnabled: boolean
   ) {
-    if (
-      paragraph.children.length > 0 &&
-      paragraph.children[0].type === "Image"
-    ) {
-      return (
-        <View key={getTxtNodeKey(paragraph)} style={{ marginVertical: 16 }}>
-          {paragraph.children.map(render)}
-        </View>
-      );
-    }
-
-    const allLinkData = extractAllLinksFromRootNode(
+    return paragraphNodeToReactNative(
       paragraph,
-      screenReaderEnabled
-    );
-    const nodeKey = getTxtNodeKey(paragraph);
-
-    return (
-      <Fragment key={nodeKey}>
-        <Body>{paragraph.children.map(render)}</Body>
-        {generateAccesibilityLinkViewsIfNeeded(
-          allLinkData,
-          nodeKey,
-          handleOpenLink,
-          screenReaderEnabled
-        )}
-      </Fragment>
+      { screenReaderEnabled },
+      render
     );
   },
   /**
@@ -251,7 +231,11 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    * @returns The rendered component.
    */
   Link(link: TxtLinkNode, render: Renderer) {
-    return linkNodeToReactNative(link, () => handleOpenLink(link.url), render);
+    return linkNodeToReactNative(
+      link,
+      { onPress: () => handleOpenLink(link.url) },
+      render
+    );
   },
   /**
    * @param image The `Image` node.
@@ -493,19 +477,55 @@ export const htmlNodeToReactNative = (
 
 export const linkNodeToReactNative = (
   link: TxtLinkNode,
-  onPress: () => void,
+  options: { onPress: () => void; size?: ParagraphSize },
   render: Renderer
-) => (
-  <Body
-    weight="Semibold"
-    asLink
-    avoidPressable
-    key={getTxtNodeKey(link)}
-    onPress={onPress}
-  >
-    {link.children.map(render)}
-  </Body>
-);
+) => {
+  const BodyComponent = options.size === "small" ? BodySmall : Body;
+  return (
+    <BodyComponent
+      weight="Semibold"
+      asLink
+      avoidPressable
+      key={getTxtNodeKey(link)}
+      onPress={options.onPress}
+    >
+      {link.children.map(render)}
+    </BodyComponent>
+  );
+};
+
+export const paragraphNodeToReactNative = (
+  paragraph: TxtParagraphNode,
+  options: { screenReaderEnabled: boolean; size?: ParagraphSize },
+  render: Renderer
+) => {
+  if (paragraph.children.length > 0 && paragraph.children[0].type === "Image") {
+    return (
+      <View key={getTxtNodeKey(paragraph)} style={{ marginVertical: 16 }}>
+        {paragraph.children.map(render)}
+      </View>
+    );
+  }
+
+  const allLinkData = extractAllLinksFromRootNode(
+    paragraph,
+    options.screenReaderEnabled
+  );
+  const nodeKey = getTxtNodeKey(paragraph);
+  const BodyComponent = options.size === "small" ? BodySmall : Body;
+
+  return (
+    <Fragment key={nodeKey}>
+      <BodyComponent>{paragraph.children.map(render)}</BodyComponent>
+      {generateAccesibilityLinkViewsIfNeeded(
+        allLinkData,
+        nodeKey,
+        handleOpenLink,
+        options.screenReaderEnabled
+      )}
+    </Fragment>
+  );
+};
 
 export const strNodeToReactNative = (content: string, node: AnyTxtNode) => (
   <Fragment key={getTxtNodeKey(node)}>{content}</Fragment>
