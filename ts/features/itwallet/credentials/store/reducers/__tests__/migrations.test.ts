@@ -386,6 +386,15 @@ describe("ITW credentials reducer migrations", () => {
             expiration: "2024-06-12T11:33:20.000Z",
             issuedAt: "2024-06-11T18:53:20.000Z"
           }
+        },
+        dc_sd_jwt_residency: {
+          credentialId: "dc_sd_jwt_residency",
+          credentialType: "residency",
+          storedStatusAssertion: undefined,
+          jwt: {
+            expiration: "2026-10-02T07:17:23.000Z",
+            issuedAt: "2025-10-02T07:17:23.000Z"
+          }
         }
       },
       _persist: {
@@ -418,6 +427,15 @@ describe("ITW credentials reducer migrations", () => {
           jwt: {
             expiration: "2024-06-12T11:33:20.000Z",
             issuedAt: "2024-06-11T18:53:20.000Z"
+          }
+        },
+        dc_sd_jwt_residency: {
+          credentialId: "dc_sd_jwt_residency",
+          credentialType: "residency",
+          storedStatusAssertion: undefined,
+          jwt: {
+            expiration: "2026-10-02T07:17:23.000Z",
+            issuedAt: "2025-10-02T07:17:23.000Z"
           }
         }
       },
