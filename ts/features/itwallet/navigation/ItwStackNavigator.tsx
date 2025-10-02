@@ -170,10 +170,6 @@ const InnerNavigator = memo(() => {
         component={ItwCiePreparationCardScreen}
       />
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CAN_SCREEN}
-        component={ItwCiePreparationCanScreen}
-      />
-      <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN}
         component={ItwCiePinScreen}
       />
