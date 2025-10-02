@@ -3,12 +3,17 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 
-import { loadMessageDetails, reloadAllMessages } from "../actions";
-import { clearCache } from "../../../settings/common/store/actions";
+import _ from "lodash";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
+import {
+  populateStoresWithEphemeralAarMessageData,
+  terminateAarFlow
+} from "../../../pn/aar/store/actions";
+import { isAarDetailById } from "../../../pn/aar/utils/detailsById";
+import { clearCache } from "../../../settings/common/store/actions";
 import { UIMessageDetails } from "../../types";
-import { populateStoresWithEphemeralAarMessageData } from "../../../pn/aar/store/actions";
+import { loadMessageDetails, reloadAllMessages } from "../actions";
 
 /**
  * A list of messages and pagination data.
@@ -51,10 +56,29 @@ export const detailsByIdReducer = (
         [action.payload.id]: pot.noneError(error.message || "UNKNOWN")
       };
     }
-    // case getType(populateStoresWithEphemeralAarMessageData): {
-    //   const { mandateId, messageData, serviceData } = action.payload;
-    //   return state;
-    // }
+    case getType(populateStoresWithEphemeralAarMessageData): {
+      const { iun, markDown, pnServiceID, subject } = action.payload;
+      const messageData: UIMessageDetails = {
+        hasRemoteContent: true,
+        hasThirdPartyData: true,
+        id: iun,
+        markdown: markDown,
+        serviceId: pnServiceID,
+        subject
+      };
+      return {
+        ...state,
+        [iun]: pot.some(messageData)
+      };
+    }
+    case getType(terminateAarFlow):
+      const newState = _.pickBy(state, (value, _key) =>
+        pipe(
+          pot.filter(value, v => !isAarDetailById(v)),
+          pot.isSome
+        )
+      );
+      return { ...newState };
 
     case getType(clearCache):
     case getType(reloadAllMessages.request):

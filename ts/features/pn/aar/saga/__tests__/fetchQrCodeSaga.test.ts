@@ -50,7 +50,7 @@ describe("fetchQrCodeSaga", () => {
         res(successResponse)
       ) as unknown as ReturnType<SendAARClient["aarQRCodeCheck"]>;
 
-    testSaga(fetchAARQrCodeSaga, aQRCode, mockApiCall, sessionToken)
+    testSaga(fetchAARQrCodeSaga, mockApiCall, sessionToken)
       .next()
       .select(currentAARFlowData)
       .next(mockFetchingQrState)
@@ -75,7 +75,7 @@ describe("fetchQrCodeSaga", () => {
     it(`should dispatch KO state on a response of ${JSON.stringify(
       res
     )}`, () => {
-      testSaga(fetchAARQrCodeSaga, aQRCode, mockFetchQrCode, sessionToken)
+      testSaga(fetchAARQrCodeSaga, mockFetchQrCode, sessionToken)
         .next()
         .select(currentAARFlowData)
         .next(mockFetchingQrState)
@@ -93,14 +93,14 @@ describe("fetchQrCodeSaga", () => {
   );
 
   it("should exit early if the current state is wrong", () => {
-    testSaga(fetchAARQrCodeSaga, aQRCode, mockFetchQrCode, sessionToken)
+    testSaga(fetchAARQrCodeSaga, mockFetchQrCode, sessionToken)
       .next()
       .select(currentAARFlowData)
       .next(mockTosState)
       .isDone();
   });
   it("should dispatch KO state on exception throw", () => {
-    testSaga(fetchAARQrCodeSaga, aQRCode, mockFetchQrCode, sessionToken)
+    testSaga(fetchAARQrCodeSaga, mockFetchQrCode, sessionToken)
       .next()
       .select(currentAARFlowData)
       .next(mockFetchingQrState)

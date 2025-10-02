@@ -21,6 +21,7 @@ export function* aarFlowMasterSaga(
       break;
     case sendAARFlowStates.fetchingNotificationData:
       yield* fetchAarDataSaga(sendAARClient.getAARNotification, sessionToken);
+      break;
   }
 }
 

@@ -1,12 +1,19 @@
+import { FiscalCode, NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { ActionType, createStandardAction } from "typesafe-actions";
+import { MessageBodyMarkdown } from "../../../../../../definitions/backend/MessageBodyMarkdown";
+import { MessageSubject } from "../../../../../../definitions/backend/MessageSubject";
+import { TaxId } from "../../../../../../definitions/pn/TaxId";
+import { ThirdPartyMessage } from "../../../../../../definitions/pn/ThirdPartyMessage";
 import { AARFlowState } from "../../utils/stateUtils";
-import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
-import { ThirdPartyMessage } from "../../../../../../definitions/pn/aar/ThirdPartyMessage";
 
-type EphemeralAarMessageData = {
-  serviceData: ServiceDetails;
-  messageData: ThirdPartyMessage;
-  mandateId: string | undefined;
+export type EphemeralAarMessageDataActionPayload = {
+  iun: NonEmptyString;
+  thirdPartyMessage: ThirdPartyMessage;
+  fiscalCode: TaxId | FiscalCode;
+  pnServiceID: NonEmptyString;
+  markDown: MessageBodyMarkdown;
+  subject: MessageSubject;
+  mandateId?: string;
 };
 
 export const setAarFlowState =
@@ -16,7 +23,7 @@ export const terminateAarFlow = createStandardAction("TERMINATE_AAR_FLOW")();
 
 export const populateStoresWithEphemeralAarMessageData = createStandardAction(
   "POPULATE_STORES_WITH_EPHEMERAL_AAR_MESSAGE_DATA"
-)<EphemeralAarMessageData>();
+)<EphemeralAarMessageDataActionPayload>();
 
 export type AARFlowStateActions = ActionType<
   | typeof setAarFlowState

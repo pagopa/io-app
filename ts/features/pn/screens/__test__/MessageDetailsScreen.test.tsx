@@ -12,6 +12,7 @@ import {
   loadMessageDetails,
   loadThirdPartyMessage
 } from "../../../messages/store/actions";
+import { isThirdParyMessageAarSelector } from "../../../messages/store/reducers/thirdPartyById";
 import {
   toUIMessage,
   toUIMessageDetails
@@ -21,48 +22,59 @@ import { thirdPartyMessage } from "../../__mocks__/pnMessage";
 import PN_ROUTES from "../../navigation/routes";
 import { MessageDetailsScreen } from "../MessageDetailsScreen";
 
+jest.mock("../../../messages/store/reducers/thirdPartyById", () => ({
+  ...jest.requireActual("../../../messages/store/reducers/thirdPartyById"),
+  isThirdParyMessageAarSelector: jest.fn()
+}));
+
 jest.mock("../../components/MessageDetails");
 
 describe("MessageDetailsScreen", () => {
-  it("should match the snapshot when there is an error", () => {
-    const sequenceOfActions: ReadonlyArray<Action> = [
-      applicationChangeState("active")
-    ];
+  [true, false].forEach(isAar => {
+    beforeEach(() => {
+      (isThirdParyMessageAarSelector as jest.Mock).mockReturnValue(isAar);
+    });
 
-    const state: GlobalState = reproduceSequence(
-      {} as GlobalState,
-      appReducer,
-      sequenceOfActions
-    );
-    const mockStore = configureMockStore<GlobalState>();
-    const store: Store<GlobalState> = mockStore(state);
+    it(`should match the snapshot when there is an error -- aar:${isAar}`, () => {
+      const sequenceOfActions: ReadonlyArray<Action> = [
+        applicationChangeState("active")
+      ];
 
-    const { component } = renderComponent(store);
-    expect(component).toMatchSnapshot();
-  });
+      const state: GlobalState = reproduceSequence(
+        {} as GlobalState,
+        appReducer,
+        sequenceOfActions
+      );
+      const mockStore = configureMockStore<GlobalState>();
+      const store: Store<GlobalState> = mockStore(state);
 
-  it("should match the snapshot when everything went fine", () => {
-    const sequenceOfActions: ReadonlyArray<Action> = [
-      applicationChangeState("active"),
-      loadMessageById.success(toUIMessage(message_1)),
-      loadServiceDetail.success(service_1),
-      loadMessageDetails.success(toUIMessageDetails(message_1)),
-      loadThirdPartyMessage.success({
-        id: message_1.id,
-        content: { kind: "TPM", ...thirdPartyMessage }
-      })
-    ];
+      const { component } = renderComponent(store);
+      expect(component).toMatchSnapshot();
+    });
 
-    const state: GlobalState = reproduceSequence(
-      {} as GlobalState,
-      appReducer,
-      sequenceOfActions
-    );
-    const mockStore = configureMockStore<GlobalState>();
-    const store: Store<GlobalState> = mockStore(state);
+    it(`should match the snapshot when everything went fine -- aar:${isAar}`, () => {
+      const sequenceOfActions: ReadonlyArray<Action> = [
+        applicationChangeState("active"),
+        loadMessageById.success(toUIMessage(message_1)),
+        loadServiceDetail.success(service_1),
+        loadMessageDetails.success(toUIMessageDetails(message_1)),
+        loadThirdPartyMessage.success({
+          id: message_1.id,
+          content: { kind: "TPM", ...thirdPartyMessage }
+        })
+      ];
 
-    const { component } = renderComponent(store);
-    expect(component).toMatchSnapshot();
+      const state: GlobalState = reproduceSequence(
+        {} as GlobalState,
+        appReducer,
+        sequenceOfActions
+      );
+      const mockStore = configureMockStore<GlobalState>();
+      const store: Store<GlobalState> = mockStore(state);
+
+      const { component } = renderComponent(store);
+      expect(component).toMatchSnapshot();
+    });
   });
 });
 

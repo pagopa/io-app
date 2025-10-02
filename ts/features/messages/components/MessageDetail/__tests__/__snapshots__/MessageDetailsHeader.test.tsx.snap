@@ -454,6 +454,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                               },
                             ]
                           }
+                          testID="message-header-organization"
                         >
                           <View
                             style={
@@ -534,6 +535,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                                     },
                                   ]
                                 }
+                                testID="header-service-name"
                               >
                                 health
                               </Text>

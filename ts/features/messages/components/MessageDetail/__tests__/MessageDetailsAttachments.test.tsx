@@ -6,9 +6,9 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { loadThirdPartyMessage } from "../../../store/actions";
-import { ThirdPartyMessageUnion } from "../../../store/reducers/thirdPartyById";
 import { ATTACHMENT_CATEGORY } from "../../../types/attachmentCategory";
 import { MessageDetailsAttachments } from "../MessageDetailsAttachments";
+import { ThirdPartyMessageUnion } from "../../../utils/thirdPartyById";
 
 describe("MessageDetailsAttachments", () => {
   const messageId = "01HNWYRT55GXGPXR16BW2MSBVY";

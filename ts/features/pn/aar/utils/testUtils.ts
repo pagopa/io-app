@@ -1,3 +1,8 @@
+import { FiscalCode, NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import { MessageSubject } from "../../../../../definitions/backend/MessageSubject";
+import { ThirdPartyMessage as PnThirdPartyMessage } from "../../../../../definitions/pn/ThirdPartyMessage";
+import { EphemeralAarMessageDataActionPayload } from "../store/actions";
+import { fillerEphemeralAARMarkdown } from "./detailsById";
 import { AARFlowState, sendAARFlowStates } from "./stateUtils";
 
 export const sendAarMockStateFactory: Record<
@@ -40,3 +45,13 @@ export const sendAarStateNames = Object.values(sendAARFlowStates);
 export const sendAarMockStates = sendAarStateNames.map(t =>
   sendAarMockStateFactory[t]()
 );
+export const mockEphemeralAarMessageDataActionPayload: EphemeralAarMessageDataActionPayload =
+  {
+    iun: "IUN123" as NonEmptyString,
+    thirdPartyMessage: { foo: "bar" } as PnThirdPartyMessage,
+    fiscalCode: "TAXCODE123" as FiscalCode,
+    pnServiceID: "SERVICEID123" as NonEmptyString,
+    markDown: fillerEphemeralAARMarkdown,
+    subject: "subject" as MessageSubject,
+    mandateId: "MANDATE123"
+  };

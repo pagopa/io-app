@@ -1,14 +1,11 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import { sequenceS } from "fp-ts/lib/Apply";
+import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { pipe } from "fp-ts/lib/function";
 import _ from "lodash";
 import { getType } from "typesafe-actions";
 import { HasPreconditionEnum } from "../../../../../definitions/backend/HasPrecondition";
-import { MessageBodyMarkdown } from "../../../../../definitions/backend/MessageBodyMarkdown";
-import { MessageSubject } from "../../../../../definitions/backend/MessageSubject";
 import { RemoteContentDetails } from "../../../../../definitions/backend/RemoteContentDetails";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { Action } from "../../../../store/actions/types";
@@ -58,47 +55,34 @@ export const thirdPartyByIdReducer = (
     case getType(reloadAllMessages.request):
       return initialState;
     case getType(populateStoresWithEphemeralAarMessageData):
-      const { messageData, serviceData, mandateId } = action.payload;
-      const { details } = messageData;
+      const {
+        iun,
+        pnServiceID,
+        subject,
+        mandateId,
+        thirdPartyMessage,
+        markDown,
+        fiscalCode
+      } = action.payload;
 
-      return pipe(
-        sequenceS(O.Monad)({
-          // we use sequenceS to make sure that the required data is not undefined
-          iun: O.fromNullable(details?.iun as NonEmptyString | undefined),
-          abstract: O.fromNullable(
-            details?.abstract as MessageBodyMarkdown | undefined
-          ),
-          subject: O.fromNullable(
-            details?.subject as MessageSubject | undefined
-          ),
-          recipients: O.fromNullable(details?.recipients)
-        }),
-        O.fold(
-          () => ({
-            // ignore the action if invalid data has been passed
-            ...state
-          }),
-          ({ iun, abstract, subject, recipients }) =>
-            toSome(iun, state, {
-              kind: "AAR",
-              mandateId,
-              created_at: new Date(),
-              third_party_message: messageData,
-              id: iun,
-              fiscal_code: recipients[0].taxId,
-              sender_service_id: serviceData.id,
-              content: {
-                third_party_data: {
-                  has_attachments: true,
-                  has_precondition: HasPreconditionEnum.ALWAYS,
-                  id: iun
-                },
-                markdown: abstract,
-                subject
-              }
-            })
-        )
-      );
+      return toSome(iun, state, {
+        kind: "AAR",
+        mandateId,
+        created_at: new Date(),
+        third_party_message: thirdPartyMessage,
+        id: iun,
+        fiscal_code: fiscalCode as FiscalCode,
+        sender_service_id: pnServiceID,
+        content: {
+          third_party_data: {
+            has_attachments: true,
+            has_precondition: HasPreconditionEnum.ALWAYS,
+            id: iun
+          },
+          markdown: markDown,
+          subject
+        }
+      });
 
     case getType(terminateAarFlow):
       const newState = _.pickBy(state, (value, _key) =>
@@ -106,7 +90,7 @@ export const thirdPartyByIdReducer = (
           value,
           O.fromNullable,
           O.flatMap(pot.toOption),
-          O.filter(isEphemeralAARThirdPartyMessage),
+          O.filter(message => !isEphemeralAARThirdPartyMessage(message)),
           O.isSome
         )
       );
@@ -119,6 +103,17 @@ export const thirdPartyFromIdSelector = (
   state: GlobalState,
   ioMessageId: string
 ) => state.entities.messages.thirdPartyById[ioMessageId] ?? pot.none;
+
+export const isThirdParyMessageAarSelector = (
+  state: GlobalState,
+  ioMessageId: string
+) =>
+  pipe(
+    thirdPartyFromIdSelector(state, ioMessageId),
+    pot.toOption,
+    O.map(isEphemeralAARThirdPartyMessage),
+    O.getOrElse(() => false)
+  );
 
 export const messageTitleSelector = (state: GlobalState, ioMessageId: string) =>
   messageContentSelector(

@@ -25,12 +25,10 @@ import { isLoadingOrUpdatingInbox } from "../../store/reducers/allPaginated";
 import { messageDetailsByIdSelector } from "../../store/reducers/detailsById";
 import { MessageGetStatusFailurePhaseType } from "../../store/reducers/messageGetStatus";
 import { getPaginatedMessageById } from "../../store/reducers/paginatedById";
-import {
-  thirdPartyFromIdSelector,
-  ThirdPartyMessageUnion
-} from "../../store/reducers/thirdPartyById";
+import { thirdPartyFromIdSelector } from "../../store/reducers/thirdPartyById";
 import { UIMessage, UIMessageDetails } from "../../types";
 import { handleLoadMessageData, testable } from "../handleLoadMessageData";
+import { ThirdPartyMessageUnion } from "../../utils/thirdPartyById";
 
 const fimsCTAFrontMatter =
   '---\nit:\n cta_1:\n  text: "Visualizza i documenti"\n  action: "iosso://https://relyingParty.url"\nen:\n cta_1:\n  text: "View documents"\n  action: "iosso://https://relyingParty.url"\n---';
