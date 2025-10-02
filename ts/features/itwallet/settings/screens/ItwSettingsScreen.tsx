@@ -105,10 +105,12 @@ export const generateLinkRuleWithCallback = () => ({
   Link(link: TxtLinkNode, render: Renderer) {
     return linkNodeToReactNative(
       link,
-      () => {
-        IOToast.info(
-          I18n.t("features.itWallet.generic.featureUnavailable.title")
-        );
+      {
+        onPress: () => {
+          IOToast.info(
+            I18n.t("features.itWallet.generic.featureUnavailable.title")
+          );
+        }
       },
       render
     );
