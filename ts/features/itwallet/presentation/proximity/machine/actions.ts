@@ -9,12 +9,17 @@ import {
   trackItwProximityQrCodeLoadingFailure
 } from "../analytics";
 import { serializeFailureReason } from "../../../common/utils/itwStoreUtils";
+import { useIOStore } from "../../../../../store/hooks.ts";
+import { isConnectedSelector } from "../../../../connectivity/store/selectors";
+import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
+import { OfflineAccessReasonEnum } from "../../../../ingress/store/reducer";
 import { Context } from "./context";
 import { ProximityEvents } from "./events";
 import { mapEventToFailure } from "./failure";
 
 export const createProximityActionsImplementation = (
-  navigation: ReturnType<typeof useIONavigation>
+  navigation: ReturnType<typeof useIONavigation>,
+  store: ReturnType<typeof useIOStore>
 ) => ({
   navigateToGrantPermissionsScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
@@ -41,16 +46,24 @@ export const createProximityActionsImplementation = (
   },
 
   navigateToWallet: () => {
+    const isConnected = isConnectedSelector(store.getState());
+    const offlineAccessReason = offlineAccessReasonSelector(store.getState());
+
+    const route =
+      !isConnected ||
+      offlineAccessReason === OfflineAccessReasonEnum.DEVICE_OFFLINE
+        ? {
+            name: ITW_ROUTES.MAIN,
+            params: { screen: ITW_ROUTES.OFFLINE.WALLET }
+          }
+        : {
+            name: ROUTES.MAIN,
+            params: { screen: ROUTES.WALLET_HOME }
+          };
+
     navigation.reset({
       index: 0,
-      routes: [
-        {
-          name: ROUTES.MAIN,
-          params: {
-            screen: ROUTES.WALLET_HOME
-          }
-        }
-      ]
+      routes: [route]
     });
   },
 
