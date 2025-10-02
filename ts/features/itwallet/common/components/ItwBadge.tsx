@@ -51,7 +51,7 @@ const StaticGradientBackground = () => {
   const [{ width, height }, setDimensions] = useState({ width: 0, height: 0 });
 
   return (
-    <Canvas
+    <View
       style={StyleSheet.absoluteFill}
       onLayout={event => {
         setDimensions({
@@ -60,14 +60,16 @@ const StaticGradientBackground = () => {
         });
       }}
     >
-      <RoundedRect x={0} y={0} width={width} height={height} r={100}>
-        <LinearGradient
-          start={vec(0, height)}
-          end={vec(width, height + width * Math.tan((60 * Math.PI) / 180))}
-          colors={["#002FCB", "#003BFE", "#0335DA", "#053FFF", "#0335DD"]}
-        />
-      </RoundedRect>
-    </Canvas>
+      <Canvas style={StyleSheet.absoluteFill}>
+        <RoundedRect x={0} y={0} width={width} height={height} r={100}>
+          <LinearGradient
+            start={vec(0, height)}
+            end={vec(width, height + width * Math.tan((60 * Math.PI) / 180))}
+            colors={["#002FCB", "#003BFE", "#0335DA", "#053FFF", "#0335DD"]}
+          />
+        </RoundedRect>
+      </Canvas>
+    </View>
   );
 };
 
@@ -105,7 +107,7 @@ const AnimatedStrokeGradient = () => {
   }, [width]);
 
   return (
-    <Canvas
+    <View
       style={StyleSheet.absoluteFill}
       // eslint-disable-next-line sonarjs/no-identical-functions
       onLayout={event => {
@@ -115,30 +117,32 @@ const AnimatedStrokeGradient = () => {
         });
       }}
     >
-      <RoundedRect
-        x={1}
-        y={1}
-        style="stroke"
-        strokeWidth={1}
-        width={width - 2}
-        height={height - 2}
-        r={16}
-      >
-        <LinearGradient
-          start={animatedStart}
-          end={animatedEnd}
-          mode="repeat"
-          colors={[
-            "#86A1FF",
-            "#CFDAFF",
-            "#B3C5FF",
-            "#7C9AFF",
-            "#C8D5FF",
-            "#86A1FF"
-          ]}
-        />
-      </RoundedRect>
-    </Canvas>
+      <Canvas style={StyleSheet.absoluteFill}>
+        <RoundedRect
+          x={1}
+          y={1}
+          style="stroke"
+          strokeWidth={1}
+          width={width - 2}
+          height={height - 2}
+          r={16}
+        >
+          <LinearGradient
+            start={animatedStart}
+            end={animatedEnd}
+            mode="repeat"
+            colors={[
+              "#86A1FF",
+              "#CFDAFF",
+              "#B3C5FF",
+              "#7C9AFF",
+              "#C8D5FF",
+              "#86A1FF"
+            ]}
+          />
+        </RoundedRect>
+      </Canvas>
+    </View>
   );
 };
 
