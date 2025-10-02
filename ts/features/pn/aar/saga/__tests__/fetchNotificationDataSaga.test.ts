@@ -4,7 +4,6 @@ import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { testSaga } from "redux-saga-test-plan";
 import { call } from "typed-redux-saga";
-import { MessageBodyMarkdown } from "../../../../../../definitions/backend/MessageBodyMarkdown";
 import { ThirdPartyMessage as PnThirdPartyMessage } from "../../../../../../definitions/pn/ThirdPartyMessage";
 import { ThirdPartyMessage as AarThirdPartyMessage } from "../../../../../../definitions/pn/aar/ThirdPartyMessage";
 import NavigationService from "../../../../../navigation/NavigationService";
@@ -20,6 +19,7 @@ import {
   setAarFlowState
 } from "../../store/actions";
 import { currentAARFlowData } from "../../store/reducers";
+import { fillerEphemeralAARMarkdown } from "../../utils/detailsById";
 import { sendAARFlowStates } from "../../utils/stateUtils";
 import {
   mockEphemeralAarMessageDataActionPayload,
@@ -326,7 +326,7 @@ describe("aarMessageDataPayloadFromResponse", () => {
           thirdPartyMessage: message,
           fiscalCode: message.details?.recipients?.[0]?.taxId ?? "CF",
           pnServiceID: "SID",
-          markDown: "*".repeat(81) as MessageBodyMarkdown,
+          markDown: fillerEphemeralAARMarkdown,
           subject: message.details?.subject,
           mandateId: mockCurrentState.mandateId
         })

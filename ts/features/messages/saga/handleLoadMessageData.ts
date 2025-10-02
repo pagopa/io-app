@@ -407,7 +407,6 @@ export const testable = isTestEnv
       dispatchSuccessAction,
       getMessageDetails,
       getPaginatedMessage,
-      getServiceDetails,
       getThirdPartyDataMessage,
       loadMessageData,
       setMessageReadIfNeeded

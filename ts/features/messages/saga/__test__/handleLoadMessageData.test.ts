@@ -10,8 +10,6 @@ import { ThirdPartyMessage } from "../../../../../definitions/backend/ThirdParty
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
 import { isPnRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { loadServiceDetail } from "../../../services/details/store/actions/details";
-import { serviceDetailsByIdPotSelector } from "../../../services/details/store/selectors";
 import { trackMessageDataLoadFailure } from "../../analytics";
 import {
   cancelGetMessageDataAction,
@@ -27,8 +25,9 @@ import { MessageGetStatusFailurePhaseType } from "../../store/reducers/messageGe
 import { getPaginatedMessageById } from "../../store/reducers/paginatedById";
 import { thirdPartyFromIdSelector } from "../../store/reducers/thirdPartyById";
 import { UIMessage, UIMessageDetails } from "../../types";
-import { handleLoadMessageData, testable } from "../handleLoadMessageData";
 import { ThirdPartyMessageUnion } from "../../utils/thirdPartyById";
+import { handleLoadMessageData, testable } from "../handleLoadMessageData";
+import { getServiceDetails } from "../utils";
 
 const fimsCTAFrontMatter =
   '---\nit:\n cta_1:\n  text: "Visualizza i documenti"\n  action: "iosso://https://relyingParty.url"\nen:\n cta_1:\n  text: "View documents"\n  action: "iosso://https://relyingParty.url"\n---';
@@ -98,77 +97,6 @@ describe("getPaginatedMessage", () => {
       .next()
       .take([loadMessageById.success, loadMessageById.failure])
       .next(loadMessageById.failure({ id: messageId, error: new Error() }))
-      .returns(undefined);
-  });
-});
-
-describe("getService", () => {
-  it("when no service is in store, it should dispatch a loadServiceDetail.request and retrieve its result from the store if it succeeds", () => {
-    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
-    const serviceDetails = { id: serviceId } as ServiceDetails;
-    testSaga(testable!.getServiceDetails, serviceId)
-      .next()
-      .select(serviceDetailsByIdPotSelector, serviceId)
-      .next(pot.none)
-      .put(loadServiceDetail.request(serviceId))
-      .next()
-      .take([loadServiceDetail.success, loadServiceDetail.failure])
-      .next(loadServiceDetail.success(serviceDetails))
-      .select(serviceDetailsByIdPotSelector, serviceId)
-      .next(pot.some(serviceDetails))
-      .returns(serviceDetails);
-  });
-  it("when an error is in store, it should dispatch a loadServiceDetail.request and retrieve its result from the store if it succeeds", () => {
-    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
-    const serviceDetails = { id: serviceId } as ServiceDetails;
-    testSaga(testable!.getServiceDetails, serviceId)
-      .next()
-      .select(serviceDetailsByIdPotSelector, serviceId)
-      .next(pot.noneError)
-      .put(loadServiceDetail.request(serviceId))
-      .next()
-      .take([loadServiceDetail.success, loadServiceDetail.failure])
-      .next(loadServiceDetail.success(serviceDetails))
-      .select(serviceDetailsByIdPotSelector, serviceId)
-      .next(pot.some(serviceDetails))
-      .returns(serviceDetails);
-  });
-  it("when a service with error is in store, it should dispatch a loadServiceDetail.request and retrieve its result from the store if it succeeds", () => {
-    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
-    const serviceDetails = { id: serviceId } as ServiceDetails;
-    testSaga(testable!.getServiceDetails, serviceId)
-      .next()
-      .select(serviceDetailsByIdPotSelector, serviceId)
-      .next(pot.someError({}, new Error()))
-      .put(loadServiceDetail.request(serviceId))
-      .next()
-      .take([loadServiceDetail.success, loadServiceDetail.failure])
-      .next(loadServiceDetail.success(serviceDetails))
-      .select(serviceDetailsByIdPotSelector, serviceId)
-      .next(pot.some(serviceDetails))
-      .returns(serviceDetails);
-  });
-  it("when a service is in store, it should return its details", () => {
-    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
-    const serviceDetails = { id: serviceId } as ServiceDetails;
-    testSaga(testable!.getServiceDetails, serviceId)
-      .next()
-      .select(serviceDetailsByIdPotSelector, serviceId)
-      .next(pot.some(serviceDetails))
-      .returns(serviceDetails);
-  });
-  it("when no service is in store, it should dispatch a loadServiceDetail.request but return undefined if the related saga fails", () => {
-    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
-    testSaga(testable!.getServiceDetails, serviceId)
-      .next()
-      .select(serviceDetailsByIdPotSelector, serviceId)
-      .next(pot.none)
-      .put(loadServiceDetail.request(serviceId))
-      .next()
-      .take([loadServiceDetail.success, loadServiceDetail.failure])
-      .next(
-        loadServiceDetail.failure({ service_id: serviceId, error: new Error() })
-      )
       .returns(undefined);
   });
 });
@@ -831,7 +759,7 @@ describe("loadMessageData", () => {
       .next(false)
       .call(testable!.getPaginatedMessage, messageId)
       .next(paginatedMessage)
-      .call(testable!.getServiceDetails, serviceId)
+      .call(getServiceDetails, serviceId)
       .next(serviceDetails)
       .call(testable!.getMessageDetails, messageId)
       .next(undefined)
@@ -864,7 +792,7 @@ describe("loadMessageData", () => {
       .next(false)
       .call(testable!.getPaginatedMessage, messageId)
       .next(paginatedMessage)
-      .call(testable!.getServiceDetails, serviceId)
+      .call(getServiceDetails, serviceId)
       .next(serviceDetails)
       .call(testable!.getMessageDetails, messageId)
       .next(messageDetails)
@@ -898,7 +826,7 @@ describe("loadMessageData", () => {
       .next(false)
       .call(testable!.getPaginatedMessage, messageId)
       .next(paginatedMessage)
-      .call(testable!.getServiceDetails, serviceId)
+      .call(getServiceDetails, serviceId)
       .next(serviceDetails)
       .call(testable!.getMessageDetails, messageId)
       .next(messageDetails)
@@ -933,7 +861,7 @@ describe("loadMessageData", () => {
       .next(false)
       .call(testable!.getPaginatedMessage, messageId)
       .next(paginatedMessage)
-      .call(testable!.getServiceDetails, serviceId)
+      .call(getServiceDetails, serviceId)
       .next(serviceDetails)
       .call(testable!.getMessageDetails, messageId)
       .next(messageDetails)
@@ -977,7 +905,7 @@ describe("loadMessageData", () => {
       .next(false)
       .call(testable!.getPaginatedMessage, messageId)
       .next(paginatedMessage)
-      .call(testable!.getServiceDetails, serviceId)
+      .call(getServiceDetails, serviceId)
       .next(serviceDetails)
       .call(testable!.getMessageDetails, messageId)
       .next(messageDetails)
@@ -1021,7 +949,7 @@ describe("loadMessageData", () => {
       .next(false)
       .call(testable!.getPaginatedMessage, messageId)
       .next(paginatedMessage)
-      .call(testable!.getServiceDetails, serviceId)
+      .call(getServiceDetails, serviceId)
       .next(serviceDetails)
       .call(testable!.getMessageDetails, messageId)
       .next(messageDetails)
@@ -1059,7 +987,7 @@ describe("loadMessageData", () => {
       .next(false)
       .call(testable!.getPaginatedMessage, messageId)
       .next(paginatedMessage)
-      .call(testable!.getServiceDetails, serviceId)
+      .call(getServiceDetails, serviceId)
       .next(serviceDetails)
       .call(testable!.getMessageDetails, messageId)
       .next(messageDetails)
@@ -1110,7 +1038,7 @@ describe("loadMessageData", () => {
       .next(false)
       .call(testable!.getPaginatedMessage, messageId)
       .next(paginatedMessage)
-      .call(testable!.getServiceDetails, serviceId)
+      .call(getServiceDetails, serviceId)
       .next(serviceDetails)
       .call(testable!.getMessageDetails, messageId)
       .next(messageDetails)
@@ -1159,7 +1087,7 @@ describe("loadMessageData", () => {
       .next(false)
       .call(testable!.getPaginatedMessage, messageId)
       .next(paginatedMessage)
-      .call(testable!.getServiceDetails, serviceId)
+      .call(getServiceDetails, serviceId)
       .next(serviceDetails)
       .call(testable!.getMessageDetails, messageId)
       .next(messageDetails)

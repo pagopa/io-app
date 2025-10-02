@@ -1,5 +1,6 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { StackActions } from "@react-navigation/native";
+import { sequenceS } from "fp-ts/lib/Apply";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -10,19 +11,20 @@ import { ThirdPartyMessage as AarThirdPartyMessage } from "../../../../../defini
 import NavigationService from "../../../../navigation/NavigationService";
 import { pnMessagingServiceIdSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { SessionToken } from "../../../../types/SessionToken";
+import { isTestEnv } from "../../../../utils/environment";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { getServiceDetails } from "../../../messages/saga/utils";
+import { profileFiscalCodeSelector } from "../../../settings/common/store/selectors";
 import PN_ROUTES from "../../navigation/routes";
 import { SendAARClient } from "../api/client";
 import {
+  EphemeralAarMessageDataActionPayload,
   populateStoresWithEphemeralAarMessageData,
   setAarFlowState
 } from "../store/actions";
 import { currentAARFlowData } from "../store/reducers";
-import { AarFlowStates, sendAARFlowStates } from "../utils/stateUtils";
-import { profileFiscalCodeSelector } from "../../../settings/common/store/selectors";
-import { isTestEnv } from "../../../../utils/environment";
 import { fillerEphemeralAARMarkdown } from "../utils/detailsById";
+import { AarFlowStates, sendAARFlowStates } from "../utils/stateUtils";
 
 export function* fetchAarDataSaga(
   fetchData: SendAARClient["getAARNotification"],
@@ -124,16 +126,28 @@ function* aarMessageDataPayloadFromResponse(
     value,
     PnThirdPartyMessage.decode,
     O.fromEither,
-    O.chainNullableK(v => v.details),
-    O.map(({ iun, recipients, subject }) => ({
-      iun: iun as NonEmptyString,
-      thirdPartyMessage: value as PnThirdPartyMessage,
-      fiscalCode: recipients[0]?.taxId ?? fiscalCode,
-      pnServiceID: pnServiceDetails?.id,
-      markDown: fillerEphemeralAARMarkdown,
-      subject: subject as MessageSubject,
-      mandateId: currentState.mandateId
-    }))
+    data =>
+      sequenceS(O.Monad)({
+        thirdPartyMessage: data,
+        details: pipe(
+          data,
+          O.chainNullableK(v => v.details)
+        )
+      }),
+    O.map(
+      ({
+        thirdPartyMessage,
+        details: { iun, recipients, subject }
+      }): EphemeralAarMessageDataActionPayload => ({
+        iun: iun as NonEmptyString,
+        thirdPartyMessage,
+        fiscalCode: recipients[0]?.taxId ?? fiscalCode,
+        pnServiceID: pnServiceDetails?.id,
+        markDown: fillerEphemeralAARMarkdown,
+        subject: subject as MessageSubject,
+        mandateId: currentState.mandateId
+      })
+    )
   );
 }
 

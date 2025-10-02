@@ -7,8 +7,8 @@ import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { loadThirdPartyMessage } from "../../../store/actions";
 import { ATTACHMENT_CATEGORY } from "../../../types/attachmentCategory";
-import { MessageDetailsAttachments } from "../MessageDetailsAttachments";
 import { ThirdPartyMessageUnion } from "../../../utils/thirdPartyById";
+import { MessageDetailsAttachments } from "../MessageDetailsAttachments";
 
 describe("MessageDetailsAttachments", () => {
   const messageId = "01HNWYRT55GXGPXR16BW2MSBVY";

@@ -110,9 +110,8 @@ export const isThirdParyMessageAarSelector = (
 ) =>
   pipe(
     thirdPartyFromIdSelector(state, ioMessageId),
-    pot.toOption,
-    O.map(isEphemeralAARThirdPartyMessage),
-    O.getOrElse(() => false)
+    data => pot.map(data, isEphemeralAARThirdPartyMessage),
+    data => pot.getOrElse(data, false)
   );
 
 export const messageTitleSelector = (state: GlobalState, ioMessageId: string) =>
