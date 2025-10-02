@@ -37,20 +37,6 @@ export const activeSessionLoginReducer = (
   action: Action
 ): ActiveSessionLoginState => {
   switch (action.type) {
-    case getType(activeSessionLoginSuccess):
-      return {
-        ...state,
-        isUserLoggedIn: true,
-        loginInfo: {
-          ...state.loginInfo,
-          token: action.payload
-        }
-      };
-    case getType(activeSessionLoginFailure):
-      return {
-        ...state,
-        isUserLoggedIn: false
-      };
     case getType(setStartActiveSessionLogin):
       return {
         ...state,
@@ -72,10 +58,25 @@ export const activeSessionLoginReducer = (
           fastLoginOptIn: action.payload
         }
       };
-    case getType(consolidateActiveSessionLoginData):
+    case getType(activeSessionLoginSuccess):
+      return {
+        ...state,
+        isUserLoggedIn: true,
+        loginInfo: {
+          ...state.loginInfo,
+          token: action.payload
+        }
+      };
+    case getType(activeSessionLoginFailure):
+      return {
+        ...state,
+        isUserLoggedIn: false
+      };
+
     case getType(setFinishedActiveSessionLoginFlow):
-    case getType(sessionCorrupted):
+    case getType(consolidateActiveSessionLoginData):
     case getType(setLggedOutUserWithDifferentCF):
+    case getType(sessionCorrupted):
       return initialState;
 
     default:
