@@ -244,7 +244,7 @@ const BackgroundGradient = () => {
   const [{ width, height }, setDimensions] = useState({ width: 0, height: 0 });
 
   return (
-    <Canvas
+    <View
       style={styles.gradient}
       onLayout={event => {
         setDimensions({
@@ -253,15 +253,17 @@ const BackgroundGradient = () => {
         });
       }}
     >
-      <RoundedRect x={0} y={0} width={width} height={height} r={16}>
-        <LinearGradient
-          start={vec(0, height / 2)}
-          end={vec(width, 0)}
-          mode="repeat"
-          colors={itwGradientColors}
-        />
-      </RoundedRect>
-    </Canvas>
+      <Canvas style={StyleSheet.absoluteFill}>
+        <RoundedRect x={0} y={0} width={width} height={height} r={16}>
+          <LinearGradient
+            start={vec(0, height / 2)}
+            end={vec(width, 0)}
+            mode="repeat"
+            colors={itwGradientColors}
+          />
+        </RoundedRect>
+      </Canvas>
+    </View>
   );
 };
 
