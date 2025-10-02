@@ -7,11 +7,12 @@ import {
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
+import { useIOSelector } from "../../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import { isTestEnv } from "../../../../../utils/environment";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
-import { sendAARFlowStates } from "../../utils/stateUtils";
+import { currentAARFlowStateErrorCodes } from "../../store/reducers";
 
 const bottomComponent = (errorCodes: Array<string>) => (
   <>
@@ -54,12 +55,8 @@ const bottomComponent = (errorCodes: Array<string>) => (
 );
 
 export const SendAARErrorComponent = () => {
-  const { terminateFlow, currentFlowData } = useSendAarFlowManager();
-
-  const errorCodes =
-    currentFlowData.type === sendAARFlowStates.ko
-      ? currentFlowData.errorCodes
-      : [];
+  const { terminateFlow } = useSendAarFlowManager();
+  const errorCodes = useIOSelector(currentAARFlowStateErrorCodes);
 
   const { bottomSheet, present } = useIOBottomSheetModal({
     component: bottomComponent(errorCodes),

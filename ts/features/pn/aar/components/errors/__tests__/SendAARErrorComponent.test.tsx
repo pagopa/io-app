@@ -1,6 +1,7 @@
 import { fireEvent, waitFor } from "@testing-library/react-native";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../../store/actions/application";
+import * as HOOKS from "../../../../../../store/hooks";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import * as CLIPBOARD from "../../../../../../utils/clipboard";
@@ -17,6 +18,10 @@ import {
 const { bottomComponent } = testable!;
 
 const managerSpy = jest.spyOn(FLOW_MANAGER, "useSendAarFlowManager");
+jest.mock("../../../../../../store/hooks", () => ({
+  ...jest.requireActual("../../../../../../store/hooks"),
+  useIOSelector: jest.fn()
+}));
 
 describe("SendAARErrorComponent - Full Test Suite", () => {
   const mockGoNextState = jest.fn();
@@ -26,10 +31,11 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
 
   beforeEach(() => {
     managerSpy.mockImplementation(() => ({
-      currentFlowData: { ...sendAarMockStateFactory.ko(), errorCodes },
+      currentFlowData: sendAarMockStateFactory.ko(),
       goToNextState: mockGoNextState,
       terminateFlow: mockTerminateFlow
     }));
+    (HOOKS.useIOSelector as jest.Mock).mockReturnValue(errorCodes);
   });
 
   afterEach(() => {

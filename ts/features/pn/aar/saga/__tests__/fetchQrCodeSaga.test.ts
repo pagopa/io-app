@@ -12,8 +12,7 @@ describe("fetchQrCodeSaga", () => {
   const sessionToken: SessionToken = "test-session-token" as SessionToken;
   const getMockKoState = (prevState: AARFlowState): AARFlowState => ({
     type: "ko",
-    previousState: prevState,
-    errorCodes: []
+    previousState: { ...prevState }
   });
   const mockFetchingQrState: AARFlowState = {
     type: "fetchingQRData",

@@ -1,3 +1,4 @@
+import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
 import { ThirdPartyMessage } from "../../../../../definitions/pn/ThirdPartyMessage";
 
 export type SendAARFlowStatesType = typeof sendAARFlowStates;
@@ -40,7 +41,7 @@ type FinalNotAddressee = {
 type ErrorState = {
   type: SendAARFlowStatesType["ko"];
   previousState: AARFlowState;
-  errorCodes: Array<string>;
+  error?: AARProblemJson;
 };
 
 export type AARFlowStateName =

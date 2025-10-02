@@ -36,13 +36,13 @@ paths:
           content:
             application/problem+json:
               schema:
-                $ref: "#/components/schemas/ProblemJson"
+                $ref: "#/components/schemas/AARProblemJson"
         "500":
           description: Bad request
           content:
             application/problem+json:
               schema:
-                $ref: "#/components/schemas/ProblemJson"
+                $ref: "#/components/schemas/AARProblemJson"
   /aar/qr-code-check:
     post:
       tags:
@@ -80,13 +80,13 @@ paths:
           content:
             application/problem+json:
               schema:
-                $ref: "#/components/schemas/ProblemJson"
+                $ref: "#/components/schemas/AARProblemJson"
         "500":
           description: Internal Server Error
           content:
             application/problem+json:
               schema:
-                $ref: "#/components/schemas/ProblemJson"
+                $ref: "#/components/schemas/AARProblemJson"
   /aar/attachments/{urlEncodedBase64AttachmentUrl}:
     get:
       operationId: getNotificationAttachment
@@ -101,7 +101,7 @@ paths:
           schema:
             type: boolean
       responses:
-        200:
+        "200":
           description: Notification Details
           content:
             application/json:
@@ -112,13 +112,13 @@ paths:
           content:
             application/problem+json:
               schema:
-                $ref: "#/components/schemas/ProblemJson"
-        500:
+                $ref: "#/components/schemas/AARProblemJson"
+        "500":
           description: Unexpected Error
           content:
             application/problem+json:
               schema:
-                $ref: "#/components/schemas/ProblemJson"
+                $ref: "#/components/schemas/AARProblemJson"
 
 components:
   parameters:
@@ -211,6 +211,12 @@ components:
           type: string
           description: valore del token QR-Code presente sull'avviso di avvenuta ricezione
           maxLength: 300
+    Iun:
+      description: Identificativo Univoco Notifica
+      type: string
+      minLength: 25
+      maxLength: 25
+      pattern: ^[A-Z]{4}-[A-Z]{4}-[A-Z]{4}-[0-9]{6}-[A-Z]{1}-[0-9]{1}$
     AARQRCodeCheckResponse:
       description: >-
         Le informazioni fornite in risposta alla verifica del AAR-QR-CodeValue
@@ -221,11 +227,7 @@ components:
         - recipientInfo
       properties:
         iun:
-          description: Identificativo Univoco Notifica
-          type: string
-          minLength: 25
-          maxLength: 25
-          pattern: ^[A-Z]{4}-[A-Z]{4}-[A-Z]{4}-[0-9]{6}-[A-Z]{1}-[0-9]{1}$
+          $ref: "#/components/schemas/Iun"
         mandateId:
           description: identificativo della delega
           type: string
@@ -254,7 +256,7 @@ components:
       maximum: 600
       exclusiveMaximum: true
       example: 200
-    ProblemJson:
+    AARProblemJson:
       type: object
       properties:
         type:
@@ -361,6 +363,14 @@ components:
         - iun
         - recipients
         - notificationStatusHistory
+    TaxId:
+      description: C.F. persona fisica o persona giuridica
+      type: string
+      x-field-extra-annotation: "@lombok.ToString.Exclude"
+      minLength: 11
+      maxLength: 16
+      pattern: >-
+        ^([A-Z]{6}[0-9LMNPQRSTUV]{2}[A-Z]{1}[0-9LMNPQRSTUV]{2}[A-Z]{1}[0-9LMNPQRSTUV]{3}[A-Z]{1})|([0-9]{11})$
     NotificationRecipient:
       description: Informazioni sui destinatari
       required:
@@ -375,13 +385,7 @@ components:
             Tipologia di destinatario: Persona Fisica (PF) o Persona
             Giuridica (PG). * `PF` * `PG`
         taxId:
-          description: C.F. persona fisica o persona giuridica
-          type: string
-          x-field-extra-annotation: "@lombok.ToString.Exclude"
-          minLength: 11
-          maxLength: 16
-          pattern: >-
-            ^([A-Z]{6}[0-9LMNPQRSTUV]{2}[A-Z]{1}[0-9LMNPQRSTUV]{2}[A-Z]{1}[0-9LMNPQRSTUV]{3}[A-Z]{1})|([0-9]{11})$
+          $ref: "#/components/schemas/TaxId"
         denomination:
           $ref: "#/components/schemas/Denomination"
         payment:

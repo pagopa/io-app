@@ -31,8 +31,7 @@ export const sendAarMockStateFactory: Record<
   }),
   ko: () => ({
     type: "ko",
-    previousState: { type: "none" },
-    errorCodes: []
+    previousState: { type: "none" }
   })
 };
 
