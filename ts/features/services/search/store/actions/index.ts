@@ -8,6 +8,7 @@ export type SearchPaginatedInstitutionsGetPayload = {
   offset: number;
   search?: string;
   scope?: ScopeTypeEnum;
+  sessionId?: string;
 };
 
 export const searchPaginatedInstitutionsGet = createAsyncAction(
