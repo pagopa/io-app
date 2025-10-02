@@ -166,7 +166,8 @@ export const itwEidIssuanceMachine = setup({
     reset: {
       target: "#itwEidIssuanceMachine.Idle"
     },
-    // This action restart the machine in L2 mode
+    // This action restarts the machine, resetting it to the Idle state before starting it again.
+    // This is crucial if we want to restart the machine without having a possible race condition with two events sent simultaneously.
     restart: {
       target: "#itwEidIssuanceMachine.Idle",
       actions: [
