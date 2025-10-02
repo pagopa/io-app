@@ -14,6 +14,6 @@ export const mapCredentialToWalletCard = (
   category: "itw",
   credentialType: credential.credentialType,
   credentialStatus: getCredentialStatus(credential),
-  isItwCredential: isItwCredential(credential.credential),
+  isItwCredential: isItwCredential(credential),
   isMultiCredential: isMultiLevelCredential(credential)
 });

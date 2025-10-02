@@ -7,6 +7,7 @@ import { ItwGenericErrorContent } from "../common/components/ItwGenericErrorCont
 import { isItwEnabledSelector } from "../common/store/selectors/remoteConfig";
 import { ItwAlreadyActiveScreen } from "../discovery/screens/ItwAlreadyActiveScreen";
 import { ItwDiscoveryInfoScreen } from "../discovery/screens/ItwDiscoveryInfoScreen";
+import { ItwDiscoveryInfoComponent } from "../discovery/components/ItwDiscoveryInfoComponent.tsx";
 import ItwIpzsPrivacyScreen from "../discovery/screens/ItwIpzsPrivacyScreen";
 import { ItwActivateNfcScreen } from "../identification/cie/screens/ItwActivateNfcScreen.tsx";
 import { ItwCieCanScreen } from "../identification/cie/screens/ItwCieCanScreen.tsx";
@@ -313,6 +314,10 @@ const InnerNavigator = memo(() => {
         <Stack.Screen
           name={ITW_ROUTES.PLAYGROUNDS.CREDENTIAL_DETAIL}
           component={ItwL3CredentialDetailScreen}
+        />
+        <Stack.Screen
+          name={ITW_ROUTES.PLAYGROUNDS.DISCOVERY_INFO_NEW}
+          component={ItwDiscoveryInfoComponent}
         />
       </Stack.Group>
       <Stack.Screen name={ITW_ROUTES.SETTINGS} component={ItwSettingsScreen} />
