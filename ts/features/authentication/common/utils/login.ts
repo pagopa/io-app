@@ -2,11 +2,14 @@ import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
+import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { SessionToken } from "../../../../types/SessionToken";
 import { trackLoginSpidError } from "../analytics/spidAnalytics";
 import { spidRelayState } from "../../../../config";
 import { IdpData } from "../../../../../definitions/content/IdpData";
 import { isStringNullyOrEmpty } from "../../../../utils/strings";
+import { getAppVersion } from "../../../../utils/appVersion";
+import { isLocalEnv } from "../../../../utils/environment";
 /**
  * Helper functions for handling the SPID login flow through a webview.
  */
@@ -124,3 +127,42 @@ export const onLoginUriChanged =
     }
     return false;
   };
+
+/**
+ * Generates the headers required for login.
+ *
+ * @param publicKey - The public key used for authentication, encoded in base64.
+ * @param hashAlgorithm - The hash algorithm used for the public key.
+ * @param isFastLogin - Indicates if fast login (LV) is enabled.
+ * @param idpId - (Optional) The identity provider ID, used in local/dev environments.
+ * @param hashedFiscalCode - (Optional) The hashed fiscal code of the current user, used for active session verification.
+ *
+ * @returns An object containing the necessary headers for the login request.
+ *
+ * @remarks
+ * - The `x-pagopa-current-user` header is included only if `hashedFiscalCode` is provided.
+ * - The `x-pagopa-login-type` header is included only if `isFastLogin` is true.
+ * - The `x-pagopa-idp-id` and `x-pagopa-app-version` headers are used only in local/dev environments.
+ * - The function relies on `isLocalEnv` and `getAppVersion()` from the surrounding scope.
+ * - The `x-pagopa-current-user` header contains the fiscal code hashed using the sha256 algorithm.
+ * It is used by the backend to verify, during an active session login, that the user is logging in with the same fiscal code.
+ * If a different fiscal code is used, error 1004 (AUTH_ERRORS.ERROR_1004) will be triggered.
+ */
+export const getLoginHeaders = (
+  publicKey: PublicKey,
+  hashAlgorithm: string,
+  isFastLogin: boolean,
+  idpId?: string,
+  hashedFiscalCode?: string
+) => ({
+  // Headers required by the backend to enable lollipop-based login
+  "x-pagopa-lollipop-pub-key": Buffer.from(JSON.stringify(publicKey)).toString(
+    "base64"
+  ),
+  "x-pagopa-lollipop-pub-key-hash-algo": hashAlgorithm,
+  ...(hashedFiscalCode && { "x-pagopa-current-user": hashedFiscalCode }),
+  ...(isFastLogin && { "x-pagopa-login-type": "LV" }),
+  // the below headers are used only in local/dev env (dev server)
+  "x-pagopa-idp-id": idpId,
+  ...(isLocalEnv && { "x-pagopa-app-version": getAppVersion() })
+});

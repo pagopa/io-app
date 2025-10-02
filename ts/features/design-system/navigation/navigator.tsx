@@ -15,7 +15,6 @@ import {
 } from "../../../theme/navigations";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { DesignSystem } from "../DesignSystem";
-import { DSCollapsible } from "../core/DSCollapsible";
 import { DSAdvice } from "../core/DSAdvice";
 import { DSAlert } from "../core/DSAlert";
 import { DSAnimatedPictograms } from "../core/DSAnimatedPictograms";
@@ -24,6 +23,7 @@ import { DSBonusCardScreen } from "../core/DSBonusCardScreen";
 import { DSBottomSheet } from "../core/DSBottomSheet";
 import { DSButtons } from "../core/DSButtons";
 import { DSCards } from "../core/DSCards";
+import { DSCollapsible } from "../core/DSCollapsible";
 import { DSColors } from "../core/DSColors";
 import { DSDynamicBackground } from "../core/DSDynamicBackground";
 import { DSDynamicCardRotation } from "../core/DSDynamicCardRotation";
@@ -54,6 +54,7 @@ import { DSLegacyAdvice } from "../core/DSLegacyAdvice";
 import { DSLegacyButtons } from "../core/DSLegacyButtons";
 import { DSListItems } from "../core/DSListItems";
 import { DSLoaders } from "../core/DSLoaders";
+import { DSLoadingScreen } from "../core/DSLoadingScreen";
 import { DSLogos } from "../core/DSLogos";
 import { DSModules } from "../core/DSModules";
 import { DSNumberPad } from "../core/DSNumberPad";
@@ -487,6 +488,14 @@ export const DesignSystemNavigator = () => {
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.SCREENS.BONUS_CARD_SCREEN.route}
           component={DSBonusCardScreen}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.SCREENS.LOADING_SCREEN.route}
+          component={DSLoadingScreen}
+          options={{
+            headerTitle: DESIGN_SYSTEM_ROUTES.SCREENS.LOADING_SCREEN.title
+          }}
         />
 
         <Stack.Screen

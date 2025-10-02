@@ -11,7 +11,7 @@ import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend
 import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
 import { isPnRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
-import { serviceDetailsByIdPotSelector } from "../../../services/details/store/reducers";
+import { serviceDetailsByIdPotSelector } from "../../../services/details/store/selectors";
 import { trackMessageDataLoadFailure } from "../../analytics";
 import {
   cancelGetMessageDataAction,

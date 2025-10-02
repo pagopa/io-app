@@ -30,12 +30,12 @@ import {
   loadThirdPartyMessage,
   upsertMessageStatusAttributes
 } from "../store/actions";
-import { isLoadingOrUpdatingInbox } from "../store/reducers/allPaginated";
-import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
-import { MessageGetStatusFailurePhaseType } from "../store/reducers/messageGetStatus";
 import { getPaginatedMessageById } from "../store/reducers/paginatedById";
-import { thirdPartyFromIdSelector } from "../store/reducers/thirdPartyById";
 import { UIMessage, UIMessageDetails } from "../types";
+import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
+import { thirdPartyFromIdSelector } from "../store/reducers/thirdPartyById";
+import { isLoadingOrUpdatingInbox } from "../store/reducers/allPaginated";
+import { MessageGetStatusFailurePhaseType } from "../store/reducers/messageGetStatus";
 
 import { isFIMSLink } from "../../fims/singleSignOn/utils";
 import { extractContentFromMessageSources } from "../utils";

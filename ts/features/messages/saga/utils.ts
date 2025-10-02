@@ -3,7 +3,7 @@ import { put, select, take } from "typed-redux-saga/macro";
 import { isActionOf } from "typesafe-actions";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { loadServiceDetail } from "../../services/details/store/actions/details";
-import { serviceDetailsByIdPotSelector } from "../../services/details/store/reducers";
+import { serviceDetailsByIdPotSelector } from "../../services/details/store/selectors";
 
 export function* getServiceDetails(serviceId: ServiceId) {
   const initialServicePot = yield* select(
