@@ -14,7 +14,7 @@ import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
 import { currentAARFlowStateErrorCodes } from "../../store/reducers";
 
-const bottomComponent = (errorCodes: Array<string>) => (
+const bottomComponent = (errorCodes: ReadonlyArray<string>) => (
   <>
     <Body>{I18n.t("features.pn.aar.flow.ko.GENERIC.detail.subTitle")}</Body>
     <VSpacer size={16} />
