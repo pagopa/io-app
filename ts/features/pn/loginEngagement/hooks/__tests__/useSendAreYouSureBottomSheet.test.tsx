@@ -9,11 +9,25 @@ jest.mock("../../../../../utils/hooks/bottomSheet", () => ({
 }));
 
 jest.mock("@react-navigation/native", () => ({
-  useFocusEffect: jest.fn()
+  useFocusEffect: jest.fn(),
+  useNavigation: jest.fn().mockReturnValue({ pop: jest.fn() })
 }));
 
 jest.mock("react-native-safe-area-context", () => ({
   useSafeAreaInsets: jest.fn().mockReturnValue({ bottom: 0 })
+}));
+
+jest.mock("@react-navigation/stack", () => ({ createStackNavigator: jest.fn }));
+
+jest.mock("react-redux", () => ({
+  useDispatch: jest.fn()
+}));
+
+jest.mock("../useSendActivationFlow", () => ({
+  useSendActivationFlow: jest.fn().mockReturnValue({
+    requestSendActivation: jest.fn(),
+    isActivating: false
+  })
 }));
 
 const useIOBottomSheetModalMock = useIOBottomSheetModal as jest.Mock;
