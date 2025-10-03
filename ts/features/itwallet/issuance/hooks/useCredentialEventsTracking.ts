@@ -12,6 +12,10 @@ import {
   trackItwAddCredentialNotTrustedIssuer,
   trackItWalletDeferredIssuing
 } from "../../analytics";
+import {
+  serializeFailureReason,
+  shouldSerializeReason
+} from "../../common/utils/itwStoreUtils";
 
 type Params = {
   failure: CredentialIssuanceFailure;
@@ -90,8 +94,12 @@ export const useCredentialEventsTracking = ({
     }
 
     if (failure.type === CredentialIssuanceFailureType.UNEXPECTED) {
+      const reasonToTrack = shouldSerializeReason(failure)
+        ? serializeFailureReason(failure)
+        : failure;
+
       return trackAddCredentialUnexpectedFailure({
-        reason: failure.reason,
+        reason: reasonToTrack.reason,
         type: failure.type,
         credential
       });
