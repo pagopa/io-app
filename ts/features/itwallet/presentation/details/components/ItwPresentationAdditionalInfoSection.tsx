@@ -4,7 +4,7 @@ import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { itwShouldRenderWalletUpgradeMDLDetailsBannerSelector } from "../../../common/store/selectors";
 import { useIOSelector } from "../../../../../store/hooks";
 import { isNewCredential } from "../../../common/utils/itwCredentialUtils";
-import { ItwPresentationNewCredentialAuthenticityAlert } from "./ItwPresentationNewCredentialAuthenticityAlert";
+import { ItwPresentationNewCredentialValidityAlert } from "./ItwPresentationNewCredentialValidityAlert";
 import { ItwPresentationFiscalCode } from "./ItwPresentationFiscalCode.tsx";
 import { ItwPresentationWalletUpgradeMDLDetailsBanner } from "./ItwPresentationWalletUpgradeMDLDetailsBanner";
 
@@ -23,7 +23,7 @@ const ItwPresentationAdditionalInfoSection = ({ credential }: Props) => {
 
   if (isNewCredential(credential.credentialType)) {
     return (
-      <ItwPresentationNewCredentialAuthenticityAlert
+      <ItwPresentationNewCredentialValidityAlert
         credentialType={credential.credentialType}
       />
     );

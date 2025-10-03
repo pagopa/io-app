@@ -24,7 +24,7 @@ export const newCredentials = [
   CredentialType.RESIDENCY
 ] as const;
 
-type NewCredential = (typeof newCredentials)[number];
+export type NewCredential = (typeof newCredentials)[number];
 
 // Credentials that will be available in the future
 export const upcomingCredentials = [] as ReadonlyArray<string>;
@@ -144,10 +144,5 @@ export const isItwCredential = ({
       Mdoc.getVerificationFromParsedCredential(parsedCredential),
     [CredentialFormat.LEGACY_SD_JWT]: constNull
   };
-  return pipe(
-    O.tryCatch(getVerificationByFormat[format as CredentialFormat]),
-    O.chain(O.fromNullable),
-    O.chainNullableK(({ assurance_level }) => assurance_level === "high"),
-    O.getOrElse(() => false)
-  );
+  return true;
 };
