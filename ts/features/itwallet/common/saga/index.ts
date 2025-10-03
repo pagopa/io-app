@@ -1,7 +1,7 @@
 import { SagaIterator } from "redux-saga";
 import { call, fork } from "typed-redux-saga/macro";
 import { watchItwCredentialsSaga } from "../../credentials/saga";
-import { checkCredentialsStatusAttestation } from "../../credentials/saga/checkCredentialsStatusAttestation";
+import { checkCredentialsStatusAssertion } from "../../credentials/saga/checkCredentialsStatusAssertion";
 import { handleWalletCredentialsRehydration } from "../../credentials/saga/handleWalletCredentialsRehydration";
 import { checkHasNfcFeatureSaga } from "../../identification/common/saga/index.ts";
 import { watchItwLifecycleSaga } from "../../lifecycle/saga";
@@ -30,11 +30,11 @@ export function* watchItwSaga(): SagaIterator {
     return;
   }
 
-  // Status attestations of credentials are checked only in case of a valid wallet instance.
+  // Status assertions of credentials are checked only in case of a valid wallet instance.
   // For this reason, these sagas must be called sequentially.
   yield* call(checkWalletInstanceStateSaga);
   yield* call(checkCurrentWalletInstanceStateSaga);
-  yield* call(checkCredentialsStatusAttestation);
+  yield* call(checkCredentialsStatusAssertion);
 }
 
 /**

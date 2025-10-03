@@ -311,4 +311,144 @@ describe("ITW credentials reducer migrations", () => {
 
     expect(nextState).toStrictEqual(persistedStateAt5);
   });
+
+  it("should migrate from 5 to 6", () => {
+    const basePersistedStateAt5 = {
+      credentials: {
+        PersonIdentificationData: {
+          credentialId: "dc_sd_jwt_PersonIdentificationData",
+          credentialType: "PersonIdentificationData",
+          storedStatusAttestation: {
+            credentialStatus: "valid",
+            statusAttestation: "abc123",
+            parsedStatusAttestation: {}
+          },
+          jwt: {
+            expiration: "2024-06-12T11:33:20.000Z",
+            issuedAt: "2024-06-11T18:53:20.000Z"
+          }
+        }
+      },
+      _persist: {
+        version: 0,
+        rehydrated: false
+      }
+    };
+    const persistedStateAt6 = {
+      credentials: {
+        dc_sd_jwt_PersonIdentificationData: {
+          credentialId: "dc_sd_jwt_PersonIdentificationData",
+          credentialType: "PersonIdentificationData",
+          storedStatusAttestation: undefined,
+          jwt: {
+            expiration: "2024-06-12T11:33:20.000Z",
+            issuedAt: "2024-06-11T18:53:20.000Z"
+          }
+        }
+      },
+      _persist: {
+        version: 0,
+        rehydrated: false
+      }
+    };
+
+    const from4To5Migration = itwCredentialsStateMigrations[5];
+    expect(from4To5Migration).toBeDefined();
+    const nextState = from4To5Migration(basePersistedStateAt5);
+
+    expect(nextState).toStrictEqual(persistedStateAt6);
+  });
+
+  it("should migrate from 6 to 7", () => {
+    const basePersistedStateAt6 = {
+      credentials: {
+        dc_sd_jwt_PersonIdentificationData: {
+          credentialId: "dc_sd_jwt_PersonIdentificationData",
+          credentialType: "PersonIdentificationData",
+          storedStatusAttestation: {
+            credentialStatus: "valid",
+            statusAttestation: "abc123",
+            parsedStatusAttestation: {}
+          },
+          jwt: {
+            expiration: "2024-06-12T11:33:20.000Z",
+            issuedAt: "2024-06-11T18:53:20.000Z"
+          }
+        },
+        MDL: {
+          credentialId: "MDL",
+          credentialType: "mDL",
+          storedStatusAttestation: {
+            credentialStatus: "invalid",
+            errorCode: "bad"
+          },
+          jwt: {
+            expiration: "2024-06-12T11:33:20.000Z",
+            issuedAt: "2024-06-11T18:53:20.000Z"
+          }
+        },
+        dc_sd_jwt_residency: {
+          credentialId: "dc_sd_jwt_residency",
+          credentialType: "residency",
+          storedStatusAssertion: undefined,
+          jwt: {
+            expiration: "2026-10-02T07:17:23.000Z",
+            issuedAt: "2025-10-02T07:17:23.000Z"
+          }
+        }
+      },
+      _persist: {
+        version: 0,
+        rehydrated: false
+      }
+    };
+    const persistedStateAt7 = {
+      credentials: {
+        dc_sd_jwt_PersonIdentificationData: {
+          credentialId: "dc_sd_jwt_PersonIdentificationData",
+          credentialType: "PersonIdentificationData",
+          storedStatusAssertion: {
+            credentialStatus: "valid",
+            statusAssertion: "abc123",
+            parsedStatusAssertion: {}
+          },
+          jwt: {
+            expiration: "2024-06-12T11:33:20.000Z",
+            issuedAt: "2024-06-11T18:53:20.000Z"
+          }
+        },
+        MDL: {
+          credentialId: "MDL",
+          credentialType: "mDL",
+          storedStatusAssertion: {
+            credentialStatus: "invalid",
+            errorCode: "bad"
+          },
+          jwt: {
+            expiration: "2024-06-12T11:33:20.000Z",
+            issuedAt: "2024-06-11T18:53:20.000Z"
+          }
+        },
+        dc_sd_jwt_residency: {
+          credentialId: "dc_sd_jwt_residency",
+          credentialType: "residency",
+          storedStatusAssertion: undefined,
+          jwt: {
+            expiration: "2026-10-02T07:17:23.000Z",
+            issuedAt: "2025-10-02T07:17:23.000Z"
+          }
+        }
+      },
+      _persist: {
+        version: 0,
+        rehydrated: false
+      }
+    };
+
+    const from4To5Migration = itwCredentialsStateMigrations[6];
+    expect(from4To5Migration).toBeDefined();
+    const nextState = from4To5Migration(basePersistedStateAt6);
+
+    expect(nextState).toStrictEqual(persistedStateAt7);
+  });
 });

@@ -27,7 +27,7 @@ describe("getCredentialStatus", () => {
             value: "2024-01-12" // Expired
           }
         },
-        storedStatusAttestation: { credentialStatus: "invalid" }
+        storedStatusAssertion: { credentialStatus: "invalid" }
       };
 
       expect(getCredentialStatus(mockCredential, options)).toEqual("expired");
@@ -48,7 +48,7 @@ describe("getCredentialStatus", () => {
           }
         },
         // @ts-expect-error partial type
-        storedStatusAttestation: { credentialStatus: "valid" }
+        storedStatusAssertion: { credentialStatus: "valid" }
       };
 
       expect(getCredentialStatus(mockCredential, options)).toEqual(
@@ -71,7 +71,7 @@ describe("getCredentialStatus", () => {
             value: "2024-01-12" // Expired
           }
         },
-        storedStatusAttestation: { credentialStatus: "invalid" }
+        storedStatusAssertion: { credentialStatus: "invalid" }
       };
 
       expect(getCredentialStatus(mockCredential, options)).toEqual("expired");
@@ -109,7 +109,7 @@ describe("getCredentialStatus", () => {
           }
         },
         // @ts-expect-error partial type
-        storedStatusAttestation: { credentialStatus: "valid" }
+        storedStatusAssertion: { credentialStatus: "valid" }
       };
 
       expect(getCredentialStatus(mockCredential, options)).toEqual("expiring");
@@ -130,7 +130,7 @@ describe("getCredentialStatus", () => {
           }
         },
         // @ts-expect-error partial type
-        storedStatusAttestation: { credentialStatus: "valid" }
+        storedStatusAssertion: { credentialStatus: "valid" }
       };
 
       expect(getCredentialStatus(mockCredential, options)).toEqual(
@@ -154,7 +154,7 @@ describe("getCredentialStatus", () => {
           }
         },
         // @ts-expect-error partial type
-        storedStatusAttestation: { credentialStatus: "valid" }
+        storedStatusAssertion: { credentialStatus: "valid" }
       };
 
       expect(getCredentialStatus(mockCredential, options)).toEqual(
@@ -178,7 +178,7 @@ describe("getCredentialStatus", () => {
           }
         },
         // @ts-expect-error partial type
-        storedStatusAttestation: { credentialStatus: "valid" }
+        storedStatusAssertion: { credentialStatus: "valid" }
       };
 
       expect(getCredentialStatus(mockCredential, options)).toEqual("expiring");
@@ -215,7 +215,7 @@ describe("getCredentialStatus", () => {
             value: "2034-12-31"
           }
         },
-        storedStatusAttestation: { credentialStatus: "invalid" }
+        storedStatusAssertion: { credentialStatus: "invalid" }
       };
 
       expect(getCredentialStatus(mockCredential, options)).toEqual("invalid");
@@ -235,7 +235,7 @@ describe("getCredentialStatus", () => {
             value: "2034-12-31"
           }
         },
-        storedStatusAttestation: { credentialStatus: "invalid" }
+        storedStatusAssertion: { credentialStatus: "invalid" }
       };
 
       expect(getCredentialStatus(mockCredential, options)).toEqual("invalid");
@@ -258,7 +258,7 @@ describe("getCredentialStatus", () => {
           }
         },
         // @ts-expect-error partial type
-        storedStatusAttestation: { credentialStatus: "valid" }
+        storedStatusAssertion: { credentialStatus: "valid" }
       };
 
       expect(getCredentialStatus(mockCredential, options)).toEqual("valid");
@@ -279,7 +279,7 @@ describe("getCredentialStatus", () => {
           }
         },
         // @ts-expect-error partial type
-        storedStatusAttestation: { credentialStatus: "valid" }
+        storedStatusAssertion: { credentialStatus: "valid" }
       };
 
       expect(getCredentialStatus(mockCredential, options)).toEqual("valid");
@@ -300,10 +300,10 @@ describe("getCredentialStatus", () => {
   });
 
   describe("unknown", () => {
-    it("should return unknown when the status attestation could not be fetched", () => {
+    it("should return unknown when the status assertion could not be fetched", () => {
       const mockCredential: StoredCredential = {
         ...ItwStoredCredentialsMocks.eid,
-        storedStatusAttestation: {
+        storedStatusAssertion: {
           credentialStatus: "unknown"
         }
       };

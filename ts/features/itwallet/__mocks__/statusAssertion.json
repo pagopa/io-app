@@ -1,0 +1,18 @@
+{
+  "credential_status_type": "0x00",
+  "credential_hash_alg": "sha-256",
+  "iss": "https://eaa.wallet.ipzs.it/1-0",
+  "credential_hash": "34672779d6d5b70344c572f92e64c79b555f4b2fa629a97e0f0636889dd0b3c2",
+  "cnf": {
+    "jwk": {
+      "kty": "EC",
+      "crv": "P-256",
+      "kid": "sFn0WTKG_v0kSxjzFTuf48l9bwSahyIPsErm7untTBY",
+      "x": "HVThomQ29WwG8gUmD7lkno-SdNviyvps3lBRDzKdxVE",
+      "y": "VCZYUhHQiOK0YCt7oaIfp2SuU-vnl7OisO_I3JMccaY"
+    }
+  },
+  "exp": 1756904365,
+  "iat": 1756817965,
+  "jti": "ce755a94-c124-4663-b52e-ad621ab6d03c"
+}

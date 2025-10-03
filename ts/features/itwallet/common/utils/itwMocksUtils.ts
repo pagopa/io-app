@@ -7,9 +7,9 @@ import dcL3 from "../../__mocks__/L3/dcL3.json";
 import edL3 from "../../__mocks__/L3/edL3.json";
 import eeL3 from "../../__mocks__/L3/eeL3.json";
 import resL3 from "../../__mocks__/L3/resL3.json";
-import statusAttestation from "../../__mocks__/statusAttestation.json";
+import statusAssertion from "../../__mocks__/statusAssertion.json";
 import ts from "../../__mocks__/ts.json";
-import { ParsedStatusAttestation, StoredCredential } from "./itwTypesUtils";
+import { ParsedStatusAssertion, StoredCredential } from "./itwTypesUtils";
 
 export const ISSUER_MOCK_NAME = "Istituto Poligrafico e Zecca dello Stato";
 
@@ -43,6 +43,6 @@ export const ItwStoredCredentialsMocks = {
   }
 };
 
-export const ItwStatusAttestationMocks = {
-  mdl: statusAttestation as ParsedStatusAttestation
+export const ItwStatusAssertionMocks = {
+  mdl: statusAssertion as ParsedStatusAssertion
 };
