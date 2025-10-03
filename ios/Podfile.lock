@@ -2486,8 +2486,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-background-timer"
   react-native-blob-util:
     :path: "../node_modules/react-native-blob-util"
-  react-native-cie:
-    :path: "../node_modules/@pagopa/react-native-cie"
   react-native-config:
     :path: "../node_modules/react-native-config"
   react-native-cookies:
