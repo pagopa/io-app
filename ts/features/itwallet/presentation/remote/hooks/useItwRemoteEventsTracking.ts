@@ -16,7 +16,10 @@ import {
   trackItwRemoteUnexpectedFailure,
   trackItwRemoteUntrustedRP
 } from "../analytics";
-import { serializeFailureReason } from "../../../common/utils/itwStoreUtils";
+import {
+  serializeFailureReason,
+  shouldSerializeReason
+} from "../../../common/utils/itwStoreUtils";
 
 type Params = {
   failure: RemoteFailure;
@@ -71,13 +74,8 @@ export const useItwRemoteEventsTracking = ({ failure }: Params) => {
         return trackItwRemoteRPInvalidAuthResponse(serializedFailure);
 
       case RemoteFailureType.UNEXPECTED:
-        const shouldSerializeReason =
-          !failure.reason ||
-          (typeof failure.reason === "object" &&
-            Object.keys(failure.reason).length === 0);
-
         return trackItwRemoteUnexpectedFailure(
-          shouldSerializeReason ? serializedFailure : failure
+          shouldSerializeReason(failure) ? serializedFailure : failure
         );
     }
   }, [failure]);
