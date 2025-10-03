@@ -91,7 +91,7 @@ export const ItwPaywallComponent = ({
 }: ItwPaywallComponentProps) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const theme = useIOTheme();
-  const { warning: toastWarning } = useIOToast();
+  const { info: toastInfo } = useIOToast();
 
   const { tos_url } = useIOSelector(tosConfigSelector);
   const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
@@ -118,7 +118,7 @@ export const ItwPaywallComponent = ({
       dismissalDialog.show();
     },
     onStartSupportRequest: () => {
-      toastWarning(I18n.t("features.wallet.onboarding.badge.unavailable"));
+      toastInfo(I18n.t("features.itWallet.generic.featureUnavailable.title"));
       return false;
     }
   });
