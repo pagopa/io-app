@@ -1,5 +1,5 @@
 import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
-import { ThirdPartyMessage } from "../../../../../definitions/pn/ThirdPartyMessage";
+import { ThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
 
 export type SendAARFlowStatesType = typeof sendAARFlowStates;
 
@@ -106,3 +106,7 @@ export type AARFlowState =
   | DisplayingNotification
   | FinalNotAddressee
   | ErrorState;
+export type AarFlowStates<T extends AARFlowStateName> = Extract<
+  AARFlowState,
+  { type: T }
+>;

@@ -1,128 +1,78 @@
-import * as E from "fp-ts/lib/Either";
-import { ValidationError } from "io-ts";
-import { IResponseType } from "@pagopa/ts-commons/lib/requests";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { testSaga } from "redux-saga-test-plan";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
+import { loadServiceDetail } from "../../../services/details/store/actions/details";
+import { serviceDetailsByIdPotSelector } from "../../../services/details/store/selectors";
+import { getServiceDetails } from "../utils";
 
-import { handleResponse, ResponseType } from "../../utils/responseHandling";
-import { reloadAllMessages } from "../../store/actions";
-import {
-  defaultRequestError,
-  defaultRequestPayload
-} from "../../__mocks__/messages";
-
-describe("`handleResponse` function", () => {
-  describe("given a failure", () => {
-    const failure: E.Either<
-      Array<ValidationError>,
-      ResponseType<unknown>
-    > = E.left([
-      {
-        value: 42,
-        context: [],
-        message: "a password here"
-      } as ValidationError
-    ]);
-
-    it("should run `onFailure` callback with a privacy report", () => {
-      const onFailure = jest.fn();
-      handleResponse(failure, jest.fn(), onFailure);
-      expect(onFailure).toHaveBeenNthCalledWith(
-        1,
-        new Error("some value at [root] is not a known property")
-      );
-    });
-
-    it("should not run `onSuccess` callback", () => {
-      const onSuccess = jest.fn();
-      handleResponse(failure, onSuccess, jest.fn());
-      expect(onSuccess).not.toHaveBeenCalled();
-    });
+describe("getServiceDetails", () => {
+  it("when no service is in store, it should dispatch a loadServiceDetail.request and retrieve its result from the store if it succeeds", () => {
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
+    const serviceDetails = { id: serviceId } as ServiceDetails;
+    testSaga(getServiceDetails, serviceId)
+      .next()
+      .select(serviceDetailsByIdPotSelector, serviceId)
+      .next(pot.none)
+      .put(loadServiceDetail.request(serviceId))
+      .next()
+      .take([loadServiceDetail.success, loadServiceDetail.failure])
+      .next(loadServiceDetail.success(serviceDetails))
+      .select(serviceDetailsByIdPotSelector, serviceId)
+      .next(pot.some(serviceDetails))
+      .returns(serviceDetails);
   });
-
-  describe("given a success", () => {
-    describe("with a 200 status", () => {
-      const success: E.Either<
-        Array<ValidationError>,
-        ResponseType<string>
-      > = E.right({ status: 200, value: "حبيبتي" } as IResponseType<
-        200,
-        string
-      >);
-
-      it("should run `onSuccess` callback with the response and return its action", () => {
-        const expectedAction = reloadAllMessages.request(defaultRequestPayload);
-        const onSuccess = jest.fn(() => expectedAction);
-        const action = handleResponse(success, onSuccess, jest.fn());
-        expect(onSuccess).toHaveBeenNthCalledWith(1, "حبيبتي");
-        expect(action).toEqual(expectedAction);
-      });
-
-      it("should not run `onFailure` callback", () => {
-        const onFailure = jest.fn();
-        handleResponse(success, jest.fn(), onFailure);
-        expect(onFailure).not.toHaveBeenCalled();
-      });
-    });
-
-    describe("with a 401 status", () => {
-      const success: E.Either<Array<ValidationError>, any> = E.right({
-        status: 401,
-        value: {}
-      });
-
-      it("should run neither `onSuccess` nor `onFailure` callback", () => {
-        const onSuccess = jest.fn();
-        const onFailure = jest.fn();
-        handleResponse(success, onSuccess, onFailure);
-        expect(onSuccess).not.toHaveBeenCalled();
-        expect(onFailure).not.toHaveBeenCalled();
-      });
-
-      it("should return `sessionExpired` action", () => {
-        expect(handleResponse(success, jest.fn(), jest.fn())).toEqual(
-          undefined
-        );
-      });
-    });
-
-    describe("with a 500 status", () => {
-      const success: E.Either<Array<ValidationError>, any> = E.right({
-        status: 500,
-        value: { title: "seriously?" }
-      });
-
-      it("should run `onFailure` callback with the error and return its action", () => {
-        const expectedAction = reloadAllMessages.failure(defaultRequestError);
-        const onFailure = jest.fn(() => expectedAction);
-        const action = handleResponse(success, jest.fn(), onFailure);
-        expect(onFailure).toHaveBeenNthCalledWith(1, new Error("seriously?"));
-        expect(action).toEqual(expectedAction);
-      });
-
-      it("should not run `onSuccess` callback", () => {
-        const onSuccess = jest.fn();
-        handleResponse(success, onSuccess, jest.fn());
-        expect(onSuccess).not.toHaveBeenCalled();
-      });
-    });
+  it("when an error is in store, it should dispatch a loadServiceDetail.request and retrieve its result from the store if it succeeds", () => {
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
+    const serviceDetails = { id: serviceId } as ServiceDetails;
+    testSaga(getServiceDetails, serviceId)
+      .next()
+      .select(serviceDetailsByIdPotSelector, serviceId)
+      .next(pot.noneError)
+      .put(loadServiceDetail.request(serviceId))
+      .next()
+      .take([loadServiceDetail.success, loadServiceDetail.failure])
+      .next(loadServiceDetail.success(serviceDetails))
+      .select(serviceDetailsByIdPotSelector, serviceId)
+      .next(pot.some(serviceDetails))
+      .returns(serviceDetails);
   });
-
-  describe("with any other status", () => {
-    const success: E.Either<Array<ValidationError>, any> = E.right({
-      status: Math.random(),
-      value: {}
-    });
-
-    it("should run `onFailure` callback with the UNKNOWN error", () => {
-      const onFailure = jest.fn();
-      handleResponse(success, jest.fn(), onFailure);
-      expect(onFailure).toHaveBeenNthCalledWith(1, new Error("UNKNOWN"));
-    });
-
-    // eslint-disable-next-line sonarjs/no-identical-functions
-    it("should not run `onSuccess` callback", () => {
-      const onSuccess = jest.fn();
-      handleResponse(success, onSuccess, jest.fn());
-      expect(onSuccess).not.toHaveBeenCalled();
-    });
+  it("when a service with error is in store, it should dispatch a loadServiceDetail.request and retrieve its result from the store if it succeeds", () => {
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
+    const serviceDetails = { id: serviceId } as ServiceDetails;
+    testSaga(getServiceDetails, serviceId)
+      .next()
+      .select(serviceDetailsByIdPotSelector, serviceId)
+      .next(pot.someError({}, new Error()))
+      .put(loadServiceDetail.request(serviceId))
+      .next()
+      .take([loadServiceDetail.success, loadServiceDetail.failure])
+      .next(loadServiceDetail.success(serviceDetails))
+      .select(serviceDetailsByIdPotSelector, serviceId)
+      .next(pot.some(serviceDetails))
+      .returns(serviceDetails);
+  });
+  it("when a service is in store, it should return its details", () => {
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
+    const serviceDetails = { id: serviceId } as ServiceDetails;
+    testSaga(getServiceDetails, serviceId)
+      .next()
+      .select(serviceDetailsByIdPotSelector, serviceId)
+      .next(pot.some(serviceDetails))
+      .returns(serviceDetails);
+  });
+  it("when no service is in store, it should dispatch a loadServiceDetail.request but return undefined if the related saga fails", () => {
+    const serviceId = "01J5WS3X839BXX6R1CMM51AB8R" as ServiceId;
+    testSaga(getServiceDetails, serviceId)
+      .next()
+      .select(serviceDetailsByIdPotSelector, serviceId)
+      .next(pot.none)
+      .put(loadServiceDetail.request(serviceId))
+      .next()
+      .take([loadServiceDetail.success, loadServiceDetail.failure])
+      .next(
+        loadServiceDetail.failure({ service_id: serviceId, error: new Error() })
+      )
+      .returns(undefined);
   });
 });

@@ -1,12 +1,13 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { getType } from "typesafe-actions";
-import { pipe } from "fp-ts/lib/function";
+import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
-import { toUndefinedOptional } from "../../../../utils/pot";
+import { pipe } from "fp-ts/lib/function";
+import _ from "lodash";
+import { getType } from "typesafe-actions";
+import { HasPreconditionEnum } from "../../../../../definitions/backend/HasPrecondition";
+import { RemoteContentDetails } from "../../../../../definitions/backend/RemoteContentDetails";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
-import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
-import { loadThirdPartyMessage, reloadAllMessages } from "../actions";
 import { Action } from "../../../../store/actions/types";
 import { IndexedById } from "../../../../store/helpers/indexer";
 import {
@@ -15,29 +16,19 @@ import {
   toSome
 } from "../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../store/reducers/types";
-import { RemoteContentDetails } from "../../../../../definitions/backend/RemoteContentDetails";
+import { isTestEnv } from "../../../../utils/environment";
+import { toUndefinedOptional } from "../../../../utils/pot";
+import {
+  populateStoresWithEphemeralAarMessageData,
+  terminateAarFlow
+} from "../../../pn/aar/store/actions";
 import { UIMessageDetails } from "../../types";
 import { extractContentFromMessageSources } from "../../utils";
-import { isTestEnv } from "../../../../utils/environment";
-
-export const thirdPartyKind = {
-  TPM: "TPM",
-  AAR: "AAR"
-} as const;
-
-type ThirdPartyKind = typeof thirdPartyKind;
-
-type StandardThirdPartyMessage = {
-  kind: ThirdPartyKind["TPM"];
-} & ThirdPartyMessageWithContent;
-type EphemeralAARThirdPartyMessage = {
-  kind: ThirdPartyKind["AAR"];
-  mandateId?: string;
-} & ThirdPartyMessageWithContent;
-
-export type ThirdPartyMessageUnion =
-  | StandardThirdPartyMessage
-  | EphemeralAARThirdPartyMessage;
+import {
+  ThirdPartyMessageUnion,
+  isEphemeralAARThirdPartyMessage
+} from "../../utils/thirdPartyById";
+import { loadThirdPartyMessage, reloadAllMessages } from "../actions";
 
 export type ThirdPartyById = IndexedById<
   pot.Pot<ThirdPartyMessageUnion, Error>
@@ -63,6 +54,47 @@ export const thirdPartyByIdReducer = (
       return toError(action.payload.id, state, action.payload.error);
     case getType(reloadAllMessages.request):
       return initialState;
+    case getType(populateStoresWithEphemeralAarMessageData):
+      const {
+        iun,
+        pnServiceID,
+        subject,
+        mandateId,
+        thirdPartyMessage,
+        markDown,
+        fiscalCode
+      } = action.payload;
+
+      return toSome(iun, state, {
+        kind: "AAR",
+        mandateId,
+        created_at: new Date(),
+        third_party_message: thirdPartyMessage,
+        id: iun,
+        fiscal_code: fiscalCode as FiscalCode,
+        sender_service_id: pnServiceID,
+        content: {
+          third_party_data: {
+            has_attachments: true,
+            has_precondition: HasPreconditionEnum.ALWAYS,
+            id: iun
+          },
+          markdown: markDown,
+          subject
+        }
+      });
+
+    case getType(terminateAarFlow):
+      const newState = _.pickBy(state, (value, _key) =>
+        pipe(
+          value,
+          O.fromNullable,
+          O.flatMap(pot.toOption),
+          O.filter(message => !isEphemeralAARThirdPartyMessage(message)),
+          O.isSome
+        )
+      );
+      return { ...newState };
   }
   return state;
 };
@@ -71,6 +103,16 @@ export const thirdPartyFromIdSelector = (
   state: GlobalState,
   ioMessageId: string
 ) => state.entities.messages.thirdPartyById[ioMessageId] ?? pot.none;
+
+export const isThirdParyMessageAarSelector = (
+  state: GlobalState,
+  ioMessageId: string
+) =>
+  pipe(
+    thirdPartyFromIdSelector(state, ioMessageId),
+    data => pot.map(data, isEphemeralAARThirdPartyMessage),
+    data => pot.getOrElse(data, false)
+  );
 
 export const messageTitleSelector = (state: GlobalState, ioMessageId: string) =>
   messageContentSelector(

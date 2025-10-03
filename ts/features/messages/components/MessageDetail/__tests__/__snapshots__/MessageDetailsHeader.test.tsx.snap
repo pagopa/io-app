@@ -454,6 +454,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                               },
                             ]
                           }
+                          testID="organization-header"
                         >
                           <View
                             style={
@@ -479,6 +480,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                                   },
                                 ]
                               }
+                              testID="org-name"
                             >
                               Ċentru tas-Saħħa
                             </Text>

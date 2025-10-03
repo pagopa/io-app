@@ -6,13 +6,16 @@ import {
   IOSpacingScale,
   useIOTheme
 } from "@pagopa/io-app-design-system";
+import i18n from "i18next";
 import { useCallback } from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
+import { thirdPartySenderDenominationSelector } from "../../../pn/aar/store/selectors";
 import { SERVICES_ROUTES } from "../../../services/common/navigation/routes";
 import { messagePaymentDataSelector } from "../../store/reducers/detailsById";
+import { isThirdParyMessageAarSelector } from "../../store/reducers/thirdPartyById";
 import { AvatarDouble } from "../Home/DS/AvatarDouble";
 
 export type OrganizationHeaderProps = {
@@ -49,6 +52,12 @@ export const OrganizationHeader = ({
   const paymentData = useIOSelector(state =>
     messagePaymentDataSelector(state, messageId)
   );
+  const isEphemeralAar = useIOSelector(state =>
+    isThirdParyMessageAarSelector(state, messageId)
+  );
+  const maybeSenderDenomination = useIOSelector(state =>
+    thirdPartySenderDenominationSelector(state, messageId)
+  );
   const navigateToServiceDetails = useCallback(
     () =>
       navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
@@ -59,12 +68,34 @@ export const OrganizationHeader = ({
       }),
     [navigation, serviceId]
   );
+
+  if (isEphemeralAar && maybeSenderDenomination === undefined) {
+    return null;
+  }
+
+  const OrganizationName = () =>
+    isEphemeralAar ? (
+      <Body weight="Regular" color={"black"} testID="org-name-aar">
+        {maybeSenderDenomination}
+        <BodySmall weight="Regular">
+          {i18n.t(
+            "features.pn.aar.flow.displayingNotificationData.headerText-through"
+          )}
+        </BodySmall>
+      </Body>
+    ) : (
+      <Body testID="org-name" weight="Semibold">
+        {organizationName}
+      </Body>
+    );
+
   return (
     <View
+      testID="organization-header"
       style={[styles.item, { borderColor: IOColors[theme["divider-default"]] }]}
     >
       <View style={{ flex: 1 }}>
-        <Body weight="Semibold">{organizationName}</Body>
+        <OrganizationName />
         <BodySmall
           asLink
           accessibilityRole="button"

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`OrganizationHeader component should match the snapshot 1`] = `
+exports[`OrganizationHeader component should match the snapshot for a non-aar message 1`] = `
 <View
   style={
     {
@@ -382,6 +382,7 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
                             },
                           ]
                         }
+                        testID="organization-header"
                       >
                         <View
                           style={
@@ -407,6 +408,7 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
                                 },
                               ]
                             }
+                            testID="org-name"
                           >
                             #### organization_name ####
                           </Text>
