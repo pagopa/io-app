@@ -52,7 +52,6 @@ export const getProximityDetails = (
       const credential = credentialsByType[docType];
 
       assert(credential, `Credential not found for docType: ${docType}`);
-
       // Extract required fields from the verifier request.
       // Each field is formatted as "namespace:field" to match the structure
       // of parsedCredential, which uses colon-separated keys.
@@ -60,11 +59,12 @@ export const getProximityDetails = (
         ([namespace, fields]) =>
           Object.keys(fields).map(field => `${namespace}:${field}`)
       );
-      // Only include required claims that are part of the parsed credential.
+      const required = new Set(requiredFields);
+
       const parsedCredential = Object.fromEntries(
-        requiredFields
-          .filter(field => field in credential.parsedCredential)
-          .map(field => [field, credential.parsedCredential[field]])
+        Object.keys(credential.parsedCredential)
+          .filter(k => required.has(k))
+          .map(k => [k, credential.parsedCredential[k]])
       );
 
       return {

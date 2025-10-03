@@ -26,7 +26,7 @@ import { ItwProximityPresentationDetails } from "../components/ItwProximityPrese
 import { ISSUER_MOCK_NAME } from "../../../common/utils/itwMocksUtils.ts";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
 import { ProximityDetails } from "../utils/itwProximityTypeUtils.ts";
-import { identificationRequest } from "../../../../identification/store/actions/index.ts";
+import { identificationRequest } from "../../../../identification/store/actions";
 import {
   trackItwProximityContinuePresentation,
   trackItwProximityDataShare
