@@ -7,6 +7,7 @@ import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
 import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
 import { PaidPaymentScreen } from "../screens/PaidPaymentScreen";
 import { SendEngagementOnFirstAppOpenScreen } from "../loginEngagement/screens/SendEngagementOnFirstAppOpenScreen";
+import { SendActivationErrorScreen } from "../loginEngagement/screens/SendActivationErrorScreen";
 import { PnParamsList } from "./params";
 import PN_ROUTES from "./routes";
 
@@ -49,7 +50,12 @@ export const PnStackNavigator = () => (
     <Stack.Screen
       name={PN_ROUTES.SEND_ENGAGEMENT_ON_FIRST_APP_OPENING}
       component={SendEngagementOnFirstAppOpenScreen}
-      options={hiddenHeader}
+      options={{ ...hiddenHeader, gestureEnabled: false }}
+    />
+    <Stack.Screen
+      name={PN_ROUTES.SEND_ENGAGEMENT_ACTIVATION_ERROR}
+      component={SendActivationErrorScreen}
+      options={{ ...hiddenHeader, gestureEnabled: false }}
     />
   </Stack.Navigator>
 );

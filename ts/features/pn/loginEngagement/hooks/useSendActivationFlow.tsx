@@ -1,4 +1,3 @@
-import { constNull } from "fp-ts/lib/function";
 import { useIOToast } from "@pagopa/io-app-design-system";
 import i18next from "i18next";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -6,9 +5,11 @@ import { pnActivationUpsert } from "../../store/actions";
 import { isLoadingPnActivationSelector } from "../../store/reducers/activation";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { setSendEngagementScreenHasBeenDismissed } from "../store/actions";
+import PN_ROUTES from "../../navigation/routes";
+import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 
 export const useSendActivationFlow = () => {
-  const { pop } = useIONavigation();
+  const { pop, navigate } = useIONavigation();
   const dispatch = useIODispatch();
   const toast = useIOToast();
   const isActivating = useIOSelector(isLoadingPnActivationSelector);
@@ -18,7 +19,14 @@ export const useSendActivationFlow = () => {
     dispatch(setSendEngagementScreenHasBeenDismissed());
     toast.success(i18next.t("features.pn.loginEngagement.send.toast"));
   };
-  const onSENDActivationFailed = constNull; // TODO: Navigation to failure screen
+  const onSENDActivationFailed = () => {
+    navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+      screen: PN_ROUTES.MAIN,
+      params: {
+        screen: PN_ROUTES.SEND_ENGAGEMENT_ACTIVATION_ERROR
+      }
+    });
+  };
 
   const requestSendActivation = () => {
     dispatch(

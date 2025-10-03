@@ -21,6 +21,7 @@ jest.mock("@pagopa/io-app-design-system", () => ({
 }));
 
 const mockPop = jest.fn();
+const mockNavigate = jest.fn();
 const mockDispatch = jest.fn();
 const mockToastSuccess = jest.fn();
 
@@ -32,7 +33,10 @@ const mockUseIOToast = useIOToast as jest.Mock;
 describe(useSendActivationFlow, () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockUseIONavigation.mockReturnValue({ pop: mockPop });
+    mockUseIONavigation.mockReturnValue({
+      pop: mockPop,
+      navigate: mockNavigate
+    });
     mockUseIODispatch.mockReturnValue(mockDispatch);
     mockUseIOToast.mockReturnValue({ success: mockToastSuccess });
   });
@@ -106,8 +110,8 @@ describe(useSendActivationFlow, () => {
       failureCallback();
     });
 
-    // Currently, onFailure is constNull, so no actions should be taken.
     expect(mockPop).not.toHaveBeenCalled();
+    expect(mockNavigate).toHaveBeenCalledTimes(1);
     expect(mockToastSuccess).not.toHaveBeenCalled();
     expect(mockDispatch).toHaveBeenCalledTimes(1);
   });
