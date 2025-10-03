@@ -11,6 +11,7 @@ import * as selectors from "../../connectivity/store/selectors";
 import * as itwSelectors from "../../itwallet/common/store/selectors";
 import * as ioHook from "../../../store/hooks";
 import { identificationRequest } from "../../identification/store/actions";
+import { IdentificationBackActionType } from "../../identification/store/reducers";
 
 jest.useFakeTimers();
 
@@ -78,7 +79,9 @@ describe(IngressScreen, () => {
             false,
             undefined,
             undefined,
-            expect.any(Object)
+            expect.any(Object),
+            undefined,
+            IdentificationBackActionType.CLOSE_APP
           )
         );
       });
