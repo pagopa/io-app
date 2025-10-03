@@ -10,14 +10,14 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import { useIODispatch } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { setSendEngagementScreenHasBeenDismissed } from "../store/actions";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { pnPrivacyUrlsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { useSendActivationFlow } from "./useSendActivationFlow";
 
-const FAKE_URL = "https://www.google.com";
-
 export const useSendAreYouSureBottomSheet = () => {
+  const { privacy, tos } = useIOSelector(pnPrivacyUrlsSelector);
   const dispatch = useIODispatch();
   const { pop } = useIONavigation();
   const { isActivating, requestSendActivation } = useSendActivationFlow();
@@ -54,7 +54,7 @@ export const useSendAreYouSureBottomSheet = () => {
         <IOMarkdown
           content={i18next.t(
             "features.pn.loginEngagement.send.areYouSureBottomSheet.content.privacyAndTos",
-            { privacyUrl: FAKE_URL, tosUrl: FAKE_URL }
+            { privacyUrl: privacy, tosUrl: tos }
           )}
         />
         <VStack space={16} style={{ alignItems: "center" }}>

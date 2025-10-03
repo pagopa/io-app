@@ -5,11 +5,12 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { pnPrivacyUrlsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { useIOSelector } from "../../../../store/hooks";
 import { useSendActivationFlow } from "./useSendActivationFlow";
 
-const FAKE_URL = "https://www.google.com";
-
 export const useSendActivationBottomSheet = () => {
+  const { privacy, tos } = useIOSelector(pnPrivacyUrlsSelector);
   const { isActivating, requestSendActivation } = useSendActivationFlow();
 
   const {
@@ -25,7 +26,7 @@ export const useSendActivationBottomSheet = () => {
         <IOMarkdown
           content={i18next.t(
             "features.pn.loginEngagement.send.activationBottomSheet.content",
-            { privacyUrl: FAKE_URL, tosUrl: FAKE_URL }
+            { privacyUrl: privacy, tosUrl: tos }
           )}
         />
         <IOButton

@@ -42,7 +42,7 @@ exports[`useSendActivationBottomSheet should match the snapshot 1`] = `
       space={24}
     >
       <Memo(IOMarkdown)
-        content="Premendo **Continua** dichiari di aver letto e compreso l'[informativa Privacy](https://www.google.com) e i [Termini e Condizioni d'uso](https://www.google.com)."
+        content="Premendo **Continua** dichiari di aver letto e compreso l'[informativa Privacy](PRIVACY_URL) e i [Termini e Condizioni d'uso](TOS_URL)."
       />
       <ForwardRef
         label="Continua"

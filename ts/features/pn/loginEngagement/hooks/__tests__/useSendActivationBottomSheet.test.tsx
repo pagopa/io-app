@@ -8,6 +8,15 @@ jest.mock("../../../../../utils/hooks/bottomSheet", () => ({
   useIOBottomSheetModal: jest.fn()
 }));
 
+jest.mock("../../../../../store/reducers/backendStatus/remoteConfig", () => ({
+  ...jest.requireActual(
+    "../../../../../store/reducers/backendStatus/remoteConfig"
+  ),
+  pnPrivacyUrlsSelector: jest
+    .fn()
+    .mockReturnValue({ tos: "TOS_URL", privacy: "PRIVACY_URL" })
+}));
+
 jest.mock("@react-navigation/native", () => ({
   useFocusEffect: jest.fn()
 }));
@@ -19,7 +28,8 @@ jest.mock("react-native-safe-area-context", () => ({
 jest.mock("@react-navigation/stack", () => ({ createStackNavigator: jest.fn }));
 
 jest.mock("react-redux", () => ({
-  useDispatch: jest.fn()
+  useDispatch: jest.fn(),
+  useSelector: jest.fn().mockImplementation(fn => fn())
 }));
 
 jest.mock("../useSendActivationFlow", () => ({
