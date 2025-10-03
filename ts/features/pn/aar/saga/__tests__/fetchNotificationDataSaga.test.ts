@@ -5,6 +5,7 @@ import * as O from "fp-ts/lib/Option";
 import { testSaga } from "redux-saga-test-plan";
 import { call } from "typed-redux-saga";
 import { ThirdPartyMessage as PnThirdPartyMessage } from "../../../../../../definitions/pn/ThirdPartyMessage";
+import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
 import { ThirdPartyMessage as AarThirdPartyMessage } from "../../../../../../definitions/pn/aar/ThirdPartyMessage";
 import NavigationService from "../../../../../navigation/NavigationService";
 import { pnMessagingServiceIdSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
@@ -57,7 +58,8 @@ describe("fetchAarDataSaga", () => {
         .call(fetchData, {
           Bearer: mockSessionToken,
           iun: mockCurrentState.iun,
-          mandateId: mockCurrentState.mandateId
+          mandateId: mockCurrentState.mandateId,
+          "x-pagopa-pn-io-src": "QRCODE"
         })
         .next(mockFailure)
         .put(
@@ -71,8 +73,9 @@ describe("fetchAarDataSaga", () => {
     });
 
     it("should handle status !== 200 and set KO state", () => {
-      const mockResolved = E.right({ status: 400, value: mockNotification });
-      const fetchData = jest.fn().mockResolvedValue(mockResolved);
+      const mockResolved = { status: 400, value: mockNotification };
+      const mockResolvedEither = E.right(mockResolved);
+      const fetchData = jest.fn().mockResolvedValue(mockResolvedEither);
 
       testSaga(fetchAarDataSaga, fetchData, mockSessionToken)
         .next()
@@ -81,13 +84,15 @@ describe("fetchAarDataSaga", () => {
         .call(fetchData, {
           Bearer: mockSessionToken,
           iun: mockCurrentState.iun,
-          mandateId: mockCurrentState.mandateId
+          mandateId: mockCurrentState.mandateId,
+          "x-pagopa-pn-io-src": "QRCODE"
         })
-        .next(mockResolved)
+        .next(mockResolvedEither)
         .put(
           setAarFlowState({
             type: sendAARFlowStates.ko,
-            previousState: mockCurrentState
+            previousState: mockCurrentState,
+            error: mockResolved.value as unknown as AARProblemJson
           })
         )
         .next()
@@ -105,7 +110,8 @@ describe("fetchAarDataSaga", () => {
         .call(fetchData, {
           Bearer: mockSessionToken,
           iun: mockCurrentState.iun,
-          mandateId: mockCurrentState.mandateId
+          mandateId: mockCurrentState.mandateId,
+          "x-pagopa-pn-io-src": "QRCODE"
         })
         .throw(error)
         .put(
@@ -129,7 +135,8 @@ describe("fetchAarDataSaga", () => {
         .call(fetchData, {
           Bearer: mockSessionToken,
           iun: mockCurrentState.iun,
-          mandateId: mockCurrentState.mandateId
+          mandateId: mockCurrentState.mandateId,
+          "x-pagopa-pn-io-src": "QRCODE"
         })
         .next(mockValue)
         .call(
@@ -151,7 +158,8 @@ describe("fetchAarDataSaga", () => {
         .call(fetchData, {
           Bearer: mockSessionToken,
           iun: mockCurrentState.iun,
-          mandateId: mockCurrentState.mandateId
+          mandateId: mockCurrentState.mandateId,
+          "x-pagopa-pn-io-src": "QRCODE"
         })
         .next(mockValue)
         .call(

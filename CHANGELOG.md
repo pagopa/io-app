@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.16.0-rc.1](https://github.com/pagopa/io-app/compare/3.16.0-rc.0...3.16.0-rc.1) (2025-10-02)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2948](https://pagopa.atlassian.net/browse/SIW-2948)] Update Mixpanel event tracking for the CIE card reading process ([#7407](https://github.com/pagopa/io-app/issues/7407)) ([3fdc113](https://github.com/pagopa/io-app/commit/3fdc113f1b01a40c667195939ea3d53e0d088ca7))
+
 ## [3.16.0-rc.0](https://github.com/pagopa/io-app/compare/3.15.0-rc.2...3.16.0-rc.0) (2025-10-02)
 
 

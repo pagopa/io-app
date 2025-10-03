@@ -38,7 +38,8 @@ export function* fetchAarDataSaga(
     const result = yield* call(fetchData, {
       Bearer: sessionToken,
       iun: currentState.iun,
-      mandateId: currentState.mandateId
+      mandateId: currentState.mandateId,
+      "x-pagopa-pn-io-src": "QRCODE"
     });
 
     if (E.isLeft(result)) {
@@ -92,7 +93,8 @@ export function* fetchAarDataSaga(
     yield* put(
       setAarFlowState({
         type: sendAARFlowStates.ko,
-        previousState: currentState
+        previousState: currentState,
+        error: value
       })
     );
     return;
