@@ -6,6 +6,9 @@ import { isActiveSessionLoginSelector } from "../store/selectors";
 import { setFinishedActiveSessionLoginFlow } from "../store/actions";
 import { CieCardReaderScreenNavigationParams } from "../../login/cie/screens/CieCardReaderScreen";
 import { CieConsentDataUsageScreenNavigationParams } from "../../login/cie/screens/CieConsentDataUsageScreen";
+import ROUTES from "../../../../navigation/routes";
+import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import { sessionCorrupted } from "../../common/store/actions";
 
 const useActiveSessionLoginNavigation = () => {
   const navigation = useIONavigation();
@@ -15,7 +18,9 @@ const useActiveSessionLoginNavigation = () => {
   const navigateToAuthenticationScreen = useCallback(() => {
     if (isActiveSessionLogin) {
       dispatch(setFinishedActiveSessionLoginFlow());
-      navigation.popToTop();
+      navigation.navigate(ROUTES.MAIN, {
+        screen: MESSAGES_ROUTES.MESSAGES_HOME
+      });
     } else {
       navigation.reset({
         index: 0,
@@ -56,10 +61,18 @@ const useActiveSessionLoginNavigation = () => {
     });
   };
 
+  const forceLogoutAndNavigateToLanding = () => {
+    dispatch(sessionCorrupted());
+    navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
+      screen: AUTHENTICATION_ROUTES.LANDING
+    });
+  };
+
   return {
     navigateToAuthenticationScreen,
     navigateToCieCardReaderScreen,
-    navigateToCieConsentDataUsage
+    navigateToCieConsentDataUsage,
+    forceLogoutAndNavigateToLanding
   };
 };
 

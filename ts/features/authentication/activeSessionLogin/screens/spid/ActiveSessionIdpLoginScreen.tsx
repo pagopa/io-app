@@ -14,7 +14,6 @@ import _isEqual from "lodash/isEqual";
 import { IdpData } from "../../../../../../definitions/content/IdpData";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { LoadingIndicator } from "../../../../../components/ui/LoadingIndicator";
-import { apiUrlPrefix } from "../../../../../config";
 import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
@@ -58,6 +57,8 @@ import {
   activeSessionUserLoggedSelector
 } from "../../store/selectors";
 import { ErrorType as SpidLoginErrorType } from "../../../login/idp/store/types";
+import useActiveSessionLoginNavigation from "../../utils/useActiveSessionLoginNavigation";
+import { ACS_PATH } from "../../shared/utils";
 
 // TODO: consider changing the loader to unify it and use the same one for both CIE and SPID
 
@@ -126,11 +127,16 @@ const ActiveSessionIdpLoginScreen = () => {
   const remoteApiLoginUrlPrefix = useIOSelector(
     remoteApiLoginUrlPrefixSelector
   );
+
+  const acsUrl = `${remoteApiLoginUrlPrefix}${ACS_PATH}`;
+
   const loginUri = idpId
     ? getIdpLoginUri(idpId, 2, remoteApiLoginUrlPrefix)
     : undefined;
   const { shouldBlockUrlNavigationWhileCheckingLollipop, webviewSource } =
     useLollipopLoginSource(handleOnLollipopCheckFailure, loginUri);
+
+  const { forceLogoutAndNavigateToLanding } = useActiveSessionLoginNavigation();
 
   const choosenTool = useMemo(
     () => assistanceToolRemoteConfig(assistanceToolConfig),
@@ -149,14 +155,16 @@ const ActiveSessionIdpLoginScreen = () => {
       const webViewHttpError = error as WebViewHttpErrorEvent;
       if (webViewHttpError.nativeEvent.statusCode) {
         const { statusCode, url } = webViewHttpError.nativeEvent;
-        if (url.includes(apiUrlPrefix) || statusCode !== 403) {
+        if (url.includes(acsUrl)) {
+          forceLogoutAndNavigateToLanding();
+        } else if (statusCode !== 403) {
           setRequestState(pot.noneError(SpidLoginErrorType.LOADING_ERROR));
         }
       } else {
         setRequestState(pot.noneError(SpidLoginErrorType.LOADING_ERROR));
       }
     },
-    [setRequestState]
+    [acsUrl, forceLogoutAndNavigateToLanding]
   );
 
   const handleLoginFailure = useCallback(
@@ -226,7 +234,7 @@ const ActiveSessionIdpLoginScreen = () => {
         O.fromNullable,
         O.fold(
           () => false,
-          s => s.indexOf("/assertionConsumerService") > -1
+          s => s.indexOf(ACS_PATH) > -1
         )
       );
       setRequestState(

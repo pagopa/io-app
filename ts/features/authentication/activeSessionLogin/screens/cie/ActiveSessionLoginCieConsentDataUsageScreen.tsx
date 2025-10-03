@@ -7,6 +7,7 @@ import { useCallback, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import WebView from "react-native-webview";
 import {
+  WebViewErrorEvent,
   WebViewHttpErrorEvent,
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
@@ -25,6 +26,10 @@ import {
 } from "../../store/actions";
 import { CieConsentDataUsageScreenNavigationParams } from "../../../login/cie/screens/CieConsentDataUsageScreen";
 import { LoaderComponent } from "../../shared/components/LoaderComponent";
+import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
+import ROUTES from "../../../../../navigation/routes";
+import useActiveSessionLoginNavigation from "../../utils/useActiveSessionLoginNavigation";
+import { ACS_PATH } from "../../shared/utils";
 
 // The MP events related to this page have been commented on,
 // pending their correct integration into the flow.
@@ -39,10 +44,12 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
       >
     >();
   const { cieConsentUri } = route.params;
+  const acsUrl = `${cieConsentUri}${ACS_PATH}`;
   const dispatch = useIODispatch();
   const [hasError, setHasError] = useState<boolean>(false);
   const [isLoginSuccess, setIsLoginSuccess] = useState<boolean | undefined>();
   const navigation = useIONavigation();
+  const { forceLogoutAndNavigateToLanding } = useActiveSessionLoginNavigation();
 
   //   const loginSuccessDispatch = useCallback(
   //     (token: SessionToken) => dispatch(loginSuccess({ token, idp: "cie" })),
@@ -70,27 +77,15 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
 
   const navigateBack = () => {
     dispatch(setFinishedActiveSessionLoginFlow());
-    navigation.popToTop();
+    navigation.navigate(ROUTES.MAIN, {
+      screen: MESSAGES_ROUTES.MESSAGES_HOME
+    });
   };
 
   useHeaderSecondLevel({
     title: "",
     goBack: navigateBack
   });
-
-  const handleWebViewError = () => {
-    setHasError(true);
-    navigateToErrorScreen();
-  };
-
-  const handleHttpError = (_: WebViewHttpErrorEvent) => {
-    // loginFailureDispatch(
-    //   new Error(
-    //     `HTTP error ${event.nativeEvent.description} with Authorization uri`
-    //   )
-    // );
-    dispatch(activeSessionLoginFailure());
-  };
 
   const handleLoginSuccess = useCallback(
     (token: SessionToken) => {
@@ -114,6 +109,24 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
       //   );
     },
     [dispatch, navigateToErrorScreen]
+  );
+
+  const handleLoadingError = useCallback(
+    (error: WebViewErrorEvent | WebViewHttpErrorEvent): void => {
+      // TODO: error tracking  https://pagopa.atlassian.net/browse/IOPID-2079
+      const webViewHttpError = error as WebViewHttpErrorEvent;
+      if (webViewHttpError.nativeEvent.statusCode) {
+        const { statusCode, url } = webViewHttpError.nativeEvent;
+        if (url.includes(acsUrl)) {
+          forceLogoutAndNavigateToLanding();
+        } else if (statusCode !== 403) {
+          handleLoginFailure();
+        }
+      } else {
+        handleLoginFailure();
+      }
+    },
+    [acsUrl, forceLogoutAndNavigateToLanding, handleLoginFailure]
   );
 
   const handleShouldStartLoading = useCallback(
@@ -152,8 +165,8 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
           javaScriptEnabled={true}
           onShouldStartLoadWithRequest={handleShouldStartLoading}
           renderLoading={() => <LoaderComponent />}
-          onError={handleWebViewError}
-          onHttpError={handleHttpError}
+          onError={handleLoadingError}
+          onHttpError={handleLoadingError}
         />
       </SafeAreaView>
     );

@@ -39,14 +39,14 @@ import {
 import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
-
-import { sessionCorrupted } from "../../../common/store/actions";
 import { LoadingOverlay } from "../../../login/cie/shared/LoadingSpinnerOverlay";
 import {
   CieIdLoginProps,
   WHITELISTED_DOMAINS,
   defaultUserAgent
 } from "../../../login/cie/shared/utils";
+import useActiveSessionLoginNavigation from "../../utils/useActiveSessionLoginNavigation";
+import { ACS_PATH } from "../../shared/utils";
 
 const ActiveSessionCieIdLoginWebView = ({
   spidLevel,
@@ -61,16 +61,12 @@ const ActiveSessionCieIdLoginWebView = ({
     activeSessionUserLoggedSelector
   );
   const apiLoginUrlPrefix = useIOSelector(remoteApiLoginUrlPrefixSelector);
+  const acsUrl = `${apiLoginUrlPrefix}${ACS_PATH}`;
   const loginUri = getCieIDLoginUri(spidLevel, isUat, apiLoginUrlPrefix);
   const [isLoadingWebView, setIsLoadingWebView] = useState(true);
+  const { forceLogoutAndNavigateToLanding } = useActiveSessionLoginNavigation();
   // Forces logout due to a corrupted session,
   // then navigates the user back to the Landing screen.
-  const forceLogoutAndNavigateToLanding = useCallback(() => {
-    dispatch(sessionCorrupted());
-    navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
-      screen: AUTHENTICATION_ROUTES.LANDING
-    });
-  }, [dispatch, navigation]);
 
   const navigateToCieIdAuthenticationError = useCallback(() => {
     navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
@@ -252,7 +248,7 @@ const ActiveSessionCieIdLoginWebView = ({
       const webViewHttpError = error as WebViewHttpErrorEvent;
       if (webViewHttpError.nativeEvent.statusCode) {
         const { statusCode, url } = webViewHttpError.nativeEvent;
-        if (url.includes(apiLoginUrlPrefix)) {
+        if (url.includes(acsUrl)) {
           forceLogoutAndNavigateToLanding();
         } else if (statusCode !== 403) {
           navigateToCieIdAuthenticationError();
@@ -262,7 +258,7 @@ const ActiveSessionCieIdLoginWebView = ({
       }
     },
     [
-      apiLoginUrlPrefix,
+      acsUrl,
       forceLogoutAndNavigateToLanding,
       navigateToCieIdAuthenticationError
     ]

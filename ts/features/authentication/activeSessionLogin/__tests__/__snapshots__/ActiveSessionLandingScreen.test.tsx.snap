@@ -567,7 +567,6 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {
@@ -760,7 +759,6 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                               }
                             >
                               <View
-                                entering={[Function]}
                                 style={
                                   [
                                     {

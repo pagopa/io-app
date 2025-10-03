@@ -71,7 +71,6 @@ const styles = StyleSheet.create({
   },
   webViewWrapper: { flex: 1 }
 });
-
 /**
  * A screen that allows the user to login with an IDP.
  * The IDP page is opened in a WebView
