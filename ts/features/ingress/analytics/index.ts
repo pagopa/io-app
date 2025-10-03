@@ -30,8 +30,8 @@ export function trackIngressNoInternetConnection() {
 // Offline wallet banner tracking
 const props = {
   banner_id: "INGRESS_SCREEN_WALLET_OFFLINE",
-  banner_page: ITW_ROUTES.OFFLINE.WALLET,
-  banner_landing: "INGRESS_SCREEN"
+  banner_page: "INGRESS_SCREEN",
+  banner_landing: ITW_ROUTES.OFFLINE.WALLET
 };
 
 export function trackSettingsDiscoverBannerVisualized() {
