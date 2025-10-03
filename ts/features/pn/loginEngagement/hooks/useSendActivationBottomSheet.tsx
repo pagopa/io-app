@@ -1,15 +1,17 @@
 import { View } from "react-native";
 import i18next from "i18next";
 import { IOButton, VStack } from "@pagopa/io-app-design-system";
-import { constNull } from "fp-ts/lib/function";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { useSendActivationFlow } from "./useSendActivationFlow";
 
 const FAKE_URL = "https://www.google.com";
 
 export const useSendActivationBottomSheet = () => {
+  const { isActivating, requestSendActivation } = useSendActivationFlow();
+
   const {
     bottomSheet: activationBottomSheet,
     present: presentActivationBottomSheet,
@@ -30,8 +32,8 @@ export const useSendActivationBottomSheet = () => {
           label={i18next.t(
             "features.pn.loginEngagement.send.activationBottomSheet.action"
           )}
-          onPress={constNull} // TODO: Define action
-          loading={false} // TODO: Define loading
+          onPress={requestSendActivation}
+          loading={isActivating}
         />
         {/* This empty View is used to add the bottom space */}
         <View />

@@ -4033,7 +4033,8 @@
             },
             "action": "Attiva SEND su IO",
             "secondaryAction": "Non attivare SEND su IO"
-          }
+          },
+          "toast": "Hai attivato SEND su IO"
         }
       }
     },

@@ -10,6 +10,7 @@ import { Action } from "../../../../../store/actions/types";
 import { setSendEngagementScreenHasBeenDismissed } from "../actions";
 import { isDevEnv, isTestEnv } from "../../../../../utils/environment";
 import { PNLoginEngagementState } from "../types";
+import { GlobalState } from "../../../../../store/reducers/types";
 
 export const PN_LOGIN_ENGAGEMENT_INITIAL_STATE: PNLoginEngagementState = {
   hasSendEngagementScreenBeenDismissed: false
@@ -40,6 +41,10 @@ const persistConfig: PersistConfig = {
   migrate: createMigrate(migrations, { debug: isDevEnv }),
   whitelist: ["hasSendEngagementScreenBeenDismissed"]
 };
+
+export const hasSendEngagementScreenBeenDismissedSelector = (
+  state: GlobalState
+) => state.features.pn.loginEngagement.hasSendEngagementScreenBeenDismissed;
 
 export const persistedPnLoginEngagementReducer = persistReducer(
   persistConfig,

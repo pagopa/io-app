@@ -5,16 +5,22 @@ import {
   IOButton,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { constNull } from "fp-ts/lib/function";
 import i18next from "i18next";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { useIODispatch } from "../../../../store/hooks";
+import { setSendEngagementScreenHasBeenDismissed } from "../store/actions";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useSendActivationFlow } from "./useSendActivationFlow";
 
 const FAKE_URL = "https://www.google.com";
 
 export const useSendAreYouSureBottomSheet = () => {
+  const dispatch = useIODispatch();
+  const { pop } = useIONavigation();
+  const { isActivating, requestSendActivation } = useSendActivationFlow();
   const {
     bottomSheet: areYouSureBottomSheet,
     present: presentAreYouSureBottomSheet,
@@ -57,8 +63,8 @@ export const useSendAreYouSureBottomSheet = () => {
               "features.pn.loginEngagement.send.areYouSureBottomSheet.action"
             )}
             fullWidth
-            onPress={constNull} // TODO: Define action
-            loading={false} // TODO: Define loading
+            onPress={requestSendActivation}
+            loading={isActivating}
           />
           <View>
             <IOButton
@@ -67,7 +73,10 @@ export const useSendAreYouSureBottomSheet = () => {
               )}
               variant="link"
               textAlign="center"
-              onPress={constNull} // TODO: Define action
+              onPress={() => {
+                dispatch(setSendEngagementScreenHasBeenDismissed());
+                pop();
+              }}
             />
           </View>
           <VSpacer size={8} />
