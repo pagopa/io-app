@@ -163,7 +163,7 @@ const IdPayFailureScreen = () => {
         };
       case OnboardingFailureEnum.ONBOARDING_INITIATIVE_NOT_STARTED:
         return {
-          pictogram: "eventClose",
+          pictogram: "ended",
           title: I18n.t(
             "idpay.onboarding.failure.message.INITIATIVE_NOT_STARTED.title"
           ),
