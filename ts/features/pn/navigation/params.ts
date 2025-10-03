@@ -17,4 +17,5 @@ export type PnParamsList = {
   // SEND ENGAGEMENT
   [PN_ROUTES.SEND_ENGAGEMENT_ON_FIRST_APP_OPENING]: undefined;
   [PN_ROUTES.SEND_ENGAGEMENT_ACTIVATION_ERROR]: undefined;
+  [PN_ROUTES.SEND_AAR_ERROR]: undefined;
 };

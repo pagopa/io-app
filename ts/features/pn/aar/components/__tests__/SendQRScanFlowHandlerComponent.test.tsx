@@ -3,6 +3,7 @@ import { act, fireEvent } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
 import { createStore } from "redux";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import * as HOOKS from "../../../../../store/hooks";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -12,7 +13,6 @@ import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import PN_ROUTES from "../../../navigation/routes";
 import * as ANALYTICS from "../../analytics";
 import * as INITIAL_FLOW from "../../screen/SendAARInitialFlowScreen";
-import * as GENERIC_UTILS from "../../utils/generic";
 import { SendQRScanFlowHandlerComponent } from "../SendQRScanFlowHandlerComponent";
 
 const sendNotificationServiceId = "01G40DWQGKY5GRWSNM4303VNRP" as ServiceId;
@@ -32,9 +32,11 @@ jest.mock("@react-navigation/native", () => {
     })
   };
 });
-const phase2Spy = jest.spyOn(GENERIC_UTILS, "isSendAARPhase2Enabled");
-const enablePhase2 = () => phase2Spy.mockImplementation(() => true);
-const disablePhase2 = () => phase2Spy.mockImplementation(() => false);
+
+jest.mock("../../../../../store/hooks", () => ({
+  ...jest.requireActual("../../../../../store/hooks"),
+  useIOSelector: jest.fn()
+}));
 
 describe("SendQRScanFlowHandlerComponent", () => {
   const mockOpenWebUrl = jest.fn();
@@ -51,7 +53,7 @@ describe("SendQRScanFlowHandlerComponent", () => {
 
   beforeAll(() => {
     jest.spyOn(URLUTILS, "openWebUrl").mockImplementation(mockOpenWebUrl);
-    disablePhase2();
+    (HOOKS.useIOSelector as jest.Mock).mockReturnValue(false);
   });
 
   afterEach(() => {
@@ -174,7 +176,7 @@ describe("SendQRScanFlowHandlerComponent", () => {
   });
 });
 
-describe("SendQRScanFlowHandlerComponent - AAR phase toggle", () => {
+describe("SendQRScanFlowHandlerComponent - AAR enabled", () => {
   const componentMock = jest.fn();
   const componentSpy = jest
     .spyOn(INITIAL_FLOW, "SendAARInitialFlowScreen")
@@ -183,11 +185,11 @@ describe("SendQRScanFlowHandlerComponent - AAR phase toggle", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     act(() => {
-      enablePhase2();
+      (HOOKS.useIOSelector as jest.Mock).mockReturnValue(true);
     });
   });
 
-  it("should render the initial flow screen if phase 2 is enabled", () => {
+  it("should render the initial flow screen if aAREnabled='true'", () => {
     expect(componentSpy).not.toHaveBeenCalled();
     renderComponent(true, true);
     expect(componentMock.mock.calls[0][0]).toEqual({

@@ -3,7 +3,7 @@ import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIOStore } from "../../../../store/hooks";
+import { useIOSelector, useIOStore } from "../../../../store/hooks";
 import { openWebUrl } from "../../../../utils/url";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";
@@ -15,7 +15,7 @@ import {
   trackSendQRCodeScanRedirectDismissed
 } from "../analytics";
 import { SendAARInitialFlowScreen } from "../screen/SendAARInitialFlowScreen";
-import { isSendAARPhase2Enabled } from "../utils/generic";
+import { isAAREnabled } from "../store/reducers";
 
 export type SendQRScanHandlerScreenProps = {
   aarUrl: string;
@@ -23,12 +23,15 @@ export type SendQRScanHandlerScreenProps = {
 
 export const SendQRScanFlowHandlerComponent = ({
   aarUrl
-}: SendQRScanHandlerScreenProps) =>
-  isSendAARPhase2Enabled() ? (
+}: SendQRScanHandlerScreenProps) => {
+  const aAREnabled = useIOSelector(isAAREnabled);
+
+  return aAREnabled ? (
     <SendAARInitialFlowScreen qrCode={aarUrl} />
   ) : (
     <SendQrScanRedirect aarUrl={aarUrl} />
   );
+};
 
 const SendQrScanRedirect = ({ aarUrl }: SendQRScanHandlerScreenProps) => {
   const store = useIOStore();
