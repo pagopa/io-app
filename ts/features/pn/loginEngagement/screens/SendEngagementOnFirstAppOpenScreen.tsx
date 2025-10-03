@@ -4,12 +4,15 @@ import i18next from "i18next";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useSendActivationBottomSheet } from "../hooks/useSendActivationBottomSheet";
 import { useSendAreYouSureBottomSheet } from "../hooks/useSendAreYouSureBottomSheet";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 
 export const SendEngagementOnFirstAppOpenScreen = () => {
   const { activationBottomSheet, presentActivationBottomSheet } =
     useSendActivationBottomSheet();
   const { areYouSureBottomSheet, presentAreYouSureBottomSheet } =
     useSendAreYouSureBottomSheet();
+
+  useAvoidHardwareBackButton();
 
   return (
     <>
