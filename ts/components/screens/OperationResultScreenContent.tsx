@@ -8,7 +8,7 @@ import {
   IOPictograms,
   IOVisualCostants,
   Pictogram,
-  VSpacer,
+  VStack,
   WithTestID
 } from "@pagopa/io-app-design-system";
 import {
@@ -38,7 +38,7 @@ type OperationResultScreenContentProps = WithTestID<
       BodyProps,
       "textBreakStrategy" | "lineBreakStrategyIOS"
     >;
-    action?: ButtonProps;
+    action?: ButtonProps & Pick<IOButtonProps, "fullWidth">;
     secondaryAction?: ButtonProps;
     isHeaderVisible?: boolean;
     topElement?: ReactNode;
@@ -93,52 +93,44 @@ const OperationResultScreenContent = forwardRef<
           Platform.OS === "android" && styles.wrapperAndroid
         ]}
       >
-        {!enableAnimatedPictogram && pictogram && (
-          <View style={{ alignItems: "center" }}>
-            <Pictogram name={pictogram} size={120} />
-            <VSpacer size={24} />
-          </View>
-        )}
-
-        {enableAnimatedPictogram && pictogram && (
-          <View style={{ alignItems: "center" }}>
-            <AnimatedPictogram name={pictogram} size={120} loop={loop} />
-            <VSpacer size={24} />
-          </View>
-        )}
-        {topElement}
-        <H3 accessibilityRole="header" style={{ textAlign: "center" }}>
-          {title}
-        </H3>
-        {subtitle && (
-          <>
-            <VSpacer size={8} />
-            {typeof subtitle === "string" ? (
-              <Body style={{ textAlign: "center" }} {...subtitleProps}>
-                {subtitle}
-              </Body>
-            ) : (
-              <ComposedBodyFromArray body={subtitle} textAlign="center" />
-            )}
-          </>
-        )}
-        {action && (
-          <View style={{ alignItems: "center" }}>
-            <VSpacer size={24} />
-            <View>
+        <VStack space={24}>
+          {!enableAnimatedPictogram && pictogram && (
+            <View style={{ alignItems: "center" }}>
+              <Pictogram name={pictogram} size={120} />
+            </View>
+          )}
+          {enableAnimatedPictogram && pictogram && (
+            <View style={{ alignItems: "center" }}>
+              <AnimatedPictogram name={pictogram} size={120} loop={loop} />
+            </View>
+          )}
+          <VStack space={8}>
+            {topElement}
+            <H3 accessibilityRole="header" style={{ textAlign: "center" }}>
+              {title}
+            </H3>
+            {subtitle &&
+              (typeof subtitle === "string" ? (
+                <Body style={{ textAlign: "center" }} {...subtitleProps}>
+                  {subtitle}
+                </Body>
+              ) : (
+                <ComposedBodyFromArray body={subtitle} textAlign="center" />
+              ))}
+          </VStack>
+          {action && (
+            <View style={{ alignItems: "center" }}>
               <IOButton variant="solid" {...action} />
             </View>
-          </View>
-        )}
-        {secondaryAction && (
-          <View style={{ alignItems: "center" }}>
-            <VSpacer size={24} />
-            <View>
-              <IOButton variant="link" {...secondaryAction} />
+          )}
+          {secondaryAction && (
+            <View style={{ alignItems: "center" }}>
+              <View>
+                <IOButton variant="link" {...secondaryAction} />
+              </View>
             </View>
-          </View>
-        )}
-
+          )}
+        </VStack>
         {isValidElement(children) && cloneElement(children)}
       </ScrollView>
     </SafeAreaView>

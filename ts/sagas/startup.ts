@@ -36,7 +36,6 @@ import {
   sessionInfoSelector,
   sessionTokenSelector
 } from "../features/authentication/common/store/selectors";
-import { setSecurityAdviceReadyToShow } from "../features/authentication/fastLogin/store/actions/securityAdviceActions";
 import { refreshSessionToken } from "../features/authentication/fastLogin/store/actions/tokenRefreshActions";
 import {
   isFastLoginEnabledSelector,
@@ -139,6 +138,7 @@ import {
   waitForMainNavigator,
   waitForNavigatorServiceInitialization
 } from "../navigation/saga/navigation";
+import { checkShouldDisplaySendEngagementScreen } from "../features/pn/loginEngagement/sagas/checkShouldDisplaySendEngagementScreen";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
@@ -716,10 +716,15 @@ export function* initializeApplicationSaga(
   yield* fork(watchEmailNotificationPreferencesSaga);
 
   // Check if we have any pending background action to be handled
-  yield* call(maybeHandlePendingBackgroundActions, true);
+  const isHandlingBackgroundActions = yield* call(
+    maybeHandlePendingBackgroundActions,
+    true
+  );
 
-  // This tells the security advice bottomsheet that it can be shown
-  yield* put(setSecurityAdviceReadyToShow(true));
+  if (!isHandlingBackgroundActions) {
+    // Check if should navigate to the send activation screen
+    yield* fork(checkShouldDisplaySendEngagementScreen, isFirstOnboarding);
+  }
 
   yield* put(
     applicationInitialized({

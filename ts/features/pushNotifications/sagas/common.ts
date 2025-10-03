@@ -67,12 +67,14 @@ export function* maybeHandlePendingBackgroundActions(
 ) {
   // check if we have a stored linking URL to process
   if (yield* call(handleStoredLinkingUrlIfNeeded)) {
-    return;
+    return true;
   }
   // Check if we have a pending notification message
   if (yield* call(handlePushNotificationIfNeeded, shouldResetToMainNavigator)) {
-    return;
+    return true;
   }
+
+  return false;
 }
 
 function* handlePushNotificationIfNeeded(
