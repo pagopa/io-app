@@ -18,9 +18,8 @@ export const pdfSavePath = (
   // Basic sanitization: remove characters not allowed in filenames (common for most OS)
   // Characters removed: / \ : * ? " < > |
   const sanitizedFileName = name.trim().replace(/[/\\:*?"<>|]/g, "");
-  const sanitizedFileNameWithExtension = !sanitizedFileName
-    .toLowerCase()
-    .endsWith(".pdf")
+  const hasPdfExtension = sanitizedFileName.toLowerCase().endsWith(".pdf");
+  const sanitizedFileNameWithExtension = !hasPdfExtension
     ? `${sanitizedFileName}.pdf`
     : sanitizedFileName;
   return `${AttachmentsDirectoryPath}/${messageId}/${attachmentId}/${sanitizedFileNameWithExtension}`;
