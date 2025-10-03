@@ -1,4 +1,3 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -71,7 +70,6 @@ import { checkAcknowledgedEmailSaga } from "../features/mailCheck/sagas/checkAck
 import { watchEmailNotificationPreferencesSaga } from "../features/mailCheck/sagas/checkEmailNotificationPreferencesSaga";
 import { checkEmailSaga } from "../features/mailCheck/sagas/checkEmailSaga";
 import { watchEmailValidationSaga } from "../features/mailCheck/sagas/emailValidationPollingSaga";
-import { watchProfileEmailValidationChangedSaga } from "../features/mailCheck/sagas/watchProfileEmailValidationChangedSaga";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { watchMessagesSaga } from "../features/messages/saga";
 import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
@@ -97,7 +95,6 @@ import {
 } from "../features/settings/common/sagas/profile";
 import { watchUserDataProcessingSaga } from "../features/settings/common/sagas/userDataProcessing";
 import { loadUserDataProcessing } from "../features/settings/common/store/actions/userDataProcessing";
-import { profileSelector } from "../features/settings/common/store/selectors";
 import { isProfileFirstOnBoarding } from "../features/settings/common/store/utils/guards";
 import { handleApplicationStartupTransientError } from "../features/startup/sagas";
 import { watchTrialSystemSaga } from "../features/trialSystem/store/sagas/watchTrialSystemSaga";
@@ -207,22 +204,6 @@ export function* initializeApplicationSaga(
   yield* takeEvery(differentProfileLoggedIn, handleClearAllAttachments); // Consider using takeLatest here instead
   // Retrieve and listen for notification permissions status changes
   yield* fork(notificationPermissionsListener);
-
-  /**
-   * Get last logged in Profile from the state
-   */
-  const lastLoggedInProfileState: ReturnType<typeof profileSelector> =
-    yield* select(profileSelector);
-
-  const lastEmailValidated = pot.isSome(lastLoggedInProfileState)
-    ? O.fromNullable(lastLoggedInProfileState.value.is_email_validated)
-    : O.none;
-
-  /**
-   * Watch for profile changes
-   * TODO: https://pagopa.atlassian.net/browse/IOPID-3040
-   */
-  yield* fork(watchProfileEmailValidationChangedSaga, lastEmailValidated);
 
   // We need to generate a key in the application startup flow
   // to use this information on old app version already logged in users.
