@@ -10,6 +10,8 @@ import {
 } from "../../utils/stateUtils";
 import { setAarFlowState, terminateAarFlow } from "../actions";
 
+const emptyArray: ReadonlyArray<string> = [];
+
 export const INITIAL_AAR_FLOW_STATE: AARFlowState = {
   type: "none"
 };
@@ -42,8 +44,8 @@ export const currentAARFlowStateType = (state: GlobalState) =>
 export const currentAARFlowStateErrorCodes = (state: GlobalState) => {
   const aarFlow = state.features.pn.aarFlow;
   if (aarFlow.type === sendAARFlowStates.ko) {
-    return aarFlow.error?.errors?.map(x => x.code) ?? [];
+    return aarFlow.error?.errors?.map(x => x.code) ?? emptyArray;
   } else {
-    return [];
+    return emptyArray;
   }
 };

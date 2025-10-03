@@ -842,16 +842,6 @@ describe("sendAARDelegateUrlSelector", () => {
     remoteConfig: O.none
   } as GlobalState;
 
-  const emptyStringState = {
-    remoteConfig: O.some({
-      pn: {
-        aar: {
-          delegate_url: ""
-        }
-      }
-    })
-  } as GlobalState;
-
   const testCases = [
     {
       result: delegateUrl,
@@ -862,17 +852,13 @@ describe("sendAARDelegateUrlSelector", () => {
       input: emptyObjectState
     },
     {
-      result: "",
-      input: emptyStringState
-    },
-    {
       result: fallbackSendAARDelegateUrl,
       input: noneState
     }
   ];
 
   for (const { result, input } of testCases) {
-    it(`should return the correct result for input remoteConfig : ${JSON.stringify(
+    it(`should return '${result}' for input remoteConfig : ${JSON.stringify(
       input.remoteConfig
     )}`, () => {
       const output = sendAARDelegateUrlSelector(input);

@@ -6,6 +6,7 @@ import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
 import { currentAARFlowData } from "../store/reducers";
 import { AARFlowState, sendAARFlowStates } from "../utils/stateUtils";
+import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 
 export function* fetchAARQrCodeSaga(
   qrcode: string,
@@ -17,12 +18,16 @@ export function* fetchAARQrCodeSaga(
   if (currentState.type !== sendAARFlowStates.fetchingQRData) {
     return;
   }
+
+  const isSendUATEnvironment = yield* select(isPnTestEnabledSelector);
+
   try {
     const result = yield* call(fetchQRCode, {
       Bearer: sessionToken,
       body: {
         aarQrCodeValue: qrcode
-      }
+      },
+      isTest: isSendUATEnvironment
     });
 
     const resultAction = pipe(
