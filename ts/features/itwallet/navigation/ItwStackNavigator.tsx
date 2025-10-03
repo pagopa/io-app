@@ -7,6 +7,7 @@ import { ItwGenericErrorContent } from "../common/components/ItwGenericErrorCont
 import { isItwEnabledSelector } from "../common/store/selectors/remoteConfig";
 import { ItwAlreadyActiveScreen } from "../discovery/screens/ItwAlreadyActiveScreen";
 import { ItwDiscoveryInfoScreen } from "../discovery/screens/ItwDiscoveryInfoScreen";
+import { ItwDiscoveryInfoComponent } from "../discovery/components/ItwDiscoveryInfoComponent.tsx";
 import ItwIpzsPrivacyScreen from "../discovery/screens/ItwIpzsPrivacyScreen";
 import { ItwActivateNfcScreen } from "../identification/cie/screens/ItwActivateNfcScreen.tsx";
 import { ItwCieCanScreen } from "../identification/cie/screens/ItwCieCanScreen.tsx";
@@ -14,6 +15,7 @@ import { ItwCieCardReaderScreen as ItwCieCardReaderL3Screen } from "../identific
 import { ItwCiePinScreen } from "../identification/cie/screens/ItwCiePinScreen.tsx";
 import { ItwCiePreparationCanScreen } from "../identification/cie/screens/ItwCiePreparationCanScreen.tsx";
 import { ItwCiePreparationCardScreen } from "../identification/cie/screens/ItwCiePreparationCardScreen.tsx";
+import { ItwCiePreparationNfcScreen } from "../identification/cie/screens/ItwCiePreparationNfcScreen.tsx";
 import { ItwCiePreparationPinScreen } from "../identification/cie/screens/ItwCiePreparationPinScreen.tsx";
 import { ItwIdentificationCieWarningScreen } from "../identification/cie/screens/ItwIdentificationCieWarningScreen.tsx";
 import ItwCieIdLoginScreen from "../identification/cieId/screens/ItwCieIdLoginScreen.tsx";
@@ -153,16 +155,20 @@ const InnerNavigator = memo(() => {
       />
       {/* IDENTIFICATION CIE */}
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION_SCREEN}
-        component={ItwCiePreparationCardScreen}
-      />
-      <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.CIE.PIN_PREPARATION_SCREEN}
+        name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.PIN_SCREEN}
         component={ItwCiePreparationPinScreen}
       />
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.CIE.CAN_PREPARATION_SCREEN}
+        name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.NFC_SCREEN}
+        component={ItwCiePreparationNfcScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CAN_SCREEN}
         component={ItwCiePreparationCanScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CARD_SCREEN}
+        component={ItwCiePreparationCardScreen}
       />
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN}
@@ -308,6 +314,10 @@ const InnerNavigator = memo(() => {
         <Stack.Screen
           name={ITW_ROUTES.PLAYGROUNDS.CREDENTIAL_DETAIL}
           component={ItwL3CredentialDetailScreen}
+        />
+        <Stack.Screen
+          name={ITW_ROUTES.PLAYGROUNDS.DISCOVERY_INFO_NEW}
+          component={ItwDiscoveryInfoComponent}
         />
       </Stack.Group>
       <Stack.Screen name={ITW_ROUTES.SETTINGS} component={ItwSettingsScreen} />

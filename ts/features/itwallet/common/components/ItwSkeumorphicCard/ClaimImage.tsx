@@ -5,6 +5,7 @@ import {
   Skia
 } from "@shopify/react-native-skia";
 import { useMemo, useState } from "react";
+import { View } from "react-native";
 
 type ClaimImageProps = {
   base64: string;
@@ -29,7 +30,7 @@ export const ClaimImage = ({ base64, blur = 0 }: ClaimImageProps) => {
   }, [base64]);
 
   return (
-    <Canvas
+    <View
       style={{ flex: 1 }}
       onLayout={event => {
         setDimensions({
@@ -38,18 +39,20 @@ export const ClaimImage = ({ base64, blur = 0 }: ClaimImageProps) => {
         });
       }}
     >
-      {dimensions && (
-        <SkiaImage
-          image={image}
-          fit="contain"
-          x={0}
-          y={0}
-          width={dimensions.width}
-          height={dimensions.height}
-        >
-          <Blur blur={blur} />
-        </SkiaImage>
-      )}
-    </Canvas>
+      <Canvas style={{ flex: 1 }}>
+        {dimensions && (
+          <SkiaImage
+            image={image}
+            fit="contain"
+            x={0}
+            y={0}
+            width={dimensions.width}
+            height={dimensions.height}
+          >
+            <Blur blur={blur} />
+          </SkiaImage>
+        )}
+      </Canvas>
+    </View>
   );
 };
