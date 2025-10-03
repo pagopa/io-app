@@ -22,11 +22,11 @@ Map {
   },
   "fetchingQRData" => Set {
     "fetchingNotificationData",
+    "notAddresseeFinal",
     "ko",
   },
   "fetchingNotificationData" => Set {
     "displayingNotificationData",
-    "notAddresseeFinal",
     "ko",
   },
   "displayingNotificationData" => Set {},
