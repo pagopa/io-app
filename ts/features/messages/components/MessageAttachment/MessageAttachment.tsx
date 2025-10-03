@@ -28,7 +28,7 @@ import { downloadedMessageAttachmentSelector } from "../../store/reducers/downlo
 import {
   attachmentContentType,
   attachmentDisplayName
-} from "../../store/reducers/transformers";
+} from "../../utils/attachments";
 import { PdfViewer } from "./PdfViewer";
 
 type MessageAttachmentFooterProps = {

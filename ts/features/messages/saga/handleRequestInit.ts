@@ -1,14 +1,11 @@
-import { call, select } from "typed-redux-saga/macro";
-import {
-  lollipopKeyTagSelector,
-  lollipopPublicKeySelector
-} from "../../lollipop/store/reducers/lollipop";
-import { generateKeyInfo } from "../../lollipop/saga";
+import { v4 as uuid } from "uuid";
+import { call } from "typed-redux-saga/macro";
 import { LollipopConfig } from "../../lollipop";
 import { lollipopRequestInit } from "../../lollipop/utils/fetch";
 import { isTestEnv } from "../../../utils/environment";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
-import { attachmentDownloadUrl } from "../store/reducers/transformers";
+import { attachmentDownloadUrl } from "../utils/attachments";
+import { KeyInfo } from "../../lollipop/utils/crypto";
 
 type HeaderType = Record<string, string>;
 
@@ -16,15 +13,11 @@ export function* handleRequestInit(
   attachment: ThirdPartyAttachment,
   messageId: string,
   bearerToken: string,
-  nonce: string
+  keyInfo: KeyInfo
 ) {
   const lollopopConfig: LollipopConfig = {
-    nonce
+    nonce: uuid()
   };
-
-  const keyTag = yield* select(lollipopKeyTagSelector);
-  const publicKey = yield* select(lollipopPublicKeySelector);
-  const keyInfo = yield* call(generateKeyInfo, keyTag, publicKey);
 
   const attachmentFullUrl = attachmentDownloadUrl(messageId, attachment);
 

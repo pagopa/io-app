@@ -2,7 +2,7 @@ import { ActionType } from "typesafe-actions";
 import { call } from "typed-redux-saga/macro";
 import RNFS from "react-native-fs";
 import { removeCachedAttachment } from "../store/actions";
-import { AttachmentsDirectoryPath } from "./handleDownloadAttachment";
+import { AttachmentsDirectoryPath } from "../utils/attachments";
 
 /**
  * Clears cached file for the attachment
