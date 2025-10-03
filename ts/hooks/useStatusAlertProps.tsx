@@ -313,6 +313,7 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
       };
     }
     if (!currentStatusMessage || currentStatusMessage.length === 0) {
+      setAlertVisible(false);
       return undefined;
     }
     // If there is at least one status-message to display, extract its content and variant (using memoization to avoid re-renderings, since we are creating a new instance)
