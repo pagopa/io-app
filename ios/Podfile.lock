@@ -34,7 +34,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - IoReactNativeIso18013 (0.4.0):
+  - IoReactNativeIso18013 (0.6.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1460,6 +1460,8 @@ PODS:
     - React
   - react-native-blob-util (0.15.0):
     - React-Core
+  - react-native-cie (1.4.3):
+    - React
   - react-native-config (1.4.5):
     - react-native-config/App (= 1.4.5)
   - react-native-config/App (1.4.5):
@@ -2286,6 +2288,7 @@ DEPENDENCIES:
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
   - react-native-background-timer (from `../node_modules/react-native-background-timer`)
   - react-native-blob-util (from `../node_modules/react-native-blob-util`)
+  - "react-native-cie (from `../node_modules/@pagopa/react-native-cie`)"
   - react-native-config (from `../node_modules/react-native-config`)
   - "react-native-cookies (from `../node_modules/@react-native-cookies/cookies`)"
   - "react-native-document-picker (from `../node_modules/@react-native-documents/picker`)"
@@ -2486,6 +2489,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-background-timer"
   react-native-blob-util:
     :path: "../node_modules/react-native-blob-util"
+  react-native-cie:
+    :path: "../node_modules/@pagopa/react-native-cie"
   react-native-config:
     :path: "../node_modules/react-native-config"
   react-native-cookies:
@@ -2635,7 +2640,7 @@ SPEC CHECKSUMS:
   glog: eb93e2f488219332457c3c4eafd2738ddc7e80b8
   hermes-engine: 2771b98fb813fdc6f92edd7c9c0035ecabf9fee7
   IoReactNativeCie: 6e0a926d1dd883a0eaa1fb3f06bcdcf8ba92fc58
-  IoReactNativeIso18013: d4252d62254440257b3fbf3075fc96cb19ea417f
+  IoReactNativeIso18013: 4803432ad6e1b535a17fa4d581e97d9699d20882
   IOWalletCBOR: 92742ef1cbd1b627ba153d0c7c11b81ad22f45cc
   IOWalletProximity: 1836d6b5df0a64a97e09f355d15d5155f086f830
   jail-monkey: 9298d04aa09f8c9cdcf04e7bf597ea423b52b5bf
@@ -2683,6 +2688,7 @@ SPEC CHECKSUMS:
   React-microtasksnativemodule: 6a39463c32ce831c4c2aa8469273114d894b6be9
   react-native-background-timer: 007ff829f79644caf2ed013e22f0563560336f86
   react-native-blob-util: ce2014444133bd568c054bf58eece8375ae5ef3c
+  react-native-cie: e1e4c20a94516ff2209ea9276d07a2d469ba6440
   react-native-config: e588441fd919c50e75a1ae023763f760b5e3adfe
   react-native-cookies: d648ab7025833b977c0b19e142503034f5f29411
   react-native-document-picker: c780d87965984ba151680826bc2175c0536ff173
