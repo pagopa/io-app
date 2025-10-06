@@ -14,7 +14,8 @@ import { unknownToReason } from "../../../messages/utils";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import {
   attachmentDisplayName,
-  pdfSavePath
+  pdfSavePath,
+  restrainRetryAfterIntervalInMilliseconds
 } from "../../../messages/utils/attachments";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { trackSendAARAttachmentDownloadFailure } from "../analytics";
@@ -91,10 +92,9 @@ function* getAttachmentPrevalidatedUrl(
     if (typeof attachmentMetadataRetryAfterOrUrl === "string") {
       return attachmentMetadataRetryAfterOrUrl;
     }
-    const retryAfterMilliseconds =
-      attachmentMetadataRetryAfterOrUrl >= 1000
-        ? attachmentMetadataRetryAfterOrUrl
-        : 1000 * attachmentMetadataRetryAfterOrUrl;
+    const retryAfterMilliseconds = restrainRetryAfterIntervalInMilliseconds(
+      attachmentMetadataRetryAfterOrUrl
+    );
     yield* delay(retryAfterMilliseconds);
   }
 }

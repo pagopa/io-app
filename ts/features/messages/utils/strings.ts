@@ -1,6 +1,3 @@
-import { pipe } from "fp-ts/lib/function";
-import * as A from "fp-ts/lib/Array";
-import * as O from "fp-ts/lib/Option";
 import { PaymentNoticeStatus } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 
@@ -24,10 +21,3 @@ export const getBadgeTextByPaymentNoticeStatus = (
       return "";
   }
 };
-
-export const getHeaderByKey = (headers: Record<string, string>, key: string) =>
-  pipe(
-    Object.entries(headers),
-    A.findFirstMap(([k, v]) => (k.toLowerCase() === key ? O.some(v) : O.none)),
-    O.toUndefined
-  );

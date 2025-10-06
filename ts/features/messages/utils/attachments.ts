@@ -37,3 +37,30 @@ export const attachmentDownloadUrl = (
     /^\//g, // note that attachmentUrl might contains a / at the beginning, so let's strip it
     ""
   )}`;
+
+// This check avoids a backend switch from seconds to
+// milliseconds that will cause the app to get stuck.
+// It also prevents a retry-after that is too long for the user
+export const restrainRetryAfterIntervalInMilliseconds = (
+  input: number,
+  upperBoundSeconds: number = 24
+) => {
+  if (input >= 0 && input <= upperBoundSeconds) {
+    return 1000 * input;
+  }
+  if (input >= 1000 && input <= 1000 * upperBoundSeconds) {
+    return input;
+  }
+  return 1000 * upperBoundSeconds;
+};
+
+export const getHeaderValueByKey = (
+  headers: Record<string, string>,
+  key: string
+) => {
+  const entries = Object.entries(headers);
+  const foundEntryPair = entries.find(
+    ([propertyName, _value]) => propertyName.toLowerCase() === key
+  );
+  return foundEntryPair?.[1];
+};

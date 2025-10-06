@@ -1,4 +1,3 @@
-import { SagaIterator } from "redux-saga";
 import { ActionType } from "typesafe-actions";
 import {
   call,
@@ -10,14 +9,12 @@ import {
   take
 } from "typed-redux-saga/macro";
 import ReactNativeBlobUtil from "react-native-blob-util";
-import { pipe } from "fp-ts/lib/function";
-import * as E from "fp-ts/lib/Either";
-import { NumberFromString } from "@pagopa/ts-commons/lib/numbers";
 import I18n from "i18next";
 import { ReduxSagaEffect } from "../../../types/utils";
 import { fetchTimeout } from "../../../config";
 import { SessionToken } from "../../../types/SessionToken";
 import { getError } from "../../../utils/errors";
+import { isTestEnv } from "../../../utils/environment";
 import {
   cancelPreviousAttachmentDownload,
   downloadAttachment
@@ -28,47 +25,77 @@ import {
   trackThirdPartyMessageAttachmentDownloadFailed,
   trackThirdPartyMessageAttachmentUnavailable
 } from "../analytics";
-import { getHeaderByKey } from "../utils/strings";
 import {
   isEphemeralAARThirdPartyMessage,
   thirdPartyMessageSelector
 } from "../store/reducers/thirdPartyById";
 import { KeyInfo } from "../../lollipop/utils/crypto";
-import { attachmentDisplayName, pdfSavePath } from "../utils/attachments";
+import {
+  attachmentDisplayName,
+  getHeaderValueByKey,
+  pdfSavePath,
+  restrainRetryAfterIntervalInMilliseconds
+} from "../utils/attachments";
 import { downloadAARAttachmentSaga } from "../../pn/aar/saga/downloadAARAttachmentSaga";
 import { handleRequestInit } from "./handleRequestInit";
 
-const getDelayMilliseconds = (headers: Record<string, string>) =>
-  pipe(
-    getHeaderByKey(headers, "retry-after"),
-    NumberFromString.decode,
-    E.map(retryAfterSeconds => retryAfterSeconds * 1000),
-    E.getOrElse(() => 0)
-  );
-
-function trackFailureEvent(
-  skipMixpanelTrackingOnFailure: boolean,
-  httpStatusCode: number,
-  messageId: string,
-  serviceId: ServiceId | undefined
-) {
-  if (skipMixpanelTrackingOnFailure) {
-    return;
-  }
-  if (httpStatusCode === 500) {
-    trackThirdPartyMessageAttachmentUnavailable(messageId, serviceId);
-  } else if (httpStatusCode === 415) {
-    trackThirdPartyMessageAttachmentBadFormat(messageId, serviceId);
-  } else if (httpStatusCode <= 200 || httpStatusCode >= 400) {
-    trackThirdPartyMessageAttachmentDownloadFailed(messageId, serviceId);
-  }
-}
-
-export function* downloadAttachmentWorker(
+/**
+ * Handles the download of an attachment
+ * @param bearerToken
+ * @param action
+ */
+export function* handleDownloadAttachment(
   bearerToken: SessionToken,
   keyInfo: KeyInfo,
   action: ActionType<typeof downloadAttachment.request>
-): SagaIterator {
+): Generator<ReduxSagaEffect, void> {
+  const messageId = action.payload.messageId;
+  const { ephemeralAARThirdPartyMessage, mandateId } = yield* call(
+    computeThirdPartyMessageData,
+    messageId
+  );
+  // cancelPreviousAttachmentDownload is required in order to
+  // cancel any previous download that was going on (since the
+  // cancelling can either be triggered by requesting a different
+  // download - where we do not know if there was a previous download
+  // and/or which one it is, on PN attachments - or manually by the
+  // user on generic attachments).
+  yield* race({
+    polling: ephemeralAARThirdPartyMessage
+      ? call(downloadAARAttachmentSaga, bearerToken, keyInfo, mandateId, action)
+      : call(downloadAttachmentWorker, bearerToken, keyInfo, action),
+    cancelAction: take(cancelPreviousAttachmentDownload)
+  });
+}
+
+function* computeThirdPartyMessageData(messageId: string): Generator<
+  ReduxSagaEffect,
+  {
+    ephemeralAARThirdPartyMessage: boolean;
+    mandateId: string | undefined;
+  }
+> {
+  const thirdPartyMessage = yield* select(thirdPartyMessageSelector, messageId);
+  if (
+    thirdPartyMessage != null &&
+    isEphemeralAARThirdPartyMessage(thirdPartyMessage)
+  ) {
+    return {
+      ephemeralAARThirdPartyMessage: true,
+      mandateId: thirdPartyMessage.mandateId
+    };
+  }
+  return {
+    ephemeralAARThirdPartyMessage: false,
+    mandateId: undefined
+  };
+}
+
+function* downloadAttachmentWorker(
+  bearerToken: SessionToken,
+  keyInfo: KeyInfo,
+  action: ActionType<typeof downloadAttachment.request>
+): Generator<ReduxSagaEffect, void> {
   const { attachment, messageId, skipMixpanelTrackingOnFailure, serviceId } =
     action.payload;
 
@@ -146,55 +173,44 @@ export function* downloadAttachmentWorker(
   }
 }
 
-/**
- * Handles the download of an attachment
- * @param bearerToken
- * @param action
- */
-export function* handleDownloadAttachment(
-  bearerToken: SessionToken,
-  keyInfo: KeyInfo,
-  action: ActionType<typeof downloadAttachment.request>
-) {
-  const messageId = action.payload.messageId;
-  const { ephemeralAARThirdPartyMessage, mandateId } = yield* call(
-    computeThirdPartyMessageData,
-    messageId
-  );
-  // cancelPreviousAttachmentDownload is required in order to
-  // cancel any previous download that was going on (since the
-  // cancelling can either be triggered by requesting a different
-  // download - where we do not know if there was a previous download
-  // and/or which one it is, on PN attachments - or manually by the
-  // user on generic attachments).
-  yield* race({
-    polling: ephemeralAARThirdPartyMessage
-      ? call(downloadAARAttachmentSaga, bearerToken, keyInfo, mandateId, action)
-      : call(downloadAttachmentWorker, bearerToken, keyInfo, action),
-    cancelAction: take(cancelPreviousAttachmentDownload)
-  });
-}
-
-export function* computeThirdPartyMessageData(messageId: string): Generator<
-  ReduxSagaEffect,
-  {
-    ephemeralAARThirdPartyMessage: boolean;
-    mandateId: string | undefined;
-  },
-  ReturnType<typeof thirdPartyMessageSelector>
-> {
-  const thirdPartyMessage = yield* select(thirdPartyMessageSelector, messageId);
-  if (
-    thirdPartyMessage != null &&
-    isEphemeralAARThirdPartyMessage(thirdPartyMessage)
-  ) {
-    return {
-      ephemeralAARThirdPartyMessage: true,
-      mandateId: thirdPartyMessage.mandateId
-    };
+const getDelayMilliseconds = (headers: Record<string, string>): number => {
+  const retryAfterSecondsString = getHeaderValueByKey(headers, "retry-after");
+  if (retryAfterSecondsString == null) {
+    return 0;
   }
-  return {
-    ephemeralAARThirdPartyMessage: false,
-    mandateId: undefined
-  };
-}
+  const retryAfterSeconds = parseInt(retryAfterSecondsString, 10);
+  if (!Number.isInteger(retryAfterSeconds) || retryAfterSeconds <= 0) {
+    return 0;
+  }
+
+  // This check avoids a backend switch from seconds to
+  // milliseconds that will cause the app to get stuck
+  return restrainRetryAfterIntervalInMilliseconds(retryAfterSeconds);
+};
+
+const trackFailureEvent = (
+  skipMixpanelTrackingOnFailure: boolean,
+  httpStatusCode: number,
+  messageId: string,
+  serviceId: ServiceId | undefined
+): void => {
+  if (skipMixpanelTrackingOnFailure) {
+    return;
+  }
+  if (httpStatusCode === 500) {
+    trackThirdPartyMessageAttachmentUnavailable(messageId, serviceId);
+  } else if (httpStatusCode === 415) {
+    trackThirdPartyMessageAttachmentBadFormat(messageId, serviceId);
+  } else if (httpStatusCode < 200 || httpStatusCode >= 400) {
+    trackThirdPartyMessageAttachmentDownloadFailed(messageId, serviceId);
+  }
+};
+
+export const testable = isTestEnv
+  ? {
+      computeThirdPartyMessageData,
+      downloadAttachmentWorker,
+      getDelayMilliseconds,
+      trackFailureEvent
+    }
+  : undefined;
