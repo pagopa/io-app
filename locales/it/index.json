@@ -4032,10 +4032,7 @@
             "label": "Novità"
           },
           "title": "Ricevi su IO le comunicazioni a valore legale e risparmia",
-          "subtitle": {
-            "firstPart": "Attiva SEND su IO per ricevere in app le comunicazioni a valore legale, come esiti di pratiche, rimborsi o multe, ed",
-            "secondPart": " evitare le raccomandate e i relativi costi."
-          },
+          "description": "Attiva SEND su IO per ricevere in app le comunicazioni a valore legale, come esiti di pratiche, rimborsi o multe, ed **evitare le raccomandate e i relativi costi.**",
           "action": "Attiva SEND su IO",
           "secondaryAction": "Non attivare SEND su IO",
           "activationBottomSheet": {

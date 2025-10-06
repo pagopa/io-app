@@ -4,6 +4,11 @@ import { SendEngagementOnFirstAppOpenScreen } from "../SendEngagementOnFirstAppO
 const mockPresentActivationBottomSheet = jest.fn();
 const mockPresentAreYouSureBottomSheet = jest.fn();
 
+jest.mock("react-redux", () => ({
+  // This mock was added to override the selector used in the `IOMarkdown` component
+  useSelector: jest.fn().mockReturnValue(false)
+}));
+
 jest.mock("../../hooks/useSendActivationBottomSheet", () => ({
   useSendActivationBottomSheet() {
     return {
