@@ -60,7 +60,7 @@ export const getHeaderValueByKey = (
 ) => {
   const entries = Object.entries(headers);
   const foundEntryPair = entries.find(
-    ([propertyName, _value]) => propertyName.toLowerCase() === key
+    ([propertyName, _value]) => propertyName.toLowerCase() === key.toLowerCase()
   );
   return foundEntryPair?.[1];
 };
