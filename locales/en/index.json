@@ -24,7 +24,15 @@
       "Friday",
       "Saturday"
     ],
-    "abbr_day_names": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    "abbr_day_names": [
+      "Sun",
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat"
+    ],
     "month_names": [
       " ",
       "January",
@@ -55,7 +63,10 @@
       "Nov",
       "Dec"
     ],
-    "meridian": ["am", "pm"],
+    "meridian": [
+      "am",
+      "pm"
+    ],
     "time": {
       "minutes_zero": "0 minutes",
       "minutes_one": "1 minute",
@@ -698,17 +709,6 @@
         "appearance": {
           "title": "Appearance",
           "subtitle": "Customize the app to your needs",
-          "typefaceStyle": {
-            "title": "Typeface style",
-            "comfortable": {
-              "title": "Comfortable",
-              "description": "Designed for better text readability"
-            },
-            "standard": {
-              "title": "Standard",
-              "description": "The usual style with narrow, geometric shapes"
-            }
-          },
           "theme": {
             "title": "Theme",
             "comingSoon": "Coming soon",

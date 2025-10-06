@@ -24,7 +24,15 @@
       "venerdì",
       "sabato"
     ],
-    "abbr_day_names": ["dom", "lun", "mar", "mer", "gio", "ven", "sab"],
+    "abbr_day_names": [
+      "dom",
+      "lun",
+      "mar",
+      "mer",
+      "gio",
+      "ven",
+      "sab"
+    ],
     "month_names": [
       " ",
       "gennaio",
@@ -55,7 +63,10 @@
       "nov",
       "dic"
     ],
-    "meridian": ["am", "pm"],
+    "meridian": [
+      "am",
+      "pm"
+    ],
     "time": {
       "minutes_zero": "0 minuti",
       "minutes_one": "1 minuto",
@@ -698,17 +709,6 @@
         "appearance": {
           "title": "Aspetto dell'app",
           "subtitle": "Personalizza l'app in base alle tue esigenze",
-          "typefaceStyle": {
-            "title": "Stile carattere",
-            "comfortable": {
-              "title": "Confortevole",
-              "description": "Progettato per una migliore leggibilità dei testi"
-            },
-            "standard": {
-              "title": "Standard",
-              "description": "Lo stile di sempre, con forme strette e geometriche"
-            }
-          },
           "theme": {
             "title": "Tema",
             "comingSoon": "In arrivo",
