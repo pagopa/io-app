@@ -4604,20 +4604,6 @@
           }
         },
         "cie": {
-          "prepare": {
-            "pin": {
-              "title": "Prepara il PIN della tua Carta di Identità Elettronica (CIE)",
-              "content": "Dovrai digitarlo per completare la verifica dell’identità.",
-              "buttonLink": "Cos’è il PIN della CIE?",
-              "cta": "Inserisci il PIN della CIE"
-            },
-            "card": {
-              "title": "Prepara la tua Carta di Identità Elettronica (CIE)",
-              "content": "Dovrai poggiare il retro del telefono sulla CIE, su una superficie stabile, e tenerli fermi per la lettura.",
-              "cta": "Inizia lettura CIE",
-              "buttonLink": "Cos’è la CIE?"
-            }
-          },
           "inputPin": {
             "title": "Inserisci il PIN della CIE",
             "buttonLink": "Dove trovo il PIN della CIE?"
@@ -5899,7 +5885,7 @@
           },
           "PAYMENT_GENERIC_ERROR": {
             "title": "Non è possibile completare la richiesta per questa iniziativa",
-            "subtitle": "Siamo già a lavoro per risolvere.  Riprova tra un po’."
+            "subtitle": "Siamo già a lavoro per risolvere. Riprova tra un po’."
           }
         }
       },
@@ -6172,7 +6158,7 @@
         "failure": {
           "GENERIC": {
             "title": "Non è stato possibile procedere con l'iniziativa richiesta",
-            "subtitle": "Siamo già a lavoro per risolvere.  Riprova tra un po’."
+            "subtitle": "Siamo già a lavoro per risolvere. Riprova tra un po’."
           },
           "TRANSACTION_EXPIRED": {
             "title": "Il codice è scaduto",

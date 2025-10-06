@@ -154,13 +154,13 @@ export const createEidIssuanceActionsImplementation = (
 
   navigateToCiePreparationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION_SCREEN
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.NFC_SCREEN
     });
   },
 
   navigateToCiePinPreparationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.PIN_PREPARATION_SCREEN
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.PIN_SCREEN
     });
   },
 
