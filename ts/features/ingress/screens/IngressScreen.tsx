@@ -18,8 +18,10 @@ import { isMixpanelInitializedSelector } from "../../mixpanel/store/selectors";
 import {
   trackIngressCdnSystemError,
   trackIngressNoInternetConnection,
+  trackIngressOfflineWalletBannerCTAClicked,
   trackIngressServicesSlowDown,
-  trackIngressTimeout
+  trackIngressTimeout,
+  trackSettingsDiscoverBannerVisualized
 } from "../analytics";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { startupLoadSuccess } from "../../../store/actions/startup";
@@ -71,6 +73,9 @@ export const IngressScreen = () => {
       setTimeout(() => {
         setContentTitle(I18n.t("startup.title2"));
         setShowBanner(true);
+        if (isOfflineAccessAvailable) {
+          trackSettingsDiscoverBannerVisualized();
+        }
         timeouts.shift();
       }, TIMEOUT_CHANGE_LABEL)
     );
@@ -86,7 +91,7 @@ export const IngressScreen = () => {
     return () => {
       timeouts?.forEach(clearTimeout);
     };
-  }, [dispatch]);
+  }, [dispatch, isOfflineAccessAvailable]);
 
   const navigateOnOfflineMiniApp = useCallback(
     (offlineReason: OfflineAccessReasonEnum) => {
@@ -154,8 +159,10 @@ export const IngressScreen = () => {
             title: I18n.t("startup.offline_access_banner.title"),
             content: I18n.t("startup.offline_access_banner.content"),
             action: I18n.t("startup.offline_access_banner.action"),
-            onPress: () =>
-              navigateOnOfflineMiniApp(OfflineAccessReasonEnum.TIMEOUT)
+            onPress: () => {
+              trackIngressOfflineWalletBannerCTAClicked();
+              navigateOnOfflineMiniApp(OfflineAccessReasonEnum.TIMEOUT);
+            }
           }
         }}
       />
