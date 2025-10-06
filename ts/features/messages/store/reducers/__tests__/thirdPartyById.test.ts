@@ -15,6 +15,8 @@ import { loadMessageDetails, loadThirdPartyMessage } from "../../actions";
 import { DetailsById } from "../detailsById";
 import {
   hasAttachmentsSelector,
+  isEphemeralAARThirdPartyMessage,
+  isThirdParyMessageAarSelector,
   messageMarkdownSelector,
   messageTitleSelector,
   testable,
@@ -22,6 +24,7 @@ import {
   thirdPartyFromIdSelector,
   thirdPartyKind,
   thirdPartyMessageAttachments,
+  thirdPartyMessageSelector,
   ThirdPartyMessageUnion
 } from "../thirdPartyById";
 
@@ -599,5 +602,125 @@ describe("messageContentSelector", () => {
       input => input.markdown
     );
     expect(messageContent).toBeUndefined();
+  });
+});
+
+describe("isEphemeralAARThirdPartyMessage", () => {
+  it("should return false for a Third Party Message of type TPM", () => {
+    const message = {
+      kind: "TPM"
+    } as ThirdPartyMessageUnion;
+    const result = isEphemeralAARThirdPartyMessage(message);
+    expect(result).toBe(false);
+  });
+  it("should return false for a Third Party Message of type AAR", () => {
+    const message = {
+      kind: "AAR"
+    } as ThirdPartyMessageUnion;
+    const result = isEphemeralAARThirdPartyMessage(message);
+    expect(result).toBe(true);
+  });
+});
+
+describe("thirdPartyMessageSelector", () => {
+  const fakeThirdPartyMessage = {} as ThirdPartyMessageUnion;
+  [
+    undefined,
+    pot.none,
+    pot.noneLoading,
+    pot.noneUpdating(fakeThirdPartyMessage),
+    pot.noneError(Error("")),
+    pot.some(fakeThirdPartyMessage),
+    pot.someLoading(fakeThirdPartyMessage),
+    pot.someUpdating(fakeThirdPartyMessage, fakeThirdPartyMessage),
+    pot.someError(fakeThirdPartyMessage, Error(""))
+  ].forEach(input => {
+    const shouldReturnSomething = input != null && pot.isSome(input);
+    it(`should return ${
+      shouldReturnSomething ? "the third party message" : "undefined"
+    } for a matching third party id which value is ${JSON.stringify(
+      input
+    )}`, () => {
+      const state = {
+        entities: {
+          messages: {
+            thirdPartyById: {
+              m1: input
+            }
+          }
+        }
+      } as unknown as GlobalState;
+      const result = thirdPartyMessageSelector(state, "m1");
+      expect(result).toEqual(
+        shouldReturnSomething ? fakeThirdPartyMessage : undefined
+      );
+    });
+  });
+  it(`should return 'undefined' for an unmatching third party id`, () => {
+    const state = {
+      entities: {
+        messages: {
+          thirdPartyById: {
+            m1: pot.some({})
+          }
+        }
+      }
+    } as unknown as GlobalState;
+    const result = thirdPartyMessageSelector(state, "m2");
+    expect(result).toBeUndefined();
+  });
+});
+
+describe("isThirdParyMessageAarSelector", () => {
+  (
+    [
+      { kind: "TPM" },
+      { kind: "AAR" }
+    ] as unknown as ReadonlyArray<ThirdPartyMessageUnion>
+  ).forEach(fakeThirdPartyMessage => {
+    [
+      undefined,
+      pot.none,
+      pot.noneLoading,
+      pot.noneUpdating(fakeThirdPartyMessage),
+      pot.noneError(Error("")),
+      pot.some(fakeThirdPartyMessage),
+      pot.someLoading(fakeThirdPartyMessage),
+      pot.someUpdating(fakeThirdPartyMessage, fakeThirdPartyMessage),
+      pot.someError(fakeThirdPartyMessage, Error(""))
+    ].forEach(input => {
+      const isEphemeralAARMessage =
+        input != null &&
+        pot.isSome(input) &&
+        fakeThirdPartyMessage.kind === "AAR";
+      it(`should return ${isEphemeralAARMessage} for a matching third party id which kind is ${
+        fakeThirdPartyMessage.kind
+      } and value is ${JSON.stringify(input)}`, () => {
+        const state = {
+          entities: {
+            messages: {
+              thirdPartyById: {
+                m1: input
+              }
+            }
+          }
+        } as unknown as GlobalState;
+        const result = isThirdParyMessageAarSelector(state, "m1");
+        expect(result).toEqual(isEphemeralAARMessage);
+      });
+    });
+  });
+  it(`should return 'false' for an unmatching third party id`, () => {
+    const state = {
+      entities: {
+        messages: {
+          thirdPartyById: {
+            m1: pot.some({ kind: "AAR" })
+          }
+        }
+      }
+    } as unknown as GlobalState;
+    const result = isThirdParyMessageAarSelector(state, "m2");
+    expect(result).toBe(false);
   });
 });

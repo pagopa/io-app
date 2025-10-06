@@ -44,8 +44,7 @@ export const isThirdParyMessageAarSelector = (
   state: GlobalState,
   ioMessageId: string
 ) => {
-  const thirdPartyMessagePot = thirdPartyFromIdSelector(state, ioMessageId);
-  const thirdPartyMessage = pot.getOrElse(thirdPartyMessagePot, undefined);
+  const thirdPartyMessage = thirdPartyMessageSelector(state, ioMessageId);
   return (
     thirdPartyMessage != null &&
     isEphemeralAARThirdPartyMessage(thirdPartyMessage)
