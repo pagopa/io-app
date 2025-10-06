@@ -38,7 +38,7 @@ export const setFinishedActiveSessionLoginFlow = createStandardAction(
   "SET_FINISHED_ACTIVE_SESSION_LOGIN_FLOW"
 )();
 
-export const setLggedOutUserWithDifferentCF = createStandardAction(
+export const setLoggedOutUserWithDifferentCF = createStandardAction(
   "SET_LOGGED_OUT_USER_WITH_DIFFERENT_CF"
 )();
 
@@ -51,4 +51,4 @@ export type LoginInfoActions =
   | ActionType<typeof consolidateActiveSessionLoginData>
   | ActionType<typeof setFastLoginOptSessionLogin>
   | ActionType<typeof setFinishedActiveSessionLoginFlow>
-  | ActionType<typeof setLggedOutUserWithDifferentCF>;
+  | ActionType<typeof setLoggedOutUserWithDifferentCF>;
