@@ -398,79 +398,75 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                           }
                         >
                           <View>
+                            <Text
+                              accessibilityRole="header"
+                              allowFontScaling={true}
+                              dynamicTypeRamp="title2"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#0E0F13",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 22,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "600",
+                                    "lineHeight": 33,
+                                  },
+                                  {
+                                    "textAlign": "center",
+                                  },
+                                ]
+                              }
+                            >
+                              title
+                            </Text>
                             <View
                               style={
                                 {
-                                  "display": "flex",
-                                  "flexDirection": "column",
-                                  "gap": 24,
+                                  "height": 8,
+                                }
+                              }
+                            />
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="body"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 24,
+                                  },
+                                  {
+                                    "textAlign": "center",
+                                  },
+                                ]
+                              }
+                            >
+                              subtitle
+                            </Text>
+                            <View
+                              style={
+                                {
+                                  "alignItems": "center",
                                 }
                               }
                             >
                               <View
                                 style={
                                   {
-                                    "display": "flex",
-                                    "flexDirection": "column",
-                                    "gap": 8,
+                                    "height": 24,
                                   }
                                 }
-                              >
-                                <Text
-                                  accessibilityRole="header"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="title2"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 22,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 33,
-                                      },
-                                      {
-                                        "textAlign": "center",
-                                      },
-                                    ]
-                                  }
-                                >
-                                  title
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 24,
-                                      },
-                                      {
-                                        "textAlign": "center",
-                                      },
-                                    ]
-                                  }
-                                >
-                                  subtitle
-                                </Text>
-                              </View>
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                  }
-                                }
-                              >
+                              />
+                              <View>
                                 <View
                                   accessibilityLabel="Action"
                                   accessibilityRole="button"
@@ -594,58 +590,94 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                   </View>
                                 </View>
                               </View>
+                            </View>
+                            <View
+                              style={
+                                {
+                                  "alignItems": "center",
+                                }
+                              }
+                            >
                               <View
                                 style={
                                   {
-                                    "alignItems": "center",
+                                    "height": 24,
                                   }
                                 }
-                              >
-                                <View>
+                              />
+                              <View>
+                                <View
+                                  accessibilityLabel="Secondary Action"
+                                  accessibilityRole="button"
+                                  accessibilityState={
+                                    {
+                                      "busy": false,
+                                      "checked": undefined,
+                                      "disabled": false,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
+                                  }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  hitSlop={
+                                    {
+                                      "bottom": 14,
+                                      "left": 24,
+                                      "right": 24,
+                                      "top": 14,
+                                    }
+                                  }
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
+                                  style={
+                                    {
+                                      "alignSelf": "flex-start",
+                                    }
+                                  }
+                                >
                                   <View
-                                    accessibilityLabel="Secondary Action"
-                                    accessibilityRole="button"
-                                    accessibilityState={
-                                      {
-                                        "busy": false,
-                                        "checked": undefined,
-                                        "disabled": false,
-                                        "expanded": undefined,
-                                        "selected": undefined,
-                                      }
-                                    }
-                                    accessibilityValue={
-                                      {
-                                        "max": undefined,
-                                        "min": undefined,
-                                        "now": undefined,
-                                        "text": undefined,
-                                      }
-                                    }
-                                    accessible={true}
-                                    collapsable={false}
-                                    focusable={true}
-                                    hitSlop={
-                                      {
-                                        "bottom": 14,
-                                        "left": 24,
-                                        "right": 24,
-                                        "top": 14,
-                                      }
-                                    }
-                                    onBlur={[Function]}
-                                    onClick={[Function]}
-                                    onFocus={[Function]}
-                                    onResponderGrant={[Function]}
-                                    onResponderMove={[Function]}
-                                    onResponderRelease={[Function]}
-                                    onResponderTerminate={[Function]}
-                                    onResponderTerminationRequest={[Function]}
-                                    onStartShouldSetResponder={[Function]}
                                     style={
-                                      {
-                                        "alignSelf": "flex-start",
-                                      }
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "borderCurve": "continuous",
+                                          "elevation": 0,
+                                          "flexDirection": "row",
+                                          "justifyContent": "center",
+                                          "overflow": "hidden",
+                                          "textAlignVertical": "center",
+                                        },
+                                        false,
+                                        {},
+                                        {
+                                          "paddingHorizontal": 0,
+                                        },
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderColor": "#0B3EE3",
+                                          "borderRadius": 8,
+                                          "borderWidth": 0,
+                                          "height": undefined,
+                                        },
+                                        {},
+                                      ]
                                     }
                                   >
                                     <View
@@ -653,80 +685,51 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                         [
                                           {
                                             "alignItems": "center",
-                                            "borderCurve": "continuous",
-                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
-                                            "overflow": "hidden",
-                                            "textAlignVertical": "center",
+                                          },
+                                          {
+                                            "columnGap": 8,
                                           },
                                           false,
-                                          {},
-                                          {
-                                            "paddingHorizontal": 0,
-                                          },
-                                          {
-                                            "backgroundColor": "transparent",
-                                            "borderColor": "#0B3EE3",
-                                            "borderRadius": 8,
-                                            "borderWidth": 0,
-                                            "height": undefined,
-                                          },
-                                          {},
                                         ]
                                       }
                                     >
-                                      <View
+                                      <Text
+                                        accessibilityElementsHidden={true}
+                                        accessible={false}
+                                        allowFontScaling={true}
+                                        ellipsizeMode="tail"
+                                        importantForAccessibility="no-hide-descendants"
+                                        maxFontSizeMultiplier={1.5}
+                                        numberOfLines={1}
                                         style={
                                           [
+                                            {},
                                             {
-                                              "alignItems": "center",
-                                              "flexDirection": "row",
-                                              "justifyContent": "center",
+                                              "color": "#0E0F13",
+                                              "fontFamily": "Titillio",
+                                              "fontSize": 16,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                              "lineHeight": 20,
                                             },
-                                            {
-                                              "columnGap": 8,
-                                            },
-                                            false,
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
+                                              },
+                                              {
+                                                "color": undefined,
+                                              },
+                                            ],
                                           ]
                                         }
                                       >
-                                        <Text
-                                          accessibilityElementsHidden={true}
-                                          accessible={false}
-                                          allowFontScaling={true}
-                                          ellipsizeMode="tail"
-                                          importantForAccessibility="no-hide-descendants"
-                                          maxFontSizeMultiplier={1.5}
-                                          numberOfLines={1}
-                                          style={
-                                            [
-                                              {},
-                                              {
-                                                "color": "#0E0F13",
-                                                "fontFamily": "Titillio",
-                                                "fontSize": 16,
-                                                "fontStyle": "normal",
-                                                "fontWeight": "600",
-                                                "lineHeight": 20,
-                                              },
-                                              [
-                                                {
-                                                  "textAlign": "auto",
-                                                },
-                                                {
-                                                  "color": "#0B3EE3",
-                                                },
-                                                {
-                                                  "color": undefined,
-                                                },
-                                              ],
-                                            ]
-                                          }
-                                        >
-                                          Secondary Action
-                                        </Text>
-                                      </View>
+                                        Secondary Action
+                                      </Text>
                                     </View>
                                   </View>
                                 </View>
