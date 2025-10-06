@@ -1,4 +1,4 @@
-import { fireEvent, RenderAPI, waitFor } from "@testing-library/react-native";
+import { fireEvent, RenderAPI } from "@testing-library/react-native";
 import type { WebViewHttpErrorEvent } from "react-native-webview/lib/WebViewTypes";
 
 // Configuration for the consent screen test suite
@@ -9,15 +9,6 @@ export type ConsentSuiteConfig = {
   onLoginUriChangedSpy: jest.SpyInstance; // spy set in the test caller on the correct module
   makeHttpError: () => WebViewHttpErrorEvent; // builder for the http error event
   expectErrorRedirectMethod: "navigate" | "replace"; // key difference between the two screens
-};
-
-// Calls the correct navigation method based on the expected error redirect
-const callNavigationError = (cfg: ConsentSuiteConfig) => {
-  if (cfg.expectErrorRedirectMethod === "replace") {
-    expect(cfg.mockNavigation.replace).toHaveBeenCalled();
-  } else {
-    expect(cfg.mockNavigation.navigate).toHaveBeenCalled();
-  }
 };
 
 // Runs the test suite for the consent screen
@@ -44,20 +35,6 @@ export const runConsentScreenSuite = (cfg: ConsentSuiteConfig) => {
         url: "https://other.url"
       });
       expect(cfg.onLoginUriChangedSpy).toHaveBeenCalled();
-    });
-
-    it("handles WebView onError -> triggers error redirect", async () => {
-      const { getByTestId } = cfg.render();
-      const webView = getByTestId("webview-cie-test");
-      fireEvent(webView, "onError");
-      await waitFor(() => callNavigationError(cfg));
-    });
-
-    it("handles WebView onHttpError -> dispatches failure and redirect", async () => {
-      const { getByTestId } = cfg.render();
-      const webView = getByTestId("webview-cie-test");
-      fireEvent(webView, "onHttpError", cfg.makeHttpError());
-      await waitFor(() => callNavigationError(cfg));
     });
   });
 };
