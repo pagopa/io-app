@@ -140,23 +140,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
               : { action: closeAction, secondaryAction: supportModalAction })
           };
         }
-        // NOTE: only the mDL supports the async flow, so this error message is specific to mDL
-        case CredentialIssuanceFailureType.ASYNC_ISSUANCE:
-          return {
-            title:
-              deferredIssuanceScreenContent?.title?.[localeFallback] ??
-              I18n.t("features.itWallet.issuance.asyncCredentialError.title"),
-            subtitle:
-              deferredIssuanceScreenContent?.description?.[localeFallback] ??
-              I18n.t("features.itWallet.issuance.asyncCredentialError.body"),
-            pictogram: "pending",
-            action: {
-              label: I18n.t(
-                "features.itWallet.issuance.asyncCredentialError.primaryAction"
-              ),
-              onPress: closeAsyncIssuance
-            }
-          };
         // Dynamic errors extracted from the entity configuration, with fallback
         case CredentialIssuanceFailureType.INVALID_STATUS: {
           const closeAction = {
