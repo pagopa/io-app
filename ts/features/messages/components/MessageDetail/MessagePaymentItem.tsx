@@ -40,7 +40,7 @@ import { getBadgeTextByPaymentNoticeStatus } from "../../utils/strings";
 import { formatPaymentNoticeNumber } from "../../../payments/common/utils";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { trackPNPaymentStart } from "../../../pn/analytics";
-import { isDueDateValid } from "../../../payments/checkout/utils";
+import { formatAndValidateDueDate } from "../../../payments/checkout/utils";
 import {
   computeAndTrackPaymentStart,
   shouldUpdatePaymentUponReturning
@@ -119,7 +119,7 @@ const modulePaymentNoticeFromPaymentStatus = (
         payablePayment.dueDate,
         O.fromNullable,
         O.filter(_ => !hideExpirationDate),
-        O.chainNullableK(isDueDateValid),
+        O.chainNullableK(formatAndValidateDueDate),
         O.map(
           dueDate =>
             `${I18n.t("wallet.firstTransactionSummary.dueDate")} ${dueDate}`
