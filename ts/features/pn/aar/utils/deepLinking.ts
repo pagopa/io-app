@@ -18,7 +18,10 @@ export const isSendAARLink = (state: GlobalState, url: string) =>
     )
   );
 
-export const navigateToSendAarFlow = (state: GlobalState, aarUrl: string) => {
+export const navigateToSendAarFlowIfEnabled = (
+  state: GlobalState,
+  aarUrl: string
+) => {
   if (isAAREnabled(state)) {
     NavigationService.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
       screen: PN_ROUTES.MAIN,

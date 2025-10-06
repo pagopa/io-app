@@ -80,10 +80,12 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToL2IdentificationScreen: () => {
+  navigateToL2IdentificationScreen: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L2,
-      params: { eidReissuing: false }
+      params: { eidReissuing: context.mode === "reissuance" }
     });
   },
 
@@ -145,34 +147,20 @@ export const createEidIssuanceActionsImplementation = (
   },
 
   navigateToCredentialCatalog: () => {
-    navigation.reset({
-      index: 1,
-      routes: [
-        {
-          name: ROUTES.MAIN,
-          params: {
-            screen: ROUTES.WALLET_HOME
-          }
-        },
-        {
-          name: ITW_ROUTES.MAIN,
-          params: {
-            screen: ITW_ROUTES.ONBOARDING
-          }
-        }
-      ]
+    navigation.replace(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ONBOARDING
     });
   },
 
   navigateToCiePreparationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION_SCREEN
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.NFC_SCREEN
     });
   },
 
   navigateToCiePinPreparationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.PIN_PREPARATION_SCREEN
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.PIN_SCREEN
     });
   },
 
@@ -182,15 +170,9 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToCieReadCardL2Screen: () => {
+  navigateToCieReadCardScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN.L2
-    });
-  },
-
-  navigateToCieReadCardL3Screen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN.L3
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN
     });
   },
 

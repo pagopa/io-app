@@ -13,7 +13,6 @@ import {
   StoredCredential,
   WalletInstanceAttestations
 } from "../../../common/utils/itwTypesUtils";
-import { CiePreparationType } from "../../../identification/cie/components/ItwCiePreparationBaseScreenContent";
 import { ItwTags } from "../../tags";
 import {
   GetWalletAttestationActorParams,
@@ -28,6 +27,7 @@ import {
 } from "../context";
 import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
 import { itwCredentialUpgradeMachine } from "../../upgrade/machine";
+import { CieWarningType } from "../../../identification/cie/utils/types";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
@@ -49,8 +49,7 @@ describe("itwEidIssuanceMachine", () => {
   const navigateToCiePreparationScreen = jest.fn();
   const navigateToCiePinPreparationScreen = jest.fn();
   const navigateToCiePinScreen = jest.fn();
-  const navigateToCieReadCardL2Screen = jest.fn();
-  const navigateToCieReadCardL3Screen = jest.fn();
+  const navigateToCieReadCardScreen = jest.fn();
   const navigateToNfcInstructionsScreen = jest.fn();
   const navigateToCieIdLoginScreen = jest.fn();
   const navigateToCieWarningScreen = jest.fn();
@@ -103,8 +102,7 @@ describe("itwEidIssuanceMachine", () => {
       navigateToCiePreparationScreen,
       navigateToCiePinPreparationScreen,
       navigateToCiePinScreen,
-      navigateToCieReadCardL2Screen,
-      navigateToCieReadCardL3Screen,
+      navigateToCieReadCardScreen,
       navigateToNfcInstructionsScreen,
       navigateToCieIdLoginScreen,
       navigateToCieWarningScreen,
@@ -1211,7 +1209,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
   });
 
-  it("Should obtain an eID (SPID), reissuing mode", async () => {
+  it("Should obtain an eID (SPID), reissuing mode with no credentials reissuing", async () => {
     // The wallet instance and attestation already exist
     const initialContext = {
       ...InitialContext,
@@ -1567,7 +1565,7 @@ describe("itwEidIssuanceMachine", () => {
       }
     });
 
-    const testWarningType: CiePreparationType = "card";
+    const testWarningType: CieWarningType = "card";
 
     actor.send({ type: "go-to-cie-warning", warning: testWarningType });
 
@@ -1667,7 +1665,7 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(navigateToCiePinPreparationScreen).toHaveBeenCalledTimes(1);
 
-    const testWarningType: CiePreparationType = "card";
+    const testWarningType: CieWarningType = "card";
 
     actor.send({ type: "go-to-cie-warning", warning: testWarningType });
 

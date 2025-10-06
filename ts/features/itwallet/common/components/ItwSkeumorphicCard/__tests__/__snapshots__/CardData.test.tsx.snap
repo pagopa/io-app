@@ -134,7 +134,7 @@ exports[`CardData should match snapshot for DC back data 1`] = `
               }
               stroke={
                 {
-                  "payload": 4278190080,
+                  "payload": 4279111443,
                   "type": 0,
                 }
               }
@@ -176,7 +176,16 @@ exports[`CardData should match snapshot for DC front data 1`] = `
         },
       ]
     }
-  />
+  >
+    <View
+      onLayout={[Function]}
+      style={
+        {
+          "flex": 1,
+        }
+      }
+    />
+  </View>
   <View
     style={
       [
@@ -595,7 +604,16 @@ exports[`CardData should match snapshot for MDL front data 1`] = `
         },
       ]
     }
-  />
+  >
+    <View
+      onLayout={[Function]}
+      style={
+        {
+          "flex": 1,
+        }
+      }
+    />
+  </View>
   <View
     style={
       [

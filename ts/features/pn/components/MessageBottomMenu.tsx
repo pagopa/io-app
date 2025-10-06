@@ -16,7 +16,7 @@ import {
   ShowMoreSection
 } from "../../messages/components/MessageDetail/ShowMoreListItem";
 import { formatPaymentNoticeNumber } from "../../payments/common/utils";
-import { serviceMetadataByIdSelector } from "../../services/details/store/reducers";
+import { serviceMetadataByIdSelector } from "../../services/details/store/selectors";
 import { TimelineListItem } from "./TimelineListItem";
 
 const styles = StyleSheet.create({
