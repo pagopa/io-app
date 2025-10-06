@@ -13,12 +13,14 @@ import { availableBonusTypesSelectorFromId } from "../../../common/store/selecto
 import { ID_CDC_TYPE } from "../../../common/utils";
 import * as analytics from "../../analytics";
 import { cdcCtaConfigSelector } from "../../store/selectors/remoteConfig";
+import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 
 const CdcBonusRequestInformationTos = () => {
   const cdcInfo = useIOSelector(availableBonusTypesSelectorFromId(ID_CDC_TYPE));
   const { startFIMSAuthenticationFlow } =
     useFIMSRemoteServiceConfiguration("cdc-onboarding");
   const ctaConfig = useIOSelector(cdcCtaConfigSelector);
+  const isMixpanelEnabled = useIOSelector(isMixpanelEnabledSelector) ?? false;
   const bonusInformationComponentRef =
     useRef<BonusInformationComponentRef>(null);
   useOnFirstRender(() => {
@@ -35,7 +37,7 @@ const CdcBonusRequestInformationTos = () => {
       return;
     }
     const url = new URL(ctaConfig.url);
-    if (ctaConfig.includeDeviceId) {
+    if (ctaConfig.includeDeviceId && isMixpanelEnabled) {
       url.searchParams.set("device", getDeviceId());
     }
     analytics.trackCdcRequestIntroContinue();
