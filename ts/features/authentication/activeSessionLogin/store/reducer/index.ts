@@ -7,7 +7,7 @@ import {
   setFastLoginOptSessionLogin,
   setFinishedActiveSessionLoginFlow,
   setIdpSelectedActiveSessionLogin,
-  setLggedOutUserWithDifferentCF,
+  setLoggedOutUserWithDifferentCF,
   setStartActiveSessionLogin
 } from "../actions";
 import { SpidIdp } from "../../../../../utils/idps";
@@ -75,7 +75,7 @@ export const activeSessionLoginReducer = (
 
     case getType(setFinishedActiveSessionLoginFlow):
     case getType(consolidateActiveSessionLoginData):
-    case getType(setLggedOutUserWithDifferentCF):
+    case getType(setLoggedOutUserWithDifferentCF):
     case getType(sessionCorrupted):
       return initialState;
 

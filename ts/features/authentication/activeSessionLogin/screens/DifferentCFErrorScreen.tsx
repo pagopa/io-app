@@ -1,7 +1,7 @@
 import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIODispatch } from "../../../../store/hooks";
-import { setLggedOutUserWithDifferentCF } from "../store/actions";
+import { setLoggedOutUserWithDifferentCF } from "../store/actions";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { startApplicationInitialization } from "../../../../store/actions/application";
 
@@ -9,7 +9,7 @@ export const DifferentCFErrorScreen = () => {
   const dispatch = useIODispatch();
 
   useOnFirstRender(() => {
-    dispatch(setLggedOutUserWithDifferentCF());
+    dispatch(setLoggedOutUserWithDifferentCF());
   });
 
   const handleNavigateToLandingScreen = () => {
