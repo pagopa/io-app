@@ -18,6 +18,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useContext, ComponentProps } from "react";
 import { Alert, FlatList, ListRenderItemInfo } from "react-native";
 import I18n from "i18next";
+import { evaluateAndDisplayIntercept } from "../../../../qualtrics";
 import { AlertModal } from "../../../../components/ui/AlertModal";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import { isPlaygroundsEnabled } from "../../../../config";
@@ -608,6 +609,17 @@ const DeveloperModeSection = () => {
           onSwitchValueChange={enabled =>
             dispatch(setDebugModeEnabled(enabled))
           }
+        />
+        <VSpacer size={8} />
+        <IOButton
+          fullWidth
+          variant="solid"
+          color={"primary"}
+          label={"Qualtrics Test"}
+          accessibilityLabel={"Qualtrics Test"}
+          onPress={() => {
+            void evaluateAndDisplayIntercept("SI_a4xuuQ8K3lpo1HE");
+          }}
         />
       </ContentWrapper>
 

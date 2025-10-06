@@ -143,6 +143,7 @@
     "react-native-permissions": "^5.3.0",
     "react-native-push-notification": "^8.1.1",
     "react-native-qrcode-svg": "^6.3.12",
+    "react-native-qualtrics": "^2.11.0",
     "react-native-reanimated": "^3.17.5",
     "react-native-render-html": "^6.3.1",
     "react-native-safe-area-context": "^5.4.0",

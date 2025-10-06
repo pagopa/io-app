@@ -16,6 +16,7 @@ import {
   takeLatest
 } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
+import * as Qualtrics from "../qualtrics";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
 import { BackendClient } from "../api/backend";
@@ -190,6 +191,7 @@ export function* initializeApplicationSaga(
   //           order to force the user to choose unlock code and run through onboarding
   //           every new installation.
 
+  yield* call(Qualtrics.initialize);
   // store the app version in the history, if the current version is not present
   yield* call(checkAppHistoryVersionSaga);
   // check if mixpanel could be initialized

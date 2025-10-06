@@ -226,6 +226,7 @@ PODS:
     - ZendeskChatSDK
     - ZendeskMessagingAPISDK
     - ZendeskSupportSDK
+  - Qualtrics (2.31.0)
   - RCT-Folly (2024.11.18.00):
     - boost
     - DoubleConversion
@@ -1560,6 +1561,28 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - react-native-qualtrics (2.11.0):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - Qualtrics
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - react-native-render-html (6.3.1):
     - React-Core
   - react-native-safe-area-context (5.4.0):
@@ -2297,6 +2320,7 @@ DEPENDENCIES:
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-pdf (from `../node_modules/react-native-pdf`)
   - react-native-pdf-thumbnail (from `../node_modules/react-native-pdf-thumbnail`)
+  - react-native-qualtrics (from `../node_modules/react-native-qualtrics`)
   - react-native-render-html (from `../node_modules/react-native-render-html`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-screen-brightness (from `../node_modules/react-native-screen-brightness`)
@@ -2364,6 +2388,7 @@ SPEC REPOS:
     - JOSESwift
     - Mixpanel-swift
     - OpenSSL-Universal
+    - Qualtrics
     - Sentry
     - SocketRocket
     - SwiftCBOR
@@ -2508,6 +2533,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-pdf"
   react-native-pdf-thumbnail:
     :path: "../node_modules/react-native-pdf-thumbnail"
+  react-native-qualtrics:
+    :path: "../node_modules/react-native-qualtrics"
   react-native-render-html:
     :path: "../node_modules/react-native-render-html"
   react-native-safe-area-context:
@@ -2651,6 +2678,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-login-utils: a493266f15ae2476ce629469658d81e93981b273
   pagopa-io-react-native-secure-storage: 7b050d9332b61b2f769bf8d7f6f145f479875976
   pagopa-react-native-zendesk: 6b72253f8f7cc89054dfaeb5f3ff3b652a3c34fe
+  Qualtrics: 33d03e902d81245437fd9538603cc8b6bf02dcb8
   RCT-Folly: e78785aa9ba2ed998ea4151e314036f6c49e6d82
   RCTDeprecation: be794de7dc6ed8f9f7fbf525f86e7651b8b68746
   RCTRequired: a83787b092ec554c2eb6019ff3f5b8d125472b3b
@@ -2694,6 +2722,7 @@ SPEC CHECKSUMS:
   react-native-pager-view: 68e8a65a607a6f91a1e25865002192c3c4f53fcf
   react-native-pdf: 6a51a22ccefb23eb93298771e4bf090913e86d70
   react-native-pdf-thumbnail: 2d69e506eb4ea4940f284a228b975f5ab74ab61b
+  react-native-qualtrics: f982daa3f69ff511ceb773500f93f971f993aaa8
   react-native-render-html: 05a7d4490ffc85c88094601207f3e48a90533476
   react-native-safe-area-context: 9d72abf6d8473da73033b597090a80b709c0b2f1
   react-native-screen-brightness: 16a7b26d12d89654fc6a2e9ff1e55c1a4a10afcb

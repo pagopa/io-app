@@ -13104,6 +13104,7 @@ __metadata:
     react-native-permissions: ^5.3.0
     react-native-push-notification: ^8.1.1
     react-native-qrcode-svg: ^6.3.12
+    react-native-qualtrics: ^2.11.0
     react-native-reanimated: ^3.17.5
     react-native-render-html: ^6.3.1
     react-native-safe-area-context: ^5.4.0
@@ -17811,6 +17812,16 @@ __metadata:
     react-native: ">=0.63.4"
     react-native-svg: ">=13.2.0"
   checksum: a8b4f4fc73eefd8980ba60c911a8516b57a8a68b11609b4313ed9e5fa194bff51c6a6dd37cf6f5c0f296d27a8c48b1461276c3fe01b4d0a6b579c64690f06bb0
+  languageName: node
+  linkType: hard
+
+"react-native-qualtrics@npm:^2.11.0":
+  version: 2.11.0
+  resolution: "react-native-qualtrics@npm:2.11.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 1753d680f4dbe688ada3d676b905cceae2c979296eeca017a5da507f6c73d7e89f20b37b6a7c611c674f7db201a477c62fc56d9eaa1c282cb96c4b2aabea643b
   languageName: node
   linkType: hard
 
