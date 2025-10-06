@@ -59,6 +59,23 @@ type AlertProps = {
 };
 
 /**
+ * Helper to build the event properties for Mixpanel events related to banners.
+ * @param eventType the type of the event, either "action" or "screen_view"
+ * @param banner_page the current route where the banner is shown
+ * @param banner_landing the URL of the banner, if any
+ * @returns the event properties object
+ */
+const buildMPEventProperties = (
+  eventType: "action" | "screen_view",
+  banner_page: string,
+  banner_landing?: string
+) =>
+  buildEventProperties("UX", eventType, {
+    banner_page,
+    banner_landing
+  });
+
+/**
  * Helper hook to derive the connectivity state based on the current connectivity status,
  * the offline access reason, the current route and the startup status, which helps to reduce
  * the complexity of the main hook.
@@ -331,10 +348,11 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
           onPress: () => {
             mixpanelTrack(
               "TAP_REMOTE_BANNER",
-              buildEventProperties("UX", "action", {
-                banner_page: currentRoute,
-                banner_landing: url[localeFallback]
-              })
+              buildMPEventProperties(
+                "action",
+                currentRoute,
+                url[localeFallback]
+              )
             );
             openWebUrl(url[localeFallback]);
           }
@@ -345,12 +363,11 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
     setAlertVisible(currentStatusMessage.length > 0);
     mixpanelTrack(
       "REMOTE_BANNER",
-      buildEventProperties("UX", "screen_view", {
-        banner_page: currentRoute,
-        banner_landing: firstAlert.web_url
-          ? firstAlert.web_url[localeFallback]
-          : undefined
-      })
+      buildMPEventProperties(
+        "screen_view",
+        currentRoute,
+        firstAlert.web_url ? firstAlert.web_url[localeFallback] : undefined
+      )
     );
     return {
       alertProps: {
