@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.16.0-rc.2](https://github.com/pagopa/io-app/compare/3.16.0-rc.1...3.16.0-rc.2) (2025-10-03)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-3072](https://pagopa.atlassian.net/browse/SIW-3072)] Add CIE card preparation screen ([#7405](https://github.com/pagopa/io-app/issues/7405)) ([33b59ab](https://github.com/pagopa/io-app/commit/33b59abf465ac1fc77e9d65bc2078ba113dca2c6))
+* [[IOCOM-2554](https://pagopa.atlassian.net/browse/IOCOM-2554),[IOCOM-2551](https://pagopa.atlassian.net/browse/IOCOM-2551)] Implementation of KO error screen for non-recipient user ([#7385](https://github.com/pagopa/io-app/issues/7385)) ([614d6ae](https://github.com/pagopa/io-app/commit/614d6ae67c4659055e5dbe7b634e950f731c15cf))
+
+
+### Bug Fixes
+
+* [[IOBP-2038](https://pagopa.atlassian.net/browse/IOBP-2038)] Set deviceId to the CdC url only if mixpanel enabled ([#7436](https://github.com/pagopa/io-app/issues/7436)) ([6b2a04c](https://github.com/pagopa/io-app/commit/6b2a04cacfd64157d82bf4fa41ab69c99de61099))
+* **IT Wallet:** [[SIW-3034](https://pagopa.atlassian.net/browse/SIW-3034),[SIW-3054](https://pagopa.atlassian.net/browse/SIW-3054),[SIW-3071](https://pagopa.atlassian.net/browse/SIW-3071)] Fix IT Wallet Mixpanel Events ([#7403](https://github.com/pagopa/io-app/issues/7403)) ([8e2dcc7](https://github.com/pagopa/io-app/commit/8e2dcc72839d8a3d509943a389656a27bf87be10))
+
 ## [3.16.0-rc.1](https://github.com/pagopa/io-app/compare/3.16.0-rc.0...3.16.0-rc.1) (2025-10-02)
 
 
