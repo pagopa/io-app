@@ -45,7 +45,6 @@ export const SendEngagementOnFirstAppOpenScreen = () => {
         action={{
           testID: "sendEngagementOnFirstAppOpenActionID",
           label: i18next.t("features.pn.loginEngagement.send.action"),
-          fullWidth: true,
           onPress: presentActivationBottomSheet
         }}
         secondaryAction={{

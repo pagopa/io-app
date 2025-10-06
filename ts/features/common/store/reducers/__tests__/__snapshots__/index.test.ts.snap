@@ -327,6 +327,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "bannerDismiss": {
       "dismissed": false,
     },
+    "loginEngagement": {
+      "hasSendEngagementScreenBeenDismissed": false,
+    },
   },
   "profileSettings": {},
   "services": {
