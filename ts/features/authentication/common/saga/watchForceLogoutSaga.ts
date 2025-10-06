@@ -6,7 +6,7 @@ import {
   resetAssistanceDataAndClearCache,
   restartCleanApplication
 } from "../../../../sagas/commons";
-import { setLggedOutUserWithDifferentCF } from "../../activeSessionLogin/store/actions";
+import { setLoggedOutUserWithDifferentCF } from "../../activeSessionLogin/store/actions";
 
 /**
  * Watches for logout-related events during runtime
@@ -21,7 +21,7 @@ export function* watchForceLogoutSaga(): IterableIterator<ReduxSagaEffect> {
 
 export function* watchForceLogoutOnDifferentCF(): IterableIterator<ReduxSagaEffect> {
   yield* takeLatest(
-    getType(setLggedOutUserWithDifferentCF),
+    getType(setLoggedOutUserWithDifferentCF),
     resetAssistanceDataAndClearCache
   );
 }
