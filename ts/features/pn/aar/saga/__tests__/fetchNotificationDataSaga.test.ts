@@ -3,9 +3,9 @@ import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { call } from "typed-redux-saga";
 import { ThirdPartyMessage as PnThirdPartyMessage } from "../../../../../../definitions/pn/ThirdPartyMessage";
-import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
 import { ThirdPartyMessage as AarThirdPartyMessage } from "../../../../../../definitions/pn/aar/ThirdPartyMessage";
 import { pnMessagingServiceIdSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../../types/SessionToken";
 import * as SAGA_UTILS from "../../../../services/common/saga/ getServiceDetails";
 import { profileFiscalCodeSelector } from "../../../../settings/common/store/selectors";
@@ -21,7 +21,7 @@ import {
   sendAarMockStates
 } from "../../utils/testUtils";
 import { fetchAarDataSaga, testable } from "../fetchNotificationDataSaga";
-
+import { ProblemJson } from "../../../../../../definitions/pn/aar/ProblemJson";
 const mockCurrentState = {
   type: sendAARFlowStates.fetchingNotificationData,
   iun: "IUN123",
@@ -40,6 +40,8 @@ describe("fetchAarDataSaga", () => {
         .next()
         .select(currentAARFlowData)
         .next(sendAarMockStates[0])
+        .select(isPnTestEnabledSelector)
+        .next(true)
         .isDone();
     });
 
@@ -50,11 +52,14 @@ describe("fetchAarDataSaga", () => {
         .next()
         .select(currentAARFlowData)
         .next(mockCurrentState)
+        .select(isPnTestEnabledSelector)
+        .next(true)
         .call(fetchData, {
           Bearer: mockSessionTokenWithBearer,
           iun: mockCurrentState.iun,
           mandateId: mockCurrentState.mandateId,
-          "x-pagopa-pn-io-src": "QRCODE"
+          "x-pagopa-pn-io-src": "QRCODE",
+          isTest: true
         })
         .next(mockFailure)
         .put(
@@ -76,18 +81,21 @@ describe("fetchAarDataSaga", () => {
         .next()
         .select(currentAARFlowData)
         .next(mockCurrentState)
+        .select(isPnTestEnabledSelector)
+        .next(true)
         .call(fetchData, {
           Bearer: mockSessionTokenWithBearer,
           iun: mockCurrentState.iun,
           mandateId: mockCurrentState.mandateId,
-          "x-pagopa-pn-io-src": "QRCODE"
+          "x-pagopa-pn-io-src": "QRCODE",
+          isTest: true
         })
         .next(mockResolvedEither)
         .put(
           setAarFlowState({
             type: sendAARFlowStates.ko,
             previousState: mockCurrentState,
-            error: mockResolved.value as unknown as AARProblemJson
+            error: mockResolved.value as unknown as ProblemJson
           })
         )
         .next()
@@ -102,11 +110,14 @@ describe("fetchAarDataSaga", () => {
         .next()
         .select(currentAARFlowData)
         .next(mockCurrentState)
+        .select(isPnTestEnabledSelector)
+        .next(true)
         .call(fetchData, {
           Bearer: mockSessionTokenWithBearer,
           iun: mockCurrentState.iun,
           mandateId: mockCurrentState.mandateId,
-          "x-pagopa-pn-io-src": "QRCODE"
+          "x-pagopa-pn-io-src": "QRCODE",
+          isTest: true
         })
         .throw(error)
         .put(
@@ -127,11 +138,14 @@ describe("fetchAarDataSaga", () => {
         .next()
         .select(currentAARFlowData)
         .next(mockCurrentState)
+        .select(isPnTestEnabledSelector)
+        .next(true)
         .call(fetchData, {
           Bearer: mockSessionTokenWithBearer,
           iun: mockCurrentState.iun,
           mandateId: mockCurrentState.mandateId,
-          "x-pagopa-pn-io-src": "QRCODE"
+          "x-pagopa-pn-io-src": "QRCODE",
+          isTest: true
         })
         .next(mockValue)
         .call(
@@ -150,11 +164,14 @@ describe("fetchAarDataSaga", () => {
         .next()
         .select(currentAARFlowData)
         .next(mockCurrentState)
+        .select(isPnTestEnabledSelector)
+        .next(true)
         .call(fetchData, {
           Bearer: mockSessionTokenWithBearer,
           iun: mockCurrentState.iun,
           mandateId: mockCurrentState.mandateId,
-          "x-pagopa-pn-io-src": "QRCODE"
+          "x-pagopa-pn-io-src": "QRCODE",
+          isTest: true
         })
         .next(mockValue)
         .call(

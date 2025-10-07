@@ -17,12 +17,14 @@ import {
 } from "../store/actions";
 import { currentAARFlowData } from "../store/selectors";
 import { AarFlowStates, sendAARFlowStates } from "../utils/stateUtils";
+import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 
 export function* fetchAarDataSaga(
   fetchData: SendAARClient["getAARNotification"],
   sessionToken: SessionToken
 ) {
   const currentState = yield* select(currentAARFlowData);
+  const isTest = yield* select(isPnTestEnabledSelector);
   if (currentState.type !== sendAARFlowStates.fetchingNotificationData) {
     return;
   }
@@ -31,7 +33,8 @@ export function* fetchAarDataSaga(
       Bearer: `Bearer ${sessionToken}`,
       iun: currentState.iun,
       mandateId: currentState.mandateId,
-      "x-pagopa-pn-io-src": "QRCODE"
+      "x-pagopa-pn-io-src": "QRCODE",
+      isTest
     });
 
     if (E.isLeft(result)) {
