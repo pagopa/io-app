@@ -3869,6 +3869,27 @@
           },
           "fetchingQrData": {
             "loadingText": "Recupero delle informazioni in corso"
+          },
+          "ko": {
+            "notAddresseeFinal": {
+              "title": "La comunicazione non è destinata a te",
+              "body": "Per accedere alle notifiche SEND per conto di un’altra persona, è necessario che chi ha ricevuto la comunicazione ti deleghi tramite il sito web di SEND.",
+              "primaryAction": "Come attivare una delega",
+              "secondaryAction": "Chiudi"
+            },
+            "GENERIC": {
+              "title": "Non riusciamo a recuperare i dati della notifica SEND",
+              "body": "Riprova più tardi.",
+              "primaryAction": "Chiudi",
+              "secondaryAction": "Mostra dettagli",
+              "detail": {
+                "subTitle": "Prendi nota del codice di errore, potrebbe servirti per richiedere assistenza.",
+                "supportTitle": "Contatta l'assistenza",
+                "chat": "Chiedi aiuto in chat",
+                "additionalDataTitle": "Dati aggiuntivi",
+                "errorCode": "Codice errore"
+              }
+            }
           }
         }
       },
@@ -4580,20 +4601,6 @@
           }
         },
         "cie": {
-          "prepare": {
-            "pin": {
-              "title": "Prepara il PIN della tua Carta di Identità Elettronica (CIE)",
-              "content": "Dovrai digitarlo per completare la verifica dell’identità.",
-              "buttonLink": "Cos’è il PIN della CIE?",
-              "cta": "Inserisci il PIN della CIE"
-            },
-            "card": {
-              "title": "Prepara la tua Carta di Identità Elettronica (CIE)",
-              "content": "Dovrai poggiare il retro del telefono sulla CIE, su una superficie stabile, e tenerli fermi per la lettura.",
-              "cta": "Inizia lettura CIE",
-              "buttonLink": "Cos’è la CIE?"
-            }
-          },
           "inputPin": {
             "title": "Inserisci il PIN della CIE",
             "buttonLink": "Dove trovo il PIN della CIE?"
@@ -5597,7 +5604,7 @@
       "initiativeOnboardedStatus": {
         "header": "My requests",
         "ON_WAITING_LIST": {
-          "label": "On evaluation"
+          "label": "On waiting list"
         },
         "ON_EVALUATION": {
           "label": "On evaluation"
@@ -5875,7 +5882,7 @@
           },
           "PAYMENT_GENERIC_ERROR": {
             "title": "Non è possibile completare la richiesta per questa iniziativa",
-            "subtitle": "Siamo già a lavoro per risolvere.  Riprova tra un po’."
+            "subtitle": "Siamo già a lavoro per risolvere. Riprova tra un po’."
           }
         }
       },
@@ -6148,7 +6155,7 @@
         "failure": {
           "GENERIC": {
             "title": "Non è stato possibile procedere con l'iniziativa richiesta",
-            "subtitle": "Siamo già a lavoro per risolvere.  Riprova tra un po’."
+            "subtitle": "Siamo già a lavoro per risolvere. Riprova tra un po’."
           },
           "TRANSACTION_EXPIRED": {
             "title": "Il codice è scaduto",

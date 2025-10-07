@@ -92,3 +92,5 @@ export const getTextForState = (
   });
   return texts[state];
 };
+
+export const ACS_PATH = "/assertionConsumerService";

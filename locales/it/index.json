@@ -3869,6 +3869,27 @@
           },
           "fetchingQrData": {
             "loadingText": "Recupero delle informazioni in corso"
+          },
+          "ko": {
+            "notAddresseeFinal": {
+              "title": "La comunicazione non è destinata a te",
+              "body": "Per accedere alle notifiche SEND per conto di un’altra persona, è necessario che chi ha ricevuto la comunicazione ti deleghi tramite il sito web di SEND.",
+              "primaryAction": "Come attivare una delega",
+              "secondaryAction": "Chiudi"
+            },
+            "GENERIC": {
+              "title": "Non riusciamo a recuperare i dati della notifica SEND",
+              "body": "Riprova più tardi.",
+              "primaryAction": "Chiudi",
+              "secondaryAction": "Mostra dettagli",
+              "detail": {
+                "subTitle": "Prendi nota del codice di errore, potrebbe servirti per richiedere assistenza.",
+                "supportTitle": "Contatta l'assistenza",
+                "chat": "Chiedi aiuto in chat",
+                "additionalDataTitle": "Dati aggiuntivi",
+                "errorCode": "Codice errore"
+              }
+            }
           }
         }
       },
@@ -4625,20 +4646,25 @@
           "prepare": {
             "pin": {
               "title": "Prepara il PIN della tua Carta di Identità Elettronica (CIE)",
-              "content": "Dovrai digitarlo per completare la verifica dell’identità.",
-              "buttonLink": "Cos’è il PIN della CIE?",
-              "cta": "Inserisci il PIN della CIE"
+              "description": "Dovrai digitarlo per completare la verifica dell’identità.",
+              "buttonLink": "Dove trovo il PIN della CIE?",
+              "cta": "Inizia"
             },
-            "card": {
-              "title": "Prepara la tua Carta di Identità Elettronica (CIE)",
-              "content": "Dovrai poggiare il retro del telefono sulla CIE, su una superficie stabile, e tenerli fermi per la lettura.",
+            "nfc": {
+              "title": "Posiziona la tua CIE su una superficie stabile per la lettura",
+              "description": "Dovrai poggiare il retro del telefono sulla carta e tenerlo fermo per la lettura.",
               "cta": "Inizia lettura CIE",
               "buttonLink": "Cos’è la CIE?"
             },
             "can": {
               "title": "Prepara la tua Carta di Identità Elettronica (CIE)",
-              "content": "Dovrai usarla e inserire il suo codice a 6 cifre (CAN) che trovi stampato sul fronte in basso a destra.",
+              "description": "Dovrai usarla e inserire il suo codice a 6 cifre (CAN) che trovi stampato sul fronte in basso a destra.",
               "buttonLink": "Cos’è il PIN della CIE?",
+              "cta": "Continua"
+            },
+            "card": {
+              "title": "Prepara la tua Carta di Identità Elettronica (CIE)",
+              "description": "Dovrai usarla e inserire il suo codice a 6 cifre (CAN) che trovi stampato sul fronte in basso a destra.",
               "cta": "Continua"
             }
           },
@@ -5684,7 +5710,7 @@
       "initiativeOnboardedStatus": {
         "header": "Le mie richieste",
         "ON_WAITING_LIST": {
-          "label": "Verifica in corso"
+          "label": "In lista d'attesa"
         },
         "ON_EVALUATION": {
           "label": "Verifica in corso"
