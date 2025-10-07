@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.16.0-rc.3](https://github.com/pagopa/io-app/compare/3.16.0-rc.2...3.16.0-rc.3) (2025-10-06)
+
+
+### Features
+
+* [[IOPID-3360](https://pagopa.atlassian.net/browse/IOPID-3360)] add tracking on ingress screen offline wallet banner  ([#7437](https://github.com/pagopa/io-app/issues/7437)) ([988f6c5](https://github.com/pagopa/io-app/commit/988f6c5380529fff7c08e20d1023339b4ea2b02b)), closes [/#diff-e1e05e98e259867744fc0cefa89762aaa81bd57a6d4bd1ae63b3eb2719660e1dR75-R77](https://github.com/pagopa///issues/diff-e1e05e98e259867744fc0cefa89762aaa81bd57a6d4bd1ae63b3eb2719660e1dR75-R77) [/#diff-e1e05e98e259867744fc0cefa89762aaa81bd57a6d4bd1ae63b3eb2719660e1dL88-R93](https://github.com/pagopa///issues/diff-e1e05e98e259867744fc0cefa89762aaa81bd57a6d4bd1ae63b3eb2719660e1dL88-R93)
+* [[IOPLT-1339](https://pagopa.atlassian.net/browse/IOPLT-1339)] Adds mixpanel events on Remote banners ([#7419](https://github.com/pagopa/io-app/issues/7419)) ([4f9c63d](https://github.com/pagopa/io-app/commit/4f9c63d83109edd87fce6ef82376f5d5ab84fbd8))
+
+
+### Bug Fixes
+
+* [[IOCOM-2600](https://pagopa.atlassian.net/browse/IOCOM-2600)] Hide payment expiration date from `ModulePaymentNotice` ([#7392](https://github.com/pagopa/io-app/issues/7392)) ([303a08c](https://github.com/pagopa/io-app/commit/303a08cf88ece651b060b445f04454efec0c59b9)), closes [/github.com/pagopa/io-app/blob/ef897cbab8cf01e4132b62e2e40b781e585778b3/ts/features/messages/components/MessageDetail/MessagePaymentItem.tsx#L119](https://github.com/pagopa//github.com/pagopa/io-app/blob/ef897cbab8cf01e4132b62e2e40b781e585778b3/ts/features/messages/components/MessageDetail/MessagePaymentItem.tsx/issues/L119)
+* [[IOPID-3425](https://pagopa.atlassian.net/browse/IOPID-3425)] in Active session login flow on push notifications and error SESSION_CORRUPTED ([#7435](https://github.com/pagopa/io-app/issues/7435)) ([c0b3425](https://github.com/pagopa/io-app/commit/c0b3425b5aa5fd046b284ef00faa5fb9a4b9064f))
+
 ## [3.16.0-rc.2](https://github.com/pagopa/io-app/compare/3.16.0-rc.1...3.16.0-rc.2) (2025-10-03)
 
 
