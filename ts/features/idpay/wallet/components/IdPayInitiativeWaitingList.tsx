@@ -79,7 +79,7 @@ const getInitiativeStatusBadge = (
         componentProps: {
           variant: "warning",
           text: I18n.t(
-            "idpay.wallet.initiativeOnboardedStatus.ON_WAITING_LIST.label"
+            "idpay.wallet.initiativeOnboardedStatus.ON_EVALUATION.label"
           )
         }
       };
