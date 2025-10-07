@@ -24,18 +24,24 @@ import emptyDark from "../../../assets/animated-pictograms/EmptyDark.json";
 import error from "../../../assets/animated-pictograms/Error.json";
 import errorDark from "../../../assets/animated-pictograms/ErrorDark.json";
 import fatalError from "../../../assets/animated-pictograms/FatalError.json";
+import fatalErrorDark from "../../../assets/animated-pictograms/FatalErrorDark.json";
 import lock from "../../../assets/animated-pictograms/Lock.json";
+import lockDark from "../../../assets/animated-pictograms/LockDark.json";
 import scanCardAndroid from "../../../assets/animated-pictograms/ScanCardAndroid.json";
 import scanCardAndroidDark from "../../../assets/animated-pictograms/ScanCardAndroidDark.json";
 import scanCardiOS from "../../../assets/animated-pictograms/ScanCardiOS.json";
 import scanCardiOSDark from "../../../assets/animated-pictograms/ScanCardiOSDark.json";
 import search from "../../../assets/animated-pictograms/Search.json";
+import searchDark from "../../../assets/animated-pictograms/SearchDark.json";
 import success from "../../../assets/animated-pictograms/Success.json";
+import successDark from "../../../assets/animated-pictograms/SuccessDark.json";
 import umbrella from "../../../assets/animated-pictograms/Umbrella.json";
 import umbrellaDark from "../../../assets/animated-pictograms/UmbrellaDark.json";
 import waiting from "../../../assets/animated-pictograms/Waiting.json";
 import warning from "../../../assets/animated-pictograms/Warning.json";
+import warningDark from "../../../assets/animated-pictograms/WarningDark.json";
 import welcome from "../../../assets/animated-pictograms/Welcome.json";
+import welcomeDark from "../../../assets/animated-pictograms/WelcomeDark.json";
 
 export const IOAnimatedPictogramsAssets = {
   waiting,
@@ -59,15 +65,15 @@ export const IOAnimatedPictogramsAssetsDark: Record<
   waiting,
   empty: emptyDark,
   error: errorDark,
-  fatalError,
-  lock,
+  fatalError: fatalErrorDark,
+  lock: lockDark,
   scanCardAndroid: scanCardAndroidDark,
   scanCardiOS: scanCardiOSDark,
-  search,
-  success,
-  warning,
+  search: searchDark,
+  success: successDark,
+  warning: warningDark,
   umbrella: umbrellaDark,
-  welcome
+  welcome: welcomeDark
 } as const;
 
 export type IOAnimatedPictograms = keyof typeof IOAnimatedPictogramsAssets;
@@ -107,6 +113,11 @@ export const AnimatedPictogram = ({
   const { themeType } = useIOThemeContext();
   const isDarkMode = themeType === "dark";
 
+  /* Ideally, I would have preferred an implementation using
+  dynamic colour overrides from a single JSON Lottie file
+  (or even better, Rive), but the original files don't reliably
+  expose these colours, so we have to proceed with a more
+  resource-intensive approach. */
   const themeDependentAsset = useMemo(
     () =>
       isDarkMode
