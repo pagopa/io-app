@@ -64,13 +64,22 @@ const getInitiativeStatusBadge = (
 ): ListItemInfo["topElement"] | undefined => {
   switch (initiativeStatus) {
     case InitiativeOnboardingStatus.ON_WAITING_LIST:
+      return {
+        type: "badge",
+        componentProps: {
+          variant: "default",
+          text: I18n.t(
+            "idpay.wallet.initiativeOnboardedStatus.ON_WAITING_LIST.label"
+          )
+        }
+      };
     case InitiativeOnboardingStatus.ON_EVALUATION: {
       return {
         type: "badge",
         componentProps: {
           variant: "warning",
           text: I18n.t(
-            "idpay.wallet.initiativeOnboardedStatus.ON_WAITING_LIST.label"
+            "idpay.wallet.initiativeOnboardedStatus.ON_EVALUATION.label"
           )
         }
       };
