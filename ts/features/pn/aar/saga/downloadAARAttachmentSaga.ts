@@ -19,6 +19,7 @@ import {
 } from "../../../messages/utils/attachments";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { trackSendAARAttachmentDownloadFailure } from "../analytics";
+import { isTestEnv } from "../../../../utils/environment";
 
 export function* downloadAARAttachmentSaga(
   bearerToken: SessionToken,
@@ -56,7 +57,7 @@ export function* downloadAARAttachmentSaga(
     );
   } catch (e) {
     const reason = unknownToReason(e);
-    trackSendAARAttachmentDownloadFailure(reason);
+    yield* call(trackSendAARAttachmentDownloadFailure, reason);
     yield* put(
       downloadAttachment.failure({
         attachment,
@@ -92,7 +93,8 @@ function* getAttachmentPrevalidatedUrl(
     if (typeof attachmentMetadataRetryAfterOrUrl === "string") {
       return attachmentMetadataRetryAfterOrUrl;
     }
-    const retryAfterMilliseconds = restrainRetryAfterIntervalInMilliseconds(
+    const retryAfterMilliseconds = yield* call(
+      restrainRetryAfterIntervalInMilliseconds,
       attachmentMetadataRetryAfterOrUrl
     );
     yield* delay(retryAfterMilliseconds);
@@ -186,3 +188,12 @@ function* downloadAttachmentFromPrevalidatedUrl(
     }${status} ${state} ${respType}`
   );
 }
+
+export const testable = isTestEnv
+  ? {
+      downloadAttachmentFromPrevalidatedUrl,
+      encodeAttachmentUrl,
+      getAttachmentMetadata,
+      getAttachmentPrevalidatedUrl
+    }
+  : undefined;
