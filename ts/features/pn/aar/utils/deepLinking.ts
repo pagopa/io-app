@@ -5,7 +5,7 @@ import { pnAARQRCodeRegexSelector } from "../../../../store/reducers/backendStat
 import PN_ROUTES from "../../navigation/routes";
 import NavigationService from "../../../../navigation/NavigationService";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-import { isAAREnabled } from "../store/reducers";
+import { isAAREnabled } from "../store/selectors";
 export const isSendAARLink = (state: GlobalState, url: string) =>
   pipe(
     state,

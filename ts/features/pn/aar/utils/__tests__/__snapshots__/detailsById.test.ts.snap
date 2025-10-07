@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`detailsById Aar utils fillerEphemeralAARMarkdown should match snapshot 1`] = `"EPHEMERAL_AAR_INVALID_MARKDOWNEPHEMERAL_AAR_INVALID_MARKDOWNEPHEMERAL_AAR_INVALID_MARKDOWN"`;

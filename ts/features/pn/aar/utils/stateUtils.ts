@@ -1,3 +1,4 @@
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
 import { ThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
 
@@ -28,6 +29,8 @@ type DisplayingNotification = {
   type: SendAARFlowStatesType["displayingNotificationData"];
   fullNameDestinatario: string;
   notification: ThirdPartyMessage;
+  iun: string;
+  pnServiceId: ServiceId;
   mandateId?: string;
 };
 

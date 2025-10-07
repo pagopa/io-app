@@ -1,10 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
-import { loadServiceDetail } from "../../../services/details/store/actions/details";
-import { serviceDetailsByIdPotSelector } from "../../../services/details/store/selectors";
-import { getServiceDetails } from "../utils";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
+import { loadServiceDetail } from "../../../details/store/actions/details";
+import { serviceDetailsByIdPotSelector } from "../../../details/store/selectors";
+import { getServiceDetails } from "../ getServiceDetails";
 
 describe("getServiceDetails", () => {
   it("when no service is in store, it should dispatch a loadServiceDetail.request and retrieve its result from the store if it succeeds", () => {

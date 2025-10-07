@@ -10,7 +10,7 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { UIMessage, UIMessageDetails } from "../../types";
 import { MessageListCategory } from "../../types/messageListCategory";
-import { ThirdPartyMessageUnion } from "../../utils/thirdPartyById";
+import { ThirdPartyMessageUnion } from "../../types/thirdPartyById";
 import { MessageGetStatusFailurePhaseType } from "../reducers/messageGetStatus";
 import {
   interruptMessageArchivingProcessingAction,

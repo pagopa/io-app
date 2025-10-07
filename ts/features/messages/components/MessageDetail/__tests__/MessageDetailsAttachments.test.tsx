@@ -7,7 +7,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { loadThirdPartyMessage } from "../../../store/actions";
 import { ATTACHMENT_CATEGORY } from "../../../types/attachmentCategory";
-import { ThirdPartyMessageUnion } from "../../../utils/thirdPartyById";
+import { ThirdPartyMessageUnion } from "../../../types/thirdPartyById";
 import { MessageDetailsAttachments } from "../MessageDetailsAttachments";
 
 describe("MessageDetailsAttachments", () => {

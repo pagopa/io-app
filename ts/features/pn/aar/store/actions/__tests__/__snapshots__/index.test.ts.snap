@@ -7,7 +7,7 @@ exports[`AARFlowStateActions should match snapshot for populateStoresWithEphemer
     "fiscalCode": "1209381023813098123",
     "iun": "some-iun",
     "mandateId": "",
-    "markDown": {},
+    "markdown": {},
     "pnServiceID": "some-Sid",
     "subject": "",
     "thirdPartyMessage": {},

@@ -1,29 +1,21 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import { StackActions } from "@react-navigation/native";
-import { sequenceS } from "fp-ts/lib/Apply";
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import { call, put, select } from "typed-redux-saga/macro";
+import { MessageBodyMarkdown } from "../../../../../definitions/backend/MessageBodyMarkdown";
 import { MessageSubject } from "../../../../../definitions/backend/MessageSubject";
 import { ThirdPartyMessage as PnThirdPartyMessage } from "../../../../../definitions/pn/ThirdPartyMessage";
 import { ThirdPartyMessage as AarThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
-import NavigationService from "../../../../navigation/NavigationService";
 import { pnMessagingServiceIdSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { SessionToken } from "../../../../types/SessionToken";
 import { isTestEnv } from "../../../../utils/environment";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-import { getServiceDetails } from "../../../messages/saga/utils";
+import { getServiceDetails } from "../../../services/common/saga/ getServiceDetails";
 import { profileFiscalCodeSelector } from "../../../settings/common/store/selectors";
-import PN_ROUTES from "../../navigation/routes";
 import { SendAARClient } from "../api/client";
 import {
-  EphemeralAarMessageDataActionPayload,
   populateStoresWithEphemeralAarMessageData,
   setAarFlowState
 } from "../store/actions";
-import { currentAARFlowData } from "../store/reducers";
-import { fillerEphemeralAARMarkdown } from "../utils/detailsById";
+import { currentAARFlowData } from "../store/selectors";
 import { AarFlowStates, sendAARFlowStates } from "../utils/stateUtils";
 
 export function* fetchAarDataSaga(
@@ -36,7 +28,7 @@ export function* fetchAarDataSaga(
   }
   try {
     const result = yield* call(fetchData, {
-      Bearer: sessionToken,
+      Bearer: `Bearer ${sessionToken}`,
       iun: currentState.iun,
       mandateId: currentState.mandateId,
       "x-pagopa-pn-io-src": "QRCODE"
@@ -52,60 +44,45 @@ export function* fetchAarDataSaga(
       return;
     }
     const { status, value } = result.right;
-    if (status === 200) {
-      const payload = yield* call(
-        aarMessageDataPayloadFromResponse,
-        value,
-        currentState
-      );
-
-      if (O.isNone(payload)) {
-        return;
-      }
-      const data = payload.value;
-
-      yield* put(populateStoresWithEphemeralAarMessageData(data));
-
-      yield* call(
-        NavigationService.dispatchNavigationAction,
-        StackActions.push(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-          screen: PN_ROUTES.MAIN,
-          params: {
-            screen: PN_ROUTES.MESSAGE_DETAILS,
-            params: {
-              messageId: data.iun,
-              serviceId: data.pnServiceID,
-              firstTimeOpening: true
-            }
-          }
-        })
-      );
+    if (status !== 200) {
       yield* put(
         setAarFlowState({
-          type: sendAARFlowStates.displayingNotificationData,
-          notification: value,
-          fullNameDestinatario: currentState.fullNameDestinatario,
-          mandateId: currentState.mandateId
+          type: sendAARFlowStates.ko,
+          previousState: currentState,
+          error: value
         })
       );
       return;
     }
+
+    const payload = yield* call(
+      aarMessageDataPayloadFromResponse,
+      value,
+      currentState
+    );
+
+    if (payload === undefined) {
+      return;
+    }
+
+    yield* put(populateStoresWithEphemeralAarMessageData(payload));
     yield* put(
       setAarFlowState({
-        type: sendAARFlowStates.ko,
-        previousState: currentState,
-        error: value
+        type: sendAARFlowStates.displayingNotificationData,
+        notification: value,
+        fullNameDestinatario: currentState.fullNameDestinatario,
+        mandateId: currentState.mandateId,
+        iun: currentState.iun,
+        pnServiceId: payload.pnServiceID
       })
     );
-    return;
-  } catch (e: any) {
+  } catch (e: unknown) {
     yield* put(
       setAarFlowState({
         type: sendAARFlowStates.ko,
         previousState: currentState
       })
     );
-    return;
   }
 }
 
@@ -115,42 +92,29 @@ function* aarMessageDataPayloadFromResponse(
 ) {
   const fiscalCode = yield* select(profileFiscalCodeSelector);
   const pnServiceID = yield* select(pnMessagingServiceIdSelector);
-  if (pnServiceID === undefined) {
-    return O.none;
+  const sendMessageEither = PnThirdPartyMessage.decode(value);
+
+  if (pnServiceID === undefined || E.isLeft(sendMessageEither)) {
+    return undefined;
   }
 
   const pnServiceDetails = yield* getServiceDetails(pnServiceID);
   if (pnServiceDetails === undefined || fiscalCode === undefined) {
-    return O.none;
+    return undefined;
   }
 
-  return pipe(
-    value,
-    PnThirdPartyMessage.decode,
-    O.fromEither,
-    data =>
-      sequenceS(O.Monad)({
-        thirdPartyMessage: data,
-        details: pipe(
-          data,
-          O.chainNullableK(v => v.details)
-        )
-      }),
-    O.map(
-      ({
-        thirdPartyMessage,
-        details: { iun, recipients, subject }
-      }): EphemeralAarMessageDataActionPayload => ({
-        iun: iun as NonEmptyString,
-        thirdPartyMessage,
-        fiscalCode: recipients[0]?.taxId ?? fiscalCode,
-        pnServiceID: pnServiceDetails?.id,
-        markDown: fillerEphemeralAARMarkdown,
-        subject: subject as MessageSubject,
-        mandateId: currentState.mandateId
-      })
-    )
-  );
+  const sendMessage = sendMessageEither.right;
+  const details = sendMessage.details;
+  const recipients = details?.recipients;
+  return {
+    iun: details?.iun as NonEmptyString,
+    thirdPartyMessage: sendMessage,
+    fiscalCode: recipients?.[0]?.taxId ?? fiscalCode,
+    pnServiceID,
+    markdown: "*".repeat(81) as MessageBodyMarkdown,
+    subject: details?.subject as MessageSubject,
+    mandateId: currentState.mandateId
+  };
 }
 
 export const testable = isTestEnv

@@ -1,8 +1,8 @@
 import { FiscalCode, NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import { MessageBodyMarkdown } from "../../../../../definitions/backend/MessageBodyMarkdown";
 import { MessageSubject } from "../../../../../definitions/backend/MessageSubject";
 import { ThirdPartyMessage as PnThirdPartyMessage } from "../../../../../definitions/pn/ThirdPartyMessage";
 import { EphemeralAarMessageDataActionPayload } from "../store/actions";
-import { fillerEphemeralAARMarkdown } from "./detailsById";
 import { AARFlowState, sendAARFlowStates } from "./stateUtils";
 
 export const sendAarMockStateFactory: Record<
@@ -26,7 +26,10 @@ export const sendAarMockStateFactory: Record<
   displayingNotificationData: () => ({
     type: "displayingNotificationData",
     fullNameDestinatario: "Mario Rossi",
-    notification: {}
+    notification: {},
+    iun: "000000000001",
+    pnServiceId: "SERVICEID123" as NonEmptyString,
+    mandateId: "MANDATE123"
   }),
   notAddresseeFinal: () => ({
     type: "notAddresseeFinal",
@@ -50,7 +53,7 @@ export const mockEphemeralAarMessageDataActionPayload: EphemeralAarMessageDataAc
     thirdPartyMessage: { foo: "bar" } as PnThirdPartyMessage,
     fiscalCode: "TAXCODE123" as FiscalCode,
     pnServiceID: "SERVICEID123" as NonEmptyString,
-    markDown: fillerEphemeralAARMarkdown,
+    markdown: "*".repeat(81) as MessageBodyMarkdown,
     subject: "subject" as MessageSubject,
     mandateId: "MANDATE123"
   };

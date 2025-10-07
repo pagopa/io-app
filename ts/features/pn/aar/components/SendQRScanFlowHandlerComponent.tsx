@@ -15,7 +15,7 @@ import {
   trackSendQRCodeScanRedirectDismissed
 } from "../analytics";
 import { SendAARInitialFlowScreen } from "../screen/SendAARInitialFlowScreen";
-import { isAAREnabled } from "../store/reducers";
+import { isAAREnabled } from "../store/selectors";
 
 export type SendQRScanHandlerScreenProps = {
   aarUrl: string;

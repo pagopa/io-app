@@ -18,10 +18,8 @@ import {
 } from "../../../../pn/aar/store/actions";
 import { mockEphemeralAarMessageDataActionPayload } from "../../../../pn/aar/utils/testUtils";
 import { UIMessageDetails } from "../../../types";
-import {
-  ThirdPartyMessageUnion,
-  thirdPartyKind
-} from "../../../utils/thirdPartyById";
+import { ThirdPartyMessageUnion } from "../../../types/thirdPartyById";
+import { thirdPartyKind } from "../../../utils/thirdPartyById";
 import { loadMessageDetails, loadThirdPartyMessage } from "../../actions";
 import { DetailsById } from "../detailsById";
 import {
@@ -647,7 +645,7 @@ describe("reducer", () => {
     const action = populateStoresWithEphemeralAarMessageData(
       mockEphemeralAarMessageDataActionPayload
     );
-    const { iun, mandateId, subject, markDown, fiscalCode } =
+    const { iun, mandateId, subject, markdown, fiscalCode } =
       mockEphemeralAarMessageDataActionPayload;
     const nextState = appReducer(undefined, action).entities.messages
       .thirdPartyById;
@@ -660,7 +658,7 @@ describe("reducer", () => {
     expect(value?.kind).toBe("AAR");
     expect(value.mandateId).toBe(mandateId);
     expect(value?.content.subject).toBe(subject);
-    expect(value?.content.markdown).toBe(markDown);
+    expect(value?.content.markdown).toBe(markdown);
     expect(value?.fiscal_code).toBe(fiscalCode);
   });
 
@@ -681,7 +679,7 @@ describe("reducer", () => {
       }))
     );
 
-    const clearAction = terminateAarFlow();
+    const clearAction = terminateAarFlow({ messageId: iun });
     const clearedState = thirdPartyByIdReducer(
       populatedStateWithNonAarMessage,
       clearAction

@@ -25,9 +25,9 @@ import { MessageGetStatusFailurePhaseType } from "../../store/reducers/messageGe
 import { getPaginatedMessageById } from "../../store/reducers/paginatedById";
 import { thirdPartyFromIdSelector } from "../../store/reducers/thirdPartyById";
 import { UIMessage, UIMessageDetails } from "../../types";
-import { ThirdPartyMessageUnion } from "../../utils/thirdPartyById";
+import { ThirdPartyMessageUnion } from "../../types/thirdPartyById";
 import { handleLoadMessageData, testable } from "../handleLoadMessageData";
-import { getServiceDetails } from "../utils";
+import { getServiceDetails } from "../../../services/common/saga/ getServiceDetails";
 
 const fimsCTAFrontMatter =
   '---\nit:\n cta_1:\n  text: "Visualizza i documenti"\n  action: "iosso://https://relyingParty.url"\nen:\n cta_1:\n  text: "View documents"\n  action: "iosso://https://relyingParty.url"\n---';

@@ -22,8 +22,12 @@ describe("AARFlowStateActions", () => {
     expect(action.payload).toEqual(payload);
   });
 
-  it(`Should have correct type="TERMINATE_AAR_FLOW"`, () => {
-    const action = terminateAarFlow();
+  it(`Should have correct type="TERMINATE_AAR_FLOW", no messageID`, () => {
+    const action = terminateAarFlow({ messageId: undefined });
+    expect(action.type).toBe("TERMINATE_AAR_FLOW");
+  });
+  it(`Should have correct type="TERMINATE_AAR_FLOW", with messageID`, () => {
+    const action = terminateAarFlow({ messageId: "SOME_MSG_ID" });
     expect(action.type).toBe("TERMINATE_AAR_FLOW");
   });
 
@@ -33,7 +37,7 @@ describe("AARFlowStateActions", () => {
       thirdPartyMessage: {} as ThirdPartyMessage,
       fiscalCode: "1209381023813098123" as FiscalCode,
       pnServiceID: "some-Sid" as NonEmptyString,
-      markDown: {} as MessageBodyMarkdown,
+      markdown: {} as MessageBodyMarkdown,
       subject: "" as MessageSubject,
       mandateId: ""
     };

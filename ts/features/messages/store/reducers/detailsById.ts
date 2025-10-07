@@ -10,7 +10,6 @@ import {
   populateStoresWithEphemeralAarMessageData,
   terminateAarFlow
 } from "../../../pn/aar/store/actions";
-import { isAarDetailById } from "../../../pn/aar/utils/detailsById";
 import { clearCache } from "../../../settings/common/store/actions";
 import { UIMessageDetails } from "../../types";
 import { loadMessageDetails, reloadAllMessages } from "../actions";
@@ -57,12 +56,12 @@ export const detailsByIdReducer = (
       };
     }
     case getType(populateStoresWithEphemeralAarMessageData): {
-      const { iun, markDown, pnServiceID, subject } = action.payload;
+      const { iun, markdown, pnServiceID, subject } = action.payload;
       const messageData: UIMessageDetails = {
         hasRemoteContent: true,
         hasThirdPartyData: true,
         id: iun,
-        markdown: markDown,
+        markdown,
         serviceId: pnServiceID,
         subject
       };
@@ -72,12 +71,10 @@ export const detailsByIdReducer = (
       };
     }
     case getType(terminateAarFlow):
-      const newState = _.pickBy(state, (value, _key) =>
-        pipe(
-          pot.filter(value, v => !isAarDetailById(v)),
-          pot.isSome
-        )
-      );
+      if (action.payload.messageId === undefined) {
+        return state;
+      }
+      const newState = _.omit(state, action.payload.messageId);
       return { ...newState };
 
     case getType(clearCache):

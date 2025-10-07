@@ -4,7 +4,7 @@ import { isPnTestEnabledSelector } from "../../../../../store/reducers/persisted
 import { SessionToken } from "../../../../../types/SessionToken";
 import { SendAARClient } from "../../api/client";
 import { setAarFlowState } from "../../store/actions";
-import { currentAARFlowData } from "../../store/reducers";
+import { currentAARFlowData } from "../../store/selectors";
 import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
 import { fetchAARQrCodeSaga } from "../fetchQrCodeSaga";
 
@@ -12,7 +12,8 @@ const sendUATEnvironment = [false, true];
 
 describe("fetchQrCodeSaga", () => {
   const aQRCode = "TESTTEST";
-  const sessionToken: SessionToken = "test-session-token" as SessionToken;
+  const sessionToken = "test-session-token" as SessionToken;
+  const sessionTokenWithBearer = `Bearer ${sessionToken}` as SessionToken;
   const getMockKoState = (prevState: AARFlowState): AARFlowState => ({
     type: "ko",
     previousState: { ...prevState }
@@ -38,7 +39,7 @@ describe("fetchQrCodeSaga", () => {
   });
 
   sendUATEnvironment.forEach(isSendUATEnvironment =>
-    it(`should correctly update state on a 200 response with isTest='${isPnTestEnabledSelector}'`, () => {
+    it(`should correctly update state on a 200 response with isTest='${isSendUATEnvironment}'`, () => {
       const successState: AARFlowState = {
         type: sendAARFlowStates.fetchingNotificationData,
         iun: "123123",
@@ -64,7 +65,7 @@ describe("fetchQrCodeSaga", () => {
         .select(isPnTestEnabledSelector)
         .next(isSendUATEnvironment)
         .call(mockApiCall, {
-          Bearer: sessionToken,
+          Bearer: sessionTokenWithBearer,
           body: {
             aarQrCodeValue: aQRCode
           },
@@ -106,7 +107,7 @@ describe("fetchQrCodeSaga", () => {
         .select(isPnTestEnabledSelector)
         .next(isSendUATEnvironment)
         .call(mockApiCall, {
-          Bearer: sessionToken,
+          Bearer: sessionTokenWithBearer,
           body: {
             aarQrCodeValue: aQRCode
           },
@@ -135,7 +136,7 @@ describe("fetchQrCodeSaga", () => {
           .select(isPnTestEnabledSelector)
           .next(isSendUATEnvironment)
           .call(mockFetchQrCode, {
-            Bearer: sessionToken,
+            Bearer: sessionTokenWithBearer,
             body: {
               aarQrCodeValue: aQRCode
             },
@@ -164,7 +165,7 @@ describe("fetchQrCodeSaga", () => {
       .select(isPnTestEnabledSelector)
       .next(true)
       .call(mockFetchQrCode, {
-        Bearer: sessionToken,
+        Bearer: sessionTokenWithBearer,
         body: {
           aarQrCodeValue: aQRCode
         },

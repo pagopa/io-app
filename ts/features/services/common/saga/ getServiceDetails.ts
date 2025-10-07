@@ -1,9 +1,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { put, select, take } from "typed-redux-saga/macro";
 import { isActionOf } from "typesafe-actions";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { loadServiceDetail } from "../../services/details/store/actions/details";
-import { serviceDetailsByIdPotSelector } from "../../services/details/store/selectors";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { loadServiceDetail } from "../../details/store/actions/details";
+import { serviceDetailsByIdPotSelector } from "../../details/store/selectors";
 
 export function* getServiceDetails(serviceId: ServiceId) {
   const initialServicePot = yield* select(

@@ -5,7 +5,7 @@ import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPre
 import { SessionToken } from "../../../../types/SessionToken";
 import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
-import { currentAARFlowData } from "../store/reducers";
+import { currentAARFlowData } from "../store/selectors";
 import { AARFlowState, sendAARFlowStates } from "../utils/stateUtils";
 
 export function* fetchAARQrCodeSaga(
@@ -23,7 +23,7 @@ export function* fetchAARQrCodeSaga(
 
   try {
     const result = yield* call(fetchQRCode, {
-      Bearer: sessionToken,
+      Bearer: `Bearer ${sessionToken}`,
       body: {
         aarQrCodeValue: qrCode
       },

@@ -24,10 +24,8 @@ import {
 } from "../../../pn/aar/store/actions";
 import { UIMessageDetails } from "../../types";
 import { extractContentFromMessageSources } from "../../utils";
-import {
-  ThirdPartyMessageUnion,
-  isEphemeralAARThirdPartyMessage
-} from "../../utils/thirdPartyById";
+import { isEphemeralAARThirdPartyMessage } from "../../utils/thirdPartyById";
+import { ThirdPartyMessageUnion } from "../../types/thirdPartyById";
 import { loadThirdPartyMessage, reloadAllMessages } from "../actions";
 
 export type ThirdPartyById = IndexedById<
@@ -61,7 +59,7 @@ export const thirdPartyByIdReducer = (
         subject,
         mandateId,
         thirdPartyMessage,
-        markDown,
+        markdown,
         fiscalCode
       } = action.payload;
 
@@ -76,24 +74,19 @@ export const thirdPartyByIdReducer = (
         content: {
           third_party_data: {
             has_attachments: true,
-            has_precondition: HasPreconditionEnum.ALWAYS,
+            has_precondition: HasPreconditionEnum.NEVER,
             id: iun
           },
-          markdown: markDown,
+          markdown,
           subject
         }
       });
 
     case getType(terminateAarFlow):
-      const newState = _.pickBy(state, (value, _key) =>
-        pipe(
-          value,
-          O.fromNullable,
-          O.flatMap(pot.toOption),
-          O.filter(message => !isEphemeralAARThirdPartyMessage(message)),
-          O.isSome
-        )
-      );
+      if (action.payload.messageId === undefined) {
+        return state;
+      }
+      const newState = _.omit(state, action.payload.messageId);
       return { ...newState };
   }
   return state;
@@ -107,12 +100,11 @@ export const thirdPartyFromIdSelector = (
 export const isThirdParyMessageAarSelector = (
   state: GlobalState,
   ioMessageId: string
-) =>
-  pipe(
-    thirdPartyFromIdSelector(state, ioMessageId),
-    data => pot.map(data, isEphemeralAARThirdPartyMessage),
-    data => pot.getOrElse(data, false)
-  );
+) => {
+  const potTpm = thirdPartyFromIdSelector(state, ioMessageId);
+  const isEphemeralPot = pot.map(potTpm, isEphemeralAARThirdPartyMessage);
+  return pot.getOrElse(isEphemeralPot, false);
+};
 
 export const messageTitleSelector = (state: GlobalState, ioMessageId: string) =>
   messageContentSelector(

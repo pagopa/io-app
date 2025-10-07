@@ -9,7 +9,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import * as URL_UTILS from "../../../../../utils/url";
 import PN_ROUTES from "../../../navigation/routes";
 import * as FLOW_MANAGER from "../../hooks/useSendAarFlowManager";
-import * as REDUCER from "../../store/reducers";
+import * as SELECTORS from "../../store/selectors";
 import { sendAARFlowStates } from "../../utils/stateUtils";
 import { SendAARTosComponent } from "../SendAARTosComponent";
 
@@ -20,7 +20,7 @@ const mockPrivacyUrls = {
 };
 
 const privacyUrlSpy = jest.spyOn(REMOTE_CONFIG, "pnPrivacyUrlsSelector");
-const flowDataSpy = jest.spyOn(REDUCER, "currentAARFlowData");
+const flowDataSpy = jest.spyOn(SELECTORS, "currentAARFlowData");
 const managerSpy = jest.spyOn(FLOW_MANAGER, "useSendAarFlowManager");
 describe("SendAARTosComponent", () => {
   const mockGoNextState = jest.fn();

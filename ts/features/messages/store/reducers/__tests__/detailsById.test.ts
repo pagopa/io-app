@@ -1,10 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { getType } from "typesafe-actions";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { populateStoresWithEphemeralAarMessageData } from "../../../../pn/aar/store/actions";
+import {
+  populateStoresWithEphemeralAarMessageData,
+  terminateAarFlow
+} from "../../../../pn/aar/store/actions";
 import { mockEphemeralAarMessageDataActionPayload } from "../../../../pn/aar/utils/testUtils";
 import {
   paymentValidInvalidAfterDueDate,
@@ -81,42 +83,36 @@ describe("detailsById reducer", () => {
       ];
       expect(pot.isSome(entry)).toBe(true);
     });
-    it("should remove all AAR messages details from the state upon receiving terminateAarFlow", () => {
-      const payloads = [1, 2, 3, 4, 5].map(i => ({
-        ...mockEphemeralAarMessageDataActionPayload,
-        iun: `IUN123${i}` as NonEmptyString
-      }));
-      const stateWithAarMessages = payloads.reduce(
-        (state, payload) =>
-          detailsByIdReducer(
-            state,
-            populateStoresWithEphemeralAarMessageData(payload)
-          ),
-        {}
+    it("should remove an AAR message's details from the state upon receiving terminateAarFlow", () => {
+      const stateWithAarMessage = detailsByIdReducer(
+        undefined,
+        populateStoresWithEphemeralAarMessageData(
+          mockEphemeralAarMessageDataActionPayload
+        )
       );
       const actionRequestStandardDetail = loadMessageDetails.success(
         successLoadMessageDetails
       );
-      const standardMessageState = detailsByIdReducer(
+      const stateWithStandardMessage = detailsByIdReducer(
         undefined,
         actionRequestStandardDetail
       );
 
       const stateWithAarAndStandardMessages = {
-        ...stateWithAarMessages,
-        ...standardMessageState
+        ...stateWithAarMessage,
+        ...stateWithStandardMessage
       };
 
-      const actionTerminate = {
-        type: "TERMINATE_AAR_FLOW"
-      } as const;
+      const actionTerminate = terminateAarFlow({
+        messageId: mockEphemeralAarMessageDataActionPayload.iun
+      });
 
       // without standard messages
       const finalState = detailsByIdReducer(
         stateWithAarAndStandardMessages,
         actionTerminate
       );
-      expect(finalState).toEqual(standardMessageState);
+      expect(finalState).toEqual(stateWithStandardMessage);
     });
   });
 });
