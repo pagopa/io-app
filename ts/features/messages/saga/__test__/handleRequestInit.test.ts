@@ -10,6 +10,11 @@ import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPa
 import { messageId_1 } from "../../__mocks__/messages";
 import { KeyInfo } from "../../../lollipop/utils/crypto";
 
+const apiUrlPrefix = "https://base.url";
+jest.mock("../../../../config", () => ({
+  apiUrlPrefix
+}));
+
 const mockUUID = "1896a22a-978b-49e9-856b-1cd74f2de3d8";
 jest.mock("uuid", () => ({ v4: () => mockUUID }));
 
@@ -29,7 +34,7 @@ describe("handleDownloadAttachment", () => {
 
   it("handleRequestInit should follow the proper flow and return the enhanced lollipop headers", () => {
     const data = fetchParametersCommonInputData();
-    const attachmentFullUrl = `undefined/api/v1/third-party-messages/${data.messageId}/attachments/${data.attachmentFullUrl}`;
+    const attachmentFullUrl = `https://base.url/api/v1/third-party-messages/${data.messageId}/attachments/${data.attachmentFullUrl}`;
     testSaga(
       handleRequestInit,
       {
@@ -59,7 +64,7 @@ describe("handleDownloadAttachment", () => {
 
   it("handleRequestInit should follow the proper flow and return standard headers when lollipopRequestInit fails", () => {
     const data = fetchParametersCommonInputData();
-    const attachmentFullUrl = `undefined/api/v1/third-party-messages/${data.messageId}/attachments/${data.attachmentFullUrl}`;
+    const attachmentFullUrl = `https://base.url/api/v1/third-party-messages/${data.messageId}/attachments/${data.attachmentFullUrl}`;
     testSaga(
       handleRequestInit,
       {
