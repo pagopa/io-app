@@ -5,9 +5,12 @@ import { isAARLocalEnabled } from "../../../../../store/reducers/persistedPrefer
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   AARFlowState,
-  isValidAARStateTransition
+  isValidAARStateTransition,
+  sendAARFlowStates
 } from "../../utils/stateUtils";
 import { setAarFlowState, terminateAarFlow } from "../actions";
+
+const emptyArray: ReadonlyArray<string> = [];
 
 export const INITIAL_AAR_FLOW_STATE: AARFlowState = {
   type: "none"
@@ -38,3 +41,11 @@ export const currentAARFlowData = (state: GlobalState) =>
   state.features.pn.aarFlow;
 export const currentAARFlowStateType = (state: GlobalState) =>
   state.features.pn.aarFlow.type;
+export const currentAARFlowStateErrorCodes = (state: GlobalState) => {
+  const aarFlow = state.features.pn.aarFlow;
+  if (aarFlow.type === sendAARFlowStates.ko) {
+    return aarFlow.error?.errors?.map(x => x.code) ?? emptyArray;
+  } else {
+    return emptyArray;
+  }
+};

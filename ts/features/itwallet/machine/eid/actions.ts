@@ -74,17 +74,11 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToL3IdentificationScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L3
-    });
-  },
-
-  navigateToL2IdentificationScreen: ({
+  navigateToIdentificationScreen: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L2,
+      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
       params: { eidReissuing: context.mode === "reissuance" }
     });
   },
@@ -147,34 +141,20 @@ export const createEidIssuanceActionsImplementation = (
   },
 
   navigateToCredentialCatalog: () => {
-    navigation.reset({
-      index: 1,
-      routes: [
-        {
-          name: ROUTES.MAIN,
-          params: {
-            screen: ROUTES.WALLET_HOME
-          }
-        },
-        {
-          name: ITW_ROUTES.MAIN,
-          params: {
-            screen: ITW_ROUTES.ONBOARDING
-          }
-        }
-      ]
+    navigation.replace(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ONBOARDING
     });
   },
 
   navigateToCiePreparationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION_SCREEN
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.NFC_SCREEN
     });
   },
 
   navigateToCiePinPreparationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.PIN_PREPARATION_SCREEN
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.PIN_SCREEN
     });
   },
 

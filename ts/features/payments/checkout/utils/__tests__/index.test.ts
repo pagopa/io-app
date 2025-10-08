@@ -2,7 +2,7 @@ import {
   getPaymentPhaseFromStep,
   getPspFlagType,
   getSubCategoryFromFaultCode,
-  isDueDateValid,
+  formatAndValidateDueDate,
   trimAndLimitValue
 } from "..";
 import { ZendeskSubCategoriesMap } from "../../../../../../definitions/content/ZendeskSubCategoriesMap";
@@ -54,22 +54,22 @@ describe("trimAndLimitValue", () => {
   });
 });
 
-describe("isDueDateValid", () => {
+describe("formatAndValidateDueDate", () => {
   it("should return the formatted date when the date is valid", () => {
     const date = "2021-12-31";
-    const result = isDueDateValid(date);
+    const result = formatAndValidateDueDate(date);
     expect(result).toBe("31/12/2021");
   });
 
   it("should return undefined when the date is invalid", () => {
     const date = "invalid date";
-    const result = isDueDateValid(date);
+    const result = formatAndValidateDueDate(date);
     expect(result).toBeUndefined();
   });
 
   it("should return undefined when the date is more than 10 years in the future", () => {
     const date = "5000-12-31";
-    const result = isDueDateValid(date);
+    const result = formatAndValidateDueDate(date);
     expect(result).toBeUndefined();
   });
 
@@ -77,7 +77,7 @@ describe("isDueDateValid", () => {
     const tenYearsFromNow = new Date();
     tenYearsFromNow.setFullYear(tenYearsFromNow.getFullYear() + 10);
     tenYearsFromNow.setHours(tenYearsFromNow.getHours() + 1);
-    const result = isDueDateValid(tenYearsFromNow.toISOString());
+    const result = formatAndValidateDueDate(tenYearsFromNow.toISOString());
     expect(result).toBeUndefined();
   });
 });
