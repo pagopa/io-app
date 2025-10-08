@@ -4434,8 +4434,8 @@
       "discovery": {
         "banner": {
           "home": {
-            "title": "Novità: Documenti su IO, anche offline",
-            "content": "Da oggi puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet.",
+            "title": "Documenti su IO",
+            "content": "Puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet.",
             "action": "Attiva Documenti su IO"
           },
           "homeActive": {
