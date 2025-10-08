@@ -362,6 +362,45 @@ export type DrivingPrivilegesClaimType = t.TypeOf<
 >;
 
 /**
+ * Decoder for the raw driving privileges array used to parse the mdoc claim format of the mDL driving privileges.
+ */
+const DrivingPrivilegesItemFlatRaw = t.type({
+  vehicle_category_code: t.string,
+  issue_date: SimpleDateClaim,
+  expiry_date: SimpleDateClaim
+});
+const DrivingPrivilegesFlatRaw = t.array(DrivingPrivilegesItemFlatRaw);
+
+const DrivingPrivilegesFromFlatRaw = new t.Type<
+  DrivingPrivilegesClaimType,
+  t.TypeOf<typeof DrivingPrivilegesFlatRaw>,
+  t.TypeOf<typeof DrivingPrivilegesFlatRaw>
+>(
+  "DrivingPrivilegesFromFlatRaw",
+  DrivingPrivilegesClaim.is,
+  (input, c) => {
+    try {
+      return t.success(
+        input.map(item => ({
+          driving_privilege: item.vehicle_category_code,
+          issue_date: item.issue_date,
+          expiry_date: item.expiry_date,
+          restrictions_conditions: null
+        }))
+      );
+    } catch (e) {
+      return t.failure(input, c);
+    }
+  },
+  output =>
+    output.map(item => ({
+      vehicle_category_code: item.driving_privilege,
+      issue_date: item.issue_date,
+      expiry_date: item.expiry_date
+    }))
+);
+
+/**
  * Decoder for the raw driving privileges array, used to parse the new format of the mDL driving privileges.
  * This is needed to support the new format of the mDL driving privileges, which is an array of objects with
  * vehicle_category_code, issue_date and expiry_date fields.
@@ -428,9 +467,10 @@ export const DrivingPrivilegesFromRaw = new t.Type<
     }))
 );
 
-export const DrivingPrivilegesCustomClaim = DrivingPrivilegesValueRaw.pipe(
-  DrivingPrivilegesFromRaw
-);
+export const DrivingPrivilegesCustomClaim = t.union([
+  DrivingPrivilegesValueRaw.pipe(DrivingPrivilegesFromRaw),
+  DrivingPrivilegesFlatRaw.pipe(DrivingPrivilegesFromFlatRaw)
+]);
 
 /**
  * Decoder for the fiscal code. This is needed since we have to remove the INIT prefix when rendering it.
