@@ -1,20 +1,34 @@
 import { useIsFocused } from "@react-navigation/native";
 import { StatusBar, StatusBarProps } from "react-native";
+import { useStatusAlertProps } from "../../hooks/useStatusAlertProps";
 
 /**
- * FocusAwareStatusBar makes the status bar component aware of
- * screen focus and renders it only when the screen is focused.
- * This is needed if you're using a tab or drawer navigator,
- * because all the screens in the navigator might be rendered
- * at once and kept rendered - that means that the last StatusBar
- * config you set will be used (likely on the final tab of your
- * tab navigator, not what the user is seeing).
+ * A component that renders the status bar only when the screen is focused.
+ * This is useful to avoid conflicts between different screens that might want to set different status bar styles.
+ * It also avoids rendering the status bar if a status alert is visible.
+ * @param {StatusBarProps} props - The props to pass to the StatusBar component.
+ * @returns {JSX.Element | null} The StatusBar component or null.
  */
-
 const FocusAwareStatusBar = (props: StatusBarProps) => {
+  /**
+   * We want to render the status bar only if the screen is focused
+   * to avoid conflicts between different screens
+   * that might want to set different status bar styles
+   * (e.g. light-content vs dark-content)
+   */
   const isFocused = useIsFocused();
 
-  return isFocused && <StatusBar {...props} />;
+  /**
+   * If we have status alert, we want to avoid rendering the status bar
+   * to avoid conflicts in the background color
+   */
+  const statusAlert = useStatusAlertProps();
+
+  if (statusAlert || !isFocused) {
+    return null;
+  }
+
+  return <StatusBar {...props} />;
 };
 
 export default FocusAwareStatusBar;
