@@ -27,7 +27,6 @@ import { DetailsById } from "../detailsById";
 import {
   ThirdPartyById,
   hasAttachmentsSelector,
-  isThirdPartyMessageAarSelector,
   messageMarkdownSelector,
   messageTitleSelector,
   testable,
@@ -612,36 +611,7 @@ describe("messageContentSelector", () => {
     expect(messageContent).toBeUndefined();
   });
 });
-describe("isThirdParyMessageAarSelector", () => {
-  it("should return false for a non AAR third party message", () => {
-    const messageId = "m1";
-    const thirdPartyMessage = {
-      kind: "TPM",
-      id: messageId as string
-    } as ThirdPartyMessageUnion;
-    const loadThirdPartyMessageSuccess = loadThirdPartyMessage.success({
-      id: messageId,
-      content: thirdPartyMessage
-    });
-    const state = appReducer(undefined, loadThirdPartyMessageSuccess);
-    const isAar = isThirdPartyMessageAarSelector(state, messageId);
-    expect(isAar).toBe(false);
-  });
-  it("should return true for an AAR third party message", () => {
-    const messageId = "m1";
-    const thirdPartyMessage = {
-      kind: "AAR",
-      id: messageId as string
-    } as ThirdPartyMessageUnion;
-    const loadThirdPartyMessageSuccess = loadThirdPartyMessage.success({
-      id: messageId,
-      content: thirdPartyMessage
-    });
-    const state = appReducer(undefined, loadThirdPartyMessageSuccess);
-    const isAar = isThirdPartyMessageAarSelector(state, messageId);
-    expect(isAar).toBe(true);
-  });
-});
+
 describe("reducer", () => {
   it("should handle populateStoresWithEphemeralAarMessageData action", () => {
     const action = populateStoresWithEphemeralAarMessageData(

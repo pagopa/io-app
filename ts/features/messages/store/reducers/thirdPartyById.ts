@@ -23,9 +23,8 @@ import {
   terminateAarFlow
 } from "../../../pn/aar/store/actions";
 import { UIMessageDetails } from "../../types";
-import { extractContentFromMessageSources } from "../../utils";
-import { isEphemeralAARThirdPartyMessage } from "../../utils/thirdPartyById";
 import { ThirdPartyMessageUnion } from "../../types/thirdPartyById";
+import { extractContentFromMessageSources } from "../../utils";
 import { loadThirdPartyMessage, reloadAllMessages } from "../actions";
 
 export type ThirdPartyById = IndexedById<
@@ -96,15 +95,6 @@ export const thirdPartyFromIdSelector = (
   state: GlobalState,
   ioMessageId: string
 ) => state.entities.messages.thirdPartyById[ioMessageId] ?? pot.none;
-
-export const isThirdPartyMessageAarSelector = (
-  state: GlobalState,
-  ioMessageId: string
-) => {
-  const potTpm = thirdPartyFromIdSelector(state, ioMessageId);
-  const isEphemeralPot = pot.map(potTpm, isEphemeralAARThirdPartyMessage);
-  return pot.getOrElse(isEphemeralPot, false);
-};
 
 export const messageTitleSelector = (state: GlobalState, ioMessageId: string) =>
   messageContentSelector(

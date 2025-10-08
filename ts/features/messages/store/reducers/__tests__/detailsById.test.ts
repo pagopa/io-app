@@ -73,7 +73,7 @@ describe("detailsById reducer", () => {
       });
     });
   });
-  describe("AAR flow related logic", () => {
+  describe("populateStoresWithEphemeralAarMessageData", () => {
     it("should add the message details to the state upon receiving populatestoresWithEphemeralAarMessageData", () => {
       const actionRequest = populateStoresWithEphemeralAarMessageData(
         mockEphemeralAarMessageDataActionPayload

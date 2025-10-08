@@ -12,7 +12,6 @@ import {
   loadMessageDetails,
   loadThirdPartyMessage
 } from "../../../messages/store/actions";
-import { isThirdPartyMessageAarSelector } from "../../../messages/store/reducers/thirdPartyById";
 import {
   toUIMessage,
   toUIMessageDetails
@@ -22,19 +21,10 @@ import { thirdPartyMessage } from "../../__mocks__/pnMessage";
 import PN_ROUTES from "../../navigation/routes";
 import { MessageDetailsScreen } from "../MessageDetailsScreen";
 
-jest.mock("../../../messages/store/reducers/thirdPartyById", () => ({
-  ...jest.requireActual("../../../messages/store/reducers/thirdPartyById"),
-  isThirdPartyMessageAarSelector: jest.fn()
-}));
-
 jest.mock("../../components/MessageDetails");
 
 describe("MessageDetailsScreen", () => {
   [true, false].forEach(isAar => {
-    beforeEach(() => {
-      (isThirdPartyMessageAarSelector as jest.Mock).mockReturnValue(isAar);
-    });
-
     it(`should match the snapshot when there is an error -- aar:${isAar}`, () => {
       const sequenceOfActions: ReadonlyArray<Action> = [
         applicationChangeState("active")
@@ -48,7 +38,7 @@ describe("MessageDetailsScreen", () => {
       const mockStore = configureMockStore<GlobalState>();
       const store: Store<GlobalState> = mockStore(state);
 
-      const { component } = renderComponent(store);
+      const { component } = renderComponent(store, isAar);
       expect(component).toMatchSnapshot();
     });
 
@@ -72,13 +62,13 @@ describe("MessageDetailsScreen", () => {
       const mockStore = configureMockStore<GlobalState>();
       const store: Store<GlobalState> = mockStore(state);
 
-      const { component } = renderComponent(store);
+      const { component } = renderComponent(store, isAar);
       expect(component).toMatchSnapshot();
     });
   });
 });
 
-const renderComponent = (store: Store<GlobalState>) => {
+const renderComponent = (store: Store<GlobalState>, isAAr = false) => {
   const { id, sender_service_id } = message_1;
 
   return {
@@ -88,7 +78,8 @@ const renderComponent = (store: Store<GlobalState>) => {
       {
         firstTimeOpening: false,
         messageId: id,
-        serviceId: sender_service_id
+        serviceId: sender_service_id,
+        isAArMessage: isAAr
       },
       store
     )
