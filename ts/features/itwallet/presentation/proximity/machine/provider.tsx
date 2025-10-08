@@ -22,7 +22,7 @@ export const ItwProximityMachineProvider = ({
   const env = pipe(useIOSelector(selectItwEnv), getEnv);
 
   const proximityMachine = itwProximityMachine.provide({
-    actions: createProximityActionsImplementation(navigation, store),
+    actions: createProximityActionsImplementation(navigation),
     actors: createProximityActorsImplementation(env, store),
     guards: createProximityGuardsImplementation()
   });
