@@ -65,7 +65,7 @@ import { WalletPaymentStepEnum } from "../types";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 import { FaultCodeCategoryEnum as FaultCodeSlowdownCategoryEnum } from "../types/PaymentSlowdownErrorProblemJson";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
-import { isDueDateValid } from "../utils";
+import { formatAndValidateDueDate } from "../utils";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
@@ -264,7 +264,7 @@ const WalletPaymentDetailContent = ({
   const dueDate = pipe(
     payment.dueDate,
     O.fromNullable,
-    O.map(date => isDueDateValid(date)),
+    O.map(date => formatAndValidateDueDate(date)),
     O.toUndefined
   );
 
