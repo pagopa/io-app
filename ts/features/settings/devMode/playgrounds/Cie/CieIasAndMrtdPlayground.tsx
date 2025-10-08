@@ -7,15 +7,16 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import { CieUtils } from "@pagopa/io-react-native-cie";
-import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, View } from "react-native";
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 
 export function CieIasAndMrtdPlayground() {
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
   const [hasNFC, setHasNFC] = useState<boolean | undefined>();
   const [isNFCEnabled, setIsNFCEnabled] = useState<boolean | undefined>();
   const [isCieAuthenticationSupported, setIsCieAuthenticationSupported] =
@@ -78,7 +79,11 @@ export function CieIasAndMrtdPlayground() {
           label="Start Internal CIE authentication"
           icon="selfCert"
           disabled={!isCieAuthenticationSupported}
-          onPress={() => void 0}
+          onPress={() =>
+            navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+              screen: SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_INTERNAL_AUTH
+            })
+          }
         />
         <View style={styles.buttonContainer}>
           <IOButton

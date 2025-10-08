@@ -54,7 +54,7 @@ type ReadStatusComponentProps = {
   step?: string;
 };
 
-const ReadStatusComponent = ({
+export const ReadStatusComponent = ({
   progress = 0,
   status,
   step
