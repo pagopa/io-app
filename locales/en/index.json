@@ -4514,11 +4514,6 @@
             "cancel": "No, torna indietro"
           }
         },
-        "offlineBanner": {
-          "title": "Novità: i tuoi documenti anche offline",
-          "content": "Da oggi puoi usare i tuoi documenti su IO anche senza connessione a internet.",
-          "action": "Scopri di più"
-        },
         "ipzsPrivacy": {
           "title": "I tuoi Documenti su IO sono al sicuro",
           "titleL3": "I tuoi Documenti sono al sicuro",

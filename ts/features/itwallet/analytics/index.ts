@@ -14,7 +14,6 @@ import {
   WalletInstanceRevocationReason
 } from "../common/utils/itwTypesUtils";
 import { itwAuthLevelSelector } from "../common/store/selectors/preferences.ts";
-import { OfflineAccessReasonEnum } from "../../ingress/store/reducer";
 import { Action } from "../../../store/actions/types.ts";
 import {
   resetOfflineAccessReason,
@@ -263,12 +262,6 @@ type ItwWalletDataShare = {
 type ItwCopyListItem = {
   credential: MixPanelCredential;
   item_copied: string;
-};
-
-type ItwOfflineBanner = {
-  screen: string;
-  error_message_type?: OfflineAccessReasonEnum;
-  use_case: "starting_app" | "foreground" | "background";
 };
 
 export type ItwOfflineRicaricaAppIOSource = "bottom_sheet" | "banner";
@@ -1269,21 +1262,6 @@ export const trackItwRequestSuccess = (
       })
     );
   }
-};
-
-export const trackItwOfflineBanner = ({
-  screen,
-  error_message_type,
-  use_case
-}: ItwOfflineBanner) => {
-  void mixpanelTrack(
-    ITW_TECH_EVENTS.ITW_OFFLINE_BANNER,
-    buildEventProperties("TECH", undefined, {
-      screen,
-      error_message_type,
-      use_case
-    })
-  );
 };
 
 // #endregion TECH

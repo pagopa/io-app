@@ -4,7 +4,6 @@ import { Action } from "../../../../../store/actions/types";
 import {
   itwCloseDiscoveryBanner,
   itwCloseFeedbackBanner,
-  itwSetOfflineBannerHidden,
   itwFlagCredentialAsRequested,
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
@@ -39,8 +38,6 @@ export type ItwPreferencesState = {
   isWalletInstanceRemotelyActive?: boolean;
   // Indicates whether the fiscal code is whitelisted for L3 features
   isFiscalCodeWhitelisted?: boolean;
-  // Indicates whether the offline banner should be hidden
-  offlineBannerHidden?: boolean;
   // Indicates whether the IT-wallet upgrade banner in MDL details should be hidden
   walletUpgradeMDLDetailsBannerHidden?: boolean;
   // Indicates whether the user should activate IT-Wallet with the simplified flow,
@@ -143,13 +140,6 @@ const reducer = (
       return {
         ...state,
         isFiscalCodeWhitelisted: action.payload
-      };
-    }
-
-    case getType(itwSetOfflineBannerHidden): {
-      return {
-        ...state,
-        offlineBannerHidden: action.payload
       };
     }
 
