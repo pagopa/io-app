@@ -310,7 +310,7 @@ const requestAndParseCredential = async ({
       credential_configuration_id,
       {
         credentialCryptoContext,
-        ignoreMissingAttributes: format === "dc+sd-jwt"
+        ignoreMissingAttributes: format === CredentialFormat.SD_JWT
       },
       env.X509_CERT_ROOT
     );
