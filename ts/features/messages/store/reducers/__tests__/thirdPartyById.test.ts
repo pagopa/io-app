@@ -16,7 +16,6 @@ import { DetailsById } from "../detailsById";
 import {
   hasAttachmentsSelector,
   isEphemeralAARThirdPartyMessage,
-  isThirdParyMessageAarSelector,
   messageMarkdownSelector,
   messageTitleSelector,
   testable,
@@ -668,59 +667,5 @@ describe("thirdPartyMessageSelector", () => {
     } as unknown as GlobalState;
     const result = thirdPartyMessageSelector(state, "m2");
     expect(result).toBeUndefined();
-  });
-});
-
-describe("isThirdParyMessageAarSelector", () => {
-  (
-    [
-      { kind: "TPM" },
-      { kind: "AAR" }
-    ] as unknown as ReadonlyArray<ThirdPartyMessageUnion>
-  ).forEach(fakeThirdPartyMessage => {
-    [
-      undefined,
-      pot.none,
-      pot.noneLoading,
-      pot.noneUpdating(fakeThirdPartyMessage),
-      pot.noneError(Error("")),
-      pot.some(fakeThirdPartyMessage),
-      pot.someLoading(fakeThirdPartyMessage),
-      pot.someUpdating(fakeThirdPartyMessage, fakeThirdPartyMessage),
-      pot.someError(fakeThirdPartyMessage, Error(""))
-    ].forEach(input => {
-      const isEphemeralAARMessage =
-        input != null &&
-        pot.isSome(input) &&
-        fakeThirdPartyMessage.kind === "AAR";
-      it(`should return ${isEphemeralAARMessage} for a matching third party id which kind is ${
-        fakeThirdPartyMessage.kind
-      } and value is ${JSON.stringify(input)}`, () => {
-        const state = {
-          entities: {
-            messages: {
-              thirdPartyById: {
-                m1: input
-              }
-            }
-          }
-        } as unknown as GlobalState;
-        const result = isThirdParyMessageAarSelector(state, "m1");
-        expect(result).toEqual(isEphemeralAARMessage);
-      });
-    });
-  });
-  it(`should return 'false' for an unmatching third party id`, () => {
-    const state = {
-      entities: {
-        messages: {
-          thirdPartyById: {
-            m1: pot.some({ kind: "AAR" })
-          }
-        }
-      }
-    } as unknown as GlobalState;
-    const result = isThirdParyMessageAarSelector(state, "m2");
-    expect(result).toBe(false);
   });
 });

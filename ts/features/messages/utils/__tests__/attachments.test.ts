@@ -26,7 +26,7 @@ describe("attachments", () => {
       const path = pdfSavePath(messageId, "att123", "document.pdf");
       expect(path).toBe(`/attachments/${messageId}/att123/document.pdf`);
     });
-    it("should correctly format the save path for regular pdf filename (uppercsae)", () => {
+    it("should correctly format the save path for regular pdf filename (uppercase)", () => {
       const path = pdfSavePath(messageId, "att123", "document.PDF");
       expect(path).toBe(`/attachments/${messageId}/att123/document.PDF`);
     });
@@ -44,6 +44,10 @@ describe("attachments", () => {
         "att123",
         ' d\\oc/u*m:e"n<t?.p>d|f  '
       );
+      expect(path).toBe(`/attachments/${messageId}/att123/document.pdf`);
+    });
+    it("should sanitize invalid filename characters and use default naming when empty", () => {
+      const path = pdfSavePath(messageId, "att123", ' \\/*:"<?>|  ');
       expect(path).toBe(`/attachments/${messageId}/att123/document.pdf`);
     });
   });

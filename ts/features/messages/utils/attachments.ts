@@ -17,7 +17,11 @@ export const pdfSavePath = (
   // Trim leading/trailing whitespace
   // Basic sanitization: remove characters not allowed in filenames (common for most OS)
   // Characters removed: / \ : * ? " < > |
-  const sanitizedFileName = name.trim().replace(/[/\\:*?"<>|]/g, "");
+  const maybeEmptySanitizedFileName = name.trim().replace(/[/\\:*?"<>|]/g, "");
+  const sanitizedFileName =
+    maybeEmptySanitizedFileName.length === 0
+      ? "document.pdf"
+      : maybeEmptySanitizedFileName;
   const hasPdfExtension = sanitizedFileName.toLowerCase().endsWith(".pdf");
   const sanitizedFileNameWithExtension = !hasPdfExtension
     ? `${sanitizedFileName}.pdf`

@@ -40,17 +40,6 @@ export const isEphemeralAARThirdPartyMessage = (
 ): message is EphemeralAARThirdPartyMessage =>
   message.kind === thirdPartyKind.AAR;
 
-export const isThirdParyMessageAarSelector = (
-  state: GlobalState,
-  ioMessageId: string
-) => {
-  const thirdPartyMessage = thirdPartyMessageSelector(state, ioMessageId);
-  return (
-    thirdPartyMessage != null &&
-    isEphemeralAARThirdPartyMessage(thirdPartyMessage)
-  );
-};
-
 export type ThirdPartyMessageUnion =
   | StandardThirdPartyMessage
   | EphemeralAARThirdPartyMessage;
