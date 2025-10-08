@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.16.0-rc.4](https://github.com/pagopa/io-app/compare/3.16.0-rc.3...3.16.0-rc.4) (2025-10-07)
+
+
+### Chores
+
+* [[IOBP-2044](https://pagopa.atlassian.net/browse/IOBP-2044)] Handle in waiting list IDPay onboarding status ([#7445](https://github.com/pagopa/io-app/issues/7445)) ([c9edaf3](https://github.com/pagopa/io-app/commit/c9edaf3db5a627325148022795ad80a476bcea4b))
+
 ## [3.16.0-rc.3](https://github.com/pagopa/io-app/compare/3.16.0-rc.2...3.16.0-rc.3) (2025-10-06)
 
 
