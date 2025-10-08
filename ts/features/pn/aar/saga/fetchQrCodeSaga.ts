@@ -6,6 +6,7 @@ import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
 import { currentAARFlowData } from "../store/reducers";
 import { AARFlowState, sendAARFlowStates } from "../utils/stateUtils";
+import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 
 export function* fetchAARQrCodeSaga(
   qrcode: string,
@@ -17,12 +18,16 @@ export function* fetchAARQrCodeSaga(
   if (currentState.type !== sendAARFlowStates.fetchingQRData) {
     return;
   }
+
+  const isSendUATEnvironment = yield* select(isPnTestEnabledSelector);
+
   try {
     const result = yield* call(fetchQRCode, {
       Bearer: sessionToken,
       body: {
         aarQrCodeValue: qrcode
-      }
+      },
+      isTest: isSendUATEnvironment
     });
 
     const resultAction = pipe(
@@ -31,7 +36,7 @@ export function* fetchAARQrCodeSaga(
         _error =>
           setAarFlowState({
             type: sendAARFlowStates.ko,
-            previousState: currentState
+            previousState: { ...currentState }
           }),
         data => {
           switch (data.status) {
@@ -43,10 +48,20 @@ export function* fetchAARQrCodeSaga(
                 fullNameDestinatario: recipientInfo.denomination
               };
               return setAarFlowState(nextState);
+            case 403:
+              const notAddresseeFinalState: AARFlowState = {
+                type: sendAARFlowStates.notAddresseeFinal,
+                iun: data.value.iun,
+                fullNameDestinatario: data.value.recipientInfo.denomination,
+                qrCode: qrcode
+              };
+              return setAarFlowState(notAddresseeFinalState);
+
             default:
               const errorState: AARFlowState = {
                 type: sendAARFlowStates.ko,
-                previousState: currentState
+                previousState: { ...currentState },
+                ...(data.value !== undefined && { error: data.value })
               };
               return setAarFlowState(errorState);
           }
@@ -58,7 +73,7 @@ export function* fetchAARQrCodeSaga(
     yield* put(
       setAarFlowState({
         type: sendAARFlowStates.ko,
-        previousState: currentState
+        previousState: { ...currentState }
       })
     );
   }

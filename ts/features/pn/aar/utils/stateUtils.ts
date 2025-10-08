@@ -1,3 +1,4 @@
+import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
 import { ThirdPartyMessage } from "../../../../../definitions/pn/ThirdPartyMessage";
 
 export type SendAARFlowStatesType = typeof sendAARFlowStates;
@@ -39,8 +40,8 @@ type FinalNotAddressee = {
 
 type ErrorState = {
   type: SendAARFlowStatesType["ko"];
-  errorKind?: string;
   previousState: AARFlowState;
+  error?: AARProblemJson;
 };
 
 export type AARFlowStateName =
@@ -67,13 +68,16 @@ export const validAARStatusTransitions = new Map<
   ],
   [
     sendAARFlowStates.fetchingQRData,
-    new Set([sendAARFlowStates.fetchingNotificationData, sendAARFlowStates.ko])
+    new Set([
+      sendAARFlowStates.fetchingNotificationData,
+      sendAARFlowStates.notAddresseeFinal,
+      sendAARFlowStates.ko
+    ])
   ],
   [
     sendAARFlowStates.fetchingNotificationData,
     new Set([
       sendAARFlowStates.displayingNotificationData,
-      sendAARFlowStates.notAddresseeFinal,
       sendAARFlowStates.ko
     ])
   ],

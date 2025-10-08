@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import PN_ROUTES from "../../navigation/routes";
 import { SendAARLoadingComponent } from "../components/SendAARLoadingComponent";
 import { SendAARTosComponent } from "../components/SendAARTosComponent";
 import { setAarFlowState } from "../store/actions";
@@ -34,6 +36,21 @@ export const SendAARInitialFlowScreen = ({
       );
     }
   });
+
+  useEffect(() => {
+    if (
+      flowState === sendAARFlowStates.notAddresseeFinal ||
+      flowState === sendAARFlowStates.ko
+    ) {
+      navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+        screen: PN_ROUTES.MAIN,
+        params: {
+          screen: PN_ROUTES.SEND_AAR_ERROR
+        }
+      });
+    }
+  }, [flowState, navigation]);
+
   switch (flowState) {
     case sendAARFlowStates.displayingAARToS:
       return <SendAARTosComponent />;

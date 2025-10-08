@@ -10,7 +10,7 @@ export const ItwCiePreparationCanScreen = () => (
       label: I18n.t(`features.itWallet.identification.cie.prepare.can.title`)
     }}
     description={I18n.t(
-      `features.itWallet.identification.cie.prepare.can.content`
+      `features.itWallet.identification.cie.prepare.can.description`
     )}
     headerActionsProp={{ showHelp: true }}
     actions={{
