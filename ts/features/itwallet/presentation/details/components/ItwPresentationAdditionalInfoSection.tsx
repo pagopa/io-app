@@ -3,7 +3,6 @@ import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { itwShouldRenderWalletUpgradeMDLDetailsBannerSelector } from "../../../common/store/selectors";
 import { useIOSelector } from "../../../../../store/hooks";
-import { isNewCredential } from "../../../common/utils/itwCredentialUtils";
 import { ItwPresentationNewCredentialValidityAlert } from "./ItwPresentationNewCredentialValidityAlert";
 import { ItwPresentationFiscalCode } from "./ItwPresentationFiscalCode.tsx";
 import { ItwPresentationWalletUpgradeMDLDetailsBanner } from "./ItwPresentationWalletUpgradeMDLDetailsBanner";
@@ -21,15 +20,15 @@ const ItwPresentationAdditionalInfoSection = ({ credential }: Props) => {
     itwShouldRenderWalletUpgradeMDLDetailsBannerSelector
   );
 
-  if (isNewCredential(credential.credentialType)) {
-    return (
-      <ItwPresentationNewCredentialValidityAlert
-        credentialType={credential.credentialType}
-      />
-    );
-  }
-
   switch (credential.credentialType) {
+    case CredentialType.EDUCATION_DEGREE:
+    case CredentialType.EDUCATION_ENROLLMENT:
+    case CredentialType.RESIDENCY:
+      return (
+        <ItwPresentationNewCredentialValidityAlert
+          credentialType={credential.credentialType}
+        />
+      );
     case CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD:
       return <ItwPresentationFiscalCode />;
     case CredentialType.DRIVING_LICENSE:
