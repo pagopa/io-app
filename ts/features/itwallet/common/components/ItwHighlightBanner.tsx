@@ -1,11 +1,11 @@
 import {
   Badge,
+  BodySmall,
   ButtonLink,
   ButtonSolid,
   H4,
   HStack,
   IOColors,
-  IOText,
   VStack,
   WithTestID,
   useScaleAnimation
@@ -18,6 +18,7 @@ import {
   vec
 } from "@shopify/react-native-skia";
 import { TxtParagraphNode, TxtStrongNode } from "@textlint/ast-node-types";
+import I18n from "i18next";
 import { useEffect, useMemo, useState } from "react";
 import { AccessibilityRole, Pressable, StyleSheet, View } from "react-native";
 import Animated, {
@@ -31,7 +32,6 @@ import Animated, {
   withRepeat,
   withTiming
 } from "react-native-reanimated";
-import I18n from "i18next";
 import HighlightImage from "../../../../../img/features/itWallet/l3/highlight.svg";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { getTxtNodeKey } from "../../../../components/IOMarkdown/renderRules";
@@ -226,26 +226,24 @@ const StaticContent = (props: Props) => {
     () => ({
       Paragraph(paragraph: TxtParagraphNode, render: Renderer) {
         return (
-          <IOText
+          <BodySmall
             color="white"
             key={getTxtNodeKey(paragraph)}
             weight="Regular"
-            size={14}
           >
             {paragraph.children.map(render)}
-          </IOText>
+          </BodySmall>
         );
       },
       Strong(strong: TxtStrongNode, render: Renderer) {
         return (
-          <IOText
+          <BodySmall
             key={getTxtNodeKey(strong)}
             color="white"
             weight="Semibold"
-            size={14}
           >
             {strong.children.map(render)}
-          </IOText>
+          </BodySmall>
         );
       }
     }),
