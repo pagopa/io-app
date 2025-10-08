@@ -22,6 +22,7 @@ export type MessageDetailsHeaderProps = PropsWithChildren<{
   messageId: string;
   serviceId: ServiceId;
   subject: string;
+  thirdPartySenderDenomination?: string;
 }>;
 
 const MessageDetailsHeaderContent = ({
@@ -49,6 +50,7 @@ export const MessageDetailsHeader = ({
   children,
   messageId,
   serviceId,
+  thirdPartySenderDenomination,
   ...rest
 }: MessageDetailsHeaderProps) => {
   const service = useIOSelector(state =>
@@ -66,6 +68,7 @@ export const MessageDetailsHeader = ({
           organizationName={service.organization.name}
           serviceId={serviceId}
           serviceName={service.name}
+          thirdPartySenderDenomination={thirdPartySenderDenomination}
         />
       )}
     </VStack>

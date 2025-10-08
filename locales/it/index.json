@@ -3890,6 +3890,9 @@
                 "errorCode": "Codice errore"
               }
             }
+          },
+          "displayingNotificationData": {
+            "headerText-through": " tramite"
           }
         }
       },
@@ -4876,8 +4879,8 @@
               "subtitle": "È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti.\n\n Per sapere come tratta i tuoi dati consulta l’[Informativa Privacy]({{privacyUrl}}). "
             },
             "authSource": {
-              "title": "Chi è?",
-              "subtitle": "È l’ente che detiene i dati contenuti all’interno del tuo documento."
+              "title": "Chi è",
+              "subtitle": "È l’ente o la banca dati digitale che detiene i dati contenuti all'interno del tuo documento."
             }
           },
           "actions": {
