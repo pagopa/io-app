@@ -32,7 +32,7 @@ import { OfflineAccessReasonEnum } from "../store/reducer";
 import { itwOfflineAccessAvailableSelector } from "../../itwallet/common/store/selectors";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
-const TIMEOUT_BLOCKING_SCREEN = (10 * 1000) as Millisecond;
+const TIMEOUT_BLOCKING_SCREEN = (25 * 1000) as Millisecond;
 
 export const IngressScreen = () => {
   const isMixpanelInitialized = useIOSelector(isMixpanelInitializedSelector);
