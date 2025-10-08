@@ -7,7 +7,7 @@ import { ThirdPartyMessage as AarThirdPartyMessage } from "../../../../../../def
 import { pnMessagingServiceIdSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../../types/SessionToken";
-import * as SAGA_UTILS from "../../../../services/common/saga/ getServiceDetails";
+import * as SAGA_UTILS from "../../../../services/common/saga/getServiceDetails";
 import { profileFiscalCodeSelector } from "../../../../settings/common/store/selectors";
 import { thirdPartyMessage } from "../../../__mocks__/pnMessage";
 import {

@@ -8,7 +8,7 @@ import { ThirdPartyMessage as AarThirdPartyMessage } from "../../../../../defini
 import { pnMessagingServiceIdSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { SessionToken } from "../../../../types/SessionToken";
 import { isTestEnv } from "../../../../utils/environment";
-import { getServiceDetails } from "../../../services/common/saga/ getServiceDetails";
+import { getServiceDetails } from "../../../services/common/saga/getServiceDetails";
 import { profileFiscalCodeSelector } from "../../../settings/common/store/selectors";
 import { SendAARClient } from "../api/client";
 import {
