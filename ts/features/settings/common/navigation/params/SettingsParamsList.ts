@@ -36,6 +36,7 @@ export type SettingsParamsList = {
   [SETTINGS_ROUTES.IO_MARKDOWN_PLAYGROUND]: undefined;
   [SETTINGS_ROUTES.APP_FEEDBACK_PLAYGROUND]: undefined;
   [SETTINGS_ROUTES.CIE_PLAYGROUND]: undefined;
+  [SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND]: undefined;
   [SETTINGS_ROUTES.SETTINGS_MAIN]: undefined;
   [SETTINGS_ROUTES.AUTHENTICATION]: NavigatorScreenParams<AuthenticationParamsList>;
 };

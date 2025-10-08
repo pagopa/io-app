@@ -20,10 +20,10 @@ import {
 import Animated, { LinearTransition } from "react-native-reanimated";
 import WebView, { WebViewNavigation } from "react-native-webview";
 import { useHeaderHeight } from "@react-navigation/elements";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { CircularProgress } from "../../../../components/ui/CircularProgress";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
+import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
+import { CircularProgress } from "../../../../../components/ui/CircularProgress";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import { useScreenEndMargin } from "../../../../../hooks/useScreenEndMargin";
 
 const iOSUserAgent =
   "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1";
