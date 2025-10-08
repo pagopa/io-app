@@ -33,8 +33,10 @@ import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProb
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
 import { UIMessage, UIMessageDetails } from "../../../types";
-import { ThirdPartyMessageUnion } from "../../../types/thirdPartyById";
-import { thirdPartyKind } from "../../../types/thirdPartyById";
+import {
+  thirdPartyKind,
+  ThirdPartyMessageUnion
+} from "../../../types/thirdPartyById";
 
 describe("index", () => {
   const messageId = "01JKAGGZTSQDR1GB5TYJ9PHXM6";
