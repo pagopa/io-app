@@ -10,20 +10,38 @@ export const ItwIdentificationSection = () => {
     <View>
       <ListItemHeader label="IT Wallet Identification" />
       <ListItemNav
-        value="CIE CAN Preparation screen"
-        description="Navigate to the CAN instructions screen"
+        value="Card preparation screen"
+        description="Navigate to the card preparation screen"
         onPress={() =>
           navigation.navigate(ITW_ROUTES.MAIN, {
-            screen: ITW_ROUTES.IDENTIFICATION.CIE.CAN_PREPARATION_SCREEN
+            screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CARD_SCREEN
           })
         }
       />
       <ListItemNav
-        value="CIE CAN Input screen"
-        description="Navigate to the CAN input screen"
+        value="CAN instructions screen"
+        description="Navigate to the CAN instructions screen"
         onPress={() =>
           navigation.navigate(ITW_ROUTES.MAIN, {
-            screen: ITW_ROUTES.IDENTIFICATION.CIE.CAN_SCREEN
+            screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CAN_SCREEN
+          })
+        }
+      />
+      <ListItemNav
+        value="PIN instructions screen"
+        description="Navigate to the PIN instructions screen"
+        onPress={() =>
+          navigation.navigate(ITW_ROUTES.MAIN, {
+            screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.PIN_SCREEN
+          })
+        }
+      />
+      <ListItemNav
+        value="NFC instructions screen"
+        description="Navigate to the NFC instructions screen"
+        onPress={() =>
+          navigation.navigate(ITW_ROUTES.MAIN, {
+            screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.NFC_SCREEN
           })
         }
       />
