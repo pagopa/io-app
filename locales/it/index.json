@@ -4605,22 +4605,45 @@
             }
           },
           "l3": {
-            "screen": {
-              "title": "Verifica la tua identità con CIE",
-              "description": "È un passaggio di sicurezza necessario per ottenere IT-Wallet e associare i documenti alla tua identità.",
-              "primaryAction": "Inizia",
-              "secondaryAction": "Non ho la CIE",
-              "requirements": {
-                "header": "Avrai bisogno di:",
-                "card": "La tua Carta di Identità Elettronica (CIE)",
-                "pin": "Il PIN della CIE a 8 cifre"
-              },
-              "otherMethods": {
-                "header": "In alternativa:",
-                "title": "Continua sull'app CieID",
-                "subtitle": "Utile se hai già installato l’app CieID e registrato la CIE"
+            "section": "Ottieni IT-Wallet",
+            "title": "Verifica la tua identità con CIE (Carta di Identità Elettronica)",
+            "description": "È un passaggio di sicurezza necessario per associare i documenti digitali alla tua identità.",
+            "reissuing": {
+              "section": "Rinnovo ID",
+              "title": "Scegli come identificarti",
+              "description": "È un passaggio necessario per continuare ad usare IT-Wallet.",
+              "method": {
+                "ciePin": {
+                  "title": "Continua con il PIN della tua CIE",
+                  "subtitle": "Dovrai inserire il PIN di 8 cifre e appoggiare la CIE al telefono.",
+                  "badge": "scelta consigliata"
+                },
+                "cieId": {
+                  "title": "Continua con l'app CieID",
+                  "subtitle": "Dovrai autenticarti con l’app CieID e appoggiare la CIE al telefono."
+                },
+                "spid": {
+                  "title": "Continua con SPID",
+                  "subtitle": "Dovrai inserire il PIN di 8 cifre e appoggiare la CIE al telefono."
+                }
               }
             },
+            "method": {
+              "ciePin": {
+                "title": "Continua con il PIN della tua CIE",
+                "subtitle": "Dovrai inserire il PIN di 8 cifre e appoggiare la CIE al telefono.",
+                "badge": "scelta consigliata"
+              },
+              "cieId": {
+                "title": "Continua con l'app CieID",
+                "subtitle": "Dovrai autenticarti con l’app CieID e appoggiare la CIE al telefono."
+              },
+              "spid": {
+                "title": "Continua con SPID",
+                "subtitle": "Dovrai inserire il PIN di 8 cifre e appoggiare la CIE al telefono."
+              }
+            },
+            "noCie": "Non hai la Carta di Identità Elettronica?",
             "bottomSheet": {
               "cieId": {
                 "title": "Continua sull’app CieID",
