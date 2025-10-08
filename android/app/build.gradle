@@ -125,6 +125,8 @@ android {
         // The resConfigs attribute will remove all not required localized resources while building the application,
         // including the localized resources from libraries.
 
+        // Added as config for react-native-capture-protection
+        missingDimensionStrategy "react-native-capture-protection", "fullMediaCapture"
     }
     signingConfigs {
         release {

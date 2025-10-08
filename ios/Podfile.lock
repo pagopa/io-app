@@ -1460,6 +1460,27 @@ PODS:
     - React
   - react-native-blob-util (0.15.0):
     - React-Core
+  - react-native-capture-protection (2.3.1):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - react-native-config (1.4.5):
     - react-native-config/App (= 1.4.5)
   - react-native-config/App (1.4.5):
@@ -2147,8 +2168,6 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreenshotPrevent (1.2.1):
-    - React
   - RNSentry (6.11.0):
     - DoubleConversion
     - glog
@@ -2286,6 +2305,7 @@ DEPENDENCIES:
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
   - react-native-background-timer (from `../node_modules/react-native-background-timer`)
   - react-native-blob-util (from `../node_modules/react-native-blob-util`)
+  - react-native-capture-protection (from `../node_modules/react-native-capture-protection`)
   - react-native-config (from `../node_modules/react-native-config`)
   - "react-native-cookies (from `../node_modules/@react-native-cookies/cookies`)"
   - "react-native-document-picker (from `../node_modules/@react-native-documents/picker`)"
@@ -2348,7 +2368,6 @@ DEPENDENCIES:
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
-  - RNScreenshotPrevent (from `../node_modules/react-native-screenshot-prevent`)
   - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -2486,6 +2505,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-background-timer"
   react-native-blob-util:
     :path: "../node_modules/react-native-blob-util"
+  react-native-capture-protection:
+    :path: "../node_modules/react-native-capture-protection"
   react-native-config:
     :path: "../node_modules/react-native-config"
   react-native-cookies:
@@ -2610,8 +2631,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
-  RNScreenshotPrevent:
-    :path: "../node_modules/react-native-screenshot-prevent"
   RNSentry:
     :path: "../node_modules/@sentry/react-native"
   RNShare:
@@ -2683,6 +2702,7 @@ SPEC CHECKSUMS:
   React-microtasksnativemodule: 6a39463c32ce831c4c2aa8469273114d894b6be9
   react-native-background-timer: 007ff829f79644caf2ed013e22f0563560336f86
   react-native-blob-util: ce2014444133bd568c054bf58eece8375ae5ef3c
+  react-native-capture-protection: 3c2d95a3d6c990ea34b933a79c5cb1799c3f7103
   react-native-config: e588441fd919c50e75a1ae023763f760b5e3adfe
   react-native-cookies: d648ab7025833b977c0b19e142503034f5f29411
   react-native-document-picker: c780d87965984ba151680826bc2175c0536ff173
@@ -2745,7 +2765,6 @@ SPEC CHECKSUMS:
   RNReactNativeHapticFeedback: f9cfb40676f21a52e9e172648d033f539156a5ec
   RNReanimated: eccbdd305c2e2e9ea6569aa1be95c24a8904be8b
   RNScreens: cfb34cc4609bb92bd4fad6583be815075705a912
-  RNScreenshotPrevent: 5f8473abaa2db2476561ef8f3704b66491ce7b01
   RNSentry: a04b4de945a7057d87e0de215dba268802e9226b
   RNShare: b1660f26d8bc57cbf9acf11872a8eb2f3ecf4825
   RNSVG: 4c63b12b7b5761063bca4f20dd228f6a8370f614

@@ -11,7 +11,7 @@ import { renderComponentWithStoreAndNavigationContextForFocus } from "../../../u
 const messageId = "01HSG6GR1JT2E23AJ5RBTAMZZP";
 
 jest.mock("rn-qr-generator", () => ({}));
-jest.mock("react-native-screenshot-prevent", () => ({}));
+jest.mock("react-native-capture-protection", () => ({}));
 jest.mock("react-native-calendar-events", () => ({
   checkPermissions: () => new Promise(resolve => resolve("authorized"))
 }));
