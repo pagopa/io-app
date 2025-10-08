@@ -1,14 +1,13 @@
+import { IResponseType } from "@pagopa/ts-commons/lib/requests";
 import * as E from "fp-ts/lib/Either";
 import { ValidationError } from "io-ts";
-import { IResponseType } from "@pagopa/ts-commons/lib/requests";
 
-import { handleResponse, ResponseType } from "../../utils/responseHandling";
-import { reloadAllMessages } from "../../store/actions";
 import {
   defaultRequestError,
   defaultRequestPayload
 } from "../../__mocks__/messages";
-
+import { reloadAllMessages } from "../../store/actions";
+import { ResponseType, handleResponse } from "../responseHandling";
 describe("`handleResponse` function", () => {
   describe("given a failure", () => {
     const failure: E.Either<
