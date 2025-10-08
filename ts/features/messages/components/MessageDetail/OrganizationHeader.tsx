@@ -65,14 +65,18 @@ export const OrganizationHeader = ({
 
   const OrganizationNameComponent = () =>
     thirdPartySenderDenomination ? (
-      <Body weight="Regular" color={"black"} testID="org-name-aar">
+      <BodySmall
+        weight="Regular"
+        color={theme["textBody-default"]}
+        testID="org-name-aar"
+      >
         {thirdPartySenderDenomination}
         <BodySmall weight="Regular">
           {i18n.t(
             "features.pn.aar.flow.displayingNotificationData.headerText-through"
           )}
         </BodySmall>
-      </Body>
+      </BodySmall>
     ) : (
       <Body testID="org-name" weight="Semibold">
         {organizationName}

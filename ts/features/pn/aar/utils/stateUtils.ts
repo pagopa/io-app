@@ -109,7 +109,3 @@ export type AARFlowState =
   | DisplayingNotification
   | FinalNotAddressee
   | ErrorState;
-export type AarFlowStates<T extends AARFlowStateName> = Extract<
-  AARFlowState,
-  { type: T }
->;
