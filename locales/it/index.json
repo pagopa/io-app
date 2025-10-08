@@ -4347,7 +4347,7 @@
         "dc": "Carta Europea della Disabilità",
         "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
         "ed": "Titoli accademici",
-        "ee": "Iscrizioni universitarie",
+        "ee": "Iscrizioni accademiche",
         "res": "Attestato di residenza"
       },
       "wallet": {
@@ -5113,6 +5113,13 @@
               "title": "Novità IT-Wallet",
               "content": "Ottieni IT-Wallet per usare la tua Patente anche come documento d'identità!",
               "action": "Ottieni IT-Wallet"
+            }
+          },
+          "newCredentialValidityAlert": {
+            "content": {
+              "education_degree": "I tuoi titoli accademici digitali hanno piena validità ufficiale.",
+              "education_enrollment": "Le tue iscrizioni accademiche digitali hanno piena validità ufficiale.",
+              "residency": "Il tuo attestato di residenza digitale ha piena validità ufficiale."
             }
           }
         },
