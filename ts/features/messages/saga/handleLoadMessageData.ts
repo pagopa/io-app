@@ -43,7 +43,7 @@ import {
   ctasFromLocalizedCTAs,
   localizedCTAsFromFrontMatter
 } from "../utils/ctas";
-import { getServiceDetails } from "../../services/common/saga/getServiceDetails";
+import { getServiceDetails } from "../../services/common/saga/ getServiceDetails";
 
 export function* handleLoadMessageData(
   action: ActionType<typeof getMessageDataAction.request>

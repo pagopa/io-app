@@ -12,7 +12,7 @@ import {
   loadMessageDetails,
   loadThirdPartyMessage
 } from "../../../messages/store/actions";
-import { isThirdParyMessageAarSelector } from "../../../messages/store/reducers/thirdPartyById";
+import { isThirdPartyMessageAarSelector } from "../../../messages/store/reducers/thirdPartyById";
 import {
   toUIMessage,
   toUIMessageDetails
@@ -24,7 +24,7 @@ import { MessageDetailsScreen } from "../MessageDetailsScreen";
 
 jest.mock("../../../messages/store/reducers/thirdPartyById", () => ({
   ...jest.requireActual("../../../messages/store/reducers/thirdPartyById"),
-  isThirdParyMessageAarSelector: jest.fn()
+  isThirdPartyMessageAarSelector: jest.fn()
 }));
 
 jest.mock("../../components/MessageDetails");
@@ -32,7 +32,7 @@ jest.mock("../../components/MessageDetails");
 describe("MessageDetailsScreen", () => {
   [true, false].forEach(isAar => {
     beforeEach(() => {
-      (isThirdParyMessageAarSelector as jest.Mock).mockReturnValue(isAar);
+      (isThirdPartyMessageAarSelector as jest.Mock).mockReturnValue(isAar);
     });
 
     it(`should match the snapshot when there is an error -- aar:${isAar}`, () => {

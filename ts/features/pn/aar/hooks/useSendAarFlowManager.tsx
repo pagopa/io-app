@@ -20,9 +20,8 @@ const getIun = (data: AARFlowState): string | undefined => {
   switch (data.type) {
     case sendAARFlowStates.notAddresseeFinal:
     case sendAARFlowStates.fetchingNotificationData:
-      return data.iun;
     case sendAARFlowStates.displayingNotificationData:
-      return data.notification.details?.iun;
+      return data.iun;
     case sendAARFlowStates.ko:
       return getIun(data.previousState);
     default:

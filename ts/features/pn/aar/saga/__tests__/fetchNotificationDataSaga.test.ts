@@ -1,13 +1,15 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
+import _ from "lodash";
 import { testSaga } from "redux-saga-test-plan";
 import { call } from "typed-redux-saga";
 import { ThirdPartyMessage as PnThirdPartyMessage } from "../../../../../../definitions/pn/ThirdPartyMessage";
+import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
 import { ThirdPartyMessage as AarThirdPartyMessage } from "../../../../../../definitions/pn/aar/ThirdPartyMessage";
 import { pnMessagingServiceIdSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../../types/SessionToken";
-import * as SAGA_UTILS from "../../../../services/common/saga/getServiceDetails";
+import * as SAGA_UTILS from "../../../../services/common/saga/ getServiceDetails";
 import { profileFiscalCodeSelector } from "../../../../settings/common/store/selectors";
 import { thirdPartyMessage } from "../../../__mocks__/pnMessage";
 import {
@@ -21,7 +23,7 @@ import {
   sendAarMockStates
 } from "../../utils/testUtils";
 import { fetchAarDataSaga, testable } from "../fetchNotificationDataSaga";
-import { ProblemJson } from "../../../../../../definitions/pn/aar/ProblemJson";
+
 const mockCurrentState = {
   type: sendAARFlowStates.fetchingNotificationData,
   iun: "IUN123",
@@ -29,6 +31,7 @@ const mockCurrentState = {
   fullNameDestinatario: "Mario Rossi"
 };
 
+const { aarMessageDataPayloadFromResponse } = testable!;
 const mockSessionToken = "token" as SessionToken;
 const mockSessionTokenWithBearer = `Bearer ${mockSessionToken}` as SessionToken;
 const mockNotification = { foo: "bar" };
@@ -95,7 +98,7 @@ describe("fetchAarDataSaga", () => {
           setAarFlowState({
             type: sendAARFlowStates.ko,
             previousState: mockCurrentState,
-            error: mockResolved.value as unknown as ProblemJson
+            error: mockResolved.value as unknown as AARProblemJson
           })
         )
         .next()
@@ -149,11 +152,18 @@ describe("fetchAarDataSaga", () => {
         })
         .next(mockValue)
         .call(
-          testable!.aarMessageDataPayloadFromResponse,
+          aarMessageDataPayloadFromResponse,
           mockNotification,
-          mockCurrentState
+          mockCurrentState.mandateId
         )
         .next(undefined)
+        .put(
+          setAarFlowState({
+            type: sendAARFlowStates.ko,
+            previousState: mockCurrentState
+          })
+        )
+        .next()
         .isDone();
     });
     it("should handle a parsable success payload and dispatch the correct actions", () => {
@@ -175,9 +185,9 @@ describe("fetchAarDataSaga", () => {
         })
         .next(mockValue)
         .call(
-          testable!.aarMessageDataPayloadFromResponse,
+          aarMessageDataPayloadFromResponse,
           mockNotification,
-          mockCurrentState
+          mockCurrentState.mandateId
         )
         .next(mockPayload)
         .put(populateStoresWithEphemeralAarMessageData(mockPayload))
@@ -199,13 +209,11 @@ describe("fetchAarDataSaga", () => {
 });
 
 describe("aarMessageDataPayloadFromResponse", () => {
-  const { aarMessageDataPayloadFromResponse } = testable!;
-
   it("should return undefined if no pnServiceId can be found in the store", () => {
     testSaga(
       aarMessageDataPayloadFromResponse,
       mockNotification,
-      mockCurrentState
+      mockCurrentState.mandateId
     )
       .next()
       .select(profileFiscalCodeSelector)
@@ -225,7 +233,7 @@ describe("aarMessageDataPayloadFromResponse", () => {
     testSaga(
       aarMessageDataPayloadFromResponse,
       mockNotification,
-      mockCurrentState
+      mockCurrentState.mandateId
     )
       .next()
       .select(profileFiscalCodeSelector)
@@ -247,7 +255,7 @@ describe("aarMessageDataPayloadFromResponse", () => {
     testSaga(
       aarMessageDataPayloadFromResponse,
       mockNotification,
-      mockCurrentState
+      mockCurrentState.mandateId
     )
       .next()
       .select(profileFiscalCodeSelector)
@@ -264,7 +272,7 @@ describe("aarMessageDataPayloadFromResponse", () => {
       {
         details: { notificationStatusHistory: "WRONG_DATA_KIND" }
       } as unknown as AarThirdPartyMessage,
-      mockCurrentState
+      mockCurrentState.iun
     )
       .next()
       .select(profileFiscalCodeSelector)
@@ -272,6 +280,32 @@ describe("aarMessageDataPayloadFromResponse", () => {
       .select(pnMessagingServiceIdSelector)
       .next("SID")
       // function fails to decode the message
+      .returns(undefined);
+  });
+  it("should return undefined if a message without a valid `details` key has been passed as parameter", () => {
+    const message = _.omit(
+      thirdPartyMessage.third_party_message as PnThirdPartyMessage,
+      "details"
+    );
+    const mockFn = jest.fn();
+    const getDetails = function* (_sid: NonEmptyString) {
+      yield* call(mockFn);
+      return { id: "SID" } as any;
+    } as typeof SAGA_UTILS.getServiceDetails;
+    jest.spyOn(SAGA_UTILS, "getServiceDetails").mockImplementation(getDetails);
+
+    testSaga(
+      aarMessageDataPayloadFromResponse,
+      message as AarThirdPartyMessage,
+      mockCurrentState.mandateId
+    )
+      .next()
+      .select(profileFiscalCodeSelector)
+      .next("CF")
+      .select(pnMessagingServiceIdSelector)
+      .next("SID")
+      .call(mockFn)
+      .next({ id: "SID" } as any)
       .returns(undefined);
   });
   it("should return a mapped object if a message with the required keys has been passed as parameter", () => {
@@ -287,7 +321,7 @@ describe("aarMessageDataPayloadFromResponse", () => {
     testSaga(
       aarMessageDataPayloadFromResponse,
       message as AarThirdPartyMessage,
-      mockCurrentState
+      mockCurrentState.mandateId
     )
       .next()
       .select(profileFiscalCodeSelector)

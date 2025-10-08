@@ -50,14 +50,15 @@ export const SendAARInitialFlowScreen = ({
         });
         break;
       case sendAARFlowStates.displayingNotificationData: {
-        navigation.push(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+        navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
           screen: PN_ROUTES.MAIN,
           params: {
             screen: PN_ROUTES.MESSAGE_DETAILS,
             params: {
               messageId: flowData.iun,
               firstTimeOpening: true,
-              serviceId: flowData.pnServiceId
+              serviceId: flowData.pnServiceId,
+              isAarMessage: true
             }
           }
         });

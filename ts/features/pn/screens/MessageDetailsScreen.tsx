@@ -6,12 +6,11 @@ import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
-import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
+import { useOfflineToastGuard } from "../../../hooks/useOfflineToastGuard";
+import { useStartSupportRequest } from "../../../hooks/useStartSupportRequest";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
-import { isTestEnv } from "../../../utils/environment";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { isStrictSome } from "../../../utils/pot";
 import {
@@ -19,9 +18,8 @@ import {
   cancelQueuedPaymentUpdates,
   updatePaymentForMessage
 } from "../../messages/store/actions";
-import { isThirdParyMessageAarSelector } from "../../messages/store/reducers/thirdPartyById";
 import { profileFiscalCodeSelector } from "../../settings/common/store/selectors";
-import { useSendAarFlowManager } from "../aar/hooks/useSendAarFlowManager";
+import { terminateAarFlow } from "../aar/store/actions";
 import { trackPNUxSuccess } from "../analytics";
 import { MessageDetails } from "../components/MessageDetails";
 import { PnParamsList } from "../navigation/params";
@@ -33,7 +31,6 @@ import {
   pnMessageFromIdSelector,
   pnUserSelectedPaymentRptIdSelector
 } from "../store/reducers";
-import { PNMessage } from "../store/types/types";
 import {
   containsF24FromPNMessagePot,
   isCancelledFromPNMessagePot,
@@ -44,89 +41,57 @@ export type MessageDetailsScreenRouteParams = {
   messageId: string;
   serviceId: ServiceId;
   firstTimeOpening: boolean;
+  isAarMessage?: boolean;
 };
 
-type BaseMessageDetailsScreenProps = {
-  messageId: string;
-  serviceId: ServiceId;
-  messagePot: pot.Pot<O.Option<PNMessage>, Error>;
-  payments: ReadonlyArray<NotificationPaymentInfo> | undefined;
-};
-type EphemeralAarMessageDetailsScreenType = {
-  messageId: string;
-  serviceId: ServiceId;
-};
 type MessageDetailsRouteProps = RouteProp<
   PnParamsList,
   "PN_ROUTES_MESSAGE_DETAILS"
 >;
 
-export const MessageDetailsScreen = () => {
-  const route = useRoute<MessageDetailsRouteProps>();
-  const { messageId, serviceId, firstTimeOpening } = route.params;
-  const isAar = useIOSelector(state =>
-    isThirdParyMessageAarSelector(state, messageId)
-  );
-  return isAar ? (
-    <EphemeralAarMessageDetailsScreen
-      messageId={messageId}
-      serviceId={serviceId}
-    />
-  ) : (
-    <StandardMessageDetailsScreen
-      messageId={messageId}
-      serviceId={serviceId}
-      firstTimeOpening={firstTimeOpening}
-    />
-  );
-};
+const useCorrectHeader = (isAAr: boolean) => {
+  const { setOptions, goBack } = useIONavigation();
+  const startSupportRequest = useOfflineToastGuard(useStartSupportRequest({}));
 
-const EphemeralAarMessageDetailsScreen = (
-  props: EphemeralAarMessageDetailsScreenType
-) => {
-  const { setOptions } = useIONavigation();
-  const { terminateFlow } = useSendAarFlowManager();
-
-  const { messageId, serviceId } = props;
-
-  const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
-  const messagePot = useIOSelector(state =>
-    pnMessageFromIdSelector(state, messageId)
-  );
-  const payments = paymentsFromPNMessagePot(currentFiscalCode, messagePot);
-
+  const aarAction: HeaderSecondLevel = {
+    title: "",
+    type: "singleAction",
+    firstAction: {
+      icon: "closeLarge",
+      onPress: goBack,
+      accessibilityLabel: I18n.t("global.buttons.close")
+    }
+  };
+  const supportRequestAction: HeaderSecondLevel = {
+    type: "singleAction",
+    title: "",
+    firstAction: {
+      icon: "help",
+      onPress: startSupportRequest,
+      accessibilityLabel: I18n.t(
+        "global.accessibility.contextualHelp.open.label"
+      )
+    },
+    goBack,
+    backAccessibilityLabel: I18n.t("global.buttons.back")
+  };
   useOnFirstRender(() => {
     setOptions({
       header: () => (
-        <HeaderSecondLevel
-          type="singleAction"
-          firstAction={{
-            icon: "closeLarge",
-            onPress: terminateFlow,
-            accessibilityLabel: I18n.t("global.buttons.close")
-          }}
-          title=""
-        />
-      )
+        <HeaderSecondLevel {...(isAAr ? aarAction : supportRequestAction)} />
+      ),
+      headerShown: true
     });
   });
-
-  return (
-    <BaseMessageDetailsScreen
-      messageId={messageId}
-      messagePot={messagePot}
-      serviceId={serviceId}
-      payments={payments}
-    />
-  );
 };
 
-const StandardMessageDetailsScreen = ({
-  messageId,
-  serviceId,
-  firstTimeOpening
-}: MessageDetailsScreenRouteParams) => {
+export const MessageDetailsScreen = () => {
   const dispatch = useIODispatch();
+  const route = useRoute<MessageDetailsRouteProps>();
+
+  const { messageId, serviceId, firstTimeOpening, isAarMessage } = route.params;
+
+  useCorrectHeader(!!isAarMessage);
 
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
   const messagePot = useIOSelector(state =>
@@ -134,11 +99,6 @@ const StandardMessageDetailsScreen = ({
   );
   const payments = paymentsFromPNMessagePot(currentFiscalCode, messagePot);
   const paymentsCount = payments?.length ?? 0;
-
-  useHeaderSecondLevel({
-    title: "",
-    supportRequest: true
-  });
 
   useEffect(() => {
     dispatch(startPNPaymentStatusTracking(messageId));
@@ -158,26 +118,19 @@ const StandardMessageDetailsScreen = ({
       dispatch(cancelPreviousAttachmentDownload());
       dispatch(cancelQueuedPaymentUpdates({ messageId }));
       dispatch(cancelPNPaymentStatusTracking());
+      if (isAarMessage) {
+        dispatch(terminateAarFlow({ messageId }));
+      }
     };
-  }, [dispatch, firstTimeOpening, messageId, messagePot, paymentsCount]);
+  }, [
+    dispatch,
+    firstTimeOpening,
+    messageId,
+    messagePot,
+    paymentsCount,
+    isAarMessage
+  ]);
 
-  return (
-    <BaseMessageDetailsScreen
-      messageId={messageId}
-      messagePot={messagePot}
-      serviceId={serviceId}
-      payments={payments}
-    />
-  );
-};
-
-const BaseMessageDetailsScreen = ({
-  messageId,
-  messagePot,
-  serviceId,
-  payments
-}: BaseMessageDetailsScreenProps) => {
-  const dispatch = useIODispatch();
   const store = useIOStore();
   useFocusEffect(
     useCallback(() => {
@@ -198,34 +151,30 @@ const BaseMessageDetailsScreen = ({
     }, [dispatch, messageId, messagePot, serviceId, store])
   );
 
-  return pipe(
-    messagePot,
-    pot.toOption,
-    O.flatten,
-    O.fold(
-      () => (
-        <OperationResultScreenContent
-          pictogram="umbrella"
-          title={I18n.t("features.pn.details.loadError.title")}
-          subtitle={I18n.t("features.pn.details.loadError.body")}
-        />
-      ),
-      message => (
-        <MessageDetails
-          message={message}
-          messageId={messageId}
-          serviceId={serviceId}
-          payments={payments}
-        />
-      )
-    )
+  return (
+    <>
+      {pipe(
+        messagePot,
+        pot.toOption,
+        O.flatten,
+        O.fold(
+          () => (
+            <OperationResultScreenContent
+              pictogram="umbrella"
+              title={I18n.t("features.pn.details.loadError.title")}
+              subtitle={I18n.t("features.pn.details.loadError.body")}
+            />
+          ),
+          message => (
+            <MessageDetails
+              message={message}
+              messageId={messageId}
+              serviceId={serviceId}
+              payments={payments}
+            />
+          )
+        )
+      )}
+    </>
   );
 };
-
-export const testable = isTestEnv
-  ? {
-      EphemeralAarMessageDetailsScreen,
-      StandardMessageDetailsScreen,
-      BaseMessageDetailsScreen
-    }
-  : undefined;

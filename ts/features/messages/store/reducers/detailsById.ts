@@ -74,8 +74,7 @@ export const detailsByIdReducer = (
       if (action.payload.messageId === undefined) {
         return state;
       }
-      const newState = _.omit(state, action.payload.messageId);
-      return { ...newState };
+      return _.omit(state, action.payload.messageId);
 
     case getType(clearCache):
     case getType(reloadAllMessages.request):

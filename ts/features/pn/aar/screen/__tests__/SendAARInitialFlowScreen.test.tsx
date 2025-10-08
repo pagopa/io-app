@@ -14,7 +14,6 @@ import { SendAARInitialFlowScreen } from "../SendAARInitialFlowScreen";
 import * as SELECTORS from "../../store/selectors";
 
 const mockReplace = jest.fn();
-const mockPush = jest.fn();
 const mockSetOptions = jest.fn();
 
 jest.mock("@react-navigation/native", () => {
@@ -24,8 +23,7 @@ jest.mock("@react-navigation/native", () => {
     useNavigation: () => ({
       ...actualNav.useNavigation?.(),
       replace: mockReplace,
-      setOptions: mockSetOptions,
-      push: mockPush
+      setOptions: mockSetOptions
     })
   };
 });
@@ -136,7 +134,7 @@ describe("SendAARInitialFlowScreen", () => {
     renderComponent();
 
     await waitFor(() => {
-      expect(mockPush).toHaveBeenCalledWith(
+      expect(mockReplace).toHaveBeenCalledWith(
         MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
         {
           screen: PN_ROUTES.MAIN,
@@ -145,7 +143,8 @@ describe("SendAARInitialFlowScreen", () => {
             params: {
               messageId: "TEST_IUN",
               firstTimeOpening: true,
-              serviceId: "SERVICE_ID"
+              serviceId: "SERVICE_ID",
+              isAarMessage: true
             }
           }
         }

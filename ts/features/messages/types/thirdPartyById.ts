@@ -1,5 +1,4 @@
 import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
-import { thirdPartyKind } from "../utils/thirdPartyById";
 
 type ThirdPartyKind = typeof thirdPartyKind;
 type StandardThirdPartyMessage = {
@@ -13,3 +12,7 @@ export type EphemeralAARThirdPartyMessage = {
 export type ThirdPartyMessageUnion =
   | StandardThirdPartyMessage
   | EphemeralAARThirdPartyMessage;
+export const thirdPartyKind = {
+  TPM: "TPM",
+  AAR: "AAR"
+} as const;

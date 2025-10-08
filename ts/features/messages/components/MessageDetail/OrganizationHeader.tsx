@@ -12,10 +12,8 @@ import { ImageSourcePropType, StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { thirdPartySenderDenominationSelector } from "../../../pn/aar/store/selectors";
 import { SERVICES_ROUTES } from "../../../services/common/navigation/routes";
 import { messagePaymentDataSelector } from "../../store/reducers/detailsById";
-import { isThirdParyMessageAarSelector } from "../../store/reducers/thirdPartyById";
 import { AvatarDouble } from "../Home/DS/AvatarDouble";
 
 export type OrganizationHeaderProps = {
@@ -24,6 +22,7 @@ export type OrganizationHeaderProps = {
   serviceId: ServiceId;
   serviceName: string;
   logoUri?: ImageSourcePropType;
+  thirdPartySenderDenomination?: string;
 };
 
 const ITEM_PADDING_VERTICAL: IOSpacingScale = 6;
@@ -44,19 +43,14 @@ export const OrganizationHeader = ({
   logoUri,
   serviceId,
   organizationName,
-  serviceName
+  serviceName,
+  thirdPartySenderDenomination
 }: OrganizationHeaderProps) => {
   const theme = useIOTheme();
 
   const navigation = useIONavigation();
   const paymentData = useIOSelector(state =>
     messagePaymentDataSelector(state, messageId)
-  );
-  const isEphemeralAar = useIOSelector(state =>
-    isThirdParyMessageAarSelector(state, messageId)
-  );
-  const maybeSenderDenomination = useIOSelector(state =>
-    thirdPartySenderDenominationSelector(state, messageId)
   );
   const navigateToServiceDetails = useCallback(
     () =>
@@ -69,14 +63,10 @@ export const OrganizationHeader = ({
     [navigation, serviceId]
   );
 
-  if (isEphemeralAar && maybeSenderDenomination === undefined) {
-    return null;
-  }
-
-  const OrganizationName = () =>
-    isEphemeralAar ? (
+  const OrganizationNameComponent = () =>
+    thirdPartySenderDenomination ? (
       <Body weight="Regular" color={"black"} testID="org-name-aar">
-        {maybeSenderDenomination}
+        {thirdPartySenderDenomination}
         <BodySmall weight="Regular">
           {i18n.t(
             "features.pn.aar.flow.displayingNotificationData.headerText-through"
@@ -95,7 +85,7 @@ export const OrganizationHeader = ({
       style={[styles.item, { borderColor: IOColors[theme["divider-default"]] }]}
     >
       <View style={{ flex: 1 }}>
-        <OrganizationName />
+        <OrganizationNameComponent />
         <BodySmall
           asLink
           accessibilityRole="button"

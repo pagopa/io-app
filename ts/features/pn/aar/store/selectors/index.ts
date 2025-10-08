@@ -7,6 +7,8 @@ import { toPNMessage } from "../../../store/types/transformers";
 import { isAARRemoteEnabled } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isAARLocalEnabled } from "../../../../../store/reducers/persistedPreferences";
 import { sendAARFlowStates } from "../../utils/stateUtils";
+
+const emptyArray: ReadonlyArray<string> = []; // used as a stable reference to avoid useless re-renders
 export const thirdPartySenderDenominationSelector = (
   state: GlobalState,
   ioMessageId: string
@@ -25,13 +27,11 @@ export const currentAARFlowData = (state: GlobalState) =>
   state.features.pn.aarFlow;
 export const currentAARFlowStateType = (state: GlobalState) =>
   state.features.pn.aarFlow.type;
-export const currentAARFlowStateErrorCodes = (
-  state: GlobalState
-): ReadonlyArray<string> => {
+export const currentAARFlowStateErrorCodes = (state: GlobalState) => {
   const aarFlow = state.features.pn.aarFlow;
   if (aarFlow.type === sendAARFlowStates.ko) {
-    return aarFlow.error?.errors?.map(x => x.code) ?? [];
+    return aarFlow.error?.errors?.map(x => x.code) ?? emptyArray;
   } else {
-    return [];
+    return emptyArray;
   }
 };

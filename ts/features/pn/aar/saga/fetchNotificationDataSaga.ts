@@ -6,9 +6,10 @@ import { MessageSubject } from "../../../../../definitions/backend/MessageSubjec
 import { ThirdPartyMessage as PnThirdPartyMessage } from "../../../../../definitions/pn/ThirdPartyMessage";
 import { ThirdPartyMessage as AarThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
 import { pnMessagingServiceIdSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../types/SessionToken";
 import { isTestEnv } from "../../../../utils/environment";
-import { getServiceDetails } from "../../../services/common/saga/getServiceDetails";
+import { getServiceDetails } from "../../../services/common/saga/ getServiceDetails";
 import { profileFiscalCodeSelector } from "../../../settings/common/store/selectors";
 import { SendAARClient } from "../api/client";
 import {
@@ -16,8 +17,7 @@ import {
   setAarFlowState
 } from "../store/actions";
 import { currentAARFlowData } from "../store/selectors";
-import { AarFlowStates, sendAARFlowStates } from "../utils/stateUtils";
-import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
+import { sendAARFlowStates } from "../utils/stateUtils";
 
 export function* fetchAarDataSaga(
   fetchData: SendAARClient["getAARNotification"],
@@ -61,11 +61,13 @@ export function* fetchAarDataSaga(
     const payload = yield* call(
       aarMessageDataPayloadFromResponse,
       value,
-      currentState
+      currentState.mandateId
     );
 
     if (payload === undefined) {
-      return;
+      throw new Error(
+        "unable to compute placeholder AAR payload from response"
+      );
     }
 
     yield* put(populateStoresWithEphemeralAarMessageData(payload));
@@ -91,7 +93,7 @@ export function* fetchAarDataSaga(
 
 function* aarMessageDataPayloadFromResponse(
   value: AarThirdPartyMessage,
-  currentState: AarFlowStates<"fetchingNotificationData">
+  mandateId: string | undefined
 ) {
   const fiscalCode = yield* select(profileFiscalCodeSelector);
   const pnServiceID = yield* select(pnMessagingServiceIdSelector);
@@ -108,15 +110,20 @@ function* aarMessageDataPayloadFromResponse(
 
   const sendMessage = sendMessageEither.right;
   const details = sendMessage.details;
+
+  if (details == null) {
+    return undefined;
+  }
+
   const recipients = details?.recipients;
   return {
-    iun: details?.iun as NonEmptyString,
+    iun: details.iun as NonEmptyString,
     thirdPartyMessage: sendMessage,
     fiscalCode: recipients?.[0]?.taxId ?? fiscalCode,
     pnServiceID,
     markdown: "*".repeat(81) as MessageBodyMarkdown,
-    subject: details?.subject as MessageSubject,
-    mandateId: currentState.mandateId
+    subject: details.subject as MessageSubject,
+    mandateId
   };
 }
 

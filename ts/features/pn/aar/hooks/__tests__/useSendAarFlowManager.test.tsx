@@ -98,10 +98,8 @@ describe("getIun", () => {
       switch (state.type) {
         case sendAARFlowStates.notAddresseeFinal:
         case sendAARFlowStates.fetchingNotificationData:
-          expect(getIun(state)).toBe(state.iun);
-          break;
         case sendAARFlowStates.displayingNotificationData:
-          expect(getIun(state)).toBe(state.notification.details?.iun);
+          expect(getIun(state)).toBe(state.iun);
           break;
         case sendAARFlowStates.ko:
           expect(getIun(state)).toBe(getIun(state.previousState));

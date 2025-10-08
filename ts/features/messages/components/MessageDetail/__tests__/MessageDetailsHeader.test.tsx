@@ -25,6 +25,13 @@ describe("MessageDetailsHeader component", () => {
     const { component } = renderComponent(defaultProps);
     expect(component.toJSON()).toMatchSnapshot();
   });
+  it("should match the snapshot with a valid thirdPartySenderDenomination", () => {
+    const { component } = renderComponent({
+      ...defaultProps,
+      thirdPartySenderDenomination: "DENOMINATION"
+    });
+    expect(component.toJSON()).toMatchSnapshot();
+  });
 
   it("should NOT render the organization info when the serviceId is invalid", () => {
     const { component } = renderComponent({

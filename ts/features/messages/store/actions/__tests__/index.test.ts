@@ -34,7 +34,7 @@ import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
 import { UIMessage, UIMessageDetails } from "../../../types";
 import { ThirdPartyMessageUnion } from "../../../types/thirdPartyById";
-import { thirdPartyKind } from "../../../utils/thirdPartyById";
+import { thirdPartyKind } from "../../../types/thirdPartyById";
 
 describe("index", () => {
   const messageId = "01JKAGGZTSQDR1GB5TYJ9PHXM6";

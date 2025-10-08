@@ -1,5 +1,5 @@
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { ProblemJson } from "../../../../../definitions/pn/aar/ProblemJson";
+import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
 import { ThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
 
 export type SendAARFlowStatesType = typeof sendAARFlowStates;
@@ -44,7 +44,7 @@ type FinalNotAddressee = {
 type ErrorState = {
   type: SendAARFlowStatesType["ko"];
   previousState: AARFlowState;
-  error?: ProblemJson;
+  error?: AARProblemJson;
 };
 
 export type AARFlowStateName =

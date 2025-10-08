@@ -63,7 +63,7 @@ export const thirdPartyByIdReducer = (
         fiscalCode
       } = action.payload;
 
-      return toSome(iun, state, {
+      const ephemeralMessage: ThirdPartyMessageUnion = {
         kind: "AAR",
         mandateId,
         created_at: new Date(),
@@ -80,14 +80,14 @@ export const thirdPartyByIdReducer = (
           markdown,
           subject
         }
-      });
+      };
+      return toSome(iun, state, ephemeralMessage);
 
     case getType(terminateAarFlow):
       if (action.payload.messageId === undefined) {
         return state;
       }
-      const newState = _.omit(state, action.payload.messageId);
-      return { ...newState };
+      return _.omit(state, action.payload.messageId);
   }
   return state;
 };
@@ -97,7 +97,7 @@ export const thirdPartyFromIdSelector = (
   ioMessageId: string
 ) => state.entities.messages.thirdPartyById[ioMessageId] ?? pot.none;
 
-export const isThirdParyMessageAarSelector = (
+export const isThirdPartyMessageAarSelector = (
   state: GlobalState,
   ioMessageId: string
 ) => {

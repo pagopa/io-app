@@ -18,14 +18,16 @@ import {
 } from "../../../../pn/aar/store/actions";
 import { mockEphemeralAarMessageDataActionPayload } from "../../../../pn/aar/utils/testUtils";
 import { UIMessageDetails } from "../../../types";
-import { ThirdPartyMessageUnion } from "../../../types/thirdPartyById";
-import { thirdPartyKind } from "../../../utils/thirdPartyById";
+import {
+  ThirdPartyMessageUnion,
+  thirdPartyKind
+} from "../../../types/thirdPartyById";
 import { loadMessageDetails, loadThirdPartyMessage } from "../../actions";
 import { DetailsById } from "../detailsById";
 import {
   ThirdPartyById,
   hasAttachmentsSelector,
-  isThirdParyMessageAarSelector,
+  isThirdPartyMessageAarSelector,
   messageMarkdownSelector,
   messageTitleSelector,
   testable,
@@ -622,7 +624,7 @@ describe("isThirdParyMessageAarSelector", () => {
       content: thirdPartyMessage
     });
     const state = appReducer(undefined, loadThirdPartyMessageSuccess);
-    const isAar = isThirdParyMessageAarSelector(state, messageId);
+    const isAar = isThirdPartyMessageAarSelector(state, messageId);
     expect(isAar).toBe(false);
   });
   it("should return true for an AAR third party message", () => {
@@ -636,7 +638,7 @@ describe("isThirdParyMessageAarSelector", () => {
       content: thirdPartyMessage
     });
     const state = appReducer(undefined, loadThirdPartyMessageSuccess);
-    const isAar = isThirdParyMessageAarSelector(state, messageId);
+    const isAar = isThirdPartyMessageAarSelector(state, messageId);
     expect(isAar).toBe(true);
   });
 });
