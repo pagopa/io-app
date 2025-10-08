@@ -8,7 +8,7 @@ import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import I18n from "i18next";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
@@ -93,12 +93,14 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
     [credentialType, isItwL3]
   );
 
-  useFocusEffect(() => {
-    trackCredentialPreview({
-      credential: mixPanelCredential,
-      credential_type: isMultilevel ? "multiple" : "unique"
-    });
-  });
+  useFocusEffect(
+    useCallback(() => {
+      trackCredentialPreview({
+        credential: mixPanelCredential,
+        credential_type: isMultilevel ? "multiple" : "unique"
+      });
+    }, [mixPanelCredential, isMultilevel])
+  );
 
   const dismissDialog = useItwDismissalDialog({
     handleDismiss: () => {

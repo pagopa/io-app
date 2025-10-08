@@ -1,24 +1,25 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { identity } from "lodash";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import * as appVersion from "../../../../utils/appVersion";
 import { GlobalState } from "../../types";
 import {
   absolutePortalLinksSelector,
   barcodesScannerConfigSelector,
   fimsServiceConfiguration,
+  fimsServiceIdInCookieDisabledListSelector,
   generateDynamicUrlSelector,
+  isAARRemoteEnabled,
   isIOMarkdownEnabledForMessagesAndServicesSelector,
   isPnAppVersionSupportedSelector,
   isPremiumMessagesOptInOutEnabledSelector,
   landingScreenBannerOrderSelector,
+  pnAARQRCodeRegexSelector,
   pnMessagingServiceIdSelector,
   pnPrivacyUrlsSelector,
-  fimsServiceIdInCookieDisabledListSelector,
-  pnAARQRCodeRegexSelector,
-  isAARRemoteEnabled
+  sendAARDelegateUrlSelector
 } from "../remoteConfig";
-import * as appVersion from "../../../../utils/appVersion";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
 describe("remoteConfig", () => {
   afterEach(() => {
@@ -812,4 +813,56 @@ describe("isAARRemoteEnabled", () => {
       expect(output).toBe(testData[1]);
     })
   );
+});
+
+describe("sendAARDelegateUrlSelector", () => {
+  const delegateUrl = "https://delegate.it";
+  const fallbackSendAARDelegateUrl =
+    "https://assistenza.notifichedigitali.it/hc/it/articles/32453819931537-Delegare-qualcuno-a-visualizzare-le-tue-notifiche";
+
+  const someState = {
+    remoteConfig: O.some({
+      pn: {
+        aar: {
+          delegate_url: delegateUrl
+        }
+      }
+    })
+  } as GlobalState;
+
+  const emptyObjectState = {
+    remoteConfig: O.some({
+      pn: {
+        aar: {}
+      }
+    })
+  } as GlobalState;
+
+  const noneState = {
+    remoteConfig: O.none
+  } as GlobalState;
+
+  const testCases = [
+    {
+      result: delegateUrl,
+      input: someState
+    },
+    {
+      result: fallbackSendAARDelegateUrl,
+      input: emptyObjectState
+    },
+    {
+      result: fallbackSendAARDelegateUrl,
+      input: noneState
+    }
+  ];
+
+  for (const { result, input } of testCases) {
+    it(`should return '${result}' for input remoteConfig : ${JSON.stringify(
+      input.remoteConfig
+    )}`, () => {
+      const output = sendAARDelegateUrlSelector(input);
+      expect(output).toEqual(result);
+    });
+  }
 });

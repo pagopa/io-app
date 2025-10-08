@@ -1,10 +1,14 @@
 import { IOColors, Tag, useIOTheme } from "@pagopa/io-app-design-system";
-import { pipe } from "fp-ts/lib/function";
+import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { SdJwt } from "@pagopa/io-react-native-wallet";
+import { SdJwt, Mdoc } from "@pagopa/io-react-native-wallet";
 import I18n from "i18next";
 import { CredentialType } from "./itwMocksUtils";
-import { ItwCredentialStatus } from "./itwTypesUtils";
+import {
+  CredentialFormat,
+  ItwCredentialStatus,
+  StoredCredential
+} from "./itwTypesUtils";
 
 export const itwGetCredentialNameByCredentialType = (
   isItwCredential: boolean
@@ -104,10 +108,21 @@ export const validCredentialStatuses: Array<ItwCredentialStatus> = [
  * @param sdJwt - The SD-JWT string to check
  * @returns boolean indicating if the credential is an ITW credential (L3)
  */
-export const isItwCredential = (sdJwt: string): boolean =>
-  pipe(
-    O.tryCatch(() => SdJwt.getVerification(sdJwt)),
+export const isItwCredential = ({
+  format,
+  credential,
+  parsedCredential
+}: StoredCredential): boolean => {
+  const getVerificationByFormat = {
+    [CredentialFormat.SD_JWT]: () => SdJwt.getVerification(credential),
+    [CredentialFormat.MDOC]: () =>
+      Mdoc.getVerificationFromParsedCredential(parsedCredential),
+    [CredentialFormat.LEGACY_SD_JWT]: constNull
+  };
+  return pipe(
+    O.tryCatch(getVerificationByFormat[format as CredentialFormat]),
     O.chain(O.fromNullable),
     O.chainNullableK(({ assurance_level }) => assurance_level === "high"),
     O.getOrElse(() => false)
   );
+};

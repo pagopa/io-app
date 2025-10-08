@@ -96,7 +96,7 @@ export const generateMessagesAndServicesRules = (
   Link(link: TxtLinkNode, render: Renderer) {
     return linkNodeToReactNative(
       link,
-      () => handleOpenLink(linkTo, link.url),
+      { onPress: () => handleOpenLink(linkTo, link.url) },
       render
     );
   },

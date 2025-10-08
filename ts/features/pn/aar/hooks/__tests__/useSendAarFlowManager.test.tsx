@@ -7,6 +7,7 @@ import {
   sendAARFlowStates
 } from "../../utils/stateUtils";
 import { useSendAarFlowManager } from "../useSendAarFlowManager";
+
 const mockPopToTop = jest.fn();
 const mockReset = jest.fn();
 const mockNavigate = jest.fn();
@@ -55,22 +56,24 @@ describe("useSendAarFlowManager", () => {
       act(() => {
         result.current.goToNextState();
       });
-      if (stateKind === "displayingAARToS") {
-        const isValid = isValidAARStateTransition(
-          stateKind,
-          mockDispatch.mock.calls[0][0].payload.type as AARFlowStateName
-        );
-        expect(mockDispatch).toHaveBeenCalledTimes(1);
-        expect(isValid).toBe(true);
-      } else {
-        // this branch is here solely to make sure all transitions are tested
-        expect(mockDispatch).not.toHaveBeenCalled();
+      switch (stateKind) {
+        case sendAARFlowStates.displayingAARToS:
+          const isValid = isValidAARStateTransition(
+            stateKind,
+            mockDispatch.mock.calls[0][0].payload.type as AARFlowStateName
+          );
+          expect(mockDispatch).toHaveBeenCalledTimes(1);
+          expect(isValid).toBe(true);
+          break;
+        default:
+          expect(mockDispatch).not.toHaveBeenCalled();
+          break;
       }
     });
   });
   it('should return "currentFlowData" as a 1/1 of the selector`s value', () => {
     const value: AARFlowState = {
-      type: "displayingNotificationData",
+      type: sendAARFlowStates.displayingNotificationData,
       fullNameDestinatario: "mario rossi",
       notification: {},
       mandateId: "mandateID"
