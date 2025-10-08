@@ -3890,6 +3890,9 @@
                 "errorCode": "Codice errore"
               }
             }
+          },
+          "displayingNotificationData": {
+            "headerText-through": " tramite"
           }
         }
       },
@@ -4344,7 +4347,7 @@
         "dc": "Carta Europea della Disabilità",
         "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
         "ed": "Titoli accademici",
-        "ee": "Iscrizioni universitarie",
+        "ee": "Iscrizioni accademiche",
         "res": "Attestato di residenza"
       },
       "wallet": {
@@ -4846,8 +4849,8 @@
               "subtitle": "È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti.\n\n Per sapere come tratta i tuoi dati consulta l’[Informativa Privacy]({{privacyUrl}}). "
             },
             "authSource": {
-              "title": "Chi è?",
-              "subtitle": "È l’ente che detiene i dati contenuti all’interno del tuo documento."
+              "title": "Chi è",
+              "subtitle": "È l’ente o la banca dati digitale che detiene i dati contenuti all'interno del tuo documento."
             }
           },
           "actions": {
@@ -5110,6 +5113,13 @@
               "title": "Novità IT-Wallet",
               "content": "Ottieni IT-Wallet per usare la tua Patente anche come documento d'identità!",
               "action": "Ottieni IT-Wallet"
+            }
+          },
+          "newCredentialValidityAlert": {
+            "content": {
+              "education_degree": "I tuoi titoli accademici digitali hanno piena validità ufficiale.",
+              "education_enrollment": "Le tue iscrizioni accademiche digitali hanno piena validità ufficiale.",
+              "residency": "Il tuo attestato di residenza digitale ha piena validità ufficiale."
             }
           }
         },
