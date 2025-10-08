@@ -18,8 +18,9 @@ import {
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import { ReadStatus, ReadStatusComponent } from "./CiePlayground";
+import { ReadStatusComponent } from "./components/ReadStatusComponent";
 import { encodeChallenge } from "./utils/encoding";
+import { ReadStatus } from "./types/ReadStatus";
 
 export function CieIasAndMrtdPlaygroundIntAuth() {
   const navigation = useIONavigation();
