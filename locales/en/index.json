@@ -5567,7 +5567,7 @@
       "initiativeOnboardedStatus": {
         "header": "My requests",
         "ON_WAITING_LIST": {
-          "label": "On evaluation"
+          "label": "On waiting list"
         },
         "ON_EVALUATION": {
           "label": "On evaluation"
