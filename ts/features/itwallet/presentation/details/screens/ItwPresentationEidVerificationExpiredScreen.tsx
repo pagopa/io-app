@@ -8,6 +8,7 @@ import { useItwEidFeedbackBottomSheet } from "../../../common/hooks/useItwEidFee
 export const ItwPresentationEidVerificationExpiredScreen = () => {
   const navigation = useIONavigation();
   const eidFeedbackBottomSheet = useItwEidFeedbackBottomSheet({
+    primaryAction: navigation.goBack,
     secondaryAction: navigation.goBack
   });
   const startEidReissuing = () => {

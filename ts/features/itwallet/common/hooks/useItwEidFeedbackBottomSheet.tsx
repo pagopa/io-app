@@ -4,6 +4,7 @@ import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
 import { openWebUrl } from "../../../../utils/url.ts";
 
 type ItwEidFeedbackBottomSheetProps = {
+  primaryAction?: () => void;
   secondaryAction?: () => void;
 };
 
@@ -12,6 +13,7 @@ type ItwEidFeedbackBottomSheetProps = {
  * @param secondaryAction - Optional secondary action to be executed when the secondary button is pressed.
  */
 export const useItwEidFeedbackBottomSheet = ({
+  primaryAction,
   secondaryAction
 }: ItwEidFeedbackBottomSheetProps = {}) => {
   const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
@@ -36,6 +38,7 @@ export const useItwEidFeedbackBottomSheet = ({
               openWebUrl(
                 "https://pagopa.qualtrics.com/jfe/form/SV_3JmGHi0IjGYESYC"
               );
+              primaryAction?.();
               dismiss();
             }
           },
