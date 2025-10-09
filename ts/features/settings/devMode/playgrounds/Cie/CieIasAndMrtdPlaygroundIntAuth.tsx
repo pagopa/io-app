@@ -7,7 +7,6 @@ import { CieManager, type NfcEvent } from "@pagopa/io-react-native-cie";
 import { useEffect, useState } from "react";
 import {
   Alert,
-  Keyboard,
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
@@ -15,9 +14,11 @@ import {
   View
 } from "react-native";
 
+import { useHeaderHeight } from "@react-navigation/elements";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import { useScreenEndMargin } from "../../../../../hooks/useScreenEndMargin";
 import { ReadStatusComponent } from "./components/ReadStatusComponent";
 import { encodeChallenge } from "./utils/encoding";
 import { ReadStatus } from "./types/ReadStatus";
@@ -36,6 +37,9 @@ export function CieIasAndMrtdPlaygroundIntAuth() {
     title: "CIE IAT+MRTD Playground (Internal Auth)"
   });
 
+  const headerHeight = useHeaderHeight();
+  const { screenEndMargin } = useScreenEndMargin();
+
   useEffect(() => {
     const cleanup = [
       // Start listening for NFC events
@@ -44,7 +48,7 @@ export function CieIasAndMrtdPlaygroundIntAuth() {
       CieManager.addListener("onError", error => {
         setStatus("error");
         Alert.alert(
-          "Error while reading attributes",
+          "Error during internal authentication",
           JSON.stringify(error, undefined, 2)
         );
       }),
@@ -86,7 +90,6 @@ export function CieIasAndMrtdPlaygroundIntAuth() {
       );
     }
 
-    Keyboard.dismiss();
     setEvent(undefined);
     setStatus("reading");
 
@@ -113,12 +116,24 @@ export function CieIasAndMrtdPlaygroundIntAuth() {
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView
+        behavior={Platform.select({
+          ios: "padding",
+          android: undefined
+        })}
+        contentContainerStyle={{
+          flex: 1,
+          paddingBottom: 100 + screenEndMargin
+        }}
+        keyboardVerticalOffset={headerHeight}
         style={styles.keyboardAvoidingView}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 124 : 0}
       >
         <View style={styles.progressContainer}>
           <ReadStatusComponent
+            /**
+             * TODO: https://pagopa.atlassian.net/browse/IOPID-3434
+             * Android and iOS native part must be updated
+             * to provide a progress float value from 0 to 1
+             * */
             progress={event?.progress}
             status={status}
             step={event?.name}
