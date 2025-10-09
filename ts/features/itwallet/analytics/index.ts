@@ -1286,6 +1286,13 @@ export const trackItwOfflineBanner = ({
   );
 };
 
+export const trackItwRemoteStart = () => {
+  void mixpanelTrack(
+    ITW_TECH_EVENTS.ITW_REMOTE_START,
+    buildEventProperties("TECH", undefined)
+  );
+};
+
 // #endregion TECH
 
 // #region PROFILE AND SUPER PROPERTIES UPDATE

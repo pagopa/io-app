@@ -15,6 +15,8 @@ import {
   StartupStatusEnum,
   isStartupLoaded
 } from "../../../../../store/reducers/startup.ts";
+import { trackItwRemoteStart } from "../../../analytics/index.ts";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender.ts";
 
 export type ItwRemoteRequestValidationScreenNavigationParams =
   Partial<ItwRemoteRequestPayload>;
@@ -44,6 +46,8 @@ const ItwRemoteRequestValidationScreen = ({ route }: ScreenProps) => {
       />
     );
   }
+
+  trackItwRemoteStart();
 
   const payload = validateItwPresentationQrCodeParams(route.params);
 
