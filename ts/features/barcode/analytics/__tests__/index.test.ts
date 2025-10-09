@@ -68,21 +68,21 @@ describe("index", () => {
       const code = testable!.getEventCodeFromBarcode(idPayIOBarcode);
       expect(code).toBeUndefined();
     });
-    it("should return undefined for barcode of type 'ITW_REMOTE' and format 'DATA_MATRIX'", () => {
+    it("should return ITW presentazione remota for barcode of type 'ITW_REMOTE' and format 'DATA_MATRIX'", () => {
       const idPayIOBarcode = {
         type: "ITW_REMOTE",
         format: "DATA_MATRIX"
       } as IOBarcode;
       const code = testable!.getEventCodeFromBarcode(idPayIOBarcode);
-      expect(code).toBeUndefined();
+      expect(code).toBe("ITW presentazione remota");
     });
-    it("should return undefined for barcode of type 'ITW_REMOTE' and format 'QR_CODE'", () => {
+    it("should return ITW presentazione remota for barcode of type 'ITW_REMOTE' and format 'QR_CODE'", () => {
       const idPayIOBarcode = {
         type: "ITW_REMOTE",
         format: "QR_CODE"
       } as IOBarcode;
       const code = testable!.getEventCodeFromBarcode(idPayIOBarcode);
-      expect(code).toBeUndefined();
+      expect(code).toBe("ITW presentazione remota");
     });
   });
   describe("trackBarcodeScanSuccess", () => {
