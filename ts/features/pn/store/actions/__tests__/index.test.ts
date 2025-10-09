@@ -45,7 +45,7 @@ describe("PN actions", () => {
         const messageId = "message-123";
 
         const action = startPNPaymentStatusTracking({
-          isAARNotification: false,
+          isAARNotification,
           messageId
         });
 
