@@ -51,7 +51,7 @@ const itwReducer = combineReducers({
   securePreferences: securePreferencesReducer
 });
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 5;
+const CURRENT_REDUX_ITW_STORE_VERSION = 6;
 
 export const migrations: MigrationManifest = {
   // Added preferences store
@@ -92,6 +92,16 @@ export const migrations: MigrationManifest = {
       "preferences.requestedCredentials",
       requestedCredentials
     );
+  },
+
+  // Removed offlineBannerHidden from preferences
+  "6": (state: PersistedState): PersistedState => {
+    const preferences = _.get(state, "preferences");
+    const migratedState = {
+      ...state,
+      preferences: _.omit(preferences, "offlineBannerHidden")
+    };
+    return migratedState;
   }
 };
 
