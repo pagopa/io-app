@@ -4880,7 +4880,12 @@
             "title": "È tutto pronto!",
             "subtitle": "Ora puoi aggiungere il primo documento al Portafoglio di IO.",
             "primaryAction": "Aggiungi primo documento",
-            "secondaryAction": "Continua più tardi"
+            "secondaryAction": "Continua più tardi",
+            "reissuance": {
+              "title": "Hai verificato la tua identità",
+              "subtitle": "Ora puoi continuare a usare Documenti su IO.",
+              "primaryAction": "Ok, chiudi"
+            }
           }
         },
         "emptyWallet": {
@@ -5437,6 +5442,19 @@
         "cta": "Disattiva IT-Wallet"
       },
       "feedback": {
+        "reissuance": {
+          "bottomSheet": {
+            "title": "Ti va di dirci perché?",
+            "content": "Hai deciso di non continuare: facci sapere il perché, così potremo migliorare la tua esperienza in app. Ci vorrà un minuto!",
+            "primaryAction": "Dicci la tua",
+            "secondaryAction": "Non ora"
+          },
+          "banner": {
+            "title": "Puoi dirci com’è andata?",
+            "content": "Raccontaci la tua esperienza con la verifica e aiutaci a migliorare.",
+            "action": "Inizia"
+          }
+        },
         "banner": {
           "title": "Dicci cosa ne pensi",
           "content": "Raccontaci la tua esperienza con la funzionalità Documenti su IO.",
