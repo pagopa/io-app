@@ -167,6 +167,7 @@ export const MessageDetailsScreen = () => {
           ),
           message => (
             <MessageDetails
+              isAARNotification={!!isAarMessage}
               message={message}
               messageId={messageId}
               serviceId={serviceId}

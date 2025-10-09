@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
 
 export type MessageBottomMenuProps = {
   history: NotificationStatusHistory;
+  isAARNotification: boolean;
   isCancelled?: boolean;
   iun: string;
   messageId: string;
@@ -133,6 +134,7 @@ const generateMessageSectionData = (
 export const MessageBottomMenu = ({
   history,
   isCancelled,
+  isAARNotification,
   iun,
   messageId,
   paidNoticeCodes,
@@ -162,7 +164,7 @@ export const MessageBottomMenu = ({
         { backgroundColor: IOColors[theme["appBackground-secondary"]] }
       ]}
     >
-      <TimelineListItem history={history} />
+      <TimelineListItem hideFooter={isAARNotification} history={history} />
       {(serviceMetadata?.email || serviceMetadata?.phone) && (
         <ContactsListItem
           email={serviceMetadata.email}

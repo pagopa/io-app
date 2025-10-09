@@ -12,21 +12,31 @@ import { BackendStatus } from "../../../../../definitions/content/BackendStatus"
 jest.mock("../Timeline");
 
 describe("TimelineListItem", () => {
-  it("Should match snapshot, no history, no link", () => {
-    const component = renderComponent([], false);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("Should match snapshot, no history, with link", () => {
-    const component = renderComponent([]);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("Should match snapshot, all handled-status items history, no link", () => {
-    const component = renderComponent(fullHistory(), false);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("Should match snapshot, all handled-status items history, with link", () => {
-    const component = renderComponent(fullHistory(), true);
-    expect(component.toJSON()).toMatchSnapshot();
+  [false, true].forEach(hideFooter => {
+    it(`Should match snapshot, ${
+      hideFooter ? "hidden" : "shown"
+    } footer, no history, no link`, () => {
+      const component = renderComponent(hideFooter, [], false);
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`Should match snapshot, ${
+      hideFooter ? "hidden" : "shown"
+    } footer,no history, with link`, () => {
+      const component = renderComponent(hideFooter, []);
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`Should match snapshot, ${
+      hideFooter ? "hidden" : "shown"
+    } footer,all handled-status items history, no link`, () => {
+      const component = renderComponent(hideFooter, fullHistory(), false);
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`Should match snapshot, ${
+      hideFooter ? "hidden" : "shown"
+    } footer,all handled-status items history, with link`, () => {
+      const component = renderComponent(hideFooter, fullHistory(), true);
+      expect(component.toJSON()).toMatchSnapshot();
+    });
   });
 });
 
@@ -84,6 +94,7 @@ const fullHistory = (): NotificationStatusHistory => [
 ];
 
 const renderComponent = (
+  hideFooter: boolean,
   history: NotificationStatusHistory,
   frontendUrlDefined: boolean = true
 ) => {
@@ -120,7 +131,7 @@ const renderComponent = (
   };
   const store = createStore(appReducer, finalState as any);
   return renderScreenWithNavigationStoreContext(
-    () => <TimelineListItem history={history} />,
+    () => <TimelineListItem hideFooter={hideFooter} history={history} />,
     PN_ROUTES.MESSAGE_DETAILS,
     {},
     store

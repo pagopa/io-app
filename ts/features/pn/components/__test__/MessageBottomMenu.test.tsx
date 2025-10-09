@@ -1,3 +1,5 @@
+/* eslint-disable sonarjs/cognitive-complexity */
+/* eslint-disable complexity */
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
@@ -13,714 +15,1125 @@ jest.mock("../../../messages/components/MessageDetail/ContactsListItem");
 jest.mock("../../../messages/components/MessageDetail/ShowMoreListItem");
 
 describe("MessageBottomMenu", () => {
-  it("should match snapshot, no history, undefined payments, undefined cancelled, undefined paid notice codes", () => {
-    const component = renderComponent([]);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, no history, empty payments, undefined cancelled, undefined paid notice codes", () => {
-    const component = renderComponent([], []);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, no history, one payment, undefined cancelled, undefined paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent([], payments);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, no history, multiple payments, undefined cancelled, undefined paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444401"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444402"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent([], payments);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
+  [false, true].forEach(isAARNotification => {
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, undefined payments, undefined cancelled, undefined paid notice codes`, () => {
+      const component = renderComponent([], isAARNotification);
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, empty payments, undefined cancelled, undefined paid notice codes`, () => {
+      const component = renderComponent([], isAARNotification, []);
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, one payment, undefined cancelled, undefined paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent([], isAARNotification, payments);
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, multiple payments, undefined cancelled, undefined paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444401"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444402"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent([], isAARNotification, payments);
+      expect(component.toJSON()).toMatchSnapshot();
+    });
 
-  it("should match snapshot, no history, undefined payments, not cancelled, undefined paid notice codes", () => {
-    const component = renderComponent([], undefined, false);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, no history, empty payments, not cancelled, undefined paid notice codes", () => {
-    const component = renderComponent([], [], false);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, no history, one payment, not cancelled, undefined paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent([], payments, false);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, no history, multiple payments, not cancelled, undefined paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444401"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444402"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent([], payments, false);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, undefined payments, not cancelled, undefined paid notice codes`, () => {
+      const component = renderComponent(
+        [],
+        isAARNotification,
+        undefined,
+        false
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, empty payments, not cancelled, undefined paid notice codes`, () => {
+      const component = renderComponent([], isAARNotification, [], false);
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, one payment, not cancelled, undefined paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent([], isAARNotification, payments, false);
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, multiple payments, not cancelled, undefined paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444401"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444402"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent([], isAARNotification, payments, false);
+      expect(component.toJSON()).toMatchSnapshot();
+    });
 
-  it("should match snapshot, no history, undefined payments, cancelled, undefined paid notice codes", () => {
-    const component = renderComponent([], undefined, true);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, no history, empty payments, cancelled, undefined paid notice codes", () => {
-    const component = renderComponent([], [], true);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, no history, one payment, cancelled, undefined paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent([], payments, true);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, no history, multiple payments, cancelled, undefined paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444401"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444402"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent([], payments, true);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, undefined payments, cancelled, undefined paid notice codes`, () => {
+      const component = renderComponent([], isAARNotification, undefined, true);
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, empty payments, cancelled, undefined paid notice codes`, () => {
+      const component = renderComponent([], isAARNotification, [], true);
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, one payment, cancelled, undefined paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent([], isAARNotification, payments, true);
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, multiple payments, cancelled, undefined paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444401"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444402"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent([], isAARNotification, payments, true);
+      expect(component.toJSON()).toMatchSnapshot();
+    });
 
-  it("should match snapshot, no history, undefined payments, undefined cancelled, empty paid notice codes", () => {
-    const component = renderComponent([], undefined, undefined, []);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, no history, empty payments, undefined cancelled, empty paid notice codes", () => {
-    const component = renderComponent([], [], undefined, []);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, no history, one payment, undefined cancelled, empty paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent([], payments, undefined, []);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, no history, multiple payments, undefined cancelled, empty paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444401"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444402"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent([], payments, undefined, []);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, undefined payments, undefined cancelled, empty paid notice codes`, () => {
+      const component = renderComponent(
+        [],
+        isAARNotification,
+        undefined,
+        undefined,
+        []
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, empty payments, undefined cancelled, empty paid notice codes`, () => {
+      const component = renderComponent(
+        [],
+        isAARNotification,
+        [],
+        undefined,
+        []
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, one payment, undefined cancelled, empty paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        [],
+        isAARNotification,
+        payments,
+        undefined,
+        []
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, multiple payments, undefined cancelled, empty paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444401"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444402"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        [],
+        isAARNotification,
+        payments,
+        undefined,
+        []
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
 
-  it("should match snapshot, no history, undefined payments, not cancelled, empty paid notice codes", () => {
-    const component = renderComponent([], undefined, false, []);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, no history, empty payments, not cancelled, empty paid notice codes", () => {
-    const component = renderComponent([], [], false, []);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, no history, one payment, not cancelled, empty paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent([], payments, false, []);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, no history, multiple payments, not cancelled, empty paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444401"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444402"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent([], payments, false, []);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, undefined payments, not cancelled, empty paid notice codes`, () => {
+      const component = renderComponent(
+        [],
+        isAARNotification,
+        undefined,
+        false,
+        []
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, empty payments, not cancelled, empty paid notice codes`, () => {
+      const component = renderComponent([], isAARNotification, [], false, []);
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, one payment, not cancelled, empty paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        [],
+        isAARNotification,
+        payments,
+        false,
+        []
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, multiple payments, not cancelled, empty paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444401"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444402"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        [],
+        isAARNotification,
+        payments,
+        false,
+        []
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
 
-  it("should match snapshot, no history, undefined payments, cancelled, empty paid notice codes", () => {
-    const component = renderComponent([], undefined, true, []);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, no history, empty payments, cancelled, empty paid notice codes", () => {
-    const component = renderComponent([], [], true, []);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, no history, one payment, cancelled, empty paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent([], payments, true, []);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, no history, multiple payments, cancelled, empty paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444401"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444402"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent([], payments, true, []);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, undefined payments, cancelled, empty paid notice codes`, () => {
+      const component = renderComponent(
+        [],
+        isAARNotification,
+        undefined,
+        true,
+        []
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, empty payments, cancelled, empty paid notice codes`, () => {
+      const component = renderComponent([], isAARNotification, [], true, []);
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, one payment, cancelled, empty paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        [],
+        isAARNotification,
+        payments,
+        true,
+        []
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, multiple payments, cancelled, empty paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444401"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444402"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        [],
+        isAARNotification,
+        payments,
+        true,
+        []
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
 
-  it("should match snapshot, no history, undefined payments, undefined cancelled, non-empty paid notice codes", () => {
-    const component = renderComponent([], undefined, undefined, [
-      "111122223333444455"
-    ]);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, no history, empty payments, undefined cancelled, non-empty paid notice codes", () => {
-    const component = renderComponent([], [], undefined, [
-      "111122223333444455"
-    ]);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, no history, one payment, undefined cancelled, non-empty paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent([], payments, undefined, [
-      "111122223333444455"
-    ]);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, no history, multiple payments, undefined cancelled, non-empty paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444401"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444402"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent([], payments, undefined, [
-      "111122223333444455"
-    ]);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, undefined payments, undefined cancelled, non-empty paid notice codes`, () => {
+      const component = renderComponent(
+        [],
+        isAARNotification,
+        undefined,
+        undefined,
+        ["111122223333444455"]
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, empty payments, undefined cancelled, non-empty paid notice codes`, () => {
+      const component = renderComponent([], isAARNotification, [], undefined, [
+        "111122223333444455"
+      ]);
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, one payment, undefined cancelled, non-empty paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        [],
+        isAARNotification,
+        payments,
+        undefined,
+        ["111122223333444455"]
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, multiple payments, undefined cancelled, non-empty paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444401"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444402"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        [],
+        isAARNotification,
+        payments,
+        undefined,
+        ["111122223333444455"]
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
 
-  it("should match snapshot, no history, undefined payments, not cancelled, non-empty paid notice codes", () => {
-    const component = renderComponent([], undefined, false, [
-      "111122223333444455"
-    ]);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, no history, empty payments, not cancelled, non-empty paid notice codes", () => {
-    const component = renderComponent([], [], false, ["111122223333444455"]);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, no history, one payment, not cancelled, non-empty paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent([], payments, false, [
-      "111122223333444455"
-    ]);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, no history, multiple payments, not cancelled, non-empty paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444401"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444402"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent([], payments, false, [
-      "111122223333444455"
-    ]);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, undefined payments, not cancelled, non-empty paid notice codes`, () => {
+      const component = renderComponent(
+        [],
+        isAARNotification,
+        undefined,
+        false,
+        ["111122223333444455"]
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, empty payments, not cancelled, non-empty paid notice codes`, () => {
+      const component = renderComponent([], isAARNotification, [], false, [
+        "111122223333444455"
+      ]);
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, one payment, not cancelled, non-empty paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        [],
+        isAARNotification,
+        payments,
+        false,
+        ["111122223333444455"]
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, multiple payments, not cancelled, non-empty paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444401"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444402"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        [],
+        isAARNotification,
+        payments,
+        false,
+        ["111122223333444455"]
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
 
-  it("should match snapshot, no history, undefined payments, cancelled, non-empty paid notice codes", () => {
-    const component = renderComponent([], undefined, true, [
-      "111122223333444455"
-    ]);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, no history, empty payments, cancelled, non-empty paid notice codes", () => {
-    const component = renderComponent([], [], true, ["111122223333444455"]);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, no history, one payment, cancelled, non-empty paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent([], payments, true, [
-      "111122223333444455"
-    ]);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, no history, multiple payments, cancelled, non-empty paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444401"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444402"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent([], payments, true, [
-      "111122223333444455"
-    ]);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, undefined payments, cancelled, non-empty paid notice codes`, () => {
+      const component = renderComponent(
+        [],
+        isAARNotification,
+        undefined,
+        true,
+        ["111122223333444455"]
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, empty payments, cancelled, non-empty paid notice codes`, () => {
+      const component = renderComponent([], isAARNotification, [], true, [
+        "111122223333444455"
+      ]);
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, one payment, cancelled, non-empty paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent([], isAARNotification, payments, true, [
+        "111122223333444455"
+      ]);
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, no history, multiple payments, cancelled, non-empty paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444401"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444402"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent([], isAARNotification, payments, true, [
+        "111122223333444455"
+      ]);
+      expect(component.toJSON()).toMatchSnapshot();
+    });
 
-  it("should match snapshot, all handled-status items history, undefined payments, undefined cancelled, undefined paid notice codes", () => {
-    const component = renderComponent(fullHistory());
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, all handled-status items history, empty payments, undefined cancelled, undefined paid notice codes", () => {
-    const component = renderComponent(fullHistory(), []);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, all handled-status items history, one payment, undefined cancelled, undefined paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent(fullHistory(), payments);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, all handled-status items history, multiple payments, undefined cancelled, undefined paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444401"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444402"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent(fullHistory(), payments);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, undefined payments, undefined cancelled, undefined paid notice codes`, () => {
+      const component = renderComponent(fullHistory(), isAARNotification);
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, empty payments, undefined cancelled, undefined paid notice codes`, () => {
+      const component = renderComponent(fullHistory(), isAARNotification, []);
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, one payment, undefined cancelled, undefined paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        payments
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, multiple payments, undefined cancelled, undefined paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444401"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444402"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        payments
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
 
-  it("should match snapshot, all handled-status items history, undefined payments, not cancelled, undefined paid notice codes", () => {
-    const component = renderComponent(fullHistory(), undefined, false);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, all handled-status items history, empty payments, not cancelled, undefined paid notice codes", () => {
-    const component = renderComponent(fullHistory(), [], false);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, all handled-status items history, one payment, not cancelled, undefined paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent(fullHistory(), payments, false);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, all handled-status items history, multiple payments, not cancelled, undefined paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444401"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444402"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent(fullHistory(), payments, false);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, undefined payments, not cancelled, undefined paid notice codes`, () => {
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        undefined,
+        false
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, empty payments, not cancelled, undefined paid notice codes`, () => {
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        [],
+        false
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, one payment, not cancelled, undefined paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        payments,
+        false
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, multiple payments, not cancelled, undefined paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444401"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444402"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        payments,
+        false
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
 
-  it("should match snapshot, all handled-status items history, undefined payments, cancelled, undefined paid notice codes", () => {
-    const component = renderComponent(fullHistory(), undefined, true);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, all handled-status items history, empty payments, cancelled, undefined paid notice codes", () => {
-    const component = renderComponent(fullHistory(), [], true);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, all handled-status items history, one payment, cancelled, undefined paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent(fullHistory(), payments, true);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, all handled-status items history, multiple payments, cancelled, undefined paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444401"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444402"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent(fullHistory(), payments, true);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, undefined payments, cancelled, undefined paid notice codes`, () => {
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        undefined,
+        true
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, empty payments, cancelled, undefined paid notice codes`, () => {
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        [],
+        true
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, one payment, cancelled, undefined paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        payments,
+        true
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, multiple payments, cancelled, undefined paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444401"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444402"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        payments,
+        true
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
 
-  it("should match snapshot, all handled-status items history, undefined payments, undefined cancelled, empty paid notice codes", () => {
-    const component = renderComponent(fullHistory(), undefined, undefined, []);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, all handled-status items history, empty payments, undefined cancelled, empty paid notice codes", () => {
-    const component = renderComponent(fullHistory(), [], undefined, []);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, all handled-status items history, one payment, undefined cancelled, empty paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent(fullHistory(), payments, undefined, []);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, all handled-status items history, multiple payments, undefined cancelled, empty paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444401"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444402"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent(fullHistory(), payments, undefined, []);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, undefined payments, undefined cancelled, empty paid notice codes`, () => {
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        undefined,
+        undefined,
+        []
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR,  all handled-status items history, empty payments, undefined cancelled, empty paid notice codes`, () => {
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        [],
+        undefined,
+        []
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, one payment, undefined cancelled, empty paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        payments,
+        undefined,
+        []
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, multiple payments, undefined cancelled, empty paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444401"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444402"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        payments,
+        undefined,
+        []
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
 
-  it("should match snapshot, all handled-status items history, undefined payments, not cancelled, empty paid notice codes", () => {
-    const component = renderComponent(fullHistory(), undefined, false, []);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, all handled-status items history, empty payments, not cancelled, empty paid notice codes", () => {
-    const component = renderComponent(fullHistory(), [], false, []);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, all handled-status items history, one payment, not cancelled, empty paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent(fullHistory(), payments, false, []);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, all handled-status items history, multiple payments, not cancelled, empty paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444401"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444402"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent(fullHistory(), payments, false, []);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, undefined payments, not cancelled, empty paid notice codes`, () => {
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        undefined,
+        false,
+        []
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, empty payments, not cancelled, empty paid notice codes`, () => {
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        [],
+        false,
+        []
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, one payment, not cancelled, empty paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        payments,
+        false,
+        []
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, multiple payments, not cancelled, empty paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444401"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444402"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        payments,
+        false,
+        []
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
 
-  it("should match snapshot, all handled-status items history, undefined payments, cancelled, empty paid notice codes", () => {
-    const component = renderComponent(fullHistory(), undefined, true, []);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, all handled-status items history, empty payments, cancelled, empty paid notice codes", () => {
-    const component = renderComponent(fullHistory(), [], true, []);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, all handled-status items history, one payment, cancelled, empty paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent(fullHistory(), payments, true, []);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, all handled-status items history, multiple payments, cancelled, empty paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444401"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444402"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent(fullHistory(), payments, true, []);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, undefined payments, cancelled, empty paid notice codes`, () => {
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        undefined,
+        true,
+        []
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, empty payments, cancelled, empty paid notice codes`, () => {
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        [],
+        true,
+        []
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, one payment, cancelled, empty paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        payments,
+        true,
+        []
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, multiple payments, cancelled, empty paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444401"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444402"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        payments,
+        true,
+        []
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
 
-  it("should match snapshot, all handled-status items history, undefined payments, undefined cancelled, non-empty paid notice codes", () => {
-    const component = renderComponent(fullHistory(), undefined, undefined, [
-      "999988887777666655"
-    ]);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, all handled-status items history, empty payments, undefined cancelled, non-empty paid notice codes", () => {
-    const component = renderComponent(fullHistory(), [], undefined, [
-      "999988887777666655"
-    ]);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, all handled-status items history, one payment, undefined cancelled, non-empty paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent(fullHistory(), payments, undefined, [
-      "999988887777666655"
-    ]);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, all handled-status items history, multiple payments, undefined cancelled, non-empty paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444401"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444402"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent(fullHistory(), payments, undefined, [
-      "999988887777666655"
-    ]);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, undefined payments, undefined cancelled, non-empty paid notice codes`, () => {
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        undefined,
+        undefined,
+        ["999988887777666655"]
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, empty payments, undefined cancelled, non-empty paid notice codes`, () => {
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        [],
+        undefined,
+        ["999988887777666655"]
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, one payment, undefined cancelled, non-empty paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        payments,
+        undefined,
+        ["999988887777666655"]
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, multiple payments, undefined cancelled, non-empty paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444401"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444402"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        payments,
+        undefined,
+        ["999988887777666655"]
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
 
-  it("should match snapshot, all handled-status items history, undefined payments, not cancelled, non-empty paid notice codes", () => {
-    const component = renderComponent(fullHistory(), undefined, false, [
-      "999988887777666655"
-    ]);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, all handled-status items history, empty payments, not cancelled, non-empty paid notice codes", () => {
-    const component = renderComponent(fullHistory(), [], false, [
-      "999988887777666655"
-    ]);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, all handled-status items history, one payment, not cancelled, non-empty paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent(fullHistory(), payments, false, [
-      "999988887777666655"
-    ]);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, all handled-status items history, multiple payments, not cancelled, non-empty paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444401"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444402"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent(fullHistory(), payments, false, [
-      "999988887777666655"
-    ]);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, undefined payments, not cancelled, non-empty paid notice codes`, () => {
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        undefined,
+        false,
+        ["999988887777666655"]
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, empty payments, not cancelled, non-empty paid notice codes`, () => {
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        [],
+        false,
+        ["999988887777666655"]
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, one payment, not cancelled, non-empty paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        payments,
+        false,
+        ["999988887777666655"]
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, multiple payments, not cancelled, non-empty paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444401"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444402"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        payments,
+        false,
+        ["999988887777666655"]
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
 
-  it("should match snapshot, all handled-status items history, undefined payments, cancelled, non-empty paid notice codes", () => {
-    const component = renderComponent(fullHistory(), undefined, true, [
-      "999988887777666655"
-    ]);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, all handled-status items history, empty payments, cancelled, non-empty paid notice codes", () => {
-    const component = renderComponent(fullHistory(), [], true, [
-      "999988887777666655"
-    ]);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, all handled-status items history, one payment, cancelled, non-empty paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent(fullHistory(), payments, true, [
-      "999988887777666655"
-    ]);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot, all handled-status items history, multiple payments, cancelled, non-empty paid notice codes", () => {
-    const payments = [
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444400"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444401"
-      } as NotificationPaymentInfo,
-      {
-        creditorTaxId: "01234567890",
-        noticeCode: "111122223333444402"
-      } as NotificationPaymentInfo
-    ];
-    const component = renderComponent(fullHistory(), payments, true, [
-      "999988887777666655"
-    ]);
-    expect(component.toJSON()).toMatchSnapshot();
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, undefined payments, cancelled, non-empty paid notice codes`, () => {
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        undefined,
+        true,
+        ["999988887777666655"]
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, empty payments, cancelled, non-empty paid notice codes`, () => {
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        [],
+        true,
+        ["999988887777666655"]
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, one payment, cancelled, non-empty paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        payments,
+        true,
+        ["999988887777666655"]
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARNotification ? "" : "not "
+    }an AAR, all handled-status items history, multiple payments, cancelled, non-empty paid notice codes`, () => {
+      const payments = [
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444400"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444401"
+        } as NotificationPaymentInfo,
+        {
+          creditorTaxId: "01234567890",
+          noticeCode: "111122223333444402"
+        } as NotificationPaymentInfo
+      ];
+      const component = renderComponent(
+        fullHistory(),
+        isAARNotification,
+        payments,
+        true,
+        ["999988887777666655"]
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
   });
 });
 
@@ -779,6 +1192,7 @@ const fullHistory = (): NotificationStatusHistory => [
 
 const renderComponent = (
   history: NotificationStatusHistory,
+  isAARNotification: boolean,
   payments?: ReadonlyArray<NotificationPaymentInfo>,
   isCancelled?: boolean,
   paidNoticeCodes?: ReadonlyArray<string>
@@ -789,6 +1203,7 @@ const renderComponent = (
   return renderScreenWithNavigationStoreContext(
     () => (
       <MessageBottomMenu
+        isAARNotification={isAARNotification}
         history={history}
         isCancelled={isCancelled}
         iun={"randomIUN"}

@@ -18,41 +18,47 @@ jest.mock("../MessageBottomMenu");
 const pnMessage = pipe(thirdPartyMessage, toPNMessage, O.toUndefined)!;
 
 describe("MessageDetails component", () => {
-  it("should match the snapshot with default props", () => {
-    const { component } = renderComponent(
-      generateComponentProperties(pnMessage)
-    );
-    expect(component).toMatchSnapshot();
-  });
+  [false, true].forEach(isAARNotification => {
+    it(`should match the snapshot with default props (is AAR ${isAARNotification})`, () => {
+      const { component } = renderComponent(
+        generateComponentProperties(isAARNotification, pnMessage)
+      );
+      expect(component).toMatchSnapshot();
+    });
 
-  it("should display the legalMessage tag", () => {
-    const { component } = renderComponent(
-      generateComponentProperties(pnMessage)
-    );
-    expect(
-      component.queryByText(I18n.t("features.pn.details.badge.legalValue"))
-    ).not.toBeNull();
-  });
+    it(`should display the legalMessage tag (is AAR ${isAARNotification})`, () => {
+      const { component } = renderComponent(
+        generateComponentProperties(isAARNotification, pnMessage)
+      );
+      expect(
+        component.queryByText(I18n.t("features.pn.details.badge.legalValue"))
+      ).not.toBeNull();
+    });
 
-  it("should display the attachment tag if there are attachments", () => {
-    const { component } = renderComponent(
-      generateComponentProperties(pnMessage)
-    );
-    expect(component.queryByTestId("attachment-tag")).not.toBeNull();
-  });
+    it(`should display the attachment tag if there are attachments (is AAR ${isAARNotification})`, () => {
+      const { component } = renderComponent(
+        generateComponentProperties(isAARNotification, pnMessage)
+      );
+      expect(component.queryByTestId("attachment-tag")).not.toBeNull();
+    });
 
-  it("should NOT display the attachment tag if there are no attachments", () => {
-    const { component } = renderComponent(
-      generateComponentProperties({
-        ...pnMessage,
-        attachments: []
-      })
-    );
-    expect(component.queryByTestId("attachment-tag")).toBeNull();
+    it(`should NOT display the attachment tag if there are no attachments (is AAR ${isAARNotification})`, () => {
+      const { component } = renderComponent(
+        generateComponentProperties(isAARNotification, {
+          ...pnMessage,
+          attachments: []
+        })
+      );
+      expect(component.queryByTestId("attachment-tag")).toBeNull();
+    });
   });
 });
 
-const generateComponentProperties = (message: PNMessage) => ({
+const generateComponentProperties = (
+  isAARNotification: boolean,
+  message: PNMessage
+) => ({
+  isAARNotification,
   messageId: "01HRYR6C761DGH3S84HBBXMMKT",
   message,
   payments: undefined,

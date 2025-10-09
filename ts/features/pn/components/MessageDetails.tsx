@@ -33,6 +33,7 @@ import { MessageFooter } from "./MessageFooter";
 import { MessageCancelledContent } from "./MessageCancelledContent";
 
 export type MessageDetailsProps = {
+  isAARNotification: boolean;
   message: PNMessage;
   messageId: string;
   serviceId: ServiceId;
@@ -40,6 +41,7 @@ export type MessageDetailsProps = {
 };
 
 export const MessageDetails = ({
+  isAARNotification,
   message,
   messageId,
   payments,
@@ -129,6 +131,7 @@ export const MessageDetails = ({
         </ContentWrapper>
         <MessageBottomMenu
           history={message.notificationStatusHistory}
+          isAARNotification={isAARNotification}
           isCancelled={message.isCancelled}
           iun={message.iun}
           messageId={messageId}
