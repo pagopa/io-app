@@ -1,6 +1,6 @@
 import { useIsFocused } from "@react-navigation/native";
 import { StatusBar, StatusBarProps } from "react-native";
-import { useStatusAlertProps } from "../../hooks/useStatusAlertProps";
+import { useIOAlertVisible } from "../StatusMessages/IOAlertVisibleContext";
 
 /**
  * A component that renders the status bar only when the screen is focused.
@@ -22,9 +22,9 @@ const FocusAwareStatusBar = (props: StatusBarProps) => {
    * If we have status alert, we want to avoid rendering the status bar
    * to avoid conflicts in the background color
    */
-  const statusAlert = useStatusAlertProps();
+  const isAlertVisible = useIOAlertVisible();
 
-  if (statusAlert || !isFocused) {
+  if (isAlertVisible || !isFocused) {
     return null;
   }
 
