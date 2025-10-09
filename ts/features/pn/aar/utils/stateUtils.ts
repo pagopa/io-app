@@ -1,5 +1,6 @@
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
-import { ThirdPartyMessage } from "../../../../../definitions/pn/ThirdPartyMessage";
+import { ThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
 
 export type SendAARFlowStatesType = typeof sendAARFlowStates;
 
@@ -28,6 +29,8 @@ type DisplayingNotification = {
   type: SendAARFlowStatesType["displayingNotificationData"];
   fullNameDestinatario: string;
   notification: ThirdPartyMessage;
+  iun: string;
+  pnServiceId: ServiceId;
   mandateId?: string;
 };
 

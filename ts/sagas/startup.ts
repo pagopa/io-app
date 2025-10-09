@@ -78,7 +78,7 @@ import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnbo
 import { watchAbortOnboardingSaga } from "../features/onboarding/saga/watchAbortOnboardingSaga";
 import { watchPaymentsSaga } from "../features/payments/common/saga";
 import { watchAarFlowSaga } from "../features/pn/aar/saga/watchAARFlowSaga";
-import { isAAREnabled } from "../features/pn/aar/store/reducers";
+import { isAAREnabled } from "../features/pn/aar/store/selectors";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { maybeHandlePendingBackgroundActions } from "../features/pushNotifications/sagas/common";
 import { notificationPermissionsListener } from "../features/pushNotifications/sagas/notificationPermissionsListener";
@@ -357,7 +357,7 @@ export function* initializeApplicationSaga(
   yield* fork(watchServicesSaga, backendClient, sessionToken);
 
   // Start watching for Messages actions
-  yield* fork(watchMessagesSaga, backendClient, sessionToken);
+  yield* fork(watchMessagesSaga, backendClient, sessionToken, keyInfo);
 
   // start watching for FIMS actions
   yield* fork(watchFimsSaga, sessionToken);
