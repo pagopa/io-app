@@ -4,7 +4,7 @@ import { isPnTestEnabledSelector } from "../../../../../store/reducers/persisted
 import { SessionToken } from "../../../../../types/SessionToken";
 import { SendAARClient } from "../../api/client";
 import { setAarFlowState } from "../../store/actions";
-import { currentAARFlowData } from "../../store/reducers";
+import { currentAARFlowData } from "../../store/selectors";
 import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
 import { fetchAARQrCodeSaga } from "../fetchQrCodeSaga";
 
@@ -12,7 +12,8 @@ const sendUATEnvironment = [false, true];
 
 describe("fetchQrCodeSaga", () => {
   const aQRCode = "TESTTEST";
-  const sessionToken: SessionToken = "test-session-token" as SessionToken;
+  const sessionToken = "test-session-token" as SessionToken;
+  const sessionTokenWithBearer = `Bearer ${sessionToken}` as SessionToken;
   const getMockKoState = (prevState: AARFlowState): AARFlowState => ({
     type: "ko",
     previousState: { ...prevState }
@@ -38,7 +39,7 @@ describe("fetchQrCodeSaga", () => {
   });
 
   sendUATEnvironment.forEach(isSendUATEnvironment =>
-    it(`should correctly update state on a 200 response with isTest='${isPnTestEnabledSelector}'`, () => {
+    it(`should correctly update state on a 200 response with isTest='${isSendUATEnvironment}'`, () => {
       const successState: AARFlowState = {
         type: sendAARFlowStates.fetchingNotificationData,
         iun: "123123",
@@ -57,14 +58,14 @@ describe("fetchQrCodeSaga", () => {
       });
       const mockApiCall = () => mockResolvedCall(successResponse);
 
-      testSaga(fetchAARQrCodeSaga, aQRCode, mockApiCall, sessionToken)
+      testSaga(fetchAARQrCodeSaga, mockApiCall, sessionToken)
         .next()
         .select(currentAARFlowData)
         .next(mockFetchingQrState)
         .select(isPnTestEnabledSelector)
         .next(isSendUATEnvironment)
         .call(mockApiCall, {
-          Bearer: sessionToken,
+          Bearer: sessionTokenWithBearer,
           body: {
             aarQrCodeValue: aQRCode
           },
@@ -99,14 +100,14 @@ describe("fetchQrCodeSaga", () => {
 
       const mockApiCall = () => mockResolvedCall(notAddresseeResponse);
 
-      testSaga(fetchAARQrCodeSaga, aQRCode, mockApiCall, sessionToken)
+      testSaga(fetchAARQrCodeSaga, mockApiCall, sessionToken)
         .next()
         .select(currentAARFlowData)
         .next(mockFetchingQrState)
         .select(isPnTestEnabledSelector)
         .next(isSendUATEnvironment)
         .call(mockApiCall, {
-          Bearer: sessionToken,
+          Bearer: sessionTokenWithBearer,
           body: {
             aarQrCodeValue: aQRCode
           },
@@ -128,14 +129,14 @@ describe("fetchQrCodeSaga", () => {
       it(`should dispatch KO state on a response of ${JSON.stringify(
         res
       )} with isTest='${isSendUATEnvironment}'`, () => {
-        testSaga(fetchAARQrCodeSaga, aQRCode, mockFetchQrCode, sessionToken)
+        testSaga(fetchAARQrCodeSaga, mockFetchQrCode, sessionToken)
           .next()
           .select(currentAARFlowData)
           .next(mockFetchingQrState)
           .select(isPnTestEnabledSelector)
           .next(isSendUATEnvironment)
           .call(mockFetchQrCode, {
-            Bearer: sessionToken,
+            Bearer: sessionTokenWithBearer,
             body: {
               aarQrCodeValue: aQRCode
             },
@@ -150,31 +151,29 @@ describe("fetchQrCodeSaga", () => {
   );
 
   it("should exit early if the current state is wrong", () => {
-    testSaga(fetchAARQrCodeSaga, aQRCode, mockFetchQrCode, sessionToken)
+    testSaga(fetchAARQrCodeSaga, mockFetchQrCode, sessionToken)
       .next()
       .select(currentAARFlowData)
       .next(mockTosState)
       .isDone();
   });
-  sendUATEnvironment.forEach(isSendUATEnvironment =>
-    it(`should dispatch KO state on exception throw with isTest='${isSendUATEnvironment}'`, () => {
-      testSaga(fetchAARQrCodeSaga, aQRCode, mockFetchQrCode, sessionToken)
-        .next()
-        .select(currentAARFlowData)
-        .next(mockFetchingQrState)
-        .select(isPnTestEnabledSelector)
-        .next(isSendUATEnvironment)
-        .call(mockFetchQrCode, {
-          Bearer: sessionToken,
-          body: {
-            aarQrCodeValue: aQRCode
-          },
-          isTest: isSendUATEnvironment
-        })
-        .throw(new Error())
-        .put(setAarFlowState(getMockKoState(mockFetchingQrState)))
-        .next()
-        .isDone();
-    })
-  );
+  it("should dispatch KO state on exception throw", () => {
+    testSaga(fetchAARQrCodeSaga, mockFetchQrCode, sessionToken)
+      .next()
+      .select(currentAARFlowData)
+      .next(mockFetchingQrState)
+      .select(isPnTestEnabledSelector)
+      .next(true)
+      .call(mockFetchQrCode, {
+        Bearer: sessionTokenWithBearer,
+        body: {
+          aarQrCodeValue: aQRCode
+        },
+        isTest: true
+      })
+      .throw(new Error())
+      .put(setAarFlowState(getMockKoState(mockFetchingQrState)))
+      .next()
+      .isDone();
+  });
 });

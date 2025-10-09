@@ -25,10 +25,7 @@ import {
   trackThirdPartyMessageAttachmentDownloadFailed,
   trackThirdPartyMessageAttachmentUnavailable
 } from "../analytics";
-import {
-  isEphemeralAARThirdPartyMessage,
-  thirdPartyMessageSelector
-} from "../store/reducers/thirdPartyById";
+import { thirdPartyMessageSelector } from "../store/reducers/thirdPartyById";
 import { KeyInfo } from "../../lollipop/utils/crypto";
 import {
   attachmentDisplayName,
@@ -36,6 +33,7 @@ import {
   pdfSavePath,
   restrainRetryAfterIntervalInMilliseconds
 } from "../utils/attachments";
+import { isEphemeralAARThirdPartyMessage } from "../utils/thirdPartyById";
 import { downloadAARAttachmentSaga } from "../../pn/aar/saga/downloadAARAttachmentSaga";
 import { handleRequestInit } from "./handleRequestInit";
 

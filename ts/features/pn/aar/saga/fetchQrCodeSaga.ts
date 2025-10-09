@@ -1,15 +1,14 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { call, put, select } from "typed-redux-saga/macro";
+import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../types/SessionToken";
 import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
-import { currentAARFlowData } from "../store/reducers";
+import { currentAARFlowData } from "../store/selectors";
 import { AARFlowState, sendAARFlowStates } from "../utils/stateUtils";
-import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 
 export function* fetchAARQrCodeSaga(
-  qrcode: string,
   fetchQRCode: SendAARClient["aarQRCodeCheck"],
   sessionToken: SessionToken
 ) {
@@ -19,13 +18,14 @@ export function* fetchAARQrCodeSaga(
     return;
   }
 
+  const { qrCode } = currentState;
   const isSendUATEnvironment = yield* select(isPnTestEnabledSelector);
 
   try {
     const result = yield* call(fetchQRCode, {
-      Bearer: sessionToken,
+      Bearer: `Bearer ${sessionToken}`,
       body: {
-        aarQrCodeValue: qrcode
+        aarQrCodeValue: qrCode
       },
       isTest: isSendUATEnvironment
     });
@@ -53,7 +53,7 @@ export function* fetchAARQrCodeSaga(
                 type: sendAARFlowStates.notAddresseeFinal,
                 iun: data.value.iun,
                 fullNameDestinatario: data.value.recipientInfo.denomination,
-                qrCode: qrcode
+                qrCode
               };
               return setAarFlowState(notAddresseeFinalState);
 
