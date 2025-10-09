@@ -753,8 +753,8 @@ export const sendShowAbstractSelector = (state: GlobalState) => {
   if (O.isSome(remoteConfigOption)) {
     const abstractShownOrUndefined = remoteConfigOption.value.pn?.abstractShown;
     if (abstractShownOrUndefined == null) {
-      // Data has been removed from CDN, there
-      // is no need to keep it hidden anymore
+      // Data has been removed from CDN, there is no
+      // need to keep the abstract hidden anymore
       return true;
     }
     // Data is set in the CDN, return its value
