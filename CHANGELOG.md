@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.16.0-rc.5](https://github.com/pagopa/io-app/compare/3.16.0-rc.4...3.16.0-rc.5) (2025-10-08)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2987](https://pagopa.atlassian.net/browse/SIW-2987)] New Identification screen design ([#7404](https://github.com/pagopa/io-app/issues/7404)) ([228b28d](https://github.com/pagopa/io-app/commit/228b28d79321bdcf76d287bc042404407aade537))
+* **IT Wallet:** [[SIW-3107](https://pagopa.atlassian.net/browse/SIW-3107)] Validity alert for new ITW credentials ([#7438](https://github.com/pagopa/io-app/issues/7438)) ([72a2fd5](https://github.com/pagopa/io-app/commit/72a2fd516fc448bffc6d31b4da4f3e049694d303))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-3079](https://pagopa.atlassian.net/browse/SIW-3079),[SIW-3109](https://pagopa.atlassian.net/browse/SIW-3109)] Improve claims render during Proximity presentation online/offline ([#7429](https://github.com/pagopa/io-app/issues/7429)) ([609caaa](https://github.com/pagopa/io-app/commit/609caaa8a686a9714874ada447a74461aa47e329))
+* **IT Wallet:** [[SIW-3095](https://pagopa.atlassian.net/browse/SIW-3095)] Fix navigation in remote & proximity flows (online/offline)  ([#7441](https://github.com/pagopa/io-app/issues/7441)) ([cd9685f](https://github.com/pagopa/io-app/commit/cd9685f36b9b47e2b329e088f9fc1026a545533d))
+* [[IOBP-2054](https://pagopa.atlassian.net/browse/IOBP-2054)] Countdown progressbar barcode IDPay on Android devices ([#7447](https://github.com/pagopa/io-app/issues/7447)) ([655f389](https://github.com/pagopa/io-app/commit/655f3893bf709343568134cef78f7d22808726a9))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-3133](https://pagopa.atlassian.net/browse/SIW-3133)] Copy auth source ([#7449](https://github.com/pagopa/io-app/issues/7449)) ([3770dbc](https://github.com/pagopa/io-app/commit/3770dbce750ce67856a7d58cff2d52a5b0d10403))
+
 ## [3.16.0-rc.4](https://github.com/pagopa/io-app/compare/3.16.0-rc.3...3.16.0-rc.4) (2025-10-07)
 
 
