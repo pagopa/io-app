@@ -126,16 +126,24 @@ describe("index", () => {
   });
 });
 
-const codeFromTypeAndFormat = (barcodeType: string, format: string) =>
-  barcodeType === "IDPAY"
-    ? "idpay"
-    : barcodeType === "SEND"
-    ? "SEND"
-    : barcodeType === "PAGOPA"
-    ? format === "DATA_MATRIX"
-      ? "data_matrix"
-      : "avviso"
-    : undefined;
+const codeFromTypeAndFormat = (barcodeType: string, format: string) => {
+  switch (barcodeType) {
+    case "IDPAY":
+      return "idpay";
+    case "SEND":
+      return "SEND";
+    case "PAGOPA":
+      if (format === "DATA_MATRIX") {
+        return "data_matrix";
+      } else {
+        return "avviso";
+      }
+    case "ITW_REMOTE":
+      return "ITW presentazione remota";
+    default:
+      return undefined;
+  }
+};
 
 const dataEntryFromOrigin = (origin: string) =>
   origin === "camera" ? "qr code" : origin === "file" ? "file" : undefined;
