@@ -22,7 +22,7 @@ const FocusAwareStatusBar = (props: StatusBarProps) => {
    * If we have status alert, we want to avoid rendering the status bar
    * to avoid conflicts in the background color
    */
-  const isAlertVisible = useIOAlertVisible();
+  const { isAlertVisible } = useIOAlertVisible();
 
   if (isAlertVisible || !isFocused) {
     return null;
