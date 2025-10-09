@@ -2,6 +2,7 @@ import {
   ContentWrapper,
   ForceScrollDownView,
   H2,
+  IOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
@@ -10,6 +11,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useCallback, useMemo } from "react";
 import I18n from "i18next";
+import { Linking } from "react-native";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -39,6 +41,8 @@ import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selec
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider.tsx";
+import { selectIssuanceMode } from "../../machine/eid/selectors.ts";
 
 export const ItwIssuanceCredentialPreviewScreen = () => {
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
@@ -87,7 +91,8 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
   const route = useRoute();
   const isMultilevel = isMultiLevelCredential(credential);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
-
+  const issuanceMode =
+    ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
   const mixPanelCredential = useMemo(
     () => getMixPanelCredential(credentialType, isItwL3),
     [credentialType, isItwL3]
@@ -104,6 +109,11 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
 
   const dismissDialog = useItwDismissalDialog({
     handleDismiss: () => {
+      if (issuanceMode === "reissuance") {
+        Linking.openURL(
+          "https://pagopa.qualtrics.com/jfe/form/SV_3JmGHi0IjGYESYC"
+        ).catch(() => IOToast.error("global.genericError"));
+      }
       machineRef.send({ type: "close" });
       trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
     }

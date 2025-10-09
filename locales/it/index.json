@@ -4877,7 +4877,12 @@
             "title": "È tutto pronto!",
             "subtitle": "Ora puoi aggiungere il primo documento al Portafoglio di IO.",
             "primaryAction": "Aggiungi primo documento",
-            "secondaryAction": "Continua più tardi"
+            "secondaryAction": "Continua più tardi",
+            "reissuance": {
+              "title": "Hai verificato la tua identità",
+              "subtitle": "Ora puoi continuare a usare Documenti su IO.",
+              "primaryAction": "Ok, chiudi"
+            }
           }
         },
         "emptyWallet": {
@@ -5424,6 +5429,13 @@
         "cta": "Disattiva IT-Wallet"
       },
       "feedback": {
+        "reissuance": {
+          "banner": {
+            "title": "Puoi dirci com’è andata?",
+            "content": "Raccontaci la tua esperienza con la verifica e aiutaci a migliorare.",
+            "action": "Inizia"
+          }
+        },
         "banner": {
           "title": "Dicci cosa ne pensi",
           "content": "Raccontaci la tua esperienza con la funzionalità Documenti su IO.",
