@@ -7,7 +7,7 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import { CieUtils } from "@pagopa/io-react-native-cie";
-import { StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
@@ -87,14 +87,16 @@ export function CieIasAndMrtdPlayground() {
             })
           }
         />
-        <View style={styles.buttonContainer}>
-          <IOButton
-            variant="link"
-            label="Open NFC Settings"
-            icon="coggle"
-            onPress={() => CieUtils.openNfcSettings()}
-          />
-        </View>
+        {Platform.OS === "android" && (
+          <View style={styles.buttonContainer}>
+            <IOButton
+              variant="link"
+              label="Open NFC Settings"
+              icon="coggle"
+              onPress={() => CieUtils.openNfcSettings()}
+            />
+          </View>
+        )}
       </VStack>
     </SafeAreaView>
   );
