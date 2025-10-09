@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.16.0-canary.7526](https://github.com/pagopa/io-app/compare/3.16.0-rc.4...3.16.0-canary.7526) (2025-10-09)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2987](https://pagopa.atlassian.net/browse/SIW-2987)] New Identification screen design ([#7404](https://github.com/pagopa/io-app/issues/7404)) ([228b28d](https://github.com/pagopa/io-app/commit/228b28d79321bdcf76d287bc042404407aade537))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-3079](https://pagopa.atlassian.net/browse/SIW-3079),[SIW-3109](https://pagopa.atlassian.net/browse/SIW-3109)] Improve claims render during Proximity presentation online/offline ([#7429](https://github.com/pagopa/io-app/issues/7429)) ([609caaa](https://github.com/pagopa/io-app/commit/609caaa8a686a9714874ada447a74461aa47e329))
+* [[IOBP-2054](https://pagopa.atlassian.net/browse/IOBP-2054)] Countdown progressbar barcode IDPay on Android devices ([#7447](https://github.com/pagopa/io-app/issues/7447)) ([655f389](https://github.com/pagopa/io-app/commit/655f3893bf709343568134cef78f7d22808726a9))
+
+
+### Chores
+
+* add CIE IAS+MRTD stub navigation ([986168a](https://github.com/pagopa/io-app/commit/986168ab299ce907bc652347ad5a499cea92375b))
+* add Internal Auth playground ([657d5d6](https://github.com/pagopa/io-app/commit/657d5d6aae01cd86b496c24af22e624826959140))
+* bump io-react-native-cie from 1.1.11 to 1.2.0 ([639e768](https://github.com/pagopa/io-app/commit/639e768833d420dcb6898ac1c5c1b80af14cff0d))
+* **IT Wallet:** [[SIW-3133](https://pagopa.atlassian.net/browse/SIW-3133)] Copy auth source ([#7449](https://github.com/pagopa/io-app/issues/7449)) ([3770dbc](https://github.com/pagopa/io-app/commit/3770dbce750ce67856a7d58cff2d52a5b0d10403))
+
 ## [3.16.0-rc.4](https://github.com/pagopa/io-app/compare/3.16.0-rc.3...3.16.0-rc.4) (2025-10-07)
 
 
