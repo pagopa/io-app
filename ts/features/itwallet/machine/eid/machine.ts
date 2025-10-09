@@ -896,10 +896,6 @@ export const itwEidIssuanceMachine = setup({
           target: "#itwEidIssuanceMachine.CredentialsUpgrade"
         },
         {
-          guard: "isReissuance",
-          actions: ["navigateToWallet"]
-        },
-        {
           target: "#itwEidIssuanceMachine.Success"
         }
       ]
