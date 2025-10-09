@@ -47,7 +47,10 @@ import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { watchFciSaga } from "../features/fci/saga";
 import { watchFimsSaga } from "../features/fims/common/saga";
 import { startAndReturnIdentificationResult } from "../features/identification/sagas";
-import { IdentificationResult } from "../features/identification/store/reducers";
+import {
+  IdentificationBackActionType,
+  IdentificationResult
+} from "../features/identification/store/reducers";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
 import {
   shouldExitForOfflineAccess,
@@ -489,7 +492,17 @@ export function* initializeApplicationSaga(
     // FIXME: This is an unsafe cast caused by a wrongly described type.
     const identificationResult: SagaCallReturnType<
       typeof startAndReturnIdentificationResult
-    > = yield* call(startAndReturnIdentificationResult, maybeStoredPin.value);
+    > = yield* call(
+      startAndReturnIdentificationResult,
+      maybeStoredPin.value,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      IdentificationBackActionType.CLOSE_APP
+    );
 
     if (identificationResult === IdentificationResult.pinreset) {
       // If we are here the user had chosen to reset the unlock code
