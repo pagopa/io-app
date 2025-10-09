@@ -55,7 +55,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     route.params?.requiredEidFeedback || false
   );
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
-  const bottomSheet = useItwEidFeedbackBottomSheet();
+  const itwFeedbackBottomSheet = useItwEidFeedbackBottomSheet();
 
   // We need to use a local state to separate the UI state from the redux state
   // This prevents to display the refresh indicator when the refresh is triggered by other components
@@ -124,11 +124,11 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
         isNewElementAdded.current = false;
       }
       if (isRequiredEidFeedback.current) {
-        bottomSheet.present();
+        itwFeedbackBottomSheet.present();
         // eslint-disable-next-line functional/immutable-data
         isRequiredEidFeedback.current = false;
       }
-    }, [isNewElementAdded, isRequiredEidFeedback, bottomSheet])
+    }, [isNewElementAdded, isRequiredEidFeedback, itwFeedbackBottomSheet])
   );
 
   const handleRefreshWallet = useCallback(() => {
@@ -165,7 +165,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
         {!hasNewItwInterface && <WalletCategoryFilterTabs />}
         <WalletCardsContainer />
       </IOScrollView>
-      {bottomSheet.bottomSheet}
+      {itwFeedbackBottomSheet.bottomSheet}
     </>
   );
 };
