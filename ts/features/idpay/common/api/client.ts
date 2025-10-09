@@ -12,7 +12,8 @@ const createIDPayClient = (baseUrl: string, apiVersion: string) =>
       } as Parameters<typeof op>[0];
 
       return op(paramsWithDefaults);
-    }
+    },
+    basePath: "/idpay-itn"
   });
 
 export type IDPayClient = ReturnType<typeof createIDPayClient>;

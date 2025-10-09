@@ -15,7 +15,7 @@ import { withAppRequiredUpdate } from "../../../../components/helpers/withAppReq
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { loadServicePreference } from "../../../services/details/store/actions/preference";
-import { servicePreferenceResponseSuccessByIdSelector } from "../../../services/details/store/reducers";
+import { servicePreferenceResponseSuccessByIdSelector } from "../../../services/details/store/selectors";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import { IdPayOnboardingDescriptionSkeleton } from "../components/IdPayOnboardingDescriptionSkeleton";
 import { IdPayOnboardingServiceHeader } from "../components/IdPayOnboardingServiceHeader";

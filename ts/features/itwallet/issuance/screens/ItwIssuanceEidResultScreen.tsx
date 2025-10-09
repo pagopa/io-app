@@ -39,6 +39,10 @@ export const ItwIssuanceEidResultScreen = () => {
     return <ItwIssuanceEidUpgradeResultContent />;
   }
 
+  if (issuanceMode === "reissuance") {
+    return <ItwIssuanceEidReissuanceResultContent />;
+  }
+
   return (
     <OperationResultScreenContent
       pictogram="success"
@@ -132,5 +136,22 @@ const ItwIssuanceEidUpgradeResultContent = () => {
         onPress: handleBackToWallet
       }}
     />
+  );
+};
+
+const ItwIssuanceEidReissuanceResultContent = () => {
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
+
+  // TODO [SIW-3038] Add Mixpanel events if the credentials reissuing fails
+
+  useEffect(() => {
+    if (!isLoading) {
+      machineRef.send({ type: "go-to-wallet" });
+    }
+  }, [isLoading, machineRef]);
+
+  return (
+    <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
   );
 };

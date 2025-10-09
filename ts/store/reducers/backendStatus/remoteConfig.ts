@@ -1,15 +1,18 @@
 import * as B from "fp-ts/lib/boolean";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
-import { pipe } from "fp-ts/lib/function";
 import { Platform } from "react-native";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { AppFeedbackConfig } from "../../../../definitions/content/AppFeedbackConfig";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../../definitions/content/BackendStatus";
 import { BancomatPayConfig } from "../../../../definitions/content/BancomatPayConfig";
 import { Banner } from "../../../../definitions/content/Banner";
 import { BarcodesScannerConfig } from "../../../../definitions/content/BarcodesScannerConfig";
+import { FimsServiceConfiguration } from "../../../../definitions/content/FimsServiceConfiguration";
 import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
@@ -17,6 +20,7 @@ import {
   premiumMessagesOptInEnabled,
   scanAdditionalBarcodesEnabled
 } from "../../../config";
+import { TopicKeys } from "../../../features/appReviews/store/actions";
 import { getAppVersion, isVersionSupported } from "../../../utils/appVersion";
 import { backendStatusLoadSuccess } from "../../actions/backendStatus";
 import { Action } from "../../actions/types";
@@ -26,10 +30,6 @@ import {
 } from "../featureFlagWithMinAppVersionStatus";
 import { isIdPayLocallyEnabledSelector } from "../persistedPreferences";
 import { GlobalState } from "../types";
-import { FimsServiceConfiguration } from "../../../../definitions/content/FimsServiceConfiguration";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { AppFeedbackConfig } from "../../../../definitions/content/AppFeedbackConfig";
-import { TopicKeys } from "../../../features/appReviews/store/actions";
 
 export type RemoteConfigState = O.Option<BackendStatus["config"]>;
 
@@ -393,32 +393,36 @@ export const isIdPayCiePaymentCodeEnabledSelector = (state: GlobalState) =>
   );
 
 export const idPayOnboardingRequiresAppUpdateSelector = (state: GlobalState) =>
-  pipe(
-    state,
-    remoteConfigSelector,
-    remoteConfig =>
-      !isPropertyWithMinAppVersionEnabled({
-        remoteConfig,
-        mainLocalFlag: true,
-        configPropertyName: "idPay",
-        optionalLocalFlag: true,
-        optionalConfig: "onboarding"
-      })
-  );
+  isIdPayLocallyEnabledSelector(state)
+    ? false
+    : pipe(
+        state,
+        remoteConfigSelector,
+        remoteConfig =>
+          !isPropertyWithMinAppVersionEnabled({
+            remoteConfig,
+            mainLocalFlag: true,
+            configPropertyName: "idPay",
+            optionalLocalFlag: true,
+            optionalConfig: "onboarding"
+          })
+      );
 
 export const idPayDetailsRequiresAppUpdateSelector = (state: GlobalState) =>
-  pipe(
-    state,
-    remoteConfigSelector,
-    remoteConfig =>
-      !isPropertyWithMinAppVersionEnabled({
-        remoteConfig,
-        mainLocalFlag: true,
-        configPropertyName: "idPay",
-        optionalLocalFlag: true,
-        optionalConfig: "initiative_details"
-      })
-  );
+  isIdPayLocallyEnabledSelector(state)
+    ? false
+    : pipe(
+        state,
+        remoteConfigSelector,
+        remoteConfig =>
+          !isPropertyWithMinAppVersionEnabled({
+            remoteConfig,
+            mainLocalFlag: true,
+            configPropertyName: "idPay",
+            optionalLocalFlag: true,
+            optionalConfig: "initiative_details"
+          })
+      );
 
 export const idPayInitiativeConfigSelector = (initiativeId?: string) =>
   createSelector(remoteConfigSelector, remoteConfig =>
@@ -732,4 +736,14 @@ export const caCBannerConfigSelector = (state: GlobalState) =>
     remoteConfigSelector,
     O.map(config => config.zendeskCacBanner),
     O.toUndefined
+  );
+
+const fallbackSendAARDelegateUrl =
+  "https://assistenza.notifichedigitali.it/hc/it/articles/32453819931537-Delegare-qualcuno-a-visualizzare-le-tue-notifiche";
+export const sendAARDelegateUrlSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    remoteConfigSelector,
+    O.chainNullableK(config => config.pn.aar?.delegate_url),
+    O.getOrElse(() => fallbackSendAARDelegateUrl)
   );

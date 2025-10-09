@@ -142,11 +142,7 @@ const TimelineComponentSkeleton = ({ size = 3 }: Pick<Props, "size">) => (
 );
 
 const EmptyTimelineComponent = () => (
-  <BodySmall
-    weight="Regular"
-    color="grey-850"
-    testID="IDPayEmptyTimelineTestID"
-  >
+  <BodySmall weight="Regular" testID="IDPayEmptyTimelineTestID">
     {I18n.t(
       "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsSubtitle"
     )}

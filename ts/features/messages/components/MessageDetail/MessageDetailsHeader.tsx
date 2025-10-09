@@ -4,7 +4,7 @@ import { ImageSourcePropType, StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useIOSelector } from "../../../../store/hooks";
 import { logosForService } from "../../../services/common/utils";
-import { serviceDetailsByIdSelector } from "../../../services/details/store/reducers";
+import { serviceDetailsByIdSelector } from "../../../services/details/store/selectors";
 import { OrganizationHeader } from "./OrganizationHeader";
 
 const styles = StyleSheet.create({
@@ -22,6 +22,7 @@ export type MessageDetailsHeaderProps = PropsWithChildren<{
   messageId: string;
   serviceId: ServiceId;
   subject: string;
+  thirdPartySenderDenomination?: string;
 }>;
 
 const MessageDetailsHeaderContent = ({
@@ -49,6 +50,7 @@ export const MessageDetailsHeader = ({
   children,
   messageId,
   serviceId,
+  thirdPartySenderDenomination,
   ...rest
 }: MessageDetailsHeaderProps) => {
   const service = useIOSelector(state =>
@@ -66,6 +68,7 @@ export const MessageDetailsHeader = ({
           organizationName={service.organization.name}
           serviceId={serviceId}
           serviceName={service.name}
+          thirdPartySenderDenomination={thirdPartySenderDenomination}
         />
       )}
     </VStack>

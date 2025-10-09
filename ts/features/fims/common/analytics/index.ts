@@ -3,7 +3,7 @@ import { ServiceDetails } from "../../../../../definitions/services/ServiceDetai
 import { mixpanelTrack } from "../../../../mixpanel";
 import { GlobalState } from "../../../../store/reducers/types";
 import { buildEventProperties } from "../../../../utils/analytics";
-import { serviceDetailsByIdSelector } from "../../../services/details/store/reducers";
+import { serviceDetailsByIdSelector } from "../../../services/details/store/selectors";
 import { fimsCtaTextSelector } from "../../singleSignOn/store/selectors";
 
 export const trackAuthenticationStart = (

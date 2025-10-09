@@ -15,7 +15,11 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { trackIDPayOnboardingPDNDAcceptance } from "../analytics";
 import IdPayOnboardingStepper from "../components/IdPayOnboardingStepper";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
-import { pdndCriteriaSelector, selectInitiative } from "../machine/selectors";
+import {
+  familyUnitCompositionCriteriaSelector,
+  pdndCriteriaSelector,
+  selectInitiative
+} from "../machine/selectors";
 import { getPDNDCriteriaDescription } from "../utils/strings";
 
 export const IdPayPDNDPrerequisitesScreen = () => {
@@ -65,6 +69,7 @@ export const IdPayPDNDPrerequisitesScreen = () => {
   });
 
   const pdndCriteria = useSelector(pdndCriteriaSelector);
+  const familyUnitCriteria = useSelector(familyUnitCompositionCriteriaSelector);
 
   const initiativeId = pipe(
     initiative,
@@ -118,6 +123,27 @@ export const IdPayPDNDPrerequisitesScreen = () => {
           <VSpacer size={16} />
         </Fragment>
       ))}
+      {familyUnitCriteria && (
+        <>
+          <ModuleSummary
+            label={I18n.t(
+              `idpay.onboarding.PDNDPrerequisites.familyUnitCode.${familyUnitCriteria}.title`
+            )}
+            description={I18n.t(
+              `idpay.onboarding.PDNDPrerequisites.familyUnitCode.${familyUnitCriteria}.description`
+            )}
+            onPress={() => {
+              setAuthority(
+                I18n.t(
+                  `idpay.onboarding.PDNDPrerequisites.familyUnitCode.${familyUnitCriteria}.description`
+                )
+              );
+              present();
+            }}
+          />
+          <VSpacer size={16} />
+        </>
+      )}
       {bottomSheet}
     </IOScrollViewWithLargeHeader>
   );

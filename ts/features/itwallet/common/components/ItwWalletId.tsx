@@ -77,7 +77,7 @@ const BackgroundGradient = () => {
   });
 
   return (
-    <Canvas
+    <View
       style={StyleSheet.absoluteFill}
       onLayout={event => {
         setDimensions({
@@ -86,14 +86,16 @@ const BackgroundGradient = () => {
         });
       }}
     >
-      <RoundedRect x={0} y={0} width={width} height={height} r={8}>
-        <LinearGradient
-          start={vec(0, 0)}
-          end={vec(width, 0)}
-          colors={IT_WALLET_ID_GRADIENT}
-        />
-      </RoundedRect>
-    </Canvas>
+      <Canvas style={StyleSheet.absoluteFill}>
+        <RoundedRect x={0} y={0} width={width} height={height} r={8}>
+          <LinearGradient
+            start={vec(0, 0)}
+            end={vec(width, 0)}
+            colors={IT_WALLET_ID_GRADIENT}
+          />
+        </RoundedRect>
+      </Canvas>
+    </View>
   );
 };
 

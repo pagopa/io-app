@@ -1,12 +1,13 @@
+import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { useEffect } from "react";
 import { Modal } from "react-native";
-import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { useIOSelector } from "../../../../store/hooks";
 import {
   isStartupLoaded,
   StartupStatusEnum
 } from "../../../../store/reducers/startup";
-import { useIOSelector } from "../../../../store/hooks";
 import { trackGetProfileEndpointTransientErrorScreen } from "../../analytics";
 
 export const GetProfileEndpointTransientError = () => {
@@ -18,8 +19,10 @@ export const GetProfileEndpointTransientError = () => {
     trackGetProfileEndpointTransientErrorScreen(afterIdentificationWithIdp);
   }, [afterIdentificationWithIdp]);
 
+  const theme = useIOTheme();
+
   return (
-    <Modal>
+    <Modal backdropColor={IOColors[theme["appBackground-primary"]]}>
       <OperationResultScreenContent
         pictogram="umbrella"
         title={I18n.t(

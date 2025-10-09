@@ -7,7 +7,7 @@ import { pnMessagingServiceIdSelector } from "../../../../../store/reducers/back
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../../types/SessionToken";
 import { loadServicePreference } from "../../../../services/details/store/actions/preference";
-import { servicePreferencePotByIdSelector } from "../../../../services/details/store/reducers";
+import { servicePreferencePotByIdSelector } from "../../../../services/details/store/selectors";
 import {
   trackPNServiceStatusChangeError,
   trackPNServiceStatusChangeSuccess

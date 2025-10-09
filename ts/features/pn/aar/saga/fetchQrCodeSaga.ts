@@ -1,14 +1,14 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { call, put, select } from "typed-redux-saga/macro";
+import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../types/SessionToken";
 import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
-import { currentAARFlowData } from "../store/reducers";
+import { currentAARFlowData } from "../store/selectors";
 import { AARFlowState, sendAARFlowStates } from "../utils/stateUtils";
 
 export function* fetchAARQrCodeSaga(
-  qrcode: string,
   fetchQRCode: SendAARClient["aarQRCodeCheck"],
   sessionToken: SessionToken
 ) {
@@ -17,12 +17,17 @@ export function* fetchAARQrCodeSaga(
   if (currentState.type !== sendAARFlowStates.fetchingQRData) {
     return;
   }
+
+  const { qrCode } = currentState;
+  const isSendUATEnvironment = yield* select(isPnTestEnabledSelector);
+
   try {
     const result = yield* call(fetchQRCode, {
-      Bearer: sessionToken,
+      Bearer: `Bearer ${sessionToken}`,
       body: {
-        aarQrCodeValue: qrcode
-      }
+        aarQrCodeValue: qrCode
+      },
+      isTest: isSendUATEnvironment
     });
 
     const resultAction = pipe(
@@ -31,7 +36,7 @@ export function* fetchAARQrCodeSaga(
         _error =>
           setAarFlowState({
             type: sendAARFlowStates.ko,
-            previousState: currentState
+            previousState: { ...currentState }
           }),
         data => {
           switch (data.status) {
@@ -43,10 +48,20 @@ export function* fetchAARQrCodeSaga(
                 fullNameDestinatario: recipientInfo.denomination
               };
               return setAarFlowState(nextState);
+            case 403:
+              const notAddresseeFinalState: AARFlowState = {
+                type: sendAARFlowStates.notAddresseeFinal,
+                iun: data.value.iun,
+                fullNameDestinatario: data.value.recipientInfo.denomination,
+                qrCode
+              };
+              return setAarFlowState(notAddresseeFinalState);
+
             default:
               const errorState: AARFlowState = {
                 type: sendAARFlowStates.ko,
-                previousState: currentState
+                previousState: { ...currentState },
+                ...(data.value !== undefined && { error: data.value })
               };
               return setAarFlowState(errorState);
           }
@@ -58,7 +73,7 @@ export function* fetchAARQrCodeSaga(
     yield* put(
       setAarFlowState({
         type: sendAARFlowStates.ko,
-        previousState: currentState
+        previousState: { ...currentState }
       })
     );
   }
