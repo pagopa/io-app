@@ -154,30 +154,28 @@ const ItwIssuanceEidReissuanceResultContent = () => {
   }
 
   return (
-    <>
-      <OperationResultScreenContent
-        pictogram="success"
-        title={I18n.t(
-          "features.itWallet.issuance.eidResult.success.reissuance.title"
-        )}
-        subtitle={I18n.t(
-          "features.itWallet.issuance.eidResult.success.reissuance.subtitle"
-        )}
-        action={{
-          label: I18n.t(
-            "features.itWallet.issuance.eidResult.success.reissuance.primaryAction"
-          ),
-          onPress: () => {
-            machineRef.send({ type: "go-to-wallet" });
-            trackBackToWallet({
-              exit_page: route.name,
-              credential: "ITW_ID_V2"
-            });
-          }
-        }}
-      >
-        <ItwReissuanceFeedbackBanner />
-      </OperationResultScreenContent>
-    </>
+    <OperationResultScreenContent
+      pictogram="success"
+      title={I18n.t(
+        "features.itWallet.issuance.eidResult.success.reissuance.title"
+      )}
+      subtitle={I18n.t(
+        "features.itWallet.issuance.eidResult.success.reissuance.subtitle"
+      )}
+      action={{
+        label: I18n.t(
+          "features.itWallet.issuance.eidResult.success.reissuance.primaryAction"
+        ),
+        onPress: () => {
+          machineRef.send({ type: "go-to-wallet" });
+          trackBackToWallet({
+            exit_page: route.name,
+            credential: "ITW_ID_V2"
+          });
+        }
+      }}
+    >
+      <ItwReissuanceFeedbackBanner />
+    </OperationResultScreenContent>
   );
 };
