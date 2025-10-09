@@ -747,3 +747,64 @@ export const sendAARDelegateUrlSelector = (state: GlobalState) =>
     O.chainNullableK(config => config.pn.aar?.delegate_url),
     O.getOrElse(() => fallbackSendAARDelegateUrl)
   );
+
+export const sendShowAbstractSelector = (state: GlobalState) => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isSome(remoteConfigOption)) {
+    const abstractShownOrUndefined = remoteConfigOption.value.pn?.abstractShown;
+    if (abstractShownOrUndefined == null) {
+      // Data has been removed from CDN, there
+      // is no need to keep it hidden anymore
+      return true;
+    }
+    // Data is set in the CDN, return its value
+    return abstractShownOrUndefined;
+  }
+  // No data from CDN, abstract must be hidden
+  return false;
+};
+
+export const sendCustomServiceCenterUrlSelector = (state: GlobalState) => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isSome(remoteConfigOption)) {
+    const customerServiceCenterUrlOrUndefined =
+      remoteConfigOption.value.pn?.customerServiceCenterUrl?.trim();
+    if (
+      customerServiceCenterUrlOrUndefined != null &&
+      customerServiceCenterUrlOrUndefined.length > 0
+    ) {
+      return customerServiceCenterUrlOrUndefined;
+    }
+  }
+  return "https://assistenza.notifichedigitali.it/hc";
+};
+
+export const sendEstimateTimelinesUrlSelector = (state: GlobalState) => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isSome(remoteConfigOption)) {
+    const estimateTimelinesUrlOrUndefined =
+      remoteConfigOption.value.pn?.estimateTimelinesUrl?.trim();
+    if (
+      estimateTimelinesUrlOrUndefined != null &&
+      estimateTimelinesUrlOrUndefined.length > 0
+    ) {
+      return estimateTimelinesUrlOrUndefined;
+    }
+  }
+  return "https://notifichedigitali.it/perfezionamento";
+};
+
+export const sendVisitTheWebsiteUrlSelector = (state: GlobalState) => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isSome(remoteConfigOption)) {
+    const visitTheWebsiteUrlOrUndefined =
+      remoteConfigOption.value.pn?.visitTheSENDWebsiteUrl?.trim();
+    if (
+      visitTheWebsiteUrlOrUndefined != null &&
+      visitTheWebsiteUrlOrUndefined.length > 0
+    ) {
+      return visitTheWebsiteUrlOrUndefined;
+    }
+  }
+  return "https://cittadini.notifichedigitali.it/auth/login";
+};
