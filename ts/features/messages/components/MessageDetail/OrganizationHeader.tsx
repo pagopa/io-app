@@ -6,6 +6,7 @@ import {
   IOSpacingScale,
   useIOTheme
 } from "@pagopa/io-app-design-system";
+import i18n from "i18next";
 import { useCallback } from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
@@ -21,6 +22,7 @@ export type OrganizationHeaderProps = {
   serviceId: ServiceId;
   serviceName: string;
   logoUri?: ImageSourcePropType;
+  thirdPartySenderDenomination?: string;
 };
 
 const ITEM_PADDING_VERTICAL: IOSpacingScale = 6;
@@ -41,7 +43,8 @@ export const OrganizationHeader = ({
   logoUri,
   serviceId,
   organizationName,
-  serviceName
+  serviceName,
+  thirdPartySenderDenomination
 }: OrganizationHeaderProps) => {
   const theme = useIOTheme();
 
@@ -59,12 +62,34 @@ export const OrganizationHeader = ({
       }),
     [navigation, serviceId]
   );
+
+  const OrganizationNameComponent = () =>
+    thirdPartySenderDenomination ? (
+      <BodySmall
+        weight="Regular"
+        color={theme["textBody-default"]}
+        testID="org-name-aar"
+      >
+        {thirdPartySenderDenomination}
+        <BodySmall weight="Regular">
+          {i18n.t(
+            "features.pn.aar.flow.displayingNotificationData.headerText-through"
+          )}
+        </BodySmall>
+      </BodySmall>
+    ) : (
+      <Body testID="org-name" weight="Semibold">
+        {organizationName}
+      </Body>
+    );
+
   return (
     <View
+      testID="organization-header"
       style={[styles.item, { borderColor: IOColors[theme["divider-default"]] }]}
     >
       <View style={{ flex: 1 }}>
-        <Body weight="Semibold">{organizationName}</Body>
+        <OrganizationNameComponent />
         <BodySmall
           asLink
           accessibilityRole="button"

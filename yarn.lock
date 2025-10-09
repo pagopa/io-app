@@ -3870,9 +3870,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-app-design-system@npm:5.11.2":
-  version: 5.11.2
-  resolution: "@pagopa/io-app-design-system@npm:5.11.2"
+"@pagopa/io-app-design-system@npm:5.11.5":
+  version: 5.11.5
+  resolution: "@pagopa/io-app-design-system@npm:5.11.5"
   dependencies:
     auto-changelog: ^2.4.0
     lodash: ^4.17.21
@@ -3893,7 +3893,7 @@ __metadata:
     react-native-reanimated: "*"
     react-native-safe-area-context: "*"
     react-native-svg: "*"
-  checksum: 0779c27b67e8bd7966281de4207a882c095ad649025305d094074ddb86a62c0d22e8cc30e84117f0f857a548c7a20504428b45dffd44c35c0a6b900ca89849fd
+  checksum: 0cf3966fec0d36de5f89e26d29244f1ce80d4f9410d95c669648813e4aa3237d3aba8ca4e07ca253586b3ef0bd07d5f262965e73219e4e95376f5ee1f498d941
   languageName: node
   linkType: hard
 
@@ -3962,15 +3962,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-iso18013@npm:^0.4.0":
-  version: 0.4.0
-  resolution: "@pagopa/io-react-native-iso18013@npm:0.4.0"
+"@pagopa/io-react-native-iso18013@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "@pagopa/io-react-native-iso18013@npm:0.6.0"
   dependencies:
     zod: ^3.25.67
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: daa95873678c41557c1e834b011f350a79f81741b6fa4972c4e600f0efcff31403b3c41a2640a290082baaf1be5960a73863f060881b7622b1f606c97692ec00
+  checksum: 45867ff4adde249ba3ee5baaa46d5c75c36262e0bd3cc0d834f9152f288a12c53af46bbc5df6ec8a1e4123491ca8f3a92998998ea6b8aa7f5b6cd660934a5896
   languageName: node
   linkType: hard
 
@@ -12954,14 +12954,14 @@ __metadata:
     "@babel/runtime": ^7.25.0
     "@gorhom/bottom-sheet": ^5.1.2
     "@jambit/eslint-plugin-typed-redux-saga": ^0.4.0
-    "@pagopa/io-app-design-system": 5.11.2
+    "@pagopa/io-app-design-system": 5.11.5
     "@pagopa/io-pagopa-commons": ^3.1.0
     "@pagopa/io-react-native-cie": ^1.1.2
     "@pagopa/io-react-native-cieid": ^0.3.5
     "@pagopa/io-react-native-crypto": ^1.2.3
     "@pagopa/io-react-native-http-client": 1.0.5
     "@pagopa/io-react-native-integrity": ^0.3.2
-    "@pagopa/io-react-native-iso18013": ^0.4.0
+    "@pagopa/io-react-native-iso18013": ^0.6.0
     "@pagopa/io-react-native-jwt": ^2.1.0
     "@pagopa/io-react-native-login-utils": ^1.1.0
     "@pagopa/io-react-native-secure-storage": ^0.2.1

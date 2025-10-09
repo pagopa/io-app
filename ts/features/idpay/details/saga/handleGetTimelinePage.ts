@@ -27,7 +27,7 @@ export function* handleGetTimelinePage(
     bearerAuth: bearerToken,
     "Accept-Language": language,
     initiativeId: action.payload.initiativeId,
-    page: (action.payload.page || 0) + 1,
+    page: action.payload.page || 0,
     size: action.payload.pageSize
   });
 

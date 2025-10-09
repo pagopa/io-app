@@ -1,13 +1,26 @@
-import { constUndefined, pipe } from "fp-ts/lib/function";
-import * as B from "fp-ts/lib/boolean";
-import * as O from "fp-ts/lib/Option";
-import * as E from "fp-ts/lib/Either";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
+import * as B from "fp-ts/lib/boolean";
+import { constUndefined, pipe } from "fp-ts/lib/function";
 import { call, delay, put, race, select, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
-import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
+import { RemoteContentDetails } from "../../../../definitions/backend/RemoteContentDetails";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
+import { isPnRemoteEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { isTestEnv } from "../../../utils/environment";
+import { trackPNPushOpened } from "../../pn/analytics";
+import {
+  trackMessageDataLoadFailure,
+  trackMessageDataLoadPending,
+  trackMessageDataLoadRequest,
+  trackMessageDataLoadSuccess,
+  trackRemoteContentMessageDecodingWarning
+} from "../analytics";
 import {
   RequestGetMessageDataActionType,
   cancelGetMessageDataAction,
@@ -19,32 +32,18 @@ import {
 } from "../store/actions";
 import { getPaginatedMessageById } from "../store/reducers/paginatedById";
 import { UIMessage, UIMessageDetails } from "../types";
-import { serviceDetailsByIdPotSelector } from "../../services/details/store/selectors";
-import { loadServiceDetail } from "../../services/details/store/actions/details";
 import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
 import { thirdPartyFromIdSelector } from "../store/reducers/thirdPartyById";
 import { isLoadingOrUpdatingInbox } from "../store/reducers/allPaginated";
-import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
-import { isPnRemoteEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
-import { trackPNPushOpened } from "../../pn/analytics";
-import { isTestEnv } from "../../../utils/environment";
-import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
-import {
-  trackMessageDataLoadFailure,
-  trackMessageDataLoadPending,
-  trackMessageDataLoadRequest,
-  trackMessageDataLoadSuccess,
-  trackRemoteContentMessageDecodingWarning
-} from "../analytics";
-import { RemoteContentDetails } from "../../../../definitions/backend/RemoteContentDetails";
 import { MessageGetStatusFailurePhaseType } from "../store/reducers/messageGetStatus";
 
-import { extractContentFromMessageSources } from "../utils";
 import { isFIMSLink } from "../../fims/singleSignOn/utils";
+import { extractContentFromMessageSources } from "../utils";
 import {
   ctasFromLocalizedCTAs,
   localizedCTAsFromFrontMatter
 } from "../utils/ctas";
+import { getServiceDetails } from "../../services/common/saga/ getServiceDetails";
 
 export function* handleLoadMessageData(
   action: ActionType<typeof getMessageDataAction.request>
@@ -189,32 +188,6 @@ function* getPaginatedMessage(messageId: string) {
   }
 
   return pot.toUndefined(initialMessagePot);
-}
-
-function* getServiceDetails(serviceId: ServiceId) {
-  const initialServicePot = yield* select(
-    serviceDetailsByIdPotSelector,
-    serviceId
-  );
-  if (!pot.isSome(initialServicePot) || pot.isError(initialServicePot)) {
-    yield* put(loadServiceDetail.request(serviceId));
-
-    const outputAction = yield* take([
-      loadServiceDetail.success,
-      loadServiceDetail.failure
-    ]);
-    if (isActionOf(loadServiceDetail.failure, outputAction)) {
-      return undefined;
-    }
-
-    const finalServicePot = yield* select(
-      serviceDetailsByIdPotSelector,
-      serviceId
-    );
-    return pot.toUndefined(finalServicePot);
-  }
-
-  return pot.toUndefined(initialServicePot);
 }
 
 function* getMessageDetails(messageId: string) {
@@ -434,7 +407,6 @@ export const testable = isTestEnv
       dispatchSuccessAction,
       getMessageDetails,
       getPaginatedMessage,
-      getServiceDetails,
       getThirdPartyDataMessage,
       loadMessageData,
       setMessageReadIfNeeded

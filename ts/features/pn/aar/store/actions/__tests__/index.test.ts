@@ -1,5 +1,13 @@
-import { setAarFlowState, terminateAarFlow } from "..";
+import { FiscalCode, NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import {
+  populateStoresWithEphemeralAarMessageData,
+  setAarFlowState,
+  terminateAarFlow
+} from "..";
+import { ThirdPartyMessage } from "../../../../../../../definitions/pn/ThirdPartyMessage";
 import { AARFlowState, sendAARFlowStates } from "../../../utils/stateUtils";
+import { MessageBodyMarkdown } from "../../../../../../../definitions/backend/MessageBodyMarkdown";
+import { MessageSubject } from "../../../../../../../definitions/backend/MessageSubject";
 
 describe("AARFlowStateActions", () => {
   const payload: AARFlowState = {
@@ -14,8 +22,26 @@ describe("AARFlowStateActions", () => {
     expect(action.payload).toEqual(payload);
   });
 
-  it(`Should have correct type="TERMINATE_AAR_FLOW"`, () => {
-    const action = terminateAarFlow();
+  it(`Should have correct type="TERMINATE_AAR_FLOW", no messageID`, () => {
+    const action = terminateAarFlow({ messageId: undefined });
     expect(action.type).toBe("TERMINATE_AAR_FLOW");
+  });
+  it(`Should have correct type="TERMINATE_AAR_FLOW", with messageID`, () => {
+    const action = terminateAarFlow({ messageId: "SOME_MSG_ID" });
+    expect(action.type).toBe("TERMINATE_AAR_FLOW");
+  });
+
+  it("should match snapshot for populateStoresWithEphemeralAarMessageData", () => {
+    const params = {
+      iun: "some-iun" as NonEmptyString,
+      thirdPartyMessage: {} as ThirdPartyMessage,
+      fiscalCode: "1209381023813098123" as FiscalCode,
+      pnServiceID: "some-Sid" as NonEmptyString,
+      markdown: {} as MessageBodyMarkdown,
+      subject: "" as MessageSubject,
+      mandateId: ""
+    };
+    const action = populateStoresWithEphemeralAarMessageData(params);
+    expect(action).toMatchSnapshot();
   });
 });
