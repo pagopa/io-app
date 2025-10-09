@@ -28,10 +28,13 @@ import { itwShouldRenderNewItWalletSelector } from "../../itwallet/common/store/
 import { WALLET_L3_BG_COLOR } from "../../itwallet/common/utils/constants";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
+import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet.tsx";
 
 export type WalletHomeNavigationParams = Readonly<{
   // Triggers the "New element added" toast display once the user returns to this screen
   newMethodAdded?: boolean;
+  // Triggers the "Required EID feedback" bottom sheet display once the user returns to this screen
+  requiredEidFeedback?: boolean;
 }>;
 
 type ScreenProps = IOStackNavigationRouteProps<
@@ -48,7 +51,11 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   const hasNewItwInterface = useIOSelector(itwShouldRenderNewItWalletSelector);
 
   const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
+  const isRequiredEidFeedback = useRef(
+    route.params?.requiredEidFeedback || false
+  );
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
+  const itwFeedbackBottomSheet = useItwEidFeedbackBottomSheet();
 
   // We need to use a local state to separate the UI state from the redux state
   // This prevents to display the refresh indicator when the refresh is triggered by other components
@@ -116,7 +123,12 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
         // eslint-disable-next-line functional/immutable-data
         isNewElementAdded.current = false;
       }
-    }, [isNewElementAdded])
+      if (isRequiredEidFeedback.current) {
+        itwFeedbackBottomSheet.present();
+        // eslint-disable-next-line functional/immutable-data
+        isRequiredEidFeedback.current = false;
+      }
+    }, [isNewElementAdded, isRequiredEidFeedback, itwFeedbackBottomSheet])
   );
 
   const handleRefreshWallet = useCallback(() => {
@@ -153,6 +165,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
         {!hasNewItwInterface && <WalletCategoryFilterTabs />}
         <WalletCardsContainer />
       </IOScrollView>
+      {itwFeedbackBottomSheet.bottomSheet}
     </>
   );
 };
