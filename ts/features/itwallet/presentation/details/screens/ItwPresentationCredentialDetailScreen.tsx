@@ -246,7 +246,10 @@ export const ItwPresentationCredentialDetail = ({
         loading: isCheckingPermissions,
         onPress: () => {
           trackItwProximityShowQrCode();
-          itwProximityMachineRef.send({ type: "start" });
+          itwProximityMachineRef.send({
+            type: "start",
+            credentialType
+          });
         }
       };
     }
