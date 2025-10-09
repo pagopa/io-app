@@ -45,8 +45,6 @@ function* handleItwOfflineAccessCounterUp(
 ) {
   if (offlineAccessReason) {
     yield* put(itwOfflineAccessCounterUp());
-  } else {
-    yield* put(resetOfflineAccessReason());
   }
 }
 
