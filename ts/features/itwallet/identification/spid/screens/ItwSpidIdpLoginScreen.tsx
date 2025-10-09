@@ -4,7 +4,6 @@ import { memo, useCallback, useMemo, useState } from "react";
 import { Linking, StyleSheet, View } from "react-native";
 import { WebView, WebViewNavigation } from "react-native-webview";
 import I18n from "i18next";
-import { IOToast } from "@pagopa/io-app-design-system";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import {
   HeaderSecondLevelHookProps,
@@ -15,14 +14,12 @@ import { getIntentFallbackUrl } from "../../../../authentication/common/utils/lo
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import {
   selectAuthUrlOption,
-  selectIsLoading,
-  selectIssuanceMode
+  selectIsLoading
 } from "../../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { useIOSelector } from "../../../../../store/hooks";
 import { selectItwEnv } from "../../../common/store/selectors/environment";
 import { getEnv } from "../../../common/utils/environment";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 
 const styles = StyleSheet.create({
   webViewWrapper: { flex: 1 }
@@ -38,27 +35,15 @@ const defaultUserAgent =
  * and sends the redirectAuthUrl back to the state machine.
  */
 const ItwSpidIdpLoginScreen = () => {
-  const navigation = useIONavigation();
   const { ISSUANCE_REDIRECT_URI } = pipe(useIOSelector(selectItwEnv), getEnv);
   const isMachineLoading =
     ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const spidAuthUrl =
     ItwEidIssuanceMachineContext.useSelector(selectAuthUrlOption);
-  const issuanceMode =
-    ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const [isWebViewLoading, setWebViewLoading] = useState(true);
 
-  const dismissalDialog = useItwDismissalDialog({
-    handleDismiss: () => {
-      if (issuanceMode === "reissuance") {
-        Linking.openURL(
-          "https://pagopa.qualtrics.com/jfe/form/SV_3JmGHi0IjGYESYC"
-        ).catch(() => IOToast.error("global.genericError"));
-      }
-      navigation.goBack();
-    }
-  });
+  const dismissalDialog = useItwDismissalDialog();
 
   const onLoadEnd = useCallback(() => {
     setWebViewLoading(false);

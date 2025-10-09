@@ -3,9 +3,8 @@ import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { memo, useCallback, useMemo, useState } from "react";
-import { Linking, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { WebView, WebViewNavigation } from "react-native-webview";
-import { IOToast } from "@pagopa/io-app-design-system";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../../store/hooks";
@@ -14,10 +13,7 @@ import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDial
 import { selectItwEnv } from "../../../common/store/selectors/environment";
 import { getEnv } from "../../../common/utils/environment";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
-import {
-  selectAuthUrlOption,
-  selectIssuanceMode
-} from "../../../machine/eid/selectors";
+import { selectAuthUrlOption } from "../../../machine/eid/selectors";
 import { useCieIdApp } from "../hooks/useCieIdApp";
 
 // To ensure the server recognizes the client as a valid mobile device, we use a custom user agent header.
@@ -45,16 +41,9 @@ const ItwCieIdLoginScreen = () => {
     ItwEidIssuanceMachineContext.useSelector(selectAuthUrlOption);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const [isWebViewLoading, setWebViewLoading] = useState(true);
-  const issuanceMode =
-    ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
 
   const dismissalDialog = useItwDismissalDialog({
     handleDismiss: () => {
-      if (issuanceMode === "reissuance") {
-        Linking.openURL(
-          "https://pagopa.qualtrics.com/jfe/form/SV_3JmGHi0IjGYESYC"
-        ).catch(() => IOToast.error("global.genericError"));
-      }
       machineRef.send({ type: "back" });
     }
   });

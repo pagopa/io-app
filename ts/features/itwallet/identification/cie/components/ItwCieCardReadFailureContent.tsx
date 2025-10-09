@@ -2,7 +2,6 @@ import { constNull } from "fp-ts/lib/function";
 import { useCallback } from "react";
 import { Linking } from "react-native";
 import I18n from "i18next";
-import { IOToast } from "@pagopa/io-app-design-system";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import {
   trackItWalletCiePinForgotten,
@@ -12,10 +11,7 @@ import { ItwCieMachineContext } from "../machine/provider";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { selectFailure } from "../machine/selectors";
 import { isNfcError } from "../utils/error";
-import {
-  isL3FeaturesEnabledSelector,
-  selectIssuanceMode
-} from "../../../machine/eid/selectors";
+import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import {
   CieCardReadContentProps,
@@ -37,19 +33,12 @@ const useFailureContentProps = (): CieCardReadContentProps => {
     isL3FeaturesEnabledSelector
   );
   const failure = ItwCieMachineContext.useSelector(selectFailure);
-  const issuanceMode =
-    ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
 
   // Display failure information for debug
   useDebugInfo({ failure });
 
   const dismissalDialog = useItwDismissalDialog({
     handleDismiss: () => {
-      if (issuanceMode === "reissuance") {
-        Linking.openURL(
-          "https://pagopa.qualtrics.com/jfe/form/SV_3JmGHi0IjGYESYC"
-        ).catch(() => IOToast.error("global.genericError"));
-      }
       issuanceActor.send({ type: "close" });
     }
   });

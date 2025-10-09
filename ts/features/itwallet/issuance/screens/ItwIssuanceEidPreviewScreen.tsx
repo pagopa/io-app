@@ -5,7 +5,6 @@ import {
   HeaderSecondLevel,
   HStack,
   Icon,
-  IOToast,
   useIOTheme,
   VStack
 } from "@pagopa/io-app-design-system";
@@ -14,7 +13,6 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useCallback, useLayoutEffect } from "react";
 import I18n from "i18next";
-import { Linking } from "react-native";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
@@ -34,8 +32,7 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
   isL3FeaturesEnabledSelector,
   selectEidOption,
-  selectIdentification,
-  selectIssuanceMode
+  selectIdentification
 } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
@@ -81,8 +78,6 @@ const ContentView = ({ eid }: ContentViewProps) => {
   const route = useRoute();
 
   const isL3 = isL3FeaturesEnabled && isItwCredential(eid);
-  const issuanceMode =
-    ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
   const mixPanelCredential = isL3 ? "ITW_PID" : "ITW_ID_V2";
 
   const theme = useIOTheme();
@@ -109,11 +104,6 @@ const ContentView = ({ eid }: ContentViewProps) => {
 
   const dismissDialog = useItwDismissalDialog({
     handleDismiss: () => {
-      if (issuanceMode === "reissuance") {
-        Linking.openURL(
-          "https://pagopa.qualtrics.com/jfe/form/SV_3JmGHi0IjGYESYC"
-        ).catch(() => IOToast.error("global.genericError"));
-      }
       machineRef.send({ type: "close" });
       trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
     }

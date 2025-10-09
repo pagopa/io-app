@@ -4,7 +4,6 @@ import {
   FeatureInfo,
   ForceScrollDownView,
   H2,
-  IOToast,
   ListItemHeader,
   useIOTheme,
   VSpacer
@@ -14,7 +13,6 @@ import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
-import { Linking } from "react-native";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
@@ -56,8 +54,6 @@ import {
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwRequestedClaimsList } from "../components/ItwRequestedClaimsList";
-import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider.tsx";
-import { selectIssuanceMode } from "../../machine/eid/selectors.ts";
 
 export type ItwIssuanceCredentialTrustIssuerNavigationParams = {
   credentialType?: string;
@@ -148,8 +144,6 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isIssuing =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsIssuing);
-  const issuanceMode =
-    ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
   const theme = useIOTheme();
 
   const handleContinuePress = () => {
@@ -160,11 +154,6 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
 
   const dismissDialog = useItwDismissalDialog({
     handleDismiss: () => {
-      if (issuanceMode === "reissuance") {
-        Linking.openURL(
-          "https://pagopa.qualtrics.com/jfe/form/SV_3JmGHi0IjGYESYC"
-        ).catch(() => IOToast.error("global.genericError"));
-      }
       machineRef.send({ type: "close" });
       trackItwExit({
         exit_page: route.name,
