@@ -12,7 +12,7 @@ import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import { isTestEnv } from "../../../../../utils/environment";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
-import { currentAARFlowStateErrorCodes } from "../../store/reducers";
+import { currentAARFlowStateErrorCodes } from "../../store/selectors";
 
 const bottomComponent = (errorCodes: ReadonlyArray<string>) => (
   <>
