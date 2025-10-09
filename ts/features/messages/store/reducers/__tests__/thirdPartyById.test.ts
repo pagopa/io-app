@@ -32,7 +32,8 @@ import {
   testable,
   thirdPartyByIdReducer,
   thirdPartyFromIdSelector,
-  thirdPartyMessageAttachments
+  thirdPartyMessageAttachments,
+  thirdPartyMessageSelector
 } from "../thirdPartyById";
 
 const thirdPartyKindsMock = Object.values(thirdPartyKind);
@@ -609,6 +610,55 @@ describe("messageContentSelector", () => {
       input => input.markdown
     );
     expect(messageContent).toBeUndefined();
+  });
+});
+
+describe("thirdPartyMessageSelector", () => {
+  const fakeThirdPartyMessage = {} as ThirdPartyMessageUnion;
+  [
+    undefined,
+    pot.none,
+    pot.noneLoading,
+    pot.noneUpdating(fakeThirdPartyMessage),
+    pot.noneError(Error("")),
+    pot.some(fakeThirdPartyMessage),
+    pot.someLoading(fakeThirdPartyMessage),
+    pot.someUpdating(fakeThirdPartyMessage, fakeThirdPartyMessage),
+    pot.someError(fakeThirdPartyMessage, Error(""))
+  ].forEach(input => {
+    const shouldReturnSomething = input != null && pot.isSome(input);
+    it(`should return ${
+      shouldReturnSomething ? "the third party message" : "undefined"
+    } for a matching third party id which value is ${JSON.stringify(
+      input
+    )}`, () => {
+      const state = {
+        entities: {
+          messages: {
+            thirdPartyById: {
+              m1: input
+            }
+          }
+        }
+      } as unknown as GlobalState;
+      const result = thirdPartyMessageSelector(state, "m1");
+      expect(result).toEqual(
+        shouldReturnSomething ? fakeThirdPartyMessage : undefined
+      );
+    });
+  });
+  it(`should return 'undefined' for an unmatching third party id`, () => {
+    const state = {
+      entities: {
+        messages: {
+          thirdPartyById: {
+            m1: pot.some({})
+          }
+        }
+      }
+    } as unknown as GlobalState;
+    const result = thirdPartyMessageSelector(state, "m2");
+    expect(result).toBeUndefined();
   });
 });
 
