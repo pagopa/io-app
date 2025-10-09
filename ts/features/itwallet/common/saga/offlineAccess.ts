@@ -11,12 +11,17 @@ import {
   isStartupLoaded,
   StartupStatusEnum
 } from "../../../../store/reducers/startup";
-import { resetOfflineAccessReason } from "../../../ingress/store/actions";
+import {
+  resetOfflineAccessReason,
+  setOfflineAccessReason
+} from "../../../ingress/store/actions";
 import { itwUpdateWalletInstanceStatus } from "../../walletInstance/store/actions";
 import {
   itwOfflineAccessCounterReset,
   itwOfflineAccessCounterUp
 } from "../store/actions/securePreferences";
+import { OfflineAccessReasonEnum } from "../../../ingress/store/reducer";
+import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
 
 /**
  * Handles the offline access counter reset by listening for the wallet
@@ -35,27 +40,31 @@ function* handleItwOfflineAccessCounterReset() {
  *
  * @param startupStatus - The current startup status of the application.
  */
-function* handleItwOfflineAccessCounterUp(startupStatus: StartupStatusEnum) {
-  if (startupStatus === StartupStatusEnum.OFFLINE) {
+function* handleItwOfflineAccessCounterUp(
+  offlineAccessReason?: OfflineAccessReasonEnum
+) {
+  if (offlineAccessReason) {
     yield* put(itwOfflineAccessCounterUp());
+  } else {
+    yield* put(resetOfflineAccessReason());
   }
 }
 
 /**
- * Increments the offline access counter if the startup status is OFFLINE.
- * It also listens for the startup load success action with the OFFLINE status
- * to increment the counter.
+ * Increments the offline access counter if the offline access reason is defined.
+ * It also listens for the offline access reason action
+ * to increment the counter if defined or reset it if not.
  */
 function* watchItwOfflineAccessCounterUp() {
   yield* takeLatest(
-    getType(startupLoadSuccess),
-    function* (action: ActionType<typeof startupLoadSuccess>) {
+    getType(setOfflineAccessReason),
+    function* (action: ActionType<typeof setOfflineAccessReason>) {
       yield* handleItwOfflineAccessCounterUp(action.payload);
     }
   );
 
-  const startupStatus = yield* select(isStartupLoaded);
-  yield* handleItwOfflineAccessCounterUp(startupStatus);
+  const offlineAccessReason = yield* select(offlineAccessReasonSelector);
+  yield* handleItwOfflineAccessCounterUp(offlineAccessReason);
 }
 
 /**
