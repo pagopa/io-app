@@ -543,7 +543,7 @@ exports[`TimelineListItem Should match snapshot, hidden footer, no history, no l
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            292,
+                            128,
                           ]
                         }
                         style={
@@ -568,7 +568,14 @@ exports[`TimelineListItem Should match snapshot, hidden footer, no history, no l
                             <View
                               style={
                                 {
-                                  "height": 0,
+                                  "height": 48,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "height": 48,
                                 }
                               }
                             />
@@ -1131,7 +1138,7 @@ exports[`TimelineListItem Should match snapshot, hidden footer,all handled-statu
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            992,
+                            828,
                           ]
                         }
                         style={
@@ -1356,7 +1363,14 @@ exports[`TimelineListItem Should match snapshot, hidden footer,all handled-statu
                             <View
                               style={
                                 {
-                                  "height": 0,
+                                  "height": 48,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "height": 48,
                                 }
                               }
                             />
@@ -1919,7 +1933,7 @@ exports[`TimelineListItem Should match snapshot, hidden footer,all handled-statu
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            992,
+                            828,
                           ]
                         }
                         style={
@@ -2144,7 +2158,14 @@ exports[`TimelineListItem Should match snapshot, hidden footer,all handled-statu
                             <View
                               style={
                                 {
-                                  "height": 0,
+                                  "height": 48,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "height": 48,
                                 }
                               }
                             />
@@ -2707,7 +2728,7 @@ exports[`TimelineListItem Should match snapshot, hidden footer,no history, with 
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            292,
+                            128,
                           ]
                         }
                         style={
@@ -2732,7 +2753,14 @@ exports[`TimelineListItem Should match snapshot, hidden footer,no history, with 
                             <View
                               style={
                                 {
-                                  "height": 0,
+                                  "height": 48,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "height": 48,
                                 }
                               }
                             />
@@ -3295,7 +3323,7 @@ exports[`TimelineListItem Should match snapshot, shown footer, no history, no li
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            292,
+                            288,
                           ]
                         }
                         style={
@@ -3890,7 +3918,7 @@ exports[`TimelineListItem Should match snapshot, shown footer,all handled-status
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            992,
+                            988,
                           ]
                         }
                         style={
@@ -4685,7 +4713,7 @@ exports[`TimelineListItem Should match snapshot, shown footer,all handled-status
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            992,
+                            988,
                           ]
                         }
                         style={
@@ -5480,7 +5508,7 @@ exports[`TimelineListItem Should match snapshot, shown footer,no history, with l
                         onDismiss={[Function]}
                         snapPoints={
                           [
-                            292,
+                            288,
                           ]
                         }
                         style={
