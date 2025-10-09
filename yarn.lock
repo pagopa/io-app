@@ -13117,7 +13117,7 @@ __metadata:
     react-native-tab-view: 3.5.2
     react-native-url-polyfill: ^2.0.0
     react-native-vision-camera: ^4.7.0
-    react-native-webview: ^13.13.5
+    react-native-webview: ^13.16.0
     react-native-xml2js: ^1.0.3
     react-redux: 8.1.3
     react-test-renderer: 19.0.0
@@ -18018,16 +18018,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-webview@npm:^13.13.5":
-  version: 13.13.5
-  resolution: "react-native-webview@npm:13.13.5"
+"react-native-webview@npm:^13.16.0":
+  version: 13.16.0
+  resolution: "react-native-webview@npm:13.16.0"
   dependencies:
     escape-string-regexp: ^4.0.0
     invariant: 2.2.4
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 7f3bce1b37d6be9b2f07f0f7481181d5344f9e58022645b0d20dc58cd66056bb6efecacb231963959db6283cc66d977593db62a403c7c151f83568f83041c2eb
+  checksum: a6fefc1bc977c1d121057c91696edb08ca170421a6d6ad5a9bcda279a20eca84aaaf553eca3a8e51b621e22fd473afa8bc994888807fb7db154eb9d7acb87928
   languageName: node
   linkType: hard
 
