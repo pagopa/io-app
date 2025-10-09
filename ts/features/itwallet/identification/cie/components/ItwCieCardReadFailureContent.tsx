@@ -38,9 +38,7 @@ const useFailureContentProps = (): CieCardReadContentProps => {
   useDebugInfo({ failure });
 
   const dismissalDialog = useItwDismissalDialog({
-    handleDismiss: () => {
-      issuanceActor.send({ type: "close" });
-    }
+    handleDismiss: () => issuanceActor.send({ type: "close" })
   });
 
   const retryAction: CieCardReadContentProps["primaryAction"] = {
