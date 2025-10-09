@@ -45,7 +45,7 @@ export function CieIasAndMrtdPlayground() {
           endElement={{
             type: "badge",
             componentProps: {
-              text: hasNFC ? "🟢 OK" : "🔴 KO",
+              text: hasNFC ? "\u{1F7E2} OK" : "\u{1F534} KO",
               variant: hasNFC ? "success" : "error"
             }
           }}
@@ -56,7 +56,7 @@ export function CieIasAndMrtdPlayground() {
           endElement={{
             type: "badge",
             componentProps: {
-              text: isNFCEnabled ? "🟢 OK" : "🔴 KO",
+              text: isNFCEnabled ? "\u{1F7E2} OK" : "\u{1F534} KO",
               variant: isNFCEnabled ? "success" : "error"
             }
           }}
@@ -67,7 +67,9 @@ export function CieIasAndMrtdPlayground() {
           endElement={{
             type: "badge",
             componentProps: {
-              text: isCieAuthenticationSupported ? "🟢 OK" : "🔴 KO",
+              text: isCieAuthenticationSupported
+                ? "\u{1F7E2} OK"
+                : "\u{1F534} KO",
               variant: isCieAuthenticationSupported ? "success" : "error"
             }
           }}
