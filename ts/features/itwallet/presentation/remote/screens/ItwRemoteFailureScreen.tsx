@@ -1,8 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
-import { Linking } from "react-native";
-import { IOToast } from "@pagopa/io-app-design-system";
 import { ItwRemoteMachineContext } from "../machine/provider.tsx";
 import { selectFailureOption } from "../machine/selectors.ts";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
@@ -206,13 +204,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
             },
             secondaryAction: {
               label: I18n.t(`${i18nNs}.eidExpiredScreen.secondaryAction`),
-              onPress: () => {
-                Linking.openURL(
-                  "https://pagopa.qualtrics.com/jfe/form/SV_3JmGHi0IjGYESYC"
-                )
-                  .catch(() => IOToast.error("global.genericError"))
-                  .finally(closeMachine);
-              }
+              onPress: closeMachine
             }
           };
         }
