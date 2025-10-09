@@ -35,7 +35,6 @@ import {
   isItwEnabledSelector,
   itwDisabledCredentialsSelector
 } from "../../common/store/selectors/remoteConfig";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { itwCredentialsTypesSelector } from "../../credentials/store/selectors";
 import {
   itwLifecycleIsITWalletValidSelector,
@@ -50,36 +49,18 @@ import { ItwOnboardingModuleCredential } from "../components/ItwOnboardingModule
 import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard.ts";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { selectItwEnv } from "../../common/store/selectors/environment";
-
-// Credentials that can be actively requested and obtained by the user
-const availableCredentials = [
-  CredentialType.DRIVING_LICENSE,
-  CredentialType.EUROPEAN_DISABILITY_CARD,
-  CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
-] as const;
-
-// New credentials that can be actively requested and obtained by the user
-const newCredentials = [
-  CredentialType.EDUCATION_DEGREE,
-  CredentialType.EDUCATION_ENROLLMENT,
-  CredentialType.RESIDENCY
-] as const;
-
-type NewCredential = (typeof newCredentials)[number];
-
-// Credentials that will be available in the future
-const upcomingCredentials = [] as ReadonlyArray<string>;
+import {
+  availableCredentials,
+  isNewCredential,
+  isUpcomingCredential,
+  newCredentials,
+  upcomingCredentials
+} from "../../common/utils/itwCredentialUtils";
 
 const activeBadge: Badge = {
   variant: "success",
   text: I18n.t("features.wallet.onboarding.badge.active")
 };
-
-const isUpcomingCredential = (type: string): boolean =>
-  upcomingCredentials.includes(type);
-
-const isNewCredential = (type: string): type is NewCredential =>
-  newCredentials.includes(type as NewCredential);
 
 const WalletCardOnboardingScreen = () => {
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);

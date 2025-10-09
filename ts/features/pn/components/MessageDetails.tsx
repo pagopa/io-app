@@ -78,6 +78,7 @@ export const MessageDetails = ({
             serviceId={serviceId}
             subject={message.subject}
             createdAt={message.created_at}
+            thirdPartySenderDenomination={message.senderDenomination}
           >
             <Tag
               text={I18n.t("features.pn.details.badge.legalValue")}
