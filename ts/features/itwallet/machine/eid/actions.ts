@@ -189,8 +189,23 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  closeIssuance: () => {
-    navigation.popToTop();
+  closeIssuance: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    navigation.reset({
+      index: 1,
+      routes: [
+        {
+          name: ROUTES.MAIN,
+          params: {
+            screen: ROUTES.WALLET_HOME,
+            params: {
+              requiredEidFeedback: context.mode === "reissuance"
+            }
+          }
+        }
+      ]
+    });
   },
 
   storeIntegrityKeyTag: ({
