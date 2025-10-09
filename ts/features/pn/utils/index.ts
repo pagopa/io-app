@@ -94,21 +94,21 @@ export const paymentsFromPNMessagePot = (
   }
 
   const recipients = paymentsOption.value.recipients;
-  return recipients.reduce<ReadonlyArray<NotificationPaymentInfo>>(
-    (accumulator, recipient) => {
-      if (
-        // Payment must be defined
-        recipient.payment != null &&
-        // Payment is valid if no input fiscal code to compare to has been provided
-        // or if the taxId property matches the provided userFiscalCode
-        (userFiscalCode == null || recipient.taxId === userFiscalCode)
-      ) {
-        return [...accumulator, recipient.payment];
-      }
-      return accumulator;
-    },
-    []
-  );
+  const filteredPayments = recipients.reduce<
+    ReadonlyArray<NotificationPaymentInfo>
+  >((accumulator, recipient) => {
+    if (
+      // Payment must be defined
+      recipient.payment != null &&
+      // Payment is valid if no input fiscal code to compare to has been provided
+      // or if the taxId property matches the provided userFiscalCode
+      (userFiscalCode == null || recipient.taxId === userFiscalCode)
+    ) {
+      return [...accumulator, recipient.payment];
+    }
+    return accumulator;
+  }, []);
+  return filteredPayments.length > 0 ? filteredPayments : undefined;
 };
 
 export const isCancelledFromPNMessagePot = (
