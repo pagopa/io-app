@@ -20,10 +20,14 @@ import { loadServiceDetail } from "../../../services/details/store/actions/detai
 import { thirdPartyMessage } from "../../__mocks__/pnMessage";
 import PN_ROUTES from "../../navigation/routes";
 import { MessageDetailsScreen } from "../MessageDetailsScreen";
+import * as commonSelectors from "../../../settings/common/store/selectors";
 
 jest.mock("../../components/MessageDetails");
 
 describe("MessageDetailsScreen", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
   [true, false].forEach(isAar => {
     it(`should match the snapshot when there is an error -- aar:${isAar}`, () => {
       const sequenceOfActions: ReadonlyArray<Action> = [
@@ -43,6 +47,9 @@ describe("MessageDetailsScreen", () => {
     });
 
     it(`should match the snapshot when everything went fine -- aar:${isAar}`, () => {
+      jest
+        .spyOn(commonSelectors, "profileFiscalCodeSelector")
+        .mockImplementation(_state => "DifferentFromTaxId");
       const sequenceOfActions: ReadonlyArray<Action> = [
         applicationChangeState("active"),
         loadMessageById.success(toUIMessage(message_1)),

@@ -96,7 +96,7 @@ describe("watchPaymentStatusSaga", () => {
     it("should follow proper flow", () => {
       testSaga(
         watchPaymentStatusForMixpanelTracking,
-        startPNPaymentStatusTracking(messageId)
+        startPNPaymentStatusTracking({ isAARNotification: false, messageId })
       )
         .next()
         .select(profileFiscalCodeSelector)

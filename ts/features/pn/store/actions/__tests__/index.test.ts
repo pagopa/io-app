@@ -40,14 +40,19 @@ describe("PN actions", () => {
   });
 
   describe("startPNPaymentStatusTracking", () => {
-    it("should create a start tracking action with the provided messageId", () => {
-      const messageId = "message-123";
+    [false, true].forEach(isAARNotification => {
+      it(`should create a start tracking action with the provided messageId and isAARNotification: ${isAARNotification}`, () => {
+        const messageId = "message-123";
 
-      const action = startPNPaymentStatusTracking(messageId);
+        const action = startPNPaymentStatusTracking({
+          isAARNotification: false,
+          messageId
+        });
 
-      expect(action).toEqual({
-        type: "PN_START_TRACKING_PAYMENT_STATUS",
-        payload: messageId
+        expect(action).toEqual({
+          type: "PN_START_TRACKING_PAYMENT_STATUS",
+          payload: { isAARNotification, messageId }
+        });
       });
     });
   });
