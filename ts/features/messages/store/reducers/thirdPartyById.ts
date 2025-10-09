@@ -1,12 +1,13 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { getType } from "typesafe-actions";
-import { pipe } from "fp-ts/lib/function";
+import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
-import { toUndefinedOptional } from "../../../../utils/pot";
+import { pipe } from "fp-ts/lib/function";
+import _ from "lodash";
+import { getType } from "typesafe-actions";
+import { HasPreconditionEnum } from "../../../../../definitions/backend/HasPrecondition";
+import { RemoteContentDetails } from "../../../../../definitions/backend/RemoteContentDetails";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
-import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
-import { loadThirdPartyMessage, reloadAllMessages } from "../actions";
 import { Action } from "../../../../store/actions/types";
 import { IndexedById } from "../../../../store/helpers/indexer";
 import {
@@ -15,29 +16,16 @@ import {
   toSome
 } from "../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../store/reducers/types";
-import { RemoteContentDetails } from "../../../../../definitions/backend/RemoteContentDetails";
-import { UIMessageDetails } from "../../types";
-import { extractContentFromMessageSources } from "../../utils";
 import { isTestEnv } from "../../../../utils/environment";
-
-export const thirdPartyKind = {
-  TPM: "TPM",
-  AAR: "AAR"
-} as const;
-
-type ThirdPartyKind = typeof thirdPartyKind;
-
-type StandardThirdPartyMessage = {
-  kind: ThirdPartyKind["TPM"];
-} & ThirdPartyMessageWithContent;
-type EphemeralAARThirdPartyMessage = {
-  kind: ThirdPartyKind["AAR"];
-  mandateId?: string;
-} & ThirdPartyMessageWithContent;
-
-export type ThirdPartyMessageUnion =
-  | StandardThirdPartyMessage
-  | EphemeralAARThirdPartyMessage;
+import { toUndefinedOptional } from "../../../../utils/pot";
+import {
+  populateStoresWithEphemeralAarMessageData,
+  terminateAarFlow
+} from "../../../pn/aar/store/actions";
+import { UIMessageDetails } from "../../types";
+import { ThirdPartyMessageUnion } from "../../types/thirdPartyById";
+import { extractContentFromMessageSources } from "../../utils";
+import { loadThirdPartyMessage, reloadAllMessages } from "../actions";
 
 export type ThirdPartyById = IndexedById<
   pot.Pot<ThirdPartyMessageUnion, Error>
@@ -63,6 +51,42 @@ export const thirdPartyByIdReducer = (
       return toError(action.payload.id, state, action.payload.error);
     case getType(reloadAllMessages.request):
       return initialState;
+    case getType(populateStoresWithEphemeralAarMessageData):
+      const {
+        iun,
+        pnServiceID,
+        subject,
+        mandateId,
+        thirdPartyMessage,
+        markdown,
+        fiscalCode
+      } = action.payload;
+
+      const ephemeralMessage: ThirdPartyMessageUnion = {
+        kind: "AAR",
+        mandateId,
+        created_at: new Date(),
+        third_party_message: thirdPartyMessage,
+        id: iun,
+        fiscal_code: fiscalCode as FiscalCode,
+        sender_service_id: pnServiceID,
+        content: {
+          third_party_data: {
+            has_attachments: true,
+            has_precondition: HasPreconditionEnum.NEVER,
+            id: iun
+          },
+          markdown,
+          subject
+        }
+      };
+      return toSome(iun, state, ephemeralMessage);
+
+    case getType(terminateAarFlow):
+      if (action.payload.messageId === undefined) {
+        return state;
+      }
+      return _.omit(state, action.payload.messageId);
   }
   return state;
 };

@@ -36,7 +36,7 @@ import { UIMessage, UIMessageDetails } from "../../../types";
 import {
   thirdPartyKind,
   ThirdPartyMessageUnion
-} from "../../reducers/thirdPartyById";
+} from "../../../types/thirdPartyById";
 
 describe("index", () => {
   const messageId = "01JKAGGZTSQDR1GB5TYJ9PHXM6";
