@@ -1,4 +1,5 @@
 import {
+  trackSendAARAttachmentDownloadFailure,
   trackSendActivationModalDialog,
   trackSendActivationModalDialogActivationDismissed,
   trackSendActivationModalDialogActivationStart,
@@ -18,7 +19,7 @@ describe("index", () => {
   });
 
   describe("trackSendQRCodeScanRedirect", () => {
-    it("should cal 'mixpanelTrack' with proper event name and properties", () => {
+    it("should call 'mixpanelTrack' with proper event name and properties", () => {
       trackSendQRCodeScanRedirect();
 
       expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
@@ -34,7 +35,7 @@ describe("index", () => {
   });
 
   describe("trackSendQRCodeScanRedirectConfirmed", () => {
-    it("should cal 'mixpanelTrack' with proper event name and properties", () => {
+    it("should call 'mixpanelTrack' with proper event name and properties", () => {
       trackSendQRCodeScanRedirectConfirmed();
 
       expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
@@ -50,7 +51,7 @@ describe("index", () => {
   });
 
   describe("trackSendQRCodeScanRedirectDismissed", () => {
-    it("should cal 'mixpanelTrack' with proper event name and properties", () => {
+    it("should call 'mixpanelTrack' with proper event name and properties", () => {
       trackSendQRCodeScanRedirectDismissed();
 
       expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
@@ -66,7 +67,7 @@ describe("index", () => {
   });
 
   describe("trackSendActivationModalDialog", () => {
-    it("should cal 'mixpanelTrack' with proper event name and properties", () => {
+    it("should call 'mixpanelTrack' with proper event name and properties", () => {
       trackSendActivationModalDialog();
 
       expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
@@ -82,7 +83,7 @@ describe("index", () => {
   });
 
   describe("trackSendActivationModalDialogActivationStart", () => {
-    it("should cal 'mixpanelTrack' with proper event name and properties", () => {
+    it("should call 'mixpanelTrack' with proper event name and properties", () => {
       trackSendActivationModalDialogActivationStart();
 
       expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
@@ -98,7 +99,7 @@ describe("index", () => {
   });
 
   describe("trackSendActivationModalDialogActivationDismissed", () => {
-    it("should cal 'mixpanelTrack' with proper event name and properties", () => {
+    it("should call 'mixpanelTrack' with proper event name and properties", () => {
       trackSendActivationModalDialogActivationDismissed();
 
       expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
@@ -109,6 +110,24 @@ describe("index", () => {
       expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
         event_category: "UX",
         event_type: "action"
+      });
+    });
+  });
+
+  describe("trackSendAARAttachmentDownloadFailure", () => {
+    it("should call 'mixpanelTrack' with proper event name and properties", () => {
+      const reason = "The reason";
+      trackSendAARAttachmentDownloadFailure(reason);
+
+      expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+        "SEND_AAR_ATTACHMENT_DOWNLOAD_FAILED"
+      );
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "KO",
+        event_type: undefined,
+        reason
       });
     });
   });
