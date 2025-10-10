@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
 import { Action } from "redux";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
@@ -8,21 +9,31 @@ import {
 } from "../../../../../../definitions/backend/ThirdPartyMessage";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
+import { toSome } from "../../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { reproduceSequence } from "../../../../../utils/tests";
+import {
+  populateStoresWithEphemeralAarMessageData,
+  terminateAarFlow
+} from "../../../../pn/aar/store/actions";
+import { mockEphemeralAarMessageDataActionPayload } from "../../../../pn/aar/utils/testUtils";
 import { UIMessageDetails } from "../../../types";
+import {
+  ThirdPartyMessageUnion,
+  thirdPartyKind
+} from "../../../types/thirdPartyById";
 import { loadMessageDetails, loadThirdPartyMessage } from "../../actions";
 import { DetailsById } from "../detailsById";
 import {
+  ThirdPartyById,
   hasAttachmentsSelector,
   messageMarkdownSelector,
   messageTitleSelector,
   testable,
-  ThirdPartyById,
+  thirdPartyByIdReducer,
   thirdPartyFromIdSelector,
-  thirdPartyKind,
   thirdPartyMessageAttachments,
-  ThirdPartyMessageUnion
+  thirdPartyMessageSelector
 } from "../thirdPartyById";
 
 const thirdPartyKindsMock = Object.values(thirdPartyKind);
@@ -599,5 +610,106 @@ describe("messageContentSelector", () => {
       input => input.markdown
     );
     expect(messageContent).toBeUndefined();
+  });
+});
+
+describe("thirdPartyMessageSelector", () => {
+  const fakeThirdPartyMessage = {} as ThirdPartyMessageUnion;
+  [
+    undefined,
+    pot.none,
+    pot.noneLoading,
+    pot.noneUpdating(fakeThirdPartyMessage),
+    pot.noneError(Error("")),
+    pot.some(fakeThirdPartyMessage),
+    pot.someLoading(fakeThirdPartyMessage),
+    pot.someUpdating(fakeThirdPartyMessage, fakeThirdPartyMessage),
+    pot.someError(fakeThirdPartyMessage, Error(""))
+  ].forEach(input => {
+    const shouldReturnSomething = input != null && pot.isSome(input);
+    it(`should return ${
+      shouldReturnSomething ? "the third party message" : "undefined"
+    } for a matching third party id which value is ${JSON.stringify(
+      input
+    )}`, () => {
+      const state = {
+        entities: {
+          messages: {
+            thirdPartyById: {
+              m1: input
+            }
+          }
+        }
+      } as unknown as GlobalState;
+      const result = thirdPartyMessageSelector(state, "m1");
+      expect(result).toEqual(
+        shouldReturnSomething ? fakeThirdPartyMessage : undefined
+      );
+    });
+  });
+  it(`should return 'undefined' for an unmatching third party id`, () => {
+    const state = {
+      entities: {
+        messages: {
+          thirdPartyById: {
+            m1: pot.some({})
+          }
+        }
+      }
+    } as unknown as GlobalState;
+    const result = thirdPartyMessageSelector(state, "m2");
+    expect(result).toBeUndefined();
+  });
+});
+
+describe("reducer", () => {
+  it("should handle populateStoresWithEphemeralAarMessageData action", () => {
+    const action = populateStoresWithEphemeralAarMessageData(
+      mockEphemeralAarMessageDataActionPayload
+    );
+    const { iun, mandateId, subject, markdown, fiscalCode } =
+      mockEphemeralAarMessageDataActionPayload;
+    const nextState = appReducer(undefined, action).entities.messages
+      .thirdPartyById;
+    expect(nextState[iun]).toBeDefined();
+    expect(pot.isSome(nextState[iun]!)).toBe(true);
+    const value = pot.toUndefined(nextState[iun]!) as Extract<
+      ThirdPartyMessageUnion,
+      { kind: "AAR" }
+    >;
+    expect(value?.kind).toBe("AAR");
+    expect(value.mandateId).toBe(mandateId);
+    expect(value?.content.subject).toBe(subject);
+    expect(value?.content.markdown).toBe(markdown);
+    expect(value?.fiscal_code).toBe(fiscalCode);
+  });
+
+  it("should handle terminateAarFlow action and remove ephemeral AAR messages", () => {
+    const { iun } = mockEphemeralAarMessageDataActionPayload;
+    const populateAction = populateStoresWithEphemeralAarMessageData(
+      mockEphemeralAarMessageDataActionPayload
+    );
+    const populatedState = thirdPartyByIdReducer(undefined, populateAction);
+
+    const messageIdGENERIC = "messageIdGENERIC";
+    const populatedStateWithNonAarMessage: ThirdPartyById = toSome(
+      messageIdGENERIC,
+      populatedState,
+      pipe(populatedState[iun]!, pot.toUndefined, data => ({
+        ...data!,
+        kind: "TPM"
+      }))
+    );
+
+    const clearAction = terminateAarFlow({ messageId: iun });
+    const clearedState = thirdPartyByIdReducer(
+      populatedStateWithNonAarMessage,
+      clearAction
+    );
+
+    expect(populatedState[iun]).toBeDefined();
+    expect(clearedState[iun]).toBeUndefined();
+    expect(clearedState[messageIdGENERIC]).toBeDefined();
+    expect(pot.isSome(clearedState[messageIdGENERIC]!)).toBe(true);
   });
 });

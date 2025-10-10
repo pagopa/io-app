@@ -2,6 +2,49 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.16.0-rc.6](https://github.com/pagopa/io-app/compare/3.16.0-rc.5...3.16.0-rc.6) (2025-10-09)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-3125](https://pagopa.atlassian.net/browse/SIW-3125)] Add eID reissuance qualtrics survey ([#7456](https://github.com/pagopa/io-app/issues/7456)) ([9f28ccd](https://github.com/pagopa/io-app/commit/9f28ccdeb04b6a8a8842c27d97a3ff50e8578f18))
+* [[IOCOM-2550](https://pagopa.atlassian.net/browse/IOCOM-2550)] Send AAR attachment download ([#7430](https://github.com/pagopa/io-app/issues/7430)) ([9a997cd](https://github.com/pagopa/io-app/commit/9a997cdeb61762bf6369cae4c238a7fd7c713d7b))
+* [[IOCOM-2661](https://pagopa.atlassian.net/browse/IOCOM-2661)] Universal/App Links for SEND UAT and PROD environments ([#7457](https://github.com/pagopa/io-app/issues/7457)) ([489a7b5](https://github.com/pagopa/io-app/commit/489a7b5a20507dd2f0066016d0639ce5d029fd30))
+
+
+### Bug Fixes
+
+* [[IOBP-2028](https://pagopa.atlassian.net/browse/IOBP-2028)] Upgrade `react-native-webview` to support Google Pay payments ([#7462](https://github.com/pagopa/io-app/issues/7462)) ([71a4fd0](https://github.com/pagopa/io-app/commit/71a4fd03db5b7a737c70bc9ce1c2dad59972027e))
+* [[IOPID-3426](https://pagopa.atlassian.net/browse/IOPID-3426)] Auth modal Android back navigation handler ([#7360](https://github.com/pagopa/io-app/issues/7360)) ([0ab1548](https://github.com/pagopa/io-app/commit/0ab1548ebc82cea96ae37592fbeaa6270b32315e))
+* **IT Wallet:** [[SIW-3093](https://pagopa.atlassian.net/browse/SIW-3093)] Inconsistencies in the IT Wallet activation flow ([#7428](https://github.com/pagopa/io-app/issues/7428)) ([d70f032](https://github.com/pagopa/io-app/commit/d70f0327974a290c150b5ddf0bc182154b884191))
+* **IT Wallet:** [[SIW-3110](https://pagopa.atlassian.net/browse/SIW-3110)] Skip `FocusAwareStatusBar` render if status alerts are present ([#7453](https://github.com/pagopa/io-app/issues/7453)) ([484c5bc](https://github.com/pagopa/io-app/commit/484c5bc3c55b890ab8a2f4cc36e79a4541a8184c))
+
+
+### Chores
+
+* [[IOBP-2055](https://pagopa.atlassian.net/browse/IOBP-2055)] Update IDPay specs ([#7455](https://github.com/pagopa/io-app/issues/7455)) ([3429391](https://github.com/pagopa/io-app/commit/3429391c4b1526216ad07521ff8a3b7534db4d18))
+* [[IOPLT-1354](https://pagopa.atlassian.net/browse/IOPLT-1354)] Bypass Sentry sampling on PDF rendering errors ([#7459](https://github.com/pagopa/io-app/issues/7459)) ([4aa84ba](https://github.com/pagopa/io-app/commit/4aa84ba7dc91440cdb7dd4d29ba6ee85d165269e))
+
+## [3.16.0-rc.5](https://github.com/pagopa/io-app/compare/3.16.0-rc.4...3.16.0-rc.5) (2025-10-08)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-2987](https://pagopa.atlassian.net/browse/SIW-2987)] New Identification screen design ([#7404](https://github.com/pagopa/io-app/issues/7404)) ([228b28d](https://github.com/pagopa/io-app/commit/228b28d79321bdcf76d287bc042404407aade537))
+* **IT Wallet:** [[SIW-3107](https://pagopa.atlassian.net/browse/SIW-3107)] Validity alert for new ITW credentials ([#7438](https://github.com/pagopa/io-app/issues/7438)) ([72a2fd5](https://github.com/pagopa/io-app/commit/72a2fd516fc448bffc6d31b4da4f3e049694d303))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-3079](https://pagopa.atlassian.net/browse/SIW-3079),[SIW-3109](https://pagopa.atlassian.net/browse/SIW-3109)] Improve claims render during Proximity presentation online/offline ([#7429](https://github.com/pagopa/io-app/issues/7429)) ([609caaa](https://github.com/pagopa/io-app/commit/609caaa8a686a9714874ada447a74461aa47e329))
+* **IT Wallet:** [[SIW-3095](https://pagopa.atlassian.net/browse/SIW-3095)] Fix navigation in remote & proximity flows (online/offline)  ([#7441](https://github.com/pagopa/io-app/issues/7441)) ([cd9685f](https://github.com/pagopa/io-app/commit/cd9685f36b9b47e2b329e088f9fc1026a545533d))
+* [[IOBP-2054](https://pagopa.atlassian.net/browse/IOBP-2054)] Countdown progressbar barcode IDPay on Android devices ([#7447](https://github.com/pagopa/io-app/issues/7447)) ([655f389](https://github.com/pagopa/io-app/commit/655f3893bf709343568134cef78f7d22808726a9))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-3133](https://pagopa.atlassian.net/browse/SIW-3133)] Copy auth source ([#7449](https://github.com/pagopa/io-app/issues/7449)) ([3770dbc](https://github.com/pagopa/io-app/commit/3770dbce750ce67856a7d58cff2d52a5b0d10403))
+
 ## [3.16.0-rc.4](https://github.com/pagopa/io-app/compare/3.16.0-rc.3...3.16.0-rc.4) (2025-10-07)
 
 

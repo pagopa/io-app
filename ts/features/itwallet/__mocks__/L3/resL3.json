@@ -997,7 +997,7 @@
           },
           "display": [
             {
-              "name": "Iscrizioni universitarie",
+              "name": "Iscrizioni accademiche",
               "locale": "it-IT"
             },
             {
@@ -1037,7 +1037,7 @@
               "path": ["education_enrollments", null],
               "display": [
                 {
-                  "name": "Iscrizioni universitarie",
+                  "name": "Iscrizioni accademiche",
                   "locale": "it-IT"
                 },
                 {
