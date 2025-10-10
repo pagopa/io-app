@@ -5,7 +5,7 @@ import { MigrationManifest, PersistedState } from "redux-persist";
 
 type MigrationState = PersistedState & Record<string, any>;
 
-export const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 5;
+export const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 6;
 
 export const itwCredentialsStateMigrations: MigrationManifest = {
   // Version 0
@@ -117,7 +117,7 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
   }),
 
   // Version 5
-  // Invalidate all status assertions so they can be fetched again from the new API 1.0
+  // Invalidate all status attestations so they can be fetched again from the new API 1.0
   "5": (state: MigrationState) => ({
     ...state,
     credentials: Object.fromEntries(
@@ -126,5 +126,37 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
         { ...credential, storedStatusAttestation: undefined }
       ])
     )
-  })
+  }),
+
+  // Version 6
+  // Rename Status Attestation to Status Assertion
+  "6": (state: MigrationState) => {
+    const mapStatusAttestationToAssertion = (
+      statusAttObj?: Record<string, any>
+    ) =>
+      statusAttObj?.credentialStatus === "valid"
+        ? {
+            credentialStatus: statusAttObj.credentialStatus,
+            statusAssertion: statusAttObj.statusAttestation,
+            parsedStatusAssertion: statusAttObj.parsedStatusAttestation
+          }
+        : statusAttObj;
+
+    return {
+      ...state,
+      credentials: Object.fromEntries(
+        Object.values<Record<string, any>>(state.credentials).map(
+          ({ storedStatusAttestation, ...rest }) => [
+            rest.credentialId,
+            {
+              ...rest,
+              storedStatusAssertion: mapStatusAttestationToAssertion(
+                storedStatusAttestation
+              )
+            }
+          ]
+        )
+      )
+    };
+  }
 };
