@@ -41,6 +41,21 @@ describe("MessageDetailsHeader component", () => {
     expect(component.queryByText(service_1.organization.name)).toBeNull();
     expect(component.queryByText(service_1.name)).toBeNull();
   });
+  [undefined, new Date()].forEach(date => {
+    it(`should render the date only when valid -- date is ${date?.toISOString()}`, () => {
+      const { component } = renderComponent({
+        ...defaultProps,
+        createdAt: date
+      });
+      const maybeDate = component.queryByTestId("date");
+
+      if (date !== undefined) {
+        expect(maybeDate).not.toBeNull();
+      } else {
+        expect(maybeDate).toBeNull();
+      }
+    });
+  });
 });
 
 const renderComponent = (

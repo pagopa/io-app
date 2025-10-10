@@ -34,7 +34,7 @@ const MessageDetailsHeaderContent = ({
       {subject}
     </H3>
     {createdAt && (
-      <BodySmall weight="Regular">
+      <BodySmall weight="Regular" testID="date">
         {`${new Intl.DateTimeFormat("it", {
           day: "2-digit",
           month: "short",
