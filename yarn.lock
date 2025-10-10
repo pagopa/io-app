@@ -3870,9 +3870,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-app-design-system@npm:5.11.2":
-  version: 5.11.2
-  resolution: "@pagopa/io-app-design-system@npm:5.11.2"
+"@pagopa/io-app-design-system@npm:5.11.5":
+  version: 5.11.5
+  resolution: "@pagopa/io-app-design-system@npm:5.11.5"
   dependencies:
     auto-changelog: ^2.4.0
     lodash: ^4.17.21
@@ -3893,7 +3893,7 @@ __metadata:
     react-native-reanimated: "*"
     react-native-safe-area-context: "*"
     react-native-svg: "*"
-  checksum: 0779c27b67e8bd7966281de4207a882c095ad649025305d094074ddb86a62c0d22e8cc30e84117f0f857a548c7a20504428b45dffd44c35c0a6b900ca89849fd
+  checksum: 0cf3966fec0d36de5f89e26d29244f1ce80d4f9410d95c669648813e4aa3237d3aba8ca4e07ca253586b3ef0bd07d5f262965e73219e4e95376f5ee1f498d941
   languageName: node
   linkType: hard
 
@@ -12954,7 +12954,7 @@ __metadata:
     "@babel/runtime": ^7.25.0
     "@gorhom/bottom-sheet": ^5.1.2
     "@jambit/eslint-plugin-typed-redux-saga": ^0.4.0
-    "@pagopa/io-app-design-system": 5.11.2
+    "@pagopa/io-app-design-system": 5.11.5
     "@pagopa/io-pagopa-commons": ^3.1.0
     "@pagopa/io-react-native-cie": ^1.1.2
     "@pagopa/io-react-native-cieid": ^0.3.5
@@ -13117,7 +13117,7 @@ __metadata:
     react-native-tab-view: 3.5.2
     react-native-url-polyfill: ^2.0.0
     react-native-vision-camera: ^4.7.0
-    react-native-webview: ^13.13.5
+    react-native-webview: ^13.16.0
     react-native-xml2js: ^1.0.3
     react-redux: 8.1.3
     react-test-renderer: 19.0.0
@@ -18018,16 +18018,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-webview@npm:^13.13.5":
-  version: 13.13.5
-  resolution: "react-native-webview@npm:13.13.5"
+"react-native-webview@npm:^13.16.0":
+  version: 13.16.0
+  resolution: "react-native-webview@npm:13.16.0"
   dependencies:
     escape-string-regexp: ^4.0.0
     invariant: 2.2.4
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 7f3bce1b37d6be9b2f07f0f7481181d5344f9e58022645b0d20dc58cd66056bb6efecacb231963959db6283cc66d977593db62a403c7c151f83568f83041c2eb
+  checksum: a6fefc1bc977c1d121057c91696edb08ca170421a6d6ad5a9bcda279a20eca84aaaf553eca3a8e51b621e22fd473afa8bc994888807fb7db154eb9d7acb87928
   languageName: node
   linkType: hard
 

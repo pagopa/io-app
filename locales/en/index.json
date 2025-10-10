@@ -4522,9 +4522,9 @@
           "primaryAction": "Ottieni IT-Wallet",
           "dismissalDialog": {
             "title": "Vuoi rinunciare ai vantaggi di IT-Wallet?",
-            "body": "Otterrai una versione digitale dei tuoi documenti con funzionalità ridotte.",
-            "confirm": "Si, rinuncia",
-            "cancel": "No, torna indietro"
+            "body": "Potrai ottenere IT-Wallet in qualsiasi altro momento, se cambi idea.",
+            "confirm": "Sì, rinuncia",
+            "cancel": "No, continua"
           }
         },
         "offlineBanner": {
@@ -5386,7 +5386,7 @@
       "upgrade": {
         "banner": {
           "title": "IT-Wallet per i tuoi documenti",
-          "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**.\nGarantito dallo Stato, accessibile solo a te.",
+          "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**. Garantito dallo Stato, accessibile solo a te.",
           "action": "Ottieni IT-Wallet"
         }
       },
@@ -5728,7 +5728,9 @@
           "labels": {
             "AUTHORIZED": "Authorized",
             "CANCELLED": "Annullata",
-            "REWARDED": "Eseguita"
+            "REWARDED": "Eseguita",
+            "REFUNDED": "Rimborsata",
+            "CAPTURED": "Eseguita"
           },
           "details": {
             "alerts": {

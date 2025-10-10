@@ -17,7 +17,7 @@ import {
 import { MESSAGES_ROUTES } from "../navigation/routes";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
-import { attachmentDisplayName } from "../store/reducers/transformers";
+import { attachmentDisplayName } from "../utils/attachments";
 import {
   trackPNAttachmentDownloadFailure,
   trackPNAttachmentOpening
