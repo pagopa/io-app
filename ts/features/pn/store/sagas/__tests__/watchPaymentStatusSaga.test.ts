@@ -93,35 +93,41 @@ describe("watchPaymentStatusSaga", () => {
   };
 
   describe("watchPaymentStatusForMixpanelTracking", () => {
-    it("should follow proper flow", () => {
-      testSaga(
-        watchPaymentStatusForMixpanelTracking,
-        startPNPaymentStatusTracking({ isAARNotification: false, messageId })
-      )
-        .next()
-        .select(profileFiscalCodeSelector)
-        .next(taxId)
-        .select(pnMessageFromIdSelector, messageId)
-        .next(pnMessage)
-        .call(paymentsFromPNMessagePot, taxId, pnMessage)
-        .next(pnMessage.recipients.map(rec => rec.payment))
-        .race({
-          polling: call(
-            testable!.generateSENDMessagePaymentStatistics,
-            messageId,
-            6,
-            pnMessage.recipients
-              .slice(0, 5)
-              .map(rec =>
-                getRptIdStringFromPayment(
-                  rec.payment as NotificationPaymentInfo
+    [false, true].forEach(isAARNotification => {
+      it(`should follow proper flow (isAARNotification: ${isAARNotification})`, () => {
+        testSaga(
+          watchPaymentStatusForMixpanelTracking,
+          startPNPaymentStatusTracking({ isAARNotification, messageId })
+        )
+          .next()
+          .select(profileFiscalCodeSelector)
+          .next(taxId)
+          .select(pnMessageFromIdSelector, messageId)
+          .next(pnMessage)
+          .call(
+            paymentsFromPNMessagePot,
+            isAARNotification ? undefined : taxId,
+            pnMessage
+          )
+          .next(pnMessage.recipients.map(rec => rec.payment))
+          .race({
+            polling: call(
+              testable!.generateSENDMessagePaymentStatistics,
+              messageId,
+              6,
+              pnMessage.recipients
+                .slice(0, 5)
+                .map(rec =>
+                  getRptIdStringFromPayment(
+                    rec.payment as NotificationPaymentInfo
+                  )
                 )
-              )
-          ),
-          cancelAction: take(cancelPNPaymentStatusTracking)
-        })
-        .next(cancelPNPaymentStatusTracking)
-        .isDone();
+            ),
+            cancelAction: take(cancelPNPaymentStatusTracking)
+          })
+          .next(cancelPNPaymentStatusTracking)
+          .isDone();
+      });
     });
   });
 

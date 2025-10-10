@@ -1,3 +1,5 @@
+import * as O from "fp-ts/lib/Option";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Action, Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -21,11 +23,18 @@ import { thirdPartyMessage } from "../../__mocks__/pnMessage";
 import PN_ROUTES from "../../navigation/routes";
 import { MessageDetailsScreen } from "../MessageDetailsScreen";
 import * as commonSelectors from "../../../settings/common/store/selectors";
+import { startPNPaymentStatusTracking } from "../../store/actions";
+
+const mockDispatch = jest.fn();
+jest.mock("react-redux", () => ({
+  ...jest.requireActual<typeof import("react-redux")>("react-redux"),
+  useDispatch: () => mockDispatch
+}));
 
 jest.mock("../../components/MessageDetails");
 
 describe("MessageDetailsScreen", () => {
-  afterEach(() => {
+  beforeEach(() => {
     jest.clearAllMocks();
   });
   [true, false].forEach(isAar => {
@@ -73,9 +82,44 @@ describe("MessageDetailsScreen", () => {
       expect(component).toMatchSnapshot();
     });
   });
+  [false, true].forEach(isAARNotification => {
+    it(`should dispatch startPNPaymentStatusTracking (isAARNotification ${isAARNotification})`, () => {
+      const state = {
+        entities: {
+          messages: {
+            thirdPartyById: {}
+          }
+        },
+        features: {
+          connectivityStatus: {},
+          ingress: {},
+          itWallet: {
+            issuance: {
+              integrityKeyTag: O.none
+            }
+          }
+        },
+        remoteConfig: O.none,
+        profile: pot.none
+      } as GlobalState;
+      const mockStore = configureMockStore<GlobalState>();
+      const store: Store<GlobalState> = mockStore(state);
+
+      renderComponent(store, isAARNotification);
+
+      expect(mockDispatch.mock.calls.length).toBe(1);
+      expect(mockDispatch.mock.calls[0].length).toBe(1);
+      expect(mockDispatch.mock.calls[0][0]).toEqual(
+        startPNPaymentStatusTracking({
+          isAARNotification,
+          messageId: message_1.id
+        })
+      );
+    });
+  });
 });
 
-const renderComponent = (store: Store<GlobalState>, isAAr = false) => {
+const renderComponent = (store: Store<GlobalState>, isAAr: boolean) => {
   const { id, sender_service_id } = message_1;
 
   return {
@@ -86,7 +130,7 @@ const renderComponent = (store: Store<GlobalState>, isAAr = false) => {
         firstTimeOpening: false,
         messageId: id,
         serviceId: sender_service_id,
-        isAArMessage: isAAr
+        isAarMessage: isAAr
       },
       store
     )
