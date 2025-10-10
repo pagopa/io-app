@@ -1,11 +1,17 @@
+import * as O from "fp-ts/lib/Option";
 import { call, put, select, take, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-import * as O from "fp-ts/lib/Option";
 import { startApplicationInitialization } from "../../../store/actions/application";
+import { PinString } from "../../../types/PinString";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
+import { isDevEnv } from "../../../utils/environment";
+import { deletePin, getPin } from "../../../utils/keychain";
 import {
   checkCurrentSession,
   sessionInvalid
 } from "../../authentication/common/store/actions";
+import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors/index";
+import { maybeHandlePendingBackgroundActions } from "../../pushNotifications/sagas/common";
 import {
   identificationCancel,
   identificationForceLogout,
@@ -17,16 +23,11 @@ import {
 } from "../store/actions";
 import {
   IdentificationCancelData,
+  IdentificationBackActionType,
   IdentificationGenericData,
   IdentificationResult,
   IdentificationSuccessData
 } from "../store/reducers";
-import { PinString } from "../../../types/PinString";
-import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
-import { deletePin, getPin } from "../../../utils/keychain";
-import { maybeHandlePendingBackgroundActions } from "../../pushNotifications/sagas/common";
-import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors/index";
-import { isDevEnv } from "../../../utils/environment";
 
 type ResultAction =
   | ActionType<typeof identificationCancel>
@@ -96,7 +97,8 @@ export function* startAndReturnIdentificationResult(
   identificationGenericData?: IdentificationGenericData,
   identificationCancelData?: IdentificationCancelData,
   identificationSuccessData?: IdentificationSuccessData,
-  shufflePad: boolean = false
+  shufflePad: boolean = false,
+  identificationContext: IdentificationBackActionType = IdentificationBackActionType.DEFAULT
 ): Generator<
   ReduxSagaEffect,
   SagaCallReturnType<typeof waitIdentificationResult>,
@@ -110,7 +112,8 @@ export function* startAndReturnIdentificationResult(
       identificationGenericData,
       identificationCancelData,
       identificationSuccessData,
-      shufflePad
+      shufflePad,
+      identificationContext
     )
   );
 
@@ -133,7 +136,8 @@ function* startAndHandleIdentificationResult(
       identificationRequestAction.payload.identificationGenericData,
       identificationRequestAction.payload.identificationCancelData,
       identificationRequestAction.payload.identificationSuccessData,
-      identificationRequestAction.payload.shufflePad
+      identificationRequestAction.payload.shufflePad,
+      identificationRequestAction.payload.identificationContext
     )
   );
   const identificationResult = yield* call(waitIdentificationResult);
