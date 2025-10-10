@@ -33,7 +33,6 @@ import { MessageFooter } from "./MessageFooter";
 import { MessageCancelledContent } from "./MessageCancelledContent";
 
 export type MessageDetailsProps = {
-  isAARMessage: boolean;
   message: PNMessage;
   messageId: string;
   serviceId: ServiceId;
@@ -42,7 +41,6 @@ export type MessageDetailsProps = {
 };
 
 export const MessageDetails = ({
-  isAARMessage,
   message,
   messageId,
   payments,

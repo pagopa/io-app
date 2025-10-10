@@ -66,7 +66,7 @@ describe("MessageDetails component", () => {
           "MessageDetailsHeader"
         );
         renderComponent({
-          ...generateComponentProperties(pnMessage),
+          ...generateComponentProperties(isAARMessage, pnMessage),
           isAARMessage
         });
         const mockCalls = headerSpy.mock.calls[0][0];

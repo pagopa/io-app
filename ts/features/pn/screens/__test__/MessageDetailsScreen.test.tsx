@@ -79,7 +79,7 @@ const renderComponent = (store: Store<GlobalState>, isAAr = false) => {
         firstTimeOpening: false,
         messageId: id,
         serviceId: sender_service_id,
-        isAArMessage: isAAr
+        isAarMessage: isAAr
       },
       store
     )
