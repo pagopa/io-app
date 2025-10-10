@@ -97,11 +97,17 @@ export const MessageDetailsScreen = () => {
   const messagePot = useIOSelector(state =>
     pnMessageFromIdSelector(state, messageId)
   );
-  const payments = paymentsFromPNMessagePot(currentFiscalCode, messagePot);
+  const fiscalCodeOrUndefined = isAarMessage ? undefined : currentFiscalCode;
+  const payments = paymentsFromPNMessagePot(fiscalCodeOrUndefined, messagePot);
   const paymentsCount = payments?.length ?? 0;
 
   useEffect(() => {
-    dispatch(startPNPaymentStatusTracking(messageId));
+    dispatch(
+      startPNPaymentStatusTracking({
+        isAARNotification: !!isAarMessage,
+        messageId
+      })
+    );
 
     if (isStrictSome(messagePot)) {
       const isCancelled = isCancelledFromPNMessagePot(messagePot);
@@ -171,6 +177,7 @@ export const MessageDetailsScreen = () => {
               messageId={messageId}
               serviceId={serviceId}
               payments={payments}
+              isAARMessage={isAarMessage}
             />
           )
         )

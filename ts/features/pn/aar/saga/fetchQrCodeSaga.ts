@@ -7,6 +7,8 @@ import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
 import { currentAARFlowData } from "../store/selectors";
 import { AARFlowState, sendAARFlowStates } from "../utils/stateUtils";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import { SagaCallReturnType } from "../../../../types/utils";
 
 export function* fetchAARQrCodeSaga(
   fetchQRCode: SendAARClient["aarQRCodeCheck"],
@@ -22,13 +24,17 @@ export function* fetchAARQrCodeSaga(
   const isSendUATEnvironment = yield* select(isPnTestEnabledSelector);
 
   try {
-    const result = yield* call(fetchQRCode, {
+    const fetchQrRequest = fetchQRCode({
       Bearer: `Bearer ${sessionToken}`,
       body: {
         aarQrCodeValue: qrCode
       },
       isTest: isSendUATEnvironment
     });
+    const result = (yield* call(
+      withRefreshApiCall,
+      fetchQrRequest
+    )) as unknown as SagaCallReturnType<typeof fetchQRCode>;
 
     const resultAction = pipe(
       result,
