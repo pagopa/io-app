@@ -434,6 +434,7 @@ exports[`MessageDetailsHeader component should match the snapshot with a valid t
                                 },
                               ]
                             }
+                            testID="date"
                           >
                             18 ott 2021, 16:00
                           </Text>
@@ -1073,6 +1074,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                                 },
                               ]
                             }
+                            testID="date"
                           >
                             18 ott 2021, 16:00
                           </Text>
