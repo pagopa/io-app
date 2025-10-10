@@ -300,14 +300,18 @@ const requestAndParseCredential = async ({
       credentialId: credential_configuration_id
     })
   );
-
   // Parse and verify the credential. The ignoreMissingAttributes flag must be set to false or omitted in production.
+  // The ignoreMissingAttributes must be set to false for mDoc credentials since
+  // there are some attributes that should not be presented during Proximity presentation.
   const { parsedCredential, issuedAt, expiration } =
     await Credential.Issuance.verifyAndParseCredential(
       issuerConf,
       credential,
       credential_configuration_id,
-      { credentialCryptoContext, ignoreMissingAttributes: true },
+      {
+        credentialCryptoContext,
+        ignoreMissingAttributes: format === CredentialFormat.SD_JWT
+      },
       env.X509_CERT_ROOT
     );
 
