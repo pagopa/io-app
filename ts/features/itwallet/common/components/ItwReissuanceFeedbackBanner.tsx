@@ -6,6 +6,7 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { openWebUrl } from "../../../../utils/url";
 import { itwCloseReissuanceFeedbackBanner } from "../store/actions/preferences";
 import { itwIsReissuanceFeedbackBannerHiddenSelector } from "../store/selectors/preferences.ts";
+import { IT_WALLET_SURVEY_EID_REISSUANCE_SUCCESS } from "../utils/constants.ts";
 
 const ItwReissuanceFeedbackBanner = () => {
   const dispatch = useIODispatch();
@@ -16,7 +17,7 @@ const ItwReissuanceFeedbackBanner = () => {
   }
 
   const handleOnPress = () => {
-    openWebUrl("https://pagopa.qualtrics.com/jfe/form/SV_3JmGHi0IjGYESYC");
+    openWebUrl(IT_WALLET_SURVEY_EID_REISSUANCE_SUCCESS);
   };
 
   const handleOnClose = () => {
