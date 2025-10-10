@@ -11,6 +11,7 @@ import { useOfflineToastGuard } from "../../../hooks/useOfflineToastGuard";
 import { useStartSupportRequest } from "../../../hooks/useStartSupportRequest";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { isStrictSome } from "../../../utils/pot";
 import {
@@ -19,6 +20,7 @@ import {
   updatePaymentForMessage
 } from "../../messages/store/actions";
 import { profileFiscalCodeSelector } from "../../settings/common/store/selectors";
+import { SendAARMessageDetailBottomSheet } from "../aar/components/SendAARMessageDetailBottomSheet";
 import { terminateAarFlow } from "../aar/store/actions";
 import { trackPNUxSuccess } from "../analytics";
 import { MessageDetails } from "../components/MessageDetails";
@@ -49,7 +51,7 @@ type MessageDetailsRouteProps = RouteProp<
   "PN_ROUTES_MESSAGE_DETAILS"
 >;
 
-const useCorrectHeader = (isAAr: boolean) => {
+const useCorrectHeader = (isAAr: boolean, onAARCloseHandler: () => void) => {
   const { setOptions, goBack } = useIONavigation();
   const startSupportRequest = useOfflineToastGuard(useStartSupportRequest({}));
 
@@ -58,7 +60,7 @@ const useCorrectHeader = (isAAr: boolean) => {
     type: "singleAction",
     firstAction: {
       icon: "closeLarge",
-      onPress: goBack,
+      onPress: onAARCloseHandler,
       accessibilityLabel: I18n.t("global.buttons.close")
     }
   };
@@ -87,11 +89,24 @@ const useCorrectHeader = (isAAr: boolean) => {
 
 export const MessageDetailsScreen = () => {
   const dispatch = useIODispatch();
+  const { popToTop } = useIONavigation();
   const route = useRoute<MessageDetailsRouteProps>();
-
   const { messageId, serviceId, firstTimeOpening, isAarMessage } = route.params;
 
-  useCorrectHeader(!!isAarMessage);
+  const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
+    title: I18n.t("features.pn.aar.flow.closeNotification.title"),
+    component: (
+      <SendAARMessageDetailBottomSheet
+        onPrimaryActionPress={() => dismiss()}
+        onSecondaryActionPress={() => {
+          dismiss();
+          popToTop();
+        }}
+      />
+    )
+  });
+
+  useCorrectHeader(!!isAarMessage, present);
 
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
   const messagePot = useIOSelector(state =>
@@ -175,6 +190,7 @@ export const MessageDetailsScreen = () => {
           )
         )
       )}
+      {bottomSheet}
     </>
   );
 };
