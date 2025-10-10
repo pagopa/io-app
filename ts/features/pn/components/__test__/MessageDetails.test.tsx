@@ -67,7 +67,9 @@ describe("MessageDetails component", () => {
           ...generateComponentProperties(pnMessage),
           isAARMessage
         });
-        const passedDate = headerSpy.mock.calls[0][0].createdAt;
+        const mockCalls = headerSpy.mock.calls[0][0];
+        expect(mockCalls).toBeDefined();
+        const passedDate = mockCalls.createdAt;
 
         if (isAARMessage) {
           expect(passedDate).toBeUndefined();
