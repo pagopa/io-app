@@ -1361,6 +1361,9 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "add-to-wallet" });
 
     expect(storeEidCredential).toHaveBeenCalledTimes(1);
+
+    actor.send({ type: "go-to-wallet" });
+
     expect(navigateToWallet).toHaveBeenCalledTimes(1);
 
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
