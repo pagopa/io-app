@@ -74,6 +74,16 @@ const beforeSendHandler = <T extends ErrorEvent | TransactionEvent>(
     return safeEvent;
   }
 
+  // Always send events related to "Already closed" error from PDF renderer
+  if (
+    event.exception?.values?.[0]?.value?.match(
+      /java.lang.IllegalStateException: Already closed/
+    ) ||
+    event.exception?.values?.[0]?.value?.match(/PDF renderer/)
+  ) {
+    return safeEvent;
+  }
+
   // Apply sampling for non-required events (20% sampling rate)
   const sampleRate = 0.2;
   return Math.random() <= sampleRate ? eventExcludeHttp500 : null;

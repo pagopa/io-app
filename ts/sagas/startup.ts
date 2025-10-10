@@ -47,7 +47,10 @@ import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { watchFciSaga } from "../features/fci/saga";
 import { watchFimsSaga } from "../features/fims/common/saga";
 import { startAndReturnIdentificationResult } from "../features/identification/sagas";
-import { IdentificationResult } from "../features/identification/store/reducers";
+import {
+  IdentificationBackActionType,
+  IdentificationResult
+} from "../features/identification/store/reducers";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
 import {
   shouldExitForOfflineAccess,
@@ -78,7 +81,7 @@ import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnbo
 import { watchAbortOnboardingSaga } from "../features/onboarding/saga/watchAbortOnboardingSaga";
 import { watchPaymentsSaga } from "../features/payments/common/saga";
 import { watchAarFlowSaga } from "../features/pn/aar/saga/watchAARFlowSaga";
-import { isAAREnabled } from "../features/pn/aar/store/reducers";
+import { isAAREnabled } from "../features/pn/aar/store/selectors";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { maybeHandlePendingBackgroundActions } from "../features/pushNotifications/sagas/common";
 import { notificationPermissionsListener } from "../features/pushNotifications/sagas/notificationPermissionsListener";
@@ -357,7 +360,7 @@ export function* initializeApplicationSaga(
   yield* fork(watchServicesSaga, backendClient, sessionToken);
 
   // Start watching for Messages actions
-  yield* fork(watchMessagesSaga, backendClient, sessionToken);
+  yield* fork(watchMessagesSaga, backendClient, sessionToken, keyInfo);
 
   // start watching for FIMS actions
   yield* fork(watchFimsSaga, sessionToken);
@@ -489,7 +492,17 @@ export function* initializeApplicationSaga(
     // FIXME: This is an unsafe cast caused by a wrongly described type.
     const identificationResult: SagaCallReturnType<
       typeof startAndReturnIdentificationResult
-    > = yield* call(startAndReturnIdentificationResult, maybeStoredPin.value);
+    > = yield* call(
+      startAndReturnIdentificationResult,
+      maybeStoredPin.value,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      IdentificationBackActionType.CLOSE_APP
+    );
 
     if (identificationResult === IdentificationResult.pinreset) {
       // If we are here the user had chosen to reset the unlock code
