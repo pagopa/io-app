@@ -23,6 +23,8 @@ import {
   sendAarMockStates
 } from "../../utils/testUtils";
 import { fetchAarDataSaga, testable } from "../fetchNotificationDataSaga";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
+import { SendAARClient } from "../../api/client";
 
 const mockCurrentState = {
   type: sendAARFlowStates.fetchingNotificationData,
@@ -36,6 +38,10 @@ const mockSessionToken = "token" as SessionToken;
 const mockSessionTokenWithBearer = `Bearer ${mockSessionToken}` as SessionToken;
 const mockNotification = { foo: "bar" };
 
+const mockResolvedCall = (resolved: any) =>
+  new Promise((res, _reject) => res(resolved)) as unknown as ReturnType<
+    SendAARClient["getAARNotification"]
+  >;
 describe("fetchAarDataSaga", () => {
   describe("error paths", () => {
     it("should early return if state is not fetchingNotificationData", () => {
@@ -50,20 +56,16 @@ describe("fetchAarDataSaga", () => {
 
     it("should handle left result and set KO state", () => {
       const mockFailure = E.left("error");
-      const fetchData = jest.fn().mockResolvedValue(mockFailure);
+      const fetchData = jest
+        .fn()
+        .mockReturnValue(mockResolvedCall(mockFailure));
       testSaga(fetchAarDataSaga, fetchData, mockSessionToken)
         .next()
         .select(currentAARFlowData)
         .next(mockCurrentState)
         .select(isPnTestEnabledSelector)
         .next(true)
-        .call(fetchData, {
-          Bearer: mockSessionTokenWithBearer,
-          iun: mockCurrentState.iun,
-          mandateId: mockCurrentState.mandateId,
-          "x-pagopa-pn-io-src": "QRCODE",
-          isTest: true
-        })
+        .call(withRefreshApiCall, fetchData())
         .next(mockFailure)
         .put(
           setAarFlowState({
@@ -73,12 +75,22 @@ describe("fetchAarDataSaga", () => {
         )
         .next()
         .isDone();
+
+      expect(fetchData).toHaveBeenCalledWith({
+        Bearer: mockSessionTokenWithBearer,
+        iun: mockCurrentState.iun,
+        mandateId: mockCurrentState.mandateId,
+        "x-pagopa-pn-io-src": "QRCODE",
+        isTest: true
+      });
     });
 
     it("should handle status !== 200 and set KO state", () => {
       const mockResolved = { status: 400, value: mockNotification };
       const mockResolvedEither = E.right(mockResolved);
-      const fetchData = jest.fn().mockResolvedValue(mockResolvedEither);
+      const fetchData = jest
+        .fn()
+        .mockReturnValue(mockResolvedCall(mockResolvedEither));
 
       testSaga(fetchAarDataSaga, fetchData, mockSessionToken)
         .next()
@@ -86,13 +98,7 @@ describe("fetchAarDataSaga", () => {
         .next(mockCurrentState)
         .select(isPnTestEnabledSelector)
         .next(true)
-        .call(fetchData, {
-          Bearer: mockSessionTokenWithBearer,
-          iun: mockCurrentState.iun,
-          mandateId: mockCurrentState.mandateId,
-          "x-pagopa-pn-io-src": "QRCODE",
-          isTest: true
-        })
+        .call(withRefreshApiCall, fetchData())
         .next(mockResolvedEither)
         .put(
           setAarFlowState({
@@ -103,6 +109,14 @@ describe("fetchAarDataSaga", () => {
         )
         .next()
         .isDone();
+
+      expect(fetchData).toHaveBeenCalledWith({
+        Bearer: mockSessionTokenWithBearer,
+        iun: mockCurrentState.iun,
+        mandateId: mockCurrentState.mandateId,
+        "x-pagopa-pn-io-src": "QRCODE",
+        isTest: true
+      });
     });
     it("should handle a saga error and set KO state", () => {
       const error = new Error("fail");
@@ -115,14 +129,6 @@ describe("fetchAarDataSaga", () => {
         .next(mockCurrentState)
         .select(isPnTestEnabledSelector)
         .next(true)
-        .call(fetchData, {
-          Bearer: mockSessionTokenWithBearer,
-          iun: mockCurrentState.iun,
-          mandateId: mockCurrentState.mandateId,
-          "x-pagopa-pn-io-src": "QRCODE",
-          isTest: true
-        })
-        .throw(error)
         .put(
           setAarFlowState({
             type: sendAARFlowStates.ko,
@@ -131,25 +137,27 @@ describe("fetchAarDataSaga", () => {
         )
         .next()
         .isDone();
+
+      expect(fetchData).toHaveBeenCalledWith({
+        Bearer: mockSessionTokenWithBearer,
+        iun: mockCurrentState.iun,
+        mandateId: mockCurrentState.mandateId,
+        "x-pagopa-pn-io-src": "QRCODE",
+        isTest: true
+      });
     });
   });
   describe("200 status path", () => {
     it("should handle a non-parsable success payload and return", () => {
       const mockValue = E.right({ status: 200, value: mockNotification });
-      const fetchData = jest.fn().mockResolvedValue(mockValue);
+      const fetchData = jest.fn().mockReturnValue(mockResolvedCall(mockValue));
       testSaga(fetchAarDataSaga, fetchData, mockSessionToken)
         .next()
         .select(currentAARFlowData)
         .next(mockCurrentState)
         .select(isPnTestEnabledSelector)
         .next(true)
-        .call(fetchData, {
-          Bearer: mockSessionTokenWithBearer,
-          iun: mockCurrentState.iun,
-          mandateId: mockCurrentState.mandateId,
-          "x-pagopa-pn-io-src": "QRCODE",
-          isTest: true
-        })
+        .call(withRefreshApiCall, fetchData())
         .next(mockValue)
         .call(
           aarMessageDataPayloadFromResponse,
@@ -165,24 +173,27 @@ describe("fetchAarDataSaga", () => {
         )
         .next()
         .isDone();
+
+      expect(fetchData).toHaveBeenCalledWith({
+        Bearer: mockSessionTokenWithBearer,
+        iun: mockCurrentState.iun,
+        mandateId: mockCurrentState.mandateId,
+        "x-pagopa-pn-io-src": "QRCODE",
+        isTest: true
+      });
     });
     it("should handle a parsable success payload and dispatch the correct actions", () => {
       const mockPayload = mockEphemeralAarMessageDataActionPayload;
       const mockValue = E.right({ status: 200, value: mockNotification });
-      const fetchData = jest.fn().mockResolvedValue(mockValue);
+      const fetchData = jest.fn().mockReturnValue(mockResolvedCall(mockValue));
+      // mockResolvedValue(mockValue);
       testSaga(fetchAarDataSaga, fetchData, mockSessionToken)
         .next()
         .select(currentAARFlowData)
         .next(mockCurrentState)
         .select(isPnTestEnabledSelector)
         .next(true)
-        .call(fetchData, {
-          Bearer: mockSessionTokenWithBearer,
-          iun: mockCurrentState.iun,
-          mandateId: mockCurrentState.mandateId,
-          "x-pagopa-pn-io-src": "QRCODE",
-          isTest: true
-        })
+        .call(withRefreshApiCall, fetchData())
         .next(mockValue)
         .call(
           aarMessageDataPayloadFromResponse,
@@ -204,6 +215,14 @@ describe("fetchAarDataSaga", () => {
         )
         .next()
         .isDone();
+
+      expect(fetchData).toHaveBeenCalledWith({
+        Bearer: mockSessionTokenWithBearer,
+        iun: mockCurrentState.iun,
+        mandateId: mockCurrentState.mandateId,
+        "x-pagopa-pn-io-src": "QRCODE",
+        isTest: true
+      });
     });
   });
 });
