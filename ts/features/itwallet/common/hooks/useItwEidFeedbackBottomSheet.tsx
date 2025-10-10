@@ -3,6 +3,7 @@ import I18n from "i18next";
 import { View } from "react-native";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
 import { openWebUrl } from "../../../../utils/url.ts";
+import { IT_WALLET_SURVEY_EID_REISSUANCE_FAILURE } from "../utils/constants.ts";
 
 type ItwEidFeedbackBottomSheetProps = {
   primaryAction?: () => void;
@@ -37,9 +38,7 @@ export const useItwEidFeedbackBottomSheet = ({
                   "features.itWallet.feedback.reissuance.bottomSheet.primaryAction"
                 )}
                 onPress={() => {
-                  openWebUrl(
-                    "https://pagopa.qualtrics.com/jfe/form/SV_5bhV8w1e2ujl9xs"
-                  );
+                  openWebUrl(IT_WALLET_SURVEY_EID_REISSUANCE_FAILURE);
                   primaryAction?.();
                   dismiss();
                 }}
