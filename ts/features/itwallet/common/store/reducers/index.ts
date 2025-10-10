@@ -95,14 +95,8 @@ export const migrations: MigrationManifest = {
   },
 
   // Removed offlineBannerHidden from preferences
-  "6": state => {
-    const prevState = state as ItWalletState & PersistPartial;
-    const preferences = _.get(prevState, "preferences");
-    return {
-      ...prevState,
-      preferences: _.omit(preferences, "offlineBannerHidden")
-    };
-  }
+  "6": (state: PersistedState): PersistedState =>
+    _.omit(state, "preferences.offlineBannerHidden")
 };
 
 const itwPersistConfig: PersistConfig = {
