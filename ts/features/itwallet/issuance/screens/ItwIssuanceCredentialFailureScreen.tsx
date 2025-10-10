@@ -22,7 +22,7 @@ import {
 } from "../../common/hooks/useItwFailureSupportModal";
 import { itwDeferredIssuanceScreenContentSelector } from "../../common/store/selectors/remoteConfig";
 import { getClaimsFullLocale } from "../../common/utils/itwClaimsUtils";
-import { StatusAttestationError } from "../../common/utils/itwCredentialStatusAttestationUtils";
+import { StatusAssertionError } from "../../common/utils/itwCredentialStatusAssertionUtils.ts";
 import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
 import { IssuerConfiguration } from "../../common/utils/itwTypesUtils";
 import {
@@ -248,7 +248,7 @@ const getCredentialInvalidStatusDetails = (
     O.fromPredicate(isInvalidStatusFailure),
     O.map(({ reason }) => ({
       errorCodeOption: pipe(
-        O.fromEither(StatusAttestationError.decode(reason?.reason)),
+        O.fromEither(StatusAssertionError.decode(reason?.reason)),
         O.map(({ error }) => error)
       ),
       credentialConfigurationId: O.fromNullable(reason?.metadata?.credentialId)
