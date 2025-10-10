@@ -322,6 +322,34 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
     isAlertVisible
   ]);
 
+  useEffect(() => {
+    if (connectivityAlert) {
+      // Visibility is handled by the connectivity useEffect
+      return;
+    }
+    if (!currentStatusMessage || currentStatusMessage.length === 0) {
+      setAlertVisible(false);
+    } else {
+      setAlertVisible(true);
+      mixpanelTrack(
+        "REMOTE_BANNER",
+        buildMPEventProperties(
+          "screen_view",
+          currentRoute,
+          currentStatusMessage[0].web_url
+            ? currentStatusMessage[0].web_url[localeFallback]
+            : undefined
+        )
+      );
+    }
+  }, [
+    connectivityAlert,
+    currentStatusMessage,
+    setAlertVisible,
+    currentRoute,
+    localeFallback
+  ]);
+
   return useMemo(() => {
     if (connectivityAlert) {
       return {
@@ -330,7 +358,6 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
       };
     }
     if (!currentStatusMessage || currentStatusMessage.length === 0) {
-      setAlertVisible(false);
       return undefined;
     }
     // If there is at least one status-message to display, extract its content and variant (using memoization to avoid re-renderings, since we are creating a new instance)
@@ -360,15 +387,6 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
       )
     );
 
-    setAlertVisible(currentStatusMessage.length > 0);
-    mixpanelTrack(
-      "REMOTE_BANNER",
-      buildMPEventProperties(
-        "screen_view",
-        currentRoute,
-        firstAlert.web_url ? firstAlert.web_url[localeFallback] : undefined
-      )
-    );
     return {
       alertProps: {
         content: firstAlert.message[localeFallback],
@@ -379,7 +397,6 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
   }, [
     connectivityAlert,
     currentStatusMessage,
-    setAlertVisible,
     localeFallback,
     bottomSheet,
     currentRoute
