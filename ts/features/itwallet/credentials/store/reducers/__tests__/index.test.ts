@@ -2,7 +2,7 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import {
-  ParsedStatusAttestation,
+  ParsedStatusAssertion,
   StoredCredential
 } from "../../../../common/utils/itwTypesUtils";
 import { itwCredentialsRemove, itwCredentialsStore } from "../../actions";
@@ -157,10 +157,10 @@ describe("ITW credentials reducer", () => {
   it("should update existing credentials overwriting the previous instances", () => {
     const updatedCredential: StoredCredential = {
       ...mockedCredential,
-      storedStatusAttestation: {
+      storedStatusAssertion: {
         credentialStatus: "valid" as const,
-        statusAttestation: "abc",
-        parsedStatusAttestation: { exp: 1000 } as ParsedStatusAttestation
+        statusAssertion: "abc",
+        parsedStatusAssertion: { exp: 1000 } as ParsedStatusAssertion
       }
     };
 

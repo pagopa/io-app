@@ -8,7 +8,9 @@ import { ThirdPartyMessage as AarThirdPartyMessage } from "../../../../../defini
 import { pnMessagingServiceIdSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../types/SessionToken";
+import { SagaCallReturnType } from "../../../../types/utils";
 import { isTestEnv } from "../../../../utils/environment";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { getServiceDetails } from "../../../services/common/saga/ getServiceDetails";
 import { profileFiscalCodeSelector } from "../../../settings/common/store/selectors";
 import { SendAARClient } from "../api/client";
@@ -29,13 +31,17 @@ export function* fetchAarDataSaga(
     return;
   }
   try {
-    const result = yield* call(fetchData, {
+    const fetchAarRequest = fetchData({
       Bearer: `Bearer ${sessionToken}`,
       iun: currentState.iun,
       mandateId: currentState.mandateId,
       "x-pagopa-pn-io-src": "QRCODE",
       isTest
     });
+    const result = (yield* call(
+      withRefreshApiCall,
+      fetchAarRequest
+    )) as unknown as SagaCallReturnType<typeof fetchData>;
 
     if (E.isLeft(result)) {
       yield* put(
