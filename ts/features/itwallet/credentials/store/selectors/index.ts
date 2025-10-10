@@ -214,14 +214,14 @@ export const itwHasWalletAtLeastTwoCredentialsSelector = createSelector(
 );
 
 /**
- * Get the credential status and the error message corresponding to the status attestation error, if present.
+ * Get the credential status and the error message corresponding to the status assertion error, if present.
  * The message is dynamic and extracted from the issuer configuration.
  *
  * Note: the credential type is passed as second argument to reuse the same selector and cache per credential type.
  *
  * @param state - The global state.
  * @param type - The credential type.
- * @returns The credential status and the error message corresponding to the status attestation error, if present.
+ * @returns The credential status and the error message corresponding to the status assertion error, if present.
  */
 export const itwCredentialStatusSelector = createSelector(
   itwCredentialsSelector,
@@ -237,17 +237,17 @@ export const itwCredentialStatusSelector = createSelector(
 );
 
 /**
- * Returns the credential status and the error message corresponding to the status attestation error, if present.
+ * Returns the credential status and the error message corresponding to the status assertion error, if present.
  *
  * @param state - The global state.
- * @returns The credential status and the error message corresponding to the status attestation error, if present.
+ * @returns The credential status and the error message corresponding to the status assertion error, if present.
  */
 export const itwCredentialsEidStatusSelector = createSelector(
   itwCredentialsEidSelector,
   eidOption =>
     pipe(
       eidOption,
-      // eID does not have status attestation nor expiry date, so it safe to assume its status is based on the JWT only
+      // eID does not have status assertion nor expiry date, so it safe to assume its status is based on the JWT only
       O.map(eid => getCredentialStatus(eid) as ItwJwtCredentialStatus),
       O.toUndefined
     )

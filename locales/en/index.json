@@ -3890,6 +3890,9 @@
                 "errorCode": "Codice errore"
               }
             }
+          },
+          "displayingNotificationData": {
+            "headerText-through": " tramite"
           }
         }
       },
@@ -4509,9 +4512,9 @@
           "primaryAction": "Ottieni IT-Wallet",
           "dismissalDialog": {
             "title": "Vuoi rinunciare ai vantaggi di IT-Wallet?",
-            "body": "Otterrai una versione digitale dei tuoi documenti con funzionalità ridotte.",
-            "confirm": "Si, rinuncia",
-            "cancel": "No, torna indietro"
+            "body": "Potrai ottenere IT-Wallet in qualsiasi altro momento, se cambi idea.",
+            "confirm": "Sì, rinuncia",
+            "cancel": "No, continua"
           }
         },
         "offlineBanner": {
@@ -4559,43 +4562,6 @@
               "cieId": {
                 "title": "Usa l'app CieID",
                 "subtitle": "Necessarie credenziali e app CieID"
-              }
-            }
-          },
-          "l3": {
-            "screen": {
-              "title": "Verifica la tua identità con CIE",
-              "description": "È un passaggio di sicurezza necessario per ottenere IT-Wallet e associare i documenti alla tua identità.",
-              "primaryAction": "Inizia",
-              "secondaryAction": "Non ho la CIE",
-              "requirements": {
-                "header": "Avrai bisogno di:",
-                "card": "La tua Carta di Identità Elettronica (CIE)",
-                "pin": "Il PIN della CIE a 8 cifre"
-              },
-              "otherMethods": {
-                "header": "In alternativa:",
-                "title": "Continua sull'app CieID",
-                "subtitle": "Utile se hai già installato l’app CieID e registrato la CIE"
-              }
-            },
-            "bottomSheet": {
-              "cieId": {
-                "title": "Continua sull’app CieID",
-                "content": "Per completare la verifica della tua identità sull’app CieID avrai bisogno di:\n\n * La Carta di Identità Elettronica\n * Il PIN a 8 cifre della CIE\n\nSe hai già installato l’app e hai già registrato la CIE, usa l’app CieID come alternativa più veloce.",
-                "primaryAction": "Continua sull’app CieID",
-                "secondaryAction": "Non ora"
-              },
-              "noCie": {
-                "title": "Se non hai  la CIE puoi continuare senza i vantaggi di IT-Wallet",
-                "content": "Puoi usare SPID o CieID (livello 2) per ottenere una versione dei tuoi documenti digitali con funzionalità ridotte.",
-                "warnings": [
-                  "Non potrai usare la Patente come documento d'identità",
-                  "Non potrai usare IT-Wallet per accedere ai servizi digitali della PA",
-                  "Non potrai ottenere i nuovi documenti disponibili solo con IT-Wallet"
-                ],
-                "primaryAction": "Continua senza IT-Wallet",
-                "secondaryAction": "Torna indietro"
               }
             }
           }
@@ -5017,7 +4983,7 @@
             "primaryAction": "Inizia"
           }
         },
-        "statusAttestationUnknown": {
+        "statusAssertionUnknown": {
           "title": "Non siamo riusciti a caricare {{credentialName}}",
           "content": "Chiudi e riapri l'app per riprovare.",
           "primaryAction": "Ho capito"
@@ -5405,7 +5371,7 @@
       "upgrade": {
         "banner": {
           "title": "IT-Wallet per i tuoi documenti",
-          "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**.\nGarantito dallo Stato, accessibile solo a te.",
+          "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**. Garantito dallo Stato, accessibile solo a te.",
           "action": "Ottieni IT-Wallet"
         }
       },
@@ -5599,7 +5565,7 @@
       "initiativeOnboardedStatus": {
         "header": "My requests",
         "ON_WAITING_LIST": {
-          "label": "On evaluation"
+          "label": "On waiting list"
         },
         "ON_EVALUATION": {
           "label": "On evaluation"
@@ -5747,7 +5713,9 @@
           "labels": {
             "AUTHORIZED": "Authorized",
             "CANCELLED": "Annullata",
-            "REWARDED": "Eseguita"
+            "REWARDED": "Eseguita",
+            "REFUNDED": "Rimborsata",
+            "CAPTURED": "Eseguita"
           },
           "details": {
             "alerts": {

@@ -5,7 +5,7 @@ import {
   GetWalletAttestationActorOutput,
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
-  ObtainStatusAttestationActorInput,
+  ObtainStatusAssertionActorInput,
   RequestCredentialActorInput,
   RequestCredentialActorOutput
 } from "./actors";
@@ -74,9 +74,9 @@ export const itwCredentialIssuanceMachine = setup({
       ObtainCredentialActorOutput,
       ObtainCredentialActorInput
     >(notImplemented),
-    obtainStatusAttestation: fromPromise<
+    obtainStatusAssertion: fromPromise<
       Array<StoredCredential>,
-      ObtainStatusAttestationActorInput
+      ObtainStatusAssertionActorInput
     >(notImplemented)
   },
   guards: {
@@ -254,7 +254,7 @@ export const itwCredentialIssuanceMachine = setup({
                 context.mode === "upgrade" ? "reissuing" : undefined
             }),
             onDone: {
-              target: "ObtainingStatusAttestation",
+              target: "ObtainingStatusAssertion",
               actions: assign(({ event }) => ({
                 credentials: event.output.credentials
               }))
@@ -265,9 +265,9 @@ export const itwCredentialIssuanceMachine = setup({
             }
           }
         },
-        ObtainingStatusAttestation: {
+        ObtainingStatusAssertion: {
           invoke: {
-            src: "obtainStatusAttestation",
+            src: "obtainStatusAssertion",
             input: ({ context }) => ({
               credentials: context.credentials
             }),
