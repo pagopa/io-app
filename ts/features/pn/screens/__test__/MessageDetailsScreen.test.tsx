@@ -1,11 +1,9 @@
-import { fireEvent } from "@testing-library/react-native";
 import { Action, Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { reproduceSequence } from "../../../../utils/tests";
 import { message_1 } from "../../../messages/__mocks__/message";
@@ -29,18 +27,7 @@ jest.mock("../../../../utils/hooks/bottomSheet");
 jest.mock("../../../../navigation/params/AppParamsList");
 
 describe("MessageDetailsScreen", () => {
-  const mockDismiss = jest.fn();
-  const mockPresent = jest.fn();
-  const mockPopToTop = jest.fn();
-
-  (useIOBottomSheetModal as jest.Mock).mockImplementation(({ component }) => ({
-    bottomSheet: component,
-    present: mockPresent,
-    dismiss: mockDismiss
-  }));
-
   (useIONavigation as jest.Mock).mockImplementation(() => ({
-    popToTop: mockPopToTop,
     setOptions: jest.fn(),
     goBack: jest.fn()
   }));
@@ -90,54 +77,6 @@ describe("MessageDetailsScreen", () => {
       const { component } = renderComponent(store, isAar);
       expect(component).toMatchSnapshot();
     });
-  });
-
-  it("calls dismiss() only when primary button is pressed", () => {
-    const sequence = [
-      loadMessageById.success(toUIMessage(message_1)),
-      loadServiceDetail.success(service_1),
-      loadMessageDetails.success(toUIMessageDetails(message_1)),
-      loadThirdPartyMessage.success({
-        id: message_1.id,
-        content: { kind: "TPM", ...thirdPartyMessage }
-      })
-    ];
-    const state = reproduceSequence({} as GlobalState, appReducer, sequence);
-    const store = configureMockStore<GlobalState>()(state);
-
-    const {
-      component: { getByTestId }
-    } = renderComponent(store, true);
-
-    const primaryButton = getByTestId("primary_button");
-    fireEvent.press(primaryButton);
-
-    expect(mockDismiss).toHaveBeenCalledTimes(1);
-    expect(mockPopToTop).not.toHaveBeenCalled();
-  });
-
-  it("calls dismiss() and popToTop() when secondary button is pressed", () => {
-    const sequence = [
-      loadMessageById.success(toUIMessage(message_1)),
-      loadServiceDetail.success(service_1),
-      loadMessageDetails.success(toUIMessageDetails(message_1)),
-      loadThirdPartyMessage.success({
-        id: message_1.id,
-        content: { kind: "TPM", ...thirdPartyMessage }
-      })
-    ];
-    const state = reproduceSequence({} as GlobalState, appReducer, sequence);
-    const store = configureMockStore<GlobalState>()(state);
-
-    const {
-      component: { getByTestId }
-    } = renderComponent(store, true);
-
-    const secondaryButton = getByTestId("secondary_button");
-    fireEvent.press(secondaryButton);
-
-    expect(mockDismiss).toHaveBeenCalledTimes(1);
-    expect(mockPopToTop).toHaveBeenCalledTimes(1);
   });
 });
 

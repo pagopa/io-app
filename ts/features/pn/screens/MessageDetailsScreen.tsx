@@ -4,14 +4,13 @@ import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useOfflineToastGuard } from "../../../hooks/useOfflineToastGuard";
 import { useStartSupportRequest } from "../../../hooks/useStartSupportRequest";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
-import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { isStrictSome } from "../../../utils/pot";
 import {
@@ -20,7 +19,10 @@ import {
   updatePaymentForMessage
 } from "../../messages/store/actions";
 import { profileFiscalCodeSelector } from "../../settings/common/store/selectors";
-import { SendAARMessageDetailBottomSheet } from "../aar/components/SendAARMessageDetailBottomSheet";
+import {
+  SendAARMessageDetailBottomSheetComponent,
+  SendAARMessageDetailBottomSheetComponentRef
+} from "../aar/components/SendAARMessageDetailBottomSheetComponent";
 import { terminateAarFlow } from "../aar/store/actions";
 import { trackPNUxSuccess } from "../analytics";
 import { MessageDetails } from "../components/MessageDetails";
@@ -61,7 +63,8 @@ const useCorrectHeader = (isAAr: boolean, onAARCloseHandler: () => void) => {
     firstAction: {
       icon: "closeLarge",
       onPress: onAARCloseHandler,
-      accessibilityLabel: I18n.t("global.buttons.close")
+      accessibilityLabel: I18n.t("global.buttons.close"),
+      testID: "AAR_close_button"
     }
   };
   const supportRequestAction: HeaderSecondLevel = {
@@ -89,24 +92,14 @@ const useCorrectHeader = (isAAr: boolean, onAARCloseHandler: () => void) => {
 
 export const MessageDetailsScreen = () => {
   const dispatch = useIODispatch();
-  const { popToTop } = useIONavigation();
   const route = useRoute<MessageDetailsRouteProps>();
   const { messageId, serviceId, firstTimeOpening, isAarMessage } = route.params;
+  const aarBottomSheetRef =
+    useRef<SendAARMessageDetailBottomSheetComponentRef>(null);
 
-  const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
-    title: I18n.t("features.pn.aar.flow.closeNotification.title"),
-    component: (
-      <SendAARMessageDetailBottomSheet
-        onPrimaryActionPress={() => dismiss()}
-        onSecondaryActionPress={() => {
-          dismiss();
-          popToTop();
-        }}
-      />
-    )
+  useCorrectHeader(!!isAarMessage, () => {
+    aarBottomSheetRef.current?.present();
   });
-
-  useCorrectHeader(!!isAarMessage, present);
 
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
   const messagePot = useIOSelector(state =>
@@ -190,7 +183,9 @@ export const MessageDetailsScreen = () => {
           )
         )
       )}
-      {bottomSheet}
+      {isAarMessage && (
+        <SendAARMessageDetailBottomSheetComponent ref={aarBottomSheetRef} />
+      )}
     </>
   );
 };

@@ -5,7 +5,6 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { useMemo } from "react";
 import { View } from "react-native";
 import { useIOSelector } from "../../../../store/hooks";
 import { openWebUrl } from "../../../../utils/url";
@@ -25,13 +24,10 @@ export const SendAARMessageDetailBottomSheet = ({
 }: SendAARMessageDetailBottomSheetProps) => {
   const currentFlow = useIOSelector(currentAARFlowData);
 
-  const mandateId = useMemo(
-    () =>
-      currentFlow.type === sendAARFlowStates.displayingNotificationData
-        ? currentFlow.mandateId
-        : undefined,
-    [currentFlow]
-  );
+  const mandateId =
+    currentFlow.type === sendAARFlowStates.displayingNotificationData
+      ? currentFlow.mandateId
+      : undefined;
 
   const onLinkPress = () => {
     openWebUrl(URL);
