@@ -87,7 +87,6 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
   const route = useRoute();
   const isMultilevel = isMultiLevelCredential(credential);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
-
   const mixPanelCredential = useMemo(
     () => getMixPanelCredential(credentialType, isItwL3),
     [credentialType, isItwL3]
