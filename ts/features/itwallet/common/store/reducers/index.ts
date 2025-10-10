@@ -102,7 +102,7 @@ export const migrations: MigrationManifest = {
       ...prevState,
       preferences: _.omit(preferences, "offlineBannerHidden")
     };
-  },
+  }
 };
 
 const itwPersistConfig: PersistConfig = {
