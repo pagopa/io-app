@@ -934,6 +934,14 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                         <View>
                           service_one
                         </View>
+                        <View>
+                          <View>
+                            00000000009
+                          </View>
+                          <View>
+                            026773337463073118
+                          </View>
+                        </View>
                       </View>
                     </View>
                     <View
