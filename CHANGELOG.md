@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.16.0-rc.7](https://github.com/pagopa/io-app/compare/3.16.0-rc.6...3.16.0-rc.7) (2025-10-10)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-3125](https://pagopa.atlassian.net/browse/SIW-3125)] Fix eid survey link ([#7466](https://github.com/pagopa/io-app/issues/7466)) ([680c17e](https://github.com/pagopa/io-app/commit/680c17e4b730ee0e258b3f69a2bfd19c8fe32028))
+
 ## [3.16.0-rc.6](https://github.com/pagopa/io-app/compare/3.16.0-rc.5...3.16.0-rc.6) (2025-10-09)
 
 
