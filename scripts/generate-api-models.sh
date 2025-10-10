@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IO_BACKEND_VERSION=v16.17.0
+IO_BACKEND_VERSION=v17.5.0
 # need to change after merge on io-services-metadata
 IO_SERVICES_METADATA_VERSION=1.0.85
 # Session manager version
