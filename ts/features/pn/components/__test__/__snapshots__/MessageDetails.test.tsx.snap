@@ -622,6 +622,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                       },
                                     ]
                                   }
+                                  testID="date"
                                 >
                                   01 gen 2020, 00:00
                                 </Text>

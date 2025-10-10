@@ -171,6 +171,7 @@ export const MessageDetailsScreen = () => {
               messageId={messageId}
               serviceId={serviceId}
               payments={payments}
+              isAARMessage={isAarMessage}
             />
           )
         )
