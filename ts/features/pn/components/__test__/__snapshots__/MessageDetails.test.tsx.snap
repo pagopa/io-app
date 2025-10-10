@@ -1397,6 +1397,9 @@ exports[`MessageDetails component should match the snapshot with default props (
                             Mock MessageBottomMenu
                           </View>
                           <View>
+                            true
+                          </View>
+                          <View>
                             731143-7-0317-8200-0
                           </View>
                           <View>

@@ -15,21 +15,21 @@ jest.mock("../../../messages/components/MessageDetail/ContactsListItem");
 jest.mock("../../../messages/components/MessageDetail/ShowMoreListItem");
 
 describe("MessageBottomMenu", () => {
-  [false, true].forEach(isAARNotification => {
+  [false, true].forEach(isAARMessage => {
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, undefined payments, undefined cancelled, undefined paid notice codes`, () => {
-      const component = renderComponent([], isAARNotification);
+      const component = renderComponent([], isAARMessage);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, empty payments, undefined cancelled, undefined paid notice codes`, () => {
-      const component = renderComponent([], isAARNotification, []);
+      const component = renderComponent([], isAARMessage, []);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, one payment, undefined cancelled, undefined paid notice codes`, () => {
       const payments = [
         {
@@ -37,11 +37,11 @@ describe("MessageBottomMenu", () => {
           noticeCode: "111122223333444400"
         } as NotificationPaymentInfo
       ];
-      const component = renderComponent([], isAARNotification, payments);
+      const component = renderComponent([], isAARMessage, payments);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, multiple payments, undefined cancelled, undefined paid notice codes`, () => {
       const payments = [
         {
@@ -57,29 +57,24 @@ describe("MessageBottomMenu", () => {
           noticeCode: "111122223333444402"
         } as NotificationPaymentInfo
       ];
-      const component = renderComponent([], isAARNotification, payments);
+      const component = renderComponent([], isAARMessage, payments);
       expect(component.toJSON()).toMatchSnapshot();
     });
 
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, undefined payments, not cancelled, undefined paid notice codes`, () => {
-      const component = renderComponent(
-        [],
-        isAARNotification,
-        undefined,
-        false
-      );
+      const component = renderComponent([], isAARMessage, undefined, false);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, empty payments, not cancelled, undefined paid notice codes`, () => {
-      const component = renderComponent([], isAARNotification, [], false);
+      const component = renderComponent([], isAARMessage, [], false);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, one payment, not cancelled, undefined paid notice codes`, () => {
       const payments = [
         {
@@ -87,11 +82,11 @@ describe("MessageBottomMenu", () => {
           noticeCode: "111122223333444400"
         } as NotificationPaymentInfo
       ];
-      const component = renderComponent([], isAARNotification, payments, false);
+      const component = renderComponent([], isAARMessage, payments, false);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, multiple payments, not cancelled, undefined paid notice codes`, () => {
       const payments = [
         {
@@ -107,24 +102,24 @@ describe("MessageBottomMenu", () => {
           noticeCode: "111122223333444402"
         } as NotificationPaymentInfo
       ];
-      const component = renderComponent([], isAARNotification, payments, false);
+      const component = renderComponent([], isAARMessage, payments, false);
       expect(component.toJSON()).toMatchSnapshot();
     });
 
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, undefined payments, cancelled, undefined paid notice codes`, () => {
-      const component = renderComponent([], isAARNotification, undefined, true);
+      const component = renderComponent([], isAARMessage, undefined, true);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, empty payments, cancelled, undefined paid notice codes`, () => {
-      const component = renderComponent([], isAARNotification, [], true);
+      const component = renderComponent([], isAARMessage, [], true);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, one payment, cancelled, undefined paid notice codes`, () => {
       const payments = [
         {
@@ -132,11 +127,11 @@ describe("MessageBottomMenu", () => {
           noticeCode: "111122223333444400"
         } as NotificationPaymentInfo
       ];
-      const component = renderComponent([], isAARNotification, payments, true);
+      const component = renderComponent([], isAARMessage, payments, true);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, multiple payments, cancelled, undefined paid notice codes`, () => {
       const payments = [
         {
@@ -152,16 +147,16 @@ describe("MessageBottomMenu", () => {
           noticeCode: "111122223333444402"
         } as NotificationPaymentInfo
       ];
-      const component = renderComponent([], isAARNotification, payments, true);
+      const component = renderComponent([], isAARMessage, payments, true);
       expect(component.toJSON()).toMatchSnapshot();
     });
 
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, undefined payments, undefined cancelled, empty paid notice codes`, () => {
       const component = renderComponent(
         [],
-        isAARNotification,
+        isAARMessage,
         undefined,
         undefined,
         []
@@ -169,19 +164,13 @@ describe("MessageBottomMenu", () => {
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, empty payments, undefined cancelled, empty paid notice codes`, () => {
-      const component = renderComponent(
-        [],
-        isAARNotification,
-        [],
-        undefined,
-        []
-      );
+      const component = renderComponent([], isAARMessage, [], undefined, []);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, one payment, undefined cancelled, empty paid notice codes`, () => {
       const payments = [
         {
@@ -191,7 +180,7 @@ describe("MessageBottomMenu", () => {
       ];
       const component = renderComponent(
         [],
-        isAARNotification,
+        isAARMessage,
         payments,
         undefined,
         []
@@ -199,7 +188,7 @@ describe("MessageBottomMenu", () => {
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, multiple payments, undefined cancelled, empty paid notice codes`, () => {
       const payments = [
         {
@@ -217,7 +206,7 @@ describe("MessageBottomMenu", () => {
       ];
       const component = renderComponent(
         [],
-        isAARNotification,
+        isAARMessage,
         payments,
         undefined,
         []
@@ -226,25 +215,19 @@ describe("MessageBottomMenu", () => {
     });
 
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, undefined payments, not cancelled, empty paid notice codes`, () => {
-      const component = renderComponent(
-        [],
-        isAARNotification,
-        undefined,
-        false,
-        []
-      );
+      const component = renderComponent([], isAARMessage, undefined, false, []);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, empty payments, not cancelled, empty paid notice codes`, () => {
-      const component = renderComponent([], isAARNotification, [], false, []);
+      const component = renderComponent([], isAARMessage, [], false, []);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, one payment, not cancelled, empty paid notice codes`, () => {
       const payments = [
         {
@@ -252,17 +235,11 @@ describe("MessageBottomMenu", () => {
           noticeCode: "111122223333444400"
         } as NotificationPaymentInfo
       ];
-      const component = renderComponent(
-        [],
-        isAARNotification,
-        payments,
-        false,
-        []
-      );
+      const component = renderComponent([], isAARMessage, payments, false, []);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, multiple payments, not cancelled, empty paid notice codes`, () => {
       const payments = [
         {
@@ -278,36 +255,24 @@ describe("MessageBottomMenu", () => {
           noticeCode: "111122223333444402"
         } as NotificationPaymentInfo
       ];
-      const component = renderComponent(
-        [],
-        isAARNotification,
-        payments,
-        false,
-        []
-      );
+      const component = renderComponent([], isAARMessage, payments, false, []);
       expect(component.toJSON()).toMatchSnapshot();
     });
 
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, undefined payments, cancelled, empty paid notice codes`, () => {
-      const component = renderComponent(
-        [],
-        isAARNotification,
-        undefined,
-        true,
-        []
-      );
+      const component = renderComponent([], isAARMessage, undefined, true, []);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, empty payments, cancelled, empty paid notice codes`, () => {
-      const component = renderComponent([], isAARNotification, [], true, []);
+      const component = renderComponent([], isAARMessage, [], true, []);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, one payment, cancelled, empty paid notice codes`, () => {
       const payments = [
         {
@@ -315,17 +280,11 @@ describe("MessageBottomMenu", () => {
           noticeCode: "111122223333444400"
         } as NotificationPaymentInfo
       ];
-      const component = renderComponent(
-        [],
-        isAARNotification,
-        payments,
-        true,
-        []
-      );
+      const component = renderComponent([], isAARMessage, payments, true, []);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, multiple payments, cancelled, empty paid notice codes`, () => {
       const payments = [
         {
@@ -341,22 +300,16 @@ describe("MessageBottomMenu", () => {
           noticeCode: "111122223333444402"
         } as NotificationPaymentInfo
       ];
-      const component = renderComponent(
-        [],
-        isAARNotification,
-        payments,
-        true,
-        []
-      );
+      const component = renderComponent([], isAARMessage, payments, true, []);
       expect(component.toJSON()).toMatchSnapshot();
     });
 
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, undefined payments, undefined cancelled, non-empty paid notice codes`, () => {
       const component = renderComponent(
         [],
-        isAARNotification,
+        isAARMessage,
         undefined,
         undefined,
         ["111122223333444455"]
@@ -364,15 +317,15 @@ describe("MessageBottomMenu", () => {
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, empty payments, undefined cancelled, non-empty paid notice codes`, () => {
-      const component = renderComponent([], isAARNotification, [], undefined, [
+      const component = renderComponent([], isAARMessage, [], undefined, [
         "111122223333444455"
       ]);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, one payment, undefined cancelled, non-empty paid notice codes`, () => {
       const payments = [
         {
@@ -380,17 +333,13 @@ describe("MessageBottomMenu", () => {
           noticeCode: "111122223333444400"
         } as NotificationPaymentInfo
       ];
-      const component = renderComponent(
-        [],
-        isAARNotification,
-        payments,
-        undefined,
-        ["111122223333444455"]
-      );
+      const component = renderComponent([], isAARMessage, payments, undefined, [
+        "111122223333444455"
+      ]);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, multiple payments, undefined cancelled, non-empty paid notice codes`, () => {
       const payments = [
         {
@@ -406,38 +355,30 @@ describe("MessageBottomMenu", () => {
           noticeCode: "111122223333444402"
         } as NotificationPaymentInfo
       ];
-      const component = renderComponent(
-        [],
-        isAARNotification,
-        payments,
-        undefined,
-        ["111122223333444455"]
-      );
+      const component = renderComponent([], isAARMessage, payments, undefined, [
+        "111122223333444455"
+      ]);
       expect(component.toJSON()).toMatchSnapshot();
     });
 
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, undefined payments, not cancelled, non-empty paid notice codes`, () => {
-      const component = renderComponent(
-        [],
-        isAARNotification,
-        undefined,
-        false,
-        ["111122223333444455"]
-      );
-      expect(component.toJSON()).toMatchSnapshot();
-    });
-    it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
-    }an AAR, no history, empty payments, not cancelled, non-empty paid notice codes`, () => {
-      const component = renderComponent([], isAARNotification, [], false, [
+      const component = renderComponent([], isAARMessage, undefined, false, [
         "111122223333444455"
       ]);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
+    }an AAR, no history, empty payments, not cancelled, non-empty paid notice codes`, () => {
+      const component = renderComponent([], isAARMessage, [], false, [
+        "111122223333444455"
+      ]);
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARMessage ? "" : "not "
     }an AAR, no history, one payment, not cancelled, non-empty paid notice codes`, () => {
       const payments = [
         {
@@ -445,17 +386,13 @@ describe("MessageBottomMenu", () => {
           noticeCode: "111122223333444400"
         } as NotificationPaymentInfo
       ];
-      const component = renderComponent(
-        [],
-        isAARNotification,
-        payments,
-        false,
-        ["111122223333444455"]
-      );
+      const component = renderComponent([], isAARMessage, payments, false, [
+        "111122223333444455"
+      ]);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, multiple payments, not cancelled, non-empty paid notice codes`, () => {
       const payments = [
         {
@@ -471,38 +408,30 @@ describe("MessageBottomMenu", () => {
           noticeCode: "111122223333444402"
         } as NotificationPaymentInfo
       ];
-      const component = renderComponent(
-        [],
-        isAARNotification,
-        payments,
-        false,
-        ["111122223333444455"]
-      );
+      const component = renderComponent([], isAARMessage, payments, false, [
+        "111122223333444455"
+      ]);
       expect(component.toJSON()).toMatchSnapshot();
     });
 
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, undefined payments, cancelled, non-empty paid notice codes`, () => {
-      const component = renderComponent(
-        [],
-        isAARNotification,
-        undefined,
-        true,
-        ["111122223333444455"]
-      );
-      expect(component.toJSON()).toMatchSnapshot();
-    });
-    it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
-    }an AAR, no history, empty payments, cancelled, non-empty paid notice codes`, () => {
-      const component = renderComponent([], isAARNotification, [], true, [
+      const component = renderComponent([], isAARMessage, undefined, true, [
         "111122223333444455"
       ]);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
+    }an AAR, no history, empty payments, cancelled, non-empty paid notice codes`, () => {
+      const component = renderComponent([], isAARMessage, [], true, [
+        "111122223333444455"
+      ]);
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+    it(`should match snapshot, is ${
+      isAARMessage ? "" : "not "
     }an AAR, no history, one payment, cancelled, non-empty paid notice codes`, () => {
       const payments = [
         {
@@ -510,13 +439,13 @@ describe("MessageBottomMenu", () => {
           noticeCode: "111122223333444400"
         } as NotificationPaymentInfo
       ];
-      const component = renderComponent([], isAARNotification, payments, true, [
+      const component = renderComponent([], isAARMessage, payments, true, [
         "111122223333444455"
       ]);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, no history, multiple payments, cancelled, non-empty paid notice codes`, () => {
       const payments = [
         {
@@ -532,26 +461,26 @@ describe("MessageBottomMenu", () => {
           noticeCode: "111122223333444402"
         } as NotificationPaymentInfo
       ];
-      const component = renderComponent([], isAARNotification, payments, true, [
+      const component = renderComponent([], isAARMessage, payments, true, [
         "111122223333444455"
       ]);
       expect(component.toJSON()).toMatchSnapshot();
     });
 
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, undefined payments, undefined cancelled, undefined paid notice codes`, () => {
-      const component = renderComponent(fullHistory(), isAARNotification);
+      const component = renderComponent(fullHistory(), isAARMessage);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, empty payments, undefined cancelled, undefined paid notice codes`, () => {
-      const component = renderComponent(fullHistory(), isAARNotification, []);
+      const component = renderComponent(fullHistory(), isAARMessage, []);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, one payment, undefined cancelled, undefined paid notice codes`, () => {
       const payments = [
         {
@@ -559,15 +488,11 @@ describe("MessageBottomMenu", () => {
           noticeCode: "111122223333444400"
         } as NotificationPaymentInfo
       ];
-      const component = renderComponent(
-        fullHistory(),
-        isAARNotification,
-        payments
-      );
+      const component = renderComponent(fullHistory(), isAARMessage, payments);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, multiple payments, undefined cancelled, undefined paid notice codes`, () => {
       const payments = [
         {
@@ -583,38 +508,29 @@ describe("MessageBottomMenu", () => {
           noticeCode: "111122223333444402"
         } as NotificationPaymentInfo
       ];
-      const component = renderComponent(
-        fullHistory(),
-        isAARNotification,
-        payments
-      );
+      const component = renderComponent(fullHistory(), isAARMessage, payments);
       expect(component.toJSON()).toMatchSnapshot();
     });
 
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, undefined payments, not cancelled, undefined paid notice codes`, () => {
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         undefined,
         false
       );
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, empty payments, not cancelled, undefined paid notice codes`, () => {
-      const component = renderComponent(
-        fullHistory(),
-        isAARNotification,
-        [],
-        false
-      );
+      const component = renderComponent(fullHistory(), isAARMessage, [], false);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, one payment, not cancelled, undefined paid notice codes`, () => {
       const payments = [
         {
@@ -624,14 +540,14 @@ describe("MessageBottomMenu", () => {
       ];
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         payments,
         false
       );
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, multiple payments, not cancelled, undefined paid notice codes`, () => {
       const payments = [
         {
@@ -649,7 +565,7 @@ describe("MessageBottomMenu", () => {
       ];
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         payments,
         false
       );
@@ -657,29 +573,24 @@ describe("MessageBottomMenu", () => {
     });
 
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, undefined payments, cancelled, undefined paid notice codes`, () => {
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         undefined,
         true
       );
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, empty payments, cancelled, undefined paid notice codes`, () => {
-      const component = renderComponent(
-        fullHistory(),
-        isAARNotification,
-        [],
-        true
-      );
+      const component = renderComponent(fullHistory(), isAARMessage, [], true);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, one payment, cancelled, undefined paid notice codes`, () => {
       const payments = [
         {
@@ -689,14 +600,14 @@ describe("MessageBottomMenu", () => {
       ];
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         payments,
         true
       );
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, multiple payments, cancelled, undefined paid notice codes`, () => {
       const payments = [
         {
@@ -714,7 +625,7 @@ describe("MessageBottomMenu", () => {
       ];
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         payments,
         true
       );
@@ -722,11 +633,11 @@ describe("MessageBottomMenu", () => {
     });
 
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, undefined payments, undefined cancelled, empty paid notice codes`, () => {
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         undefined,
         undefined,
         []
@@ -734,11 +645,11 @@ describe("MessageBottomMenu", () => {
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR,  all handled-status items history, empty payments, undefined cancelled, empty paid notice codes`, () => {
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         [],
         undefined,
         []
@@ -746,7 +657,7 @@ describe("MessageBottomMenu", () => {
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, one payment, undefined cancelled, empty paid notice codes`, () => {
       const payments = [
         {
@@ -756,7 +667,7 @@ describe("MessageBottomMenu", () => {
       ];
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         payments,
         undefined,
         []
@@ -764,7 +675,7 @@ describe("MessageBottomMenu", () => {
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, multiple payments, undefined cancelled, empty paid notice codes`, () => {
       const payments = [
         {
@@ -782,7 +693,7 @@ describe("MessageBottomMenu", () => {
       ];
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         payments,
         undefined,
         []
@@ -791,11 +702,11 @@ describe("MessageBottomMenu", () => {
     });
 
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, undefined payments, not cancelled, empty paid notice codes`, () => {
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         undefined,
         false,
         []
@@ -803,11 +714,11 @@ describe("MessageBottomMenu", () => {
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, empty payments, not cancelled, empty paid notice codes`, () => {
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         [],
         false,
         []
@@ -815,7 +726,7 @@ describe("MessageBottomMenu", () => {
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, one payment, not cancelled, empty paid notice codes`, () => {
       const payments = [
         {
@@ -825,7 +736,7 @@ describe("MessageBottomMenu", () => {
       ];
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         payments,
         false,
         []
@@ -833,7 +744,7 @@ describe("MessageBottomMenu", () => {
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, multiple payments, not cancelled, empty paid notice codes`, () => {
       const payments = [
         {
@@ -851,7 +762,7 @@ describe("MessageBottomMenu", () => {
       ];
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         payments,
         false,
         []
@@ -860,11 +771,11 @@ describe("MessageBottomMenu", () => {
     });
 
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, undefined payments, cancelled, empty paid notice codes`, () => {
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         undefined,
         true,
         []
@@ -872,11 +783,11 @@ describe("MessageBottomMenu", () => {
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, empty payments, cancelled, empty paid notice codes`, () => {
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         [],
         true,
         []
@@ -884,7 +795,7 @@ describe("MessageBottomMenu", () => {
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, one payment, cancelled, empty paid notice codes`, () => {
       const payments = [
         {
@@ -894,7 +805,7 @@ describe("MessageBottomMenu", () => {
       ];
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         payments,
         true,
         []
@@ -902,7 +813,7 @@ describe("MessageBottomMenu", () => {
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, multiple payments, cancelled, empty paid notice codes`, () => {
       const payments = [
         {
@@ -920,7 +831,7 @@ describe("MessageBottomMenu", () => {
       ];
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         payments,
         true,
         []
@@ -929,11 +840,11 @@ describe("MessageBottomMenu", () => {
     });
 
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, undefined payments, undefined cancelled, non-empty paid notice codes`, () => {
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         undefined,
         undefined,
         ["999988887777666655"]
@@ -941,11 +852,11 @@ describe("MessageBottomMenu", () => {
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, empty payments, undefined cancelled, non-empty paid notice codes`, () => {
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         [],
         undefined,
         ["999988887777666655"]
@@ -953,7 +864,7 @@ describe("MessageBottomMenu", () => {
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, one payment, undefined cancelled, non-empty paid notice codes`, () => {
       const payments = [
         {
@@ -963,7 +874,7 @@ describe("MessageBottomMenu", () => {
       ];
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         payments,
         undefined,
         ["999988887777666655"]
@@ -971,7 +882,7 @@ describe("MessageBottomMenu", () => {
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, multiple payments, undefined cancelled, non-empty paid notice codes`, () => {
       const payments = [
         {
@@ -989,7 +900,7 @@ describe("MessageBottomMenu", () => {
       ];
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         payments,
         undefined,
         ["999988887777666655"]
@@ -998,11 +909,11 @@ describe("MessageBottomMenu", () => {
     });
 
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, undefined payments, not cancelled, non-empty paid notice codes`, () => {
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         undefined,
         false,
         ["999988887777666655"]
@@ -1010,11 +921,11 @@ describe("MessageBottomMenu", () => {
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, empty payments, not cancelled, non-empty paid notice codes`, () => {
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         [],
         false,
         ["999988887777666655"]
@@ -1022,7 +933,7 @@ describe("MessageBottomMenu", () => {
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, one payment, not cancelled, non-empty paid notice codes`, () => {
       const payments = [
         {
@@ -1032,7 +943,7 @@ describe("MessageBottomMenu", () => {
       ];
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         payments,
         false,
         ["999988887777666655"]
@@ -1040,7 +951,7 @@ describe("MessageBottomMenu", () => {
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, multiple payments, not cancelled, non-empty paid notice codes`, () => {
       const payments = [
         {
@@ -1058,7 +969,7 @@ describe("MessageBottomMenu", () => {
       ];
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         payments,
         false,
         ["999988887777666655"]
@@ -1067,11 +978,11 @@ describe("MessageBottomMenu", () => {
     });
 
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, undefined payments, cancelled, non-empty paid notice codes`, () => {
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         undefined,
         true,
         ["999988887777666655"]
@@ -1079,19 +990,15 @@ describe("MessageBottomMenu", () => {
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, empty payments, cancelled, non-empty paid notice codes`, () => {
-      const component = renderComponent(
-        fullHistory(),
-        isAARNotification,
-        [],
-        true,
-        ["999988887777666655"]
-      );
+      const component = renderComponent(fullHistory(), isAARMessage, [], true, [
+        "999988887777666655"
+      ]);
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, one payment, cancelled, non-empty paid notice codes`, () => {
       const payments = [
         {
@@ -1101,7 +1008,7 @@ describe("MessageBottomMenu", () => {
       ];
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         payments,
         true,
         ["999988887777666655"]
@@ -1109,7 +1016,7 @@ describe("MessageBottomMenu", () => {
       expect(component.toJSON()).toMatchSnapshot();
     });
     it(`should match snapshot, is ${
-      isAARNotification ? "" : "not "
+      isAARMessage ? "" : "not "
     }an AAR, all handled-status items history, multiple payments, cancelled, non-empty paid notice codes`, () => {
       const payments = [
         {
@@ -1127,7 +1034,7 @@ describe("MessageBottomMenu", () => {
       ];
       const component = renderComponent(
         fullHistory(),
-        isAARNotification,
+        isAARMessage,
         payments,
         true,
         ["999988887777666655"]
@@ -1192,7 +1099,7 @@ const fullHistory = (): NotificationStatusHistory => [
 
 const renderComponent = (
   history: NotificationStatusHistory,
-  isAARNotification: boolean,
+  isAARMessage: boolean,
   payments?: ReadonlyArray<NotificationPaymentInfo>,
   isCancelled?: boolean,
   paidNoticeCodes?: ReadonlyArray<string>
@@ -1203,7 +1110,7 @@ const renderComponent = (
   return renderScreenWithNavigationStoreContext(
     () => (
       <MessageBottomMenu
-        isAARNotification={isAARNotification}
+        isAARMessage={isAARMessage}
         history={history}
         isCancelled={isCancelled}
         iun={"randomIUN"}

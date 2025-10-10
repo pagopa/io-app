@@ -3,6 +3,7 @@ import { MessageBottomMenuProps } from "../MessageBottomMenu";
 
 export const MessageBottomMenu = ({
   history,
+  isAARMessage,
   isCancelled,
   iun,
   messageId,
@@ -26,7 +27,8 @@ export const MessageBottomMenu = ({
         <View>{`${pieceOfHistory.status}`}</View>
       </View>
     ))}
-    {isCancelled && <View>{isCancelled}</View>}
+    {isAARMessage && <View>{`${isAARMessage}`}</View>}
+    {isCancelled && <View>{`${isCancelled}`}</View>}
     <View>{iun}</View>
     <View>{messageId}</View>
     {paidNoticeCodes &&

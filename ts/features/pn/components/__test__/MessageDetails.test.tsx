@@ -18,33 +18,33 @@ jest.mock("../MessageBottomMenu");
 const pnMessage = pipe(thirdPartyMessage, toPNMessage, O.toUndefined)!;
 
 describe("MessageDetails component", () => {
-  [false, true].forEach(isAARNotification => {
-    it(`should match the snapshot with default props (is AAR ${isAARNotification})`, () => {
+  [false, true].forEach(isAARMessage => {
+    it(`should match the snapshot with default props (is AAR ${isAARMessage})`, () => {
       const { component } = renderComponent(
-        generateComponentProperties(isAARNotification, pnMessage)
+        generateComponentProperties(isAARMessage, pnMessage)
       );
       expect(component).toMatchSnapshot();
     });
 
-    it(`should display the legalMessage tag (is AAR ${isAARNotification})`, () => {
+    it(`should display the legalMessage tag (is AAR ${isAARMessage})`, () => {
       const { component } = renderComponent(
-        generateComponentProperties(isAARNotification, pnMessage)
+        generateComponentProperties(isAARMessage, pnMessage)
       );
       expect(
         component.queryByText(I18n.t("features.pn.details.badge.legalValue"))
       ).not.toBeNull();
     });
 
-    it(`should display the attachment tag if there are attachments (is AAR ${isAARNotification})`, () => {
+    it(`should display the attachment tag if there are attachments (is AAR ${isAARMessage})`, () => {
       const { component } = renderComponent(
-        generateComponentProperties(isAARNotification, pnMessage)
+        generateComponentProperties(isAARMessage, pnMessage)
       );
       expect(component.queryByTestId("attachment-tag")).not.toBeNull();
     });
 
-    it(`should NOT display the attachment tag if there are no attachments (is AAR ${isAARNotification})`, () => {
+    it(`should NOT display the attachment tag if there are no attachments (is AAR ${isAARMessage})`, () => {
       const { component } = renderComponent(
-        generateComponentProperties(isAARNotification, {
+        generateComponentProperties(isAARMessage, {
           ...pnMessage,
           attachments: []
         })
@@ -55,10 +55,10 @@ describe("MessageDetails component", () => {
 });
 
 const generateComponentProperties = (
-  isAARNotification: boolean,
+  isAARMessage: boolean,
   message: PNMessage
 ) => ({
-  isAARNotification,
+  isAARMessage,
   messageId: "01HRYR6C761DGH3S84HBBXMMKT",
   message,
   payments: undefined,
