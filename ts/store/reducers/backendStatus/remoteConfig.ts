@@ -381,6 +381,17 @@ export const isIdPayEnabledSelector = createSelector(
     )
 );
 
+export const isIdPayEnabledInScanScreenSelector = (state: GlobalState) =>
+  pipe(state, remoteConfigSelector, remoteConfig =>
+    isPropertyWithMinAppVersionEnabled({
+      remoteConfig,
+      mainLocalFlag: true,
+      configPropertyName: "idPay",
+      optionalLocalFlag: true,
+      optionalConfig: "scan_screen"
+    })
+  );
+
 export const isIdPayCiePaymentCodeEnabledSelector = (state: GlobalState) =>
   pipe(state, remoteConfigSelector, remoteConfig =>
     isPropertyWithMinAppVersionEnabled({
