@@ -1560,8 +1560,6 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-render-html (6.3.1):
-    - React-Core
   - react-native-safe-area-context (5.4.0):
     - React-Core
   - react-native-screen-brightness (2.0.0-alpha):
@@ -1589,11 +1587,9 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-slider (3.0.3):
-    - React
   - react-native-splash-screen (3.2.0):
     - React
-  - react-native-webview (13.13.5):
+  - react-native-webview (13.16.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2297,11 +2293,9 @@ DEPENDENCIES:
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-pdf (from `../node_modules/react-native-pdf`)
   - react-native-pdf-thumbnail (from `../node_modules/react-native-pdf-thumbnail`)
-  - react-native-render-html (from `../node_modules/react-native-render-html`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-screen-brightness (from `../node_modules/react-native-screen-brightness`)
   - "react-native-skia (from `../node_modules/@shopify/react-native-skia`)"
-  - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
@@ -2508,16 +2502,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-pdf"
   react-native-pdf-thumbnail:
     :path: "../node_modules/react-native-pdf-thumbnail"
-  react-native-render-html:
-    :path: "../node_modules/react-native-render-html"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-screen-brightness:
     :path: "../node_modules/react-native-screen-brightness"
   react-native-skia:
     :path: "../node_modules/@shopify/react-native-skia"
-  react-native-slider:
-    :path: "../node_modules/@react-native-community/slider"
   react-native-splash-screen:
     :path: "../node_modules/react-native-splash-screen"
   react-native-webview:
@@ -2694,13 +2684,11 @@ SPEC CHECKSUMS:
   react-native-pager-view: 68e8a65a607a6f91a1e25865002192c3c4f53fcf
   react-native-pdf: 6a51a22ccefb23eb93298771e4bf090913e86d70
   react-native-pdf-thumbnail: 2d69e506eb4ea4940f284a228b975f5ab74ab61b
-  react-native-render-html: 05a7d4490ffc85c88094601207f3e48a90533476
   react-native-safe-area-context: 9d72abf6d8473da73033b597090a80b709c0b2f1
   react-native-screen-brightness: 16a7b26d12d89654fc6a2e9ff1e55c1a4a10afcb
   react-native-skia: 0d442c824f4a6f6ec905d5d07aa932f255f0baed
-  react-native-slider: 5299110eb902bc5169b1dd94192aa28e1bf15ad8
   react-native-splash-screen: a43276f9cf4b2e65d7ce30efe372ffc528064293
-  react-native-webview: 079eca50edf657503318b66687dadfb903731aa8
+  react-native-webview: d9d01324f104e41fe57b8ddd048acd9e1e39caf5
   React-NativeModulesApple: fd0545efbb7f936f78edd15a6564a72d2c34bb32
   React-perflogger: 5f8fa36a8e168fb355efe72099efe77213bc2ac6
   React-performancetimeline: 8c0ecfa1ae459cc5678a65f95ac3bf85644d6feb

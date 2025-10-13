@@ -21,12 +21,16 @@ import { isTestEnv } from "../../../../utils/environment";
 export function* watchPaymentStatusForMixpanelTracking(
   action: ActionType<typeof startPNPaymentStatusTracking>
 ) {
-  const messageId = action.payload;
+  const { isAARNotification, messageId } = action.payload;
   const currentFiscalCode = yield* select(profileFiscalCodeSelector);
   const message = yield* select(pnMessageFromIdSelector, messageId);
+
+  const fiscalCodeOrUndefined = isAARNotification
+    ? undefined
+    : currentFiscalCode;
   const payments = yield* call(
     paymentsFromPNMessagePot,
-    currentFiscalCode,
+    fiscalCodeOrUndefined,
     message
   );
   const visibleRPTIds =

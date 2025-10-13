@@ -4012,7 +4012,7 @@
         "timeline": {
           "goToSend": "Accedi a SEND",
           "menuTitle": "Stato della notifica",
-          "newInfo": "Accedi alla versione web per vedere maggiori dettagli, le ricevute e le attestazioni opponibili a terzi.",
+          "newInfo": "Accedi a SEND dal tuo browser per avere tutti i dettagli, le ricevute e le attestazioni opponibili a terzi.",
           "title": "STATO DELLA NOTIFICA",
           "status": {
             "ACCEPTED": "Depositata",
@@ -4527,11 +4527,6 @@
             "cancel": "No, continua"
           }
         },
-        "offlineBanner": {
-          "title": "Novità: i tuoi documenti anche offline",
-          "content": "Da oggi puoi usare i tuoi documenti su IO anche senza connessione a internet.",
-          "action": "Scopri di più"
-        },
         "ipzsPrivacy": {
           "title": "I tuoi Documenti su IO sono al sicuro",
           "titleL3": "I tuoi Documenti sono al sicuro",
@@ -4998,7 +4993,7 @@
             "primaryAction": "Inizia"
           }
         },
-        "statusAttestationUnknown": {
+        "statusAssertionUnknown": {
           "title": "Non siamo riusciti a caricare {{credentialName}}",
           "content": "Chiudi e riapri l'app per riprovare.",
           "primaryAction": "Ho capito"

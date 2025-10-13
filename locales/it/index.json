@@ -4012,7 +4012,7 @@
         "timeline": {
           "goToSend": "Accedi a SEND",
           "menuTitle": "Stato della notifica",
-          "newInfo": "Accedi alla versione web per vedere maggiori dettagli, le ricevute e le attestazioni opponibili a terzi.",
+          "newInfo": "Accedi a SEND dal tuo browser per avere tutti i dettagli, le ricevute e le attestazioni opponibili a terzi.",
           "title": "STATO DELLA NOTIFICA",
           "status": {
             "ACCEPTED": "Depositata",
@@ -4447,8 +4447,8 @@
       "discovery": {
         "banner": {
           "home": {
-            "title": "Novità: Documenti su IO, anche offline",
-            "content": "Da oggi puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet.",
+            "title": "Documenti su IO",
+            "content": "Puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet.",
             "action": "Attiva Documenti su IO"
           },
           "homeActive": {
@@ -4546,11 +4546,6 @@
             "confirm": "Sì, rinuncia",
             "cancel": "No, continua"
           }
-        },
-        "offlineBanner": {
-          "title": "Novità: i tuoi documenti anche offline",
-          "content": "Da oggi puoi usare i tuoi documenti su IO anche senza connessione a internet.",
-          "action": "Scopri di più"
         },
         "ipzsPrivacy": {
           "title": "I tuoi Documenti su IO sono al sicuro",
@@ -5154,7 +5149,7 @@
             "primaryAction": "Inizia"
           }
         },
-        "statusAttestationUnknown": {
+        "statusAssertionUnknown": {
           "title": "Non siamo riusciti a caricare {{credentialName}}",
           "content": "Chiudi e riapri l'app per riprovare.",
           "primaryAction": "Ho capito"
@@ -6327,7 +6322,7 @@
         "failure": {
           "GENERIC": {
             "title": "Non è stato possibile procedere con l'iniziativa richiesta",
-            "subtitle": "Siamo già a lavoro per risolvere.  Riprova tra un po’."
+            "subtitle": "Siamo già a lavoro per risolvere. Riprova tra un po’."
           },
           "TRANSACTION_EXPIRED": {
             "title": "Il codice è scaduto",

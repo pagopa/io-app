@@ -629,25 +629,6 @@
     }
   },
   "keyTag": "70122d54-24ad-4241-9134-57f3662682ea",
-  "storedStatusAttestation": {
-    "credentialStatus": "valid",
-    "statusAttestation": "eyJraWQiOiJVSy11dzlpX1RrTDFqa3FuOG1VZmNyMWFMRE5QNUlGRHRIRFZOamptb1dBIiwidHlwIjoic3RhdHVzLWF0dGVzdGF0aW9uK2p3dCIsImFsZyI6IkVTMjU2In0.eyJjcmVkZW50aWFsX2hhc2hfYWxnIjoiUzI1NiIsImlzcyI6Imh0dHBzOi8vcHJlLmVhYS53YWxsZXQuaXB6cy5pdCIsImNyZWRlbnRpYWxfaGFzaCI6IjAxZmY1MmZhMjZiN2I1YjYxZmM0YzA2MGE2NmI3NDkyNWRiMDZlM2EyOWNhODk3ODAwMDMwMzc2MTRmOGZlNGUiLCJjbmYiOnsiandrIjp7Imt0eSI6IkVDIiwiY3J2IjoiUC0yNTYiLCJraWQiOiJ5TkRkR3hqa3lLN19sYWNLbUhpVHNKUEx2YXNPaGd4cEpaaXJRSmNRSVVVIiwieCI6ImxxeFZpVmFtX2dkMFV1OEZqdFZxUndRSmRFTHB4SHk0Y1h0Z1RSU0VIVlEiLCJ5IjoieW1WSG1JbmJ5MmVHdVZPMUdJV1B6ZnVuRld5alcxNDFCZlpsYUVtN0FySSJ9fSwiZXhwIjoxNzI3ODU3NzgxLCJpYXQiOjE3Mjc3NzEzODF9.uL9RNbfedsiBSwU8iLtIBy6Kz0resZjiTjA1FKp3cG42wBTxOd0D21La732uYFGH-_E2C2mpeiQeHa6wOUORpA",
-    "parsedStatusAttestation": {
-      "credential_hash_alg": "S256",
-      "credential_hash": "01ff52fa26b7b5b61fc4c060a66b74925db06e3a29ca89780003037614f8fe4e",
-      "cnf": {
-        "jwk": {
-          "crv": "P-256",
-          "kid": "yNDdGxjkyK7_lacKmHiTsJPLvasOhgxpJZirQJcQIUU",
-          "kty": "EC",
-          "x": "lqxViVam_gd0Uu8FjtVqRwQJdELpxHy4cXtgTRSEHVQ",
-          "y": "ymVHmInby2eGuVO1GIWPzfunFWyjW141BfZlaEm7ArI"
-        }
-      },
-      "exp": 1727857781,
-      "iat": 1727771381
-    }
-  },
   "jwt": {
     "expiration": "2030-11-22T14:09:41Z",
     "issuedAt": "2024-11-13T14:09:41Z"
