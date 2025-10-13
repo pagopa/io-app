@@ -3,10 +3,12 @@ import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import * as HOOKS from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
+import { sendVisitTheWebsiteUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as URL_UTILS from "../../../../../utils/url";
 import PN_ROUTES from "../../../navigation/routes";
+import { currentAARFlowData } from "../../store/selectors";
 import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
 import { sendAarMockStateFactory } from "../../utils/testUtils";
 import {
@@ -44,15 +46,24 @@ describe("BottomSheetContent", () => {
     const openWebUrlSpy = jest
       .spyOn(URL_UTILS, "openWebUrl")
       .mockImplementation(jest.fn());
-    jest.spyOn(HOOKS, "useIOSelector").mockReturnValue(stateWithMandateId);
+
+    const mockUrl = "https://example.com/test-url";
+
+    jest.spyOn(HOOKS, "useIOSelector").mockImplementation(selector => {
+      if (selector === currentAARFlowData) {
+        return stateWithMandateId;
+      }
+      if (selector === sendVisitTheWebsiteUrlSelector) {
+        return mockUrl;
+      }
+      return undefined;
+    });
 
     const { getByTestId } = renderComponent(defaultProps);
     const linkComponent = getByTestId("link");
     expect(openWebUrlSpy).toHaveBeenCalledTimes(0);
     fireEvent.press(linkComponent);
-    expect(openWebUrlSpy).toHaveBeenCalledWith(
-      "https://cittadini.notifichedigitali.it/auth/login"
-    );
+    expect(openWebUrlSpy).toHaveBeenCalledWith(mockUrl);
     expect(openWebUrlSpy).toHaveBeenCalledTimes(1);
   });
 

@@ -7,11 +7,10 @@ import {
 import I18n from "i18next";
 import { View } from "react-native";
 import { useIOSelector } from "../../../../store/hooks";
+import { sendVisitTheWebsiteUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { openWebUrl } from "../../../../utils/url";
 import { currentAARFlowData } from "../store/selectors";
 import { sendAARFlowStates } from "../utils/stateUtils";
-
-const URL = "https://cittadini.notifichedigitali.it/auth/login";
 
 export type SendAARMessageDetailBottomSheetProps = {
   onPrimaryActionPress: () => void;
@@ -23,6 +22,7 @@ export const SendAARMessageDetailBottomSheet = ({
   onSecondaryActionPress
 }: SendAARMessageDetailBottomSheetProps) => {
   const currentFlow = useIOSelector(currentAARFlowData);
+  const sendVisitTheWebsiteUrl = useIOSelector(sendVisitTheWebsiteUrlSelector);
 
   const mandateId =
     currentFlow.type === sendAARFlowStates.displayingNotificationData
@@ -30,7 +30,7 @@ export const SendAARMessageDetailBottomSheet = ({
       : undefined;
 
   const onLinkPress = () => {
-    openWebUrl(URL);
+    openWebUrl(sendVisitTheWebsiteUrl);
   };
 
   return (
