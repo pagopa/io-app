@@ -4,7 +4,6 @@ import { Action } from "../../../../../store/actions/types";
 import {
   itwCloseDiscoveryBanner,
   itwCloseFeedbackBanner,
-  itwSetOfflineBannerHidden,
   itwFlagCredentialAsRequested,
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
@@ -14,7 +13,8 @@ import {
   itwUnflagCredentialAsRequested,
   itwSetWalletUpgradeMDLDetailsBannerHidden,
   itwFreezeSimplifiedActivationRequirements,
-  itwClearSimplifiedActivationRequirements
+  itwClearSimplifiedActivationRequirements,
+  itwCloseReissuanceFeedbackBanner
 } from "../actions/preferences";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
@@ -39,8 +39,8 @@ export type ItwPreferencesState = {
   isWalletInstanceRemotelyActive?: boolean;
   // Indicates whether the fiscal code is whitelisted for L3 features
   isFiscalCodeWhitelisted?: boolean;
-  // Indicates whether the offline banner should be hidden
-  offlineBannerHidden?: boolean;
+  // Indicates whether the reissuance feedback banner should be hidden
+  reissuanceFeedbackBannerHidden?: boolean;
   // Indicates whether the IT-wallet upgrade banner in MDL details should be hidden
   walletUpgradeMDLDetailsBannerHidden?: boolean;
   // Indicates whether the user should activate IT-Wallet with the simplified flow,
@@ -146,10 +146,10 @@ const reducer = (
       };
     }
 
-    case getType(itwSetOfflineBannerHidden): {
+    case getType(itwCloseReissuanceFeedbackBanner): {
       return {
         ...state,
-        offlineBannerHidden: action.payload
+        reissuanceFeedbackBannerHidden: true
       };
     }
 

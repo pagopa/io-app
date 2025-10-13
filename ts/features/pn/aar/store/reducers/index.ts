@@ -1,8 +1,5 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
-import { isAARRemoteEnabled } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { isAARLocalEnabled } from "../../../../../store/reducers/persistedPreferences";
-import { GlobalState } from "../../../../../store/reducers/types";
 import {
   AARFlowState,
   isValidAARStateTransition
@@ -30,11 +27,3 @@ export const aarFlowReducer = (
   }
   return state;
 };
-
-export const isAAREnabled = (state: GlobalState): boolean =>
-  isAARLocalEnabled(state) && isAARRemoteEnabled(state);
-
-export const currentAARFlowData = (state: GlobalState) =>
-  state.features.pn.aarFlow;
-export const currentAARFlowStateType = (state: GlobalState) =>
-  state.features.pn.aarFlow.type;

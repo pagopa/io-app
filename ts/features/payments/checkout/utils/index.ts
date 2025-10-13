@@ -75,7 +75,7 @@ export const trimAndLimitValue = (value: string, maxLength: number): string => {
 
 const YEARS_TO_EXPIRE = 10;
 
-export const isDueDateValid = (date: string): string | undefined => {
+export const formatAndValidateDueDate = (date: string): string | undefined => {
   const formattedDate = format(date, "DD/MM/YYYY");
   if (formattedDate === "Invalid Date") {
     return undefined;

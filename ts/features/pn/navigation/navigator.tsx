@@ -1,4 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
+import { SendAARErrorScreen } from "../aar/screen/SendAARErrorScreen";
 import { SendQrScanPushEngagementScreen } from "../aar/screen/SendAARPushEngagementScreen";
 import { SendEngagementScreen } from "../aar/screen/SendEngagementScreen";
 import { SendQRScanFlowScreen } from "../aar/screen/SendQRScanFlowScreen";
@@ -43,6 +44,11 @@ export const PnStackNavigator = () => (
     <Stack.Screen
       name={PN_ROUTES.QR_SCAN_PUSH_ENGAGEMENT}
       component={SendQrScanPushEngagementScreen}
+    />
+    <Stack.Screen
+      name={PN_ROUTES.SEND_AAR_ERROR}
+      component={SendAARErrorScreen}
+      options={{ headerShown: false }}
     />
   </Stack.Navigator>
 );
