@@ -77,6 +77,28 @@ describe("MessageDetails component", () => {
           expect(passedDate).toEqual(pnMessage.created_at);
         }
       });
+
+      it(`should ${
+        isAARMessage ? "NOT " : ""
+      }allow navigation to service details when isAARMessage is ${isAARMessage}`, () => {
+        const headerSpy = jest.spyOn(
+          MSG_DETAILS_HEADER,
+          "MessageDetailsHeader"
+        );
+        renderComponent({
+          ...generateComponentProperties(pnMessage),
+          isAARMessage
+        });
+        const mockCalls = headerSpy.mock.calls[0][0];
+        expect(mockCalls).toBeDefined();
+        const canNavigateToServiceDetails =
+          mockCalls.canNavigateToServiceDetails;
+        if (isAARMessage) {
+          expect(canNavigateToServiceDetails).toBe(false);
+        } else {
+          expect(canNavigateToServiceDetails).toBe(true);
+        }
+      });
     });
   });
 });

@@ -557,6 +557,7 @@ exports[`MessageDetailsHeader component should match the snapshot with a valid t
                                     },
                                   ]
                                 }
+                                testID="service-name"
                               >
                                 health
                               </Text>
@@ -1177,6 +1178,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                                     },
                                   ]
                                 }
+                                testID="service-name"
                               >
                                 health
                               </Text>

@@ -99,6 +99,7 @@ export const OrganizationHeader = ({
           onPress={navigateToServiceDetails}
           textStyle={{ textDecorationLine: "none" }}
           weight="Semibold"
+          testID="service-name"
         >
           {serviceName}
         </BodySmall>
