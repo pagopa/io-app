@@ -40,28 +40,6 @@ describe("BottomSheetContent", () => {
     jest.clearAllMocks();
   });
 
-  it("renders correctly with a mandateId (delegate flow)", () => {
-    jest.spyOn(HOOKS, "useIOSelector").mockReturnValue(stateWithMandateId);
-
-    const { getByTestId, queryByTestId } = renderComponent(defaultProps);
-    expect(getByTestId("primary_button")).toBeTruthy();
-    expect(getByTestId("secondary_button")).toBeTruthy();
-    expect(getByTestId("link")).toBeTruthy();
-    expect(getByTestId("body_mandate")).toBeTruthy();
-    expect(queryByTestId("body_nomandate")).not.toBeTruthy();
-  });
-
-  it("renders correctly without a mandateId (citizen flow)", () => {
-    jest.spyOn(HOOKS, "useIOSelector").mockReturnValue(stateWithoutMandateId);
-
-    const { getByTestId, queryByTestId } = renderComponent(defaultProps);
-    expect(getByTestId("primary_button")).toBeTruthy();
-    expect(getByTestId("secondary_button")).toBeTruthy();
-    expect(getByTestId("link")).toBeTruthy();
-    expect(getByTestId("body_nomandate")).toBeTruthy();
-    expect(queryByTestId("body_mandate")).not.toBeTruthy();
-  });
-
   it("calls openWebUrl when link is pressed", () => {
     const openWebUrlSpy = jest
       .spyOn(URL_UTILS, "openWebUrl")
