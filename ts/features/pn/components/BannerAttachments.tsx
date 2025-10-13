@@ -25,6 +25,7 @@ export const BannerAttachments = () => {
             "features.pn.details.attachmentsSection.bottomSheet.action"
           )}
           onPress={openExternalUrl}
+          testID="banner-attachment-bottomsheet-cta"
         />
         <VSpacer size={32} />
       </View>
@@ -41,6 +42,7 @@ export const BannerAttachments = () => {
         )}
         action={I18n.t("features.pn.details.attachmentsSection.banner.action")}
         onPress={present}
+        testID="banner-attachment-banner"
       />
       <VSpacer size={16} />
       {bottomSheet}
