@@ -2,7 +2,6 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { Action, Store } from "redux";
 import configureMockStore from "redux-mock-store";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -22,10 +21,10 @@ import {
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
 import * as commonSelectors from "../../../settings/common/store/selectors";
 import { thirdPartyMessage } from "../../__mocks__/pnMessage";
+import { sendAarMockStateFactory } from "../../aar/utils/testUtils";
 import PN_ROUTES from "../../navigation/routes";
 import { startPNPaymentStatusTracking } from "../../store/actions";
 import { MessageDetailsScreen } from "../MessageDetailsScreen";
-import { sendAarMockStateFactory } from "../../aar/utils/testUtils";
 
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
