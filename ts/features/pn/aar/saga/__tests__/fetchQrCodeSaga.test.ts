@@ -40,45 +40,49 @@ describe("fetchQrCodeSaga", () => {
   });
 
   sendUATEnvironment.forEach(isSendUATEnvironment => {
-    it(`should correctly update state on a 200 response with isTest='${isSendUATEnvironment}'`, () => {
-      const successState: AARFlowState = {
-        type: sendAARFlowStates.fetchingNotificationData,
-        iun: "123123",
-        fullNameDestinatario: "nomecognome"
-      };
-      const successResponse = E.right({
-        headers: {},
-        status: 200,
-        value: {
+    [undefined, "d27a353f-09a9-46c0-a63f-ab7a72cb1861"].forEach(mandateId => {
+      it(`should correctly update state on a 200 response with isTest='${isSendUATEnvironment}' and mandateId='${mandateId}'`, () => {
+        const successState: AARFlowState = {
+          type: sendAARFlowStates.fetchingNotificationData,
           iun: "123123",
-          recipientInfo: {
-            denomination: "nomecognome",
-            taxId: "taxID"
+          fullNameDestinatario: "nomecognome",
+          mandateId
+        };
+        const successResponse = E.right({
+          headers: {},
+          status: 200,
+          value: {
+            iun: "123123",
+            recipientInfo: {
+              denomination: "nomecognome",
+              taxId: "taxID"
+            },
+            mandateId
           }
-        }
-      });
-      const mockApiCall = jest
-        .fn()
-        .mockReturnValue(mockResolvedCall(successResponse));
+        });
+        const mockApiCall = jest
+          .fn()
+          .mockReturnValue(mockResolvedCall(successResponse));
 
-      testSaga(fetchAARQrCodeSaga, mockApiCall, sessionToken)
-        .next()
-        .select(currentAARFlowData)
-        .next(mockFetchingQrState)
-        .select(isPnTestEnabledSelector)
-        .next(isSendUATEnvironment)
-        .call(withRefreshApiCall, mockApiCall())
-        .next(successResponse)
-        .put(setAarFlowState(successState))
-        .next()
-        .isDone();
+        testSaga(fetchAARQrCodeSaga, mockApiCall, sessionToken)
+          .next()
+          .select(currentAARFlowData)
+          .next(mockFetchingQrState)
+          .select(isPnTestEnabledSelector)
+          .next(isSendUATEnvironment)
+          .call(withRefreshApiCall, mockApiCall())
+          .next(successResponse)
+          .put(setAarFlowState(successState))
+          .next()
+          .isDone();
 
-      expect(mockApiCall).toHaveBeenCalledWith({
-        Bearer: sessionTokenWithBearer,
-        body: {
-          aarQrCodeValue: aQRCode
-        },
-        isTest: isSendUATEnvironment
+        expect(mockApiCall).toHaveBeenCalledWith({
+          Bearer: sessionTokenWithBearer,
+          body: {
+            aarQrCodeValue: aQRCode
+          },
+          isTest: isSendUATEnvironment
+        });
       });
     });
 
