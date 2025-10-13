@@ -23,6 +23,7 @@ export type OrganizationHeaderProps = {
   serviceName: string;
   logoUri?: ImageSourcePropType;
   thirdPartySenderDenomination?: string;
+  canNavigateToServiceDetails?: boolean;
 };
 
 const ITEM_PADDING_VERTICAL: IOSpacingScale = 6;
@@ -44,7 +45,8 @@ export const OrganizationHeader = ({
   serviceId,
   organizationName,
   serviceName,
-  thirdPartySenderDenomination
+  thirdPartySenderDenomination,
+  canNavigateToServiceDetails = true
 }: OrganizationHeaderProps) => {
   const theme = useIOTheme();
 
@@ -52,16 +54,17 @@ export const OrganizationHeader = ({
   const paymentData = useIOSelector(state =>
     messagePaymentDataSelector(state, messageId)
   );
-  const navigateToServiceDetails = useCallback(
-    () =>
-      navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
-        screen: SERVICES_ROUTES.SERVICE_DETAIL,
-        params: {
-          serviceId
-        }
-      }),
-    [navigation, serviceId]
-  );
+  const navigateToServiceDetails = useCallback(() => {
+    if (!canNavigateToServiceDetails) {
+      return;
+    }
+    navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
+      screen: SERVICES_ROUTES.SERVICE_DETAIL,
+      params: {
+        serviceId
+      }
+    });
+  }, [navigation, serviceId, canNavigateToServiceDetails]);
 
   const OrganizationNameComponent = () =>
     thirdPartySenderDenomination ? (
