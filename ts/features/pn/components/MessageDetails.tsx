@@ -138,7 +138,6 @@ export const MessageDetails = ({
           messageId={messageId}
           paidNoticeCodes={completedPaymentNoticeCodes}
           payments={payments}
-          serviceId={serviceId}
         />
       </ScrollView>
       <MessageFooter
