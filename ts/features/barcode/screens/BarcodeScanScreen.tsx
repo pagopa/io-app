@@ -20,9 +20,9 @@ import {
 import { useIOSelector } from "../../../store/hooks";
 import {
   barcodesScannerConfigSelector,
+  isIdPayEnabledInScanScreenSelector,
   isPnRemoteEnabledSelector
 } from "../../../store/reducers/backendStatus/remoteConfig";
-import { isIdPayLocallyEnabledSelector } from "../../../store/reducers/persistedPreferences.ts";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { FCI_ROUTES } from "../../fci/navigation/routes";
@@ -53,7 +53,9 @@ import { getIOBarcodesByType } from "../utils/getBarcodesByType";
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const openDeepLink = useOpenDeepLink();
-  const isIdPayEnabled = useIOSelector(isIdPayLocallyEnabledSelector);
+  const isIdPayEnabledInScanScreen = useIOSelector(
+    isIdPayEnabledInScanScreenSelector
+  );
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const isSendEnabled = useIOSelector(isPnRemoteEnabledSelector);
 
@@ -73,7 +75,11 @@ const BarcodeScanScreen = () => {
   );
 
   const barcodeTypes: Array<IOBarcodeType> = IO_BARCODE_ALL_TYPES.filter(type =>
-    type === "IDPAY" ? isIdPayEnabled : type === "SEND" ? isSendEnabled : true
+    type === "IDPAY"
+      ? isIdPayEnabledInScanScreen
+      : type === "SEND"
+      ? isSendEnabled
+      : true
   );
 
   /**
@@ -240,7 +246,7 @@ const BarcodeScanScreen = () => {
   const handleManualInputPressed = () => {
     analytics.trackBarcodeManualEntryPath("home");
 
-    if (isIdPayEnabled) {
+    if (isIdPayEnabledInScanScreen) {
       manualInputModal.present();
     } else {
       handlePagoPACodeInput();
