@@ -778,18 +778,18 @@ Se hai bisogno di supporto su SEND, consulta le risorse di assistenza
                                   </View>
                                 </View>
                               </View>
+                              <View
+                                style={
+                                  {
+                                    "height": 32,
+                                  }
+                                }
+                              />
                             </View>
                             <View
                               style={
                                 {
-                                  "height": 48,
-                                }
-                              }
-                            />
-                            <View
-                              style={
-                                {
-                                  "height": 48,
+                                  "height": 0,
                                 }
                               }
                             />

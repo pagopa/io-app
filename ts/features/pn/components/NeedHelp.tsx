@@ -30,10 +30,10 @@ export const NeedHelp = () => {
           variant="link"
           testID="needHelp-bottomsheet-action"
         />
+        <VSpacer size={32} />
       </View>
     ),
-    title: I18n.t("features.pn.details.help.bottomSheet.title"),
-    footer: <View />
+    title: I18n.t("features.pn.details.help.bottomSheet.title")
   });
 
   return (
