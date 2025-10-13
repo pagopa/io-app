@@ -481,7 +481,7 @@ exports[`ShareDataScreen should match snapshot 1`] = `
                                       accessibilityRole="link"
                                       accessible={true}
                                       allowFontScaling={true}
-                                      dynamicTypeRamp="footnote"
+                                      dynamicTypeRamp="body"
                                       importantForAccessibility="yes"
                                       maxFontSizeMultiplier={1.5}
                                       style={
@@ -492,10 +492,10 @@ exports[`ShareDataScreen should match snapshot 1`] = `
                                           {
                                             "color": "#0B3EE3",
                                             "fontFamily": "Titillio",
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": 21,
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
@@ -814,7 +814,7 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                       accessibilityRole="link"
                                       accessible={true}
                                       allowFontScaling={true}
-                                      dynamicTypeRamp="footnote"
+                                      dynamicTypeRamp="body"
                                       importantForAccessibility="yes"
                                       maxFontSizeMultiplier={1.5}
                                       style={
@@ -825,10 +825,10 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                           {
                                             "color": "#0B3EE3",
                                             "fontFamily": "Titillio",
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": 21,
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
@@ -999,7 +999,7 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                       accessibilityRole="link"
                                       accessible={true}
                                       allowFontScaling={true}
-                                      dynamicTypeRamp="footnote"
+                                      dynamicTypeRamp="body"
                                       importantForAccessibility="yes"
                                       maxFontSizeMultiplier={1.5}
                                       style={
@@ -1010,10 +1010,10 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                           {
                                             "color": "#0B3EE3",
                                             "fontFamily": "Titillio",
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": 21,
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
