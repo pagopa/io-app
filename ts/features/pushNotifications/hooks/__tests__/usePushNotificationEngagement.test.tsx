@@ -2,15 +2,15 @@ import * as DESIGN_SYSTEM from "@pagopa/io-app-design-system";
 import { act } from "@testing-library/react-native";
 import * as RN from "react-native";
 import { createStore } from "redux";
-import * as USEIO from "../../../../../navigation/params/AppParamsList";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { appReducer } from "../../../../../store/reducers";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import * as NOTIF_UTILS from "../../../../pushNotifications/utils";
-import PN_ROUTES from "../../../navigation/routes";
-import * as MAIN_FILE from "../useAARpushEngagementScreenLogic";
-import * as analytics from "../../../../pushNotifications/analytics";
+import * as USEIO from "../../../../navigation/params/AppParamsList";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
+import { GlobalState } from "../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import * as NOTIF_UTILS from "../../utils";
+import { NOTIFICATIONS_ROUTES } from "../../navigation/routes";
+import * as MAIN_FILE from "../usePushNotificationEngagement";
+import * as analytics from "../../analytics";
 
 // eslint-disable-next-line functional/no-let
 let testingHookOutput = {
@@ -44,7 +44,7 @@ describe("UseEngamentScreenFocusLogic", () => {
     jest.resetAllMocks();
   });
 
-  it(" should set header and call openSystemNotificationSettingsScreen on button press, return {shouldRenderBlankPage:true} and track proper analytics event", async () => {
+  it("should set header and call openSystemNotificationSettingsScreen on button press, return {shouldRenderBlankPage:true} and track proper analytics event", async () => {
     const spiedOnMockedAnalyticsOutcomeEvent = jest
       .spyOn(analytics, "trackSystemNotificationPermissionScreenOutcome")
       .mockImplementation();
@@ -56,8 +56,6 @@ describe("UseEngamentScreenFocusLogic", () => {
     act(testingHookOutput.onButtonPress);
 
     expect(testOpenNotifications).toHaveBeenCalledTimes(1);
-    expect(testSetOptions).toHaveBeenCalledTimes(1);
-    expect(testSetOptions).toHaveBeenCalledWith({ headerShown: false });
     expect(testingHookOutput.shouldRenderBlankPage).toBe(true);
     expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls.length).toBe(1);
     expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0].length).toBe(2);
@@ -142,7 +140,9 @@ describe("appStateHandler", () => {
 
 const renderHook = () => {
   const Component = () => {
-    const hookOutput = MAIN_FILE.useAARPushEngagementScreenLogic();
+    const hookOutput = MAIN_FILE.usePushNotificationEngagement(
+      "send_notification_opening"
+    );
     testingHookOutput = hookOutput;
     return <></>;
   };
@@ -151,7 +151,7 @@ const renderHook = () => {
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => <Component />,
-    PN_ROUTES.QR_SCAN_PUSH_ENGAGEMENT,
+    NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT,
     {},
     store
   );

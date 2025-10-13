@@ -5632,6 +5632,15 @@
           }
         }
       }
+    },
+    "pushNotifications": {
+      "engagementScreen": {
+        "badge": "Consigliato",
+        "title": "Non perderti i messaggi importanti",
+        "body": "Attiva le notifiche push: se leggi subito le comunicazioni a valore legale, potresti risparmiare sui costi di raccomandata.",
+        "cta": "Attiva notifiche push",
+        "toast": "Hai attivato le notifiche push"
+      }
     }
   },
   "support": {

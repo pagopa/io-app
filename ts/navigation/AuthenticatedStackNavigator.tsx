@@ -71,6 +71,7 @@ import {
 } from "../store/reducers/backendStatus/remoteConfig";
 import { isGestureEnabled } from "../utils/navigation";
 import OnboardingNavigator from "../features/onboarding/navigation/OnboardingNavigator.tsx";
+import { PushNotificationEngagementScreen } from "../features/pushNotifications/screens/PushNotificationEngagementScreen.tsx";
 import { AppParamsList } from "./params/AppParamsList";
 import ROUTES from "./routes";
 import { MainTabNavigator } from "./TabNavigator";
@@ -134,6 +135,10 @@ const AuthenticatedStackNavigator = () => {
           headerShown: true,
           presentation: "modal"
         }}
+      />
+      <Stack.Screen
+        name={NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT}
+        component={PushNotificationEngagementScreen}
       />
       <Stack.Screen
         name={MESSAGES_ROUTES.MESSAGES_SEARCH}
