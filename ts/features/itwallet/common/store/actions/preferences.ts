@@ -41,10 +41,6 @@ export const itwSetFiscalCodeWhitelisted = createStandardAction(
   "ITW_SET_FISCAL_CODE_WHITELISTED"
 )<boolean>();
 
-export const itwSetOfflineBannerHidden = createStandardAction(
-  "ITW_SET_OFFLINE_BANNER_HIDDEN"
-)<boolean>();
-
 export const itwSetWalletUpgradeMDLDetailsBannerHidden = createStandardAction(
   "ITW_SET_WALLET_UPGRADE_MDL_DETAILS_BANNER_HIDDEN"
 )<boolean>();
@@ -68,7 +64,6 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwSetClaimValuesHidden>
   | ActionType<typeof itwSetWalletInstanceRemotelyActive>
   | ActionType<typeof itwSetFiscalCodeWhitelisted>
-  | ActionType<typeof itwSetOfflineBannerHidden>
   | ActionType<typeof itwSetWalletUpgradeMDLDetailsBannerHidden>
   | ActionType<typeof itwFreezeSimplifiedActivationRequirements>
   | ActionType<typeof itwClearSimplifiedActivationRequirements>;

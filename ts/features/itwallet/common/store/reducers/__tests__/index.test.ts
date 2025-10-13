@@ -87,4 +87,32 @@ describe("itWalletReducer migrations", () => {
       environment: { env: "prod" }
     });
   });
+
+  it("should migrate the store to version 5 and rename MDL to mDL", async () => {
+    const previousState = {
+      _persist: { version: 4, rehydrated: false },
+      preferences: { requestedCredentials: { MDL: "2025-10-01T00:00:00Z" } }
+    };
+
+    const newState = await migrate(previousState, 5);
+
+    expect(newState).toEqual({
+      _persist: { version: 4, rehydrated: false },
+      preferences: { requestedCredentials: { mDL: "2025-10-01T00:00:00Z" } }
+    });
+  });
+
+  it("should migrate the store to version 6 and remove offlineBannerHidden", async () => {
+    const previousState = {
+      _persist: { version: 5, rehydrated: false },
+      preferences: { offlineBannerHidden: true, requestedCredentials: {} }
+    };
+
+    const newState = await migrate(previousState, 6);
+
+    expect(newState).toEqual({
+      _persist: { version: 5, rehydrated: false },
+      preferences: { requestedCredentials: {} }
+    });
+  });
 });

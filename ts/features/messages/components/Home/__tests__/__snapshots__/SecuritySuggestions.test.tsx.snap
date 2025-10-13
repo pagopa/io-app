@@ -481,7 +481,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                 >
                                   <Text
                                     allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.5}
                                     style={
                                       [
@@ -489,10 +489,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                         {
                                           "color": "#555C70",
                                           "fontFamily": "Titillio",
-                                          "fontSize": 14,
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
-                                          "lineHeight": 21,
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
@@ -588,7 +588,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                 >
                                   <Text
                                     allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.5}
                                     style={
                                       [
@@ -596,10 +596,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                         {
                                           "color": "#555C70",
                                           "fontFamily": "Titillio",
-                                          "fontSize": 14,
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
-                                          "lineHeight": 21,
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
@@ -644,7 +644,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                       accessibilityRole="link"
                                       accessible={true}
                                       allowFontScaling={true}
-                                      dynamicTypeRamp="footnote"
+                                      dynamicTypeRamp="body"
                                       importantForAccessibility="yes"
                                       maxFontSizeMultiplier={1.5}
                                       style={
@@ -655,10 +655,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                           {
                                             "color": "#0B3EE3",
                                             "fontFamily": "Titillio",
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": 21,
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
@@ -754,7 +754,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                 >
                                   <Text
                                     allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.5}
                                     style={
                                       [
@@ -762,10 +762,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                         {
                                           "color": "#555C70",
                                           "fontFamily": "Titillio",
-                                          "fontSize": 14,
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
-                                          "lineHeight": 21,
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
@@ -810,7 +810,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                       accessibilityRole="link"
                                       accessible={true}
                                       allowFontScaling={true}
-                                      dynamicTypeRamp="footnote"
+                                      dynamicTypeRamp="body"
                                       importantForAccessibility="yes"
                                       maxFontSizeMultiplier={1.5}
                                       style={
@@ -821,10 +821,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                           {
                                             "color": "#0B3EE3",
                                             "fontFamily": "Titillio",
-                                            "fontSize": 14,
+                                            "fontSize": 16,
                                             "fontStyle": "normal",
                                             "fontWeight": "600",
-                                            "lineHeight": 21,
+                                            "lineHeight": 24,
                                           },
                                         ]
                                       }
@@ -920,7 +920,7 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                 >
                                   <Text
                                     allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
+                                    dynamicTypeRamp="body"
                                     maxFontSizeMultiplier={1.5}
                                     style={
                                       [
@@ -928,10 +928,10 @@ exports[`SecuritySuggestions should match snapshot 1`] = `
                                         {
                                           "color": "#555C70",
                                           "fontFamily": "Titillio",
-                                          "fontSize": 14,
+                                          "fontSize": 16,
                                           "fontStyle": "normal",
                                           "fontWeight": "400",
-                                          "lineHeight": 21,
+                                          "lineHeight": 24,
                                         },
                                       ]
                                     }
