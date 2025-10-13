@@ -484,6 +484,7 @@ exports[`OrganizationHeader component should match the snapshot for a TPM denomi
                                   },
                                 ]
                               }
+                              testID="service-name"
                             >
                               #### service name ####
                             </Text>
@@ -1021,6 +1022,7 @@ exports[`OrganizationHeader component should match the snapshot for a non third-
                                   },
                                 ]
                               }
+                              testID="service-name"
                             >
                               #### service name ####
                             </Text>
