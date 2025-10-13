@@ -14,7 +14,6 @@ import {
   itwIsDiscoveryBannerHiddenSelector,
   itwIsFeedbackBannerHiddenSelector,
   itwIsL3EnabledSelector,
-  itwIsOfflineBannerHiddenSelector,
   itwIsWalletUpgradeMDLDetailsBannerHiddenSelector
 } from "./preferences";
 import {
@@ -89,19 +88,6 @@ export const itwShouldRenderWalletReadyBannerSelector = (state: GlobalState) =>
  */
 export const itwOfflineAccessAvailableSelector = (state: GlobalState) =>
   itwLifecycleIsOperationalOrValid(state) && !itwIsWalletEmptySelector(state);
-
-/**
- * Returns if the offline banner should be visible. The banner is visible if:
- * - The user has online access (not available in the mini-app)
- * - The Wallet has a valid Wallet Instance
- * - The user did not close the banner
- * @param state the application global state
- * @returns true if the banner should be visible, false otherwise
- */
-export const itwShouldRenderOfflineBannerSelector = (state: GlobalState) =>
-  !offlineAccessReasonSelector(state) &&
-  itwLifecycleIsValidSelector(state) &&
-  !itwIsOfflineBannerHiddenSelector(state);
 
 /**
  * Returns if the L3 upgrade banner should be rendered. The banner is rendered if:

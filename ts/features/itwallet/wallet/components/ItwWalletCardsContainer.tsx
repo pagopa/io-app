@@ -15,7 +15,6 @@ import {
 } from "../../common/components/ItwEidInfoBottomSheetContent";
 import { ItwEidLifecycleAlert } from "../../common/components/ItwEidLifecycleAlert";
 import { ItwFeedbackBanner } from "../../common/components/ItwFeedbackBanner";
-import { ItwOfflineWalletBanner } from "../../common/components/ItwOfflineWalletBanner.tsx";
 import { ItwWalletId } from "../../common/components/ItwWalletId.tsx";
 import { ItwWalletReadyBanner } from "../../common/components/ItwWalletReadyBanner";
 import { useItwPendingReviewRequest } from "../../common/hooks/useItwPendingReviewRequest";
@@ -112,7 +111,6 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   return (
     <>
       <VStack space={16}>
-        <ItwOfflineWalletBanner />
         <WalletCardsCategoryContainer
           key={`cards_category_itw`}
           testID={`itwWalletCardsContainerTestID`}
