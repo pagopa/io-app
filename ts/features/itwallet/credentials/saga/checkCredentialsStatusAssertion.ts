@@ -5,10 +5,10 @@ import { Errors } from "@pagopa/io-react-native-wallet";
 import { itwCredentialsSelector } from "../store/selectors";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
-  shouldRequestStatusAttestation,
-  getCredentialStatusAttestation,
-  StatusAttestationError
-} from "../../common/utils/itwCredentialStatusAttestationUtils";
+  shouldRequestStatusAssertion,
+  getCredentialStatusAssertion,
+  StatusAssertionError
+} from "../../common/utils/itwCredentialStatusAssertionUtils";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import {
   itwLifecycleIsITWalletValidSelector,
@@ -20,14 +20,14 @@ import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superP
 import { GlobalState } from "../../../../store/reducers/types";
 import {
   getMixPanelCredential,
-  trackItwStatusCredentialAttestationFailure
+  trackItwStatusCredentialAssertionFailure
 } from "../../analytics";
 import { selectItwEnv } from "../../common/store/selectors/environment";
 import { getEnv } from "../../common/utils/environment";
 
 const { isIssuerResponseError, IssuerResponseErrorCodes: Codes } = Errors;
 
-export function* updateCredentialStatusAttestationSaga(
+export function* updateCredentialStatusAssertionSaga(
   credential: StoredCredential
 ): Generator<ReduxSagaEffect, StoredCredential> {
   const env = yield* select(selectItwEnv);
@@ -37,40 +37,40 @@ export function* updateCredentialStatusAttestationSaga(
     isItwL3
   );
   try {
-    const { parsedStatusAttestation, statusAttestation } = yield* call(
-      getCredentialStatusAttestation,
+    const { parsedStatusAssertion, statusAssertion } = yield* call(
+      getCredentialStatusAssertion,
       credential,
       getEnv(env)
     );
     return {
       ...credential,
-      storedStatusAttestation: {
+      storedStatusAssertion: {
         credentialStatus: "valid",
-        statusAttestation,
-        parsedStatusAttestation: parsedStatusAttestation.payload
+        statusAssertion,
+        parsedStatusAssertion: parsedStatusAssertion.payload
       }
     };
   } catch (e) {
     if (isIssuerResponseError(e, Codes.CredentialInvalidStatus)) {
       const errorCode = pipe(
-        StatusAttestationError.decode(e.reason),
+        StatusAssertionError.decode(e.reason),
         O.fromEither,
         O.map(x => x.error),
         O.toUndefined
       );
 
-      trackItwStatusCredentialAttestationFailure({
+      trackItwStatusCredentialAssertionFailure({
         credential: mixpanelCredential,
         credential_status: errorCode || "invalid"
       });
 
       return {
         ...credential,
-        storedStatusAttestation: { credentialStatus: "invalid", errorCode }
+        storedStatusAssertion: { credentialStatus: "invalid", errorCode }
       };
     }
     // We do not have enough information on the status, the error was unexpected
-    trackItwStatusCredentialAttestationFailure({
+    trackItwStatusCredentialAssertionFailure({
       credential: mixpanelCredential,
       credential_status: "unknown",
       reason: e instanceof Error ? e.message : e
@@ -78,15 +78,15 @@ export function* updateCredentialStatusAttestationSaga(
 
     return {
       ...credential,
-      storedStatusAttestation: { credentialStatus: "unknown" }
+      storedStatusAssertion: { credentialStatus: "unknown" }
     };
   }
 }
 
 /**
- * This saga is responsible to check the status attestation for each credential in the wallet.
+ * This saga is responsible to check the status assertion for each credential in the wallet.
  */
-export function* checkCredentialsStatusAttestation() {
+export function* checkCredentialsStatusAssertion() {
   const isWalletValid = yield* select(itwLifecycleIsValidSelector);
 
   // Credentials can be requested only when the wallet is valid, i.e. the eID was issued
@@ -96,7 +96,7 @@ export function* checkCredentialsStatusAttestation() {
 
   const credentials = yield* select(itwCredentialsSelector);
   const credentialsToCheck = Object.values(credentials).filter(
-    shouldRequestStatusAttestation
+    shouldRequestStatusAssertion
   );
 
   if (credentialsToCheck.length === 0) {
@@ -105,7 +105,7 @@ export function* checkCredentialsStatusAttestation() {
 
   const updatedCredentials = yield* all(
     credentialsToCheck.map(credential =>
-      call(updateCredentialStatusAttestationSaga, credential)
+      call(updateCredentialStatusAssertionSaga, credential)
     )
   );
 

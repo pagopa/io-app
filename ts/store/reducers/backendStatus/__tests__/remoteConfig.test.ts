@@ -18,7 +18,11 @@ import {
   pnAARQRCodeRegexSelector,
   pnMessagingServiceIdSelector,
   pnPrivacyUrlsSelector,
-  sendAARDelegateUrlSelector
+  sendAARDelegateUrlSelector,
+  sendCustomServiceCenterUrlSelector,
+  sendEstimateTimelinesUrlSelector,
+  sendShowAbstractSelector,
+  sendVisitTheWebsiteUrlSelector
 } from "../remoteConfig";
 
 describe("remoteConfig", () => {
@@ -865,4 +869,262 @@ describe("sendAARDelegateUrlSelector", () => {
       expect(output).toEqual(result);
     });
   }
+});
+
+describe("sendShowAbstractSelector", () => {
+  it("should return false if remoteConfig is not set", () => {
+    const state = {
+      remoteConfig: O.none
+    } as GlobalState;
+    const output = sendShowAbstractSelector(state);
+    expect(output).toBe(false);
+  });
+  it("should return true if pn property is not set", () => {
+    const state = {
+      remoteConfig: O.some({})
+    } as GlobalState;
+    const output = sendShowAbstractSelector(state);
+    expect(output).toBe(true);
+  });
+  it("should return true if abstractShown property is not set", () => {
+    const state = {
+      remoteConfig: O.some({
+        pn: {}
+      })
+    } as GlobalState;
+    const output = sendShowAbstractSelector(state);
+    expect(output).toBe(true);
+  });
+  [false, true].forEach(abstractShown => {
+    it(`should return ${abstractShown} if abstractShown property is set to ${abstractShown}`, () => {
+      const state = {
+        remoteConfig: O.some({
+          pn: {
+            abstractShown
+          }
+        })
+      } as GlobalState;
+      const output = sendShowAbstractSelector(state);
+      expect(output).toBe(abstractShown);
+    });
+  });
+});
+
+describe("sendCustomServiceCenterUrlSelector", () => {
+  const defaultValue = "https://assistenza.notifichedigitali.it/hc";
+  it("should return default value if remoteConfig is not set", () => {
+    const state = {
+      remoteConfig: O.none
+    } as GlobalState;
+    const output = sendCustomServiceCenterUrlSelector(state);
+    expect(output).toBe(defaultValue);
+  });
+  it("should return default value if pn property is not set", () => {
+    const state = {
+      remoteConfig: O.some({})
+    } as GlobalState;
+    const output = sendCustomServiceCenterUrlSelector(state);
+    expect(output).toBe(defaultValue);
+  });
+  it("should return default value if customerServiceCenterUrl property is not set", () => {
+    const state = {
+      remoteConfig: O.some({
+        pn: {}
+      })
+    } as GlobalState;
+    const output = sendCustomServiceCenterUrlSelector(state);
+    expect(output).toBe(defaultValue);
+  });
+  it("should return default value if customerServiceCenterUrl property is an empty string", () => {
+    const state = {
+      remoteConfig: O.some({
+        pn: {
+          customerServiceCenterUrl: ""
+        }
+      })
+    } as GlobalState;
+    const output = sendCustomServiceCenterUrlSelector(state);
+    expect(output).toBe(defaultValue);
+  });
+  it("should return default value if customerServiceCenterUrl property is a whitespace string", () => {
+    const state = {
+      remoteConfig: O.some({
+        pn: {
+          customerServiceCenterUrl: "   "
+        }
+      })
+    } as GlobalState;
+    const output = sendCustomServiceCenterUrlSelector(state);
+    expect(output).toBe(defaultValue);
+  });
+  it("should return the value of the property customerServiceCenterUrl", () => {
+    const expectedOutput = "https://an.url/toCheck";
+    const state = {
+      remoteConfig: O.some({
+        pn: {
+          customerServiceCenterUrl: expectedOutput
+        }
+      })
+    } as GlobalState;
+    const output = sendCustomServiceCenterUrlSelector(state);
+    expect(output).toBe(expectedOutput);
+  });
+  it("should return the value of the property customerServiceCenterUrl without additional leading and trailing spaces", () => {
+    const expectedOutput = "https://an.url/toCheck";
+    const state = {
+      remoteConfig: O.some({
+        pn: {
+          customerServiceCenterUrl: ` ${expectedOutput} `
+        }
+      })
+    } as GlobalState;
+    const output = sendCustomServiceCenterUrlSelector(state);
+    expect(output).toBe(expectedOutput);
+  });
+});
+
+describe("sendEstimateTimelinesUrlSelector", () => {
+  const defaultValue = "https://notifichedigitali.it/perfezionamento";
+  it("should return default value if remoteConfig is not set", () => {
+    const state = {
+      remoteConfig: O.none
+    } as GlobalState;
+    const output = sendEstimateTimelinesUrlSelector(state);
+    expect(output).toBe(defaultValue);
+  });
+  it("should return default value if pn property is not set", () => {
+    const state = {
+      remoteConfig: O.some({})
+    } as GlobalState;
+    const output = sendEstimateTimelinesUrlSelector(state);
+    expect(output).toBe(defaultValue);
+  });
+  it("should return default value if estimateTimelinesUrl property is not set", () => {
+    const state = {
+      remoteConfig: O.some({
+        pn: {}
+      })
+    } as GlobalState;
+    const output = sendEstimateTimelinesUrlSelector(state);
+    expect(output).toBe(defaultValue);
+  });
+  it("should return default value if estimateTimelinesUrl property is an empty string", () => {
+    const state = {
+      remoteConfig: O.some({
+        pn: {
+          estimateTimelinesUrl: ""
+        }
+      })
+    } as GlobalState;
+    const output = sendEstimateTimelinesUrlSelector(state);
+    expect(output).toBe(defaultValue);
+  });
+  it("should return default value if estimateTimelinesUrl property is a whitespace string", () => {
+    const state = {
+      remoteConfig: O.some({
+        pn: {
+          estimateTimelinesUrl: "   "
+        }
+      })
+    } as GlobalState;
+    const output = sendEstimateTimelinesUrlSelector(state);
+    expect(output).toBe(defaultValue);
+  });
+  it("should return the value of the property estimateTimelinesUrl", () => {
+    const expectedOutput = "https://an.url/toCheck";
+    const state = {
+      remoteConfig: O.some({
+        pn: {
+          estimateTimelinesUrl: expectedOutput
+        }
+      })
+    } as GlobalState;
+    const output = sendEstimateTimelinesUrlSelector(state);
+    expect(output).toBe(expectedOutput);
+  });
+  it("should return the value of the property estimateTimelinesUrl without additional leading and trailing spaces", () => {
+    const expectedOutput = "https://an.url/toCheck";
+    const state = {
+      remoteConfig: O.some({
+        pn: {
+          estimateTimelinesUrl: ` ${expectedOutput} `
+        }
+      })
+    } as GlobalState;
+    const output = sendEstimateTimelinesUrlSelector(state);
+    expect(output).toBe(expectedOutput);
+  });
+});
+
+describe("sendVisitTheWebsiteUrlSelector", () => {
+  const defaultValue = "https://cittadini.notifichedigitali.it/auth/login";
+  it("should return default value if remoteConfig is not set", () => {
+    const state = {
+      remoteConfig: O.none
+    } as GlobalState;
+    const output = sendVisitTheWebsiteUrlSelector(state);
+    expect(output).toBe(defaultValue);
+  });
+  it("should return default value if pn property is not set", () => {
+    const state = {
+      remoteConfig: O.some({})
+    } as GlobalState;
+    const output = sendVisitTheWebsiteUrlSelector(state);
+    expect(output).toBe(defaultValue);
+  });
+  it("should return default value if visitTheSENDWebsiteUrl property is not set", () => {
+    const state = {
+      remoteConfig: O.some({
+        pn: {}
+      })
+    } as GlobalState;
+    const output = sendVisitTheWebsiteUrlSelector(state);
+    expect(output).toBe(defaultValue);
+  });
+  it("should return default value if visitTheSENDWebsiteUrl property is an empty string", () => {
+    const state = {
+      remoteConfig: O.some({
+        pn: {
+          visitTheSENDWebsiteUrl: ""
+        }
+      })
+    } as GlobalState;
+    const output = sendVisitTheWebsiteUrlSelector(state);
+    expect(output).toBe(defaultValue);
+  });
+  it("should return default value if visitTheSENDWebsiteUrl property is a whitespace string", () => {
+    const state = {
+      remoteConfig: O.some({
+        pn: {
+          visitTheSENDWebsiteUrl: "   "
+        }
+      })
+    } as GlobalState;
+    const output = sendVisitTheWebsiteUrlSelector(state);
+    expect(output).toBe(defaultValue);
+  });
+  it("should return the value of the property visitTheSENDWebsiteUrl", () => {
+    const expectedOutput = "https://an.url/toCheck";
+    const state = {
+      remoteConfig: O.some({
+        pn: {
+          visitTheSENDWebsiteUrl: expectedOutput
+        }
+      })
+    } as GlobalState;
+    const output = sendVisitTheWebsiteUrlSelector(state);
+    expect(output).toBe(expectedOutput);
+  });
+  it("should return the value of the property visitTheSENDWebsiteUrl without additional leading and trailing spaces", () => {
+    const expectedOutput = "https://an.url/toCheck";
+    const state = {
+      remoteConfig: O.some({
+        pn: {
+          visitTheSENDWebsiteUrl: ` ${expectedOutput} `
+        }
+      })
+    } as GlobalState;
+    const output = sendVisitTheWebsiteUrlSelector(state);
+    expect(output).toBe(expectedOutput);
+  });
 });

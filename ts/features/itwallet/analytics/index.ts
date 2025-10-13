@@ -156,7 +156,7 @@ type CredentialUnexpectedFailure = {
   type: string;
 };
 
-type CredentialStatusAttestationFailure = {
+type CredentialStatusAssertionFailure = {
   credential: MixPanelCredential;
   credential_status: string;
   reason?: unknown;
@@ -1062,11 +1062,11 @@ export const trackItwStatusWalletAttestationFailure = () => {
   );
 };
 
-export const trackItwStatusCredentialAttestationFailure = ({
+export const trackItwStatusCredentialAssertionFailure = ({
   credential,
   credential_status,
   reason
-}: CredentialStatusAttestationFailure) => {
+}: CredentialStatusAssertionFailure) => {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_STATUS_CREDENTIAL_ATTESTATION_FAILURE,
     buildEventProperties("KO", "error", {
