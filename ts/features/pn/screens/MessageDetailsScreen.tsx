@@ -4,9 +4,10 @@ import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
-import { useCallback, useEffect } from "react";
+import { RefObject, useCallback, useEffect, useRef } from "react";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
+import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import { useOfflineToastGuard } from "../../../hooks/useOfflineToastGuard";
 import { useStartSupportRequest } from "../../../hooks/useStartSupportRequest";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
@@ -19,6 +20,7 @@ import {
   updatePaymentForMessage
 } from "../../messages/store/actions";
 import { profileFiscalCodeSelector } from "../../settings/common/store/selectors";
+import { SendAARMessageDetailBottomSheetComponent } from "../aar/components/SendAARMessageDetailBottomSheetComponent";
 import { terminateAarFlow } from "../aar/store/actions";
 import { trackPNUxSuccess } from "../analytics";
 import { MessageDetails } from "../components/MessageDetails";
@@ -49,7 +51,10 @@ type MessageDetailsRouteProps = RouteProp<
   "PN_ROUTES_MESSAGE_DETAILS"
 >;
 
-const useCorrectHeader = (isAAr: boolean) => {
+const useCorrectHeader = (
+  isAAr: boolean,
+  aarBottomSheetRef: RefObject<(() => void) | undefined>
+) => {
   const { setOptions, goBack } = useIONavigation();
   const startSupportRequest = useOfflineToastGuard(useStartSupportRequest({}));
 
@@ -58,8 +63,11 @@ const useCorrectHeader = (isAAr: boolean) => {
     type: "singleAction",
     firstAction: {
       icon: "closeLarge",
-      onPress: goBack,
-      accessibilityLabel: I18n.t("global.buttons.close")
+      onPress: () => {
+        aarBottomSheetRef.current?.();
+      },
+      accessibilityLabel: I18n.t("global.buttons.close"),
+      testID: "AAR_close_button"
     }
   };
   const supportRequestAction: HeaderSecondLevel = {
@@ -88,10 +96,20 @@ const useCorrectHeader = (isAAr: boolean) => {
 export const MessageDetailsScreen = () => {
   const dispatch = useIODispatch();
   const route = useRoute<MessageDetailsRouteProps>();
-
   const { messageId, serviceId, firstTimeOpening, isAarMessage } = route.params;
+  const aarBottomSheetRef = useRef<() => void>(undefined);
 
-  useCorrectHeader(!!isAarMessage);
+  useCorrectHeader(!!isAarMessage, aarBottomSheetRef);
+
+  const androidBackButtonCallback = useCallback(() => {
+    if (isAarMessage) {
+      aarBottomSheetRef.current?.();
+      return true;
+    }
+    return false;
+  }, [isAarMessage]);
+
+  useHardwareBackButton(androidBackButtonCallback);
 
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
   const messagePot = useIOSelector(state =>
@@ -181,6 +199,11 @@ export const MessageDetailsScreen = () => {
             />
           )
         )
+      )}
+      {isAarMessage && (
+        <SendAARMessageDetailBottomSheetComponent
+          aarBottomSheetRef={aarBottomSheetRef}
+        />
       )}
     </>
   );
