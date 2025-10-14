@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.17.0-rc.0](https://github.com/pagopa/io-app/compare/3.16.0-rc.7...3.17.0-rc.0) (2025-10-14)
+
+
+### Features
+
+* [[IOCOM-2553](https://pagopa.atlassian.net/browse/IOCOM-2553),[IOCOM-2662](https://pagopa.atlassian.net/browse/IOCOM-2662),[IOCOM-2656](https://pagopa.atlassian.net/browse/IOCOM-2656)] BottomSheet implementation for closing the SEND AAR flow ([#7454](https://github.com/pagopa/io-app/issues/7454)) ([da2d03f](https://github.com/pagopa/io-app/commit/da2d03f731ca0141ae7f951b4713e41be4c285f8))
+* [[IOCOM-2653](https://pagopa.atlassian.net/browse/IOCOM-2653)] Change text on the Alert of the timeline of the SEND bottom sheet ([#7460](https://github.com/pagopa/io-app/issues/7460)) ([c935488](https://github.com/pagopa/io-app/commit/c9354886e64d20f1b87b37da9f678d5d8b7f144e))
+* [[IOCOM-2657](https://pagopa.atlassian.net/browse/IOCOM-2657)] Selectors for SEND CDN Data ([#7458](https://github.com/pagopa/io-app/issues/7458)) ([32e0ecc](https://github.com/pagopa/io-app/commit/32e0ecc05df1997fbaf003e5d0df4a7e5a11c421))
+* [[IOCOM-2663](https://pagopa.atlassian.net/browse/IOCOM-2663)] SEND AAR payment filtering ([#7464](https://github.com/pagopa/io-app/issues/7464)) ([f3bd5b6](https://github.com/pagopa/io-app/commit/f3bd5b608b55c0fd5b1be6bca5d3c6b40b99586c))
+* [[IOPAE-2002](https://pagopa.atlassian.net/browse/IOPAE-2002)] Add `sessionId` param to institutions search ([#7434](https://github.com/pagopa/io-app/issues/7434)) ([3943dba](https://github.com/pagopa/io-app/commit/3943dbad17011157fd6c0dc9d86bb6764e5fd97d))
+
+
+### Bug Fixes
+
+* [[IOCOM-2666](https://pagopa.atlassian.net/browse/IOCOM-2666)] Save `mandateId` upon AAR retrieval ([#7473](https://github.com/pagopa/io-app/issues/7473)) ([79bdfc9](https://github.com/pagopa/io-app/commit/79bdfc94ebe8fd695f5b59b0156945cce1ddb5e5))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-3126](https://pagopa.atlassian.net/browse/SIW-3126)] ITW Offline Banner removal ([#7451](https://github.com/pagopa/io-app/issues/7451)) ([ef1c4fd](https://github.com/pagopa/io-app/commit/ef1c4fde11779cd0eb8f185ca8d6ed1bd075efba))
+* **IT Wallet:** [[SIW-3134](https://pagopa.atlassian.net/browse/SIW-3134)] Add chevron for credential with `onPress` property in `ItwOnboardingModuleCredential` ([#7469](https://github.com/pagopa/io-app/issues/7469)) ([9c2eeb9](https://github.com/pagopa/io-app/commit/9c2eeb996ac46e75f079952574b1414efd7e0dea))
+* [[IOAPPX-504](https://pagopa.atlassian.net/browse/IOAPPX-504)] Remove unused dependencies ([#7245](https://github.com/pagopa/io-app/issues/7245)) ([8de2e78](https://github.com/pagopa/io-app/commit/8de2e78ed37e003906ffdfaed2a134a9853a5b84)), closes [/github.com/pagopa/io-app/blob/d8a21ed69d1acd6ed6a5c07590f068454e99e0c9/yarn.lock#L11966](https://github.com/pagopa//github.com/pagopa/io-app/blob/d8a21ed69d1acd6ed6a5c07590f068454e99e0c9/yarn.lock/issues/L11966) [readme-ov-file#for-react-native-v0721](https://github.com/pagopa/readme-ov-file/issues/for-react-native-v0721)
+* [[IOBP-2061](https://pagopa.atlassian.net/browse/IOBP-2061)] Add IDPay scan screen remote feature flag ([#7471](https://github.com/pagopa/io-app/issues/7471)) ([ddf564c](https://github.com/pagopa/io-app/commit/ddf564cd1ff82aa8875457cdb1efe842ea022521))
+
 ## [3.16.0-rc.7](https://github.com/pagopa/io-app/compare/3.16.0-rc.6...3.16.0-rc.7) (2025-10-10)
 
 
