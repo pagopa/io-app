@@ -1,7 +1,10 @@
 import { View } from "react-native";
 import { TimelineListItemProps } from "../TimelineListItem";
 
-export const TimelineListItem = ({ history }: TimelineListItemProps) => (
+export const TimelineListItem = ({
+  hideFooter,
+  history
+}: TimelineListItemProps) => (
   <>
     {history.map((pieceOfHistory, index) => (
       <View key={`poh_${index}`}>
@@ -17,5 +20,6 @@ export const TimelineListItem = ({ history }: TimelineListItemProps) => (
         <View>{pieceOfHistory.status}</View>
       </View>
     ))}
+    <View>{`${hideFooter}`}</View>
   </>
 );

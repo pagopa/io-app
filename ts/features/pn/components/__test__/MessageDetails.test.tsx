@@ -19,37 +19,39 @@ jest.mock("../MessageBottomMenu");
 const pnMessage = pipe(thirdPartyMessage, toPNMessage, O.toUndefined)!;
 
 describe("MessageDetails component", () => {
-  it("should match the snapshot with default props", () => {
-    const { component } = renderComponent(
-      generateComponentProperties(pnMessage)
-    );
-    expect(component).toMatchSnapshot();
-  });
+  [false, true].forEach(isAARMessage => {
+    it(`should match the snapshot with default props (is AAR ${isAARMessage})`, () => {
+      const { component } = renderComponent(
+        generateComponentProperties(isAARMessage, pnMessage)
+      );
+      expect(component).toMatchSnapshot();
+    });
 
-  it("should display the legalMessage tag", () => {
-    const { component } = renderComponent(
-      generateComponentProperties(pnMessage)
-    );
-    expect(
-      component.queryByText(I18n.t("features.pn.details.badge.legalValue"))
-    ).not.toBeNull();
-  });
+    it(`should display the legalMessage tag (is AAR ${isAARMessage})`, () => {
+      const { component } = renderComponent(
+        generateComponentProperties(isAARMessage, pnMessage)
+      );
+      expect(
+        component.queryByText(I18n.t("features.pn.details.badge.legalValue"))
+      ).not.toBeNull();
+    });
 
-  it("should display the attachment tag if there are attachments", () => {
-    const { component } = renderComponent(
-      generateComponentProperties(pnMessage)
-    );
-    expect(component.queryByTestId("attachment-tag")).not.toBeNull();
-  });
+    it(`should display the attachment tag if there are attachments (is AAR ${isAARMessage})`, () => {
+      const { component } = renderComponent(
+        generateComponentProperties(isAARMessage, pnMessage)
+      );
+      expect(component.queryByTestId("attachment-tag")).not.toBeNull();
+    });
 
-  it("should NOT display the attachment tag if there are no attachments", () => {
-    const { component } = renderComponent(
-      generateComponentProperties({
-        ...pnMessage,
-        attachments: []
-      })
-    );
-    expect(component.queryByTestId("attachment-tag")).toBeNull();
+    it(`should NOT display the attachment tag if there are no attachments (is AAR ${isAARMessage})`, () => {
+      const { component } = renderComponent(
+        generateComponentProperties(isAARMessage, {
+          ...pnMessage,
+          attachments: []
+        })
+      );
+      expect(component.queryByTestId("attachment-tag")).toBeNull();
+    });
   });
   describe("isAARMessage logic", () => {
     beforeEach(() => {
@@ -64,7 +66,7 @@ describe("MessageDetails component", () => {
           "MessageDetailsHeader"
         );
         renderComponent({
-          ...generateComponentProperties(pnMessage),
+          ...generateComponentProperties(isAARMessage, pnMessage),
           isAARMessage
         });
         const mockCalls = headerSpy.mock.calls[0][0];
@@ -86,7 +88,7 @@ describe("MessageDetails component", () => {
           "MessageDetailsHeader"
         );
         renderComponent({
-          ...generateComponentProperties(pnMessage),
+          ...generateComponentProperties(isAARMessage, pnMessage),
           isAARMessage
         });
         const mockCalls = headerSpy.mock.calls[0][0];
@@ -103,7 +105,11 @@ describe("MessageDetails component", () => {
   });
 });
 
-const generateComponentProperties = (message: PNMessage) => ({
+const generateComponentProperties = (
+  isAARMessage: boolean,
+  message: PNMessage
+) => ({
+  isAARMessage,
   messageId: "01HRYR6C761DGH3S84HBBXMMKT",
   message,
   payments: undefined,
