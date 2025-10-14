@@ -25,7 +25,7 @@ export const isAAREnabled = (state: GlobalState): boolean =>
 
 export const isAarMessageDelegatedSelector = (
   state: GlobalState,
-  ioMessageId: string
+  iun: string
 ): boolean => {
   const currentState = currentAARFlowData(state);
   const isCorrectState =
@@ -33,20 +33,20 @@ export const isAarMessageDelegatedSelector = (
     currentState.type === sendAARFlowStates.displayingNotificationData;
   return (
     isCorrectState &&
-    currentState.iun === ioMessageId &&
+    currentState.iun === iun &&
     currentState.mandateId !== undefined
   );
 };
 export const aarAdresseeDenominationSelector = (
   state: GlobalState,
-  ioMessageId: string
+  iun: string
 ) => {
   const currentState = currentAARFlowData(state);
 
   switch (currentState.type) {
     case sendAARFlowStates.fetchingNotificationData:
     case sendAARFlowStates.displayingNotificationData:
-      if (ioMessageId === currentState.iun) {
+      if (iun === currentState.iun) {
         return currentState.fullNameDestinatario;
       }
       return undefined;
