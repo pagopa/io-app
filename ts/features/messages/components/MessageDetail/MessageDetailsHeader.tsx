@@ -22,6 +22,7 @@ export type MessageDetailsHeaderProps = PropsWithChildren<{
   messageId: string;
   serviceId: ServiceId;
   subject: string;
+  canNavigateToServiceDetails?: boolean;
   thirdPartySenderDenomination?: string;
 }>;
 
@@ -53,6 +54,7 @@ export const MessageDetailsHeader = ({
   messageId,
   serviceId,
   thirdPartySenderDenomination,
+  canNavigateToServiceDetails = true,
   ...rest
 }: MessageDetailsHeaderProps) => {
   const service = useIOSelector(state =>
@@ -71,6 +73,7 @@ export const MessageDetailsHeader = ({
           serviceId={serviceId}
           serviceName={service.name}
           thirdPartySenderDenomination={thirdPartySenderDenomination}
+          canNavigateToServiceDetails={canNavigateToServiceDetails}
         />
       )}
     </VStack>
