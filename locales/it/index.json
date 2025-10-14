@@ -3892,7 +3892,19 @@
             }
           },
           "displayingNotificationData": {
-            "headerText-through": " tramite"
+            "headerText-through": " tramite",
+            "abstract": {
+              "title": {
+                "notDelegated": {
+                  "youHave": "Hai"
+                },
+                "delegated": {
+                  "theyHave": " ha"
+                },
+                "receivedFrom": " ricevuto una notifica SEND: è una comunicazione a valore legale inviata da ",
+                "checkDocuments": ". Consulta i documenti allegati per scoprire tutti i dettagli. \n\nSe è previsto un pagamento, puoi farlo ora da IO con il tuo metodo preferito."
+              }
+            }
           }
         }
       },
