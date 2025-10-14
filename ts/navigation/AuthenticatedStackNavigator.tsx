@@ -139,6 +139,7 @@ const AuthenticatedStackNavigator = () => {
       <Stack.Screen
         name={NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT}
         component={PushNotificationEngagementScreen}
+        options={TransitionPresets.ModalSlideFromBottomIOS}
       />
       <Stack.Screen
         name={MESSAGES_ROUTES.MESSAGES_SEARCH}

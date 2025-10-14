@@ -63,6 +63,7 @@ const PushNotificationEngagementScreenContent = ({
 
   useEffect(() => {
     setOptions({
+      headerShown: true,
       header: () => (
         <HeaderSecondLevel
           title=""
@@ -98,7 +99,7 @@ const PushNotificationEngagementScreenContent = ({
         text: i18next.t("features.pushNotifications.engagementScreen.badge")
       }}
     >
-      <Body>
+      <Body style={{ textAlign: "center" }}>
         {i18next.t("features.pushNotifications.engagementScreen.body")}
       </Body>
     </WhatsNewScreenContent>
