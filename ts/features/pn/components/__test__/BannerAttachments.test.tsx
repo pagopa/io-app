@@ -10,7 +10,7 @@ import * as urlUtils from "../../../../utils/url";
 import * as remoteConfigSelectors from "../../../../store/reducers/backendStatus/remoteConfig";
 
 describe("BannerAttachments", () => {
-  describe("BannerAttachments", () => {
+  describe("BannerAttachments component", () => {
     afterEach(() => {
       jest.clearAllMocks();
       jest.restoreAllMocks();
