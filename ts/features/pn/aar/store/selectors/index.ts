@@ -6,7 +6,7 @@ import { isAARLocalEnabled } from "../../../../../store/reducers/persistedPrefer
 import { GlobalState } from "../../../../../store/reducers/types";
 import { thirdPartyFromIdSelector } from "../../../../messages/store/reducers/thirdPartyById";
 import { toPNMessage } from "../../../store/types/transformers";
-import { sendAARFlowStates } from "../../utils/stateUtils";
+import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
 
 const emptyArray: ReadonlyArray<string> = []; // used as a stable reference to avoid useless re-renders
 export const thirdPartySenderDenominationSelector = (
@@ -22,20 +22,32 @@ export const thirdPartySenderDenominationSelector = (
   );
 export const isAAREnabled = (state: GlobalState): boolean =>
   isAARLocalEnabled(state) && isAARRemoteEnabled(state);
+
 export const isAarMessageDelegatedSelector = (
   state: GlobalState,
   ioMessageId: string
 ): boolean => {
   const currentState = currentAARFlowData(state);
 
-  const isCorrectMessage =
-    "iun" in currentState && currentState.iun === ioMessageId;
+  const isIunValid = isMessageIdAarIun(currentState, ioMessageId);
   const stateHasMandateId = "mandateId" in currentState;
 
-  if (isCorrectMessage && stateHasMandateId) {
+  if (isIunValid && stateHasMandateId) {
     return currentState.mandateId !== undefined;
   }
   return false;
+};
+export const aarAdresseeDenominationSelector = (
+  state: GlobalState,
+  ioMessageId: string
+) => {
+  const currentState = currentAARFlowData(state);
+  const isIunValid = isMessageIdAarIun(currentState, ioMessageId);
+  const stateHasDenomination = "fullNameDestinatario" in currentState;
+  if (isIunValid && stateHasDenomination) {
+    return currentState.fullNameDestinatario;
+  }
+  return undefined;
 };
 
 export const currentAARFlowData = (state: GlobalState) =>
@@ -50,3 +62,8 @@ export const currentAARFlowStateErrorCodes = (state: GlobalState) => {
     return emptyArray;
   }
 };
+
+// ------------ HELPERS ------------
+
+const isMessageIdAarIun = (state: AARFlowState, messageId: string): boolean =>
+  "iun" in state && state.iun === messageId;
