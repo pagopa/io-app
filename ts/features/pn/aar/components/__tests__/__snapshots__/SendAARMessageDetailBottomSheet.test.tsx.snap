@@ -446,7 +446,7 @@ exports[`BottomSheetContent should match snapshot when mandateId='MANDATE123' 1`
                           >
                             <Text
                               allowFontScaling={true}
-                              dynamicTypeRamp="footnote"
+                              dynamicTypeRamp="body"
                               maxFontSizeMultiplier={1.5}
                               style={
                                 [
@@ -454,10 +454,10 @@ exports[`BottomSheetContent should match snapshot when mandateId='MANDATE123' 1`
                                   {
                                     "color": "#555C70",
                                     "fontFamily": "Titillio",
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
-                                    "lineHeight": 21,
+                                    "lineHeight": 24,
                                   },
                                 ]
                               }
@@ -553,7 +553,7 @@ exports[`BottomSheetContent should match snapshot when mandateId='MANDATE123' 1`
                           >
                             <Text
                               allowFontScaling={true}
-                              dynamicTypeRamp="footnote"
+                              dynamicTypeRamp="body"
                               maxFontSizeMultiplier={1.5}
                               style={
                                 [
@@ -561,10 +561,10 @@ exports[`BottomSheetContent should match snapshot when mandateId='MANDATE123' 1`
                                   {
                                     "color": "#555C70",
                                     "fontFamily": "Titillio",
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
-                                    "lineHeight": 21,
+                                    "lineHeight": 24,
                                   },
                                 ]
                               }
@@ -1475,7 +1475,7 @@ exports[`BottomSheetContent should match snapshot when mandateId='undefined' 1`]
                           >
                             <Text
                               allowFontScaling={true}
-                              dynamicTypeRamp="footnote"
+                              dynamicTypeRamp="body"
                               maxFontSizeMultiplier={1.5}
                               style={
                                 [
@@ -1483,10 +1483,10 @@ exports[`BottomSheetContent should match snapshot when mandateId='undefined' 1`]
                                   {
                                     "color": "#555C70",
                                     "fontFamily": "Titillio",
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
-                                    "lineHeight": 21,
+                                    "lineHeight": 24,
                                   },
                                 ]
                               }
@@ -1582,7 +1582,7 @@ exports[`BottomSheetContent should match snapshot when mandateId='undefined' 1`]
                           >
                             <Text
                               allowFontScaling={true}
-                              dynamicTypeRamp="footnote"
+                              dynamicTypeRamp="body"
                               maxFontSizeMultiplier={1.5}
                               style={
                                 [
@@ -1590,10 +1590,10 @@ exports[`BottomSheetContent should match snapshot when mandateId='undefined' 1`]
                                   {
                                     "color": "#555C70",
                                     "fontFamily": "Titillio",
-                                    "fontSize": 14,
+                                    "fontSize": 16,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
-                                    "lineHeight": 21,
+                                    "lineHeight": 24,
                                   },
                                 ]
                               }

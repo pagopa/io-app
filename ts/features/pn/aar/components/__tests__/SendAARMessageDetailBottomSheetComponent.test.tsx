@@ -49,19 +49,6 @@ describe("SendAARMessageDetailBottomSheetComponent", () => {
     expect(aarBottomSheetRef.current).toBe(presentMock);
   });
 
-  it("should call 'present' on hardware back button press", () => {
-    jest
-      .spyOn(BACK_BUTTON, "useHardwareBackButton")
-      .mockImplementation(async cb => {
-        await act(async () => {
-          const result = cb();
-          expect(presentMock).toHaveBeenCalledTimes(1);
-          expect(result).toBe(false);
-        });
-      });
-
-    renderComponent();
-  });
   describe("onSecondaryActionPress navigation behavior", () => {
     test.each([
       [false, "replace"],

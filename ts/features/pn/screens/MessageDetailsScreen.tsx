@@ -7,6 +7,7 @@ import I18n from "i18next";
 import { RefObject, useCallback, useEffect, useRef } from "react";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
+import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import { useOfflineToastGuard } from "../../../hooks/useOfflineToastGuard";
 import { useStartSupportRequest } from "../../../hooks/useStartSupportRequest";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
@@ -99,6 +100,16 @@ export const MessageDetailsScreen = () => {
   const aarBottomSheetRef = useRef<() => void>(undefined);
 
   useCorrectHeader(!!isAarMessage, aarBottomSheetRef);
+
+  const androidBackButtonCallback = useCallback(() => {
+    if (isAarMessage) {
+      aarBottomSheetRef.current?.();
+      return true;
+    }
+    return false;
+  }, [isAarMessage]);
+
+  useHardwareBackButton(androidBackButtonCallback);
 
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
   const messagePot = useIOSelector(state =>
