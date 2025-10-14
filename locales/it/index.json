@@ -3905,6 +3905,16 @@
                 "checkDocuments": ". Consulta i documenti allegati per scoprire tutti i dettagli. \n\nSe è previsto un pagamento, puoi farlo ora da IO con il tuo metodo preferito."
               }
             }
+          },
+          "closeNotification": {
+            "title": "Vuoi chiudere la notifica SEND?",
+            "paragraph1": "Conserva il codice QR, ti servirà per rileggere la notifica in app",
+            "paragraph2": "Puoi inquadrarlo oppure caricare una sua foto su IO",
+            "paragraph3": "Tutte le tue notifiche sono disponibili sul sito di SEND - Notifiche Digitali",
+            "paragraphDelegate3": "Tutte le tue notifiche e quelle per cui hai una delega sono disponibili sul sito di SEND - Notifiche Digitali",
+            "link": "Vai sul sito di SEND",
+            "primaryAction": "Torna alla notifica",
+            "secondaryAction": "Chiudi la notifica"
           }
         }
       },

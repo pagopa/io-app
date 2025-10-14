@@ -89,6 +89,7 @@ export const MessageDetails = ({
             subject={message.subject}
             createdAt={maybeMessageDate}
             thirdPartySenderDenomination={message.senderDenomination}
+            canNavigateToServiceDetails={!isAARMessage}
           >
             <Tag
               text={I18n.t("features.pn.details.badge.legalValue")}
