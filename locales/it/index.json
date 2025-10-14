@@ -3893,6 +3893,16 @@
           },
           "displayingNotificationData": {
             "headerText-through": " tramite"
+          },
+          "closeNotification": {
+            "title": "Vuoi chiudere la notifica SEND?",
+            "paragraph1": "Conserva il codice QR, ti servirà per rileggere la notifica in app",
+            "paragraph2": "Puoi inquadrarlo oppure caricare una sua foto su IO",
+            "paragraph3": "Tutte le tue notifiche sono disponibili sul sito di SEND - Notifiche Digitali",
+            "paragraphDelegate3": "Tutte le tue notifiche e quelle per cui hai una delega sono disponibili sul sito di SEND - Notifiche Digitali",
+            "link": "Vai sul sito di SEND",
+            "primaryAction": "Torna alla notifica",
+            "secondaryAction": "Chiudi la notifica"
           }
         }
       },
