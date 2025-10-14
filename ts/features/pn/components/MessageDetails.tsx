@@ -19,7 +19,6 @@ import { NotificationPaymentInfo } from "../../../../definitions/pn/Notification
 import { MessageDetailsAttachments } from "../../messages/components/MessageDetail/MessageDetailsAttachments";
 import { MessageDetailsHeader } from "../../messages/components/MessageDetail/MessageDetailsHeader";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
-import { AarMessageDetailsContent } from "../aar/components/AarMessageDetailsContent";
 import { PNMessage } from "../store/types/types";
 import {
   maxVisiblePaymentCount,
@@ -28,10 +27,10 @@ import {
 import { F24Section } from "./F24Section";
 import { MessageBottomMenu } from "./MessageBottomMenu";
 import { MessageCancelledContent } from "./MessageCancelledContent";
-import { MessageDetailsContent } from "./MessageDetailsContent";
 import { MessageFooter } from "./MessageFooter";
 import { MessagePaymentBottomSheet } from "./MessagePaymentBottomSheet";
 import { MessagePayments } from "./MessagePayments";
+import { MessageDetailsContent } from "./MessageDetailsContent";
 
 export type MessageDetailsProps = {
   message: PNMessage;
@@ -69,12 +68,6 @@ export const MessageDetails = ({
     : undefined;
 
   const maybeMessageDate = isAARMessage ? undefined : message.created_at;
-  const MessageDetailsComponent = () =>
-    isAARMessage ? (
-      <AarMessageDetailsContent message={message} />
-    ) : (
-      <MessageDetailsContent abstract={message.abstract} />
-    );
   return (
     <>
       <ScrollView
@@ -112,7 +105,7 @@ export const MessageDetails = ({
             paidNoticeCodes={completedPaymentNoticeCodes}
             payments={payments}
           />
-          <MessageDetailsComponent />
+          <MessageDetailsContent message={message} />
           <VSpacer size={16} />
           <MessageDetailsAttachments
             disabled={message.isCancelled}

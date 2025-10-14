@@ -6,7 +6,7 @@ import { isAARLocalEnabled } from "../../../../../store/reducers/persistedPrefer
 import { GlobalState } from "../../../../../store/reducers/types";
 import { thirdPartyFromIdSelector } from "../../../../messages/store/reducers/thirdPartyById";
 import { toPNMessage } from "../../../store/types/transformers";
-import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
+import { sendAARFlowStates } from "../../utils/stateUtils";
 
 const emptyArray: ReadonlyArray<string> = []; // used as a stable reference to avoid useless re-renders
 export const thirdPartySenderDenominationSelector = (
@@ -28,26 +28,31 @@ export const isAarMessageDelegatedSelector = (
   ioMessageId: string
 ): boolean => {
   const currentState = currentAARFlowData(state);
-
-  const isIunValid = isMessageIdAarIun(currentState, ioMessageId);
-  const stateHasMandateId = "mandateId" in currentState;
-
-  if (isIunValid && stateHasMandateId) {
-    return currentState.mandateId !== undefined;
-  }
-  return false;
+  const isCorrectState =
+    currentState.type === sendAARFlowStates.fetchingNotificationData ||
+    currentState.type === sendAARFlowStates.displayingNotificationData;
+  return (
+    isCorrectState &&
+    currentState.iun === ioMessageId &&
+    currentState.mandateId !== undefined
+  );
 };
 export const aarAdresseeDenominationSelector = (
   state: GlobalState,
   ioMessageId: string
 ) => {
   const currentState = currentAARFlowData(state);
-  const isIunValid = isMessageIdAarIun(currentState, ioMessageId);
-  const stateHasDenomination = "fullNameDestinatario" in currentState;
-  if (isIunValid && stateHasDenomination) {
-    return currentState.fullNameDestinatario;
+
+  switch (currentState.type) {
+    case sendAARFlowStates.fetchingNotificationData:
+    case sendAARFlowStates.displayingNotificationData:
+      if (ioMessageId === currentState.iun) {
+        return currentState.fullNameDestinatario;
+      }
+      return undefined;
+    default:
+      return undefined;
   }
-  return undefined;
 };
 
 export const currentAARFlowData = (state: GlobalState) =>
@@ -62,8 +67,3 @@ export const currentAARFlowStateErrorCodes = (state: GlobalState) => {
     return emptyArray;
   }
 };
-
-// ------------ HELPERS ------------
-
-const isMessageIdAarIun = (state: AARFlowState, messageId: string): boolean =>
-  "iun" in state && state.iun === messageId;
