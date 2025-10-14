@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AARFlowStateActions should match snapshot for populateStoresWithEphemeralAarMessageData 1`] = `
+{
+  "meta": undefined,
+  "payload": {
+    "fiscalCode": "1209381023813098123",
+    "iun": "some-iun",
+    "mandateId": "",
+    "markdown": {},
+    "pnServiceID": "some-Sid",
+    "subject": "",
+    "thirdPartyMessage": {},
+  },
+  "type": "POPULATE_STORES_WITH_EPHEMERAL_AAR_MESSAGE_DATA",
+}
+`;

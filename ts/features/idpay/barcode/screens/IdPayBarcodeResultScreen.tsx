@@ -9,7 +9,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import I18n from "i18next";
@@ -24,7 +24,6 @@ import { IdPayBarcodeExpireProgressBar } from "../components/IdPayBarcodeExpireP
 import { IdPayBarcodeParamsList } from "../navigation/params";
 import { idPayBarcodeByInitiativeIdSelector } from "../store";
 import { idPayGenerateBarcode } from "../store/actions";
-import { calculateIdPayBarcodeSecondsToExpire } from "../utils";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -150,13 +149,6 @@ const SuccessContent = ({
   });
 
   const [isBarcodeExpired, setIsBarcodeExpired] = useState(false);
-  // expire check is handled by the progress bar
-  // to avoid unnecessary rerenders, which could also be on the
-  // heavier side due to barcode generation
-  const secondsTillExpire = useMemo(
-    () => calculateIdPayBarcodeSecondsToExpire(barcode),
-    [barcode]
-  );
 
   if (isBarcodeExpired) {
     return <BarcodeExpiredContent initiativeId={barcode.initiativeId} />;
@@ -195,8 +187,8 @@ const SuccessContent = ({
         <H3 style={{ alignSelf: "center" }}>{trx}</H3>
         <VSpacer size={32} />
         <IdPayBarcodeExpireProgressBar
+          barcode={barcode}
           secondsExpirationTotal={barcode.trxExpirationSeconds}
-          secondsToExpiration={secondsTillExpire}
           setIsExpired={setIsBarcodeExpired}
         />
       </View>

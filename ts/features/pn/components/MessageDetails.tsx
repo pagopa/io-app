@@ -37,13 +37,15 @@ export type MessageDetailsProps = {
   messageId: string;
   serviceId: ServiceId;
   payments?: ReadonlyArray<NotificationPaymentInfo>;
+  isAARMessage?: boolean;
 };
 
 export const MessageDetails = ({
   message,
   messageId,
   payments,
-  serviceId
+  serviceId,
+  isAARMessage = false
 }: MessageDetailsProps) => {
   const presentPaymentsBottomSheetRef = useRef<() => void>(undefined);
   const partitionedAttachments = pipe(
@@ -65,6 +67,7 @@ export const MessageDetails = ({
     ? message.completedPayments
     : undefined;
 
+  const maybeMessageDate = isAARMessage ? undefined : message.created_at;
   return (
     <>
       <ScrollView
@@ -77,7 +80,9 @@ export const MessageDetails = ({
             messageId={messageId}
             serviceId={serviceId}
             subject={message.subject}
-            createdAt={message.created_at}
+            createdAt={maybeMessageDate}
+            thirdPartySenderDenomination={message.senderDenomination}
+            canNavigateToServiceDetails={!isAARMessage}
           >
             <Tag
               text={I18n.t("features.pn.details.badge.legalValue")}
