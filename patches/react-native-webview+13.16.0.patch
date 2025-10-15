@@ -62,13 +62,21 @@ index 80c6803..27c8d00 100644
  }
 \ No newline at end of file
 diff --git a/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebViewManagerImpl.kt b/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebViewManagerImpl.kt
-index f83033b..f3b98c1 100644
+index f83033b..285ea46 100644
 --- a/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebViewManagerImpl.kt
 +++ b/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebViewManagerImpl.kt
-@@ -563,6 +563,10 @@ class RNCWebViewManagerImpl(private val newArch: Boolean = false) {
+@@ -563,6 +563,18 @@ class RNCWebViewManagerImpl(private val newArch: Boolean = false) {
          setupWebChromeClient(view)
      }
  
++    fun setMicrophoneAccessDisabled(viewWrapper: RNCWebViewWrapper, value: Boolean) {
++        getCustomSettings(viewWrapper).setMicrophoneAccessDisabled(value)
++    }
++
++    fun setCameraAccessDisabled(viewWrapper: RNCWebViewWrapper, value: Boolean) {
++        getCustomSettings(viewWrapper).setCameraAccessDisabled(value)
++    }
++
 +    fun getCustomSettings(viewWrapper: RNCWebViewWrapper): RNCWebView.CustomWebSettings? {
 +        return viewWrapper.webView.customSettings
 +    }
@@ -77,7 +85,7 @@ index f83033b..f3b98c1 100644
          val view = viewWrapper.webView
          val layerType = when (layerTypeString) {
 diff --git a/node_modules/react-native-webview/android/src/newarch/com/reactnativecommunity/webview/RNCWebViewManager.java b/node_modules/react-native-webview/android/src/newarch/com/reactnativecommunity/webview/RNCWebViewManager.java
-index 4709e28..2529431 100644
+index 4709e28..79715f0 100644
 --- a/node_modules/react-native-webview/android/src/newarch/com/reactnativecommunity/webview/RNCWebViewManager.java
 +++ b/node_modules/react-native-webview/android/src/newarch/com/reactnativecommunity/webview/RNCWebViewManager.java
 @@ -94,6 +94,18 @@ public class RNCWebViewManager extends ViewGroupManager<RNCWebViewWrapper>
@@ -87,20 +95,20 @@ index 4709e28..2529431 100644
 +    @Override
 +    @ReactProp(name = "androidMicrophoneAccessDisabled")
 +    public void setMicrophoneAccessDisabled(RNCWebViewWrapper view, boolean disabled) {
-+        mRNCWebViewManagerImpl.getCustomSettings(view).setMicrophoneAccessDisabled(disabled);
++        mRNCWebViewManagerImpl.setMicrophoneAccessDisabled(view, disabled);
 +    }
 +
 +    @Override
 +    @ReactProp(name = "androidCameraAccessDisabled")
 +    public void setCameraAccessDisabled(RNCWebViewWrapper view, boolean disabled) {
-+        mRNCWebViewManagerImpl.getCustomSettings(view).setCameraAccessDisabled(disabled);
++        mRNCWebViewManagerImpl.setCameraAccessDisabled(view, disabled);
 +    }
 +
      @Override
      @ReactProp(name = "androidLayerType")
      public void setAndroidLayerType(RNCWebViewWrapper view, @Nullable String value) {
 diff --git a/node_modules/react-native-webview/android/src/oldarch/com/reactnativecommunity/webview/RNCWebViewManager.java b/node_modules/react-native-webview/android/src/oldarch/com/reactnativecommunity/webview/RNCWebViewManager.java
-index 974337f..86e5435 100644
+index 974337f..b1bb367 100644
 --- a/node_modules/react-native-webview/android/src/oldarch/com/reactnativecommunity/webview/RNCWebViewManager.java
 +++ b/node_modules/react-native-webview/android/src/oldarch/com/reactnativecommunity/webview/RNCWebViewManager.java
 @@ -72,6 +72,16 @@ public class RNCWebViewManager extends ViewGroupManager<RNCWebViewWrapper> {
@@ -109,12 +117,12 @@ index 974337f..86e5435 100644
  
 +    @ReactProp(name = "androidMicrophoneAccessDisabled")
 +    public void setMicrophoneAccessDisabled(RNCWebViewWrapper view, boolean disabled) {
-+        mRNCWebViewManagerImpl.getCustomSettings(view).setMicrophoneAccessDisabled(disabled);
++        mRNCWebViewManagerImpl.setMicrophoneAccessDisabled(view, disabled);
 +    }
 +
 +    @ReactProp(name = "androidCameraAccessDisabled")
 +    public void setCameraAccessDisabled(RNCWebViewWrapper view, boolean disabled) {
-+        mRNCWebViewManagerImpl.getCustomSettings(view).setCameraAccessDisabled(disabled);
++        mRNCWebViewManagerImpl.setCameraAccessDisabled(view, disabled);
 +    }
 +
      @ReactProp(name = "androidLayerType")
