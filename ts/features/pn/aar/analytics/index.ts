@@ -1,6 +1,7 @@
 import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
+import { SendAARFailurePhase } from "../utils/stateUtils";
 
 export const trackSendQRCodeScanRedirect = () => {
   const eventName = "SEND_QRCODE_SCAN_REDIRECT";
@@ -39,7 +40,7 @@ export const trackSendActivationModalDialogActivationDismissed = () => {
 };
 
 export const trackSendAARFailure = (
-  phase: "AAR Fetch QRCode",
+  phase: SendAARFailurePhase,
   reason: string
 ) => {
   const eventName = "SEND_AAR_ERROR";

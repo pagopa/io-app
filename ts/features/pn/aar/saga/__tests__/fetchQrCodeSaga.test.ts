@@ -8,6 +8,7 @@ import { currentAARFlowData } from "../../store/selectors";
 import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
 import { fetchAARQrCodeSaga } from "../fetchQrCodeSaga";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
+import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
 
 const sendUATEnvironment = [false, true];
 
@@ -15,9 +16,23 @@ describe("fetchQrCodeSaga", () => {
   const aQRCode = "TESTTEST";
   const sessionToken = "test-session-token" as SessionToken;
   const sessionTokenWithBearer = `Bearer ${sessionToken}` as SessionToken;
-  const getMockKoState = (prevState: AARFlowState): AARFlowState => ({
+  const getMockKoState = (
+    prevState: AARFlowState,
+    error: AARProblemJson | undefined,
+    reason: string
+  ): AARFlowState => ({
     type: "ko",
-    previousState: { ...prevState }
+    previousState: { ...prevState },
+    ...(error != null && { error }),
+    debugData: {
+      phase:
+        prevState.type === "fetchingQRData"
+          ? "Fetch QRCode"
+          : prevState.type === "fetchingNotificationData"
+          ? "Fetch Notification"
+          : "Entry Point",
+      reason
+    }
   });
   const mockFetchingQrState: AARFlowState = {
     type: "fetchingQRData",
@@ -131,8 +146,14 @@ describe("fetchQrCodeSaga", () => {
     });
     [
       (E.left(undefined),
-      E.right({ status: 500, value: undefined }),
-      E.right({ status: 418, value: undefined }))
+      E.right({
+        status: 500,
+        value: { status: 500, detail: "A detail" } as AARProblemJson
+      }),
+      E.right({
+        status: 418,
+        value: { status: 418, detail: "A detail" } as AARProblemJson
+      }))
     ].forEach(res =>
       it(`should dispatch KO state on a response of ${JSON.stringify(
         res
@@ -145,7 +166,22 @@ describe("fetchQrCodeSaga", () => {
           .next(isSendUATEnvironment)
           .call(withRefreshApiCall, mockFetchQrCode())
           .next(res)
-          .put(setAarFlowState(getMockKoState(mockFetchingQrState)))
+          .put(
+            setAarFlowState(
+              getMockKoState(
+                mockFetchingQrState,
+                // eslint-disable-next-line no-underscore-dangle
+                res._tag === "Right" ? res.right.value : undefined,
+                `HTTP request failed (${
+                  // eslint-disable-next-line no-underscore-dangle
+                  res._tag === "Right" ? res.right.status : ""
+                } ${
+                  // eslint-disable-next-line no-underscore-dangle
+                  res._tag === "Right" ? res.right.value.status : ""
+                } A detail)`
+              )
+            )
+          )
           .next()
           .isDone();
 
@@ -176,7 +212,15 @@ describe("fetchQrCodeSaga", () => {
       .next(true)
       .call(withRefreshApiCall, mockFetchQrCode())
       .throw(new Error())
-      .put(setAarFlowState(getMockKoState(mockFetchingQrState)))
+      .put(
+        setAarFlowState(
+          getMockKoState(
+            mockFetchingQrState,
+            undefined,
+            `An error was thrown ()`
+          )
+        )
+      )
       .next()
       .isDone();
     expect(mockFetchQrCode).toHaveBeenCalledWith({

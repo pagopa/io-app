@@ -7,7 +7,11 @@ import { SessionToken } from "../../../../types/SessionToken";
 import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
 import { currentAARFlowData } from "../store/selectors";
-import { AARFlowState, sendAARFlowStates } from "../utils/stateUtils";
+import {
+  AARFlowState,
+  SendAARFailurePhase,
+  sendAARFlowStates
+} from "../utils/stateUtils";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../../types/utils";
 import {
@@ -15,6 +19,8 @@ import {
   trackSendAARFailure
 } from "../analytics";
 import { unknownToReason } from "../../../messages/utils";
+
+const sendAARFailurePhase: SendAARFailurePhase = "Fetch QRCode";
 
 export function* fetchAARQrCodeSaga(
   fetchQRCode: SendAARClient["aarQRCodeCheck"],
@@ -24,7 +30,7 @@ export function* fetchAARQrCodeSaga(
 
   if (currentState.type !== sendAARFlowStates.fetchingQRData) {
     trackSendAARFailure(
-      "AAR Fetch QRCode",
+      sendAARFailurePhase,
       `Called in wrong state (${currentState.type})`
     );
     return;
@@ -49,14 +55,18 @@ export function* fetchAARQrCodeSaga(
     const resultAction = pipe(
       result,
       E.fold(
-        _error => {
-          trackSendAARFailure(
-            "AAR Fetch QRCode",
-            `Decoding failure (${readableReportSimplified(_error)})`
-          );
+        error => {
+          const reason = `Decoding failure (${readableReportSimplified(
+            error
+          )})`;
+          trackSendAARFailure(sendAARFailurePhase, reason);
           return setAarFlowState({
             type: sendAARFlowStates.ko,
-            previousState: { ...currentState }
+            previousState: { ...currentState },
+            debugData: {
+              phase: sendAARFailurePhase,
+              reason
+            }
           });
         },
         data => {
@@ -80,18 +90,19 @@ export function* fetchAARQrCodeSaga(
               return setAarFlowState(notAddresseeFinalState);
 
             default:
-              const reason = aarProblemJsonAnalyticsReport(
+              const reason = `HTTP request failed (${aarProblemJsonAnalyticsReport(
                 data.status,
                 data.value
-              );
-              trackSendAARFailure(
-                "AAR Fetch QRCode",
-                `HTTP request failed (${reason})`
-              );
+              )})`;
+              trackSendAARFailure(sendAARFailurePhase, reason);
               const errorState: AARFlowState = {
                 type: sendAARFlowStates.ko,
                 previousState: { ...currentState },
-                ...(data.value !== undefined && { error: data.value })
+                ...(data.value !== undefined && { error: data.value }),
+                debugData: {
+                  phase: sendAARFailurePhase,
+                  reason
+                }
               };
               return setAarFlowState(errorState);
           }
@@ -100,12 +111,16 @@ export function* fetchAARQrCodeSaga(
     );
     yield* put(resultAction);
   } catch (e) {
-    const reason = unknownToReason(e);
-    trackSendAARFailure("AAR Fetch QRCode", `An error was thrown (${reason})`);
+    const reason = `An error was thrown (${unknownToReason(e)})`;
+    trackSendAARFailure(sendAARFailurePhase, reason);
     yield* put(
       setAarFlowState({
         type: sendAARFlowStates.ko,
-        previousState: { ...currentState }
+        previousState: { ...currentState },
+        debugData: {
+          phase: sendAARFailurePhase,
+          reason
+        }
       })
     );
   }

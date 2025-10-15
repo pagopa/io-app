@@ -39,7 +39,11 @@ export const sendAarMockStateFactory: Record<
   }),
   ko: () => ({
     type: "ko",
-    previousState: { type: "none" }
+    previousState: { type: "none" },
+    debugData: {
+      phase: "Entry Point",
+      reason: "Sample reason"
+    }
   })
 };
 

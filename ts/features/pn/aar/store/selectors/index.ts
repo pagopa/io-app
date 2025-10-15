@@ -1,12 +1,13 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import { createSelector } from "reselect";
 import { isAARRemoteEnabled } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isAARLocalEnabled } from "../../../../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { thirdPartyFromIdSelector } from "../../../../messages/store/reducers/thirdPartyById";
 import { toPNMessage } from "../../../store/types/transformers";
-import { sendAARFlowStates } from "../../utils/stateUtils";
+import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
 
 const emptyArray: ReadonlyArray<string> = []; // used as a stable reference to avoid useless re-renders
 export const thirdPartySenderDenominationSelector = (
@@ -68,3 +69,22 @@ export const currentAARFlowStateErrorCodes = (state: GlobalState) => {
     return emptyArray;
   }
 };
+
+const emptyInstance = {};
+export const currentAARFlowStateErrorDebugInfoSelector = createSelector(
+  (state: GlobalState) => state.features.pn.aarFlow,
+  (aarFlow: AARFlowState) => {
+    if (aarFlow.type === sendAARFlowStates.ko) {
+      const errorCodes = aarFlow.error?.errors
+        ?.map(error => `${error.code} ${error.detail ?? ""}`)
+        .join(", ");
+      return {
+        errorCodes,
+        phase: aarFlow.debugData.phase,
+        reason: aarFlow.debugData.reason,
+        traceId: aarFlow.error?.traceId
+      };
+    }
+    return emptyInstance;
+  }
+);

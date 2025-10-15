@@ -173,6 +173,10 @@ describe("currentAARFlowStateErrorCodes", () => {
           detail: "",
           status: 599,
           errors
+        },
+        debugData: {
+          phase: "Fetch QRCode",
+          reason: "A test reason"
         }
       };
 
