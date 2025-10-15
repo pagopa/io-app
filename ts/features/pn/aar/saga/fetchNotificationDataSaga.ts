@@ -12,7 +12,7 @@ import { SessionToken } from "../../../../types/SessionToken";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
 import { isTestEnv } from "../../../../utils/environment";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
-import { getServiceDetails } from "../../../services/common/saga/ getServiceDetails";
+import { getServiceDetails } from "../../../services/common/saga/getServiceDetails";
 import { profileFiscalCodeSelector } from "../../../settings/common/store/selectors";
 import { SendAARClient } from "../api/client";
 import {
@@ -161,8 +161,8 @@ function* aarMessageDataPayloadFromResponse(
   // Make sure that the SEND service details are loaded. They are
   // not needed here but in the SEND notification screen in order
   // to display service details
-  const pnServiceDetails = yield* getServiceDetails(pnServiceID);
-  if (pnServiceDetails === undefined) {
+  const sendServiceDetails = yield* getServiceDetails(pnServiceID);
+  if (sendServiceDetails === undefined) {
     return E.left(`Unable to retrieve SEND service details`);
   }
 
