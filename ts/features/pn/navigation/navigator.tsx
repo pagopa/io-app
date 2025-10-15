@@ -51,12 +51,12 @@ export const PnStackNavigator = () => (
     <Stack.Screen
       name={PN_ROUTES.SEND_ENGAGEMENT_ON_FIRST_APP_OPENING}
       component={SendEngagementOnFirstAppOpenScreen}
-      options={{ ...hiddenHeader, gestureEnabled: false }}
+      options={hiddenHeader}
     />
     <Stack.Screen
       name={PN_ROUTES.SEND_ENGAGEMENT_ACTIVATION_ERROR}
       component={SendActivationErrorScreen}
-      options={{ ...hiddenHeader, gestureEnabled: false }}
+      options={hiddenHeader}
     />
     <Stack.Screen
       name={PN_ROUTES.SEND_AAR_ERROR}
