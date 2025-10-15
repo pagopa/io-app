@@ -22,7 +22,7 @@ jest.mock("@pagopa/io-app-design-system", () => ({
 }));
 
 const mockPop = jest.fn();
-const mockNavigate = jest.fn();
+const mockReplace = jest.fn();
 const mockDispatch = jest.fn();
 const mockToastSuccess = jest.fn();
 
@@ -36,7 +36,7 @@ describe(useSendActivationFlow, () => {
     jest.clearAllMocks();
     mockUseIONavigation.mockReturnValue({
       pop: mockPop,
-      navigate: mockNavigate
+      replace: mockReplace
     });
     mockUseIODispatch.mockReturnValue(mockDispatch);
     mockUseIOToast.mockReturnValue({ success: mockToastSuccess });
@@ -116,7 +116,7 @@ describe(useSendActivationFlow, () => {
     });
 
     expect(mockPop).not.toHaveBeenCalled();
-    expect(mockNavigate).toHaveBeenCalledTimes(1);
+    expect(mockReplace).toHaveBeenCalledTimes(1);
     expect(mockToastSuccess).not.toHaveBeenCalled();
     expect(mockDispatch).toHaveBeenCalledTimes(1);
   });

@@ -10,7 +10,7 @@ import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { setSecurityAdviceReadyToShow } from "../../../authentication/fastLogin/store/actions/securityAdviceActions";
 
 export const useSendActivationFlow = () => {
-  const { pop, navigate } = useIONavigation();
+  const { pop, replace } = useIONavigation();
   const dispatch = useIODispatch();
   const toast = useIOToast();
   const isActivating = useIOSelector(isLoadingPnActivationSelector);
@@ -22,7 +22,7 @@ export const useSendActivationFlow = () => {
     toast.success(i18n.t("features.pn.loginEngagement.send.toast"));
   };
   const onSENDActivationFailed = () => {
-    navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+    replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
       screen: PN_ROUTES.MAIN,
       params: {
         screen: PN_ROUTES.SEND_ENGAGEMENT_ACTIVATION_ERROR

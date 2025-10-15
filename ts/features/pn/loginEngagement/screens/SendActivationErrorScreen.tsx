@@ -9,7 +9,7 @@ import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBa
 import ROUTES from "../../../../navigation/routes";
 
 export const SendActivationErrorScreen = () => {
-  const { navigate } = useIONavigation();
+  const { navigate, replace } = useIONavigation();
   const dispatch = useIODispatch();
 
   useAvoidHardwareBackButton();
@@ -34,7 +34,7 @@ export const SendActivationErrorScreen = () => {
         testID: "actionCloseID",
         label: i18n.t("global.buttons.close"),
         onPress: () => {
-          navigate(ROUTES.MAIN, {
+          replace(ROUTES.MAIN, {
             screen: MESSAGES_ROUTES.MESSAGES_HOME
           });
           dispatch(setSecurityAdviceReadyToShow(true));
