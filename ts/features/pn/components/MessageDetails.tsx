@@ -31,6 +31,7 @@ import { MessagePayments } from "./MessagePayments";
 import { MessagePaymentBottomSheet } from "./MessagePaymentBottomSheet";
 import { MessageFooter } from "./MessageFooter";
 import { MessageCancelledContent } from "./MessageCancelledContent";
+import { BannerAttachments } from "./BannerAttachments";
 
 export type MessageDetailsProps = {
   message: PNMessage;
@@ -108,6 +109,7 @@ export const MessageDetails = ({
           <MessageDetailsContent abstract={message.abstract} />
           <VSpacer size={16} />
           <MessageDetailsAttachments
+            banner={<BannerAttachments />}
             disabled={message.isCancelled}
             messageId={messageId}
             isPN
