@@ -17,6 +17,7 @@ import {
 import { ActionType, getType } from "typesafe-actions";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
+import { backendClientManager } from "../api/BackendClientManager";
 import { BackendClient } from "../api/backend";
 import { apiUrlPrefix, zendeskEnabled } from "../config";
 import { watchActiveSessionLoginSaga } from "../features/authentication/activeSessionLogin/saga";
@@ -81,7 +82,6 @@ import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnbo
 import { watchAbortOnboardingSaga } from "../features/onboarding/saga/watchAbortOnboardingSaga";
 import { watchPaymentsSaga } from "../features/payments/common/saga";
 import { watchAarFlowSaga } from "../features/pn/aar/saga/watchAARFlowSaga";
-import { isAAREnabled } from "../features/pn/aar/store/selectors";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { maybeHandlePendingBackgroundActions } from "../features/pushNotifications/sagas/common";
 import { notificationPermissionsListener } from "../features/pushNotifications/sagas/notificationPermissionsListener";
@@ -110,6 +110,10 @@ import { formatRequestedTokenString } from "../features/zendesk/utils";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
 import {
+  waitForMainNavigator,
+  waitForNavigatorServiceInitialization
+} from "../navigation/saga/navigation";
+import {
   applicationInitialized,
   startApplicationInitialization
 } from "../store/actions/application";
@@ -135,11 +139,6 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { getPin } from "../utils/keychain";
-import { backendClientManager } from "../api/BackendClientManager";
-import {
-  waitForMainNavigator,
-  waitForNavigatorServiceInitialization
-} from "../navigation/saga/navigation";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
