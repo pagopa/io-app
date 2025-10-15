@@ -4080,7 +4080,7 @@
           "secondaryAction": "Non attivare SEND su IO",
           "activationBottomSheet": {
             "title": "Riceverai su IO le prossime\ncomunicazioni a valore legale",
-            "content": "Premendo **Continua** dichiari di aver letto l'[informativa Privacy]({{privacyUrl}}) e di accettare i [Termini e Condizioni d'uso]({{tosUrl}}).",
+            "content": "Premendo **Continua** dichiari di aver letto l'[Informativa Privacy]({{privacyUrl}}) e di accettare i [Termini e Condizioni d'uso]({{tosUrl}}).",
             "action": "Continua"
           },
           "areYouSureBottomSheet": {
@@ -4090,7 +4090,7 @@
                 "savingMoney": "Se leggi le comunicazioni a valore legale online in tempo, **eviti le raccomandate e risparmi.**",
                 "notification": "Con il servizio SEND su IO, **ti avvisiamo subito** quando c’è una comunicazione importante per te."
               },
-              "privacyAndTos": "Premendo **Attiva SEND su IO** dichiari di aver letto l'[informativa Privacy]({{privacyUrl}}) e di accettare i [Termini e Condizioni d'uso]({{tosUrl}})."
+              "privacyAndTos": "Premendo **Attiva SEND su IO** dichiari di aver letto l'[Informativa Privacy]({{privacyUrl}}) e di accettare i [Termini e Condizioni d'uso]({{tosUrl}})."
             },
             "action": "Attiva SEND su IO",
             "secondaryAction": "Non attivare SEND su IO"
