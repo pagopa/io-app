@@ -7,6 +7,7 @@ import {
   isAarMessageDelegatedSelector
 } from "../aar/store/selectors";
 import { sendShowAbstractSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { isTestEnv } from "../../../utils/environment";
 
 type MessageDetailsContentProps = { message: PNMessage };
 export const MessageDetailsContent = ({
@@ -76,7 +77,9 @@ const MaybeAbstract = ({ abstract }: MaybeAbstractProps) => {
   const isEmptyAbstract = abstract == null || abstract.trim().length === 0;
 
   if (shouldShowAbstract && !isEmptyAbstract) {
-    return <BodySmall>{`\n\n${abstract}`}</BodySmall>;
+    return <BodySmall testID="abstract">{`\n\n${abstract}`}</BodySmall>;
   }
   return <></>;
 };
+
+export const testable = isTestEnv ? { MaybeAbstract } : undefined;
