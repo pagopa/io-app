@@ -7,6 +7,8 @@ import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
 import { currentAARFlowData } from "../store/selectors";
 import { AARFlowState, sendAARFlowStates } from "../utils/stateUtils";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import { SagaCallReturnType } from "../../../../types/utils";
 
 export function* fetchAARQrCodeSaga(
   fetchQRCode: SendAARClient["aarQRCodeCheck"],
@@ -22,13 +24,17 @@ export function* fetchAARQrCodeSaga(
   const isSendUATEnvironment = yield* select(isPnTestEnabledSelector);
 
   try {
-    const result = yield* call(fetchQRCode, {
+    const fetchQrRequest = fetchQRCode({
       Bearer: `Bearer ${sessionToken}`,
       body: {
         aarQrCodeValue: qrCode
       },
       isTest: isSendUATEnvironment
     });
+    const result = (yield* call(
+      withRefreshApiCall,
+      fetchQrRequest
+    )) as unknown as SagaCallReturnType<typeof fetchQRCode>;
 
     const resultAction = pipe(
       result,
@@ -41,11 +47,12 @@ export function* fetchAARQrCodeSaga(
         data => {
           switch (data.status) {
             case 200:
-              const { iun, recipientInfo } = data.value;
+              const { iun, recipientInfo, mandateId } = data.value;
               const nextState: AARFlowState = {
                 type: sendAARFlowStates.fetchingNotificationData,
                 iun,
-                fullNameDestinatario: recipientInfo.denomination
+                fullNameDestinatario: recipientInfo.denomination,
+                mandateId
               };
               return setAarFlowState(nextState);
             case 403:

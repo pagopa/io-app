@@ -31,19 +31,22 @@ import { MessagePayments } from "./MessagePayments";
 import { MessagePaymentBottomSheet } from "./MessagePaymentBottomSheet";
 import { MessageFooter } from "./MessageFooter";
 import { MessageCancelledContent } from "./MessageCancelledContent";
+import { BannerAttachments } from "./BannerAttachments";
 
 export type MessageDetailsProps = {
   message: PNMessage;
   messageId: string;
   serviceId: ServiceId;
   payments?: ReadonlyArray<NotificationPaymentInfo>;
+  isAARMessage?: boolean;
 };
 
 export const MessageDetails = ({
   message,
   messageId,
   payments,
-  serviceId
+  serviceId,
+  isAARMessage = false
 }: MessageDetailsProps) => {
   const presentPaymentsBottomSheetRef = useRef<() => void>(undefined);
   const partitionedAttachments = pipe(
@@ -65,6 +68,7 @@ export const MessageDetails = ({
     ? message.completedPayments
     : undefined;
 
+  const maybeMessageDate = isAARMessage ? undefined : message.created_at;
   return (
     <>
       <ScrollView
@@ -77,8 +81,9 @@ export const MessageDetails = ({
             messageId={messageId}
             serviceId={serviceId}
             subject={message.subject}
-            createdAt={message.created_at}
+            createdAt={maybeMessageDate}
             thirdPartySenderDenomination={message.senderDenomination}
+            canNavigateToServiceDetails={!isAARMessage}
           >
             <Tag
               text={I18n.t("features.pn.details.badge.legalValue")}
@@ -104,6 +109,7 @@ export const MessageDetails = ({
           <MessageDetailsContent abstract={message.abstract} />
           <VSpacer size={16} />
           <MessageDetailsAttachments
+            banner={<BannerAttachments />}
             disabled={message.isCancelled}
             messageId={messageId}
             isPN
@@ -134,7 +140,6 @@ export const MessageDetails = ({
           messageId={messageId}
           paidNoticeCodes={completedPaymentNoticeCodes}
           payments={payments}
-          serviceId={serviceId}
         />
       </ScrollView>
       <MessageFooter
