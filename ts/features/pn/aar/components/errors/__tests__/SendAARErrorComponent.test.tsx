@@ -26,8 +26,9 @@ jest.mock("../../../../../../store/hooks", () => ({
 describe("SendAARErrorComponent - Full Test Suite", () => {
   const mockGoNextState = jest.fn();
   const mockTerminateFlow = jest.fn();
+  const mockAssistance = jest.fn();
 
-  const errorCodes = ["ERROR_1", "ERROR_2"];
+  const errorCode = "VERY_LONG_AND_NOT_DESCRIPTIVE_ERROR_CODE";
 
   beforeEach(() => {
     managerSpy.mockImplementation(() => ({
@@ -35,7 +36,7 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
       goToNextState: mockGoNextState,
       terminateFlow: mockTerminateFlow
     }));
-    (HOOKS.useIOSelector as jest.Mock).mockReturnValue(errorCodes);
+    (HOOKS.useIOSelector as jest.Mock).mockReturnValue(errorCode);
   });
 
   afterEach(() => {
@@ -50,7 +51,7 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
   });
 
   it("calls present() on secondary button press", () => {
-    const renderedBottomComponent = bottomComponent(errorCodes);
+    const renderedBottomComponent = bottomComponent(() => undefined, errorCode);
 
     const presentMock = jest.fn();
     const dismissMock = jest.fn();
@@ -66,9 +67,26 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
     expect(presentMock).toHaveBeenCalledTimes(1);
   });
 
+  it("calls present() on assistance button press", () => {
+    const renderedBottomComponent = bottomComponent(mockAssistance, errorCode);
+
+    const presentMock = jest.fn();
+    const dismissMock = jest.fn();
+    jest.spyOn(BOTTOM_SHEET, "useIOBottomSheetModal").mockReturnValue({
+      bottomSheet: renderedBottomComponent,
+      present: presentMock,
+      dismiss: dismissMock
+    });
+
+    const { getByTestId } = renderComponent();
+    const button = getByTestId("button_assistance");
+    fireEvent.press(button);
+    expect(mockAssistance).toHaveBeenCalledTimes(1);
+  });
+
   it("renders error codes when flow is 'ko'", () => {
     const { getByText } = renderComponent();
-    expect(getByText(errorCodes.join(", "))).toBeTruthy();
+    expect(getByText(errorCode)).toBeTruthy();
   });
 
   it("copies error codes to clipboard on press", async () => {
@@ -78,12 +96,12 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
     );
 
     const { getByText } = renderComponent();
-    const copyButton = getByText(errorCodes.join(", "));
+    const copyButton = getByText(errorCode);
 
     fireEvent.press(copyButton);
 
     await waitFor(() => {
-      expect(clipboardSpy).toHaveBeenCalledWith(errorCodes.join(", "));
+      expect(clipboardSpy).toHaveBeenCalledWith(errorCode);
     });
   });
 
@@ -100,7 +118,7 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
     jest
       .spyOn(BOTTOM_SHEET, "useIOBottomSheetModal")
       .mockImplementation(() => ({
-        bottomSheet: bottomComponent([]),
+        bottomSheet: bottomComponent(() => undefined),
         present: jest.fn(),
         dismiss: jest.fn()
       }));

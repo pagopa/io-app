@@ -8,7 +8,6 @@ import { thirdPartyFromIdSelector } from "../../../../messages/store/reducers/th
 import { toPNMessage } from "../../../store/types/transformers";
 import { sendAARFlowStates } from "../../utils/stateUtils";
 
-const emptyArray: ReadonlyArray<string> = []; // used as a stable reference to avoid useless re-renders
 export const thirdPartySenderDenominationSelector = (
   state: GlobalState,
   ioMessageId: string
@@ -60,11 +59,27 @@ export const currentAARFlowData = (state: GlobalState) =>
   state.features.pn.aarFlow;
 export const currentAARFlowStateType = (state: GlobalState) =>
   state.features.pn.aarFlow.type;
-export const currentAARFlowStateErrorCodes = (state: GlobalState) => {
+
+export const currentAARFlowStateErrorCode = (
+  state: GlobalState
+): string | undefined => {
   const aarFlow = state.features.pn.aarFlow;
+
   if (aarFlow.type === sendAARFlowStates.ko) {
-    return aarFlow.error?.errors?.map(x => x.code) ?? emptyArray;
-  } else {
-    return emptyArray;
+    const error = aarFlow.error;
+
+    if (error?.traceId) {
+      return error.traceId;
+    }
+
+    const errorCodes = error?.errors
+      ?.map(e => e.code)
+      .filter((code): code is string => Boolean(code));
+
+    if (errorCodes && errorCodes.length > 0) {
+      return errorCodes.join(", ");
+    }
   }
+
+  return undefined;
 };

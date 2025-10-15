@@ -1039,6 +1039,7 @@ exports[`SendAARErrorComponent - Full Test Suite should match snapshot 1`] = `
                         onResponderTerminationRequest={[Function]}
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
+                        testID="button_assistance"
                       >
                         <View
                           accessibilityElementsHidden={true}
