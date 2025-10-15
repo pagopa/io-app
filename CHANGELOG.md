@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.17.0-rc.1](https://github.com/pagopa/io-app/compare/3.17.0-rc.0...3.17.0-rc.1) (2025-10-15)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-3137](https://pagopa.atlassian.net/browse/SIW-3137)] Tracking of presentation remote event ([#7461](https://github.com/pagopa/io-app/issues/7461)) ([5805e08](https://github.com/pagopa/io-app/commit/5805e0847a6b6fb8b03e4c06f9fe57d5b436c414))
+* [[IOCOM-2652](https://pagopa.atlassian.net/browse/IOCOM-2652)] Banner and bottom sheet on SEND attachments ([#7470](https://github.com/pagopa/io-app/issues/7470)) ([bf7420d](https://github.com/pagopa/io-app/commit/bf7420d196ab9425a1accb4a5cc194dc2d213356))
+* [[IOCOM-2655](https://pagopa.atlassian.net/browse/IOCOM-2655)] "Need Help?" list item action on SEND notification ([#7474](https://github.com/pagopa/io-app/issues/7474)) ([24f939d](https://github.com/pagopa/io-app/commit/24f939d6c83f7b50d9c6fada97513a35c6aad31c))
+* [[IOCOM-2672](https://pagopa.atlassian.net/browse/IOCOM-2672)] New copy fro attachments' bottom sheet on SEND ([#7478](https://github.com/pagopa/io-app/issues/7478)) ([e9febc0](https://github.com/pagopa/io-app/commit/e9febc0065973267dbac58cfd221e586b76624df))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2892](https://pagopa.atlassian.net/browse/SIW-2892)] Offline Access, rendering delay ([#7467](https://github.com/pagopa/io-app/issues/7467)) ([b4fb8da](https://github.com/pagopa/io-app/commit/b4fb8dacc06922835ee7584d127cc41d45831bef))
+
 ## [3.17.0-rc.0](https://github.com/pagopa/io-app/compare/3.16.0-rc.7...3.17.0-rc.0) (2025-10-14)
 
 
