@@ -6,18 +6,15 @@ import {
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "i18next";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { NotificationStatusHistory } from "../../../../definitions/pn/NotificationStatusHistory";
-import { useIOSelector } from "../../../store/hooks";
-import { ContactsListItem } from "../../messages/components/MessageDetail/ContactsListItem";
 import {
   ShowMoreListItem,
   ShowMoreSection
 } from "../../messages/components/MessageDetail/ShowMoreListItem";
 import { formatPaymentNoticeNumber } from "../../payments/common/utils";
-import { serviceMetadataByIdSelector } from "../../services/details/store/selectors";
 import { TimelineListItem } from "./TimelineListItem";
+import { NeedHelp } from "./NeedHelp";
 
 const styles = StyleSheet.create({
   container: {
@@ -35,7 +32,6 @@ export type MessageBottomMenuProps = {
   messageId: string;
   paidNoticeCodes?: ReadonlyArray<string>;
   payments?: ReadonlyArray<NotificationPaymentInfo>;
-  serviceId: ServiceId;
 };
 
 const generateMessageSectionData = (
@@ -136,14 +132,10 @@ export const MessageBottomMenu = ({
   iun,
   messageId,
   paidNoticeCodes,
-  payments,
-  serviceId
+  payments
 }: MessageBottomMenuProps) => {
   const theme = useIOTheme();
 
-  const serviceMetadata = useIOSelector(state =>
-    serviceMetadataByIdSelector(state, serviceId)
-  );
   const showMoreSectionData = useMemo(
     () =>
       generateMessageSectionData(
@@ -163,12 +155,7 @@ export const MessageBottomMenu = ({
       ]}
     >
       <TimelineListItem history={history} />
-      {(serviceMetadata?.email || serviceMetadata?.phone) && (
-        <ContactsListItem
-          email={serviceMetadata.email}
-          phone={serviceMetadata.phone}
-        />
-      )}
+      <NeedHelp />
       <ShowMoreListItem sections={showMoreSectionData} />
     </View>
   );
