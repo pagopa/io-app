@@ -473,7 +473,13 @@ export const DrivingPrivilegesFromRaw = new t.Type<
       expiry_date: {
         name: "",
         value: item.expiry_date
-      }
+      },
+      ...(item.restrictions_conditions && {
+        codes: {
+          name: "",
+          value: [{ code: { name: "", value: item.restrictions_conditions } }]
+        }
+      })
     }))
 );
 
