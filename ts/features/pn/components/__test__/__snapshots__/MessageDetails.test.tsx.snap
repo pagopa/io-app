@@ -711,9 +711,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                           <View>
                             01HRYR6C761DGH3S84HBBXMMKT
                           </View>
-                          <View>
-                            service_one
-                          </View>
                         </View>
                       </RCTScrollView>
                     </View>
