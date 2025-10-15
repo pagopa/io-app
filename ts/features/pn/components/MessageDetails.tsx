@@ -24,13 +24,14 @@ import {
   maxVisiblePaymentCount,
   shouldUseBottomSheetForPayments
 } from "../utils";
+import { BannerAttachments } from "./BannerAttachments";
 import { F24Section } from "./F24Section";
 import { MessageBottomMenu } from "./MessageBottomMenu";
 import { MessageCancelledContent } from "./MessageCancelledContent";
+import { MessageDetailsContent } from "./MessageDetailsContent";
 import { MessageFooter } from "./MessageFooter";
 import { MessagePaymentBottomSheet } from "./MessagePaymentBottomSheet";
 import { MessagePayments } from "./MessagePayments";
-import { MessageDetailsContent } from "./MessageDetailsContent";
 
 export type MessageDetailsProps = {
   message: PNMessage;
@@ -108,6 +109,7 @@ export const MessageDetails = ({
           <MessageDetailsContent message={message} />
           <VSpacer size={16} />
           <MessageDetailsAttachments
+            banner={<BannerAttachments />}
             disabled={message.isCancelled}
             messageId={messageId}
             isPN
@@ -138,7 +140,6 @@ export const MessageDetails = ({
           messageId={messageId}
           paidNoticeCodes={completedPaymentNoticeCodes}
           payments={payments}
-          serviceId={serviceId}
         />
       </ScrollView>
       <MessageFooter

@@ -698,6 +698,24 @@ Se è previsto un pagamento, puoi farlo ora da IO con il tuo metodo preferito.
                                 }
                               }
                             />
+                            <View>
+                              Mock MessageDetailsAttachments
+                            </View>
+                            <View>
+                              Has Banner
+                            </View>
+                            <View>
+                              Is not disabled
+                            </View>
+                            <View>
+                              Is SEND
+                            </View>
+                            <View>
+                              Message Id: 01HRYR6C761DGH3S84HBBXMMKT
+                            </View>
+                            <View>
+                              Service Id: service_one
+                            </View>
                             <View
                               style={
                                 {
@@ -728,9 +746,6 @@ Se è previsto un pagamento, puoi farlo ora da IO con il tuo metodo preferito.
                           </View>
                           <View>
                             01HRYR6C761DGH3S84HBBXMMKT
-                          </View>
-                          <View>
-                            service_one
                           </View>
                         </View>
                       </RCTScrollView>

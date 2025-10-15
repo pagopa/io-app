@@ -1,96 +1,114 @@
+import { ReactNode } from "react";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import { View } from "react-native";
 import { createStore } from "redux";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
-import { ThirdPartyMessage } from "../../../../../../definitions/backend/ThirdPartyMessage";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { loadThirdPartyMessage } from "../../../store/actions";
-import { ATTACHMENT_CATEGORY } from "../../../types/attachmentCategory";
-import { ThirdPartyMessageUnion } from "../../../types/thirdPartyById";
 import { MessageDetailsAttachments } from "../MessageDetailsAttachments";
+import { MESSAGES_ROUTES } from "../../../navigation/routes";
+import * as thirdPartySelectors from "../../../store/reducers/thirdPartyById";
+
+jest.mock("../MessageDetailsAttachmentItem");
 
 describe("MessageDetailsAttachments", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
+
   const messageId = "01HNWYRT55GXGPXR16BW2MSBVY";
   const serviceId = "01JKAGWVQRFE1P8QAHZS743M90" as ServiceId;
-  it("Should match snapshot with no attachments", () => {
-    const component = renderScreen(messageId, serviceId);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("Should match snapshot with no attachments and disabled UI", () => {
-    const component = renderScreen(messageId, serviceId, 0, true);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("Should match snapshot with no attachments, where F24 have been removed and disabled UI", () => {
-    const component = renderScreen(messageId, serviceId, 0, true, true);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("Should match snapshot with 1 attachment", () => {
-    const component = renderScreen(messageId, serviceId, 1);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("Should match snapshot with 1 attachment that is disabled", () => {
-    const component = renderScreen(messageId, serviceId, 1, true);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("Should match snapshot with 1 attachment that is disabled and F24 have been removed", () => {
-    const component = renderScreen(messageId, serviceId, 1, true, true);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("Should match snapshot with 10 attachments", () => {
-    const component = renderScreen(messageId, serviceId, 10);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("Should match snapshot with 10 attachments that are disabled", () => {
-    const component = renderScreen(messageId, serviceId, 10, true);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("Should match snapshot with 5 attachments that are disabled and F24 have been removed", () => {
-    const component = renderScreen(messageId, serviceId, 10, true, true);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
+  const attachments: ReadonlyArray<ReadonlyArray<ThirdPartyAttachment>> = [
+    [],
+    [
+      {
+        id: "1" as NonEmptyString,
+        url: "https://an.url/path" as NonEmptyString
+      }
+    ],
+    [
+      {
+        id: "1" as NonEmptyString,
+        url: "https://an.url/path" as NonEmptyString
+      },
+      {
+        category: "DOCUMENT",
+        content_type: "application/pdf" as NonEmptyString,
+        id: "2" as NonEmptyString,
+        name: "Document.pdf" as NonEmptyString,
+        url: "https://an.url/document" as NonEmptyString
+      },
+      {
+        category: "F24",
+        content_type: "application/pdf" as NonEmptyString,
+        id: "3" as NonEmptyString,
+        name: "f24.pdf" as NonEmptyString,
+        url: "https://an.url/f24" as NonEmptyString
+      },
+      {
+        category: "PAGOPA",
+        content_type: "application/pdf" as NonEmptyString,
+        id: "4" as NonEmptyString,
+        name: "pagopa.pdf" as NonEmptyString,
+        url: "https://an.url/pagopa" as NonEmptyString
+      }
+    ]
+  ];
+
+  const reactComponent = <View>{"A banner"}</View>;
+  attachments.forEach(attachmentArray =>
+    [undefined, reactComponent].forEach(banner =>
+      [undefined, false, true].forEach(disabled =>
+        [undefined, false, true].forEach(isSend =>
+          it(`should match snapshot (${
+            attachmentArray.length
+          } attachments) (has ${
+            banner ? "" : "no "
+          }banner) (disabled: ${disabled}) (isSend: ${isSend})`, () => {
+            jest
+              .spyOn(thirdPartySelectors, "thirdPartyMessageAttachments")
+              .mockImplementation((_state, _messageId) => attachmentArray);
+            const component = renderScreen(
+              messageId,
+              serviceId,
+              disabled,
+              isSend,
+              banner
+            );
+            expect(component.toJSON()).toMatchSnapshot();
+          })
+        )
+      )
+    )
+  );
 });
 
 const renderScreen = (
   messageId: string,
   serviceId: ServiceId,
-  attachmentCount: number = 0,
-  disabled: boolean = false,
-  isPN: boolean = false,
-  kind: ThirdPartyMessageUnion["kind"] = "TPM"
+  disabled: boolean | undefined,
+  isPN: boolean | undefined,
+  banner: ReactNode | undefined
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
 
-  const attachments = Array(attachmentCount).map(index => ({
-    id: `${index}`,
-    url: `https://invalid.url/${index}.pdf`,
-    category: index % 2 === 1 ? ATTACHMENT_CATEGORY.F24 : undefined
-  })) as Array<ThirdPartyAttachment>;
-
-  const finalState = appReducer(
-    initialState,
-    loadThirdPartyMessage.success({
-      id: messageId,
-      content: {
-        kind,
-        third_party_message: {
-          attachments
-        } as ThirdPartyMessage
-      } as ThirdPartyMessageUnion
-    })
-  );
+  const finalState = appReducer(initialState, applicationChangeState("active"));
   const store = createStore(appReducer, finalState as any);
 
   return renderScreenWithNavigationStoreContext(
     () => (
       <MessageDetailsAttachments
+        banner={banner}
         messageId={messageId}
         disabled={disabled}
         isPN={isPN}
         serviceId={serviceId}
       />
     ),
-    "DUMMY",
+    MESSAGES_ROUTES.MESSAGE_DETAIL,
     {},
     store
   );
