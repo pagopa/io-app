@@ -24,6 +24,7 @@ import { setSecurityAdviceReadyToShow } from "../../../authentication/fastLogin/
 export function* checkShouldDisplaySendEngagementScreen(
   isFirstOnboarding: boolean
 ) {
+  // If the user comes from a first onboarding, the engagement screen shall not be shown
   if (isFirstOnboarding) {
     yield* put(setSecurityAdviceReadyToShow(true));
     return;
