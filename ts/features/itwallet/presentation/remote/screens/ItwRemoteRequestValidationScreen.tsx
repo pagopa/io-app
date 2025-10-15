@@ -1,20 +1,21 @@
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback, useState } from "react";
 import * as E from "fp-ts/lib/Either";
 import I18n from "i18next";
+import { useCallback, useState } from "react";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
-import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
-import { ItwRemoteRequestPayload } from "../utils/itwRemoteTypeUtils.ts";
-import { validateItwPresentationQrCodeParams } from "../utils/itwRemotePresentationUtils.ts";
-import { ItwRemoteMachineContext } from "../machine/provider.tsx";
-import { ItwRemoteParamsList } from "../navigation/ItwRemoteParamsList.ts";
-import { ItwRemoteDeepLinkFailure } from "../components/ItwRemoteDeepLinkFailure.tsx";
-import { ItwRemoteLoadingScreen } from "../components/ItwRemoteLoadingScreen.tsx";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import {
   StartupStatusEnum,
   isStartupLoaded
 } from "../../../../../store/reducers/startup.ts";
+import { trackItwRemoteStart } from "../../../analytics/index.ts";
+import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
+import { ItwRemoteDeepLinkFailure } from "../components/ItwRemoteDeepLinkFailure.tsx";
+import { ItwRemoteLoadingScreen } from "../components/ItwRemoteLoadingScreen.tsx";
+import { ItwRemoteMachineContext } from "../machine/provider.tsx";
+import { ItwRemoteParamsList } from "../navigation/ItwRemoteParamsList.ts";
+import { validateItwPresentationQrCodeParams } from "../utils/itwRemotePresentationUtils.ts";
+import { ItwRemoteRequestPayload } from "../utils/itwRemoteTypeUtils.ts";
 
 export type ItwRemoteRequestValidationScreenNavigationParams =
   Partial<ItwRemoteRequestPayload>;
@@ -28,6 +29,12 @@ const ItwRemoteRequestValidationScreen = ({ route }: ScreenProps) => {
   useItwDisableGestureNavigation();
 
   const startupStatus = useIOSelector(isStartupLoaded);
+
+  useFocusEffect(
+    useCallback(() => {
+      trackItwRemoteStart();
+    }, [])
+  );
 
   /**
    * There may be scenarios where the app is not running when the user opens the link,

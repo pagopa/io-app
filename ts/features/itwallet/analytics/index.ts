@@ -1,32 +1,32 @@
-import { getType } from "typesafe-actions";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import { getType } from "typesafe-actions";
 import { mixpanelTrack } from "../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
 import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
+import { Action } from "../../../store/actions/types.ts";
 import { GlobalState } from "../../../store/reducers/types";
 import { buildEventProperties } from "../../../utils/analytics";
-import { IdentificationContext } from "../machine/eid/context";
-import { IssuanceFailure } from "../machine/eid/failure";
+import {
+  resetOfflineAccessReason,
+  setOfflineAccessReason
+} from "../../ingress/store/actions";
+import { itwAuthLevelSelector } from "../common/store/selectors/preferences.ts";
+import { getCredentialStatus } from "../common/utils/itwCredentialStatusUtils";
+import { isItwCredential } from "../common/utils/itwCredentialUtils";
+import { CredentialType } from "../common/utils/itwMocksUtils";
 import {
   ItwCredentialStatus,
   ItwJwtCredentialStatus,
   WalletInstanceRevocationReason
 } from "../common/utils/itwTypesUtils";
-import { itwAuthLevelSelector } from "../common/store/selectors/preferences.ts";
-import { Action } from "../../../store/actions/types.ts";
-import {
-  resetOfflineAccessReason,
-  setOfflineAccessReason
-} from "../../ingress/store/actions";
-import { getCredentialStatus } from "../common/utils/itwCredentialStatusUtils";
 import {
   itwCredentialsEidStatusSelector,
   itwCredentialsSelector
 } from "../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../lifecycle/store/selectors";
-import { isItwCredential } from "../common/utils/itwCredentialUtils";
-import { CredentialType } from "../common/utils/itwMocksUtils";
+import { IdentificationContext } from "../machine/eid/context";
+import { IssuanceFailure } from "../machine/eid/failure";
 import {
   ITW_ACTIONS_EVENTS,
   ITW_CONFIRM_EVENTS,
@@ -1262,6 +1262,13 @@ export const trackItwRequestSuccess = (
       })
     );
   }
+};
+
+export const trackItwRemoteStart = () => {
+  void mixpanelTrack(
+    ITW_TECH_EVENTS.ITW_REMOTE_START,
+    buildEventProperties("TECH", undefined)
+  );
 };
 
 // #endregion TECH
