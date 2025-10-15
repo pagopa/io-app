@@ -4000,7 +4000,7 @@
           },
           "bottomSheet": {
             "action": "Come calcolare i tempi?",
-            "content": "Hai 120 giorni dalla data in cui la notifica risulta legalmente consegnata a te per accedere ai documenti online. Dopo non saranno più disponibili e dovrai contattare l'ente che li ha inviati.",
+            "content": "Gli atti sono disponibili su SEND per un periodo limitato: scarica i documenti allegati per conservarli sul tuo dispositivo.\n\nSe i documenti non sono più disponibili, contatta l'ente che li ha inviati.",
             "title": "Disponibilità degli atti online"
           }
         },
