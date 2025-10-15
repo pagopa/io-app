@@ -1,4 +1,4 @@
-import i18next from "i18next";
+import i18n from "i18next";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
@@ -17,12 +17,10 @@ export const SendActivationErrorScreen = () => {
   return (
     <OperationResultScreenContent
       pictogram="umbrella"
-      title={i18next.t(
-        "features.pn.loginEngagement.send.activationErrorMessage"
-      )}
+      title={i18n.t("features.pn.loginEngagement.send.activationErrorMessage")}
       action={{
         testID: "actionRetryID",
-        label: i18next.t("global.buttons.retry"),
+        label: i18n.t("global.buttons.retry"),
         onPress: () => {
           navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
             screen: PN_ROUTES.MAIN,
@@ -34,7 +32,7 @@ export const SendActivationErrorScreen = () => {
       }}
       secondaryAction={{
         testID: "actionCloseID",
-        label: i18next.t("global.buttons.close"),
+        label: i18n.t("global.buttons.close"),
         onPress: () => {
           navigate(ROUTES.MAIN, {
             screen: MESSAGES_ROUTES.MESSAGES_HOME

@@ -1,6 +1,6 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { renderHook, act } from "@testing-library/react-native";
-import i18next from "i18next";
+import i18n from "i18next";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { useSendAreYouSureBottomSheet } from "../useSendAreYouSureBottomSheet";
 
@@ -95,7 +95,7 @@ describe(useSendAreYouSureBottomSheet, () => {
 
     expect(useIOBottomSheetModalMock).toHaveBeenCalledWith(
       expect.objectContaining({
-        title: i18next.t(
+        title: i18n.t(
           "features.pn.loginEngagement.send.areYouSureBottomSheet.title"
         )
       })

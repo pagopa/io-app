@@ -1,5 +1,5 @@
 import { useIOToast } from "@pagopa/io-app-design-system";
-import i18next from "i18next";
+import i18n from "i18next";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { pnActivationUpsert } from "../../store/actions";
 import { isLoadingPnActivationSelector } from "../../store/reducers/activation";
@@ -17,7 +17,7 @@ export const useSendActivationFlow = () => {
   const onSENDActivationSucceeded = () => {
     pop();
     dispatch(setSendEngagementScreenHasBeenDismissed());
-    toast.success(i18next.t("features.pn.loginEngagement.send.toast"));
+    toast.success(i18n.t("features.pn.loginEngagement.send.toast"));
   };
   const onSENDActivationFailed = () => {
     navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {

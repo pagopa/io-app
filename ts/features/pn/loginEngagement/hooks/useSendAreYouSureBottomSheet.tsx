@@ -5,7 +5,7 @@ import {
   IOButton,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import i18next from "i18next";
+import i18n from "i18next";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import IOMarkdown from "../../../../components/IOMarkdown";
@@ -26,7 +26,7 @@ export const useSendAreYouSureBottomSheet = () => {
     present: presentAreYouSureBottomSheet,
     dismiss
   } = useIOBottomSheetModal({
-    title: i18next.t(
+    title: i18n.t(
       "features.pn.loginEngagement.send.areYouSureBottomSheet.title"
     ),
     component: (
@@ -35,7 +35,7 @@ export const useSendAreYouSureBottomSheet = () => {
           pictogramProps={{ name: "savingMoney", pictogramStyle: "default" }}
           body={
             <IOMarkdown
-              content={i18next.t(
+              content={i18n.t(
                 "features.pn.loginEngagement.send.areYouSureBottomSheet.content.features.savingMoney"
               )}
             />
@@ -45,21 +45,21 @@ export const useSendAreYouSureBottomSheet = () => {
           pictogramProps={{ name: "message", pictogramStyle: "default" }}
           body={
             <IOMarkdown
-              content={i18next.t(
+              content={i18n.t(
                 "features.pn.loginEngagement.send.areYouSureBottomSheet.content.features.notification"
               )}
             />
           }
         />
         <IOMarkdown
-          content={i18next.t(
+          content={i18n.t(
             "features.pn.loginEngagement.send.areYouSureBottomSheet.content.privacyAndTos",
             { privacyUrl: privacy, tosUrl: tos }
           )}
         />
         <VStack space={16} style={{ alignItems: "center" }}>
           <IOButton
-            label={i18next.t(
+            label={i18n.t(
               "features.pn.loginEngagement.send.areYouSureBottomSheet.action"
             )}
             fullWidth
@@ -68,7 +68,7 @@ export const useSendAreYouSureBottomSheet = () => {
           />
           <View>
             <IOButton
-              label={i18next.t(
+              label={i18n.t(
                 "features.pn.loginEngagement.send.areYouSureBottomSheet.secondaryAction"
               )}
               variant="link"
