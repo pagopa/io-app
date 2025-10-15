@@ -1,8 +1,5 @@
-diff --git a/node_modules/react-native-webview/.DS_Store b/node_modules/react-native-webview/.DS_Store
-new file mode 100644
-index 0000000..e69de29
 diff --git a/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebChromeClient.java b/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebChromeClient.java
-index 07f73fd..882b722 100644
+index 07f73fd..a5a5bff 100644
 --- a/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebChromeClient.java
 +++ b/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebChromeClient.java
 @@ -171,6 +171,10 @@ public class RNCWebChromeClient extends WebChromeClient implements LifecycleEven
@@ -12,15 +9,15 @@ index 07f73fd..882b722 100644
 +                    if ((androidPermission.equals(Manifest.permission.RECORD_AUDIO) && this.mWebView.getCustomSettings().getMicrophoneAccessDisabled()) ||
 +                        (androidPermission.equals(Manifest.permission.CAMERA) && this.mWebView.getCustomSettings().getCameraAccessDisabled())) {
 +                        continue;
-+                    }
++                    }    
                      grantedPermissions.add(requestedResource);
                  } else {
                      requestedAndroidPermissions.add(androidPermission);
 diff --git a/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebView.java b/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebView.java
-index 80c6803..27c8d00 100644
+index 80c6803..4d2a5d1 100644
 --- a/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebView.java
 +++ b/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebView.java
-@@ -79,6 +79,16 @@ public class RNCWebView extends WebView implements LifecycleEventListener {
+@@ -79,6 +79,17 @@ public class RNCWebView extends WebView implements LifecycleEventListener {
      protected boolean nestedScrollEnabled = false;
      protected ProgressChangedFilter progressChangedFilter;
  
@@ -34,10 +31,11 @@ index 80c6803..27c8d00 100644
 +        }
 +        return customWebSettings;
 +    }
++
      /**
       * WebView must be created with an context of the current activity
       * <p>
-@@ -465,4 +475,25 @@ public class RNCWebView extends WebView implements LifecycleEventListener {
+@@ -465,4 +476,25 @@ public class RNCWebView extends WebView implements LifecycleEventListener {
              return waitingForCommandLoadUrl;
          }
      }
@@ -61,7 +59,7 @@ index 80c6803..27c8d00 100644
 +        public void setCameraAccessDisabled(boolean b) {
 +            cameraAccess = !b;
 +        }
-+    }
++    }    
  }
 \ No newline at end of file
 diff --git a/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebViewManagerImpl.kt b/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebViewManagerImpl.kt
@@ -154,7 +152,7 @@ index 25d09e9..1d94e78 100644
 +var _interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault");Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=exports.__INTERNAL_VIEW_CONFIG=exports.Commands=void 0;var _codegenNativeComponent=_interopRequireDefault(require("react-native/Libraries/Utilities/codegenNativeComponent")),_codegenNativeCommands=_interopRequireDefault(require("react-native/Libraries/Utilities/codegenNativeCommands")),NativeComponentRegistry=require("react-native/Libraries/NativeComponent/NativeComponentRegistry"),_require=require("react-native/Libraries/NativeComponent/ViewConfigIgnore"),ConditionallyIgnoredEventHandlers=_require.ConditionallyIgnoredEventHandlers,_require2=require("react-native/Libraries/ReactNative/RendererProxy"),dispatchCommand=_require2.dispatchCommand,nativeComponentName="RNCWebView",__INTERNAL_VIEW_CONFIG=exports.__INTERNAL_VIEW_CONFIG={uiViewClassName:"RNCWebView",directEventTypes:{topContentSizeChange:{registrationName:"onContentSizeChange"},topRenderProcessGone:{registrationName:"onRenderProcessGone"},topContentProcessDidTerminate:{registrationName:"onContentProcessDidTerminate"},topCustomMenuSelection:{registrationName:"onCustomMenuSelection"},topFileDownload:{registrationName:"onFileDownload"},topLoadingError:{registrationName:"onLoadingError"},topLoadingSubResourceError:{registrationName:"onLoadingSubResourceError"},topLoadingFinish:{registrationName:"onLoadingFinish"},topLoadingProgress:{registrationName:"onLoadingProgress"},topLoadingStart:{registrationName:"onLoadingStart"},topHttpError:{registrationName:"onHttpError"},topMessage:{registrationName:"onMessage"},topOpenWindow:{registrationName:"onOpenWindow"},topScroll:{registrationName:"onScroll"},topShouldStartLoadWithRequest:{registrationName:"onShouldStartLoadWithRequest"}},validAttributes:Object.assign({allowFileAccess:!0,allowsProtectedMedia:!0,allowsFullscreenVideo:!0,androidLayerType:!0,androidMicrophoneAccessDisabled:!0,androidCameraAccessDisabled:!0,cacheMode:!0,domStorageEnabled:!0,downloadingMessage:!0,forceDarkOn:!0,geolocationEnabled:!0,lackPermissionToDownloadMessage:!0,messagingModuleName:!0,minimumFontSize:!0,mixedContentMode:!0,nestedScrollEnabled:!0,overScrollMode:!0,saveFormDataDisabled:!0,scalesPageToFit:!0,setBuiltInZoomControls:!0,setDisplayZoomControls:!0,setSupportMultipleWindows:!0,textZoom:!0,thirdPartyCookiesEnabled:!0,hasOnScroll:!0,allowingReadAccessToURL:!0,allowsBackForwardNavigationGestures:!0,allowsInlineMediaPlayback:!0,allowsPictureInPictureMediaPlayback:!0,allowsAirPlayForMediaPlayback:!0,allowsLinkPreview:!0,automaticallyAdjustContentInsets:!0,autoManageStatusBarEnabled:!0,bounces:!0,contentInset:!0,contentInsetAdjustmentBehavior:!0,contentMode:!0,dataDetectorTypes:!0,decelerationRate:!0,directionalLockEnabled:!0,enableApplePay:!0,hideKeyboardAccessoryView:!0,keyboardDisplayRequiresUserAction:!0,limitsNavigationsToAppBoundDomains:!0,mediaCapturePermissionGrantType:!0,pagingEnabled:!0,pullToRefreshEnabled:!0,refreshControlLightMode:!0,scrollEnabled:!0,sharedCookiesEnabled:!0,textInteractionEnabled:!0,useSharedProcessPool:!0,menuItems:!0,suppressMenuItems:!0,hasOnFileDownload:!0,fraudulentWebsiteWarningEnabled:!0,allowFileAccessFromFileURLs:!0,allowUniversalAccessFromFileURLs:!0,applicationNameForUserAgent:!0,basicAuthCredential:!0,cacheEnabled:!0,incognito:!0,injectedJavaScript:!0,injectedJavaScriptBeforeContentLoaded:!0,injectedJavaScriptForMainFrameOnly:!0,injectedJavaScriptBeforeContentLoadedForMainFrameOnly:!0,javaScriptCanOpenWindowsAutomatically:!0,javaScriptEnabled:!0,webviewDebuggingEnabled:!0,mediaPlaybackRequiresUserAction:!0,messagingEnabled:!0,hasOnOpenWindowEvent:!0,showsHorizontalScrollIndicator:!0,showsVerticalScrollIndicator:!0,indicatorStyle:!0,newSource:!0,userAgent:!0,injectedJavaScriptObject:!0,paymentRequestEnabled:!0},ConditionallyIgnoredEventHandlers({onContentSizeChange:!0,onRenderProcessGone:!0,onContentProcessDidTerminate:!0,onCustomMenuSelection:!0,onFileDownload:!0,onLoadingError:!0,onLoadingSubResourceError:!0,onLoadingFinish:!0,onLoadingProgress:!0,onLoadingStart:!0,onHttpError:!0,onMessage:!0,onOpenWindow:!0,onScroll:!0,onShouldStartLoadWithRequest:!0}))},_default=exports.default=NativeComponentRegistry.get(nativeComponentName,(function(){return __INTERNAL_VIEW_CONFIG})),Commands=exports.Commands={goBack:function(e){dispatchCommand(e,"goBack",[])},goForward:function(e){dispatchCommand(e,"goForward",[])},reload:function(e){dispatchCommand(e,"reload",[])},stopLoading:function(e){dispatchCommand(e,"stopLoading",[])},injectJavaScript:function(e,o){dispatchCommand(e,"injectJavaScript",[o])},requestFocus:function(e){dispatchCommand(e,"requestFocus",[])},postMessage:function(e,o){dispatchCommand(e,"postMessage",[o])},loadUrl:function(e,o){dispatchCommand(e,"loadUrl",[o])},clearFormData:function(e){dispatchCommand(e,"clearFormData",[])},clearCache:function(e,o){dispatchCommand(e,"clearCache",[o])},clearHistory:function(e){dispatchCommand(e,"clearHistory",[])}};
 \ No newline at end of file
 diff --git a/node_modules/react-native-webview/lib/WebViewTypes.d.ts b/node_modules/react-native-webview/lib/WebViewTypes.d.ts
-index 998cc88..669b326 100644
+index 998cc88..214678e 100644
 --- a/node_modules/react-native-webview/lib/WebViewTypes.d.ts
 +++ b/node_modules/react-native-webview/lib/WebViewTypes.d.ts
 @@ -844,6 +844,18 @@ export interface AndroidWebViewProps extends WebViewSharedProps {
@@ -172,7 +170,7 @@ index 998cc88..669b326 100644
 +     * was granted the necessary Android permission. The default value is `false` for backward-compatibility.
 +     * @platform android
 +     */
-+    androidCameraAccessDisabled?: boolean;
++    androidCameraAccessDisabled?: boolean;    
      /**
       * https://developer.android.com/reference/android/webkit/WebView#setLayerType(int,%20android.graphics.Paint)
       * Sets the layerType. Possible values are:
