@@ -8,7 +8,6 @@ import {
 } from "../actions/securityAdviceActions";
 import { differentProfileLoggedIn } from "../../../../../store/actions/crossSessions";
 import { isDevEnv } from "../../../../../utils/environment";
-import { setSendEngagementScreenHasBeenDismissed } from "../../../../pn/loginEngagement/store/actions";
 
 export type SecurityAdviceAcknowledgedState = {
   acknowledged: boolean | undefined;
@@ -36,11 +35,6 @@ const securityAdviceAcknowledgedReducer = (
       return {
         ...state,
         readyToShow: action.payload
-      };
-    case getType(setSendEngagementScreenHasBeenDismissed):
-      return {
-        ...state,
-        readyToShow: true
       };
     default:
       return state;

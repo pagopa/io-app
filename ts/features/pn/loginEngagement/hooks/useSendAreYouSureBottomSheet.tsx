@@ -14,6 +14,7 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { setSendEngagementScreenHasBeenDismissed } from "../store/actions";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { pnPrivacyUrlsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { setSecurityAdviceReadyToShow } from "../../../authentication/fastLogin/store/actions/securityAdviceActions";
 import { useSendActivationFlow } from "./useSendActivationFlow";
 
 export const useSendAreYouSureBottomSheet = () => {
@@ -75,6 +76,7 @@ export const useSendAreYouSureBottomSheet = () => {
               textAlign="center"
               onPress={() => {
                 dispatch(setSendEngagementScreenHasBeenDismissed());
+                dispatch(setSecurityAdviceReadyToShow(true));
                 pop();
               }}
             />

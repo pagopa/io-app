@@ -6,6 +6,7 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { pnActivationUpsert } from "../../../store/actions";
 import { setSendEngagementScreenHasBeenDismissed } from "../../store/actions";
+import { setSecurityAdviceReadyToShow } from "../../../../authentication/fastLogin/store/actions/securityAdviceActions";
 
 jest.mock("../../../../../navigation/params/AppParamsList", () => ({
   useIONavigation: jest.fn()
@@ -88,8 +89,12 @@ describe(useSendActivationFlow, () => {
     });
 
     expect(mockPop).toHaveBeenCalledTimes(1);
+    expect(mockDispatch).toHaveBeenCalledTimes(3);
     expect(mockDispatch).toHaveBeenCalledWith(
       setSendEngagementScreenHasBeenDismissed()
+    );
+    expect(mockDispatch).toHaveBeenCalledWith(
+      setSecurityAdviceReadyToShow(true)
     );
     expect(mockToastSuccess).toHaveBeenCalledTimes(1);
     expect(mockToastSuccess).toHaveBeenCalledWith(

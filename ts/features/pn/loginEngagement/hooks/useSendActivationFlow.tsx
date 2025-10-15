@@ -7,6 +7,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { setSendEngagementScreenHasBeenDismissed } from "../store/actions";
 import PN_ROUTES from "../../navigation/routes";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import { setSecurityAdviceReadyToShow } from "../../../authentication/fastLogin/store/actions/securityAdviceActions";
 
 export const useSendActivationFlow = () => {
   const { pop, navigate } = useIONavigation();
@@ -17,6 +18,7 @@ export const useSendActivationFlow = () => {
   const onSENDActivationSucceeded = () => {
     pop();
     dispatch(setSendEngagementScreenHasBeenDismissed());
+    dispatch(setSecurityAdviceReadyToShow(true));
     toast.success(i18n.t("features.pn.loginEngagement.send.toast"));
   };
   const onSENDActivationFailed = () => {
