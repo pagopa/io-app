@@ -46,6 +46,7 @@ export const aarAdresseeDenominationSelector = (
   switch (currentState.type) {
     case sendAARFlowStates.fetchingNotificationData:
     case sendAARFlowStates.displayingNotificationData:
+    case sendAARFlowStates.notAddresseeFinal:
       if (iun === currentState.iun) {
         return currentState.fullNameDestinatario;
       }
