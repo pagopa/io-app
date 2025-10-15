@@ -9,6 +9,7 @@ import {
   takeEvery
 } from "typed-redux-saga/macro";
 import { StackActions } from "@react-navigation/native";
+import { v4 as uuidv4 } from "uuid";
 import NavigationService from "../../../../navigation/NavigationService";
 import PN_ROUTES from "../../navigation/routes";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
@@ -36,6 +37,8 @@ export function* checkShouldDisplaySendEngagementScreen(
   const isPnInboxEnabled = yield* select(isPnServiceEnabled);
 
   if (typeof isPnInboxEnabled === "undefined") {
+    const guid = uuidv4();
+
     const task: FixedTask<void> = yield* fork(function* () {
       yield* takeEvery(loadServicePreference.success, function* ({ payload }) {
         const pnMessagingServiceId = yield* select(
@@ -43,18 +46,17 @@ export function* checkShouldDisplaySendEngagementScreen(
         );
 
         if (pnMessagingServiceId === payload.id) {
-          // eslint-disable-next-line @typescript-eslint/no-shadow
-          const isPnInboxEnabled = yield* select(isPnServiceEnabled);
+          const updatedIsSendServiceEnabled = yield* select(isPnServiceEnabled);
           yield* call(
             handleNavigateToSendEngagementScreen,
             !hasSendEngagementScreenBeenDismissed,
             isPnRemoteEnabled,
-            !isPnInboxEnabled
+            !updatedIsSendServiceEnabled
           );
-          yield* put({ type: "CANCEL_TASK" });
+          yield* put({ type: guid });
         }
       });
-      yield* take("CANCEL_TASK");
+      yield* take(guid);
       yield* cancel(task);
     });
   } else {
