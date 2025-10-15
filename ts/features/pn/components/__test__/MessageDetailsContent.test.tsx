@@ -1,5 +1,4 @@
 import * as O from "fp-ts/Option";
-import { pipe } from "fp-ts/lib/function";
 import _ from "lodash";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -23,7 +22,7 @@ jest.mock("../../aar/store/selectors", () => ({
   isAarMessageDelegatedSelector: jest.fn().mockReturnValue(true)
 }));
 
-const mockMessage = pipe(thirdPartyMessage, toPNMessage, O.toUndefined)!;
+const mockMessage = O.toUndefined(toPNMessage(thirdPartyMessage))!;
 const mockMessageWithoutDenomination = _.omit(
   mockMessage,
   "senderDenomination"
