@@ -757,7 +757,9 @@ exports[`BannerAttachments BannerAttachments component should match snapshot 1`]
                                   ]
                                 }
                               >
-                                Hai 120 giorni dalla data in cui la notifica risulta legalmente consegnata a te per accedere ai documenti online. Dopo non saranno più disponibili e dovrai contattare l'ente che li ha inviati.
+                                Gli atti sono disponibili su SEND per un periodo limitato: scarica i documenti allegati per conservarli sul tuo dispositivo.
+
+Se i documenti non sono più disponibili, contatta l'ente che li ha inviati.
                               </Text>
                               <View
                                 style={
