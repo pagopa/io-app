@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 import StoreKit
-import SwiftUICore
+import SwiftUI
 
 
 /** `@objc` attribute exposes Swift methods to the Objective-C runtime**/
@@ -19,14 +19,14 @@ class AppReviewModule: NSObject {
     let activeWindowScene = UIApplication.shared.connectedScenes.first { scene in
       return scene.activationState == .foregroundActive && scene is UIWindowScene
     }
-    
+
     if #available(iOS 16.0, *) {
       if let scene = activeWindowScene as? UIWindowScene {
         AppStore.requestReview(in: scene)
         return
       }
     }
-    
+
     if #available(iOS 14.0, *) {
       if let scene = activeWindowScene as? UIWindowScene {
         SKStoreReviewController.requestReview(in: scene)
