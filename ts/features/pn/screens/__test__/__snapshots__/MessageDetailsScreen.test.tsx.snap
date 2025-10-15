@@ -2949,9 +2949,9 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error -
                         edges={
                           {
                             "bottom": "additive",
-                            "left": "additive",
-                            "right": "additive",
-                            "top": "additive",
+                            "left": "off",
+                            "right": "off",
+                            "top": "off",
                           }
                         }
                         style={

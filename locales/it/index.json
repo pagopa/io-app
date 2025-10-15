@@ -3892,7 +3892,20 @@
             }
           },
           "displayingNotificationData": {
-            "headerText-through": " tramite"
+            "headerText-through": " tramite",
+            "abstract": {
+              "title": {
+                "notDelegated": {
+                  "youHave": "Hai"
+                },
+                "delegated": {
+                  "theyHave": " ha"
+                },
+                "receivedFrom_withDenomination": " ricevuto una notifica SEND: è una comunicazione a valore legale inviata da ",
+                "receivedFrom_withoutDenomination": " ricevuto una notifica SEND: è una comunicazione a valore legale",
+                "checkDocuments": ". Consulta i documenti allegati per scoprire tutti i dettagli. \n\nSe è previsto un pagamento, puoi farlo ora da IO con il tuo metodo preferito."
+              }
+            }
           },
           "closeNotification": {
             "title": "Vuoi chiudere la notifica SEND?",
@@ -3993,7 +4006,16 @@
           "bottomSheetTitle": "Quale avviso vuoi pagare?"
         },
         "attachmentsSection": {
-          "title": "Allegati"
+          "title": "Allegati",
+          "banner": {
+            "action": "Scopri di più",
+            "content": "Gli atti sono disponibili online per 120 giorni. Salvali sul tuo dispositivo!"
+          },
+          "bottomSheet": {
+            "action": "Come calcolare i tempi?",
+            "content": "Gli atti sono disponibili su SEND per un periodo limitato: scarica i documenti allegati per conservarli sul tuo dispositivo.\n\nSe i documenti non sono più disponibili, contatta l'ente che li ha inviati.",
+            "title": "Disponibilità degli atti online"
+          }
         },
         "f24Section": {
           "title": "Modelli F24",
@@ -4029,6 +4051,14 @@
           "expand": "mostra gli stati precedenti",
           "info": "Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio",
           "cta": "Accedi alla versione web"
+        },
+        "help": {
+          "needHelp": "Serve aiuto?",
+          "bottomSheet": {
+            "action": "Vai al centro assistenza",
+            "content": "Per qualsiasi dubbio sul contenuto della notifica SEND, contatta l'ente che te l'ha inviata. I contatti generalmente sono riportati negli allegati alla notifica.\n\nSe hai bisogno di supporto su SEND, consulta le risorse di assistenza",
+            "title": "Serve aiuto?"
+          }
         }
       },
       "qrCodeScan": {
@@ -6543,7 +6573,7 @@
       },
       "historyScreen": {
         "header": "I tuoi accessi a servizi di terze parti",
-        "body": "Qui puoi consultare le cronologia dei tuoi accessi a servizi esterni tramite IO e richiederne una copia via email."
+        "body": "Qui puoi consultare la cronologia dei tuoi accessi a servizi esterni tramite IO e richiederne una copia via email."
       }
     },
     "loadingScreen": {
