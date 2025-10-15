@@ -68,7 +68,7 @@ exports[`useSendAreYouSureBottomSheet should match the snapshot 1`] = `
         }
       />
       <Memo(IOMarkdown)
-        content="Premendo **Attiva SEND su IO** dichiari di aver letto l'[informativa Privacy](PRIVACY_URL) e di accettare i [Termini e Condizioni d'uso](TOS_URL)."
+        content="Premendo **Attiva SEND su IO** dichiari di aver letto l'[Informativa Privacy](PRIVACY_URL) e di accettare i [Termini e Condizioni d'uso](TOS_URL)."
       />
       <VStack
         space={16}
