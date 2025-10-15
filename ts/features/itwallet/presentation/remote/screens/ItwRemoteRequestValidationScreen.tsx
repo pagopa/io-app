@@ -30,6 +30,12 @@ const ItwRemoteRequestValidationScreen = ({ route }: ScreenProps) => {
 
   const startupStatus = useIOSelector(isStartupLoaded);
 
+  useFocusEffect(
+    useCallback(() => {
+      trackItwRemoteStart();
+    }, [])
+  );
+
   /**
    * There may be scenarios where the app is not running when the user opens the link,
    * so the app is started and the user goes through the identification or the full authentication process.
@@ -45,8 +51,6 @@ const ItwRemoteRequestValidationScreen = ({ route }: ScreenProps) => {
       />
     );
   }
-
-  trackItwRemoteStart();
 
   const payload = validateItwPresentationQrCodeParams(route.params);
 
