@@ -20,6 +20,7 @@ import {
 } from "../store/actions";
 import { currentAARFlowData } from "../store/selectors";
 import { sendAARFlowStates } from "../utils/stateUtils";
+import { trackSendAARFailure } from "../analytics";
 
 export function* fetchAarDataSaga(
   fetchData: SendAARClient["getAARNotification"],
@@ -28,6 +29,10 @@ export function* fetchAarDataSaga(
   const currentState = yield* select(currentAARFlowData);
   const isTest = yield* select(isPnTestEnabledSelector);
   if (currentState.type !== sendAARFlowStates.fetchingNotificationData) {
+    trackSendAARFailure(
+      "",
+      `fetchAarDataSaga called with wrong state ${currentState.type}`
+    );
     return;
   }
   try {

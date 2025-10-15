@@ -1,5 +1,5 @@
 import {
-  trackSendAARAttachmentDownloadFailure,
+  trackSendAARFailure,
   trackSendActivationModalDialog,
   trackSendActivationModalDialogActivationDismissed,
   trackSendActivationModalDialogActivationStart,
@@ -116,17 +116,19 @@ describe("index", () => {
 
   describe("trackSendAARAttachmentDownloadFailure", () => {
     it("should call 'mixpanelTrack' with proper event name and properties", () => {
+      const phase = "The phase";
       const reason = "The reason";
-      trackSendAARAttachmentDownloadFailure(reason);
+      trackSendAARFailure(phase, reason);
 
       expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
       expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
       expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
-        "SEND_AAR_ATTACHMENT_DOWNLOAD_FAILED"
+        "SEND_AAR_ERROR"
       );
       expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
         event_category: "KO",
         event_type: undefined,
+        phase,
         reason
       });
     });
