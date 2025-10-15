@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import i18next from "i18next";
+import i18n from "i18next";
 import { IOButton, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
@@ -18,19 +18,19 @@ export const useSendActivationBottomSheet = () => {
     present: presentActivationBottomSheet,
     dismiss
   } = useIOBottomSheetModal({
-    title: i18next.t(
+    title: i18n.t(
       "features.pn.loginEngagement.send.activationBottomSheet.title"
     ),
     component: (
       <VStack space={24}>
         <IOMarkdown
-          content={i18next.t(
+          content={i18n.t(
             "features.pn.loginEngagement.send.activationBottomSheet.content",
             { privacyUrl: privacy, tosUrl: tos }
           )}
         />
         <IOButton
-          label={i18next.t(
+          label={i18n.t(
             "features.pn.loginEngagement.send.activationBottomSheet.action"
           )}
           onPress={requestSendActivation}

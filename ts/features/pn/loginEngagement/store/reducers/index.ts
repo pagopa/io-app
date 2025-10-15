@@ -9,17 +9,20 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Action } from "../../../../../store/actions/types";
 import { setSendEngagementScreenHasBeenDismissed } from "../actions";
 import { isDevEnv, isTestEnv } from "../../../../../utils/environment";
-import { PNLoginEngagementState } from "../types";
 import { GlobalState } from "../../../../../store/reducers/types";
 
-export const PN_LOGIN_ENGAGEMENT_INITIAL_STATE: PNLoginEngagementState = {
+export type SENDLoginEngagementState = {
+  hasSendEngagementScreenBeenDismissed: boolean;
+};
+
+export const SEND_LOGIN_ENGAGEMENT_INITIAL_STATE: SENDLoginEngagementState = {
   hasSendEngagementScreenBeenDismissed: false
 };
 
-const pnLoginEngagementReducer = (
-  state = PN_LOGIN_ENGAGEMENT_INITIAL_STATE,
+const sendLoginEngagementReducer = (
+  state = SEND_LOGIN_ENGAGEMENT_INITIAL_STATE,
   action: Action
-): PNLoginEngagementState => {
+): SENDLoginEngagementState => {
   switch (action.type) {
     case getType(setSendEngagementScreenHasBeenDismissed):
       return {
@@ -35,24 +38,23 @@ const CURRENT_STORE_VERSION = -1;
 const migrations: MigrationManifest = {};
 
 const persistConfig: PersistConfig = {
-  key: "pnLoginEngagementReducer",
+  key: "sendLoginEngagementReducer",
   storage: AsyncStorage,
   version: CURRENT_STORE_VERSION,
-  migrate: createMigrate(migrations, { debug: isDevEnv }),
-  whitelist: ["hasSendEngagementScreenBeenDismissed"]
+  migrate: createMigrate(migrations, { debug: isDevEnv })
 };
 
 export const hasSendEngagementScreenBeenDismissedSelector = (
   state: GlobalState
 ) => state.features.pn.loginEngagement.hasSendEngagementScreenBeenDismissed;
 
-export const persistedPnLoginEngagementReducer = persistReducer(
+export const persistedSendLoginEngagementReducer = persistReducer(
   persistConfig,
-  pnLoginEngagementReducer
+  sendLoginEngagementReducer
 );
 
 export const testable = isTestEnv
   ? {
-      pnLoginEngagementReducer
+      sendLoginEngagementReducer
     }
   : undefined;

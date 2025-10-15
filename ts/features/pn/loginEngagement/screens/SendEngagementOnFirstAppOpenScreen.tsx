@@ -1,4 +1,4 @@
-import i18next from "i18next";
+import i18n from "i18next";
 import { Body } from "@pagopa/io-app-design-system";
 import { useSendActivationBottomSheet } from "../hooks/useSendActivationBottomSheet";
 import { useSendAreYouSureBottomSheet } from "../hooks/useSendAreYouSureBottomSheet";
@@ -28,26 +28,26 @@ export const SendEngagementOnFirstAppOpenScreen = () => {
     <>
       <WhatsNewScreenContent
         pictogram="savingMoney"
-        title={i18next.t("features.pn.loginEngagement.send.title")}
+        title={i18n.t("features.pn.loginEngagement.send.title")}
         badge={{
-          text: i18next.t("features.pn.loginEngagement.send.topElement.label"),
+          text: i18n.t("features.pn.loginEngagement.send.topElement.label"),
           variant: "highlight"
         }}
         action={{
           testID: "sendEngagementOnFirstAppOpenActionID",
-          label: i18next.t("features.pn.loginEngagement.send.action"),
+          label: i18n.t("features.pn.loginEngagement.send.action"),
           fullWidth: true,
           onPress: presentActivationBottomSheet
         }}
         secondaryAction={{
           testID: "sendEngagementOnFirstAppOpenSecondaryActionID",
-          label: i18next.t("features.pn.loginEngagement.send.secondaryAction"),
+          label: i18n.t("features.pn.loginEngagement.send.secondaryAction"),
           onPress: presentAreYouSureBottomSheet
         }}
       >
         <IOMarkdown
           rules={customRules}
-          content={i18next.t("features.pn.loginEngagement.send.description")}
+          content={i18n.t("features.pn.loginEngagement.send.description")}
         />
       </WhatsNewScreenContent>
       {activationBottomSheet}

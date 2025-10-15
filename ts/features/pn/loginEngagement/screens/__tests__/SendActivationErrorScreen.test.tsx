@@ -7,6 +7,7 @@ import PN_ROUTES from "../../../navigation/routes";
 import ROUTES from "../../../../../navigation/routes";
 
 const mockNavigate = jest.fn();
+const mockReplace = jest.fn();
 const mockDispatch = jest.fn();
 
 jest.mock("@react-navigation/stack", () => ({
@@ -25,7 +26,10 @@ const mockUseDispatch = useDispatch as jest.Mock;
 describe(SendActivationErrorScreen, () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockUseNavigation.mockReturnValue({ navigate: mockNavigate });
+    mockUseNavigation.mockReturnValue({
+      navigate: mockNavigate,
+      replace: mockReplace
+    });
     mockUseDispatch.mockReturnValue(mockDispatch);
   });
 
@@ -50,6 +54,7 @@ describe(SendActivationErrorScreen, () => {
         }
       }
     );
+    expect(mockReplace).not.toHaveBeenCalled();
     expect(mockDispatch).not.toHaveBeenCalled();
   });
   it("should properly navigate to the message screen", () => {
@@ -58,8 +63,9 @@ describe(SendActivationErrorScreen, () => {
     const presentActivationBottomSheet = getByTestId("actionCloseID");
     fireEvent.press(presentActivationBottomSheet);
 
-    expect(mockNavigate).toHaveBeenCalledTimes(1);
-    expect(mockNavigate).toHaveBeenCalledWith(ROUTES.MAIN, {
+    expect(mockNavigate).not.toHaveBeenCalled();
+    expect(mockReplace).toHaveBeenCalledTimes(1);
+    expect(mockReplace).toHaveBeenCalledWith(ROUTES.MAIN, {
       screen: MESSAGES_ROUTES.MESSAGES_HOME
     });
     expect(mockDispatch).toHaveBeenCalled();

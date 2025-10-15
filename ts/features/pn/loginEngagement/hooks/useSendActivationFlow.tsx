@@ -1,5 +1,5 @@
 import { useIOToast } from "@pagopa/io-app-design-system";
-import i18next from "i18next";
+import i18n from "i18next";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { pnActivationUpsert } from "../../store/actions";
 import { isLoadingPnActivationSelector } from "../../store/reducers/activation";
@@ -9,9 +9,10 @@ import PN_ROUTES from "../../navigation/routes";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";
 import { NOTIFICATIONS_ROUTES } from "../../../pushNotifications/navigation/routes";
+import { setSecurityAdviceReadyToShow } from "../../../authentication/fastLogin/store/actions/securityAdviceActions";
 
 export const useSendActivationFlow = () => {
-  const { popToTop, replace, navigate } = useIONavigation();
+  const { popToTop, replace } = useIONavigation();
   const dispatch = useIODispatch();
   const toast = useIOToast();
   const isActivating = useIOSelector(isLoadingPnActivationSelector);
@@ -28,10 +29,11 @@ export const useSendActivationFlow = () => {
       });
     }
     dispatch(setSendEngagementScreenHasBeenDismissed());
-    toast.success(i18next.t("features.pn.loginEngagement.send.toast"));
+    dispatch(setSecurityAdviceReadyToShow(true));
+    toast.success(i18n.t("features.pn.loginEngagement.send.toast"));
   };
   const onSENDActivationFailed = () => {
-    navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+    replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
       screen: PN_ROUTES.MAIN,
       params: {
         screen: PN_ROUTES.SEND_ENGAGEMENT_ACTIVATION_ERROR

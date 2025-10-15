@@ -1,6 +1,6 @@
 import { renderHook, act } from "@testing-library/react-native";
 import { useIOToast } from "@pagopa/io-app-design-system";
-import i18next from "i18next";
+import i18n from "i18next";
 import { useSendActivationFlow } from "../useSendActivationFlow";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../../store/hooks";
@@ -9,6 +9,7 @@ import { setSendEngagementScreenHasBeenDismissed } from "../../store/actions";
 import { isLoadingPnActivationSelector } from "../../../store/reducers/activation";
 import { areNotificationPermissionsEnabledSelector } from "../../../../pushNotifications/store/reducers/environment";
 import { NOTIFICATIONS_ROUTES } from "../../../../pushNotifications/navigation/routes";
+import { setSecurityAdviceReadyToShow } from "../../../../authentication/fastLogin/store/actions/securityAdviceActions";
 
 jest.mock("../../../store/reducers/activation", () => ({
   isLoadingPnActivationSelector: jest.fn()
@@ -31,7 +32,6 @@ jest.mock("@pagopa/io-app-design-system", () => ({
 }));
 
 const mockPopToTop = jest.fn();
-const mockNavigate = jest.fn();
 const mockReplace = jest.fn();
 const mockDispatch = jest.fn();
 const mockToastSuccess = jest.fn();
@@ -49,7 +49,6 @@ describe(useSendActivationFlow, () => {
     jest.clearAllMocks();
     mockUseIONavigation.mockReturnValue({
       popToTop: mockPopToTop,
-      navigate: mockNavigate,
       replace: mockReplace
     });
     mockUseIODispatch.mockReturnValue(mockDispatch);
@@ -112,7 +111,7 @@ describe(useSendActivationFlow, () => {
     );
     expect(mockToastSuccess).toHaveBeenCalledTimes(1);
     expect(mockToastSuccess).toHaveBeenCalledWith(
-      i18next.t("features.pn.loginEngagement.send.toast")
+      i18n.t("features.pn.loginEngagement.send.toast")
     );
   });
 
@@ -140,12 +139,16 @@ describe(useSendActivationFlow, () => {
         flow: expect.any(String)
       }
     );
+    expect(mockDispatch).toHaveBeenCalledTimes(3);
     expect(mockDispatch).toHaveBeenCalledWith(
       setSendEngagementScreenHasBeenDismissed()
     );
+    expect(mockDispatch).toHaveBeenCalledWith(
+      setSecurityAdviceReadyToShow(true)
+    );
     expect(mockToastSuccess).toHaveBeenCalledTimes(1);
     expect(mockToastSuccess).toHaveBeenCalledWith(
-      i18next.t("features.pn.loginEngagement.send.toast")
+      i18n.t("features.pn.loginEngagement.send.toast")
     );
   });
 
@@ -163,8 +166,7 @@ describe(useSendActivationFlow, () => {
     });
 
     expect(mockPopToTop).not.toHaveBeenCalled();
-    expect(mockReplace).not.toHaveBeenCalled();
-    expect(mockNavigate).toHaveBeenCalledTimes(1);
+    expect(mockReplace).toHaveBeenCalledTimes(1);
     expect(mockToastSuccess).not.toHaveBeenCalled();
     expect(mockDispatch).toHaveBeenCalledTimes(1);
   });
