@@ -136,7 +136,7 @@ describe(useSendActivationFlow, () => {
     expect(mockReplace).toHaveBeenCalledWith(
       NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT,
       {
-        flow: expect.any(String)
+        flow: "access"
       }
     );
     expect(mockDispatch).toHaveBeenCalledTimes(3);

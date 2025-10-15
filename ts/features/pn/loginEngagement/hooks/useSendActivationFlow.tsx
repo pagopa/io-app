@@ -25,7 +25,7 @@ export const useSendActivationFlow = () => {
       popToTop();
     } else {
       replace(NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT, {
-        flow: "authentication" // TODO: Ensure this is the right flow
+        flow: "access"
       });
     }
     dispatch(setSendEngagementScreenHasBeenDismissed());
