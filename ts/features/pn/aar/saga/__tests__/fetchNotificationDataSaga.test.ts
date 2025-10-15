@@ -9,9 +9,11 @@ import { ThirdPartyMessage as AarThirdPartyMessage } from "../../../../../../def
 import { pnMessagingServiceIdSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../../types/SessionToken";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import * as SAGA_UTILS from "../../../../services/common/saga/ getServiceDetails";
 import { profileFiscalCodeSelector } from "../../../../settings/common/store/selectors";
 import { thirdPartyMessage } from "../../../__mocks__/pnMessage";
+import { SendAARClient } from "../../api/client";
 import {
   populateStoresWithEphemeralAarMessageData,
   setAarFlowState
@@ -23,14 +25,15 @@ import {
   sendAarMockStates
 } from "../../utils/testUtils";
 import { fetchAarDataSaga, testable } from "../fetchNotificationDataSaga";
-import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
-import { SendAARClient } from "../../api/client";
 
 const mockCurrentState = {
   type: sendAARFlowStates.fetchingNotificationData,
   iun: "IUN123",
   mandateId: "MANDATE123",
-  fullNameDestinatario: "Mario Rossi"
+  recipientInfo: {
+    denomination: "nomecognome",
+    taxId: "taxID"
+  }
 };
 
 const { aarMessageDataPayloadFromResponse } = testable!;
@@ -207,7 +210,7 @@ describe("fetchAarDataSaga", () => {
           setAarFlowState({
             type: sendAARFlowStates.displayingNotificationData,
             notification: mockNotification,
-            fullNameDestinatario: mockCurrentState.fullNameDestinatario,
+            recipientInfo: mockCurrentState.recipientInfo,
             mandateId: mockPayload.mandateId,
             iun: mockPayload.iun,
             pnServiceId: mockPayload.pnServiceID

@@ -45,7 +45,10 @@ describe("fetchQrCodeSaga", () => {
         const successState: AARFlowState = {
           type: sendAARFlowStates.fetchingNotificationData,
           iun: "123123",
-          fullNameDestinatario: "nomecognome",
+          recipientInfo: {
+            denomination: "nomecognome",
+            taxId: "taxID"
+          },
           mandateId
         };
         const successResponse = E.right({
@@ -90,7 +93,10 @@ describe("fetchQrCodeSaga", () => {
       const notAddresseeState: AARFlowState = {
         type: sendAARFlowStates.notAddresseeFinal,
         iun: "123123",
-        fullNameDestinatario: "nomecognome",
+        recipientInfo: {
+          denomination: "nomecognome",
+          taxId: "taxID"
+        },
         qrCode: aQRCode
       };
       const notAddresseeResponse = E.right({

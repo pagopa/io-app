@@ -71,7 +71,10 @@ describe("watchAarFlowSaga", () => {
         } as typeof FETCH_DATA_SAGA.fetchAarDataSaga);
       const action = setAarFlowState({
         type: sendAARFlowStates.fetchingNotificationData,
-        fullNameDestinatario: "Mario Rossi",
+        recipientInfo: {
+          denomination: "nomecognome",
+          taxId: "taxID"
+        },
         iun: "123"
       });
 

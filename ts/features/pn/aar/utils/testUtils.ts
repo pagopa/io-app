@@ -21,11 +21,17 @@ export const sendAarMockStateFactory: Record<
   fetchingNotificationData: () => ({
     type: "fetchingNotificationData",
     iun: "000000000001",
-    fullNameDestinatario: "Mario Rossi"
+    recipientInfo: {
+      denomination: "nomecognome",
+      taxId: "taxID"
+    }
   }),
   displayingNotificationData: () => ({
     type: "displayingNotificationData",
-    fullNameDestinatario: "Mario Rossi",
+    recipientInfo: {
+      denomination: "nomecognome",
+      taxId: "taxID"
+    },
     notification: {},
     iun: "000000000001",
     pnServiceId: "SERVICEID123" as NonEmptyString,
@@ -33,7 +39,10 @@ export const sendAarMockStateFactory: Record<
   }),
   notAddresseeFinal: () => ({
     type: "notAddresseeFinal",
-    fullNameDestinatario: "Mario Rossi",
+    recipientInfo: {
+      denomination: "nomecognome",
+      taxId: "taxID"
+    },
     qrCode: "https://www.google.com",
     iun: "000000000001"
   }),
