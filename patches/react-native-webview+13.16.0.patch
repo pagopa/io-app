@@ -1,7 +1,6 @@
 diff --git a/node_modules/react-native-webview/.DS_Store b/node_modules/react-native-webview/.DS_Store
 new file mode 100644
-index 0000000..5172429
-Binary files /dev/null and b/node_modules/react-native-webview/.DS_Store differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebChromeClient.java b/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebChromeClient.java
 index 07f73fd..882b722 100644
 --- a/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebChromeClient.java
@@ -66,7 +65,7 @@ index 80c6803..27c8d00 100644
  }
 \ No newline at end of file
 diff --git a/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebViewManagerImpl.kt b/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebViewManagerImpl.kt
-index f83033b..285ea46 100644
+index f83033b..dc8292a 100644
 --- a/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebViewManagerImpl.kt
 +++ b/node_modules/react-native-webview/android/src/main/java/com/reactnativecommunity/webview/RNCWebViewManagerImpl.kt
 @@ -563,6 +563,18 @@ class RNCWebViewManagerImpl(private val newArch: Boolean = false) {
@@ -74,11 +73,11 @@ index f83033b..285ea46 100644
      }
  
 +    fun setMicrophoneAccessDisabled(viewWrapper: RNCWebViewWrapper, value: Boolean) {
-+        getCustomSettings(viewWrapper).setMicrophoneAccessDisabled(value)
++        getCustomSettings(viewWrapper)?.setMicrophoneAccessDisabled(value)
 +    }
 +
 +    fun setCameraAccessDisabled(viewWrapper: RNCWebViewWrapper, value: Boolean) {
-+        getCustomSettings(viewWrapper).setCameraAccessDisabled(value)
++        getCustomSettings(viewWrapper)?.setCameraAccessDisabled(value)
 +    }
 +
 +    fun getCustomSettings(viewWrapper: RNCWebViewWrapper): RNCWebView.CustomWebSettings? {
