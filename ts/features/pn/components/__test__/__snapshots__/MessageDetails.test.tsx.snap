@@ -628,6 +628,13 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                 </Text>
                               </View>
                             </View>
+                            <View
+                              style={
+                                {
+                                  "height": 16,
+                                }
+                              }
+                            />
                             <Text
                               allowFontScaling={true}
                               dynamicTypeRamp="footnote"

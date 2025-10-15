@@ -106,6 +106,7 @@ export const MessageDetails = ({
             paidNoticeCodes={completedPaymentNoticeCodes}
             payments={payments}
           />
+          <VSpacer size={16} />
           <MessageDetailsContent message={message} />
           <VSpacer size={16} />
           <MessageDetailsAttachments
