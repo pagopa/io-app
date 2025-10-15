@@ -4,7 +4,7 @@ import { pipe } from "fp-ts/lib/function";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { thirdPartyFromIdSelector } from "../../../../messages/store/reducers/thirdPartyById";
 import { toPNMessage } from "../../../store/types/transformers";
-import { isAARRemoteEnabled } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { isAarRemoteEnabled } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isAARLocalEnabled } from "../../../../../store/reducers/persistedPreferences";
 import { sendAARFlowStates } from "../../utils/stateUtils";
 
@@ -21,7 +21,7 @@ export const thirdPartySenderDenominationSelector = (
     O.toUndefined
   );
 export const isAAREnabled = (state: GlobalState): boolean =>
-  isAARLocalEnabled(state) && isAARRemoteEnabled(state);
+  isAARLocalEnabled(state) && isAarRemoteEnabled(state);
 
 export const currentAARFlowData = (state: GlobalState) =>
   state.features.pn.aarFlow;

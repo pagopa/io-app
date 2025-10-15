@@ -126,7 +126,7 @@ import {
   startupTransientError
 } from "../store/actions/startup";
 import {
-  isAARRemoteEnabled,
+  isAarRemoteEnabled,
   isIdPayEnabledSelector,
   isPnRemoteEnabledSelector,
   remoteConfigSelector
@@ -614,13 +614,13 @@ export function* initializeApplicationSaga(
     isPnRemoteEnabledSelector
   );
 
-  const aARRemoteEnabled = yield* select(isAARRemoteEnabled);
-
   if (pnEnabled) {
     // Start watching for PN actions
     yield* fork(watchPnSaga, sessionToken);
 
-    if (aARRemoteEnabled) {
+    const aarRemoteEnabled = yield* select(isAarRemoteEnabled);
+
+    if (aarRemoteEnabled) {
       yield* fork(watchAarFlowSaga, sessionToken, keyInfo);
     }
   }
