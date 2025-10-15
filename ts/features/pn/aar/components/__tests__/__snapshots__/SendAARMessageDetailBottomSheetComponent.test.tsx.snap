@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FimsHistoryHeaderComponent should match snapshot 1`] = `
+exports[`SendAARMessageDetailBottomSheetComponent should match snapshot 1`] = `
 <View
   style={
     {
@@ -168,7 +168,7 @@ exports[`FimsHistoryHeaderComponent should match snapshot 1`] = `
                     ]
                   }
                 >
-                  FIMS_HISTORY
+                  PN_ROUTES_MESSAGE_DETAILS
                 </Text>
               </View>
               <View
@@ -365,65 +365,7 @@ exports[`FimsHistoryHeaderComponent should match snapshot 1`] = `
                           "flex": 1,
                         }
                       }
-                    >
-                      <View>
-                        <Text
-                          accessibilityRole="header"
-                          allowFontScaling={true}
-                          dynamicTypeRamp="title1"
-                          maxFontSizeMultiplier={1.5}
-                          style={
-                            [
-                              {},
-                              {
-                                "color": "#0E0F13",
-                                "fontFamily": "Titillio",
-                                "fontSize": 26,
-                                "fontStyle": "normal",
-                                "fontWeight": "600",
-                                "lineHeight": 34,
-                              },
-                            ]
-                          }
-                        >
-                          I tuoi accessi a servizi di terze parti
-                        </Text>
-                        <View
-                          style={
-                            {
-                              "height": 16,
-                            }
-                          }
-                        />
-                        <Text
-                          allowFontScaling={true}
-                          dynamicTypeRamp="body"
-                          maxFontSizeMultiplier={1.5}
-                          style={
-                            [
-                              {},
-                              {
-                                "color": "#555C70",
-                                "fontFamily": "Titillio",
-                                "fontSize": 16,
-                                "fontStyle": "normal",
-                                "fontWeight": "400",
-                                "lineHeight": 24,
-                              },
-                            ]
-                          }
-                        >
-                          Qui puoi consultare la cronologia dei tuoi accessi a servizi esterni tramite IO e richiederne una copia via email.
-                        </Text>
-                        <View
-                          style={
-                            {
-                              "height": 16,
-                            }
-                          }
-                        />
-                      </View>
-                    </View>
+                    />
                   </View>
                 </View>
               </View>
