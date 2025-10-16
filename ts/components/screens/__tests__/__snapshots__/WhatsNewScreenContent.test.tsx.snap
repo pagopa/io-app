@@ -1,0 +1,618 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WhatsNewScreenContent should match the snapshots 1`] = `
+<RNCSafeAreaView
+  edges={
+    {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "additive",
+    }
+  }
+  style={
+    {
+      "flexGrow": 1,
+    }
+  }
+>
+  <RCTScrollView
+    alwaysBounceVertical={false}
+    centerContent={true}
+    contentContainerStyle={
+      {
+        "alignContent": "center",
+        "alignItems": "stretch",
+        "flexGrow": 1,
+        "justifyContent": "center",
+      }
+    }
+  >
+    <View>
+      <View
+        style={
+          {
+            "display": "flex",
+            "flexDirection": "column",
+            "gap": 24,
+            "padding": 24,
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "alignItems": "center",
+            }
+          }
+        >
+          <RNSVGSvgView
+            align="xMidYMid"
+            bbHeight={120}
+            bbWidth={120}
+            focusable={false}
+            height={120}
+            meetOrSlice={0}
+            minX={0}
+            minY={0}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "borderWidth": 0,
+                },
+                {
+                  "flex": 0,
+                  "height": 120,
+                  "width": 120,
+                },
+              ]
+            }
+            vbHeight={240}
+            vbWidth={240}
+            width={120}
+          >
+            <RNSVGGroup
+              fill={
+                {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
+            >
+              <RNSVGPath
+                d="M133.86 137.26L131.89 132.47L132.79 127.15L135.42 121.98L132.13 122.25C132.13 122.25 112.8 116.62 112.05 116.15C111.3 115.68 110.32 109.82 110.32 109.82L111.8 104.69L125.39 100.87L149.99 99.71L164.27 101.67V56.69C164.27 50.23 159.04 45 152.58 45H33.69C27.23 45 22 50.23 22 56.69V125.64C22 132.1 27.23 137.33 33.69 137.33H45.11L37.15 159.94C35.63 164.26 40.43 168.07 44.29 165.61L88.58 137.34H134L133.86 137.27V137.26Z"
+                fill={
+                  {
+                    "payload": 4289392367,
+                    "type": 0,
+                  }
+                }
+                propList={
+                  [
+                    "fill",
+                  ]
+                }
+              />
+              <RNSVGPath
+                d="M218.85 179.03L214.85 179C215 156.25 200.43 131.48 191.73 118.74C188.06 113.36 182.99 109.35 177.08 107.12C154.55 98.63 128.42 102.22 118.23 104.15C114.55 104.85 111.97 108.06 112.22 111.62C112.3 112.81 112.56 116.43 119.96 117.63C135.18 120.08 148.72 117.32 148.86 117.29L149.68 121.21C149.1 121.33 135.3 124.16 119.32 121.59C110.61 120.19 108.48 115.55 108.22 111.91C107.83 106.33 111.81 101.3 117.48 100.23C128 98.23 155.01 94.54 178.48 103.38C185.17 105.9 190.89 110.43 195.02 116.49C203.98 129.62 218.99 155.2 218.84 179.04L218.85 179.03Z"
+                fill={
+                  {
+                    "payload": 4278927075,
+                    "type": 0,
+                  }
+                }
+                propList={
+                  [
+                    "fill",
+                  ]
+                }
+              />
+              <RNSVGPath
+                d="M154.24 143.5C153.99 143.5 153.74 143.49 153.5 143.46C150.64 143.18 148.68 141.27 148.14 138.23C147.39 133.99 149.44 128.14 154.25 120.87C157.69 115.66 161.28 111.63 161.43 111.46L164.41 114.13C160.58 118.41 150.91 130.97 152.08 137.54C152.36 139.13 153.12 139.42 153.89 139.49C157.86 139.89 166.43 133.83 168.76 127.87L172.48 129.33C169.71 136.4 160.42 143.51 154.23 143.51L154.24 143.5Z"
+                fill={
+                  {
+                    "payload": 4278927075,
+                    "type": 0,
+                  }
+                }
+                propList={
+                  [
+                    "fill",
+                  ]
+                }
+              />
+              <RNSVGPath
+                d="M174.67 144.29C173.91 140.34 168.17 137.13 166.02 136.22L167.57 132.53C167.97 132.7 177.28 136.67 178.6 143.53L174.67 144.28V144.29Z"
+                fill={
+                  {
+                    "payload": 4278927075,
+                    "type": 0,
+                  }
+                }
+                propList={
+                  [
+                    "fill",
+                  ]
+                }
+              />
+              <RNSVGPath
+                d="M140.499 141.75C137.299 141.75 134.129 140.97 132.259 138.46C129.849 135.23 129.039 130.28 130.259 126.15C131.249 122.8 133.429 120.34 136.389 119.24C137.129 118.96 137.919 118.77 138.749 118.67L139.249 122.64C138.729 122.7 138.239 122.82 137.789 122.99C135.539 123.83 134.539 125.79 134.099 127.28C133.239 130.21 133.799 133.82 135.469 136.06C137.719 139.08 145.849 137.33 149.429 136L150.809 139.75C149.969 140.06 145.199 141.74 140.499 141.74V141.75Z"
+                fill={
+                  {
+                    "payload": 4278927075,
+                    "type": 0,
+                  }
+                }
+                propList={
+                  [
+                    "fill",
+                  ]
+                }
+              />
+              <RNSVGPath
+                d="M154.1 156.38C151.82 156.38 149.64 155.87 147.55 154.86C139.37 150.89 135.87 140.51 135.72 140.07L139.52 138.82C139.55 138.91 142.66 148.05 149.31 151.27C152.22 152.68 155.34 152.75 158.82 151.48C162.32 150.21 164.39 148.69 164.5 147.31C164.64 145.41 161.35 142.69 159.08 141.46L160.98 137.94C161.79 138.38 168.87 142.36 168.49 147.6C168.26 150.75 165.47 153.32 160.19 155.24C158.11 156 156.07 156.38 154.1 156.38Z"
+                fill={
+                  {
+                    "payload": 4278927075,
+                    "type": 0,
+                  }
+                }
+                propList={
+                  [
+                    "fill",
+                  ]
+                }
+              />
+              <RNSVGPath
+                d="M175.159 195.9C162.219 178.35 159.509 153.84 159.399 152.8L163.379 152.38C163.409 152.62 166.089 176.86 178.379 193.53L175.159 195.9Z"
+                fill={
+                  {
+                    "payload": 4278927075,
+                    "type": 0,
+                  }
+                }
+                propList={
+                  [
+                    "fill",
+                  ]
+                }
+              />
+              <RNSVGPath
+                d="M43.0401 70.34C46.7459 70.34 49.7501 67.3358 49.7501 63.63C49.7501 59.9242 46.7459 56.92 43.0401 56.92C39.3342 56.92 36.3301 59.9242 36.3301 63.63C36.3301 67.3358 39.3342 70.34 43.0401 70.34Z"
+                fill={
+                  {
+                    "payload": 4278240714,
+                    "type": 0,
+                  }
+                }
+                propList={
+                  [
+                    "fill",
+                  ]
+                }
+              />
+              <RNSVGPath
+                d="M69.1202 70.34C72.826 70.34 75.8302 67.3358 75.8302 63.63C75.8302 59.9242 72.826 56.92 69.1202 56.92C65.4143 56.92 62.4102 59.9242 62.4102 63.63C62.4102 67.3358 65.4143 70.34 69.1202 70.34Z"
+                fill={
+                  {
+                    "payload": 4278240714,
+                    "type": 0,
+                  }
+                }
+                propList={
+                  [
+                    "fill",
+                  ]
+                }
+              />
+              <RNSVGPath
+                d="M94.1202 70.34C97.826 70.34 100.83 67.3358 100.83 63.63C100.83 59.9242 97.826 56.92 94.1202 56.92C90.4143 56.92 87.4102 59.9242 87.4102 63.63C87.4102 67.3358 90.4143 70.34 94.1202 70.34Z"
+                fill={
+                  {
+                    "payload": 4278240714,
+                    "type": 0,
+                  }
+                }
+                propList={
+                  [
+                    "fill",
+                  ]
+                }
+              />
+            </RNSVGGroup>
+          </RNSVGSvgView>
+        </View>
+        <View
+          style={
+            {
+              "display": "flex",
+              "flexDirection": "column",
+              "gap": 8,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "center",
+              }
+            }
+          >
+            <View
+              accessible={true}
+              style={
+                [
+                  {
+                    "alignItems": "center",
+                    "borderCurve": "continuous",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  {
+                    "borderRadius": 36,
+                    "paddingHorizontal": 12,
+                    "paddingVertical": 6,
+                  },
+                  {
+                    "backgroundColor": "#DBF9FA",
+                  },
+                ]
+              }
+            >
+              <Text
+                allowFontScaling={true}
+                ellipsizeMode="tail"
+                maxFontSizeMultiplier={1.5}
+                numberOfLines={1}
+                style={
+                  [
+                    {},
+                    {
+                      "color": "#003B3D",
+                      "fontFamily": "Titillio",
+                      "fontSize": 12,
+                      "fontStyle": "normal",
+                      "fontWeight": "600",
+                      "lineHeight": 16,
+                    },
+                    {
+                      "alignSelf": "center",
+                      "flexShrink": 1,
+                      "letterSpacing": 0.5,
+                      "textTransform": "uppercase",
+                    },
+                  ]
+                }
+              >
+                badge
+              </Text>
+            </View>
+          </View>
+          <Text
+            accessibilityRole="header"
+            allowFontScaling={true}
+            dynamicTypeRamp="title2"
+            maxFontSizeMultiplier={1.5}
+            style={
+              [
+                {},
+                {
+                  "color": "#0E0F13",
+                  "fontFamily": "Titillio",
+                  "fontSize": 22,
+                  "fontStyle": "normal",
+                  "fontWeight": "600",
+                  "lineHeight": 33,
+                },
+                {
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            title
+          </Text>
+          <Text
+            allowFontScaling={true}
+            dynamicTypeRamp="body"
+            maxFontSizeMultiplier={1.5}
+            style={
+              [
+                {},
+                {
+                  "color": "#555C70",
+                  "fontFamily": "Titillio",
+                  "fontSize": 16,
+                  "fontStyle": "normal",
+                  "fontWeight": "400",
+                  "lineHeight": 24,
+                },
+              ]
+            }
+          >
+            content
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "display": "flex",
+              "flexDirection": "column",
+              "gap": 16,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "center",
+              }
+            }
+          >
+            <View
+              accessibilityLabel="click me"
+              accessibilityRole="button"
+              accessibilityState={
+                {
+                  "busy": false,
+                  "checked": undefined,
+                  "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "alignSelf": "auto",
+                  "flexShrink": 1,
+                }
+              }
+              testID="primaryActionID"
+            >
+              <View
+                style={
+                  [
+                    {
+                      "alignItems": "center",
+                      "borderCurve": "continuous",
+                      "elevation": 0,
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                      "overflow": "hidden",
+                      "textAlignVertical": "center",
+                    },
+                    false,
+                    {
+                      "backgroundColor": undefined,
+                    },
+                    {
+                      "paddingHorizontal": 24,
+                    },
+                    {
+                      "backgroundColor": "#0B3EE3",
+                      "borderColor": "#FFFFFF",
+                      "borderRadius": 8,
+                      "borderWidth": 0,
+                      "height": 48,
+                    },
+                    {},
+                  ]
+                }
+              >
+                <View
+                  style={
+                    [
+                      {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "justifyContent": "center",
+                      },
+                      {
+                        "columnGap": 8,
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  <Text
+                    accessibilityElementsHidden={true}
+                    accessible={false}
+                    allowFontScaling={true}
+                    ellipsizeMode="tail"
+                    importantForAccessibility="no-hide-descendants"
+                    maxFontSizeMultiplier={1.5}
+                    numberOfLines={1}
+                    style={
+                      [
+                        {},
+                        {
+                          "color": "#0E0F13",
+                          "fontFamily": "Titillio",
+                          "fontSize": 16,
+                          "fontStyle": "normal",
+                          "fontWeight": "600",
+                          "lineHeight": undefined,
+                        },
+                        [
+                          {
+                            "textAlign": "auto",
+                          },
+                          {
+                            "color": "#FFFFFF",
+                          },
+                          {
+                            "color": undefined,
+                          },
+                        ],
+                      ]
+                    }
+                  >
+                    click me
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              {
+                "alignSelf": "center",
+              }
+            }
+          >
+            <View
+              accessibilityLabel="click me"
+              accessibilityRole="button"
+              accessibilityState={
+                {
+                  "busy": false,
+                  "checked": undefined,
+                  "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                {
+                  "bottom": 14,
+                  "left": 24,
+                  "right": 24,
+                  "top": 14,
+                }
+              }
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "alignSelf": "flex-start",
+                }
+              }
+              testID="secondaryActionID"
+            >
+              <View
+                style={
+                  [
+                    {
+                      "alignItems": "center",
+                      "borderCurve": "continuous",
+                      "elevation": 0,
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                      "overflow": "hidden",
+                      "textAlignVertical": "center",
+                    },
+                    false,
+                    {},
+                    {
+                      "paddingHorizontal": 0,
+                    },
+                    {
+                      "backgroundColor": "transparent",
+                      "borderColor": "#0B3EE3",
+                      "borderRadius": 8,
+                      "borderWidth": 0,
+                      "height": undefined,
+                    },
+                    {},
+                  ]
+                }
+              >
+                <View
+                  style={
+                    [
+                      {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "justifyContent": "center",
+                      },
+                      {
+                        "columnGap": 8,
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  <Text
+                    accessibilityElementsHidden={true}
+                    accessible={false}
+                    allowFontScaling={true}
+                    ellipsizeMode="tail"
+                    importantForAccessibility="no-hide-descendants"
+                    maxFontSizeMultiplier={1.5}
+                    numberOfLines={1}
+                    style={
+                      [
+                        {},
+                        {
+                          "color": "#0E0F13",
+                          "fontFamily": "Titillio",
+                          "fontSize": 16,
+                          "fontStyle": "normal",
+                          "fontWeight": "600",
+                          "lineHeight": 20,
+                        },
+                        [
+                          {
+                            "textAlign": "auto",
+                          },
+                          {
+                            "color": "#0B3EE3",
+                          },
+                          {
+                            "color": undefined,
+                          },
+                        ],
+                      ]
+                    }
+                  >
+                    click me
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</RNCSafeAreaView>
+`;
