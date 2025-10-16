@@ -148,7 +148,7 @@ describe(" currentAARFlowData and currentAARFlowStateType", () => {
     expect(resultType).toEqual(INITIAL_AAR_FLOW_STATE.type);
   });
 });
-describe("currentAARFlowStateErrorCode", () => {
+describe("currentAARFlowStateAssistanceErrorCode", () => {
   const testCases: Array<{
     description: string;
     traceId?: string;
