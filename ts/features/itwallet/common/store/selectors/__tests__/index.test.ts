@@ -3,7 +3,6 @@ import {
   itwOfflineAccessAvailableSelector,
   itwShouldRenderFeedbackBannerSelector,
   itwShouldRenderL3UpgradeBannerSelector,
-  itwShouldRenderOfflineBannerSelector,
   itwShouldRenderWalletUpgradeMDLDetailsBannerSelector
 } from "..";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -120,44 +119,6 @@ describe("itwOfflineAccessAvailableSelector", () => {
       expect(
         itwOfflineAccessAvailableSelector({} as unknown as GlobalState)
       ).toEqual(isAvailable);
-    }
-  );
-});
-
-describe("itwShouldRenderOfflineBannerSelector", () => {
-  beforeEach(() => {
-    jest.resetAllMocks();
-    jest.clearAllMocks();
-  });
-
-  it.each`
-    isWalletValid | isBannerHidden | offlineAccessReason                       | shouldRenderBanner
-    ${true}       | ${false}       | ${undefined}                              | ${true}
-    ${true}       | ${false}       | ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${false}
-    ${true}       | ${true}        | ${undefined}                              | ${false}
-    ${false}      | ${false}       | ${undefined}                              | ${false}
-  `(
-    "should render banner: $shouldRenderBanner when wallet valid: $isWalletValid, banner hidden: $isBannerHidden and offlineAccessReason: $offlineAccessReason",
-    ({
-      isWalletValid,
-      isBannerHidden,
-      offlineAccessReason,
-      shouldRenderBanner
-    }) => {
-      jest
-        .spyOn(ingressSelectors, "offlineAccessReasonSelector")
-        .mockReturnValue(offlineAccessReason);
-      jest
-        .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
-        .mockImplementation(() => isWalletValid);
-
-      jest
-        .spyOn(preferencesSelectors, "itwIsOfflineBannerHiddenSelector")
-        .mockImplementation(() => isBannerHidden);
-
-      expect(
-        itwShouldRenderOfflineBannerSelector({} as unknown as GlobalState)
-      ).toBe(shouldRenderBanner);
     }
   );
 });

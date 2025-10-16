@@ -14,7 +14,7 @@ type IssuerConf = Awaited<
 
 const fetchIssuerConfShared = createIssuerConfSharedFetch();
 
-export const getCredentialStatusAttestation = async (
+export const getCredentialStatusAssertion = async (
   credential: StoredCredential,
   env: Env
 ) => {
@@ -44,31 +44,31 @@ export const getCredentialStatusAttestation = async (
     );
 
   return {
-    statusAttestation: rawStatusAssertion.statusAssertion,
-    parsedStatusAttestation: parsedStatusAssertion
+    statusAssertion: rawStatusAssertion.statusAssertion,
+    parsedStatusAssertion
   };
 };
 
-export const shouldRequestStatusAttestation = ({
-  storedStatusAttestation
+export const shouldRequestStatusAssertion = ({
+  storedStatusAssertion
 }: StoredCredential) => {
-  // When no status attestation is present, request a new one
-  if (!storedStatusAttestation) {
+  // When no status assertion is present, request a new one
+  if (!storedStatusAssertion) {
     return true;
   }
 
-  switch (storedStatusAttestation.credentialStatus) {
-    // We could not determine the status, try to request another attestation
+  switch (storedStatusAssertion.credentialStatus) {
+    // We could not determine the status, try to request another assertion
     case "unknown":
       return true;
-    // The credential is invalid, no need to request another attestation
+    // The credential is invalid, no need to request another assertion
     case "invalid":
       return false;
-    // When the status attestation is expired request a new one
+    // When the status assertion is expired request a new one
     case "valid":
       return isAfter(
         new Date(),
-        new Date(storedStatusAttestation.parsedStatusAttestation.exp * 1000)
+        new Date(storedStatusAssertion.parsedStatusAssertion.exp * 1000)
       );
     default:
       throw new Error("Unexpected credential status");
@@ -76,9 +76,9 @@ export const shouldRequestStatusAttestation = ({
 };
 
 /**
- * Shape of a credential status attestation response error.
+ * Shape of a credential status assertion response error.
  */
-export const StatusAttestationError = t.intersection([
+export const StatusAssertionError = t.intersection([
   t.type({ error: t.string }),
   t.partial({ error_description: t.string })
 ]);
