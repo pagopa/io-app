@@ -457,7 +457,7 @@ const EmailInsertScreen = () => {
               screen: ROUTES.ONBOARDING_EMAIL_VERIFICATION_SCREEN,
               params: {
                 isOnboarding,
-                sendEmailAtFirstRender: isOnboarding
+                sendEmailAtFirstRender
               }
             });
           } else {
