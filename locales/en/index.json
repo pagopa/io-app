@@ -5821,7 +5821,10 @@
         "pleaseWait": "Un attimo di pazienza...",
         "requestSent": {
           "title": "La tua richiesta è stata inviata!",
-          "body": "Riceverai un messaggio con l’esito dell’operazione."
+          "subtitleStart": "Riceverai un ",
+          "subtitleBoldStart": "messaggio su IO ",
+          "subtitleCenter": "quando l’esito della tua richiesta sarà disponibile.\n\nPuoi verificare lo stato della tua richiesta dalla sezione ",
+          "subtitleEnd": "Servizi"
         },
         "button": {
           "continue": "Ok, chiudi"
