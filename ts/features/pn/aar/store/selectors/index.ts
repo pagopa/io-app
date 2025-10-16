@@ -65,20 +65,22 @@ export const currentAARFlowStateAssistanceErrorCode = (
 ): string | undefined => {
   const aarFlow = state.features.pn.aarFlow;
 
-  if (aarFlow.type === sendAARFlowStates.ko) {
-    const error = aarFlow.error;
+  if (aarFlow.type !== sendAARFlowStates.ko) {
+    return undefined;
+  }
 
-    if (error?.traceId && error.traceId.trim().length > 0) {
-      return error.traceId;
-    }
+  const error = aarFlow.error;
 
-    const errorCodes = error?.errors
-      ?.filter(({ code }) => code.trim().length > 0)
-      ?.map(e => e.code);
+  if (error?.traceId && error.traceId.trim().length > 0) {
+    return error.traceId;
+  }
 
-    if (errorCodes && errorCodes.length > 0) {
-      return errorCodes.join(", ");
-    }
+  const assistanceErrorCode = error?.errors
+    ?.filter(({ code }) => code.trim().length > 0)
+    ?.map(e => e.code);
+
+  if (assistanceErrorCode && assistanceErrorCode.length > 0) {
+    return assistanceErrorCode.join(", ");
   }
 
   return undefined;
