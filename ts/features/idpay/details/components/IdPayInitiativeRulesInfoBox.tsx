@@ -8,10 +8,11 @@ import {
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
-import { StyleSheet, View } from "react-native";
 import I18n from "i18next";
+import { StyleSheet, View } from "react-native";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { markdownToPlainText } from "../../../../utils/markdown";
 
 type Props = {
   content: string;
@@ -38,7 +39,7 @@ const IdPayInitiativeRulesInfoBox = (props: Props) => {
         <H6>{I18n.t("idpay.initiative.beneficiaryDetails.infobox.title")}</H6>
         <VSpacer size={4} />
         <Body numberOfLines={3} ellipsizeMode="tail">
-          {content}
+          {markdownToPlainText(content)}
         </Body>
         <VSpacer size={16} />
         <View style={{ flexDirection: "row" }}>
