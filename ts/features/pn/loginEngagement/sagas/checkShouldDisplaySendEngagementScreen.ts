@@ -14,11 +14,11 @@ import NavigationService from "../../../../navigation/NavigationService";
 import PN_ROUTES from "../../navigation/routes";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import {
-  isPnRemoteEnabledSelector,
-  pnMessagingServiceIdSelector
+  isPnRemoteEnabledSelector as isSendRemoteEnabledSelector,
+  pnMessagingServiceIdSelector as sendServiceIdSelector
 } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { hasSendEngagementScreenBeenDismissedSelector } from "../store/reducers";
-import { isPnServiceEnabled } from "../../reminderBanner/reducer/bannerDismiss";
+import { isPnServiceEnabled as isSendServiceEnabledSelector } from "../../reminderBanner/reducer/bannerDismiss";
 import { loadServicePreference } from "../../../services/details/store/actions/preference";
 import { setSecurityAdviceReadyToShow } from "../../../authentication/fastLogin/store/actions/securityAdviceActions";
 
@@ -33,24 +33,24 @@ export function* checkShouldDisplaySendEngagementScreen(
   const hasSendEngagementScreenBeenDismissed = yield* select(
     hasSendEngagementScreenBeenDismissedSelector
   );
-  const isPnRemoteEnabled = yield* select(isPnRemoteEnabledSelector);
-  const isPnInboxEnabled = yield* select(isPnServiceEnabled);
+  const isSendEnabled = yield* select(isSendRemoteEnabledSelector);
+  const isSendServiceEnabled = yield* select(isSendServiceEnabledSelector);
 
-  if (typeof isPnInboxEnabled === "undefined") {
+  if (typeof isSendServiceEnabled === "undefined") {
     const guid = uuidv4();
 
     const task: FixedTask<void> = yield* fork(function* () {
       yield* takeEvery(loadServicePreference.success, function* ({ payload }) {
-        const pnMessagingServiceId = yield* select(
-          pnMessagingServiceIdSelector
-        );
+        const sendServiceId = yield* select(sendServiceIdSelector);
 
-        if (pnMessagingServiceId === payload.id) {
-          const updatedIsSendServiceEnabled = yield* select(isPnServiceEnabled);
+        if (sendServiceId === payload.id) {
+          const updatedIsSendServiceEnabled = yield* select(
+            isSendServiceEnabledSelector
+          );
           yield* call(
             handleNavigateToSendEngagementScreen,
             !hasSendEngagementScreenBeenDismissed,
-            isPnRemoteEnabled,
+            isSendEnabled,
             !updatedIsSendServiceEnabled
           );
           yield* put({ type: guid });
@@ -63,8 +63,8 @@ export function* checkShouldDisplaySendEngagementScreen(
     yield* call(
       handleNavigateToSendEngagementScreen,
       !hasSendEngagementScreenBeenDismissed,
-      isPnRemoteEnabled,
-      !isPnInboxEnabled
+      isSendEnabled,
+      !isSendServiceEnabled
     );
   }
 }
