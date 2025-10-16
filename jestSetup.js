@@ -27,7 +27,7 @@ const mockRNQRGenerator = {
 import "react-native-get-random-values";
 require("@shopify/flash-list/jestSetup");
 jest.mock("rn-qr-generator", () => mockRNQRGenerator);
-jest.mock("react-native-screenshot-prevent", () => ({}));
+jest.mock("react-native-capture-protection", () => ({}));
 jest.mock("react-native-haptic-feedback", () => ({
   ...jest.requireActual("react-native-haptic-feedback"),
   trigger: jest.fn()
