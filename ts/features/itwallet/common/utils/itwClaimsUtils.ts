@@ -405,20 +405,29 @@ const DrivingPrivilegesFromFlatRaw = new t.Type<
  * This is needed to support the new format of the mDL driving privileges, which is an array of objects with
  * vehicle_category_code, issue_date and expiry_date fields.
  */
-const DrivingPrivilegesItemRaw = t.type({
-  vehicle_category_code: t.type({
-    name: LocaleName,
-    value: t.string
+const DrivingPrivilegesItemRaw = t.intersection([
+  t.type({
+    vehicle_category_code: t.type({
+      name: LocaleName,
+      value: t.string
+    }),
+    issue_date: t.type({
+      name: LocaleName,
+      value: SimpleDateClaim
+    }),
+    expiry_date: t.type({
+      name: LocaleName,
+      value: SimpleDateClaim
+    })
   }),
-  issue_date: t.type({
-    name: LocaleName,
-    value: SimpleDateClaim
-  }),
-  expiry_date: t.type({
-    name: LocaleName,
-    value: SimpleDateClaim
+  // Optional properties
+  t.partial({
+    codes: t.type({
+      name: LocaleName,
+      value: t.array(t.type({ code: ParsedAttribute }))
+    })
   })
-});
+]);
 
 /**
  * Array of driving privileges in the raw format
@@ -443,7 +452,8 @@ export const DrivingPrivilegesFromRaw = new t.Type<
           driving_privilege: item.vehicle_category_code.value,
           issue_date: item.issue_date.value,
           expiry_date: item.expiry_date.value,
-          restrictions_conditions: null
+          restrictions_conditions:
+            item.codes?.value.map(({ code }) => code.value).join(", ") ?? null
         }))
       );
     } catch (e) {
@@ -463,7 +473,13 @@ export const DrivingPrivilegesFromRaw = new t.Type<
       expiry_date: {
         name: "",
         value: item.expiry_date
-      }
+      },
+      ...(item.restrictions_conditions && {
+        codes: {
+          name: "",
+          value: [{ code: { name: "", value: item.restrictions_conditions } }]
+        }
+      })
     }))
 );
 
