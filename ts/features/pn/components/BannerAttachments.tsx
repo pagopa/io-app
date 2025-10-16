@@ -36,7 +36,7 @@ export const BannerAttachments = () => {
     <>
       <Banner
         color="neutral"
-        pictogramName="doc"
+        pictogramName="attachment"
         content={I18n.t(
           "features.pn.details.attachmentsSection.banner.content"
         )}

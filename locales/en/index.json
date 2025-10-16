@@ -4068,6 +4068,36 @@
             "firstCta": "Vai su SEND"
           }
         }
+      },
+      "loginEngagement": {
+        "send": {
+          "topElement": {
+            "label": "Novità"
+          },
+          "title": "Ricevi su IO le comunicazioni a valore legale e risparmia",
+          "description": "Attiva SEND su IO per ricevere in app le comunicazioni a valore legale, come esiti di pratiche, rimborsi o multe, ed **evitare le raccomandate e i relativi costi.**",
+          "action": "Attiva SEND su IO",
+          "secondaryAction": "Non attivare SEND su IO",
+          "activationBottomSheet": {
+            "title": "Riceverai su IO le prossime\ncomunicazioni a valore legale",
+            "content": "Premendo **Continua** dichiari di aver letto l'[Informativa Privacy]({{privacyUrl}}) e di accettare i [Termini e Condizioni d'uso]({{tosUrl}}).",
+            "action": "Continua"
+          },
+          "areYouSureBottomSheet": {
+            "title": "Se non attivi SEND su IO,\nrischi di pagare di più",
+            "content": {
+              "features": {
+                "savingMoney": "Se leggi le comunicazioni a valore legale online in tempo, **eviti le raccomandate e risparmi.**",
+                "notification": "Con il servizio SEND su IO, **ti avvisiamo subito** quando c’è una comunicazione importante per te."
+              },
+              "privacyAndTos": "Premendo **Attiva SEND su IO** dichiari di aver letto l'[Informativa Privacy]({{privacyUrl}}) e di accettare i [Termini e Condizioni d'uso]({{tosUrl}})."
+            },
+            "action": "Attiva SEND su IO",
+            "secondaryAction": "Non attivare SEND su IO"
+          },
+          "toast": "Hai attivato SEND su IO",
+          "activationErrorMessage": "Non riusciamo ad attivare il servizio SEND"
+        }
       }
     },
     "fci": {
@@ -5729,6 +5759,7 @@
         "spentUntilNow": "Speso finora",
         "summary": "Riepilogo",
         "status": "Stato iniziativa",
+        "voucherStatus": "Stato del bonus",
         "endDate": "Scadenza",
         "amount": "Saldo disponibile",
         "toBeRefunded": "In attesa di rimborso",
@@ -5739,7 +5770,7 @@
         "spendPercentage": "Percentuale riconosciuta",
         "spendValue": "Importo riconosciuto",
         "enrollmentDetails": "Dettagli dell'adesione",
-        "enrollmentDate": "Data",
+        "enrollmentDate": "Bonus emesso il",
         "protocolNumber": "Numero di protocollo",
         "lastUpdate": "Saldo aggiornato al {{dateString}}",
         "buttons": {
