@@ -1,4 +1,3 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -18,6 +17,7 @@ import {
 import { ActionType, getType } from "typesafe-actions";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
+import { backendClientManager } from "../api/BackendClientManager";
 import { BackendClient } from "../api/backend";
 import { apiUrlPrefix, zendeskEnabled } from "../config";
 import { watchActiveSessionLoginSaga } from "../features/authentication/activeSessionLogin/saga";
@@ -48,7 +48,10 @@ import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { watchFciSaga } from "../features/fci/saga";
 import { watchFimsSaga } from "../features/fims/common/saga";
 import { startAndReturnIdentificationResult } from "../features/identification/sagas";
-import { IdentificationResult } from "../features/identification/store/reducers";
+import {
+  IdentificationBackActionType,
+  IdentificationResult
+} from "../features/identification/store/reducers";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
 import {
   shouldExitForOfflineAccess,
@@ -71,7 +74,6 @@ import { checkAcknowledgedEmailSaga } from "../features/mailCheck/sagas/checkAck
 import { watchEmailNotificationPreferencesSaga } from "../features/mailCheck/sagas/checkEmailNotificationPreferencesSaga";
 import { checkEmailSaga } from "../features/mailCheck/sagas/checkEmailSaga";
 import { watchEmailValidationSaga } from "../features/mailCheck/sagas/emailValidationPollingSaga";
-import { watchProfileEmailValidationChangedSaga } from "../features/mailCheck/sagas/watchProfileEmailValidationChangedSaga";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { watchMessagesSaga } from "../features/messages/saga";
 import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
@@ -80,7 +82,6 @@ import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnbo
 import { watchAbortOnboardingSaga } from "../features/onboarding/saga/watchAbortOnboardingSaga";
 import { watchPaymentsSaga } from "../features/payments/common/saga";
 import { watchAarFlowSaga } from "../features/pn/aar/saga/watchAARFlowSaga";
-import { isAAREnabled } from "../features/pn/aar/store/reducers";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { maybeHandlePendingBackgroundActions } from "../features/pushNotifications/sagas/common";
 import { notificationPermissionsListener } from "../features/pushNotifications/sagas/notificationPermissionsListener";
@@ -97,7 +98,6 @@ import {
 } from "../features/settings/common/sagas/profile";
 import { watchUserDataProcessingSaga } from "../features/settings/common/sagas/userDataProcessing";
 import { loadUserDataProcessing } from "../features/settings/common/store/actions/userDataProcessing";
-import { profileSelector } from "../features/settings/common/store/selectors";
 import { isProfileFirstOnBoarding } from "../features/settings/common/store/utils/guards";
 import { handleApplicationStartupTransientError } from "../features/startup/sagas";
 import { watchTrialSystemSaga } from "../features/trialSystem/store/sagas/watchTrialSystemSaga";
@@ -109,6 +109,10 @@ import {
 import { formatRequestedTokenString } from "../features/zendesk/utils";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
+import {
+  waitForMainNavigator,
+  waitForNavigatorServiceInitialization
+} from "../navigation/saga/navigation";
 import {
   applicationInitialized,
   startApplicationInitialization
@@ -122,6 +126,7 @@ import {
   startupTransientError
 } from "../store/actions/startup";
 import {
+  isAarRemoteEnabled,
   isIdPayEnabledSelector,
   isPnRemoteEnabledSelector,
   remoteConfigSelector
@@ -134,11 +139,6 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { getPin } from "../utils/keychain";
-import { backendClientManager } from "../api/BackendClientManager";
-import {
-  waitForMainNavigator,
-  waitForNavigatorServiceInitialization
-} from "../navigation/saga/navigation";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
@@ -207,22 +207,6 @@ export function* initializeApplicationSaga(
   yield* takeEvery(differentProfileLoggedIn, handleClearAllAttachments); // Consider using takeLatest here instead
   // Retrieve and listen for notification permissions status changes
   yield* fork(notificationPermissionsListener);
-
-  /**
-   * Get last logged in Profile from the state
-   */
-  const lastLoggedInProfileState: ReturnType<typeof profileSelector> =
-    yield* select(profileSelector);
-
-  const lastEmailValidated = pot.isSome(lastLoggedInProfileState)
-    ? O.fromNullable(lastLoggedInProfileState.value.is_email_validated)
-    : O.none;
-
-  /**
-   * Watch for profile changes
-   * TODO: https://pagopa.atlassian.net/browse/IOPID-3040
-   */
-  yield* fork(watchProfileEmailValidationChangedSaga, lastEmailValidated);
 
   // We need to generate a key in the application startup flow
   // to use this information on old app version already logged in users.
@@ -376,7 +360,7 @@ export function* initializeApplicationSaga(
   yield* fork(watchServicesSaga, backendClient, sessionToken);
 
   // Start watching for Messages actions
-  yield* fork(watchMessagesSaga, backendClient, sessionToken);
+  yield* fork(watchMessagesSaga, backendClient, sessionToken, keyInfo);
 
   // start watching for FIMS actions
   yield* fork(watchFimsSaga, sessionToken);
@@ -508,7 +492,17 @@ export function* initializeApplicationSaga(
     // FIXME: This is an unsafe cast caused by a wrongly described type.
     const identificationResult: SagaCallReturnType<
       typeof startAndReturnIdentificationResult
-    > = yield* call(startAndReturnIdentificationResult, maybeStoredPin.value);
+    > = yield* call(
+      startAndReturnIdentificationResult,
+      maybeStoredPin.value,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      IdentificationBackActionType.CLOSE_APP
+    );
 
     if (identificationResult === IdentificationResult.pinreset) {
       // If we are here the user had chosen to reset the unlock code
@@ -620,13 +614,13 @@ export function* initializeApplicationSaga(
     isPnRemoteEnabledSelector
   );
 
-  const aAREnabled = yield* select(isAAREnabled);
-
   if (pnEnabled) {
     // Start watching for PN actions
     yield* fork(watchPnSaga, sessionToken);
 
-    if (aAREnabled) {
+    const aarRemoteEnabled = yield* select(isAarRemoteEnabled);
+
+    if (aarRemoteEnabled) {
       yield* fork(watchAarFlowSaga, sessionToken, keyInfo);
     }
   }

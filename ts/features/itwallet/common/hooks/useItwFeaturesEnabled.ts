@@ -17,7 +17,7 @@ export const useItwFeaturesEnabled = (credential: StoredCredential) => {
   const isItWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   return useMemo(
-    () => isItWalletValid && isItwCredential(credential.credential),
-    [isItWalletValid, credential.credential]
+    () => isItWalletValid && isItwCredential(credential),
+    [isItWalletValid, credential]
   );
 };

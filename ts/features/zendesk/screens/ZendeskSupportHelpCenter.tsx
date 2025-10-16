@@ -1,15 +1,12 @@
 import {
   AccordionItem,
   Banner,
-  Body,
   ContentWrapper,
-  FeatureInfo,
   FooterActions,
   H4,
-  H6,
   HeaderSecondLevel,
-  IOButton,
   IOToast,
+  ListItemInfo,
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -40,7 +37,6 @@ import {
   IOScrollView,
   IOScrollViewActions
 } from "../../../components/ui/IOScrollView";
-import { zendeskPrivacyUrl } from "../../../config";
 import { mixpanelTrack } from "../../../mixpanel";
 import {
   AppParamsList,
@@ -54,6 +50,7 @@ import {
 } from "../../../store/reducers/backendStatus/remoteConfig";
 import { getContextualHelpDataFromRouteSelector } from "../../../store/reducers/content";
 import { FAQType, getFAQsFromCategories } from "../../../utils/faq";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../../utils/hooks/usePrevious";
 import {
   fallbackForLocalizedMessageKeys,
@@ -71,6 +68,10 @@ import {
   isProfileEmailValidatedSelector,
   profileSelector
 } from "../../settings/common/store/selectors";
+import {
+  trackZendeskCaCBannerShow,
+  trackZendeskCaCBannerTap
+} from "../analytics";
 import { ZendeskParamsList } from "../navigation/params";
 import ZENDESK_ROUTES from "../navigation/routes";
 import {
@@ -86,11 +87,6 @@ import {
   ZendeskTokenStatusEnum
 } from "../store/reducers";
 import { handleContactSupport } from "../utils";
-import {
-  trackZendeskCaCBannerShow,
-  trackZendeskCaCBannerTap
-} from "../analytics";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 
 type FaqManagerProps = Pick<
   ZendeskStartPayload,
@@ -199,11 +195,9 @@ const FaqManager = (props: FaqManagerProps) => {
   return (
     <>
       {!isStringNullyOrEmpty(contextualHelpData.title) && (
-        <>
-          <H4 color={theme["textHeading-default"]} accessible={true}>
-            {contextualHelpData.title}
-          </H4>
-        </>
+        <H4 color={theme["textHeading-default"]} accessible={true}>
+          {contextualHelpData.title}
+        </H4>
       )}
       {contextualHelpData.content && (
         <>
@@ -332,12 +326,14 @@ const ZendeskSupportHelpCenter = () => {
       primary: {
         testID: "contactSupportButton",
         label: I18n.t("support.helpCenter.cta.contactSupport"),
+        icon: "chat",
         onPress: () => handleButtonPress(ButtonPressedEnum.OPEN_NEW_REQUEST),
         loading:
           getZendeskTokenStatus === "request" &&
           pressedButton === ButtonPressedEnum.OPEN_NEW_REQUEST
       },
       secondary: {
+        icon: "inbox",
         testID: "showTicketsButton",
         label: I18n.t("support.helpCenter.cta.seeReports"),
         onPress: () => handleButtonPress(ButtonPressedEnum.ON_GOING_REQUEST)
@@ -429,26 +425,40 @@ const ZendeskSupportHelpCenter = () => {
         {showRequestSupportContacts && (
           <>
             <VSpacer size={24} />
-            <H6>{I18n.t("support.helpCenter.supportComponent.title")}</H6>
+            <H4>{I18n.t("support.helpCenter.supportComponent.title")}</H4>
             <VSpacer size={8} />
-            <Body>
-              {I18n.t("support.helpCenter.supportComponent.subtitle")}
-            </Body>
-            <VSpacer size={16} />
-            <IOButton
-              variant="link"
-              accessibilityRole="link"
-              label={I18n.t("support.askPermissions.privacyLink")}
-              onPress={() => {
-                openWebUrl(zendeskPrivacyUrl, () =>
-                  IOToast.error(I18n.t("global.jserror.title"))
-                );
-              }}
+            <ListItemInfo
+              numberOfLines={5}
+              value={
+                <IOMarkdown
+                  content={I18n.t(
+                    "support.helpCenter.supportComponent.messageProblem"
+                  )}
+                />
+              }
+              icon="email"
             />
-            <VSpacer size={24} />
-            <FeatureInfo
-              iconName="notice"
-              body={I18n.t("support.helpCenter.supportComponent.adviceMessage")}
+            <ListItemInfo
+              numberOfLines={3}
+              value={
+                <IOMarkdown
+                  content={I18n.t(
+                    "support.helpCenter.supportComponent.appProblem"
+                  )}
+                />
+              }
+              icon="chat"
+            />
+            <ListItemInfo
+              numberOfLines={2}
+              value={
+                <IOMarkdown
+                  content={I18n.t(
+                    "support.helpCenter.supportComponent.checkRequests"
+                  )}
+                />
+              }
+              icon="inbox"
             />
           </>
         )}

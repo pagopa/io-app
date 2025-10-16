@@ -18,8 +18,10 @@ import { isMixpanelInitializedSelector } from "../../mixpanel/store/selectors";
 import {
   trackIngressCdnSystemError,
   trackIngressNoInternetConnection,
+  trackIngressOfflineWalletBannerCTAClicked,
   trackIngressServicesSlowDown,
-  trackIngressTimeout
+  trackIngressTimeout,
+  trackSettingsDiscoverBannerVisualized
 } from "../analytics";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { startupLoadSuccess } from "../../../store/actions/startup";
@@ -28,6 +30,7 @@ import { isConnectedSelector } from "../../connectivity/store/selectors";
 import { identificationRequest } from "../../identification/store/actions";
 import { OfflineAccessReasonEnum } from "../store/reducer";
 import { itwOfflineAccessAvailableSelector } from "../../itwallet/common/store/selectors";
+import { IdentificationBackActionType } from "../../identification/store/reducers";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
 const TIMEOUT_BLOCKING_SCREEN = (10 * 1000) as Millisecond;
@@ -70,6 +73,9 @@ export const IngressScreen = () => {
       setTimeout(() => {
         setContentTitle(I18n.t("startup.title2"));
         setShowBanner(true);
+        if (isOfflineAccessAvailable) {
+          trackSettingsDiscoverBannerVisualized();
+        }
         timeouts.shift();
       }, TIMEOUT_CHANGE_LABEL)
     );
@@ -85,20 +91,28 @@ export const IngressScreen = () => {
     return () => {
       timeouts?.forEach(clearTimeout);
     };
-  }, [dispatch]);
+  }, [dispatch, isOfflineAccessAvailable]);
 
   const navigateOnOfflineMiniApp = useCallback(
     (offlineReason: OfflineAccessReasonEnum) => {
       dispatch(setOfflineAccessReason(offlineReason));
       dispatch(
-        identificationRequest(false, false, undefined, undefined, {
-          onSuccess: () => {
-            // This dispatch mounts the new offline navigator.
-            // It must be initialized **after** the user completes
-            // biometric authentication to prevent graphical glitches.
-            dispatch(startupLoadSuccess(StartupStatusEnum.OFFLINE));
-          }
-        })
+        identificationRequest(
+          false,
+          false,
+          undefined,
+          undefined,
+          {
+            onSuccess: () => {
+              // This dispatch mounts the new offline navigator.
+              // It must be initialized **after** the user completes
+              // biometric authentication to prevent graphical glitches.
+              dispatch(startupLoadSuccess(StartupStatusEnum.OFFLINE));
+            }
+          },
+          undefined,
+          IdentificationBackActionType.CLOSE_APP
+        )
       );
     },
     [dispatch]
@@ -145,8 +159,10 @@ export const IngressScreen = () => {
             title: I18n.t("startup.offline_access_banner.title"),
             content: I18n.t("startup.offline_access_banner.content"),
             action: I18n.t("startup.offline_access_banner.action"),
-            onPress: () =>
-              navigateOnOfflineMiniApp(OfflineAccessReasonEnum.TIMEOUT)
+            onPress: () => {
+              trackIngressOfflineWalletBannerCTAClicked();
+              navigateOnOfflineMiniApp(OfflineAccessReasonEnum.TIMEOUT);
+            }
           }
         }}
       />

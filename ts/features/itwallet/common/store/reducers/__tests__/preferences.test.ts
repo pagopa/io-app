@@ -104,7 +104,6 @@ describe("IT Wallet preferences reducer", () => {
       claimValuesHidden: true,
       isWalletInstanceRemotelyActive: true,
       isFiscalCodeWhitelisted: true,
-      offlineBannerHidden: true,
       walletUpgradeMDLDetailsBannerHidden: true
     };
 
@@ -152,7 +151,6 @@ describe("IT Wallet preferences reducer", () => {
         authLevel: "L2",
         claimValuesHidden: true,
         isWalletInstanceRemotelyActive: true,
-        offlineBannerHidden: true,
         walletUpgradeMDLDetailsBannerHidden: true
       },
       action

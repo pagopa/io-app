@@ -77,8 +77,7 @@ const ContentView = ({ eid }: ContentViewProps) => {
   const navigation = useIONavigation();
   const route = useRoute();
 
-  const isL3 = isL3FeaturesEnabled && isItwCredential(eid.credential);
-
+  const isL3 = isL3FeaturesEnabled && isItwCredential(eid);
   const mixPanelCredential = isL3 ? "ITW_PID" : "ITW_ID_V2";
 
   const theme = useIOTheme();

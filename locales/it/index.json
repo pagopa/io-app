@@ -3869,6 +3869,53 @@
           },
           "fetchingQrData": {
             "loadingText": "Recupero delle informazioni in corso"
+          },
+          "ko": {
+            "notAddresseeFinal": {
+              "title": "La comunicazione non è destinata a te",
+              "body": "Per accedere alle notifiche SEND per conto di un’altra persona, è necessario che chi ha ricevuto la comunicazione ti deleghi tramite il sito web di SEND.",
+              "primaryAction": "Come attivare una delega",
+              "secondaryAction": "Chiudi"
+            },
+            "GENERIC": {
+              "title": "Non riusciamo a recuperare i dati della notifica SEND",
+              "body": "Riprova più tardi.",
+              "primaryAction": "Chiudi",
+              "secondaryAction": "Mostra dettagli",
+              "detail": {
+                "subTitle": "Prendi nota del codice di errore, potrebbe servirti per richiedere assistenza.",
+                "supportTitle": "Contatta l'assistenza",
+                "chat": "Chiedi aiuto in chat",
+                "additionalDataTitle": "Dati aggiuntivi",
+                "errorCode": "Codice errore"
+              }
+            }
+          },
+          "displayingNotificationData": {
+            "headerText-through": " tramite",
+            "abstract": {
+              "title": {
+                "notDelegated": {
+                  "youHave": "Hai"
+                },
+                "delegated": {
+                  "theyHave": " ha"
+                },
+                "receivedFrom_withDenomination": " ricevuto una notifica SEND: è una comunicazione a valore legale inviata da ",
+                "receivedFrom_withoutDenomination": " ricevuto una notifica SEND: è una comunicazione a valore legale",
+                "checkDocuments": ". Consulta i documenti allegati per scoprire tutti i dettagli. \n\nSe è previsto un pagamento, puoi farlo ora da IO con il tuo metodo preferito."
+              }
+            }
+          },
+          "closeNotification": {
+            "title": "Vuoi chiudere la notifica SEND?",
+            "paragraph1": "Conserva il codice QR, ti servirà per rileggere la notifica in app",
+            "paragraph2": "Puoi inquadrarlo oppure caricare una sua foto su IO",
+            "paragraph3": "Tutte le tue notifiche sono disponibili sul sito di SEND - Notifiche Digitali",
+            "paragraphDelegate3": "Tutte le tue notifiche e quelle per cui hai una delega sono disponibili sul sito di SEND - Notifiche Digitali",
+            "link": "Vai sul sito di SEND",
+            "primaryAction": "Torna alla notifica",
+            "secondaryAction": "Chiudi la notifica"
           }
         }
       },
@@ -3959,7 +4006,16 @@
           "bottomSheetTitle": "Quale avviso vuoi pagare?"
         },
         "attachmentsSection": {
-          "title": "Allegati"
+          "title": "Allegati",
+          "banner": {
+            "action": "Scopri di più",
+            "content": "Gli atti sono disponibili online per 120 giorni. Salvali sul tuo dispositivo!"
+          },
+          "bottomSheet": {
+            "action": "Come calcolare i tempi?",
+            "content": "Gli atti sono disponibili su SEND per un periodo limitato: scarica i documenti allegati per conservarli sul tuo dispositivo.\n\nSe i documenti non sono più disponibili, contatta l'ente che li ha inviati.",
+            "title": "Disponibilità degli atti online"
+          }
         },
         "f24Section": {
           "title": "Modelli F24",
@@ -3978,7 +4034,7 @@
         "timeline": {
           "goToSend": "Accedi a SEND",
           "menuTitle": "Stato della notifica",
-          "newInfo": "Accedi alla versione web per vedere maggiori dettagli, le ricevute e le attestazioni opponibili a terzi.",
+          "newInfo": "Accedi a SEND dal tuo browser per avere tutti i dettagli, le ricevute e le attestazioni opponibili a terzi.",
           "title": "STATO DELLA NOTIFICA",
           "status": {
             "ACCEPTED": "Depositata",
@@ -3995,6 +4051,14 @@
           "expand": "mostra gli stati precedenti",
           "info": "Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio",
           "cta": "Accedi alla versione web"
+        },
+        "help": {
+          "needHelp": "Serve aiuto?",
+          "bottomSheet": {
+            "action": "Vai al centro assistenza",
+            "content": "Per qualsiasi dubbio sul contenuto della notifica SEND, contatta l'ente che te l'ha inviata. I contatti generalmente sono riportati negli allegati alla notifica.\n\nSe hai bisogno di supporto su SEND, consulta le risorse di assistenza",
+            "title": "Serve aiuto?"
+          }
         }
       },
       "qrCodeScan": {
@@ -4323,8 +4387,8 @@
         "dc": "Carta Europea della Disabilità",
         "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
         "ed": "Titoli accademici",
-        "ee": "Iscrizioni universitarie",
-        "res": "Residenza"
+        "ee": "Iscrizioni accademiche",
+        "res": "Attestato di residenza"
       },
       "wallet": {
         "active": "Attivo",
@@ -4413,8 +4477,8 @@
       "discovery": {
         "banner": {
           "home": {
-            "title": "Novità: Documenti su IO, anche offline",
-            "content": "Da oggi puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet.",
+            "title": "Documenti su IO",
+            "content": "Puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet.",
             "action": "Attiva Documenti su IO"
           },
           "homeActive": {
@@ -4431,9 +4495,18 @@
             "action": "Inizia"
           }
         },
-        "title": "La versione digitale dei tuoi documenti, su IO",
-        "content": "Aggiungi la versione digitale dei tuoi documenti personali al Portafoglio dell'app! \n\n Hanno lo **stesso valore legale** di quelli fisici, in specifici contesti d'uso. \n\n ###### È facile e veloce \n Continua per attivare la nuova funzionalità in meno di 3 minuti: oltre **6 Milioni** di persone stanno già usando i **Documenti su IO**!",
-        "tos": "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d’uso]({{tos_url}}).",
+        "title": "Inizia con Documenti su IO",
+        "content": "Se non puoi ancora ottenere IT-Wallet perché non hai la CIE, il suo PIN o il tuo dispositivo non lo supporta, attiva Documenti su IO:",
+        "featureHighlights": {
+          "1": "Ottieni una versione digitale dei documenti con funzionalità ridotte e disponibile per un tempo limitato",
+          "2": "Hai a disposizione la Patente di guida, la Tessera sanitaria - Tessera europea di assicurazione malattia e la Carta Europea della Disabilità",
+          "3": "Puoi usare la tua Patente su IO per dimostrare la tua idoneità alla guida"
+        },
+        "contentBottom": "###### Ricorda\n\nPotrai sempre ottenere IT-Wallet in futuro: hai bisogno di un dispositivo con tecnologia NFC e della tua Carta di Identità Elettronica (CIE).",
+        "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d'uso]({{tos_url}}).",
+        "actions": {
+          "continue": "Continua con SPID o CieID"
+        },
         "dismissalDialog": {
           "title": "Vuoi rinunciare ai documenti digitali su IO?",
           "body": "Potrai attivarli in qualsiasi altro momento, se cambi idea.",
@@ -4461,6 +4534,10 @@
               "cancel": "Chiudi"
             }
           }
+        },
+        "legacy": {
+          "title": "La versione digitale dei tuoi documenti, su IO",
+          "content": "Aggiungi la versione digitale dei tuoi documenti personali al Portafoglio dell'app! \n\n Hanno lo **stesso valore legale** di quelli fisici, in specifici contesti d'uso. \n\n ###### È facile e veloce \n Continua per attivare la nuova funzionalità in meno di 3 minuti: oltre **6 Milioni** di persone stanno già usando i **Documenti su IO**!"
         },
         "paywall": {
           "badge": "Novità",
@@ -4495,15 +4572,10 @@
           "primaryAction": "Ottieni IT-Wallet",
           "dismissalDialog": {
             "title": "Vuoi rinunciare ai vantaggi di IT-Wallet?",
-            "body": "Otterrai una versione digitale dei tuoi documenti con funzionalità ridotte.",
-            "confirm": "Si, rinuncia",
-            "cancel": "No, torna indietro"
+            "body": "Potrai ottenere IT-Wallet in qualsiasi altro momento, se cambi idea.",
+            "confirm": "Sì, rinuncia",
+            "cancel": "No, continua"
           }
-        },
-        "offlineBanner": {
-          "title": "Novità: i tuoi documenti anche offline",
-          "content": "Da oggi puoi usare i tuoi documenti su IO anche senza connessione a internet.",
-          "action": "Scopri di più"
         },
         "ipzsPrivacy": {
           "title": "I tuoi Documenti su IO sono al sicuro",
@@ -4571,22 +4643,45 @@
             }
           },
           "l3": {
-            "screen": {
-              "title": "Verifica la tua identità con CIE",
-              "description": "È un passaggio di sicurezza necessario per ottenere IT-Wallet e associare i documenti alla tua identità.",
-              "primaryAction": "Inizia",
-              "secondaryAction": "Non ho la CIE",
-              "requirements": {
-                "header": "Avrai bisogno di:",
-                "card": "La tua Carta di Identità Elettronica (CIE)",
-                "pin": "Il PIN della CIE a 8 cifre"
-              },
-              "otherMethods": {
-                "header": "In alternativa:",
-                "title": "Continua sull'app CieID",
-                "subtitle": "Utile se hai già installato l’app CieID e registrato la CIE"
+            "section": "Ottieni IT-Wallet",
+            "title": "Verifica la tua identità con CIE (Carta di Identità Elettronica)",
+            "description": "È un passaggio di sicurezza necessario per associare i documenti digitali alla tua identità.",
+            "reissuing": {
+              "section": "Rinnovo ID",
+              "title": "Scegli come identificarti",
+              "description": "È un passaggio necessario per continuare ad usare IT-Wallet.",
+              "method": {
+                "ciePin": {
+                  "title": "Continua con il PIN della tua CIE",
+                  "subtitle": "Dovrai inserire il PIN di 8 cifre e appoggiare la CIE al telefono.",
+                  "badge": "scelta consigliata"
+                },
+                "cieId": {
+                  "title": "Continua con l'app CieID",
+                  "subtitle": "Dovrai autenticarti con l’app CieID e appoggiare la CIE al telefono."
+                },
+                "spid": {
+                  "title": "Continua con SPID",
+                  "subtitle": "Dovrai inserire il PIN di 8 cifre e appoggiare la CIE al telefono."
+                }
               }
             },
+            "method": {
+              "ciePin": {
+                "title": "Continua con il PIN della tua CIE",
+                "subtitle": "Dovrai inserire il PIN di 8 cifre e appoggiare la CIE al telefono.",
+                "badge": "scelta consigliata"
+              },
+              "cieId": {
+                "title": "Continua con l'app CieID",
+                "subtitle": "Dovrai autenticarti con l’app CieID e appoggiare la CIE al telefono."
+              },
+              "spid": {
+                "title": "Continua con SPID",
+                "subtitle": "Dovrai inserire il PIN di 8 cifre e appoggiare la CIE al telefono."
+              }
+            },
+            "noCie": "Non hai la Carta di Identità Elettronica?",
             "bottomSheet": {
               "cieId": {
                 "title": "Continua sull’app CieID",
@@ -4612,20 +4707,25 @@
           "prepare": {
             "pin": {
               "title": "Prepara il PIN della tua Carta di Identità Elettronica (CIE)",
-              "content": "Dovrai digitarlo per completare la verifica dell’identità.",
-              "buttonLink": "Cos’è il PIN della CIE?",
-              "cta": "Inserisci il PIN della CIE"
+              "description": "Dovrai digitarlo per completare la verifica dell’identità.",
+              "buttonLink": "Dove trovo il PIN della CIE?",
+              "cta": "Inizia"
             },
-            "card": {
-              "title": "Prepara la tua Carta di Identità Elettronica (CIE)",
-              "content": "Dovrai poggiare il retro del telefono sulla CIE, su una superficie stabile, e tenerli fermi per la lettura.",
+            "nfc": {
+              "title": "Posiziona la tua CIE su una superficie stabile per la lettura",
+              "description": "Dovrai poggiare il retro del telefono sulla carta e tenerlo fermo per la lettura.",
               "cta": "Inizia lettura CIE",
               "buttonLink": "Cos’è la CIE?"
             },
             "can": {
               "title": "Prepara la tua Carta di Identità Elettronica (CIE)",
-              "content": "Dovrai usarla e inserire il suo codice a 6 cifre (CAN) che trovi stampato sul fronte in basso a destra.",
+              "description": "Dovrai usarla e inserire il suo codice a 6 cifre (CAN) che trovi stampato sul fronte in basso a destra.",
               "buttonLink": "Cos’è il PIN della CIE?",
+              "cta": "Continua"
+            },
+            "card": {
+              "title": "Prepara la tua Carta di Identità Elettronica (CIE)",
+              "description": "Dovrai usarla e inserire il suo codice a 6 cifre (CAN) che trovi stampato sul fronte in basso a destra.",
               "cta": "Continua"
             }
           },
@@ -4784,8 +4884,8 @@
               "subtitle": "È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti.\n\n Per sapere come tratta i tuoi dati consulta l’[Informativa Privacy]({{privacyUrl}}). "
             },
             "authSource": {
-              "title": "Chi è?",
-              "subtitle": "È l’ente che detiene i dati contenuti all’interno del tuo documento."
+              "title": "Chi è",
+              "subtitle": "È l’ente o la banca dati digitale che detiene i dati contenuti all'interno del tuo documento."
             }
           },
           "actions": {
@@ -4815,7 +4915,12 @@
             "title": "È tutto pronto!",
             "subtitle": "Ora puoi aggiungere il primo documento al Portafoglio di IO.",
             "primaryAction": "Aggiungi primo documento",
-            "secondaryAction": "Continua più tardi"
+            "secondaryAction": "Continua più tardi",
+            "reissuance": {
+              "title": "Hai verificato la tua identità",
+              "subtitle": "Ora puoi continuare a usare Documenti su IO.",
+              "primaryAction": "Ok, chiudi"
+            }
           }
         },
         "emptyWallet": {
@@ -5049,6 +5154,13 @@
               "content": "Ottieni IT-Wallet per usare la tua Patente anche come documento d'identità!",
               "action": "Ottieni IT-Wallet"
             }
+          },
+          "newCredentialValidityAlert": {
+            "content": {
+              "education_degree": "I tuoi titoli accademici digitali hanno piena validità ufficiale.",
+              "education_enrollment": "Le tue iscrizioni accademiche digitali hanno piena validità ufficiale.",
+              "residency": "Il tuo attestato di residenza digitale ha piena validità ufficiale."
+            }
           }
         },
         "ctas": {
@@ -5067,7 +5179,7 @@
             "primaryAction": "Inizia"
           }
         },
-        "statusAttestationUnknown": {
+        "statusAssertionUnknown": {
           "title": "Non siamo riusciti a caricare {{credentialName}}",
           "content": "Chiudi e riapri l'app per riprovare.",
           "primaryAction": "Ho capito"
@@ -5084,7 +5196,10 @@
             "0": "I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.",
             "1": "I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento."
           },
-          "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}})."
+          "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}}).",
+          "alert": {
+            "message": "Non potrai completare l'accesso ai servizi online."
+          }
         },
         "remote": {
           "loadingScreen": {
@@ -5362,6 +5477,19 @@
         "cta": "Disattiva IT-Wallet"
       },
       "feedback": {
+        "reissuance": {
+          "bottomSheet": {
+            "title": "Ti va di dirci perché?",
+            "content": "Hai deciso di non continuare: facci sapere il perché, così potremo migliorare la tua esperienza in app. Ci vorrà un minuto!",
+            "primaryAction": "Dicci la tua",
+            "secondaryAction": "Non ora"
+          },
+          "banner": {
+            "title": "Puoi dirci com’è andata?",
+            "content": "Raccontaci la tua esperienza con la verifica e aiutaci a migliorare.",
+            "action": "Inizia"
+          }
+        },
         "banner": {
           "title": "Dicci cosa ne pensi",
           "content": "Raccontaci la tua esperienza con la funzionalità Documenti su IO.",
@@ -5456,7 +5584,7 @@
       "upgrade": {
         "banner": {
           "title": "IT-Wallet per i tuoi documenti",
-          "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**.\nGarantito dallo Stato, accessibile solo a te.",
+          "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**. Garantito dallo Stato, accessibile solo a te.",
           "action": "Ottieni IT-Wallet"
         }
       },
@@ -5530,7 +5658,10 @@
         "seeReports": "Richieste in corso"
       },
       "supportComponent": {
-        "title": "Hai bisogno d’aiuto?",
+        "title": "Non hai trovato la risposta che cercavi?",
+        "messageProblem": "Se hai un problema con il contenuto di un messaggio o un servizio, **contatta direttamente l’ente responsabile**: trovi i riferimenti nel messaggio.",
+        "appProblem": "Se hai un **problema con l’app o una sua funzionalità**, premi “Apri una richiesta”.",
+        "checkRequests": "Se vuoi **controllare le richieste già inviate**, premi su “Richieste in corso”.",
         "subtitle": "Dai un’occhiata alle FAQ: se non trovi la risposta che cerchi, apri una richiesta. Se hai già aperto una richiesta e vuoi verificarne lo stato o aggiungere dettagli, seleziona “Richieste in corso”.",
         "adviceMessage": "Se il tuo problema riguarda il contenuto di un messaggio o il servizio di un ente, contatta quest’ultimo: trovi i riferimenti nel messaggio o nella scheda del servizio."
       }
@@ -5668,7 +5799,7 @@
       "initiativeOnboardedStatus": {
         "header": "Le mie richieste",
         "ON_WAITING_LIST": {
-          "label": "Verifica in corso"
+          "label": "In lista d'attesa"
         },
         "ON_EVALUATION": {
           "label": "Verifica in corso"
@@ -5816,7 +5947,9 @@
           "labels": {
             "AUTHORIZED": "Autorizzata",
             "CANCELLED": "Annullata",
-            "REWARDED": "Eseguita"
+            "REWARDED": "Eseguita",
+            "REFUNDED": "Rimborsata",
+            "CAPTURED": "Eseguita"
           },
           "details": {
             "alerts": {
@@ -6219,7 +6352,7 @@
         "failure": {
           "GENERIC": {
             "title": "Non è stato possibile procedere con l'iniziativa richiesta",
-            "subtitle": "Siamo già a lavoro per risolvere.  Riprova tra un po’."
+            "subtitle": "Siamo già a lavoro per risolvere. Riprova tra un po’."
           },
           "TRANSACTION_EXPIRED": {
             "title": "Il codice è scaduto",
@@ -6440,7 +6573,7 @@
       },
       "historyScreen": {
         "header": "I tuoi accessi a servizi di terze parti",
-        "body": "Qui puoi consultare le cronologia dei tuoi accessi a servizi esterni tramite IO e richiederne una copia via email."
+        "body": "Qui puoi consultare la cronologia dei tuoi accessi a servizi esterni tramite IO e richiederne una copia via email."
       }
     },
     "loadingScreen": {

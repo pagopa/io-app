@@ -4,7 +4,7 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { useAttachmentDownload } from "../../hooks/useAttachmentDownload";
 
-type MessageDetailsAttachmentItemProps = {
+export type MessageDetailsAttachmentItemProps = {
   attachment: ThirdPartyAttachment;
   bottomSpacer?: boolean;
   disabled?: boolean;

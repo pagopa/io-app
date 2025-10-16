@@ -1,4 +1,6 @@
-import { ThirdPartyMessage } from "../../../../../definitions/pn/ThirdPartyMessage";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
+import { ThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
 
 export type SendAARFlowStatesType = typeof sendAARFlowStates;
 
@@ -27,6 +29,8 @@ type DisplayingNotification = {
   type: SendAARFlowStatesType["displayingNotificationData"];
   fullNameDestinatario: string;
   notification: ThirdPartyMessage;
+  iun: string;
+  pnServiceId: ServiceId;
   mandateId?: string;
 };
 
@@ -39,8 +43,8 @@ type FinalNotAddressee = {
 
 type ErrorState = {
   type: SendAARFlowStatesType["ko"];
-  errorKind?: string;
   previousState: AARFlowState;
+  error?: AARProblemJson;
 };
 
 export type AARFlowStateName =
@@ -67,13 +71,16 @@ export const validAARStatusTransitions = new Map<
   ],
   [
     sendAARFlowStates.fetchingQRData,
-    new Set([sendAARFlowStates.fetchingNotificationData, sendAARFlowStates.ko])
+    new Set([
+      sendAARFlowStates.fetchingNotificationData,
+      sendAARFlowStates.notAddresseeFinal,
+      sendAARFlowStates.ko
+    ])
   ],
   [
     sendAARFlowStates.fetchingNotificationData,
     new Set([
       sendAARFlowStates.displayingNotificationData,
-      sendAARFlowStates.notAddresseeFinal,
       sendAARFlowStates.ko
     ])
   ],

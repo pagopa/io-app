@@ -413,7 +413,7 @@ exports[`FimsHistoryHeaderComponent should match snapshot 1`] = `
                             ]
                           }
                         >
-                          Qui puoi consultare le cronologia dei tuoi accessi a servizi esterni tramite IO e richiederne una copia via email.
+                          Qui puoi consultare la cronologia dei tuoi accessi a servizi esterni tramite IO e richiederne una copia via email.
                         </Text>
                         <View
                           style={

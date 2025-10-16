@@ -3,12 +3,18 @@ import {
   ContentWrapper,
   H2,
   IOButtonBlockSpecificProps,
+  useIOThemeContext,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as AR from "fp-ts/lib/Array";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { ComponentProps, useContext } from "react";
+import {
+  ComponentProps,
+  forwardRef,
+  useContext,
+  useImperativeHandle
+} from "react";
 import { Image, ImageStyle, StyleProp } from "react-native";
 import Animated, {
   useAnimatedRef,
@@ -46,6 +52,10 @@ type Props = OwnProps &
     ComponentProps<typeof IOScrollViewWithLargeHeader>,
     "contextualHelp" | "contextualHelpMarkdown" | "faqCategories"
   >;
+
+export type BonusInformationComponentRef = {
+  scrollTo: (y: number) => void;
+};
 
 const getTosFooter = (
   maybeBonusTos: O.Option<string>,
@@ -100,7 +110,7 @@ const imageHeight: number = 270;
 /**
  * A screen to explain how the bonus activation works and how it will be assigned
  */
-const BonusInformationComponent = (props: Props) => {
+const BonusInformationComponent = forwardRef((props: Props, ref) => {
   const { showModal, hideModal } = useContext(LightModalContext);
   const bonusType = props.bonus;
   const { imageStyle: imageProps } = props;
@@ -152,8 +162,14 @@ const BonusInformationComponent = (props: Props) => {
     O.chain(urls => AR.lookup(0, [...urls]))
   );
 
+  const { themeType } = useIOThemeContext();
+  const isDark = themeType === "dark";
+
   const maybeBonusTos = maybeNotNullyString(bonusTypeLocalizedContent.tos_url);
-  const maybeHeroImage = maybeNotNullyString(bonusType.hero_image);
+  const maybeHeroImage =
+    isDark && bonusType.hero_image_dark
+      ? maybeNotNullyString(bonusType.hero_image_dark)
+      : maybeNotNullyString(bonusType.hero_image);
 
   const actions: IOScrollViewActions = props.secondaryAction
     ? {
@@ -165,6 +181,12 @@ const BonusInformationComponent = (props: Props) => {
         type: "SingleButton",
         primary: requestButtonProps
       };
+
+  useImperativeHandle(ref, () => ({
+    scrollTo: (y: number) => {
+      animatedScrollViewRef.current?.scrollTo({ y, animated: true });
+    }
+  }));
 
   return (
     <IOScrollView
@@ -213,6 +235,6 @@ const BonusInformationComponent = (props: Props) => {
       </ContentWrapper>
     </IOScrollView>
   );
-};
+});
 
 export default BonusInformationComponent;
