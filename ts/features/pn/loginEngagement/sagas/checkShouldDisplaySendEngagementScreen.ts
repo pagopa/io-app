@@ -21,6 +21,7 @@ import { hasSendEngagementScreenBeenDismissedSelector } from "../store/reducers"
 import { isPnServiceEnabled as isSendServiceEnabledSelector } from "../../reminderBanner/reducer/bannerDismiss";
 import { loadServicePreference } from "../../../services/details/store/actions/preference";
 import { setSecurityAdviceReadyToShow } from "../../../authentication/fastLogin/store/actions/securityAdviceActions";
+import { isTestEnv } from "../../../../utils/environment";
 
 export function* checkShouldDisplaySendEngagementScreen(
   isFirstOnboarding: boolean
@@ -49,9 +50,9 @@ export function* checkShouldDisplaySendEngagementScreen(
           );
           yield* call(
             handleNavigateToSendEngagementScreen,
-            !hasSendEngagementScreenBeenDismissed,
+            hasSendEngagementScreenBeenDismissed,
             isSendEnabled,
-            !updatedIsSendServiceEnabled
+            updatedIsSendServiceEnabled
           );
           yield* put({ type: guid });
         }
@@ -62,17 +63,23 @@ export function* checkShouldDisplaySendEngagementScreen(
   } else {
     yield* call(
       handleNavigateToSendEngagementScreen,
-      !hasSendEngagementScreenBeenDismissed,
+      hasSendEngagementScreenBeenDismissed,
       isSendEnabled,
-      !isSendServiceEnabled
+      isSendServiceEnabled
     );
   }
 }
 
-export function* handleNavigateToSendEngagementScreen(
-  ...conditions: Array<boolean>
+function* handleNavigateToSendEngagementScreen(
+  isSendEngagementScreenDismissed: boolean,
+  isSendRemoteEnabled: boolean,
+  isSendServiceEnabled: boolean | undefined
 ) {
-  if (conditions.every(Boolean)) {
+  if (
+    !isSendEngagementScreenDismissed &&
+    isSendRemoteEnabled &&
+    !isSendServiceEnabled
+  ) {
     yield* call(
       NavigationService.dispatchNavigationAction,
       StackActions.push(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
@@ -86,3 +93,7 @@ export function* handleNavigateToSendEngagementScreen(
     yield* put(setSecurityAdviceReadyToShow(true));
   }
 }
+
+export const testable = isTestEnv
+  ? { handleNavigateToSendEngagementScreen }
+  : undefined;
