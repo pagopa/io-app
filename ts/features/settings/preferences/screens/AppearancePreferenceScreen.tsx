@@ -1,7 +1,6 @@
 import {
   ListItemHeader,
   RadioGroup,
-  useIONewTypeface,
   useIOThemeContext,
   VStack
 } from "@pagopa/io-app-design-system";
@@ -11,22 +10,16 @@ import { constVoid } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { ReactElement, useState } from "react";
 import { Appearance, useColorScheme, View } from "react-native";
-import { FONT_PERSISTENCE_KEY } from "../../../../common/context/DSTypefaceContext";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import {
   ColorModeChoice,
   THEME_PERSISTENCE_KEY
 } from "../../../../hooks/useAppThemeConfiguration";
-import {
-  preferencesFontSet,
-  preferencesThemeSet,
-  TypefaceChoice
-} from "../../../../store/actions/persistedPreferences";
+import { preferencesThemeSet } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import {
   trackAppearancePreferenceScreenView,
-  trackAppearancePreferenceThemeUpdate,
-  trackAppearancePreferenceTypefaceUpdate
+  trackAppearancePreferenceThemeUpdate
 } from "../../common/analytics";
 
 /**
@@ -37,7 +30,6 @@ import {
 const AppearancePreferenceScreen = (): ReactElement => {
   const store = useIOStore();
   const dispatch = useIODispatch();
-  const { newTypefaceEnabled, setNewTypefaceEnabled } = useIONewTypeface();
   const { setTheme } = useIOThemeContext();
   const systemColorScheme = useColorScheme();
   const [selectedColorMode, setSelectedColorMode] =
@@ -54,18 +46,6 @@ const AppearancePreferenceScreen = (): ReactElement => {
       .catch(constVoid);
   });
 
-  const selectedTypeface: TypefaceChoice = newTypefaceEnabled
-    ? "comfortable"
-    : "standard";
-
-  const handleTypefaceChange = (choice: TypefaceChoice) => {
-    trackAppearancePreferenceTypefaceUpdate(choice, store.getState());
-    AsyncStorage.setItem(FONT_PERSISTENCE_KEY, choice).finally(() => {
-      dispatch(preferencesFontSet(choice));
-      setNewTypefaceEnabled(choice === "comfortable");
-    });
-  };
-
   const handleColorModeChange = (choice: ColorModeChoice) => {
     trackAppearancePreferenceThemeUpdate(choice, store.getState());
     AsyncStorage.setItem(THEME_PERSISTENCE_KEY, choice).finally(() => {
@@ -80,28 +60,6 @@ const AppearancePreferenceScreen = (): ReactElement => {
       setTheme(choice);
     });
   };
-
-  // Options for typeface
-  const typefaceOptions = [
-    {
-      id: "comfortable" as TypefaceChoice,
-      value: I18n.t(
-        "profile.preferences.list.appearance.typefaceStyle.comfortable.title"
-      ),
-      description: I18n.t(
-        "profile.preferences.list.appearance.typefaceStyle.comfortable.description"
-      )
-    },
-    {
-      id: "standard" as TypefaceChoice,
-      value: I18n.t(
-        "profile.preferences.list.appearance.typefaceStyle.standard.title"
-      ),
-      description: I18n.t(
-        "profile.preferences.list.appearance.typefaceStyle.standard.description"
-      )
-    }
-  ];
 
   // Options for the color mode
   const colorModeOptions = [
@@ -134,21 +92,6 @@ const AppearancePreferenceScreen = (): ReactElement => {
       includeContentMargins
     >
       <VStack space={24}>
-        <View>
-          <ListItemHeader
-            iconName="typeface"
-            label={I18n.t(
-              "profile.preferences.list.appearance.typefaceStyle.title"
-            )}
-          />
-          <RadioGroup<TypefaceChoice>
-            type="radioListItem"
-            items={typefaceOptions}
-            selectedItem={selectedTypeface}
-            onPress={handleTypefaceChange}
-          />
-        </View>
-
         <View>
           <ListItemHeader
             iconName="theme"

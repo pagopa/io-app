@@ -698,17 +698,6 @@
         "appearance": {
           "title": "Appearance",
           "subtitle": "Customize the app to your needs",
-          "typefaceStyle": {
-            "title": "Typeface style",
-            "comfortable": {
-              "title": "Comfortable",
-              "description": "Designed for better text readability"
-            },
-            "standard": {
-              "title": "Standard",
-              "description": "The usual style with narrow, geometric shapes"
-            }
-          },
           "theme": {
             "title": "Theme",
             "comingSoon": "Coming soon",
