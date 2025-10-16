@@ -9,7 +9,7 @@ import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBa
 import ROUTES from "../../../../navigation/routes";
 
 export const SendActivationErrorScreen = () => {
-  const { navigate, replace } = useIONavigation();
+  const { replace } = useIONavigation();
   const dispatch = useIODispatch();
 
   useAvoidHardwareBackButton();
@@ -22,7 +22,7 @@ export const SendActivationErrorScreen = () => {
         testID: "actionRetryID",
         label: i18n.t("global.buttons.retry"),
         onPress: () => {
-          navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+          replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
             screen: PN_ROUTES.MAIN,
             params: {
               screen: PN_ROUTES.SEND_ENGAGEMENT_ON_FIRST_APP_OPENING
