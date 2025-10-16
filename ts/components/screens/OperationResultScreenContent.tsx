@@ -24,6 +24,7 @@ import {
   AnimatedPictogram,
   IOAnimatedPictograms
 } from "../ui/AnimatedPictogram";
+import IOMarkdown from "../IOMarkdown";
 
 type ButtonProps = Pick<
   IOButtonProps,
@@ -42,6 +43,7 @@ type OperationResultScreenContentProps = WithTestID<
     secondaryAction?: ButtonProps;
     isHeaderVisible?: boolean;
     topElement?: ReactNode;
+    enableMarkdown?: boolean;
   } & GraphicAssetProps
 >;
 
@@ -74,7 +76,8 @@ const OperationResultScreenContent = forwardRef<
       testID,
       isHeaderVisible,
       subtitleProps,
-      topElement = undefined
+      topElement = undefined,
+      enableMarkdown = false
     },
     ref
   ) => (
@@ -114,9 +117,14 @@ const OperationResultScreenContent = forwardRef<
           <>
             <VSpacer size={8} />
             {typeof subtitle === "string" ? (
-              <Body style={{ textAlign: "center" }} {...subtitleProps}>
-                {subtitle}
-              </Body>
+              // TODO: to replace with a better fallback logic for markdown rendering
+              enableMarkdown ? (
+                <IOMarkdown textAlign="center" content={subtitle} />
+              ) : (
+                <Body style={{ textAlign: "center" }} {...subtitleProps}>
+                  {subtitle}
+                </Body>
+              )
             ) : (
               <ComposedBodyFromArray body={subtitle} textAlign="center" />
             )}
