@@ -44,32 +44,42 @@ describe("MessageDetailsContent component", () => {
 
   const testCases = [true, false].flatMap(isDelegated =>
     [true, false].flatMap(hasAarAdresseeDenomination =>
-      [true, false].map(hasSenderDenomination => ({
-        isDelegated,
-        hasAarAdresseeDenomination,
-        hasSenderDenomination
-      }))
+      [true, false].flatMap(isAbstractEnabled =>
+        [true, false].map(hasSenderDenomination => ({
+          isDelegated,
+          hasAarAdresseeDenomination,
+          hasSenderDenomination,
+          isAbstractEnabled
+        }))
+      )
     )
   );
 
   const runSnapshotTest = ({
     isDelegated,
     hasAarAdresseeDenomination,
-    hasSenderDenomination
+    hasSenderDenomination,
+    isAbstractEnabled
   }: {
     isDelegated: boolean;
     hasAarAdresseeDenomination: boolean;
     hasSenderDenomination: boolean;
+    isAbstractEnabled: boolean;
   }) => {
     it(`should match snapshot when ${isDelegated ? "is" : "isn't"} delegated, ${
       hasAarAdresseeDenomination ? "has" : "does not have"
     } a valid Aar Adressee denomination, ${
       hasSenderDenomination ? "has" : "doesn't have"
-    } a valid sender denomination`, () => {
+    } a valid sender denomination, with the abstract ${
+      isAbstractEnabled ? "enabled" : "disabled"
+    } by feature flag`, () => {
       mockSelectors(
         hasAarAdresseeDenomination ? "AAR Denomination" : undefined,
         isDelegated
       );
+      jest
+        .spyOn(USEIO_HOOKS, "useIOSelector")
+        .mockReturnValue(isAbstractEnabled);
       const { toJSON } = renderMessageDetails(
         hasSenderDenomination ? mockMessage : mockMessageWithoutDenomination
       );
