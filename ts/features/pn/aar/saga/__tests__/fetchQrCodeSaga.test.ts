@@ -9,6 +9,7 @@ import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
 import { fetchAARQrCodeSaga } from "../fetchQrCodeSaga";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
+import { trackSendAARFailure } from "../../analytics";
 
 const sendUATEnvironment = [false, true];
 
@@ -158,6 +159,15 @@ describe("fetchQrCodeSaga", () => {
       it(`should dispatch KO state on a response of ${JSON.stringify(
         res
       )} with isTest='${isSendUATEnvironment}'`, () => {
+        // eslint-disable-next-line no-underscore-dangle
+        const error = res._tag === "Right" ? res.right.value : undefined;
+        const reason = `HTTP request failed (${
+          // eslint-disable-next-line no-underscore-dangle
+          res._tag === "Right" ? res.right.status : ""
+        } ${
+          // eslint-disable-next-line no-underscore-dangle
+          res._tag === "Right" ? res.right.value.status : ""
+        } A detail)`;
         testSaga(fetchAARQrCodeSaga, mockFetchQrCode, sessionToken)
           .next()
           .select(currentAARFlowData)
@@ -166,21 +176,10 @@ describe("fetchQrCodeSaga", () => {
           .next(isSendUATEnvironment)
           .call(withRefreshApiCall, mockFetchQrCode())
           .next(res)
+          .call(trackSendAARFailure, "Fetch QRCode", reason)
+          .next()
           .put(
-            setAarFlowState(
-              getMockKoState(
-                mockFetchingQrState,
-                // eslint-disable-next-line no-underscore-dangle
-                res._tag === "Right" ? res.right.value : undefined,
-                `HTTP request failed (${
-                  // eslint-disable-next-line no-underscore-dangle
-                  res._tag === "Right" ? res.right.status : ""
-                } ${
-                  // eslint-disable-next-line no-underscore-dangle
-                  res._tag === "Right" ? res.right.value.status : ""
-                } A detail)`
-              )
-            )
+            setAarFlowState(getMockKoState(mockFetchingQrState, error, reason))
           )
           .next()
           .isDone();
@@ -201,6 +200,12 @@ describe("fetchQrCodeSaga", () => {
       .next()
       .select(currentAARFlowData)
       .next(mockTosState)
+      .call(
+        trackSendAARFailure,
+        "Fetch QRCode",
+        "Called in wrong state (displayingAARToS)"
+      )
+      .next()
       .isDone();
   });
   it("should dispatch KO state on exception throw", () => {
@@ -212,6 +217,8 @@ describe("fetchQrCodeSaga", () => {
       .next(true)
       .call(withRefreshApiCall, mockFetchQrCode())
       .throw(new Error())
+      .call(trackSendAARFailure, "Fetch QRCode", "An error was thrown ()")
+      .next()
       .put(
         setAarFlowState(
           getMockKoState(
@@ -230,5 +237,28 @@ describe("fetchQrCodeSaga", () => {
       },
       isTest: true
     });
+  });
+  it("should dispatch KO state on a decoding failute", () => {
+    const failureDecodingResponse = E.left([]);
+    const mockApiCall = jest
+      .fn()
+      .mockReturnValue(mockResolvedCall(failureDecodingResponse));
+    testSaga(fetchAARQrCodeSaga, mockApiCall, sessionToken)
+      .next()
+      .select(currentAARFlowData)
+      .next(mockFetchingQrState)
+      .select(isPnTestEnabledSelector)
+      .next(true)
+      .call(withRefreshApiCall, mockApiCall())
+      .next(failureDecodingResponse)
+      .call(trackSendAARFailure, "Fetch QRCode", "Decoding failure ()")
+      .next()
+      .put(
+        setAarFlowState(
+          getMockKoState(mockFetchingQrState, undefined, `Decoding failure ()`)
+        )
+      )
+      .next()
+      .isDone();
   });
 });
