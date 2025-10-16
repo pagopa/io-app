@@ -1,5 +1,5 @@
-import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { Action, Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -19,11 +19,12 @@ import {
   toUIMessageDetails
 } from "../../../messages/store/reducers/transformers";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
-import { thirdPartyMessage } from "../../__mocks__/pnMessage";
-import PN_ROUTES from "../../navigation/routes";
-import { MessageDetailsScreen } from "../MessageDetailsScreen";
 import * as commonSelectors from "../../../settings/common/store/selectors";
+import { thirdPartyMessage } from "../../__mocks__/pnMessage";
+import { sendAarMockStateFactory } from "../../aar/utils/testUtils";
+import PN_ROUTES from "../../navigation/routes";
 import { startPNPaymentStatusTracking } from "../../store/actions";
+import { MessageDetailsScreen } from "../MessageDetailsScreen";
 
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
@@ -37,6 +38,7 @@ describe("MessageDetailsScreen", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
+
   [true, false].forEach(isAar => {
     it(`should match the snapshot when there is an error -- aar:${isAar}`, () => {
       const sequenceOfActions: ReadonlyArray<Action> = [
@@ -97,6 +99,11 @@ describe("MessageDetailsScreen", () => {
             issuance: {
               integrityKeyTag: O.none
             }
+          },
+          pn: {
+            aarFlow: isAARNotification
+              ? sendAarMockStateFactory.displayingNotificationData()
+              : sendAarMockStateFactory.none()
           }
         },
         remoteConfig: O.none,
