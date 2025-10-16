@@ -52,7 +52,7 @@ import { WalletActions } from "../../features/wallet/store/actions";
 import { WhatsNewActions } from "../../features/whatsnew/store/actions";
 import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
 import { GlobalState } from "../reducers/types";
-import { PNLoginEngagementActions } from "../../features/pn/loginEngagement/store/actions";
+import { SENDLoginEngagementActions } from "../../features/pn/loginEngagement/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { BackendStatusActions } from "./backendStatus";
@@ -125,7 +125,7 @@ export type Action =
   | LoginPreferencesActions
   | AARFlowStateActions
   | BackgroundLinkingActions
-  | PNLoginEngagementActions;
+  | SENDLoginEngagementActions;
 
 export type Dispatch = DispatchAPI<Action>;
 

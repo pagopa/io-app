@@ -4,6 +4,6 @@ export const setSendEngagementScreenHasBeenDismissed = createAction(
   "SET_SEND_ENGAGEMENT_SCREEN_HAS_BEEN_DISMISSED"
 );
 
-export type PNLoginEngagementActions = ActionType<
+export type SENDLoginEngagementActions = ActionType<
   typeof setSendEngagementScreenHasBeenDismissed
 >;
