@@ -7,10 +7,15 @@ import { PNActivationBannerFlowScreen } from "../reminderBanner/screens/PnRemind
 import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
 import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
 import { PaidPaymentScreen } from "../screens/PaidPaymentScreen";
+import { SendEngagementOnFirstAppOpenScreen } from "../loginEngagement/screens/SendEngagementOnFirstAppOpenScreen";
+import { SendActivationErrorScreen } from "../loginEngagement/screens/SendActivationErrorScreen";
 import { PnParamsList } from "./params";
 import PN_ROUTES from "./routes";
 
 const Stack = createStackNavigator<PnParamsList>();
+const hiddenHeader = {
+  headerShown: false
+};
 
 export const PnStackNavigator = () => (
   <Stack.Navigator initialRouteName={PN_ROUTES.MESSAGE_DETAILS}>
@@ -29,9 +34,7 @@ export const PnStackNavigator = () => (
     <Stack.Screen
       name={PN_ROUTES.ACTIVATION_BANNER_FLOW}
       component={PNActivationBannerFlowScreen}
-      options={{
-        headerShown: false
-      }}
+      options={hiddenHeader}
     />
     <Stack.Screen
       name={PN_ROUTES.QR_SCAN_FLOW}
@@ -46,9 +49,19 @@ export const PnStackNavigator = () => (
       component={SendQrScanPushEngagementScreen}
     />
     <Stack.Screen
+      name={PN_ROUTES.SEND_ENGAGEMENT_ON_FIRST_APP_OPENING}
+      component={SendEngagementOnFirstAppOpenScreen}
+      options={hiddenHeader}
+    />
+    <Stack.Screen
+      name={PN_ROUTES.SEND_ENGAGEMENT_ACTIVATION_ERROR}
+      component={SendActivationErrorScreen}
+      options={hiddenHeader}
+    />
+    <Stack.Screen
       name={PN_ROUTES.SEND_AAR_ERROR}
       component={SendAARErrorScreen}
-      options={{ headerShown: false }}
+      options={hiddenHeader}
     />
   </Stack.Navigator>
 );
