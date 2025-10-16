@@ -32,6 +32,8 @@ export type IOMarkdownProps = {
    * The render rules that can be used to override the `DEFAULT_RULES`.
    */
   rules?: Partial<IOMarkdownRenderRules>;
+
+  textAlign?: "left" | "center" | "right";
 };
 
 /**
@@ -39,7 +41,7 @@ export type IOMarkdownProps = {
  *
  * It's possible to override every single rule by passing a custom `rules` object.
  */
-const UnsafeIOMarkdown = ({ content, rules }: UnsafeProps) => {
+const UnsafeIOMarkdown = ({ content, rules, textAlign }: UnsafeProps) => {
   const screenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
 
   const inlineLinkMarkdown = convertReferenceLinksToInline(content);
@@ -50,12 +52,18 @@ const UnsafeIOMarkdown = ({ content, rules }: UnsafeProps) => {
       ...DEFAULT_RULES,
       ...(rules || {})
     },
-    screenReaderEnabled
+    screenReaderEnabled,
+    textAlign
   );
   return <View>{parsedContent.map(renderMarkdown)}</View>;
 };
 
-const IOMarkdown = ({ content, rules, onError }: IOMarkdownProps) => (
+const IOMarkdown = ({
+  content,
+  rules,
+  onError,
+  textAlign
+}: IOMarkdownProps) => (
   <Sentry.ErrorBoundary
     fallback={
       <View>
@@ -64,7 +72,7 @@ const IOMarkdown = ({ content, rules, onError }: IOMarkdownProps) => (
     }
     onError={onError}
   >
-    <UnsafeIOMarkdown content={content} rules={rules} />
+    <UnsafeIOMarkdown content={content} rules={rules} textAlign={textAlign} />
   </Sentry.ErrorBoundary>
 );
 export default memo(IOMarkdown);
