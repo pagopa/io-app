@@ -5836,7 +5836,7 @@
         },
         "message": {
           "GENERIC": {
-            "title": "Non riusciamo a inviare la richiesta per questa iniziativa",
+            "title": "Non è possibile completare la richiesta per questa iniziativa",
             "subtitle": "Siamo già a lavoro per risolvere. \nRiprova tra un po’."
           },
           "INITIATIVE_NOT_FOUND": {
