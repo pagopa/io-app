@@ -74,39 +74,11 @@ const IdPayCompletionScreen = () => {
     );
   }
 
-  const subtitle: Array<BodyProps> = [
-    {
-      text: I18n.t("idpay.onboarding.success.requestSent.subtitleStart"),
-      style: {
-        textAlign: "center"
-      }
-    },
-    {
-      text: I18n.t("idpay.onboarding.success.requestSent.subtitleBoldStart"),
-      style: {
-        textAlign: "center"
-      },
-      weight: "Semibold"
-    },
-    {
-      text: I18n.t("idpay.onboarding.success.requestSent.subtitleCenter"),
-      style: {
-        textAlign: "center"
-      }
-    },
-    {
-      text: I18n.t("idpay.onboarding.success.requestSent.subtitleEnd"),
-      style: {
-        textAlign: "center"
-      },
-      weight: "Semibold"
-    }
-  ];
-
   return (
     <OperationResultScreenContent
       title={I18n.t("idpay.onboarding.success.requestSent.title")}
-      subtitle={subtitle}
+      subtitle={I18n.t("idpay.onboarding.success.requestSent.subtitle")}
+      enableMarkdown
       action={{
         label: I18n.t("idpay.onboarding.success.button.continue"),
         accessibilityLabel: I18n.t("idpay.onboarding.success.button.continue"),
