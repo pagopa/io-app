@@ -64,9 +64,9 @@ export const aarProblemJsonAnalyticsReport = (
             const detailReport = error.detail != null ? ` ${error.detail}` : "";
             const elementReport =
               error.element != null ? ` ${error.element}` : "";
-            return `${error.code}${detailReport}${elementReport}`;
+            return ` ${error.code}${detailReport}${elementReport}`;
           })
-          .join(", ")
+          .join(",")
       : "";
   return `${responseCode} ${input.status}${titleReport} ${input.detail}${traceIdReport}${errorReport}`;
 };
