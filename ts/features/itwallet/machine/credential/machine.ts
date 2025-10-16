@@ -36,12 +36,14 @@ export const itwCredentialIssuanceMachine = setup({
      * Navigation actions
      */
 
+    navigateToCredentialIntroductionScreen: notImplemented,
     navigateToTrustIssuerScreen: notImplemented,
     navigateToCredentialPreviewScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToWallet: notImplemented,
     navigateToEidVerificationExpiredScreen: notImplemented,
     closeIssuance: notImplemented,
+    goBack: notImplemented,
 
     /**
      * Store actions
@@ -116,7 +118,7 @@ export const itwCredentialIssuanceMachine = setup({
         },
         {
           guard: ({ context }) => context.mode === "issuance",
-          target: "TrustFederationVerification",
+          target: "CredentialIntroduction", // target: "TrustFederationVerification"
           actions: ["trackStartAddCredential"]
         },
         {
@@ -132,6 +134,18 @@ export const itwCredentialIssuanceMachine = setup({
           actions: ["trackStartAddCredential", "navigateToTrustIssuerScreen"]
         }
       ]
+    },
+    CredentialIntroduction: {
+      entry: "navigateToCredentialIntroductionScreen",
+      on: {
+        continue: {
+          target: "TrustFederationVerification"
+        },
+        back: {
+          target: "Completed",
+          actions: "goBack"
+        }
+      }
     },
     TrustFederationVerification: {
       description:

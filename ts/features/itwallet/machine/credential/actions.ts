@@ -54,6 +54,12 @@ export const createCredentialIssuanceActionsImplementation = (
     };
   }),
 
+  navigateToCredentialIntroductionScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_INTRODUCTION
+    });
+  },
+
   navigateToTrustIssuerScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER
@@ -91,6 +97,10 @@ export const createCredentialIssuanceActionsImplementation = (
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED
     });
+  },
+
+  goBack: () => {
+    navigation.goBack();
   },
 
   closeIssuance: () => {

@@ -31,6 +31,7 @@ import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidP
 import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidResultScreen";
 import { ItwIssuanceInactiveITWalletScreen } from "../issuance/screens/ItwIssuanceInactiveITWalletScreen.tsx";
 import { ItwIssuanceUpcomingCredentialScreen } from "../issuance/screens/ItwIssuanceUpcomingCredentialScreen";
+import { ItwIssuanceCredentialIntroductionScreen } from "../issuance/screens/ItwIssuanceCredentialIntroductionScreen";
 import { ItwIdentityNotMatchingScreen } from "../lifecycle/screens/ItwIdentityNotMatchingScreen.tsx";
 import { ItwLifecycleWalletRevocationScreen } from "../lifecycle/screens/ItwLifecycleWalletRevocationScreen.tsx";
 import {
@@ -186,6 +187,11 @@ const InnerNavigator = memo(() => {
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.EID_PREVIEW}
         component={ItwIssuanceEidPreviewScreen}
+        options={hiddenHeader}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.ISSUANCE.CREDENTIAL_INTRODUCTION}
+        component={ItwIssuanceCredentialIntroductionScreen}
         options={hiddenHeader}
       />
       <Stack.Screen
