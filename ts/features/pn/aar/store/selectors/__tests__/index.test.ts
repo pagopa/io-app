@@ -3,7 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import {
   aarAdresseeDenominationSelector,
   currentAARFlowData,
-  currentAARFlowStateErrorCode,
+  currentAARFlowStateAssistanceErrorCode,
   currentAARFlowStateType,
   isAAREnabled,
   isAarMessageDelegatedSelector,
@@ -202,7 +202,7 @@ describe("currentAARFlowStateErrorCode", () => {
         }
       } as unknown as GlobalState;
 
-      const result = currentAARFlowStateErrorCode(mockGlobalState);
+      const result = currentAARFlowStateAssistanceErrorCode(mockGlobalState);
       expect(result).toEqual(expected);
     });
   });

@@ -60,7 +60,7 @@ export const currentAARFlowData = (state: GlobalState) =>
 export const currentAARFlowStateType = (state: GlobalState) =>
   state.features.pn.aarFlow.type;
 
-export const currentAARFlowStateErrorCode = (
+export const currentAARFlowStateAssistanceErrorCode = (
   state: GlobalState
 ): string | undefined => {
   const aarFlow = state.features.pn.aarFlow;
@@ -68,13 +68,13 @@ export const currentAARFlowStateErrorCode = (
   if (aarFlow.type === sendAARFlowStates.ko) {
     const error = aarFlow.error;
 
-    if (error?.traceId) {
+    if (error?.traceId && error.traceId.trim().length > 0) {
       return error.traceId;
     }
 
     const errorCodes = error?.errors
-      ?.map(e => e.code)
-      .filter((code): code is string => Boolean(code));
+      ?.filter(({ code }) => code.trim().length > 0)
+      ?.map(e => e.code);
 
     if (errorCodes && errorCodes.length > 0) {
       return errorCodes.join(", ");

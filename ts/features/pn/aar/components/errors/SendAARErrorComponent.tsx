@@ -26,7 +26,7 @@ import {
   zendeskSupportStart
 } from "../../../../zendesk/store/actions";
 import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
-import { currentAARFlowStateErrorCode } from "../../store/selectors";
+import { currentAARFlowStateAssistanceErrorCode } from "../../store/selectors";
 
 const bottomComponent = (onAssistancePress: () => void, errorCode?: string) => (
   <>
@@ -72,7 +72,9 @@ const bottomComponent = (onAssistancePress: () => void, errorCode?: string) => (
 export const SendAARErrorComponent = () => {
   const dispatch = useIODispatch();
   const { terminateFlow } = useSendAarFlowManager();
-  const errorCode = useIOSelector(currentAARFlowStateErrorCode);
+  const assistanceErrorCode = useIOSelector(
+    currentAARFlowStateAssistanceErrorCode
+  );
 
   const zendeskAssistanceLogAndStart = () => {
     dismiss();
@@ -81,7 +83,7 @@ export const SendAARErrorComponent = () => {
 
     addTicketCustomField(zendeskCategoryId, zendeskSendCategory.value);
     addTicketCustomField("39752564743313", "io_problema_notifica_send_qr");
-    appendLog(JSON.stringify(errorCode));
+    appendLog(JSON.stringify(assistanceErrorCode));
 
     dispatch(
       zendeskSupportStart({
@@ -95,7 +97,10 @@ export const SendAARErrorComponent = () => {
   };
 
   const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
-    component: bottomComponent(zendeskAssistanceLogAndStart, errorCode),
+    component: bottomComponent(
+      zendeskAssistanceLogAndStart,
+      assistanceErrorCode
+    ),
     title: ""
   });
 
