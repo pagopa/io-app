@@ -136,6 +136,7 @@ import {
   waitForMainNavigator,
   waitForNavigatorServiceInitialization
 } from "../navigation/saga/navigation";
+import { watchToyProfileSaga } from "../features/toyProfile/saga/fetch.ts";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
@@ -500,6 +501,8 @@ export function* initializeApplicationSaga(
     if (!handleSessionExpiration) {
       yield* call(setLanguageFromProfileIfExists);
     }
+
+    yield* fork(watchToyProfileSaga, backendClient.getProfile);
 
     const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
     if (isFastLoginEnabled) {

@@ -51,6 +51,7 @@ import { isDevEnv } from "../../utils/environment";
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
+import { toyProfileReducer } from "../../features/toyProfile/store/reducers";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
 import { backendInfoReducer } from "./backendStatus/backendInfo";
@@ -125,6 +126,7 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   //
   // ephemeral state
   //
+  toyProfile: toyProfileReducer,
   appState: appStateReducer,
   navigation: navigationReducer,
   versionInfo: versionInfoReducer,
@@ -198,6 +200,7 @@ export function createRootReducer(
       // eslint-disable-next-line no-param-reassign
       state = state
         ? ({
+            toyProfile: state.toyProfile,
             authentication: {
               ...authenticationInitialState,
 

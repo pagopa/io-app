@@ -13,6 +13,7 @@ import { PersistedNotificationsState } from "../../features/pushNotifications/st
 import { ProfileState } from "../../features/settings/common/store/reducers";
 import { UserDataProcessingState } from "../../features/settings/common/store/reducers/userDataProcessing";
 import { TrialSystemState } from "../../features/trialSystem/store/reducers";
+import { ToyProfileState } from "../../features/toyProfile/store/reducers";
 import { AppState } from "./appState";
 import { AssistanceToolsState } from "./assistanceTools";
 import { BackedInfoState } from "./backendStatus/backendInfo";
@@ -60,6 +61,7 @@ export type GlobalState = Readonly<{
   startup: StartupState;
   lollipop: PersistedLollipopState;
   trialSystem: TrialSystemState;
+  toyProfile: ToyProfileState;
 }>;
 
 export type PersistedGlobalState = GlobalState & PersistPartial;

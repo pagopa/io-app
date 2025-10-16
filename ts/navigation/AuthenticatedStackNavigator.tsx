@@ -71,6 +71,7 @@ import {
 } from "../store/reducers/backendStatus/remoteConfig";
 import { isGestureEnabled } from "../utils/navigation";
 import OnboardingNavigator from "../features/onboarding/navigation/OnboardingNavigator.tsx";
+import ToyProfileNavigator from "../features/toyProfile/navigation/toyProfileNavigator.tsx";
 import { AppParamsList } from "./params/AppParamsList";
 import ROUTES from "./routes";
 import { MainTabNavigator } from "./TabNavigator";
@@ -177,7 +178,7 @@ const AuthenticatedStackNavigator = () => {
           ...TransitionPresets.SlideFromRightIOS,
           gestureEnabled: isGestureEnabled
         }}
-        component={SettingsStackNavigator}
+        component={ToyProfileNavigator}
       />
 
       <Stack.Screen
