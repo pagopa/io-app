@@ -35,14 +35,15 @@ export function* fetchAarDataSaga(
   sessionToken: SessionToken
 ) {
   const currentState = yield* select(currentAARFlowData);
-  const isTest = yield* select(isPnTestEnabledSelector);
   if (currentState.type !== sendAARFlowStates.fetchingNotificationData) {
-    trackSendAARFailure(
+    yield* call(
+      trackSendAARFailure,
       sendAARFailurePhase,
-      `Called in wrong state ${currentState.type}`
+      `Called in wrong state (${currentState.type})`
     );
     return;
   }
+  const isTest = yield* select(isPnTestEnabledSelector);
   try {
     const fetchAarRequest = fetchData({
       Bearer: `Bearer ${sessionToken}`,
@@ -60,7 +61,7 @@ export function* fetchAarDataSaga(
       const reason = `Decoding failure (${readableReportSimplified(
         result.left
       )})`;
-      trackSendAARFailure(sendAARFailurePhase, reason);
+      yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
       yield* put(
         setAarFlowState({
           type: sendAARFlowStates.ko,
@@ -80,7 +81,7 @@ export function* fetchAarDataSaga(
         status,
         value
       )})`;
-      trackSendAARFailure(sendAARFailurePhase, reason);
+      yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
       yield* put(
         setAarFlowState({
           type: sendAARFlowStates.ko,
@@ -118,7 +119,7 @@ export function* fetchAarDataSaga(
     );
   } catch (e: unknown) {
     const reason = `An error was thrown (${unknownToReason(e)})`;
-    trackSendAARFailure(sendAARFailurePhase, reason);
+    yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
     yield* put(
       setAarFlowState({
         type: sendAARFlowStates.ko,

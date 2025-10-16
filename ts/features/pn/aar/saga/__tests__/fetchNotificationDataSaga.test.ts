@@ -25,6 +25,7 @@ import { fetchAarDataSaga, testable } from "../fetchNotificationDataSaga";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { SendAARClient } from "../../api/client";
 import * as serviceDetailsSaga from "../../../../services/common/saga/getServiceDetails";
+import { trackSendAARFailure } from "../../analytics";
 
 const mockCurrentState = {
   type: sendAARFlowStates.fetchingNotificationData,
@@ -50,8 +51,12 @@ describe("fetchAarDataSaga", () => {
         .next()
         .select(currentAARFlowData)
         .next(sendAarMockStates[0])
-        .select(isPnTestEnabledSelector)
-        .next(true)
+        .call(
+          trackSendAARFailure,
+          "Fetch Notification",
+          "Called in wrong state (none)"
+        )
+        .next()
         .isDone();
     });
 
@@ -68,6 +73,8 @@ describe("fetchAarDataSaga", () => {
         .next(true)
         .call(withRefreshApiCall, fetchData())
         .next(mockFailure)
+        .call(trackSendAARFailure, "Fetch Notification", "Decoding failure ()")
+        .next()
         .put(
           setAarFlowState({
             type: sendAARFlowStates.ko,
@@ -108,6 +115,12 @@ describe("fetchAarDataSaga", () => {
         .next(true)
         .call(withRefreshApiCall, fetchData())
         .next(mockResolvedEither)
+        .call(
+          trackSendAARFailure,
+          "Fetch Notification",
+          "HTTP request failed (400 400 A detail)"
+        )
+        .next()
         .put(
           setAarFlowState({
             type: sendAARFlowStates.ko,
@@ -141,6 +154,12 @@ describe("fetchAarDataSaga", () => {
         .next(mockCurrentState)
         .select(isPnTestEnabledSelector)
         .next(true)
+        .call(
+          trackSendAARFailure,
+          "Fetch Notification",
+          "An error was thrown (fail)"
+        )
+        .next()
         .put(
           setAarFlowState({
             type: sendAARFlowStates.ko,
@@ -181,6 +200,12 @@ describe("fetchAarDataSaga", () => {
           mockCurrentState.mandateId
         )
         .next(E.left("Unable to retrieve user fiscal code"))
+        .call(
+          trackSendAARFailure,
+          "Fetch Notification",
+          "An error was thrown (Unable to retrieve user fiscal code)"
+        )
+        .next()
         .put(
           setAarFlowState({
             type: sendAARFlowStates.ko,
