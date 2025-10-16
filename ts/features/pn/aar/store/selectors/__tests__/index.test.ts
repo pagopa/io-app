@@ -240,7 +240,7 @@ describe("aarAdresseeDenominationSelector", () => {
         AARFlowState,
         { recipientInfo?: { denomination: string; taxId: string } }
       >
-    ).recipientInfo.denomination;
+    ).recipientInfo?.denomination;
     it(`should return ${fullName} when state is ${state.type}, and iun matches`, () => {
       const mockGlobalState = {
         features: {
