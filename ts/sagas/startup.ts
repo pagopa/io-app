@@ -463,6 +463,7 @@ export function* initializeApplicationSaga(
 
   // Start watching for requests of refresh the profile
   yield* fork(watchProfileRefreshRequestsSaga, backendClient.getProfile);
+  yield* fork(watchToyProfileSaga, backendClient.getProfile);
 
   // Start watching for requests about session and support token
   yield* fork(
@@ -501,8 +502,6 @@ export function* initializeApplicationSaga(
     if (!handleSessionExpiration) {
       yield* call(setLanguageFromProfileIfExists);
     }
-
-    yield* fork(watchToyProfileSaga, backendClient.getProfile);
 
     const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
     if (isFastLoginEnabled) {
