@@ -7,18 +7,29 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { setSendEngagementScreenHasBeenDismissed } from "../store/actions";
 import PN_ROUTES from "../../navigation/routes";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";
+import { NOTIFICATIONS_ROUTES } from "../../../pushNotifications/navigation/routes";
 import { setSecurityAdviceReadyToShow } from "../../../authentication/fastLogin/store/actions/securityAdviceActions";
 
 export const useSendActivationFlow = () => {
-  const { pop, replace } = useIONavigation();
+  const { popToTop, replace } = useIONavigation();
   const dispatch = useIODispatch();
   const toast = useIOToast();
   const isActivating = useIOSelector(isLoadingPnActivationSelector);
+  const notificationPermissionsEnabled = useIOSelector(
+    areNotificationPermissionsEnabledSelector
+  );
 
   const onSENDActivationSucceeded = () => {
-    pop();
     dispatch(setSendEngagementScreenHasBeenDismissed());
     dispatch(setSecurityAdviceReadyToShow(true));
+    if (notificationPermissionsEnabled) {
+      popToTop();
+    } else {
+      replace(NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT, {
+        flow: "access"
+      });
+    }
     toast.success(i18n.t("features.pn.loginEngagement.send.toast"));
   };
   const onSENDActivationFailed = () => {
