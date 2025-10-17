@@ -139,6 +139,9 @@ describe("SendQRScanFlowHandlerComponent", () => {
           expect(mockReplace.mock.calls[0][0]).toBe(
             NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT
           );
+          expect(mockReplace.mock.calls[0][1]).toMatchObject({
+            flow: "send_notification_opening"
+          });
           expect(mockPopToTop.mock.calls.length).toBe(0);
         } else {
           expect(mockReplace.mock.calls.length).toBe(0);
