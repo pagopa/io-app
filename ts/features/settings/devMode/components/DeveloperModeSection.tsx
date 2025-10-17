@@ -396,6 +396,13 @@ const PlaygroundsSection = () => {
         })
     },
     {
+      value: "CIE IAS+MRTD",
+      onPress: () =>
+        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+          screen: SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND
+        })
+    },
+    {
       value: "Active session login playground",
       onPress: () => {
         dispatch(setStartActiveSessionLogin());

@@ -3,6 +3,7 @@ import { EmailInsertScreenNavigationParams } from "../../../userData/shared/scre
 import { SendEmailValidationScreenProp } from "../../../userData/shared/screens/EmailValidationSendEmailScreen";
 import { SETTINGS_ROUTES } from "../routes";
 import { AuthenticationParamsList } from "../../../../authentication/common/navigation/params/AuthenticationParamsList";
+import { CieIasAndMrtdAuthResultNavParams } from "../../../devMode/playgrounds/Cie/CieIasAndMrtdPlaygroundIntAuthResult";
 
 export type SettingsParamsList = {
   [SETTINGS_ROUTES.PROFILE_PRIVACY_MAIN]: undefined;
@@ -36,6 +37,9 @@ export type SettingsParamsList = {
   [SETTINGS_ROUTES.IO_MARKDOWN_PLAYGROUND]: undefined;
   [SETTINGS_ROUTES.APP_FEEDBACK_PLAYGROUND]: undefined;
   [SETTINGS_ROUTES.CIE_PLAYGROUND]: undefined;
+  [SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND]: undefined;
+  [SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_INTERNAL_AUTH]: undefined;
+  [SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_INTERNAL_AUTH_RESULTS]: CieIasAndMrtdAuthResultNavParams;
   [SETTINGS_ROUTES.SETTINGS_MAIN]: undefined;
   [SETTINGS_ROUTES.AUTHENTICATION]: NavigatorScreenParams<AuthenticationParamsList>;
 };
