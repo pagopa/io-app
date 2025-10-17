@@ -666,8 +666,36 @@
         "nameSurname": "Nome e cognome",
         "fiscalCode": "Codice Fiscale",
         "birthDate" : "Data di nascita"
+      }
+    },
+    "toy" : {
+      "main" : {
+        "email": "Indirizzo email",
+        "nameSurname": "Nome e cognome",
+        "fiscalCode": "Codice Fiscale",
+        "birthDate" : "Data di nascita",
+        "deleteState" : "Stato cancellazione profilo"
       },
-      "deleteState" : "Stato cancellazione profilo"
+      "warn" : {
+        "header" : "Sei avvisato",
+        "headerTitle" : "Sicuro di voler procedere?",
+        "message" : "Sicuro **sicuro** Sicuro?",
+        "buttons" : {
+          "continue" : "Continua",
+          "cancel" : "Annulla"
+        }
+      },
+      "confirm_delete" : {
+        "header" : "Ecco cosa stai per rimuovere...",
+        "header_deleted" : "Ecco cosa stai per rimuovere...",
+        "deleted" : "Hai richiesto correttamente la cancellazione",
+        "buttons" : {
+          "continue" : "Sono Sicuro",
+          "cancel" : "Annulla",
+          "retry" : "Riprova",
+          "close" : "Chiudi"
+        }
+      }
     },
     "security": {
       "title": "Sicurezza e accesso",
