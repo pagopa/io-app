@@ -24,7 +24,7 @@ jest.mock("../../../../../navigation/params/AppParamsList", () => ({
 
 jest.mock("../../../../../store/hooks", () => ({
   useIODispatch: jest.fn(),
-  useIOSelector: jest.fn().mockImplementation(fn => fn())
+  useIOSelector: (fn: () => any) => fn()
 }));
 
 jest.mock("@pagopa/io-app-design-system", () => ({
