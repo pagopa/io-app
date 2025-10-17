@@ -177,16 +177,14 @@ export const createActorsImplementation = (
         response,
         E.fold(
           _ => Promise.reject(OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR),
-          ({ status }) => {
+          ({ status, value }) => {
             switch (status) {
               case 202:
                 return Promise.resolve(undefined);
               case 401:
                 return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
               default:
-                return Promise.reject(
-                  OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR
-                );
+                return Promise.reject(mapErrorCodeToFailure(value.code));
             }
           }
         )
