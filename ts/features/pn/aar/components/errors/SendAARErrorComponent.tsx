@@ -5,12 +5,6 @@ import {
   ListItemInfoCopy,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import {
-  addTicketCustomField,
-  appendLog,
-  resetCustomFields,
-  resetLog
-} from "@pagopa/io-react-native-zendesk";
 import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
@@ -18,6 +12,10 @@ import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import { isTestEnv } from "../../../../../utils/environment";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import {
+  addTicketCustomField,
+  appendLog,
+  resetCustomFields,
+  resetLog,
   zendeskCategoryId,
   zendeskSendCategory
 } from "../../../../../utils/supportAssistance";
