@@ -5759,6 +5759,7 @@
         "spentUntilNow": "Speso finora",
         "summary": "Riepilogo",
         "status": "Stato iniziativa",
+        "voucherStatus": "Stato del bonus",
         "endDate": "Scadenza",
         "amount": "Saldo disponibile",
         "toBeRefunded": "In attesa di rimborso",
@@ -5769,7 +5770,7 @@
         "spendPercentage": "Percentuale riconosciuta",
         "spendValue": "Importo riconosciuto",
         "enrollmentDetails": "Dettagli dell'adesione",
-        "enrollmentDate": "Data",
+        "enrollmentDate": "Bonus emesso il",
         "protocolNumber": "Numero di protocollo",
         "lastUpdate": "Saldo aggiornato al {{dateString}}",
         "buttons": {
@@ -5851,7 +5852,10 @@
         "pleaseWait": "Un attimo di pazienza...",
         "requestSent": {
           "title": "La tua richiesta è stata inviata!",
-          "body": "Riceverai un messaggio con l’esito dell’operazione."
+          "subtitleStart": "Riceverai un ",
+          "subtitleBoldStart": "messaggio su IO ",
+          "subtitleCenter": "quando l’esito della tua richiesta sarà disponibile.\n\nPuoi verificare lo stato della tua richiesta dalla sezione ",
+          "subtitleEnd": "Servizi"
         },
         "button": {
           "continue": "Ok, chiudi"
@@ -5863,7 +5867,7 @@
         },
         "message": {
           "GENERIC": {
-            "title": "Non riusciamo a inviare la richiesta per questa iniziativa",
+            "title": "Non è possibile completare la richiesta per questa iniziativa",
             "subtitle": "Siamo già a lavoro per risolvere. \nRiprova tra un po’."
           },
           "INITIATIVE_NOT_FOUND": {

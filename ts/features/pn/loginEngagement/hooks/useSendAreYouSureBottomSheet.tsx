@@ -29,7 +29,6 @@ export const useSendAreYouSureBottomSheet = () => {
   const dispatch = useIODispatch();
   const { pop } = useIONavigation();
   const { isActivating, requestSendActivation } = useSendActivationFlow();
-
   const {
     bottomSheet: areYouSureBottomSheet,
     present: presentAreYouSureBottomSheet,

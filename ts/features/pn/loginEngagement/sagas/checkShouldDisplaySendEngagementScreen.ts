@@ -37,7 +37,7 @@ export function* checkShouldDisplaySendEngagementScreen(
   const isSendEnabled = yield* select(isSendRemoteEnabledSelector);
   const isSendServiceEnabled = yield* select(isSendServiceEnabledSelector);
 
-  if (typeof isSendServiceEnabled === "undefined") {
+  if (isSendServiceEnabled === undefined) {
     const guid = uuidv4();
 
     const task: FixedTask<void> = yield* fork(function* () {
