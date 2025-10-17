@@ -1,10 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import {
+  aarAdresseeDenominationSelector,
   currentAARFlowData,
   currentAARFlowStateErrorCodes,
   currentAARFlowStateType,
   isAAREnabled,
+  isAarMessageDelegatedSelector,
   thirdPartySenderDenominationSelector
 } from "..";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -12,7 +14,10 @@ import * as appVersion from "../../../../../../utils/appVersion";
 import { thirdPartyFromIdSelector } from "../../../../../messages/store/reducers/thirdPartyById";
 import { toPNMessage } from "../../../../store/types/transformers";
 import { AARFlowState, sendAARFlowStates } from "../../../utils/stateUtils";
-import { sendAarMockStateFactory } from "../../../utils/testUtils";
+import {
+  sendAarMockStateFactory,
+  sendAarMockStates
+} from "../../../utils/testUtils";
 import { INITIAL_AAR_FLOW_STATE } from "../../reducers";
 
 // Mocks
@@ -187,4 +192,87 @@ describe("currentAARFlowStateErrorCodes", () => {
       }
     })
   );
+});
+
+describe("isAarMessageDelegatedSelector", () => {
+  sendAarMockStates.forEach(state => {
+    const mandate = (state as Extract<AARFlowState, { mandateId?: string }>)
+      .mandateId;
+    it(`should return ${mandate !== undefined} when state is ${
+      state.type
+    }, and mandateId is ${mandate}`, () => {
+      const mockGlobalState = {
+        features: {
+          pn: {
+            aarFlow: state
+          }
+        }
+      } as unknown as GlobalState;
+
+      const result = isAarMessageDelegatedSelector(
+        mockGlobalState,
+        "000000000001"
+      );
+      expect(result).toBe(mandate !== undefined);
+    });
+  });
+  it("should return false when the passed iun is different from the one in the state", () => {
+    const state = sendAarMockStateFactory.displayingNotificationData();
+    const mockGlobalState = {
+      features: {
+        pn: {
+          aarFlow: state
+        }
+      }
+    } as unknown as GlobalState;
+
+    const result = isAarMessageDelegatedSelector(
+      mockGlobalState,
+      "different-iun"
+    );
+    expect(result).toBe(false);
+  });
+});
+describe("aarAdresseeDenominationSelector", () => {
+  sendAarMockStates.forEach(state => {
+    const fullName = (
+      state as Extract<
+        AARFlowState,
+        { recipientInfo?: { denomination: string; taxId: string } }
+      >
+    ).recipientInfo?.denomination;
+    it(`should return ${fullName} when state is ${state.type}, and iun matches`, () => {
+      const mockGlobalState = {
+        features: {
+          pn: {
+            aarFlow: state
+          }
+        }
+      } as unknown as GlobalState;
+
+      const result = aarAdresseeDenominationSelector(
+        mockGlobalState,
+        "000000000001"
+      );
+      const expected =
+        "iun" in state && state.iun === "000000000001" ? fullName : undefined;
+      expect(result).toBe(expected);
+    });
+  });
+  it("should return undefined when the passed iun is different from the one in the state", () => {
+    const state = sendAarMockStateFactory.displayingNotificationData();
+    const mockGlobalState = {
+      features: {
+        pn: {
+          aarFlow: state
+        }
+      }
+    } as unknown as GlobalState;
+
+    const result = aarAdresseeDenominationSelector(
+      mockGlobalState,
+      "different-iun"
+    );
+    expect(result).toBeUndefined();
+  });
 });

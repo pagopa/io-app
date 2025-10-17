@@ -1,0 +1,633 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SendEngagementOnFirstAppOpenScreen should match the snapshot 1`] = `
+<RNCSafeAreaView
+  edges={
+    {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "additive",
+    }
+  }
+  style={
+    {
+      "flexGrow": 1,
+    }
+  }
+>
+  <RCTScrollView
+    alwaysBounceVertical={false}
+    centerContent={true}
+    contentContainerStyle={
+      {
+        "alignContent": "center",
+        "alignItems": "stretch",
+        "flexGrow": 1,
+        "justifyContent": "center",
+      }
+    }
+  >
+    <View>
+      <View
+        style={
+          {
+            "display": "flex",
+            "flexDirection": "column",
+            "gap": 24,
+            "padding": 24,
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "alignItems": "center",
+            }
+          }
+        >
+          <RNSVGSvgView
+            align="xMidYMid"
+            bbHeight={120}
+            bbWidth={120}
+            fill="none"
+            focusable={false}
+            height={120}
+            meetOrSlice={0}
+            minX={0}
+            minY={0}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "borderWidth": 0,
+                },
+                {
+                  "flex": 0,
+                  "height": 120,
+                  "width": 120,
+                },
+              ]
+            }
+            vbHeight={240}
+            vbWidth={240}
+            width={120}
+          >
+            <RNSVGGroup
+              fill={null}
+              propList={
+                [
+                  "fill",
+                ]
+              }
+            >
+              <RNSVGPath
+                d="M130.5 73c1.156.432 5.244 2.36 6.34 3.046 10.153 6.36 13.322 21.446 7.077 33.696s-19.539 17.023-29.692 10.662c-10.154-6.36-13.324-21.446-7.079-33.696 2.167-4.25 5.11-7.725 10.354-9.708l2 5.458 6 2.042 4-2.042L131 80z"
+                fill={
+                  {
+                    "payload": 4278240714,
+                    "type": 0,
+                  }
+                }
+                propList={
+                  [
+                    "fill",
+                  ]
+                }
+              />
+              <RNSVGPath
+                d="M129.606 77.474a15.6 15.6 0 0 1 5.423 2.132l.401.26c8.321 5.554 10.853 18.152 5.622 28.413l-.254.484c-5.413 10.063-16.507 13.917-25.012 8.59l-.402-.26c-8.189-5.466-10.77-17.755-5.864-27.923l.243-.49c1.968-3.86 4.759-6.848 7.932-8.805l.53 1.372.301.137c-2.917 1.797-5.505 4.556-7.352 8.18-4.997 9.802-2.317 21.491 5.368 26.305 7.684 4.814 18.101 1.328 23.098-8.474 4.998-9.802 2.318-21.491-5.367-26.305a14 14 0 0 0-4.071-1.733l.005-.02z"
+                fill={
+                  {
+                    "payload": 4289392367,
+                    "type": 0,
+                  }
+                }
+                propList={
+                  [
+                    "fill",
+                  ]
+                }
+              />
+              <RNSVGPath
+                d="m128.529 106.424.068 2.918c-3.108-.205-8.197-.871-9.043-7.68-.014-.18-.011-.37-.016-.552l-2.162-.512.605-2.6 1.765.425c.054-.314.114-.635.189-.957.039-.167.091-.328.134-.494l-1.753-.408.597-2.565 2.072.482c.135-.276.274-.543.426-.797q.98-1.653 2.33-2.75c.902-.733 1.869-1.232 2.908-1.506a6.56 6.56 0 0 1 3.183-.03q.967.226 1.827.775.86.546 1.5 1.368l-1.639 2.037a4.2 4.2 0 0 0-1.053-.988 3.9 3.9 0 0 0-1.253-.54c-1.055-.246-2.055-.158-3.013.272q-1.435.642-2.51 2.096a7 7 0 0 0-.403.604l4.689 1.105-.599 2.57-5.129-1.213q-.066.237-.124.483-.115.493-.189.97l5.099 1.219-.598 2.569-4.57-1.077q.016.168.045.332c.149.9 2.424 5.333 6.617 4.444"
+                fill={
+                  {
+                    "payload": 4289392367,
+                    "type": 0,
+                  }
+                }
+                propList={
+                  [
+                    "fill",
+                  ]
+                }
+              />
+              <RNSVGPath
+                d="M119.925 85.177a2.3 2.3 0 0 1-.864-.624c-.392-.455-12.562-15.842-8.778-25.878 2.637-6.983 10.7-11.484 23.97-13.402.855-.115 8.361-1.03 12.581 2.298l-2.768 3.51c-2.325-1.837-7.414-1.619-9.182-1.381-11.343 1.632-18.413 5.276-20.406 10.535-2.456 6.49 5.922 18.714 7.539 20.851 1.252.241 2.432.355 3.517.342a3.82 3.82 0 0 0 3.114-1.68c.771-1.115-2.08-7.038-2.542-8.325-1.327-3.7-1.193-6.635.397-8.727 1.627-2.145 4.592-3.061 8.804-2.742 19.31 1.468 24.834 10.576 26.057 17.963.398 2.368-.212 4.53-1.75 6.233-4.815 5.332-12.685 5.161-14.145 5.067l-1.289-4.315c4.683.287 9.582-.93 12.126-3.757.627-.696.821-1.458.649-2.495-1.406-8.447-8.809-13.242-21.991-14.239-2.496-.19-4.281.17-4.915 1-.586.776-.499 2.413.259 4.508.954 2.642 3.596 10.076 2.018 12.37a8.27 8.27 0 0 1-6.711 3.617c-1.668.03-3.47-.172-5.361-.612a3 3 0 0 1-.33-.105zm45.418 8.438c-5.713 4.706-8.786 7.157-19.434 6.027l-.469 4.479c10.97-.313 16.118-1.589 22.8-7.12 5.97-4.94 8.071-11.245 8.791-14.497l43.945 2.257.22-4.462-45.92-2.356a2.25 2.25 0 0 0-2.338 2.044c-.004.078-.788 8.036-7.595 13.628"
+                fill={
+                  {
+                    "payload": 4278927075,
+                    "type": 0,
+                  }
+                }
+                propList={
+                  [
+                    "fill",
+                  ]
+                }
+              />
+              <RNSVGPath
+                d="M128.429 46.988c-4.912-1.998-10.516-4.937-13.695-8.058-2.048-2.002-3.033-4.03-2.946-6.017.132-2.901 1.627-5.333 4.207-6.839 4.917-2.866 13.087-2.05 21.301 2.147l-2.03 3.983c-8.238-4.198-14.317-3.85-17.023-2.272-1.279.754-1.934 1.784-2.002 3.178-.028.558.434 1.386 1.252 2.266 4.577 4.934 17.632 9.65 19.642 9.715l.227 4.463c-1.323.08-4.898-.913-8.944-2.555z"
+                fill={
+                  {
+                    "payload": 4278927075,
+                    "type": 0,
+                  }
+                }
+                propList={
+                  [
+                    "fill",
+                  ]
+                }
+              />
+              <RNSVGPath
+                d="M154.87 43.349c-.776-.374-19.211-9.169-26.382-16.826-1.53-1.641-1.953-3.944-1.09-6.015a5.54 5.54 0 0 1 5.002-3.456c4.839-.152 13.095 1.183 24.952 8.401 9.903 6.025 22.165 5.042 39.143 3.698 7.748-.613 16.808-1.306 26.69-1.434l-.22 4.463c-9.737.124-18.439.813-26.12 1.43-17.809 1.424-30.677 2.445-41.818-4.335-10.912-6.645-18.256-7.88-22.49-7.753-.661.023-.919.503-1.007.7-.089.208-.239.76.229 1.252 6.587 7.036 24.857 15.756 25.032 15.843z"
+                fill={
+                  {
+                    "payload": 4278927075,
+                    "type": 0,
+                  }
+                }
+                propList={
+                  [
+                    "fill",
+                  ]
+                }
+              />
+              <RNSVGPath
+                d="M80.474 88.102c4.106 1.132 11.614 4.81 11.614 11.398 0 8.5-14.5 8 5.5 13.5a142 142 0 0 1 8.58 2.626c2.042 3.708 4.923 6.908 8.832 8.374 3.895 1.461 8.264 2.183 12.526 2.34 15.772 11.597 26.495 32.015 7.562 68.66-4.167 6.5-14.8 21.4-24 29h-62c-9.2-7.6-19.833-22.5-24-29-31-60 17.5-76.5 37.5-82 19.998-5.5 5.5-5 5.5-13.5 0-6.8 8-10.5 12-11.5z"
+                fill={
+                  {
+                    "payload": 4289392367,
+                    "type": 0,
+                  }
+                }
+                propList={
+                  [
+                    "fill",
+                  ]
+                }
+              />
+              <RNSVGRect
+                fill={
+                  {
+                    "payload": 4278240714,
+                    "type": 0,
+                  }
+                }
+                height={9}
+                propList={
+                  [
+                    "fill",
+                  ]
+                }
+                rx={4.5}
+                width={49}
+                x={55}
+                y={129}
+              />
+              <RNSVGPath
+                d="M53.328 120c-24 7.667-58.6 37.9-5 97.5M80.04 91c-5 2.167-12.2 7.2-5 14"
+                fill={
+                  {
+                    "payload": 4278190080,
+                    "type": 0,
+                  }
+                }
+                propList={
+                  [
+                    "stroke",
+                    "strokeWidth",
+                    "strokeLinecap",
+                  ]
+                }
+                stroke={
+                  {
+                    "payload": 4278240714,
+                    "type": 0,
+                  }
+                }
+                strokeLinecap={1}
+                strokeWidth={2}
+              />
+            </RNSVGGroup>
+          </RNSVGSvgView>
+        </View>
+        <View
+          style={
+            {
+              "display": "flex",
+              "flexDirection": "column",
+              "gap": 8,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "center",
+              }
+            }
+          >
+            <View
+              accessible={true}
+              style={
+                [
+                  {
+                    "alignItems": "center",
+                    "borderCurve": "continuous",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  {
+                    "borderRadius": 36,
+                    "paddingHorizontal": 12,
+                    "paddingVertical": 6,
+                  },
+                  {
+                    "backgroundColor": "#DBF9FA",
+                  },
+                ]
+              }
+            >
+              <Text
+                allowFontScaling={true}
+                ellipsizeMode="tail"
+                maxFontSizeMultiplier={1.5}
+                numberOfLines={1}
+                style={
+                  [
+                    {},
+                    {
+                      "color": "#003B3D",
+                      "fontFamily": "Titillio",
+                      "fontSize": 12,
+                      "fontStyle": "normal",
+                      "fontWeight": "600",
+                      "lineHeight": 16,
+                    },
+                    {
+                      "alignSelf": "center",
+                      "flexShrink": 1,
+                      "letterSpacing": 0.5,
+                      "textTransform": "uppercase",
+                    },
+                  ]
+                }
+              >
+                Novità
+              </Text>
+            </View>
+          </View>
+          <Text
+            accessibilityRole="header"
+            allowFontScaling={true}
+            dynamicTypeRamp="title2"
+            maxFontSizeMultiplier={1.5}
+            style={
+              [
+                {},
+                {
+                  "color": "#0E0F13",
+                  "fontFamily": "Titillio",
+                  "fontSize": 22,
+                  "fontStyle": "normal",
+                  "fontWeight": "600",
+                  "lineHeight": 33,
+                },
+                {
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            Ricevi su IO le comunicazioni a valore legale e risparmia
+          </Text>
+          <View>
+            <Text
+              allowFontScaling={true}
+              dynamicTypeRamp="body"
+              maxFontSizeMultiplier={1.5}
+              style={
+                [
+                  {},
+                  {
+                    "color": "#555C70",
+                    "fontFamily": "Titillio",
+                    "fontSize": 16,
+                    "fontStyle": "normal",
+                    "fontWeight": "400",
+                    "lineHeight": 24,
+                  },
+                  {
+                    "textAlign": "center",
+                  },
+                ]
+              }
+            >
+              Attiva SEND su IO per ricevere in app le comunicazioni a valore legale, come esiti di pratiche, rimborsi o multe, ed 
+              <Text
+                style={
+                  {
+                    "fontWeight": "600",
+                  }
+                }
+              >
+                evitare le raccomandate e i relativi costi.
+              </Text>
+            </Text>
+          </View>
+        </View>
+        <View
+          style={
+            {
+              "display": "flex",
+              "flexDirection": "column",
+              "gap": 16,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "center",
+              }
+            }
+          >
+            <View
+              accessibilityLabel="Attiva SEND su IO"
+              accessibilityRole="button"
+              accessibilityState={
+                {
+                  "busy": false,
+                  "checked": undefined,
+                  "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "alignSelf": "stretch",
+                  "flexShrink": 0,
+                }
+              }
+              testID="sendEngagementOnFirstAppOpenActionID"
+            >
+              <View
+                style={
+                  [
+                    {
+                      "alignItems": "center",
+                      "borderCurve": "continuous",
+                      "elevation": 0,
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                      "overflow": "hidden",
+                      "textAlignVertical": "center",
+                    },
+                    false,
+                    {
+                      "backgroundColor": undefined,
+                    },
+                    {
+                      "paddingHorizontal": 16,
+                    },
+                    {
+                      "backgroundColor": "#0B3EE3",
+                      "borderColor": "#FFFFFF",
+                      "borderRadius": 8,
+                      "borderWidth": 0,
+                      "height": 48,
+                    },
+                    {},
+                  ]
+                }
+              >
+                <View
+                  style={
+                    [
+                      {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "justifyContent": "center",
+                      },
+                      {
+                        "columnGap": 8,
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  <Text
+                    accessibilityElementsHidden={true}
+                    accessible={false}
+                    allowFontScaling={true}
+                    ellipsizeMode="tail"
+                    importantForAccessibility="no-hide-descendants"
+                    maxFontSizeMultiplier={1.5}
+                    numberOfLines={1}
+                    style={
+                      [
+                        {},
+                        {
+                          "color": "#0E0F13",
+                          "fontFamily": "Titillio",
+                          "fontSize": 16,
+                          "fontStyle": "normal",
+                          "fontWeight": "600",
+                          "lineHeight": undefined,
+                        },
+                        [
+                          {
+                            "textAlign": "auto",
+                          },
+                          {
+                            "color": "#FFFFFF",
+                          },
+                          {
+                            "color": undefined,
+                          },
+                        ],
+                      ]
+                    }
+                  >
+                    Attiva SEND su IO
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              {
+                "alignSelf": "center",
+              }
+            }
+          >
+            <View
+              accessibilityLabel="Non attivare SEND su IO"
+              accessibilityRole="button"
+              accessibilityState={
+                {
+                  "busy": false,
+                  "checked": undefined,
+                  "disabled": false,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                {
+                  "bottom": 14,
+                  "left": 24,
+                  "right": 24,
+                  "top": 14,
+                }
+              }
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "alignSelf": "flex-start",
+                }
+              }
+              testID="sendEngagementOnFirstAppOpenSecondaryActionID"
+            >
+              <View
+                style={
+                  [
+                    {
+                      "alignItems": "center",
+                      "borderCurve": "continuous",
+                      "elevation": 0,
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                      "overflow": "hidden",
+                      "textAlignVertical": "center",
+                    },
+                    false,
+                    {},
+                    {
+                      "paddingHorizontal": 0,
+                    },
+                    {
+                      "backgroundColor": "transparent",
+                      "borderColor": "#0B3EE3",
+                      "borderRadius": 8,
+                      "borderWidth": 0,
+                      "height": undefined,
+                    },
+                    {},
+                  ]
+                }
+              >
+                <View
+                  style={
+                    [
+                      {
+                        "alignItems": "center",
+                        "flexDirection": "row",
+                        "justifyContent": "center",
+                      },
+                      {
+                        "columnGap": 8,
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  <Text
+                    accessibilityElementsHidden={true}
+                    accessible={false}
+                    allowFontScaling={true}
+                    ellipsizeMode="tail"
+                    importantForAccessibility="no-hide-descendants"
+                    maxFontSizeMultiplier={1.5}
+                    numberOfLines={1}
+                    style={
+                      [
+                        {},
+                        {
+                          "color": "#0E0F13",
+                          "fontFamily": "Titillio",
+                          "fontSize": 16,
+                          "fontStyle": "normal",
+                          "fontWeight": "600",
+                          "lineHeight": 20,
+                        },
+                        [
+                          {
+                            "textAlign": "auto",
+                          },
+                          {
+                            "color": "#0B3EE3",
+                          },
+                          {
+                            "color": undefined,
+                          },
+                        ],
+                      ]
+                    }
+                  >
+                    Non attivare SEND su IO
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</RNCSafeAreaView>
+`;
