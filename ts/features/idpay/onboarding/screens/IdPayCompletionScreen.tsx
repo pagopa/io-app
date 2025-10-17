@@ -2,6 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { SafeAreaView } from "react-native";
+import { BodyProps } from "@pagopa/io-app-design-system";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -72,10 +73,40 @@ const IdPayCompletionScreen = () => {
       </SafeAreaView>
     );
   }
+
+  const subtitle: Array<BodyProps> = [
+    {
+      text: I18n.t("idpay.onboarding.success.requestSent.subtitleStart"),
+      style: {
+        textAlign: "center"
+      }
+    },
+    {
+      text: I18n.t("idpay.onboarding.success.requestSent.subtitleBoldStart"),
+      style: {
+        textAlign: "center"
+      },
+      weight: "Semibold"
+    },
+    {
+      text: I18n.t("idpay.onboarding.success.requestSent.subtitleCenter"),
+      style: {
+        textAlign: "center"
+      }
+    },
+    {
+      text: I18n.t("idpay.onboarding.success.requestSent.subtitleEnd"),
+      style: {
+        textAlign: "center"
+      },
+      weight: "Semibold"
+    }
+  ];
+
   return (
     <OperationResultScreenContent
       title={I18n.t("idpay.onboarding.success.requestSent.title")}
-      subtitle={I18n.t("idpay.onboarding.success.requestSent.body")}
+      subtitle={subtitle}
       action={{
         label: I18n.t("idpay.onboarding.success.button.continue"),
         accessibilityLabel: I18n.t("idpay.onboarding.success.button.continue"),

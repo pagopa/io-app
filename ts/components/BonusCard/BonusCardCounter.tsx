@@ -63,7 +63,7 @@ const BonusCardCounter = (props: BonusCardCounter) => {
         {props.label}
       </LabelMini>
       <VSpacer size={4} />
-      <H3 color={isDark ? "blueIO-300" : "blueItalia-500"} style={styles.value}>
+      <H3 color={isDark ? "blueIO-300" : "blueIO-500"} style={styles.value}>
         {props.value}
       </H3>
       {props.type === "ValueWithProgress" && (
@@ -85,7 +85,7 @@ const BonusProgressBar = ({ progress }: BonusProgressBarProps) => {
 
   const progressBarColor: ColorValue = isDark
     ? IOColors["blueIO-300"]
-    : IOColors["blueItalia-500"];
+    : IOColors["blueIO-500"];
 
   const width = useSharedValue(100);
   useEffect(() => {
