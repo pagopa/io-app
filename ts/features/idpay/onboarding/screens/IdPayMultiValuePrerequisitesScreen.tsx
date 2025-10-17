@@ -111,7 +111,7 @@ const MultiValuePrerequisiteItemScreenContent = ({
   const handleContinuePress = () => {
     if (selectedValueIndex === undefined) {
       IOToast.error(
-        I18n.t("idpay.onboarding.boolPrerequisites.emptyValueError")
+        I18n.t("idpay.onboarding.multiPrerequisites.emptyValueError")
       );
       trackIDPayOnboardingAlert({
         screen: "multi_self_declaration",
