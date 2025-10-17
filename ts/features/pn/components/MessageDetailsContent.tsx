@@ -6,39 +6,41 @@ import {
   aarAdresseeDenominationSelector,
   isAarMessageDelegatedSelector
 } from "../aar/store/selectors";
+import { sendShowAbstractSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { isTestEnv } from "../../../utils/environment";
 
 type MessageDetailsContentProps = { message: PNMessage };
 export const MessageDetailsContent = ({
   message
-}: MessageDetailsContentProps) => {
-  const { senderDenomination } = message;
+}: MessageDetailsContentProps) => (
+  <BodySmall>
+    <MaybeDelegationText iun={message.iun} />
+    <MaybeDenomination senderDenomination={message.senderDenomination} />
+    {I18n.t(
+      "features.pn.aar.flow.displayingNotificationData.abstract.title.checkDocuments"
+    )}
+    <MaybeAbstract abstract={message.abstract} />
+  </BodySmall>
+);
 
-  const MaybeDenomination = () =>
-    senderDenomination ? (
-      <BodySmall weight="Regular">
-        {I18n.t(
-          "features.pn.aar.flow.displayingNotificationData.abstract.title.receivedFrom_withDenomination"
-        )}
-        <BodySmall weight="Semibold">{senderDenomination}</BodySmall>
-      </BodySmall>
-    ) : (
-      <BodySmall>
-        {I18n.t(
-          "features.pn.aar.flow.displayingNotificationData.abstract.title.receivedFrom_withoutDenomination"
-        )}
-      </BodySmall>
-    );
+// ---------------- Subcomponents ----------------
 
-  return (
-    <BodySmall>
-      <MaybeDelegationText iun={message.iun} />
-      <MaybeDenomination />
+type MaybeDenominationProps = { senderDenomination: string | undefined };
+const MaybeDenomination = ({ senderDenomination }: MaybeDenominationProps) =>
+  senderDenomination ? (
+    <BodySmall weight="Regular">
       {I18n.t(
-        "features.pn.aar.flow.displayingNotificationData.abstract.title.checkDocuments"
+        "features.pn.aar.flow.displayingNotificationData.abstract.title.receivedFrom_withDenomination"
+      )}
+      <BodySmall weight="Semibold">{senderDenomination}</BodySmall>
+    </BodySmall>
+  ) : (
+    <BodySmall>
+      {I18n.t(
+        "features.pn.aar.flow.displayingNotificationData.abstract.title.receivedFrom_withoutDenomination"
       )}
     </BodySmall>
   );
-};
 
 type MaybeDelegationTextProps = { iun: string };
 const MaybeDelegationText = ({ iun }: MaybeDelegationTextProps) => {
@@ -68,3 +70,16 @@ const MaybeDelegationText = ({ iun }: MaybeDelegationTextProps) => {
     <></>
   );
 };
+
+type MaybeAbstractProps = { abstract: string | undefined };
+const MaybeAbstract = ({ abstract }: MaybeAbstractProps) => {
+  const shouldShowAbstract = useIOSelector(sendShowAbstractSelector);
+  const isEmptyAbstract = abstract == null || abstract.trim().length === 0;
+
+  if (shouldShowAbstract && !isEmptyAbstract) {
+    return <BodySmall testID="abstract">{`\n\n${abstract}`}</BodySmall>;
+  }
+  return <></>;
+};
+
+export const testable = isTestEnv ? { MaybeAbstract } : undefined;
