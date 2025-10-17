@@ -26,7 +26,10 @@ import {
 import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
 import { currentAARFlowStateAssistanceErrorCode } from "../../store/selectors";
 
-const bottomComponent = (onAssistancePress: () => void, errorCode?: string) => (
+const bottomComponent = (
+  onAssistancePress: () => void,
+  assistanceErrorCode?: string
+) => (
   <>
     <Body>{I18n.t("features.pn.aar.flow.ko.GENERIC.detail.subTitle")}</Body>
     <VSpacer size={16} />
@@ -42,7 +45,7 @@ const bottomComponent = (onAssistancePress: () => void, errorCode?: string) => (
       testID="button_assistance"
     />
     <VSpacer size={24} />
-    {errorCode && (
+    {assistanceErrorCode && (
       <>
         <ListItemHeader
           label={I18n.t(
@@ -56,9 +59,9 @@ const bottomComponent = (onAssistancePress: () => void, errorCode?: string) => (
             "features.pn.aar.flow.ko.GENERIC.detail.errorCode"
           )}
           icon="ladybug"
-          value={errorCode}
+          value={assistanceErrorCode}
           numberOfLines={2}
-          onPress={() => clipboardSetStringWithFeedback(errorCode)}
+          onPress={() => clipboardSetStringWithFeedback(assistanceErrorCode)}
           testID="error_code_value"
         />
         <VSpacer size={24} />
