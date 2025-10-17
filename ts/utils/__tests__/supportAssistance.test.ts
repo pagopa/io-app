@@ -1,10 +1,11 @@
+import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
+import MockZendesk from "../../__mocks__/io-react-native-zendesk";
 import {
   anonymousAssistanceAddressWithSubject,
   canShowHelp,
-  handleSendAssistanceLog
+  handleSendAssistanceLog,
+  zendeskSendCategory
 } from "../supportAssistance";
-import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
-import MockZendesk from "../../__mocks__/io-react-native-zendesk";
 
 jest.mock("../../config", () => ({ zendeskEnabled: true }));
 describe("anonymousAssistanceAddress", () => {
@@ -45,5 +46,10 @@ describe("handleSendAssistanceLog", () => {
   it("if the assistanceTool is Zendesk should call the appendLog function", () => {
     handleSendAssistanceLog(ToolEnum.zendesk, "mockedLog");
     expect(MockZendesk.appendLog).toBeCalled();
+  });
+});
+describe("snapshots", () => {
+  it("zendeskSendCategory", () => {
+    expect(zendeskSendCategory).toMatchSnapshot();
   });
 });

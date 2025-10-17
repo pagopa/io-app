@@ -3,9 +3,9 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { ToolEnum } from "../../definitions/content/AssistanceToolConfig";
 import { ZendeskCategory } from "../../definitions/content/ZendeskCategory";
-import { ZendeskConfig } from "../features/zendesk/store/reducers";
 import { getValueOrElse } from "../common/model/RemoteValue";
 import { zendeskEnabled } from "../config";
+import { ZendeskConfig } from "../features/zendesk/store/reducers";
 
 export type ZendeskAppConfig = {
   key: string;
@@ -167,6 +167,15 @@ export const defaultZendeskIDPayCategory: ZendeskCategory = {
     "it-IT": "IDPay",
     "en-EN": "IDPay",
     "de-DE": "IDPay"
+  }
+};
+
+export const zendeskSendCategory: ZendeskCategory = {
+  value: "io_send",
+  description: {
+    "it-IT": "SEND",
+    "en-EN": "SEND",
+    "de-DE": "SEND"
   }
 };
 
