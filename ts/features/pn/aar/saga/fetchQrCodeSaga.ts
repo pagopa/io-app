@@ -76,7 +76,7 @@ export function* fetchAARQrCodeSaga(
         const nextState: AARFlowState = {
           type: sendAARFlowStates.fetchingNotificationData,
           iun,
-          fullNameDestinatario: recipientInfo.denomination,
+          recipientInfo: { ...recipientInfo },
           mandateId
         };
         yield* put(setAarFlowState(nextState));
@@ -86,7 +86,7 @@ export function* fetchAARQrCodeSaga(
         const notAddresseeFinalState: AARFlowState = {
           type: sendAARFlowStates.notAddresseeFinal,
           iun: value.iun,
-          fullNameDestinatario: value.recipientInfo.denomination,
+          recipientInfo: { ...value.recipientInfo },
           qrCode
         };
         yield* put(setAarFlowState(notAddresseeFinalState));

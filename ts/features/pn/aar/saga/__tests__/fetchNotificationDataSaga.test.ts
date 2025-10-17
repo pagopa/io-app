@@ -31,7 +31,10 @@ const mockCurrentState = {
   type: sendAARFlowStates.fetchingNotificationData,
   iun: "IUN123",
   mandateId: "MANDATE123",
-  fullNameDestinatario: "Mario Rossi"
+  recipientInfo: {
+    denomination: "Mario Rossi",
+    taxId: "RSSMRA74D22A001Q"
+  }
 };
 
 const { aarMessageDataPayloadFromResponse } = testable!;
@@ -252,7 +255,7 @@ describe("fetchAarDataSaga", () => {
           setAarFlowState({
             type: sendAARFlowStates.displayingNotificationData,
             notification: mockNotification,
-            fullNameDestinatario: mockCurrentState.fullNameDestinatario,
+            recipientInfo: mockCurrentState.recipientInfo,
             mandateId: mockPayload.mandateId,
             iun: mockPayload.iun,
             pnServiceId: mockPayload.pnServiceID

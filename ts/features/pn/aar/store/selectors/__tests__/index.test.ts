@@ -241,8 +241,11 @@ describe("isAarMessageDelegatedSelector", () => {
 describe("aarAdresseeDenominationSelector", () => {
   sendAarMockStates.forEach(state => {
     const fullName = (
-      state as Extract<AARFlowState, { fullNameDestinatario?: string }>
-    ).fullNameDestinatario;
+      state as Extract<
+        AARFlowState,
+        { recipientInfo?: { denomination: string; taxId: string } }
+      >
+    ).recipientInfo?.denomination;
     it(`should return ${fullName} when state is ${state.type}, and iun matches`, () => {
       const mockGlobalState = {
         features: {

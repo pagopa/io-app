@@ -61,7 +61,10 @@ describe("fetchQrCodeSaga", () => {
         const successState: AARFlowState = {
           type: sendAARFlowStates.fetchingNotificationData,
           iun: "123123",
-          fullNameDestinatario: "nomecognome",
+          recipientInfo: {
+            denomination: "Mario Rossi",
+            taxId: "RSSMRA74D22A001Q"
+          },
           mandateId
         };
         const successResponse = E.right({
@@ -70,8 +73,8 @@ describe("fetchQrCodeSaga", () => {
           value: {
             iun: "123123",
             recipientInfo: {
-              denomination: "nomecognome",
-              taxId: "taxID"
+              denomination: "Mario Rossi",
+              taxId: "RSSMRA74D22A001Q"
             },
             mandateId
           }
@@ -106,7 +109,10 @@ describe("fetchQrCodeSaga", () => {
       const notAddresseeState: AARFlowState = {
         type: sendAARFlowStates.notAddresseeFinal,
         iun: "123123",
-        fullNameDestinatario: "nomecognome",
+        recipientInfo: {
+          denomination: "Mario Rossi",
+          taxId: "RSSMRA74D22A001Q"
+        },
         qrCode: aQRCode
       };
       const notAddresseeResponse = E.right({
@@ -115,8 +121,8 @@ describe("fetchQrCodeSaga", () => {
         value: {
           iun: "123123",
           recipientInfo: {
-            denomination: "nomecognome",
-            taxId: "taxID"
+            denomination: "Mario Rossi",
+            taxId: "RSSMRA74D22A001Q"
           }
         }
       });
