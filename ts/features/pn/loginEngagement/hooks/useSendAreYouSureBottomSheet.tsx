@@ -7,7 +7,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import i18n from "i18next";
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -15,13 +15,21 @@ import { setSendEngagementScreenHasBeenDismissed } from "../store/actions";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { pnPrivacyUrlsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { setSecurityAdviceReadyToShow } from "../../../authentication/fastLogin/store/actions/securityAdviceActions";
+import {
+  trackSendActivationAccepted,
+  trackSendActivationDeclined,
+  trackSendNurturingDialogClosure
+} from "../../analytics/send";
+import { ANALYTICS_NOTIFICATION_MODAL_FLOW } from "../utils/constants";
 import { useSendActivationFlow } from "./useSendActivationFlow";
 
 export const useSendAreYouSureBottomSheet = () => {
+  const ctaPressed = useRef(false);
   const { privacy, tos } = useIOSelector(pnPrivacyUrlsSelector);
   const dispatch = useIODispatch();
   const { pop } = useIONavigation();
   const { isActivating, requestSendActivation } = useSendActivationFlow();
+
   const {
     bottomSheet: areYouSureBottomSheet,
     present: presentAreYouSureBottomSheet,
@@ -64,7 +72,15 @@ export const useSendAreYouSureBottomSheet = () => {
               "features.pn.loginEngagement.send.areYouSureBottomSheet.action"
             )}
             fullWidth
-            onPress={requestSendActivation}
+            onPress={() => {
+              // eslint-disable-next-line functional/immutable-data
+              ctaPressed.current = true;
+              trackSendActivationAccepted(
+                "nurturing_bottomsheet",
+                ANALYTICS_NOTIFICATION_MODAL_FLOW
+              );
+              requestSendActivation();
+            }}
             loading={isActivating}
           />
           <View>
@@ -75,6 +91,9 @@ export const useSendAreYouSureBottomSheet = () => {
               variant="link"
               textAlign="center"
               onPress={() => {
+                // eslint-disable-next-line functional/immutable-data
+                ctaPressed.current = true;
+                trackSendActivationDeclined(ANALYTICS_NOTIFICATION_MODAL_FLOW);
                 dispatch(setSendEngagementScreenHasBeenDismissed());
                 dispatch(setSecurityAdviceReadyToShow(true));
                 pop();
@@ -84,7 +103,12 @@ export const useSendAreYouSureBottomSheet = () => {
           <VSpacer size={8} />
         </VStack>
       </VStack>
-    )
+    ),
+    onDismiss: () => {
+      if (ctaPressed.current) {
+        trackSendNurturingDialogClosure(ANALYTICS_NOTIFICATION_MODAL_FLOW);
+      }
+    }
   });
 
   useFocusEffect(
