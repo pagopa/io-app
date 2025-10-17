@@ -31,8 +31,8 @@ const mockCurrentState = {
   iun: "IUN123",
   mandateId: "MANDATE123",
   recipientInfo: {
-    denomination: "nomecognome",
-    taxId: "taxID"
+    denomination: "Mario Rossi",
+    taxId: "RSSMRA74D22A001Q"
   }
 };
 

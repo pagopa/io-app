@@ -22,15 +22,15 @@ export const sendAarMockStateFactory: Record<
     type: "fetchingNotificationData",
     iun: "000000000001",
     recipientInfo: {
-      denomination: "nomecognome",
-      taxId: "taxID"
+      denomination: "Mario Rossi",
+      taxId: "RSSMRA74D22A001Q"
     }
   }),
   displayingNotificationData: () => ({
     type: "displayingNotificationData",
     recipientInfo: {
-      denomination: "nomecognome",
-      taxId: "taxID"
+      denomination: "Mario Rossi",
+      taxId: "RSSMRA74D22A001Q"
     },
     notification: {},
     iun: "000000000001",
@@ -40,8 +40,8 @@ export const sendAarMockStateFactory: Record<
   notAddresseeFinal: () => ({
     type: "notAddresseeFinal",
     recipientInfo: {
-      denomination: "nomecognome",
-      taxId: "taxID"
+      denomination: "Mario Rossi",
+      taxId: "RSSMRA74D22A001Q"
     },
     qrCode: "https://www.google.com",
     iun: "000000000001"

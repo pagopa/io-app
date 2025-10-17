@@ -72,8 +72,8 @@ describe("watchAarFlowSaga", () => {
       const action = setAarFlowState({
         type: sendAARFlowStates.fetchingNotificationData,
         recipientInfo: {
-          denomination: "nomecognome",
-          taxId: "taxID"
+          denomination: "Mario Rossi",
+          taxId: "RSSMRA74D22A001Q"
         },
         iun: "123"
       });

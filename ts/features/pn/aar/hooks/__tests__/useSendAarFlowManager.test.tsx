@@ -79,8 +79,8 @@ describe("useSendAarFlowManager", () => {
     const value: AARFlowState = {
       type: sendAARFlowStates.displayingNotificationData,
       recipientInfo: {
-        denomination: "nomecognome",
-        taxId: "taxID"
+        denomination: "Mario Rossi",
+        taxId: "RSSMRA74D22A001Q"
       },
       notification: {},
       mandateId: "mandateID",

@@ -81,7 +81,7 @@ export function* fetchAarDataSaga(
       setAarFlowState({
         type: sendAARFlowStates.displayingNotificationData,
         notification: value,
-        recipientInfo: currentState.recipientInfo,
+        recipientInfo: { ...currentState.recipientInfo },
         mandateId: currentState.mandateId,
         iun: currentState.iun,
         pnServiceId: payload.pnServiceID
