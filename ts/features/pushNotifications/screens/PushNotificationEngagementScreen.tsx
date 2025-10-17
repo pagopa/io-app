@@ -1,7 +1,7 @@
 import i18next from "i18next";
 import { Body, HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import { useCallback, useEffect } from "react";
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { WhatsNewScreenContent } from "../../../components/screens/WhatsNewScreenContent";
 import {
   AppParamsList,
@@ -18,15 +18,15 @@ import { usePushNotificationEngagement } from "../hooks/usePushNotificationEngag
 export type PushNotificationEngagementScreenNavigationParams = {
   flow: NotificationModalFlow;
 };
+type PushNotificationEngagementScreenProps = NativeStackScreenProps<
+  AppParamsList,
+  typeof NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT
+>;
 
-export const PushNotificationEngagementScreen = () => {
-  const { flow } =
-    useRoute<
-      RouteProp<
-        AppParamsList,
-        typeof NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT
-      >
-    >().params;
+export const PushNotificationEngagementScreen = ({
+  route
+}: PushNotificationEngagementScreenProps) => {
+  const { flow } = route.params;
   const { shouldRenderBlankPage, onButtonPress } =
     usePushNotificationEngagement(flow);
 

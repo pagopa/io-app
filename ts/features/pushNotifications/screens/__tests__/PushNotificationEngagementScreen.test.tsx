@@ -99,7 +99,7 @@ describe("PushNotificationEngagementScreen", () => {
 const renderScreen = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    () => <PushNotificationEngagementScreen />,
+    PushNotificationEngagementScreen,
     NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT,
     { flow: "send_notification_opening" },
     createStore(appReducer, globalState as any)
