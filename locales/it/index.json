@@ -6436,6 +6436,10 @@
       "chat": "Chiedi aiuto in chat",
       "additionalDataTitle": "Dati aggiuntivi",
       "copyAll": "Copia tutti"
+    },
+    "slowdowns_results_screen": {
+      "title": "Sembra che le cose vadano un po' a rilento",
+      "subtitle": "Potreste essere in tanti in questo momento.\nPuoi riprovare tra qualche minuto, o puoi richiedere il bonus dal sito dedicato."
     }
   },
   "barcodeScan": {
