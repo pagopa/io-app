@@ -4,11 +4,11 @@ import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import PN_ROUTES from "../../navigation/routes";
 import { MessageBottomMenu } from "../MessageBottomMenu";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 import { NotificationStatusHistory } from "../../../../../definitions/pn/NotificationStatusHistory";
 
 jest.mock("../TimelineListItem");
+jest.mock("../NeedHelp");
 jest.mock("../../../messages/components/MessageDetail/ContactsListItem");
 jest.mock("../../../messages/components/MessageDetail/ShowMoreListItem");
 
@@ -795,7 +795,6 @@ const renderComponent = (
         messageId={"01HVPB9XYZMWNEPTDKZJ8ZJV28"}
         paidNoticeCodes={paidNoticeCodes}
         payments={payments}
-        serviceId={"01HT25YR72A8N42AJ0TEKAB2V7" as ServiceId}
       />
     ),
     PN_ROUTES.MESSAGE_DETAILS,

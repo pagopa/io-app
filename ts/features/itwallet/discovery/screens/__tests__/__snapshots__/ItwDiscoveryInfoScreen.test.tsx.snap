@@ -1805,7 +1805,7 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true and 
                                       >
                                         <Text
                                           allowFontScaling={true}
-                                          dynamicTypeRamp="footnote"
+                                          dynamicTypeRamp="body"
                                           maxFontSizeMultiplier={1.5}
                                           style={
                                             [
@@ -1813,10 +1813,10 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true and 
                                               {
                                                 "color": "#FFFFFF",
                                                 "fontFamily": "Titillio",
-                                                "fontSize": 14,
+                                                "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "400",
-                                                "lineHeight": 21,
+                                                "lineHeight": 24,
                                               },
                                             ]
                                           }
@@ -1996,7 +1996,7 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true and 
                                       >
                                         <Text
                                           allowFontScaling={true}
-                                          dynamicTypeRamp="footnote"
+                                          dynamicTypeRamp="body"
                                           maxFontSizeMultiplier={1.5}
                                           style={
                                             [
@@ -2004,10 +2004,10 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true and 
                                               {
                                                 "color": "#FFFFFF",
                                                 "fontFamily": "Titillio",
-                                                "fontSize": 14,
+                                                "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "400",
-                                                "lineHeight": 21,
+                                                "lineHeight": 24,
                                               },
                                             ]
                                           }
@@ -2173,7 +2173,7 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true and 
                                       >
                                         <Text
                                           allowFontScaling={true}
-                                          dynamicTypeRamp="footnote"
+                                          dynamicTypeRamp="body"
                                           maxFontSizeMultiplier={1.5}
                                           style={
                                             [
@@ -2181,10 +2181,10 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true and 
                                               {
                                                 "color": "#FFFFFF",
                                                 "fontFamily": "Titillio",
-                                                "fontSize": 14,
+                                                "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "400",
-                                                "lineHeight": 21,
+                                                "lineHeight": 24,
                                               },
                                             ]
                                           }
@@ -2350,7 +2350,7 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true and 
                                       >
                                         <Text
                                           allowFontScaling={true}
-                                          dynamicTypeRamp="footnote"
+                                          dynamicTypeRamp="body"
                                           maxFontSizeMultiplier={1.5}
                                           style={
                                             [
@@ -2358,10 +2358,10 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true and 
                                               {
                                                 "color": "#FFFFFF",
                                                 "fontFamily": "Titillio",
-                                                "fontSize": 14,
+                                                "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "400",
-                                                "lineHeight": 21,
+                                                "lineHeight": 24,
                                               },
                                             ]
                                           }
@@ -2513,7 +2513,7 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true and 
                                       >
                                         <Text
                                           allowFontScaling={true}
-                                          dynamicTypeRamp="footnote"
+                                          dynamicTypeRamp="body"
                                           maxFontSizeMultiplier={1.5}
                                           style={
                                             [
@@ -2521,10 +2521,10 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is true and 
                                               {
                                                 "color": "#FFFFFF",
                                                 "fontFamily": "Titillio",
-                                                "fontSize": 14,
+                                                "fontSize": 16,
                                                 "fontStyle": "normal",
                                                 "fontWeight": "400",
-                                                "lineHeight": 21,
+                                                "lineHeight": 24,
                                               },
                                             ]
                                           }
