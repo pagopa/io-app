@@ -666,7 +666,8 @@
         "nameSurname": "Nome e cognome",
         "fiscalCode": "Codice Fiscale",
         "birthDate" : "Data di nascita"
-      }
+      },
+      "deleteState" : "Stato cancellazione profilo"
     },
     "security": {
       "title": "Sicurezza e accesso",
