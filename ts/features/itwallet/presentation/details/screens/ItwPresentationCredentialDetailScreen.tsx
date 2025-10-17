@@ -57,7 +57,6 @@ import { ItwPresentationClaimsSection } from "../components/ItwPresentationClaim
 import { ItwPresentationCredentialInfoAlert } from "../components/ItwPresentationCredentialInfoAlert.tsx";
 import { ItwPresentationCredentialStatusAlert } from "../components/ItwPresentationCredentialStatusAlert.tsx";
 import { ItwPresentationCredentialUnknownStatus } from "../components/ItwPresentationCredentialUnknownStatus.tsx";
-import { ItwPresentationCredentialVerificationExpired } from "../components/ItwPresentationCredentialVerificationExpired.tsx";
 import { ItwPresentationDetailsFooter } from "../components/ItwPresentationDetailsFooter.tsx";
 import { ItwPresentationDetailsHeader } from "../components/ItwPresentationDetailsHeader.tsx";
 import {
@@ -286,12 +285,6 @@ export const ItwPresentationCredentialDetail = ({
 
   if (status === "unknown") {
     return <ItwPresentationCredentialUnknownStatus credential={credential} />;
-  }
-
-  if (status === "jwtExpired") {
-    return (
-      <ItwPresentationCredentialVerificationExpired credential={credential} />
-    );
   }
 
   return (

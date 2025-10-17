@@ -13,13 +13,13 @@ import { ItwSkeumorphicCard } from "../../../common/components/ItwSkeumorphicCar
 import { FlipGestureDetector } from "../../../common/components/ItwSkeumorphicCard/FlipGestureDetector.tsx";
 import { getThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
-import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
 import { ItwBadge } from "../../../common/components/ItwBadge.tsx";
 import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
 import { ItwPresentationCredentialCardFlipButton } from "./ItwPresentationCredentialCardFlipButton.tsx";
+import { useEffectiveCredentialStatus } from "../hooks/useEffectiveCredentialStatus";
 
 type Props = {
   credential: StoredCredential;
@@ -33,10 +33,7 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const navigation = useIONavigation();
   const [isFlipped, setIsFlipped] = useState(false);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
-
-  const { status = "valid" } = useIOSelector(state =>
-    itwCredentialStatusSelector(state, credential.credentialType)
-  );
+  const status = useEffectiveCredentialStatus(credential.credentialType);
 
   const handleFlipButtonPress = useCallback(() => {
     trackWalletShowBack(
