@@ -1,3 +1,4 @@
+import { parse as textLintParse } from "@textlint/markdown-to-ast";
 import {
   AnyTxtNode,
   TxtHeaderNode,
@@ -8,9 +9,7 @@ import {
   TxtParentNode,
   TxtStrNode
 } from "@textlint/ast-node-types";
-import { parse as textLintParse } from "@textlint/markdown-to-ast";
 import { omit } from "lodash";
-import { Text } from "react-native";
 import { isIos } from "../../utils/platform";
 import { AnyTxtNodeWithSpacer, IOMarkdownRenderRules, Renderer } from "./types";
 
@@ -21,34 +20,18 @@ import { AnyTxtNodeWithSpacer, IOMarkdownRenderRules, Renderer } from "./types";
  */
 export function getRenderMarkdown(
   rules: IOMarkdownRenderRules,
-  screenReaderEnabled: boolean,
-  textAlign?: "left" | "center" | "right"
+  screenReaderEnabled: boolean
 ): Renderer {
-  return (content: AnyTxtNodeWithSpacer) => {
+  return (content: AnyTxtNodeWithSpacer) =>
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const rendered = rules[content.type]?.(
+    rules[content.type]?.(
       content,
-      getRenderMarkdown(rules, screenReaderEnabled, textAlign),
+      getRenderMarkdown(rules, screenReaderEnabled),
       screenReaderEnabled
-    );
-
-    if (!rendered) {
-      return null;
-    }
-
-    // Wrap rendered node in a center-aligned container
-    return (
-      <Text
-        style={{
-          textAlign
-        }}
-      >
-        {rendered}
-      </Text>
-    );
-  };
+    ) ?? null;
 }
+
 /**
  * This component extends the `parse` method of `@textlint/markdown-to-ast` by inserting a custom node with type `Spacer` between first-level nodes that have at least one empty line between them.
  *
