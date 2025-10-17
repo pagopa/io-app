@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SendAARErrorComponent - Full Test Suite should match snapshot 1`] = `
+exports[`SendAARErrorComponent - Full Test Suite should match snapshot and call useDebugInfo to display proper debug data 1`] = `
 <View
   style={
     {
@@ -924,254 +924,299 @@ exports[`SendAARErrorComponent - Full Test Suite should match snapshot 1`] = `
                           </View>
                         </RCTScrollView>
                       </RNCSafeAreaView>
-                      <Text
-                        allowFontScaling={true}
-                        dynamicTypeRamp="body"
-                        maxFontSizeMultiplier={1.5}
-                        style={
-                          [
-                            {},
-                            {
-                              "color": "#555C70",
-                              "fontFamily": "Titillio",
-                              "fontSize": 16,
-                              "fontStyle": "normal",
-                              "fontWeight": "400",
-                              "lineHeight": 24,
-                            },
-                          ]
-                        }
-                      >
-                        Prendi nota del codice di errore, potrebbe servirti per richiedere assistenza.
-                      </Text>
-                      <View
-                        style={
+                      <Modal
+                        accessible={false}
+                        backdropComponent={[Function]}
+                        backgroundStyle={
                           {
-                            "height": 16,
+                            "backgroundColor": "#FFFFFF",
                           }
                         }
-                      />
-                      <View
+                        enableDismissOnClose={true}
+                        enableDynamicSizing={true}
+                        footerComponent={[Function]}
+                        handleComponent={[Function]}
+                        hardwareAccelerated={false}
+                        importantForAccessibility="yes"
+                        maxDynamicContentSize={1334}
+                        onDismiss={[Function]}
                         style={
                           {
-                            "marginHorizontal": -24,
-                            "paddingHorizontal": 24,
-                            "paddingVertical": 12,
+                            "borderCurve": "continuous",
+                            "borderTopLeftRadius": 24,
+                            "borderTopRightRadius": 24,
+                            "overflow": "hidden",
                           }
                         }
+                        visible={true}
                       >
-                        <View
+                        <RCTScrollView
+                          overScrollMode="never"
                           style={
                             {
-                              "alignItems": "center",
-                              "flexDirection": "row",
-                              "justifyContent": "space-between",
+                              "paddingHorizontal": 24,
                             }
                           }
                         >
-                          <View
-                            style={
-                              {
-                                "flex": 1,
-                              }
-                            }
-                          >
-                            <View
-                              accessibilityLabel="Contatta l'assistenza"
-                              accessibilityRole="header"
-                              accessible={true}
-                            >
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="headline"
-                                maxFontSizeMultiplier={1.5}
-                                role="heading"
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 24,
-                                    },
-                                  ]
-                                }
-                              >
-                                Contatta l'assistenza
-                              </Text>
-                            </View>
-                          </View>
-                        </View>
-                      </View>
-                      <View
-                        accessibilityLabel="Chiedi aiuto in chat"
-                        accessibilityRole="button"
-                        accessibilityState={
-                          {
-                            "busy": undefined,
-                            "checked": undefined,
-                            "disabled": undefined,
-                            "expanded": undefined,
-                            "selected": undefined,
-                          }
-                        }
-                        accessibilityValue={
-                          {
-                            "max": undefined,
-                            "min": undefined,
-                            "now": undefined,
-                            "text": undefined,
-                          }
-                        }
-                        accessible={true}
-                        collapsable={false}
-                        focusable={true}
-                        onBlur={[Function]}
-                        onClick={[Function]}
-                        onFocus={[Function]}
-                        onResponderGrant={[Function]}
-                        onResponderMove={[Function]}
-                        onResponderRelease={[Function]}
-                        onResponderTerminate={[Function]}
-                        onResponderTerminationRequest={[Function]}
-                        onStartShouldSetResponder={[Function]}
-                        onTouchEnd={[Function]}
-                      >
-                        <View
-                          accessibilityElementsHidden={true}
-                          importantForAccessibility="no-hide-descendants"
-                          style={
-                            [
-                              {
-                                "marginHorizontal": -24,
-                                "paddingHorizontal": 24,
-                                "paddingVertical": 12,
-                              },
-                              {
-                                "backgroundColor": undefined,
-                              },
-                            ]
-                          }
-                        >
-                          <View
-                            style={
-                              [
-                                {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "justifyContent": "space-between",
-                                },
-                                {
-                                  "columnGap": 18,
-                                },
-                                {
-                                  "transform": [
-                                    {
-                                      "scale": undefined,
-                                    },
-                                  ],
-                                },
-                              ]
-                            }
-                          >
-                            <RNSVGSvgView
-                              accessibilityElementsHidden={true}
-                              accessibilityLabel=""
-                              accessible={false}
-                              align="xMidYMid"
-                              bbHeight={36}
-                              bbWidth={36}
-                              color="#0B3EE3"
-                              focusable={false}
-                              height={36}
-                              importantForAccessibility="no-hide-descendants"
-                              meetOrSlice={0}
-                              minX={0}
-                              minY={0}
+                          <View>
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="body"
+                              maxFontSizeMultiplier={1.5}
                               style={
                                 [
+                                  {},
                                   {
-                                    "backgroundColor": "transparent",
-                                    "borderWidth": 0,
-                                  },
-                                  {
-                                    "flex": 0,
-                                    "height": 36,
-                                    "width": 36,
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 24,
                                   },
                                 ]
                               }
-                              vbHeight={24}
-                              vbWidth={24}
-                              width={36}
                             >
-                              <RNSVGGroup
-                                fill={
-                                  {
-                                    "payload": 4278190080,
-                                    "type": 0,
-                                  }
-                                }
-                              >
-                                <RNSVGPath
-                                  clipRule={0}
-                                  d="M0 9c0-4.97056 4.02944-9 9-9 4.9706 0 9 4.02944 9 9 0 4.9706-4.0294 9-9 9H3c-1.65685 0-3-1.3431-3-3V9Zm9-7C5.13401 2 2 5.13401 2 9v6c0 .5523.44772 1 1 1h6c3.866 0 7-3.134 7-7 0-3.86599-3.134-7-7-7ZM4.99808 7C4.44686 7 4 7.44686 4 7.99808c0 .55123.44686.99808.99808.99808h8.00382c.5512 0 .9981-.44685.9981-.99808C14 7.44686 13.5531 7 13.0019 7H4.99808Zm-.00143 4C4.44621 11 4 11.4462 4 11.9966c0 .5505.44621.9967.99665.9967h4.0067c.55044 0 .99665-.4462.99665-.9967C10 11.4462 9.55379 11 9.00335 11h-4.0067ZM21.8292 9.13773c-.3598-.41906-.9911-.46716-1.4102-.10743-.419.35973-.4671.9911-.1074 1.4101a7.00025 7.00025 0 0 1 1.6841 4.8099c.0031 1.2586.0017 4.1954.0007 5.7448-.0004.5514-.4457.9983-.9971.9988-1.7351.0017-5.1759.0043-5.6862-.001-1.759-.0183-3.4799-.5073-4.8248-1.6411-.4222-.356-1.05312-.3022-1.40909.12-.35598.4223-.30224 1.0532.12002 1.4091 1.72917 1.4578 3.94387 2.2111 6.20327 2.11.4038.0061 4.1864.004 6.5962.0019 1.1037-.0009 1.9957-.8955 1.9957-1.9992v-6.6717c.0809-2.2602-.6921-4.4681-2.1652-6.18417Z"
-                                  fill={
-                                    {
-                                      "type": 2,
-                                    }
-                                  }
-                                  fillRule={0}
-                                  propList={
-                                    [
-                                      "fill",
-                                      "fillRule",
-                                    ]
-                                  }
-                                />
-                              </RNSVGGroup>
-                            </RNSVGSvgView>
+                              Prendi nota del codice di errore, potrebbe servirti per richiedere assistenza.
+                            </Text>
                             <View
                               style={
                                 {
-                                  "flexGrow": 1,
-                                  "flexShrink": 1,
+                                  "height": 16,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "marginHorizontal": -24,
+                                  "paddingHorizontal": 24,
+                                  "paddingVertical": 12,
                                 }
                               }
                             >
-                              <Text
-                                allowFontScaling={true}
-                                maxFontSizeMultiplier={1.5}
+                              <View
+                                style={
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "space-between",
+                                  }
+                                }
+                              >
+                                <View
+                                  style={
+                                    {
+                                      "flex": 1,
+                                    }
+                                  }
+                                >
+                                  <View
+                                    accessibilityLabel="Contatta l'assistenza"
+                                    accessibilityRole="header"
+                                    accessible={true}
+                                  >
+                                    <Text
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="headline"
+                                      maxFontSizeMultiplier={1.5}
+                                      role="heading"
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#555C70",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": 24,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Contatta l'assistenza
+                                    </Text>
+                                  </View>
+                                </View>
+                              </View>
+                            </View>
+                            <View
+                              accessibilityLabel="Chiedi aiuto in chat"
+                              accessibilityRole="button"
+                              accessibilityState={
+                                {
+                                  "busy": undefined,
+                                  "checked": undefined,
+                                  "disabled": undefined,
+                                  "expanded": undefined,
+                                  "selected": undefined,
+                                }
+                              }
+                              accessibilityValue={
+                                {
+                                  "max": undefined,
+                                  "min": undefined,
+                                  "now": undefined,
+                                  "text": undefined,
+                                }
+                              }
+                              accessible={true}
+                              collapsable={false}
+                              focusable={true}
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onResponderGrant={[Function]}
+                              onResponderMove={[Function]}
+                              onResponderRelease={[Function]}
+                              onResponderTerminate={[Function]}
+                              onResponderTerminationRequest={[Function]}
+                              onStartShouldSetResponder={[Function]}
+                              onTouchEnd={[Function]}
+                            >
+                              <View
+                                accessibilityElementsHidden={true}
+                                importantForAccessibility="no-hide-descendants"
                                 style={
                                   [
-                                    {},
                                     {
-                                      "color": "#0B3EE3",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 20,
+                                      "marginHorizontal": -24,
+                                      "paddingHorizontal": 24,
+                                      "paddingVertical": 12,
+                                    },
+                                    {
+                                      "backgroundColor": undefined,
                                     },
                                   ]
                                 }
                               >
-                                Chiedi aiuto in chat
-                              </Text>
+                                <View
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "space-between",
+                                      },
+                                      {
+                                        "columnGap": 18,
+                                      },
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": undefined,
+                                          },
+                                        ],
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <RNSVGSvgView
+                                    accessibilityElementsHidden={true}
+                                    accessibilityLabel=""
+                                    accessible={false}
+                                    align="xMidYMid"
+                                    bbHeight={36}
+                                    bbWidth={36}
+                                    color="#0B3EE3"
+                                    focusable={false}
+                                    height={36}
+                                    importantForAccessibility="no-hide-descendants"
+                                    meetOrSlice={0}
+                                    minX={0}
+                                    minY={0}
+                                    style={
+                                      [
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderWidth": 0,
+                                        },
+                                        {
+                                          "flex": 0,
+                                          "height": 36,
+                                          "width": 36,
+                                        },
+                                      ]
+                                    }
+                                    vbHeight={24}
+                                    vbWidth={24}
+                                    width={36}
+                                  >
+                                    <RNSVGGroup
+                                      fill={
+                                        {
+                                          "payload": 4278190080,
+                                          "type": 0,
+                                        }
+                                      }
+                                    >
+                                      <RNSVGPath
+                                        clipRule={0}
+                                        d="M0 9c0-4.97056 4.02944-9 9-9 4.9706 0 9 4.02944 9 9 0 4.9706-4.0294 9-9 9H3c-1.65685 0-3-1.3431-3-3V9Zm9-7C5.13401 2 2 5.13401 2 9v6c0 .5523.44772 1 1 1h6c3.866 0 7-3.134 7-7 0-3.86599-3.134-7-7-7ZM4.99808 7C4.44686 7 4 7.44686 4 7.99808c0 .55123.44686.99808.99808.99808h8.00382c.5512 0 .9981-.44685.9981-.99808C14 7.44686 13.5531 7 13.0019 7H4.99808Zm-.00143 4C4.44621 11 4 11.4462 4 11.9966c0 .5505.44621.9967.99665.9967h4.0067c.55044 0 .99665-.4462.99665-.9967C10 11.4462 9.55379 11 9.00335 11h-4.0067ZM21.8292 9.13773c-.3598-.41906-.9911-.46716-1.4102-.10743-.419.35973-.4671.9911-.1074 1.4101a7.00025 7.00025 0 0 1 1.6841 4.8099c.0031 1.2586.0017 4.1954.0007 5.7448-.0004.5514-.4457.9983-.9971.9988-1.7351.0017-5.1759.0043-5.6862-.001-1.759-.0183-3.4799-.5073-4.8248-1.6411-.4222-.356-1.05312-.3022-1.40909.12-.35598.4223-.30224 1.0532.12002 1.4091 1.72917 1.4578 3.94387 2.2111 6.20327 2.11.4038.0061 4.1864.004 6.5962.0019 1.1037-.0009 1.9957-.8955 1.9957-1.9992v-6.6717c.0809-2.2602-.6921-4.4681-2.1652-6.18417Z"
+                                        fill={
+                                          {
+                                            "type": 2,
+                                          }
+                                        }
+                                        fillRule={0}
+                                        propList={
+                                          [
+                                            "fill",
+                                            "fillRule",
+                                          ]
+                                        }
+                                      />
+                                    </RNSVGGroup>
+                                  </RNSVGSvgView>
+                                  <View
+                                    style={
+                                      {
+                                        "flexGrow": 1,
+                                        "flexShrink": 1,
+                                      }
+                                    }
+                                  >
+                                    <Text
+                                      allowFontScaling={true}
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#0B3EE3",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": 20,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Chiedi aiuto in chat
+                                    </Text>
+                                  </View>
+                                </View>
+                              </View>
                             </View>
+                            <View
+                              style={
+                                {
+                                  "height": 24,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "height": 0,
+                                }
+                              }
+                            />
                           </View>
-                        </View>
-                      </View>
-                      <View
-                        style={
-                          {
-                            "height": 24,
-                          }
-                        }
-                      />
+                        </RCTScrollView>
+                      </Modal>
                     </View>
                   </View>
                 </View>

@@ -3,6 +3,12 @@ import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson
 import { ThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
 
 export type SendAARFlowStatesType = typeof sendAARFlowStates;
+export type SendAARFailurePhase =
+  | "Download Attachment"
+  | "Entry Point"
+  | "Fetch Notification"
+  | "Fetch QRCode"
+  | "Show Notification";
 
 type RecipientInfo = {
   denomination: string;
@@ -50,6 +56,10 @@ type ErrorState = {
   type: SendAARFlowStatesType["ko"];
   previousState: AARFlowState;
   error?: AARProblemJson;
+  debugData: {
+    phase: SendAARFailurePhase;
+    reason: string;
+  };
 };
 
 export type AARFlowStateName =

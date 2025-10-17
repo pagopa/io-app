@@ -12,7 +12,11 @@ import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import { isTestEnv } from "../../../../../utils/environment";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
-import { currentAARFlowStateErrorCodes } from "../../store/selectors";
+import {
+  currentAARFlowStateErrorCodes,
+  currentAARFlowStateErrorDebugInfoSelector
+} from "../../store/selectors";
+import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 
 const bottomComponent = (errorCodes: ReadonlyArray<string>) => (
   <>
@@ -62,6 +66,9 @@ export const SendAARErrorComponent = () => {
     component: bottomComponent(errorCodes),
     title: ""
   });
+
+  const debugInfo = useIOSelector(currentAARFlowStateErrorDebugInfoSelector);
+  useDebugInfo(debugInfo);
 
   return (
     <>

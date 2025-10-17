@@ -1,7 +1,6 @@
 import { fireEvent, waitFor } from "@testing-library/react-native";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../../store/actions/application";
-import * as HOOKS from "../../../../../../store/hooks";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import * as CLIPBOARD from "../../../../../../utils/clipboard";
@@ -14,14 +13,12 @@ import {
   SendAARErrorComponent,
   testable
 } from "../../errors/SendAARErrorComponent";
+import * as debugHooks from "../../../../../../hooks/useDebugInfo";
+import * as aarSelectors from "../../../store/selectors";
 
 const { bottomComponent } = testable!;
 
 const managerSpy = jest.spyOn(FLOW_MANAGER, "useSendAarFlowManager");
-jest.mock("../../../../../../store/hooks", () => ({
-  ...jest.requireActual("../../../../../../store/hooks"),
-  useIOSelector: jest.fn()
-}));
 
 describe("SendAARErrorComponent - Full Test Suite", () => {
   const mockGoNextState = jest.fn();
@@ -35,14 +32,17 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
       goToNextState: mockGoNextState,
       terminateFlow: mockTerminateFlow
     }));
-    (HOOKS.useIOSelector as jest.Mock).mockReturnValue(errorCodes);
   });
 
   afterEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
 
   it("quits out of the flow on primary button press", () => {
+    jest
+      .spyOn(aarSelectors, "currentAARFlowStateErrorCodes")
+      .mockReturnValue(errorCodes);
     const { getByTestId } = renderComponent();
     const button = getByTestId("primary_button");
     fireEvent.press(button);
@@ -50,6 +50,9 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
   });
 
   it("calls present() on secondary button press", () => {
+    jest
+      .spyOn(aarSelectors, "currentAARFlowStateErrorCodes")
+      .mockReturnValue(errorCodes);
     const renderedBottomComponent = bottomComponent(errorCodes);
 
     const presentMock = jest.fn();
@@ -67,11 +70,17 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
   });
 
   it("renders error codes when flow is 'ko'", () => {
+    jest
+      .spyOn(aarSelectors, "currentAARFlowStateErrorCodes")
+      .mockReturnValue(errorCodes);
     const { getByText } = renderComponent();
     expect(getByText(errorCodes.join(", "))).toBeTruthy();
   });
 
   it("copies error codes to clipboard on press", async () => {
+    jest
+      .spyOn(aarSelectors, "currentAARFlowStateErrorCodes")
+      .mockReturnValue(errorCodes);
     const clipboardSpy = jest.spyOn(
       CLIPBOARD,
       "clipboardSetStringWithFeedback"
@@ -88,6 +97,9 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
   });
 
   it("does not render error code section when errorCodes is empty", async () => {
+    jest
+      .spyOn(aarSelectors, "currentAARFlowStateErrorCodes")
+      .mockReturnValue(errorCodes);
     managerSpy.mockImplementation(() => ({
       currentFlowData: {
         ...sendAarMockStateFactory.ko(),
@@ -113,9 +125,23 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
     });
   });
 
-  it("should match snapshot", () => {
+  it("should match snapshot and call useDebugInfo to display proper debug data", () => {
+    const fakeDebugInfo = {
+      errorCodes: "830 Debug info",
+      phase: "Fetch Notification",
+      reason: "Something failed",
+      traceId: "traceId-123"
+    };
+    jest
+      .spyOn(aarSelectors, "currentAARFlowStateErrorDebugInfoSelector")
+      .mockImplementation(_state => fakeDebugInfo);
+    const spiedOnUseDebugInfo = jest.spyOn(debugHooks, "useDebugInfo");
     const { toJSON } = renderComponent();
     expect(toJSON()).toMatchSnapshot();
+
+    expect(spiedOnUseDebugInfo.mock.calls.length).toBe(1);
+    expect(spiedOnUseDebugInfo.mock.calls[0].length).toBe(1);
+    expect(spiedOnUseDebugInfo.mock.calls[0][0]).toEqual(fakeDebugInfo);
   });
 });
 
