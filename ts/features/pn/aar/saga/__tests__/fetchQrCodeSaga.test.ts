@@ -2,12 +2,12 @@ import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../../types/SessionToken";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { SendAARClient } from "../../api/client";
 import { setAarFlowState } from "../../store/actions";
 import { currentAARFlowData } from "../../store/selectors";
 import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
 import { fetchAARQrCodeSaga } from "../fetchQrCodeSaga";
-import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 
 const sendUATEnvironment = [false, true];
 
@@ -45,7 +45,10 @@ describe("fetchQrCodeSaga", () => {
         const successState: AARFlowState = {
           type: sendAARFlowStates.fetchingNotificationData,
           iun: "123123",
-          fullNameDestinatario: "nomecognome",
+          recipientInfo: {
+            denomination: "Mario Rossi",
+            taxId: "RSSMRA74D22A001Q"
+          },
           mandateId
         };
         const successResponse = E.right({
@@ -54,8 +57,8 @@ describe("fetchQrCodeSaga", () => {
           value: {
             iun: "123123",
             recipientInfo: {
-              denomination: "nomecognome",
-              taxId: "taxID"
+              denomination: "Mario Rossi",
+              taxId: "RSSMRA74D22A001Q"
             },
             mandateId
           }
@@ -90,7 +93,10 @@ describe("fetchQrCodeSaga", () => {
       const notAddresseeState: AARFlowState = {
         type: sendAARFlowStates.notAddresseeFinal,
         iun: "123123",
-        fullNameDestinatario: "nomecognome",
+        recipientInfo: {
+          denomination: "Mario Rossi",
+          taxId: "RSSMRA74D22A001Q"
+        },
         qrCode: aQRCode
       };
       const notAddresseeResponse = E.right({
@@ -99,8 +105,8 @@ describe("fetchQrCodeSaga", () => {
         value: {
           iun: "123123",
           recipientInfo: {
-            denomination: "nomecognome",
-            taxId: "taxID"
+            denomination: "Mario Rossi",
+            taxId: "RSSMRA74D22A001Q"
           }
         }
       });

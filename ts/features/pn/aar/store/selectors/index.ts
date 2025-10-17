@@ -48,7 +48,7 @@ export const aarAdresseeDenominationSelector = (
     case sendAARFlowStates.displayingNotificationData:
     case sendAARFlowStates.notAddresseeFinal:
       if (iun === currentState.iun) {
-        return currentState.fullNameDestinatario;
+        return currentState.recipientInfo.denomination;
       }
       return undefined;
     default:
