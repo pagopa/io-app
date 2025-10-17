@@ -21,6 +21,8 @@ export const useSendActivationFlow = () => {
   );
 
   const onSENDActivationSucceeded = () => {
+    dispatch(setSendEngagementScreenHasBeenDismissed());
+    dispatch(setSecurityAdviceReadyToShow(true));
     if (notificationPermissionsEnabled) {
       popToTop();
     } else {
@@ -28,8 +30,6 @@ export const useSendActivationFlow = () => {
         flow: "access"
       });
     }
-    dispatch(setSendEngagementScreenHasBeenDismissed());
-    dispatch(setSecurityAdviceReadyToShow(true));
     toast.success(i18n.t("features.pn.loginEngagement.send.toast"));
   };
   const onSENDActivationFailed = () => {
