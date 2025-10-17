@@ -1,4 +1,3 @@
-import * as DESIGN_SYSTEM from "@pagopa/io-app-design-system";
 import { act } from "@testing-library/react-native";
 import * as RN from "react-native";
 import { createStore } from "redux";
@@ -83,6 +82,8 @@ describe("UseEngamentScreenFocusLogic", () => {
 });
 
 describe("appStateHandler", () => {
+  const mockNavigate = jest.fn();
+  const mockOnSuccess = jest.fn();
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -102,12 +103,6 @@ describe("appStateHandler", () => {
     it(`should handle the case where isActive=${isActive} and isPressed=${isPressed} and notifications ${
       isNotificationAuthorized ? "are" : "are not"
     } authorized`, async () => {
-      const mockNavigate = jest.fn();
-
-      const mockToastSuccess = jest
-        .spyOn(DESIGN_SYSTEM.IOToast, "success")
-        .mockImplementation(jest.fn());
-
       const mockCheckPermissions = jest
         .spyOn(NOTIF_UTILS, "checkNotificationPermissions")
         .mockImplementation(
@@ -116,21 +111,22 @@ describe("appStateHandler", () => {
 
       await MAIN_FILE.testable!.appStateHandler(
         mockNavigate,
+        mockOnSuccess,
         isPressed
       )(isActive ? "active" : "background");
 
       if (!isActive || !isPressed) {
         expect(mockCheckPermissions).toHaveBeenCalledTimes(0);
-        expect(mockToastSuccess).toHaveBeenCalledTimes(0);
+        expect(mockOnSuccess).toHaveBeenCalledTimes(0);
         expect(mockNavigate).toHaveBeenCalledTimes(0);
       }
 
       if (isActive && isPressed) {
         expect(mockCheckPermissions).toHaveBeenCalledTimes(1);
         if (isNotificationAuthorized) {
-          expect(mockToastSuccess).toHaveBeenCalledTimes(1);
+          expect(mockOnSuccess).toHaveBeenCalledTimes(1);
         } else {
-          expect(mockToastSuccess).toHaveBeenCalledTimes(0);
+          expect(mockOnSuccess).toHaveBeenCalledTimes(0);
         }
         expect(mockNavigate).toHaveBeenCalledTimes(1);
       }

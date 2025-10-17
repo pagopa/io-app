@@ -1,4 +1,4 @@
-import { IOToast } from "@pagopa/io-app-design-system";
+import { useIOToast } from "@pagopa/io-app-design-system";
 import { useEffect, useState } from "react";
 import { AppState, AppStateStatus } from "react-native";
 import I18n from "i18next";
@@ -15,17 +15,26 @@ import { isTestEnv } from "../../../utils/environment";
 
 export const usePushNotificationEngagement = (flow: NotificationModalFlow) => {
   const { popToTop } = useIONavigation();
+  const toast = useIOToast();
   const [isButtonPressed, setIsButtonPressed] = useState(false);
 
   useEffect(() => {
     const subscription = AppState.addEventListener(
       "change",
-      appStateHandler(popToTop, isButtonPressed)
+      appStateHandler(
+        popToTop,
+        () => {
+          toast.success(
+            I18n.t("features.pushNotifications.engagementScreen.toast")
+          );
+        },
+        isButtonPressed
+      )
     );
     return () => {
       subscription.remove();
     };
-  }, [isButtonPressed, popToTop]);
+  }, [isButtonPressed, toast, popToTop]);
 
   const onButtonPress = () => {
     trackSystemNotificationPermissionScreenOutcome("activate", flow);
@@ -38,17 +47,16 @@ export const usePushNotificationEngagement = (flow: NotificationModalFlow) => {
 
 type HandlerType = (
   popToTop: () => void,
+  onSuccess: () => void,
   isButtonPressed: boolean
 ) => (nextAppState: AppStateStatus) => Promise<void>;
 
 const appStateHandler: HandlerType =
-  (popToTop, isButtonPressed) => async nextAppState => {
+  (popToTop, onSuccess, isButtonPressed) => async nextAppState => {
     if (nextAppState === "active" && isButtonPressed) {
       const authorizationStatus = await checkNotificationPermissions();
       if (authorizationStatus) {
-        IOToast.success(
-          I18n.t("features.pushNotifications.engagementScreen.toast")
-        );
+        onSuccess();
       }
       popToTop();
     }
