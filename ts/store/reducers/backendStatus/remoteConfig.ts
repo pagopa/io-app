@@ -381,6 +381,26 @@ export const isIdPayEnabledSelector = createSelector(
     )
 );
 
+export const isIdPayOnboardingEnabledSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): boolean =>
+    pipe(
+      remoteConfig,
+      O.map(config => config.idPay.onboarding?.enabled ?? false),
+      O.getOrElse(() => false)
+    )
+);
+
+export const isIdPayDetailsEnabledSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): boolean =>
+    pipe(
+      remoteConfig,
+      O.map(config => config.idPay.initiative_details?.enabled ?? false),
+      O.getOrElse(() => false)
+    )
+);
+
 export const isIdPayEnabledInScanScreenSelector = (state: GlobalState) =>
   pipe(state, remoteConfigSelector, remoteConfig =>
     isPropertyWithMinAppVersionEnabled({
