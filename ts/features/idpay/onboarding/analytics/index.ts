@@ -44,12 +44,21 @@ export const trackIDPayOnboardingNotificationOK = (
   );
 };
 
-export const trackIDPayOnboardingNotificationKO = (
+export const trackIDPayOnboardingNotificationCancel = (
   props: DefaultOnboardingEventProperties
 ) => {
   mixpanelTrack(
     "IDPAY_SERVICE_NOTIFICATION_DENIED",
     buildEventProperties("UX", "action", props)
+  );
+};
+
+export const trackIDPayOnboardingNotificationError = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_SERVICE_NOTIFICATION_ERROR",
+    buildEventProperties("KO", "screen_view", props)
   );
 };
 

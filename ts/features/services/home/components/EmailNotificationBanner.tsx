@@ -24,6 +24,7 @@ import {
   profileSelector
 } from "../../../settings/common/store/selectors";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 export const EmailNotificationBanner = () => {
   const dispatch = useIODispatch();
@@ -56,6 +57,16 @@ export const EmailNotificationBanner = () => {
       })
     );
   };
+
+  useOnFirstRender(() => {
+    mixpanelTrack(
+      "BANNER",
+      buildEventProperties("UX", "screen_view", {
+        banner_id: "IDPAY_EMAIL_ACTIVATION",
+        banner_page: SERVICES_ROUTES.SERVICES_HOME
+      })
+    );
+  });
 
   useEffect(() => {
     if (prevProfile && pot.isUpdating(prevProfile)) {

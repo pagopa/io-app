@@ -1,13 +1,15 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import { getInstructionsButtonConfig } from "../../../../components/ui/utils/buttons";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { useIOSelector } from "../../../../store/hooks";
+import { idPayInitiativeConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { getFullLocale } from "../../../../utils/locale";
 import useIDPayFailureSupportModal from "../../common/hooks/useIDPayFailureSupportModal";
 import {
   trackIDPayOnboardingErrorHelp,
@@ -20,9 +22,6 @@ import {
   selectServiceId
 } from "../machine/selectors";
 import { OnboardingFailureEnum } from "../types/OnboardingFailure";
-import { useIOSelector } from "../../../../store/hooks";
-import { idPayInitiativeConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { getFullLocale } from "../../../../utils/locale";
 
 const IdPayFailureScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
@@ -274,13 +273,15 @@ const IdPayFailureScreen = () => {
     O.getOrElse(() => genericErrorProps)
   );
 
-  useOnFirstRender(() => {
-    trackIDPayOnboardingFailure({
-      initiativeId,
-      initiativeName,
-      reason: failureOption
-    });
-  });
+  useEffect(() => {
+    if (O.some(failureOption)) {
+      trackIDPayOnboardingFailure({
+        initiativeId,
+        initiativeName,
+        reason: failureOption
+      });
+    }
+  }, [initiativeId, initiativeName, failureOption]);
 
   return (
     <>
