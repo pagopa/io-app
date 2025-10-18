@@ -1,5 +1,6 @@
 import i18n from "i18next";
 import { Body } from "@pagopa/io-app-design-system";
+import { useEffect } from "react";
 import { useSendActivationBottomSheet } from "../hooks/useSendActivationBottomSheet";
 import { useSendAreYouSureBottomSheet } from "../hooks/useSendAreYouSureBottomSheet";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
@@ -7,6 +8,14 @@ import { WhatsNewScreenContent } from "../../../../components/screens/WhatsNewSc
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { getTxtNodeKey } from "../../../../components/IOMarkdown/renderRules";
 import { IOMarkdownRenderRules } from "../../../../components/IOMarkdown/types";
+import {
+  trackSendAcceptanceDialog,
+  trackSendActivationModalDialog,
+  trackSendActivationModalDialogActivationDismissed,
+  trackSendActivationModalDialogActivationStart,
+  trackSendNurturingDialog
+} from "../../analytics/send";
+import { ANALYTICS_NOTIFICATION_MODAL_FLOW } from "../utils/constants";
 
 const customRules: Partial<IOMarkdownRenderRules> = {
   Paragraph: (param, render) => (
@@ -22,7 +31,27 @@ export const SendEngagementOnFirstAppOpenScreen = () => {
   const { areYouSureBottomSheet, presentAreYouSureBottomSheet } =
     useSendAreYouSureBottomSheet();
 
+  useEffect(() => {
+    void trackSendActivationModalDialog(ANALYTICS_NOTIFICATION_MODAL_FLOW);
+  }, []);
+
   useAvoidHardwareBackButton();
+
+  const trackAndPresentActivationBottomSheet = () => {
+    trackSendActivationModalDialogActivationStart(
+      ANALYTICS_NOTIFICATION_MODAL_FLOW
+    );
+    presentActivationBottomSheet();
+    trackSendAcceptanceDialog(ANALYTICS_NOTIFICATION_MODAL_FLOW);
+  };
+
+  const trackAndPresentAreYouSureBottomSheet = () => {
+    trackSendActivationModalDialogActivationDismissed(
+      ANALYTICS_NOTIFICATION_MODAL_FLOW
+    );
+    presentAreYouSureBottomSheet();
+    trackSendNurturingDialog(ANALYTICS_NOTIFICATION_MODAL_FLOW);
+  };
 
   return (
     <>
@@ -37,12 +66,12 @@ export const SendEngagementOnFirstAppOpenScreen = () => {
           testID: "sendEngagementOnFirstAppOpenActionID",
           label: i18n.t("features.pn.loginEngagement.send.action"),
           fullWidth: true,
-          onPress: presentActivationBottomSheet
+          onPress: trackAndPresentActivationBottomSheet
         }}
         secondaryAction={{
           testID: "sendEngagementOnFirstAppOpenSecondaryActionID",
           label: i18n.t("features.pn.loginEngagement.send.secondaryAction"),
-          onPress: presentAreYouSureBottomSheet
+          onPress: trackAndPresentAreYouSureBottomSheet
         }}
       >
         <IOMarkdown

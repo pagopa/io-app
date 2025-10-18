@@ -82,7 +82,7 @@ exports[`useSendAreYouSureBottomSheet should match the snapshot 1`] = `
           fullWidth={true}
           label="Attiva SEND su IO"
           loading={false}
-          onPress={[MockFunction]}
+          onPress={[Function]}
         />
         <View>
           <ForwardRef
