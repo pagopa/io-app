@@ -3665,8 +3665,12 @@
           "expiring": {
             "content": "Es verbleiben noch {{days}} Tage, bevor das Dokument abläuft."
           },
-          "verificationExpiring": {
-            "content": "Überprüfe die digitale Version deines Dokuments bis zum {{date}}."
+          "jwtVerification": {
+            "content": {
+              "jwtExpiring": "Überprüfe die digitale Version deines Dokuments bis zum {{date}}.",
+              "jwtExpired": "Verifica ora la versione digitale del tuo documento per continuare a usarlo senza limitazioni."
+            },
+            "action": "Inizia"
           }
         },
         "bottomSheets": {

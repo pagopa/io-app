@@ -17,7 +17,8 @@ import {
 } from "../utils/itwTypesUtils";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { itwShouldRenderNewItWalletSelector } from "../store/selectors";
+import { isConnectedSelector } from "../../../connectivity/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 
 const defaultLifecycleStatus: Array<ItwJwtCredentialStatus> = [
   "valid",
@@ -41,8 +42,9 @@ export const ItwEidLifecycleAlert = ({
   navigation
 }: Props) => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
-  const isNewItwRenderable = useIOSelector(itwShouldRenderNewItWalletSelector);
+  const isItw = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);
+  const isConnected = useIOSelector(isConnectedSelector);
 
   const startEidReissuing = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
@@ -63,7 +65,24 @@ export const ItwEidLifecycleAlert = ({
     if (!lifecycleStatus.includes(eidStatus)) {
       return null;
     }
-    const nameSpace = isNewItwRenderable ? "itw" : "documents";
+    const nameSpace = isItw ? "itw" : "documents";
+
+    if (!isConnected && eidStatus === "jwtExpired" && !isItw) {
+      return (
+        <View
+          style={{ marginBottom: 16 }}
+          testID={`itwEidLifecycleAlertTestID`}
+        >
+          <Alert
+            testID="itwEidLifecycleAlertTestID_noConnection"
+            variant="error"
+            content={I18n.t(
+              `features.itWallet.presentation.bottomSheets.eidInfo.alert.documents.offline`
+            )}
+          />
+        </View>
+      );
+    }
 
     const alertProps: Record<
       ItwJwtCredentialStatus,

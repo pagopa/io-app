@@ -18,6 +18,7 @@ import {
   ItwJwtCredentialStatus,
   StoredCredential
 } from "../../../common/utils/itwTypesUtils";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 
 type CredentialsByType = {
   [K: string]: Record<CredentialFormat, StoredCredential>;
@@ -251,6 +252,21 @@ export const itwCredentialsEidStatusSelector = createSelector(
       O.map(eid => getCredentialStatus(eid) as ItwJwtCredentialStatus),
       O.toUndefined
     )
+);
+
+/**
+ * Returns true if the eID is present and its status is "jwtExpired" or "jwtExpiring".
+ * Ignore the PID by checking that IT Wallet is not enabled.
+ */
+export const itwIsEidExpiredOrExpiringSelector = createSelector(
+  [
+    itwCredentialsEidStatusSelector,
+    (state: GlobalState) => itwLifecycleIsITWalletValidSelector(state)
+  ],
+  (eidStatus, isITWalletValid) => {
+    if (isITWalletValid) return false;
+    return eidStatus === "jwtExpired" || eidStatus === "jwtExpiring";
+  }
 );
 
 /**
