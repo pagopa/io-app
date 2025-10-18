@@ -18,12 +18,12 @@ export const ON_SCROLL_END_LISTENER = `window.onscroll=function(){
  */
 export const GET_CONTENT_HEIGHT_SCRIPT = `
 function sendHeight() {
-  const height = document.body.scrollHeight;
-  window.ReactNativeWebView.postMessage(height);
+  var html = document.documentElement;
+  window.ReactNativeWebView.postMessage(html.offsetHeight);
 }
 window.addEventListener("load", sendHeight);
 window.addEventListener("resize", sendHeight);
-setTimeout(sendHeight, 300); // fallback
+sendHeight();
 `;
 
 const endTrue = "true;";
