@@ -213,6 +213,7 @@ const EmailValidationSendEmailScreen = () => {
       if (pot.isError(emailValidation.sendEmailValidationRequest)) {
         IOToast.error(I18n.t("global.actions.retry"));
         setShowCountdown(false);
+        stopPollingSaga();
       }
       // send validation email OK
       if (pot.isSome(emailValidation.sendEmailValidationRequest)) {
@@ -220,7 +221,11 @@ const EmailValidationSendEmailScreen = () => {
         setShowCountdown(true);
       }
     }
-  }, [emailValidation.sendEmailValidationRequest, prevEmailValidation]);
+  }, [
+    emailValidation.sendEmailValidationRequest,
+    prevEmailValidation,
+    stopPollingSaga
+  ]);
 
   useEffect(() => {
     if (isEmailValidated) {

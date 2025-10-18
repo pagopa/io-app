@@ -452,12 +452,12 @@ const EmailInsertScreen = () => {
           }
           // eslint-disable-next-line functional/immutable-data
           canShowLoadingSpinner.current = false;
-          if (isOnboarding) {
+          if (isOnboarding || isFirstOnboarding) {
             navigation.navigate(ROUTES.ONBOARDING, {
               screen: ROUTES.ONBOARDING_EMAIL_VERIFICATION_SCREEN,
               params: {
                 isOnboarding,
-                sendEmailAtFirstRender: isOnboarding
+                sendEmailAtFirstRender
               }
             });
           } else {
