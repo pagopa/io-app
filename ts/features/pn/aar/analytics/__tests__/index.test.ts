@@ -1,4 +1,5 @@
 import {
+  trackSendAARAccessDeniedDelegateInfo,
   trackSendAARAccessDeniedScreenView,
   trackSendAARAttachmentDownloadFailure,
   trackSendAARToS,
@@ -232,6 +233,22 @@ describe("index", () => {
       expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
         event_category: "UX",
         event_type: "screen_view"
+      });
+    });
+  });
+
+  describe("trackSendAARAccessDeniedDelegateInfo", () => {
+    it("should call 'mixpanelTrack' with proper event name and properties", () => {
+      trackSendAARAccessDeniedDelegateInfo();
+
+      expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+        "SEND_TEMPORARY_NOTIFICATION_OPENING_NOT_ALLOWED_MANDATE_INFO"
+      );
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "UX",
+        event_type: "exit"
       });
     });
   });
