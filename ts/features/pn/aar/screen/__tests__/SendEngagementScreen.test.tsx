@@ -94,34 +94,50 @@ describe("SendEngagementScreen", () => {
       })
     )
   );
-  it("should popToTop and track proper analytics if the close button is pressed upon first rendering", () => {
-    const mockPopToTop = jest.fn();
-    const mockReplace = jest.fn();
-    jest
-      .spyOn(navigation, "useIONavigation")
-      .mockImplementation(() => ({ popToTop: mockPopToTop } as any));
+  (["aar", "message", "not_set"] as const).forEach(source =>
+    (["recipient", "mandatory", "not_set"] as const).forEach(userType =>
+      it(`should popToTop and track proper analytics if the close button is pressed upon first rendering (userType ${userType} source ${source})`, () => {
+        const mockPopToTop = jest.fn();
+        const mockReplace = jest.fn();
+        jest
+          .spyOn(navigation, "useIONavigation")
+          .mockImplementation(() => ({ popToTop: mockPopToTop } as any));
 
-    const screen = renderScreen();
+        const screen = renderScreen(false, source, userType);
 
-    const closeButton = screen.getByTestId("close-button");
-    fireEvent.press(closeButton);
+        const closeButton = screen.getByTestId("close-button");
+        fireEvent.press(closeButton);
 
-    expect(mockPopToTop.mock.calls.length).toBe(1);
-    expect(mockPopToTop.mock.calls[0].length).toBe(0);
-    expect(
-      spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock.calls
-        .length
-    ).toBe(1);
-    expect(
-      spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock
-        .calls[0].length
-    ).toBe(0);
-    expect(
-      spiedOnMockedTrackSendActivationModalDialogActivationStart.mock.calls
-        .length
-    ).toBe(0);
-    expect(mockReplace).toHaveBeenCalledTimes(0);
-  });
+        expect(mockPopToTop.mock.calls.length).toBe(1);
+        expect(mockPopToTop.mock.calls[0].length).toBe(0);
+        expect(
+          spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock
+            .calls.length
+        ).toBe(1);
+        expect(
+          spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock
+            .calls[0].length
+        ).toBe(3);
+        expect(
+          spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock
+            .calls[0][0]
+        ).toBe("send_notification_opening");
+        expect(
+          spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock
+            .calls[0][1]
+        ).toBe(source);
+        expect(
+          spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock
+            .calls[0][2]
+        ).toBe(userType);
+        expect(
+          spiedOnMockedTrackSendActivationModalDialogActivationStart.mock.calls
+            .length
+        ).toBe(0);
+        expect(mockReplace).toHaveBeenCalledTimes(0);
+      })
+    )
+  );
   [false, true].forEach(systemNotificationsEnabled =>
     (["aar", "message", "not_set"] as const).forEach(sendOpeningSource =>
       (["recipient", "mandatory", "not_set"] as const).forEach(sendUserType =>

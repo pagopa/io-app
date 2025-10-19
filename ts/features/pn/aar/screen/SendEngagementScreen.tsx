@@ -102,10 +102,14 @@ export const SendEngagementScreen = (props: SendEngagementScreenProps) => {
   );
   const onClose = useCallback(() => {
     if (screenStatus !== "Activating") {
-      trackSendActivationModalDialogActivationDismissed();
+      trackSendActivationModalDialogActivationDismissed(
+        "send_notification_opening",
+        sendOpeningSource,
+        sendUserType
+      );
       navigation.popToTop();
     }
-  }, [navigation, screenStatus]);
+  }, [navigation, screenStatus, sendOpeningSource, sendUserType]);
 
   useEffect(() => {
     if (screenStatus === "Waiting") {
