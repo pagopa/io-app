@@ -164,7 +164,7 @@ describe("SendAARInitialFlowScreen", () => {
             screen: PN_ROUTES.MESSAGE_DETAILS,
             params: {
               messageId: "TEST_IUN",
-              firstTimeOpening: true,
+              firstTimeOpening: undefined,
               serviceId: "SERVICE_ID",
               isAarMessage: true
             }

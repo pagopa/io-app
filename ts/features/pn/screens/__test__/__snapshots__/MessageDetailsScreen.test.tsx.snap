@@ -156,7 +156,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={4}
+                handlerTag={388}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -2052,7 +2052,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error -
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={3}
+                handlerTag={387}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}

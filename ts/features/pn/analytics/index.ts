@@ -11,6 +11,10 @@ import {
 } from "../../../utils/analytics";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { PaymentStatistics } from "../../messages/store/reducers/payments";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../pushNotifications/analytics";
 
 export type PNServiceStatus = "active" | "not_active" | "unknown";
 
@@ -189,19 +193,24 @@ export function trackPNShowTimeline() {
 
 export function trackPNUxSuccess(
   paymentCount: number,
-  firstTimeOpening: boolean,
+  firstTimeOpening: boolean | undefined,
   isCancelled: boolean,
-  containsF24: boolean
+  containsF24: boolean,
+  openingSource: SendOpeningSource,
+  userType: SendUserType
 ) {
   void mixpanelTrack(
     "PN_UX_SUCCESS",
     buildEventProperties("UX", "screen_view", {
       contains_payment: numberToYesNoOnThreshold(paymentCount),
-      first_time_opening: booleanToYesNo(firstTimeOpening),
+      first_time_opening:
+        firstTimeOpening != null ? booleanToYesNo(firstTimeOpening) : "not_set",
       notification_status: isCancelled ? "cancelled" : "active",
       contains_multipayment: numberToYesNoOnThreshold(paymentCount, 1),
       count_payment: paymentCount,
-      contains_f24: containsF24
+      contains_f24: containsF24,
+      opening_source: openingSource,
+      send_user: userType
     })
   );
 }

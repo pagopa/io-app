@@ -13,7 +13,6 @@ import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import PN_ROUTES from "../../../navigation/routes";
 import * as BANNER from "../../../reminderBanner/reducer/bannerDismiss";
 import { SendAARMessageDetailBottomSheetComponent } from "../SendAARMessageDetailBottomSheetComponent";
-import * as SELECTORS from "../../store/selectors";
 
 describe("SendAARMessageDetailBottomSheetComponent", () => {
   const presentMock = jest.fn();
@@ -63,11 +62,7 @@ describe("SendAARMessageDetailBottomSheetComponent", () => {
           getStateMock.mockReturnValue({});
           (BANNER.isPnServiceEnabled as jest.Mock).mockReturnValue(isEnabled);
 
-          jest
-            .spyOn(SELECTORS, "isAarMessageDelegatedSelector")
-            .mockImplementation((_state, _iun) => isDelegate);
-
-          renderComponent();
+          renderComponent(isDelegate);
 
           await act(async () => {
             (
@@ -110,7 +105,7 @@ describe("SendAARMessageDetailBottomSheetComponent", () => {
   });
 });
 
-const renderComponent = () => {
+const renderComponent = (isDelegate: boolean = false) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const aarBottomSheetRef: RefObject<(() => void) | undefined> = {
     current: undefined
@@ -120,7 +115,7 @@ const renderComponent = () => {
     () => (
       <SendAARMessageDetailBottomSheetComponent
         aarBottomSheetRef={aarBottomSheetRef}
-        iun={"43cfa489-e141-490b-ae10-a4d65c806732"}
+        isDelegate={isDelegate}
       />
     ),
     PN_ROUTES.MESSAGE_DETAILS,

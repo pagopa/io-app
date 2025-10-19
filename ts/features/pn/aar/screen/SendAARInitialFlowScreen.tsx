@@ -57,7 +57,7 @@ export const SendAARInitialFlowScreen = ({
             screen: PN_ROUTES.MESSAGE_DETAILS,
             params: {
               messageId: flowData.iun,
-              firstTimeOpening: true,
+              firstTimeOpening: undefined,
               serviceId: flowData.pnServiceId,
               isAarMessage: true
             }

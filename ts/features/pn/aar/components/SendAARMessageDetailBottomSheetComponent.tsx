@@ -1,28 +1,25 @@
 import I18n from "i18next";
 import { RefObject } from "react";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIOSelector, useIOStore } from "../../../../store/hooks";
+import { useIOStore } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import PN_ROUTES from "../../navigation/routes";
-import { isAarMessageDelegatedSelector } from "../store/selectors";
+
 import { isPnServiceEnabled } from "../../reminderBanner/reducer/bannerDismiss";
 import { SendAARMessageDetailBottomSheet } from "./SendAARMessageDetailBottomSheet";
 
 type SendAARMessageDetailBottomSheetComponentProps = {
   aarBottomSheetRef: RefObject<(() => void) | undefined>;
-  iun: string;
+  isDelegate: boolean;
 };
 
 export const SendAARMessageDetailBottomSheetComponent = ({
   aarBottomSheetRef,
-  iun
+  isDelegate
 }: SendAARMessageDetailBottomSheetComponentProps) => {
   const navigation = useIONavigation();
   const store = useIOStore();
-  const isDelegate = useIOSelector(state =>
-    isAarMessageDelegatedSelector(state, iun)
-  );
 
   const onSecondaryActionPress = () => {
     dismiss();

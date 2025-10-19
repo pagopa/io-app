@@ -25,6 +25,11 @@ import { sendAarMockStateFactory } from "../../aar/utils/testUtils";
 import PN_ROUTES from "../../navigation/routes";
 import { startPNPaymentStatusTracking } from "../../store/actions";
 import { MessageDetailsScreen } from "../MessageDetailsScreen";
+import * as REDUCERS from "../../store/reducers";
+import { PNMessage } from "../../store/types/types";
+import * as AAR_SELECTORS from "../../aar/store/selectors";
+import { ATTACHMENT_CATEGORY } from "../../../messages/types/attachmentCategory";
+import * as ANALYTICS from "../../analytics";
 
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
@@ -37,8 +42,10 @@ jest.mock("../../components/MessageDetails");
 describe("MessageDetailsScreen", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
 
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   [true, false].forEach(isAar => {
     it(`should match the snapshot when there is an error -- aar:${isAar}`, () => {
       const sequenceOfActions: ReadonlyArray<Action> = [
@@ -53,7 +60,7 @@ describe("MessageDetailsScreen", () => {
       const mockStore = configureMockStore<GlobalState>();
       const store: Store<GlobalState> = mockStore(state);
 
-      const { component } = renderComponent(store, isAar);
+      const { component } = renderComponent(store, false, isAar);
       expect(component).toMatchSnapshot();
     });
 
@@ -80,9 +87,119 @@ describe("MessageDetailsScreen", () => {
       const mockStore = configureMockStore<GlobalState>();
       const store: Store<GlobalState> = mockStore(state);
 
-      const { component } = renderComponent(store, isAar);
+      const { component } = renderComponent(store, false, isAar);
       expect(component).toMatchSnapshot();
     });
+
+    [false, true].forEach(firstTimeOpening =>
+      [0, 1].forEach(paymentCount =>
+        [false, true].forEach(isCancelled =>
+          [false, true].forEach(containsF24 => {
+            const fakeProfileFiscalCode = "XXXYYY99Z00A123B";
+            const sendMessage = {
+              notificationStatusHistory: [],
+              isCancelled,
+              recipients:
+                paymentCount > 0
+                  ? [{ taxId: fakeProfileFiscalCode, payment: {} }]
+                  : [],
+              attachments: containsF24
+                ? [
+                    {
+                      category: ATTACHMENT_CATEGORY.F24
+                    }
+                  ]
+                : []
+            } as unknown as PNMessage;
+            [
+              pot.none,
+              pot.noneLoading,
+              pot.noneUpdating(O.none),
+              pot.noneError(Error()),
+              pot.some(O.none),
+              pot.some(O.some(sendMessage)),
+              pot.someLoading(O.none),
+              pot.someLoading(O.some(sendMessage)),
+              pot.someUpdating(O.none, O.some(sendMessage)),
+              pot.someUpdating(O.some(sendMessage), O.none),
+              pot.someError(O.none, Error()),
+              pot.someError(O.some(sendMessage), Error())
+            ].forEach(messagePot =>
+              [false, true].forEach(isDelegate => {
+                const isSomePot = pot.isSome(messagePot);
+                const isSomeOption =
+                  isSomePot && O.isSome(pot.getOrElse(messagePot, O.none));
+                const potOptionDescription = isSomePot
+                  ? `pot ${messagePot.kind} option ${
+                      isSomeOption ? "some" : "none"
+                    }`
+                  : `pot ${messagePot.kind}`;
+                it(`should ${
+                  messagePot.kind === "PotSome" ? "" : "not "
+                }call 'trackPNUxSuccess' with proper parameters (${potOptionDescription} isAAR ${isAar} firstTimeOpening ${firstTimeOpening} paymentCount ${paymentCount} isCancelled ${isCancelled} containsF24 ${containsF24} isDelegate ${isDelegate})`, () => {
+                  jest
+                    .spyOn(commonSelectors, "profileFiscalCodeSelector")
+                    .mockImplementation(_state => fakeProfileFiscalCode);
+                  jest
+                    .spyOn(REDUCERS, "pnMessageFromIdSelector")
+                    .mockImplementation((_state, _id) => messagePot);
+                  jest
+                    .spyOn(AAR_SELECTORS, "isAarMessageDelegatedSelector")
+                    .mockImplementation((_state, _messageId) => isDelegate);
+                  const spiedOnMockedTrackPNExSuccess = jest
+                    .spyOn(ANALYTICS, "trackPNUxSuccess")
+                    .mockImplementation();
+
+                  const globalState = appReducer(
+                    undefined,
+                    applicationChangeState("active")
+                  );
+                  const mockStore = configureMockStore<GlobalState>();
+                  const store: Store<GlobalState> = mockStore(globalState);
+
+                  renderComponent(store, firstTimeOpening, isAar);
+
+                  if (messagePot.kind === "PotSome") {
+                    expect(
+                      spiedOnMockedTrackPNExSuccess.mock.calls.length
+                    ).toBe(1);
+                    expect(
+                      spiedOnMockedTrackPNExSuccess.mock.calls[0].length
+                    ).toBe(6);
+                    expect(spiedOnMockedTrackPNExSuccess.mock.calls[0][0]).toBe(
+                      isSomeOption ? paymentCount : 0
+                    );
+                    expect(spiedOnMockedTrackPNExSuccess.mock.calls[0][1]).toBe(
+                      firstTimeOpening
+                    );
+                    expect(spiedOnMockedTrackPNExSuccess.mock.calls[0][2]).toBe(
+                      isSomeOption ? isCancelled : false
+                    );
+                    expect(spiedOnMockedTrackPNExSuccess.mock.calls[0][3]).toBe(
+                      isSomeOption ? containsF24 : false
+                    );
+                    expect(spiedOnMockedTrackPNExSuccess.mock.calls[0][4]).toBe(
+                      isAar ? "aar" : "message"
+                    );
+                    expect(spiedOnMockedTrackPNExSuccess.mock.calls[0][5]).toBe(
+                      !isAar
+                        ? "not_set"
+                        : isDelegate
+                        ? "mandatory"
+                        : "recipient"
+                    );
+                  } else {
+                    expect(
+                      spiedOnMockedTrackPNExSuccess.mock.calls.length
+                    ).toBe(0);
+                  }
+                });
+              })
+            );
+          })
+        )
+      )
+    );
   });
   [false, true].forEach(isAARNotification => {
     it(`should dispatch startPNPaymentStatusTracking (isAARNotification ${isAARNotification})`, () => {
@@ -112,7 +229,7 @@ describe("MessageDetailsScreen", () => {
       const mockStore = configureMockStore<GlobalState>();
       const store: Store<GlobalState> = mockStore(state);
 
-      renderComponent(store, isAARNotification);
+      renderComponent(store, false, isAARNotification);
 
       expect(mockDispatch.mock.calls.length).toBe(1);
       expect(mockDispatch.mock.calls[0].length).toBe(1);
@@ -126,7 +243,11 @@ describe("MessageDetailsScreen", () => {
   });
 });
 
-const renderComponent = (store: Store<GlobalState>, isAAr: boolean) => {
+const renderComponent = (
+  store: Store<GlobalState>,
+  firstTimeOpening: boolean,
+  isAAr: boolean
+) => {
   const { id, sender_service_id } = message_1;
 
   return {
@@ -134,7 +255,7 @@ const renderComponent = (store: Store<GlobalState>, isAAr: boolean) => {
       MessageDetailsScreen,
       PN_ROUTES.MESSAGE_DETAILS,
       {
-        firstTimeOpening: false,
+        firstTimeOpening,
         messageId: id,
         serviceId: sender_service_id,
         isAarMessage: isAAr

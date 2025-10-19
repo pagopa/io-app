@@ -38,11 +38,12 @@ import {
   isCancelledFromPNMessagePot,
   paymentsFromPNMessagePot
 } from "../utils";
+import { isAarMessageDelegatedSelector } from "../aar/store/selectors";
 
 export type MessageDetailsScreenRouteParams = {
   messageId: string;
   serviceId: ServiceId;
-  firstTimeOpening: boolean;
+  firstTimeOpening: boolean | undefined;
   isAarMessage?: boolean;
 };
 
@@ -118,6 +119,9 @@ export const MessageDetailsScreen = () => {
   const messagePot = useIOSelector(state =>
     pnMessageFromIdSelector(state, messageId)
   );
+  const isAARDelegate = useIOSelector(state =>
+    isAarMessageDelegatedSelector(state, messageId)
+  );
   const fiscalCodeOrUndefined = isAarMessage ? undefined : currentFiscalCode;
   const payments = paymentsFromPNMessagePot(fiscalCodeOrUndefined, messagePot);
   const paymentsCount = payments?.length ?? 0;
@@ -133,12 +137,20 @@ export const MessageDetailsScreen = () => {
     if (isStrictSome(messagePot)) {
       const isCancelled = isCancelledFromPNMessagePot(messagePot);
       const containsF24 = containsF24FromPNMessagePot(messagePot);
+      const openingSource = isAarMessage ? "aar" : "message";
+      const userType = !isAarMessage
+        ? "not_set"
+        : isAARDelegate
+        ? "mandatory"
+        : "recipient";
 
       trackPNUxSuccess(
         paymentsCount,
         firstTimeOpening,
         isCancelled,
-        containsF24
+        containsF24,
+        openingSource,
+        userType
       );
     }
     return () => {
@@ -152,10 +164,11 @@ export const MessageDetailsScreen = () => {
   }, [
     dispatch,
     firstTimeOpening,
+    isAARDelegate,
+    isAarMessage,
     messageId,
     messagePot,
-    paymentsCount,
-    isAarMessage
+    paymentsCount
   ]);
 
   const store = useIOStore();
@@ -207,7 +220,7 @@ export const MessageDetailsScreen = () => {
       {isAarMessage && (
         <SendAARMessageDetailBottomSheetComponent
           aarBottomSheetRef={aarBottomSheetRef}
-          iun={messageId}
+          isDelegate={isAARDelegate}
         />
       )}
     </>
