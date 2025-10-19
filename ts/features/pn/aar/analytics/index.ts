@@ -91,3 +91,9 @@ export const trackSendAARToSDismissed = () => {
   const props = buildEventProperties("UX", "action");
   void mixpanelTrack(eventName, props);
 };
+
+export const trackSendAARAccessDeniedScreenView = () => {
+  const eventName = "SEND_TEMPORARY_NOTIFICATION_OPENING_NOT_ALLOWED";
+  const props = buildEventProperties("UX", "screen_view");
+  void mixpanelTrack(eventName, props);
+};
