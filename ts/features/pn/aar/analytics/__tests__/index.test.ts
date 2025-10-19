@@ -67,19 +67,30 @@ describe("index", () => {
   });
 
   describe("trackSendActivationModalDialog", () => {
-    it("should call 'mixpanelTrack' with proper event name and properties", () => {
-      trackSendActivationModalDialog();
+    (
+      ["authentication", "send_notification_opening", "access"] as const
+    ).forEach(flow =>
+      (["aar", "message", "not_set"] as const).forEach(source =>
+        (["recipient", "mandatory", "not_set"] as const).forEach(user =>
+          it(`should call 'mixpanelTrack' with proper event name and properties (flow ${flow} user ${user})`, () => {
+            trackSendActivationModalDialog(flow, source, user);
 
-      expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
-      expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
-      expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
-        "SEND_ACTIVATION_MODAL_DIALOG"
-      );
-      expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
-        event_category: "UX",
-        event_type: "screen_view"
-      });
-    });
+            expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+            expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+            expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+              "SEND_ACTIVATION_MODAL_DIALOG"
+            );
+            expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+              event_category: "UX",
+              event_type: "screen_view",
+              flow,
+              opening_source: source,
+              send_user: user
+            });
+          })
+        )
+      )
+    );
   });
 
   describe("trackSendActivationModalDialogActivationStart", () => {

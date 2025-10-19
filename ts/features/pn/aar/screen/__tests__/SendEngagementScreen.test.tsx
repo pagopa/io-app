@@ -46,9 +46,6 @@ jest.mock("react-redux", () => ({
 }));
 
 describe("SendEngagementScreen", () => {
-  const spiedOnMockedTrackSendActivationModalDialog = jest
-    .spyOn(analytics, "trackSendActivationModalDialog")
-    .mockImplementation();
   const spiedOnMockedTrackSendActivationModalDialogActivationDismissed = jest
     .spyOn(analytics, "trackSendActivationModalDialogActivationDismissed")
     .mockImplementation();
@@ -58,24 +55,45 @@ describe("SendEngagementScreen", () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
-  it("should match snapshot and track screen visualization", () => {
+  it("should match snapshot", () => {
     const screen = renderScreen();
     expect(screen.toJSON()).toMatchSnapshot();
-    expect(spiedOnMockedTrackSendActivationModalDialog.mock.calls.length).toBe(
-      1
-    );
-    expect(
-      spiedOnMockedTrackSendActivationModalDialog.mock.calls[0].length
-    ).toBe(0);
-    expect(
-      spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock.calls
-        .length
-    ).toBe(0);
-    expect(
-      spiedOnMockedTrackSendActivationModalDialogActivationStart.mock.calls
-        .length
-    ).toBe(0);
   });
+  (["aar", "message", "not_set"] as const).forEach(source =>
+    (["recipient", "mandatory", "not_set"] as const).forEach(userType =>
+      it(`should track screen visualization (userType ${userType} source ${source})`, () => {
+        const spiedOnMockedTrackSendActivationModalDialog = jest
+          .spyOn(analytics, "trackSendActivationModalDialog")
+          .mockImplementation();
+
+        renderScreen(false, source, userType);
+
+        expect(
+          spiedOnMockedTrackSendActivationModalDialog.mock.calls.length
+        ).toBe(1);
+        expect(
+          spiedOnMockedTrackSendActivationModalDialog.mock.calls[0].length
+        ).toBe(3);
+        expect(
+          spiedOnMockedTrackSendActivationModalDialog.mock.calls[0][0]
+        ).toBe("send_notification_opening");
+        expect(
+          spiedOnMockedTrackSendActivationModalDialog.mock.calls[0][1]
+        ).toBe(source);
+        expect(
+          spiedOnMockedTrackSendActivationModalDialog.mock.calls[0][2]
+        ).toBe(userType);
+        expect(
+          spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock
+            .calls.length
+        ).toBe(0);
+        expect(
+          spiedOnMockedTrackSendActivationModalDialogActivationStart.mock.calls
+            .length
+        ).toBe(0);
+      })
+    )
+  );
   it("should popToTop and track proper analytics if the close button is pressed upon first rendering", () => {
     const mockPopToTop = jest.fn();
     const mockReplace = jest.fn();
@@ -90,12 +108,6 @@ describe("SendEngagementScreen", () => {
 
     expect(mockPopToTop.mock.calls.length).toBe(1);
     expect(mockPopToTop.mock.calls[0].length).toBe(0);
-    expect(spiedOnMockedTrackSendActivationModalDialog.mock.calls.length).toBe(
-      1
-    );
-    expect(
-      spiedOnMockedTrackSendActivationModalDialog.mock.calls[0].length
-    ).toBe(0);
     expect(
       spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock.calls
         .length
@@ -138,12 +150,6 @@ describe("SendEngagementScreen", () => {
           expect(mockSetOptions.mock.calls.length).toBe(0);
           expect(mockDispatch.mock.calls.length).toBe(1);
           expect(mockDispatch.mock.calls[0].length).toBe(1);
-          expect(
-            spiedOnMockedTrackSendActivationModalDialog.mock.calls.length
-          ).toBe(1);
-          expect(
-            spiedOnMockedTrackSendActivationModalDialog.mock.calls[0].length
-          ).toBe(0);
           expect(
             spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock
               .calls.length

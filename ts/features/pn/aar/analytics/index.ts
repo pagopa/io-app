@@ -1,5 +1,10 @@
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
+import {
+  NotificationModalFlow,
+  SendOpeningSource,
+  SendUserType
+} from "../../../pushNotifications/analytics";
 
 export const trackSendQRCodeScanRedirect = () => {
   const eventName = "SEND_QRCODE_SCAN_REDIRECT";
@@ -19,9 +24,17 @@ export const trackSendQRCodeScanRedirectDismissed = () => {
   mixpanelTrack(eventName, properties);
 };
 
-export const trackSendActivationModalDialog = () => {
+export const trackSendActivationModalDialog = (
+  flow: NotificationModalFlow,
+  sendSource: SendOpeningSource,
+  sendUser: SendUserType
+) => {
   const eventName = "SEND_ACTIVATION_MODAL_DIALOG";
-  const properties = buildEventProperties("UX", "screen_view");
+  const properties = buildEventProperties("UX", "screen_view", {
+    flow,
+    opening_source: sendSource,
+    send_user: sendUser
+  });
   mixpanelTrack(eventName, properties);
 };
 

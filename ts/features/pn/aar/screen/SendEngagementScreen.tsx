@@ -100,13 +100,17 @@ export const SendEngagementScreen = (props: SendEngagementScreenProps) => {
     if (screenStatus === "Waiting") {
       // Make sure that nothing sets screenStatus to Waiting,
       // otherwise there will be a double event tracking
-      trackSendActivationModalDialog();
+      trackSendActivationModalDialog(
+        "send_notification_opening",
+        sendOpeningSource,
+        sendUserType
+      );
     } else if (screenStatus === "Failed") {
       // Here multiple tracking is fine, since we want
       // to track it every time that the user retries it
       sendBannerMixpanelEvents.bannerKO("aar");
     }
-  }, [screenStatus]);
+  }, [screenStatus, sendOpeningSource, sendUserType]);
 
   if (screenStatus === "Failed") {
     return (
