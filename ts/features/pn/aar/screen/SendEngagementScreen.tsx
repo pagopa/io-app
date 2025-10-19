@@ -72,7 +72,11 @@ export const SendEngagementScreen = (props: SendEngagementScreenProps) => {
 
   const onActivateService = useCallback(
     (isRetry: boolean = false) => {
-      trackSendActivationModalDialogActivationStart();
+      trackSendActivationModalDialogActivationStart(
+        "send_notification_opening",
+        sendOpeningSource,
+        sendUserType
+      );
       if (isRetry) {
         navigation.setOptions({
           headerShown: true
@@ -87,7 +91,14 @@ export const SendEngagementScreen = (props: SendEngagementScreenProps) => {
         })
       );
     },
-    [dispatch, navigation, onSENDActivationFailed, onSENDActivationSucceeded]
+    [
+      dispatch,
+      navigation,
+      onSENDActivationFailed,
+      onSENDActivationSucceeded,
+      sendOpeningSource,
+      sendUserType
+    ]
   );
   const onClose = useCallback(() => {
     if (screenStatus !== "Activating") {

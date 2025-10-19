@@ -161,7 +161,19 @@ describe("SendEngagementScreen", () => {
           expect(
             spiedOnMockedTrackSendActivationModalDialogActivationStart.mock
               .calls[0].length
-          ).toBe(0);
+          ).toBe(3);
+          expect(
+            spiedOnMockedTrackSendActivationModalDialogActivationStart.mock
+              .calls[0][0]
+          ).toBe("send_notification_opening");
+          expect(
+            spiedOnMockedTrackSendActivationModalDialogActivationStart.mock
+              .calls[0][1]
+          ).toBe(sendOpeningSource);
+          expect(
+            spiedOnMockedTrackSendActivationModalDialogActivationStart.mock
+              .calls[0][2]
+          ).toBe(sendUserType);
 
           const expectedAction = pnActivationUpsert.request({
             value: true,

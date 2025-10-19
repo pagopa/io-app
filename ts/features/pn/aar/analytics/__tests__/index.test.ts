@@ -72,7 +72,7 @@ describe("index", () => {
     ).forEach(flow =>
       (["aar", "message", "not_set"] as const).forEach(source =>
         (["recipient", "mandatory", "not_set"] as const).forEach(user =>
-          it(`should call 'mixpanelTrack' with proper event name and properties (flow ${flow} user ${user})`, () => {
+          it(`should call 'mixpanelTrack' with proper event name and properties (flow ${flow} source ${source} user ${user})`, () => {
             trackSendActivationModalDialog(flow, source, user);
 
             expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
@@ -94,19 +94,30 @@ describe("index", () => {
   });
 
   describe("trackSendActivationModalDialogActivationStart", () => {
-    it("should call 'mixpanelTrack' with proper event name and properties", () => {
-      trackSendActivationModalDialogActivationStart();
+    (
+      ["authentication", "send_notification_opening", "access"] as const
+    ).forEach(flow =>
+      (["aar", "message", "not_set"] as const).forEach(source =>
+        (["recipient", "mandatory", "not_set"] as const).forEach(user =>
+          it(`should call 'mixpanelTrack' with proper event name and properties (flow ${flow} source ${source} user ${user})`, () => {
+            trackSendActivationModalDialogActivationStart(flow, source, user);
 
-      expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
-      expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
-      expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
-        "SEND_ACTIVATION_MODAL_DIALOG_ACTIVATION_START"
-      );
-      expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
-        event_category: "UX",
-        event_type: "action"
-      });
-    });
+            expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+            expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+            expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+              "SEND_ACTIVATION_MODAL_DIALOG_ACTIVATION_START"
+            );
+            expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+              event_category: "UX",
+              event_type: "action",
+              flow,
+              opening_source: source,
+              send_user: user
+            });
+          })
+        )
+      )
+    );
   });
 
   describe("trackSendActivationModalDialogActivationDismissed", () => {

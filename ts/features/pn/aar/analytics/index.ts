@@ -38,9 +38,17 @@ export const trackSendActivationModalDialog = (
   mixpanelTrack(eventName, properties);
 };
 
-export const trackSendActivationModalDialogActivationStart = () => {
+export const trackSendActivationModalDialogActivationStart = (
+  flow: NotificationModalFlow,
+  sendSource: SendOpeningSource,
+  sendUser: SendUserType
+) => {
   const eventName = "SEND_ACTIVATION_MODAL_DIALOG_ACTIVATION_START";
-  const properties = buildEventProperties("UX", "action");
+  const properties = buildEventProperties("UX", "action", {
+    flow,
+    opening_source: sendSource,
+    send_user: sendUser
+  });
   mixpanelTrack(eventName, properties);
 };
 
