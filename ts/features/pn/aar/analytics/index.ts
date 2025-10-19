@@ -85,3 +85,9 @@ export const trackSendAARToSAccepted = () => {
   const props = buildEventProperties("UX", "action");
   void mixpanelTrack(eventName, props);
 };
+
+export const trackSendAARToSDismissed = () => {
+  const eventName = "SEND_TEMPORARY_NOTIFICATION_OPENING_DISCLAIMER_DISMISSED";
+  const props = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, props);
+};
