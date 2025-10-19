@@ -36,7 +36,11 @@ export const SystemNotificationPermissionsScreen = () => {
       )
     });
 
-    trackSystemNotificationPermissionScreenShown("authentication");
+    trackSystemNotificationPermissionScreenShown(
+      "authentication",
+      "not_set",
+      "not_set"
+    );
     dispatch(setEngagementScreenShown());
   }, [dispatch, navigation, onDismiss]);
 

@@ -8,6 +8,11 @@ import * as LOGIC_HOOK from "../../hooks/usePushNotificationEngagement";
 import * as analytics from "../../analytics";
 import { PushNotificationEngagementScreen } from "../PushNotificationEngagementScreen";
 import { NOTIFICATIONS_ROUTES } from "../../navigation/routes";
+import {
+  NotificationModalFlow,
+  SendOpeningSource,
+  SendUserType
+} from "../../analytics";
 
 const mockPopToTop = jest.fn();
 jest.mock("@react-navigation/native", () => {
@@ -28,18 +33,36 @@ describe("PushNotificationEngagementScreen", () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
-  it("should match snapshot and track analytics event", () => {
-    const spiedOnMockedAnalyticsEvent = jest
-      .spyOn(analytics, "trackSystemNotificationPermissionScreenShown")
-      .mockImplementation();
+  it("should match snapshot", () => {
     const screen = renderScreen();
     expect(screen.toJSON()).toMatchSnapshot();
-    expect(spiedOnMockedAnalyticsEvent.mock.calls.length).toBe(1);
-    expect(spiedOnMockedAnalyticsEvent.mock.calls[0].length).toBe(1);
-    expect(spiedOnMockedAnalyticsEvent.mock.calls[0][0]).toBe(
-      "send_notification_opening"
-    );
   });
+  (["authentication", "send_notification_opening", "access"] as const).forEach(
+    flow =>
+      (["aar", "message", "not_set"] as const).forEach(sendUserType =>
+        (["recipient", "mandatory", "not_set"] as const).forEach(
+          sendOpeningSource =>
+            it(`should track the analytics event with proper parameters ()`, () => {
+              const spiedOnMockedAnalyticsEvent = jest
+                .spyOn(
+                  analytics,
+                  "trackSystemNotificationPermissionScreenShown"
+                )
+                .mockImplementation();
+              renderScreen(flow, sendUserType, sendOpeningSource);
+              expect(spiedOnMockedAnalyticsEvent.mock.calls.length).toBe(1);
+              expect(spiedOnMockedAnalyticsEvent.mock.calls[0].length).toBe(3);
+              expect(spiedOnMockedAnalyticsEvent.mock.calls[0][0]).toBe(flow);
+              expect(spiedOnMockedAnalyticsEvent.mock.calls[0][1]).toBe(
+                sendUserType
+              );
+              expect(spiedOnMockedAnalyticsEvent.mock.calls[0][2]).toBe(
+                sendOpeningSource
+              );
+            })
+        )
+      )
+  );
 
   it("should render a blank page when told to do so by the logic hook", () => {
     jest
@@ -96,12 +119,16 @@ describe("PushNotificationEngagementScreen", () => {
   });
 });
 
-const renderScreen = () => {
+const renderScreen = (
+  flow: NotificationModalFlow = "send_notification_opening",
+  sendOpeningSource: SendOpeningSource = "not_set",
+  sendUserType: SendUserType = "not_set"
+) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
     PushNotificationEngagementScreen,
     NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT,
-    { flow: "send_notification_opening" },
+    { flow, sendOpeningSource, sendUserType },
     createStore(appReducer, globalState as any)
   );
 };

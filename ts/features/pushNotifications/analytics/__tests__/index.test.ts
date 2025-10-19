@@ -238,18 +238,30 @@ describe("pushNotifications analytics", () => {
     });
   });
   (["send_notification_opening", "authentication"] as const).forEach(flow =>
-    it(`'trackSystemNotificationPermissionScreenShown' should have expected event name and properties (flow: ${flow})`, () => {
-      const mockMixpanelTrack = getMockMixpanelTrack();
-      void trackSystemNotificationPermissionScreenShown(flow);
-      expect(mockMixpanelTrack.mock.calls.length).toBe(1);
-      expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
-      expect(mockMixpanelTrack.mock.calls[0][0]).toBe("PUSH_NOTIF_APP_MODAL");
-      expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
-        event_category: "UX",
-        event_type: "screen_view",
-        flow
-      });
-    })
+    (["aar", "message", "not_set"] as const).forEach(sendOpeningSource =>
+      (["recipient", "mandatory", "not_set"] as const).forEach(sendUserType =>
+        it(`'trackSystemNotificationPermissionScreenShown' should have expected event name and properties (flow: ${flow})`, () => {
+          const mockMixpanelTrack = getMockMixpanelTrack();
+          void trackSystemNotificationPermissionScreenShown(
+            flow,
+            sendOpeningSource,
+            sendUserType
+          );
+          expect(mockMixpanelTrack.mock.calls.length).toBe(1);
+          expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
+          expect(mockMixpanelTrack.mock.calls[0][0]).toBe(
+            "PUSH_NOTIF_APP_MODAL"
+          );
+          expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
+            event_category: "UX",
+            event_type: "screen_view",
+            flow,
+            opening_source: sendOpeningSource,
+            send_user: sendUserType
+          });
+        })
+      )
+    )
   );
   (["send_notification_opening", "authentication"] as const).forEach(flow =>
     it(`'trackSystemNotificationPermissionScreenOutcome' should have expected event name and properties for 'activate' input (flow ${flow})`, () => {

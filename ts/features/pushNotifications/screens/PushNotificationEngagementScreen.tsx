@@ -9,6 +9,8 @@ import {
 } from "../../../navigation/params/AppParamsList";
 import {
   NotificationModalFlow,
+  SendOpeningSource,
+  SendUserType,
   trackSystemNotificationPermissionScreenOutcome,
   trackSystemNotificationPermissionScreenShown
 } from "../analytics";
@@ -17,6 +19,8 @@ import { usePushNotificationEngagement } from "../hooks/usePushNotificationEngag
 
 export type PushNotificationEngagementScreenNavigationParams = {
   flow: NotificationModalFlow;
+  sendOpeningSource: SendOpeningSource;
+  sendUserType: SendUserType;
 };
 type PushNotificationEngagementScreenProps = NativeStackScreenProps<
   AppParamsList,
@@ -26,13 +30,17 @@ type PushNotificationEngagementScreenProps = NativeStackScreenProps<
 export const PushNotificationEngagementScreen = ({
   route
 }: PushNotificationEngagementScreenProps) => {
-  const { flow } = route.params;
+  const { flow, sendOpeningSource, sendUserType } = route.params;
   const { shouldRenderBlankPage, onButtonPress } =
     usePushNotificationEngagement(flow);
 
   useEffect(() => {
-    trackSystemNotificationPermissionScreenShown(flow);
-  }, [flow]);
+    trackSystemNotificationPermissionScreenShown(
+      flow,
+      sendOpeningSource,
+      sendUserType
+    );
+  }, [flow, sendOpeningSource, sendUserType]);
 
   if (shouldRenderBlankPage) {
     return null;
@@ -42,6 +50,8 @@ export const PushNotificationEngagementScreen = ({
     <PushNotificationEngagementScreenContent
       flow={flow}
       onPressActivate={onButtonPress}
+      sendOpeningSource={sendOpeningSource}
+      sendUserType={sendUserType}
     />
   );
 };
