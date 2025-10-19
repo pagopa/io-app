@@ -1,6 +1,7 @@
 import {
   trackSendAARAttachmentDownloadFailure,
   trackSendAARToS,
+  trackSendAARToSAccepted,
   trackSendActivationModalDialog,
   trackSendActivationModalDialogActivationDismissed,
   trackSendActivationModalDialogActivationStart,
@@ -181,6 +182,22 @@ describe("index", () => {
       expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
         event_category: "UX",
         event_type: "screen_view"
+      });
+    });
+  });
+
+  describe("trackSendAARToSAccepted", () => {
+    it("should call 'mixpanelTrack' with proper event name and properties", () => {
+      trackSendAARToSAccepted();
+
+      expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+        "SEND_TEMPORARY_NOTIFICATION_OPENING_DISCLAIMER_ACCEPTED"
+      );
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "UX",
+        event_type: "action"
       });
     });
   });
