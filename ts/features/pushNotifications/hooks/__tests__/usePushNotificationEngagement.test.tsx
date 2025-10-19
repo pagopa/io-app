@@ -10,6 +10,11 @@ import * as NOTIF_UTILS from "../../utils";
 import { NOTIFICATIONS_ROUTES } from "../../navigation/routes";
 import * as MAIN_FILE from "../usePushNotificationEngagement";
 import * as analytics from "../../analytics";
+import {
+  NotificationModalFlow,
+  SendOpeningSource,
+  SendUserType
+} from "../../analytics";
 
 // eslint-disable-next-line functional/no-let
 let testingHookOutput = {
@@ -43,28 +48,50 @@ describe("UseEngamentScreenFocusLogic", () => {
     jest.resetAllMocks();
   });
 
-  it("should set header and call openSystemNotificationSettingsScreen on button press, return {shouldRenderBlankPage:true} and track proper analytics event", async () => {
-    const spiedOnMockedAnalyticsOutcomeEvent = jest
-      .spyOn(analytics, "trackSystemNotificationPermissionScreenOutcome")
-      .mockImplementation();
-    renderHook();
-    expect(testOpenNotifications).toHaveBeenCalledTimes(0);
-    expect(testSetOptions).toHaveBeenCalledTimes(0);
-    expect(testingHookOutput.shouldRenderBlankPage).toBe(false);
+  (["authentication", "send_notification_opening", "access"] as const).forEach(
+    flow =>
+      (["aar", "message", "not_set"] as const).forEach(openingSource =>
+        (["recipient", "mandatory", "not_set"] as const).forEach(userType =>
+          it(`should set header and call openSystemNotificationSettingsScreen on button press, return {shouldRenderBlankPage:true} and track proper analytics event (flow ${flow} opening source ${openingSource} user type ${userType})`, async () => {
+            const spiedOnMockedAnalyticsOutcomeEvent = jest
+              .spyOn(
+                analytics,
+                "trackSystemNotificationPermissionScreenOutcome"
+              )
+              .mockImplementation();
 
-    act(testingHookOutput.onButtonPress);
+            renderHook(flow, openingSource, userType);
 
-    expect(testOpenNotifications).toHaveBeenCalledTimes(1);
-    expect(testingHookOutput.shouldRenderBlankPage).toBe(true);
-    expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls.length).toBe(1);
-    expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0].length).toBe(2);
-    expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0][0]).toBe(
-      "activate"
-    );
-    expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0][1]).toBe(
-      "send_notification_opening"
-    );
-  });
+            expect(testOpenNotifications).toHaveBeenCalledTimes(0);
+            expect(testSetOptions).toHaveBeenCalledTimes(0);
+            expect(testingHookOutput.shouldRenderBlankPage).toBe(false);
+
+            act(testingHookOutput.onButtonPress);
+
+            expect(testOpenNotifications).toHaveBeenCalledTimes(1);
+            expect(testingHookOutput.shouldRenderBlankPage).toBe(true);
+            expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls.length).toBe(
+              1
+            );
+            expect(
+              spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0].length
+            ).toBe(4);
+            expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0][0]).toBe(
+              "activate"
+            );
+            expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0][1]).toBe(
+              flow
+            );
+            expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0][2]).toBe(
+              openingSource
+            );
+            expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0][3]).toBe(
+              userType
+            );
+          })
+        )
+      )
+  );
 
   it('should subscribe to a "change" appstate event, and unsubscribe on unmount', () => {
     const removeMock = jest.fn();
@@ -134,10 +161,16 @@ describe("appStateHandler", () => {
   });
 });
 
-const renderHook = () => {
+const renderHook = (
+  flow: NotificationModalFlow = "send_notification_opening",
+  sendOpeningSource: SendOpeningSource = "not_set",
+  sendUserType: SendUserType = "not_set"
+) => {
   const Component = () => {
     const hookOutput = MAIN_FILE.usePushNotificationEngagement(
-      "send_notification_opening"
+      flow,
+      sendOpeningSource,
+      sendUserType
     );
     testingHookOutput = hookOutput;
     return <></>;

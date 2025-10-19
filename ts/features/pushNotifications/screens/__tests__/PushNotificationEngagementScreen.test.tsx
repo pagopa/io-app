@@ -42,14 +42,16 @@ describe("PushNotificationEngagementScreen", () => {
       (["aar", "message", "not_set"] as const).forEach(sendUserType =>
         (["recipient", "mandatory", "not_set"] as const).forEach(
           sendOpeningSource =>
-            it(`should track the analytics event with proper parameters ()`, () => {
+            it(`should track the analytics event with proper parameters (flow ${flow} userType ${sendUserType} opening source ${sendOpeningSource})`, () => {
               const spiedOnMockedAnalyticsEvent = jest
                 .spyOn(
                   analytics,
                   "trackSystemNotificationPermissionScreenShown"
                 )
                 .mockImplementation();
+
               renderScreen(flow, sendUserType, sendOpeningSource);
+
               expect(spiedOnMockedAnalyticsEvent.mock.calls.length).toBe(1);
               expect(spiedOnMockedAnalyticsEvent.mock.calls[0].length).toBe(3);
               expect(spiedOnMockedAnalyticsEvent.mock.calls[0][0]).toBe(flow);
@@ -77,25 +79,46 @@ describe("PushNotificationEngagementScreen", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
 
-  it("should render a header with an X button which should behave as expected and track analytics event", () => {
-    jest
-      .spyOn(LOGIC_HOOK, "usePushNotificationEngagement")
-      .mockImplementation(() => ({
-        onButtonPress: () => null,
-        shouldRenderBlankPage: false
-      }));
-    expect(mockPopToTop).toHaveBeenCalledTimes(0);
-    const { getByTestId } = renderScreen();
-    const button = getByTestId("header-close");
-    fireEvent.press(button);
-    expect(mockPopToTop).toHaveBeenCalledTimes(1);
-    expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls.length).toBe(1);
-    expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0].length).toBe(2);
-    expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0][0]).toBe("dismiss");
-    expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0][1]).toBe(
-      "send_notification_opening"
-    );
-  });
+  (["authentication", "send_notification_opening", "access"] as const).forEach(
+    flow =>
+      (["aar", "message", "not_set"] as const).forEach(openingSource =>
+        (["recipient", "mandatory", "not_set"] as const).forEach(userType =>
+          it(`should render a header with an X button which should behave as expected and track analytics event (flow ${flow} opening source ${openingSource} user type ${userType})`, () => {
+            jest
+              .spyOn(LOGIC_HOOK, "usePushNotificationEngagement")
+              .mockImplementation(() => ({
+                onButtonPress: () => null,
+                shouldRenderBlankPage: false
+              }));
+            expect(mockPopToTop).toHaveBeenCalledTimes(0);
+
+            const { getByTestId } = renderScreen(flow, openingSource, userType);
+
+            const button = getByTestId("header-close");
+            fireEvent.press(button);
+            expect(mockPopToTop).toHaveBeenCalledTimes(1);
+            expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls.length).toBe(
+              1
+            );
+            expect(
+              spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0].length
+            ).toBe(4);
+            expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0][0]).toBe(
+              "dismiss"
+            );
+            expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0][1]).toBe(
+              flow
+            );
+            expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0][2]).toBe(
+              openingSource
+            );
+            expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0][3]).toBe(
+              userType
+            );
+          })
+        )
+      )
+  );
 
   it("should call the button press callback on button press", () => {
     const mockButtonPress = jest.fn();

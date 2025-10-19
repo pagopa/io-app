@@ -32,7 +32,7 @@ export const PushNotificationEngagementScreen = ({
 }: PushNotificationEngagementScreenProps) => {
   const { flow, sendOpeningSource, sendUserType } = route.params;
   const { shouldRenderBlankPage, onButtonPress } =
-    usePushNotificationEngagement(flow);
+    usePushNotificationEngagement(flow, sendOpeningSource, sendUserType);
 
   useEffect(() => {
     trackSystemNotificationPermissionScreenShown(
@@ -62,14 +62,21 @@ type Props = {
 
 const PushNotificationEngagementScreenContent = ({
   flow,
-  onPressActivate
+  onPressActivate,
+  sendOpeningSource,
+  sendUserType
 }: Props) => {
   const { popToTop, setOptions } = useIONavigation();
 
   const handleCloseScreen = useCallback(() => {
-    trackSystemNotificationPermissionScreenOutcome("dismiss", flow);
+    trackSystemNotificationPermissionScreenOutcome(
+      "dismiss",
+      flow,
+      sendOpeningSource,
+      sendUserType
+    );
     popToTop();
-  }, [flow, popToTop]);
+  }, [flow, popToTop, sendOpeningSource, sendUserType]);
 
   useEffect(() => {
     setOptions({

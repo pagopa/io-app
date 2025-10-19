@@ -16,7 +16,12 @@ export const SystemNotificationPermissionsScreen = () => {
   const navigation = useIONavigation();
 
   const onDismiss = useCallback(() => {
-    trackSystemNotificationPermissionScreenOutcome("dismiss", "authentication");
+    trackSystemNotificationPermissionScreenOutcome(
+      "dismiss",
+      "authentication",
+      "not_set",
+      "not_set"
+    );
     navigation.goBack();
   }, [navigation]);
 
@@ -56,7 +61,9 @@ export const SystemNotificationPermissionsScreen = () => {
           onPress: () => {
             trackSystemNotificationPermissionScreenOutcome(
               "activate",
-              "authentication"
+              "authentication",
+              "not_set",
+              "not_set"
             );
             openSystemNotificationSettingsScreen();
             navigation.goBack();

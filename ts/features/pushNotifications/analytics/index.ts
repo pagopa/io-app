@@ -99,12 +99,16 @@ export const trackSystemNotificationPermissionScreenShown = (
 
 export const trackSystemNotificationPermissionScreenOutcome = (
   outcome: "activate" | "dismiss",
-  flow: NotificationModalFlow
+  flow: NotificationModalFlow,
+  sendOpeningSource: SendOpeningSource,
+  sendUser: SendUserType
 ) => {
   const eventName = "PUSH_NOTIF_APP_MODAL_INTERACTION";
   const props = buildEventProperties("UX", "action", {
     flow,
-    outcome
+    outcome,
+    opening_source: sendOpeningSource,
+    send_user: sendUser
   });
   void mixpanelTrack(eventName, props);
 };
