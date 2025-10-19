@@ -1,5 +1,6 @@
 import {
   trackSendAARAttachmentDownloadFailure,
+  trackSendAARToS,
   trackSendActivationModalDialog,
   trackSendActivationModalDialogActivationDismissed,
   trackSendActivationModalDialogActivationStart,
@@ -126,7 +127,7 @@ describe("index", () => {
     ).forEach(flow =>
       (["aar", "message", "not_set"] as const).forEach(source =>
         (["recipient", "mandatory", "not_set"] as const).forEach(user =>
-          it(`should call 'mixpanelTrack' with proper event name and properties`, () => {
+          it(`should call 'mixpanelTrack' with proper event name and properties (flow ${flow} source ${source}) use ${user}`, () => {
             trackSendActivationModalDialogActivationDismissed(
               flow,
               source,
@@ -164,6 +165,22 @@ describe("index", () => {
         event_category: "KO",
         event_type: undefined,
         reason
+      });
+    });
+  });
+
+  describe("trackSendAARToS", () => {
+    it("should call 'mixpanelTrack' with proper event name and properties", () => {
+      trackSendAARToS();
+
+      expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+        "SEND_TEMPORARY_NOTIFICATION_OPENING_DISCLAIMER"
+      );
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "UX",
+        event_type: "screen_view"
       });
     });
   });

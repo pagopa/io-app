@@ -9,6 +9,7 @@ import { SendAARTosComponent } from "../components/SendAARTosComponent";
 import { setAarFlowState } from "../store/actions";
 import { currentAARFlowData } from "../store/selectors";
 import { sendAARFlowStates } from "../utils/stateUtils";
+import { trackSendAARToS } from "../analytics";
 
 type SendAarInitialFlowScreenT = {
   qrCode: string;
@@ -62,6 +63,10 @@ export const SendAARInitialFlowScreen = ({
             }
           }
         });
+        break;
+      }
+      case sendAARFlowStates.displayingAARToS: {
+        trackSendAARToS();
         break;
       }
     }

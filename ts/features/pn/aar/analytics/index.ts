@@ -73,3 +73,9 @@ export const trackSendAARAttachmentDownloadFailure = (reason: string) => {
   });
   void mixpanelTrack(eventName, props);
 };
+
+export const trackSendAARToS = () => {
+  const eventName = "SEND_TEMPORARY_NOTIFICATION_OPENING_DISCLAIMER";
+  const props = buildEventProperties("UX", "screen_view");
+  void mixpanelTrack(eventName, props);
+};
