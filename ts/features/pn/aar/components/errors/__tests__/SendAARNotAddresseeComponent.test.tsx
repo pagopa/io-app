@@ -55,12 +55,24 @@ describe("SendAARTosComponent", () => {
       spiedOnMockedTrackSendAARAccessDeniedDelegateInfo.mock.calls[0].length
     ).toBe(0);
   });
-  it("quits out of the flow on secondary button press", () => {
+  it("quits out of the flow on secondary button press and calls trackSendAARAccessDeniedDismissed", () => {
+    const spiedOnMockedTrackSendAARAccessDeniedDismissed = jest
+      .spyOn(ANALYTICS, "trackSendAARAccessDeniedDismissed")
+      .mockImplementation();
+
     const { getByTestId } = renderComponent();
+
     const button = getByTestId("secondary_button");
     expect(mockTerminateFlow).toHaveBeenCalledTimes(0);
     fireEvent.press(button);
     expect(mockTerminateFlow).toHaveBeenCalledTimes(1);
+
+    expect(
+      spiedOnMockedTrackSendAARAccessDeniedDismissed.mock.calls.length
+    ).toBe(1);
+    expect(
+      spiedOnMockedTrackSendAARAccessDeniedDismissed.mock.calls[0].length
+    ).toBe(0);
   });
   it("should match snapshot", () => {
     const { toJSON } = renderComponent();

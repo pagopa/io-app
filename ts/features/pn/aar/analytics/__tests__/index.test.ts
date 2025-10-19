@@ -1,5 +1,6 @@
 import {
   trackSendAARAccessDeniedDelegateInfo,
+  trackSendAARAccessDeniedDismissed,
   trackSendAARAccessDeniedScreenView,
   trackSendAARAttachmentDownloadFailure,
   trackSendAARToS,
@@ -249,6 +250,22 @@ describe("index", () => {
       expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
         event_category: "UX",
         event_type: "exit"
+      });
+    });
+  });
+
+  describe("trackSendAARAccessDeniedDismissed", () => {
+    it("should call 'mixpanelTrack' with proper event name and properties", () => {
+      trackSendAARAccessDeniedDismissed();
+
+      expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+        "SEND_TEMPORARY_NOTIFICATION_OPENING_NOT_ALLOWED_DISMISSED"
+      );
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "UX",
+        event_type: "action"
       });
     });
   });

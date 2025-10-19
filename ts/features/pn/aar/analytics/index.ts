@@ -104,3 +104,9 @@ export const trackSendAARAccessDeniedDelegateInfo = () => {
   const props = buildEventProperties("UX", "exit");
   void mixpanelTrack(eventName, props);
 };
+
+export const trackSendAARAccessDeniedDismissed = () => {
+  const eventName = "SEND_TEMPORARY_NOTIFICATION_OPENING_NOT_ALLOWED_DISMISSED";
+  const props = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, props);
+};
