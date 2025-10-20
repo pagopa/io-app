@@ -264,7 +264,9 @@ export const itwIsEidExpiredOrExpiringSelector = createSelector(
     (state: GlobalState) => itwLifecycleIsITWalletValidSelector(state)
   ],
   (eidStatus, isITWalletValid) => {
-    if (isITWalletValid) return false;
+    if (isITWalletValid) {
+      return false;
+    }
     return eidStatus === "jwtExpired" || eidStatus === "jwtExpiring";
   }
 );
