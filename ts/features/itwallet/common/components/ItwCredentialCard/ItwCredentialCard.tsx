@@ -14,10 +14,10 @@ import {
 import { getThemeColorByCredentialType } from "../../utils/itwStyleUtils";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import { useEffectiveCredentialStatus } from "../../../presentation/details/hooks/useEffectiveCredentialStatus";
 import { CardBackground } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
 import { CardColorScheme } from "./types";
-import { useEffectiveCredentialStatus } from "../../../presentation/details/hooks/useEffectiveCredentialStatus";
 
 export type ItwCredentialCard = {
   /**
@@ -107,7 +107,7 @@ export const ItwCredentialCard = ({
       titleOpacity: 0.5,
       colorScheme: "faded"
     };
-  }, [credentialType, credentialStatus, needsItwUpgrade]);
+  }, [credentialType, credentialStatus, needsItwUpgrade, status]);
 
   return (
     <View style={styles.cardContainer}>

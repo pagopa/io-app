@@ -9,8 +9,8 @@ import {
 } from "../../analytics";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwShouldRenderL3UpgradeBannerSelector } from "../store/selectors";
-import { ItwHighlightBanner } from "./ItwHighlightBanner";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import { ItwHighlightBanner } from "./ItwHighlightBanner";
 
 export const ItwUpgradeBanner = () => {
   const navigation = useIONavigation();
