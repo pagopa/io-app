@@ -83,12 +83,6 @@ export const itwIsL3EnabledSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.isFiscalCodeWhitelisted ?? false;
 
 /**
- * Returns whether offline banner is hidden. Defaults to false.
- */
-export const itwIsOfflineBannerHiddenSelector = (state: GlobalState) =>
-  state.features.itWallet.preferences.offlineBannerHidden ?? false;
-
-/**
  * Returns whether the IT-wallet upgrade banner in MDL details is hidden. Defaults to false.
  */
 export const itwIsWalletUpgradeMDLDetailsBannerHiddenSelector = (
@@ -103,3 +97,11 @@ export const itwIsWalletUpgradeMDLDetailsBannerHiddenSelector = (
 export const itwIsSimplifiedActivationRequired = (state: GlobalState) =>
   state.features.itWallet.preferences.isItwSimplifiedActivationRequired ??
   false;
+
+/**
+ * Returns whether the reissuance feedback banner is hidden. Defaults to false.
+ */
+export const itwIsReissuanceFeedbackBannerHiddenSelector = (
+  state: GlobalState
+) =>
+  state.features.itWallet.preferences.reissuanceFeedbackBannerHidden ?? false;

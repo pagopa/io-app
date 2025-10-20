@@ -36,3 +36,11 @@ export const trackSendActivationModalDialogActivationDismissed = () => {
   const properties = buildEventProperties("UX", "action");
   mixpanelTrack(eventName, properties);
 };
+
+export const trackSendAARAttachmentDownloadFailure = (reason: string) => {
+  const eventName = "SEND_AAR_ATTACHMENT_DOWNLOAD_FAILED";
+  const props = buildEventProperties("KO", undefined, {
+    reason
+  });
+  void mixpanelTrack(eventName, props);
+};

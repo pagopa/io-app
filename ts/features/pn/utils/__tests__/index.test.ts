@@ -1,15 +1,18 @@
 import * as O from "fp-ts/lib/Option";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   canShowMorePaymentsLink,
   extractPNOptInMessageInfoIfAvailable,
   maxVisiblePaymentCount,
   notificationStatusToTimelineStatus,
+  paymentsFromPNMessagePot,
   shouldUseBottomSheetForPayments
 } from "..";
 import { GlobalState } from "../../../../store/reducers/types";
 import { CTAS } from "../../../../types/LocalizedCTAs";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
+import { PNMessage } from "../../store/types/types";
 
 const navigateToServiceLink = () =>
   "ioit://services/service-detail?serviceId=optInServiceId&activate=true";
@@ -435,5 +438,100 @@ describe("shouldUseBottomSheetForPayments", () => {
     );
     const showMorePayments = shouldUseBottomSheetForPayments(false, payments);
     expect(showMorePayments).toBe(true);
+  });
+});
+
+describe("paymentsFromPNMessagePot", () => {
+  const userFiscalCode = "RSSMRA80A10H501A";
+  [
+    pot.none,
+    pot.noneLoading,
+    pot.noneUpdating(O.none),
+    pot.noneError(Error("")),
+    pot.some(O.none),
+    pot.someLoading(O.none),
+    pot.someUpdating(O.none, O.none),
+    pot.someError(O.none, Error(""))
+  ].map(input =>
+    it(`should return undefined when the message pot is ${input.kind}${
+      pot.isSome(input) ? " with O.none inside" : ""
+    }`, () => {
+      const output = paymentsFromPNMessagePot(userFiscalCode, input);
+      expect(output).toBe(undefined);
+    })
+  );
+  const noPaymentRecipients = {
+    recipients: [{}, {}, {}]
+  } as unknown as PNMessage;
+  [
+    pot.some(O.some(noPaymentRecipients)),
+    pot.someLoading(O.some(noPaymentRecipients)),
+    pot.someUpdating(O.some(noPaymentRecipients), O.some(noPaymentRecipients)),
+    pot.someError(O.some(noPaymentRecipients), Error(""))
+  ].forEach(input => {
+    it(`should return undefined when the message pot is ${input.kind} with empty recipients`, () => {
+      const output = paymentsFromPNMessagePot(userFiscalCode, input);
+      expect(output).toBe(undefined);
+    });
+  });
+  const recipientsWithTaxId = {
+    recipients: [
+      {
+        payment: {
+          creditorTaxId: "c1",
+          noticeCode: "n1"
+        },
+        taxId: userFiscalCode
+      },
+      {
+        payment: {
+          creditorTaxId: "c2",
+          noticeCode: "n2"
+        },
+        taxId: "NotMatchingTaxId"
+      },
+      {
+        taxId: userFiscalCode
+      },
+      {
+        taxId: "NotMatchingTaxId"
+      }
+    ]
+  } as unknown as PNMessage;
+  [
+    pot.some(O.some(recipientsWithTaxId)),
+    pot.someLoading(O.some(recipientsWithTaxId)),
+    pot.someUpdating(O.some(recipientsWithTaxId), O.some(recipientsWithTaxId)),
+    pot.someError(O.some(recipientsWithTaxId), Error(""))
+  ].forEach(input => {
+    it(`should return one matching payments when the message pot is ${input.kind}`, () => {
+      const output = paymentsFromPNMessagePot(userFiscalCode, input);
+      expect(output).toEqual([
+        {
+          creditorTaxId: "c1",
+          noticeCode: "n1"
+        }
+      ]);
+    });
+  });
+  [
+    pot.some(O.some(recipientsWithTaxId)),
+    pot.someLoading(O.some(recipientsWithTaxId)),
+    pot.someUpdating(O.some(recipientsWithTaxId), O.some(recipientsWithTaxId)),
+    pot.someError(O.some(recipientsWithTaxId), Error(""))
+  ].forEach(input => {
+    it(`should return two matching payments when the message pot is ${input.kind} and the input fiscal code is undefiend`, () => {
+      const output = paymentsFromPNMessagePot(undefined, input);
+      expect(output).toEqual([
+        {
+          creditorTaxId: "c1",
+          noticeCode: "n1"
+        },
+        {
+          creditorTaxId: "c2",
+          noticeCode: "n2"
+        }
+      ]);
+    });
   });
 });

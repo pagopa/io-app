@@ -35,7 +35,6 @@ import {
   sessionInfoSelector,
   sessionTokenSelector
 } from "../features/authentication/common/store/selectors";
-import { setSecurityAdviceReadyToShow } from "../features/authentication/fastLogin/store/actions/securityAdviceActions";
 import { refreshSessionToken } from "../features/authentication/fastLogin/store/actions/tokenRefreshActions";
 import {
   isFastLoginEnabledSelector,
@@ -47,7 +46,10 @@ import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { watchFciSaga } from "../features/fci/saga";
 import { watchFimsSaga } from "../features/fims/common/saga";
 import { startAndReturnIdentificationResult } from "../features/identification/sagas";
-import { IdentificationResult } from "../features/identification/store/reducers";
+import {
+  IdentificationBackActionType,
+  IdentificationResult
+} from "../features/identification/store/reducers";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
 import {
   shouldExitForOfflineAccess,
@@ -78,7 +80,6 @@ import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnbo
 import { watchAbortOnboardingSaga } from "../features/onboarding/saga/watchAbortOnboardingSaga";
 import { watchPaymentsSaga } from "../features/payments/common/saga";
 import { watchAarFlowSaga } from "../features/pn/aar/saga/watchAARFlowSaga";
-import { isAAREnabled } from "../features/pn/aar/store/reducers";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { maybeHandlePendingBackgroundActions } from "../features/pushNotifications/sagas/common";
 import { notificationPermissionsListener } from "../features/pushNotifications/sagas/notificationPermissionsListener";
@@ -119,6 +120,7 @@ import {
   startupTransientError
 } from "../store/actions/startup";
 import {
+  isAarRemoteEnabled,
   isIdPayEnabledSelector,
   isPnRemoteEnabledSelector,
   remoteConfigSelector
@@ -136,6 +138,7 @@ import {
   waitForMainNavigator,
   waitForNavigatorServiceInitialization
 } from "../navigation/saga/navigation";
+import { checkShouldDisplaySendEngagementScreen } from "../features/pn/loginEngagement/sagas/checkShouldDisplaySendEngagementScreen";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
@@ -358,7 +361,7 @@ export function* initializeApplicationSaga(
   yield* fork(watchServicesSaga, backendClient, sessionToken);
 
   // Start watching for Messages actions
-  yield* fork(watchMessagesSaga, backendClient, sessionToken);
+  yield* fork(watchMessagesSaga, backendClient, sessionToken, keyInfo);
 
   // start watching for FIMS actions
   yield* fork(watchFimsSaga, sessionToken);
@@ -495,7 +498,17 @@ export function* initializeApplicationSaga(
     // FIXME: This is an unsafe cast caused by a wrongly described type.
     const identificationResult: SagaCallReturnType<
       typeof startAndReturnIdentificationResult
-    > = yield* call(startAndReturnIdentificationResult, maybeStoredPin.value);
+    > = yield* call(
+      startAndReturnIdentificationResult,
+      maybeStoredPin.value,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      IdentificationBackActionType.CLOSE_APP
+    );
 
     if (identificationResult === IdentificationResult.pinreset) {
       // If we are here the user had chosen to reset the unlock code
@@ -607,13 +620,13 @@ export function* initializeApplicationSaga(
     isPnRemoteEnabledSelector
   );
 
-  const aAREnabled = yield* select(isAAREnabled);
-
   if (pnEnabled) {
     // Start watching for PN actions
     yield* fork(watchPnSaga, sessionToken);
 
-    if (aAREnabled) {
+    const aarRemoteEnabled = yield* select(isAarRemoteEnabled);
+
+    if (aarRemoteEnabled) {
       yield* fork(watchAarFlowSaga, sessionToken, keyInfo);
     }
   }
@@ -703,10 +716,15 @@ export function* initializeApplicationSaga(
   yield* fork(watchEmailNotificationPreferencesSaga);
 
   // Check if we have any pending background action to be handled
-  yield* call(maybeHandlePendingBackgroundActions, true);
+  const isHandlingBackgroundActions = yield* call(
+    maybeHandlePendingBackgroundActions,
+    true
+  );
 
-  // This tells the security advice bottomsheet that it can be shown
-  yield* put(setSecurityAdviceReadyToShow(true));
+  if (!isHandlingBackgroundActions) {
+    // Check if should navigate to the send activation screen
+    yield* fork(checkShouldDisplaySendEngagementScreen, isFirstOnboarding);
+  }
 
   yield* put(
     applicationInitialized({

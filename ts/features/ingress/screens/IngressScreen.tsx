@@ -31,6 +31,7 @@ import { identificationRequest } from "../../identification/store/actions";
 import { OfflineAccessReasonEnum } from "../store/reducer";
 import { itwOfflineAccessAvailableSelector } from "../../itwallet/common/store/selectors";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { IdentificationBackActionType } from "../../identification/store/reducers";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
 const TIMEOUT_BLOCKING_SCREEN = (25 * 1000) as Millisecond;
@@ -97,14 +98,22 @@ export const IngressScreen = () => {
     (offlineReason: OfflineAccessReasonEnum) => {
       dispatch(setOfflineAccessReason(offlineReason));
       dispatch(
-        identificationRequest(false, false, undefined, undefined, {
-          onSuccess: () => {
-            // This dispatch mounts the new offline navigator.
-            // It must be initialized **after** the user completes
-            // biometric authentication to prevent graphical glitches.
-            dispatch(startupLoadSuccess(StartupStatusEnum.OFFLINE));
-          }
-        })
+        identificationRequest(
+          false,
+          false,
+          undefined,
+          undefined,
+          {
+            onSuccess: () => {
+              // This dispatch mounts the new offline navigator.
+              // It must be initialized **after** the user completes
+              // biometric authentication to prevent graphical glitches.
+              dispatch(startupLoadSuccess(StartupStatusEnum.OFFLINE));
+            }
+          },
+          undefined,
+          IdentificationBackActionType.CLOSE_APP
+        )
       );
     },
     [dispatch]

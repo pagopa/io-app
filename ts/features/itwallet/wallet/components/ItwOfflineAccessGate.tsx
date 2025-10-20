@@ -1,17 +1,17 @@
-import { PropsWithChildren, useState } from "react";
-import I18n from "i18next";
 import { useFocusEffect } from "@react-navigation/native";
+import I18n from "i18next";
+import { PropsWithChildren, useState } from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIOSelector } from "../../../../store/hooks";
+import {
+  trackItwOfflineAccessExpired,
+  trackItwOfflineAccessExpiring
+} from "../../analytics";
 import {
   itwIsOfflineAccessLimitReached,
   itwShouldDisplayOfflineAccessLimitWarning
 } from "../../common/store/selectors/securePreferences";
 import { useAppRestartAction } from "../hooks/useAppRestartAction";
-import {
-  trackItwOfflineAccessExpired,
-  trackItwOfflineAccessExpiring
-} from "../../analytics";
 
 export const ItwOfflineAccessGate = ({ children }: PropsWithChildren) => {
   const [warningViewed, setWarningViewed] = useState(false);
@@ -20,14 +20,12 @@ export const ItwOfflineAccessGate = ({ children }: PropsWithChildren) => {
     itwShouldDisplayOfflineAccessLimitWarning
   );
 
-  const handleAppRestart = useAppRestartAction("banner");
-
   if (shouldDisplayLimitWarning && !warningViewed) {
     return <LimitWarningScreenContent setWarningViewed={setWarningViewed} />;
   }
 
   if (isLimitReached) {
-    return <LimitReachedScreenContent handleAppRestart={handleAppRestart} />;
+    return <LimitReachedScreenContent />;
   }
 
   return children;
@@ -60,11 +58,9 @@ const LimitWarningScreenContent = ({
   );
 };
 
-const LimitReachedScreenContent = ({
-  handleAppRestart
-}: {
-  handleAppRestart: () => void;
-}) => {
+const LimitReachedScreenContent = () => {
+  const handleAppRestart = useAppRestartAction("banner");
+
   useFocusEffect(trackItwOfflineAccessExpired);
 
   return (

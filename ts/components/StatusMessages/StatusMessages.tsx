@@ -1,9 +1,23 @@
+import {
+  AlertEdgeToEdgeProps,
+  AlertEdgeToEdgeWrapper,
+  IOColors
+} from "@pagopa/io-app-design-system";
 import { PropsWithChildren } from "react";
-import { AlertEdgeToEdgeWrapper, IOColors } from "@pagopa/io-app-design-system";
 import { StatusBar } from "react-native";
 import { useStatusAlertProps } from "../../hooks/useStatusAlertProps";
 
 type StatusMessagesProps = PropsWithChildren;
+
+const mapStatusBarVariantStates: Record<
+  NonNullable<AlertEdgeToEdgeProps["variant"]>,
+  IOColors
+> = {
+  error: "error-100",
+  warning: "warning-100",
+  info: "info-100",
+  success: "success-100"
+};
 
 export const StatusMessages = ({ children }: StatusMessagesProps) => {
   const statusAlert = useStatusAlertProps();
@@ -13,7 +27,13 @@ export const StatusMessages = ({ children }: StatusMessagesProps) => {
       {statusAlert && (
         <StatusBar
           barStyle="dark-content"
-          backgroundColor={IOColors["info-100"]}
+          backgroundColor={
+            IOColors[
+              mapStatusBarVariantStates[
+                statusAlert.alertProps?.variant || "info"
+              ]
+            ]
+          }
         />
       )}
       {children}

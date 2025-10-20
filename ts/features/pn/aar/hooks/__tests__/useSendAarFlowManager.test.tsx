@@ -6,7 +6,9 @@ import {
   isValidAARStateTransition,
   sendAARFlowStates
 } from "../../utils/stateUtils";
-import { useSendAarFlowManager } from "../useSendAarFlowManager";
+import { testable, useSendAarFlowManager } from "../useSendAarFlowManager";
+import { sendAarMockStates } from "../../utils/testUtils";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 
 const mockPopToTop = jest.fn();
 const mockReset = jest.fn();
@@ -41,7 +43,9 @@ describe("useSendAarFlowManager", () => {
     });
     expect(mockPopToTop).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledTimes(1);
-    expect(mockDispatch).toHaveBeenCalledWith(terminateAarFlow());
+    expect(mockDispatch).toHaveBeenCalledWith(
+      terminateAarFlow({ messageId: undefined })
+    );
   });
   Object.values(sendAARFlowStates).forEach(stateKind => {
     it(`should navigate to a valid state when calling "goToNextState" when the state type is ${stateKind}`, () => {
@@ -74,14 +78,39 @@ describe("useSendAarFlowManager", () => {
   it('should return "currentFlowData" as a 1/1 of the selector`s value', () => {
     const value: AARFlowState = {
       type: sendAARFlowStates.displayingNotificationData,
-      fullNameDestinatario: "mario rossi",
+      recipientInfo: {
+        denomination: "Mario Rossi",
+        taxId: "RSSMRA74D22A001Q"
+      },
       notification: {},
-      mandateId: "mandateID"
+      mandateId: "mandateID",
+      iun: "IUN123",
+      pnServiceId: "SERVICEID123" as ServiceId
     };
     mockSelector.mockImplementation(() => value);
 
     const { result } = renderHook(useSendAarFlowManager);
 
     expect(result.current.currentFlowData).toEqual(value);
+  });
+});
+describe("getIun", () => {
+  const getIun = testable.getIun!;
+  it("should handle all the possible states", () => {
+    sendAarMockStates.forEach(state => {
+      switch (state.type) {
+        case sendAARFlowStates.notAddresseeFinal:
+        case sendAARFlowStates.fetchingNotificationData:
+        case sendAARFlowStates.displayingNotificationData:
+          expect(getIun(state)).toBe(state.iun);
+          break;
+        case sendAARFlowStates.ko:
+          expect(getIun(state)).toBe(getIun(state.previousState));
+          break;
+        default:
+          expect(getIun(state)).toBeUndefined();
+          break;
+      }
+    });
   });
 });

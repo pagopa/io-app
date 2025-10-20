@@ -1,20 +1,27 @@
+import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useCallback, useEffect } from "react";
 import I18n from "i18next";
+import { RefObject, useCallback, useEffect, useRef } from "react";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
-import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
+import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
+import { useOfflineToastGuard } from "../../../hooks/useOfflineToastGuard";
+import { useStartSupportRequest } from "../../../hooks/useStartSupportRequest";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
-import { profileFiscalCodeSelector } from "../../settings/common/store/selectors";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { isStrictSome } from "../../../utils/pot";
 import {
   cancelPreviousAttachmentDownload,
   cancelQueuedPaymentUpdates,
   updatePaymentForMessage
 } from "../../messages/store/actions";
+import { profileFiscalCodeSelector } from "../../settings/common/store/selectors";
+import { SendAARMessageDetailBottomSheetComponent } from "../aar/components/SendAARMessageDetailBottomSheetComponent";
+import { terminateAarFlow } from "../aar/store/actions";
 import { trackPNUxSuccess } from "../analytics";
 import { MessageDetails } from "../components/MessageDetails";
 import { PnParamsList } from "../navigation/params";
@@ -36,6 +43,7 @@ export type MessageDetailsScreenRouteParams = {
   messageId: string;
   serviceId: ServiceId;
   firstTimeOpening: boolean;
+  isAarMessage?: boolean;
 };
 
 type MessageDetailsRouteProps = RouteProp<
@@ -43,26 +51,81 @@ type MessageDetailsRouteProps = RouteProp<
   "PN_ROUTES_MESSAGE_DETAILS"
 >;
 
+const useCorrectHeader = (
+  isAAr: boolean,
+  aarBottomSheetRef: RefObject<(() => void) | undefined>
+) => {
+  const { setOptions, goBack } = useIONavigation();
+  const startSupportRequest = useOfflineToastGuard(useStartSupportRequest({}));
+
+  const aarAction: HeaderSecondLevel = {
+    title: "",
+    type: "singleAction",
+    firstAction: {
+      icon: "closeLarge",
+      onPress: () => {
+        aarBottomSheetRef.current?.();
+      },
+      accessibilityLabel: I18n.t("global.buttons.close"),
+      testID: "AAR_close_button"
+    }
+  };
+  const supportRequestAction: HeaderSecondLevel = {
+    type: "singleAction",
+    title: "",
+    firstAction: {
+      icon: "help",
+      onPress: startSupportRequest,
+      accessibilityLabel: I18n.t(
+        "global.accessibility.contextualHelp.open.label"
+      )
+    },
+    goBack,
+    backAccessibilityLabel: I18n.t("global.buttons.back")
+  };
+  useOnFirstRender(() => {
+    setOptions({
+      header: () => (
+        <HeaderSecondLevel {...(isAAr ? aarAction : supportRequestAction)} />
+      ),
+      headerShown: true
+    });
+  });
+};
+
 export const MessageDetailsScreen = () => {
   const dispatch = useIODispatch();
   const route = useRoute<MessageDetailsRouteProps>();
+  const { messageId, serviceId, firstTimeOpening, isAarMessage } = route.params;
+  const aarBottomSheetRef = useRef<() => void>(undefined);
 
-  const { messageId, serviceId, firstTimeOpening } = route.params;
+  useCorrectHeader(!!isAarMessage, aarBottomSheetRef);
+
+  const androidBackButtonCallback = useCallback(() => {
+    if (isAarMessage) {
+      aarBottomSheetRef.current?.();
+      return true;
+    }
+    return false;
+  }, [isAarMessage]);
+
+  useHardwareBackButton(androidBackButtonCallback);
 
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
   const messagePot = useIOSelector(state =>
     pnMessageFromIdSelector(state, messageId)
   );
-  const payments = paymentsFromPNMessagePot(currentFiscalCode, messagePot);
+  const fiscalCodeOrUndefined = isAarMessage ? undefined : currentFiscalCode;
+  const payments = paymentsFromPNMessagePot(fiscalCodeOrUndefined, messagePot);
   const paymentsCount = payments?.length ?? 0;
 
-  useHeaderSecondLevel({
-    title: "",
-    supportRequest: true
-  });
-
   useEffect(() => {
-    dispatch(startPNPaymentStatusTracking(messageId));
+    dispatch(
+      startPNPaymentStatusTracking({
+        isAARNotification: !!isAarMessage,
+        messageId
+      })
+    );
 
     if (isStrictSome(messagePot)) {
       const isCancelled = isCancelledFromPNMessagePot(messagePot);
@@ -79,8 +142,18 @@ export const MessageDetailsScreen = () => {
       dispatch(cancelPreviousAttachmentDownload());
       dispatch(cancelQueuedPaymentUpdates({ messageId }));
       dispatch(cancelPNPaymentStatusTracking());
+      if (isAarMessage) {
+        dispatch(terminateAarFlow({ messageId }));
+      }
     };
-  }, [dispatch, firstTimeOpening, messageId, messagePot, paymentsCount]);
+  }, [
+    dispatch,
+    firstTimeOpening,
+    messageId,
+    messagePot,
+    paymentsCount,
+    isAarMessage
+  ]);
 
   const store = useIOStore();
   useFocusEffect(
@@ -114,6 +187,7 @@ export const MessageDetailsScreen = () => {
               pictogram="umbrella"
               title={I18n.t("features.pn.details.loadError.title")}
               subtitle={I18n.t("features.pn.details.loadError.body")}
+              isHeaderVisible={isAarMessage}
             />
           ),
           message => (
@@ -122,9 +196,15 @@ export const MessageDetailsScreen = () => {
               messageId={messageId}
               serviceId={serviceId}
               payments={payments}
+              isAARMessage={isAarMessage}
             />
           )
         )
+      )}
+      {isAarMessage && (
+        <SendAARMessageDetailBottomSheetComponent
+          aarBottomSheetRef={aarBottomSheetRef}
+        />
       )}
     </>
   );

@@ -36,7 +36,6 @@ const defaultUserAgent =
  */
 const ItwSpidIdpLoginScreen = () => {
   const { ISSUANCE_REDIRECT_URI } = pipe(useIOSelector(selectItwEnv), getEnv);
-
   const isMachineLoading =
     ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const spidAuthUrl =
