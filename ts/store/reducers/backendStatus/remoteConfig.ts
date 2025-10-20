@@ -708,7 +708,7 @@ export const pnPrivacyUrlsSelector = createSelector(
  * Return true if the app supports the AAR feature (based on remote config).
  * If the remote value is missing, consider the feature as enabled.
  */
-export const isAARRemoteEnabled = (state: GlobalState) => {
+export const isAarRemoteEnabled = (state: GlobalState) => {
   const remoteConfigOption = remoteConfigSelector(state);
   if (O.isNone(remoteConfigOption)) {
     // CDN data not available, AAR is disabled

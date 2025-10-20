@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { isAARRemoteEnabled } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { isAarRemoteEnabled } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isAARLocalEnabled } from "../../../../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { thirdPartyFromIdSelector } from "../../../../messages/store/reducers/thirdPartyById";
@@ -21,7 +21,7 @@ export const thirdPartySenderDenominationSelector = (
     O.toUndefined
   );
 export const isAAREnabled = (state: GlobalState): boolean =>
-  isAARLocalEnabled(state) && isAARRemoteEnabled(state);
+  isAARLocalEnabled(state) && isAarRemoteEnabled(state);
 
 export const isAarMessageDelegatedSelector = (
   state: GlobalState,
@@ -48,7 +48,7 @@ export const aarAdresseeDenominationSelector = (
     case sendAARFlowStates.displayingNotificationData:
     case sendAARFlowStates.notAddresseeFinal:
       if (iun === currentState.iun) {
-        return currentState.fullNameDestinatario;
+        return currentState.recipientInfo.denomination;
       }
       return undefined;
     default:
