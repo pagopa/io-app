@@ -20,8 +20,10 @@ import {
   trackSendActivationDeclined,
   trackSendNurturingDialogClosure
 } from "../../analytics/send";
-import { ANALYTICS_NOTIFICATION_MODAL_FLOW } from "../utils/constants";
+import { NotificationModalFlow } from "../../../pushNotifications/analytics";
 import { useSendActivationFlow } from "./useSendActivationFlow";
+
+export const flow: NotificationModalFlow = "access";
 
 export const useSendAreYouSureBottomSheet = () => {
   const ctaPressed = useRef(false);
@@ -74,10 +76,7 @@ export const useSendAreYouSureBottomSheet = () => {
             onPress={() => {
               // eslint-disable-next-line functional/immutable-data
               ctaPressed.current = true;
-              trackSendActivationAccepted(
-                "nurturing_bottomsheet",
-                ANALYTICS_NOTIFICATION_MODAL_FLOW
-              );
+              trackSendActivationAccepted("nurturing_bottomsheet", flow);
               requestSendActivation();
             }}
             loading={isActivating}
@@ -92,7 +91,7 @@ export const useSendAreYouSureBottomSheet = () => {
               onPress={() => {
                 // eslint-disable-next-line functional/immutable-data
                 ctaPressed.current = true;
-                trackSendActivationDeclined(ANALYTICS_NOTIFICATION_MODAL_FLOW);
+                trackSendActivationDeclined(flow);
                 dispatch(setSendEngagementScreenHasBeenDismissed());
                 dispatch(setSecurityAdviceReadyToShow(true));
                 pop();
@@ -109,7 +108,7 @@ export const useSendAreYouSureBottomSheet = () => {
        * the closing action is direct and not the result of another action
        */
       if (!ctaPressed.current) {
-        trackSendNurturingDialogClosure(ANALYTICS_NOTIFICATION_MODAL_FLOW);
+        trackSendNurturingDialogClosure(flow);
       }
     }
   });

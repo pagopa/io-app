@@ -11,8 +11,10 @@ import {
   trackSendAcceptanceDialogClosure,
   trackSendActivationAccepted
 } from "../../analytics/send";
-import { ANALYTICS_NOTIFICATION_MODAL_FLOW } from "../utils/constants";
+import { NotificationModalFlow } from "../../../pushNotifications/analytics";
 import { useSendActivationFlow } from "./useSendActivationFlow";
+
+export const flow: NotificationModalFlow = "access";
 
 export const useSendActivationBottomSheet = () => {
   const ctaPressed = useRef(false);
@@ -42,10 +44,7 @@ export const useSendActivationBottomSheet = () => {
           onPress={() => {
             // eslint-disable-next-line functional/immutable-data
             ctaPressed.current = true;
-            trackSendActivationAccepted(
-              "tos_bottomsheet",
-              ANALYTICS_NOTIFICATION_MODAL_FLOW
-            );
+            trackSendActivationAccepted("tos_bottomsheet", flow);
             requestSendActivation();
           }}
           loading={isActivating}
@@ -60,7 +59,7 @@ export const useSendActivationBottomSheet = () => {
        * the closing action is direct and not the result of another action
        */
       if (!ctaPressed.current) {
-        trackSendAcceptanceDialogClosure(ANALYTICS_NOTIFICATION_MODAL_FLOW);
+        trackSendAcceptanceDialogClosure(flow);
       }
     }
   });

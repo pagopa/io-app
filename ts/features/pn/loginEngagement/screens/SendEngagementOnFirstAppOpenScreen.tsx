@@ -15,7 +15,9 @@ import {
   trackSendActivationModalDialogActivationStart,
   trackSendNurturingDialog
 } from "../../analytics/send";
-import { ANALYTICS_NOTIFICATION_MODAL_FLOW } from "../utils/constants";
+import { NotificationModalFlow } from "../../../pushNotifications/analytics";
+
+export const flow: NotificationModalFlow = "access";
 
 const customRules: Partial<IOMarkdownRenderRules> = {
   Paragraph: (param, render) => (
@@ -32,25 +34,21 @@ export const SendEngagementOnFirstAppOpenScreen = () => {
     useSendAreYouSureBottomSheet();
 
   useEffect(() => {
-    void trackSendActivationModalDialog(ANALYTICS_NOTIFICATION_MODAL_FLOW);
+    void trackSendActivationModalDialog(flow);
   }, []);
 
   useAvoidHardwareBackButton();
 
   const trackAndPresentActivationBottomSheet = () => {
-    trackSendActivationModalDialogActivationStart(
-      ANALYTICS_NOTIFICATION_MODAL_FLOW
-    );
+    trackSendActivationModalDialogActivationStart(flow);
     presentActivationBottomSheet();
-    trackSendAcceptanceDialog(ANALYTICS_NOTIFICATION_MODAL_FLOW);
+    trackSendAcceptanceDialog(flow);
   };
 
   const trackAndPresentAreYouSureBottomSheet = () => {
-    trackSendActivationModalDialogActivationDismissed(
-      ANALYTICS_NOTIFICATION_MODAL_FLOW
-    );
+    trackSendActivationModalDialogActivationDismissed(flow);
     presentAreYouSureBottomSheet();
-    trackSendNurturingDialog(ANALYTICS_NOTIFICATION_MODAL_FLOW);
+    trackSendNurturingDialog(flow);
   };
 
   return (
