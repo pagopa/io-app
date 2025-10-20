@@ -176,9 +176,12 @@ function* doRefreshTokenSaga(
             firstError &&
             typeof firstError.value === "object" &&
             firstError.value !== null &&
-            "status" in firstError.value
+            "status" in firstError.value &&
+            firstError.value.status === 429
           ) {
             yield* delay(RETRY_TIMEOUT_MS_ON_429);
+          } else {
+            yield* delay(RETRY_TIMEOUT_MS);
           }
         } else {
           yield* delay(RETRY_TIMEOUT_MS);

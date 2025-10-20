@@ -42,5 +42,7 @@ type GetNonceClient = ReturnType<typeof createNonceClient>;
 export const createNonceClient = (baseUrl: string) =>
   createClient({
     baseUrl,
+    // In this case, error 999 has been added so that for nonce requests,
+    // the retries are limited to 3 attempts.
     fetchApi: defaultRetryingFetch(fetchTimeout, fetchMaxRetries, 999)
   });
