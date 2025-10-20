@@ -267,7 +267,8 @@ export function* initializeApplicationSaga(
   }
 
   // ingress screen
-  const isBlockingScreen = yield* select(isBlockingScreenSelector);
+  // eslint-disable-next-line functional/no-let
+  let isBlockingScreen = yield* select(isBlockingScreenSelector);
   if (isBlockingScreen) {
     return;
   }
@@ -456,6 +457,11 @@ export function* initializeApplicationSaga(
     return;
   }
   yield* put(startupTransientError(startupTransientErrorInitialState));
+
+  isBlockingScreen = yield* select(isBlockingScreenSelector);
+  if (isBlockingScreen) {
+    return;
+  }
 
   // eslint-disable-next-line functional/no-let
   let userProfile = maybeUserProfile.value;
