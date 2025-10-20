@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.17.0-rc.3](https://github.com/pagopa/io-app/compare/3.17.0-rc.2...3.17.0-rc.3) (2025-10-17)
+
+
+### Bug Fixes
+
+* [[IOBP-2087](https://pagopa.atlassian.net/browse/IOBP-2087)] Map onboarding error code to failure screen ([#7492](https://github.com/pagopa/io-app/issues/7492)) ([84c261e](https://github.com/pagopa/io-app/commit/84c261ed9ad10ff211aef8308d4a70da30f40f14))
+
+
+### Chores
+
+* [[IOBP-2074](https://pagopa.atlassian.net/browse/IOBP-2074),[IOBP-2070](https://pagopa.atlassian.net/browse/IOBP-2070)] Adjust bonus screen copy and cosmetics changes ([#7486](https://github.com/pagopa/io-app/issues/7486)) ([15bfd60](https://github.com/pagopa/io-app/commit/15bfd60974e42976a1d1a457a87cb1c7fe2f8f5e))
+
 ## [3.17.0-rc.2](https://github.com/pagopa/io-app/compare/3.17.0-rc.1...3.17.0-rc.2) (2025-10-16)
 
 
