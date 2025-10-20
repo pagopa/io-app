@@ -9,7 +9,8 @@ import { buildEventProperties } from "../../../utils/analytics";
 
 export type NotificationModalFlow =
   | "authentication"
-  | "send_notification_opening";
+  | "send_notification_opening"
+  | "access";
 
 export const trackNotificationInstallationTokenNotChanged = () =>
   void mixpanelTrack(
