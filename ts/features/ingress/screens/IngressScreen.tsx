@@ -6,6 +6,7 @@ import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { AccessibilityInfo, View } from "react-native";
 import I18n from "i18next";
+import { Body, ContentWrapper } from "@pagopa/io-app-design-system";
 import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { trackIngressScreen } from "../../settings/common/analytics";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
@@ -32,7 +33,6 @@ import { OfflineAccessReasonEnum } from "../store/reducer";
 import { itwOfflineAccessAvailableSelector } from "../../itwallet/common/store/selectors";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { IdentificationBackActionType } from "../../identification/store/reducers";
-import { Body, ContentWrapper } from "@pagopa/io-app-design-system";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
 const TIMEOUT_BLOCKING_SCREEN = (25 * 1000) as Millisecond;
