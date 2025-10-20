@@ -1,11 +1,17 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../../store/actions/application";
+import * as DISPATCH from "../../../../../../store/hooks";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import * as CLIPBOARD from "../../../../../../utils/clipboard";
 import * as BOTTOM_SHEET from "../../../../../../utils/hooks/bottomSheet";
+import * as SUPPORT_ASSISTANCE from "../../../../../../utils/supportAssistance";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import {
+  zendeskSelectedCategory,
+  zendeskSupportStart
+} from "../../../../../zendesk/store/actions";
 import PN_ROUTES from "../../../../navigation/routes";
 import * as FLOW_MANAGER from "../../../hooks/useSendAarFlowManager";
 import * as SELECTORS from "../../../store/selectors";
@@ -121,88 +127,88 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
     expect(toJSON()).toMatchSnapshot();
   });
 
-  // TODO: WIP
-  // it("zendeskAssistanceLogAndStart calls expected functions in order", () => {
-  //   const dispatchMock = jest.fn();
-  //   jest.spyOn(HOOKS, "useIODispatch").mockReturnValue(dispatchMock);
+  it("zendeskAssistanceLogAndStart calls expected functions in order", () => {
+    const mockDispatch = jest.fn();
+    jest
+      .spyOn(DISPATCH, "useIODispatch")
+      .mockImplementation(() => mockDispatch);
 
-  //   const dismissMock = jest.fn();
+    const refUseIOBottomSheetModal = BOTTOM_SHEET.useIOBottomSheetModal;
+    const dismissMock = jest.fn();
+    jest
+      .spyOn(BOTTOM_SHEET, "useIOBottomSheetModal")
+      .mockImplementation(props => {
+        const { present, bottomSheet } = refUseIOBottomSheetModal(props);
 
-  //   const mockZendeskAssistanceLogAndStart = () => {
-  //     dismissMock();
-  //     supportAssistance.resetCustomFields();
-  //     supportAssistance.resetLog();
-  //     supportAssistance.addTicketCustomField(
-  //       supportAssistance.zendeskCategoryId,
-  //       supportAssistance.zendeskSendCategory.value
-  //     );
-  //     supportAssistance.addTicketCustomField(
-  //       "39752564743313",
-  //       "io_problema_notifica_send_qr"
-  //     );
-  //     supportAssistance.appendLog(JSON.stringify(assistanceErrorCode));
-  //     dispatchMock(
-  //       zendeskSupportStart({
-  //         startingRoute: "n/a",
-  //         assistanceType: { send: true }
-  //       })
-  //     );
-  //     dispatchMock(
-  //       zendeskSelectedCategory(supportAssistance.zendeskSendCategory)
-  //     );
-  //   };
+        return { present, bottomSheet, dismiss: dismissMock };
+      });
 
-  //   const renderedBottomComponent = bottomComponent(
-  //     mockZendeskAssistanceLogAndStart,
-  //     assistanceErrorCode
-  //   );
+    const resetCustomFields = jest.spyOn(
+      SUPPORT_ASSISTANCE,
+      "resetCustomFields"
+    );
+    const resetLog = jest.spyOn(SUPPORT_ASSISTANCE, "resetLog");
+    const addTicketCustomField = jest.spyOn(
+      SUPPORT_ASSISTANCE,
+      "addTicketCustomField"
+    );
+    const appendLog = jest.spyOn(SUPPORT_ASSISTANCE, "appendLog");
 
-  //   jest.spyOn(BOTTOM_SHEET, "useIOBottomSheetModal").mockReturnValue({
-  //     bottomSheet: renderedBottomComponent,
-  //     present: jest.fn(),
-  //     dismiss: dismissMock
-  //   });
+    const { getByTestId } = renderComponent();
+    const buttonAssistance = getByTestId("button_assistance");
+    fireEvent.press(buttonAssistance);
 
-  //   const { getByTestId } = renderComponent();
+    expect(dismissMock).toHaveBeenCalledTimes(1);
 
-  //   const secondary = getByTestId("secondary_button");
-  //   fireEvent.press(secondary);
+    expect(resetCustomFields).toHaveBeenCalledTimes(1);
 
-  //   const assistance = getByTestId("button_assistance");
-  //   fireEvent.press(assistance);
+    expect(resetLog).toHaveBeenCalledTimes(1);
 
-  //   expect(dismissMock).toHaveBeenCalled();
+    expect(addTicketCustomField.mock.calls.length).toBe(2);
+    expect(addTicketCustomField.mock.calls[0].length).toBe(2);
+    expect(addTicketCustomField.mock.calls[0][0]).toBe(
+      SUPPORT_ASSISTANCE.zendeskCategoryId
+    );
+    expect(addTicketCustomField.mock.calls[0][1]).toBe(
+      SUPPORT_ASSISTANCE.zendeskSendCategory.value
+    );
+    expect(addTicketCustomField.mock.calls[1][0]).toBe("39752564743313");
+    expect(addTicketCustomField.mock.calls[1][1]).toBe(
+      "io_problema_notifica_send_qr"
+    );
 
-  //   expect(supportAssistance.resetCustomFields).toHaveBeenCalled();
-  //   expect(supportAssistance.resetLog).toHaveBeenCalled();
-  //   expect(supportAssistance.addTicketCustomField).toHaveBeenCalledTimes(2);
-  //   expect(supportAssistance.appendLog).toHaveBeenCalledWith(
-  //     JSON.stringify(assistanceErrorCode)
-  //   );
+    expect(appendLog).toHaveBeenCalledTimes(1);
+    expect(appendLog).toHaveBeenCalledWith(JSON.stringify(assistanceErrorCode));
 
-  //   expect(dispatchMock).toHaveBeenCalledWith(
-  //     expect.objectContaining({ type: "ZENDESK_SUPPORT_START" })
-  //   );
-  //   expect(dispatchMock).toHaveBeenCalledWith(
-  //     expect.objectContaining({ type: "ZENDESK_SELECTED_CATEGORY" })
-  //   );
+    expect(mockDispatch.mock.calls.length).toBe(2);
+    expect(mockDispatch.mock.calls[0].length).toBe(1);
+    expect(mockDispatch.mock.calls[0][0]).toEqual(
+      zendeskSupportStart({
+        startingRoute: "n/a",
+        assistanceType: {
+          send: true
+        }
+      })
+    );
+    expect(mockDispatch.mock.calls[1].length).toBe(1);
+    expect(mockDispatch.mock.calls[1][0]).toEqual(
+      zendeskSelectedCategory(SUPPORT_ASSISTANCE.zendeskSendCategory)
+    );
 
-  //   const callOrder = [
-  //     (supportAssistance.resetCustomFields as jest.Mock).mock
-  //       .invocationCallOrder[0],
-  //     (supportAssistance.resetLog as jest.Mock).mock.invocationCallOrder[0],
-  //     (supportAssistance.addTicketCustomField as jest.Mock).mock
-  //       .invocationCallOrder[0],
-  //     (supportAssistance.addTicketCustomField as jest.Mock).mock
-  //       .invocationCallOrder[1],
-  //     (supportAssistance.appendLog as jest.Mock).mock.invocationCallOrder[0]
-  //   ];
-
-  //   callOrder.slice(1).forEach((current, i) => {
-  //     const previous = callOrder[i];
-  //     expect(previous).toBeLessThan(current);
-  //   });
-  // });
+    // order test for assistance api
+    expect(resetCustomFields.mock.invocationCallOrder[0]).toBeLessThan(
+      resetLog.mock.invocationCallOrder[0]
+    );
+    expect(resetLog.mock.invocationCallOrder[0]).toBeLessThan(
+      addTicketCustomField.mock.invocationCallOrder[0]
+    );
+    expect(addTicketCustomField.mock.invocationCallOrder[0]).toBeLessThan(
+      addTicketCustomField.mock.invocationCallOrder[1]
+    );
+    expect(addTicketCustomField.mock.invocationCallOrder[1]).toBeLessThan(
+      appendLog.mock.invocationCallOrder[0]
+    );
+  });
 });
 
 const renderComponent = () => {
