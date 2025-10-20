@@ -2,6 +2,52 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.17.0-rc.3](https://github.com/pagopa/io-app/compare/3.17.0-rc.2...3.17.0-rc.3) (2025-10-17)
+
+
+### Bug Fixes
+
+* [[IOBP-2087](https://pagopa.atlassian.net/browse/IOBP-2087)] Map onboarding error code to failure screen ([#7492](https://github.com/pagopa/io-app/issues/7492)) ([84c261e](https://github.com/pagopa/io-app/commit/84c261ed9ad10ff211aef8308d4a70da30f40f14))
+
+
+### Chores
+
+* [[IOBP-2074](https://pagopa.atlassian.net/browse/IOBP-2074),[IOBP-2070](https://pagopa.atlassian.net/browse/IOBP-2070)] Adjust bonus screen copy and cosmetics changes ([#7486](https://github.com/pagopa/io-app/issues/7486)) ([15bfd60](https://github.com/pagopa/io-app/commit/15bfd60974e42976a1d1a457a87cb1c7fe2f8f5e))
+
+## [3.17.0-rc.2](https://github.com/pagopa/io-app/compare/3.17.0-rc.1...3.17.0-rc.2) (2025-10-16)
+
+
+### Features
+
+* [[IOCOM-2595](https://pagopa.atlassian.net/browse/IOCOM-2595),[IOCOM-2626](https://pagopa.atlassian.net/browse/IOCOM-2626)] New SEND engagement flow ([#7412](https://github.com/pagopa/io-app/issues/7412)) ([2f9be5f](https://github.com/pagopa/io-app/commit/2f9be5f2fc0835c67cb3ccdf6b7d9ee5ff0014ee))
+* [[IOCOM-2664](https://pagopa.atlassian.net/browse/IOCOM-2664)] Update DS package with attachment bleed pictogram ([#7489](https://github.com/pagopa/io-app/issues/7489)) ([526917d](https://github.com/pagopa/io-app/commit/526917d762217e9c828e382a328ef85833c4caca))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-3186](https://pagopa.atlassian.net/browse/SIW-3186)] Correctly display MDL's category codes, birth place and issuing authority ([#7480](https://github.com/pagopa/io-app/issues/7480)) ([7948343](https://github.com/pagopa/io-app/commit/794834323b1d36f10f80b13c05f1e502461ec041))
+* [[IOBP-2075](https://pagopa.atlassian.net/browse/IOBP-2075)] IDPay initiative info box wrong markdown render ([#7487](https://github.com/pagopa/io-app/issues/7487)) ([2c7fe17](https://github.com/pagopa/io-app/commit/2c7fe17b875c593f6bf7ab02559d850a3681c68a))
+
+
+### Chores
+
+* [[IOBP-2071](https://pagopa.atlassian.net/browse/IOBP-2071)] IDPay update copy ([#7488](https://github.com/pagopa/io-app/issues/7488)) ([743c983](https://github.com/pagopa/io-app/commit/743c983250a9389859ec9a96aecc3468948c9b37))
+
+## [3.17.0-rc.1](https://github.com/pagopa/io-app/compare/3.17.0-rc.0...3.17.0-rc.1) (2025-10-15)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-3137](https://pagopa.atlassian.net/browse/SIW-3137)] Tracking of presentation remote event ([#7461](https://github.com/pagopa/io-app/issues/7461)) ([5805e08](https://github.com/pagopa/io-app/commit/5805e0847a6b6fb8b03e4c06f9fe57d5b436c414))
+* [[IOCOM-2652](https://pagopa.atlassian.net/browse/IOCOM-2652)] Banner and bottom sheet on SEND attachments ([#7470](https://github.com/pagopa/io-app/issues/7470)) ([bf7420d](https://github.com/pagopa/io-app/commit/bf7420d196ab9425a1accb4a5cc194dc2d213356))
+* [[IOCOM-2655](https://pagopa.atlassian.net/browse/IOCOM-2655)] "Need Help?" list item action on SEND notification ([#7474](https://github.com/pagopa/io-app/issues/7474)) ([24f939d](https://github.com/pagopa/io-app/commit/24f939d6c83f7b50d9c6fada97513a35c6aad31c))
+* [[IOCOM-2672](https://pagopa.atlassian.net/browse/IOCOM-2672)] New copy fro attachments' bottom sheet on SEND ([#7478](https://github.com/pagopa/io-app/issues/7478)) ([e9febc0](https://github.com/pagopa/io-app/commit/e9febc0065973267dbac58cfd221e586b76624df))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-2892](https://pagopa.atlassian.net/browse/SIW-2892)] Offline Access, rendering delay ([#7467](https://github.com/pagopa/io-app/issues/7467)) ([b4fb8da](https://github.com/pagopa/io-app/commit/b4fb8dacc06922835ee7584d127cc41d45831bef))
+
 ## [3.17.0-rc.0](https://github.com/pagopa/io-app/compare/3.16.0-rc.7...3.17.0-rc.0) (2025-10-14)
 
 

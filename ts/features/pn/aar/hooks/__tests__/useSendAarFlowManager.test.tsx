@@ -78,7 +78,10 @@ describe("useSendAarFlowManager", () => {
   it('should return "currentFlowData" as a 1/1 of the selector`s value', () => {
     const value: AARFlowState = {
       type: sendAARFlowStates.displayingNotificationData,
-      fullNameDestinatario: "mario rossi",
+      recipientInfo: {
+        denomination: "Mario Rossi",
+        taxId: "RSSMRA74D22A001Q"
+      },
       notification: {},
       mandateId: "mandateID",
       iun: "IUN123",
