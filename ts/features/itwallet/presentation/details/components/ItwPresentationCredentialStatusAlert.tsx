@@ -153,8 +153,9 @@ const getAlertToRender = ({
       return null;
     }
     // If both the eID jwt and the credential jwt are expired, show the eID alert
-    if (isEidExpired && isCredentialJwtExpired && !isItwL3)
+    if (isEidExpired && isCredentialJwtExpired && !isItwL3) {
       return <ItwEidLifecycleAlert navigation={navigation} />;
+    }
 
     return (
       <JwtVerificationAlert
@@ -165,10 +166,11 @@ const getAlertToRender = ({
     );
   }
 
-  if (status === "expiring")
+  if (status === "expiring") {
     return <DocumentExpiringAlert credential={credential} onTrack={onTrack} />;
+  }
 
-  if (message)
+  if (message) {
     return (
       <IssuerDynamicErrorAlert
         message={message}
@@ -176,9 +178,10 @@ const getAlertToRender = ({
         onTrack={onTrack}
       />
     );
+  }
 
   // Fallback when the issuer does not provide a message for an expired credential
-  if (status === "expired")
+  if (status === "expired") {
     return (
       <Alert
         testID="itwExpiredBannerTestID"
@@ -188,6 +191,7 @@ const getAlertToRender = ({
         )}
       />
     );
+  }
 
   return null;
 };
