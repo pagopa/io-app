@@ -63,7 +63,6 @@ const PushNotificationEngagementScreenContent = ({
 
   useEffect(() => {
     setOptions({
-      headerShown: true,
       header: () => (
         <HeaderSecondLevel
           title=""
@@ -78,10 +77,6 @@ const PushNotificationEngagementScreenContent = ({
         />
       )
     });
-
-    return () => {
-      setOptions({ headerShown: false });
-    };
   }, [handleCloseScreen, setOptions]);
 
   return (
