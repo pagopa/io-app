@@ -169,20 +169,13 @@ function* doRefreshTokenSaga(
         }
       } else {
         if (E.isLeft(nonceResponse)) {
-          const firstError = Array.isArray(nonceResponse.left)
-            ? nonceResponse.left[0]
+          const status = Array.isArray(nonceResponse.left)
+            ? (nonceResponse.left[0]?.value as { status?: number } | undefined)
+                ?.status
             : undefined;
-          if (
-            firstError &&
-            typeof firstError.value === "object" &&
-            firstError.value !== null &&
-            "status" in firstError.value &&
-            firstError.value.status === 429
-          ) {
-            yield* delay(RETRY_TIMEOUT_MS_ON_429);
-          } else {
-            yield* delay(RETRY_TIMEOUT_MS);
-          }
+          yield* delay(
+            status === 429 ? RETRY_TIMEOUT_MS_ON_429 : RETRY_TIMEOUT_MS
+          );
         } else {
           yield* delay(RETRY_TIMEOUT_MS);
         }
