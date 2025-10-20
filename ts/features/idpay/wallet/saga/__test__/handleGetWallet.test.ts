@@ -16,6 +16,13 @@ describe("handleGetIDPayWallet", () => {
       idPayWalletGet.success
     )} with the initiative beneficiary details`, () => {
       const getWallet = jest.fn();
+      const mockedState = {
+        features: {
+          wallet: {
+            cards: {}
+          }
+        }
+      };
       testSaga(
         handleGetIDPayWallet,
         getWallet,
@@ -28,6 +35,8 @@ describe("handleGetIDPayWallet", () => {
         .next(E.right({ status: 200, value: mockedWallet }))
         .put(walletAddCards([]))
         .next()
+        .select()
+        .next(mockedState)
         .put(idPayWalletGet.success(mockedWallet))
         .next()
         .isDone();

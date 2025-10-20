@@ -119,10 +119,6 @@ const IdPayInitiativeDetailsScreenComponent = () => {
     supportRequest: true
   });
 
-  useOnFirstRender(() => {
-    trackIDPayOnboardingIntro({ initiativeName, initiativeId });
-  });
-
   return (
     <ForceScrollDownView
       contentContainerStyle={{ flexGrow: 1 }}
@@ -164,6 +160,10 @@ export const IdPayInitiativeDetailsScreen = () => {
     initiative,
     O.map(i => i.initiativeId),
     O.toUndefined
+  );
+
+  useOnFirstRender(() =>
+    trackIDPayOnboardingIntro({ initiativeName, initiativeId })
   );
 
   const WrappedComponent = withAppRequiredUpdate(
