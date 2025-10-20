@@ -3,7 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import {
   aarAdresseeDenominationSelector,
   currentAARFlowData,
-  currentAARFlowStateErrorCodes,
+  currentAARFlowStateAssistanceErrorCode,
   currentAARFlowStateType,
   isAAREnabled,
   isAarMessageDelegatedSelector,
@@ -148,30 +148,48 @@ describe(" currentAARFlowData and currentAARFlowStateType", () => {
     expect(resultType).toEqual(INITIAL_AAR_FLOW_STATE.type);
   });
 });
-describe("currentAARFlowStateErrorCodes", () => {
-  [
-    [
-      {
-        code: "ERROR1"
-      },
-      {
-        code: "ERROR2"
-      },
-      {
-        code: "UNKNOWN_ERROR"
-      }
-    ],
-    undefined
-  ].forEach(errors =>
-    it(`should return ${JSON.stringify(
-      !errors ? [] : errors.map(x => x.code)
-    )} when errors=${JSON.stringify(errors)}`, () => {
-      const mockErrorState: AARFlowState = {
+describe("currentAARFlowStateAssistanceErrorCode", () => {
+  const testCases: Array<{
+    description: string;
+    traceId?: string;
+    errors?: Array<{ code: string }>;
+    aarFlowType?: string;
+    expected: string | undefined;
+  }> = [
+    {
+      description: "should return traceId if present, regardless of errors",
+      traceId: "TRACE-12345",
+      errors: [{ code: "ERROR1" }, { code: "ERROR2" }],
+      expected: "TRACE-12345"
+    },
+    {
+      description:
+        "should return error codes joined if traceId is not present and errors are available",
+      errors: [{ code: "ERROR1" }, { code: "ERROR2" }],
+      expected: "ERROR1, ERROR2"
+    },
+    {
+      description:
+        "should return undefined if neither traceId nor errors are present",
+      expected: undefined
+    },
+    {
+      description:
+        "should return undefined if errors array is empty and no traceId",
+      errors: [],
+      expected: undefined
+    }
+  ];
+
+  testCases.forEach(({ description, traceId, errors, expected }) => {
+    it(description, () => {
+      const aarFlow: AARFlowState = {
         type: sendAARFlowStates.ko,
         previousState: sendAarMockStateFactory.fetchingQRData(),
         error: {
-          detail: "",
+          detail: "Some error",
           status: 599,
+          traceId,
           errors
         }
       };
@@ -179,19 +197,15 @@ describe("currentAARFlowStateErrorCodes", () => {
       const mockGlobalState = {
         features: {
           pn: {
-            aarFlow: mockErrorState
+            aarFlow
           }
         }
       } as unknown as GlobalState;
 
-      const resultErrorCodes = currentAARFlowStateErrorCodes(mockGlobalState);
-      if (!errors) {
-        expect(resultErrorCodes).toEqual([]);
-      } else {
-        expect(resultErrorCodes).toEqual(errors.map(x => x.code));
-      }
-    })
-  );
+      const result = currentAARFlowStateAssistanceErrorCode(mockGlobalState);
+      expect(result).toEqual(expected);
+    });
+  });
 });
 
 describe("isAarMessageDelegatedSelector", () => {
