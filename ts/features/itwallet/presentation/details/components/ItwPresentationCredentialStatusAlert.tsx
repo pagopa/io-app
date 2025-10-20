@@ -141,14 +141,15 @@ const getAlertToRender = ({
   onTrack
 }: AlertToRenderProps) => {
   const isEidExpired = eidStatus === "jwtExpired";
+  const isEidExpiring = eidStatus === "jwtExpiring";
   const isCredentialJwtExpiring = status === "jwtExpiring";
   const isCredentialJwtExpired = status === "jwtExpired";
 
   if (isCredentialJwtExpiring || isCredentialJwtExpired) {
-    // If the eID jwt is expired and the credential jwt is expiring, do not show any alert
+    // If the eID jwt is expired or expiring and the credential jwt is expiring, do not show any alert
     // We do not handle the case where the eID jwt is expiring and the credential jwt is expired,
     // as this situation should never occur.
-    if (isEidExpired && isCredentialJwtExpiring) {
+    if ((isEidExpired || isEidExpiring) && isCredentialJwtExpiring) {
       return null;
     }
     // If both the eID jwt and the credential jwt are expired, show the eID alert
