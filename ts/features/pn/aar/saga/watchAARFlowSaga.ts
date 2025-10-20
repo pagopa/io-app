@@ -1,9 +1,9 @@
-import { takeLatest } from "typed-redux-saga/macro";
+import { race, take, takeLatest } from "typed-redux-saga/macro";
 import { apiUrlPrefix } from "../../../../config";
 import { SessionToken } from "../../../../types/SessionToken";
 import { KeyInfo } from "../../../lollipop/utils/crypto";
 import { SendAARClient, createSendAARClientWithLollipop } from "../api/client";
-import { setAarFlowState } from "../store/actions";
+import { setAarFlowState, terminateAarFlow } from "../store/actions";
 import { sendAARFlowStates } from "../utils/stateUtils";
 import { fetchAarDataSaga } from "./fetchNotificationDataSaga";
 import { fetchAARQrCodeSaga } from "./fetchQrCodeSaga";
@@ -17,12 +17,22 @@ export function* aarFlowMasterSaga(
 
   switch (nextState.type) {
     case sendAARFlowStates.fetchingQRData:
-      yield* fetchAARQrCodeSaga(sendAARClient.aarQRCodeCheck, sessionToken);
+      yield* raceWithTerminateFlow(
+        fetchAARQrCodeSaga(sendAARClient.aarQRCodeCheck, sessionToken)
+      );
       break;
     case sendAARFlowStates.fetchingNotificationData:
-      yield* fetchAarDataSaga(sendAARClient.getAARNotification, sessionToken);
+      yield* raceWithTerminateFlow(
+        fetchAarDataSaga(sendAARClient.getAARNotification, sessionToken)
+      );
       break;
   }
+}
+function* raceWithTerminateFlow(saga: Generator<unknown, unknown>) {
+  yield* race({
+    task: saga,
+    cancel: take(terminateAarFlow)
+  });
 }
 
 export function* watchAarFlowSaga(

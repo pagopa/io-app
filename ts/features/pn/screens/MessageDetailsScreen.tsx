@@ -38,6 +38,7 @@ import {
   isCancelledFromPNMessagePot,
   paymentsFromPNMessagePot
 } from "../utils";
+import { sendAARFlowStates } from "../aar/utils/stateUtils";
 
 export type MessageDetailsScreenRouteParams = {
   messageId: string;
@@ -143,7 +144,12 @@ export const MessageDetailsScreen = () => {
       dispatch(cancelQueuedPaymentUpdates({ messageId }));
       dispatch(cancelPNPaymentStatusTracking());
       if (isAarMessage) {
-        dispatch(terminateAarFlow({ messageId }));
+        dispatch(
+          terminateAarFlow({
+            messageId,
+            currentState: sendAARFlowStates.displayingNotificationData
+          })
+        );
       }
     };
   }, [

@@ -29,7 +29,7 @@ export const linkingSubscription =
       if (isLoggedIn(state.authentication)) {
         // only when logged in we can navigate to the AAR screen.
         if (isSendAARLink(state, url)) {
-          navigateToSendAarFlowIfEnabled(state, url);
+          navigateToSendAarFlowIfEnabled(state, url, dispatch);
         }
       } else {
         // If we are not logged in, we store the URL to be processed later

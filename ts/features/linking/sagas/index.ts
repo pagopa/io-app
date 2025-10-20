@@ -3,8 +3,8 @@ import {
   isSendAARLink,
   navigateToSendAarFlowIfEnabled
 } from "../../pn/aar/utils/deepLinking";
-import { clearLinkingUrl } from "../actions";
 import { storedLinkingUrlSelector } from "../reducers";
+import { clearLinkingUrl } from "../actions";
 
 export function* handleStoredLinkingUrlIfNeeded() {
   const storedLinkingUrl = yield* select(storedLinkingUrlSelector);
@@ -13,7 +13,7 @@ export function* handleStoredLinkingUrlIfNeeded() {
     if (shouldNavigateToAAR) {
       const state = yield* select();
       yield* put(clearLinkingUrl());
-      yield* call(navigateToSendAarFlowIfEnabled, state, storedLinkingUrl);
+      yield* call(navigateToSendAarFlowIfEnabled, state, storedLinkingUrl, put);
       return true;
     }
   }

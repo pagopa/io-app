@@ -114,3 +114,18 @@ export type AARFlowState =
   | DisplayingNotification
   | FinalNotAddressee
   | ErrorState;
+
+export const maybeIunFromAarFlowState = (
+  data: AARFlowState
+): string | undefined => {
+  switch (data.type) {
+    case sendAARFlowStates.notAddresseeFinal:
+    case sendAARFlowStates.fetchingNotificationData:
+    case sendAARFlowStates.displayingNotificationData:
+      return data.iun;
+    case sendAARFlowStates.ko:
+      return maybeIunFromAarFlowState(data.previousState);
+    default:
+      return undefined;
+  }
+};

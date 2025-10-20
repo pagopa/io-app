@@ -6,7 +6,10 @@ import { isAARLocalEnabled } from "../../../../../store/reducers/persistedPrefer
 import { GlobalState } from "../../../../../store/reducers/types";
 import { thirdPartyFromIdSelector } from "../../../../messages/store/reducers/thirdPartyById";
 import { toPNMessage } from "../../../store/types/transformers";
-import { sendAARFlowStates } from "../../utils/stateUtils";
+import {
+  maybeIunFromAarFlowState,
+  sendAARFlowStates
+} from "../../utils/stateUtils";
 
 const emptyArray: ReadonlyArray<string> = []; // used as a stable reference to avoid useless re-renders
 export const thirdPartySenderDenominationSelector = (
@@ -54,6 +57,12 @@ export const aarAdresseeDenominationSelector = (
     default:
       return undefined;
   }
+};
+export const currentAarFlowIunSelector = (
+  state: GlobalState
+): string | undefined => {
+  const currentState = currentAARFlowData(state);
+  return maybeIunFromAarFlowState(currentState);
 };
 
 export const currentAARFlowData = (state: GlobalState) =>
