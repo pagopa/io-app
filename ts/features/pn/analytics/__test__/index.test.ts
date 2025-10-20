@@ -1,4 +1,8 @@
-import { booleanOrUndefinedToPNServiceStatus, trackPNUxSuccess } from "..";
+import {
+  booleanOrUndefinedToPNServiceStatus,
+  trackPNNotificationLoadSuccess,
+  trackPNUxSuccess
+} from "..";
 import * as MIXPANEL from "../../../../mixpanel";
 
 describe("index", () => {
@@ -79,6 +83,43 @@ describe("index", () => {
                 }
               )
             )
+          )
+        )
+      )
+    );
+  });
+
+  describe("trackPNNotificationLoadSuccess", () => {
+    [false, true].forEach(hasAttachments =>
+      [undefined, "CANCELLED"].forEach(status =>
+        (["aar", "message", "not_set"] as const).forEach(openingSource =>
+          (["recipient", "mandatory", "not_set"] as const).forEach(userType =>
+            it(`should call 'mixpanelTrack' with proper event name and properties (hasAttachments ${hasAttachments} status ${status} openingSource ${openingSource} userType ${userType})`, () => {
+              const spiedOnMockedMixpanelTrack = jest
+                .spyOn(MIXPANEL, "mixpanelTrack")
+                .mockImplementation();
+
+              trackPNNotificationLoadSuccess(
+                hasAttachments,
+                status,
+                openingSource,
+                userType
+              );
+
+              expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+              expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+              expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+                "PN_NOTIFICATION_LOAD_SUCCESS"
+              );
+              expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+                event_category: "TECH",
+                event_type: undefined,
+                NOTIFICATION_LAST_STATUS: status ?? "not_set",
+                HAS_ATTACHMENTS: hasAttachments,
+                opening_source: openingSource,
+                send_user: userType
+              });
+            })
           )
         )
       )

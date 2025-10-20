@@ -1,20 +1,15 @@
-import { pipe } from "fp-ts/lib/function";
-import * as A from "fp-ts/lib/Array";
-import * as O from "fp-ts/lib/Option";
 import { mixpanelTrack } from "../../../mixpanel";
-import { PNMessage } from "../../pn/store/types/types";
-import { NotificationStatusHistoryElement } from "../../../../definitions/pn/NotificationStatusHistoryElement";
 import {
   booleanToYesNo,
   buildEventProperties,
   numberToYesNoOnThreshold
 } from "../../../utils/analytics";
-import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { PaymentStatistics } from "../../messages/store/reducers/payments";
 import {
   SendOpeningSource,
   SendUserType
 } from "../../pushNotifications/analytics";
+import { NotificationStatus } from "../../../../definitions/pn/NotificationStatus";
 
 export type PNServiceStatus = "active" | "not_active" | "unknown";
 
@@ -152,28 +147,20 @@ export function trackPNNotificationLoadError(errorCode?: string) {
   );
 }
 
-export function trackPNNotificationLoadSuccess(pnMessage: PNMessage) {
-  pipe(
-    pnMessage.notificationStatusHistory as Array<NotificationStatusHistoryElement>,
-    A.last,
-    O.map(lastNotification => lastNotification.status),
-    O.fold(
-      () => undefined,
-      (status: string) =>
-        void mixpanelTrack(
-          "PN_NOTIFICATION_LOAD_SUCCESS",
-          buildEventProperties("TECH", undefined, {
-            NOTIFICATION_LAST_STATUS: status,
-            HAS_ATTACHMENTS: pipe(
-              pnMessage.attachments as Array<ThirdPartyAttachment>,
-              O.fromNullable,
-              O.map(A.isNonEmpty),
-              O.getOrElse(() => false)
-            )
-          })
-        )
-    )
-  );
+export function trackPNNotificationLoadSuccess(
+  hasAttachmens: boolean,
+  status: NotificationStatus | undefined,
+  openingSource: SendOpeningSource,
+  userType: SendUserType
+) {
+  const eventName = "PN_NOTIFICATION_LOAD_SUCCESS";
+  const eventProperties = buildEventProperties("TECH", undefined, {
+    NOTIFICATION_LAST_STATUS: status ?? "not_set",
+    HAS_ATTACHMENTS: hasAttachmens,
+    opening_source: openingSource,
+    send_user: userType
+  });
+  void mixpanelTrack(eventName, eventProperties);
 }
 
 export function trackPNPushOpened() {

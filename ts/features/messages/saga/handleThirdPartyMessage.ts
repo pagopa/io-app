@@ -24,6 +24,7 @@ import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
 import { serviceDetailsByIdSelector } from "../../services/details/store/selectors";
 import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
 import { thirdPartyKind } from "../types/thirdPartyById";
+import { isTestEnv } from "../../../utils/environment";
 
 export function* handleThirdPartyMessage(
   getThirdPartyMessage: BackendClient["getThirdPartyMessage"],
@@ -96,7 +97,17 @@ const trackSuccess = (
 
     if (O.isSome(pnMessageOption)) {
       const pnMessage = pnMessageOption.value;
-      trackPNNotificationLoadSuccess(pnMessage);
+      const hasAttachments =
+        pnMessage.attachments != null && pnMessage.attachments.length > 0;
+      const timeline = pnMessage.notificationStatusHistory;
+      const status =
+        timeline.length > 0 ? timeline[timeline.length - 1].status : undefined;
+      trackPNNotificationLoadSuccess(
+        hasAttachments,
+        status,
+        "message",
+        "recipient"
+      );
     } else {
       trackPNNotificationLoadError();
     }
@@ -125,3 +136,5 @@ const trackFailure = (
     trackPNNotificationLoadError(reason);
   }
 };
+
+export const testable = isTestEnv ? { trackSuccess, trackFailure } : undefined;
