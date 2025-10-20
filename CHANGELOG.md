@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.17.0-canary.7607](https://github.com/pagopa/io-app/compare/3.17.0-rc.3...3.17.0-canary.7607) (2025-10-20)
+
+
+### Chores
+
+* fix conflicts ([66185e7](https://github.com/pagopa/io-app/commit/66185e7f647a3e3d5a0c9901c98ddb26cad117da))
+* migrate to yarn patch ([b907ad3](https://github.com/pagopa/io-app/commit/b907ad3bf72fed7828657d3818e7471d7ee2d5ea))
+* Remove duplicate patch ([daf1977](https://github.com/pagopa/io-app/commit/daf1977f29e0f8858964cbd3e6a3538c22b2091d))
+* remove unused patch ([d246520](https://github.com/pagopa/io-app/commit/d2465205b5b71626f36c1f52bba483c22f86be73))
+* remove unwanted change ([1ccabce](https://github.com/pagopa/io-app/commit/1ccabced54eca353948fd195ae53c939edf166a7))
+* remove unwanted changes ([41b293f](https://github.com/pagopa/io-app/commit/41b293ff17bf0ce7090b39f01c38bede2e5f6072))
+* update patches list ([93ce0ed](https://github.com/pagopa/io-app/commit/93ce0ed1e9406c22c0364116865d751726024758))
+
 ## [3.17.0-rc.3](https://github.com/pagopa/io-app/compare/3.17.0-rc.2...3.17.0-rc.3) (2025-10-17)
 
 
