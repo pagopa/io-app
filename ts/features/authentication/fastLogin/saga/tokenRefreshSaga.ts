@@ -47,6 +47,9 @@ import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import ROUTES from "../../../../navigation/routes";
 import { isDevEnv } from "../../../../utils/environment";
 
+const RETRY_TIMEOUT_MS = 1000;
+const RETRY_TIMEOUT_MS_ON_429 = 3000;
+
 export function* watchTokenRefreshSaga(): SagaIterator {
   yield* takeLatest(refreshSessionToken.request, handleRefreshSessionToken);
 }
@@ -107,6 +110,7 @@ type RequestStateType = {
 
 const MAX_RETRIES = fastLoginMaxRetries;
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 function* doRefreshTokenSaga(
   refreshSessionTokenRequestAction: ReturnType<
     typeof refreshSessionToken.request
@@ -160,15 +164,29 @@ function* doRefreshTokenSaga(
             })
           );
         } else {
-          yield* delay(1000);
+          yield* delay(RETRY_TIMEOUT_MS);
           handleRequestError(requestState, tokenResponse);
         }
       } else {
-        yield* delay(1000);
+        if (E.isLeft(nonceResponse)) {
+          const firstError = Array.isArray(nonceResponse.left)
+            ? nonceResponse.left[0]
+            : undefined;
+          if (
+            firstError &&
+            typeof firstError.value === "object" &&
+            firstError.value !== null &&
+            "status" in firstError.value
+          ) {
+            yield* delay(RETRY_TIMEOUT_MS_ON_429);
+          }
+        } else {
+          yield* delay(RETRY_TIMEOUT_MS);
+        }
         handleRequestError(requestState, nonceResponse);
       }
     } catch (e) {
-      yield* delay(1000);
+      yield* delay(RETRY_TIMEOUT_MS);
       handleRequestError(requestState);
     }
   }

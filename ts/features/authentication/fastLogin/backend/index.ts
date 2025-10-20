@@ -8,6 +8,7 @@ import { LollipopSignatureInput } from "../../../../../definitions/lollipop/Loll
 import { LollipopSignature } from "../../../../../definitions/lollipop/LollipopSignature";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import { createClient } from "../../../../../definitions/session_manager/client";
+import { fetchMaxRetries, fetchTimeout } from "../../../../config";
 
 const FAST_LOGIN_TIMEOUT_MS = 9000 as Millisecond;
 
@@ -41,5 +42,5 @@ type GetNonceClient = ReturnType<typeof createNonceClient>;
 export const createNonceClient = (baseUrl: string) =>
   createClient({
     baseUrl,
-    fetchApi: defaultRetryingFetch()
+    fetchApi: defaultRetryingFetch(fetchTimeout, fetchMaxRetries, 999)
   });
