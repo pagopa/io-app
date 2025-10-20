@@ -1,13 +1,13 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { appReducer } from "../../../../../store/reducers";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import PN_ROUTES from "../../../navigation/routes";
-import * as LOGIC_HOOK from "../../hooks/useAARpushEngagementScreenLogic";
-import { SendQrScanPushEngagementScreen } from "../SendAARPushEngagementScreen";
-import * as analytics from "../../../../pushNotifications/analytics";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
+import { GlobalState } from "../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import * as LOGIC_HOOK from "../../hooks/usePushNotificationEngagement";
+import * as analytics from "../../analytics";
+import { PushNotificationEngagementScreen } from "../PushNotificationEngagementScreen";
+import { NOTIFICATIONS_ROUTES } from "../../navigation/routes";
 
 const mockPopToTop = jest.fn();
 jest.mock("@react-navigation/native", () => {
@@ -21,7 +21,7 @@ jest.mock("@react-navigation/native", () => {
   };
 });
 
-describe("SendQrScanPushEngagementScreen", () => {
+describe("PushNotificationEngagementScreen", () => {
   const spiedOnMockedAnalyticsOutcomeEvent = jest
     .spyOn(analytics, "trackSystemNotificationPermissionScreenOutcome")
     .mockImplementation();
@@ -43,7 +43,7 @@ describe("SendQrScanPushEngagementScreen", () => {
 
   it("should render a blank page when told to do so by the logic hook", () => {
     jest
-      .spyOn(LOGIC_HOOK, "useAARPushEngagementScreenLogic")
+      .spyOn(LOGIC_HOOK, "usePushNotificationEngagement")
       .mockImplementation(() => ({
         onButtonPress: () => null,
         shouldRenderBlankPage: true
@@ -56,7 +56,7 @@ describe("SendQrScanPushEngagementScreen", () => {
 
   it("should render a header with an X button which should behave as expected and track analytics event", () => {
     jest
-      .spyOn(LOGIC_HOOK, "useAARPushEngagementScreenLogic")
+      .spyOn(LOGIC_HOOK, "usePushNotificationEngagement")
       .mockImplementation(() => ({
         onButtonPress: () => null,
         shouldRenderBlankPage: false
@@ -78,7 +78,7 @@ describe("SendQrScanPushEngagementScreen", () => {
     const mockButtonPress = jest.fn();
 
     jest
-      .spyOn(LOGIC_HOOK, "useAARPushEngagementScreenLogic")
+      .spyOn(LOGIC_HOOK, "usePushNotificationEngagement")
       .mockImplementation(() => ({
         onButtonPress: mockButtonPress,
         shouldRenderBlankPage: false
@@ -99,9 +99,9 @@ describe("SendQrScanPushEngagementScreen", () => {
 const renderScreen = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    () => <SendQrScanPushEngagementScreen />,
-    PN_ROUTES.QR_SCAN_PUSH_ENGAGEMENT,
-    {},
+    PushNotificationEngagementScreen,
+    NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT,
+    { flow: "send_notification_opening" },
     createStore(appReducer, globalState as any)
   );
 };
