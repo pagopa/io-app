@@ -9,10 +9,6 @@ import {
 } from "../../../../components/screens/OperationResultScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../../store/hooks";
-import {
-  fallbackForLocalizedMessageKeys,
-  getFullLocale
-} from "../../../../utils/locale";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { trackItwKoStateAction } from "../../analytics";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
@@ -20,7 +16,6 @@ import {
   useItwFailureSupportModal,
   ZendeskSubcategoryValue
 } from "../../common/hooks/useItwFailureSupportModal";
-import { itwDeferredIssuanceScreenContentSelector } from "../../common/store/selectors/remoteConfig";
 import { getClaimsFullLocale } from "../../common/utils/itwClaimsUtils";
 import { StatusAssertionError } from "../../common/utils/itwCredentialStatusAssertionUtils.ts";
 import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
@@ -78,11 +73,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const issuerConf = ItwCredentialIssuanceMachineContext.useSelector(
     selectIssuerConfigurationOption
   );
-  const locale = getFullLocale();
-  const localeFallback = fallbackForLocalizedMessageKeys(locale);
-  const deferredIssuanceScreenContent = useIOSelector(
-    itwDeferredIssuanceScreenContentSelector
-  );
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const invalidStatusDetails = getCredentialInvalidStatusDetails(failure, {
@@ -96,11 +86,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
       reason: failure.reason,
       cta_category: "custom_2",
       cta_id: "close_issuance"
-    });
-  };
-  const closeAsyncIssuance = () => {
-    machineRef.send({
-      type: "close"
     });
   };
 

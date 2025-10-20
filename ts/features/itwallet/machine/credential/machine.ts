@@ -81,7 +81,6 @@ export const itwCredentialIssuanceMachine = setup({
   },
   guards: {
     isSessionExpired: notImplemented,
-    isDeferredIssuance: notImplemented,
     hasValidWalletInstanceAttestation: notImplemented,
     isStatusError: notImplemented,
     isEidExpired: notImplemented
@@ -320,10 +319,6 @@ export const itwCredentialIssuanceMachine = setup({
     Failure: {
       entry: ["navigateToFailureScreen"],
       always: [
-        {
-          guard: "isDeferredIssuance",
-          actions: "flagCredentialAsRequested"
-        },
         {
           guard: "isStatusError",
           actions: "unflagCredentialAsRequested"
