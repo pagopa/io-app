@@ -104,7 +104,11 @@ export const useSendAreYouSureBottomSheet = () => {
       </VStack>
     ),
     onDismiss: () => {
-      if (ctaPressed.current) {
+      /**
+       * This is a workaround that allows us to track the bottom-sheet close event only when
+       * the closing action is direct and not the result of another action
+       */
+      if (!ctaPressed.current) {
         trackSendNurturingDialogClosure(ANALYTICS_NOTIFICATION_MODAL_FLOW);
       }
     }
