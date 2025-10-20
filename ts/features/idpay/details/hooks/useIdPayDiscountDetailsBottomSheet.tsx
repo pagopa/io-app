@@ -92,7 +92,6 @@ export const useIdPayDiscountDetailsBottomSheet = (initiativeId: string) => {
           "idpay.initiative.discountDetails.bottomSheetOptions.generateBarcode"
         )}
       />
-      <Divider />
       <VSpacer size={24} />
     </>
   );

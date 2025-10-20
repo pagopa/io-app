@@ -47,18 +47,19 @@ export function* fetchAARQrCodeSaga(
         data => {
           switch (data.status) {
             case 200:
-              const { iun, recipientInfo } = data.value;
+              const { iun, recipientInfo, mandateId } = data.value;
               const nextState: AARFlowState = {
                 type: sendAARFlowStates.fetchingNotificationData,
                 iun,
-                fullNameDestinatario: recipientInfo.denomination
+                recipientInfo: { ...recipientInfo },
+                mandateId
               };
               return setAarFlowState(nextState);
             case 403:
               const notAddresseeFinalState: AARFlowState = {
                 type: sendAARFlowStates.notAddresseeFinal,
                 iun: data.value.iun,
-                fullNameDestinatario: data.value.recipientInfo.denomination,
+                recipientInfo: { ...data.value.recipientInfo },
                 qrCode
               };
               return setAarFlowState(notAddresseeFinalState);
