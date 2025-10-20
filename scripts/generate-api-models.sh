@@ -2,7 +2,7 @@
 
 IO_BACKEND_VERSION=v17.5.0
 # need to change after merge on io-services-metadata
-IO_SERVICES_METADATA_VERSION=IOBP-2084-add-idpay-enabled-ff
+IO_SERVICES_METADATA_VERSION=1.0.87
 # Session manager version
 IO_SESSION_MANAGER_VERSION=1.8.0
 # IO Wallet Backend version
