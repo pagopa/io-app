@@ -18,7 +18,10 @@ import {
   restrainRetryAfterIntervalInMilliseconds
 } from "../../../messages/utils/attachments";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
-import { trackSendAARAttachmentDownloadFailure } from "../analytics";
+import {
+  aarProblemJsonAnalyticsReport,
+  trackSendAARFailure
+} from "../analytics";
 import { isTestEnv } from "../../../../utils/environment";
 
 export function* downloadAARAttachmentSaga(
@@ -57,7 +60,7 @@ export function* downloadAARAttachmentSaga(
     );
   } catch (e) {
     const reason = unknownToReason(e);
-    yield* call(trackSendAARAttachmentDownloadFailure, reason);
+    yield* call(trackSendAARFailure, "Download Attachment", reason);
     yield* put(
       downloadAttachment.failure({
         attachment,
@@ -128,15 +131,16 @@ function* getAttachmentMetadata(
 
   if (isLeft(responseEither)) {
     const reason = readableReportSimplified(responseEither.left);
-    throw Error(reason);
+    throw Error(`Decoding failure (${reason})`);
   }
 
   const response = responseEither.right;
   if (response.status !== 200) {
-    const problemJson = response.value;
-    throw Error(
-      `${response.status} ${problemJson.status} ${problemJson.title} ${problemJson.detail}`
+    const reason = aarProblemJsonAnalyticsReport(
+      response.status,
+      response.value
     );
+    throw Error(`HTTP request failed (${reason})`);
   }
 
   const { retryAfter, url } = response.value;
@@ -146,7 +150,7 @@ function* getAttachmentMetadata(
     return retryAfter;
   }
   throw Error(
-    `Both 'retryAfter' and 'url' fields are invalid (${retryAfter}) (${url})`
+    `Both 'retryAfter' and 'url' fields are missing or invalid (${retryAfter}) (${url})`
   );
 }
 
