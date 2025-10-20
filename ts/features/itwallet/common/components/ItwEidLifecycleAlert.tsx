@@ -105,6 +105,7 @@ export const ItwEidLifecycleAlert = ({
         variant: "warning",
         content: I18n.t(
           `features.itWallet.presentation.bottomSheets.eidInfo.alert.${nameSpace}.expiring`,
+          // TODO [SIW-3225]: date in bold
           {
             date: format(eid.jwt.expiration, "DD-MM-YYYY")
           }

@@ -221,6 +221,7 @@ const JwtVerificationAlert = ({
         `features.itWallet.presentation.alerts.jwtVerification.content.${
           isExpired ? "jwtExpired" : "jwtExpiring"
         }`,
+        // TODO [SIW-3225]: date in bold
         { date: format(credential.jwt.expiration, "DD-MM-YYYY") }
       )}
       action={I18n.t(
