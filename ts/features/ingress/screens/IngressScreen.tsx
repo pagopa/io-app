@@ -30,10 +30,11 @@ import { isConnectedSelector } from "../../connectivity/store/selectors";
 import { identificationRequest } from "../../identification/store/actions";
 import { OfflineAccessReasonEnum } from "../store/reducer";
 import { itwOfflineAccessAvailableSelector } from "../../itwallet/common/store/selectors";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { IdentificationBackActionType } from "../../identification/store/reducers";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
-const TIMEOUT_BLOCKING_SCREEN = (10 * 1000) as Millisecond;
+const TIMEOUT_BLOCKING_SCREEN = (25 * 1000) as Millisecond;
 
 export const IngressScreen = () => {
   const isMixpanelInitialized = useIOSelector(isMixpanelInitializedSelector);
@@ -82,8 +83,8 @@ export const IngressScreen = () => {
 
     timeouts.push(
       setTimeout(() => {
-        setShowBlockingScreen(true);
         dispatch(setIsBlockingScreen());
+        setShowBlockingScreen(true);
         timeouts.shift();
       }, TIMEOUT_BLOCKING_SCREEN)
     );
@@ -173,6 +174,11 @@ export const IngressScreen = () => {
 const IngressScreenNoInternetConnection = memo(() => {
   const isMixpanelEnabled = useIOSelector(isMixpanelEnabledSelector);
   const isMixpanelInitialized = useIOSelector(isMixpanelInitializedSelector);
+  const dispatch = useIODispatch();
+
+  useOnFirstRender(() => {
+    dispatch(setIsBlockingScreen());
+  });
 
   useEffect(() => {
     if (isMixpanelInitialized && isMixpanelEnabled !== false) {

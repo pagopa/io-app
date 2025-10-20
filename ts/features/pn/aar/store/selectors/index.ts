@@ -8,7 +8,6 @@ import { thirdPartyFromIdSelector } from "../../../../messages/store/reducers/th
 import { toPNMessage } from "../../../store/types/transformers";
 import { sendAARFlowStates } from "../../utils/stateUtils";
 
-const emptyArray: ReadonlyArray<string> = []; // used as a stable reference to avoid useless re-renders
 export const thirdPartySenderDenominationSelector = (
   state: GlobalState,
   ioMessageId: string
@@ -48,7 +47,7 @@ export const aarAdresseeDenominationSelector = (
     case sendAARFlowStates.displayingNotificationData:
     case sendAARFlowStates.notAddresseeFinal:
       if (iun === currentState.iun) {
-        return currentState.fullNameDestinatario;
+        return currentState.recipientInfo.denomination;
       }
       return undefined;
     default:
@@ -60,11 +59,29 @@ export const currentAARFlowData = (state: GlobalState) =>
   state.features.pn.aarFlow;
 export const currentAARFlowStateType = (state: GlobalState) =>
   state.features.pn.aarFlow.type;
-export const currentAARFlowStateErrorCodes = (state: GlobalState) => {
+
+export const currentAARFlowStateAssistanceErrorCode = (
+  state: GlobalState
+): string | undefined => {
   const aarFlow = state.features.pn.aarFlow;
-  if (aarFlow.type === sendAARFlowStates.ko) {
-    return aarFlow.error?.errors?.map(x => x.code) ?? emptyArray;
-  } else {
-    return emptyArray;
+
+  if (aarFlow.type !== sendAARFlowStates.ko) {
+    return undefined;
   }
+
+  const error = aarFlow.error;
+
+  if (error?.traceId && error.traceId.trim().length > 0) {
+    return error.traceId;
+  }
+
+  const assistanceErrorCode = error?.errors
+    ?.filter(({ code }) => code.trim().length > 0)
+    ?.map(e => e.code);
+
+  if (assistanceErrorCode && assistanceErrorCode.length > 0) {
+    return assistanceErrorCode.join(", ");
+  }
+
+  return undefined;
 };
