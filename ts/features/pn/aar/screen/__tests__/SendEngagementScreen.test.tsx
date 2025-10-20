@@ -9,8 +9,8 @@ import PN_ROUTES from "../../../navigation/routes";
 import * as navigation from "../../../../../navigation/params/AppParamsList";
 import { pnActivationUpsert } from "../../../store/actions";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import * as analytics from "../../analytics";
+import { NOTIFICATIONS_ROUTES } from "../../../../pushNotifications/navigation/routes";
 
 const mockBannerKO = jest.fn();
 jest.mock("../../components/SendEngagementComponent");
@@ -173,13 +173,8 @@ describe("SendEngagementScreen", () => {
         expect(mockPopToTop.mock.calls.length).toEqual(0);
         expect(mockReplace).toHaveBeenCalledTimes(1);
         expect(mockReplace).toHaveBeenCalledWith(
-          MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
-          {
-            screen: PN_ROUTES.MAIN,
-            params: {
-              screen: PN_ROUTES.QR_SCAN_PUSH_ENGAGEMENT
-            }
-          }
+          NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT,
+          { flow: "send_notification_opening" }
         );
       }
 

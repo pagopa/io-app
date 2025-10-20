@@ -1,35 +1,43 @@
-import { IOToast } from "@pagopa/io-app-design-system";
+import { useIOToast } from "@pagopa/io-app-design-system";
 import { useEffect, useState } from "react";
 import { AppState, AppStateStatus } from "react-native";
 import I18n from "i18next";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { isTestEnv } from "../../../../utils/environment";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import {
   checkNotificationPermissions,
   openSystemNotificationSettingsScreen
-} from "../../../pushNotifications/utils";
-import { trackSystemNotificationPermissionScreenOutcome } from "../../../pushNotifications/analytics";
+} from "../utils";
+import {
+  NotificationModalFlow,
+  trackSystemNotificationPermissionScreenOutcome
+} from "../analytics";
+import { isTestEnv } from "../../../utils/environment";
 
-export const useAARPushEngagementScreenLogic = () => {
-  const navigation = useIONavigation();
-  const [isButtonPressed, setIsButtonPressed] = useState<boolean>(false);
+export const usePushNotificationEngagement = (flow: NotificationModalFlow) => {
+  const { popToTop } = useIONavigation();
+  const toast = useIOToast();
+  const [isButtonPressed, setIsButtonPressed] = useState(false);
 
   useEffect(() => {
     const subscription = AppState.addEventListener(
       "change",
-      appStateHandler(navigation.popToTop, isButtonPressed)
+      appStateHandler(
+        popToTop,
+        () => {
+          toast.success(
+            I18n.t("features.pushNotifications.engagementScreen.toast")
+          );
+        },
+        isButtonPressed
+      )
     );
     return () => {
       subscription.remove();
     };
-  }, [isButtonPressed, navigation]);
+  }, [isButtonPressed, toast, popToTop]);
 
   const onButtonPress = () => {
-    trackSystemNotificationPermissionScreenOutcome(
-      "activate",
-      "send_notification_opening"
-    );
-    navigation.setOptions({ headerShown: false });
+    trackSystemNotificationPermissionScreenOutcome("activate", flow);
     openSystemNotificationSettingsScreen();
     setIsButtonPressed(true);
   };
@@ -39,15 +47,16 @@ export const useAARPushEngagementScreenLogic = () => {
 
 type HandlerType = (
   popToTop: () => void,
+  onSuccess: () => void,
   isButtonPressed: boolean
 ) => (nextAppState: AppStateStatus) => Promise<void>;
 
 const appStateHandler: HandlerType =
-  (popToTop, isButtonPressed) => async nextAppState => {
+  (popToTop, onSuccess, isButtonPressed) => async nextAppState => {
     if (nextAppState === "active" && isButtonPressed) {
       const authorizationStatus = await checkNotificationPermissions();
       if (authorizationStatus) {
-        IOToast.success(I18n.t("features.pn.aar.pushEngagement.toast"));
+        onSuccess();
       }
       popToTop();
     }
