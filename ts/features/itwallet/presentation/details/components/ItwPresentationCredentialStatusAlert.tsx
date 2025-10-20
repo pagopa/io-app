@@ -6,6 +6,7 @@ import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import {
   ItwCredentialStatus,
+  ItwJwtCredentialStatus,
   StoredCredential
 } from "../../../common/utils/itwTypesUtils.ts";
 import {
@@ -54,6 +55,16 @@ const LICENSE_RENEWAL_URL = "https://www.mit.gov.it/rinnovo-patente";
 type CredentialAlertEvents = "tap_banner" | "open_bottom_sheet" | "press_cta";
 
 export type TrackCredentialAlert = (action: CredentialAlertEvents) => void;
+
+type AlertToRenderProps = {
+  status?: ItwCredentialStatus;
+  message?: Record<string, { title: string; description: string }>;
+  credential: StoredCredential;
+  eidStatus: ItwJwtCredentialStatus | undefined;
+  isItwL3: boolean;
+  navigation: any;
+  onTrack: TrackCredentialAlert;
+};
 
 type CredentialStatusAlertProps = {
   credential: StoredCredential;
@@ -109,6 +120,26 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
     }
   };
 
+  return getAlertToRender({
+    status,
+    message,
+    credential,
+    eidStatus,
+    isItwL3,
+    navigation,
+    onTrack: trackCredentialAlertEvent
+  });
+};
+
+const getAlertToRender = ({
+  status,
+  message,
+  credential,
+  eidStatus,
+  isItwL3,
+  navigation,
+  onTrack
+}: AlertToRenderProps) => {
   const isEidExpired = eidStatus === "jwtExpired";
   const isCredentialJwtExpiring = status === "jwtExpiring";
   const isCredentialJwtExpired = status === "jwtExpired";
@@ -120,43 +151,33 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
     if (isEidExpired && isCredentialJwtExpiring) {
       return null;
     }
-
     // If both the eID jwt and the credential jwt are expired, show the eID alert
-    if (isEidExpired && isCredentialJwtExpired && !isItwL3) {
+    if (isEidExpired && isCredentialJwtExpired && !isItwL3)
       return <ItwEidLifecycleAlert navigation={navigation} />;
-    }
 
     return (
-      // Show the JWT verification alert for jwtExpiring or jwtExpired status
       <JwtVerificationAlert
         credential={credential}
-        onTrack={trackCredentialAlertEvent}
+        onTrack={onTrack}
         status={status}
       />
     );
   }
 
-  if (status === "expiring") {
-    return (
-      <DocumentExpiringAlert
-        credential={credential}
-        onTrack={trackCredentialAlertEvent}
-      />
-    );
-  }
+  if (status === "expiring")
+    return <DocumentExpiringAlert credential={credential} onTrack={onTrack} />;
 
-  if (message) {
+  if (message)
     return (
       <IssuerDynamicErrorAlert
         message={message}
         credential={credential}
-        onTrack={trackCredentialAlertEvent}
+        onTrack={onTrack}
       />
     );
-  }
 
   // Fallback when the issuer does not provide a message for an expired credential
-  if (status === "expired") {
+  if (status === "expired")
     return (
       <Alert
         testID="itwExpiredBannerTestID"
@@ -166,7 +187,6 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
         )}
       />
     );
-  }
 
   return null;
 };
