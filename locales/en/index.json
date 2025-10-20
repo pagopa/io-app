@@ -337,6 +337,7 @@
   "startup": {
     "title": "We are getting ready for your experience on IO",
     "title2": "Just a little more patience...",
+    "subtitle2": "Non chiudere l’app, ci vorranno al massimo 20 secondi.",
     "authentication": "User authenticated",
     "sessionInfo": "SPID attributes loaded",
     "profileInfo": "User profile loaded",
