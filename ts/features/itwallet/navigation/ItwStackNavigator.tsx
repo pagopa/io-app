@@ -22,6 +22,7 @@ import ItwCieIdLoginScreen from "../identification/cieId/screens/ItwCieIdLoginSc
 import { ItwIdentificationModeSelectionScreen } from "../identification/common/screens/ItwIdentificationModeSelectionScreen.tsx";
 import { ItwIdentificationIdpSelectionScreen } from "../identification/spid/screens/ItwIdentificationIdpSelectionScreen.tsx";
 import ItwSpidIdpLoginScreen from "../identification/spid/screens/ItwSpidIdpLoginScreen.tsx";
+import { ItwIssuanceCredentialAsyncContinuationScreen } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
 import { ItwIssuanceCredentialFailureScreen } from "../issuance/screens/ItwIssuanceCredentialFailureScreen";
 import { ItwIssuanceCredentialPreviewScreen } from "../issuance/screens/ItwIssuanceCredentialPreviewScreen";
 import { ItwIssuanceCredentialTrustIssuerScreen } from "../issuance/screens/ItwIssuanceCredentialTrustIssuerScreen";
@@ -214,6 +215,11 @@ const InnerNavigator = memo(() => {
         /* gestureEnabled to false prevents going back to the loading screen, just go back to the home screen when swiping back.
          * TODO: [SIW-1375] better retry and go back handling logic for the issuance process
          */
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.ISSUANCE.CREDENTIAL_ASYNC_FLOW_CONTINUATION}
+        component={withItwEnabled(ItwIssuanceCredentialAsyncContinuationScreen)}
+        options={hiddenHeader}
       />
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL}
