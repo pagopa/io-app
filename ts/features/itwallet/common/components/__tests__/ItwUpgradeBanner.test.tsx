@@ -12,10 +12,6 @@ import { ITW_ROUTES } from "../../../navigation/routes";
 
 const mockNavigate = jest.fn();
 
-jest.mock("../../../lifecycle/store/selectors", () => ({
-  itwLifecycleIsValidSelector: jest.fn(() => true)
-}));
-
 jest.mock("@react-navigation/native", () => {
   const actual = jest.requireActual("@react-navigation/native");
   return {
@@ -50,10 +46,9 @@ describe("ItwUpgradeBanner", () => {
       .spyOn(selectors, "itwShouldRenderL3UpgradeBannerSelector")
       .mockReturnValue(true);
 
-    const { getAllByText } = renderComponent();
-    const [button] = getAllByText(
-      I18n.t("features.itWallet.upgrade.banner.documents.active.action")
-    );
+    const { getByText } = renderComponent();
+
+    const button = getByText(I18n.t("features.itWallet.upgrade.banner.action"));
     fireEvent.press(button);
 
     await waitFor(() => {

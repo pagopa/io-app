@@ -14,7 +14,6 @@ import {
 import { getThemeColorByCredentialType } from "../../utils/itwStyleUtils";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
-import { useEffectiveCredentialStatus } from "../../../presentation/details/hooks/useEffectiveCredentialStatus";
 import { CardBackground } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
 import { CardColorScheme } from "./types";
@@ -59,7 +58,6 @@ export const ItwCredentialCard = ({
   const typefacePreference = useIOSelector(fontPreferenceSelector);
   const isItwPid = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const needsItwUpgrade = isItwPid && !isItwCredential;
-  const status = useEffectiveCredentialStatus(credentialType);
 
   const borderColorMap = useBorderColorByStatus();
 
@@ -71,11 +69,11 @@ export const ItwCredentialCard = ({
       };
     }
 
-    return tagPropsByStatus[status];
-  }, [status, needsItwUpgrade]);
+    return tagPropsByStatus[credentialStatus];
+  }, [credentialStatus, needsItwUpgrade]);
 
   const { titleColor, titleOpacity, colorScheme } = useMemo<StyleProps>(() => {
-    const isValid = validCredentialStatuses.includes(status);
+    const isValid = validCredentialStatuses.includes(credentialStatus);
     const theme = getThemeColorByCredentialType(credentialType);
 
     if (needsItwUpgrade) {
@@ -94,7 +92,7 @@ export const ItwCredentialCard = ({
       };
     }
 
-    if (isValid || status === "jwtExpired") {
+    if (isValid) {
       return {
         titleColor: theme.textColor,
         titleOpacity: 1,
@@ -107,7 +105,7 @@ export const ItwCredentialCard = ({
       titleOpacity: 0.5,
       colorScheme: "faded"
     };
-  }, [credentialType, credentialStatus, needsItwUpgrade, status]);
+  }, [credentialType, credentialStatus, needsItwUpgrade]);
 
   return (
     <View style={styles.cardContainer}>
@@ -147,7 +145,12 @@ export const ItwCredentialCard = ({
         credentialType={credentialType}
         colorScheme={colorScheme}
       />
-      <View style={[styles.border, { borderColor: borderColorMap[status] }]} />
+      <View
+        style={[
+          styles.border,
+          { borderColor: borderColorMap[credentialStatus] }
+        ]}
+      />
     </View>
   );
 };

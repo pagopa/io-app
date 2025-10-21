@@ -136,10 +136,9 @@ const CardSideBase = ({ status, children }: CardSideBaseProps) => {
 
   const dynamicStyle: StyleProp<ViewStyle> = {
     borderColor,
-    backgroundColor:
-      validCredentialStatuses.includes(status) || status === "jwtExpired"
-        ? undefined
-        : "rgba(255,255,255,0.7)"
+    backgroundColor: validCredentialStatuses.includes(status)
+      ? undefined
+      : "rgba(255,255,255,0.7)"
   };
 
   return (

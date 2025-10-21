@@ -9,13 +9,11 @@ import {
 } from "../../analytics";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwShouldRenderL3UpgradeBannerSelector } from "../store/selectors";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwHighlightBanner } from "./ItwHighlightBanner";
 
 export const ItwUpgradeBanner = () => {
   const navigation = useIONavigation();
   const shouldRender = useIOSelector(itwShouldRenderL3UpgradeBannerSelector);
-  const isItWalletValid = useIOSelector(itwLifecycleIsValidSelector);
   const { name: routeName } = useRoute();
 
   useFocusEffect(
@@ -38,20 +36,12 @@ export const ItwUpgradeBanner = () => {
     });
   };
 
-  const isDocumentsActive = isItWalletValid ? "active" : "inactive";
-
   return (
     <ItwHighlightBanner
       testID="itwUpgradeBannerTestID"
-      title={I18n.t(
-        `features.itWallet.upgrade.banner.documents.${isDocumentsActive}.title`
-      )}
-      description={I18n.t(
-        `features.itWallet.upgrade.banner.documents.${isDocumentsActive}.description`
-      )}
-      action={I18n.t(
-        `features.itWallet.upgrade.banner.documents.${isDocumentsActive}.action`
-      )}
+      title={I18n.t("features.itWallet.upgrade.banner.title")}
+      description={I18n.t("features.itWallet.upgrade.banner.description")}
+      action={I18n.t("features.itWallet.upgrade.banner.action")}
       onPress={handleOnPress}
     />
   );
