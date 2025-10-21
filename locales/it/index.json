@@ -6194,6 +6194,10 @@
       "failToRetry": {
         "contentTitle": "Stiamo per collegarti.\n Attendi qualche secondo..."
       },
+      "disabledScreen": {
+        "title": "Stai per accedere all’iniziativa",
+        "subtitle": "Potrebbero volerci diversi minuti. Non chiudere l’app: quando sarà tutto pronto, potrai richiedere il tuo bonus."
+      },
       "preferences": {
         "enableEmailBanner": {
           "title": "Non perderti aggiornamenti importanti",

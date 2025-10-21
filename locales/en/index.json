@@ -6000,6 +6000,10 @@
       "failToRetry": {
         "contentTitle": "Stiamo per collegarti.\n Attendi qualche secondo..."
       },
+      "disabledScreen": {
+        "title": "You are about to access the initiative",
+        "subtitle": "This may take several minutes. Do not close the app: once everything is ready, you will be able to request your bonus."
+      },
       "preferences": {
         "enableEmailBanner": {
           "title": "Don't miss important updates",
@@ -6245,10 +6249,6 @@
       "chat": "Chiedi aiuto in chat",
       "additionalDataTitle": "Additional data",
       "copyAll": "Copy all"
-    },
-    "slowdowns_results_screen": {
-      "title": "Things seem to be going a little slowly at the moment.",
-      "subtitle": "It looks like many people are trying right now.\nYou can try again in a few minutes, or request your bonus on the dedicated site."
     }
   },
   "barcodeScan": {
