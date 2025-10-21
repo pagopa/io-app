@@ -44,16 +44,16 @@ describe("ItwUpgradeBanner", () => {
 
   it("should navigate to the Discovery Info Screen", async () => {
     jest
-    .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
-    .mockReturnValue(true);
+      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockReturnValue(true);
     jest
       .spyOn(selectors, "itwShouldRenderL3UpgradeBannerSelector")
       .mockReturnValue(true);
 
-      const { getAllByText } = renderComponent();
-      const [button] = getAllByText(
-        I18n.t("features.itWallet.upgrade.banner.documents.active.action")
-      );
+    const { getAllByText } = renderComponent();
+    const [button] = getAllByText(
+      I18n.t("features.itWallet.upgrade.banner.documents.active.action")
+    );
     fireEvent.press(button);
 
     await waitFor(() => {
