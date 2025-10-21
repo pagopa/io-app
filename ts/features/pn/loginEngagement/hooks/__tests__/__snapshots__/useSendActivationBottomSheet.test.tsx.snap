@@ -48,6 +48,7 @@ exports[`useSendActivationBottomSheet should match the snapshot 1`] = `
         label="Continua"
         loading={false}
         onPress={[Function]}
+        testID="sendActivationID"
       />
       <View />
     </VStack>

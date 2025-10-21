@@ -69,6 +69,7 @@ export const useSendAreYouSureBottomSheet = () => {
         />
         <VStack space={16} style={{ alignItems: "center" }}>
           <IOButton
+            testID="sendActivationID"
             label={i18n.t(
               "features.pn.loginEngagement.send.areYouSureBottomSheet.action"
             )}
@@ -83,6 +84,7 @@ export const useSendAreYouSureBottomSheet = () => {
           />
           <View>
             <IOButton
+              testID="sendDismissalID"
               label={i18n.t(
                 "features.pn.loginEngagement.send.areYouSureBottomSheet.secondaryAction"
               )}

@@ -83,11 +83,13 @@ exports[`useSendAreYouSureBottomSheet should match the snapshot 1`] = `
           label="Attiva SEND su IO"
           loading={false}
           onPress={[Function]}
+          testID="sendActivationID"
         />
         <View>
           <ForwardRef
             label="Non attivare SEND su IO"
             onPress={[Function]}
+            testID="sendDismissalID"
             textAlign="center"
             variant="link"
           />

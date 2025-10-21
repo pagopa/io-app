@@ -38,6 +38,7 @@ export const useSendActivationBottomSheet = () => {
           )}
         />
         <IOButton
+          testID="sendActivationID"
           label={i18n.t(
             "features.pn.loginEngagement.send.activationBottomSheet.action"
           )}
