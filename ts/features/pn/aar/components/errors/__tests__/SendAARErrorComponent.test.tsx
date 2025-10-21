@@ -20,6 +20,7 @@ import {
   SendAARErrorComponent,
   testable
 } from "../../errors/SendAARErrorComponent";
+import * as debugHooks from "../../../../../../hooks/useDebugInfo";
 
 const { bottomComponent } = testable!;
 
@@ -122,9 +123,23 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
     expect(queryByTestId("error_code_value") == null).toBe(true);
   });
 
-  it("should match snapshot", () => {
+  it("should match snapshot and call useDebugInfo to display proper debug data", () => {
+    const fakeDebugInfo = {
+      errorCodes: "830 Debug info",
+      phase: "Fetch Notification",
+      reason: "Something failed",
+      traceId: "traceId-123"
+    };
+    jest
+      .spyOn(SELECTORS, "currentAARFlowStateErrorDebugInfoSelector")
+      .mockImplementation(_state => fakeDebugInfo);
+    const spiedOnUseDebugInfo = jest.spyOn(debugHooks, "useDebugInfo");
     const { toJSON } = renderComponent();
     expect(toJSON()).toMatchSnapshot();
+
+    expect(spiedOnUseDebugInfo.mock.calls.length).toBe(1);
+    expect(spiedOnUseDebugInfo.mock.calls[0].length).toBe(1);
+    expect(spiedOnUseDebugInfo.mock.calls[0][0]).toEqual(fakeDebugInfo);
   });
 
   it("zendeskAssistanceLogAndStart calls expected functions in order", () => {
