@@ -12,7 +12,10 @@ import {
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
 import { getThemeColorByCredentialType } from "../../utils/itwStyleUtils";
-import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
+import {
+  ItwCredentialStatus,
+  ItwJwtCredentialStatus
+} from "../../utils/itwTypesUtils";
 import { itwCredentialsEidStatusSelector } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { CardBackground } from "./CardBackground";
@@ -56,7 +59,7 @@ type StyleProps = {
  * the card is displayed correctly during the eID reactivation process.
  */
 const shouldOverrideCredentialStatus = (
-  maybeEidStatus: string | undefined,
+  maybeEidStatus: ItwJwtCredentialStatus | undefined,
   credentialStatus: ItwCredentialStatus
 ): boolean => {
   const eIDStatusesRequiringOverride = ["jwtExpired", "jwtExpiring"];
