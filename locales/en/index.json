@@ -5432,13 +5432,6 @@
         "action": "Ricarica l'app IO",
         "failure": "Nessuna connessione. Collegati a internet e riprova."
       },
-      "upgrade": {
-        "banner": {
-          "title": "IT-Wallet per i tuoi documenti",
-          "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**. Garantito dallo Stato, accessibile solo a te.",
-          "action": "Ottieni IT-Wallet"
-        }
-      },
       "playgrounds": {
         "environment": {
           "toggle": {

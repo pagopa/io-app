@@ -5608,9 +5608,18 @@
       },
       "upgrade": {
         "banner": {
-          "title": "IT-Wallet per i tuoi documenti",
-          "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**. Garantito dallo Stato, accessibile solo a te.",
-          "action": "Ottieni IT-Wallet"
+          "documents": {
+            "active": {
+              "title": "Passa a IT-Wallet",
+              "description": "Aggiorna i tuoi documenti digitali e passa a funzionalità evolute con l’unico portafoglio digitale di Stato: pubblico, sicuro e gratuito. Garantito dallo Stato, accessibile solo a te.",
+              "action": "Passa a IT-Wallet"
+            },
+            "inactive": {
+              "title": "IT-Wallet per i tuoi documenti",
+              "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**. Garantito dallo Stato, accessibile solo a te.",
+              "action": "Ottieni IT-Wallet"
+            }
+          }
         }
       },
       "settings": {
