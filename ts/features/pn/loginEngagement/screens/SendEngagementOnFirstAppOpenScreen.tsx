@@ -17,7 +17,7 @@ import {
 } from "../../analytics/send";
 import { NotificationModalFlow } from "../../../pushNotifications/analytics";
 
-export const flow: NotificationModalFlow = "access";
+const flow: NotificationModalFlow = "access";
 
 const customRules: Partial<IOMarkdownRenderRules> = {
   Paragraph: (param, render) => (
