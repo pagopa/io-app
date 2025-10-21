@@ -171,7 +171,7 @@ const IdPayInitiativeDetailsScreenComponent = () => {
           "idpay.initiative.details.initiativeDetailsScreen.error.subtitle"
         )}
         action={{
-          label: "Indietro",
+          label: I18n.t("global.buttons.back"),
           onPress: () => navigation.pop()
         }}
       />
