@@ -2,6 +2,63 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.17.0-rc.4](https://github.com/pagopa/io-app/compare/3.17.0-rc.3...3.17.0-rc.4) (2025-10-20)
+
+
+### Features
+
+* [[IOCOM-2636](https://pagopa.atlassian.net/browse/IOCOM-2636)] AAR error tracking ([#7485](https://github.com/pagopa/io-app/issues/7485)) ([5ba25bb](https://github.com/pagopa/io-app/commit/5ba25bb8004dfdf96fe364a1cc582130c798ff99))
+* [[IOCOM-2660](https://pagopa.atlassian.net/browse/IOCOM-2660)] Added zendesk on SEND AAR generic error bottomsheet ([#7481](https://github.com/pagopa/io-app/issues/7481)) ([90ae66b](https://github.com/pagopa/io-app/commit/90ae66b8b8ee6734246b9a9d3e11e75d37162187))
+* [[IOCOM-2670](https://pagopa.atlassian.net/browse/IOCOM-2670)] Add Push Notification engagement flow after SEND activation success (if needed) ([#7477](https://github.com/pagopa/io-app/issues/7477)) ([ac29d54](https://github.com/pagopa/io-app/commit/ac29d542ef08239bd3beb605b5f0636e3ddb710a))
+
+
+### Bug Fixes
+
+*  [[IOPLT-1380](https://pagopa.atlassian.net/browse/IOPLT-1380)] Remove hardcoded colors from `RefreshControl` in the `MessageList` ([#7498](https://github.com/pagopa/io-app/issues/7498)) ([88a2925](https://github.com/pagopa/io-app/commit/88a2925c823c0c502f744f9f67ccbf11fa9b8d5c))
+* [[IOBP-2086](https://pagopa.atlassian.net/browse/IOBP-2086)] IDPay mixpanel event missing data   ([#7493](https://github.com/pagopa/io-app/issues/7493)) ([09d88b1](https://github.com/pagopa/io-app/commit/09d88b1cd7d22a764cd889f57ea3562afdba6e47))
+* [[IOBP-2089](https://pagopa.atlassian.net/browse/IOBP-2089)] Remove outdated IDPay wallet cards when missing from API response ([#7497](https://github.com/pagopa/io-app/issues/7497)) ([e481943](https://github.com/pagopa/io-app/commit/e48194309e78730567ca253084627252b1accdba))
+* [[IOBP-2091](https://pagopa.atlassian.net/browse/IOBP-2091)] Add the day format from the IdPayCard component ([#7501](https://github.com/pagopa/io-app/issues/7501)) ([b83cdd7](https://github.com/pagopa/io-app/commit/b83cdd766c1031d491a8c0b447a1b683fb63d2e9))
+* [[IOPID-3480](https://pagopa.atlassian.net/browse/IOPID-3480),[IOPID-3487](https://pagopa.atlassian.net/browse/IOPID-3487)] email address validation: polling and email validation ([#7490](https://github.com/pagopa/io-app/issues/7490)) ([b7878a3](https://github.com/pagopa/io-app/commit/b7878a3d2fc12862c29fa81c3d6b88081cdbc378))
+
+
+### Chores
+
+* [[IOAPPX-502](https://pagopa.atlassian.net/browse/IOAPPX-502)] Migrate to yarn patch ([#7143](https://github.com/pagopa/io-app/issues/7143)) ([93f95b8](https://github.com/pagopa/io-app/commit/93f95b8c8deb12d016cb1bf52c7696e7e7f76388)), closes [/github.com/hieuvp/react-native-fingerprint-scanner.git#9cecc0db326471c571553ea85f7c016fee2f803](https://github.com/pagopa//github.com/hieuvp/react-native-fingerprint-scanner.git/issues/9cecc0db326471c571553ea85f7c016fee2f803)
+* [[IOPID-3435](https://pagopa.atlassian.net/browse/IOPID-3435)] CIE iOS Internal Auth Playground ([#7450](https://github.com/pagopa/io-app/issues/7450)) ([d67e411](https://github.com/pagopa/io-app/commit/d67e4113127ba39c794ccf7cadda38843ce62387)), closes [/#diff-3cbe9ab9a2ab9e89c6b737e8e89c568728ee48f7d5613d750a69d40c4a9cff9cR1-R125](https://github.com/pagopa///issues/diff-3cbe9ab9a2ab9e89c6b737e8e89c568728ee48f7d5613d750a69d40c4a9cff9cR1-R125) [/#diff-f305a7d3723b5c937849dbacbe983d296ed6c3023807393481e5f9b637485052R1-R186](https://github.com/pagopa///issues/diff-f305a7d3723b5c937849dbacbe983d296ed6c3023807393481e5f9b637485052R1-R186) [/#diff-16f77f384fbb9eda77bfc67ab62f0d18d17e93801ed95fa44e08629711049184R1-R111](https://github.com/pagopa///issues/diff-16f77f384fbb9eda77bfc67ab62f0d18d17e93801ed95fa44e08629711049184R1-R111) [/#diff-489778b3a8709db85e849d2e49e8f94f9aea08a4418a9187f1a6bf06715ba261L34-R38](https://github.com/pagopa///issues/diff-489778b3a8709db85e849d2e49e8f94f9aea08a4418a9187f1a6bf06715ba261L34-R38) [/#diff-489778b3a8709db85e849d2e49e8f94f9aea08a4418a9187f1a6bf06715ba261R196-R207](https://github.com/pagopa///issues/diff-489778b3a8709db85e849d2e49e8f94f9aea08a4418a9187f1a6bf06715ba261R196-R207) [/#diff-4766fc5d3eaaed7fd678cc01376c13cf5730aa34e6d7459d147d85c697753594R6](https://github.com/pagopa///issues/diff-4766fc5d3eaaed7fd678cc01376c13cf5730aa34e6d7459d147d85c697753594R6) [/#diff-4766fc5d3eaaed7fd678cc01376c13cf5730aa34e6d7459d147d85c697753594R40-R42](https://github.com/pagopa///issues/diff-4766fc5d3eaaed7fd678cc01376c13cf5730aa34e6d7459d147d85c697753594R40-R42) [/#diff-266f5a0d436e918b4c6a8ce655ece9527fb76226fbfb44f7f2d16bf1069b269aR38-R42](https://github.com/pagopa///issues/diff-266f5a0d436e918b4c6a8ce655ece9527fb76226fbfb44f7f2d16bf1069b269aR38-R42) [/#diff-b7b8e078d4f239fa62748604b4914233dc1d45c1f23fd7620b801f10e4000f63L3-R4](https://github.com/pagopa///issues/diff-b7b8e078d4f239fa62748604b4914233dc1d45c1f23fd7620b801f10e4000f63L3-R4) [/#diff-b7b8e078d4f239fa62748604b4914233dc1d45c1f23fd7620b801f10e4000f63L20-R22](https://github.com/pagopa///issues/diff-b7b8e078d4f239fa62748604b4914233dc1d45c1f23fd7620b801f10e4000f63L20-R22) [/#diff-b7b8e078d4f239fa62748604b4914233dc1d45c1f23fd7620b801f10e4000f63L35-L84](https://github.com/pagopa///issues/diff-b7b8e078d4f239fa62748604b4914233dc1d45c1f23fd7620b801f10e4000f63L35-L84) [/#diff-b7b8e078d4f239fa62748604b4914233dc1d45c1f23fd7620b801f10e4000f63L296-L300](https://github.com/pagopa///issues/diff-b7b8e078d4f239fa62748604b4914233dc1d45c1f23fd7620b801f10e4000f63L296-L300)
+* [[IOPID-3472](https://pagopa.atlassian.net/browse/IOPID-3472),[IOPID-3478](https://pagopa.atlassian.net/browse/IOPID-3478),[IOPID-3209](https://pagopa.atlassian.net/browse/IOPID-3209)] Bump `IngressScreen` timeout from `10` to `25` ([#7448](https://github.com/pagopa/io-app/issues/7448)) ([f2c9b16](https://github.com/pagopa/io-app/commit/f2c9b161a1ba2a9d0a7e14dcb57bc3a903721078)), closes [/#diff-8a5b2f3967d681b976fe673762bd1061f5b430130c880c1195b76af06362cf31L267-R268](https://github.com/pagopa///issues/diff-8a5b2f3967d681b976fe673762bd1061f5b430130c880c1195b76af06362cf31L267-R268) [/#diff-8a5b2f3967d681b976fe673762bd1061f5b430130c880c1195b76af06362cf31R458-R462](https://github.com/pagopa///issues/diff-8a5b2f3967d681b976fe673762bd1061f5b430130c880c1195b76af06362cf31R458-R462)
+* [[IOPID-3486](https://pagopa.atlassian.net/browse/IOPID-3486)] add manage of error 429 from `/nonce` API ([#7500](https://github.com/pagopa/io-app/issues/7500)) ([b72b4b7](https://github.com/pagopa/io-app/commit/b72b4b7aac411fb0f1b34762b5a293298d057bb5)), closes [/#diff-646d1754a4ba3616dad7fc6278fe4acfd306f09e1257c7aa4f37ece41ea44c76L163-R192](https://github.com/pagopa///issues/diff-646d1754a4ba3616dad7fc6278fe4acfd306f09e1257c7aa4f37ece41ea44c76L163-R192) [/#diff-646d1754a4ba3616dad7fc6278fe4acfd306f09e1257c7aa4f37ece41ea44c76R50-R52](https://github.com/pagopa///issues/diff-646d1754a4ba3616dad7fc6278fe4acfd306f09e1257c7aa4f37ece41ea44c76R50-R52)
+
+## [3.17.0-rc.3](https://github.com/pagopa/io-app/compare/3.17.0-rc.2...3.17.0-rc.3) (2025-10-17)
+
+
+### Bug Fixes
+
+* [[IOBP-2087](https://pagopa.atlassian.net/browse/IOBP-2087)] Map onboarding error code to failure screen ([#7492](https://github.com/pagopa/io-app/issues/7492)) ([84c261e](https://github.com/pagopa/io-app/commit/84c261ed9ad10ff211aef8308d4a70da30f40f14))
+
+
+### Chores
+
+* [[IOBP-2074](https://pagopa.atlassian.net/browse/IOBP-2074),[IOBP-2070](https://pagopa.atlassian.net/browse/IOBP-2070)] Adjust bonus screen copy and cosmetics changes ([#7486](https://github.com/pagopa/io-app/issues/7486)) ([15bfd60](https://github.com/pagopa/io-app/commit/15bfd60974e42976a1d1a457a87cb1c7fe2f8f5e))
+
+## [3.17.0-rc.2](https://github.com/pagopa/io-app/compare/3.17.0-rc.1...3.17.0-rc.2) (2025-10-16)
+
+
+### Features
+
+* [[IOCOM-2595](https://pagopa.atlassian.net/browse/IOCOM-2595),[IOCOM-2626](https://pagopa.atlassian.net/browse/IOCOM-2626)] New SEND engagement flow ([#7412](https://github.com/pagopa/io-app/issues/7412)) ([2f9be5f](https://github.com/pagopa/io-app/commit/2f9be5f2fc0835c67cb3ccdf6b7d9ee5ff0014ee))
+* [[IOCOM-2664](https://pagopa.atlassian.net/browse/IOCOM-2664)] Update DS package with attachment bleed pictogram ([#7489](https://github.com/pagopa/io-app/issues/7489)) ([526917d](https://github.com/pagopa/io-app/commit/526917d762217e9c828e382a328ef85833c4caca))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-3186](https://pagopa.atlassian.net/browse/SIW-3186)] Correctly display MDL's category codes, birth place and issuing authority ([#7480](https://github.com/pagopa/io-app/issues/7480)) ([7948343](https://github.com/pagopa/io-app/commit/794834323b1d36f10f80b13c05f1e502461ec041))
+* [[IOBP-2075](https://pagopa.atlassian.net/browse/IOBP-2075)] IDPay initiative info box wrong markdown render ([#7487](https://github.com/pagopa/io-app/issues/7487)) ([2c7fe17](https://github.com/pagopa/io-app/commit/2c7fe17b875c593f6bf7ab02559d850a3681c68a))
+
+
+### Chores
+
+* [[IOBP-2071](https://pagopa.atlassian.net/browse/IOBP-2071)] IDPay update copy ([#7488](https://github.com/pagopa/io-app/issues/7488)) ([743c983](https://github.com/pagopa/io-app/commit/743c983250a9389859ec9a96aecc3468948c9b37))
+
 ## [3.17.0-rc.1](https://github.com/pagopa/io-app/compare/3.17.0-rc.0...3.17.0-rc.1) (2025-10-15)
 
 

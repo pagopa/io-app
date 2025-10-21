@@ -109,7 +109,7 @@ export const IdPayCard = (props: IdPayCardProps) => {
         </View>
         <Body weight="Regular" color={validationColor}>
           {I18n.t("bonusCard.validUntil", {
-            endDate: format(props.expireDate, "MM/YY")
+            endDate: format(props.expireDate, "DD/MM/YY")
           })}
         </Body>
       </View>
