@@ -253,7 +253,6 @@ export const itwCredentialsEidStatusSelector = createSelector(
     )
 );
 
-
 /**
  * Return a list of all credentials of the same type, mainly used for clean up operations.
  * @param key The type of credential

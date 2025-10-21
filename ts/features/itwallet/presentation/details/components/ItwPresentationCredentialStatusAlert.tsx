@@ -54,11 +54,11 @@ type CredentialStatusAlertProps = {
 
 const useAlertPressHandler =
   (onTrack: TrackCredentialAlert, bottomSheet: { present: () => void }) =>
-    () => {
-      onTrack("tap_banner");
-      bottomSheet.present();
-      onTrack("open_bottom_sheet");
-    };
+  () => {
+    onTrack("tap_banner");
+    bottomSheet.present();
+    onTrack("open_bottom_sheet");
+  };
 
 /**
  * This component renders an alert related to the credential status (expiring or invalid).
@@ -143,9 +143,9 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
 };
 
 const VerificationExpiringAlert = ({
-                                     credential,
-                                     onTrack
-                                   }: CredentialStatusAlertProps) => {
+  credential,
+  onTrack
+}: CredentialStatusAlertProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
 
   const beginCredentialIssuance = () => {
@@ -172,9 +172,9 @@ const VerificationExpiringAlert = ({
 };
 
 const DocumentExpiringAlert = ({
-                                 credential,
-                                 onTrack
-                               }: CredentialStatusAlertProps) => {
+  credential,
+  onTrack
+}: CredentialStatusAlertProps) => {
   const expireDays = getCredentialExpireDays(credential.parsedCredential);
   const showCta = credential.credentialType === CredentialType.DRIVING_LICENSE;
 
@@ -239,10 +239,10 @@ type IssuerDynamicErrorAlertProps = {
 };
 
 const IssuerDynamicErrorAlert = ({
-                                   message,
-                                   credential,
-                                   onTrack
-                                 }: IssuerDynamicErrorAlertProps) => {
+  message,
+  credential,
+  onTrack
+}: IssuerDynamicErrorAlertProps) => {
   const localizedMessage = getLocalizedMessageOrFallback(message);
   const showCta = credential.credentialType === CredentialType.DRIVING_LICENSE;
 
