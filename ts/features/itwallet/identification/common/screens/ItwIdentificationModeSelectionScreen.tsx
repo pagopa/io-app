@@ -1,4 +1,8 @@
-import { useFocusEffect, useRoute } from "@react-navigation/native";
+import {
+  useFocusEffect,
+  // useNavigation,
+  useRoute
+} from "@react-navigation/native";
 import { useCallback, useMemo } from "react";
 import {
   ContentWrapper,
@@ -29,6 +33,8 @@ import SpidLogo from "../../../../../../img/features/itWallet/identification/spi
 import CiePin from "../../../../../../img/features/itWallet/identification/cie_pin.svg";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
+// import { openWebUrl } from "../../../../../utils/url";
+// import ROUTES from "../../../../../navigation/routes";
 
 export type ItwIdentificationNavigationParams = {
   eidReissuing?: boolean;
@@ -44,6 +50,7 @@ export const ItwIdentificationModeSelectionScreen = (
   props: ItwIdentificationModeSelectionScreenProps
 ) => {
   const { eidReissuing } = props.route.params;
+  // const navigation = useNavigation();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
@@ -168,6 +175,9 @@ export const ItwIdentificationModeSelectionScreen = (
       }}
       description={description}
       headerActionsProp={{ showHelp: true }}
+      goBack={() => {
+        // navigation.navigate(ROUTES.MAIN, {screen: ROUTES.WALLET_HOME, params: { newMethodAdded: false }});
+      }}
     >
       <ContentWrapper>
         <VStack space={24}>
