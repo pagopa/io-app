@@ -180,7 +180,8 @@ const getTransactionOperationProps = (
       title,
       subtitle,
       transaction: {
-        badge: getBadgePropsByTransactionStatus("reversal")
+        // Modified to show "cancelled" badge when reversal IOBP-2092
+        badge: getBadgePropsByTransactionStatus("cancelled")
       }
     };
   }
