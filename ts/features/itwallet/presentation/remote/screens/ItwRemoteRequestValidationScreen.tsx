@@ -30,11 +30,7 @@ const ItwRemoteRequestValidationScreen = ({ route }: ScreenProps) => {
 
   const startupStatus = useIOSelector(isStartupLoaded);
 
-  useFocusEffect(
-    useCallback(() => {
-      trackItwRemoteStart();
-    }, [])
-  );
+  trackItwRemoteStart();
 
   /**
    * There may be scenarios where the app is not running when the user opens the link,
