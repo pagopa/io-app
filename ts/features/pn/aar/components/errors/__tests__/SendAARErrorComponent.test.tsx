@@ -227,14 +227,9 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
 
   [undefined, null, "", "   "].forEach(emptyAssistanceErrorCode =>
     it(`zendeskAssistanceLogAndStart should not append log if assistanceErrorCode is (${emptyAssistanceErrorCode})`, () => {
-      const mockDispatch = jest.fn();
-      jest
-        .spyOn(DISPATCH, "useIODispatch")
-        .mockImplementation(() => mockDispatch);
-
       jest
         .spyOn(SELECTORS, "currentAARFlowStateAssistanceErrorCode")
-        .mockReturnValue(undefined);
+        .mockReturnValue(emptyAssistanceErrorCode as string);
 
       const appendLog = jest.spyOn(SUPPORT_ASSISTANCE, "appendLog");
 
