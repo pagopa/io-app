@@ -27,6 +27,7 @@ jest.mock("../../hooks/useSendActivationBottomSheet", () => ({
     };
   }
 }));
+
 jest.mock("../../hooks/useSendAreYouSureBottomSheet", () => ({
   useSendAreYouSureBottomSheet() {
     return {
@@ -35,6 +36,7 @@ jest.mock("../../hooks/useSendAreYouSureBottomSheet", () => ({
     };
   }
 }));
+
 jest.mock("../../../analytics/send", () => ({
   trackSendActivationModalDialog: jest.fn(),
   trackSendActivationModalDialogActivationStart: jest.fn(),
@@ -42,16 +44,6 @@ jest.mock("../../../analytics/send", () => ({
   trackSendActivationModalDialogActivationDismissed: jest.fn(),
   trackSendNurturingDialog: jest.fn()
 }));
-
-// Event tracking functions mocks
-const mockTrackSendActivationModalDialog =
-  trackSendActivationModalDialog as jest.Mock;
-const mockTrackSendActivationModalDialogActivationStart =
-  trackSendActivationModalDialogActivationStart as jest.Mock;
-const mockTrackSendAcceptanceDialog = trackSendAcceptanceDialog as jest.Mock;
-const mockTrackSendActivationModalDialogActivationDismissed =
-  trackSendActivationModalDialogActivationDismissed as jest.Mock;
-const mockTrackSendNurturingDialog = trackSendNurturingDialog as jest.Mock;
 
 describe(SendEngagementOnFirstAppOpenScreen, () => {
   beforeEach(jest.clearAllMocks);
@@ -69,21 +61,21 @@ describe(SendEngagementOnFirstAppOpenScreen, () => {
     );
     fireEvent.press(presentActivationBottomSheet);
 
-    expect(mockTrackSendActivationModalDialog).toHaveBeenCalledTimes(1);
-    expect(mockTrackSendActivationModalDialog).toHaveBeenCalledWith(testFlow);
+    expect(trackSendActivationModalDialog).toHaveBeenCalledTimes(1);
+    expect(trackSendActivationModalDialog).toHaveBeenCalledWith(testFlow);
     expect(mockPresentActivationBottomSheet).toHaveBeenCalledTimes(1);
+    expect(trackSendActivationModalDialogActivationStart).toHaveBeenCalledTimes(
+      1
+    );
+    expect(trackSendActivationModalDialogActivationStart).toHaveBeenCalledWith(
+      testFlow
+    );
+    expect(trackSendAcceptanceDialog).toHaveBeenCalledTimes(1);
+    expect(trackSendAcceptanceDialog).toHaveBeenCalledWith(testFlow);
     expect(
-      mockTrackSendActivationModalDialogActivationStart
-    ).toHaveBeenCalledTimes(1);
-    expect(
-      mockTrackSendActivationModalDialogActivationStart
-    ).toHaveBeenCalledWith(testFlow);
-    expect(mockTrackSendAcceptanceDialog).toHaveBeenCalledTimes(1);
-    expect(mockTrackSendAcceptanceDialog).toHaveBeenCalledWith(testFlow);
-    expect(
-      mockTrackSendActivationModalDialogActivationDismissed
+      trackSendActivationModalDialogActivationDismissed
     ).not.toHaveBeenCalled();
-    expect(mockTrackSendNurturingDialog).not.toHaveBeenCalled();
+    expect(trackSendNurturingDialog).not.toHaveBeenCalled();
     expect(mockPresentAreYouSureBottomSheet).not.toHaveBeenCalled();
   });
   it("should properly call presentAreYouSureBottomSheet", () => {
@@ -94,21 +86,21 @@ describe(SendEngagementOnFirstAppOpenScreen, () => {
     );
     fireEvent.press(presentActivationBottomSheet);
 
-    expect(mockTrackSendActivationModalDialog).toHaveBeenCalledTimes(1);
-    expect(mockTrackSendActivationModalDialog).toHaveBeenCalledWith(testFlow);
+    expect(trackSendActivationModalDialog).toHaveBeenCalledTimes(1);
+    expect(trackSendActivationModalDialog).toHaveBeenCalledWith(testFlow);
     expect(mockPresentAreYouSureBottomSheet).toHaveBeenCalledTimes(1);
     expect(
-      mockTrackSendActivationModalDialogActivationDismissed
+      trackSendActivationModalDialogActivationDismissed
     ).toHaveBeenCalledTimes(1);
     expect(
-      mockTrackSendActivationModalDialogActivationDismissed
+      trackSendActivationModalDialogActivationDismissed
     ).toHaveBeenCalledWith(testFlow);
-    expect(mockTrackSendNurturingDialog).toHaveBeenCalledTimes(1);
-    expect(mockTrackSendNurturingDialog).toHaveBeenCalledWith(testFlow);
+    expect(trackSendNurturingDialog).toHaveBeenCalledTimes(1);
+    expect(trackSendNurturingDialog).toHaveBeenCalledWith(testFlow);
     expect(
-      mockTrackSendActivationModalDialogActivationStart
+      trackSendActivationModalDialogActivationStart
     ).not.toHaveBeenCalled();
-    expect(mockTrackSendAcceptanceDialog).not.toHaveBeenCalled();
+    expect(trackSendAcceptanceDialog).not.toHaveBeenCalled();
     expect(mockPresentActivationBottomSheet).not.toHaveBeenCalled();
   });
 });
