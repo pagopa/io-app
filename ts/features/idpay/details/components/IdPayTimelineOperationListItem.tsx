@@ -138,10 +138,8 @@ const getTransactionOperationProps = (
 
   const isQRCode = channel === ChannelEnum.QRCODE;
 
-  // CANCELLED operations must be considered as REVERSAL (see IOBP-391)
-  const isReversal =
-    status === TransactionStatusEnum.CANCELLED ||
-    operationType === TransactionOperationTypeEnum.REVERSAL;
+  const isCancelled = status === TransactionStatusEnum.CANCELLED;
+  const isReversal = operationType === TransactionOperationTypeEnum.REVERSAL;
 
   const paymentLogoIcon: ListItemTransactionLogo = brand || (
     <Icon
@@ -180,7 +178,17 @@ const getTransactionOperationProps = (
       title,
       subtitle,
       transaction: {
-        // Modified to show "cancelled" badge when reversal IOBP-2092
+        badge: getBadgePropsByTransactionStatus("reversal")
+      }
+    };
+  }
+
+  if (isCancelled) {
+    return {
+      paymentLogoIcon,
+      title,
+      subtitle,
+      transaction: {
         badge: getBadgePropsByTransactionStatus("cancelled")
       }
     };
