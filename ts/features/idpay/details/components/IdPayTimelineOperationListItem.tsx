@@ -138,17 +138,18 @@ const getTransactionOperationProps = (
 
   const isQRCode = channel === ChannelEnum.QRCODE;
 
+  const iconName =
+    channel === ChannelEnum.QRCODE || channel === ChannelEnum.BARCODE
+      ? "merchant"
+      : "creditCard";
+
   // CANCELLED operations must be considered as REVERSAL (see IOBP-391)
   const isReversal =
     status === TransactionStatusEnum.CANCELLED ||
     operationType === TransactionOperationTypeEnum.REVERSAL;
 
   const paymentLogoIcon: ListItemTransactionLogo = brand || (
-    <Icon
-      name={isQRCode ? "merchant" : "creditCard"}
-      color="grey-300"
-      testID="genericLogoTestID"
-    />
+    <Icon name={iconName} color="grey-300" testID="genericLogoTestID" />
   );
 
   const title: string =
