@@ -15,7 +15,8 @@ import {
   trackSendQRCodeScanRedirectDismissed
 } from "../analytics";
 import { SendAARInitialFlowScreen } from "../screen/SendAARInitialFlowScreen";
-import { isAAREnabled } from "../store/reducers";
+import { isAAREnabled } from "../store/selectors";
+import { NOTIFICATIONS_ROUTES } from "../../../pushNotifications/navigation/routes";
 
 export type SendQRScanHandlerScreenProps = {
   aarUrl: string;
@@ -86,11 +87,8 @@ const SendQrScanRedirect = ({ aarUrl }: SendQRScanHandlerScreenProps) => {
     const areNotificationPermissionsEnabled =
       areNotificationPermissionsEnabledSelector(state);
     if (!areNotificationPermissionsEnabled) {
-      navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-        screen: PN_ROUTES.MAIN,
-        params: {
-          screen: PN_ROUTES.QR_SCAN_PUSH_ENGAGEMENT
-        }
+      navigation.replace(NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT, {
+        flow: "send_notification_opening"
       });
       return;
     }

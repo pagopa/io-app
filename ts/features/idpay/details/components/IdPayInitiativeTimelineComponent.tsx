@@ -75,7 +75,9 @@ const IdPayInitiativeTimelineComponent = ({
               }
               onPress={() => detailsBottomSheet.present(operation)}
             />
-            {index < size - 1 ? <Divider /> : undefined}
+            {index < size - 1 && index !== timeline.length - 1 ? (
+              <Divider />
+            ) : undefined}
           </Fragment>
         ))}
       </>

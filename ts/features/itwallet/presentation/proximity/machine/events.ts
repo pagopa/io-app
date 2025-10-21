@@ -5,6 +5,7 @@ import type {
 
 export type Start = {
   type: "start";
+  credentialType: string;
 };
 
 export type Back = {

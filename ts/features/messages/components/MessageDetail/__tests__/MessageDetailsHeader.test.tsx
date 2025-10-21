@@ -25,6 +25,13 @@ describe("MessageDetailsHeader component", () => {
     const { component } = renderComponent(defaultProps);
     expect(component.toJSON()).toMatchSnapshot();
   });
+  it("should match the snapshot with a valid thirdPartySenderDenomination", () => {
+    const { component } = renderComponent({
+      ...defaultProps,
+      thirdPartySenderDenomination: "DENOMINATION"
+    });
+    expect(component.toJSON()).toMatchSnapshot();
+  });
 
   it("should NOT render the organization info when the serviceId is invalid", () => {
     const { component } = renderComponent({
@@ -33,6 +40,21 @@ describe("MessageDetailsHeader component", () => {
     });
     expect(component.queryByText(service_1.organization.name)).toBeNull();
     expect(component.queryByText(service_1.name)).toBeNull();
+  });
+  [undefined, new Date()].forEach(date => {
+    it(`should render the date only when valid -- date is ${date?.toISOString()}`, () => {
+      const { component } = renderComponent({
+        ...defaultProps,
+        createdAt: date
+      });
+      const maybeDate = component.queryByTestId("date");
+
+      if (date !== undefined) {
+        expect(maybeDate).not.toBeNull();
+      } else {
+        expect(maybeDate).toBeNull();
+      }
+    });
   });
 });
 

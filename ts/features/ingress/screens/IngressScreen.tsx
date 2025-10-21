@@ -6,6 +6,7 @@ import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { AccessibilityInfo, View } from "react-native";
 import I18n from "i18next";
+import { Body, ContentWrapper } from "@pagopa/io-app-design-system";
 import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { trackIngressScreen } from "../../settings/common/analytics";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
@@ -30,9 +31,11 @@ import { isConnectedSelector } from "../../connectivity/store/selectors";
 import { identificationRequest } from "../../identification/store/actions";
 import { OfflineAccessReasonEnum } from "../store/reducer";
 import { itwOfflineAccessAvailableSelector } from "../../itwallet/common/store/selectors";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { IdentificationBackActionType } from "../../identification/store/reducers";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
-const TIMEOUT_BLOCKING_SCREEN = (10 * 1000) as Millisecond;
+const TIMEOUT_BLOCKING_SCREEN = (25 * 1000) as Millisecond;
 
 export const IngressScreen = () => {
   const isMixpanelInitialized = useIOSelector(isMixpanelInitializedSelector);
@@ -45,18 +48,21 @@ export const IngressScreen = () => {
 
   const [showBlockingScreen, setShowBlockingScreen] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
-  const [contentTitle, setContentTitle] = useState<string>(
-    I18n.t("startup.title")
-  );
+  const [content, setContent] = useState<{
+    title: string;
+    subtitle?: string;
+  }>({
+    title: I18n.t("startup.title")
+  });
 
   useEffect(() => {
     // Since the screen is shown for a very short time,
     // we prefer to announce the content to the screen reader,
     // instead of focusing the first element.
-    AccessibilityInfo.announceForAccessibilityWithOptions(contentTitle, {
+    AccessibilityInfo.announceForAccessibilityWithOptions(content.title, {
       queue: true
     });
-  }, [contentTitle]);
+  }, [content]);
 
   useEffect(() => {
     // `isMixpanelEnabled` mustn't be `false`
@@ -70,7 +76,10 @@ export const IngressScreen = () => {
 
     timeouts.push(
       setTimeout(() => {
-        setContentTitle(I18n.t("startup.title2"));
+        setContent({
+          title: I18n.t("startup.title2"),
+          subtitle: I18n.t("startup.subtitle2")
+        });
         setShowBanner(true);
         if (isOfflineAccessAvailable) {
           trackSettingsDiscoverBannerVisualized();
@@ -81,8 +90,8 @@ export const IngressScreen = () => {
 
     timeouts.push(
       setTimeout(() => {
-        setShowBlockingScreen(true);
         dispatch(setIsBlockingScreen());
+        setShowBlockingScreen(true);
         timeouts.shift();
       }, TIMEOUT_BLOCKING_SCREEN)
     );
@@ -96,14 +105,22 @@ export const IngressScreen = () => {
     (offlineReason: OfflineAccessReasonEnum) => {
       dispatch(setOfflineAccessReason(offlineReason));
       dispatch(
-        identificationRequest(false, false, undefined, undefined, {
-          onSuccess: () => {
-            // This dispatch mounts the new offline navigator.
-            // It must be initialized **after** the user completes
-            // biometric authentication to prevent graphical glitches.
-            dispatch(startupLoadSuccess(StartupStatusEnum.OFFLINE));
-          }
-        })
+        identificationRequest(
+          false,
+          false,
+          undefined,
+          undefined,
+          {
+            onSuccess: () => {
+              // This dispatch mounts the new offline navigator.
+              // It must be initialized **after** the user completes
+              // biometric authentication to prevent graphical glitches.
+              dispatch(startupLoadSuccess(StartupStatusEnum.OFFLINE));
+            }
+          },
+          undefined,
+          IdentificationBackActionType.CLOSE_APP
+        )
       );
     },
     [dispatch]
@@ -140,7 +157,7 @@ export const IngressScreen = () => {
       />
       <LoadingScreenContent
         testID="ingress-screen-loader-id"
-        contentTitle={contentTitle}
+        contentTitle={content.title}
         animatedPictogramSource="waiting"
         banner={{
           showBanner: isOfflineAccessAvailable && showBanner,
@@ -156,7 +173,13 @@ export const IngressScreen = () => {
             }
           }
         }}
-      />
+      >
+        {content.subtitle && (
+          <ContentWrapper style={{ alignItems: "center" }}>
+            <Body style={{ textAlign: "center" }}>{content.subtitle}</Body>
+          </ContentWrapper>
+        )}
+      </LoadingScreenContent>
     </>
   );
 };
@@ -164,6 +187,11 @@ export const IngressScreen = () => {
 const IngressScreenNoInternetConnection = memo(() => {
   const isMixpanelEnabled = useIOSelector(isMixpanelEnabledSelector);
   const isMixpanelInitialized = useIOSelector(isMixpanelInitializedSelector);
+  const dispatch = useIODispatch();
+
+  useOnFirstRender(() => {
+    dispatch(setIsBlockingScreen());
+  });
 
   useEffect(() => {
     if (isMixpanelInitialized && isMixpanelEnabled !== false) {
