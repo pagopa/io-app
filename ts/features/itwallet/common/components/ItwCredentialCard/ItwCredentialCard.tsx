@@ -135,7 +135,7 @@ export const ItwCredentialCard = ({
       titleOpacity: 0.5,
       colorScheme: "faded"
     };
-  }, [credentialType, credentialStatus, needsItwUpgrade, status]);
+  }, [credentialType, status, needsItwUpgrade]);
 
   return (
     <View style={styles.cardContainer}>
