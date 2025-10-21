@@ -14,7 +14,7 @@ import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { Linking, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
@@ -32,6 +32,7 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { useFIMSAuthenticationFlow } from "../../../fims/common/hooks";
 import { IdPayCodeCieBanner } from "../../code/components/IdPayCodeCieBanner";
@@ -132,16 +133,15 @@ const IdPayInitiativeDetailsScreenComponent = () => {
     initiativeNeedsConfigurationSelector
   );
 
-  useEffect(() => {
-    if (pot.isSome(initiativeDataPot)) {
+  useOnFirstRender(
+    () =>
       trackIDPayDetailLanding({
         initiativeName,
         initiativeId,
         status: initiative.voucherStatus
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initiativeDataPot]);
+      }),
+    () => pot.isSome(initiativeDataPot)
+  );
 
   if (!pot.isSome(initiativeDataPot)) {
     return (
