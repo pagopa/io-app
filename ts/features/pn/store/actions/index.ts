@@ -13,6 +13,7 @@ type TogglePnActivationPayload = {
 
 type PNPaymentStatusTracking = {
   isAARNotification: boolean;
+  isDelegate: boolean;
   messageId: string;
 };
 

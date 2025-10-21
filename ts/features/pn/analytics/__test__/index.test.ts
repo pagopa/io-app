@@ -1,9 +1,11 @@
 import {
   booleanOrUndefinedToPNServiceStatus,
   trackPNNotificationLoadSuccess,
+  trackPNPaymentStatus,
   trackPNUxSuccess
 } from "..";
 import * as MIXPANEL from "../../../../mixpanel";
+import { PaymentStatistics } from "../../../messages/store/reducers/payments";
 
 describe("index", () => {
   afterEach(() => {
@@ -124,5 +126,50 @@ describe("index", () => {
         )
       )
     );
+  });
+
+  describe("trackPNPaymentStatus", () => {
+    (["aar", "message", "not_set"] as const).forEach(source => {
+      (["recipient", "mandatory", "not_set"] as const).forEach(userType => {
+        it(`should call 'mixpanelTrack' with proper event name and parameters (source ${source} userType ${userType})`, () => {
+          const spiedOnMockedMixpanelTrack = jest
+            .spyOn(MIXPANEL, "mixpanelTrack")
+            .mockImplementation();
+
+          const paymentStatistics: PaymentStatistics = {
+            errorCount: 1,
+            expiredCount: 2,
+            ongoingCount: 3,
+            paidCount: 4,
+            paymentCount: 5,
+            revokedCount: 6,
+            unpaidCount: 7
+          };
+
+          trackPNPaymentStatus(paymentStatistics, source, userType);
+
+          expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+          expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+          expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+            "PN_PAYMENT_STATUS"
+          );
+          expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+            event_category: "TECH",
+            event_type: undefined,
+            count_payment: paymentStatistics.paymentCount,
+            count_unpaid: paymentStatistics.unpaidCount,
+            count_paid: paymentStatistics.paidCount,
+            count_error: paymentStatistics.errorCount,
+            count_expired: paymentStatistics.expiredCount,
+            count_revoked: paymentStatistics.revokedCount,
+            count_inprogress: paymentStatistics.ongoingCount,
+            opening_source: source,
+            send_user: userType
+          });
+        });
+      });
+    });
+
+    const a = 0;
   });
 });

@@ -212,15 +212,19 @@ export function trackPNShowAllPayments() {
   );
 }
 
-export function trackPNPaymentStatus({
-  paymentCount,
-  unpaidCount,
-  paidCount,
-  errorCount,
-  expiredCount,
-  revokedCount,
-  ongoingCount
-}: PaymentStatistics) {
+export function trackPNPaymentStatus(
+  {
+    paymentCount,
+    unpaidCount,
+    paidCount,
+    errorCount,
+    expiredCount,
+    revokedCount,
+    ongoingCount
+  }: PaymentStatistics,
+  openingSource: SendOpeningSource,
+  userType: SendUserType
+) {
   void mixpanelTrack(
     "PN_PAYMENT_STATUS",
     buildEventProperties("TECH", undefined, {
@@ -230,7 +234,9 @@ export function trackPNPaymentStatus({
       count_error: errorCount,
       count_expired: expiredCount,
       count_revoked: revokedCount,
-      count_inprogress: ongoingCount
+      count_inprogress: ongoingCount,
+      opening_source: openingSource,
+      send_user: userType
     })
   );
 }

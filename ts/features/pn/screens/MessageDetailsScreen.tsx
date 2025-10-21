@@ -137,6 +137,7 @@ export const MessageDetailsScreen = () => {
     dispatch(
       startPNPaymentStatusTracking({
         isAARNotification: !!isAarMessage,
+        isDelegate: isAARDelegate,
         messageId
       })
     );

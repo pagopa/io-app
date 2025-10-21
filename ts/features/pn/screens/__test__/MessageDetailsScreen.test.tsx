@@ -235,43 +235,50 @@ describe("MessageDetailsScreen", () => {
     );
   });
   [false, true].forEach(isAARNotification => {
-    it(`should dispatch startPNPaymentStatusTracking (isAARNotification ${isAARNotification})`, () => {
-      const state = {
-        entities: {
-          messages: {
-            thirdPartyById: {}
-          }
-        },
-        features: {
-          connectivityStatus: {},
-          ingress: {},
-          itWallet: {
-            issuance: {
-              integrityKeyTag: O.none
+    [false, true].forEach(isDelegate => {
+      it(`should dispatch startPNPaymentStatusTracking (isAARNotification ${isAARNotification} isDelegate ${isDelegate})`, () => {
+        const state = {
+          entities: {
+            messages: {
+              thirdPartyById: {}
             }
           },
-          pn: {
-            aarFlow: isAARNotification
-              ? sendAarMockStateFactory.displayingNotificationData()
-              : sendAarMockStateFactory.none()
-          }
-        },
-        remoteConfig: O.none,
-        profile: pot.none
-      } as GlobalState;
-      const mockStore = configureMockStore<GlobalState>();
-      const store: Store<GlobalState> = mockStore(state);
+          features: {
+            connectivityStatus: {},
+            ingress: {},
+            itWallet: {
+              issuance: {
+                integrityKeyTag: O.none
+              }
+            },
+            pn: {
+              aarFlow: isAARNotification
+                ? sendAarMockStateFactory.displayingNotificationData()
+                : sendAarMockStateFactory.none()
+            }
+          },
+          remoteConfig: O.none,
+          profile: pot.none
+        } as GlobalState;
+        const mockStore = configureMockStore<GlobalState>();
+        const store: Store<GlobalState> = mockStore(state);
 
-      renderComponent(store, false, isAARNotification);
+        jest
+          .spyOn(AAR_SELECTORS, "isAarMessageDelegatedSelector")
+          .mockImplementation((_state, _messageId) => isDelegate);
 
-      expect(mockDispatch.mock.calls.length).toBe(1);
-      expect(mockDispatch.mock.calls[0].length).toBe(1);
-      expect(mockDispatch.mock.calls[0][0]).toEqual(
-        startPNPaymentStatusTracking({
-          isAARNotification,
-          messageId: message_1.id
-        })
-      );
+        renderComponent(store, false, isAARNotification);
+
+        expect(mockDispatch.mock.calls.length).toBe(1);
+        expect(mockDispatch.mock.calls[0].length).toBe(1);
+        expect(mockDispatch.mock.calls[0][0]).toEqual(
+          startPNPaymentStatusTracking({
+            isAARNotification,
+            isDelegate,
+            messageId: message_1.id
+          })
+        );
+      });
     });
   });
 });
