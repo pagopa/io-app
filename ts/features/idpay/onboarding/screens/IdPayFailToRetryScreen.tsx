@@ -149,9 +149,9 @@ const IngressScreenBlockingError = memo(() => {
       testID="device-blocking-screen-id"
       pictogram="time"
       title={I18n.t("startup.slowdowns_results_screen.title")}
-      subtitle={I18n.t("startup.slowdowns_results_screen.subtitle")}
+      subtitle={I18n.t("idpay.onboarding.failToRetry.subtitle")}
       action={{
-        label: I18n.t("global.buttons.close"),
+        label: I18n.t("global.buttons.back"),
         onPress: () => machine.send({ type: "close" })
       }}
       secondaryAction={{
