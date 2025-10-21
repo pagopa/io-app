@@ -2,8 +2,8 @@ import { mixpanelTrack } from "../../../mixpanel";
 import { buildEventProperties } from "../../../utils/analytics";
 import { NotificationModalFlow } from "../../pushNotifications/analytics";
 
-type SendActivationSource = "tos_bottomsheet" | "nurturing_bottomsheet";
-type SendUser = "recipient" | "mandatory" | "not_set";
+export type SendActivationSource = "tos_bottomsheet" | "nurturing_bottomsheet";
+export type SendUser = "recipient" | "mandatory" | "not_set";
 
 export const trackSendActivationModalDialog = (
   flow: NotificationModalFlow,
