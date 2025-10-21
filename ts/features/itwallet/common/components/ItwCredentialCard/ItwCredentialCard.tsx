@@ -13,6 +13,7 @@ import {
 } from "../../utils/itwCredentialUtils";
 import { getThemeColorByCredentialType } from "../../utils/itwStyleUtils";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
+import { itwCredentialsEidStatusSelector } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { CardBackground } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
@@ -49,6 +50,9 @@ type StyleProps = {
   colorScheme: CardColorScheme;
 };
 
+const eIDStatusesToOverride = ["jwtExpired", "jwtExpiring"];
+const excludedStatuses = ["expired", "expiring", "invalid"];
+
 export const ItwCredentialCard = ({
   credentialType,
   credentialStatus = "valid",
@@ -58,6 +62,21 @@ export const ItwCredentialCard = ({
   const typefacePreference = useIOSelector(fontPreferenceSelector);
   const isItwPid = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const needsItwUpgrade = isItwPid && !isItwCredential;
+  const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);
+
+  /* If the eID status is "jwtExpired" or "jwtExpiring" and the current credential
+   * status is not one of the excluded ones (invalid, expired, or expiring),
+   * then we should override the credential status to "valid" to ensure
+   * the card is displayed correctly during the eID reactivation process.
+   */
+  const shouldOverride =
+    maybeEidStatus !== undefined &&
+    eIDStatusesToOverride.includes(maybeEidStatus) &&
+    !excludedStatuses.includes(credentialStatus);
+
+  const status: ItwCredentialStatus = shouldOverride
+    ? "valid"
+    : credentialStatus;
 
   const borderColorMap = useBorderColorByStatus();
 
@@ -69,11 +88,11 @@ export const ItwCredentialCard = ({
       };
     }
 
-    return tagPropsByStatus[credentialStatus];
-  }, [credentialStatus, needsItwUpgrade]);
+    return tagPropsByStatus[status];
+  }, [status, needsItwUpgrade]);
 
   const { titleColor, titleOpacity, colorScheme } = useMemo<StyleProps>(() => {
-    const isValid = validCredentialStatuses.includes(credentialStatus);
+    const isValid = validCredentialStatuses.includes(status);
     const theme = getThemeColorByCredentialType(credentialType);
 
     if (needsItwUpgrade) {
@@ -84,7 +103,7 @@ export const ItwCredentialCard = ({
       };
     }
 
-    if (credentialStatus === "unknown") {
+    if (status === "unknown") {
       return {
         titleColor: Color(theme.textColor).grayscale().hex(),
         titleOpacity: 0.5,
@@ -145,12 +164,7 @@ export const ItwCredentialCard = ({
         credentialType={credentialType}
         colorScheme={colorScheme}
       />
-      <View
-        style={[
-          styles.border,
-          { borderColor: borderColorMap[credentialStatus] }
-        ]}
-      />
+      <View style={[styles.border, { borderColor: borderColorMap[status] }]} />
     </View>
   );
 };
