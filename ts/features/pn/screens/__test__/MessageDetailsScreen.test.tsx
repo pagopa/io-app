@@ -25,6 +25,7 @@ import { sendAarMockStateFactory } from "../../aar/utils/testUtils";
 import PN_ROUTES from "../../navigation/routes";
 import { startPNPaymentStatusTracking } from "../../store/actions";
 import { MessageDetailsScreen } from "../MessageDetailsScreen";
+import * as analytics from "../../aar/analytics";
 
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
@@ -40,13 +41,27 @@ describe("MessageDetailsScreen", () => {
   });
 
   [true, false].forEach(isAar => {
-    it(`should match the snapshot when there is an error -- aar:${isAar}`, () => {
+    it(`should match the snapshot when there is an error${
+      isAar ? "and dispatch trackSendAARFailure" : ""
+    }`, () => {
+      const spiedOnMockedTrackSendAARFailure = jest
+        .spyOn(analytics, "trackSendAARFailure")
+        .mockImplementation();
       const sequenceOfActions: ReadonlyArray<Action> = [
         applicationChangeState("active")
       ];
 
+      const id = message_1.id;
       const state: GlobalState = reproduceSequence(
-        {} as GlobalState,
+        {
+          entities: {
+            messages: {
+              thirdPartyById: {
+                [id]: pot.some({ third_party_message: {} })
+              }
+            }
+          }
+        } as unknown as GlobalState,
         appReducer,
         sequenceOfActions
       );
@@ -55,9 +70,25 @@ describe("MessageDetailsScreen", () => {
 
       const { component } = renderComponent(store, isAar);
       expect(component).toMatchSnapshot();
+
+      if (isAar) {
+        expect(spiedOnMockedTrackSendAARFailure.mock.calls.length).toBe(1);
+        expect(spiedOnMockedTrackSendAARFailure.mock.calls[0].length).toBe(2);
+        expect(spiedOnMockedTrackSendAARFailure.mock.calls[0][0]).toBe(
+          "Show Notification"
+        );
+        expect(spiedOnMockedTrackSendAARFailure.mock.calls[0][1]).toBe(
+          "Screen rendering with undefined SEND message"
+        );
+      } else {
+        expect(spiedOnMockedTrackSendAARFailure.mock.calls.length).toBe(0);
+      }
     });
 
-    it(`should match the snapshot when everything went fine -- aar:${isAar}`, () => {
+    it(`should match the snapshot when everything went fine -- aar:${isAar} and not dispatch trackSendAARFailure`, () => {
+      const spiedOnMockedTrackSendAARFailure = jest
+        .spyOn(analytics, "trackSendAARFailure")
+        .mockImplementation();
       jest
         .spyOn(commonSelectors, "profileFiscalCodeSelector")
         .mockImplementation(_state => "DifferentFromTaxId");
@@ -82,6 +113,8 @@ describe("MessageDetailsScreen", () => {
 
       const { component } = renderComponent(store, isAar);
       expect(component).toMatchSnapshot();
+
+      expect(spiedOnMockedTrackSendAARFailure.mock.calls.length).toBe(0);
     });
   });
   [false, true].forEach(isAARNotification => {
