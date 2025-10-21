@@ -6122,7 +6122,7 @@
       },
       "headerTitle": "Adesione all'iniziativa",
       "beforeContinue": {
-        "text": "Premendo Continua dichiari di aver letto, compreso e accettato l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni]({{tosUrl}}) d'uso.",
+        "text": "Premendo Continua dichiari di aver letto, compreso e accettato l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni  d'uso]({{tosUrl}}).",
         "requestBonus": "Richiedi il bonus"
       },
       "navigation": {

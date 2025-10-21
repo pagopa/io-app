@@ -5928,7 +5928,7 @@
       },
       "headerTitle": "Verifica dei requisiti",
       "beforeContinue": {
-        "text": "By clicking Continue, you declare that you have read, understood, and accepted the [Privacy Policy]({{privacyUrl}}) and the [Terms and Conditions]({{tosUrl}}) of use.",
+        "text": "By clicking Continue, you declare that you have read, understood, and accepted the [Privacy Policy]({{privacyUrl}}) and the [Terms and Conditions of use]({{tosUrl}}).",
         "requestBonus": "Request bonus"
       },
       "navigation": {
