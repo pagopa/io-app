@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { useIOToast } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import {
+  IOStackNavigationRouteProps,
+  useIONavigation
+} from "../../../../navigation/params/AppParamsList";
 import { SendEngagementComponent } from "../components/SendEngagementComponent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -14,8 +17,25 @@ import {
 } from "../analytics";
 import { sendBannerMixpanelEvents } from "../../analytics/activationReminderBanner";
 import { NOTIFICATIONS_ROUTES } from "../../../pushNotifications/navigation/routes";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../../pushNotifications/analytics";
+import { PnParamsList } from "../../navigation/params";
+import PN_ROUTES from "../../navigation/routes";
 
-export const SendEngagementScreen = () => {
+export type SendEngagementScreenNavigationParams = Readonly<{
+  sendOpeningSource: SendOpeningSource;
+  sendUserType: SendUserType;
+}>;
+
+type SendEngagementScreenProps = IOStackNavigationRouteProps<
+  PnParamsList,
+  typeof PN_ROUTES.ENGAGEMENT_SCREEN
+>;
+
+export const SendEngagementScreen = ({ route }: SendEngagementScreenProps) => {
+  const { sendOpeningSource, sendUserType } = route.params;
   const [screenStatus, setScreenStatus] = useState<
     "Waiting" | "Activating" | "Failed"
   >("Waiting");
@@ -32,10 +52,18 @@ export const SendEngagementScreen = () => {
       navigation.popToTop();
     } else {
       navigation.replace(NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT, {
-        flow: "send_notification_opening"
+        flow: "send_notification_opening",
+        sendOpeningSource,
+        sendUserType
       });
     }
-  }, [navigation, notificationPermissionsEnabled, toast]);
+  }, [
+    navigation,
+    notificationPermissionsEnabled,
+    sendOpeningSource,
+    sendUserType,
+    toast
+  ]);
   const onSENDActivationFailed = useCallback(() => {
     navigation.setOptions({
       headerShown: false
