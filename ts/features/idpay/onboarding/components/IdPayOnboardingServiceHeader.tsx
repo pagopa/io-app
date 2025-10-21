@@ -1,13 +1,13 @@
 import {
   ContentWrapper,
   H1,
+  IOImage,
   IOSkeleton,
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { Image } from "react-native";
 import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
 
 type Props = {
@@ -28,14 +28,12 @@ const IdPayOnboardingServiceHeader = (props: Props) => {
       () => <Skeleton />,
       ({ initiativeName, thumbnailUrl }) => (
         <VStack>
-          <Image
-            accessibilityIgnoresInvertColors
-            style={{
-              width: "100%",
-              height: 270,
-              flex: 1
+          <IOImage
+            imageProps={{
+              source: { uri: thumbnailUrl }
             }}
-            source={{ uri: thumbnailUrl }}
+            alt="Initiative Image"
+            aspectRatio="4:3"
           />
           <ContentWrapper>
             <VSpacer size={24} />
