@@ -22,6 +22,7 @@ import ItwCieIdLoginScreen from "../identification/cieId/screens/ItwCieIdLoginSc
 import { ItwIdentificationModeSelectionScreen } from "../identification/common/screens/ItwIdentificationModeSelectionScreen.tsx";
 import { ItwIdentificationIdpSelectionScreen } from "../identification/spid/screens/ItwIdentificationIdpSelectionScreen.tsx";
 import ItwSpidIdpLoginScreen from "../identification/spid/screens/ItwSpidIdpLoginScreen.tsx";
+import { ItwIssuanceEidReissuanceLandingScreen } from "../issuance/screens/ItwIssuanceEidReissuanceLandingScreen";
 import { ItwIssuanceCredentialAsyncContinuationScreen } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
 import { ItwIssuanceCredentialFailureScreen } from "../issuance/screens/ItwIssuanceCredentialFailureScreen";
 import { ItwIssuanceCredentialPreviewScreen } from "../issuance/screens/ItwIssuanceCredentialPreviewScreen";
@@ -217,11 +218,6 @@ const InnerNavigator = memo(() => {
          */
       />
       <Stack.Screen
-        name={ITW_ROUTES.ISSUANCE.CREDENTIAL_ASYNC_FLOW_CONTINUATION}
-        component={withItwEnabled(ItwIssuanceCredentialAsyncContinuationScreen)}
-        options={hiddenHeader}
-      />
-      <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL}
         component={ItwIssuanceUpcomingCredentialScreen}
         options={hiddenHeader}
@@ -276,6 +272,17 @@ const InnerNavigator = memo(() => {
         name={ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED}
         component={ItwPresentationEidVerificationExpiredScreen}
         options={{ headerShown: false }}
+      />
+      {/* Landing screens from deep links */}
+      <Stack.Screen
+        name={ITW_ROUTES.LANDING_SCREEN.CREDENTIAL_ASYNC_FLOW_CONTINUATION}
+        component={withItwEnabled(ItwIssuanceCredentialAsyncContinuationScreen)}
+        options={hiddenHeader}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.LANDING_SCREEN.EID_REISSUANCE}
+        component={withItwEnabled(ItwIssuanceEidReissuanceLandingScreen)}
+        options={hiddenHeader}
       />
       {/* Proximity's flow routes */}
       <Stack.Group screenOptions={hiddenHeader}>
