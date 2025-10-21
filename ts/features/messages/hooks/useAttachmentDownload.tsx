@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from "react";
 import RNFS from "react-native-fs";
-import { IOToast } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+import { useIOToast } from "@pagopa/io-app-design-system";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import {
   downloadedMessageAttachmentSelector,
@@ -37,6 +37,7 @@ export const useAttachmentDownload = (
 
   const dispatch = useIODispatch();
   const store = useIOStore();
+  const toast = useIOToast();
 
   const download = useIOSelector(state =>
     downloadedMessageAttachmentSelector(state, messageId, attachmentId)
@@ -143,7 +144,7 @@ export const useAttachmentDownload = (
       if (isPN) {
         trackPNAttachmentDownloadFailure(attachmentCategory);
       }
-      IOToast.error(I18n.t("messageDetails.attachments.failing.details"));
+      toast.error(I18n.t("messageDetails.attachments.failing.details"));
     }
   }, [
     attachmentCategory,
@@ -154,7 +155,8 @@ export const useAttachmentDownload = (
     download,
     isPN,
     messageId,
-    store
+    store,
+    toast
   ]);
 
   const displayName = attachmentDisplayName(attachment);
