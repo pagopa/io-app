@@ -337,6 +337,7 @@
   "startup": {
     "title": "We are getting ready for your experience on IO",
     "title2": "Just a little more patience...",
+    "subtitle2": "Please don't close the app, it will only take 20 seconds.",
     "authentication": "User authenticated",
     "sessionInfo": "SPID attributes loaded",
     "profileInfo": "User profile loaded",
@@ -3845,13 +3846,6 @@
           "serviceActivated": "Hai attivato SEND su IO",
           "title": "Ricevi su IO le tue prossime notifiche SEND"
         },
-        "pushEngagement": {
-          "badge": "Consigliato",
-          "title": "Non perderti i messaggi importanti",
-          "body": "Attiva le notifiche push: se leggi subito le comunicazioni a valore legale, potresti risparmiare sui costi di raccomandata.",
-          "cta": "Attiva notifiche push",
-          "toast": "Hai attivato le notifiche push"
-        },
         "flow": {
           "aarTos": {
             "title": "Stai per aprire la notifica SEND",
@@ -5477,6 +5471,15 @@
             "content": "If you had IT-Wallet enabled, the wallet will be reset and all documents removed."
           }
         }
+      }
+    },
+    "pushNotifications": {
+      "engagementScreen": {
+        "badge": "Consigliato",
+        "title": "Non perderti i messaggi importanti",
+        "body": "Attiva le notifiche push: se leggi subito le comunicazioni a valore legale, potresti risparmiare sui costi di raccomandata.",
+        "cta": "Attiva notifiche push",
+        "toast": "Hai attivato le notifiche push"
       }
     }
   },

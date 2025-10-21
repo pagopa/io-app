@@ -7,14 +7,13 @@ import { OperationResultScreenContent } from "../../../../components/screens/Ope
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { pnActivationUpsert } from "../../store/actions";
 import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-import PN_ROUTES from "../../navigation/routes";
 import {
   trackSendActivationModalDialog,
   trackSendActivationModalDialogActivationDismissed,
   trackSendActivationModalDialogActivationStart
 } from "../analytics";
 import { sendBannerMixpanelEvents } from "../../analytics/activationReminderBanner";
+import { NOTIFICATIONS_ROUTES } from "../../../pushNotifications/navigation/routes";
 
 export const SendEngagementScreen = () => {
   const [screenStatus, setScreenStatus] = useState<
@@ -32,11 +31,8 @@ export const SendEngagementScreen = () => {
     if (notificationPermissionsEnabled) {
       navigation.popToTop();
     } else {
-      navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-        screen: PN_ROUTES.MAIN,
-        params: {
-          screen: PN_ROUTES.QR_SCAN_PUSH_ENGAGEMENT
-        }
+      navigation.replace(NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT, {
+        flow: "send_notification_opening"
       });
     }
   }, [navigation, notificationPermissionsEnabled, toast]);

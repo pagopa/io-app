@@ -120,10 +120,6 @@ const IdPayInitiativeDetailsScreenComponent = () => {
     supportRequest: true
   });
 
-  useOnFirstRender(() => {
-    trackIDPayOnboardingIntro({ initiativeName, initiativeId });
-  });
-
   return (
     <ForceScrollDownView
       contentContainerStyle={{ flexGrow: 1 }}
@@ -171,6 +167,10 @@ export const IdPayInitiativeDetailsScreen = () => {
     <IdPayEnabledFeatureFlagGuard featureKey="idpay.onboarding">
       <IdPayInitiativeDetailsScreenComponent />
     </IdPayEnabledFeatureFlagGuard>
+  );
+
+  useOnFirstRender(() =>
+    trackIDPayOnboardingIntro({ initiativeName, initiativeId })
   );
 
   const WrappedComponent = withAppRequiredUpdate(

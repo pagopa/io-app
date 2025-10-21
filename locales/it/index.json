@@ -337,6 +337,7 @@
   "startup": {
     "title": "Stiamo preparando la tua esperienza su IO",
     "title2": "Ancora un po’ di pazienza...",
+    "subtitle2": "Non chiudere l’app, ci vorranno al massimo 20 secondi.",
     "authentication": "Utente autenticato",
     "sessionInfo": "Attributi SPID caricati",
     "profileInfo": "Profilo utente caricato",
@@ -3845,13 +3846,6 @@
           "serviceActivated": "Hai attivato SEND su IO",
           "title": "Ricevi su IO le tue prossime notifiche SEND"
         },
-        "pushEngagement": {
-          "badge": "Consigliato",
-          "title": "Non perderti i messaggi importanti",
-          "body": "Attiva le notifiche push: se leggi subito le comunicazioni a valore legale, potresti risparmiare sui costi di raccomandata.",
-          "cta": "Attiva notifiche push",
-          "toast": "Hai attivato le notifiche push"
-        },
         "flow": {
           "aarTos": {
             "title": "Stai per aprire la notifica SEND",
@@ -5671,6 +5665,15 @@
             "content": "Stai per avviare il reissuing dell'eID e delle credenziali al momento ottenute."
           }
         }
+      }
+    },
+    "pushNotifications": {
+      "engagementScreen": {
+        "badge": "Consigliato",
+        "title": "Non perderti i messaggi importanti",
+        "body": "Attiva le notifiche push: se leggi subito le comunicazioni a valore legale, potresti risparmiare sui costi di raccomandata.",
+        "cta": "Attiva notifiche push",
+        "toast": "Hai attivato le notifiche push"
       }
     }
   },
