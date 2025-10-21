@@ -493,7 +493,7 @@ describe("Test IdPayTimelineOperationListItem", () => {
         const T_SUBTITLE = getOperationSubtitleWithAmount(
           T_DATE,
           T_AMOUNT,
-          true
+          false
         );
 
         const T_TITLE = I18n.t(
@@ -518,7 +518,7 @@ describe("Test IdPayTimelineOperationListItem", () => {
         expect(component.queryByText(T_SUBTITLE)).toBeTruthy();
         expect(component.queryByText(T_ACCRUED_STRING)).toBeFalsy();
         expect(
-          component.queryByText(I18n.t("global.badges.reversal"))
+          component.queryByText(I18n.t("global.badges.cancelled"))
         ).toBeTruthy();
       });
     });
