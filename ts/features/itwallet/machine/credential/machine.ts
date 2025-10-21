@@ -49,8 +49,6 @@ export const itwCredentialIssuanceMachine = setup({
 
     storeWalletInstanceAttestation: notImplemented,
     storeCredential: notImplemented,
-    flagCredentialAsRequested: notImplemented,
-    unflagCredentialAsRequested: notImplemented,
 
     /**
      * Analytics actions
@@ -300,12 +298,7 @@ export const itwCredentialIssuanceMachine = setup({
       entry: "navigateToCredentialPreviewScreen",
       on: {
         "add-to-wallet": {
-          actions: [
-            "storeCredential",
-            "navigateToWallet",
-            "trackAddCredential",
-            "unflagCredentialAsRequested"
-          ]
+          actions: ["storeCredential", "navigateToWallet", "trackAddCredential"]
         },
         close: {
           target: "Completed",
@@ -318,12 +311,6 @@ export const itwCredentialIssuanceMachine = setup({
     },
     Failure: {
       entry: ["navigateToFailureScreen"],
-      always: [
-        {
-          guard: "isStatusError",
-          actions: "unflagCredentialAsRequested"
-        }
-      ],
       on: {
         close: {
           actions: "closeIssuance"

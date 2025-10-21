@@ -1,7 +1,5 @@
 import { IOToast } from "@pagopa/io-app-design-system";
 import { ActionArgs, assign } from "xstate";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
@@ -18,10 +16,6 @@ import {
   trackWalletDataShareAccepted
 } from "../../analytics";
 import {
-  itwFlagCredentialAsRequested,
-  itwUnflagCredentialAsRequested
-} from "../../common/store/actions/preferences";
-import {
   itwCredentialsRemoveByType,
   itwCredentialsStore
 } from "../../credentials/store/actions";
@@ -29,8 +23,6 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
-import { itwRequestedCredentialsSelector } from "../../common/store/selectors/preferences";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 
@@ -128,28 +120,6 @@ export const createCredentialIssuanceActionsImplementation = (
     store.dispatch(itwCredentialsStore(context.credentials));
   },
 
-  flagCredentialAsRequested: ({
-    context
-  }: ActionArgs<
-    Context,
-    CredentialIssuanceEvents,
-    CredentialIssuanceEvents
-  >) => {
-    assert(context.credentialType, "credentialType is undefined");
-    store.dispatch(itwFlagCredentialAsRequested(context.credentialType));
-  },
-
-  unflagCredentialAsRequested: ({
-    context
-  }: ActionArgs<
-    Context,
-    CredentialIssuanceEvents,
-    CredentialIssuanceEvents
-  >) => {
-    assert(context.credentialType, "credentialType is undefined");
-    store.dispatch(itwUnflagCredentialAsRequested(context.credentialType));
-  },
-
   trackStartAddCredential: ({
     context
   }: ActionArgs<
@@ -213,46 +183,15 @@ const trackDataShareEvent = (
 ) => {
   if (context.credentialType) {
     const { credentialType } = context;
-    const requestedCredentials = itwRequestedCredentialsSelector(
-      store.getState()
-    );
+    if (!credentialType) {
+      return;
+    }
     const isItwL3 = itwLifecycleIsITWalletValidSelector(store.getState());
     const credential = getMixPanelCredential(context.credentialType, isItwL3);
-    const isMdlRequested = requestedCredentials.includes(
-      CredentialType.DRIVING_LICENSE
-    );
 
-    /** Determine the correct phase based on the following conditions:
-     *
-     * - `initial_request`: No active request, user clicks on the driving license from the credential selection screen.
-     * - `request_in_progress`: An ongoing request is active, but the IPZS message has not yet been received, and the user clicks on the driving license from the credential selection screen again.
-     * - `old_message_request`: No active request, but the user clicks on an old IPZS message.
-     * - `async_continuation`: An ongoing request is active, and the user opens the IPZS message.
-     *
-     * This logic ensures that the phase is accurate regardless of whether
-     * there is an active MDL request or if the credential is requested
-     * from ItwCredentialOnboardingSection.
-     */
-    const trackingData = pipe(
-      O.fromPredicate(() => credentialType === CredentialType.DRIVING_LICENSE)(
-        credentialType
-      ),
-      O.map(() =>
-        // TODO: is the following code still necessary?
-        /*  if (isAsyncContinuation) {
-          // TODO to be removed in [SIW-2839]
-          return isMdlRequested ? "async_continuation" : "old_message_request";
-        } */
-        isMdlRequested ? "request_in_progress" : "initial_request"
-      ),
-      O.fold(
-        () => ({ credential }),
-        phase => ({ credential, phase })
-      )
-    );
-
-    (isAccepted ? trackWalletDataShareAccepted : trackWalletDataShare)(
-      trackingData
-    );
+    const trackDataFn = isAccepted
+      ? trackWalletDataShareAccepted
+      : trackWalletDataShare;
+    trackDataFn({ credential, phase: "initial_request" });
   }
 };

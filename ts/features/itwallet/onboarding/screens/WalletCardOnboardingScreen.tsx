@@ -27,10 +27,7 @@ import {
   trackStartAddNewCredential
 } from "../../analytics";
 import { ItwDiscoveryBannerOnboarding } from "../../common/components/discoveryBanner/ItwDiscoveryBannerOnboarding";
-import {
-  itwIsL3EnabledSelector,
-  itwRequestedCredentialsSelector
-} from "../../common/store/selectors/preferences";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import {
   isItwEnabledSelector,
   itwDisabledCredentialsSelector
@@ -100,7 +97,6 @@ const ItwCredentialOnboardingSection = () => {
   const remotelyDisabledCredentials = useIOSelector(
     itwDisabledCredentialsSelector
   );
-  const requestedCredentials = useIOSelector(itwRequestedCredentialsSelector);
   const env = useIOSelector(selectItwEnv);
   const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
   const itwCredentialsTypes = useIOSelector(itwCredentialsTypesSelector);
@@ -165,7 +161,6 @@ const ItwCredentialOnboardingSection = () => {
             type={type}
             isActive={itwCredentialsTypes.includes(type)}
             isDisabled={remotelyDisabledCredentials.includes(type)}
-            isRequested={requestedCredentials.includes(type)}
             isUpcoming={isUpcomingCredential(type)}
             isNew={isNewCredential(type)}
             isCredentialIssuancePending={isCredentialIssuancePending}
