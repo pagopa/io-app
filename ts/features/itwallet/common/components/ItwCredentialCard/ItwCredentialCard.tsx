@@ -50,8 +50,24 @@ type StyleProps = {
   colorScheme: CardColorScheme;
 };
 
-const eIDStatusesToOverride = ["jwtExpired", "jwtExpiring"];
-const excludedStatuses = ["expired", "expiring", "invalid"];
+/* If the eID status is "jwtExpired" or "jwtExpiring" and the current credential
+ * status is not one of the excluded ones (invalid, expired, or expiring),
+ * then we should override the credential status to "valid" to ensure
+ * the card is displayed correctly during the eID reactivation process.
+ */
+const shouldOverrideCredentialStatus = (
+  maybeEidStatus: string | undefined,
+  credentialStatus: ItwCredentialStatus
+): boolean => {
+  const eIDStatusesRequiringOverride = ["jwtExpired", "jwtExpiring"];
+  const credentialStatusesToExclude = ["expired", "expiring", "invalid"];
+
+  return (
+    maybeEidStatus !== undefined &&
+    eIDStatusesRequiringOverride.includes(maybeEidStatus) &&
+    !credentialStatusesToExclude.includes(credentialStatus)
+  );
+};
 
 export const ItwCredentialCard = ({
   credentialType,
@@ -64,15 +80,10 @@ export const ItwCredentialCard = ({
   const needsItwUpgrade = isItwPid && !isItwCredential;
   const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);
 
-  /* If the eID status is "jwtExpired" or "jwtExpiring" and the current credential
-   * status is not one of the excluded ones (invalid, expired, or expiring),
-   * then we should override the credential status to "valid" to ensure
-   * the card is displayed correctly during the eID reactivation process.
-   */
-  const shouldOverride =
-    maybeEidStatus !== undefined &&
-    eIDStatusesToOverride.includes(maybeEidStatus) &&
-    !excludedStatuses.includes(credentialStatus);
+  const shouldOverride = useMemo(
+    () => shouldOverrideCredentialStatus(maybeEidStatus, credentialStatus),
+    [maybeEidStatus, credentialStatus]
+  );
 
   const status: ItwCredentialStatus = shouldOverride
     ? "valid"
@@ -124,7 +135,7 @@ export const ItwCredentialCard = ({
       titleOpacity: 0.5,
       colorScheme: "faded"
     };
-  }, [credentialType, credentialStatus, needsItwUpgrade]);
+  }, [credentialType, credentialStatus, needsItwUpgrade, status]);
 
   return (
     <View style={styles.cardContainer}>
