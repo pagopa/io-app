@@ -2,7 +2,6 @@ import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { RefObject, useCallback, useEffect, useRef } from "react";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
@@ -39,6 +38,7 @@ import {
   paymentsFromPNMessagePot
 } from "../utils";
 import { isAarMessageDelegatedSelector } from "../aar/store/selectors";
+import { trackSendAARFailure } from "../aar/analytics";
 
 export type MessageDetailsScreenRouteParams = {
   messageId: string;
@@ -116,14 +116,21 @@ export const MessageDetailsScreen = () => {
   useHardwareBackButton(androidBackButtonCallback);
 
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
-  const messagePot = useIOSelector(state =>
+  const sendMessagePot = useIOSelector(state =>
     pnMessageFromIdSelector(state, messageId)
   );
   const isAARDelegate = useIOSelector(state =>
     isAarMessageDelegatedSelector(state, messageId)
   );
+  const sendMessageOrUndefined = O.getOrElseW(() => undefined)(
+    pot.getOrElse(sendMessagePot, O.none)
+  );
+
   const fiscalCodeOrUndefined = isAarMessage ? undefined : currentFiscalCode;
-  const payments = paymentsFromPNMessagePot(fiscalCodeOrUndefined, messagePot);
+  const payments = paymentsFromPNMessagePot(
+    fiscalCodeOrUndefined,
+    sendMessagePot
+  );
   const paymentsCount = payments?.length ?? 0;
 
   useEffect(() => {
@@ -134,9 +141,9 @@ export const MessageDetailsScreen = () => {
       })
     );
 
-    if (isStrictSome(messagePot)) {
-      const isCancelled = isCancelledFromPNMessagePot(messagePot);
-      const containsF24 = containsF24FromPNMessagePot(messagePot);
+    if (isStrictSome(sendMessagePot)) {
+      const isCancelled = isCancelledFromPNMessagePot(sendMessagePot);
+      const containsF24 = containsF24FromPNMessagePot(sendMessagePot);
       const openingSource = isAarMessage ? "aar" : "message";
       const userType = !isAarMessage
         ? "not_set"
@@ -152,6 +159,13 @@ export const MessageDetailsScreen = () => {
         openingSource,
         userType
       );
+
+      if (sendMessageOrUndefined == null && isAarMessage) {
+        trackSendAARFailure(
+          "Show Notification",
+          "Screen rendering with undefined SEND message"
+        );
+      }
     }
     return () => {
       dispatch(cancelPreviousAttachmentDownload());
@@ -167,8 +181,9 @@ export const MessageDetailsScreen = () => {
     isAARDelegate,
     isAarMessage,
     messageId,
-    messagePot,
-    paymentsCount
+    paymentsCount,
+    sendMessageOrUndefined,
+    sendMessagePot
   ]);
 
   const store = useIOStore();
@@ -177,7 +192,7 @@ export const MessageDetailsScreen = () => {
       const globalState = store.getState();
       const paymentToCheckRptId = pnUserSelectedPaymentRptIdSelector(
         globalState,
-        messagePot
+        sendMessagePot
       );
       if (paymentToCheckRptId) {
         dispatch(
@@ -188,35 +203,29 @@ export const MessageDetailsScreen = () => {
           })
         );
       }
-    }, [dispatch, messageId, messagePot, serviceId, store])
+    }, [dispatch, messageId, sendMessagePot, serviceId, store])
   );
+
+  if (sendMessageOrUndefined == null) {
+    return (
+      <OperationResultScreenContent
+        pictogram="umbrella"
+        title={I18n.t("features.pn.details.loadError.title")}
+        subtitle={I18n.t("features.pn.details.loadError.body")}
+        isHeaderVisible={isAarMessage}
+      />
+    );
+  }
 
   return (
     <>
-      {pipe(
-        messagePot,
-        pot.toOption,
-        O.flatten,
-        O.fold(
-          () => (
-            <OperationResultScreenContent
-              pictogram="umbrella"
-              title={I18n.t("features.pn.details.loadError.title")}
-              subtitle={I18n.t("features.pn.details.loadError.body")}
-              isHeaderVisible={isAarMessage}
-            />
-          ),
-          message => (
-            <MessageDetails
-              message={message}
-              messageId={messageId}
-              serviceId={serviceId}
-              payments={payments}
-              isAARMessage={isAarMessage}
-            />
-          )
-        )
-      )}
+      <MessageDetails
+        message={sendMessageOrUndefined}
+        messageId={messageId}
+        serviceId={serviceId}
+        payments={payments}
+        isAARMessage={isAarMessage}
+      />
       {isAarMessage && (
         <SendAARMessageDetailBottomSheetComponent
           aarBottomSheetRef={aarBottomSheetRef}

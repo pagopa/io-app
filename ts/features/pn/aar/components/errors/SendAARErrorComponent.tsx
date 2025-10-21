@@ -24,7 +24,11 @@ import {
   zendeskSupportStart
 } from "../../../../zendesk/store/actions";
 import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
-import { currentAARFlowStateAssistanceErrorCode } from "../../store/selectors";
+import {
+  currentAARFlowStateAssistanceErrorCode,
+  currentAARFlowStateErrorDebugInfoSelector
+} from "../../store/selectors";
+import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 
 const bottomComponent = (
   onAssistancePress: () => void,
@@ -104,6 +108,9 @@ export const SendAARErrorComponent = () => {
     ),
     title: ""
   });
+
+  const debugInfo = useIOSelector(currentAARFlowStateErrorDebugInfoSelector);
+  useDebugInfo(debugInfo);
 
   return (
     <>

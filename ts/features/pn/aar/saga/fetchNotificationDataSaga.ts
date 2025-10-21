@@ -1,43 +1,57 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
+import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import { call, put, select } from "typed-redux-saga/macro";
 import { MessageBodyMarkdown } from "../../../../../definitions/backend/MessageBodyMarkdown";
 import { MessageSubject } from "../../../../../definitions/backend/MessageSubject";
 import { pnMessagingServiceIdSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../types/SessionToken";
-import { SagaCallReturnType } from "../../../../types/utils";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
 import { isTestEnv } from "../../../../utils/environment";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
-import { getServiceDetails } from "../../../services/common/saga/ getServiceDetails";
+import { getServiceDetails } from "../../../services/common/saga/getServiceDetails";
 import { profileFiscalCodeSelector } from "../../../settings/common/store/selectors";
 import { SendAARClient } from "../api/client";
 import {
+  EphemeralAarMessageDataActionPayload,
   populateStoresWithEphemeralAarMessageData,
   setAarFlowState
 } from "../store/actions";
 import { currentAARFlowData } from "../store/selectors";
-import { sendAARFlowStates } from "../utils/stateUtils";
+import { SendAARFailurePhase, sendAARFlowStates } from "../utils/stateUtils";
 import { trackPNNotificationLoadSuccess } from "../../analytics";
 import { SendUserType } from "../../../pushNotifications/analytics";
 import { ThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
+import {
+  aarProblemJsonAnalyticsReport,
+  trackSendAARFailure
+} from "../analytics";
+import { unknownToReason } from "../../../messages/utils";
+
+const sendAARFailurePhase: SendAARFailurePhase = "Fetch Notification";
 
 export function* fetchAarDataSaga(
   fetchData: SendAARClient["getAARNotification"],
   sessionToken: SessionToken
 ) {
   const currentState = yield* select(currentAARFlowData);
-  const isTest = yield* select(isPnTestEnabledSelector);
   if (currentState.type !== sendAARFlowStates.fetchingNotificationData) {
+    yield* call(
+      trackSendAARFailure,
+      sendAARFailurePhase,
+      `Called in wrong state (${currentState.type})`
+    );
     return;
   }
+  const isSendUATEnvironment = yield* select(isPnTestEnabledSelector);
   try {
     const fetchAarRequest = fetchData({
       Bearer: `Bearer ${sessionToken}`,
       iun: currentState.iun,
       mandateId: currentState.mandateId,
       "x-pagopa-pn-io-src": "QRCODE",
-      isTest
+      isTest: isSendUATEnvironment
     });
     const result = (yield* call(
       withRefreshApiCall,
@@ -45,38 +59,54 @@ export function* fetchAarDataSaga(
     )) as unknown as SagaCallReturnType<typeof fetchData>;
 
     if (E.isLeft(result)) {
-      yield* put(
-        setAarFlowState({
-          type: sendAARFlowStates.ko,
-          previousState: currentState
-        })
-      );
-      return;
-    }
-    const { status, value } = result.right;
-    if (status !== 200) {
+      const reason = `Decoding failure (${readableReportSimplified(
+        result.left
+      )})`;
+      yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
       yield* put(
         setAarFlowState({
           type: sendAARFlowStates.ko,
           previousState: currentState,
-          error: value
+          debugData: {
+            phase: sendAARFailurePhase,
+            reason
+          }
         })
       );
       return;
     }
 
-    const payload = yield* call(
+    const { status, value } = result.right;
+    if (status !== 200) {
+      const reason = `HTTP request failed (${aarProblemJsonAnalyticsReport(
+        status,
+        value
+      )})`;
+      yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
+      yield* put(
+        setAarFlowState({
+          type: sendAARFlowStates.ko,
+          previousState: currentState,
+          error: value,
+          debugData: {
+            phase: sendAARFailurePhase,
+            reason
+          }
+        })
+      );
+      return;
+    }
+
+    const payloadEither = yield* call(
       aarMessageDataPayloadFromResponse,
       value,
       currentState.mandateId
     );
-
-    if (payload === undefined) {
-      throw new Error(
-        "unable to compute placeholder AAR payload from response"
-      );
+    if (E.isLeft(payloadEither)) {
+      throw Error(payloadEither.left);
     }
 
+    const payload = payloadEither.right;
     yield* put(populateStoresWithEphemeralAarMessageData(payload));
     yield* put(
       setAarFlowState({
@@ -89,10 +119,16 @@ export function* fetchAarDataSaga(
       })
     );
   } catch (e: unknown) {
+    const reason = `An error was thrown (${unknownToReason(e)})`;
+    yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
     yield* put(
       setAarFlowState({
         type: sendAARFlowStates.ko,
-        previousState: currentState
+        previousState: currentState,
+        debugData: {
+          phase: sendAARFailurePhase,
+          reason
+        }
       })
     );
   }
@@ -101,13 +137,16 @@ export function* fetchAarDataSaga(
 function* aarMessageDataPayloadFromResponse(
   sendMessage: ThirdPartyMessage,
   mandateId: string | undefined
-) {
+): Generator<
+  ReduxSagaEffect,
+  E.Either<string, EphemeralAarMessageDataActionPayload>
+> {
   const sendUserType: SendUserType =
     mandateId != null ? "mandatory" : "recipient";
 
   const details = sendMessage.details;
   if (details == null) {
-    return undefined;
+    return E.left(`Field 'details' in the AAR Notification is missing`);
   }
 
   // Notification data has been properly retrieved
@@ -127,30 +166,31 @@ function* aarMessageDataPayloadFromResponse(
   );
 
   // Service details (will be displayed in the SEND notification screen)
-  const pnServiceID = yield* select(pnMessagingServiceIdSelector);
-  if (pnServiceID === undefined) {
-    return undefined;
+  const sendServiceID = yield* select(pnMessagingServiceIdSelector);
+  if (sendServiceID === undefined) {
+    return E.left(`Unable to retrieve sendServiceId`);
   }
 
-  const pnServiceDetails = yield* call(getServiceDetails, pnServiceID);
-  if (pnServiceDetails === undefined) {
-    return undefined;
+  const sendServiceDetails = yield* call(getServiceDetails, sendServiceID);
+  if (sendServiceDetails === undefined) {
+    return E.left(`Unable to retrieve SEND service details`);
   }
 
   const fiscalCode = yield* select(profileFiscalCodeSelector);
   if (fiscalCode === undefined) {
-    return undefined;
+    return E.left(`Unable to retrieve user fiscal code`);
   }
 
-  return {
+  const aarFlowState: EphemeralAarMessageDataActionPayload = {
     iun: details.iun as NonEmptyString,
     thirdPartyMessage: sendMessage,
     fiscalCode,
-    pnServiceID,
+    pnServiceID: sendServiceID,
     markdown: "*".repeat(81) as MessageBodyMarkdown,
     subject: details.subject as MessageSubject,
     mandateId
   };
+  return E.right(aarFlowState);
 }
 
 export const testable = isTestEnv
