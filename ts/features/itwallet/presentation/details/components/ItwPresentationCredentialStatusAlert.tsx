@@ -4,7 +4,11 @@ import { Alert, IOButton, IOToast, VStack } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import {
+  ItwCredentialStatus,
+  ItwJwtCredentialStatus,
+  StoredCredential
+} from "../../../common/utils/itwTypesUtils.ts";
 import {
   ClaimsLocales,
   getClaimsFullLocale,
@@ -12,7 +16,10 @@ import {
 } from "../../../common/utils/itwClaimsUtils.ts";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet.tsx";
 import { useIOSelector } from "../../../../../store/hooks.ts";
-import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
+import {
+  itwCredentialStatusSelector,
+  itwCredentialsEidStatusSelector
+} from "../../../credentials/store/selectors";
 import { format } from "../../../../../utils/dates.ts";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import IOMarkdown from "../../../../../components/IOMarkdown";
@@ -27,6 +34,8 @@ import {
   trackItwCredentialTapBanner
 } from "../../../analytics";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 
 type Props = {
   credential: StoredCredential;
@@ -50,6 +59,7 @@ export type TrackCredentialAlert = (action: CredentialAlertEvents) => void;
 type CredentialStatusAlertProps = {
   credential: StoredCredential;
   onTrack: TrackCredentialAlert;
+  status?: ItwCredentialStatus;
 };
 
 const useAlertPressHandler =
@@ -60,12 +70,24 @@ const useAlertPressHandler =
     onTrack("open_bottom_sheet");
   };
 
+type AlertToRenderProps = {
+  status?: ItwCredentialStatus;
+  message?: Record<string, { title: string; description: string }>;
+  credential: StoredCredential;
+  eidStatus: ItwJwtCredentialStatus | undefined;
+  isItwL3: boolean;
+  navigation: any;
+  onTrack: TrackCredentialAlert;
+};
+
 /**
  * This component renders an alert related to the credential status (expiring or invalid).
  * It contains messages that are statically defined in the app's locale or
  * dynamically extracted from the issuer configuration.
  */
 const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
+  const navigation = useIONavigation();
+  const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
   const { status, message } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
@@ -98,22 +120,54 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
     }
   };
 
-  if (status === "jwtExpiring") {
+  return getAlertToRender({
+    status,
+    message,
+    credential,
+    eidStatus,
+    isItwL3,
+    navigation,
+    onTrack: trackCredentialAlertEvent
+  });
+};
+
+const getAlertToRender = ({
+  status,
+  message,
+  credential,
+  eidStatus,
+  isItwL3,
+  navigation,
+  onTrack
+}: AlertToRenderProps) => {
+  const isEidExpired = eidStatus === "jwtExpired";
+  const isEidExpiring = eidStatus === "jwtExpiring";
+  const isCredentialJwtExpiring = status === "jwtExpiring";
+  const isCredentialJwtExpired = status === "jwtExpired";
+
+  if (isCredentialJwtExpiring || isCredentialJwtExpired) {
+    // If the eID jwt is expired or expiring and the credential jwt is expiring, do not show any alert
+    // We do not handle the case where the eID jwt is expiring and the credential jwt is expired,
+    // as this situation should never occur.
+    if ((isEidExpired || isEidExpiring) && isCredentialJwtExpiring) {
+      return null;
+    }
+    // If both the eID jwt and the credential jwt are expired, show the eID alert
+    if (isEidExpired && isCredentialJwtExpired && !isItwL3) {
+      return <ItwEidLifecycleAlert navigation={navigation} />;
+    }
+
     return (
-      <VerificationExpiringAlert
+      <JwtVerificationAlert
         credential={credential}
-        onTrack={trackCredentialAlertEvent}
+        onTrack={onTrack}
+        status={status}
       />
     );
   }
 
   if (status === "expiring") {
-    return (
-      <DocumentExpiringAlert
-        credential={credential}
-        onTrack={trackCredentialAlertEvent}
-      />
-    );
+    return <DocumentExpiringAlert credential={credential} onTrack={onTrack} />;
   }
 
   if (message) {
@@ -121,7 +175,7 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
       <IssuerDynamicErrorAlert
         message={message}
         credential={credential}
-        onTrack={trackCredentialAlertEvent}
+        onTrack={onTrack}
       />
     );
   }
@@ -142,11 +196,13 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
   return null;
 };
 
-const VerificationExpiringAlert = ({
+const JwtVerificationAlert = ({
   credential,
-  onTrack
+  onTrack,
+  status
 }: CredentialStatusAlertProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
+  const isExpired = status === "jwtExpired";
 
   const beginCredentialIssuance = () => {
     onTrack("tap_banner");
@@ -160,12 +216,16 @@ const VerificationExpiringAlert = ({
   return (
     <Alert
       testID="itwExpiringBannerTestID"
-      variant="warning"
+      variant={isExpired ? "error" : "warning"}
       content={I18n.t(
-        "features.itWallet.presentation.alerts.verificationExpiring.content",
+        `features.itWallet.presentation.alerts.jwtVerification.content.${
+          isExpired ? "jwtExpired" : "jwtExpiring"
+        }`,
         { date: format(credential.jwt.expiration, "DD-MM-YYYY") }
       )}
-      action={I18n.t("features.itWallet.presentation.alerts.expired.action")}
+      action={I18n.t(
+        "features.itWallet.presentation.alerts.jwtVerification.action"
+      )}
       onPress={beginCredentialIssuance}
     />
   );

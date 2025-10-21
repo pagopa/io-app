@@ -4,7 +4,7 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 
-import { PropsWithChildren, useCallback, useState } from "react";
+import { PropsWithChildren, useCallback, useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
@@ -12,8 +12,15 @@ import { getMixPanelCredential, trackWalletShowBack } from "../../../analytics";
 import { ItwSkeumorphicCard } from "../../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../../common/components/ItwSkeumorphicCard/FlipGestureDetector.tsx";
 import { getThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
-import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
+import {
+  ItwCredentialStatus,
+  ItwJwtCredentialStatus,
+  StoredCredential
+} from "../../../common/utils/itwTypesUtils.ts";
+import {
+  itwCredentialStatusSelector,
+  itwCredentialsEidStatusSelector
+} from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
@@ -25,6 +32,20 @@ type Props = {
   credential: StoredCredential;
 };
 
+const shouldOverrideCredentialStatus = (
+  maybeEidStatus: ItwJwtCredentialStatus | undefined,
+  credentialStatus: ItwCredentialStatus
+): boolean => {
+  const eIDStatusesRequiringOverride = ["jwtExpired", "jwtExpiring"];
+  const credentialStatusesToExclude = ["expired", "expiring", "invalid"];
+
+  return (
+    maybeEidStatus !== undefined &&
+    eIDStatusesRequiringOverride.includes(maybeEidStatus) &&
+    !credentialStatusesToExclude.includes(credentialStatus)
+  );
+};
+
 /**
  * This component renders the credential card in the presentation screen.
  * If the credential supports the skeumorphic card, it also renders it with the flip button and If L3 is enabled, it shows the badge.
@@ -33,10 +54,19 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const navigation = useIONavigation();
   const [isFlipped, setIsFlipped] = useState(false);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
-
-  const { status = "valid" } = useIOSelector(state =>
+  const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);
+  const { status: credentialStatus = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
+
+  const shouldOverride = useMemo(
+    () => shouldOverrideCredentialStatus(maybeEidStatus, credentialStatus),
+    [maybeEidStatus, credentialStatus]
+  );
+
+  const status: ItwCredentialStatus = shouldOverride
+    ? "valid"
+    : credentialStatus;
 
   const handleFlipButtonPress = useCallback(() => {
     trackWalletShowBack(
