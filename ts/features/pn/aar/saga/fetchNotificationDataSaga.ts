@@ -3,8 +3,6 @@ import * as E from "fp-ts/lib/Either";
 import { call, put, select } from "typed-redux-saga/macro";
 import { MessageBodyMarkdown } from "../../../../../definitions/backend/MessageBodyMarkdown";
 import { MessageSubject } from "../../../../../definitions/backend/MessageSubject";
-import { ThirdPartyMessage as PnThirdPartyMessage } from "../../../../../definitions/pn/ThirdPartyMessage";
-import { ThirdPartyMessage as AarThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
 import { pnMessagingServiceIdSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../types/SessionToken";
@@ -20,6 +18,9 @@ import {
 } from "../store/actions";
 import { currentAARFlowData } from "../store/selectors";
 import { sendAARFlowStates } from "../utils/stateUtils";
+import { trackPNNotificationLoadSuccess } from "../../analytics";
+import { SendUserType } from "../../../pushNotifications/analytics";
+import { ThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
 
 export function* fetchAarDataSaga(
   fetchData: SendAARClient["getAARNotification"],
@@ -98,34 +99,53 @@ export function* fetchAarDataSaga(
 }
 
 function* aarMessageDataPayloadFromResponse(
-  value: AarThirdPartyMessage,
+  sendMessage: ThirdPartyMessage,
   mandateId: string | undefined
 ) {
-  const fiscalCode = yield* select(profileFiscalCodeSelector);
-  const pnServiceID = yield* select(pnMessagingServiceIdSelector);
-  const sendMessageEither = PnThirdPartyMessage.decode(value);
+  const sendUserType: SendUserType =
+    mandateId != null ? "mandatory" : "recipient";
 
-  if (pnServiceID === undefined || E.isLeft(sendMessageEither)) {
-    return undefined;
-  }
-
-  const pnServiceDetails = yield* getServiceDetails(pnServiceID);
-  if (pnServiceDetails === undefined || fiscalCode === undefined) {
-    return undefined;
-  }
-
-  const sendMessage = sendMessageEither.right;
   const details = sendMessage.details;
-
   if (details == null) {
     return undefined;
   }
 
-  const recipients = details?.recipients;
+  // Notification data has been properly retrieved
+  const hasAttachments =
+    sendMessage.attachments != null && sendMessage.attachments.length > 0;
+  const timelineOrUndefined = sendMessage.details?.notificationStatusHistory;
+  const lastTimelineStatus =
+    timelineOrUndefined != null && timelineOrUndefined.length > 0
+      ? timelineOrUndefined[timelineOrUndefined.length - 1].status
+      : undefined;
+  yield* call(
+    trackPNNotificationLoadSuccess,
+    hasAttachments,
+    lastTimelineStatus,
+    "aar",
+    sendUserType
+  );
+
+  // Service details (will be displayed in the SEND notification screen)
+  const pnServiceID = yield* select(pnMessagingServiceIdSelector);
+  if (pnServiceID === undefined) {
+    return undefined;
+  }
+
+  const pnServiceDetails = yield* call(getServiceDetails, pnServiceID);
+  if (pnServiceDetails === undefined) {
+    return undefined;
+  }
+
+  const fiscalCode = yield* select(profileFiscalCodeSelector);
+  if (fiscalCode === undefined) {
+    return undefined;
+  }
+
   return {
     iun: details.iun as NonEmptyString,
     thirdPartyMessage: sendMessage,
-    fiscalCode: recipients?.[0]?.taxId ?? fiscalCode,
+    fiscalCode,
     pnServiceID,
     markdown: "*".repeat(81) as MessageBodyMarkdown,
     subject: details.subject as MessageSubject,

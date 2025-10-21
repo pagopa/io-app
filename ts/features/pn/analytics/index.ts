@@ -141,8 +141,7 @@ export function trackPNNotificationLoadError(errorCode?: string) {
   void mixpanelTrack(
     "PN_NOTIFICATION_LOAD_ERROR",
     buildEventProperties("KO", undefined, {
-      ERROR_CODE: errorCode,
-      JSON_DECODE_FAILED: errorCode ? false : true
+      ERROR_CODE: errorCode
     })
   );
 }

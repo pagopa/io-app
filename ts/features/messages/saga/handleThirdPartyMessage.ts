@@ -109,7 +109,9 @@ const trackSuccess = (
         "recipient"
       );
     } else {
-      trackPNNotificationLoadError();
+      trackPNNotificationLoadError(
+        "Unable convert the third party message to SEND message structure"
+      );
     }
   } else {
     const attachments = messageFromApi.third_party_message.attachments;

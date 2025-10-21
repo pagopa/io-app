@@ -18,9 +18,19 @@ import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils
 import { ThirdPartyMessageUnion } from "../../types/thirdPartyById";
 
 describe("handleThirdPartyMessage", () => {
+  const serviceDetails = {
+    id: "01K80HY0HV1KP41F555A854HDG",
+    name: "Service Name",
+    organization: {
+      name: "Organization Name",
+      fiscal_code: "IT34655573020"
+    }
+  } as unknown as ServiceDetails;
+
   afterEach(() => {
     jest.clearAllMocks();
   });
+
   describe("handleThirdPartyMessage saga", () => {
     it("should follow the proper flow when everything goes well", () => {
       const mockGetThirdPartyMessageRequest = jest.fn();
@@ -33,13 +43,6 @@ describe("handleThirdPartyMessage", () => {
         serviceId,
         tag: TagEnum.GENERIC
       });
-      const serviceDetails = {
-        name: "Service name",
-        organization: {
-          name: "Organization name",
-          fiscal_code: "32898130250"
-        }
-      };
       const thirdPartyMessage = {};
       const result = E.right({ status: 200, value: thirdPartyMessage });
       testSaga(handleThirdPartyMessage, mockGetThirdPartyMessageFactory, action)
@@ -69,16 +72,9 @@ describe("handleThirdPartyMessage", () => {
         );
     });
   });
+
   // eslint-disable-next-line sonarjs/cognitive-complexity
   describe("testable.trackSuccess", () => {
-    const serviceDetails = {
-      id: "01K80HY0HV1KP41F555A854HDG",
-      name: "Service Name",
-      organization: {
-        name: "Organization Name",
-        fiscal_code: "IT34655573020"
-      }
-    } as unknown as ServiceDetails;
     const generateMessages = (attachmentCount: number | undefined) => {
       const thirdPartyMessage = {
         third_party_message: {
@@ -296,6 +292,14 @@ describe("handleThirdPartyMessage", () => {
                 expect(
                   spiedOnMockedTrackPNNotificationLoadError.mock.calls.length
                 ).toBe(1);
+                expect(
+                  spiedOnMockedTrackPNNotificationLoadError.mock.calls[0].length
+                ).toBe(1);
+                expect(
+                  spiedOnMockedTrackPNNotificationLoadError.mock.calls[0][0]
+                ).toBe(
+                  "Unable convert the third party message to SEND message structure"
+                );
               } else {
                 expect(
                   spiedOnMockedTrackPNNotificationLoadError.mock.calls.length
@@ -328,6 +332,73 @@ describe("handleThirdPartyMessage", () => {
               }
             });
           });
+        });
+      });
+    });
+  });
+
+  describe("testable.trackFailure", () => {
+    [undefined, serviceDetails].forEach(serviceDetail => {
+      [
+        TEBASE.EU_COVID_CERT,
+        TEBASE.GENERIC,
+        TEBASE.LEGAL_MESSAGE,
+        TEPAYMENT.PAYMENT,
+        TESEND.PN
+      ].forEach(tagEnum => {
+        it(`should call proper analytics functions (service details (${
+          serviceDetail != null ? "defined" : "undefined"
+        }) tag (${tagEnum}))`, () => {
+          const reason = "A reason";
+          const spiedOnMockedTrackRemoteContentLoadFailure = jest
+            .spyOn(ANALYTICS, "trackRemoteContentLoadFailure")
+            .mockImplementation();
+          const spiedOnMockedTrackPNNotificationLoadError = jest
+            .spyOn(SEND_ANALYTICS, "trackPNNotificationLoadError")
+            .mockImplementation();
+
+          testable!.trackFailure(reason, serviceDetail, tagEnum);
+
+          expect(
+            spiedOnMockedTrackRemoteContentLoadFailure.mock.calls.length
+          ).toBe(1);
+          expect(
+            spiedOnMockedTrackRemoteContentLoadFailure.mock.calls[0].length
+          ).toBe(6);
+          expect(
+            spiedOnMockedTrackRemoteContentLoadFailure.mock.calls[0][0]
+          ).toBe(serviceDetail?.id);
+          expect(
+            spiedOnMockedTrackRemoteContentLoadFailure.mock.calls[0][1]
+          ).toBe(serviceDetail?.name);
+          expect(
+            spiedOnMockedTrackRemoteContentLoadFailure.mock.calls[0][2]
+          ).toBe(serviceDetail?.organization.name);
+          expect(
+            spiedOnMockedTrackRemoteContentLoadFailure.mock.calls[0][3]
+          ).toBe(serviceDetail?.organization.fiscal_code);
+          expect(
+            spiedOnMockedTrackRemoteContentLoadFailure.mock.calls[0][4]
+          ).toBe(tagEnum);
+          expect(
+            spiedOnMockedTrackRemoteContentLoadFailure.mock.calls[0][5]
+          ).toBe(reason);
+
+          if (tagEnum === TESEND.PN) {
+            expect(
+              spiedOnMockedTrackPNNotificationLoadError.mock.calls.length
+            ).toBe(1);
+            expect(
+              spiedOnMockedTrackPNNotificationLoadError.mock.calls[0].length
+            ).toBe(1);
+            expect(
+              spiedOnMockedTrackPNNotificationLoadError.mock.calls[0][0]
+            ).toBe(reason);
+          } else {
+            expect(
+              spiedOnMockedTrackPNNotificationLoadError.mock.calls.length
+            ).toBe(0);
+          }
         });
       });
     });
