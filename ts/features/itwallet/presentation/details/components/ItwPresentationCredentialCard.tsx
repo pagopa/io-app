@@ -32,6 +32,11 @@ type Props = {
   credential: StoredCredential;
 };
 
+/* If the eID status is "jwtExpired" or "jwtExpiring" and the current credential
+ * status is not one of the excluded ones (invalid, expired, or expiring),
+ * then we should override the credential status to "valid" to ensure
+ * the card is displayed correctly during the eID reactivation process.
+ */
 const shouldOverrideCredentialStatus = (
   maybeEidStatus: ItwJwtCredentialStatus | undefined,
   credentialStatus: ItwCredentialStatus
