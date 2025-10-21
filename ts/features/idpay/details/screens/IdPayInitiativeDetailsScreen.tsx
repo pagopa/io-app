@@ -13,10 +13,10 @@ import { RouteProp, useFocusEffect } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useCallback } from "react";
+import I18n from "i18next";
+import { useCallback, useEffect } from "react";
 import { Linking, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
-import I18n from "i18next";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import {
   InitiativeDTO,
@@ -37,6 +37,12 @@ import { useFIMSAuthenticationFlow } from "../../../fims/common/hooks";
 import { IdPayCodeCieBanner } from "../../code/components/IdPayCodeCieBanner";
 import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
 import { ConfigurationMode } from "../../configuration/types";
+import {
+  trackIDPayDetailAuthorizationStart,
+  trackIDPayDetailInfoAction,
+  trackIDPayDetailLanding,
+  trackIDPayDetailRetailersClick
+} from "../analytics";
 import { IdPayInitiativeDiscountSettingsComponent } from "../components/IdPayInitiativeDiscountSettingsComponent";
 import { IdPayInitiativeLastUpdateCounter } from "../components/IdPayInitiativeLastUpdateCounter";
 import { IdPayInitiativeRefundSettingsComponent } from "../components/IdPayInitiativeRefundSettingsComponent";
@@ -53,13 +59,6 @@ import {
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
 import { IdPayCardStatus } from "../utils";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import {
-  trackIDPayDetailAuthorizationStart,
-  trackIDPayDetailInfoAction,
-  trackIDPayDetailLanding,
-  trackIDPayDetailRetailersClick
-} from "../analytics";
 
 export type IdPayInitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -133,7 +132,7 @@ const IdPayInitiativeDetailsScreenComponent = () => {
     initiativeNeedsConfigurationSelector
   );
 
-  useOnFirstRender(() => {
+  useEffect(() => {
     if (pot.isSome(initiativeDataPot)) {
       trackIDPayDetailLanding({
         initiativeName,
@@ -141,7 +140,8 @@ const IdPayInitiativeDetailsScreenComponent = () => {
         status: initiative.voucherStatus
       });
     }
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initiativeDataPot]);
 
   if (!pot.isSome(initiativeDataPot)) {
     return (
@@ -366,11 +366,11 @@ const IdPayInitiativeDetailsScreenComponent = () => {
         const useBonusButton = {
           label: I18n.t("idpay.initiative.discountDetails.authorizeButton"),
           onPress: () => {
-            discountBottomSheet.present();
             trackIDPayDetailAuthorizationStart({
               initiativeId,
               initiativeName: initiative.initiativeName
             });
+            discountBottomSheet.present();
           }
         };
         const showMerchantsButton = {
