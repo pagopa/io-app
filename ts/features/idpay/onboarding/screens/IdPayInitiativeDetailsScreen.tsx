@@ -1,10 +1,11 @@
 import {
   ContentWrapper,
+  Divider,
   ForceScrollDownView,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { INonEmptyStringTag } from "@pagopa/ts-commons/lib/strings";
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { RouteProp, useLinkTo, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useEffect } from "react";
@@ -29,6 +30,7 @@ import {
   trackIDPayOnboardingIntro,
   trackIDPayOnboardingStart
 } from "../analytics";
+import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";
 
 export type InitiativeDetailsScreenParams = {
   serviceId?: string;
@@ -93,11 +95,18 @@ const IdPayInitiativeDetailsScreenComponent = () => {
     )
   );
 
+  const linkTo = useLinkTo();
+
   const descriptionComponent = pipe(
     initiative,
     O.fold(
       () => <IdPayOnboardingDescriptionSkeleton />,
-      ({ description }) => <IOMarkdown content={description} />
+      ({ description }) => (
+        <IOMarkdown
+          content={description}
+          rules={generateMessagesAndServicesRules(linkTo)}
+        />
+      )
     )
   );
 
@@ -139,7 +148,9 @@ const IdPayInitiativeDetailsScreenComponent = () => {
       <ContentWrapper>
         <VSpacer size={16} />
         {descriptionComponent}
-        <VSpacer size={24} />
+        <VSpacer size={16} />
+        <Divider />
+        <VSpacer size={16} />
         {onboardingPrivacyAdvice}
       </ContentWrapper>
     </ForceScrollDownView>
