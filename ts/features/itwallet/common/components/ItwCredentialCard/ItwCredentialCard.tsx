@@ -122,7 +122,7 @@ export const ItwCredentialCard = ({
       };
     }
 
-    if (isValid) {
+    if (isValid || status === "jwtExpired") {
       return {
         titleColor: theme.textColor,
         titleOpacity: 1,

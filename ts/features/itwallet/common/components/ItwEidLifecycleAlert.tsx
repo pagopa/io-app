@@ -74,7 +74,7 @@ export const ItwEidLifecycleAlert = ({
           testID={`itwEidLifecycleAlertTestID`}
         >
           <Alert
-            testID="itwEidLifecycleAlertTestID_noConnection"
+            testID="itwEidLifecycleAlertTestID_offline"
             variant="error"
             content={I18n.t(
               `features.itWallet.presentation.bottomSheets.eidInfo.alert.documents.offline`
