@@ -3664,6 +3664,9 @@
           },
           "expiring": {
             "content": "Es verbleiben noch {{days}} Tage, bevor das Dokument abläuft."
+          },
+          "verificationExpiring": {
+            "content": "Überprüfe die digitale Version deines Dokuments bis zum {{date}}."
           }
         },
         "bottomSheets": {

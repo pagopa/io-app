@@ -4933,6 +4933,9 @@
           },
           "expiring": {
             "content": "Mancano {{days}} giorni alla scadenza del documento."
+          },
+          "verificationExpiring": {
+            "content": "Verifica la versione digitale del tuo documento entro il {{date}}."
           }
         },
         "bottomSheets": {
@@ -5434,6 +5437,13 @@
         },
         "action": "Ricarica l'app IO",
         "failure": "Nessuna connessione. Collegati a internet e riprova."
+      },
+      "upgrade": {
+        "banner": {
+          "title": "IT-Wallet per i tuoi documenti",
+          "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**. Garantito dallo Stato, accessibile solo a te.",
+          "action": "Ottieni IT-Wallet"
+        }
       },
       "playgrounds": {
         "environment": {
