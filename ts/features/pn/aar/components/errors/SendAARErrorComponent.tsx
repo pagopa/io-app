@@ -24,7 +24,11 @@ import {
   zendeskSupportStart
 } from "../../../../zendesk/store/actions";
 import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
-import { currentAARFlowStateAssistanceErrorCode } from "../../store/selectors";
+import {
+  currentAARFlowStateAssistanceErrorCode,
+  currentAARFlowStateErrorDebugInfoSelector
+} from "../../store/selectors";
+import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 
 const bottomComponent = (
   onAssistancePress: () => void,
@@ -84,7 +88,9 @@ export const SendAARErrorComponent = () => {
 
     addTicketCustomField(zendeskCategoryId, zendeskSendCategory.value);
     addTicketCustomField("39752564743313", "io_problema_notifica_send_qr");
-    appendLog(JSON.stringify(assistanceErrorCode));
+    if (assistanceErrorCode != null && assistanceErrorCode.trim().length > 0) {
+      appendLog(assistanceErrorCode);
+    }
 
     dispatch(
       zendeskSupportStart({
@@ -104,6 +110,9 @@ export const SendAARErrorComponent = () => {
     ),
     title: ""
   });
+
+  const debugInfo = useIOSelector(currentAARFlowStateErrorDebugInfoSelector);
+  useDebugInfo(debugInfo);
 
   return (
     <>
