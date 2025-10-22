@@ -5865,6 +5865,10 @@
           }
         },
         "initiativeDetailsScreen": {
+          "error": {
+            "title": "Il dettaglio dell'iniziativa non è al momento disponibile",
+            "subtitle": "Siamo già a lavoro per risolvere il problema\nRiprova tra un po'."
+          },
           "notConfigured": {
             "header": "Configura l'iniziativa!",
             "footer": "Aggiungi almeno un metodo per iniziare ad utilizzare {{initiative}}."
@@ -6196,7 +6200,9 @@
         "advice": "Consigliato"
       },
       "failToRetry": {
-        "contentTitle": "Stiamo per collegarti.\n Attendi qualche secondo..."
+        "contentTitle": "Stiamo per collegarti.\n Attendi qualche secondo...",
+        "slowDownSubtitle": "Non chiudere l’app, ci vorranno al massimo 10 secondi.",
+        "failureSubtitle": "Riprova tra qualche minuto o usa il sito dell’iniziativa per richiedere il bonus."
       },
       "preferences": {
         "enableEmailBanner": {

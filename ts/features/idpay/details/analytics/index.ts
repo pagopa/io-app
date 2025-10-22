@@ -192,3 +192,14 @@ export const trackIDPayDetailCodeGenerationConversion = (
     buildEventProperties("UX", "confirm", props)
   );
 };
+
+export const trackIDPayDetailError = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_DETAIL_ERROR",
+    buildEventProperties("KO", "screen_view", {
+      ...props
+    })
+  );
+};
