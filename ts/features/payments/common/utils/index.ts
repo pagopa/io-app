@@ -41,7 +41,7 @@ export const getBadgePropsByTransactionStatus = (
     case "cancelled":
       return {
         text: I18n.t("global.badges.cancelled"),
-        variant: "error"
+        variant: "default"
       };
     case "reversal":
       return {

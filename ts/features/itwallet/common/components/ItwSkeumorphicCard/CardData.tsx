@@ -21,6 +21,15 @@ type DataComponentProps = {
   valuesHidden: boolean;
 };
 
+/**
+ * Mapping of new claims to old claims for MDL. Some of them have been renamed
+ * between specs 0.7 and 1.0, so this is necessary to ensure backward compatibility.
+ */
+const mdlClaimsFallback: Record<string, string> = {
+  birth_place: "place_of_birth",
+  document_iss_authority: "issuing_authority"
+};
+
 const MdlFrontData = ({ claims, valuesHidden }: DataComponentProps) => {
   const row = 11.6; // Row padding, defines the first row position
   const rowStep = 6.9; // Row step, defines the space between each row
@@ -29,11 +38,13 @@ const MdlFrontData = ({ claims, valuesHidden }: DataComponentProps) => {
     (_, i) => row + rowStep * i
   );
   const cols: ReadonlyArray<number> = [34, 57.5];
+  const getClaim = (claimName: string) =>
+    claims[claimName] ?? claims[mdlClaimsFallback[claimName]];
 
   return (
     <View testID="mdlFrontDataTestID" style={styles.container}>
       <CardClaim
-        claim={claims["portrait"]}
+        claim={getClaim("portrait")}
         position={{ left: "4%", top: "30%" }}
         dimensions={{
           width: "22.5%",
@@ -42,52 +53,52 @@ const MdlFrontData = ({ claims, valuesHidden }: DataComponentProps) => {
         hidden={valuesHidden}
       />
       <CardClaim
-        claim={claims["family_name"]}
+        claim={getClaim("family_name")}
         position={{ left: `${cols[0]}%`, top: `${rows[0]}%` }}
         hidden={valuesHidden}
       />
       <CardClaim
-        claim={claims["given_name"]}
+        claim={getClaim("given_name")}
         position={{ left: `${cols[0]}%`, top: `${rows[1]}%` }}
         hidden={valuesHidden}
       />
       <CardClaim
-        claim={claims["birth_date"]}
+        claim={getClaim("birth_date")}
         position={{ left: `${cols[0]}%`, top: `${rows[2]}%` }}
         dateFormat="DD/MM/YY"
         hidden={valuesHidden}
       />
       <CardClaim
-        claim={claims["place_of_birth"]}
+        claim={getClaim("birth_place")}
         position={{ left: `${cols[0] + 17}%`, top: `${rows[2]}%` }}
         hidden={valuesHidden}
       />
       <CardClaim
-        claim={claims["issue_date"]}
+        claim={getClaim("issue_date")}
         position={{ left: `${cols[0]}%`, top: `${rows[3]}%` }}
         fontWeight={"Bold"}
         dateFormat={"DD/MM/YYYY"}
         hidden={valuesHidden}
       />
       <CardClaim
-        claim={claims["issuing_authority"]}
+        claim={getClaim("document_iss_authority")}
         position={{ left: `${cols[1]}%`, top: `${rows[3]}%` }}
         hidden={valuesHidden}
       />
       <CardClaim
-        claim={claims["expiry_date"]}
+        claim={getClaim("expiry_date")}
         position={{ left: `${cols[0]}%`, top: `${rows[4]}%` }}
         fontWeight={"Bold"}
         dateFormat={"DD/MM/YYYY"}
         hidden={valuesHidden}
       />
       <CardClaim
-        claim={claims["document_number"]}
+        claim={getClaim("document_number")}
         position={{ left: `${cols[0]}%`, top: `${rows[5]}%` }}
         hidden={valuesHidden}
       />
       <CardClaim
-        claim={claims["driving_privileges"]}
+        claim={getClaim("driving_privileges")}
         position={{ left: "8%", bottom: "17.9%" }}
         hidden={valuesHidden}
       />

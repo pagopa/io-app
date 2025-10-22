@@ -13,6 +13,7 @@ import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import PN_ROUTES from "../../../navigation/routes";
 import * as BANNER from "../../../reminderBanner/reducer/bannerDismiss";
 import { SendAARMessageDetailBottomSheetComponent } from "../SendAARMessageDetailBottomSheetComponent";
+import * as SELECTORS from "../../store/selectors";
 
 describe("SendAARMessageDetailBottomSheetComponent", () => {
   const presentMock = jest.fn();
@@ -50,44 +51,56 @@ describe("SendAARMessageDetailBottomSheetComponent", () => {
   });
 
   describe("onSecondaryActionPress navigation behavior", () => {
-    test.each([
-      [false, "replace"],
-      [true, "popToTop"]
-    ])(
-      "when isPnServiceEnabled is %s it calls navigation.%s",
-      async (isEnabled, navigationMethod) => {
-        getStateMock.mockReturnValue({});
-        (BANNER.isPnServiceEnabled as jest.Mock).mockReturnValue(isEnabled);
+    [false, true].forEach(isDelegate =>
+      test.each([
+        [false, "replace"],
+        [true, "popToTop"]
+      ])(
+        `when isPnServiceEnabled is %s and user is ${
+          isDelegate ? "delegate" : "recipient"
+        } it calls navigation.%s`,
+        async (isEnabled, navigationMethod) => {
+          getStateMock.mockReturnValue({});
+          (BANNER.isPnServiceEnabled as jest.Mock).mockReturnValue(isEnabled);
 
-        renderComponent();
+          jest
+            .spyOn(SELECTORS, "isAarMessageDelegatedSelector")
+            .mockImplementation((_state, _iun) => isDelegate);
 
-        await act(async () => {
-          (
-            BOTTOM_SHEET.useIOBottomSheetModal as jest.Mock
-          ).mock.calls[0][0].component.props.onSecondaryActionPress();
-        });
+          renderComponent();
 
-        expect(dismissMock).toHaveBeenCalledTimes(1);
-        expect(dismissMock).toHaveBeenCalled();
+          await act(async () => {
+            (
+              BOTTOM_SHEET.useIOBottomSheetModal as jest.Mock
+            ).mock.calls[0][0].component.props.onSecondaryActionPress();
+          });
 
-        if (navigationMethod === "replace") {
-          expect(popToTopMock.mock.calls.length).toEqual(0);
-          expect(replaceMock).toHaveBeenCalledTimes(1);
-          expect(replaceMock).toHaveBeenCalledWith(
-            MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
-            {
-              screen: PN_ROUTES.MAIN,
-              params: {
-                screen: PN_ROUTES.ENGAGEMENT_SCREEN
+          expect(dismissMock).toHaveBeenCalledTimes(1);
+          expect(dismissMock).toHaveBeenCalled();
+
+          if (navigationMethod === "replace") {
+            expect(popToTopMock.mock.calls.length).toEqual(0);
+            expect(replaceMock).toHaveBeenCalledTimes(1);
+            expect(replaceMock).toHaveBeenCalledWith(
+              MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
+              {
+                screen: PN_ROUTES.MAIN,
+                params: {
+                  screen: PN_ROUTES.ENGAGEMENT_SCREEN,
+                  params: {
+                    sendOpeningSource: "aar",
+                    sendUserType: isDelegate ? "mandatory" : "recipient"
+                  }
+                }
               }
-            }
-          );
-        } else {
-          expect(popToTopMock.mock.calls.length).toEqual(1);
-          expect(popToTopMock.mock.calls[0].length).toEqual(0);
-          expect(replaceMock).toHaveBeenCalledTimes(0);
+            );
+          } else {
+            expect(popToTopMock.mock.calls.length).toEqual(1);
+            expect(popToTopMock.mock.calls[0].length).toEqual(0);
+            expect(replaceMock).toHaveBeenCalledTimes(0);
+          }
         }
-      }
+      )
     );
   });
 
@@ -107,6 +120,7 @@ const renderComponent = () => {
     () => (
       <SendAARMessageDetailBottomSheetComponent
         aarBottomSheetRef={aarBottomSheetRef}
+        iun={"43cfa489-e141-490b-ae10-a4d65c806732"}
       />
     ),
     PN_ROUTES.MESSAGE_DETAILS,

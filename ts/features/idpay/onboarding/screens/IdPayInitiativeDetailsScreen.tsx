@@ -29,6 +29,7 @@ import {
   trackIDPayOnboardingIntro,
   trackIDPayOnboardingStart
 } from "../analytics";
+import { IdPayEnabledFeatureFlagGuard } from "../../common/components/IdPayEnabledFeatureFlagGuard";
 
 export type InitiativeDetailsScreenParams = {
   serviceId?: string;
@@ -119,10 +120,6 @@ const IdPayInitiativeDetailsScreenComponent = () => {
     supportRequest: true
   });
 
-  useOnFirstRender(() => {
-    trackIDPayOnboardingIntro({ initiativeName, initiativeId });
-  });
-
   return (
     <ForceScrollDownView
       contentContainerStyle={{ flexGrow: 1 }}
@@ -166,8 +163,18 @@ export const IdPayInitiativeDetailsScreen = () => {
     O.toUndefined
   );
 
+  const IdPayInitiativeDetails = () => (
+    <IdPayEnabledFeatureFlagGuard featureKey="idpay.onboarding">
+      <IdPayInitiativeDetailsScreenComponent />
+    </IdPayEnabledFeatureFlagGuard>
+  );
+
+  useOnFirstRender(() =>
+    trackIDPayOnboardingIntro({ initiativeName, initiativeId })
+  );
+
   const WrappedComponent = withAppRequiredUpdate(
-    IdPayInitiativeDetailsScreenComponent,
+    IdPayInitiativeDetails,
     "idpay.onboarding",
     {
       onConfirm: () =>

@@ -17,7 +17,6 @@ import {
 import { ActionType, getType } from "typesafe-actions";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
-import { backendClientManager } from "../api/BackendClientManager";
 import { BackendClient } from "../api/backend";
 import { apiUrlPrefix, zendeskEnabled } from "../config";
 import { watchActiveSessionLoginSaga } from "../features/authentication/activeSessionLogin/saga";
@@ -36,7 +35,6 @@ import {
   sessionInfoSelector,
   sessionTokenSelector
 } from "../features/authentication/common/store/selectors";
-import { setSecurityAdviceReadyToShow } from "../features/authentication/fastLogin/store/actions/securityAdviceActions";
 import { refreshSessionToken } from "../features/authentication/fastLogin/store/actions/tokenRefreshActions";
 import {
   isFastLoginEnabledSelector,
@@ -110,10 +108,6 @@ import { formatRequestedTokenString } from "../features/zendesk/utils";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
 import {
-  waitForMainNavigator,
-  waitForNavigatorServiceInitialization
-} from "../navigation/saga/navigation";
-import {
   applicationInitialized,
   startApplicationInitialization
 } from "../store/actions/application";
@@ -139,6 +133,12 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { getPin } from "../utils/keychain";
+import { backendClientManager } from "../api/BackendClientManager";
+import {
+  waitForMainNavigator,
+  waitForNavigatorServiceInitialization
+} from "../navigation/saga/navigation";
+import { checkShouldDisplaySendEngagementScreen } from "../features/pn/loginEngagement/sagas/checkShouldDisplaySendEngagementScreen";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
@@ -267,7 +267,8 @@ export function* initializeApplicationSaga(
   }
 
   // ingress screen
-  const isBlockingScreen = yield* select(isBlockingScreenSelector);
+  // eslint-disable-next-line functional/no-let
+  let isBlockingScreen = yield* select(isBlockingScreenSelector);
   if (isBlockingScreen) {
     return;
   }
@@ -456,6 +457,11 @@ export function* initializeApplicationSaga(
     return;
   }
   yield* put(startupTransientError(startupTransientErrorInitialState));
+
+  isBlockingScreen = yield* select(isBlockingScreenSelector);
+  if (isBlockingScreen) {
+    return;
+  }
 
   // eslint-disable-next-line functional/no-let
   let userProfile = maybeUserProfile.value;
@@ -710,10 +716,15 @@ export function* initializeApplicationSaga(
   yield* fork(watchEmailNotificationPreferencesSaga);
 
   // Check if we have any pending background action to be handled
-  yield* call(maybeHandlePendingBackgroundActions, true);
+  const isHandlingBackgroundActions = yield* call(
+    maybeHandlePendingBackgroundActions,
+    true
+  );
 
-  // This tells the security advice bottomsheet that it can be shown
-  yield* put(setSecurityAdviceReadyToShow(true));
+  if (!isHandlingBackgroundActions) {
+    // Check if should navigate to the send activation screen
+    yield* fork(checkShouldDisplaySendEngagementScreen, isFirstOnboarding);
+  }
 
   yield* put(
     applicationInitialized({

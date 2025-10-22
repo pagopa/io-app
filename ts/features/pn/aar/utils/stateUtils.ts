@@ -3,6 +3,17 @@ import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson
 import { ThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
 
 export type SendAARFlowStatesType = typeof sendAARFlowStates;
+export type SendAARFailurePhase =
+  | "Download Attachment"
+  | "Entry Point"
+  | "Fetch Notification"
+  | "Fetch QRCode"
+  | "Show Notification";
+
+type RecipientInfo = {
+  denomination: string;
+  taxId: string;
+};
 
 type NotInitialized = {
   type: SendAARFlowStatesType["none"];
@@ -21,13 +32,13 @@ type FetchQR = {
 type FetchNotification = {
   type: SendAARFlowStatesType["fetchingNotificationData"];
   iun: string;
-  fullNameDestinatario: string;
+  recipientInfo: RecipientInfo;
   mandateId?: string;
 };
 
 type DisplayingNotification = {
   type: SendAARFlowStatesType["displayingNotificationData"];
-  fullNameDestinatario: string;
+  recipientInfo: RecipientInfo;
   notification: ThirdPartyMessage;
   iun: string;
   pnServiceId: ServiceId;
@@ -36,7 +47,7 @@ type DisplayingNotification = {
 
 type FinalNotAddressee = {
   type: SendAARFlowStatesType["notAddresseeFinal"];
-  fullNameDestinatario: string;
+  recipientInfo: RecipientInfo;
   qrCode: string;
   iun: string;
 };
@@ -45,6 +56,10 @@ type ErrorState = {
   type: SendAARFlowStatesType["ko"];
   previousState: AARFlowState;
   error?: AARProblemJson;
+  debugData: {
+    phase: SendAARFailurePhase;
+    reason: string;
+  };
 };
 
 export type AARFlowStateName =
