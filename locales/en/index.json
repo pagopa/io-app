@@ -4090,6 +4090,7 @@
             "secondaryAction": "Non attivare SEND su IO"
           },
           "toast": "Hai attivato SEND su IO",
+          "rateLimitToast": "Non riusciamo ad attivare il servizio SEND, riprova più tardi",
           "activationErrorMessage": "Non riusciamo ad attivare il servizio SEND"
         }
       }

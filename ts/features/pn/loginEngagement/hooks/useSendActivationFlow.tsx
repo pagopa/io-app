@@ -32,6 +32,8 @@ export const useSendActivationFlow = () => {
     if (isActivationSucceeded) {
       dispatch(setSendEngagementScreenHasBeenDismissed());
       toast.success(i18n.t("features.pn.loginEngagement.send.toast"));
+    } else {
+      toast.error(i18n.t("features.pn.loginEngagement.send.rateLimitToast"));
     }
   };
 

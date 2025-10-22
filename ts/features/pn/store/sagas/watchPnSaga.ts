@@ -11,6 +11,7 @@ import { pnMessagingServiceIdSelector } from "../../../../store/reducers/backend
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../types/SessionToken";
 import { isTestEnv } from "../../../../utils/environment";
+import { getNetworkError } from "../../../../utils/errors";
 import { unknownToReason } from "../../../messages/utils";
 import { loadServicePreference } from "../../../services/details/store/actions/preference";
 import { servicePreferencePotByIdSelector } from "../../../services/details/store/selectors";
@@ -29,9 +30,6 @@ export function* tryLoadSENDPreferences() {
     yield* put(loadServicePreference.request(pnServiceId));
   }
 }
-const tooManyRequestsErrorInstance = new Error(
-  "Too many requests sent to the server. Please try again later."
-);
 
 function* handlePnActivation(
   upsertPnActivation: PnClient["upsertPNActivation"],
@@ -62,8 +60,6 @@ function* handlePnActivation(
           ]);
           action.payload.onSuccess?.();
           break;
-        case 429:
-          throw tooManyRequestsErrorInstance;
         default:
           throw Error(
             `Status code: ${result.right.status} Request data: ${JSON.stringify(
@@ -75,7 +71,7 @@ function* handlePnActivation(
       throw Error(readableReport(result.left));
     }
   } catch (e) {
-    const isRateLimitError = e === tooManyRequestsErrorInstance;
+    const isRateLimitError = getNetworkError(e).kind === "timeout";
     yield* all([
       call(
         reportPNServiceStatusOnFailure,
