@@ -193,7 +193,7 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
     );
 
     expect(appendLog).toHaveBeenCalledTimes(1);
-    expect(appendLog).toHaveBeenCalledWith(JSON.stringify(assistanceErrorCode));
+    expect(appendLog).toHaveBeenCalledWith(assistanceErrorCode);
 
     expect(mockDispatch.mock.calls.length).toBe(2);
     expect(mockDispatch.mock.calls[0].length).toBe(1);
@@ -224,6 +224,23 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
       appendLog.mock.invocationCallOrder[0]
     );
   });
+
+  [undefined, null, "", "   "].forEach(emptyAssistanceErrorCode =>
+    it(`zendeskAssistanceLogAndStart should not append log if assistanceErrorCode is (${emptyAssistanceErrorCode})`, () => {
+      jest
+        .spyOn(SELECTORS, "currentAARFlowStateAssistanceErrorCode")
+        .mockReturnValue(emptyAssistanceErrorCode as string);
+
+      const appendLog = jest.spyOn(SUPPORT_ASSISTANCE, "appendLog");
+
+      const { getByTestId } = renderComponent();
+
+      const buttonAssistance = getByTestId("button_assistance");
+      fireEvent.press(buttonAssistance);
+
+      expect(appendLog).toHaveBeenCalledTimes(0);
+    })
+  );
 });
 
 const renderComponent = () => {

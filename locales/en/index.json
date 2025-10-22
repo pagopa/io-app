@@ -337,6 +337,7 @@
   "startup": {
     "title": "We are getting ready for your experience on IO",
     "title2": "Just a little more patience...",
+    "subtitle2": "Please don't close the app, it will only take 20 seconds.",
     "authentication": "User authenticated",
     "sessionInfo": "SPID attributes loaded",
     "profileInfo": "User profile loaded",
@@ -5666,6 +5667,10 @@
           }
         },
         "initiativeDetailsScreen": {
+          "error": {
+            "title": "The initiative details are currently unavailable",
+            "subtitle": "We’re already working to fix the issue.\nPlease try again later."
+          },
           "notConfigured": {
             "header": "Configura l'iniziativa!",
             "footer": "Aggiungi almeno un metodo per iniziare ad utilizzare {{initiative}}."

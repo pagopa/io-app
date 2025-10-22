@@ -37,6 +37,7 @@ export const trackIDPayDetailLanding = (
     })
   );
 };
+
 export const trackIDPayDetailRetailersClick = (
   props: DefaultOnboardingEventProperties
 ) => {
@@ -45,6 +46,7 @@ export const trackIDPayDetailRetailersClick = (
     buildEventProperties("UX", "action", props)
   );
 };
+
 export const trackIDPayDetailAuthorizationStart = (
   props: DefaultOnboardingEventProperties
 ) => {
@@ -163,6 +165,7 @@ export const trackIDPayDetailAuthorizationError = (
     buildEventProperties("UX", "confirm", props)
   );
 };
+
 export const trackIDPayDetailCodeGenerationError = (
   props: DefaultOnboardingEventProperties
 ) => {
@@ -171,6 +174,7 @@ export const trackIDPayDetailCodeGenerationError = (
     buildEventProperties("KO", "screen_view", props)
   );
 };
+
 export const trackIDPayDetailCodeGenerationCopy = (
   props: DefaultOnboardingEventProperties
 ) => {
@@ -179,11 +183,23 @@ export const trackIDPayDetailCodeGenerationCopy = (
     buildEventProperties("UX", "confirm", props)
   );
 };
+
 export const trackIDPayDetailCodeGenerationConversion = (
   props: DefaultOnboardingEventProperties
 ) => {
   mixpanelTrack(
     "IDPAY_CODE_GENERATION_UX_CONVERSION",
     buildEventProperties("UX", "confirm", props)
+  );
+};
+
+export const trackIDPayDetailError = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_DETAIL_ERROR",
+    buildEventProperties("KO", "screen_view", {
+      ...props
+    })
   );
 };
