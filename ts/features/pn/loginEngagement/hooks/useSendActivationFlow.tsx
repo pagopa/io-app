@@ -26,7 +26,9 @@ export const useSendActivationFlow = () => {
       popToTop();
     } else {
       replace(NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT, {
-        flow: "access"
+        flow: "access",
+        sendOpeningSource: "not_set",
+        sendUserType: "not_set"
       });
     }
   };

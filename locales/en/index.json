@@ -6005,6 +6005,10 @@
       "failToRetry": {
         "contentTitle": "Stiamo per collegarti.\n Attendi qualche secondo..."
       },
+      "disabledScreen": {
+        "title": "You are about to access the initiative",
+        "subtitle": "This may take several minutes. Do not close the app: once everything is ready, you will be able to request your bonus."
+      },
       "preferences": {
         "enableEmailBanner": {
           "title": "Don't miss important updates",

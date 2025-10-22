@@ -142,7 +142,9 @@ describe(useSendActivationFlow, () => {
       expect(mockReplace).toHaveBeenCalledWith(
         NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT,
         {
-          flow: "access"
+          flow: "access",
+          sendOpeningSource: "not_set",
+          sendUserType: "not_set"
         }
       );
       expect(mockDispatch).toHaveBeenCalledTimes(3);
@@ -217,7 +219,9 @@ describe(useSendActivationFlow, () => {
             expect(mockReplace).toHaveBeenCalledWith(
               NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT,
               {
-                flow: "access"
+                flow: "access",
+                sendOpeningSource: "not_set",
+                sendUserType: "not_set"
               }
             );
           }

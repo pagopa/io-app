@@ -9,11 +9,17 @@ import {
 } from "../utils";
 import {
   NotificationModalFlow,
+  SendOpeningSource,
+  SendUserType,
   trackSystemNotificationPermissionScreenOutcome
 } from "../analytics";
 import { isTestEnv } from "../../../utils/environment";
 
-export const usePushNotificationEngagement = (flow: NotificationModalFlow) => {
+export const usePushNotificationEngagement = (
+  flow: NotificationModalFlow,
+  sendOpeningSource: SendOpeningSource,
+  sendUserType: SendUserType
+) => {
   const { popToTop } = useIONavigation();
   const toast = useIOToast();
   const [isButtonPressed, setIsButtonPressed] = useState(false);
@@ -37,7 +43,12 @@ export const usePushNotificationEngagement = (flow: NotificationModalFlow) => {
   }, [isButtonPressed, toast, popToTop]);
 
   const onButtonPress = () => {
-    trackSystemNotificationPermissionScreenOutcome("activate", flow);
+    trackSystemNotificationPermissionScreenOutcome(
+      "activate",
+      flow,
+      sendOpeningSource,
+      sendUserType
+    );
     openSystemNotificationSettingsScreen();
     setIsButtonPressed(true);
   };
