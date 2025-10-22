@@ -665,7 +665,7 @@ describe("Test getOperationSubtitleWithAmount", () => {
   it("should return the correct date string with negative number", () => {
     const T_DATE = new Date(2023, 4, 5, 16, 31);
     const T_AMOUNT = 413567;
-    const T_RESULT = "05 mag 2023, 16:31 · -4.135,67 €";
+    const T_RESULT = "05 mag 2023, 16:31 · −4.135,67 €";
 
     const result = getOperationSubtitleWithAmount(T_DATE, T_AMOUNT, true);
 
