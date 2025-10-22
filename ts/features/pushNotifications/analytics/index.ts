@@ -85,8 +85,8 @@ export const trackPushNotificationTokenUploadFailure = (reason: string) =>
 
 export const trackSystemNotificationPermissionScreenShown = (
   flow: NotificationModalFlow,
-  sendOpeningSource: SendOpeningSource,
-  sendUser: SendUserType
+  sendOpeningSource: SendOpeningSource = "not_set",
+  sendUser: SendUserType = "not_set"
 ) => {
   const eventName = "PUSH_NOTIF_APP_MODAL";
   const props = buildEventProperties("UX", "screen_view", {
@@ -100,8 +100,8 @@ export const trackSystemNotificationPermissionScreenShown = (
 export const trackSystemNotificationPermissionScreenOutcome = (
   outcome: "activate" | "dismiss",
   flow: NotificationModalFlow,
-  sendOpeningSource: SendOpeningSource,
-  sendUser: SendUserType
+  sendOpeningSource: SendOpeningSource = "not_set",
+  sendUser: SendUserType = "not_set"
 ) => {
   const eventName = "PUSH_NOTIF_APP_MODAL_INTERACTION";
   const props = buildEventProperties("UX", "action", {

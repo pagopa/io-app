@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SendEngagementScreen should match snapshot 1`] = `
+exports[`SendEngagementScreen should match snapshot and track screen visualization 1`] = `
 <View
   style={
     {

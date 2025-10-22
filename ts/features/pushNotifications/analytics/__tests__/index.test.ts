@@ -1,4 +1,7 @@
 import {
+  NotificationModalFlow,
+  SendOpeningSource,
+  SendUserType,
   trackNewPushNotificationsTokenGenerated,
   trackNotificationInstallationTokenNotChanged,
   trackNotificationPermissionsStatus,
@@ -25,6 +28,22 @@ import { ReminderStatusEnum } from "../../../../../definitions/backend/ReminderS
 import * as Mixpanel from "../../../../mixpanel";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
+
+const notificationModalFlowList: Array<NotificationModalFlow> = [
+  "send_notification_opening",
+  "authentication",
+  "access"
+];
+const sendOpeningSourceList: Array<SendOpeningSource> = [
+  "aar",
+  "message",
+  "not_set"
+];
+const sendUserTypeList: Array<SendUserType> = [
+  "mandatory",
+  "recipient",
+  "not_set"
+];
 
 describe("pushNotifications analytics", () => {
   beforeEach(() => {
@@ -237,9 +256,9 @@ describe("pushNotifications analytics", () => {
       reason
     });
   });
-  (["send_notification_opening", "authentication"] as const).forEach(flow =>
-    (["aar", "message", "not_set"] as const).forEach(sendOpeningSource =>
-      (["recipient", "mandatory", "not_set"] as const).forEach(sendUserType =>
+  notificationModalFlowList.forEach(flow =>
+    sendOpeningSourceList.forEach(sendOpeningSource =>
+      sendUserTypeList.forEach(sendUserType =>
         it(`'trackSystemNotificationPermissionScreenShown' should have expected event name and properties (flow: ${flow})`, () => {
           const mockMixpanelTrack = getMockMixpanelTrack();
           void trackSystemNotificationPermissionScreenShown(
@@ -264,16 +283,16 @@ describe("pushNotifications analytics", () => {
     )
   );
   (["dismiss", "activate"] as const).forEach(outcome =>
-    (["send_notification_opening", "authentication"] as const).forEach(flow =>
-      (["aar", "message", "not_set"] as const).forEach(sendOpeningSource =>
-        (["recipient", "mandatory", "not_set"] as const).forEach(sendUser =>
-          it(`'trackSystemNotificationPermissionScreenOutcome' should have expected event name and properties (oucome '${outcome}' input flow ${flow} openingSource ${sendOpeningSource} sendUser ${sendUser})`, () => {
+    notificationModalFlowList.forEach(flow =>
+      sendOpeningSourceList.forEach(sendOpeningSource =>
+        sendUserTypeList.forEach(sendUserType =>
+          it(`'trackSystemNotificationPermissionScreenOutcome' should have expected event name and properties (oucome '${outcome}' input flow ${flow} openingSource ${sendOpeningSource} sendUser ${sendUserType})`, () => {
             const mockMixpanelTrack = getMockMixpanelTrack();
             void trackSystemNotificationPermissionScreenOutcome(
               outcome,
               flow,
               sendOpeningSource,
-              sendUser
+              sendUserType
             );
             expect(mockMixpanelTrack.mock.calls.length).toBe(1);
             expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
@@ -286,7 +305,7 @@ describe("pushNotifications analytics", () => {
               outcome,
               flow,
               opening_source: sendOpeningSource,
-              send_user: sendUser
+              send_user: sendUserType
             });
           })
         )
