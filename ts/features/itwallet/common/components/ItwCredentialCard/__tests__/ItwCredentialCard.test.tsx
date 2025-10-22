@@ -120,6 +120,7 @@ describe("ItwCredentialCard", () => {
     "unknown"
   ] as ReadonlyArray<ItwCredentialStatus>)(
     "should match snapshot when eID is expired and credential is %p (credential status not overridden)",
+    // eslint-disable-next-line sonarjs/no-identical-functions
     credentialStatus => {
       jest
         .spyOn(credentials, "itwCredentialsEidStatusSelector")

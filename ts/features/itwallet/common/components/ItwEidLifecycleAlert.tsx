@@ -62,73 +62,51 @@ export const ItwEidLifecycleAlert = ({
     eid: StoredCredential;
     eidStatus: ItwJwtCredentialStatus;
   }) => {
-    if (!lifecycleStatus.includes(eidStatus)) {
-      return null;
-    }
     const nameSpace = isItw ? "itw" : "documents";
 
-    if (!isConnected && eidStatus === "jwtExpired" && !isItw) {
-      return (
-        <View
-          style={{ marginBottom: 16 }}
-          testID={`itwEidLifecycleAlertTestID`}
-        >
-          <Alert
-            testID="itwEidLifecycleAlertTestID_offline"
-            variant="error"
-            content={I18n.t(
-              `features.itWallet.presentation.bottomSheets.eidInfo.alert.documents.offline`
-            )}
-          />
-        </View>
-      );
-    }
-
-    const eIDAlertPropsMap: Record<
-      ItwJwtCredentialStatus,
-      ComponentProps<typeof Alert>
-    > = {
-      valid: {
-        testID: "itwEidLifecycleAlertTestID_valid",
-        variant: "success",
-        content: I18n.t(
-          `features.itWallet.presentation.bottomSheets.eidInfo.alert.${nameSpace}.valid`,
-          {
-            date: eid.jwt.issuedAt
-              ? format(eid.jwt.issuedAt, "DD-MM-YYYY")
-              : "-"
-          }
-        )
-      },
-      jwtExpiring: {
-        testID: "itwEidLifecycleAlertTestID_jwtExpiring",
-        variant: "warning",
-        content: I18n.t(
-          `features.itWallet.presentation.bottomSheets.eidInfo.alert.${nameSpace}.expiring`,
-          // TODO [SIW-3225]: date in bold
-          {
-            date: format(eid.jwt.expiration, "DD-MM-YYYY")
-          }
-        ),
-        action: I18n.t(
-          `features.itWallet.presentation.bottomSheets.eidInfo.alert.${nameSpace}.action`
-        ),
-        onPress: startEidReissuing
-      },
-      jwtExpired: {
-        testID: "itwEidLifecycleAlertTestID_jwtExpired",
-        variant: "error",
-        content: I18n.t(
-          `features.itWallet.presentation.bottomSheets.eidInfo.alert.${nameSpace}.expired`
-        ),
-        action: I18n.t(
-          `features.itWallet.presentation.bottomSheets.eidInfo.alert.${nameSpace}.action`
-        ),
-        onPress: startEidReissuing
-      }
-    };
-
     const alertProps = useMemo<ComponentProps<typeof Alert>>(() => {
+      const eIDAlertPropsMap: Record<
+        ItwJwtCredentialStatus,
+        ComponentProps<typeof Alert>
+      > = {
+        valid: {
+          testID: "itwEidLifecycleAlertTestID_valid",
+          variant: "success",
+          content: I18n.t(
+            `features.itWallet.presentation.bottomSheets.eidInfo.alert.${nameSpace}.valid`,
+            {
+              date: eid.jwt.issuedAt
+                ? format(eid.jwt.issuedAt, "DD-MM-YYYY")
+                : "-"
+            }
+          )
+        },
+        jwtExpiring: {
+          testID: "itwEidLifecycleAlertTestID_jwtExpiring",
+          variant: "warning",
+          content: I18n.t(
+            `features.itWallet.presentation.bottomSheets.eidInfo.alert.${nameSpace}.expiring`,
+            // TODO [SIW-3225]: date in bold
+            { date: format(eid.jwt.expiration, "DD-MM-YYYY") }
+          ),
+          action: I18n.t(
+            `features.itWallet.presentation.bottomSheets.eidInfo.alert.${nameSpace}.action`
+          ),
+          onPress: startEidReissuing
+        },
+        jwtExpired: {
+          testID: "itwEidLifecycleAlertTestID_jwtExpired",
+          variant: "error",
+          content: I18n.t(
+            `features.itWallet.presentation.bottomSheets.eidInfo.alert.${nameSpace}.expired`
+          ),
+          action: I18n.t(
+            `features.itWallet.presentation.bottomSheets.eidInfo.alert.${nameSpace}.action`
+          ),
+          onPress: startEidReissuing
+        }
+      };
+
       if (!isConnected && eidStatus === "jwtExpired" && !isItw) {
         return {
           testID: "itwEidLifecycleAlertTestID_offline",
@@ -138,10 +116,13 @@ export const ItwEidLifecycleAlert = ({
           )
         };
       }
-      return {
-        ...eIDAlertPropsMap[eidStatus]
-      };
-    }, [isConnected, eidStatus, isItw, eIDAlertPropsMap]);
+
+      return eIDAlertPropsMap[eidStatus];
+    }, [eidStatus, eid.jwt.issuedAt, eid.jwt.expiration, nameSpace]);
+
+    if (!lifecycleStatus.includes(eidStatus)) {
+      return null;
+    }
 
     return (
       <View style={{ marginBottom: 16 }} testID={`itwEidLifecycleAlertTestID`}>
