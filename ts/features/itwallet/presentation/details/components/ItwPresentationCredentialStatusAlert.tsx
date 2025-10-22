@@ -120,18 +120,20 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
     }
   };
 
-  return getAlertToRender({
-    status,
-    message,
-    credential,
-    eidStatus,
-    isItwL3,
-    navigation,
-    onTrack: trackCredentialAlertEvent
-  });
+  return (
+    <AlertToRender
+      status={status}
+      message={message}
+      credential={credential}
+      eidStatus={eidStatus}
+      isItwL3={isItwL3}
+      navigation={navigation}
+      onTrack={trackCredentialAlertEvent}
+    />
+  );
 };
 
-const getAlertToRender = ({
+const AlertToRender = ({
   status,
   message,
   credential,
