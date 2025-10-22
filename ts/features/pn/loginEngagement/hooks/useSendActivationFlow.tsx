@@ -20,8 +20,7 @@ export const useSendActivationFlow = () => {
     areNotificationPermissionsEnabledSelector
   );
 
-  const onSENDActivationSucceeded = () => {
-    dispatch(setSendEngagementScreenHasBeenDismissed());
+  const handleTerminateFlow = (isActivationSucceeded: boolean) => {
     dispatch(setSecurityAdviceReadyToShow(true));
     if (notificationPermissionsEnabled) {
       popToTop();
@@ -30,9 +29,20 @@ export const useSendActivationFlow = () => {
         flow: "access"
       });
     }
-    toast.success(i18n.t("features.pn.loginEngagement.send.toast"));
+    if (isActivationSucceeded) {
+      dispatch(setSendEngagementScreenHasBeenDismissed());
+      toast.success(i18n.t("features.pn.loginEngagement.send.toast"));
+    }
   };
-  const onSENDActivationFailed = () => {
+
+  const onSENDActivationSucceeded = () => {
+    handleTerminateFlow(true);
+  };
+  const onSENDActivationFailed = (isRateLimitError?: boolean) => {
+    if (isRateLimitError) {
+      handleTerminateFlow(false);
+      return;
+    }
     replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
       screen: PN_ROUTES.MAIN,
       params: {
