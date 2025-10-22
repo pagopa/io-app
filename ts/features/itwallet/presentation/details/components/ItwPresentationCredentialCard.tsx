@@ -14,7 +14,6 @@ import { FlipGestureDetector } from "../../../common/components/ItwSkeumorphicCa
 import { getThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import {
   ItwCredentialStatus,
-  ItwJwtCredentialStatus,
   StoredCredential
 } from "../../../common/utils/itwTypesUtils.ts";
 import {
@@ -32,25 +31,6 @@ type Props = {
   credential: StoredCredential;
 };
 
-/* If the eID status is "jwtExpired" or "jwtExpiring" and the current credential
- * status is not one of the excluded ones (invalid, expired, or expiring),
- * then we should override the credential status to "valid" to ensure
- * the card is displayed correctly during the eID reactivation process.
- */
-const shouldOverrideCredentialStatus = (
-  maybeEidStatus: ItwJwtCredentialStatus | undefined,
-  credentialStatus: ItwCredentialStatus
-): boolean => {
-  const eIDStatusesRequiringOverride = ["jwtExpired", "jwtExpiring"];
-  const credentialStatusesToExclude = ["expired", "expiring", "invalid"];
-
-  return (
-    maybeEidStatus !== undefined &&
-    eIDStatusesRequiringOverride.includes(maybeEidStatus) &&
-    !credentialStatusesToExclude.includes(credentialStatus)
-  );
-};
-
 /**
  * This component renders the credential card in the presentation screen.
  * If the credential supports the skeumorphic card, it also renders it with the flip button and If L3 is enabled, it shows the badge.
@@ -64,14 +44,28 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
     itwCredentialStatusSelector(state, credential.credentialType)
   );
 
-  const shouldOverride = useMemo(
-    () => shouldOverrideCredentialStatus(maybeEidStatus, credentialStatus),
-    [maybeEidStatus, credentialStatus]
-  );
+  /**
+   * The credential's expire UI should be displayed only when:
+   * - the eID status is "valid"
+   * - the eID status is not "valid" and the document associated to the
+   *   credential is "expiring", "expired" or "invalid"
+   */
+  const status = useMemo<ItwCredentialStatus>(() => {
+    const excludedCredentialStatuses: ReadonlyArray<ItwCredentialStatus> = [
+      "expired",
+      "expiring",
+      "invalid"
+    ];
 
-  const status: ItwCredentialStatus = shouldOverride
-    ? "valid"
-    : credentialStatus;
+    if (
+      maybeEidStatus === "valid" ||
+      excludedCredentialStatuses.includes(credentialStatus)
+    ) {
+      return credentialStatus;
+    }
+
+    return "valid";
+  }, [credentialStatus, maybeEidStatus]);
 
   const handleFlipButtonPress = useCallback(() => {
     trackWalletShowBack(
