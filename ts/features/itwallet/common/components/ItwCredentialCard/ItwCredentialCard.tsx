@@ -99,7 +99,9 @@ export const ItwCredentialCard = ({
   }, [status, needsItwUpgrade]);
 
   const { titleColor, titleOpacity, colorScheme } = useMemo<StyleProps>(() => {
-    const isValid = validCredentialStatuses.includes(status);
+    // Include "jwtExpired" as a valid status because credentials with this state
+    // should not appear faded. Only the "expired" status should be displayed with reduced opacity.
+    const isValid = [...validCredentialStatuses, "jwtExpired"].includes(status);
     const theme = getThemeColorByCredentialType(credentialType);
 
     if (needsItwUpgrade) {
@@ -118,7 +120,7 @@ export const ItwCredentialCard = ({
       };
     }
 
-    if (isValid || status === "jwtExpired") {
+    if (isValid) {
       return {
         titleColor: theme.textColor,
         titleOpacity: 1,
