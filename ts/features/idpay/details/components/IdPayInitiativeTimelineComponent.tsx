@@ -124,6 +124,7 @@ const IdPayInitiativeTimelineComponent = ({
 
   return (
     <View testID="IDPayTimelineTestID">
+      <VSpacer size={16} />
       <ListItemHeader
         label={I18n.t(
           "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
