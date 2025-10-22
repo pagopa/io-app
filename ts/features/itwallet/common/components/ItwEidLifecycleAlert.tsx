@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import { sequenceT } from "fp-ts/lib/Apply";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { ComponentProps } from "react";
+import { ComponentProps, useMemo } from "react";
 import { View } from "react-native";
 import I18n from "i18next";
 import { useIOSelector } from "../../../../store/hooks";
@@ -84,7 +84,7 @@ export const ItwEidLifecycleAlert = ({
       );
     }
 
-    const alertProps: Record<
+    const eIDAlertPropsMap: Record<
       ItwJwtCredentialStatus,
       ComponentProps<typeof Alert>
     > = {
@@ -128,9 +128,24 @@ export const ItwEidLifecycleAlert = ({
       }
     };
 
+    const alertProps = useMemo<ComponentProps<typeof Alert>>(() => {
+      if (!isConnected && eidStatus === "jwtExpired" && !isItw) {
+        return {
+          testID: "itwEidLifecycleAlertTestID_offline",
+          variant: "error",
+          content: I18n.t(
+            `features.itWallet.presentation.bottomSheets.eidInfo.alert.documents.offline`
+          )
+        };
+      }
+      return {
+        ...eIDAlertPropsMap[eidStatus]
+      };
+    }, [isConnected, eidStatus, isItw, eIDAlertPropsMap]);
+
     return (
       <View style={{ marginBottom: 16 }} testID={`itwEidLifecycleAlertTestID`}>
-        <Alert {...alertProps[eidStatus]} />
+        <Alert {...alertProps} />
       </View>
     );
   };
