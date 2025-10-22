@@ -6193,7 +6193,8 @@
       },
       "failToRetry": {
         "contentTitle": "Stiamo per collegarti.\n Attendi qualche secondo...",
-        "subtitle": "Riprova tra qualche minuto o usa il sito dell’iniziativa per richiedere il bonus."
+        "slowDownSubtitle": "Non chiudere l’app, ci vorranno al massimo 10 secondi.",
+        "failureSubtitle": "Riprova tra qualche minuto o usa il sito dell’iniziativa per richiedere il bonus."
       },
       "preferences": {
         "enableEmailBanner": {
