@@ -6200,6 +6200,10 @@
         "slowDownSubtitle": "Non chiudere l’app, ci vorranno al massimo 10 secondi.",
         "failureSubtitle": "Riprova tra qualche minuto o usa il sito dell’iniziativa per richiedere il bonus."
       },
+      "disabledScreen": {
+        "title": "Stai per accedere all’iniziativa",
+        "subtitle": "Potrebbero volerci alcuni minuti. Non chiudere l’app: quando sarà tutto pronto, potrai richiedere il tuo bonus."
+      },
       "preferences": {
         "enableEmailBanner": {
           "title": "Non perderti aggiornamenti importanti",
@@ -6445,6 +6449,10 @@
       "chat": "Chiedi aiuto in chat",
       "additionalDataTitle": "Dati aggiuntivi",
       "copyAll": "Copia tutti"
+    },
+    "slowdowns_results_screen": {
+      "title": "Sembra che le cose vadano un po' a rilento",
+      "subtitle": "Potreste essere in tanti in questo momento.\nPuoi riprovare tra qualche minuto, o puoi richiedere il bonus dal sito dedicato."
     }
   },
   "barcodeScan": {
