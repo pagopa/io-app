@@ -5,7 +5,7 @@ import PushNotification from "react-native-push-notification";
 import { pipe } from "fp-ts/lib/function";
 import i18n from "i18next";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
-import { NotificationPayload } from "../../../pushNotifications/utils/configurePushNotification.ts";
+import { ItwNotificationPayload } from "../../../pushNotifications/utils/configurePushNotification.ts";
 import { openWebUrl } from "../../../../utils/url.ts";
 
 const EID_REISSUANCE_DEEP_LINK =
@@ -29,7 +29,7 @@ export function* checkEidExpiringSaga() {
 
   PushNotification.popInitialNotification(notification => {
     const decodedDeepLink = pipe(
-      NotificationPayload.decode(notification),
+      ItwNotificationPayload.decode(notification),
       O.fromEither,
       O.chainNullableK(payload => payload.deepLink ?? payload.data?.deepLink),
       O.toUndefined
