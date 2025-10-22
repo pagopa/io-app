@@ -1,11 +1,11 @@
 import { useCallback } from "react";
-import { Text } from "react-native";
+import I18n from "i18next";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 
 /**
  * Landing screen for the eID reissuing flow started from a message.
@@ -13,15 +13,23 @@ import { itwCredentialsEidStatusSelector } from "../../credentials/store/selecto
  * it it necessary to make some preliminary checks before proceeding.
  */
 export const ItwIssuanceEidReissuanceLandingScreen = () => {
+  const navigation = useIONavigation();
+
   const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
-  const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
 
+  // TODO: use more specific messages - see SIW-3233
   if (!isWalletValid) {
-    return <Text>Documenti su IO non è attivo</Text>;
-  }
-
-  if (eidStatus === "valid") {
-    return <Text>EID non è in scadenza</Text>;
+    return (
+      <OperationResultScreenContent
+        title={I18n.t("features.itWallet.issuance.genericError.title")}
+        pictogram="error"
+        enableAnimatedPictogram
+        action={{
+          label: I18n.t("global.buttons.close"),
+          onPress: () => navigation.goBack()
+        }}
+      />
+    );
   }
 
   return <NavigateToIdentificationModeSelection />;
