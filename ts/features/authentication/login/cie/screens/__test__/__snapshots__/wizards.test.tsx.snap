@@ -33,28 +33,38 @@ exports[`CieIdWizard Should match the snapshot 1`] = `
           }
         }
       >
-        <Text
-          accessibilityLabel="Hai l'app CieID?"
-          accessibilityRole="header"
-          allowFontScaling={true}
-          dynamicTypeRamp="title1"
-          maxFontSizeMultiplier={1.5}
+        <View
           style={
-            [
-              {},
-              {
-                "color": "#0E0F13",
-                "fontFamily": "Titillio",
-                "fontSize": 26,
-                "fontStyle": "normal",
-                "fontWeight": "600",
-                "lineHeight": 34,
-              },
-            ]
+            {
+              "display": "flex",
+              "flexDirection": "column",
+              "gap": 8,
+            }
           }
         >
-          Hai l'app CieID?
-        </Text>
+          <Text
+            accessibilityLabel="Hai l'app CieID?"
+            accessibilityRole="header"
+            allowFontScaling={true}
+            dynamicTypeRamp="title1"
+            maxFontSizeMultiplier={1.5}
+            style={
+              [
+                {},
+                {
+                  "color": "#0E0F13",
+                  "fontFamily": "Titillio",
+                  "fontSize": 26,
+                  "fontStyle": "normal",
+                  "fontWeight": "600",
+                  "lineHeight": 34,
+                },
+              ]
+            }
+          >
+            Hai l'app CieID?
+          </Text>
+        </View>
       </View>
       <View
         style={
@@ -685,28 +695,38 @@ exports[`CiePinWizard Should match the snapshot 1`] = `
           }
         }
       >
-        <Text
-          accessibilityLabel="Hai la Carta di Identità Elettronica e il PIN?"
-          accessibilityRole="header"
-          allowFontScaling={true}
-          dynamicTypeRamp="title1"
-          maxFontSizeMultiplier={1.5}
+        <View
           style={
-            [
-              {},
-              {
-                "color": "#0E0F13",
-                "fontFamily": "Titillio",
-                "fontSize": 26,
-                "fontStyle": "normal",
-                "fontWeight": "600",
-                "lineHeight": 34,
-              },
-            ]
+            {
+              "display": "flex",
+              "flexDirection": "column",
+              "gap": 8,
+            }
           }
         >
-          Hai la Carta di Identità Elettronica e il PIN?
-        </Text>
+          <Text
+            accessibilityLabel="Hai la Carta di Identità Elettronica e il PIN?"
+            accessibilityRole="header"
+            allowFontScaling={true}
+            dynamicTypeRamp="title1"
+            maxFontSizeMultiplier={1.5}
+            style={
+              [
+                {},
+                {
+                  "color": "#0E0F13",
+                  "fontFamily": "Titillio",
+                  "fontSize": 26,
+                  "fontStyle": "normal",
+                  "fontWeight": "600",
+                  "lineHeight": 34,
+                },
+              ]
+            }
+          >
+            Hai la Carta di Identità Elettronica e il PIN?
+          </Text>
+        </View>
       </View>
       <View
         style={
@@ -1704,28 +1724,38 @@ exports[`IDActivationWizard Should match the snapshot 1`] = `
           }
         }
       >
-        <Text
-          accessibilityLabel="Attiva la tua identità digitale!"
-          accessibilityRole="header"
-          allowFontScaling={true}
-          dynamicTypeRamp="title1"
-          maxFontSizeMultiplier={1.5}
+        <View
           style={
-            [
-              {},
-              {
-                "color": "#0E0F13",
-                "fontFamily": "Titillio",
-                "fontSize": 26,
-                "fontStyle": "normal",
-                "fontWeight": "600",
-                "lineHeight": 34,
-              },
-            ]
+            {
+              "display": "flex",
+              "flexDirection": "column",
+              "gap": 8,
+            }
           }
         >
-          Attiva la tua identità digitale!
-        </Text>
+          <Text
+            accessibilityLabel="Attiva la tua identità digitale!"
+            accessibilityRole="header"
+            allowFontScaling={true}
+            dynamicTypeRamp="title1"
+            maxFontSizeMultiplier={1.5}
+            style={
+              [
+                {},
+                {
+                  "color": "#0E0F13",
+                  "fontFamily": "Titillio",
+                  "fontSize": 26,
+                  "fontStyle": "normal",
+                  "fontWeight": "600",
+                  "lineHeight": 34,
+                },
+              ]
+            }
+          >
+            Attiva la tua identità digitale!
+          </Text>
+        </View>
       </View>
       <View
         style={
@@ -2630,28 +2660,38 @@ exports[`SpidWizard Should match the snapshot 1`] = `
           }
         }
       >
-        <Text
-          accessibilityLabel="Hai SPID?"
-          accessibilityRole="header"
-          allowFontScaling={true}
-          dynamicTypeRamp="title1"
-          maxFontSizeMultiplier={1.5}
+        <View
           style={
-            [
-              {},
-              {
-                "color": "#0E0F13",
-                "fontFamily": "Titillio",
-                "fontSize": 26,
-                "fontStyle": "normal",
-                "fontWeight": "600",
-                "lineHeight": 34,
-              },
-            ]
+            {
+              "display": "flex",
+              "flexDirection": "column",
+              "gap": 8,
+            }
           }
         >
-          Hai SPID?
-        </Text>
+          <Text
+            accessibilityLabel="Hai SPID?"
+            accessibilityRole="header"
+            allowFontScaling={true}
+            dynamicTypeRamp="title1"
+            maxFontSizeMultiplier={1.5}
+            style={
+              [
+                {},
+                {
+                  "color": "#0E0F13",
+                  "fontFamily": "Titillio",
+                  "fontSize": 26,
+                  "fontStyle": "normal",
+                  "fontWeight": "600",
+                  "lineHeight": 34,
+                },
+              ]
+            }
+          >
+            Hai SPID?
+          </Text>
+        </View>
       </View>
       <View
         style={
