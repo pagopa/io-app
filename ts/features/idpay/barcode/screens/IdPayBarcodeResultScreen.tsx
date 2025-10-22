@@ -28,6 +28,8 @@ import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
+  trackIDPayDetailCodeExpired,
+  trackIDPayDetailCodeGenerateNew,
   trackIDPayDetailCodeGenerationConversion,
   trackIDPayDetailCodeGenerationCopy,
   trackIDPayDetailCodeGenerationError
@@ -50,6 +52,7 @@ type SuccessContentProps = {
 };
 type BarcodeExpiredContentProps = {
   initiativeId: string;
+  initiativeName?: string;
 };
 
 // -------------------- main component --------------------
@@ -151,8 +154,19 @@ const SuccessContent = ({
   const [isBarcodeExpired, setIsBarcodeExpired] = useState(false);
 
   if (isBarcodeExpired) {
-    return <BarcodeExpiredContent initiativeId={barcode.initiativeId} />;
+    trackIDPayDetailCodeExpired({
+      initiativeId,
+      initiativeName
+    });
+
+    return (
+      <BarcodeExpiredContent
+        initiativeId={barcode.initiativeId}
+        initiativeName={initiativeName}
+      />
+    );
   }
+
   return (
     <IOScrollViewWithLargeHeader
       includeContentMargins
@@ -197,14 +211,21 @@ const SuccessContent = ({
 };
 
 const BarcodeExpiredContent = ({
-  initiativeId
+  initiativeId,
+  initiativeName
 }: BarcodeExpiredContentProps) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const { goBack } = navigation;
   const ctaClickHandler = () => {
+    trackIDPayDetailCodeGenerateNew({
+      initiativeId,
+      initiativeName
+    });
+
     dispatch(idPayGenerateBarcode.request({ initiativeId }));
   };
+
   return (
     <OperationResultScreenContent
       isHeaderVisible
