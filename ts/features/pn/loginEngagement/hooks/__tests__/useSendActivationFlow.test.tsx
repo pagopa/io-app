@@ -183,53 +183,33 @@ describe(useSendActivationFlow, () => {
         expect(mockReplace).toHaveBeenCalled();
         expect(mockReplace).toHaveBeenCalledTimes(1);
       });
+    });
 
-      [true, false].forEach(notificationsEnabled => {
-        it(`should handle the failure callback correctly, rateLimited: true, notificationPermissionsEnabled: ${notificationsEnabled}`, () => {
-          mockAreNotificationPermissionsEnabledSelector.mockReturnValue(
-            notificationsEnabled
-          );
-          const { result } = renderHook(() => useSendActivationFlow());
+    it("should handle the failure callback correctly, rateLimited: true", () => {
+      const { result } = renderHook(() => useSendActivationFlow());
 
-          act(() => {
-            result.current.requestSendActivation();
-          });
-
-          expect(mockDispatch).toHaveBeenCalledTimes(1);
-          // Simulate the failure callback
-          const failureCallback =
-            mockDispatch.mock.calls[0][0].payload.onFailure;
-          mockDispatch.mockClear();
-          expect(mockDispatch).toHaveBeenCalledTimes(0);
-          act(() => {
-            failureCallback(true);
-          });
-
-          expect(mockDispatch).toHaveBeenCalledTimes(1); // second call
-          expect(mockDispatch).toHaveBeenCalledWith(
-            setSecurityAdviceReadyToShow(true)
-          );
-
-          if (notificationsEnabled) {
-            expect(mockReplace).not.toHaveBeenCalled();
-            expect(mockPopToTop).toHaveBeenCalledTimes(1);
-          } else {
-            expect(mockPopToTop).not.toHaveBeenCalled();
-            expect(mockReplace).toHaveBeenCalledTimes(1);
-            expect(mockReplace).toHaveBeenCalledWith(
-              NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT,
-              {
-                flow: "access",
-                sendOpeningSource: "not_set",
-                sendUserType: "not_set"
-              }
-            );
-          }
-
-          expect(mockToastSuccess).not.toHaveBeenCalled();
-          expect(mockToastError).toHaveBeenCalledTimes(1);
-        });
+      act(() => {
+        result.current.requestSendActivation();
       });
+
+      expect(mockDispatch).toHaveBeenCalledTimes(1);
+      // Simulate the failure callback
+      const failureCallback = mockDispatch.mock.calls[0][0].payload.onFailure;
+      mockDispatch.mockClear();
+      expect(mockDispatch).toHaveBeenCalledTimes(0);
+      act(() => {
+        failureCallback(true);
+      });
+
+      expect(mockDispatch).toHaveBeenCalledTimes(1); // second call
+      expect(mockDispatch).toHaveBeenCalledWith(
+        setSecurityAdviceReadyToShow(true)
+      );
+
+      expect(mockReplace).not.toHaveBeenCalled();
+      expect(mockPopToTop).toHaveBeenCalledTimes(1);
+      expect(mockToastSuccess).not.toHaveBeenCalled();
+      expect(mockToastError).toHaveBeenCalledTimes(1);
     });
   });
 });

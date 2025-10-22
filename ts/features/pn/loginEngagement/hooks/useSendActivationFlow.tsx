@@ -20,7 +20,14 @@ export const useSendActivationFlow = () => {
     areNotificationPermissionsEnabledSelector
   );
 
-  const handleTerminateFlow = () => {
+  const handleRateLimitError = () => {
+    dispatch(setSecurityAdviceReadyToShow(true));
+    popToTop();
+    toast.error(i18n.t("features.pn.loginEngagement.send.rateLimitToast"));
+  };
+
+  const onSENDActivationSucceeded = () => {
+    dispatch(setSendEngagementScreenHasBeenDismissed());
     dispatch(setSecurityAdviceReadyToShow(true));
     if (notificationPermissionsEnabled) {
       popToTop();
@@ -31,17 +38,11 @@ export const useSendActivationFlow = () => {
         sendUserType: "not_set"
       });
     }
-  };
-
-  const onSENDActivationSucceeded = () => {
-    dispatch(setSendEngagementScreenHasBeenDismissed());
-    handleTerminateFlow();
     toast.success(i18n.t("features.pn.loginEngagement.send.toast"));
   };
   const onSENDActivationFailed = (isRateLimitError?: boolean) => {
     if (isRateLimitError === true) {
-      handleTerminateFlow();
-      toast.error(i18n.t("features.pn.loginEngagement.send.rateLimitToast"));
+      handleRateLimitError();
       return;
     }
     replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
