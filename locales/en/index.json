@@ -5798,7 +5798,7 @@
           "details": {
             "alerts": {
               "AUTHORIZED": "Questa transazione è in corso, ovvero è stata autorizzata ma non è ancora stata confermata dall’esercente.",
-              "CANCELLED": "Questa transazione è stata annullata dall’esercente, abbiamo riaccreditato l’importo sul portafoglio dell’iniziativa."
+              "CANCELLED": "Questa transazione è stata annullata dall’esercente."
             },
             "labels": {
               "business": "Esercente",
@@ -5996,13 +5996,17 @@
       "enableNotification": {
         "title": "Don't risk losing the outcome of your request",
         "subtitle": "Activate push notifications to know immediately when you receive a new message in the app.",
-        "action": "Activate notifications",
-        "deny": "Not now",
+        "action": "Activate push notifications",
+        "deny": "Don't activate",
         "success": "You activated Push notifications",
         "advice": "Consigliato"
       },
       "failToRetry": {
         "contentTitle": "Stiamo per collegarti.\n Attendi qualche secondo..."
+      },
+      "disabledScreen": {
+        "title": "You are about to access the initiative",
+        "subtitle": "This may take several minutes. Do not close the app: once everything is ready, you will be able to request your bonus."
       },
       "preferences": {
         "enableEmailBanner": {

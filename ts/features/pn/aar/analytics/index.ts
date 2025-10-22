@@ -21,24 +21,6 @@ export const trackSendQRCodeScanRedirectDismissed = () => {
   mixpanelTrack(eventName, properties);
 };
 
-export const trackSendActivationModalDialog = () => {
-  const eventName = "SEND_ACTIVATION_MODAL_DIALOG";
-  const properties = buildEventProperties("UX", "screen_view");
-  mixpanelTrack(eventName, properties);
-};
-
-export const trackSendActivationModalDialogActivationStart = () => {
-  const eventName = "SEND_ACTIVATION_MODAL_DIALOG_ACTIVATION_START";
-  const properties = buildEventProperties("UX", "action");
-  mixpanelTrack(eventName, properties);
-};
-
-export const trackSendActivationModalDialogActivationDismissed = () => {
-  const eventName = "SEND_ACTIVATION_MODAL_DIALOG_DISMISSED";
-  const properties = buildEventProperties("UX", "action");
-  mixpanelTrack(eventName, properties);
-};
-
 export const trackSendAARFailure = (
   phase: SendAARFailurePhase,
   reason: string
