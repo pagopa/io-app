@@ -12,10 +12,7 @@ import {
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
 import { getThemeColorByCredentialType } from "../../utils/itwStyleUtils";
-import {
-  ItwCredentialStatus,
-  ItwJwtCredentialStatus
-} from "../../utils/itwTypesUtils";
+import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
 import { itwCredentialsEidStatusSelector } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { CardBackground } from "./CardBackground";
@@ -53,25 +50,6 @@ type StyleProps = {
   colorScheme: CardColorScheme;
 };
 
-/* If the eID status is "jwtExpired" or "jwtExpiring" and the current credential
- * status is not one of the excluded ones (invalid, expired, or expiring),
- * then we should override the credential status to "valid" to ensure
- * the card is displayed correctly during the eID reactivation process.
- */
-const shouldOverrideCredentialStatus = (
-  maybeEidStatus: ItwJwtCredentialStatus | undefined,
-  credentialStatus: ItwCredentialStatus
-): boolean => {
-  const eIDStatusesRequiringOverride = ["jwtExpired", "jwtExpiring"];
-  const credentialStatusesToExclude = ["expired", "expiring", "invalid"];
-
-  return (
-    maybeEidStatus !== undefined &&
-    eIDStatusesRequiringOverride.includes(maybeEidStatus) &&
-    !credentialStatusesToExclude.includes(credentialStatus)
-  );
-};
-
 export const ItwCredentialCard = ({
   credentialType,
   credentialStatus = "valid",
@@ -83,14 +61,29 @@ export const ItwCredentialCard = ({
   const needsItwUpgrade = isItwPid && !isItwCredential;
   const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);
 
-  const shouldOverride = useMemo(
-    () => shouldOverrideCredentialStatus(maybeEidStatus, credentialStatus),
-    [maybeEidStatus, credentialStatus]
-  );
+  /**
+   * The credential's expire UI should be displayed only when:
+   * - the eID status is "valid"
+   * - the eID status is not "valid" and the document associated to the
+   *   credential is "expiring", "expired", "invalid" or "unknown"
+   */
+  const status = useMemo<ItwCredentialStatus>(() => {
+    const excludedCredentialStatuses: ReadonlyArray<ItwCredentialStatus> = [
+      "expired",
+      "expiring",
+      "invalid",
+      "unknown"
+    ];
 
-  const status: ItwCredentialStatus = shouldOverride
-    ? "valid"
-    : credentialStatus;
+    if (
+      maybeEidStatus === "valid" ||
+      excludedCredentialStatuses.includes(credentialStatus)
+    ) {
+      return credentialStatus;
+    }
+
+    return "valid";
+  }, [credentialStatus, maybeEidStatus]);
 
   const borderColorMap = useBorderColorByStatus();
 
