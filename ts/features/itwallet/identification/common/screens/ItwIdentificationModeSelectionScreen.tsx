@@ -1,40 +1,38 @@
 import {
-  useFocusEffect,
-  // useNavigation,
-  useRoute
-} from "@react-navigation/native";
-import { useCallback, useMemo } from "react";
-import {
   ContentWrapper,
-  VStack,
+  IOButton,
   ModuleNavigationAlt,
-  IOButton
+  VStack
 } from "@pagopa/io-app-design-system";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
-import { View } from "react-native";
-import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { useCallback, useMemo } from "react";
+import { Alert, View } from "react-native";
+import CiePin from "../../../../../../img/features/itWallet/identification/cie_pin.svg";
+import SpidLogo from "../../../../../../img/features/itWallet/identification/spid_logo.svg";
+import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
+import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
+import {
+  IOStackNavigationRouteProps,
+  useIONavigation
+} from "../../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../../navigation/routes";
+import { useIOSelector } from "../../../../../store/hooks";
 import {
   trackItWalletIDMethod,
   trackItWalletIDMethodSelected,
   trackItwUserWithoutL3Bottomsheet,
   trackItwUserWithoutL3Requirements
 } from "../../../analytics";
-import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
-import { useIOSelector } from "../../../../../store/hooks";
 import { itwDisabledIdentificationMethodsSelector } from "../../../common/store/selectors/remoteConfig";
-import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
-import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   isCIEAuthenticationSupportedSelector,
   isL3FeaturesEnabledSelector,
   selectIsLoading
 } from "../../../machine/eid/selectors";
-import SpidLogo from "../../../../../../img/features/itWallet/identification/spid_logo.svg";
-import CiePin from "../../../../../../img/features/itWallet/identification/cie_pin.svg";
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
-import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
-// import { openWebUrl } from "../../../../../utils/url";
-// import ROUTES from "../../../../../navigation/routes";
+import { ItwParamsList } from "../../../navigation/ItwParamsList";
 
 export type ItwIdentificationNavigationParams = {
   eidReissuing?: boolean;
@@ -50,7 +48,7 @@ export const ItwIdentificationModeSelectionScreen = (
   props: ItwIdentificationModeSelectionScreenProps
 ) => {
   const { eidReissuing } = props.route.params;
-  // const navigation = useNavigation();
+  const navigation = useIONavigation();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
@@ -167,6 +165,22 @@ export const ItwIdentificationModeSelectionScreen = (
     );
   }
 
+  const onConfirmPress = () => {
+    navigation.popToTop();
+    navigation.reset({
+      index: 1,
+      routes: [
+        {
+          name: ROUTES.MAIN,
+          params: {
+            screen: ROUTES.WALLET_HOME,
+            params: { requiredEidFeedback: true }
+          }
+        }
+      ]
+    });
+  };
+
   return (
     <IOScrollViewWithLargeHeader
       title={{
@@ -175,9 +189,33 @@ export const ItwIdentificationModeSelectionScreen = (
       }}
       description={description}
       headerActionsProp={{ showHelp: true }}
-      goBack={() => {
-        // navigation.navigate(ROUTES.MAIN, {screen: ROUTES.WALLET_HOME, params: { newMethodAdded: false }});
-      }}
+      {...(eidReissuing
+        ? {
+            goBack: () =>
+              Alert.alert(
+                I18n.t(
+                  "features.itWallet.identification.mode.l2.reissuing.alert.title"
+                ),
+                "",
+                [
+                  {
+                    text: I18n.t(
+                      "features.itWallet.identification.mode.l2.reissuing.alert.confirm"
+                    ),
+                    style: "destructive",
+                    onPress: onConfirmPress
+                  },
+                  {
+                    text: I18n.t(
+                      "features.itWallet.identification.mode.l2.reissuing.alert.cancel"
+                    ),
+                    style: "cancel"
+                  }
+                ],
+                { cancelable: false }
+              )
+          }
+        : {})}
     >
       <ContentWrapper>
         <VStack space={24}>

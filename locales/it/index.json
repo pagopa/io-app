@@ -4648,6 +4648,11 @@
                   "title": "Continua con SPID",
                   "subtitle": "Dovrai usare credenziali e app (o SMS)"
                 }
+              },
+              "alert": {
+                "title": "Vuoi interrompere l’operazione?",
+                "confirm": "Sì, interrompi",
+                "cancel": "No, torna indietro"
               }
             },
             "method": {
