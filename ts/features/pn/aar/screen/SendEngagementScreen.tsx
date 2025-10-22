@@ -10,19 +10,22 @@ import { OperationResultScreenContent } from "../../../../components/screens/Ope
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { pnActivationUpsert } from "../../store/actions";
 import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";
-import {
-  trackSendActivationModalDialog,
-  trackSendActivationModalDialogActivationDismissed,
-  trackSendActivationModalDialogActivationStart
-} from "../analytics";
 import { sendBannerMixpanelEvents } from "../../analytics/activationReminderBanner";
 import { NOTIFICATIONS_ROUTES } from "../../../pushNotifications/navigation/routes";
 import {
+  NotificationModalFlow,
   SendOpeningSource,
   SendUserType
 } from "../../../pushNotifications/analytics";
 import { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
+import {
+  trackSendActivationModalDialog,
+  trackSendActivationModalDialogActivationStart,
+  trackSendActivationModalDialogActivationDismissed
+} from "../../analytics/send";
+
+const flow: NotificationModalFlow = "send_notification_opening";
 
 export type SendEngagementScreenNavigationParams = Readonly<{
   sendOpeningSource: SendOpeningSource;
@@ -52,7 +55,7 @@ export const SendEngagementScreen = ({ route }: SendEngagementScreenProps) => {
       navigation.popToTop();
     } else {
       navigation.replace(NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT, {
-        flow: "send_notification_opening",
+        flow,
         sendOpeningSource,
         sendUserType
       });
@@ -73,7 +76,7 @@ export const SendEngagementScreen = ({ route }: SendEngagementScreenProps) => {
 
   const onActivateService = useCallback(
     (isRetry: boolean = false) => {
-      trackSendActivationModalDialogActivationStart();
+      trackSendActivationModalDialogActivationStart(flow, sendUserType);
       if (isRetry) {
         navigation.setOptions({
           headerShown: true
@@ -88,26 +91,32 @@ export const SendEngagementScreen = ({ route }: SendEngagementScreenProps) => {
         })
       );
     },
-    [dispatch, navigation, onSENDActivationFailed, onSENDActivationSucceeded]
+    [
+      dispatch,
+      navigation,
+      sendUserType,
+      onSENDActivationFailed,
+      onSENDActivationSucceeded
+    ]
   );
   const onClose = useCallback(() => {
     if (screenStatus !== "Activating") {
-      trackSendActivationModalDialogActivationDismissed();
+      trackSendActivationModalDialogActivationDismissed(flow, sendUserType);
       navigation.popToTop();
     }
-  }, [navigation, screenStatus]);
+  }, [navigation, screenStatus, sendUserType]);
 
   useEffect(() => {
     if (screenStatus === "Waiting") {
       // Make sure that nothing sets screenStatus to Waiting,
       // otherwise there will be a double event tracking
-      trackSendActivationModalDialog();
+      trackSendActivationModalDialog(flow, sendUserType);
     } else if (screenStatus === "Failed") {
       // Here multiple tracking is fine, since we want
       // to track it every time that the user retries it
       sendBannerMixpanelEvents.bannerKO("aar");
     }
-  }, [screenStatus]);
+  }, [screenStatus, sendUserType]);
 
   if (screenStatus === "Failed") {
     return (
