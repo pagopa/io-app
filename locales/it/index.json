@@ -6215,7 +6215,8 @@
       "loading": {
         "subtitle": "Attendi qualche secondo",
         "title": "Stiamo elaborando la tua richiesta"
-      }
+      },
+      "initiativeImageAltText": "Immagine iniziativa"
     },
     "configuration": {
       "failureStates": {

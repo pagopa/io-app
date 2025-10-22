@@ -8,6 +8,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
 
 type Props = {
@@ -32,7 +33,7 @@ const IdPayOnboardingServiceHeader = (props: Props) => {
             imageProps={{
               source: { uri: thumbnailUrl }
             }}
-            alt="Initiative Image"
+            alt={I18n.t("idpay.onboarding.initiativeImageAltText")}
             aspectRatio="4:3"
           />
           <ContentWrapper>
