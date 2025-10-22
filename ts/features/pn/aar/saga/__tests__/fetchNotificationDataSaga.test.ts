@@ -9,8 +9,12 @@ import { ThirdPartyMessage as AarThirdPartyMessage } from "../../../../../../def
 import { pnMessagingServiceIdSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../../types/SessionToken";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
+import * as serviceDetailsSaga from "../../../../services/common/saga/getServiceDetails";
 import { profileFiscalCodeSelector } from "../../../../settings/common/store/selectors";
 import { thirdPartyMessage } from "../../../__mocks__/pnMessage";
+import { trackSendAARFailure } from "../../analytics";
+import { SendAARClient } from "../../api/client";
 import {
   populateStoresWithEphemeralAarMessageData,
   setAarFlowState
@@ -19,13 +23,10 @@ import { currentAARFlowData } from "../../store/selectors";
 import { sendAARFlowStates } from "../../utils/stateUtils";
 import {
   mockEphemeralAarMessageDataActionPayload,
+  sendAarMockStateFactory,
   sendAarMockStates
 } from "../../utils/testUtils";
 import { fetchAarDataSaga, testable } from "../fetchNotificationDataSaga";
-import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
-import { SendAARClient } from "../../api/client";
-import * as serviceDetailsSaga from "../../../../services/common/saga/getServiceDetails";
-import { trackSendAARFailure } from "../../analytics";
 
 const mockCurrentState = {
   type: sendAARFlowStates.fetchingNotificationData,
@@ -36,6 +37,10 @@ const mockCurrentState = {
     taxId: "RSSMRA74D22A001Q"
   }
 };
+
+const fetchingNotificationDataRequestAction = setAarFlowState(
+  sendAarMockStateFactory.fetchingNotificationData()
+);
 
 const { aarMessageDataPayloadFromResponse } = testable!;
 const mockSessionToken = "token" as SessionToken;
@@ -50,7 +55,12 @@ const mockResolvedCall = (resolved: any) =>
 describe("fetchAarDataSaga", () => {
   describe("error paths", () => {
     it("should early return if state is not fetchingNotificationData", () => {
-      testSaga(fetchAarDataSaga, jest.fn(), mockSessionToken)
+      testSaga(
+        fetchAarDataSaga,
+        jest.fn(),
+        mockSessionToken,
+        fetchingNotificationDataRequestAction
+      )
         .next()
         .select(currentAARFlowData)
         .next(sendAarMockStates[0])
@@ -68,13 +78,22 @@ describe("fetchAarDataSaga", () => {
       const fetchData = jest
         .fn()
         .mockReturnValue(mockResolvedCall(mockFailure));
-      testSaga(fetchAarDataSaga, fetchData, mockSessionToken)
+      testSaga(
+        fetchAarDataSaga,
+        fetchData,
+        mockSessionToken,
+        fetchingNotificationDataRequestAction
+      )
         .next()
         .select(currentAARFlowData)
         .next(mockCurrentState)
         .select(isPnTestEnabledSelector)
         .next(true)
-        .call(withRefreshApiCall, fetchData())
+        .call(
+          withRefreshApiCall,
+          fetchData(),
+          fetchingNotificationDataRequestAction
+        )
         .next(mockFailure)
         .call(trackSendAARFailure, "Fetch Notification", "Decoding failure ()")
         .next()
@@ -110,13 +129,22 @@ describe("fetchAarDataSaga", () => {
         .fn()
         .mockReturnValue(mockResolvedCall(mockResolvedEither));
 
-      testSaga(fetchAarDataSaga, fetchData, mockSessionToken)
+      testSaga(
+        fetchAarDataSaga,
+        fetchData,
+        mockSessionToken,
+        fetchingNotificationDataRequestAction
+      )
         .next()
         .select(currentAARFlowData)
         .next(mockCurrentState)
         .select(isPnTestEnabledSelector)
         .next(true)
-        .call(withRefreshApiCall, fetchData())
+        .call(
+          withRefreshApiCall,
+          fetchData(),
+          fetchingNotificationDataRequestAction
+        )
         .next(mockResolvedEither)
         .call(
           trackSendAARFailure,
@@ -151,7 +179,12 @@ describe("fetchAarDataSaga", () => {
       const fetchData = jest.fn().mockImplementation(() => {
         throw error;
       });
-      testSaga(fetchAarDataSaga, fetchData, mockSessionToken)
+      testSaga(
+        fetchAarDataSaga,
+        fetchData,
+        mockSessionToken,
+        fetchingNotificationDataRequestAction
+      )
         .next()
         .select(currentAARFlowData)
         .next(mockCurrentState)
@@ -189,13 +222,22 @@ describe("fetchAarDataSaga", () => {
     it("should handle a non-parsable success payload and return", () => {
       const mockValue = E.right({ status: 200, value: mockNotification });
       const fetchData = jest.fn().mockReturnValue(mockResolvedCall(mockValue));
-      testSaga(fetchAarDataSaga, fetchData, mockSessionToken)
+      testSaga(
+        fetchAarDataSaga,
+        fetchData,
+        mockSessionToken,
+        fetchingNotificationDataRequestAction
+      )
         .next()
         .select(currentAARFlowData)
         .next(mockCurrentState)
         .select(isPnTestEnabledSelector)
         .next(true)
-        .call(withRefreshApiCall, fetchData())
+        .call(
+          withRefreshApiCall,
+          fetchData(),
+          fetchingNotificationDataRequestAction
+        )
         .next(mockValue)
         .call(
           aarMessageDataPayloadFromResponse,
@@ -235,13 +277,22 @@ describe("fetchAarDataSaga", () => {
       const mockPayload = mockEphemeralAarMessageDataActionPayload;
       const mockValue = E.right({ status: 200, value: mockNotification });
       const fetchData = jest.fn().mockReturnValue(mockResolvedCall(mockValue));
-      testSaga(fetchAarDataSaga, fetchData, mockSessionToken)
+      testSaga(
+        fetchAarDataSaga,
+        fetchData,
+        mockSessionToken,
+        fetchingNotificationDataRequestAction
+      )
         .next()
         .select(currentAARFlowData)
         .next(mockCurrentState)
         .select(isPnTestEnabledSelector)
         .next(true)
-        .call(withRefreshApiCall, fetchData())
+        .call(
+          withRefreshApiCall,
+          fetchData(),
+          fetchingNotificationDataRequestAction
+        )
         .next(mockValue)
         .call(
           aarMessageDataPayloadFromResponse,

@@ -41,7 +41,8 @@ export function* downloadAARAttachmentSaga(
       keyInfo,
       attachment.url,
       useSendUATEnvironment,
-      mandateId
+      mandateId,
+      action
     );
 
     const attachmentDownloadPath = yield* call(
@@ -82,7 +83,8 @@ function* getAttachmentPrevalidatedUrl(
   keyInfo: KeyInfo,
   attachmentUrl: string,
   useUATEnvironment: boolean,
-  mandateId: string | undefined
+  mandateId: string | undefined,
+  action: ActionType<typeof downloadAttachment.request>
 ): Generator<ReduxSagaEffect, string> {
   while (true) {
     const attachmentMetadataRetryAfterOrUrl = yield* call(
@@ -91,7 +93,8 @@ function* getAttachmentPrevalidatedUrl(
       keyInfo,
       attachmentUrl,
       useUATEnvironment,
-      mandateId
+      mandateId,
+      action
     );
     if (typeof attachmentMetadataRetryAfterOrUrl === "string") {
       return attachmentMetadataRetryAfterOrUrl;
@@ -109,7 +112,8 @@ function* getAttachmentMetadata(
   keyInfo: KeyInfo,
   attachmentUrl: string,
   useUATEnvironment: boolean,
-  mandateId?: string
+  mandateId: string | undefined,
+  action: ActionType<typeof downloadAttachment.request>
 ): Generator<ReduxSagaEffect, string | number> {
   const sendAARClient = createSendAARClientWithLollipop(apiUrlPrefix, keyInfo);
   const getAttachmentMetadataFactory = sendAARClient.getNotificationAttachment;
@@ -126,7 +130,8 @@ function* getAttachmentMetadata(
 
   const responseEither = (yield* call(
     withRefreshApiCall,
-    request
+    request,
+    action
   )) as SagaCallReturnType<typeof getAttachmentMetadataFactory>;
 
   if (isLeft(responseEither)) {
