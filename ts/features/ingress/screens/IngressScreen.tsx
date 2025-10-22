@@ -4,6 +4,8 @@
  */
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { AccessibilityInfo, View } from "react-native";
 import I18n from "i18next";
 import { Body, ContentWrapper } from "@pagopa/io-app-design-system";
@@ -33,6 +35,8 @@ import { OfflineAccessReasonEnum } from "../store/reducer";
 import { itwOfflineAccessAvailableSelector } from "../../itwallet/common/store/selectors";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { IdentificationBackActionType } from "../../identification/store/reducers";
+import { profileSelector } from "../../settings/common/store/selectors";
+import { sessionInfoSelector } from "../../authentication/common/store/selectors";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
 const TIMEOUT_BLOCKING_SCREEN = (25 * 1000) as Millisecond;
@@ -213,17 +217,42 @@ const IngressScreenBlockingError = memo(() => {
   const operationRef = useRef<View>(null);
   const isBackendStatusLoaded = useIOSelector(isBackendStatusLoadedSelector);
   const isMixpanelEnabled = useIOSelector(isMixpanelEnabledSelector);
+  const isConnected = useIOSelector(isConnectedSelector);
+  const profileLoaded = useIOSelector(profileSelector);
+  const sessionLoaded = useIOSelector(sessionInfoSelector);
 
   useEffect(() => {
     setAccessibilityFocus(operationRef);
   }, []);
+
+  // Build API_failure parameter based on current state
+  const getApiFailureValue = (): string => {
+    const apiFailures: string[] = [];
+
+    // Add "ping" if isConnected is undefined
+    if (isConnected === undefined) {
+      apiFailures.push("ping");
+    }
+
+    // Add "get session" if sessionLoaded is None (error loading session)
+    if (O.isNone(sessionLoaded)) {
+      apiFailures.push("get session");
+    }
+
+    // Add "get profile" if profileLoaded is error or someError
+    if (pot.isError(profileLoaded)) {
+      apiFailures.push("get profile");
+    }
+
+    return apiFailures.join(", ");
+  };
 
   useEffect(() => {
     // It's not necessary to check if mixpanel is initialized since this screen is shown after 10 seconds.
     // If mixpanel is not initialized at that time, we have an issue spanning, system-wide.
     if (isMixpanelEnabled !== false) {
       if (isBackendStatusLoaded) {
-        void trackIngressTimeout();
+        void trackIngressTimeout(getApiFailureValue());
       } else {
         void trackIngressCdnSystemError();
       }
