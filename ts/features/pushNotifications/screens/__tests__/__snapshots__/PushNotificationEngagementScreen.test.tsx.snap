@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PushNotificationEngagementScreen should match snapshot and track analytics event 1`] = `
+exports[`PushNotificationEngagementScreen should match snapshot 1`] = `
 <View
   style={
     {

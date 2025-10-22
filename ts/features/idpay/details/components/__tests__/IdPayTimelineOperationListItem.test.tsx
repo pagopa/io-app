@@ -426,7 +426,7 @@ describe("Test IdPayTimelineOperationListItem", () => {
         const T_DATE = new Date(2023, 4, 5, 16, 31);
         const T_AMOUNT = 3456.1;
         const T_ACCRUED = 23456;
-        const T_ACCRUED_STRING = "-234,56 €";
+        const T_ACCRUED_STRING = "−234,56 €";
         const T_SUBTITLE = getOperationSubtitleWithAmount(T_DATE, T_AMOUNT);
 
         const T_TITLE = I18n.t(
@@ -456,7 +456,7 @@ describe("Test IdPayTimelineOperationListItem", () => {
         const T_DATE = new Date(2023, 4, 5, 16, 31);
         const T_AMOUNT = 3456.1;
         const T_ACCRUED = 23456;
-        const T_ACCRUED_STRING = "-234,56 €";
+        const T_ACCRUED_STRING = "−234,56 €";
         const T_SUBTITLE = getOperationSubtitleWithAmount(T_DATE, T_AMOUNT);
         const T_BUSINESS_NAME = "Business name";
 
@@ -489,7 +489,7 @@ describe("Test IdPayTimelineOperationListItem", () => {
         const T_DATE = new Date(2023, 4, 5, 16, 31);
         const T_AMOUNT = 3456.1;
         const T_ACCRUED = 23456;
-        const T_ACCRUED_STRING = "-234,56 €";
+        const T_ACCRUED_STRING = "−234,56 €";
         const T_SUBTITLE = getOperationSubtitleWithAmount(
           T_DATE,
           T_AMOUNT,
@@ -527,7 +527,7 @@ describe("Test IdPayTimelineOperationListItem", () => {
         const T_DATE = new Date(2023, 4, 5, 16, 31);
         const T_AMOUNT = 3456.1;
         const T_ACCRUED = 23456;
-        const T_ACCRUED_STRING = "-234,56 €";
+        const T_ACCRUED_STRING = "−234,56 €";
         const T_SUBTITLE = getOperationSubtitleWithAmount(
           T_DATE,
           T_AMOUNT,
@@ -564,7 +564,7 @@ describe("Test IdPayTimelineOperationListItem", () => {
         const T_DATE = new Date(2023, 4, 5, 16, 31);
         const T_AMOUNT = 3456.1;
         const T_ACCRUED = 23456;
-        const T_ACCRUED_STRING = "-234,56 €";
+        const T_ACCRUED_STRING = "−234,56 €";
         const T_SUBTITLE = getOperationSubtitleWithAmount(
           T_DATE,
           T_AMOUNT,
@@ -604,7 +604,7 @@ describe("Test IdPayTimelineOperationListItem", () => {
         const T_DATE = new Date(2023, 4, 5, 16, 31);
         const T_AMOUNT = 3456.1;
         const T_ACCRUED = 23456;
-        const T_ACCRUED_STRING = "-234,56 €";
+        const T_ACCRUED_STRING = "−234,56 €";
         const T_SUBTITLE = getOperationSubtitleWithAmount(
           T_DATE,
           T_AMOUNT,
@@ -665,7 +665,7 @@ describe("Test getOperationSubtitleWithAmount", () => {
   it("should return the correct date string with negative number", () => {
     const T_DATE = new Date(2023, 4, 5, 16, 31);
     const T_AMOUNT = 413567;
-    const T_RESULT = "05 mag 2023, 16:31 · -4.135,67 €";
+    const T_RESULT = "05 mag 2023, 16:31 · −4.135,67 €";
 
     const result = getOperationSubtitleWithAmount(T_DATE, T_AMOUNT, true);
 

@@ -9,30 +9,32 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useState } from "react";
+import I18n from "i18next";
+import { useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
-import I18n from "i18next";
 import { TransactionBarCodeResponse } from "../../../../../definitions/idpay/TransactionBarCodeResponse";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { IDPayDetailsRoutes } from "../../details/navigation";
-import { IdPayBarcodeExpireProgressBar } from "../components/IdPayBarcodeExpireProgressBar";
-import { IdPayBarcodeParamsList } from "../navigation/params";
-import { idPayBarcodeByInitiativeIdSelector } from "../store";
-import { idPayGenerateBarcode } from "../store/actions";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
+  trackIDPayDetailCodeExpired,
+  trackIDPayDetailCodeGenerateNew,
   trackIDPayDetailCodeGenerationConversion,
   trackIDPayDetailCodeGenerationCopy,
   trackIDPayDetailCodeGenerationError
 } from "../../details/analytics";
+import { IDPayDetailsRoutes } from "../../details/navigation";
 import { idpayInitiativeDetailsSelector } from "../../details/store";
+import { IdPayBarcodeExpireProgressBar } from "../components/IdPayBarcodeExpireProgressBar";
+import { IdPayBarcodeParamsList } from "../navigation/params";
+import { idPayBarcodeByInitiativeIdSelector } from "../store";
+import { idPayGenerateBarcode } from "../store/actions";
 
 // -------------------- types --------------------
 
@@ -50,6 +52,7 @@ type SuccessContentProps = {
 };
 type BarcodeExpiredContentProps = {
   initiativeId: string;
+  initiativeName?: string;
 };
 
 // -------------------- main component --------------------
@@ -150,9 +153,24 @@ const SuccessContent = ({
 
   const [isBarcodeExpired, setIsBarcodeExpired] = useState(false);
 
+  useEffect(() => {
+    if (isBarcodeExpired) {
+      trackIDPayDetailCodeExpired({
+        initiativeId,
+        initiativeName
+      });
+    }
+  }, [initiativeId, initiativeName, isBarcodeExpired]);
+
   if (isBarcodeExpired) {
-    return <BarcodeExpiredContent initiativeId={barcode.initiativeId} />;
+    return (
+      <BarcodeExpiredContent
+        initiativeId={barcode.initiativeId}
+        initiativeName={initiativeName}
+      />
+    );
   }
+
   return (
     <IOScrollViewWithLargeHeader
       includeContentMargins
@@ -197,14 +215,21 @@ const SuccessContent = ({
 };
 
 const BarcodeExpiredContent = ({
-  initiativeId
+  initiativeId,
+  initiativeName
 }: BarcodeExpiredContentProps) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const { goBack } = navigation;
   const ctaClickHandler = () => {
+    trackIDPayDetailCodeGenerateNew({
+      initiativeId,
+      initiativeName
+    });
+
     dispatch(idPayGenerateBarcode.request({ initiativeId }));
   };
+
   return (
     <OperationResultScreenContent
       isHeaderVisible
