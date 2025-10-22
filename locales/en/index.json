@@ -5798,7 +5798,7 @@
           "details": {
             "alerts": {
               "AUTHORIZED": "Questa transazione è in corso, ovvero è stata autorizzata ma non è ancora stata confermata dall’esercente.",
-              "CANCELLED": "Questa transazione è stata annullata dall’esercente, abbiamo riaccreditato l’importo sul portafoglio dell’iniziativa."
+              "CANCELLED": "Questa transazione è stata annullata dall’esercente."
             },
             "labels": {
               "business": "Esercente",
