@@ -22,10 +22,9 @@ export const ItwIssuanceEidReissuanceLandingScreen = () => {
     return (
       <OperationResultScreenContent
         title={I18n.t("features.itWallet.issuance.genericError.title")}
-        pictogram="error"
-        enableAnimatedPictogram
+        pictogram="fatalError"
         action={{
-          label: I18n.t("global.buttons.close"),
+          label: I18n.t("global.buttons.back"),
           onPress: () => navigation.goBack()
         }}
       />
