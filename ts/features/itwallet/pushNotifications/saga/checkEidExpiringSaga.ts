@@ -11,9 +11,15 @@ import { openWebUrl } from "../../../../utils/url.ts";
 const EID_REISSUANCE_DEEP_LINK =
   "ioit://itw/identification/mode-selection?eidReissuing=true";
 
+/**
+ * This saga checks if the eID JWT is expiring soon and triggers a local push notification
+ * to remind the user to reissue it.
+ * The notification contains a deep link to the eID reissuance flow.
+ */
 export function* checkEidExpiringSaga() {
   const pid = O.toUndefined(yield* select(itwCredentialsEidSelector));
 
+  // If there is no eID credential, exit the saga
   if (!pid) {
     return;
   }
@@ -28,11 +34,12 @@ export function* checkEidExpiringSaga() {
       O.chainNullableK(payload => payload.deepLink ?? payload.data?.deepLink),
       O.toUndefined
     );
-
+    // If the app was opened from the notification, navigate to the deep link and don't send another notification
     if (decodedDeepLink) {
       openWebUrl(decodedDeepLink);
     } else {
-      if (jwtExpireDays > 1) {
+      // If the eID JWT is expiring in 1 day or less, show the local notification
+      if (jwtExpireDays <= 1) {
         PushNotification.localNotification({
           id: "itw_reissuing_eid_notification",
           category: "itw",
