@@ -58,7 +58,7 @@ const DEFAULT_HEADING_MARGINS: HeadingMargins = {
   marginEnd: 4
 };
 
-const handleOpenLink = (linkTo: (path: string) => void, url: string) => {
+export const handleOpenLink = (linkTo: (path: string) => void, url: string) => {
   if (isIoInternalLink(url)) {
     handleInternalLink(linkTo, url);
     // Non-secure HTTP links have to be supported since

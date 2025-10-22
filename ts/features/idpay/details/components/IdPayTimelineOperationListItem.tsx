@@ -165,7 +165,7 @@ const getTransactionOperationProps = (
   );
 
   const getAccruedString = () => {
-    const signString = isReversal ? "" : "-";
+    const signString = isReversal ? "" : "−";
     const accruedString = `${formatAbsNumberAmountCentsOrDefault(
       accruedCents
     )} €`;
@@ -400,7 +400,7 @@ export const getOperationSubtitleWithAmount = (
   amount: number | undefined,
   withMinusSign: boolean = false
 ): string => {
-  const signString = withMinusSign ? "-" : "";
+  const signString = withMinusSign ? "−" : "";
   const amountString = `${formatAbsNumberAmountCentsOrDefault(amount)} €`;
 
   return `${getOperationSubtitle(
