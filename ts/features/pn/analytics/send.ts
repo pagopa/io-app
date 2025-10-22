@@ -1,13 +1,15 @@
 import { mixpanelTrack } from "../../../mixpanel";
 import { buildEventProperties } from "../../../utils/analytics";
-import { NotificationModalFlow } from "../../pushNotifications/analytics";
+import {
+  NotificationModalFlow,
+  SendUserType
+} from "../../pushNotifications/analytics";
 
 export type SendActivationSource = "tos_bottomsheet" | "nurturing_bottomsheet";
-export type SendUser = "recipient" | "mandatory" | "not_set";
 
 export const trackSendActivationModalDialog = (
   flow: NotificationModalFlow,
-  send_user: SendUser = "not_set"
+  send_user: SendUserType = "not_set"
 ) => {
   void mixpanelTrack(
     "SEND_ACTIVATION_MODAL_DIALOG",
@@ -20,7 +22,7 @@ export const trackSendActivationModalDialog = (
 
 export const trackSendActivationModalDialogActivationStart = (
   flow: NotificationModalFlow,
-  send_user: SendUser = "not_set"
+  send_user: SendUserType = "not_set"
 ) => {
   void mixpanelTrack(
     "SEND_ACTIVATION_MODAL_DIALOG_ACTIVATION_START",
@@ -32,7 +34,7 @@ export const trackSendActivationModalDialogActivationStart = (
 };
 export const trackSendActivationModalDialogActivationDismissed = (
   flow: NotificationModalFlow,
-  send_user: SendUser = "not_set"
+  send_user: SendUserType = "not_set"
 ) => {
   void mixpanelTrack(
     "SEND_ACTIVATION_MODAL_DIALOG_DISMISSED",
@@ -44,7 +46,7 @@ export const trackSendActivationModalDialogActivationDismissed = (
 };
 export const trackSendAcceptanceDialog = (
   flow: NotificationModalFlow,
-  send_user: SendUser = "not_set"
+  send_user: SendUserType = "not_set"
 ) => {
   void mixpanelTrack(
     "SEND_ACCEPTANCE_DIALOG",
@@ -56,7 +58,7 @@ export const trackSendAcceptanceDialog = (
 };
 export const trackSendNurturingDialog = (
   flow: NotificationModalFlow,
-  send_user: SendUser = "not_set"
+  send_user: SendUserType = "not_set"
 ) => {
   void mixpanelTrack(
     "SEND_NURTURING_DIALOG",
@@ -69,7 +71,7 @@ export const trackSendNurturingDialog = (
 export const trackSendActivationAccepted = (
   source: SendActivationSource,
   flow: NotificationModalFlow,
-  send_user: SendUser = "not_set"
+  send_user: SendUserType = "not_set"
 ) => {
   void mixpanelTrack(
     "SEND_ACTIVATION_ACCEPTED",
@@ -82,7 +84,7 @@ export const trackSendActivationAccepted = (
 };
 export const trackSendAcceptanceDialogClosure = (
   flow: NotificationModalFlow,
-  send_user: SendUser = "not_set"
+  send_user: SendUserType = "not_set"
 ) => {
   void mixpanelTrack(
     "SEND_ACCEPTANCE_DIALOG_CLOSURE",
@@ -94,7 +96,7 @@ export const trackSendAcceptanceDialogClosure = (
 };
 export const trackSendActivationDeclined = (
   flow: NotificationModalFlow,
-  send_user: SendUser = "not_set"
+  send_user: SendUserType = "not_set"
 ) => {
   void mixpanelTrack(
     "SEND_ACTIVATION_DECLINED",
@@ -106,7 +108,7 @@ export const trackSendActivationDeclined = (
 };
 export const trackSendNurturingDialogClosure = (
   flow: NotificationModalFlow,
-  send_user: SendUser = "not_set"
+  send_user: SendUserType = "not_set"
 ) => {
   void mixpanelTrack(
     "SEND_NURTURING_DIALOG_CLOSURE",

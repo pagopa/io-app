@@ -6,14 +6,13 @@ import {
   mixpanelTrack
 } from "../../../mixpanel";
 import { buildEventProperties } from "../../../utils/analytics";
-import type { SendUser } from "../../pn/analytics/send";
 
 export type NotificationModalFlow =
   | "authentication"
   | "send_notification_opening"
   | "access";
 export type SendOpeningSource = "aar" | "message" | "not_set";
-export type SendUserType = SendUser;
+export type SendUserType = "recipient" | "mandatory" | "not_set";
 
 export const trackNotificationInstallationTokenNotChanged = () =>
   void mixpanelTrack(

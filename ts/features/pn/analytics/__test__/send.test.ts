@@ -1,15 +1,18 @@
 import * as sendEvents from "../send";
-import type { SendActivationSource, SendUser } from "../send";
+import type { SendActivationSource } from "../send";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
-import { NotificationModalFlow } from "../../../pushNotifications/analytics";
+import {
+  NotificationModalFlow,
+  SendUserType
+} from "../../../pushNotifications/analytics";
 
 const notificationModalFlowList: Array<NotificationModalFlow> = [
   "authentication",
   "send_notification_opening",
   "access"
 ];
-const sendUserList: Array<SendUser> = ["mandatory", "recipient", "not_set"];
+const sendUserList: Array<SendUserType> = ["mandatory", "recipient", "not_set"];
 const sendActivationSourceList: Array<SendActivationSource> = [
   "tos_bottomsheet",
   "nurturing_bottomsheet"
