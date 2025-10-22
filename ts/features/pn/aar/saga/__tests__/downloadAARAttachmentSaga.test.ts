@@ -503,6 +503,55 @@ describe("getAttachmentMetadata", () => {
           isTest: useUATEnvironment
         });
       });
+      it(`should throw FAST_LOGIN_EXPIRED on 401 response (mandateId: ${mandateIdVariant} isUAT: ${useUATEnvironment})`, () => {
+        const response = E.right({
+          status: 401,
+          value: {
+            status: 401,
+            title: "Unauthorized",
+            detail: "Your session has expired"
+          }
+        });
+
+        const {
+          mockedGetNotificationAttachment,
+          mockedGetNotificationAttachmentInput
+        } = generateMocks(response);
+
+        // eslint-disable-next-line functional/no-let
+        let expectionThrown = false;
+        try {
+          testSaga(
+            testable!.getAttachmentMetadata,
+            bearerToken,
+            keyInfo,
+            attachment.url,
+            useUATEnvironment,
+            mandateIdVariant,
+            downloadRequestAction
+          )
+            .next()
+            .call(
+              withRefreshApiCall,
+              mockedGetNotificationAttachment,
+              downloadRequestAction
+            )
+            .next(response);
+        } catch (e: unknown) {
+          expectionThrown = true;
+          expect(e).toEqual(new Error("FAST_LOGIN_EXPIRED"));
+        }
+
+        expect(expectionThrown).toBe(true);
+        expect(mockedGetNotificationAttachmentInput.mock.calls.length).toBe(1);
+        expect(mockedGetNotificationAttachmentInput.mock.calls[0][0]).toEqual({
+          Bearer: `Bearer ${bearerToken}`,
+          urlEncodedBase64AttachmentUrl: encodedUrl,
+          "x-pagopa-pn-io-src": "QRCODE",
+          mandateId: mandateIdVariant,
+          isTest: useUATEnvironment
+        });
+      });
     });
   });
 });

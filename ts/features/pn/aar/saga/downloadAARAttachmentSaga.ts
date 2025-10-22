@@ -61,7 +61,16 @@ export function* downloadAARAttachmentSaga(
     );
   } catch (e) {
     const reason = unknownToReason(e);
-    yield* call(trackSendAARFailure, "Download Attachment", reason);
+    if (e instanceof Error && e.message === "FAST_LOGIN_EXPIRED") {
+      yield* call(
+        trackSendAARFailure,
+        "Download Attachment",
+        "Fast login expired"
+      );
+    } else {
+      yield* call(trackSendAARFailure, "Download Attachment", reason);
+    }
+
     yield* put(
       downloadAttachment.failure({
         attachment,
@@ -87,23 +96,31 @@ function* getAttachmentPrevalidatedUrl(
   action: ActionType<typeof downloadAttachment.request>
 ): Generator<ReduxSagaEffect, string> {
   while (true) {
-    const attachmentMetadataRetryAfterOrUrl = yield* call(
-      getAttachmentMetadata,
-      bearerToken,
-      keyInfo,
-      attachmentUrl,
-      useUATEnvironment,
-      mandateId,
-      action
-    );
-    if (typeof attachmentMetadataRetryAfterOrUrl === "string") {
-      return attachmentMetadataRetryAfterOrUrl;
+    try {
+      const attachmentMetadataRetryAfterOrUrl = yield* call(
+        getAttachmentMetadata,
+        bearerToken,
+        keyInfo,
+        attachmentUrl,
+        useUATEnvironment,
+        mandateId,
+        action
+      );
+      if (typeof attachmentMetadataRetryAfterOrUrl === "string") {
+        return attachmentMetadataRetryAfterOrUrl;
+      }
+      const retryAfterMilliseconds = yield* call(
+        restrainRetryAfterIntervalInMilliseconds,
+        attachmentMetadataRetryAfterOrUrl
+      );
+      yield* delay(retryAfterMilliseconds);
+    } catch (e) {
+      if (e instanceof Error && e.message === "FAST_LOGIN_EXPIRED") {
+        throw e;
+      }
+
+      throw e;
     }
-    const retryAfterMilliseconds = yield* call(
-      restrainRetryAfterIntervalInMilliseconds,
-      attachmentMetadataRetryAfterOrUrl
-    );
-    yield* delay(retryAfterMilliseconds);
   }
 }
 
@@ -140,6 +157,9 @@ function* getAttachmentMetadata(
   }
 
   const { status, value } = responseEither.right;
+  if (status === 401) {
+    throw new Error("FAST_LOGIN_EXPIRED");
+  }
   if (status !== 200) {
     const reason = aarProblemJsonAnalyticsReport(status, value);
     throw Error(`HTTP request failed (${reason})`);
