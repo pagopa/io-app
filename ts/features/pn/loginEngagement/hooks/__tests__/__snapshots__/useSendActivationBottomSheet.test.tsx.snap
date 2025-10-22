@@ -47,7 +47,8 @@ exports[`useSendActivationBottomSheet should match the snapshot 1`] = `
       <ForwardRef
         label="Continua"
         loading={false}
-        onPress={[MockFunction]}
+        onPress={[Function]}
+        testID="sendActivationID"
       />
       <View />
     </VStack>
