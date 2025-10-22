@@ -35,6 +35,7 @@ const mockPopToTop = jest.fn();
 const mockReplace = jest.fn();
 const mockDispatch = jest.fn();
 const mockToastSuccess = jest.fn();
+const mockToastError = jest.fn();
 const mockIsLoadingPnActivationSelector =
   isLoadingPnActivationSelector as jest.Mock;
 const mockAreNotificationPermissionsEnabledSelector =
@@ -52,7 +53,10 @@ describe(useSendActivationFlow, () => {
       replace: mockReplace
     });
     mockUseIODispatch.mockReturnValue(mockDispatch);
-    mockUseIOToast.mockReturnValue({ success: mockToastSuccess });
+    mockUseIOToast.mockReturnValue({
+      success: mockToastSuccess,
+      error: mockToastError
+    });
   });
 
   it("should return the initial state correctly", () => {
@@ -88,86 +92,140 @@ describe(useSendActivationFlow, () => {
     );
   });
 
-  it("should handle the success callback correctly and call toastSuccess and popToTop", () => {
-    mockIsLoadingPnActivationSelector.mockReturnValue(false);
-    mockAreNotificationPermissionsEnabledSelector.mockReturnValue(true);
+  describe("success callback", () => {
+    it("should handle the success callback correctly and call toastSuccess and popToTop", () => {
+      mockIsLoadingPnActivationSelector.mockReturnValue(false);
+      mockAreNotificationPermissionsEnabledSelector.mockReturnValue(true);
 
-    const { result } = renderHook(() => useSendActivationFlow());
+      const { result } = renderHook(() => useSendActivationFlow());
 
-    act(() => {
-      result.current.requestSendActivation();
+      act(() => {
+        result.current.requestSendActivation();
+      });
+
+      // Simulate the success callback
+      const successCallback = mockDispatch.mock.calls[0][0].payload.onSuccess;
+      act(() => {
+        successCallback();
+      });
+
+      expect(mockReplace).not.toHaveBeenCalled();
+      expect(mockPopToTop).toHaveBeenCalledTimes(1);
+      expect(mockDispatch).toHaveBeenCalledWith(
+        setSendEngagementScreenHasBeenDismissed()
+      );
+      expect(mockToastSuccess).toHaveBeenCalledTimes(1);
+      expect(mockToastError).not.toHaveBeenCalled();
+      expect(mockToastSuccess).toHaveBeenCalledWith(
+        i18n.t("features.pn.loginEngagement.send.toast")
+      );
     });
 
-    // Simulate the success callback
-    const successCallback = mockDispatch.mock.calls[0][0].payload.onSuccess;
-    act(() => {
-      successCallback();
-    });
+    it("should handle the success callback correctly and call replace with the right params", () => {
+      mockIsLoadingPnActivationSelector.mockReturnValue(false);
+      mockAreNotificationPermissionsEnabledSelector.mockReturnValue(false);
 
-    expect(mockReplace).not.toHaveBeenCalled();
-    expect(mockPopToTop).toHaveBeenCalledTimes(1);
-    expect(mockDispatch).toHaveBeenCalledWith(
-      setSendEngagementScreenHasBeenDismissed()
-    );
-    expect(mockToastSuccess).toHaveBeenCalledTimes(1);
-    expect(mockToastSuccess).toHaveBeenCalledWith(
-      i18n.t("features.pn.loginEngagement.send.toast")
-    );
+      const { result } = renderHook(() => useSendActivationFlow());
+
+      act(() => {
+        result.current.requestSendActivation();
+      });
+
+      // Simulate the success callback
+      const successCallback = mockDispatch.mock.calls[0][0].payload.onSuccess;
+      act(() => {
+        successCallback();
+      });
+
+      expect(mockPopToTop).not.toHaveBeenCalled();
+      expect(mockReplace).toHaveBeenCalledTimes(1);
+      expect(mockReplace).toHaveBeenCalledWith(
+        NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT,
+        {
+          flow: "access"
+        }
+      );
+      expect(mockDispatch).toHaveBeenCalledTimes(3);
+      expect(mockDispatch).toHaveBeenCalledWith(
+        setSendEngagementScreenHasBeenDismissed()
+      );
+      expect(mockDispatch).toHaveBeenCalledWith(
+        setSecurityAdviceReadyToShow(true)
+      );
+      expect(mockToastSuccess).toHaveBeenCalledTimes(1);
+      expect(mockToastError).not.toHaveBeenCalled();
+      expect(mockToastSuccess).toHaveBeenCalledWith(
+        i18n.t("features.pn.loginEngagement.send.toast")
+      );
+    });
   });
+  describe("failure callback", () => {
+    [false, undefined].forEach(rateLimited => {
+      it(`should handle the failure callback correctly, rateLimited: ${rateLimited}`, () => {
+        const { result } = renderHook(() => useSendActivationFlow());
 
-  it("should handle the success callback correctly and call replace with the right params", () => {
-    mockIsLoadingPnActivationSelector.mockReturnValue(false);
-    mockAreNotificationPermissionsEnabledSelector.mockReturnValue(false);
+        act(() => {
+          result.current.requestSendActivation();
+        });
+        expect(mockDispatch).toHaveBeenCalledTimes(1);
 
-    const { result } = renderHook(() => useSendActivationFlow());
+        // Simulate the failure callback
+        const failureCallback = mockDispatch.mock.calls[0][0].payload.onFailure;
+        act(() => {
+          failureCallback(rateLimited);
+        });
 
-    act(() => {
-      result.current.requestSendActivation();
+        expect(mockPopToTop).not.toHaveBeenCalled();
+        expect(mockToastSuccess).not.toHaveBeenCalled();
+        expect(mockToastError).not.toHaveBeenCalled();
+        expect(mockReplace).toHaveBeenCalled();
+        expect(mockReplace).toHaveBeenCalledTimes(1);
+      });
+
+      [true, false].forEach(notificationsEnabled => {
+        it(`should handle the failure callback correctly, rateLimited: true, notificationPermissionsEnabled: ${notificationsEnabled}`, () => {
+          mockAreNotificationPermissionsEnabledSelector.mockReturnValue(
+            notificationsEnabled
+          );
+          const { result } = renderHook(() => useSendActivationFlow());
+
+          act(() => {
+            result.current.requestSendActivation();
+          });
+
+          expect(mockDispatch).toHaveBeenCalledTimes(1);
+          // Simulate the failure callback
+          const failureCallback =
+            mockDispatch.mock.calls[0][0].payload.onFailure;
+          mockDispatch.mockClear();
+          expect(mockDispatch).toHaveBeenCalledTimes(0);
+          act(() => {
+            failureCallback(true);
+          });
+
+          expect(mockDispatch).toHaveBeenCalledTimes(1); // second call
+          expect(mockDispatch).toHaveBeenCalledWith(
+            setSecurityAdviceReadyToShow(true)
+          );
+
+          if (notificationsEnabled) {
+            expect(mockReplace).not.toHaveBeenCalled();
+            expect(mockPopToTop).toHaveBeenCalledTimes(1);
+          } else {
+            expect(mockPopToTop).not.toHaveBeenCalled();
+            expect(mockReplace).toHaveBeenCalledTimes(1);
+            expect(mockReplace).toHaveBeenCalledWith(
+              NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT,
+              {
+                flow: "access"
+              }
+            );
+          }
+
+          expect(mockToastSuccess).not.toHaveBeenCalled();
+          expect(mockToastError).toHaveBeenCalledTimes(1);
+        });
+      });
     });
-
-    // Simulate the success callback
-    const successCallback = mockDispatch.mock.calls[0][0].payload.onSuccess;
-    act(() => {
-      successCallback();
-    });
-
-    expect(mockPopToTop).not.toHaveBeenCalled();
-    expect(mockReplace).toHaveBeenCalledTimes(1);
-    expect(mockReplace).toHaveBeenCalledWith(
-      NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT,
-      {
-        flow: "access"
-      }
-    );
-    expect(mockDispatch).toHaveBeenCalledTimes(3);
-    expect(mockDispatch).toHaveBeenCalledWith(
-      setSendEngagementScreenHasBeenDismissed()
-    );
-    expect(mockDispatch).toHaveBeenCalledWith(
-      setSecurityAdviceReadyToShow(true)
-    );
-    expect(mockToastSuccess).toHaveBeenCalledTimes(1);
-    expect(mockToastSuccess).toHaveBeenCalledWith(
-      i18n.t("features.pn.loginEngagement.send.toast")
-    );
-  });
-
-  it("should handle the failure callback correctly", () => {
-    const { result } = renderHook(() => useSendActivationFlow());
-
-    act(() => {
-      result.current.requestSendActivation();
-    });
-
-    // Simulate the failure callback
-    const failureCallback = mockDispatch.mock.calls[0][0].payload.onFailure;
-    act(() => {
-      failureCallback();
-    });
-
-    expect(mockPopToTop).not.toHaveBeenCalled();
-    expect(mockReplace).toHaveBeenCalledTimes(1);
-    expect(mockToastSuccess).not.toHaveBeenCalled();
-    expect(mockDispatch).toHaveBeenCalledTimes(1);
   });
 });

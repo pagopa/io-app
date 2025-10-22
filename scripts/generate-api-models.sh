@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IO_BACKEND_VERSION=v17.5.0
+IO_BACKEND_VERSION=v17.5.1
 # need to change after merge on io-services-metadata
 IO_SERVICES_METADATA_VERSION=1.0.86
 # Session manager version
@@ -39,7 +39,7 @@ declare -a apis=(
   "./definitions/cgn https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_cgn.yaml"
   "./definitions/cgn/merchants https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_cgn_operator_search.yaml"
   # PN APIs
-  "./definitions/pn https://raw.githubusercontent.com/pagopa/io-backend/d5e69f58fd1e0e00b079816aff92e5baa72f6d28/openapi/generated/api_pn.yaml"
+  "./definitions/pn https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_pn.yaml"
   "./definitions/pn/aar https://raw.githubusercontent.com/pagopa/io-messages/2b0d3d226b95f731c4a6fdf58daff2e6dfcb4ef0/apps/send-func/openapi/aar-notification.yaml"
   # FCI APIs
   "./definitions/fci https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_io_sign.yaml"
