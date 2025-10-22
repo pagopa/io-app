@@ -5667,6 +5667,10 @@
           }
         },
         "initiativeDetailsScreen": {
+          "error": {
+            "title": "The initiative details are currently unavailable",
+            "subtitle": "We’re already working to fix the issue.\nPlease try again later."
+          },
           "notConfigured": {
             "header": "Configura l'iniziativa!",
             "footer": "Aggiungi almeno un metodo per iniziare ad utilizzare {{initiative}}."

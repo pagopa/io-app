@@ -5861,6 +5861,10 @@
           }
         },
         "initiativeDetailsScreen": {
+          "error": {
+            "title": "Il dettaglio dell'iniziativa non è al momento disponibile",
+            "subtitle": "Siamo già a lavoro per risolvere il problema\nRiprova tra un po'."
+          },
           "notConfigured": {
             "header": "Configura l'iniziativa!",
             "footer": "Aggiungi almeno un metodo per iniziare ad utilizzare {{initiative}}."
