@@ -5095,8 +5095,8 @@
             "alert": {
               "documents": {
                 "valid": "L'ultima verifica è del {{date}}.",
-                "expiring": "Verifica la tua identità entro il {{date}}.",
-                "expired": "È necessario un rapido passaggio di verifica per continuare a usare Documenti su IO.",
+                "expiring": "Conferma la tua identità con CIE o SPID entro il {{date}} per continuare a usare Documenti su IO senza limitazioni.",
+                "expired": "Conferma la tua identità con CIE o SPID per continuare a usare Documenti su IO senza limitazioni.",
                 "action": "Inizia"
               },
               "itw": {
