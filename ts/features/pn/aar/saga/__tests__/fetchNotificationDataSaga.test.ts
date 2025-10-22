@@ -217,6 +217,50 @@ describe("fetchAarDataSaga", () => {
         isTest: true
       });
     });
+
+    it("should early return on 401 response status", () => {
+      const mockResolved = {
+        status: 401,
+        value: { status: 401, detail: "Unauthorized" }
+      };
+      const mockResolvedEither = E.right(mockResolved);
+      const fetchData = jest
+        .fn()
+        .mockReturnValue(mockResolvedCall(mockResolvedEither));
+
+      testSaga(
+        fetchAarDataSaga,
+        fetchData,
+        mockSessionToken,
+        fetchingNotificationDataRequestAction
+      )
+        .next()
+        .select(currentAARFlowData)
+        .next(mockCurrentState)
+        .select(isPnTestEnabledSelector)
+        .next(true)
+        .call(
+          withRefreshApiCall,
+          fetchData(),
+          fetchingNotificationDataRequestAction
+        )
+        .next(mockResolvedEither)
+        .call(
+          trackSendAARFailure,
+          "Fetch Notification",
+          "Fast login expiration"
+        )
+        .next()
+        .isDone();
+
+      expect(fetchData).toHaveBeenCalledWith({
+        Bearer: mockSessionTokenWithBearer,
+        iun: mockCurrentState.iun,
+        mandateId: mockCurrentState.mandateId,
+        "x-pagopa-pn-io-src": "QRCODE",
+        isTest: true
+      });
+    });
   });
   describe("200 status path", () => {
     it("should handle a non-parsable success payload and return", () => {

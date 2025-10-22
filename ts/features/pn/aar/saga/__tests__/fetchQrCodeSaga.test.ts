@@ -115,6 +115,41 @@ describe("fetchQrCodeSaga", () => {
       });
     });
 
+    it(`should correctly update state on a 401 response with isTest='${isSendUATEnvironment}'`, () => {
+      const tokenExpiredResponse = E.right({
+        headers: {},
+        status: 401,
+        value: {}
+      });
+
+      const mockApiCall = jest
+        .fn()
+        .mockReturnValue(mockResolvedCall(mockFetchingQrState));
+
+      testSaga(
+        fetchAARQrCodeSaga,
+        mockApiCall,
+        sessionToken,
+        fetchingQrRequestAction
+      )
+        .next()
+        .select(currentAARFlowData)
+        .next(mockFetchingQrState)
+        .select(isPnTestEnabledSelector)
+        .next(isSendUATEnvironment)
+        .call(withRefreshApiCall, mockApiCall(), fetchingQrRequestAction)
+        .next(tokenExpiredResponse)
+        .next()
+        .isDone();
+
+      expect(mockApiCall).toHaveBeenCalledWith({
+        Bearer: sessionTokenWithBearer,
+        body: {
+          aarQrCodeValue: aQRCode
+        },
+        isTest: isSendUATEnvironment
+      });
+    });
     it(`should correctly update state on a 403 response with isTest='${isSendUATEnvironment}'`, () => {
       const notAddresseeState: AARFlowState = {
         type: sendAARFlowStates.notAddresseeFinal,

@@ -84,6 +84,14 @@ export function* fetchAARQrCodeSaga(
         yield* put(setAarFlowState(nextState));
         return;
 
+      case 401:
+        yield* call(
+          trackSendAARFailure,
+          sendAARFailurePhase,
+          "Fast login expiration"
+        );
+        return;
+
       case 403:
         const notAddresseeFinalState: AARFlowState = {
           type: sendAARFlowStates.notAddresseeFinal,

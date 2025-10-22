@@ -78,6 +78,14 @@ export function* fetchAarDataSaga(
     }
 
     const { status, value } = result.right;
+    if (status === 401) {
+      yield* call(
+        trackSendAARFailure,
+        sendAARFailurePhase,
+        "Fast login expiration"
+      );
+      return;
+    }
     if (status !== 200) {
       const reason = `HTTP request failed (${aarProblemJsonAnalyticsReport(
         status,

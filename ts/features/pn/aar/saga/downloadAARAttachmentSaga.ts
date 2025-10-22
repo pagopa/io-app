@@ -139,16 +139,13 @@ function* getAttachmentMetadata(
     throw Error(`Decoding failure (${reason})`);
   }
 
-  const response = responseEither.right;
-  if (response.status !== 200) {
-    const reason = aarProblemJsonAnalyticsReport(
-      response.status,
-      response.value
-    );
+  const { status, value } = responseEither.right;
+  if (status !== 200) {
+    const reason = aarProblemJsonAnalyticsReport(status, value);
     throw Error(`HTTP request failed (${reason})`);
   }
 
-  const { retryAfter, url } = response.value;
+  const { retryAfter, url } = value;
   if (url != null && url.trim().length > 0) {
     return url;
   } else if (retryAfter != null) {
