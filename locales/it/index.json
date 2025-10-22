@@ -6191,8 +6191,8 @@
       "enableNotification": {
         "title": "Non perderti l’esito delle tue richieste",
         "subtitle": "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app.",
-        "action": "Attiva le notifiche",
-        "deny": "Non ora",
+        "action": "Attiva notifiche push",
+        "deny": "Non attivare",
         "success": "Hai attivato le notifiche push",
         "advice": "Consigliato"
       },
