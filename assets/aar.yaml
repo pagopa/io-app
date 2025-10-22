@@ -1,0 +1,511 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: "IO-COM SEND Service"
+  description: "Microservizio che espone API per
+    - verifica contenuto del QR-Code di un AAR SEND
+    - recuperare il contenuto di una notifica AAR SEND
+    - download degli allegati realtivi ad una notifica AAR SEND"
+  contact:
+    name: pagoPA - Touchpoints team
+servers:
+  - url: https://api-app.io.pagopa.it/api/com/v1/send/aar
+    description: Ambiente di produzione
+paths:
+  /notifications/{iun}:
+    get:
+      tags:
+        - SEND AAR Notifications
+      summary: Accesso ai dati della notifica
+      description: >-
+        Restituisce i dati di una notifica AAR SEND
+      operationId: getAARNotification
+      parameters:
+        - $ref: "#/components/parameters/pathIun"
+        - $ref: "#/components/parameters/queryMandateId"
+        - $ref: "#/components/parameters/headerIoSource"
+        - in: query
+          name: isTest
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: OK
+          content:
+            application/io+json:
+              schema:
+                $ref: "#/components/schemas/ThirdPartyMessage"
+        "400":
+          description: Bad request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/AARProblemJson"
+        "401":
+          description: "Unauthorized"
+        "500":
+          description: Bad request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/AARProblemJson"
+  /qr-code-check:
+    post:
+      tags:
+        - SEND AAR QRCode
+      description: Verifica il contenuto del qrcode di un' AAR SEND e restituisce dati utili al recupero della notifica
+      summary: Verifica QRCcode di una AAR
+      operationId: aarQRCodeCheck
+      parameters:
+        - in: query
+          name: isTest
+          schema:
+            type: boolean
+        - $ref: "#/components/parameters/headerIoSource"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RequestCheckQrMandateDto"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AARQRCodeCheckResponse"
+        "401":
+          description: "Unauthorized"
+        "403":
+          description: Mandate not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AARQRCodeCheckResponse"
+        "400":
+          description: Bad request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/AARProblemJson"
+        "500":
+          description: Internal Server Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/AARProblemJson"
+  /attachments/{urlEncodedBase64AttachmentUrl}:
+    get:
+      operationId: getNotificationAttachment
+      tags:
+        - SEND AAR Attachments
+      description: Restituisce i documenti relativi ad una AAR SEND
+      summary: Documenti relativi ad una AAR
+      parameters:
+        - $ref: "#/components/parameters/urlEncodedBase64AttachmentUrl"
+        - $ref: "#/components/parameters/queryMandateId"
+        - $ref: "#/components/parameters/headerIoSource"
+        - in: query
+          name: isTest
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: Notification Details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationAttachmentDownloadMetadataResponse"
+        "400":
+          description: Bad request
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/AARProblemJson"
+        "401":
+          description: "Unauthorized"
+        "500":
+          description: Unexpected Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/AARProblemJson"
+
+components:
+  parameters:
+    urlEncodedBase64AttachmentUrl:
+      name: urlEncodedBase64AttachmentUrl
+      in: path
+      required: true
+      schema:
+        type: string
+    headerIoSource:
+      name: x-pagopa-pn-io-src
+      in: header
+      description: User login source channel details, should be QR_CODE or left empty
+      required: false
+      schema:
+        type: string
+    pathIun:
+      description: Identificativo Univoco Notifica
+      name: iun
+      in: path
+      required: true
+      schema:
+        type: string
+        minLength: 25
+        maxLength: 25
+        pattern: ^[A-Z]{4}-[A-Z]{4}-[A-Z]{4}-[0-9]{6}-[A-Z]{1}-[0-9]{1}$
+    queryMandateId:
+      name: mandateId
+      description: Identificativo della delega
+      in: query
+      required: false
+      schema:
+        type: string
+        format: uuid
+  schemas:
+    NotificationAttachmentDownloadMetadataResponse:
+      description: |-
+        I due campi più importanti sono __url__ e __retryAfter__. <br/>
+          - __url__ è presente se il file è pronto per essere scaricato ed indica l'url a cui fare GET.
+          - __retryAfter__ indica che il file è stato archiviato e bisognerà aspettare un numero di
+            secondi non inferiore a quanto indicato dal campo _retryAfter_. <br/>
+      type: object
+      required:
+        - filename
+        - contentType
+        - contentLength
+        - sha256
+      properties:
+        filename:
+          type: string
+        contentType:
+          type: string
+          example: application/pdf
+        contentLength:
+          type: integer
+          format: int32
+          example: 54092
+          description: dimensione, in byte, del contenuto.
+        sha256:
+          type: string
+          description: SHA256 del contenuto del file.
+        url:
+          type: string
+          description: >-
+            URL preautorizzato a cui effettuare una richiesta GET per ottenere
+            il contenuto del documento. Presente solo se il documento è pronto
+            per il download.
+        retryAfter:
+          type: integer
+          format: int32
+          description: >-
+            Stima del numero di secondi da aspettare prima che il contenuto del
+            documento sia disponibile per il download.
+    ThirdPartyMessage:
+      type: object
+      properties:
+        attachments:
+          type: array
+          items:
+            $ref: "#/components/schemas/ThirdPartyAttachment"
+        details:
+          $ref: "#/components/schemas/IOReceivedNotification"
+    RequestCheckQrMandateDto:
+      description: Le informazioni fornite per verificare l'AAR-QR-CodeValue
+      type: object
+      required:
+        - aarQrCodeValue
+      properties:
+        aarQrCodeValue:
+          type: string
+          description: valore del token QR-Code presente sull'avviso di avvenuta ricezione
+          maxLength: 300
+    Iun:
+      description: Identificativo Univoco Notifica
+      type: string
+      minLength: 25
+      maxLength: 25
+      pattern: ^[A-Z]{4}-[A-Z]{4}-[A-Z]{4}-[0-9]{6}-[A-Z]{1}-[0-9]{1}$
+    AARQRCodeCheckResponse:
+      description: >-
+        Le informazioni fornite in risposta alla verifica del AAR-QR-CodeValue
+        con possibile identificativo della delega attiva
+      type: object
+      required:
+        - iun
+        - recipientInfo
+      properties:
+        iun:
+          $ref: "#/components/schemas/Iun"
+        mandateId:
+          description: identificativo della delega
+          type: string
+        recipientInfo:
+          $ref: "#/components/schemas/UserInfo"
+    UserInfo:
+      type: object
+      required:
+        - denomination
+        - taxId
+      properties:
+        denomination:
+          type: string
+          description: Nome + cognome __oppure__ ragione sociale
+          example: Nome Cognome
+        taxId:
+          title: Codice Fiscale
+          description: Codice Fiscale
+          type: string
+          example: CGNNMO01T10A944Q
+    HttpStatusCode:
+      type: integer
+      format: int32
+      description: The HTTP status code generated by the origin server for this occurrence of the problem.
+      minimum: 100
+      maximum: 600
+      exclusiveMaximum: true
+      example: 200
+    AARProblemJson:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+          description: |-
+            An absolute URI that identifies the problem type. When dereferenced,
+            it SHOULD provide human-readable documentation for the problem type
+            (e.g., using HTML).
+          default: about:blank
+          example: https://example.com/problem/constraint-violation
+        title:
+          type: string
+          description: |-
+            A short, summary of the problem type. Written in english and readable
+            for engineers (usually not suited for non technical stakeholders and
+            not localized); example: Service Unavailable
+        status:
+          $ref: "#/components/schemas/HttpStatusCode"
+        detail:
+          type: string
+          description: |-
+            A human readable explanation specific to this occurrence of the
+            problem.
+          example: There was an error processing the request
+        instance:
+          type: string
+          format: uri
+          description: |-
+            An absolute URI that identifies the specific occurrence of the problem.
+            It may or may not yield further information if dereferenced.
+        errors:
+          type: array
+          minItems: 1
+          items:
+            $ref: "#/components/schemas/AARError"
+        traceId:
+          description: Internal support identifier associated to error
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+      required:
+        - status
+        - detail
+    ThirdPartyAttachment:
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 1
+        content_type:
+          type: string
+          minLength: 1
+        name:
+          type: string
+          minLength: 1
+        url:
+          type: string
+          minLength: 1
+        category:
+          type: string
+          enum:
+            - DOCUMENT
+            - F24
+      required:
+        - id
+        - url
+        - category
+    IOReceivedNotification:
+      description: >-
+        Le informazioni riguardanti una richiesta di notifica accettata e il
+        processo di inoltro della notifica verso i destinatari (Persone
+        Fisiche o Giuridiche).
+      type: object
+      properties:
+        subject:
+          type: string
+        iun:
+          type: string
+        recipients:
+          type: array
+          items:
+            $ref: "#/components/schemas/NotificationRecipient"
+        notificationStatusHistory:
+          $ref: "#/components/schemas/NotificationStatusHistory"
+        abstract:
+          type: string
+        senderDenomination:
+          type: string
+        completedPayments:
+          description: elenco dei pagamenti completati
+          type: array
+          items:
+            description: Payment notice number  numero avviso
+            example: "302000100000019421"
+            type: string
+            maxLength: 18
+            minLength: 18
+            pattern: ^\d+$
+        isCancelled:
+          type: boolean
+          description: indica se la notifica è stata annullata
+      required:
+        - subject
+        - iun
+        - recipients
+        - notificationStatusHistory
+    TaxId:
+      description: C.F. persona fisica o persona giuridica
+      type: string
+      x-field-extra-annotation: "@lombok.ToString.Exclude"
+      minLength: 11
+      maxLength: 16
+      pattern: >-
+        ^([A-Z]{6}[0-9LMNPQRSTUV]{2}[A-Z]{1}[0-9LMNPQRSTUV]{2}[A-Z]{1}[0-9LMNPQRSTUV]{3}[A-Z]{1})|([0-9]{11})$
+    NotificationRecipient:
+      description: Informazioni sui destinatari
+      required:
+        - denomination
+        - recipientType
+        - taxId
+      type: object
+      properties:
+        recipientType:
+          type: string
+          description: >
+            Tipologia di destinatario: Persona Fisica (PF) o Persona
+            Giuridica (PG). * `PF` * `PG`
+        taxId:
+          $ref: "#/components/schemas/TaxId"
+        denomination:
+          $ref: "#/components/schemas/Denomination"
+        payment:
+          $ref: "#/components/schemas/NotificationPaymentInfo"
+    Denomination:
+      description: >-
+        Denominazione ente o persona fisica / ragione sociale. La
+        codifica prevede i caratteri ISO LATIN 1, senza | e senza
+        i caratteri di controllo, ovvero la seguente regexp: ^[
+        -{}~\u00A0-ÿ]*$
+      type: string
+      x-field-extra-annotation: "@lombok.ToString.Exclude"
+      minLength: 1
+      pattern: ^.*$
+    NotificationPaymentInfo:
+      description: >-
+        Informazioni utili per effettuare il pagamento di una
+        notifica, sono associate al destinatario perché le spese
+        di notifica possono differire a seconda del canale di
+        notifica utilizzato. <br/>
+          - _noticeCode_: "codice avviso pagoPA" di pagamento del sistema pagoPA, usato per pagamento online.<br/>
+          - _creditorTaxId_: codice fiscale dell'ente a cui fa riferimento il "codice avviso pagoPA". <br/>
+      type: object
+      required:
+        - noticeCode
+        - creditorTaxId
+      properties:
+        noticeCode:
+          $ref: "#/components/schemas/NoticeCode"
+        creditorTaxId:
+          $ref: "#/components/schemas/PaTaxId"
+    NotificationStatusHistory:
+      description: elenco degli avanzamenti effettuati dal processo di notifica
+      type: array
+      items:
+        $ref: "#/components/schemas/NotificationStatusHistoryElement"
+    NotificationStatusHistoryElement:
+      description: elenco degli avanzamenti effettuati dal processo di notifica
+      type: object
+      required:
+        - status
+        - activeFrom
+        - relatedTimelineElements
+      properties:
+        status:
+          type: string
+          description: |
+            stato di avanzamento del processo di notifica:
+              * `IN_VALIDATION` - notifica depositata in attesa di validazione
+              * `ACCEPTED` - notifica accettata
+              * `REFUSED` - notifica rifiutata
+              * `DELIVERING` - notifica in spedita
+              * `DELIVERED` - notifica ricevuta da tutti i destinatari
+              * `VIEWED` - notifica presa visione per almeno un destinatario
+              * `EFFECTIVE_DATE` - notifica perfezionata per un destinatario
+              * `PAID` - notifica pagata
+              * `UNREACHABLE` - notifica non recapitabile
+              * `CANCELLED` - notifica annullata dal mittente
+              * `PAID` - [DEPRECATO] Uno dei destinatari ha pagato la notifica
+              * `RETURNED_TO_SENDER` - La notifica è stata restituita al mittente
+        activeFrom:
+          type: string
+          description: data e ora di raggiungimento dello stato di avanzamento
+          format: date-time
+        relatedTimelineElements:
+          type: array
+          description: Eventi avvenuti nello stato
+          items:
+            type: string
+    NoticeCode:
+      maxLength: 18
+      minLength: 18
+      pattern: ^\d+$
+      type: string
+      description: Payment notice number  numero avviso
+      example: "302000100000019421"
+    PaTaxId:
+      maxLength: 11
+      minLength: 11
+      pattern: ^\d+$
+      type: string
+      description: Payment PA fiscal code
+      example: "77777777777"
+    AARError:
+      properties:
+        code:
+          description: Internal code of the error, in human-readable format
+          example: >-
+            PN_PARAMETER_TOO_LONG | PN_PARAMETER_TOO_SHORT |
+            PN_DUPLICATE_ENTRY | etc...
+          type: string
+        element:
+          description: Parameter or request body field name for validation error
+          example: body.order.item[2].quantity
+          type: string
+        detail:
+          description: >-
+            A human readable explanation specific to this occurrence of
+            the problem.
+          example: Parameter not valid
+          maxLength: 1024
+          type: string
+      required:
+        - code
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      in: header
+      name: Authorization
+security:
+  - Bearer: []
