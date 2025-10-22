@@ -28,17 +28,25 @@ import { isTestEnv } from "../../../utils/environment";
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
 import { Store } from "../../../store/actions/types";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
+import { openWebUrl } from "../../../utils/url.ts";
 
 /**
  * Helper type used to validate the notification payload.
- * The message_id can be in different places depending on the platform.
+ * The message_id and the deepLink can be in different places depending on the platform.
  */
-const NotificationPayload = t.partial({
+export const NotificationPayload = t.partial({
   message_id: NonEmptyString,
+  deepLink: NonEmptyString,
   data: t.partial({
-    message_id: NonEmptyString
+    message_id: NonEmptyString,
+    deepLink: NonEmptyString
   })
 });
+
+type ParsedNotificationPayload = {
+  messageId?: string;
+  deepLink?: string;
+};
 
 export const configurePushNotifications = (store: Store) => {
   // Create the default channel used for notifications, the callback return false if the channel already exists
@@ -93,10 +101,18 @@ const onPushNotificationReceived = (
 ) => {
   const userOptedInForAnalytics = hasUserOptedInForAnalytics(store.getState());
   if (notification.userInteraction) {
-    const messageId = messageIdFromPushNotification(
+    const parsedPayload = parseNotificationPayload(
       notification,
       userOptedInForAnalytics
     );
+
+    // If the payload is not valid, we stop here
+    if (!parsedPayload) {
+      return;
+    }
+    // The payload is valid, handle the notification tap
+    const { messageId, deepLink } = parsedPayload;
+    // Notification with a message id
     if (messageId != null) {
       handleMessagePushNotification(
         notification.foreground,
@@ -104,19 +120,22 @@ const onPushNotificationReceived = (
         store,
         userOptedInForAnalytics
       );
+    } else if (deepLink) {
+      // Any other notification with a deep link
+      openWebUrl(deepLink);
     }
   }
 
   // Signal the system that the notification has been processed (this
-  // is mandatory even if there was an errore. Failing to do so can
+  // is mandatory even if there was an error. Failing to do so can
   // lead the system to not deliver push notifications anymore)
   notification.finish(PushNotificationIOS.FetchResult.NoData);
 };
 
-const messageIdFromPushNotification = (
+const parseNotificationPayload = (
   notification: Omit<ReceivedNotification, "userInfo">,
   userAnalyticsOptIn: boolean
-) => {
+): ParsedNotificationPayload | undefined => {
   // Try to decode the notification's payload
   const payloadDecodeEither = NotificationPayload.decode(notification);
   if (E.isLeft(payloadDecodeEither)) {
@@ -135,22 +154,24 @@ const messageIdFromPushNotification = (
   // the backend implementation can be fixed in the future without
   // having to also update and upgrade the global minimum app-version.
 
-  // On iOS, the message_id is stored in the top-level payload
-  const messageIdOniOS = payload.message_id;
-  if (messageIdOniOS != null) {
-    return messageIdOniOS;
-  }
-  // On Android, the message_id is stored in the payload.data property
-  const messageIdOnAndroid = payload.data?.message_id;
-  if (messageIdOnAndroid == null) {
-    // In this case, there was no message_id, so we track the error
+  // On iOS, params are stored in the top-level payload
+  // On Android, params are stored in the payload.data property
+  const messageId = payload.message_id ?? payload.data?.message_id;
+  // Extract navigation data if present in the payload
+  const deepLink = payload.deepLink ?? payload.data?.deepLink;
+  // If there is no message_id and no navigationData, we track the error
+  if (messageId == null && deepLink == null) {
     handleTrackingOfDecodingFailure(
       "No 'messageId' found in push notification payload data",
       userAnalyticsOptIn
     );
     return undefined;
   }
-  return messageIdOnAndroid;
+
+  return {
+    messageId,
+    deepLink
+  };
 };
 
 const handleMessagePushNotification = (
@@ -261,7 +282,7 @@ export const testable = isTestEnv
       handleTrackingOfDecodingFailure,
       handleTrackingOfTokenGeneration,
       hasUserOptedInForAnalytics,
-      messageIdFromPushNotification,
+      parseNotificationPayload,
       onPushNotificationReceived,
       onPushNotificationTokenAvailable
     }

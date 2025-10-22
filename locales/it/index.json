@@ -4876,6 +4876,10 @@
             "subtitle": "Autorizza l'accesso nell'app CieID per continuare oppure annulla la connessione",
             "cancel": "Annulla connessione"
           }
+        },
+        "localPushNotification": {
+          "title": "IO - L’app dei servizi pubblici",
+          "message": "Aggiorna i tuoi documenti digitali su IO per continuare ad usarli."
         }
       },
       "issuance": {
