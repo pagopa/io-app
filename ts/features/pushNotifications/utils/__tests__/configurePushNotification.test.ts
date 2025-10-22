@@ -638,7 +638,7 @@ describe("configurePushNotifications", () => {
         .spyOn(MESSAGESANALYTICS, "trackMessageNotificationParsingFailure")
         .mockImplementation();
 
-      const output = testable!.messageIdFromPushNotification(
+      const output = testable!.parseNotificationPayload(
         "asd" as unknown as ReceivedNotification,
         true
       );
@@ -655,7 +655,7 @@ describe("configurePushNotifications", () => {
       expect(
         spiedOnTrackMessageNotificationParsingFailure.mock.calls[0][1]
       ).toBe(
-        'value ["asd"] at [root] is not a valid [Partial<{ message_id: non empty string, data: Partial<{ message_id: non empty string }> }>]'
+        'value ["asd"] at [root] is not a valid [Partial<{ message_id: non empty string, deepLink: non empty string, data: Partial<{ message_id: non empty string, deepLink: non empty string }> }>]'
       );
       expect(
         spiedOnTrackMessageNotificationParsingFailure.mock.calls[0][2]
@@ -668,9 +668,9 @@ describe("configurePushNotifications", () => {
         message_id: "01JQZYA0T36WN9ZWR4P4RPXZ6S"
       } as unknown as ReceivedNotification;
 
-      const output = testable!.messageIdFromPushNotification(payload, true);
+      const output = testable!.parseNotificationPayload(payload, true);
 
-      expect(output).toEqual("01JQZYA0T36WN9ZWR4P4RPXZ6S");
+      expect(output?.messageId).toEqual("01JQZYA0T36WN9ZWR4P4RPXZ6S");
     });
     it("should return the messageId if the payload decoding succeeds (Android)", () => {
       const payload = {
@@ -678,8 +678,8 @@ describe("configurePushNotifications", () => {
           message_id: "01JQZYA0T36WN9ZWR4P4RPXZ6S"
         }
       } as unknown as ReceivedNotification;
-      const output = testable!.messageIdFromPushNotification(payload, true);
-      expect(output).toEqual("01JQZYA0T36WN9ZWR4P4RPXZ6S");
+      const output = testable!.parseNotificationPayload(payload, true);
+      expect(output?.messageId).toEqual("01JQZYA0T36WN9ZWR4P4RPXZ6S");
     });
     it("should call 'trackMessageNotificationParsingFailure' and return undefined if the payload decoding succeeds but the messageId is not present", () => {
       const payload = {
@@ -688,7 +688,7 @@ describe("configurePushNotifications", () => {
       const spiedOnTrackMessageNotificationParsingFailure = jest
         .spyOn(MESSAGESANALYTICS, "trackMessageNotificationParsingFailure")
         .mockImplementation();
-      const output = testable!.messageIdFromPushNotification(payload, true);
+      const output = testable!.parseNotificationPayload(payload, true);
       expect(
         spiedOnTrackMessageNotificationParsingFailure.mock.calls.length
       ).toBe(1);

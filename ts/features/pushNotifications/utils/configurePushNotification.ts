@@ -106,23 +106,21 @@ const onPushNotificationReceived = (
       userOptedInForAnalytics
     );
 
-    // If the payload is not valid, we stop here
-    if (!parsedPayload) {
-      return;
-    }
     // The payload is valid, handle the notification tap
-    const { messageId, deepLink } = parsedPayload;
-    // Notification with a message id
-    if (messageId != null) {
-      handleMessagePushNotification(
-        notification.foreground,
-        messageId,
-        store,
-        userOptedInForAnalytics
-      );
-    } else if (deepLink) {
-      // Any other notification with a deep link
-      openWebUrl(deepLink);
+    if (parsedPayload) {
+      const { messageId, deepLink } = parsedPayload;
+      // Notification with a message id
+      if (messageId != null) {
+        handleMessagePushNotification(
+          notification.foreground,
+          messageId,
+          store,
+          userOptedInForAnalytics
+        );
+      } else if (deepLink) {
+        // Any other notification with a deep link
+        openWebUrl(deepLink);
+      }
     }
   }
 
