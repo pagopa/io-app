@@ -169,8 +169,9 @@ export const IdPayInitiativeDetailsScreen = () => {
     </IdPayEnabledFeatureFlagGuard>
   );
 
-  useOnFirstRender(() =>
-    trackIDPayOnboardingIntro({ initiativeName, initiativeId })
+  useOnFirstRender(
+    () => trackIDPayOnboardingIntro({ initiativeName, initiativeId }),
+    () => O.isSome(initiative)
   );
 
   const WrappedComponent = withAppRequiredUpdate(
