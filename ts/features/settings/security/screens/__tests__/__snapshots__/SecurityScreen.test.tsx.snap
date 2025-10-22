@@ -397,28 +397,38 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                               }
                             }
                           >
-                            <Text
-                              accessibilityLabel="Sicurezza e accesso"
-                              accessibilityRole="header"
-                              allowFontScaling={true}
-                              dynamicTypeRamp="title1"
-                              maxFontSizeMultiplier={1.5}
+                            <View
                               style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#0E0F13",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 26,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 34,
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 8,
+                                }
                               }
                             >
-                              Sicurezza e accesso
-                            </Text>
+                              <Text
+                                accessibilityLabel="Sicurezza e accesso"
+                                accessibilityRole="header"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="title1"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#0E0F13",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 26,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 34,
+                                    },
+                                  ]
+                                }
+                              >
+                                Sicurezza e accesso
+                              </Text>
+                            </View>
                           </View>
                           <View
                             style={
