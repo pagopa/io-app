@@ -4,6 +4,7 @@ import {
   aarAdresseeDenominationSelector,
   currentAARFlowData,
   currentAARFlowStateAssistanceErrorCode,
+  currentAARFlowStateErrorDebugInfoSelector,
   currentAARFlowStateType,
   isAAREnabled,
   isAarMessageDelegatedSelector,
@@ -191,6 +192,10 @@ describe("currentAARFlowStateAssistanceErrorCode", () => {
           status: 599,
           traceId,
           errors
+        },
+        debugData: {
+          phase: "Fetch QRCode",
+          reason: "A test reason"
         }
       };
 
@@ -288,5 +293,239 @@ describe("aarAdresseeDenominationSelector", () => {
       "different-iun"
     );
     expect(result).toBeUndefined();
+  });
+});
+
+describe("currentAARFlowStateErrorDebugInfoSelector", () => {
+  const nonErrorStates = sendAarMockStates.filter(
+    s => s.type !== sendAARFlowStates.ko
+  );
+
+  nonErrorStates.forEach(state => {
+    it(`should return an empty object for state ${state.type}`, () => {
+      const mockGlobalState = {
+        features: { pn: { aarFlow: state } }
+      } as unknown as GlobalState;
+      const result = currentAARFlowStateErrorDebugInfoSelector(mockGlobalState);
+      expect(result).toEqual({});
+    });
+  });
+
+  const debugData = {
+    phase: "Fetch QRCode" as const,
+    reason: "A test reason"
+  };
+
+  it("should handle ErrorState with no errors and no traceId", () => {
+    const state: AARFlowState = {
+      type: sendAARFlowStates.ko,
+      previousState: sendAarMockStateFactory.fetchingQRData(),
+      error: { status: 599, detail: "Internal Server Error" },
+      debugData
+    };
+    const mockGlobalState = {
+      features: { pn: { aarFlow: state } }
+    } as unknown as GlobalState;
+    const result = currentAARFlowStateErrorDebugInfoSelector(mockGlobalState);
+    expect(result).toEqual({
+      errorCodes: undefined,
+      phase: debugData.phase,
+      reason: debugData.reason,
+      traceId: undefined
+    });
+  });
+
+  it("should handle ErrorState with no errors but traceId", () => {
+    const state: AARFlowState = {
+      type: sendAARFlowStates.ko,
+      previousState: sendAarMockStateFactory.fetchingQRData(),
+      error: {
+        status: 599,
+        detail: "Internal Server Error",
+        traceId: "trace-123"
+      },
+      debugData
+    };
+    const mockGlobalState = {
+      features: { pn: { aarFlow: state } }
+    } as unknown as GlobalState;
+    const result = currentAARFlowStateErrorDebugInfoSelector(mockGlobalState);
+    expect(result).toEqual({
+      errorCodes: undefined,
+      phase: debugData.phase,
+      reason: debugData.reason,
+      traceId: "trace-123"
+    });
+  });
+
+  it("should handle ErrorState with traceId and empty array errors", () => {
+    const state: AARFlowState = {
+      type: sendAARFlowStates.ko,
+      previousState: sendAarMockStateFactory.fetchingQRData(),
+      error: {
+        status: 599,
+        detail: "Bad Request",
+        traceId: "trace-123",
+        errors: []
+      },
+      debugData
+    };
+    const mockGlobalState = {
+      features: { pn: { aarFlow: state } }
+    } as unknown as GlobalState;
+    const result = currentAARFlowStateErrorDebugInfoSelector(mockGlobalState);
+    expect(result).toEqual({
+      errorCodes: "",
+      phase: debugData.phase,
+      reason: debugData.reason,
+      traceId: "trace-123"
+    });
+  });
+
+  it("should handle ErrorState with one error with code but no detail", () => {
+    const state: AARFlowState = {
+      type: sendAARFlowStates.ko,
+      previousState: sendAarMockStateFactory.fetchingQRData(),
+      error: {
+        status: 599,
+        detail: "Bad Request",
+        traceId: "trace-123",
+        errors: [{ code: "ERR01" }]
+      },
+      debugData
+    };
+    const mockGlobalState = {
+      features: { pn: { aarFlow: state } }
+    } as unknown as GlobalState;
+    const result = currentAARFlowStateErrorDebugInfoSelector(mockGlobalState);
+    expect(result).toEqual({
+      errorCodes: "ERR01 ",
+      phase: debugData.phase,
+      reason: debugData.reason,
+      traceId: "trace-123"
+    });
+  });
+
+  it("should handle ErrorState with one error with code and detail", () => {
+    const state: AARFlowState = {
+      type: sendAARFlowStates.ko,
+      previousState: sendAarMockStateFactory.fetchingQRData(),
+      error: {
+        status: 599,
+        detail: "Bad Request",
+        traceId: "trace-123",
+        errors: [{ code: "ERR01", detail: "Something is wrong" }]
+      },
+      debugData
+    };
+    const mockGlobalState = {
+      features: { pn: { aarFlow: state } }
+    } as unknown as GlobalState;
+    const result = currentAARFlowStateErrorDebugInfoSelector(mockGlobalState);
+    expect(result).toEqual({
+      errorCodes: "ERR01 Something is wrong",
+      phase: debugData.phase,
+      reason: debugData.reason,
+      traceId: "trace-123"
+    });
+  });
+
+  it("should handle ErrorState with two errors with code but no detail", () => {
+    const state: AARFlowState = {
+      type: sendAARFlowStates.ko,
+      previousState: sendAarMockStateFactory.fetchingQRData(),
+      error: {
+        status: 599,
+        detail: "Bad Request",
+        traceId: "trace-123",
+        errors: [{ code: "ERR01" }, { code: "ERR02" }]
+      },
+      debugData
+    };
+    const mockGlobalState = {
+      features: { pn: { aarFlow: state } }
+    } as unknown as GlobalState;
+    const result = currentAARFlowStateErrorDebugInfoSelector(mockGlobalState);
+    expect(result).toEqual({
+      errorCodes: "ERR01 , ERR02 ",
+      phase: debugData.phase,
+      reason: debugData.reason,
+      traceId: "trace-123"
+    });
+  });
+
+  it("should handle ErrorState with two errors, first with detail, second without", () => {
+    const state: AARFlowState = {
+      type: sendAARFlowStates.ko,
+      previousState: sendAarMockStateFactory.fetchingQRData(),
+      error: {
+        status: 599,
+        detail: "Bad Request",
+        traceId: "trace-123",
+        errors: [{ code: "ERR01", detail: "Detail 1" }, { code: "ERR02" }]
+      },
+      debugData
+    };
+    const mockGlobalState = {
+      features: { pn: { aarFlow: state } }
+    } as unknown as GlobalState;
+    const result = currentAARFlowStateErrorDebugInfoSelector(mockGlobalState);
+    expect(result).toEqual({
+      errorCodes: "ERR01 Detail 1, ERR02 ",
+      phase: debugData.phase,
+      reason: debugData.reason,
+      traceId: "trace-123"
+    });
+  });
+
+  it("should handle ErrorState with two errors, first without detail, second with", () => {
+    const state: AARFlowState = {
+      type: sendAARFlowStates.ko,
+      previousState: sendAarMockStateFactory.fetchingQRData(),
+      error: {
+        status: 599,
+        detail: "Bad Request",
+        traceId: "trace-123",
+        errors: [{ code: "ERR01" }, { code: "ERR02", detail: "Detail 2" }]
+      },
+      debugData
+    };
+    const mockGlobalState = {
+      features: { pn: { aarFlow: state } }
+    } as unknown as GlobalState;
+    const result = currentAARFlowStateErrorDebugInfoSelector(mockGlobalState);
+    expect(result).toEqual({
+      errorCodes: "ERR01 , ERR02 Detail 2",
+      phase: debugData.phase,
+      reason: debugData.reason,
+      traceId: "trace-123"
+    });
+  });
+
+  it("should handle ErrorState with two errors with code and detail", () => {
+    const state: AARFlowState = {
+      type: sendAARFlowStates.ko,
+      previousState: sendAarMockStateFactory.fetchingQRData(),
+      error: {
+        status: 599,
+        detail: "Bad Request",
+        traceId: "trace-123",
+        errors: [
+          { code: "ERR01", detail: "Detail 1" },
+          { code: "ERR02", detail: "Detail 2" }
+        ]
+      },
+      debugData
+    };
+    const mockGlobalState = {
+      features: { pn: { aarFlow: state } }
+    } as unknown as GlobalState;
+    const result = currentAARFlowStateErrorDebugInfoSelector(mockGlobalState);
+    expect(result).toEqual({
+      errorCodes: "ERR01 Detail 1, ERR02 Detail 2",
+      phase: debugData.phase,
+      reason: debugData.reason,
+      traceId: "trace-123"
+    });
   });
 });

@@ -20,6 +20,7 @@ import {
   SendAARErrorComponent,
   testable
 } from "../../errors/SendAARErrorComponent";
+import * as debugHooks from "../../../../../../hooks/useDebugInfo";
 
 const { bottomComponent } = testable!;
 
@@ -122,9 +123,23 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
     expect(queryByTestId("error_code_value") == null).toBe(true);
   });
 
-  it("should match snapshot", () => {
+  it("should match snapshot and call useDebugInfo to display proper debug data", () => {
+    const fakeDebugInfo = {
+      errorCodes: "830 Debug info",
+      phase: "Fetch Notification",
+      reason: "Something failed",
+      traceId: "traceId-123"
+    };
+    jest
+      .spyOn(SELECTORS, "currentAARFlowStateErrorDebugInfoSelector")
+      .mockImplementation(_state => fakeDebugInfo);
+    const spiedOnUseDebugInfo = jest.spyOn(debugHooks, "useDebugInfo");
     const { toJSON } = renderComponent();
     expect(toJSON()).toMatchSnapshot();
+
+    expect(spiedOnUseDebugInfo.mock.calls.length).toBe(1);
+    expect(spiedOnUseDebugInfo.mock.calls[0].length).toBe(1);
+    expect(spiedOnUseDebugInfo.mock.calls[0][0]).toEqual(fakeDebugInfo);
   });
 
   it("zendeskAssistanceLogAndStart calls expected functions in order", () => {
@@ -178,7 +193,7 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
     );
 
     expect(appendLog).toHaveBeenCalledTimes(1);
-    expect(appendLog).toHaveBeenCalledWith(JSON.stringify(assistanceErrorCode));
+    expect(appendLog).toHaveBeenCalledWith(assistanceErrorCode);
 
     expect(mockDispatch.mock.calls.length).toBe(2);
     expect(mockDispatch.mock.calls[0].length).toBe(1);
@@ -209,6 +224,23 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
       appendLog.mock.invocationCallOrder[0]
     );
   });
+
+  [undefined, null, "", "   "].forEach(emptyAssistanceErrorCode =>
+    it(`zendeskAssistanceLogAndStart should not append log if assistanceErrorCode is (${emptyAssistanceErrorCode})`, () => {
+      jest
+        .spyOn(SELECTORS, "currentAARFlowStateAssistanceErrorCode")
+        .mockReturnValue(emptyAssistanceErrorCode as string);
+
+      const appendLog = jest.spyOn(SUPPORT_ASSISTANCE, "appendLog");
+
+      const { getByTestId } = renderComponent();
+
+      const buttonAssistance = getByTestId("button_assistance");
+      fireEvent.press(buttonAssistance);
+
+      expect(appendLog).toHaveBeenCalledTimes(0);
+    })
+  );
 });
 
 const renderComponent = () => {
