@@ -169,8 +169,8 @@ const messageIdFromPushNotification = (
   return messageIdOnAndroid;
 };
 
-const deepLinkFromPushNotification = (
-  notification: Omit<ReceivedNotification, "userInfo">
+export const deepLinkFromPushNotification = (
+  notification: Omit<ReceivedNotification, "userInfo"> | null
 ) => {
   // Try to decode the notification's payload
   const payloadDecodeEither = ItwNotificationPayload.decode(notification);

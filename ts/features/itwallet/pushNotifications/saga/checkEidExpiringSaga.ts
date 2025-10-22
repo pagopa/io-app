@@ -2,10 +2,9 @@ import { select } from "typed-redux-saga/macro";
 import { differenceInCalendarDays } from "date-fns";
 import * as O from "fp-ts/Option";
 import PushNotification from "react-native-push-notification";
-import { pipe } from "fp-ts/lib/function";
 import i18n from "i18next";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
-import { ItwNotificationPayload } from "../../../pushNotifications/utils/configurePushNotification.ts";
+import { deepLinkFromPushNotification } from "../../../pushNotifications/utils/configurePushNotification.ts";
 import { openWebUrl } from "../../../../utils/url.ts";
 
 const EID_REISSUANCE_DEEP_LINK =
@@ -28,18 +27,13 @@ export function* checkEidExpiringSaga() {
   const jwtExpireDays = differenceInCalendarDays(pid.jwt.expiration, now);
 
   PushNotification.popInitialNotification(notification => {
-    const decodedDeepLink = pipe(
-      ItwNotificationPayload.decode(notification),
-      O.fromEither,
-      O.chainNullableK(payload => payload.deepLink ?? payload.data?.deepLink),
-      O.toUndefined
-    );
+    const decodedDeepLink = deepLinkFromPushNotification(notification);
     // If the app was opened from the notification, navigate to the deep link and don't send another notification
     if (decodedDeepLink) {
       openWebUrl(decodedDeepLink);
     } else {
       // If the eID JWT is expiring in 1 day or less, show the local notification
-      if (jwtExpireDays <= 1) {
+      if (jwtExpireDays > 1) {
         PushNotification.localNotification({
           id: "itw_reissuing_eid_notification",
           category: "itw",
