@@ -133,6 +133,8 @@ export const itwShouldRenderWalletUpgradeMDLDetailsBannerSelector = (
 
 /**
  * Returns whether the eID lifecycle alert should be hidden in wallet.
+ * When the ITW upgrade banner is displayed, the eID lifecycle alert
+ * is hidden so that the user does not need to perform eID reissuance.
  * The alert is hidden if:
  * - The new IT Wallet design is being rendered
  * - The L3 upgrade banner is being displayed
