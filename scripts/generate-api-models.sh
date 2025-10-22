@@ -1,8 +1,8 @@
 #!/bin/bash
 
-IO_BACKEND_VERSION=v17.5.0
+IO_BACKEND_VERSION=v17.5.1
 # need to change after merge on io-services-metadata
-IO_SERVICES_METADATA_VERSION=1.0.86
+IO_SERVICES_METADATA_VERSION=1.0.87
 # Session manager version
 IO_SESSION_MANAGER_VERSION=1.8.0
 # IO Wallet Backend version
@@ -40,7 +40,7 @@ declare -a apis=(
   "./definitions/cgn/merchants https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_cgn_operator_search.yaml"
   # PN APIs
   "./definitions/pn https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_pn.yaml"
-  "./definitions/pn/aar https://raw.githubusercontent.com/pagopa/io-messages/send-func@1.3.3/apps/send-func/openapi/aar-notification.yaml"
+  "./definitions/pn/aar https://raw.githubusercontent.com/pagopa/io-messages/2b0d3d226b95f731c4a6fdf58daff2e6dfcb4ef0/apps/send-func/openapi/aar-notification.yaml"
   # FCI APIs
   "./definitions/fci https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_io_sign.yaml"
   # ITW APIs
