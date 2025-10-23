@@ -193,6 +193,28 @@ export const trackIDPayDetailCodeGenerationConversion = (
   );
 };
 
+export const trackIDPayDetailCodeExpired = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_CODE_EXPIRED",
+    buildEventProperties("KO", "screen_view", {
+      ...props
+    })
+  );
+};
+
+export const trackIDPayDetailCodeGenerateNew = (
+  props: DefaultOnboardingEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_CODE_EXPIRED_GENERATE_NEW",
+    buildEventProperties("UX", "action", {
+      ...props
+    })
+  );
+};
+
 export const trackIDPayDetailError = (
   props: DefaultOnboardingEventProperties
 ) => {
