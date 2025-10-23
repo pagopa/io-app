@@ -48,7 +48,7 @@ export const ReadStatusComponent = ({
           <Pictogram size={180} name={pictogramMap[status]} />
         </Animated.View>
         {status === "reading" && step && (
-          <IOText font="DMMono" color="black" weight="Bold" size={12}>
+          <IOText font="FiraCode" color="black" weight="Bold" size={12}>
             {step}
           </IOText>
         )}
