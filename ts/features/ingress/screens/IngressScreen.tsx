@@ -226,8 +226,8 @@ const IngressScreenBlockingError = memo(() => {
   }, []);
 
   // Build API_failure parameter based on current state
-  const getApiFailureValue = (): string => {
-    const apiFailures: string[] = [];
+  const getApiFailureValue = useCallback((): string => {
+    const apiFailures: Array<string> = [];
 
     // Add "ping" if isConnected is undefined
     if (isConnected === undefined) {
@@ -245,7 +245,7 @@ const IngressScreenBlockingError = memo(() => {
     }
 
     return apiFailures.join(", ");
-  };
+  }, [isConnected, profileLoaded, sessionLoaded]);
 
   useEffect(() => {
     // It's not necessary to check if mixpanel is initialized since this screen is shown after 10 seconds.
@@ -257,7 +257,7 @@ const IngressScreenBlockingError = memo(() => {
         void trackIngressCdnSystemError();
       }
     }
-  }, [isBackendStatusLoaded, isMixpanelEnabled]);
+  }, [getApiFailureValue, isBackendStatusLoaded, isMixpanelEnabled]);
 
   return (
     <OperationResultScreenContent
