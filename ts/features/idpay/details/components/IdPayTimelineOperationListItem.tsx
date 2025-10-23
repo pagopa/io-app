@@ -138,15 +138,16 @@ const getTransactionOperationProps = (
 
   const isQRCode = channel === ChannelEnum.QRCODE;
 
+  const iconName =
+    channel === ChannelEnum.QRCODE || channel === ChannelEnum.BARCODE
+      ? "merchant"
+      : "creditCard";
+
   const isCancelled = status === TransactionStatusEnum.CANCELLED;
   const isReversal = operationType === TransactionOperationTypeEnum.REVERSAL;
 
   const paymentLogoIcon: ListItemTransactionLogo = brand || (
-    <Icon
-      name={isQRCode ? "merchant" : "creditCard"}
-      color="grey-300"
-      testID="genericLogoTestID"
-    />
+    <Icon name={iconName} color="grey-300" testID="genericLogoTestID" />
   );
 
   const title: string =
@@ -164,7 +165,7 @@ const getTransactionOperationProps = (
   );
 
   const getAccruedString = () => {
-    const signString = isReversal ? "" : "-";
+    const signString = isReversal ? "" : "−";
     const accruedString = `${formatAbsNumberAmountCentsOrDefault(
       accruedCents
     )} €`;
@@ -399,7 +400,7 @@ export const getOperationSubtitleWithAmount = (
   amount: number | undefined,
   withMinusSign: boolean = false
 ): string => {
-  const signString = withMinusSign ? "-" : "";
+  const signString = withMinusSign ? "−" : "";
   const amountString = `${formatAbsNumberAmountCentsOrDefault(amount)} €`;
 
   return `${getOperationSubtitle(

@@ -4090,6 +4090,7 @@
             "secondaryAction": "Non attivare SEND su IO"
           },
           "toast": "Hai attivato SEND su IO",
+          "rateLimitToast": "Non riusciamo ad attivare il servizio SEND, riprova più tardi",
           "activationErrorMessage": "Non riusciamo ad attivare il servizio SEND"
         }
       }
@@ -5961,7 +5962,7 @@
           "title": "Regole dell'iniziativa",
           "button": "Ok, ho capito"
         },
-        "spentUntilNow": "Speso finora",
+        "spentUntilNow": "Speso",
         "summary": "Riepilogo",
         "status": "Stato iniziativa",
         "voucherStatus": "Stato del bonus",
@@ -5996,7 +5997,7 @@
           "details": {
             "alerts": {
               "AUTHORIZED": "Questa transazione è in corso, ovvero è stata autorizzata ma non è ancora stata confermata dall’esercente.",
-              "CANCELLED": "Questa transazione è stata annullata dall’esercente, abbiamo riaccreditato l’importo sul portafoglio dell’iniziativa."
+              "CANCELLED": "Questa transazione è stata annullata dall’esercente."
             },
             "labels": {
               "business": "Esercente",
@@ -6063,7 +6064,7 @@
           "subtitleEnd": "Servizi"
         },
         "button": {
-          "continue": "Ho capito!"
+          "continue": "Ok, chiudi"
         }
       },
       "failure": {
@@ -6130,7 +6131,7 @@
       },
       "headerTitle": "Adesione all'iniziativa",
       "beforeContinue": {
-        "text": "Premendo Continua dichiari di aver letto, compreso e accettato l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni]({{tosUrl}}) d'uso.",
+        "text": "Premendo Continua dichiari di aver letto, compreso e accettato l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d'uso]({{tosUrl}}).",
         "requestBonus": "Richiedi il bonus"
       },
       "navigation": {
@@ -6194,8 +6195,8 @@
       "enableNotification": {
         "title": "Non perderti l’esito delle tue richieste",
         "subtitle": "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app.",
-        "action": "Attiva le notifiche",
-        "deny": "Non ora",
+        "action": "Attiva notifiche push",
+        "deny": "Non attivare",
         "success": "Hai attivato le notifiche push",
         "advice": "Consigliato"
       },
@@ -6203,6 +6204,10 @@
         "contentTitle": "Stiamo per collegarti.\n Attendi qualche secondo...",
         "slowDownSubtitle": "Non chiudere l’app, ci vorranno al massimo 10 secondi.",
         "failureSubtitle": "Riprova tra qualche minuto o usa il sito dell’iniziativa per richiedere il bonus."
+      },
+      "disabledScreen": {
+        "title": "Stai per accedere all’iniziativa",
+        "subtitle": "Potrebbero volerci alcuni minuti. Non chiudere l’app: quando sarà tutto pronto, potrai richiedere il tuo bonus."
       },
       "preferences": {
         "enableEmailBanner": {
@@ -6215,7 +6220,8 @@
       "loading": {
         "subtitle": "Attendi qualche secondo",
         "title": "Stiamo elaborando la tua richiesta"
-      }
+      },
+      "initiativeImageAltText": "Immagine iniziativa"
     },
     "configuration": {
       "failureStates": {
@@ -6449,6 +6455,10 @@
       "chat": "Chiedi aiuto in chat",
       "additionalDataTitle": "Dati aggiuntivi",
       "copyAll": "Copia tutti"
+    },
+    "slowdowns_results_screen": {
+      "title": "Sembra che le cose vadano un po' a rilento",
+      "subtitle": "Potreste essere in tanti in questo momento.\nPuoi riprovare tra qualche minuto, o puoi richiedere il bonus dal sito dedicato."
     }
   },
   "barcodeScan": {

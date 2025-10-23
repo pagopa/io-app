@@ -10,7 +10,7 @@ const IdPayOnboardingStepper = () => {
   return (
     <>
       <Stepper currentStep={currentStep} steps={stepperCount} />
-      <VSpacer size={16} />
+      <VSpacer size={24} />
     </>
   );
 };
