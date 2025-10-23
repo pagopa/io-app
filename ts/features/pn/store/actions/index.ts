@@ -5,10 +5,10 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
-type TogglePnActivationPayload = {
+type TogglePnActivationRequestPaylad = {
   value: boolean;
   onSuccess?: () => void;
-  onFailure?: () => void;
+  onFailure?: (isRateLimitError?: boolean) => void;
 };
 
 type PNPaymentStatusTracking = {
@@ -21,7 +21,7 @@ export const pnActivationUpsert = createAsyncAction(
   "PN_ACTIVATION_UPSERT_REQUEST",
   "PN_ACTIVATION_UPSERT_SUCCESS",
   "PN_ACTIVATION_UPSERT_FAILURE"
-)<TogglePnActivationPayload, void, void>();
+)<TogglePnActivationRequestPaylad, void, void>();
 
 export const startPNPaymentStatusTracking = createStandardAction(
   "PN_START_TRACKING_PAYMENT_STATUS"

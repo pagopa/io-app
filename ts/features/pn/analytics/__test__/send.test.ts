@@ -34,7 +34,7 @@ notificationModalFlowList.forEach(flow =>
       describe(`SEND events when flow is "${flow}" send_user is "${send_user}" and opening source is "${sendOpeningSource}"`, () => {
         beforeEach(jest.clearAllMocks);
 
-        it(`should track "SEND_ACTIVATION_MODAL_DIALOG" event with the properties => flow = "${flow}" and send_user = "${send_user}"`, () => {
+        it(`should track "SEND_ACTIVATION_MODAL_DIALOG" event with the properties => flow = "${flow}" send_user = "${send_user}" opening source = "${sendOpeningSource}"`, () => {
           sendEvents.trackSendActivationModalDialog(
             flow,
             sendOpeningSource,
@@ -45,12 +45,12 @@ notificationModalFlowList.forEach(flow =>
             "SEND_ACTIVATION_MODAL_DIALOG",
             buildEventProperties("UX", "screen_view", {
               flow,
-              opening_source: "not_set",
+              opening_source: sendOpeningSource,
               send_user
             })
           );
         });
-        it(`should track "SEND_ACTIVATION_MODAL_DIALOG_ACTIVATION_START" event with the properties => flow = "${flow}" and send_user = "${send_user}"`, () => {
+        it(`should track "SEND_ACTIVATION_MODAL_DIALOG_ACTIVATION_START" event with the properties => flow = "${flow}" send_user = "${send_user}" opening source = "${sendOpeningSource}"`, () => {
           sendEvents.trackSendActivationModalDialogActivationStart(
             flow,
             sendOpeningSource,
@@ -61,12 +61,12 @@ notificationModalFlowList.forEach(flow =>
             "SEND_ACTIVATION_MODAL_DIALOG_ACTIVATION_START",
             buildEventProperties("UX", "action", {
               flow,
-              opening_source: "not_set",
+              opening_source: sendOpeningSource,
               send_user
             })
           );
         });
-        it(`should track "SEND_ACTIVATION_MODAL_DIALOG_DISMISSED" event with the properties => flow = "${flow}" and send_user = "${send_user}"`, () => {
+        it(`should track "SEND_ACTIVATION_MODAL_DIALOG_DISMISSED" event with the properties => flow = "${flow}" send_user = "${send_user}" opening source = "${sendOpeningSource}"`, () => {
           sendEvents.trackSendActivationModalDialogActivationDismissed(
             flow,
             sendOpeningSource,
@@ -77,7 +77,7 @@ notificationModalFlowList.forEach(flow =>
             "SEND_ACTIVATION_MODAL_DIALOG_DISMISSED",
             buildEventProperties("UX", "action", {
               flow,
-              opening_source: "not_set",
+              opening_source: sendOpeningSource,
               send_user
             })
           );

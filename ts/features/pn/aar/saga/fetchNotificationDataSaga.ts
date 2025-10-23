@@ -33,7 +33,8 @@ const sendAARFailurePhase: SendAARFailurePhase = "Fetch Notification";
 
 export function* fetchAarDataSaga(
   fetchData: SendAARClient["getAARNotification"],
-  sessionToken: SessionToken
+  sessionToken: SessionToken,
+  action: ReturnType<typeof setAarFlowState>
 ) {
   const currentState = yield* select(currentAARFlowData);
   if (currentState.type !== sendAARFlowStates.fetchingNotificationData) {
@@ -55,7 +56,8 @@ export function* fetchAarDataSaga(
     });
     const result = (yield* call(
       withRefreshApiCall,
-      fetchAarRequest
+      fetchAarRequest,
+      action
     )) as unknown as SagaCallReturnType<typeof fetchData>;
 
     if (E.isLeft(result)) {
@@ -77,6 +79,14 @@ export function* fetchAarDataSaga(
     }
 
     const { status, value } = result.right;
+    if (status === 401) {
+      yield* call(
+        trackSendAARFailure,
+        sendAARFailurePhase,
+        "Fast login expiration"
+      );
+      return;
+    }
     if (status !== 200) {
       const reason = `HTTP request failed (${aarProblemJsonAnalyticsReport(
         status,
