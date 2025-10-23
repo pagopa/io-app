@@ -699,17 +699,6 @@
         "appearance": {
           "title": "Aspetto dell'app",
           "subtitle": "Personalizza l'app in base alle tue esigenze",
-          "typefaceStyle": {
-            "title": "Stile carattere",
-            "comfortable": {
-              "title": "Confortevole",
-              "description": "Progettato per una migliore leggibilità dei testi"
-            },
-            "standard": {
-              "title": "Standard",
-              "description": "Lo stile di sempre, con forme strette e geometriche"
-            }
-          },
           "theme": {
             "title": "Tema",
             "comingSoon": "In arrivo",
