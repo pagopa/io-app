@@ -93,7 +93,7 @@ export const ItwCredentialCard = ({
     }
 
     return "valid";
-  }, [credentialStatus, maybeEidStatus]);
+  }, [credentialStatus, maybeEidStatus, offlineAccessReason]);
 
   const borderColorMap = useBorderColorByStatus();
 
