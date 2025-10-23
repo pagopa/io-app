@@ -32,6 +32,7 @@ import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors"
 
 export type ItwIdentificationNavigationParams = {
   eidReissuing?: boolean;
+  animationEnabled?: boolean;
 };
 
 export type ItwIdentificationModeSelectionScreenProps =
