@@ -27,6 +27,7 @@ export function* checkEidExpiringSaga() {
   const jwtExpireDays = differenceInCalendarDays(pid.jwt.expiration, now);
 
   PushNotification.popInitialNotification(notification => {
+    // TODO: add Mixpanel tracking (SIW-3243)
     const decodedDeepLink = deepLinkFromPushNotification(notification);
     // If the app was opened from the notification, navigate to the deep link and don't send another notification
     if (decodedDeepLink) {
