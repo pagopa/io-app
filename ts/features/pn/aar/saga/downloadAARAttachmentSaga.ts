@@ -1,28 +1,33 @@
-import { isLeft } from "fp-ts/lib/Either";
 import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
+import { isLeft } from "fp-ts/lib/Either";
+import ReactNativeBlobUtil from "react-native-blob-util";
 import { call, cancelled, delay, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import ReactNativeBlobUtil from "react-native-blob-util";
-import { SessionToken } from "../../../../types/SessionToken";
-import { KeyInfo } from "../../../lollipop/utils/crypto";
-import { createSendAARClientWithLollipop } from "../api/client";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { apiUrlPrefix, fetchTimeout } from "../../../../config";
-import { downloadAttachment } from "../../../messages/store/actions";
-import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
-import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
-import { unknownToReason } from "../../../messages/utils";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
+import { SessionToken } from "../../../../types/SessionToken";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
+import { isTestEnv } from "../../../../utils/environment";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import { KeyInfo } from "../../../lollipop/utils/crypto";
+import { downloadAttachment } from "../../../messages/store/actions";
+import { unknownToReason } from "../../../messages/utils";
 import {
   attachmentDisplayName,
   pdfSavePath,
   restrainRetryAfterIntervalInMilliseconds
 } from "../../../messages/utils/attachments";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import {
   aarProblemJsonAnalyticsReport,
   trackSendAARFailure
 } from "../analytics";
-import { isTestEnv } from "../../../../utils/environment";
+import { createSendAARClientWithLollipop } from "../api/client";
+
+const fastLoginType = "FAST_LOGIN_EXPIRED";
+const fastLoginError = Error(fastLoginType);
+const isFastLoginError = (e: unknown) =>
+  e instanceof Error && e.message === fastLoginType;
 
 export function* downloadAARAttachmentSaga(
   bearerToken: SessionToken,
@@ -31,7 +36,6 @@ export function* downloadAARAttachmentSaga(
   action: ActionType<typeof downloadAttachment.request>
 ) {
   const { attachment, messageId } = action.payload;
-
   const useSendUATEnvironment = yield* select(isPnTestEnabledSelector);
 
   try {
@@ -61,7 +65,7 @@ export function* downloadAARAttachmentSaga(
     );
   } catch (e) {
     const reason = unknownToReason(e);
-    if (e instanceof Error && e.message === "FAST_LOGIN_EXPIRED") {
+    if (isFastLoginError(e)) {
       yield* call(
         trackSendAARFailure,
         "Download Attachment",
@@ -96,31 +100,23 @@ function* getAttachmentPrevalidatedUrl(
   action: ActionType<typeof downloadAttachment.request>
 ): Generator<ReduxSagaEffect, string> {
   while (true) {
-    try {
-      const attachmentMetadataRetryAfterOrUrl = yield* call(
-        getAttachmentMetadata,
-        bearerToken,
-        keyInfo,
-        attachmentUrl,
-        useUATEnvironment,
-        mandateId,
-        action
-      );
-      if (typeof attachmentMetadataRetryAfterOrUrl === "string") {
-        return attachmentMetadataRetryAfterOrUrl;
-      }
-      const retryAfterMilliseconds = yield* call(
-        restrainRetryAfterIntervalInMilliseconds,
-        attachmentMetadataRetryAfterOrUrl
-      );
-      yield* delay(retryAfterMilliseconds);
-    } catch (e) {
-      if (e instanceof Error && e.message === "FAST_LOGIN_EXPIRED") {
-        throw e;
-      }
-
-      throw e;
+    const attachmentMetadataRetryAfterOrUrl = yield* call(
+      getAttachmentMetadata,
+      bearerToken,
+      keyInfo,
+      attachmentUrl,
+      useUATEnvironment,
+      mandateId,
+      action
+    );
+    if (typeof attachmentMetadataRetryAfterOrUrl === "string") {
+      return attachmentMetadataRetryAfterOrUrl;
     }
+    const retryAfterMilliseconds = yield* call(
+      restrainRetryAfterIntervalInMilliseconds,
+      attachmentMetadataRetryAfterOrUrl
+    );
+    yield* delay(retryAfterMilliseconds);
   }
 }
 
@@ -158,7 +154,7 @@ function* getAttachmentMetadata(
 
   const { status, value } = responseEither.right;
   if (status === 401) {
-    throw new Error("FAST_LOGIN_EXPIRED");
+    throw fastLoginError;
   }
   if (status !== 200) {
     const reason = aarProblemJsonAnalyticsReport(status, value);
@@ -203,7 +199,6 @@ function* downloadAttachmentFromPrevalidatedUrl(
     timeout: fetchTimeout
   });
   const result = yield* call(config.fetch, "get", prevalidatedAttachmentUrl);
-
   const { status, state, respType, timeout } = result.info();
   if (status === 200) {
     return result.path();
