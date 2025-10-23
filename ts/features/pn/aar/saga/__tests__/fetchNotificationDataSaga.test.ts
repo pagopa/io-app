@@ -218,7 +218,7 @@ describe("fetchAarDataSaga", () => {
       });
     });
 
-    it("should early return on 401 response status", () => {
+    it("should call trackSendAARFailure with 'Fast login expiration' and stop on 401", () => {
       const mockResolved = {
         status: 401,
         value: { status: 401, detail: "Unauthorized" }

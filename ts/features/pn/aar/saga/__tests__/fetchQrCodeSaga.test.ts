@@ -115,7 +115,7 @@ describe("fetchQrCodeSaga", () => {
       });
     });
 
-    it(`should correctly update state on a 401 response with isTest='${isSendUATEnvironment}'`, () => {
+    it(`should call trackSendAARFailure with 'Fast login expiration' and stop on 401, keeping isTest set to ${isSendUATEnvironment}'`, () => {
       const tokenExpiredResponse = E.right({
         headers: {},
         status: 401,
@@ -139,6 +139,7 @@ describe("fetchQrCodeSaga", () => {
         .next(isSendUATEnvironment)
         .call(withRefreshApiCall, mockApiCall(), fetchingQrRequestAction)
         .next(tokenExpiredResponse)
+        .call(trackSendAARFailure, "Fetch QRCode", "Fast login expiration")
         .next()
         .isDone();
 
