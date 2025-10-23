@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.17.0-rc.6](https://github.com/pagopa/io-app/compare/3.17.0-rc.5...3.17.0-rc.6) (2025-10-22)
+
+
+### Features
+
+* [[IOBP-2081](https://pagopa.atlassian.net/browse/IOBP-2081),[IOBP-2082](https://pagopa.atlassian.net/browse/IOBP-2082)] Add boolean feature flag to IDPay onboarding flow ([#7494](https://github.com/pagopa/io-app/issues/7494)) ([878a7e8](https://github.com/pagopa/io-app/commit/878a7e8fb0c23a172c7a2917b407ac70c6e9d708))
+* [[IOCOM-2621](https://pagopa.atlassian.net/browse/IOCOM-2621)] Send engagement flow tracking strategy ([#7496](https://github.com/pagopa/io-app/issues/7496)) ([731ffec](https://github.com/pagopa/io-app/commit/731ffecdb5bb371c7467731ebd29ef4afdcb153f))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-3094](https://pagopa.atlassian.net/browse/SIW-3094)] Fix IPZS privacy webview's viewport height ([#7417](https://github.com/pagopa/io-app/issues/7417)) ([c407775](https://github.com/pagopa/io-app/commit/c4077756bdce1c415938ddd3002e4c3cb356aaf4))
+* [[IOBP-2105](https://pagopa.atlassian.net/browse/IOBP-2105)] Adjust IDPay Mixpanel events ([#7523](https://github.com/pagopa/io-app/issues/7523)) ([68e9795](https://github.com/pagopa/io-app/commit/68e979554dfd4fdbcb741f8ef60acd30fcccd595))
+* [[IOCOM-2692](https://pagopa.atlassian.net/browse/IOCOM-2692)] 429 handling for SEND service activation ([#7518](https://github.com/pagopa/io-app/issues/7518)) ([c09652c](https://github.com/pagopa/io-app/commit/c09652cadba0d9f54245877722c69201af47c977))
+
+
+### Chores
+
+* [[IOBP-2096](https://pagopa.atlassian.net/browse/IOBP-2096)] Handle IDPay initiative details error screen ([#7512](https://github.com/pagopa/io-app/issues/7512)) ([3fd153f](https://github.com/pagopa/io-app/commit/3fd153fd83254ed7282ad75b9f70d9df7ece2be0))
+* [[IOBP-2103](https://pagopa.atlassian.net/browse/IOBP-2103)] Add IDPay expiring barcode Mixpanel events ([#7519](https://github.com/pagopa/io-app/issues/7519)) ([a0ebf0e](https://github.com/pagopa/io-app/commit/a0ebf0e18d34dda337e7fe3fd0161d0449602fc1))
+* [[IOPLT-1378](https://pagopa.atlassian.net/browse/IOPLT-1378)] Replace `DMMono` with `FiraCode` ([#7515](https://github.com/pagopa/io-app/issues/7515)) ([e870c1a](https://github.com/pagopa/io-app/commit/e870c1a17f001bf19cac33ded1f0a8df4848f8c5))
+
 ## [3.17.0-rc.5](https://github.com/pagopa/io-app/compare/3.17.0-rc.4...3.17.0-rc.5) (2025-10-21)
 
 
