@@ -18,6 +18,7 @@ import {
 } from "../../machine/eid/selectors";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
+import { ItwReissuanceFeedbackBanner } from "../../common/components/ItwReissuanceFeedbackBanner.tsx";
 
 export const ItwIssuanceEidResultScreen = () => {
   const route = useRoute();
@@ -37,6 +38,10 @@ export const ItwIssuanceEidResultScreen = () => {
 
   if (issuanceMode === "upgrade") {
     return <ItwIssuanceEidUpgradeResultContent />;
+  }
+
+  if (issuanceMode === "reissuance") {
+    return <ItwIssuanceEidReissuanceResultContent />;
   }
 
   return (
@@ -132,5 +137,45 @@ const ItwIssuanceEidUpgradeResultContent = () => {
         onPress: handleBackToWallet
       }}
     />
+  );
+};
+
+const ItwIssuanceEidReissuanceResultContent = () => {
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
+  const route = useRoute();
+
+  // TODO [SIW-3038] Add Mixpanel events if the credentials reissuing fails
+
+  if (isLoading) {
+    return (
+      <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
+    );
+  }
+
+  return (
+    <OperationResultScreenContent
+      pictogram="success"
+      title={I18n.t(
+        "features.itWallet.issuance.eidResult.success.reissuance.title"
+      )}
+      subtitle={I18n.t(
+        "features.itWallet.issuance.eidResult.success.reissuance.subtitle"
+      )}
+      action={{
+        label: I18n.t(
+          "features.itWallet.issuance.eidResult.success.reissuance.primaryAction"
+        ),
+        onPress: () => {
+          machineRef.send({ type: "go-to-wallet" });
+          trackBackToWallet({
+            exit_page: route.name,
+            credential: "ITW_ID_V2"
+          });
+        }
+      }}
+    >
+      <ItwReissuanceFeedbackBanner />
+    </OperationResultScreenContent>
   );
 };

@@ -62,7 +62,8 @@ export const itwCredentialUpgradeMachine = setup({
         input: ({ context }) => ({
           pid: context.pid,
           walletInstanceAttestation: context.walletInstanceAttestation,
-          credential: context.credentials[context.credentialIndex]
+          credential: context.credentials[context.credentialIndex],
+          issuanceMode: context.issuanceMode
         }),
         onDone: {
           actions: ["storeCredential"],

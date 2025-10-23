@@ -17,6 +17,10 @@ import { IdpData } from "../../../../../definitions/content/IdpData";
 import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
 import { ephemeralPublicKeySelector } from "../../../lollipop/store/reducers/lollipop";
 import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../../../lollipop/utils/login";
+import {
+  isActiveSessionFastLoginEnabledSelector,
+  isActiveSessionLoginSelector
+} from "../../activeSessionLogin/store/selectors";
 
 // Started by redux action
 export function* handleTestLogin({
@@ -29,6 +33,15 @@ export function* handleTestLogin({
   const backendPublicClient = BackendPublicClient(apiUrlPrefix);
   const isFastLoginSelected = yield* select(isFastLoginEnabledSelector);
   const maybeEphemeralPublicKey = yield* select(ephemeralPublicKeySelector);
+  const isActiveSessionFastLogin = yield* select(
+    isActiveSessionFastLoginEnabledSelector
+  );
+  const isActiveSessionLogin = yield* select(isActiveSessionLoginSelector);
+  const isFL = maybeEphemeralPublicKey
+    ? isActiveSessionLogin
+      ? isActiveSessionFastLogin
+      : isFastLoginSelected
+    : undefined;
   function postTestLogin(
     login: PasswordLogin,
     publicKey?: PublicKey,
@@ -54,7 +67,7 @@ export function* handleTestLogin({
         maybeEphemeralPublicKey
           ? DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
           : undefined,
-        maybeEphemeralPublicKey ? isFastLoginSelected : undefined
+        isFL
       );
 
     if (E.isRight(testLoginResponse)) {

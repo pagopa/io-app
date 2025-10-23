@@ -1,33 +1,32 @@
-import { getType } from "typesafe-actions";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import { getType } from "typesafe-actions";
 import { mixpanelTrack } from "../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
 import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
+import { Action } from "../../../store/actions/types.ts";
 import { GlobalState } from "../../../store/reducers/types";
 import { buildEventProperties } from "../../../utils/analytics";
-import { IdentificationContext } from "../machine/eid/context";
-import { IssuanceFailure } from "../machine/eid/failure";
+import {
+  resetOfflineAccessReason,
+  setOfflineAccessReason
+} from "../../ingress/store/actions";
+import { itwAuthLevelSelector } from "../common/store/selectors/preferences.ts";
+import { getCredentialStatus } from "../common/utils/itwCredentialStatusUtils";
+import { isItwCredential } from "../common/utils/itwCredentialUtils";
+import { CredentialType } from "../common/utils/itwMocksUtils";
 import {
   ItwCredentialStatus,
   ItwJwtCredentialStatus,
   WalletInstanceRevocationReason
 } from "../common/utils/itwTypesUtils";
-import { itwAuthLevelSelector } from "../common/store/selectors/preferences.ts";
-import { OfflineAccessReasonEnum } from "../../ingress/store/reducer";
-import { Action } from "../../../store/actions/types.ts";
-import {
-  resetOfflineAccessReason,
-  setOfflineAccessReason
-} from "../../ingress/store/actions";
-import { getCredentialStatus } from "../common/utils/itwCredentialStatusUtils";
 import {
   itwCredentialsEidStatusSelector,
   itwCredentialsSelector
 } from "../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../lifecycle/store/selectors";
-import { isItwCredential } from "../common/utils/itwCredentialUtils";
-import { CredentialType } from "../common/utils/itwMocksUtils";
+import { IdentificationContext } from "../machine/eid/context";
+import { IssuanceFailure } from "../machine/eid/failure";
 import {
   ITW_ACTIONS_EVENTS,
   ITW_CONFIRM_EVENTS,
@@ -157,7 +156,7 @@ type CredentialUnexpectedFailure = {
   type: string;
 };
 
-type CredentialStatusAttestationFailure = {
+type CredentialStatusAssertionFailure = {
   credential: MixPanelCredential;
   credential_status: string;
   reason?: unknown;
@@ -180,10 +179,36 @@ type TrackITWalletIDMethodSelected = {
 
 type TrackITWalletSpidIDPSelected = { idp: string };
 
-type TrackItWalletCieCardReadingFailure = {
-  reason: string | undefined;
+type TrackItWalletCieCardVerifyFailure = {
+  reason: CieCardVerifyFailureReason;
   itw_flow: ItwFlow;
+  cie_reading_progress: number;
 };
+
+type TrackItWalletCieCardReadingFailure = {
+  reason: CieCardReadingFailureReason;
+  itw_flow: ItwFlow;
+  cie_reading_progress: number;
+};
+
+type TrackItWalletCieCardReadingUnexpectedFailure = {
+  reason: string | undefined;
+  cie_reading_progress: number;
+};
+
+export type CieCardVerifyFailureReason =
+  | "certificate revoked"
+  | "certificate expired";
+
+export const enum CieCardReadingFailureReason {
+  KO = "KO",
+  unknownCard = "unknown card",
+  apduNotSupported = "ADPU not supported",
+  startNFCError = "start NFC error",
+  stopNFCError = "stop NFC error",
+  noInternetConnection = "no internet connection",
+  authenticationError = "authentication error"
+}
 
 export type ItwCredentialMixpanelStatus =
   | "not_available"
@@ -237,12 +262,6 @@ type ItwWalletDataShare = {
 type ItwCopyListItem = {
   credential: MixPanelCredential;
   item_copied: string;
-};
-
-type ItwOfflineBanner = {
-  screen: string;
-  error_message_type?: OfflineAccessReasonEnum;
-  use_case: "starting_app" | "foreground" | "background";
 };
 
 export type ItwOfflineRicaricaAppIOSource = "bottom_sheet" | "banner";
@@ -852,45 +871,59 @@ export function trackItwCredentialQualificationDetail(
 
 // #region ERRORS
 
-export function trackItWalletErrorCardReading(itw_flow: ItwFlow) {
+export function trackItWalletErrorCardReading(
+  itw_flow: ItwFlow,
+  cie_reading_progress: number
+) {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_CIE_CARD_READING_ERROR,
-    buildEventProperties("UX", "error", { itw_flow })
+    buildEventProperties("UX", "error", { itw_flow, cie_reading_progress })
   );
 }
 
-export function trackItWalletErrorPin(itw_flow: ItwFlow) {
+export function trackItWalletErrorPin(
+  itw_flow: ItwFlow,
+  cie_reading_progress: number
+) {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_CIE_PIN_ERROR,
-    buildEventProperties("UX", "error", { itw_flow })
+    buildEventProperties("UX", "error", { itw_flow, cie_reading_progress })
   );
 }
 
-export function trackItWalletSecondErrorPin(itw_flow: ItwFlow) {
+export function trackItWalletSecondErrorPin(
+  itw_flow: ItwFlow,
+  cie_reading_progress: number
+) {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_CIE_PIN_SECOND_ERROR,
-    buildEventProperties("UX", "error", { itw_flow })
+    buildEventProperties("UX", "error", { itw_flow, cie_reading_progress })
   );
 }
 
-export function trackItWalletLastErrorPin(itw_flow: ItwFlow) {
+export function trackItWalletLastErrorPin(
+  itw_flow: ItwFlow,
+  cie_reading_progress: number
+) {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_CIE_PIN_LAST_ERROR,
-    buildEventProperties("UX", "error", { itw_flow })
+    buildEventProperties("UX", "error", { itw_flow, cie_reading_progress })
   );
 }
 
-export function trackItWalletCardReadingClose() {
+export function trackItWalletCardReadingClose(cie_reading_progress: number) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CIE_CARD_READING_CLOSE,
-    buildEventProperties("UX", "error")
+    buildEventProperties("UX", "error", { cie_reading_progress })
   );
 }
 
-export function trackItWalletCieCardVerifyFailure(itw_flow: ItwFlow) {
+export function trackItWalletCieCardVerifyFailure(
+  properties: TrackItWalletCieCardVerifyFailure
+) {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_CIE_CARD_VERIFY_FAILURE,
-    buildEventProperties("UX", "error", { itw_flow })
+    buildEventProperties("UX", "error", properties)
   );
 }
 
@@ -900,6 +933,15 @@ export function trackItWalletCieCardReadingFailure(
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_CIE_CARD_READING_FAILURE,
     buildEventProperties("UX", "error", properties)
+  );
+}
+
+export function trackItWalletCieCardReadingUnexpectedFailure(
+  properties: TrackItWalletCieCardReadingUnexpectedFailure
+) {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_CIE_CARD_READING_UNEXPECTED_FAILURE,
+    buildEventProperties("KO", "error", properties)
   );
 }
 
@@ -1020,11 +1062,11 @@ export const trackItwStatusWalletAttestationFailure = () => {
   );
 };
 
-export const trackItwStatusCredentialAttestationFailure = ({
+export const trackItwStatusCredentialAssertionFailure = ({
   credential,
   credential_status,
   reason
-}: CredentialStatusAttestationFailure) => {
+}: CredentialStatusAssertionFailure) => {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_STATUS_CREDENTIAL_ATTESTATION_FAILURE,
     buildEventProperties("KO", "error", {
@@ -1222,18 +1264,10 @@ export const trackItwRequestSuccess = (
   }
 };
 
-export const trackItwOfflineBanner = ({
-  screen,
-  error_message_type,
-  use_case
-}: ItwOfflineBanner) => {
+export const trackItwRemoteStart = () => {
   void mixpanelTrack(
-    ITW_TECH_EVENTS.ITW_OFFLINE_BANNER,
-    buildEventProperties("TECH", undefined, {
-      screen,
-      error_message_type,
-      use_case
-    })
+    ITW_TECH_EVENTS.ITW_REMOTE_START,
+    buildEventProperties("TECH", undefined)
   );
 };
 
@@ -1346,7 +1380,7 @@ export const getMixpanelCredentialStatus = (
     return "not_available";
   }
   const credential = itwCredentialsSelector(state)[type];
-  if (isItwL3 && credential && !isItwCredential(credential.credential)) {
+  if (isItwL3 && credential && !isItwCredential(credential)) {
     return "not_available";
   }
 

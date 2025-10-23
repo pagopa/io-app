@@ -10,15 +10,16 @@ import { upsertServicePreference } from "../../../services/details/store/actions
 import {
   isErrorServicePreferenceSelector,
   servicePreferenceResponseSuccessByIdSelector
-} from "../../../services/details/store/reducers";
+} from "../../../services/details/store/selectors";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { selectInitiative } from "../machine/selectors";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { useFirstRender } from "../../../services/common/hooks/useFirstRender";
 import {
   trackIDPayOnboardingNotificationOK,
-  trackIDPayOnboardingNotificationKO,
-  trackIDPayOnboardingNotificationPermission
+  trackIDPayOnboardingNotificationCancel,
+  trackIDPayOnboardingNotificationPermission,
+  trackIDPayOnboardingNotificationError
 } from "../analytics";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
@@ -64,7 +65,7 @@ const IdPayEnableMessageScreen = () => {
   const onActivate = () => {
     if (!initiativeId || !servicePreferenceResponseSuccess) {
       IOToast.error(I18n.t("global.genericError"));
-      trackIDPayOnboardingNotificationKO({ initiativeName, initiativeId });
+      trackIDPayOnboardingNotificationError({ initiativeName, initiativeId });
       return;
     }
 
@@ -81,6 +82,11 @@ const IdPayEnableMessageScreen = () => {
     if (!isErrorServicePreference) {
       machine.send({ type: "next" });
     }
+  };
+
+  const onCancel = () => {
+    trackIDPayOnboardingNotificationCancel({ initiativeName, initiativeId });
+    machine.send({ type: "close" });
   };
 
   useOnFirstRender(() => {
@@ -103,7 +109,7 @@ const IdPayEnableMessageScreen = () => {
       }}
       secondaryAction={{
         label: I18n.t("idpay.onboarding.enableMessages.cancelAction"),
-        onPress: () => machine.send({ type: "close" })
+        onPress: onCancel
       }}
     />
   );

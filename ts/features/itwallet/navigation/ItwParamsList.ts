@@ -1,7 +1,6 @@
 import { ItwDiscoveryInfoScreenNavigationParams } from "../discovery/screens/ItwDiscoveryInfoScreen";
-import { ItwCieWrongCiePinScreenNavigationParams } from "../identification/cie/screens/ItwCieWrongCiePinScreen.tsx";
 import { ItwIdentificationCieWarningScreenNavigationParams } from "../identification/cie/screens/ItwIdentificationCieWarningScreen.tsx";
-import { ItwL2IdentificationNavigationParams } from "../identification/common/screens/ItwL2IdentificationModeSelectionScreen.tsx";
+import { ItwIdentificationNavigationParams } from "../identification/common/screens/ItwIdentificationModeSelectionScreen.tsx";
 import { ItwIssuanceCredentialAsyncContinuationNavigationParams } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
 import { ItwIssuanceCredentialTrustIssuerNavigationParams } from "../issuance/screens/ItwIssuanceCredentialTrustIssuerScreen";
 import { ItwPlaygroundParamsList } from "../playgrounds/navigation/ItwPlaygroundParamsList.ts";
@@ -23,9 +22,7 @@ export type ItwParamsList = {
   [ITW_ROUTES.DISCOVERY.IPZS_PRIVACY]: undefined;
   [ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN]: undefined;
   // IDENTIFICATION
-  [ITW_ROUTES.IDENTIFICATION.MODE_SELECTION
-    .L2]: ItwL2IdentificationNavigationParams;
-  [ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L3]: undefined;
+  [ITW_ROUTES.IDENTIFICATION.MODE_SELECTION]: ItwIdentificationNavigationParams;
   // IDENTIFICATION ERRORS
   [ITW_ROUTES.IDENTIFICATION
     .CIE_WARNING]: ItwIdentificationCieWarningScreenNavigationParams;
@@ -34,17 +31,15 @@ export type ItwParamsList = {
   [ITW_ROUTES.IDENTIFICATION.SPID.LOGIN]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE_ID.LOGIN]: undefined;
   // IDENTIFICATION CIE + PIN
-  [ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION_SCREEN]: undefined;
-  [ITW_ROUTES.IDENTIFICATION.CIE.PIN_PREPARATION_SCREEN]: undefined;
+  [ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.PIN_SCREEN]: undefined;
+  [ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.NFC_SCREEN]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN]: undefined;
-  [ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN.L2]: undefined;
-  [ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN.L3]: undefined;
-  [ITW_ROUTES.IDENTIFICATION.CIE
-    .WRONG_PIN]: ItwCieWrongCiePinScreenNavigationParams;
-  [ITW_ROUTES.IDENTIFICATION.CIE.WRONG_CARD]: undefined;
-  [ITW_ROUTES.IDENTIFICATION.CIE.UNEXPECTED_ERROR]: undefined;
+  [ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC]: undefined;
-  [ITW_ROUTES.IDENTIFICATION.CIE.CIE_EXPIRED_SCREEN]: undefined;
+  // IDENTIFICATION L2+
+  [ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CAN_SCREEN]: undefined;
+  [ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CARD_SCREEN]: undefined;
+  [ITW_ROUTES.IDENTIFICATION.CIE.CAN_SCREEN]: undefined;
   // ISSUANCE
   [ITW_ROUTES.ISSUANCE.EID_PREVIEW]: undefined;
   [ITW_ROUTES.ISSUANCE.EID_RESULT]: undefined;

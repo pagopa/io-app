@@ -55,6 +55,7 @@ import { PaymentsOnboardingRoutes } from "../features/payments/onboarding/naviga
 import { PaymentsReceiptNavigator } from "../features/payments/receipts/navigation/navigator";
 import { PaymentsReceiptRoutes } from "../features/payments/receipts/navigation/routes";
 import { NOTIFICATIONS_ROUTES } from "../features/pushNotifications/navigation/routes";
+import { PushNotificationEngagementScreen } from "../features/pushNotifications/screens/PushNotificationEngagementScreen.tsx";
 import { SystemNotificationPermissionsScreen } from "../features/pushNotifications/screens/SystemNotificationPermissionsScreen";
 import ServicesNavigator from "../features/services/common/navigation/navigator";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
@@ -134,6 +135,11 @@ const AuthenticatedStackNavigator = () => {
           headerShown: true,
           presentation: "modal"
         }}
+      />
+      <Stack.Screen
+        name={NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT}
+        component={PushNotificationEngagementScreen}
+        options={TransitionPresets.ModalSlideFromBottomIOS}
       />
       <Stack.Screen
         name={MESSAGES_ROUTES.MESSAGES_SEARCH}

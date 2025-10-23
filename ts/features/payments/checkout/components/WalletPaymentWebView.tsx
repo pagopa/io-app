@@ -62,6 +62,7 @@ const WalletPaymentWebView = ({
       source={{
         uri
       }}
+      paymentRequestEnabled
       androidCameraAccessDisabled
       androidMicrophoneAccessDisabled
     />

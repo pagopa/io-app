@@ -17,10 +17,6 @@ import {
   useMemo
 } from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
-import {
-  heightPercentageToDP,
-  widthPercentageToDP
-} from "react-native-responsive-screen";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { BonusCardCounter } from "./BonusCardCounter";
@@ -145,7 +141,9 @@ export const BonusCard = (props: BonusCard) => {
     <View style={[styles.container, { paddingTop }]}>
       {!props.isLoading && props.cardBackground ? (
         <>
-          <View style={styles.cardBackground}>{props.cardBackground}</View>
+          <View style={{ ...StyleSheet.absoluteFillObject }}>
+            {props.cardBackground}
+          </View>
           <BonusCardShape key={shapeKey} mode="draw-on-top" />
         </>
       ) : (
@@ -215,10 +213,5 @@ const styles = StyleSheet.create({
   logos: {
     flexDirection: "row",
     columnGap: 8
-  },
-  cardBackground: {
-    position: "absolute",
-    width: widthPercentageToDP(100) - 16,
-    height: heightPercentageToDP(100)
   }
 });

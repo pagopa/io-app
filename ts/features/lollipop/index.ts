@@ -10,8 +10,6 @@ import {
   trackLollipopKeyGenerationSuccess
 } from "../../utils/analytics";
 import { AppDispatch } from "../../App";
-import { getAppVersion } from "../../utils/appVersion";
-import { isLocalEnv } from "../../utils/environment";
 import { SignatureAlgorithm } from "./httpSignature/types/SignatureAlgorithms";
 import { SignatureComponents } from "./httpSignature/types/SignatureComponents";
 import { toCryptoError } from "./utils/crypto";
@@ -108,25 +106,3 @@ export const taskRegenerateKey = (keyTag: string) =>
     TE.tryCatch(() => deleteKey(keyTag), toCryptoError),
     TE.chain(() => TE.tryCatch(() => generate(keyTag), toCryptoError))
   );
-
-export const getLollipopLoginHeaders = (
-  publicKey: PublicKey,
-  hashAlgorithm: string,
-  isFastLogin: boolean,
-  idpId?: string,
-  hashedFiscalCode?: string
-) => ({
-  "x-pagopa-lollipop-pub-key": Buffer.from(JSON.stringify(publicKey)).toString(
-    "base64"
-  ),
-  "x-pagopa-lollipop-pub-key-hash-algo": hashAlgorithm,
-  "x-pagopa-app-version": isLocalEnv ? getAppVersion() : undefined,
-  // The `x-pagopa-current-user` header contains the
-  // fiscal code hashed using the sha256 algorithm.
-  // It is used by the backend to verify, during an active session login,
-  // that the user is logging in with the same fiscal code.
-  // If a different fiscal code is used, error 1004 (AUTH_ERRORS.ERROR_1004) will be triggered.
-  "x-pagopa-current-user": hashedFiscalCode ?? undefined,
-  "x-pagopa-login-type": isFastLogin ? "LV" : undefined,
-  "x-pagopa-idp-id": idpId
-});

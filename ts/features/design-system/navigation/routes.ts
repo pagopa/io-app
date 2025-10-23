@@ -97,6 +97,10 @@ const DESIGN_SYSTEM_ROUTES = {
     NUMBERPAD: {
       route: "DS_NUMBERPAD",
       title: "NumberPad"
+    },
+    LOADING_SCREEN: {
+      route: "DS_LOADING_SCREEN",
+      title: "Loading Screen"
     }
   },
   DEBUG: {

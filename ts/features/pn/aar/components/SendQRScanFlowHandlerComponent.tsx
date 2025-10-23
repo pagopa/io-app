@@ -3,7 +3,7 @@ import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIOStore } from "../../../../store/hooks";
+import { useIOSelector, useIOStore } from "../../../../store/hooks";
 import { openWebUrl } from "../../../../utils/url";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";
@@ -15,7 +15,8 @@ import {
   trackSendQRCodeScanRedirectDismissed
 } from "../analytics";
 import { SendAARInitialFlowScreen } from "../screen/SendAARInitialFlowScreen";
-import { isSendAARPhase2Enabled } from "../utils/generic";
+import { isAAREnabled } from "../store/selectors";
+import { NOTIFICATIONS_ROUTES } from "../../../pushNotifications/navigation/routes";
 
 export type SendQRScanHandlerScreenProps = {
   aarUrl: string;
@@ -23,12 +24,15 @@ export type SendQRScanHandlerScreenProps = {
 
 export const SendQRScanFlowHandlerComponent = ({
   aarUrl
-}: SendQRScanHandlerScreenProps) =>
-  isSendAARPhase2Enabled() ? (
+}: SendQRScanHandlerScreenProps) => {
+  const aAREnabled = useIOSelector(isAAREnabled);
+
+  return aAREnabled ? (
     <SendAARInitialFlowScreen qrCode={aarUrl} />
   ) : (
     <SendQrScanRedirect aarUrl={aarUrl} />
   );
+};
 
 const SendQrScanRedirect = ({ aarUrl }: SendQRScanHandlerScreenProps) => {
   const store = useIOStore();
@@ -71,7 +75,11 @@ const SendQrScanRedirect = ({ aarUrl }: SendQRScanHandlerScreenProps) => {
       navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
         screen: PN_ROUTES.MAIN,
         params: {
-          screen: PN_ROUTES.ENGAGEMENT_SCREEN
+          screen: PN_ROUTES.ENGAGEMENT_SCREEN,
+          params: {
+            sendOpeningSource: "aar",
+            sendUserType: "not_set"
+          }
         }
       });
       return;
@@ -83,11 +91,10 @@ const SendQrScanRedirect = ({ aarUrl }: SendQRScanHandlerScreenProps) => {
     const areNotificationPermissionsEnabled =
       areNotificationPermissionsEnabledSelector(state);
     if (!areNotificationPermissionsEnabled) {
-      navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-        screen: PN_ROUTES.MAIN,
-        params: {
-          screen: PN_ROUTES.QR_SCAN_PUSH_ENGAGEMENT
-        }
+      navigation.replace(NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT, {
+        flow: "send_notification_opening",
+        sendOpeningSource: "aar",
+        sendUserType: "not_set"
       });
       return;
     }

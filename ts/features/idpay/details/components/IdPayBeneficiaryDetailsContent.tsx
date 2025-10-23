@@ -37,7 +37,7 @@ import {
   IdPayInitiativeRulesInfoBox,
   IdPayInitiativeRulesInfoBoxSkeleton
 } from "./IdPayInitiativeRulesInfoBox";
-import { IdPayinitiativeStatusItem } from "./IdPayInitiativeStatusItem";
+import { IdPayInitiativeStatusItem } from "./IdPayInitiativeStatusItem";
 
 type TableRow = WithTestID<{
   label: string;
@@ -243,7 +243,10 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
             <ListItemHeader
               label={I18n.t("idpay.initiative.beneficiaryDetails.summary")}
             />
-            <IdPayinitiativeStatusItem status={initiativeDetails.status} />
+            <IdPayInitiativeStatusItem
+              status={initiativeDetails.status}
+              voucherStatus={initiativeDetails?.voucherStatus}
+            />
             {renderTableRow(summaryData)}
             <VSpacer size={8} />
             {canShowRulesData && (

@@ -9,6 +9,10 @@ import {
   SelfCriteriaMultiDTO,
   _typeEnum as SelfCriteriaMultiTypeEnum
 } from "../../../../../definitions/idpay/SelfCriteriaMultiDTO";
+import {
+  _typeEnum as SelfCriteriaMultiTypeVariationEnum,
+  SelfCriteriaMultiTypeDTO
+} from "../../../../../definitions/idpay/SelfCriteriaMultiTypeDTO";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -68,10 +72,10 @@ const IdPayMultiValuePrerequisitesScreen = () => {
       style={{ flex: 1 }}
       initialPage={0}
     >
-      {multiSelfDeclarations.map((selfDelcaration, index) => (
+      {multiSelfDeclarations.map((selfDeclaration, index) => (
         <View key={index}>
           <MultiValuePrerequisiteItemScreenContent
-            selfDeclaration={selfDelcaration}
+            selfDeclaration={selfDeclaration}
             initiativeId={initiativeId}
             initiativeName={initiativeName}
           />
@@ -82,7 +86,7 @@ const IdPayMultiValuePrerequisitesScreen = () => {
 };
 
 type MultiValuePrerequisiteItemScreenContentProps = {
-  selfDeclaration: SelfCriteriaMultiDTO;
+  selfDeclaration: SelfCriteriaMultiDTO | SelfCriteriaMultiTypeDTO;
   initiativeId?: string;
   initiativeName?: string;
 };
@@ -98,10 +102,16 @@ const MultiValuePrerequisiteItemScreenContent = ({
     number | undefined
   >(undefined);
 
+  const isSelfCriteriaMultiTypeDTO = (
+    obj: SelfCriteriaMultiDTO | SelfCriteriaMultiTypeDTO
+  ): obj is SelfCriteriaMultiTypeDTO =>
+    // eslint-disable-next-line no-underscore-dangle
+    obj._type === SelfCriteriaMultiTypeVariationEnum.multi_consent;
+
   const handleContinuePress = () => {
     if (selectedValueIndex === undefined) {
       IOToast.error(
-        I18n.t("idpay.onboarding.boolPrerequisites.emptyValueError")
+        I18n.t("idpay.onboarding.multiPrerequisites.emptyValueError")
       );
       trackIDPayOnboardingAlert({
         screen: "multi_self_declaration",
@@ -115,13 +125,20 @@ const MultiValuePrerequisiteItemScreenContent = ({
       IOToast.error(I18n.t("global.genericError"));
       return;
     }
+
     machine.send({
       type: "select-multi-consent",
-      data: {
-        _type: SelfCriteriaMultiTypeEnum.multi,
-        value,
-        code: selfDeclaration.code
-      }
+      data: isSelfCriteriaMultiTypeDTO(selfDeclaration)
+        ? {
+            _type: SelfCriteriaMultiTypeVariationEnum.multi_consent,
+            value,
+            code: selfDeclaration.code
+          }
+        : {
+            _type: SelfCriteriaMultiTypeEnum.multi,
+            value,
+            code: selfDeclaration.code
+          }
     });
   };
 

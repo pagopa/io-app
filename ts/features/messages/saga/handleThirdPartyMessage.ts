@@ -21,9 +21,9 @@ import { SagaCallReturnType } from "../../../types/utils";
 import { unknownToReason } from "../utils";
 import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
-import { serviceDetailsByIdSelector } from "../../services/details/store/reducers";
+import { serviceDetailsByIdSelector } from "../../services/details/store/selectors";
 import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
-import { thirdPartyKind } from "../store/reducers/thirdPartyById";
+import { thirdPartyKind } from "../types/thirdPartyById";
 
 export function* handleThirdPartyMessage(
   getThirdPartyMessage: BackendClient["getThirdPartyMessage"],

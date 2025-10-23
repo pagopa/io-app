@@ -1,40 +1,28 @@
-import {
-  Dimensions,
-  Image,
-  ImageSourcePropType,
-  StyleSheet
-} from "react-native";
-import { heightPercentageToDP } from "react-native-responsive-screen";
+import { Image, ImageSourcePropType, useWindowDimensions } from "react-native";
 
 const infoImageSize = 102;
-const screenHeight = Dimensions.get("screen").height;
 const maxHeightFullSize = 650;
 
 /**
- * On device with screen size < 650, the image size is reduced
- */
-const styles = StyleSheet.create({
-  raster: {
-    width:
-      screenHeight >= maxHeightFullSize
-        ? infoImageSize
-        : heightPercentageToDP("11%"),
-    height:
-      screenHeight >= maxHeightFullSize
-        ? infoImageSize
-        : heightPercentageToDP("11%")
-  }
-});
-/**
  * A generic component to render an image with all the settings for a {@link InfoScreenComponent}
  * @param image
+ * @deprecated It's part of deprecated `InfoScreenComponent`. It's only used in `WorkunitGenericFailure` and should be removed asap.
  */
-export const renderInfoRasterImage = (image: ImageSourcePropType) => (
-  <Image
-    accessibilityIgnoresInvertColors
-    source={image}
-    resizeMode={"contain"}
-    style={styles.raster}
-    testID={"rasterImage"}
-  />
-);
+export const InfoRasterImage = ({ image }: { image: ImageSourcePropType }) => {
+  const { height } = useWindowDimensions();
+  const defautlHeight = height * 0.11;
+
+  return (
+    <Image
+      accessibilityIgnoresInvertColors
+      source={image}
+      resizeMode={"contain"}
+      style={{
+        // On device with screen size < 650, the image size is reduced
+        width: height >= maxHeightFullSize ? infoImageSize : defautlHeight,
+        height: height >= maxHeightFullSize ? infoImageSize : defautlHeight
+      }}
+      testID={"rasterImage"}
+    />
+  );
+};

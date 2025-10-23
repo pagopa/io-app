@@ -13,6 +13,10 @@ import {
 } from "../../store/actions";
 import { handleTestLogin } from "../testLoginSaga";
 import { ephemeralPublicKeySelector } from "../../../../lollipop/store/reducers/lollipop";
+import {
+  isActiveSessionFastLoginEnabledSelector,
+  isActiveSessionLoginSelector
+} from "../../../activeSessionLogin/store/selectors";
 
 const fakePayload: PasswordLogin = {
   username: "ABCDEF12G34H567I" as any,
@@ -46,6 +50,10 @@ describe("handleTestLogin saga", () => {
       .next(false)
       .select(ephemeralPublicKeySelector)
       .next(undefined)
+      .select(isActiveSessionFastLoginEnabledSelector)
+      .next(false)
+      .select(isActiveSessionLoginSelector)
+      .next(false)
       .next(E.right(rightResponse))
       .put(
         loginSuccess({
@@ -68,6 +76,10 @@ describe("handleTestLogin saga", () => {
       .next(false)
       .select(ephemeralPublicKeySelector)
       .next(undefined)
+      .select(isActiveSessionFastLoginEnabledSelector)
+      .next(false)
+      .select(isActiveSessionLoginSelector)
+      .next(false)
       .next(E.right(responseWithError))
       .put(
         loginFailure({
@@ -92,6 +104,10 @@ describe("handleTestLogin saga", () => {
       .next(false)
       .select(ephemeralPublicKeySelector)
       .next(undefined)
+      .select(isActiveSessionFastLoginEnabledSelector)
+      .next(false)
+      .select(isActiveSessionLoginSelector)
+      .next(false)
       .next(validationError)
       .put(
         loginFailure({
@@ -111,6 +127,10 @@ describe("handleTestLogin saga", () => {
       .next(false)
       .select(ephemeralPublicKeySelector)
       .next(undefined)
+      .select(isActiveSessionFastLoginEnabledSelector)
+      .next(false)
+      .select(isActiveSessionLoginSelector)
+      .next(false)
       .throw(error)
       .put(
         loginFailure({
@@ -129,6 +149,10 @@ describe("handleTestLogin saga", () => {
       .next(true)
       .select(ephemeralPublicKeySelector)
       .next(fakePublicKey)
+      .select(isActiveSessionFastLoginEnabledSelector)
+      .next(false)
+      .select(isActiveSessionLoginSelector)
+      .next(false)
       .next(E.right(rightResponse))
       .put(
         loginSuccess({
@@ -158,6 +182,10 @@ describe("handleTestLogin saga", () => {
       .next(false)
       .select(ephemeralPublicKeySelector)
       .next(undefined)
+      .select(isActiveSessionFastLoginEnabledSelector)
+      .next(false)
+      .select(isActiveSessionLoginSelector)
+      .next(false)
       .next(leftWithStatus)
       .put(
         loginFailure({

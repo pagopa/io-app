@@ -54,7 +54,7 @@ export const DebugPrettyPrint = withDebugEnabled(
       return (
         <View style={styles.content} pointerEvents="box-only">
           <IOText
-            font="DMMono"
+            font="FiraCode"
             size={12}
             lineHeight={18}
             color={"grey-700"}

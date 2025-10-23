@@ -591,33 +591,43 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                 </View>
                               </View>
                             </View>
-                            <Text
-                              accessibilityLabel="Test Content Title"
-                              allowFontScaling={true}
-                              dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.5}
+                            <View
                               style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#2B2E38",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 22,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 33,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 8,
+                                }
                               }
                             >
-                              Test Content Title
-                            </Text>
-                            <Text>
-                              My test child
-                            </Text>
+                              <Text
+                                accessibilityLabel="Test Content Title"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="title2"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#2B2E38",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 22,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 33,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                Test Content Title
+                              </Text>
+                              <Text>
+                                My test child
+                              </Text>
+                            </View>
                           </View>
                         </View>
                         <View
@@ -1233,33 +1243,43 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                                 </View>
                               </View>
                             </View>
-                            <Text
-                              accessibilityLabel="Test Content Title"
-                              allowFontScaling={true}
-                              dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.5}
+                            <View
                               style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#2B2E38",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 22,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 33,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 8,
+                                }
                               }
                             >
-                              Test Content Title
-                            </Text>
-                            <Text>
-                              My test child
-                            </Text>
+                              <Text
+                                accessibilityLabel="Test Content Title"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="title2"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#2B2E38",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 22,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 33,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                Test Content Title
+                              </Text>
+                              <Text>
+                                My test child
+                              </Text>
+                            </View>
                           </View>
                         </View>
                         <View
@@ -1875,30 +1895,40 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                 </View>
                               </View>
                             </View>
-                            <Text
-                              accessibilityLabel="Test Content Title"
-                              allowFontScaling={true}
-                              dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.5}
+                            <View
                               style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#2B2E38",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 22,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 33,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 8,
+                                }
                               }
                             >
-                              Test Content Title
-                            </Text>
+                              <Text
+                                accessibilityLabel="Test Content Title"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="title2"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#2B2E38",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 22,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 33,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                Test Content Title
+                              </Text>
+                            </View>
                           </View>
                         </View>
                         <View
@@ -2514,30 +2544,40 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                                 </View>
                               </View>
                             </View>
-                            <Text
-                              accessibilityLabel="Test Content Title"
-                              allowFontScaling={true}
-                              dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.5}
+                            <View
                               style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#2B2E38",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 22,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 33,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 8,
+                                }
                               }
                             >
-                              Test Content Title
-                            </Text>
+                              <Text
+                                accessibilityLabel="Test Content Title"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="title2"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#2B2E38",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 22,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 33,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                Test Content Title
+                              </Text>
+                            </View>
                           </View>
                         </View>
                         <View

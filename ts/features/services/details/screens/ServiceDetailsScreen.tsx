@@ -33,7 +33,7 @@ import {
   serviceDetailsByIdSelector,
   serviceMetadataByIdSelector,
   serviceMetadataInfoSelector
-} from "../store/reducers";
+} from "../store/selectors";
 
 export type ServiceDetailsScreenRouteParams = {
   serviceId: ServiceId;

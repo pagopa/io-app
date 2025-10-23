@@ -432,64 +432,74 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                 </View>
                               </View>
                             </View>
-                            <Text
-                              accessibilityLabel="Stiamo caricando il messaggio"
-                              allowFontScaling={true}
-                              dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#2B2E38",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 22,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 33,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
-                              Stiamo caricando il messaggio
-                            </Text>
                             <View
                               style={
                                 {
-                                  "alignItems": "center",
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 8,
                                 }
                               }
                             >
-                              <View
-                                style={
-                                  {
-                                    "height": 8,
-                                  }
-                                }
-                              />
                               <Text
+                                accessibilityLabel="Stiamo caricando il messaggio"
                                 allowFontScaling={true}
-                                dynamicTypeRamp="body"
+                                dynamicTypeRamp="title2"
                                 maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
                                     {
-                                      "color": "#555C70",
+                                      "color": "#2B2E38",
                                       "fontFamily": "Titillio",
-                                      "fontSize": 16,
+                                      "fontSize": 22,
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 24,
+                                      "fontWeight": "600",
+                                      "lineHeight": 33,
+                                    },
+                                    {
+                                      "textAlign": "center",
                                     },
                                   ]
                                 }
                               >
-                                Attendi qualche secondo
+                                Stiamo caricando il messaggio
                               </Text>
+                              <View
+                                style={
+                                  {
+                                    "alignItems": "center",
+                                  }
+                                }
+                              >
+                                <View
+                                  style={
+                                    {
+                                      "height": 8,
+                                    }
+                                  }
+                                />
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Attendi qualche secondo
+                                </Text>
+                              </View>
                             </View>
                           </View>
                         </View>
@@ -1297,64 +1307,74 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                 </View>
                               </View>
                             </View>
-                            <Text
-                              accessibilityLabel="Stiamo caricando il messaggio"
-                              allowFontScaling={true}
-                              dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#2B2E38",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 22,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 33,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
-                              Stiamo caricando il messaggio
-                            </Text>
                             <View
                               style={
                                 {
-                                  "alignItems": "center",
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 8,
                                 }
                               }
                             >
-                              <View
-                                style={
-                                  {
-                                    "height": 8,
-                                  }
-                                }
-                              />
                               <Text
+                                accessibilityLabel="Stiamo caricando il messaggio"
                                 allowFontScaling={true}
-                                dynamicTypeRamp="body"
+                                dynamicTypeRamp="title2"
                                 maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
                                     {
-                                      "color": "#555C70",
+                                      "color": "#2B2E38",
                                       "fontFamily": "Titillio",
-                                      "fontSize": 16,
+                                      "fontSize": 22,
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 24,
+                                      "fontWeight": "600",
+                                      "lineHeight": 33,
+                                    },
+                                    {
+                                      "textAlign": "center",
                                     },
                                   ]
                                 }
                               >
-                                Attendi qualche secondo
+                                Stiamo caricando il messaggio
                               </Text>
+                              <View
+                                style={
+                                  {
+                                    "alignItems": "center",
+                                  }
+                                }
+                              >
+                                <View
+                                  style={
+                                    {
+                                      "height": 8,
+                                    }
+                                  }
+                                />
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Attendi qualche secondo
+                                </Text>
+                              </View>
                             </View>
                           </View>
                         </View>
@@ -3257,64 +3277,74 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                 </View>
                               </View>
                             </View>
-                            <Text
-                              accessibilityLabel="Stiamo caricando il messaggio"
-                              allowFontScaling={true}
-                              dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#2B2E38",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 22,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 33,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
-                              Stiamo caricando il messaggio
-                            </Text>
                             <View
                               style={
                                 {
-                                  "alignItems": "center",
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 8,
                                 }
                               }
                             >
-                              <View
-                                style={
-                                  {
-                                    "height": 8,
-                                  }
-                                }
-                              />
                               <Text
+                                accessibilityLabel="Stiamo caricando il messaggio"
                                 allowFontScaling={true}
-                                dynamicTypeRamp="body"
+                                dynamicTypeRamp="title2"
                                 maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
                                     {
-                                      "color": "#555C70",
+                                      "color": "#2B2E38",
                                       "fontFamily": "Titillio",
-                                      "fontSize": 16,
+                                      "fontSize": 22,
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 24,
+                                      "fontWeight": "600",
+                                      "lineHeight": 33,
+                                    },
+                                    {
+                                      "textAlign": "center",
                                     },
                                   ]
                                 }
                               >
-                                Attendi qualche secondo
+                                Stiamo caricando il messaggio
                               </Text>
+                              <View
+                                style={
+                                  {
+                                    "alignItems": "center",
+                                  }
+                                }
+                              >
+                                <View
+                                  style={
+                                    {
+                                      "height": 8,
+                                    }
+                                  }
+                                />
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Attendi qualche secondo
+                                </Text>
+                              </View>
                             </View>
                           </View>
                         </View>
@@ -4122,64 +4152,74 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                 </View>
                               </View>
                             </View>
-                            <Text
-                              accessibilityLabel="Stiamo caricando il messaggio"
-                              allowFontScaling={true}
-                              dynamicTypeRamp="title2"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#2B2E38",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 22,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 33,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
-                              Stiamo caricando il messaggio
-                            </Text>
                             <View
                               style={
                                 {
-                                  "alignItems": "center",
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 8,
                                 }
                               }
                             >
-                              <View
-                                style={
-                                  {
-                                    "height": 8,
-                                  }
-                                }
-                              />
                               <Text
+                                accessibilityLabel="Stiamo caricando il messaggio"
                                 allowFontScaling={true}
-                                dynamicTypeRamp="body"
+                                dynamicTypeRamp="title2"
                                 maxFontSizeMultiplier={1.5}
                                 style={
                                   [
                                     {},
                                     {
-                                      "color": "#555C70",
+                                      "color": "#2B2E38",
                                       "fontFamily": "Titillio",
-                                      "fontSize": 16,
+                                      "fontSize": 22,
                                       "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 24,
+                                      "fontWeight": "600",
+                                      "lineHeight": 33,
+                                    },
+                                    {
+                                      "textAlign": "center",
                                     },
                                   ]
                                 }
                               >
-                                Attendi qualche secondo
+                                Stiamo caricando il messaggio
                               </Text>
+                              <View
+                                style={
+                                  {
+                                    "alignItems": "center",
+                                  }
+                                }
+                              >
+                                <View
+                                  style={
+                                    {
+                                      "height": 8,
+                                    }
+                                  }
+                                />
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Attendi qualche secondo
+                                </Text>
+                              </View>
                             </View>
                           </View>
                         </View>

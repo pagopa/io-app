@@ -14,6 +14,7 @@ import {
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import _ from "lodash";
 import { memo, useCallback, useMemo, useRef, useState } from "react";
 import {
@@ -27,44 +28,42 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
-import I18n from "i18next";
+import { useDetectSmallScreen } from "../../../hooks/useDetectSmallScreen";
+import { useIOSelector } from "../../../store/hooks";
+import { appCurrentStateSelector } from "../../../store/reducers/appState";
+import { setAccessibilityFocus } from "../../../utils/accessibility";
+import { biometricAuthenticationRequest } from "../../../utils/biometrics";
+import { useBiometricType } from "../../../utils/hooks/useBiometricType";
+import { usePrevious } from "../../../utils/hooks/usePrevious";
 import { areTwoMinElapsedFromLastActivity } from "../../authentication/fastLogin/store/actions/sessionRefreshActions";
 import { refreshSessionToken } from "../../authentication/fastLogin/store/actions/tokenRefreshActions";
 import {
   hasTwoMinutesElapsedSinceLastActivitySelector,
   isFastLoginEnabledSelector
 } from "../../authentication/fastLogin/store/selectors";
-import { useDetectSmallScreen } from "../../../hooks/useDetectSmallScreen";
+import { profileNameSelector } from "../../settings/common/store/selectors";
+import { IdentificationNumberPad } from "../components/IdentificationNumberPad";
 import {
   identificationCancel,
   identificationFailure,
   identificationPinReset,
   identificationSuccess
 } from "../store/actions";
-import { useIOSelector } from "../../../store/hooks";
-import { appCurrentStateSelector } from "../../../store/reducers/appState";
 import { IdentificationCancelData, maxAttempts } from "../store/reducers";
-import { profileNameSelector } from "../../settings/common/store/selectors";
-import { setAccessibilityFocus } from "../../../utils/accessibility";
-import { biometricAuthenticationRequest } from "../../../utils/biometrics";
-import { useBiometricType } from "../../../utils/hooks/useBiometricType";
-import { usePrevious } from "../../../utils/hooks/usePrevious";
-import {
-  FAIL_ATTEMPTS_TO_SHOW_ALERT,
-  IdentificationInstructionsComponent,
-  getBiometryIconName
-} from "../utils";
-import { IdentificationNumberPad } from "../components/IdentificationNumberPad";
 import {
   identificationFailSelector,
   progressSelector
 } from "../store/selectors";
+import {
+  FAIL_ATTEMPTS_TO_SHOW_ALERT,
+  IdentificationInstructionsComponent,
+  getBiometryIconName,
+  handleAndroidBackNavigation
+} from "../utils";
 import { IdentificationLockModal } from "./IdentificationLockModal";
 
 const VERTICAL_PADDING = 16;
 const A11Y_FOCUS_DELAY = 1000 as Millisecond;
-
-const onRequestCloseHandler = () => undefined;
 
 // eslint-disable-next-line sonarjs/cognitive-complexity, complexity
 export const IdentificationModal = () => {
@@ -365,6 +364,9 @@ export const IdentificationModal = () => {
     setAccessibilityFocus(errorStatusRef, A11Y_FOCUS_DELAY);
   }
 
+  const identificationContext =
+    identificationProgressState.identificationContext;
+
   return showLockModal ? (
     <IdentificationLockModal
       countdownInMs={countdownInMs}
@@ -375,7 +377,12 @@ export const IdentificationModal = () => {
       testID="identification-modal"
       statusBarTranslucent
       transparent
-      onRequestClose={onRequestCloseHandler}
+      onRequestClose={() =>
+        handleAndroidBackNavigation(
+          identificationContext,
+          onIdentificationCancelHandler
+        )
+      }
     >
       <StatusBar
         barStyle={"light-content"}

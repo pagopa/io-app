@@ -9,7 +9,7 @@ import {
   setStartActiveSessionLogin
 } from "../store/actions";
 import {
-  fastLoginOptInActiveSessionLoginSelector,
+  isActiveSessionFastLoginEnabledSelector,
   idpSelectedActiveSessionLoginSelector,
   newTokenActiveSessionLoginSelector
 } from "../store/selectors";
@@ -43,7 +43,7 @@ describe("handleActiveSessionLoginSaga", () => {
         ],
         [select(newTokenActiveSessionLoginSelector), mockToken],
         [select(idpSelectedActiveSessionLoginSelector), mockIdp],
-        [select(fastLoginOptInActiveSessionLoginSelector), mockOptIn]
+        [select(isActiveSessionFastLoginEnabledSelector), mockOptIn]
       ])
       .put(
         consolidateActiveSessionLoginData({

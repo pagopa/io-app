@@ -16,7 +16,7 @@ import {
   setStartActiveSessionLogin
 } from "../store/actions";
 import {
-  fastLoginOptInActiveSessionLoginSelector,
+  isActiveSessionFastLoginEnabledSelector,
   idpSelectedActiveSessionLoginSelector,
   newTokenActiveSessionLoginSelector
 } from "../store/selectors";
@@ -53,7 +53,7 @@ export function* handleActiveSessionLoginSaga(): Generator<
     const token = yield* select(newTokenActiveSessionLoginSelector);
     const idp = yield* select(idpSelectedActiveSessionLoginSelector);
     const fastLoginOptIn = yield* select(
-      fastLoginOptInActiveSessionLoginSelector
+      isActiveSessionFastLoginEnabledSelector
     );
 
     // Even though we are sure that all three values are present at this point,

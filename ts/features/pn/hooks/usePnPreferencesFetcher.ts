@@ -6,7 +6,7 @@ import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { loadServicePreference } from "../../services/details/store/actions/preference";
-import { servicePreferencePotByIdSelector } from "../../services/details/store/reducers";
+import { servicePreferencePotByIdSelector } from "../../services/details/store/selectors";
 import { isServicePreferenceResponseSuccess } from "../../services/details/types/ServicePreferenceResponse";
 
 type PnStatus = {

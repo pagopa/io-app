@@ -1,15 +1,18 @@
 import * as B from "fp-ts/lib/boolean";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
-import { pipe } from "fp-ts/lib/function";
 import { Platform } from "react-native";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { AppFeedbackConfig } from "../../../../definitions/content/AppFeedbackConfig";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../../definitions/content/BackendStatus";
 import { BancomatPayConfig } from "../../../../definitions/content/BancomatPayConfig";
 import { Banner } from "../../../../definitions/content/Banner";
 import { BarcodesScannerConfig } from "../../../../definitions/content/BarcodesScannerConfig";
+import { FimsServiceConfiguration } from "../../../../definitions/content/FimsServiceConfiguration";
 import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
@@ -17,6 +20,7 @@ import {
   premiumMessagesOptInEnabled,
   scanAdditionalBarcodesEnabled
 } from "../../../config";
+import { TopicKeys } from "../../../features/appReviews/store/actions";
 import { getAppVersion, isVersionSupported } from "../../../utils/appVersion";
 import { backendStatusLoadSuccess } from "../../actions/backendStatus";
 import { Action } from "../../actions/types";
@@ -26,10 +30,6 @@ import {
 } from "../featureFlagWithMinAppVersionStatus";
 import { isIdPayLocallyEnabledSelector } from "../persistedPreferences";
 import { GlobalState } from "../types";
-import { FimsServiceConfiguration } from "../../../../definitions/content/FimsServiceConfiguration";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { AppFeedbackConfig } from "../../../../definitions/content/AppFeedbackConfig";
-import { TopicKeys } from "../../../features/appReviews/store/actions";
 
 export type RemoteConfigState = O.Option<BackendStatus["config"]>;
 
@@ -381,6 +381,37 @@ export const isIdPayEnabledSelector = createSelector(
     )
 );
 
+export const isIdPayOnboardingEnabledSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): boolean =>
+    pipe(
+      remoteConfig,
+      O.map(config => config.idPay.onboarding?.enabled ?? false),
+      O.getOrElse(() => false)
+    )
+);
+
+export const isIdPayDetailsEnabledSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): boolean =>
+    pipe(
+      remoteConfig,
+      O.map(config => config.idPay.initiative_details?.enabled ?? false),
+      O.getOrElse(() => false)
+    )
+);
+
+export const isIdPayEnabledInScanScreenSelector = (state: GlobalState) =>
+  pipe(state, remoteConfigSelector, remoteConfig =>
+    isPropertyWithMinAppVersionEnabled({
+      remoteConfig,
+      mainLocalFlag: true,
+      configPropertyName: "idPay",
+      optionalLocalFlag: true,
+      optionalConfig: "scan_screen"
+    })
+  );
+
 export const isIdPayCiePaymentCodeEnabledSelector = (state: GlobalState) =>
   pipe(state, remoteConfigSelector, remoteConfig =>
     isPropertyWithMinAppVersionEnabled({
@@ -393,32 +424,36 @@ export const isIdPayCiePaymentCodeEnabledSelector = (state: GlobalState) =>
   );
 
 export const idPayOnboardingRequiresAppUpdateSelector = (state: GlobalState) =>
-  pipe(
-    state,
-    remoteConfigSelector,
-    remoteConfig =>
-      !isPropertyWithMinAppVersionEnabled({
-        remoteConfig,
-        mainLocalFlag: true,
-        configPropertyName: "idPay",
-        optionalLocalFlag: true,
-        optionalConfig: "onboarding"
-      })
-  );
+  isIdPayLocallyEnabledSelector(state)
+    ? false
+    : pipe(
+        state,
+        remoteConfigSelector,
+        remoteConfig =>
+          !isPropertyWithMinAppVersionEnabled({
+            remoteConfig,
+            mainLocalFlag: true,
+            configPropertyName: "idPay",
+            optionalLocalFlag: true,
+            optionalConfig: "onboarding"
+          })
+      );
 
 export const idPayDetailsRequiresAppUpdateSelector = (state: GlobalState) =>
-  pipe(
-    state,
-    remoteConfigSelector,
-    remoteConfig =>
-      !isPropertyWithMinAppVersionEnabled({
-        remoteConfig,
-        mainLocalFlag: true,
-        configPropertyName: "idPay",
-        optionalLocalFlag: true,
-        optionalConfig: "initiative_details"
-      })
-  );
+  isIdPayLocallyEnabledSelector(state)
+    ? false
+    : pipe(
+        state,
+        remoteConfigSelector,
+        remoteConfig =>
+          !isPropertyWithMinAppVersionEnabled({
+            remoteConfig,
+            mainLocalFlag: true,
+            configPropertyName: "idPay",
+            optionalLocalFlag: true,
+            optionalConfig: "initiative_details"
+          })
+      );
 
 export const idPayInitiativeConfigSelector = (initiativeId?: string) =>
   createSelector(remoteConfigSelector, remoteConfig =>
@@ -693,7 +728,7 @@ export const pnPrivacyUrlsSelector = createSelector(
  * Return true if the app supports the AAR feature (based on remote config).
  * If the remote value is missing, consider the feature as enabled.
  */
-export const isAARRemoteEnabled = (state: GlobalState) => {
+export const isAarRemoteEnabled = (state: GlobalState) => {
   const remoteConfigOption = remoteConfigSelector(state);
   if (O.isNone(remoteConfigOption)) {
     // CDN data not available, AAR is disabled
@@ -733,3 +768,74 @@ export const caCBannerConfigSelector = (state: GlobalState) =>
     O.map(config => config.zendeskCacBanner),
     O.toUndefined
   );
+
+const fallbackSendAARDelegateUrl =
+  "https://assistenza.notifichedigitali.it/hc/it/articles/32453819931537-Delegare-qualcuno-a-visualizzare-le-tue-notifiche";
+export const sendAARDelegateUrlSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    remoteConfigSelector,
+    O.chainNullableK(config => config.pn.aar?.delegate_url),
+    O.getOrElse(() => fallbackSendAARDelegateUrl)
+  );
+
+export const sendShowAbstractSelector = (state: GlobalState) => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isSome(remoteConfigOption)) {
+    const abstractShownOrUndefined = remoteConfigOption.value.pn?.abstractShown;
+    if (abstractShownOrUndefined == null) {
+      // Data has been removed from CDN, there is no
+      // need to keep the abstract hidden anymore
+      return true;
+    }
+    // Data is set in the CDN, return its value
+    return abstractShownOrUndefined;
+  }
+  // No data from CDN, abstract must be hidden
+  return false;
+};
+
+export const sendCustomServiceCenterUrlSelector = (state: GlobalState) => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isSome(remoteConfigOption)) {
+    const customerServiceCenterUrlOrUndefined =
+      remoteConfigOption.value.pn?.customerServiceCenterUrl?.trim();
+    if (
+      customerServiceCenterUrlOrUndefined != null &&
+      customerServiceCenterUrlOrUndefined.length > 0
+    ) {
+      return customerServiceCenterUrlOrUndefined;
+    }
+  }
+  return "https://assistenza.notifichedigitali.it/hc";
+};
+
+export const sendEstimateTimelinesUrlSelector = (state: GlobalState) => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isSome(remoteConfigOption)) {
+    const estimateTimelinesUrlOrUndefined =
+      remoteConfigOption.value.pn?.estimateTimelinesUrl?.trim();
+    if (
+      estimateTimelinesUrlOrUndefined != null &&
+      estimateTimelinesUrlOrUndefined.length > 0
+    ) {
+      return estimateTimelinesUrlOrUndefined;
+    }
+  }
+  return "https://notifichedigitali.it/perfezionamento";
+};
+
+export const sendVisitTheWebsiteUrlSelector = (state: GlobalState) => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isSome(remoteConfigOption)) {
+    const visitTheWebsiteUrlOrUndefined =
+      remoteConfigOption.value.pn?.visitTheSENDWebsiteUrl?.trim();
+    if (
+      visitTheWebsiteUrlOrUndefined != null &&
+      visitTheWebsiteUrlOrUndefined.length > 0
+    ) {
+      return visitTheWebsiteUrlOrUndefined;
+    }
+  }
+  return "https://cittadini.notifichedigitali.it/auth/login";
+};

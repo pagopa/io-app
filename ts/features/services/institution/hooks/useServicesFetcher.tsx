@@ -9,7 +9,7 @@ import {
   paginatedServicesCurrentPageSelector,
   paginatedServicesLastPageSelector,
   paginatedServicesSelector
-} from "../store/reducers";
+} from "../store/selectors";
 
 const LIMIT: number = 20;
 

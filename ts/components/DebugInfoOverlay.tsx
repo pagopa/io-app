@@ -9,7 +9,6 @@ import {
 
 import { FunctionComponent, useState } from "react";
 import { Platform, Pressable, StyleSheet, View } from "react-native";
-import { widthPercentageToDP } from "react-native-responsive-screen";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { connect } from "react-redux";
 import { selectItwEnv } from "../features/itwallet/common/store/selectors/environment";
@@ -52,7 +51,7 @@ const styles = StyleSheet.create({
     borderColor: debugItemBorderColor,
     borderWidth: 1,
     borderRadius: 8,
-    maxWidth: widthPercentageToDP(80),
+    maxWidth: "80%",
     paddingHorizontal: 8,
     backgroundColor: debugItemBgColor
   }
@@ -112,6 +111,9 @@ const DebugInfoOverlay: FunctionComponent<Props> = (props: Props) => {
                 weight="Regular"
                 size={12}
                 lineHeight={16}
+                style={{
+                  textAlign: "center"
+                }}
               >
                 {props.screenNameDebug}
               </IOText>
