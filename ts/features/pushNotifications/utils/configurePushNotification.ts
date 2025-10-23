@@ -172,27 +172,14 @@ const messageIdFromPushNotification = (
 export const deepLinkFromPushNotification = (
   notification: Omit<ReceivedNotification, "userInfo"> | null
 ) => {
+  // TODO: add Mixpanel tracking (SIW-3243)
   // Try to decode the notification's payload
   const payloadDecodeEither = ItwNotificationPayload.decode(notification);
   if (E.isLeft(payloadDecodeEither)) {
-    // TODO: track the error on Mixpanel
     return undefined;
   }
   const payload = payloadDecodeEither.right;
-
-  // On iOS, the deepLink is stored in the top-level payload
-  const deepLinkOniOS = payload.deepLink;
-  if (deepLinkOniOS != null) {
-    return deepLinkOniOS;
-  }
-  // On Android, the deepLink is stored in the payload.data property
-  const deepLinkOnAndroid = payload.data?.deepLink;
-  if (deepLinkOnAndroid == null) {
-    // TODO: track the error on Mixpanel
-    // In this case, there was no deepLink, so we return
-    return undefined;
-  }
-  return deepLinkOnAndroid;
+  return payload.deepLink || payload.data?.deepLink;
 };
 
 const handleMessagePushNotification = (
