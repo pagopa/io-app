@@ -21,6 +21,7 @@ import {
   itwCredentialsEidStatusSelector
 } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
 import { ItwBadge } from "../../../common/components/ItwBadge.tsx";
@@ -43,6 +44,7 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const { status: credentialStatus = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
+  const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
 
   /**
    * The credential's expire UI should be displayed only when:
@@ -56,6 +58,14 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
       "expiring",
       "invalid"
     ];
+
+    // In offline mode show digital credential nearing expiration and expired as valid
+    if (
+      offlineAccessReason !== undefined &&
+      !excludedCredentialStatuses.includes(credentialStatus)
+    ) {
+      return "valid";
+    }
 
     if (
       maybeEidStatus === "valid" ||

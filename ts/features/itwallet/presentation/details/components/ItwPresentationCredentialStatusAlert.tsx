@@ -34,6 +34,8 @@ import {
   trackItwCredentialTapBanner
 } from "../../../analytics";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
+import { OfflineAccessReasonEnum } from "../../../../ingress/store/reducer";
 import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 
@@ -77,6 +79,7 @@ type AlertToRenderProps = {
   eidStatus: ItwJwtCredentialStatus | undefined;
   isItwL3: boolean;
   navigation: any;
+  offlineAccessReason?: OfflineAccessReasonEnum;
   onTrack: TrackCredentialAlert;
 };
 
@@ -92,6 +95,7 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
     itwCredentialStatusSelector(state, credential.credentialType)
   );
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
 
   const trackCredentialAlertEvent = (action: CredentialAlertEvents): void => {
     if (!status) {
@@ -128,6 +132,7 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
       eidStatus={eidStatus}
       isItwL3={isItwL3}
       navigation={navigation}
+      offlineAccessReason={offlineAccessReason}
       onTrack={trackCredentialAlertEvent}
     />
   );
@@ -140,6 +145,7 @@ const AlertToRender = ({
   eidStatus,
   isItwL3,
   navigation,
+  offlineAccessReason,
   onTrack
 }: AlertToRenderProps) => {
   const isEidExpired = eidStatus === "jwtExpired";
@@ -151,7 +157,10 @@ const AlertToRender = ({
     // If the eID jwt is expired or expiring and the credential jwt is expiring, do not show any alert
     // We do not handle the case where the eID jwt is expiring and the credential jwt is expired,
     // as this situation should never occur.
-    if ((isEidExpired || isEidExpiring) && isCredentialJwtExpiring) {
+    if (
+      ((isEidExpired || isEidExpiring) && isCredentialJwtExpiring) ||
+      offlineAccessReason !== undefined
+    ) {
       return null;
     }
     // If both the eID jwt and the credential jwt are expired, show the eID alert
