@@ -37,7 +37,7 @@ describe("analytics/index.ts", () => {
     (buildEventProperties as jest.Mock).mockReturnValue(props);
     trackLoginSessionTimeoutPostPin();
     expect(mixpanelTrack).toHaveBeenCalledWith(
-      "LOGIN_SESSION_TIMEOUT_POST_PIN",
+      "LOGIN_SESSION_TIMEOUT_POST_PIN_V2",
       props
     );
   });
