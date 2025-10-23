@@ -129,7 +129,11 @@ describe("SendQRScanFlowHandlerComponent", () => {
           expect(mockReplace.mock.calls[0][1]).toEqual({
             screen: PN_ROUTES.MAIN,
             params: {
-              screen: PN_ROUTES.ENGAGEMENT_SCREEN
+              screen: PN_ROUTES.ENGAGEMENT_SCREEN,
+              params: {
+                sendOpeningSource: "aar",
+                sendUserType: "not_set"
+              }
             }
           });
           expect(mockPopToTop.mock.calls.length).toBe(0);
@@ -140,7 +144,9 @@ describe("SendQRScanFlowHandlerComponent", () => {
             NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT
           );
           expect(mockReplace.mock.calls[0][1]).toMatchObject({
-            flow: "send_notification_opening"
+            flow: "send_notification_opening",
+            sendOpeningSource: "aar",
+            sendUserType: "not_set"
           });
           expect(mockPopToTop.mock.calls.length).toBe(0);
         } else {

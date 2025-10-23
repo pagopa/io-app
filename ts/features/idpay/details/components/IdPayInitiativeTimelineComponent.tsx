@@ -1,4 +1,5 @@
 import {
+  BannerErrorState,
   Body,
   BodySmall,
   Divider,
@@ -8,14 +9,15 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
+import I18n from "i18next";
 import { ComponentProps, Fragment } from "react";
 import { View } from "react-native";
-import I18n from "i18next";
+import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useIdPayTimelineDetailsBottomSheet } from "../../timeline/components/IdPayTimelineDetailsBottomSheet";
 import { IDPayDetailsRoutes } from "../navigation";
 import {
@@ -23,7 +25,7 @@ import {
   idpayOperationListSelector,
   idpayPaginatedTimelineSelector
 } from "../store";
-import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
+import { idpayTimelinePageGet } from "../store/actions";
 import { IdPayTimelineOperationListItem } from "./IdPayTimelineOperationListItem";
 
 type Props = {
@@ -36,12 +38,13 @@ const IdPayInitiativeTimelineComponent = ({
   size = 3
 }: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const dispatch = useIODispatch();
 
   const detailsBottomSheet = useIdPayTimelineDetailsBottomSheet(initiativeId);
-
   const paginatedTimelinePot = useIOSelector(idpayPaginatedTimelineSelector);
   const timeline = useIOSelector(idpayOperationListSelector);
   const isLoading = pot.isLoading(paginatedTimelinePot);
+  const isError = pot.isError(paginatedTimelinePot);
   const initiativeDataPot = useIOSelector(idpayInitiativeDetailsSelector);
   const initiative = pot.toUndefined(initiativeDataPot);
 
@@ -54,7 +57,29 @@ const IdPayInitiativeTimelineComponent = ({
     });
   };
 
+  const fetchTimelineData = () =>
+    dispatch(
+      idpayTimelinePageGet.request({
+        initiativeId,
+        page: 0,
+        pageSize: 5
+      })
+    );
+
   const renderTimelineContent = () => {
+    if (isError) {
+      return (
+        <BannerErrorState
+          label={I18n.t("features.wallet.home.otherMethods.error.banner.label")}
+          icon="warningFilled"
+          actionText={I18n.t(
+            "features.payments.methods.error.banner.retryButton"
+          )}
+          onPress={fetchTimelineData}
+        />
+      );
+    }
+
     if (isLoading) {
       return <TimelineComponentSkeleton size={size} />;
     }
@@ -99,6 +124,7 @@ const IdPayInitiativeTimelineComponent = ({
 
   return (
     <View testID="IDPayTimelineTestID">
+      <VSpacer size={16} />
       <ListItemHeader
         label={I18n.t(
           "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"

@@ -1,28 +1,33 @@
-import { isLeft } from "fp-ts/lib/Either";
 import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
+import { isLeft } from "fp-ts/lib/Either";
+import ReactNativeBlobUtil from "react-native-blob-util";
 import { call, cancelled, delay, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import ReactNativeBlobUtil from "react-native-blob-util";
-import { SessionToken } from "../../../../types/SessionToken";
-import { KeyInfo } from "../../../lollipop/utils/crypto";
-import { createSendAARClientWithLollipop } from "../api/client";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { apiUrlPrefix, fetchTimeout } from "../../../../config";
-import { downloadAttachment } from "../../../messages/store/actions";
-import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
-import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
-import { unknownToReason } from "../../../messages/utils";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
+import { SessionToken } from "../../../../types/SessionToken";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
+import { isTestEnv } from "../../../../utils/environment";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import { KeyInfo } from "../../../lollipop/utils/crypto";
+import { downloadAttachment } from "../../../messages/store/actions";
+import { unknownToReason } from "../../../messages/utils";
 import {
   attachmentDisplayName,
   pdfSavePath,
   restrainRetryAfterIntervalInMilliseconds
 } from "../../../messages/utils/attachments";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import {
   aarProblemJsonAnalyticsReport,
   trackSendAARFailure
 } from "../analytics";
-import { isTestEnv } from "../../../../utils/environment";
+import { createSendAARClientWithLollipop } from "../api/client";
+
+const fastLoginType = "FAST_LOGIN_EXPIRED";
+const fastLoginError = Error(fastLoginType);
+const isFastLoginError = (e: unknown) =>
+  e instanceof Error && e.message === fastLoginType;
 
 export function* downloadAARAttachmentSaga(
   bearerToken: SessionToken,
@@ -31,7 +36,6 @@ export function* downloadAARAttachmentSaga(
   action: ActionType<typeof downloadAttachment.request>
 ) {
   const { attachment, messageId } = action.payload;
-
   const useSendUATEnvironment = yield* select(isPnTestEnabledSelector);
 
   try {
@@ -41,7 +45,8 @@ export function* downloadAARAttachmentSaga(
       keyInfo,
       attachment.url,
       useSendUATEnvironment,
-      mandateId
+      mandateId,
+      action
     );
 
     const attachmentDownloadPath = yield* call(
@@ -60,7 +65,16 @@ export function* downloadAARAttachmentSaga(
     );
   } catch (e) {
     const reason = unknownToReason(e);
-    yield* call(trackSendAARFailure, "Download Attachment", reason);
+    if (isFastLoginError(e)) {
+      yield* call(
+        trackSendAARFailure,
+        "Download Attachment",
+        "Fast login expired"
+      );
+    } else {
+      yield* call(trackSendAARFailure, "Download Attachment", reason);
+    }
+
     yield* put(
       downloadAttachment.failure({
         attachment,
@@ -82,7 +96,8 @@ function* getAttachmentPrevalidatedUrl(
   keyInfo: KeyInfo,
   attachmentUrl: string,
   useUATEnvironment: boolean,
-  mandateId: string | undefined
+  mandateId: string | undefined,
+  action: ActionType<typeof downloadAttachment.request>
 ): Generator<ReduxSagaEffect, string> {
   while (true) {
     const attachmentMetadataRetryAfterOrUrl = yield* call(
@@ -91,7 +106,8 @@ function* getAttachmentPrevalidatedUrl(
       keyInfo,
       attachmentUrl,
       useUATEnvironment,
-      mandateId
+      mandateId,
+      action
     );
     if (typeof attachmentMetadataRetryAfterOrUrl === "string") {
       return attachmentMetadataRetryAfterOrUrl;
@@ -109,7 +125,8 @@ function* getAttachmentMetadata(
   keyInfo: KeyInfo,
   attachmentUrl: string,
   useUATEnvironment: boolean,
-  mandateId?: string
+  mandateId: string | undefined,
+  action: ActionType<typeof downloadAttachment.request>
 ): Generator<ReduxSagaEffect, string | number> {
   const sendAARClient = createSendAARClientWithLollipop(apiUrlPrefix, keyInfo);
   const getAttachmentMetadataFactory = sendAARClient.getNotificationAttachment;
@@ -126,7 +143,8 @@ function* getAttachmentMetadata(
 
   const responseEither = (yield* call(
     withRefreshApiCall,
-    request
+    request,
+    action
   )) as SagaCallReturnType<typeof getAttachmentMetadataFactory>;
 
   if (isLeft(responseEither)) {
@@ -134,16 +152,16 @@ function* getAttachmentMetadata(
     throw Error(`Decoding failure (${reason})`);
   }
 
-  const response = responseEither.right;
-  if (response.status !== 200) {
-    const reason = aarProblemJsonAnalyticsReport(
-      response.status,
-      response.value
-    );
+  const { status, value } = responseEither.right;
+  if (status === 401) {
+    throw fastLoginError;
+  }
+  if (status !== 200) {
+    const reason = aarProblemJsonAnalyticsReport(status, value);
     throw Error(`HTTP request failed (${reason})`);
   }
 
-  const { retryAfter, url } = response.value;
+  const { retryAfter, url } = value;
   if (url != null && url.trim().length > 0) {
     return url;
   } else if (retryAfter != null) {
@@ -181,7 +199,6 @@ function* downloadAttachmentFromPrevalidatedUrl(
     timeout: fetchTimeout
   });
   const result = yield* call(config.fetch, "get", prevalidatedAttachmentUrl);
-
   const { status, state, respType, timeout } = result.info();
   if (status === 200) {
     return result.path();
