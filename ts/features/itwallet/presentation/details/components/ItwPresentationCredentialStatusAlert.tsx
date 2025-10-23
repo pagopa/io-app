@@ -6,7 +6,6 @@ import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import {
   ItwCredentialStatus,
-  ItwJwtCredentialStatus,
   StoredCredential
 } from "../../../common/utils/itwTypesUtils.ts";
 import {
