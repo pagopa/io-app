@@ -9,8 +9,11 @@ export function trackIngressServicesSlowDown() {
   );
 }
 
-export function trackIngressTimeout() {
-  void mixpanelTrack("INGRESS_TIMEOUT", buildEventProperties("KO", undefined));
+export function trackIngressTimeout(API_failure: string) {
+  void mixpanelTrack(
+    "INGRESS_TIMEOUT",
+    buildEventProperties("KO", undefined, { API_failure })
+  );
 }
 
 export function trackIngressCdnSystemError() {

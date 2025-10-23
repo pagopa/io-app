@@ -75,7 +75,7 @@
     "@pagopa/react-native-cie": "^1.4.3",
     "@pagopa/ts-commons": "^10.15.0",
     "@react-native-async-storage/async-storage": "^2.0.0",
-    "@react-native-clipboard/clipboard": "^1.14.0",
+    "@react-native-clipboard/clipboard": "^1.16.3",
     "@react-native-community/netinfo": "11.4.1",
     "@react-native-community/push-notification-ios": "^1.8.0",
     "@react-native-cookies/cookies": "^6.2.1",
