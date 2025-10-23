@@ -75,7 +75,7 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
     }
 
     return "valid";
-  }, [credentialStatus, maybeEidStatus]);
+  }, [credentialStatus, maybeEidStatus, offlineAccessReason]);
 
   const handleFlipButtonPress = useCallback(() => {
     trackWalletShowBack(
