@@ -258,28 +258,38 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                                   }
                                 }
                               >
-                                <Text
-                                  accessibilityLabel="Lingua preferita"
-                                  accessibilityRole="header"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="title1"
-                                  maxFontSizeMultiplier={1.5}
+                                <View
                                   style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 26,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 34,
-                                      },
-                                    ]
+                                    {
+                                      "display": "flex",
+                                      "flexDirection": "column",
+                                      "gap": 8,
+                                    }
                                   }
                                 >
-                                  Lingua preferita
-                                </Text>
+                                  <Text
+                                    accessibilityLabel="Lingua preferita"
+                                    accessibilityRole="header"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="title1"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 26,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 34,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Lingua preferita
+                                  </Text>
+                                </View>
                               </View>
                               <View
                                 style={

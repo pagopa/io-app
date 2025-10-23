@@ -20,6 +20,12 @@ export const useSendActivationFlow = () => {
     areNotificationPermissionsEnabledSelector
   );
 
+  const handleRateLimitError = () => {
+    dispatch(setSecurityAdviceReadyToShow(true));
+    popToTop();
+    toast.error(i18n.t("features.pn.loginEngagement.send.rateLimitToast"));
+  };
+
   const onSENDActivationSucceeded = () => {
     dispatch(setSendEngagementScreenHasBeenDismissed());
     dispatch(setSecurityAdviceReadyToShow(true));
@@ -27,12 +33,18 @@ export const useSendActivationFlow = () => {
       popToTop();
     } else {
       replace(NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT, {
-        flow: "access"
+        flow: "access",
+        sendOpeningSource: "not_set",
+        sendUserType: "not_set"
       });
     }
     toast.success(i18n.t("features.pn.loginEngagement.send.toast"));
   };
-  const onSENDActivationFailed = () => {
+  const onSENDActivationFailed = (isRateLimitError?: boolean) => {
+    if (isRateLimitError === true) {
+      handleRateLimitError();
+      return;
+    }
     replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
       screen: PN_ROUTES.MAIN,
       params: {

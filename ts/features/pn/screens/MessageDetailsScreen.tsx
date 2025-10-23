@@ -96,6 +96,9 @@ const useCorrectHeader = (
 export const MessageDetailsScreen = () => {
   const dispatch = useIODispatch();
   const route = useRoute<MessageDetailsRouteProps>();
+  // Be aware that when this screen displays an AAR message, messageId and IUN have
+  // the same value. When displaying SEND's notifications via IO Messages, messageId
+  // and IUN have differente values
   const { messageId, serviceId, firstTimeOpening, isAarMessage } = route.params;
   const aarBottomSheetRef = useRef<() => void>(undefined);
 
@@ -213,6 +216,7 @@ export const MessageDetailsScreen = () => {
       {isAarMessage && (
         <SendAARMessageDetailBottomSheetComponent
           aarBottomSheetRef={aarBottomSheetRef}
+          iun={messageId}
         />
       )}
     </>
