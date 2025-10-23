@@ -397,28 +397,38 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                               }
                             }
                           >
-                            <Text
-                              accessibilityLabel="Inserisci il codice fiscale dell’Ente Creditore"
-                              accessibilityRole="header"
-                              allowFontScaling={true}
-                              dynamicTypeRamp="title1"
-                              maxFontSizeMultiplier={1.5}
+                            <View
                               style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#0E0F13",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 26,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 34,
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 8,
+                                }
                               }
                             >
-                              Inserisci il codice fiscale dell’Ente Creditore
-                            </Text>
+                              <Text
+                                accessibilityLabel="Inserisci il codice fiscale dell’Ente Creditore"
+                                accessibilityRole="header"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="title1"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#0E0F13",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 26,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 34,
+                                    },
+                                  ]
+                                }
+                              >
+                                Inserisci il codice fiscale dell’Ente Creditore
+                              </Text>
+                            </View>
                           </View>
                           <View
                             style={

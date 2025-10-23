@@ -9,8 +9,17 @@ import PN_ROUTES from "../../../navigation/routes";
 import * as navigation from "../../../../../navigation/params/AppParamsList";
 import { pnActivationUpsert } from "../../../store/actions";
 import { GlobalState } from "../../../../../store/reducers/types";
-import * as analytics from "../../analytics";
+import * as sendAnalytics from "../../../analytics/send";
 import { NOTIFICATIONS_ROUTES } from "../../../../pushNotifications/navigation/routes";
+import {
+  NotificationModalFlow,
+  SendOpeningSource,
+  SendUserType
+} from "../../../../pushNotifications/analytics";
+
+const DEFAULT_OPENING_SOURCE: SendOpeningSource = "not_set";
+const DEFAULT_USER_TYPE: SendUserType = "not_set";
+const expectedFlow: NotificationModalFlow = "send_notification_opening";
 
 const mockBannerKO = jest.fn();
 jest.mock("../../components/SendEngagementComponent");
@@ -43,13 +52,13 @@ jest.mock("react-redux", () => ({
 
 describe("SendEngagementScreen", () => {
   const spiedOnMockedTrackSendActivationModalDialog = jest
-    .spyOn(analytics, "trackSendActivationModalDialog")
+    .spyOn(sendAnalytics, "trackSendActivationModalDialog")
     .mockImplementation();
   const spiedOnMockedTrackSendActivationModalDialogActivationDismissed = jest
-    .spyOn(analytics, "trackSendActivationModalDialogActivationDismissed")
+    .spyOn(sendAnalytics, "trackSendActivationModalDialogActivationDismissed")
     .mockImplementation();
   const spiedOnMockedTrackSendActivationModalDialogActivationStart = jest
-    .spyOn(analytics, "trackSendActivationModalDialogActivationStart")
+    .spyOn(sendAnalytics, "trackSendActivationModalDialogActivationStart")
     .mockImplementation();
   afterEach(() => {
     jest.clearAllMocks();
@@ -62,7 +71,13 @@ describe("SendEngagementScreen", () => {
     );
     expect(
       spiedOnMockedTrackSendActivationModalDialog.mock.calls[0].length
-    ).toBe(0);
+    ).toBe(2);
+    expect(spiedOnMockedTrackSendActivationModalDialog.mock.calls[0][0]).toBe(
+      expectedFlow
+    );
+    expect(spiedOnMockedTrackSendActivationModalDialog.mock.calls[0][1]).toBe(
+      DEFAULT_USER_TYPE
+    );
     expect(
       spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock.calls
         .length
@@ -91,7 +106,13 @@ describe("SendEngagementScreen", () => {
     );
     expect(
       spiedOnMockedTrackSendActivationModalDialog.mock.calls[0].length
-    ).toBe(0);
+    ).toBe(2);
+    expect(spiedOnMockedTrackSendActivationModalDialog.mock.calls[0][0]).toBe(
+      expectedFlow
+    );
+    expect(spiedOnMockedTrackSendActivationModalDialog.mock.calls[0][1]).toBe(
+      DEFAULT_USER_TYPE
+    );
     expect(
       spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock.calls
         .length
@@ -99,7 +120,15 @@ describe("SendEngagementScreen", () => {
     expect(
       spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock
         .calls[0].length
-    ).toBe(0);
+    ).toBe(2);
+    expect(
+      spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock
+        .calls[0][0]
+    ).toBe(expectedFlow);
+    expect(
+      spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock
+        .calls[0][1]
+    ).toBe(DEFAULT_USER_TYPE);
     expect(
       spiedOnMockedTrackSendActivationModalDialogActivationStart.mock.calls
         .length
@@ -107,90 +136,122 @@ describe("SendEngagementScreen", () => {
     expect(mockReplace).toHaveBeenCalledTimes(0);
   });
   [false, true].forEach(systemNotificationsEnabled =>
-    it(`should dispatch a 'pnActivationUpsert.request' and track proper analytics when pressing the primary action, with proper flow for success and failure actions (systemNotificationsEnabled: ${systemNotificationsEnabled})`, () => {
-      const mockPopToTop = jest.fn();
-      const mockReplace = jest.fn();
-      const mockSetOptions = jest.fn();
-      jest.spyOn(navigation, "useIONavigation").mockImplementation(
-        () =>
-          ({
-            popToTop: mockPopToTop,
-            setOptions: mockSetOptions,
-            replace: mockReplace
-          } as any)
-      );
+    (["aar", "message", "not_set"] as const).forEach(sendOpeningSource =>
+      (["recipient", "mandatory", "not_set"] as const).forEach(sendUserType =>
+        it(`should dispatch a 'pnActivationUpsert.request' and track proper analytics when pressing the primary action, with proper flow for success and failure actions (systemNotificationsEnabled: ${systemNotificationsEnabled})`, () => {
+          const mockPopToTop = jest.fn();
+          const mockReplace = jest.fn();
+          const mockSetOptions = jest.fn();
+          jest.spyOn(navigation, "useIONavigation").mockImplementation(
+            () =>
+              ({
+                popToTop: mockPopToTop,
+                setOptions: mockSetOptions,
+                replace: mockReplace
+              } as any)
+          );
 
-      const screen = renderScreen(systemNotificationsEnabled);
+          const screen = renderScreen(
+            systemNotificationsEnabled,
+            sendOpeningSource,
+            sendUserType
+          );
 
-      const closeButton = screen.getByTestId("primary-action");
-      fireEvent.press(closeButton);
+          const closeButton = screen.getByTestId("primary-action");
+          fireEvent.press(closeButton);
 
-      expect(mockSetOptions.mock.calls.length).toBe(0);
-      expect(mockDispatch.mock.calls.length).toBe(1);
-      expect(mockDispatch.mock.calls[0].length).toBe(1);
-      expect(
-        spiedOnMockedTrackSendActivationModalDialog.mock.calls.length
-      ).toBe(1);
-      expect(
-        spiedOnMockedTrackSendActivationModalDialog.mock.calls[0].length
-      ).toBe(0);
-      expect(
-        spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock
-          .calls.length
-      ).toBe(0);
-      expect(
-        spiedOnMockedTrackSendActivationModalDialogActivationStart.mock.calls
-          .length
-      ).toBe(1);
-      expect(
-        spiedOnMockedTrackSendActivationModalDialogActivationStart.mock.calls[0]
-          .length
-      ).toBe(0);
+          expect(mockSetOptions.mock.calls.length).toBe(0);
+          expect(mockDispatch.mock.calls.length).toBe(1);
+          expect(mockDispatch.mock.calls[0].length).toBe(1);
+          expect(
+            spiedOnMockedTrackSendActivationModalDialog.mock.calls.length
+          ).toBe(1);
+          expect(
+            spiedOnMockedTrackSendActivationModalDialog.mock.calls[0].length
+          ).toBe(2);
+          expect(
+            spiedOnMockedTrackSendActivationModalDialog.mock.calls[0][0]
+          ).toBe(expectedFlow);
+          expect(
+            spiedOnMockedTrackSendActivationModalDialog.mock.calls[0][1]
+          ).toBe(sendUserType);
+          expect(
+            spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock
+              .calls.length
+          ).toBe(0);
+          expect(
+            spiedOnMockedTrackSendActivationModalDialogActivationStart.mock
+              .calls.length
+          ).toBe(1);
+          expect(
+            spiedOnMockedTrackSendActivationModalDialogActivationStart.mock
+              .calls[0].length
+          ).toBe(2);
+          expect(
+            spiedOnMockedTrackSendActivationModalDialogActivationStart.mock
+              .calls[0][0]
+          ).toBe(expectedFlow);
+          expect(
+            spiedOnMockedTrackSendActivationModalDialogActivationStart.mock
+              .calls[0][1]
+          ).toBe(sendUserType);
 
-      const expectedAction = pnActivationUpsert.request({
-        value: true,
-        onSuccess: () => undefined,
-        onFailure: () => undefined
-      });
-      const argument = mockDispatch.mock.calls[0][0];
-      expect(argument).toBeDefined();
-      expect(argument.type).toEqual(expectedAction.type);
-      expect(argument.payload.value).toEqual(expectedAction.payload.value);
-      expect(argument.payload.onFailure).toBeDefined();
-      expect(argument.payload.onSuccess).toBeDefined();
+          const expectedAction = pnActivationUpsert.request({
+            value: true,
+            onSuccess: () => undefined,
+            onFailure: () => undefined
+          });
+          const argument = mockDispatch.mock.calls[0][0];
+          expect(argument).toBeDefined();
+          expect(argument.type).toEqual(expectedAction.type);
+          expect(argument.payload.value).toEqual(expectedAction.payload.value);
+          expect(argument.payload.onFailure).toBeDefined();
+          expect(argument.payload.onSuccess).toBeDefined();
 
-      argument.payload.onSuccess();
-      expect(mockToastSuccess.mock.calls.length).toBe(1);
-      expect(mockToastSuccess.mock.calls[0].length).toBe(1);
-      expect(mockToastSuccess.mock.calls[0][0]).toEqual(
-        I18n.t("features.pn.aar.serviceActivation.serviceActivated")
-      );
-      if (systemNotificationsEnabled) {
-        expect(mockPopToTop.mock.calls.length).toEqual(1);
-        expect(mockPopToTop.mock.calls[0].length).toEqual(0);
-        expect(mockReplace).toHaveBeenCalledTimes(0);
-      } else {
-        expect(mockPopToTop.mock.calls.length).toEqual(0);
-        expect(mockReplace).toHaveBeenCalledTimes(1);
-        expect(mockReplace).toHaveBeenCalledWith(
-          NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT,
-          { flow: "send_notification_opening" }
-        );
-      }
+          argument.payload.onSuccess();
+          expect(mockToastSuccess.mock.calls.length).toBe(1);
+          expect(mockToastSuccess.mock.calls[0].length).toBe(1);
+          expect(mockToastSuccess.mock.calls[0][0]).toEqual(
+            I18n.t("features.pn.aar.serviceActivation.serviceActivated")
+          );
+          if (systemNotificationsEnabled) {
+            expect(mockPopToTop.mock.calls.length).toEqual(1);
+            expect(mockPopToTop.mock.calls[0].length).toEqual(0);
+            expect(mockReplace).toHaveBeenCalledTimes(0);
+          } else {
+            expect(mockPopToTop.mock.calls.length).toEqual(0);
+            expect(mockReplace).toHaveBeenCalledTimes(1);
+            expect(mockReplace).toHaveBeenCalledWith(
+              NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT,
+              {
+                flow: expectedFlow,
+                sendOpeningSource,
+                sendUserType
+              }
+            );
+          }
 
-      act(() => {
-        argument.payload.onFailure();
-      });
-      expect(mockSetOptions.mock.calls.length).toBe(1);
-      expect(mockSetOptions.mock.calls[0].length).toBe(1);
-      expect(mockSetOptions.mock.calls[0][0]).toEqual({ headerShown: false });
+          act(() => {
+            argument.payload.onFailure();
+          });
+          expect(mockSetOptions.mock.calls.length).toBe(1);
+          expect(mockSetOptions.mock.calls[0].length).toBe(1);
+          expect(mockSetOptions.mock.calls[0][0]).toEqual({
+            headerShown: false
+          });
 
-      expect(mockBannerKO.mock.calls.length).toBe(1);
-    })
+          expect(mockBannerKO.mock.calls.length).toBe(1);
+        })
+      )
+    )
   );
 });
 
-const renderScreen = (systemNotificationsEnabled: boolean = false) => {
+const renderScreen = (
+  systemNotificationsEnabled: boolean = false,
+  sendOpeningSource: SendOpeningSource = DEFAULT_OPENING_SOURCE,
+  sendUserType: SendUserType = DEFAULT_USER_TYPE
+) => {
   const baseState = appReducer(undefined, applicationChangeState("active"));
   const testState = {
     ...baseState,
@@ -204,9 +265,12 @@ const renderScreen = (systemNotificationsEnabled: boolean = false) => {
   } as GlobalState;
   const store = createStore(appReducer, testState as any);
   return renderScreenWithNavigationStoreContext(
-    () => <SendEngagementScreen />,
+    SendEngagementScreen,
     PN_ROUTES.ENGAGEMENT_SCREEN,
-    {},
+    {
+      sendOpeningSource,
+      sendUserType
+    },
     store
   );
 };

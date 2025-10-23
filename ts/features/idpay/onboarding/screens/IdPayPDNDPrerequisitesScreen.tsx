@@ -1,8 +1,4 @@
-import {
-  FooterActions,
-  ModuleSummary,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { ModuleSummary, VSpacer } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
@@ -39,32 +35,22 @@ export const IdPayPDNDPrerequisitesScreen = () => {
   const continueOnPress = () => machine.send({ type: "next" });
   const goBackOnPress = () => machine.send({ type: "back" });
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
+  const { present, bottomSheet } = useIOBottomSheetModal({
     title: I18n.t(
       "idpay.onboarding.PDNDPrerequisites.prerequisites.info.header"
     ),
     component: (
-      <IOMarkdown
-        content={I18n.t(
-          "idpay.onboarding.PDNDPrerequisites.prerequisites.info.body",
-          {
-            provider: authority
-          }
-        )}
-      />
-    ),
-    footer: (
-      <FooterActions
-        actions={{
-          primary: {
-            label: I18n.t(
-              "idpay.onboarding.PDNDPrerequisites.prerequisites.info.understoodCTA"
-            ),
-            onPress: () => dismiss()
-          },
-          type: "SingleButton"
-        }}
-      />
+      <>
+        <IOMarkdown
+          content={I18n.t(
+            "idpay.onboarding.PDNDPrerequisites.prerequisites.info.body",
+            {
+              provider: authority
+            }
+          )}
+        />
+        <VSpacer size={24} />
+      </>
     )
   });
 

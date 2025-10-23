@@ -1,22 +1,28 @@
 import I18n from "i18next";
 import { RefObject } from "react";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIOStore } from "../../../../store/hooks";
+import { useIOSelector, useIOStore } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import PN_ROUTES from "../../navigation/routes";
 import { isPnServiceEnabled } from "../../reminderBanner/reducer/bannerDismiss";
+import { isAarMessageDelegatedSelector } from "../store/selectors";
 import { SendAARMessageDetailBottomSheet } from "./SendAARMessageDetailBottomSheet";
 
 type SendAARMessageDetailBottomSheetComponentProps = {
   aarBottomSheetRef: RefObject<(() => void) | undefined>;
+  iun: string;
 };
 
 export const SendAARMessageDetailBottomSheetComponent = ({
-  aarBottomSheetRef
+  aarBottomSheetRef,
+  iun
 }: SendAARMessageDetailBottomSheetComponentProps) => {
   const navigation = useIONavigation();
   const store = useIOStore();
+  const isDelegate = useIOSelector(state =>
+    isAarMessageDelegatedSelector(state, iun)
+  );
 
   const onSecondaryActionPress = () => {
     dismiss();
@@ -40,7 +46,11 @@ export const SendAARMessageDetailBottomSheetComponent = ({
     navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
       screen: PN_ROUTES.MAIN,
       params: {
-        screen: PN_ROUTES.ENGAGEMENT_SCREEN
+        screen: PN_ROUTES.ENGAGEMENT_SCREEN,
+        params: {
+          sendOpeningSource: "aar",
+          sendUserType: isDelegate ? "mandatory" : "recipient"
+        }
       }
     });
   };
