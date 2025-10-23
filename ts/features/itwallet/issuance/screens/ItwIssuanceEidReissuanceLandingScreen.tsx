@@ -1,11 +1,16 @@
 import { useCallback } from "react";
 import I18n from "i18next";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useNavigation } from "@react-navigation/native";
+import {
+  IOStackNavigationProp,
+  useIONavigation
+} from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { ItwParamsList } from "../../navigation/ItwParamsList";
 
 /**
  * Landing screen for the eID reissuing flow started from a message.
@@ -35,14 +40,12 @@ export const ItwIssuanceEidReissuanceLandingScreen = () => {
 };
 
 const NavigateToIdentificationModeSelection = () => {
-  const navigation = useIONavigation();
+  const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
 
   const startEidReissuing = useCallback(() => {
-    navigation.replace(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
-      params: {
-        eidReissuing: true
-      }
+    navigation.replace(ITW_ROUTES.IDENTIFICATION.MODE_SELECTION, {
+      eidReissuing: true,
+      animationEnabled: false
     });
   }, [navigation]);
 
