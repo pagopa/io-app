@@ -133,13 +133,13 @@ const CardSideBase = ({ status, children }: CardSideBaseProps) => {
 
   const statusTagProps = tagPropsByStatus[status];
   const borderColor = borderColorMap[status];
+  // Include "jwtExpired" as a valid status because the credential skeumorphic card with this state
+  // should not appear faded. Only the "expired" status should be displayed with reduced opacity.
+  const isValid = [...validCredentialStatuses, "jwtExpired"].includes(status);
 
   const dynamicStyle: StyleProp<ViewStyle> = {
     borderColor,
-    backgroundColor:
-      validCredentialStatuses.includes(status) || status === "jwtExpired"
-        ? undefined
-        : "rgba(255,255,255,0.7)"
+    backgroundColor: isValid ? undefined : "rgba(255,255,255,0.7)"
   };
 
   return (
