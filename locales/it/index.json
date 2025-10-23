@@ -4090,6 +4090,7 @@
             "secondaryAction": "Non attivare SEND su IO"
           },
           "toast": "Hai attivato SEND su IO",
+          "rateLimitToast": "Non riusciamo ad attivare il servizio SEND, riprova più tardi",
           "activationErrorMessage": "Non riusciamo ad attivare il servizio SEND"
         }
       }
@@ -6126,7 +6127,7 @@
       },
       "headerTitle": "Adesione all'iniziativa",
       "beforeContinue": {
-        "text": "Premendo Continua dichiari di aver letto, compreso e accettato l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni]({{tosUrl}}) d'uso.",
+        "text": "Premendo Continua dichiari di aver letto, compreso e accettato l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d'uso]({{tosUrl}}).",
         "requestBonus": "Richiedi il bonus"
       },
       "navigation": {
@@ -6190,8 +6191,8 @@
       "enableNotification": {
         "title": "Non perderti l’esito delle tue richieste",
         "subtitle": "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app.",
-        "action": "Attiva le notifiche",
-        "deny": "Non ora",
+        "action": "Attiva notifiche push",
+        "deny": "Non attivare",
         "success": "Hai attivato le notifiche push",
         "advice": "Consigliato"
       },
@@ -6215,7 +6216,8 @@
       "loading": {
         "subtitle": "Attendi qualche secondo",
         "title": "Stiamo elaborando la tua richiesta"
-      }
+      },
+      "initiativeImageAltText": "Immagine iniziativa"
     },
     "configuration": {
       "failureStates": {
