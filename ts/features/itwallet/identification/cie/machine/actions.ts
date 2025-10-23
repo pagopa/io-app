@@ -7,7 +7,9 @@ import {
   trackItWalletCardReadingClose,
   trackItWalletCieCardReadingFailure,
   trackItWalletCieCardReadingSuccess,
+  trackItWalletCieCardReadingUnexpectedFailure,
   trackItWalletCieCardVerifyFailure,
+  trackItWalletErrorCardReading,
   trackItWalletErrorPin,
   trackItWalletLastErrorPin,
   trackItWalletSecondErrorPin
@@ -80,21 +82,8 @@ export const cieMachineActions = {
 
     if (isNfcError(failure)) {
       switch (failure.name) {
-        case "WEBVIEW_ERROR": // No tracking
-          return;
-        case "NOT_A_CIE":
-          trackItWalletCieCardReadingFailure({
-            reason: CieCardReadingFailureReason.unknownCard,
-            itw_flow,
-            cie_reading_progress: progress
-          });
-          return;
-        case "APDU_ERROR":
-          trackItWalletCieCardReadingFailure({
-            reason: CieCardReadingFailureReason.apduNotSupported,
-            itw_flow,
-            cie_reading_progress: progress
-          });
+        case "TAG_LOST":
+          trackItWalletErrorCardReading(itw_flow, progress);
           return;
         case "WRONG_PIN":
           if (failure.attemptsLeft > 1) {
@@ -109,26 +98,45 @@ export const cieMachineActions = {
         case "CERTIFICATE_EXPIRED":
           trackItWalletCieCardVerifyFailure({
             itw_flow,
-            reason: "certificate expired",
+            reason: "CERTIFICATE_EXPIRED",
             cie_reading_progress: progress
           });
           return;
         case "CERTIFICATE_REVOKED":
           trackItWalletCieCardVerifyFailure({
             itw_flow,
-            reason: "certificate revoked",
+            reason: "CERTIFICATE_REVOKED",
             cie_reading_progress: progress
           });
           return;
+        case "NOT_A_CIE":
+          trackItWalletCieCardReadingFailure({
+            reason: CieCardReadingFailureReason.ON_TAG_DISCOVERED_NOT_CIE,
+            itw_flow,
+            cie_reading_progress: progress
+          });
+          return;
+        case "GENERIC_ERROR":
+        case "APDU_ERROR":
+        case "NO_INTERNET_CONNECTION":
+        case "AUTHENTICATION_ERROR":
+          trackItWalletCieCardReadingFailure({
+            reason: CieCardReadingFailureReason[failure.name],
+            itw_flow,
+            cie_reading_progress: progress
+          });
+          return;
+
         case "CANCELLED_BY_USER":
           trackItWalletCardReadingClose(progress);
+          return;
+        case "WEBVIEW_ERROR": // No tracking
           return;
       }
     }
 
-    trackItWalletCieCardReadingFailure({
-      reason: CieCardReadingFailureReason.KO,
-      itw_flow,
+    trackItWalletCieCardReadingUnexpectedFailure({
+      reason: failure?.name,
       cie_reading_progress: progress
     });
   }
