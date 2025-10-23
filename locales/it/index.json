@@ -5098,7 +5098,8 @@
                 "valid": "L'ultima verifica è del {{date}}.",
                 "expiring": "Conferma la tua identità con CIE o SPID entro il {{date}} per continuare a usare Documenti su IO senza limitazioni.",
                 "expired": "Conferma la tua identità con CIE o SPID per continuare a usare Documenti su IO senza limitazioni.",
-                "action": "Inizia"
+                "action": "Inizia",
+                "offline": "Torna online e conferma la tua identità con CIE o SPID per continuare a usare Documenti su IO senza limitazioni."
               },
               "itw": {
                 "valid": "Hai attivato il tuo ID con CIE il {{date}}.",
@@ -5201,10 +5202,10 @@
         },
         "eid": {
           "verificationExpired": {
-            "title": "Verifica la tua identità",
-            "contentStart": "È un passaggio di sicurezza necessario per continuare ad usare ",
-            "contentBold": "Documenti su IO",
-            "contentEnd": ".",
+            "title": "Conferma la tua identità",
+            "contentStart": "È un passaggio necessario per continuare ad usare ",
+            "contentBold": "Documenti su IO ",
+            "contentEnd": "senza limitazioni.",
             "primaryAction": "Inizia"
           }
         },
@@ -5612,9 +5613,18 @@
       },
       "upgrade": {
         "banner": {
-          "title": "IT-Wallet per i tuoi documenti",
-          "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**. Garantito dallo Stato, accessibile solo a te.",
-          "action": "Ottieni IT-Wallet"
+          "documents": {
+            "active": {
+              "title": "Passa a IT-Wallet",
+              "description": "Aggiorna i tuoi documenti digitali e passa a funzionalità evolute con l’unico portafoglio digitale di Stato: pubblico, sicuro e gratuito. Garantito dallo Stato, accessibile solo a te.",
+              "action": "Passa a IT-Wallet"
+            },
+            "inactive": {
+              "title": "IT-Wallet per i tuoi documenti",
+              "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**. Garantito dallo Stato, accessibile solo a te.",
+              "action": "Ottieni IT-Wallet"
+            }
+          }
         }
       },
       "settings": {

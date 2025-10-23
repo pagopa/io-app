@@ -1,4 +1,5 @@
 import { GlobalState } from "../../../../../store/reducers/types";
+import { isConnectedSelector } from "../../../../connectivity/store/selectors";
 import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import {
   itwCredentialsEidStatusSelector,
@@ -129,3 +130,18 @@ export const itwShouldRenderWalletUpgradeMDLDetailsBannerSelector = (
   itwIsL3EnabledSelector(state) &&
   !itwLifecycleIsITWalletValidSelector(state) &&
   !itwIsWalletUpgradeMDLDetailsBannerHiddenSelector(state);
+
+/**
+ * Returns whether the eID lifecycle alert should be hidden in wallet.
+ * When the ITW upgrade banner is displayed, the eID lifecycle alert
+ * is hidden so that the user does not need to perform eID reissuance.
+ * The alert is hidden if:
+ * - The new IT Wallet design is being rendered
+ * - The L3 upgrade banner is being displayed
+ * - The eID is expiring and the device is offline
+ */
+export const itwShouldHideEidLifecycleAlert = (state: GlobalState): boolean =>
+  itwShouldRenderNewItWalletSelector(state) ||
+  itwShouldRenderL3UpgradeBannerSelector(state) ||
+  (itwCredentialsEidStatusSelector(state) === "jwtExpiring" &&
+    !isConnectedSelector(state));
