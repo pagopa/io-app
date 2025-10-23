@@ -1,22 +1,28 @@
 import { IOToast, IOVisualCostants } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+import { useRef } from "react";
 import { useIOSelector } from "../../../../../store/hooks";
 import { getDeviceId } from "../../../../../utils/device";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
-import BonusInformationComponent from "../../../common/components/BonusInformationComponent";
+import BonusInformationComponent, {
+  BonusInformationComponentRef
+} from "../../../common/components/BonusInformationComponent";
 import { availableBonusTypesSelectorFromId } from "../../../common/store/selectors";
 import { ID_CDC_TYPE } from "../../../common/utils";
 import * as analytics from "../../analytics";
 import { cdcCtaConfigSelector } from "../../store/selectors/remoteConfig";
+import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 
 const CdcBonusRequestInformationTos = () => {
   const cdcInfo = useIOSelector(availableBonusTypesSelectorFromId(ID_CDC_TYPE));
   const { startFIMSAuthenticationFlow } =
     useFIMSRemoteServiceConfiguration("cdc-onboarding");
   const ctaConfig = useIOSelector(cdcCtaConfigSelector);
-
+  const isMixpanelEnabled = useIOSelector(isMixpanelEnabledSelector) ?? false;
+  const bonusInformationComponentRef =
+    useRef<BonusInformationComponentRef>(null);
   useOnFirstRender(() => {
     analytics.trackCdcRequestIntro();
   });
@@ -31,11 +37,12 @@ const CdcBonusRequestInformationTos = () => {
       return;
     }
     const url = new URL(ctaConfig.url);
-    if (ctaConfig.includeDeviceId) {
+    if (ctaConfig.includeDeviceId && isMixpanelEnabled) {
       url.searchParams.set("device", getDeviceId());
     }
     analytics.trackCdcRequestIntroContinue();
     startFIMSAuthenticationFlow(I18n.t("bonus.cdc.request"), url.toString());
+    bonusInformationComponentRef.current?.scrollTo(0);
   };
 
   return (
@@ -43,6 +50,7 @@ const CdcBonusRequestInformationTos = () => {
       bonus={cdcInfo}
       contextualHelp={emptyContextualHelp}
       primaryCtaText={I18n.t("global.buttons.continue")}
+      ref={bonusInformationComponentRef}
       onConfirm={onStartCdcFlow}
       imageStyle={{
         aspectRatio: 2,

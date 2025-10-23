@@ -5626,27 +5626,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               >
                                 <Text
                                   allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={1}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Entro il 02/05/2099
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
@@ -7271,27 +7250,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                               >
                                 <Text
                                   allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={1}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Entro il 02/05/2099
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
@@ -8914,27 +8872,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   }
                                 }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={1}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Entro il 02/05/2099
-                                </Text>
                                 <Text
                                   allowFontScaling={true}
                                   dynamicTypeRamp="body"
@@ -10710,27 +10647,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                               >
                                 <Text
                                   allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={1}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Entro il 02/05/2099
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
@@ -12504,27 +12420,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                               >
                                 <Text
                                   allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={1}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Entro il 02/05/2099
-                                </Text>
-                                <Text
-                                  allowFontScaling={true}
                                   dynamicTypeRamp="body"
                                   maxFontSizeMultiplier={1.5}
                                   numberOfLines={2}
@@ -13151,27 +13046,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                   }
                                 }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="footnote"
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={1}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 14,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 21,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Entro il 02/05/2099
-                                </Text>
                                 <Text
                                   allowFontScaling={true}
                                   dynamicTypeRamp="body"

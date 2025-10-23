@@ -11,7 +11,7 @@ import { trackFciUxConversion } from "../analytics";
 import { fciStartSigningRequest } from "../store/actions";
 import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
 import { fciMetadataServiceIdSelector } from "../store/reducers/fciMetadata";
-import { servicePreferencePotByIdSelector } from "../../services/details/store/reducers";
+import { servicePreferencePotByIdSelector } from "../../services/details/store/selectors";
 
 /**
  * A hook that returns a function to present the abort signature flow bottom sheet

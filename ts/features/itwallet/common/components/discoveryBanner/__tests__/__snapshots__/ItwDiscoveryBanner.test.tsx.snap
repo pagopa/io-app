@@ -431,7 +431,7 @@ exports[`ItwDiscoveryBanner should match snapshot with 'onboarding' banner type 
                             }
                           >
                             <View
-                              accessibilityLabel="Novità: Documenti su IO, anche offline Da oggi puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet. Attiva Documenti su IO"
+                              accessibilityLabel="Documenti su IO Puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet. Attiva Documenti su IO"
                               accessibilityRole="button"
                               accessible={true}
                               style={
@@ -460,7 +460,7 @@ exports[`ItwDiscoveryBanner should match snapshot with 'onboarding' banner type 
                                   ]
                                 }
                               >
-                                Novità: Documenti su IO, anche offline
+                                Documenti su IO
                               </Text>
                               <Text
                                 allowFontScaling={true}
@@ -480,7 +480,7 @@ exports[`ItwDiscoveryBanner should match snapshot with 'onboarding' banner type 
                                   ]
                                 }
                               >
-                                Da oggi puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet.
+                                Puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet.
                               </Text>
                               <View
                                 accessibilityElementsHidden={true}

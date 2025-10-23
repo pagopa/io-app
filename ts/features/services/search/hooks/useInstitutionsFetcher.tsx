@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { v4 as uuid } from "uuid";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { searchPaginatedInstitutionsGet } from "../store/actions";
 import {
@@ -8,12 +9,14 @@ import {
   paginatedInstitutionsCurrentPageSelector,
   paginatedInstitutionsLastPageSelector,
   paginatedInstitutionsSelector
-} from "../store/reducers";
+} from "../store/selectors";
 
 const LIMIT: number = 20;
 
 export const useInstitutionsFetcher = () => {
   const dispatch = useIODispatch();
+
+  const sessionId = useRef<string | undefined>(undefined);
 
   const paginatedInstitutions = useIOSelector(paginatedInstitutionsSelector);
   const currentPage = useIOSelector(paginatedInstitutionsCurrentPageSelector);
@@ -32,11 +35,19 @@ export const useInstitutionsFetcher = () => {
 
   const fetchPage = useCallback(
     (page: number, search?: string) => {
+      // If this is the first page, start a new search session
+      // by generating a new uuid
+      if (page === 0) {
+        // eslint-disable-next-line functional/immutable-data
+        sessionId.current = uuid();
+      }
+
       dispatch(
         searchPaginatedInstitutionsGet.request({
           offset: page * LIMIT,
           limit: LIMIT,
-          search
+          search,
+          sessionId: sessionId.current
         })
       );
     },

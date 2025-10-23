@@ -1,4 +1,4 @@
-import { Divider, IOColors } from "@pagopa/io-app-design-system";
+import { Divider } from "@pagopa/io-app-design-system";
 import { forwardRef, useCallback, useMemo } from "react";
 import { FlatList, RefreshControl, StyleSheet } from "react-native";
 import {
@@ -146,8 +146,6 @@ export const MessageList = forwardRef<FlatList, MessageListProps>(
           <RefreshControl
             refreshing={isRefreshing}
             onRefresh={onRefreshCallback}
-            tintColor={IOColors["blueIO-500"]}
-            colors={[IOColors["blueIO-500"]]}
             testID={`custom_refresh_control_${category.toLowerCase()}`}
           />
         }

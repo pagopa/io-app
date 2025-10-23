@@ -6,8 +6,8 @@ import { fromPromise } from "xstate";
 import { PreferredLanguage } from "../../../../../definitions/backend/PreferredLanguage";
 import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
 import { CodeEnum as OnboardingErrorCodeEnum } from "../../../../../definitions/idpay/OnboardingErrorDTO";
+import { OnboardingInitiativeDTO } from "../../../../../definitions/idpay/OnboardingInitiativeDTO";
 import { StatusEnum as OnboardingStatusEnum } from "../../../../../definitions/idpay/OnboardingStatusDTO";
-import { InitiativeBeneficiaryRuleDTO } from "../../../../../definitions/idpay/InitiativeBeneficiaryRuleDTO";
 import { SelfConsentDTO } from "../../../../../definitions/idpay/SelfConsentDTO";
 import { IDPayClient } from "../../common/api/client";
 import {
@@ -44,6 +44,10 @@ export const createActorsImplementation = (
                 return Promise.resolve(value);
               case 401:
                 return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
+              case 429:
+                return Promise.reject(
+                  OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS
+                );
               default:
                 return Promise.reject(
                   OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR
@@ -104,7 +108,7 @@ export const createActorsImplementation = (
   });
 
   const getRequiredCriteria = fromPromise<
-    O.Option<InitiativeBeneficiaryRuleDTO>,
+    O.Option<OnboardingInitiativeDTO>,
     O.Option<string>
   >(async params => {
     if (O.isNone(params.input)) {
@@ -116,7 +120,7 @@ export const createActorsImplementation = (
       initiativeId: params.input.value
     });
 
-    const dataPromise: Promise<O.Option<InitiativeBeneficiaryRuleDTO>> = pipe(
+    const dataPromise: Promise<O.Option<OnboardingInitiativeDTO>> = pipe(
       response,
       E.fold(
         _ => Promise.reject(OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR),
@@ -126,6 +130,10 @@ export const createActorsImplementation = (
               return Promise.resolve(O.some(value));
             case 401:
               return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
+            case 429:
+              return Promise.reject(
+                OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS
+              );
             default:
               return Promise.reject(mapErrorCodeToFailure(value.code));
           }
@@ -141,7 +149,7 @@ export const createActorsImplementation = (
       const {
         initiative,
         requiredCriteria,
-        selfDeclarationsMultiAnwsers,
+        selfDeclarationsMultiAnswers,
         selfDeclarationsTextAnswers
       } = params.input;
 
@@ -159,7 +167,7 @@ export const createActorsImplementation = (
           code: _.code,
           accepted: true
         })),
-        ...Object.values(selfDeclarationsMultiAnwsers),
+        ...Object.values(selfDeclarationsMultiAnswers),
         ...Object.values(selfDeclarationsTextAnswers)
       ] as Array<SelfConsentDTO>;
 
@@ -177,16 +185,18 @@ export const createActorsImplementation = (
         response,
         E.fold(
           _ => Promise.reject(OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR),
-          ({ status }) => {
+          ({ status, value }) => {
             switch (status) {
               case 202:
                 return Promise.resolve(undefined);
               case 401:
                 return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
-              default:
+              case 429:
                 return Promise.reject(
-                  OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR
+                  OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS
                 );
+              default:
+                return Promise.reject(mapErrorCodeToFailure(value.code));
             }
           }
         )
@@ -258,6 +268,10 @@ const mapErrorCodeToFailure = (
       return OnboardingFailureEnum.ONBOARDING_WAITING_LIST;
     case OnboardingErrorCodeEnum.ONBOARDING_TOO_MANY_REQUESTS:
       return OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS;
+    case OnboardingErrorCodeEnum.ONBOARDING_ALREADY_ONBOARDED:
+      return OnboardingFailureEnum.ONBOARDING_ALREADY_ONBOARDED;
+    case OnboardingErrorCodeEnum.ONBOARDING_ON_EVALUATION:
+      return OnboardingFailureEnum.ONBOARDING_ON_EVALUATION;
     default:
       return OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR;
   }

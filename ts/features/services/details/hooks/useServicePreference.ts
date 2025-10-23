@@ -2,7 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useIOSelector } from "../../../../store/hooks";
 import { EnabledChannels } from "../../../../utils/profile";
-import { servicePreferenceByChannelPotSelector } from "../store/reducers";
+import { servicePreferenceByChannelPotSelector } from "../store/selectors";
 
 /**
  * Hook to get the service preference by channel

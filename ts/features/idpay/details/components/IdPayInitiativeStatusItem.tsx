@@ -7,33 +7,45 @@ import {
 import { ComponentProps } from "react";
 import { View } from "react-native";
 import I18n from "i18next";
-import { StatusEnum } from "../../../../../definitions/idpay/InitiativeDTO";
+import {
+  StatusEnum,
+  VoucherStatusEnum
+} from "../../../../../definitions/idpay/InitiativeDTO";
 
 const getStatusBadgeVariant = (
-  status: StatusEnum
+  status: StatusEnum | VoucherStatusEnum
 ): ComponentProps<typeof Badge>["variant"] => {
   switch (status) {
     case StatusEnum.REFUNDABLE:
     case StatusEnum.NOT_REFUNDABLE:
     case StatusEnum.NOT_REFUNDABLE_ONLY_IBAN:
     case StatusEnum.NOT_REFUNDABLE_ONLY_INSTRUMENT:
+    case VoucherStatusEnum.ACTIVE:
+    case VoucherStatusEnum.USED:
       return "success";
     case StatusEnum.UNSUBSCRIBED:
+    case VoucherStatusEnum.EXPIRED:
       return "error";
+    case VoucherStatusEnum.EXPIRING:
+      return "warning";
     default:
       return "default";
   }
 };
 
-type IdPayinitiativeStatusItemProps = {
+type IdPayInitiativeStatusItemProps = {
   status: StatusEnum;
+  voucherStatus?: VoucherStatusEnum;
 };
 
-export const IdPayinitiativeStatusItem = ({
-  status
-}: IdPayinitiativeStatusItemProps) => {
+export const IdPayInitiativeStatusItem = ({
+  status,
+  voucherStatus
+}: IdPayInitiativeStatusItemProps) => {
   const statusString = I18n.t(
-    `idpay.initiative.details.initiativeCard.statusLabels.${status}`
+    `idpay.initiative.details.initiativeCard.statusLabels.${
+      voucherStatus ?? status
+    }`
   );
 
   return (
@@ -45,8 +57,15 @@ export const IdPayinitiativeStatusItem = ({
           flexDirection: "row"
         }}
       >
-        <H6>{I18n.t("idpay.initiative.beneficiaryDetails.status")}</H6>
-        <Badge text={statusString} variant={getStatusBadgeVariant(status)} />
+        <H6>
+          {voucherStatus
+            ? I18n.t("idpay.initiative.beneficiaryDetails.voucherStatus")
+            : I18n.t("idpay.initiative.beneficiaryDetails.status")}
+        </H6>
+        <Badge
+          text={statusString}
+          variant={getStatusBadgeVariant(voucherStatus ?? status)}
+        />
       </View>
       <Divider />
     </View>

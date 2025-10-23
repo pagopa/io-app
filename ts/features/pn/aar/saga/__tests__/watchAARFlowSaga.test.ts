@@ -7,6 +7,7 @@ import { setAarFlowState } from "../../store/actions";
 import * as FETCH_QR_SAGA from "../fetchQrCodeSaga";
 import { aarFlowMasterSaga, watchAarFlowSaga } from "../watchAARFlowSaga";
 import { sendAARFlowStates } from "../../utils/stateUtils";
+import * as FETCH_DATA_SAGA from "../fetchNotificationDataSaga";
 
 describe("watchAarFlowSaga", () => {
   const mockSessionToken = "mock-session-token" as SessionToken;
@@ -27,19 +28,17 @@ describe("watchAarFlowSaga", () => {
     mockCreateClient.mockImplementation(() => mockSendAARClient);
   });
 
-  describe("watchAARFlowSaga", () => {
-    it("should register takeLatest for setAarFlowState", () => {
-      testSaga(watchAarFlowSaga, mockSessionToken, mockKeyInfo)
-        .next()
-        .takeLatest(
-          setAarFlowState,
-          aarFlowMasterSaga,
-          mockSendAARClient,
-          mockSessionToken
-        )
-        .next()
-        .isDone();
-    });
+  it("should register takeLatest for setAarFlowState", () => {
+    testSaga(watchAarFlowSaga, mockSessionToken, mockKeyInfo)
+      .next()
+      .takeLatest(
+        setAarFlowState,
+        aarFlowMasterSaga,
+        mockSendAARClient,
+        mockSessionToken
+      )
+      .next()
+      .isDone();
   });
 
   describe("aARFlowMasterSaga", () => {
@@ -49,11 +48,7 @@ describe("watchAarFlowSaga", () => {
       const mockFn = jest.fn();
       jest
         .spyOn(FETCH_QR_SAGA, "fetchAARQrCodeSaga")
-        .mockImplementation(function* (
-          _qr: string,
-          _client: any,
-          _token: string
-        ) {
+        .mockImplementation(function* (_client: any, _token: string) {
           yield* call(mockFn);
         } as typeof FETCH_QR_SAGA.fetchAARQrCodeSaga);
       const action = setAarFlowState({
@@ -67,8 +62,30 @@ describe("watchAarFlowSaga", () => {
         .next()
         .isDone();
     });
+    it("should call the fetchAarDataSaga when an updateState action has getAARNotification as payload", () => {
+      const mockFn = jest.fn();
+      jest
+        .spyOn(FETCH_DATA_SAGA, "fetchAarDataSaga")
+        .mockImplementation(function* (_client: any, _token: string) {
+          yield* call(mockFn);
+        } as typeof FETCH_DATA_SAGA.fetchAarDataSaga);
+      const action = setAarFlowState({
+        type: sendAARFlowStates.fetchingNotificationData,
+        recipientInfo: {
+          denomination: "Mario Rossi",
+          taxId: "RSSMRA74D22A001Q"
+        },
+        iun: "123"
+      });
 
-    it("should do nothing for unknown flow state", () => {
+      testSaga(aarFlowMasterSaga, mockSendAARClient, mockSessionToken, action)
+        .next()
+        .call(mockFn) // this equates to switching the saga to the aar qr one
+        .next()
+        .isDone();
+    });
+
+    it("should do nothing when called with an unknown flow state", () => {
       const action = setAarFlowState({
         type: "unknownState" as any
       });

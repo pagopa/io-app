@@ -121,15 +121,17 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
 
     if (pot.isError(latestTransactionsPot)) {
       return (
-        <BannerErrorState
-          testID="PaymentsHomeTransactionsListTestID-error"
-          label="Il caricamento delle ricevute è fallito."
-          icon="warningFilled"
-          actionText={I18n.t(
-            "features.payments.transactions.error.banner.retryButton"
-          )}
-          onPress={handleOnRetry}
-        />
+        <ContentWrapper>
+          <BannerErrorState
+            testID="PaymentsHomeTransactionsListTestID-error"
+            label="Il caricamento delle ricevute è fallito."
+            icon="warningFilled"
+            actionText={I18n.t(
+              "features.payments.transactions.error.banner.retryButton"
+            )}
+            onPress={handleOnRetry}
+          />
+        </ContentWrapper>
       );
     }
 

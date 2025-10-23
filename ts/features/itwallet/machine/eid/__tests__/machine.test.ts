@@ -13,7 +13,6 @@ import {
   StoredCredential,
   WalletInstanceAttestations
 } from "../../../common/utils/itwTypesUtils";
-import { CiePreparationType } from "../../../identification/cie/components/ItwCiePreparationBaseScreenContent";
 import { ItwTags } from "../../tags";
 import {
   GetWalletAttestationActorParams,
@@ -28,6 +27,7 @@ import {
 } from "../context";
 import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
 import { itwCredentialUpgradeMachine } from "../../upgrade/machine";
+import { CieWarningType } from "../../../identification/cie/utils/types";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
@@ -49,13 +49,11 @@ describe("itwEidIssuanceMachine", () => {
   const navigateToCiePreparationScreen = jest.fn();
   const navigateToCiePinPreparationScreen = jest.fn();
   const navigateToCiePinScreen = jest.fn();
-  const navigateToCieReadCardL2Screen = jest.fn();
-  const navigateToCieReadCardL3Screen = jest.fn();
+  const navigateToCieReadCardScreen = jest.fn();
   const navigateToNfcInstructionsScreen = jest.fn();
   const navigateToCieIdLoginScreen = jest.fn();
   const navigateToCieWarningScreen = jest.fn();
-  const navigateToL3IdentificationScreen = jest.fn();
-  const navigateToL2IdentificationScreen = jest.fn();
+  const navigateToIdentificationScreen = jest.fn();
   const storeIntegrityKeyTag = jest.fn();
   const cleanupIntegrityKeyTag = jest.fn();
   const storeWalletInstanceAttestation = jest.fn();
@@ -103,13 +101,11 @@ describe("itwEidIssuanceMachine", () => {
       navigateToCiePreparationScreen,
       navigateToCiePinPreparationScreen,
       navigateToCiePinScreen,
-      navigateToCieReadCardL2Screen,
-      navigateToCieReadCardL3Screen,
+      navigateToCieReadCardScreen,
       navigateToNfcInstructionsScreen,
       navigateToCieIdLoginScreen,
       navigateToCieWarningScreen,
-      navigateToL3IdentificationScreen,
-      navigateToL2IdentificationScreen,
+      navigateToIdentificationScreen,
       storeIntegrityKeyTag,
       cleanupIntegrityKeyTag,
       storeWalletInstanceAttestation,
@@ -200,6 +196,7 @@ describe("itwEidIssuanceMachine", () => {
 
   it("Should obtain an eID (SPID) from L3 Identification", async () => {
     isL3FeaturesEnabled.mockImplementation(() => true);
+    isL2Fallback.mockImplementation(({ context }) => !!context.isL2Fallback);
     const actor = createActor(mockedMachine);
     actor.start();
 
@@ -293,9 +290,19 @@ describe("itwEidIssuanceMachine", () => {
         }
       })
     );
-    expect(navigateToL3IdentificationScreen).toHaveBeenCalledTimes(1);
+    expect(navigateToIdentificationScreen).toHaveBeenCalledTimes(1);
 
-    actor.send({ type: "go-to-l2-identification" });
+    /**
+     * Restart the flow as L2 fallback from the beginning (TOS acceptance)
+     */
+
+    actor.send({ type: "restart", mode: "issuance", isL2Fallback: true });
+
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance")
+    );
+
+    actor.send({ type: "accept-tos" });
 
     await waitFor(() =>
       expect(actor.getSnapshot().value).toStrictEqual({
@@ -304,8 +311,6 @@ describe("itwEidIssuanceMachine", () => {
         }
       })
     );
-
-    expect(navigateToL2IdentificationScreen).toHaveBeenCalledTimes(1);
 
     /**
      * Choose SPID as identification mode
@@ -343,6 +348,7 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
+      mode: "issuance",
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
       identification: {
@@ -395,6 +401,7 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
+      mode: "issuance",
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
       identification: {
@@ -1211,7 +1218,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
   });
 
-  it("Should obtain an eID (SPID), reissuing mode", async () => {
+  it("Should obtain an eID (SPID), reissuing mode with no credentials reissuing", async () => {
     // The wallet instance and attestation already exist
     const initialContext = {
       ...InitialContext,
@@ -1267,7 +1274,7 @@ describe("itwEidIssuanceMachine", () => {
       mode: "reissuance"
     });
 
-    expect(navigateToL2IdentificationScreen).toHaveBeenCalledTimes(1);
+    expect(navigateToIdentificationScreen).toHaveBeenCalledTimes(1);
 
     /**
      * Choose SPID as identification mode
@@ -1354,6 +1361,9 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "add-to-wallet" });
 
     expect(storeEidCredential).toHaveBeenCalledTimes(1);
+
+    actor.send({ type: "go-to-wallet" });
+
     expect(navigateToWallet).toHaveBeenCalledTimes(1);
 
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
@@ -1567,7 +1577,7 @@ describe("itwEidIssuanceMachine", () => {
       }
     });
 
-    const testWarningType: CiePreparationType = "card";
+    const testWarningType: CieWarningType = "card";
 
     actor.send({ type: "go-to-cie-warning", warning: testWarningType });
 
@@ -1667,7 +1677,7 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(navigateToCiePinPreparationScreen).toHaveBeenCalledTimes(1);
 
-    const testWarningType: CiePreparationType = "card";
+    const testWarningType: CieWarningType = "card";
 
     actor.send({ type: "go-to-cie-warning", warning: testWarningType });
 
@@ -1807,7 +1817,7 @@ describe("itwEidIssuanceMachine", () => {
     jest.advanceTimersByTime(6000);
 
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
-    expect(navigateToL2IdentificationScreen).toHaveBeenCalledTimes(1);
+    expect(navigateToIdentificationScreen).toHaveBeenCalledTimes(1);
   });
 
   it("Should start the simplified activation flow without credentials", async () => {

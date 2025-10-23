@@ -103,7 +103,7 @@ export const AnimatedPictogram = ({
     const totalFrames = duration * fps;
 
     const elapsedTime = (clock.value - animationStartTime.value) / 1000;
-    const currentFrame = Math.floor(elapsedTime * fps);
+    const currentFrame = elapsedTime * fps;
 
     return loop
       ? currentFrame % totalFrames

@@ -9,7 +9,7 @@ import {
 import I18n from "i18next";
 import { openWebUrl } from "../../../../utils/url";
 import { useIOSelector } from "../../../../store/hooks";
-import { serviceMetadataByIdSelector } from "../store/reducers";
+import { serviceMetadataByIdSelector } from "../store/selectors";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 
 type TosAndPrivacyListItem = {

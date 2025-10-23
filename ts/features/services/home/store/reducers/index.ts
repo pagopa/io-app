@@ -1,13 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
-import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { FeaturedServices } from "../../../../../../definitions/services/FeaturedServices";
 import { Institution } from "../../../../../../definitions/services/Institution";
 import { Institutions } from "../../../../../../definitions/services/Institutions";
 import { InstitutionsResource } from "../../../../../../definitions/services/InstitutionsResource";
 import { Action } from "../../../../../store/actions/types";
-import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import {
   featuredInstitutionsGet,
@@ -35,7 +32,7 @@ const INITIAL_STATE: ServicesHomeState = {
   paginatedInstitutions: pot.none
 };
 
-const homeReducer = (
+const reducer = (
   state: ServicesHomeState = INITIAL_STATE,
   action: Action
 ): ServicesHomeState => {
@@ -145,97 +142,4 @@ const homeReducer = (
   return state;
 };
 
-export default homeReducer;
-
-export const homeSelector = (state: GlobalState) =>
-  state.features.services.home;
-
-export const paginatedInstitutionsPotSelector = createSelector(
-  homeSelector,
-  home => home.paginatedInstitutions
-);
-
-export const paginatedInstitutionsSelector = createSelector(
-  paginatedInstitutionsPotSelector,
-  pot.toUndefined
-);
-
-export const featuredInstitutionsPotSelector = createSelector(
-  homeSelector,
-  home => home.featuredInstitutions
-);
-
-export const featuredInstitutionsSelector = createSelector(
-  featuredInstitutionsPotSelector,
-  featuredInstitutionsPot =>
-    pot.getOrElse(
-      pot.map(
-        featuredInstitutionsPot,
-        featuredInstitutions => featuredInstitutions.institutions
-      ),
-      []
-    )
-);
-
-export const featuredServicesPotSelector = createSelector(
-  homeSelector,
-  home => home.featuredServices
-);
-
-export const featuredServicesSelector = createSelector(
-  featuredServicesPotSelector,
-  featuredServicesPot =>
-    pot.getOrElse(
-      pot.map(
-        featuredServicesPot,
-        featuredServices => featuredServices.services
-      ),
-      []
-    )
-);
-
-export const isLoadingFeaturedInstitutionsSelector = (state: GlobalState) =>
-  pipe(state, featuredInstitutionsPotSelector, pot.isLoading);
-
-export const isErrorFeaturedInstitutionsSelector = (state: GlobalState) =>
-  pipe(state, featuredInstitutionsPotSelector, pot.isError);
-
-export const isLoadingFeaturedServicesSelector = (state: GlobalState) =>
-  pipe(state, featuredServicesPotSelector, pot.isLoading);
-
-export const isErrorFeaturedServicesSelector = (state: GlobalState) =>
-  pipe(state, featuredServicesPotSelector, pot.isError);
-
-/**
- * Returns the current page of the paginated institutions.
- *
- * | count | offset | limit | result |
- * |------:|-------:|------:|-------:|
- * | 55    | 0      | 20    | 0      |
- * | 55    | 20     | 20    | 1      |
- * | 55    | 40     | 20    | 2      |
- * | 55    | 60     | 20    | -1     |
- */
-export const paginatedInstitutionsCurrentPageSelector = createSelector(
-  paginatedInstitutionsPotSelector,
-  paginatedInstitutions =>
-    pot.getOrElse(
-      pot.map(paginatedInstitutions, ({ count: total, limit, offset }) =>
-        offset >= total ? -1 : offset / limit
-      ),
-      0
-    )
-);
-
-export const paginatedInstitutionsLastPageSelector = createSelector(
-  paginatedInstitutionsPotSelector,
-  paginatedInstitutionsCurrentPageSelector,
-  (paginatedInstitutionsPot, currentPage) =>
-    pot.getOrElse(
-      pot.map(
-        paginatedInstitutionsPot,
-        ({ count: total, limit }) => (currentPage + 1) * limit >= total
-      ),
-      false
-    )
-);
+export default reducer;

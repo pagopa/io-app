@@ -5,6 +5,10 @@ export const itwCloseFeedbackBanner = createStandardAction(
   "ITW_CLOSE_FEEDBACK_BANNER"
 )();
 
+export const itwCloseReissuanceFeedbackBanner = createStandardAction(
+  "ITW_CLOSE_REISSUANCE_FEEDBACK_BANNER"
+)();
+
 export const itwCloseDiscoveryBanner = createStandardAction(
   "ITW_CLOSE_DISCOVERY_BANNER"
 )();
@@ -37,10 +41,6 @@ export const itwSetFiscalCodeWhitelisted = createStandardAction(
   "ITW_SET_FISCAL_CODE_WHITELISTED"
 )<boolean>();
 
-export const itwSetOfflineBannerHidden = createStandardAction(
-  "ITW_SET_OFFLINE_BANNER_HIDDEN"
-)<boolean>();
-
 export const itwSetWalletUpgradeMDLDetailsBannerHidden = createStandardAction(
   "ITW_SET_WALLET_UPGRADE_MDL_DETAILS_BANNER_HIDDEN"
 )<boolean>();
@@ -55,6 +55,7 @@ export const itwClearSimplifiedActivationRequirements = createStandardAction(
 
 export type ItwPreferencesActions =
   | ActionType<typeof itwCloseFeedbackBanner>
+  | ActionType<typeof itwCloseReissuanceFeedbackBanner>
   | ActionType<typeof itwCloseDiscoveryBanner>
   | ActionType<typeof itwFlagCredentialAsRequested>
   | ActionType<typeof itwUnflagCredentialAsRequested>
@@ -63,7 +64,6 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwSetClaimValuesHidden>
   | ActionType<typeof itwSetWalletInstanceRemotelyActive>
   | ActionType<typeof itwSetFiscalCodeWhitelisted>
-  | ActionType<typeof itwSetOfflineBannerHidden>
   | ActionType<typeof itwSetWalletUpgradeMDLDetailsBannerHidden>
   | ActionType<typeof itwFreezeSimplifiedActivationRequirements>
   | ActionType<typeof itwClearSimplifiedActivationRequirements>;

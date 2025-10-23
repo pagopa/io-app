@@ -8,7 +8,7 @@ import {
 import {
   serviceDetailsByIdPotSelector,
   serviceDetailsByIdSelector
-} from "../../../services/details/store/reducers";
+} from "../../../services/details/store/selectors";
 import { loadServiceDetail } from "../../../services/details/store/actions/details";
 import { isStrictNone } from "../../../../utils/pot";
 import {

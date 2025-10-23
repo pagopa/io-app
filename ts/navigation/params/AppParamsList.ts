@@ -64,6 +64,7 @@ import { AUTHENTICATION_ROUTES } from "../../features/authentication/common/navi
 import { SettingsParamsList } from "../../features/settings/common/navigation/params/SettingsParamsList.ts";
 import { SETTINGS_ROUTES } from "../../features/settings/common/navigation/routes.ts";
 import { OnboardingParamsList } from "../../features/onboarding/navigation/params/OnboardingParamsList.ts";
+import { PushNotificationEngagementScreenNavigationParams } from "../../features/pushNotifications/screens/PushNotificationEngagementScreen.tsx";
 import { CheckEmailParamsList } from "./CheckEmailParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
 
@@ -79,6 +80,7 @@ export type AppParamsList = {
   [MESSAGES_ROUTES.MESSAGES_NAVIGATOR]: NavigatorScreenParams<MessagesParamsList>;
   [MESSAGES_ROUTES.MESSAGES_SEARCH]: undefined;
   [NOTIFICATIONS_ROUTES.SYSTEM_NOTIFICATION_PERMISSIONS]: undefined;
+  [NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT]: PushNotificationEngagementScreenNavigationParams;
   [SERVICES_ROUTES.SERVICES_NAVIGATOR]: NavigatorScreenParams<ServicesParamsList>;
   [SERVICES_ROUTES.SEARCH]: undefined;
   [SETTINGS_ROUTES.PROFILE_NAVIGATOR]: NavigatorScreenParams<SettingsParamsList>;

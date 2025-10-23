@@ -2,12 +2,12 @@ import { useCallback } from "react";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { trackItWalletActivationStart } from "../../analytics/index.ts";
+import { itwHasNfcFeatureSelector } from "../../identification/common/store/selectors/index.ts";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider.tsx";
 import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
-import { ItwDiscoveryInfoComponent } from "../components/ItwDiscoveryInfoComponent.tsx";
+import { ItwLegacyDiscoveryInfoComponent } from "../components/ItwLegacyDiscoveryInfoComponent.tsx";
 import { ItwNfcNotSupportedComponent } from "../components/ItwNfcNotSupportedComponent.tsx";
-import { ItwPaywallComponent } from "../components/ItwPaywallComponent.tsx";
-import { itwHasNfcFeatureSelector } from "../../identification/common/store/selectors/index.ts";
+import { ItwPaywallComponent } from "../components/ItwPaywallComponent";
 
 export type ItwDiscoveryInfoScreenNavigationParams = {
   isL3?: boolean;
@@ -35,7 +35,9 @@ export const ItwDiscoveryInfoScreen = ({
   }, [machineRef, isL3]);
 
   if (!isL3) {
-    return <ItwDiscoveryInfoComponent onContinuePress={handleContinuePress} />;
+    return (
+      <ItwLegacyDiscoveryInfoComponent onContinuePress={handleContinuePress} />
+    );
   }
 
   if (!hasNfcFeature) {

@@ -25,10 +25,14 @@ import {
   getInvalidCredentials
 } from "../utils/itwRemotePresentationUtils";
 import { assert } from "../../../../../utils/assert";
-import { itwIntegrityKeyTagSelector } from "../../../issuance/store/selectors";
+import {
+  itwIntegrityKeyTagSelector,
+  itwIntegrityServiceStatusSelector
+} from "../../../issuance/store/selectors";
 import { sessionTokenSelector } from "../../../../authentication/common/store/selectors";
 import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors";
 import { WIA_KEYTAG } from "../../../common/utils/itwCryptoContextUtils";
+import { pollForStoreValue } from "../../../common/utils/itwStoreUtils";
 import { itwCredentialsAllSelector } from "../../../credentials/store/selectors";
 import { InvalidCredentialsStatusError } from "./failure";
 
@@ -226,17 +230,33 @@ export const createRemoteActorsImplementation = (
     };
   });
 
-  const getWalletAttestation = fromPromise<WalletInstanceAttestations>(() => {
-    const sessionToken = sessionTokenSelector(store.getState());
-    const integrityKeyTag = O.toUndefined(
-      itwIntegrityKeyTagSelector(store.getState())
-    );
+  const getWalletAttestation = fromPromise<WalletInstanceAttestations>(
+    async () => {
+      // In the same-device flow the app might be launched directly to the presentation machine,
+      // and the integrity service necessary to get the attestation might not yet be ready.
+      const integrityServiceStatus = await pollForStoreValue({
+        getState: store.getState,
+        selector: itwIntegrityServiceStatusSelector,
+        condition: value => value !== undefined
+      }).catch(() => {
+        throw new Error("Integrity service status check timed out");
+      });
+      assert(
+        integrityServiceStatus === "ready",
+        `Integrity service status is ${integrityServiceStatus}`
+      );
 
-    assert(sessionToken, "sessionToken is undefined");
-    assert(integrityKeyTag, "integrityKeyTag is undefined");
+      const sessionToken = sessionTokenSelector(store.getState());
+      const integrityKeyTag = O.toUndefined(
+        itwIntegrityKeyTagSelector(store.getState())
+      );
 
-    return getAttestation(env, integrityKeyTag, sessionToken);
-  });
+      assert(sessionToken, "sessionToken is undefined");
+      assert(integrityKeyTag, "integrityKeyTag is undefined");
+
+      return getAttestation(env, integrityKeyTag, sessionToken);
+    }
+  );
 
   return {
     evaluateRelyingPartyTrust,

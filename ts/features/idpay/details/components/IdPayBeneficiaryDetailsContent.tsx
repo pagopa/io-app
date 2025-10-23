@@ -37,7 +37,7 @@ import {
   IdPayInitiativeRulesInfoBox,
   IdPayInitiativeRulesInfoBoxSkeleton
 } from "./IdPayInitiativeRulesInfoBox";
-import { IdPayinitiativeStatusItem } from "./IdPayInitiativeStatusItem";
+import { IdPayInitiativeStatusItem } from "./IdPayInitiativeStatusItem";
 
 type TableRow = WithTestID<{
   label: string;
@@ -81,7 +81,7 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
   const endDateString = pipe(
     initiativeDetails.voucherEndDate,
     O.fromNullable,
-    O.map(formatDate("DD/MM/YYYY, HH:mm")),
+    O.map(formatDate("DD/MM/YYYY")),
     O.getOrElse(() => "-")
   );
 
@@ -122,7 +122,7 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
   const voucherStartDateString = pipe(
     initiativeDetails.voucherStartDate,
     O.fromNullable,
-    O.map(formatDate("DD MMM YYYY, HH:mm")),
+    O.map(formatDate("DD MMM YYYY")),
     O.getOrElse(() => "-")
   );
 
@@ -243,7 +243,10 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
             <ListItemHeader
               label={I18n.t("idpay.initiative.beneficiaryDetails.summary")}
             />
-            <IdPayinitiativeStatusItem status={initiativeDetails.status} />
+            <IdPayInitiativeStatusItem
+              status={initiativeDetails.status}
+              voucherStatus={initiativeDetails?.voucherStatus}
+            />
             {renderTableRow(summaryData)}
             <VSpacer size={8} />
             {canShowRulesData && (

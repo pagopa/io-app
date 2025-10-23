@@ -4,7 +4,7 @@ import { ImageSourcePropType, StyleSheet, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useIOSelector } from "../../../../store/hooks";
 import { logosForService } from "../../../services/common/utils";
-import { serviceDetailsByIdSelector } from "../../../services/details/store/reducers";
+import { serviceDetailsByIdSelector } from "../../../services/details/store/selectors";
 import { OrganizationHeader } from "./OrganizationHeader";
 
 const styles = StyleSheet.create({
@@ -18,10 +18,12 @@ const styles = StyleSheet.create({
 });
 
 export type MessageDetailsHeaderProps = PropsWithChildren<{
-  createdAt: Date;
+  createdAt: Date | undefined;
   messageId: string;
   serviceId: ServiceId;
   subject: string;
+  canNavigateToServiceDetails?: boolean;
+  thirdPartySenderDenomination?: string;
 }>;
 
 const MessageDetailsHeaderContent = ({
@@ -32,16 +34,18 @@ const MessageDetailsHeaderContent = ({
     <H3 accessibilityRole="header" testID="message-header-subject">
       {subject}
     </H3>
-    <BodySmall weight="Regular">
-      {`${new Intl.DateTimeFormat("it", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric"
-      }).format(createdAt)}, ${new Intl.DateTimeFormat("it", {
-        hour: "2-digit",
-        minute: "2-digit"
-      }).format(createdAt)}`}
-    </BodySmall>
+    {createdAt && (
+      <BodySmall weight="Regular" testID="date">
+        {`${new Intl.DateTimeFormat("it", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric"
+        }).format(createdAt)}, ${new Intl.DateTimeFormat("it", {
+          hour: "2-digit",
+          minute: "2-digit"
+        }).format(createdAt)}`}
+      </BodySmall>
+    )}
   </VStack>
 );
 
@@ -49,6 +53,8 @@ export const MessageDetailsHeader = ({
   children,
   messageId,
   serviceId,
+  thirdPartySenderDenomination,
+  canNavigateToServiceDetails = true,
   ...rest
 }: MessageDetailsHeaderProps) => {
   const service = useIOSelector(state =>
@@ -66,6 +72,8 @@ export const MessageDetailsHeader = ({
           organizationName={service.organization.name}
           serviceId={serviceId}
           serviceName={service.name}
+          thirdPartySenderDenomination={thirdPartySenderDenomination}
+          canNavigateToServiceDetails={canNavigateToServiceDetails}
         />
       )}
     </VStack>

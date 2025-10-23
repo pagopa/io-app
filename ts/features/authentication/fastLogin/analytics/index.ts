@@ -10,7 +10,7 @@ export function trackLoginSessionTimeoutPrePin() {
 
 export function trackLoginSessionTimeoutPostPin() {
   void mixpanelTrack(
-    "LOGIN_SESSION_TIMEOUT_POST_PIN",
+    "LOGIN_SESSION_TIMEOUT_POST_PIN_V2",
     buildEventProperties("UX", "screen_view")
   );
 }

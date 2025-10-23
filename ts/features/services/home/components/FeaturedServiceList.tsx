@@ -13,7 +13,7 @@ import {
   featuredServicesSelector,
   isErrorFeaturedServicesSelector,
   isLoadingFeaturedServicesSelector
-} from "../store/reducers";
+} from "../store/selectors";
 import {
   FeaturedServicesCarousel,
   FeaturedServicesCarouselSkeleton

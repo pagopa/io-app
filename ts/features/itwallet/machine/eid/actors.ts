@@ -1,5 +1,5 @@
 import { Trust } from "@pagopa/io-react-native-wallet";
-import cieManager from "@pagopa/react-native-cie";
+import { CieUtils } from "@pagopa/io-react-native-cie";
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
 import { useIOStore } from "../../../../store/hooks";
@@ -128,7 +128,7 @@ export const createEidIssuanceActorsImplementation = (
   getCieStatus: fromPromise<CieContext>(async () => {
     const [isNFCEnabled, isCIEAuthenticationSupported] = await Promise.all([
       cieUtils.isNfcEnabled(),
-      cieManager.isCIEAuthenticationSupported()
+      CieUtils.isCieAuthenticationSupported()
     ]);
     return {
       isNFCEnabled,

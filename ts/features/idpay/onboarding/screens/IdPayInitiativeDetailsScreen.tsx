@@ -4,31 +4,34 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { INonEmptyStringTag } from "@pagopa/ts-commons/lib/strings";
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { RouteProp, useLinkTo, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useEffect } from "react";
 import I18n from "i18next";
+import { useEffect } from "react";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { loadServicePreference } from "../../../services/details/store/actions/preference";
-import { servicePreferenceResponseSuccessByIdSelector } from "../../../services/details/store/reducers";
-import { isLoadingSelector } from "../../common/machine/selectors";
-import { IdPayOnboardingDescriptionSkeleton } from "../components/IdPayOnboardingDescriptionSkeleton";
-import { IdPayOnboardingServiceHeader } from "../components/IdPayOnboardingServiceHeader";
-import { IdPayOnboardingMachineContext } from "../machine/provider";
-import { selectInitiative } from "../machine/selectors";
-import { IdPayOnboardingParamsList } from "../navigation/params";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";
+import { loadServicePreference } from "../../../services/details/store/actions/preference";
+import { servicePreferenceResponseSuccessByIdSelector } from "../../../services/details/store/selectors";
+import { IdPayEnabledFeatureFlagGuard } from "../../common/components/IdPayEnabledFeatureFlagGuard";
+import { isLoadingSelector } from "../../common/machine/selectors";
 import {
   trackIDPayOnboardingAppUpdateConfirm,
   trackIDPayOnboardingAppUpdateRequired,
   trackIDPayOnboardingIntro,
   trackIDPayOnboardingStart
 } from "../analytics";
+import { IdPayOnboardingDescriptionSkeleton } from "../components/IdPayOnboardingDescriptionSkeleton";
+import { IdPayOnboardingServiceHeader } from "../components/IdPayOnboardingServiceHeader";
+import { IdPayOnboardingMachineContext } from "../machine/provider";
+import { selectInitiative } from "../machine/selectors";
+import { IdPayOnboardingParamsList } from "../navigation/params";
+import { generateSmallTosMarkdownRules } from "../utils/markdown";
 
 export type InitiativeDetailsScreenParams = {
   serviceId?: string;
@@ -88,16 +91,24 @@ const IdPayInitiativeDetailsScreenComponent = () => {
             privacyUrl: privacyLink,
             tosUrl: tcLink
           })}
+          rules={generateSmallTosMarkdownRules(linkTo)}
         />
       )
     )
   );
 
+  const linkTo = useLinkTo();
+
   const descriptionComponent = pipe(
     initiative,
     O.fold(
       () => <IdPayOnboardingDescriptionSkeleton />,
-      ({ description }) => <IOMarkdown content={description} />
+      ({ description }) => (
+        <IOMarkdown
+          content={description}
+          rules={generateMessagesAndServicesRules(linkTo)}
+        />
+      )
     )
   );
 
@@ -117,10 +128,6 @@ const IdPayInitiativeDetailsScreenComponent = () => {
     title: "",
     goBack: handleGoBackPress,
     supportRequest: true
-  });
-
-  useOnFirstRender(() => {
-    trackIDPayOnboardingIntro({ initiativeName, initiativeId });
   });
 
   return (
@@ -143,7 +150,7 @@ const IdPayInitiativeDetailsScreenComponent = () => {
       <ContentWrapper>
         <VSpacer size={16} />
         {descriptionComponent}
-        <VSpacer size={24} />
+        <VSpacer size={32} />
         {onboardingPrivacyAdvice}
       </ContentWrapper>
     </ForceScrollDownView>
@@ -166,8 +173,19 @@ export const IdPayInitiativeDetailsScreen = () => {
     O.toUndefined
   );
 
+  const IdPayInitiativeDetails = () => (
+    <IdPayEnabledFeatureFlagGuard featureKey="idpay.onboarding">
+      <IdPayInitiativeDetailsScreenComponent />
+    </IdPayEnabledFeatureFlagGuard>
+  );
+
+  useOnFirstRender(
+    () => trackIDPayOnboardingIntro({ initiativeName, initiativeId }),
+    () => O.isSome(initiative)
+  );
+
   const WrappedComponent = withAppRequiredUpdate(
-    IdPayInitiativeDetailsScreenComponent,
+    IdPayInitiativeDetails,
     "idpay.onboarding",
     {
       onConfirm: () =>
