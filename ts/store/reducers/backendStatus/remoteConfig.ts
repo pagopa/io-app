@@ -412,6 +412,17 @@ export const isIdPayEnabledInScanScreenSelector = (state: GlobalState) =>
     })
   );
 
+export const isIdPayQrCodeFeatureEnabledSelector = (state: GlobalState) =>
+  pipe(state, remoteConfigSelector, remoteConfig =>
+    isPropertyWithMinAppVersionEnabled({
+      remoteConfig,
+      mainLocalFlag: true,
+      configPropertyName: "idPay",
+      optionalLocalFlag: true,
+      optionalConfig: "qr_code_payments"
+    })
+  );
+
 export const isIdPayCiePaymentCodeEnabledSelector = (state: GlobalState) =>
   pipe(state, remoteConfigSelector, remoteConfig =>
     isPropertyWithMinAppVersionEnabled({
