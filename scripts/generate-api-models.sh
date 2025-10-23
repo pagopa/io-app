@@ -21,7 +21,7 @@ declare -a apis=(
   "./definitions/pagopa/cobadge/configuration https://raw.githubusercontent.com/pagopa/io-services-metadata/$IO_SERVICES_METADATA_VERSION/pagopa/cobadge/abi_definitions.yml"
   "./definitions/pagopa/privative/configuration https://raw.githubusercontent.com/pagopa/io-services-metadata/$IO_SERVICES_METADATA_VERSION/pagopa/privative/definitions.yml"
   # IDPay APIs
-  "./definitions/idpay https://raw.githubusercontent.com/pagopa/cstar-securehub-infra-api-spec/d905f791b8d8e0aae7a382670c80d182e90d3da1/src/idpay/apim/api/idpay_appio_full/openapi.appio.full.yml"
+  "./definitions/idpay https://raw.githubusercontent.com/pagopa/cstar-securehub-infra-api-spec/refs/tags/v2.47.6/src/idpay/apim/api/idpay_appio_full/openapi.appio.full.yml"
   # Services APIs
   "./definitions/services https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_services_app_backend.yaml"
   # Lollipop APIs
