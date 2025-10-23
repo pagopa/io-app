@@ -15,6 +15,7 @@ import { getThemeColorByCredentialType } from "../../utils/itwStyleUtils";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
 import { itwCredentialsEidStatusSelector } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import { CardBackground } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
 import { CardColorScheme } from "./types";
@@ -60,6 +61,7 @@ export const ItwCredentialCard = ({
   const isItwPid = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const needsItwUpgrade = isItwPid && !isItwCredential;
   const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);
+  const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
 
   /**
    * The credential's expire UI should be displayed only when:
@@ -74,6 +76,14 @@ export const ItwCredentialCard = ({
       "invalid",
       "unknown"
     ];
+
+    // In offline mode show digital credential nearing expiration and expired as valid
+    if (
+      offlineAccessReason !== undefined &&
+      !excludedCredentialStatuses.includes(credentialStatus)
+    ) {
+      return "valid";
+    }
 
     if (
       maybeEidStatus === "valid" ||

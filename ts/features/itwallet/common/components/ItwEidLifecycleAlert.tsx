@@ -17,8 +17,8 @@ import {
 } from "../utils/itwTypesUtils";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { isConnectedSelector } from "../../../connectivity/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
 
 const defaultLifecycleStatus: Array<ItwJwtCredentialStatus> = [
   "valid",
@@ -44,7 +44,7 @@ export const ItwEidLifecycleAlert = ({
   const eidOption = useIOSelector(itwCredentialsEidSelector);
   const isItw = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);
-  const isConnected = useIOSelector(isConnectedSelector);
+  const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
 
   const startEidReissuing = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
@@ -107,7 +107,11 @@ export const ItwEidLifecycleAlert = ({
         }
       };
 
-      if (!isConnected && eidStatus === "jwtExpired" && !isItw) {
+      if (
+        offlineAccessReason !== undefined &&
+        eidStatus === "jwtExpired" &&
+        !isItw
+      ) {
         return {
           testID: "itwEidLifecycleAlertTestID_offline",
           variant: "error",
