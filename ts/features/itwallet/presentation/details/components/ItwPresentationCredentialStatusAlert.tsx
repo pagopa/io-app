@@ -35,7 +35,6 @@ import {
 } from "../../../analytics";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
-import { OfflineAccessReasonEnum } from "../../../../ingress/store/reducer";
 import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 
@@ -71,17 +70,6 @@ const useAlertPressHandler =
     bottomSheet.present();
     onTrack("open_bottom_sheet");
   };
-
-type AlertToRenderProps = {
-  status?: ItwCredentialStatus;
-  message?: Record<string, { title: string; description: string }>;
-  credential: StoredCredential;
-  eidStatus: ItwJwtCredentialStatus | undefined;
-  isItwL3: boolean;
-  navigation: any;
-  offlineAccessReason?: OfflineAccessReasonEnum;
-  onTrack: TrackCredentialAlert;
-};
 
 /**
  * This component renders an alert related to the credential status (expiring or invalid).
@@ -124,30 +112,6 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
     }
   };
 
-  return (
-    <AlertToRender
-      status={status}
-      message={message}
-      credential={credential}
-      eidStatus={eidStatus}
-      isItwL3={isItwL3}
-      navigation={navigation}
-      offlineAccessReason={offlineAccessReason}
-      onTrack={trackCredentialAlertEvent}
-    />
-  );
-};
-
-const AlertToRender = ({
-  status,
-  message,
-  credential,
-  eidStatus,
-  isItwL3,
-  navigation,
-  offlineAccessReason,
-  onTrack
-}: AlertToRenderProps) => {
   const isEidExpired = eidStatus === "jwtExpired";
   const isEidExpiring = eidStatus === "jwtExpiring";
   const isCredentialJwtExpiring = status === "jwtExpiring";
@@ -171,14 +135,19 @@ const AlertToRender = ({
     return (
       <JwtVerificationAlert
         credential={credential}
-        onTrack={onTrack}
+        onTrack={trackCredentialAlertEvent}
         status={status}
       />
     );
   }
 
   if (status === "expiring") {
-    return <DocumentExpiringAlert credential={credential} onTrack={onTrack} />;
+    return (
+      <DocumentExpiringAlert
+        credential={credential}
+        onTrack={trackCredentialAlertEvent}
+      />
+    );
   }
 
   if (message) {
@@ -186,7 +155,7 @@ const AlertToRender = ({
       <IssuerDynamicErrorAlert
         message={message}
         credential={credential}
-        onTrack={onTrack}
+        onTrack={trackCredentialAlertEvent}
       />
     );
   }
