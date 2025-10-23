@@ -73,7 +73,6 @@ import { watchEmailNotificationPreferencesSaga } from "../features/mailCheck/sag
 import { checkEmailSaga } from "../features/mailCheck/sagas/checkEmailSaga";
 import { watchEmailValidationSaga } from "../features/mailCheck/sagas/emailValidationPollingSaga";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
-import { watchMessagesSaga } from "../features/messages/saga";
 import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
 import { checkAcknowledgedFingerprintSaga } from "../features/onboarding/saga/biometric/checkAcknowledgedFingerprintSaga";
 import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnboardingSaga";
@@ -359,9 +358,6 @@ export function* initializeApplicationSaga(
 
   // Start watching for Services actions
   yield* fork(watchServicesSaga, backendClient, sessionToken);
-
-  // Start watching for Messages actions
-  yield* fork(watchMessagesSaga, backendClient, sessionToken, keyInfo);
 
   // start watching for FIMS actions
   yield* fork(watchFimsSaga, sessionToken);

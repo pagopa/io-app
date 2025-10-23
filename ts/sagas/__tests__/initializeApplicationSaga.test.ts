@@ -126,7 +126,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next()
       .next()
-      .next()
       .select(sessionInfoSelector)
       .next(O.none)
       .next(O.none) // loadSessionInformationSaga
@@ -278,7 +277,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next()
       .next()
-      .next()
       .select(sessionInfoSelector)
       .next(aSessionInfo)
       .select(userFromSuccessLoginSelector)
@@ -343,7 +341,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next()
       .next()
-      .next()
       .select(sessionInfoSelector)
       .next(O.none)
       .next(O.none)
@@ -391,7 +388,6 @@ describe("initializeApplicationSaga", () => {
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
       .next(200) // check session
-      .next()
       .next()
       .next()
       .next()

@@ -29,12 +29,22 @@ import { readablePrivacyReport } from "../../../utils/reporters";
 import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 import { isTestEnv } from "../../../utils/environment";
 import { trackMessagePaymentFailure } from "../analytics";
+import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { apiUrlPrefix } from "../../../config";
+import { backendClientManager } from "../../../api/BackendClientManager";
 
 const PaymentUpdateWorkerCount = 5;
 
-export function* handlePaymentUpdateRequests(
-  getPaymentDataRequestFactory: BackendClient["getPaymentInfoV2"]
-) {
+export function* handlePaymentUpdateRequests() {
+  const sessionToken = yield* select(sessionTokenSelector);
+
+  if (!sessionToken) {
+    return;
+  }
+
+  const { getPaymentInfoV2: getPaymentDataRequestFactory } =
+    backendClientManager.getBackendClient(apiUrlPrefix, sessionToken);
+
   // Create a channel where 'updatePaymentForMessage.request' actions will be enqueued
   const paymentUpdateChannel = yield* actionChannel(
     updatePaymentForMessage.request

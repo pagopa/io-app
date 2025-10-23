@@ -1,7 +1,6 @@
-import { call, put } from "typed-redux-saga/macro";
+import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { convertUnknownToError } from "../../../utils/errors";
-import { BackendClient } from "../../../api/backend";
 import { loadMessageById } from "../store/actions";
 import { toUIMessage } from "../store/reducers/transformers";
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
@@ -10,12 +9,25 @@ import { SagaCallReturnType } from "../../../types/utils";
 import { errorToReason, unknownToReason } from "../utils";
 import { trackLoadMessageByIdFailure } from "../analytics";
 import { handleResponse } from "../utils/responseHandling";
+import { backendClientManager } from "../../../api/BackendClientManager";
+import { apiUrlPrefix } from "../../../config";
+import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 
 export function* handleLoadMessageById(
-  getMessage: BackendClient["getMessage"],
   action: ActionType<typeof loadMessageById.request>
 ) {
   const id = action.payload.id;
+
+  const sessionToken = yield* select(sessionTokenSelector);
+
+  if (!sessionToken) {
+    return;
+  }
+
+  const { getMessage } = backendClientManager.getBackendClient(
+    apiUrlPrefix,
+    sessionToken
+  );
 
   try {
     const response = (yield* call(

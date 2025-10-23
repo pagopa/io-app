@@ -3,7 +3,6 @@ import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { BackendClient } from "../../../api/backend";
 import { loadThirdPartyMessage } from "../store/actions";
 import { toPNMessage } from "../../pn/store/types/transformers";
 import {
@@ -24,12 +23,25 @@ import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
 import { serviceDetailsByIdSelector } from "../../services/details/store/selectors";
 import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
 import { thirdPartyKind } from "../types/thirdPartyById";
+import { backendClientManager } from "../../../api/BackendClientManager";
+import { apiUrlPrefix } from "../../../config";
+import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 
 export function* handleThirdPartyMessage(
-  getThirdPartyMessage: BackendClient["getThirdPartyMessage"],
   action: ActionType<typeof loadThirdPartyMessage.request>
 ) {
   const { id, serviceId, tag } = action.payload;
+
+  const sessionToken = yield* select(sessionTokenSelector);
+
+  if (!sessionToken) {
+    return;
+  }
+
+  const { getThirdPartyMessage } = backendClientManager.getBackendClient(
+    apiUrlPrefix,
+    sessionToken
+  );
 
   // This method is called by `handleLoadMessageData` saga, which makes
   // sure that the service details are properly retrieved and loaded
