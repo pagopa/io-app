@@ -36,7 +36,7 @@
       </dict>
     </array>
     <key>CFBundleVersion</key>
-    <string>5</string>
+    <string>6</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
     <key>LSApplicationQueriesSchemes</key>
@@ -98,7 +98,6 @@
     <string>The app needs NSSpeechRecognitionUsageDescription permission</string>
     <key>UIAppFonts</key>
     <array>
-      <string>DMMono-Medium.ttf</string>
       <string>TitilliumSansPro-Black.otf</string>
       <string>TitilliumSansPro-Bold.otf</string>
       <string>TitilliumSansPro-Light.otf</string>
@@ -127,6 +126,7 @@
       <string>Titillio-SemiboldItalic.otf</string>
       <string>Titillio-Thin.otf</string>
       <string>Titillio-ThinItalic.otf</string>
+      <string>FiraCode-Medium.ttf</string>
     </array>
     <key>UIBackgroundModes</key>
     <array>
