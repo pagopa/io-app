@@ -102,7 +102,6 @@ const ItwEidInfoBottomSheetContent = ({
             </Fragment>
           ))}
         </View>
-
         <IOMarkdown
           content={I18n.t(
             "features.itWallet.presentation.bottomSheets.eidInfo.contentBottom"
