@@ -75,7 +75,11 @@ const SendQrScanRedirect = ({ aarUrl }: SendQRScanHandlerScreenProps) => {
       navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
         screen: PN_ROUTES.MAIN,
         params: {
-          screen: PN_ROUTES.ENGAGEMENT_SCREEN
+          screen: PN_ROUTES.ENGAGEMENT_SCREEN,
+          params: {
+            sendOpeningSource: "aar",
+            sendUserType: "not_set"
+          }
         }
       });
       return;
@@ -88,7 +92,9 @@ const SendQrScanRedirect = ({ aarUrl }: SendQRScanHandlerScreenProps) => {
       areNotificationPermissionsEnabledSelector(state);
     if (!areNotificationPermissionsEnabled) {
       navigation.replace(NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT, {
-        flow: "send_notification_opening"
+        flow: "send_notification_opening",
+        sendOpeningSource: "aar",
+        sendUserType: "not_set"
       });
       return;
     }

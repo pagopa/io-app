@@ -13,12 +13,26 @@ describe("PN actions", () => {
         onSuccess: jest.fn(),
         onFailure: jest.fn()
       };
+      const payload_withRateLimitedFailure = {
+        value: true,
+        onSuccess: jest.fn(),
+        onFailure: jest.fn((_isRateLimitError?: boolean) => {
+          void null;
+        })
+      };
 
       const action = pnActivationUpsert.request(payload);
+      const action_rateLimited = pnActivationUpsert.request(
+        payload_withRateLimitedFailure
+      );
 
       expect(action).toEqual({
         type: "PN_ACTIVATION_UPSERT_REQUEST",
         payload
+      });
+      expect(action_rateLimited).toEqual({
+        type: "PN_ACTIVATION_UPSERT_REQUEST",
+        payload: payload_withRateLimitedFailure
       });
     });
 

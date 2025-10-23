@@ -13,12 +13,10 @@ import { idPayBarcodeSecondsTillExpireSelector } from "../../barcode/store";
 import { idPayGenerateBarcode } from "../../barcode/store/actions";
 import { IdPayPaymentRoutes } from "../../payment/navigation/routes";
 import {
-  trackIDPayDetailBottomSheetLanding,
   trackIDPayDetailCodeGeneration,
   trackIDPayDetailQRCodeScan
 } from "../analytics";
 import { idpayInitiativeDetailsSelector } from "../store";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 export const useIdPayDiscountDetailsBottomSheet = (initiativeId: string) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -48,13 +46,6 @@ export const useIdPayDiscountDetailsBottomSheet = (initiativeId: string) => {
     pot.map(initiativeDataPot, initiative => initiative.initiativeName),
     undefined
   );
-
-  useOnFirstRender(() => {
-    trackIDPayDetailBottomSheetLanding({
-      initiativeId,
-      initiativeName
-    });
-  });
 
   const DiscountInitiativeBottomSheetContent = () => (
     <>

@@ -21,7 +21,6 @@ import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 const mockRNBUFetch = jest.fn();
 
 jest.mock("../../../../messages/utils");
-jest.mock("../../analytics");
 jest.mock("react-native-blob-util", () => ({
   config: jest.fn().mockImplementation(() => ({
     fetch: mockRNBUFetch
@@ -127,7 +126,7 @@ describe("downloadAARAttachmentSaga", () => {
             mandateId
           )
           .throw(error)
-          .call(analytics.trackSendAARAttachmentDownloadFailure, reason)
+          .call(analytics.trackSendAARFailure, "Download Attachment", reason)
           .next()
           .put(
             downloadAttachment.failure({
@@ -365,7 +364,9 @@ describe("getAttachmentMetadata", () => {
             .next(response);
         } catch (e: unknown) {
           expectionThrown = true;
-          expect(e).toEqual(Error(`value "error" at root (decoder info n/a)`));
+          expect(e).toEqual(
+            Error(`Decoding failure (value "error" at root (decoder info n/a))`)
+          );
         }
         expect(expectionThrown).toBe(true);
         expect(mockedGetNotificationAttachmentInput.mock.calls.length).toBe(1);
@@ -411,7 +412,7 @@ describe("getAttachmentMetadata", () => {
           expectionThrown = true;
           expect(e).toEqual(
             Error(
-              `500 401 Access denied Remote server has denied access. Check your API key`
+              `HTTP request failed (500 401 Access denied Remote server has denied access. Check your API key)`
             )
           );
         }
@@ -452,7 +453,7 @@ describe("getAttachmentMetadata", () => {
           expectionThrown = true;
           expect(e).toEqual(
             Error(
-              `Both 'retryAfter' and 'url' fields are invalid (undefined) (undefined)`
+              `Both 'retryAfter' and 'url' fields are missing or invalid (undefined) (undefined)`
             )
           );
         }

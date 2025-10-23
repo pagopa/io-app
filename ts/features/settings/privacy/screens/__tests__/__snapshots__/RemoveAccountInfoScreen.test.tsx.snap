@@ -238,28 +238,38 @@ exports[`RemoveAccountInfoScreen should match snapshot 1`] = `
                               }
                             }
                           >
-                            <Text
-                              accessibilityLabel="Elimina il tuo profilo"
-                              accessibilityRole="header"
-                              allowFontScaling={true}
-                              dynamicTypeRamp="title1"
-                              maxFontSizeMultiplier={1.5}
+                            <View
                               style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#0E0F13",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 26,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                    "lineHeight": 34,
-                                  },
-                                ]
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 8,
+                                }
                               }
                             >
-                              Elimina il tuo profilo
-                            </Text>
+                              <Text
+                                accessibilityLabel="Elimina il tuo profilo"
+                                accessibilityRole="header"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="title1"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#0E0F13",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 26,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 34,
+                                    },
+                                  ]
+                                }
+                              >
+                                Elimina il tuo profilo
+                              </Text>
+                            </View>
                           </View>
                           <View
                             style={
