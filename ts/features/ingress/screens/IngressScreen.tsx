@@ -37,9 +37,37 @@ import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { IdentificationBackActionType } from "../../identification/store/reducers";
 import { profileSelector } from "../../settings/common/store/selectors";
 import { sessionInfoSelector } from "../../authentication/common/store/selectors";
+import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
+import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
+import { ProfileError } from "../../settings/common/store/types";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
 const TIMEOUT_BLOCKING_SCREEN = (25 * 1000) as Millisecond;
+
+const getApiFailureValue = (
+  isConnected: boolean | undefined,
+  sessionLoaded: O.Option<PublicSession>,
+  profileLoaded: pot.Pot<InitializedProfile, ProfileError>
+): string => {
+  const apiFailures: Array<string> = [];
+
+  // Add "ping" if isConnected is undefined
+  if (isConnected === undefined) {
+    apiFailures.push("ping");
+  }
+
+  // Add "get session" if sessionLoaded is None (error loading session)
+  if (O.isNone(sessionLoaded)) {
+    apiFailures.push("get session");
+  }
+
+  // Add "get profile" if profileLoaded is error or someError
+  if (pot.isError(profileLoaded)) {
+    apiFailures.push("get profile");
+  }
+
+  return apiFailures.join(", ");
+};
 
 export const IngressScreen = () => {
   const isMixpanelInitialized = useIOSelector(isMixpanelInitializedSelector);
@@ -225,39 +253,25 @@ const IngressScreenBlockingError = memo(() => {
     setAccessibilityFocus(operationRef);
   }, []);
 
-  // Build API_failure parameter based on current state
-  const getApiFailureValue = useCallback((): string => {
-    const apiFailures: Array<string> = [];
-
-    // Add "ping" if isConnected is undefined
-    if (isConnected === undefined) {
-      apiFailures.push("ping");
-    }
-
-    // Add "get session" if sessionLoaded is None (error loading session)
-    if (O.isNone(sessionLoaded)) {
-      apiFailures.push("get session");
-    }
-
-    // Add "get profile" if profileLoaded is error or someError
-    if (pot.isError(profileLoaded)) {
-      apiFailures.push("get profile");
-    }
-
-    return apiFailures.join(", ");
-  }, [isConnected, profileLoaded, sessionLoaded]);
-
   useEffect(() => {
     // It's not necessary to check if mixpanel is initialized since this screen is shown after 10 seconds.
     // If mixpanel is not initialized at that time, we have an issue spanning, system-wide.
     if (isMixpanelEnabled !== false) {
       if (isBackendStatusLoaded) {
-        void trackIngressTimeout(getApiFailureValue());
+        void trackIngressTimeout(
+          getApiFailureValue(isConnected, sessionLoaded, profileLoaded)
+        );
       } else {
         void trackIngressCdnSystemError();
       }
     }
-  }, [getApiFailureValue, isBackendStatusLoaded, isMixpanelEnabled]);
+  }, [
+    isBackendStatusLoaded,
+    isConnected,
+    isMixpanelEnabled,
+    profileLoaded,
+    sessionLoaded
+  ]);
 
   return (
     <OperationResultScreenContent
