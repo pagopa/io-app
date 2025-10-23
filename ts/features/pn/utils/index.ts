@@ -8,7 +8,6 @@ import { NotificationStatus } from "../../../../definitions/pn/NotificationStatu
 import { CTAS } from "../../../types/LocalizedCTAs";
 import { isServiceDetailNavigationLink } from "../../../utils/internalLink";
 import { GlobalState } from "../../../store/reducers/types";
-import { NotificationRecipient } from "../../../../definitions/pn/NotificationRecipient";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
@@ -88,28 +87,29 @@ export const extractPNOptInMessageInfoIfAvailable = (
 export const paymentsFromPNMessagePot = (
   userFiscalCode: string | undefined,
   messagePot: pot.Pot<O.Option<PNMessage>, Error>
-) =>
-  pipe(
-    messagePot,
-    pot.toOption,
-    O.flatten,
-    O.map(message =>
-      pipe(
-        message.recipients,
-        RA.filterMap(paymentFromUserFiscalCodeAndRecipient(userFiscalCode))
-      )
-    ),
-    O.toUndefined
-  );
+): ReadonlyArray<NotificationPaymentInfo> | undefined => {
+  const paymentsOption = pot.getOrElse(messagePot, undefined);
+  if (paymentsOption == null || O.isNone(paymentsOption)) {
+    return undefined;
+  }
 
-const paymentFromUserFiscalCodeAndRecipient =
-  (userFiscalCode: string | undefined) =>
-  (recipient: NotificationRecipient): O.Option<NotificationPaymentInfo> =>
-    pipe(
-      recipient.payment,
-      O.fromNullable,
-      O.filter(() => recipient.taxId === userFiscalCode)
-    );
+  const recipients = paymentsOption.value.recipients;
+  const filteredPayments = recipients.reduce<
+    ReadonlyArray<NotificationPaymentInfo>
+  >((accumulator, recipient) => {
+    if (
+      // Payment must be defined
+      recipient.payment != null &&
+      // Payment is valid if no input fiscal code to compare to has been provided
+      // or if the taxId property matches the provided userFiscalCode
+      (userFiscalCode == null || recipient.taxId === userFiscalCode)
+    ) {
+      return [...accumulator, recipient.payment];
+    }
+    return accumulator;
+  }, []);
+  return filteredPayments.length > 0 ? filteredPayments : undefined;
+};
 
 export const isCancelledFromPNMessagePot = (
   potMessage: pot.Pot<O.Option<PNMessage>, Error>

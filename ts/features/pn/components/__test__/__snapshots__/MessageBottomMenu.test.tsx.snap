@@ -492,6 +492,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -1048,6 +1051,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -1636,6 +1642,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -2192,6 +2201,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -2752,6 +2764,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -3308,6 +3323,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -3868,6 +3886,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -4424,6 +4445,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -4984,6 +5008,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -5542,6 +5569,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -6098,6 +6128,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -6686,6 +6719,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -7242,6 +7278,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -7937,6 +7976,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -8628,6 +8670,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -9323,6 +9368,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -10014,6 +10062,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -10709,6 +10760,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -11402,6 +11456,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -11958,6 +12015,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -12546,6 +12606,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -13102,6 +13165,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -13707,6 +13773,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -14308,6 +14377,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -14913,6 +14985,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -15514,6 +15589,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -16119,6 +16197,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -16722,6 +16803,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -17278,6 +17362,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -17866,6 +17953,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -18422,6 +18512,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -18982,6 +19075,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -19538,6 +19634,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -20098,6 +20197,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -20654,6 +20756,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -21214,6 +21319,9 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -21662,6 +21770,9 @@ exports[`MessageBottomMenu should match snapshot, no history, empty payments, ca
                         }
                       >
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -22109,6 +22220,9 @@ exports[`MessageBottomMenu should match snapshot, no history, empty payments, ca
                           ]
                         }
                       >
+                        <View>
+                          Mock NeedHelp
+                        </View>
                         <View>
                           Mock ShowMoreListItem
                         </View>
@@ -22586,6 +22700,9 @@ exports[`MessageBottomMenu should match snapshot, no history, empty payments, ca
                         }
                       >
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -23033,6 +23150,9 @@ exports[`MessageBottomMenu should match snapshot, no history, empty payments, no
                           ]
                         }
                       >
+                        <View>
+                          Mock NeedHelp
+                        </View>
                         <View>
                           Mock ShowMoreListItem
                         </View>
@@ -23482,6 +23602,9 @@ exports[`MessageBottomMenu should match snapshot, no history, empty payments, no
                         }
                       >
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -23929,6 +24052,9 @@ exports[`MessageBottomMenu should match snapshot, no history, empty payments, no
                           ]
                         }
                       >
+                        <View>
+                          Mock NeedHelp
+                        </View>
                         <View>
                           Mock ShowMoreListItem
                         </View>
@@ -24378,6 +24504,9 @@ exports[`MessageBottomMenu should match snapshot, no history, empty payments, un
                         }
                       >
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -24825,6 +24954,9 @@ exports[`MessageBottomMenu should match snapshot, no history, empty payments, un
                           ]
                         }
                       >
+                        <View>
+                          Mock NeedHelp
+                        </View>
                         <View>
                           Mock ShowMoreListItem
                         </View>
@@ -25274,6 +25406,9 @@ exports[`MessageBottomMenu should match snapshot, no history, empty payments, un
                         }
                       >
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -25722,6 +25857,9 @@ exports[`MessageBottomMenu should match snapshot, no history, multiple payments,
                         }
                       >
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -26169,6 +26307,9 @@ exports[`MessageBottomMenu should match snapshot, no history, multiple payments,
                           ]
                         }
                       >
+                        <View>
+                          Mock NeedHelp
+                        </View>
                         <View>
                           Mock ShowMoreListItem
                         </View>
@@ -26646,6 +26787,9 @@ exports[`MessageBottomMenu should match snapshot, no history, multiple payments,
                         }
                       >
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -27093,6 +27237,9 @@ exports[`MessageBottomMenu should match snapshot, no history, multiple payments,
                           ]
                         }
                       >
+                        <View>
+                          Mock NeedHelp
+                        </View>
                         <View>
                           Mock ShowMoreListItem
                         </View>
@@ -27677,6 +27824,9 @@ exports[`MessageBottomMenu should match snapshot, no history, multiple payments,
                         }
                       >
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -28259,6 +28409,9 @@ exports[`MessageBottomMenu should match snapshot, no history, multiple payments,
                           ]
                         }
                       >
+                        <View>
+                          Mock NeedHelp
+                        </View>
                         <View>
                           Mock ShowMoreListItem
                         </View>
@@ -28843,6 +28996,9 @@ exports[`MessageBottomMenu should match snapshot, no history, multiple payments,
                         }
                       >
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -29425,6 +29581,9 @@ exports[`MessageBottomMenu should match snapshot, no history, multiple payments,
                           ]
                         }
                       >
+                        <View>
+                          Mock NeedHelp
+                        </View>
                         <View>
                           Mock ShowMoreListItem
                         </View>
@@ -30009,6 +30168,9 @@ exports[`MessageBottomMenu should match snapshot, no history, multiple payments,
                         }
                       >
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -30592,6 +30754,9 @@ exports[`MessageBottomMenu should match snapshot, no history, one payment, cance
                         }
                       >
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -31039,6 +31204,9 @@ exports[`MessageBottomMenu should match snapshot, no history, one payment, cance
                           ]
                         }
                       >
+                        <View>
+                          Mock NeedHelp
+                        </View>
                         <View>
                           Mock ShowMoreListItem
                         </View>
@@ -31516,6 +31684,9 @@ exports[`MessageBottomMenu should match snapshot, no history, one payment, cance
                         }
                       >
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -31963,6 +32134,9 @@ exports[`MessageBottomMenu should match snapshot, no history, one payment, not c
                           ]
                         }
                       >
+                        <View>
+                          Mock NeedHelp
+                        </View>
                         <View>
                           Mock ShowMoreListItem
                         </View>
@@ -32457,6 +32631,9 @@ exports[`MessageBottomMenu should match snapshot, no history, one payment, not c
                         }
                       >
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -32949,6 +33126,9 @@ exports[`MessageBottomMenu should match snapshot, no history, one payment, not c
                           ]
                         }
                       >
+                        <View>
+                          Mock NeedHelp
+                        </View>
                         <View>
                           Mock ShowMoreListItem
                         </View>
@@ -33443,6 +33623,9 @@ exports[`MessageBottomMenu should match snapshot, no history, one payment, undef
                         }
                       >
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -33935,6 +34118,9 @@ exports[`MessageBottomMenu should match snapshot, no history, one payment, undef
                           ]
                         }
                       >
+                        <View>
+                          Mock NeedHelp
+                        </View>
                         <View>
                           Mock ShowMoreListItem
                         </View>
@@ -34429,6 +34615,9 @@ exports[`MessageBottomMenu should match snapshot, no history, one payment, undef
                         }
                       >
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -34922,6 +35111,9 @@ exports[`MessageBottomMenu should match snapshot, no history, undefined payments
                         }
                       >
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -35369,6 +35561,9 @@ exports[`MessageBottomMenu should match snapshot, no history, undefined payments
                           ]
                         }
                       >
+                        <View>
+                          Mock NeedHelp
+                        </View>
                         <View>
                           Mock ShowMoreListItem
                         </View>
@@ -35846,6 +36041,9 @@ exports[`MessageBottomMenu should match snapshot, no history, undefined payments
                         }
                       >
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -36293,6 +36491,9 @@ exports[`MessageBottomMenu should match snapshot, no history, undefined payments
                           ]
                         }
                       >
+                        <View>
+                          Mock NeedHelp
+                        </View>
                         <View>
                           Mock ShowMoreListItem
                         </View>
@@ -36742,6 +36943,9 @@ exports[`MessageBottomMenu should match snapshot, no history, undefined payments
                         }
                       >
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -37189,6 +37393,9 @@ exports[`MessageBottomMenu should match snapshot, no history, undefined payments
                           ]
                         }
                       >
+                        <View>
+                          Mock NeedHelp
+                        </View>
                         <View>
                           Mock ShowMoreListItem
                         </View>
@@ -37638,6 +37845,9 @@ exports[`MessageBottomMenu should match snapshot, no history, undefined payments
                         }
                       >
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -38086,6 +38296,9 @@ exports[`MessageBottomMenu should match snapshot, no history, undefined payments
                         }
                       >
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -38533,6 +38746,9 @@ exports[`MessageBottomMenu should match snapshot, no history, undefined payments
                           ]
                         }
                       >
+                        <View>
+                          Mock NeedHelp
+                        </View>
                         <View>
                           Mock ShowMoreListItem
                         </View>

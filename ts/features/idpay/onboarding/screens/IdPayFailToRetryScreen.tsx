@@ -1,4 +1,5 @@
 /* eslint-disable functional/immutable-data */
+import { Body } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -30,6 +31,8 @@ export const IdPayFailToRetryScreen = () => {
   const [contentTitle, setContentTitle] = useState(
     I18n.t("idpay.onboarding.failToRetry.contentTitle")
   );
+  const [showSubtitle, setShowSubtitle] = useState(false);
+
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
 
@@ -66,6 +69,7 @@ export const IdPayFailToRetryScreen = () => {
       setTimeout(() => {
         machine.send({ type: "retryConnection" });
         setContentTitle(I18n.t("startup.title2"));
+        setShowSubtitle(true);
         timeouts.shift();
       }, TIMEOUT_CHANGE_LABEL)
     );
@@ -75,6 +79,7 @@ export const IdPayFailToRetryScreen = () => {
         if (!isFirstCallInPending) {
           machine.send({ type: "retryConnection" });
         }
+        setShowSubtitle(false);
         setShowBlockingScreen(true);
         dispatch(setIsBlockingScreen());
         timeouts.shift();
@@ -109,7 +114,15 @@ export const IdPayFailToRetryScreen = () => {
         testID="ingress-screen-loader-id"
         contentTitle={contentTitle}
         animatedPictogramSource="waiting"
-      />
+      >
+        {showSubtitle && (
+          <View style={{ alignItems: "center" }}>
+            <Body style={{ textAlign: "center" }}>
+              {I18n.t("idpay.onboarding.failToRetry.slowDownSubtitle")}
+            </Body>
+          </View>
+        )}
+      </LoadingScreenContent>
     </>
   );
 };
@@ -149,9 +162,9 @@ const IngressScreenBlockingError = memo(() => {
       testID="device-blocking-screen-id"
       pictogram="time"
       title={I18n.t("startup.slowdowns_results_screen.title")}
-      subtitle={I18n.t("startup.slowdowns_results_screen.subtitle")}
+      subtitle={I18n.t("idpay.onboarding.failToRetry.failureSubtitle")}
       action={{
-        label: I18n.t("global.buttons.close"),
+        label: I18n.t("global.buttons.back"),
         onPress: () => machine.send({ type: "close" })
       }}
       secondaryAction={{

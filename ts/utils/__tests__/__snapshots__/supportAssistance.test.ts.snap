@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshots zendeskSendCategory 1`] = `
+{
+  "description": {
+    "de-DE": "SEND",
+    "en-EN": "SEND",
+    "it-IT": "SEND",
+  },
+  "value": "io_send",
+}
+`;

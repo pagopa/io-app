@@ -24,6 +24,7 @@ import {
   AnimatedPictogram,
   IOAnimatedPictograms
 } from "../ui/AnimatedPictogram";
+import { LoadingIndicator } from "../ui/LoadingIndicator";
 
 type ButtonProps = Pick<
   IOButtonProps,
@@ -45,10 +46,12 @@ type OperationResultScreenContentProps = WithTestID<
   } & GraphicAssetProps
 >;
 
+type IOAnimatedPictogramsWithSpinner = IOAnimatedPictograms | "spinner";
+
 type GraphicAssetProps =
   | {
       enableAnimatedPictogram: true;
-      pictogram: IOAnimatedPictograms;
+      pictogram: IOAnimatedPictogramsWithSpinner;
       loop?: AnimatedPictogram["loop"];
     }
   | {
@@ -102,7 +105,11 @@ const OperationResultScreenContent = forwardRef<
 
         {enableAnimatedPictogram && pictogram && (
           <View style={{ alignItems: "center" }}>
-            <AnimatedPictogram name={pictogram} size={120} loop={loop} />
+            {pictogram !== "spinner" ? (
+              <AnimatedPictogram name={pictogram} size={120} loop={loop} />
+            ) : (
+              <LoadingIndicator />
+            )}
             <VSpacer size={24} />
           </View>
         )}
