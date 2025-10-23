@@ -34,7 +34,7 @@ export function* checkEidExpiringSaga() {
       openWebUrl(decodedDeepLink);
     } else {
       // If the eID JWT is expiring in 1 day or less, show the local notification
-      if (jwtExpireDays > 1) {
+      if (jwtExpireDays <= 1) {
         PushNotification.localNotification({
           id: "itw_reissuing_eid_notification",
           category: "itw",
