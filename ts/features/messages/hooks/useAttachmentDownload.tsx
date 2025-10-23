@@ -25,15 +25,21 @@ import {
 import { trackThirdPartyMessageAttachmentShowPreview } from "../analytics";
 import PN_ROUTES from "../../pn/navigation/routes";
 import NavigationService from "../../../navigation/NavigationService";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../pushNotifications/analytics";
 
 export const useAttachmentDownload = (
   messageId: string,
   attachment: ThirdPartyAttachment,
-  isPN: boolean,
+  sendOpeningSource: SendOpeningSource,
+  sendUserType: SendUserType,
   serviceId: ServiceId,
   onPreNavigate?: () => void
 ) => {
   const attachmentId = attachment.id;
+  const isSendAttachment = sendUserType !== "not_set";
 
   const dispatch = useIODispatch();
   const store = useIOStore();
@@ -50,8 +56,12 @@ export const useAttachmentDownload = (
   const doNavigate = useCallback(() => {
     dispatch(clearRequestedAttachmentDownload());
     onPreNavigate?.();
-    if (isPN) {
-      trackPNAttachmentOpening(attachmentCategory);
+    if (isSendAttachment) {
+      trackPNAttachmentOpening(
+        sendOpeningSource,
+        sendUserType,
+        attachmentCategory
+      );
       NavigationService.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
         screen: PN_ROUTES.MAIN,
         params: {
@@ -76,11 +86,14 @@ export const useAttachmentDownload = (
     attachmentCategory,
     attachmentId,
     dispatch,
-    isPN,
+    isSendAttachment,
     messageId,
     onPreNavigate,
+    sendOpeningSource,
+    sendUserType,
     serviceId
   ]);
+
   const checkPathAndNavigate = useCallback(
     async (downloadPath: string) => {
       if (await RNFS.exists(downloadPath)) {
@@ -96,7 +109,7 @@ export const useAttachmentDownload = (
       return;
     }
 
-    if (!isPN) {
+    if (!isSendAttachment) {
       trackThirdPartyMessageAttachmentShowPreview();
     }
 
@@ -110,18 +123,18 @@ export const useAttachmentDownload = (
         downloadAttachment.request({
           attachment,
           messageId,
-          skipMixpanelTrackingOnFailure: isPN,
+          skipMixpanelTrackingOnFailure: isSendAttachment,
           serviceId
         })
       );
     }
   }, [
-    attachment,
+    isFetching,
+    isSendAttachment,
     dispatch,
     download,
     doNavigate,
-    isFetching,
-    isPN,
+    attachment,
     messageId,
     serviceId
   ]);
@@ -141,7 +154,7 @@ export const useAttachmentDownload = (
       )
     ) {
       dispatch(clearRequestedAttachmentDownload());
-      if (isPN) {
+      if (isSendAttachment) {
         trackPNAttachmentDownloadFailure(attachmentCategory);
       }
       toast.error(I18n.t("messageDetails.attachments.failing.details"));
@@ -153,8 +166,9 @@ export const useAttachmentDownload = (
     dispatch,
     doNavigate,
     download,
-    isPN,
+    isSendAttachment,
     messageId,
+    sendUserType,
     store,
     toast
   ]);

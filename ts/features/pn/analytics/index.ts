@@ -115,11 +115,17 @@ export function trackPNAttachmentSaveShare(category?: string) {
   );
 }
 
-export function trackPNAttachmentOpening(category?: string) {
+export function trackPNAttachmentOpening(
+  openingSource: SendOpeningSource,
+  userType: SendUserType,
+  category?: string
+) {
   void mixpanelTrack(
     "PN_ATTACHMENT_OPENING",
     buildEventProperties("UX", "action", {
-      category
+      category,
+      opening_source: openingSource,
+      send_user: userType
     })
   );
 }

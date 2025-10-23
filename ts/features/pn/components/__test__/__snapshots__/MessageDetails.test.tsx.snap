@@ -168,7 +168,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                     ]
                   }
                 >
-                  DUMMY_ROUTE
+                  PN_ROUTES_MESSAGE_DETAILS
                 </Text>
               </View>
               <View
@@ -715,7 +715,10 @@ Se è previsto un pagamento, puoi farlo ora da IO con il tuo metodo preferito.
                               Is not disabled
                             </View>
                             <View>
-                              Is SEND
+                              Send Opening Source message
+                            </View>
+                            <View>
+                              Send User Type recipient
                             </View>
                             <View>
                               Message Id: 01HRYR6C761DGH3S84HBBXMMKT
@@ -737,6 +740,26 @@ Se è previsto un pagamento, puoi farlo ora da IO con il tuo metodo preferito.
                                 }
                               }
                             />
+                            <View>
+                              <View>
+                                Mock F24Section
+                              </View>
+                              <View>
+                                Message Id:     01HRYR6C761DGH3S84HBBXMMKT
+                              </View>
+                              <View>
+                                Service Id:     service_one
+                              </View>
+                              <View>
+                                Cancelled:      undefined
+                              </View>
+                              <View>
+                                Opening Source: message
+                              </View>
+                              <View>
+                                User Type:      recipient
+                              </View>
+                            </View>
                             <View
                               style={
                                 {

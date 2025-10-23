@@ -5,6 +5,11 @@ import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWr
 import { F24ListBottomSheetLink } from "../F24ListBottomSheetLink";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import PN_ROUTES from "../../navigation/routes";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../../pushNotifications/analytics";
 
 const numberToThirdPartyAttachment = (index: number) =>
   ({
@@ -12,25 +17,47 @@ const numberToThirdPartyAttachment = (index: number) =>
     url: `https://domain.url/doc${index}.pdf`
   } as ThirdPartyAttachment);
 
+const f24Lists: ReadonlyArray<ReadonlyArray<ThirdPartyAttachment>> = [
+  [],
+  [{ ...numberToThirdPartyAttachment(1) }],
+  [
+    { ...numberToThirdPartyAttachment(1) },
+    { ...numberToThirdPartyAttachment(2) }
+  ]
+];
+const sendOpeningSources: ReadonlyArray<SendOpeningSource> = [
+  "aar",
+  "message",
+  "not_set"
+];
+const sendUserTypes: ReadonlyArray<SendUserType> = [
+  "mandatory",
+  "not_set",
+  "recipient"
+];
+
 describe("F24ListBottomSheetLink", () => {
-  it("should be snapshot for an 0 items F24 list", () => {
-    const zeroF24List = [] as ReadonlyArray<ThirdPartyAttachment>;
-    const component = renderComponent(zeroF24List);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should be snapshot for an 1 item F24 list", () => {
-    const oneF24List = [...Array(1).keys()].map(numberToThirdPartyAttachment);
-    const component = renderComponent(oneF24List);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should be snapshot for a 10 items F24 list", () => {
-    const oneF24List = [...Array(10).keys()].map(numberToThirdPartyAttachment);
-    const component = renderComponent(oneF24List);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
+  f24Lists.forEach(f24List =>
+    sendOpeningSources.forEach(sendOpeningSource =>
+      sendUserTypes.forEach(sendUserType => {
+        it(`should match snapshot (${f24List.length} items, opening source ${sendOpeningSource}, user type ${sendUserType})`, () => {
+          const component = renderComponent(
+            f24List,
+            sendOpeningSource,
+            sendUserType
+          );
+          expect(component.toJSON()).toMatchSnapshot();
+        });
+      })
+    )
+  );
 });
 
-const renderComponent = (f24List: ReadonlyArray<ThirdPartyAttachment>) => {
+const renderComponent = (
+  f24List: ReadonlyArray<ThirdPartyAttachment>,
+  openingSource: SendOpeningSource,
+  userType: SendUserType
+) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, initialState as any);
 
@@ -40,9 +67,11 @@ const renderComponent = (f24List: ReadonlyArray<ThirdPartyAttachment>) => {
         f24List={f24List}
         messageId={"01HS94671EXDWDESDJB3NCBYPM"}
         serviceId={"01JKAGWVQRFE1P8QAHZS743M90" as ServiceId}
+        sendOpeningSource={openingSource}
+        sendUserType={userType}
       />
     ),
-    "DUMMY",
+    PN_ROUTES.MESSAGE_DETAILS,
     {},
     store
   );

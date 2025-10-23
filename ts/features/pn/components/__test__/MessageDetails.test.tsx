@@ -13,11 +13,13 @@ import { thirdPartyMessage } from "../../__mocks__/pnMessage";
 import { toPNMessage } from "../../store/types/transformers";
 import { PNMessage } from "../../store/types/types";
 import { MessageDetails } from "../MessageDetails";
+import PN_ROUTES from "../../navigation/routes";
 
 jest.mock(
   "../../../messages/components/MessageDetail/MessageDetailsAttachments"
 );
 jest.mock("../MessageBottomMenu");
+jest.mock("../F24Section");
 
 const pnMessage = pipe(thirdPartyMessage, toPNMessage, O.toUndefined)!;
 
@@ -110,7 +112,9 @@ const generateComponentProperties = (message: PNMessage) => ({
   messageId: "01HRYR6C761DGH3S84HBBXMMKT",
   message,
   payments: undefined,
-  serviceId: serviceId_1
+  serviceId: serviceId_1,
+  isAARMessage: false,
+  isDelegate: false
 });
 
 const renderComponent = (props: ComponentProps<typeof MessageDetails>) => {
@@ -121,7 +125,7 @@ const renderComponent = (props: ComponentProps<typeof MessageDetails>) => {
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
       () => <MessageDetails {...props} />,
-      "DUMMY_ROUTE",
+      PN_ROUTES.MESSAGE_DETAILS,
       {},
       store
     ),

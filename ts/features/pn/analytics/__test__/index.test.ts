@@ -1,11 +1,27 @@
 import {
   booleanOrUndefinedToPNServiceStatus,
+  trackPNAttachmentOpening,
   trackPNNotificationLoadSuccess,
   trackPNPaymentStatus,
   trackPNUxSuccess
 } from "..";
 import * as MIXPANEL from "../../../../mixpanel";
 import { PaymentStatistics } from "../../../messages/store/reducers/payments";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../../pushNotifications/analytics";
+
+const sendOpeningSources: ReadonlyArray<SendOpeningSource> = [
+  "aar",
+  "message",
+  "not_set"
+];
+const sendUserTypes: ReadonlyArray<SendUserType> = [
+  "mandatory",
+  "not_set",
+  "recipient"
+];
 
 describe("index", () => {
   afterEach(() => {
@@ -34,56 +50,48 @@ describe("index", () => {
       [undefined, false, true].forEach(firstTimeOpening =>
         [false, true].forEach(isCancelled =>
           [false, true].forEach(containsF24 =>
-            (["aar", "message", "not_set"] as const).forEach(openingSource =>
-              (["recipient", "mandatory", "not_set"] as const).forEach(
-                userType => {
-                  it(`should call 'mixpanelTrack' with proper event name and parameters (paymentCount ${paymentCount} firstTimeOpening ${firstTimeOpening} isCancelled ${isCancelled} containsF24 ${containsF24} openingSource ${openingSource} userType ${userType})`, () => {
-                    const spiedOnMockedMixpanelTrack = jest
-                      .spyOn(MIXPANEL, "mixpanelTrack")
-                      .mockImplementation();
+            sendOpeningSources.forEach(openingSource =>
+              sendUserTypes.forEach(userType => {
+                it(`should call 'mixpanelTrack' with proper event name and parameters (paymentCount ${paymentCount} firstTimeOpening ${firstTimeOpening} isCancelled ${isCancelled} containsF24 ${containsF24} openingSource ${openingSource} userType ${userType})`, () => {
+                  const spiedOnMockedMixpanelTrack = jest
+                    .spyOn(MIXPANEL, "mixpanelTrack")
+                    .mockImplementation();
 
-                    trackPNUxSuccess(
-                      paymentCount,
-                      firstTimeOpening,
-                      isCancelled,
-                      containsF24,
-                      openingSource,
-                      userType
-                    );
+                  trackPNUxSuccess(
+                    paymentCount,
+                    firstTimeOpening,
+                    isCancelled,
+                    containsF24,
+                    openingSource,
+                    userType
+                  );
 
-                    expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(
-                      1
-                    );
-                    expect(
-                      spiedOnMockedMixpanelTrack.mock.calls[0].length
-                    ).toBe(2);
-                    expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
-                      "PN_UX_SUCCESS"
-                    );
-                    expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual(
-                      {
-                        event_category: "UX",
-                        event_type: "screen_view",
-                        contains_payment: paymentCount > 0 ? "yes" : "no",
-                        first_time_opening:
-                          firstTimeOpening === true
-                            ? "yes"
-                            : firstTimeOpening === false
-                            ? "no"
-                            : "not_set",
-                        notification_status: isCancelled
-                          ? "cancelled"
-                          : "active",
-                        contains_multipayment: paymentCount > 1 ? "yes" : "no",
-                        count_payment: paymentCount,
-                        contains_f24: containsF24,
-                        opening_source: openingSource,
-                        send_user: userType
-                      }
-                    );
+                  expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+                  expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(
+                    2
+                  );
+                  expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+                    "PN_UX_SUCCESS"
+                  );
+                  expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+                    event_category: "UX",
+                    event_type: "screen_view",
+                    contains_payment: paymentCount > 0 ? "yes" : "no",
+                    first_time_opening:
+                      firstTimeOpening === true
+                        ? "yes"
+                        : firstTimeOpening === false
+                        ? "no"
+                        : "not_set",
+                    notification_status: isCancelled ? "cancelled" : "active",
+                    contains_multipayment: paymentCount > 1 ? "yes" : "no",
+                    count_payment: paymentCount,
+                    contains_f24: containsF24,
+                    opening_source: openingSource,
+                    send_user: userType
                   });
-                }
-              )
+                });
+              })
             )
           )
         )
@@ -94,8 +102,8 @@ describe("index", () => {
   describe("trackPNNotificationLoadSuccess", () => {
     [false, true].forEach(hasAttachments =>
       [undefined, "CANCELLED"].forEach(status =>
-        (["aar", "message", "not_set"] as const).forEach(openingSource =>
-          (["recipient", "mandatory", "not_set"] as const).forEach(userType =>
+        sendOpeningSources.forEach(openingSource =>
+          sendUserTypes.forEach(userType =>
             it(`should call 'mixpanelTrack' with proper event name and properties (hasAttachments ${hasAttachments} status ${status} openingSource ${openingSource} userType ${userType})`, () => {
               const spiedOnMockedMixpanelTrack = jest
                 .spyOn(MIXPANEL, "mixpanelTrack")
@@ -129,8 +137,8 @@ describe("index", () => {
   });
 
   describe("trackPNPaymentStatus", () => {
-    (["aar", "message", "not_set"] as const).forEach(source => {
-      (["recipient", "mandatory", "not_set"] as const).forEach(userType => {
+    sendOpeningSources.forEach(source => {
+      sendUserTypes.forEach(userType => {
         it(`should call 'mixpanelTrack' with proper event name and parameters (source ${source} userType ${userType})`, () => {
           const spiedOnMockedMixpanelTrack = jest
             .spyOn(MIXPANEL, "mixpanelTrack")
@@ -165,6 +173,35 @@ describe("index", () => {
             count_inprogress: paymentStatistics.ongoingCount,
             opening_source: source,
             send_user: userType
+          });
+        });
+      });
+    });
+  });
+
+  describe("trackPNAttachmentOpening", () => {
+    sendOpeningSources.forEach(source => {
+      sendUserTypes.forEach(userType => {
+        [undefined, "F24"].forEach(category => {
+          it(`should call 'mixpanelTrack' with proper event name and parameters (source ${source} userType ${userType} category ${category})`, () => {
+            const spiedOnMockedMixpanelTrack = jest
+              .spyOn(MIXPANEL, "mixpanelTrack")
+              .mockImplementation();
+
+            trackPNAttachmentOpening(source, userType, category);
+
+            expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+            expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+            expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+              "PN_ATTACHMENT_OPENING"
+            );
+            expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+              event_category: "UX",
+              event_type: "action",
+              category,
+              opening_source: source,
+              send_user: userType
+            });
           });
         });
       });

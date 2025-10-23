@@ -24,6 +24,10 @@ import {
   maxVisiblePaymentCount,
   shouldUseBottomSheetForPayments
 } from "../utils";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../pushNotifications/analytics";
 import { BannerAttachments } from "./BannerAttachments";
 import { F24Section } from "./F24Section";
 import { MessageBottomMenu } from "./MessageBottomMenu";
@@ -38,7 +42,8 @@ export type MessageDetailsProps = {
   messageId: string;
   serviceId: ServiceId;
   payments?: ReadonlyArray<NotificationPaymentInfo>;
-  isAARMessage?: boolean;
+  isAARMessage: boolean;
+  isDelegate: boolean;
 };
 
 export const MessageDetails = ({
@@ -46,7 +51,8 @@ export const MessageDetails = ({
   messageId,
   payments,
   serviceId,
-  isAARMessage = false
+  isAARMessage,
+  isDelegate
 }: MessageDetailsProps) => {
   const presentPaymentsBottomSheetRef = useRef<() => void>(undefined);
   const partitionedAttachments = pipe(
@@ -69,6 +75,8 @@ export const MessageDetails = ({
     : undefined;
 
   const maybeMessageDate = isAARMessage ? undefined : message.created_at;
+  const sendOpeningSource: SendOpeningSource = isAARMessage ? "aar" : "message";
+  const sendUserType: SendUserType = isDelegate ? "mandatory" : "recipient";
   return (
     <>
       <ScrollView
@@ -113,8 +121,9 @@ export const MessageDetails = ({
             banner={<BannerAttachments />}
             disabled={message.isCancelled}
             messageId={messageId}
-            isPN
             serviceId={serviceId}
+            sendOpeningSource={sendOpeningSource}
+            sendUserType={sendUserType}
           />
           <VSpacer size={16} />
           <MessagePayments
@@ -131,6 +140,8 @@ export const MessageDetails = ({
             messageId={messageId}
             isCancelled={message.isCancelled}
             serviceId={serviceId}
+            sendOpeningSource={sendOpeningSource}
+            sendUserType={sendUserType}
           />
           <VSpacer size={16} />
         </ContentWrapper>

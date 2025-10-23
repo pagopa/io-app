@@ -7,17 +7,25 @@ import { trackPNShowF24 } from "../analytics";
 import { useIODispatch } from "../../../store/hooks";
 import { cancelPreviousAttachmentDownload } from "../../messages/store/actions";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../pushNotifications/analytics";
 
-type F24ListBottomSheetLinkProps = {
+export type F24ListBottomSheetLinkProps = {
   f24List: ReadonlyArray<ThirdPartyAttachment>;
   messageId: string;
   serviceId: ServiceId;
+  sendOpeningSource: SendOpeningSource;
+  sendUserType: SendUserType;
 };
 
 export const F24ListBottomSheetLink = ({
   f24List,
   messageId,
-  serviceId
+  serviceId,
+  sendOpeningSource,
+  sendUserType
 }: F24ListBottomSheetLinkProps) => {
   // The empty footer is needed in order for the internal scroll view to properly compute
   // its bottom space when the bottom sheet opens filling the entire view. Without it, the
@@ -30,7 +38,8 @@ export const F24ListBottomSheetLink = ({
           <MessageDetailsAttachmentItem
             attachment={f24Attachment}
             bottomSpacer={index + 1 < f24List.length}
-            isPN
+            sendOpeningSource={sendOpeningSource}
+            sendUserType={sendUserType}
             key={`MessageF24_${index}`}
             messageId={messageId}
             onPreNavigate={() => {

@@ -100,10 +100,15 @@ export const MessageDetailsScreen = () => {
   // Be aware that when this screen displays an AAR message, messageId and IUN have
   // the same value. When displaying SEND's notifications via IO Messages, messageId
   // and IUN have differente values
-  const { messageId, serviceId, firstTimeOpening, isAarMessage } = route.params;
+  const {
+    messageId,
+    serviceId,
+    firstTimeOpening,
+    isAarMessage = false
+  } = route.params;
   const aarBottomSheetRef = useRef<() => void>(undefined);
 
-  useCorrectHeader(!!isAarMessage, aarBottomSheetRef);
+  useCorrectHeader(isAarMessage, aarBottomSheetRef);
 
   const androidBackButtonCallback = useCallback(() => {
     if (isAarMessage) {
@@ -226,6 +231,7 @@ export const MessageDetailsScreen = () => {
         serviceId={serviceId}
         payments={payments}
         isAARMessage={isAarMessage}
+        isDelegate={isAARDelegate}
       />
       {isAarMessage && (
         <SendAARMessageDetailBottomSheetComponent

@@ -5,18 +5,26 @@ import { thirdPartyMessageAttachments } from "../../messages/store/reducers/thir
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 import { MessageDetailsAttachmentItem } from "../../messages/components/MessageDetail/MessageDetailsAttachmentItem";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../pushNotifications/analytics";
 import { F24ListBottomSheetLink } from "./F24ListBottomSheetLink";
 
-type F24SectionProps = {
+export type F24SectionProps = {
   isCancelled?: boolean;
   messageId: string;
   serviceId: ServiceId;
+  sendOpeningSource: SendOpeningSource;
+  sendUserType: SendUserType;
 };
 
 export const F24Section = ({
   isCancelled = false,
   messageId,
-  serviceId
+  serviceId,
+  sendOpeningSource,
+  sendUserType
 }: F24SectionProps) => {
   const attachments = useIOSelector(state =>
     thirdPartyMessageAttachments(state, messageId)
@@ -42,7 +50,8 @@ export const F24Section = ({
           attachment={f24s[0]}
           messageId={messageId}
           serviceId={serviceId}
-          isPN
+          sendOpeningSource={sendOpeningSource}
+          sendUserType={sendUserType}
         />
       )}
       {f24Count > 1 && (
@@ -50,6 +59,8 @@ export const F24Section = ({
           f24List={f24s}
           messageId={messageId}
           serviceId={serviceId}
+          sendOpeningSource={sendOpeningSource}
+          sendUserType={sendUserType}
         />
       )}
       <VSpacer size={16} />
