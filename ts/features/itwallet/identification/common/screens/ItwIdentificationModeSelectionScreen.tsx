@@ -7,7 +7,7 @@ import {
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
-import { Alert, View } from "react-native";
+import { View } from "react-native";
 import CiePin from "../../../../../../img/features/itWallet/identification/cie_pin.svg";
 import SpidLogo from "../../../../../../img/features/itWallet/identification/spid_logo.svg";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
@@ -33,6 +33,7 @@ import {
   selectIsLoading
 } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 
 export type ItwIdentificationNavigationParams = {
   eidReissuing?: boolean;
@@ -159,14 +160,7 @@ export const ItwIdentificationModeSelectionScreen = (
     [disabledIdentificationMethods]
   );
 
-  if (isLoading) {
-    return (
-      <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
-    );
-  }
-
   const onConfirmPress = () => {
-    navigation.popToTop();
     navigation.reset({
       index: 1,
       routes: [
@@ -181,6 +175,27 @@ export const ItwIdentificationModeSelectionScreen = (
     });
   };
 
+  const dismissalDialog = useItwDismissalDialog({
+    customLabels: {
+      title: I18n.t(
+        "features.itWallet.identification.mode.l2.reissuing.alert.title"
+      ),
+      confirmLabel: I18n.t(
+        "features.itWallet.identification.mode.l2.reissuing.alert.confirm"
+      ),
+      cancelLabel: I18n.t(
+        "features.itWallet.identification.mode.l2.reissuing.alert.cancel"
+      )
+    },
+    handleDismiss: onConfirmPress
+  });
+
+  if (isLoading) {
+    return (
+      <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
+    );
+  }
+
   return (
     <IOScrollViewWithLargeHeader
       title={{
@@ -191,29 +206,7 @@ export const ItwIdentificationModeSelectionScreen = (
       headerActionsProp={{ showHelp: true }}
       {...(eidReissuing
         ? {
-            goBack: () =>
-              Alert.alert(
-                I18n.t(
-                  "features.itWallet.identification.mode.l2.reissuing.alert.title"
-                ),
-                "",
-                [
-                  {
-                    text: I18n.t(
-                      "features.itWallet.identification.mode.l2.reissuing.alert.confirm"
-                    ),
-                    style: "destructive",
-                    onPress: onConfirmPress
-                  },
-                  {
-                    text: I18n.t(
-                      "features.itWallet.identification.mode.l2.reissuing.alert.cancel"
-                    ),
-                    style: "cancel"
-                  }
-                ],
-                { cancelable: false }
-              )
+            goBack: dismissalDialog.show
           }
         : {})}
     >
