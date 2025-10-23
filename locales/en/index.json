@@ -4928,9 +4928,6 @@
           },
           "expiring": {
             "content": "Mancano {{days}} giorni alla scadenza del documento."
-          },
-          "verificationExpiring": {
-            "content": "Verifica la versione digitale del tuo documento entro il {{date}}."
           }
         },
         "bottomSheets": {
