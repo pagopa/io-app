@@ -503,7 +503,7 @@ describe("getAttachmentMetadata", () => {
           isTest: useUATEnvironment
         });
       });
-      it(`should throw FAST_LOGIN_EXPIRED on 401 response (mandateId: ${mandateIdVariant} isUAT: ${useUATEnvironment})`, () => {
+      it(`should throw FAST_LOGIN_EXPIRED and call trackSendAARFailure with 'Fast login expiration' on 401 response (mandateId: ${mandateIdVariant} isUAT: ${useUATEnvironment})`, () => {
         const response = E.right({
           status: 401,
           value: {
@@ -536,7 +536,12 @@ describe("getAttachmentMetadata", () => {
               mockedGetNotificationAttachment,
               downloadRequestAction
             )
-            .next(response);
+            .next(response)
+            .call(
+              analytics.trackSendAARFailure,
+              "Download Attachment",
+              "Fast login expired"
+            );
         } catch (e: unknown) {
           expectionThrown = true;
           expect(e).toEqual(new Error("FAST_LOGIN_EXPIRED"));
