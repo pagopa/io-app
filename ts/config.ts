@@ -106,6 +106,10 @@ export const cieLoginFlowWithDevServerEnabled =
 // Native Login Feature Flag
 export const nativeLoginEnabled = Config.NATIVE_LOGIN_ENABLED === "YES";
 
+// Favourite Services Feature Flag
+export const isFavouriteServicesEnabled =
+  Config.FAVOURITE_SERVICES_ENABLED === "YES";
+
 // #region Help Center URLs
 
 /**
