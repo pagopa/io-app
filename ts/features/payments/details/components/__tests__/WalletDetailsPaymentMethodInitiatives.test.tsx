@@ -74,7 +74,7 @@ describe("WalletDetailsPaymentMethodInitiatives", () => {
     );
 
     const initiativeLink = component.getByText(
-      I18n.t("idpay.wallet.preview.showAll")
+      I18n.t("idpay.wallet.card.showAll")
     );
     fireEvent.press(initiativeLink);
     expect(mockNavigate).toHaveBeenCalled();
