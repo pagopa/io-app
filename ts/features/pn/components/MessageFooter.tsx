@@ -14,15 +14,13 @@ import { trackPNPaymentStart, trackPNShowAllPayments } from "../analytics";
 import { initializeAndNavigateToWalletForPayment } from "../../messages/utils";
 import { paymentsButtonStateSelector } from "../store/reducers/payments";
 import { shouldUseBottomSheetForPayments } from "../utils";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
 
-type MessageFooterProps = {
+export type MessageFooterProps = {
   messageId: string;
   payments: ReadonlyArray<NotificationPaymentInfo> | undefined;
   maxVisiblePaymentCount: number;
   isCancelled: boolean;
   presentPaymentsBottomSheetRef: MutableRefObject<(() => void) | undefined>;
-  serviceId: ServiceId;
   onMeasure: (measurements: FooterActionsMeasurements) => void;
 };
 

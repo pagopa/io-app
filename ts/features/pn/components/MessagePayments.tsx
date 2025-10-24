@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   }
 });
 
-type MessagePaymentsProps = {
+export type MessagePaymentsProps = {
   messageId: string;
   isCancelled: boolean;
   payments: ReadonlyArray<NotificationPaymentInfo> | undefined;
