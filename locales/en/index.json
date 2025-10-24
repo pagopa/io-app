@@ -4090,6 +4090,7 @@
             "secondaryAction": "Non attivare SEND su IO"
           },
           "toast": "Hai attivato SEND su IO",
+          "rateLimitToast": "Non riusciamo ad attivare il servizio SEND, riprova più tardi",
           "activationErrorMessage": "Non riusciamo ad attivare il servizio SEND"
         }
       }
@@ -4922,9 +4923,6 @@
           },
           "expiring": {
             "content": "Mancano {{days}} giorni alla scadenza del documento."
-          },
-          "verificationExpiring": {
-            "content": "Verifica la versione digitale del tuo documento entro il {{date}}."
           }
         },
         "bottomSheets": {
@@ -5427,13 +5425,6 @@
         "action": "Ricarica l'app IO",
         "failure": "Nessuna connessione. Collegati a internet e riprova."
       },
-      "upgrade": {
-        "banner": {
-          "title": "IT-Wallet per i tuoi documenti",
-          "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**. Garantito dallo Stato, accessibile solo a te.",
-          "action": "Ottieni IT-Wallet"
-        }
-      },
       "playgrounds": {
         "environment": {
           "toggle": {
@@ -5662,6 +5653,10 @@
           }
         },
         "initiativeDetailsScreen": {
+          "error": {
+            "title": "The initiative details are currently unavailable",
+            "subtitle": "We’re already working to fix the issue.\nPlease try again later."
+          },
           "notConfigured": {
             "header": "Configura l'iniziativa!",
             "footer": "Aggiungi almeno un metodo per iniziare ad utilizzare {{initiative}}."
@@ -5754,7 +5749,7 @@
           "title": "Regole dell'iniziativa",
           "button": "Ok, ho capito"
         },
-        "spentUntilNow": "Speso finora",
+        "spentUntilNow": "Speso",
         "summary": "Riepilogo",
         "status": "Stato iniziativa",
         "voucherStatus": "Stato del bonus",
@@ -5789,7 +5784,7 @@
           "details": {
             "alerts": {
               "AUTHORIZED": "Questa transazione è in corso, ovvero è stata autorizzata ma non è ancora stata confermata dall’esercente.",
-              "CANCELLED": "Questa transazione è stata annullata dall’esercente, abbiamo riaccreditato l’importo sul portafoglio dell’iniziativa."
+              "CANCELLED": "Questa transazione è stata annullata dall’esercente."
             },
             "labels": {
               "business": "Esercente",
@@ -5923,7 +5918,7 @@
       },
       "headerTitle": "Verifica dei requisiti",
       "beforeContinue": {
-        "text": "By clicking Continue, you declare that you have read, understood, and accepted the [Privacy Policy]({{privacyUrl}}) and the [Terms and Conditions]({{tosUrl}}) of use.",
+        "text": "By clicking Continue, you declare that you have read, understood, and accepted the [Privacy Policy]({{privacyUrl}}) and the [Terms and Conditions of use]({{tosUrl}}).",
         "requestBonus": "Request bonus"
       },
       "navigation": {
@@ -5987,13 +5982,17 @@
       "enableNotification": {
         "title": "Don't risk losing the outcome of your request",
         "subtitle": "Activate push notifications to know immediately when you receive a new message in the app.",
-        "action": "Activate notifications",
-        "deny": "Not now",
+        "action": "Activate push notifications",
+        "deny": "Don't activate",
         "success": "You activated Push notifications",
         "advice": "Consigliato"
       },
       "failToRetry": {
         "contentTitle": "Stiamo per collegarti.\n Attendi qualche secondo..."
+      },
+      "disabledScreen": {
+        "title": "You are about to access the initiative",
+        "subtitle": "This may take several minutes. Do not close the app: once everything is ready, you will be able to request your bonus."
       },
       "preferences": {
         "enableEmailBanner": {
@@ -6006,7 +6005,8 @@
       "loading": {
         "subtitle": "Attendi qualche secondo",
         "title": "Stiamo elaborando la tua richiesta"
-      }
+      },
+      "initiativeImageAltText": "Initiative image"
     },
     "configuration": {
       "failureStates": {

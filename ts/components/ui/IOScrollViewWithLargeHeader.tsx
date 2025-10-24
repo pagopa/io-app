@@ -7,7 +7,8 @@ import {
   H2,
   HeaderSecondLevel,
   useIOTheme,
-  VSpacer
+  VSpacer,
+  VStack
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import { ComponentProps, forwardRef, ReactNode, useState } from "react";
@@ -121,20 +122,22 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
         topElement={topElement}
       >
         <ContentWrapper onLayout={getTitleHeight}>
-          {title.section && (
-            <BodySmall weight="Semibold" color={theme["textBody-tertiary"]}>
-              {title.section}
-            </BodySmall>
-          )}
-          <H2
-            color={theme["textHeading-default"]}
-            testID={title?.testID}
-            ref={ref}
-            accessibilityLabel={title.accessibilityLabel ?? title.label}
-            accessibilityRole="header"
-          >
-            {title.label}
-          </H2>
+          <VStack space={8}>
+            {title.section && (
+              <BodySmall weight="Semibold" color={theme["textBody-tertiary"]}>
+                {title.section}
+              </BodySmall>
+            )}
+            <H2
+              color={theme["textHeading-default"]}
+              testID={title?.testID}
+              ref={ref}
+              accessibilityLabel={title.accessibilityLabel ?? title.label}
+              accessibilityRole="header"
+            >
+              {title.label}
+            </H2>
+          </VStack>
         </ContentWrapper>
 
         {description && (

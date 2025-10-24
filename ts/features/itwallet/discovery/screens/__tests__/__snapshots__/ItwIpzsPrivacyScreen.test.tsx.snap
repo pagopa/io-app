@@ -599,7 +599,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                   fraudulentWebsiteWarningEnabled={true}
                                   hasOnFileDownload={false}
                                   hasOnOpenWindowEvent={false}
-                                  injectedJavaScript="const meta = document.createElement('meta');meta.setAttribute('content', 'width=device-width, initial-scale=0.99, maximum-scale=0.99, user-scalable=0');meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta);;function sendHeight() {const height = document.body.scrollHeight;window.ReactNativeWebView.postMessage(height);}window.addEventListener("load", sendHeight);window.addEventListener("resize", sendHeight);setTimeout(sendHeight, 300); // fallback;true;"
+                                  injectedJavaScript="const meta = document.createElement('meta');meta.setAttribute('content', 'width=device-width, initial-scale=0.99, maximum-scale=0.99, user-scalable=0');meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta);;function sendHeight() {var html = document.documentElement;window.ReactNativeWebView.postMessage(html.offsetHeight);}window.addEventListener("load", sendHeight);window.addEventListener("resize", sendHeight);sendHeight();true;"
                                   injectedJavaScriptBeforeContentLoadedForMainFrameOnly={true}
                                   injectedJavaScriptForMainFrameOnly={true}
                                   javaScriptEnabled={true}
@@ -1868,7 +1868,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                   fraudulentWebsiteWarningEnabled={true}
                                   hasOnFileDownload={false}
                                   hasOnOpenWindowEvent={false}
-                                  injectedJavaScript="const meta = document.createElement('meta');meta.setAttribute('content', 'width=device-width, initial-scale=0.99, maximum-scale=0.99, user-scalable=0');meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta);;function sendHeight() {const height = document.body.scrollHeight;window.ReactNativeWebView.postMessage(height);}window.addEventListener("load", sendHeight);window.addEventListener("resize", sendHeight);setTimeout(sendHeight, 300); // fallback;true;"
+                                  injectedJavaScript="const meta = document.createElement('meta');meta.setAttribute('content', 'width=device-width, initial-scale=0.99, maximum-scale=0.99, user-scalable=0');meta.setAttribute('name', 'viewport'); document.getElementsByTagName('head')[0].appendChild(meta);;function sendHeight() {var html = document.documentElement;window.ReactNativeWebView.postMessage(html.offsetHeight);}window.addEventListener("load", sendHeight);window.addEventListener("resize", sendHeight);sendHeight();true;"
                                   injectedJavaScriptBeforeContentLoadedForMainFrameOnly={true}
                                   injectedJavaScriptForMainFrameOnly={true}
                                   javaScriptEnabled={true}
