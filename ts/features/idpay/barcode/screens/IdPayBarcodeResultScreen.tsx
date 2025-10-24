@@ -1,7 +1,10 @@
 import {
   Body,
   H3,
+  h3FontSize,
+  h3LineHeight,
   IOColors,
+  IOText,
   IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -202,7 +205,16 @@ const SuccessContent = ({
       <View style={styles.barcodeContainer}>
         <VSpacer size={4} />
         <Barcode format="CODE128" value={trx} />
-        <H3 style={{ alignSelf: "center" }}>{trx}</H3>
+        <View style={{ alignItems: "center" }}>
+          <IOText
+            font="FiraCode"
+            size={h3FontSize}
+            lineHeight={h3LineHeight}
+            weight="Medium"
+          >
+            {trx}
+          </IOText>
+        </View>
         <VSpacer size={32} />
         <IdPayBarcodeExpireProgressBar
           barcode={barcode}
