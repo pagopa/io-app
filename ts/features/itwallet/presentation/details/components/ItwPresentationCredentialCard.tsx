@@ -4,7 +4,7 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 
-import { PropsWithChildren, useCallback, useMemo, useState } from "react";
+import { PropsWithChildren, useCallback, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
