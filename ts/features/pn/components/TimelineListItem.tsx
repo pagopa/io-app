@@ -17,6 +17,10 @@ import { trackPNShowTimeline, trackPNTimelineExternal } from "../analytics";
 import { handleItemOnPress } from "../../../utils/url";
 import { useIOSelector } from "../../../store/hooks";
 import { pnFrontendUrlSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../pushNotifications/analytics";
 import { Timeline, TimelineItemProps } from "./Timeline";
 
 const topBottomSheetMargin = 122;
@@ -25,6 +29,8 @@ const timelineItemHeight = 70;
 
 export type TimelineListItemProps = {
   history: NotificationStatusHistory;
+  sendOpeningSource: SendOpeningSource;
+  sendUserType: SendUserType;
 };
 
 const generateTimelineData = (
@@ -41,7 +47,11 @@ const generateTimelineData = (
     status: notificationStatusToTimelineStatus(historyItem.status)
   }));
 
-export const TimelineListItem = ({ history }: TimelineListItemProps) => {
+export const TimelineListItem = ({
+  history,
+  sendOpeningSource,
+  sendUserType
+}: TimelineListItemProps) => {
   const [footerHeight, setFooterHeight] = useState<number>(181);
   const windowHeight = Dimensions.get("window").height;
   const snapPoint = Math.min(
@@ -87,10 +97,11 @@ export const TimelineListItem = ({ history }: TimelineListItemProps) => {
         icon="history"
         label={I18n.t("features.pn.details.timeline.menuTitle")}
         onPress={() => {
-          trackPNShowTimeline();
+          trackPNShowTimeline(sendOpeningSource, sendUserType);
           present();
         }}
         variant="primary"
+        testID="timeline_listitem_bottom_menu"
       />
       {bottomSheet}
     </>

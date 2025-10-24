@@ -154,6 +154,8 @@ export const MessageDetails = ({
           messageId={messageId}
           paidNoticeCodes={completedPaymentNoticeCodes}
           payments={payments}
+          sendOpeningSource={sendOpeningSource}
+          sendUserType={sendUserType}
         />
       </ScrollView>
       <MessageFooter

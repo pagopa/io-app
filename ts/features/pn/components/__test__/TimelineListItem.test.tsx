@@ -1,5 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { createStore } from "redux";
+import { fireEvent } from "@testing-library/react-native";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
@@ -8,26 +9,94 @@ import PN_ROUTES from "../../navigation/routes";
 import { NotificationStatusHistory } from "../../../../../definitions/pn/NotificationStatusHistory";
 import { GlobalState } from "../../../../store/reducers/types";
 import { BackendStatus } from "../../../../../definitions/content/BackendStatus";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../../pushNotifications/analytics";
+import * as ANALYTICS from "../../analytics";
+import * as BOTTOM_SHEET from "../../../../utils/hooks/bottomSheet";
 
 jest.mock("../Timeline");
 
+const sendOpeningSources: ReadonlyArray<SendOpeningSource> = [
+  "aar",
+  "message",
+  "not_set"
+];
+const sendUserTypes: ReadonlyArray<SendUserType> = [
+  "mandatory",
+  "not_set",
+  "recipient"
+];
+
 describe("TimelineListItem", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
   it("Should match snapshot, no history, no link", () => {
-    const component = renderComponent([], false);
+    const component = renderComponent([], false, "not_set", "not_set");
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("Should match snapshot, no history, with link", () => {
-    const component = renderComponent([]);
+    const component = renderComponent([], true, "not_set", "not_set");
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("Should match snapshot, all handled-status items history, no link", () => {
-    const component = renderComponent(fullHistory(), false);
+    const component = renderComponent(
+      fullHistory(),
+      false,
+      "not_set",
+      "not_set"
+    );
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("Should match snapshot, all handled-status items history, with link", () => {
-    const component = renderComponent(fullHistory(), true);
+    const component = renderComponent(
+      fullHistory(),
+      true,
+      "not_set",
+      "not_set"
+    );
     expect(component.toJSON()).toMatchSnapshot();
   });
+  sendOpeningSources.forEach(openingSource =>
+    sendUserTypes.forEach(userType => {
+      it(`Should call 'trackPNShowTimeline' upong press (source ${openingSource} user ${userType})`, () => {
+        const refUseIOBottomSheetModal = BOTTOM_SHEET.useIOBottomSheetModal;
+        jest
+          .spyOn(BOTTOM_SHEET, "useIOBottomSheetModal")
+          .mockImplementation(props => {
+            const { bottomSheet } = refUseIOBottomSheetModal(props);
+            return { present: jest.fn(), bottomSheet, dismiss: jest.fn() };
+          });
+
+        const spiedOnMockedTrackPNShowTimeline = jest
+          .spyOn(ANALYTICS, "trackPNShowTimeline")
+          .mockImplementation();
+
+        const component = renderComponent(
+          fullHistory(),
+          true,
+          openingSource,
+          userType
+        );
+        const pressable = component.getByTestId(
+          "timeline_listitem_bottom_menu"
+        );
+        fireEvent.press(pressable);
+
+        expect(spiedOnMockedTrackPNShowTimeline.mock.calls.length).toBe(1);
+        expect(spiedOnMockedTrackPNShowTimeline.mock.calls[0].length).toBe(2);
+        expect(spiedOnMockedTrackPNShowTimeline.mock.calls[0][0]).toBe(
+          openingSource
+        );
+        expect(spiedOnMockedTrackPNShowTimeline.mock.calls[0][1]).toBe(
+          userType
+        );
+      });
+    })
+  );
 });
 
 const fullHistory = (): NotificationStatusHistory => [
@@ -85,7 +154,9 @@ const fullHistory = (): NotificationStatusHistory => [
 
 const renderComponent = (
   history: NotificationStatusHistory,
-  frontendUrlDefined: boolean = true
+  frontendUrlDefined: boolean,
+  sendOpeningSource: SendOpeningSource,
+  sendUserType: SendUserType
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const finalState: GlobalState = {
@@ -120,7 +191,13 @@ const renderComponent = (
   };
   const store = createStore(appReducer, finalState as any);
   return renderScreenWithNavigationStoreContext(
-    () => <TimelineListItem history={history} />,
+    () => (
+      <TimelineListItem
+        history={history}
+        sendOpeningSource={sendOpeningSource}
+        sendUserType={sendUserType}
+      />
+    ),
     PN_ROUTES.MESSAGE_DETAILS,
     {},
     store

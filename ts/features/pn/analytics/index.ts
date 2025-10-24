@@ -179,8 +179,16 @@ export function trackPNTimelineExternal() {
   );
 }
 
-export function trackPNShowTimeline() {
-  void mixpanelTrack("PN_SHOW_TIMELINE", buildEventProperties("UX", "action"));
+export function trackPNShowTimeline(
+  openingSource: SendOpeningSource,
+  userType: SendUserType
+) {
+  const eventName = "PN_SHOW_TIMELINE";
+  const eventProps = buildEventProperties("UX", "action", {
+    opening_source: openingSource,
+    send_user: userType
+  });
+  void mixpanelTrack(eventName, eventProps);
 }
 
 export function trackPNUxSuccess(
