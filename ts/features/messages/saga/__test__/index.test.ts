@@ -39,7 +39,6 @@ import { handlePaymentUpdateRequests } from "../handlePaymentUpdateRequests";
 import { watchMessagesSaga } from "..";
 
 describe("watchMessagesSaga", () => {
-
   it("should setup watchers and not retry if no retry data is present", () => {
     testSaga(watchMessagesSaga)
       .next()
