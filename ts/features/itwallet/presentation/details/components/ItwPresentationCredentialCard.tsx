@@ -12,12 +12,8 @@ import { getMixPanelCredential, trackWalletShowBack } from "../../../analytics";
 import { ItwSkeumorphicCard } from "../../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../../common/components/ItwSkeumorphicCard/FlipGestureDetector.tsx";
 import { getThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
-import {
-  StoredCredential
-} from "../../../common/utils/itwTypesUtils.ts";
-import {
-  itwCredentialStatusSelector,
-} from "../../../credentials/store/selectors";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
@@ -40,8 +36,8 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const { status: credentialStatus = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
-  ); 
-   const status = useItwEffectiveCredentialStatus(credentialStatus);
+  );
+  const status = useItwEffectiveCredentialStatus(credentialStatus);
 
   const handleFlipButtonPress = useCallback(() => {
     trackWalletShowBack(
