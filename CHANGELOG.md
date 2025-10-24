@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.17.0-canary.7666](https://github.com/pagopa/io-app/compare/3.17.0-rc.8...3.17.0-canary.7666) (2025-10-24)
+
+
+### Features
+
+* custom navigation Android bar color ([2814498](https://github.com/pagopa/io-app/commit/28144980a91b0f95fd487fddf1870d6f5027175c))
+
 ## [3.17.0-rc.8](https://github.com/pagopa/io-app/compare/3.17.0-rc.7...3.17.0-rc.8) (2025-10-24)
 
 
