@@ -13,12 +13,11 @@ import {
 } from "../../utils/itwCredentialUtils";
 import { getThemeColorByCredentialType } from "../../utils/itwStyleUtils";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
-import { itwCredentialsEidStatusSelector } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
-import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import { CardBackground } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
 import { CardColorScheme } from "./types";
+import { useItwEffectiveCredentialStatus } from "../../../presentation/details/hooks/useItwEffectiveCredentialStatus";
 
 export type ItwCredentialCard = {
   /**
@@ -60,40 +59,7 @@ export const ItwCredentialCard = ({
   const typefacePreference = useIOSelector(fontPreferenceSelector);
   const isItwPid = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const needsItwUpgrade = isItwPid && !isItwCredential;
-  const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);
-  const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
-
-  /**
-   * The credential's expire UI should be displayed only when:
-   * - the eID status is "valid"
-   * - the eID status is not "valid" and the document associated to the
-   *   credential is "expiring", "expired", "invalid" or "unknown"
-   */
-  const status = useMemo<ItwCredentialStatus>(() => {
-    const excludedCredentialStatuses: ReadonlyArray<ItwCredentialStatus> = [
-      "expired",
-      "expiring",
-      "invalid",
-      "unknown"
-    ];
-
-    // In offline mode show digital credential nearing expiration and expired as valid
-    if (
-      offlineAccessReason !== undefined &&
-      !excludedCredentialStatuses.includes(credentialStatus)
-    ) {
-      return "valid";
-    }
-
-    if (
-      maybeEidStatus === "valid" ||
-      excludedCredentialStatuses.includes(credentialStatus)
-    ) {
-      return credentialStatus;
-    }
-
-    return "valid";
-  }, [credentialStatus, maybeEidStatus, offlineAccessReason]);
+  const status = useItwEffectiveCredentialStatus(credentialStatus);
 
   const borderColorMap = useBorderColorByStatus();
 

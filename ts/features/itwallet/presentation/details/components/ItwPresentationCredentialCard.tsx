@@ -13,20 +13,18 @@ import { ItwSkeumorphicCard } from "../../../common/components/ItwSkeumorphicCar
 import { FlipGestureDetector } from "../../../common/components/ItwSkeumorphicCard/FlipGestureDetector.tsx";
 import { getThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import {
-  ItwCredentialStatus,
   StoredCredential
 } from "../../../common/utils/itwTypesUtils.ts";
 import {
   itwCredentialStatusSelector,
-  itwCredentialsEidStatusSelector
 } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
-import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
 import { ItwBadge } from "../../../common/components/ItwBadge.tsx";
 import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
 import { ItwPresentationCredentialCardFlipButton } from "./ItwPresentationCredentialCardFlipButton.tsx";
+import { useItwEffectiveCredentialStatus } from "../hooks/useItwEffectiveCredentialStatus";
 
 type Props = {
   credential: StoredCredential;
@@ -40,42 +38,10 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const navigation = useIONavigation();
   const [isFlipped, setIsFlipped] = useState(false);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);
   const { status: credentialStatus = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
-  );
-  const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
-
-  /**
-   * The credential's expire UI should be displayed only when:
-   * - the eID status is "valid"
-   * - the eID status is not "valid" and the document associated to the
-   *   credential is "expiring", "expired" or "invalid"
-   */
-  const status = useMemo<ItwCredentialStatus>(() => {
-    const excludedCredentialStatuses: ReadonlyArray<ItwCredentialStatus> = [
-      "expired",
-      "expiring",
-      "invalid"
-    ];
-
-    // In offline mode show digital credential nearing expiration and expired as valid
-    if (
-      offlineAccessReason !== undefined &&
-      !excludedCredentialStatuses.includes(credentialStatus)
-    ) {
-      return "valid";
-    }
-
-    if (
-      maybeEidStatus === "valid" ||
-      excludedCredentialStatuses.includes(credentialStatus)
-    ) {
-      return credentialStatus;
-    }
-
-    return "valid";
-  }, [credentialStatus, maybeEidStatus, offlineAccessReason]);
+  ); 
+   const status = useItwEffectiveCredentialStatus(credentialStatus);
 
   const handleFlipButtonPress = useCallback(() => {
     trackWalletShowBack(
