@@ -16,6 +16,8 @@ import {
 } from "../analytics";
 import { NOTIFICATIONS_ROUTES } from "../navigation/routes";
 import { usePushNotificationEngagement } from "../hooks/usePushNotificationEngagement";
+import { useIODispatch } from "../../../store/hooks";
+import { setSecurityAdviceReadyToShow } from "../../authentication/fastLogin/store/actions/securityAdviceActions";
 
 export type PushNotificationEngagementScreenNavigationParams = {
   flow: NotificationModalFlow;
@@ -31,8 +33,14 @@ export const PushNotificationEngagementScreen = ({
   route
 }: PushNotificationEngagementScreenProps) => {
   const { flow, sendOpeningSource, sendUserType } = route.params;
+  const isAccess = flow === "access";
   const { shouldRenderBlankPage, onButtonPress } =
-    usePushNotificationEngagement(flow, sendOpeningSource, sendUserType);
+    usePushNotificationEngagement(
+      flow,
+      sendOpeningSource,
+      sendUserType,
+      isAccess
+    );
 
   useEffect(() => {
     trackSystemNotificationPermissionScreenShown(
@@ -52,23 +60,30 @@ export const PushNotificationEngagementScreen = ({
       sendOpeningSource={sendOpeningSource}
       sendUserType={sendUserType}
       onPressActivate={onButtonPress}
+      isAccess={isAccess}
     />
   );
 };
 
 type Props = {
   onPressActivate: () => void;
+  isAccess: boolean;
 } & PushNotificationEngagementScreenNavigationParams;
 
 const PushNotificationEngagementScreenContent = ({
   flow,
   sendOpeningSource,
   sendUserType,
+  isAccess,
   onPressActivate
 }: Props) => {
+  const dispatch = useIODispatch();
   const { popToTop, setOptions } = useIONavigation();
 
   const handleCloseScreen = useCallback(() => {
+    if (isAccess) {
+      dispatch(setSecurityAdviceReadyToShow(true));
+    }
     trackSystemNotificationPermissionScreenOutcome(
       "dismiss",
       flow,
@@ -76,7 +91,7 @@ const PushNotificationEngagementScreenContent = ({
       sendUserType
     );
     popToTop();
-  }, [flow, sendOpeningSource, sendUserType, popToTop]);
+  }, [flow, sendOpeningSource, sendUserType, isAccess, dispatch, popToTop]);
 
   useEffect(() => {
     setOptions({

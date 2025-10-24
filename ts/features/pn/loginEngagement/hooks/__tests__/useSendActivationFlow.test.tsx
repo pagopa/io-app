@@ -147,12 +147,9 @@ describe(useSendActivationFlow, () => {
           sendUserType: "not_set"
         }
       );
-      expect(mockDispatch).toHaveBeenCalledTimes(3);
+      expect(mockDispatch).toHaveBeenCalledTimes(2);
       expect(mockDispatch).toHaveBeenCalledWith(
         setSendEngagementScreenHasBeenDismissed()
-      );
-      expect(mockDispatch).toHaveBeenCalledWith(
-        setSecurityAdviceReadyToShow(true)
       );
       expect(mockToastSuccess).toHaveBeenCalledTimes(1);
       expect(mockToastError).not.toHaveBeenCalled();
