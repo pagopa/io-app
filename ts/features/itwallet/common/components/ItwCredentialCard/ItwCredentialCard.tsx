@@ -14,10 +14,10 @@ import {
 import { getThemeColorByCredentialType } from "../../utils/itwStyleUtils";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import { useItwEffectiveCredentialStatus } from "../../../presentation/details/hooks/useItwEffectiveCredentialStatus";
 import { CardBackground } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
 import { CardColorScheme } from "./types";
-import { useItwEffectiveCredentialStatus } from "../../../presentation/details/hooks/useItwEffectiveCredentialStatus";
 
 export type ItwCredentialCard = {
   /**
