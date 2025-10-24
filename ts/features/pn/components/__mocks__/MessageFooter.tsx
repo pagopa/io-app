@@ -7,7 +7,9 @@ export const MessageFooter = ({
   messageId,
   onMeasure,
   payments,
-  presentPaymentsBottomSheetRef
+  presentPaymentsBottomSheetRef,
+  sendOpeningSource,
+  sendUserType
 }: MessageFooterProps) => (
   <View>
     <View>{`Mock MessageFooterProps`}</View>
@@ -19,5 +21,7 @@ export const MessageFooter = ({
     <View>{`Bottom Sheet:  ${
       presentPaymentsBottomSheetRef ? "defined" : "undefined"
     }`}</View>
+    <View>{`Open Source:   ${sendOpeningSource}`}</View>
+    <View>{`User Type:     ${sendUserType}`}</View>
   </View>
 );

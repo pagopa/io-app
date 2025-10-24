@@ -8,7 +8,9 @@ export const MessagePayments = ({
   messageId,
   payments,
   presentPaymentsBottomSheetRef,
-  serviceId
+  serviceId,
+  sendOpeningSource,
+  sendUserType
 }: MessagePaymentsProps) => (
   <View>
     <View>{`Mock MessagePayments`}</View>
@@ -23,5 +25,7 @@ export const MessagePayments = ({
       presentPaymentsBottomSheetRef ? "defined" : "undefined"
     }`}</View>
     <View>{`Service Id:         ${serviceId}`}</View>
+    <View>{`Opening Source:     ${sendOpeningSource}`}</View>
+    <View>{`User Type:          ${sendUserType}`}</View>
   </View>
 );

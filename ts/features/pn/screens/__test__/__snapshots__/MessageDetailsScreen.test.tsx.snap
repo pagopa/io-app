@@ -285,6 +285,12 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                         <View>
                           service_one
                         </View>
+                        <View>
+                          Is AAR: false
+                        </View>
+                        <View>
+                          Is Delegate: false
+                        </View>
                       </View>
                     </View>
                     <View
@@ -941,6 +947,12 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                           <View>
                             026773337463073118
                           </View>
+                        </View>
+                        <View>
+                          Is AAR: true
+                        </View>
+                        <View>
+                          Is Delegate: false
                         </View>
                       </View>
                       <Modal

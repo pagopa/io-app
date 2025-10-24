@@ -2,6 +2,7 @@ import {
   booleanOrUndefinedToPNServiceStatus,
   trackPNAttachmentOpening,
   trackPNNotificationLoadSuccess,
+  trackPNPaymentStart,
   trackPNPaymentStatus,
   trackPNUxSuccess
 } from "..";
@@ -202,6 +203,32 @@ describe("index", () => {
               opening_source: source,
               send_user: userType
             });
+          });
+        });
+      });
+    });
+  });
+
+  describe("trackPNPaymentStart", () => {
+    sendOpeningSources.forEach(source => {
+      sendUserTypes.forEach(userType => {
+        it(`should call 'mixpanelTrack' with proper event name and parameters (source ${source} userType ${userType})`, () => {
+          const spiedOnMockedMixpanelTrack = jest
+            .spyOn(MIXPANEL, "mixpanelTrack")
+            .mockImplementation();
+
+          trackPNPaymentStart(source, userType);
+
+          expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+          expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+          expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+            "PN_PAYMENT_START"
+          );
+          expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+            event_category: "UX",
+            event_type: "action",
+            opening_source: source,
+            send_user: userType
           });
         });
       });

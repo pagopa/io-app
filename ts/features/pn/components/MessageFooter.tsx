@@ -14,6 +14,10 @@ import { trackPNPaymentStart, trackPNShowAllPayments } from "../analytics";
 import { initializeAndNavigateToWalletForPayment } from "../../messages/utils";
 import { paymentsButtonStateSelector } from "../store/reducers/payments";
 import { shouldUseBottomSheetForPayments } from "../utils";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../pushNotifications/analytics";
 
 export type MessageFooterProps = {
   messageId: string;
@@ -22,6 +26,8 @@ export type MessageFooterProps = {
   isCancelled: boolean;
   presentPaymentsBottomSheetRef: MutableRefObject<(() => void) | undefined>;
   onMeasure: (measurements: FooterActionsMeasurements) => void;
+  sendOpeningSource: SendOpeningSource;
+  sendUserType: SendUserType;
 };
 
 export const MessageFooter = ({
@@ -30,7 +36,9 @@ export const MessageFooter = ({
   maxVisiblePaymentCount,
   isCancelled,
   presentPaymentsBottomSheetRef,
-  onMeasure
+  onMeasure,
+  sendOpeningSource,
+  sendUserType
 }: MessageFooterProps) => {
   const dispatch = useDispatch();
   const toast = useIOToast();
@@ -57,7 +65,7 @@ export const MessageFooter = ({
         true,
         canNavigateToPayment,
         dispatch,
-        () => trackPNPaymentStart(),
+        () => trackPNPaymentStart(sendOpeningSource, sendUserType),
         () => toast.error(I18n.t("genericError"))
       );
     }
@@ -66,6 +74,8 @@ export const MessageFooter = ({
     dispatch,
     payments,
     presentPaymentsBottomSheetRef,
+    sendOpeningSource,
+    sendUserType,
     toast
   ]);
   if (isCancelled || buttonState === "hidden") {

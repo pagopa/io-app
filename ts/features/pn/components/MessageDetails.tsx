@@ -134,6 +134,8 @@ export const MessageDetails = ({
             maxVisiblePaymentCount={maxVisiblePaymentCount}
             presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
             serviceId={serviceId}
+            sendOpeningSource={sendOpeningSource}
+            sendUserType={sendUserType}
           />
           <VSpacer size={16} />
           <F24Section
@@ -161,6 +163,8 @@ export const MessageDetails = ({
         isCancelled={isCancelled}
         presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
         onMeasure={handleFooterActionsMeasurements}
+        sendOpeningSource={sendOpeningSource}
+        sendUserType={sendUserType}
       />
       {shouldUseBottomSheetForPayments(isCancelled, payments) && (
         <MessagePaymentBottomSheet
@@ -168,6 +172,8 @@ export const MessageDetails = ({
           payments={payments}
           presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
           serviceId={serviceId}
+          sendOpeningSource={sendOpeningSource}
+          sendUserType={sendUserType}
         />
       )}
     </>

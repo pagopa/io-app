@@ -207,8 +207,16 @@ export function trackPNUxSuccess(
   );
 }
 
-export function trackPNPaymentStart() {
-  void mixpanelTrack("PN_PAYMENT_START", buildEventProperties("UX", "action"));
+export function trackPNPaymentStart(
+  openingSource: SendOpeningSource,
+  userType: SendUserType
+) {
+  const eventName = "PN_PAYMENT_START";
+  const eventProps = buildEventProperties("UX", "action", {
+    opening_source: openingSource,
+    send_user: userType
+  });
+  void mixpanelTrack(eventName, eventProps);
 }
 
 export function trackPNShowAllPayments() {

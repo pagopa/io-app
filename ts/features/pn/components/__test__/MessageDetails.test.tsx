@@ -85,10 +85,14 @@ const completedPaymentList: ReadonlyArray<string> = [
 const timelineList: ReadonlyArray<NotificationStatusHistoryElement> = [
   {
     status: "IN_VALIDATION",
-    activeFrom: new Date(),
+    activeFrom: new Date(2025, 9, 24, 3, 56),
     relatedTimelineElements: []
   },
-  { status: "ACCEPTED", activeFrom: new Date(), relatedTimelineElements: [] }
+  {
+    status: "ACCEPTED",
+    activeFrom: new Date(2025, 9, 24, 3, 57),
+    relatedTimelineElements: []
+  }
 ];
 
 describe("MessageDetails component", () => {
@@ -128,7 +132,7 @@ describe("MessageDetails component", () => {
                       : undefined
                   );
                 const sendMessage: PNMessage = {
-                  created_at: new Date(),
+                  created_at: new Date(2025, 9, 24, 3, 58),
                   iun: mockIUN,
                   notificationStatusHistory: useEmptyLists ? [] : timelineList,
                   recipients: useEmptyLists ? [] : recipientList,
