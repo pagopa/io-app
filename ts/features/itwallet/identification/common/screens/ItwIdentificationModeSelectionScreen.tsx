@@ -177,15 +177,7 @@ export const ItwIdentificationModeSelectionScreen = (
 
   const dismissalDialog = useItwDismissalDialog({
     customLabels: {
-      title: I18n.t(
-        "features.itWallet.identification.mode.l2.reissuing.alert.title"
-      ),
-      confirmLabel: I18n.t(
-        "features.itWallet.identification.mode.l2.reissuing.alert.confirm"
-      ),
-      cancelLabel: I18n.t(
-        "features.itWallet.identification.mode.l2.reissuing.alert.cancel"
-      )
+      body: ""
     },
     handleDismiss: onConfirmPress
   });
@@ -204,11 +196,7 @@ export const ItwIdentificationModeSelectionScreen = (
       }}
       description={description}
       headerActionsProp={{ showHelp: true }}
-      {...(eidReissuing
-        ? {
-            goBack: dismissalDialog.show
-          }
-        : {})}
+      goBack={eidReissuing ? dismissalDialog.show : undefined}
     >
       <ContentWrapper>
         <VStack space={24}>
