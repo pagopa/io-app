@@ -23,7 +23,8 @@ const sendAARFailurePhase: SendAARFailurePhase = "Fetch QRCode";
 
 export function* fetchAARQrCodeSaga(
   fetchQRCode: SendAARClient["aarQRCodeCheck"],
-  sessionToken: SessionToken
+  sessionToken: SessionToken,
+  action: ReturnType<typeof setAarFlowState>
 ) {
   const currentState = yield* select(currentAARFlowData);
   if (currentState.type !== sendAARFlowStates.fetchingQRData) {
@@ -48,7 +49,8 @@ export function* fetchAARQrCodeSaga(
     });
     const result = (yield* call(
       withRefreshApiCall,
-      fetchQrRequest
+      fetchQrRequest,
+      action
     )) as unknown as SagaCallReturnType<typeof fetchQRCode>;
 
     if (E.isLeft(result)) {
@@ -80,6 +82,14 @@ export function* fetchAARQrCodeSaga(
           mandateId
         };
         yield* put(setAarFlowState(nextState));
+        return;
+
+      case 401:
+        yield* call(
+          trackSendAARFailure,
+          sendAARFailurePhase,
+          "Fast login expiration"
+        );
         return;
 
       case 403:
