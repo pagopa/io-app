@@ -44,10 +44,10 @@ export type EidIssuanceMode = "issuance" | "reissuance" | "upgrade";
 /**
  * The EidIssuanceLevel represents the different levels of eID issuance and
  * determines which authentication method are allowed:
- * - "l2" for Documenti su IO issuance with CIE+PIN, CIEID and SPID
- * - "l2-fallback" for Documenti su IO issuance with CIEID and SPID
- * - "l2-plus" for IT-Wallet issuance with CIE+PIN, CIEID and SPID plus a CIE authentication
- * - "l3" for IT-Wallet issuance with CIE+PIN and CIEID
+ * - "l2": Documenti su IO issuance using CIE+PIN, CIEID, or SPID
+ * - "l2-fallback": Documenti su IO issuance using CIEID or SPID (fallback mode)
+ * - "l2-plus": IT Wallet issuance using CIE+PIN, CIEID, or SPID plus an additional CIE card authentication
+ * - "l3" IT Wallet issuance using CIE+PIN or CIEID
  */
 export type EidIssuanceLevel = "l2" | "l2-fallback" | "l2-plus" | "l3";
 
