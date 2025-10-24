@@ -13,8 +13,7 @@ import {
   itwUnflagCredentialAsRequested,
   itwSetWalletUpgradeMDLDetailsBannerHidden,
   itwFreezeSimplifiedActivationRequirements,
-  itwClearSimplifiedActivationRequirements,
-  itwCloseReissuanceFeedbackBanner
+  itwClearSimplifiedActivationRequirements
 } from "../actions/preferences";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
@@ -143,13 +142,6 @@ const reducer = (
       return {
         ...state,
         isFiscalCodeWhitelisted: action.payload
-      };
-    }
-
-    case getType(itwCloseReissuanceFeedbackBanner): {
-      return {
-        ...state,
-        reissuanceFeedbackBannerHidden: true
       };
     }
 
