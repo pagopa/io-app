@@ -384,7 +384,11 @@ export const IdentificationModal = () => {
         )
       }
     >
-      {Platform.OS === "ios" && <StatusBar barStyle={"light-content"} />}
+      <StatusBar
+        barStyle={"light-content"}
+        backgroundColor={"transparent"}
+        translucent
+      />
       <View
         style={[
           styles.contentWrapper,

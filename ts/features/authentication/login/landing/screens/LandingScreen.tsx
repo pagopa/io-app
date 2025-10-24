@@ -13,6 +13,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
 import JailMonkey from "jail-monkey";
 import {
   ComponentProps,
@@ -23,8 +24,6 @@ import {
   useState
 } from "react";
 import { Alert, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import I18n from "i18next";
 import { LandingCardComponent } from "../../../../../components/LandingCardComponent";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import SectionStatusComponent from "../../../../../components/SectionStatus";
@@ -33,7 +32,6 @@ import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../../../../config"
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { sessionExpired } from "../../../common/store/actions";
 import {
   useIODispatch,
   useIOSelector,
@@ -56,7 +54,15 @@ import {
 } from "../../../common/analytics";
 import { Carousel } from "../../../common/components/Carousel";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { sessionExpired } from "../../../common/store/actions";
 
+import { useFooterActionsMargin } from "../../../../../hooks/useFooterActionsMargin";
+import { startupLoadSuccess } from "../../../../../store/actions/startup";
+import { StartupStatusEnum } from "../../../../../store/reducers/startup";
+import { identificationRequest } from "../../../../identification/store/actions";
+import { setOfflineAccessReason } from "../../../../ingress/store/actions";
+import { OfflineAccessReasonEnum } from "../../../../ingress/store/reducer";
+import { itwOfflineAccessAvailableSelector } from "../../../../itwallet/common/store/selectors";
 import {
   isSessionCorruptedSelector,
   isSessionExpiredSelector
@@ -70,12 +76,6 @@ import { SpidLevel } from "../../cie/utils";
 import useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
 import { LandingSessionExpiredComponent } from "../components/LandingSessionExpiredComponent";
 import { useInfoBottomsheetComponent } from "../hooks/useInfoBottomsheetComponent";
-import { setOfflineAccessReason } from "../../../../ingress/store/actions";
-import { OfflineAccessReasonEnum } from "../../../../ingress/store/reducer";
-import { identificationRequest } from "../../../../identification/store/actions";
-import { startupLoadSuccess } from "../../../../../store/actions/startup";
-import { StartupStatusEnum } from "../../../../../store/reducers/startup";
-import { itwOfflineAccessAvailableSelector } from "../../../../itwallet/common/store/selectors";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.landing.contextualHelpTitle",
@@ -89,7 +89,8 @@ const SPID_LEVEL: SpidLevel = "SpidL2";
 export const LandingScreen = () => {
   const { error } = useIOToast();
   const store = useIOStore();
-  const insets = useSafeAreaInsets();
+  const { bottomMargin: paddingBottom } = useFooterActionsMargin();
+
   const isCieIDTourGuideEnabled = useIOSelector(
     isCieIDTourGuideEnabledSelector
   );
@@ -389,53 +390,54 @@ export const LandingScreen = () => {
 
         <SectionStatusComponent sectionKey={"login"} />
         <ContentWrapper>
-          <Tooltip
-            closeIconAccessibilityLabel={I18n.t("global.buttons.close")}
-            isVisible={isCieIDTourGuideEnabled}
-            onClose={() => dispatch(cieIDDisableTourGuide())}
-            title={I18n.t("authentication.landing.tour_guide.title")}
-            content={I18n.t("authentication.landing.tour_guide.content")}
-          >
+          <View style={{ paddingBottom }}>
+            <Tooltip
+              closeIconAccessibilityLabel={I18n.t("global.buttons.close")}
+              isVisible={isCieIDTourGuideEnabled}
+              onClose={() => dispatch(cieIDDisableTourGuide())}
+              title={I18n.t("authentication.landing.tour_guide.title")}
+              content={I18n.t("authentication.landing.tour_guide.content")}
+            >
+              <IOButton
+                fullWidth
+                variant="solid"
+                color={isCieUatEnabled ? "danger" : "primary"}
+                label={I18n.t("authentication.landing.loginCie")}
+                icon="cieLetter"
+                onPress={navigateToCiePinScreen}
+                testID="landing-button-login-cie"
+              />
+            </Tooltip>
+            <VSpacer size={SPACE_BETWEEN_BUTTONS} />
             <IOButton
               fullWidth
               variant="solid"
-              color={isCieUatEnabled ? "danger" : "primary"}
-              label={I18n.t("authentication.landing.loginCie")}
-              icon="cieLetter"
-              onPress={navigateToCiePinScreen}
-              testID="landing-button-login-cie"
+              color="primary"
+              // if CIE is not supported, since the new DS has not a
+              // "semi-enabled" state, we leave the button enabled
+              // but we navigate to the CIE unsupported info screen.
+              label={I18n.t("authentication.landing.loginSpid")}
+              icon="spid"
+              onPress={() => {
+                void trackSpidLoginSelected();
+                navigateToIdpSelection();
+              }}
+              testID="landing-button-login-spid"
             />
-          </Tooltip>
-          <VSpacer size={SPACE_BETWEEN_BUTTONS} />
-          <IOButton
-            fullWidth
-            variant="solid"
-            color="primary"
-            // if CIE is not supported, since the new DS has not a
-            // "semi-enabled" state, we leave the button enabled
-            // but we navigate to the CIE unsupported info screen.
-            label={I18n.t("authentication.landing.loginSpid")}
-            icon="spid"
-            onPress={() => {
-              void trackSpidLoginSelected();
-              navigateToIdpSelection();
-            }}
-            testID="landing-button-login-spid"
-          />
-          <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
-          {itwOfflineAccessAvailable && isSessionExpired && (
-            <View style={{ alignSelf: "center" }}>
-              <IOButton
-                variant="link"
-                accessibilityRole="link"
-                color="primary"
-                label={I18n.t("authentication.landing.show_wallet")}
-                onPress={navigateToWallet}
-              />
-              <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
-            </View>
-          )}
-          {insets.bottom !== 0 && <VSpacer size={SPACE_AROUND_BUTTON_LINK} />}
+            <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
+            {itwOfflineAccessAvailable && isSessionExpired && (
+              <View style={{ alignSelf: "center" }}>
+                <IOButton
+                  variant="link"
+                  accessibilityRole="link"
+                  color="primary"
+                  label={I18n.t("authentication.landing.show_wallet")}
+                  onPress={navigateToWallet}
+                />
+                <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
+              </View>
+            )}
+          </View>
           {bottomSheet}
           {infoBottomsheetComponent}
         </ContentWrapper>
