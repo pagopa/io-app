@@ -1,18 +1,19 @@
 import I18n from "i18next";
+import { useEffect } from "react";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
+import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
-import { ItwRemoteRequestPayload } from "../utils/itwRemoteTypeUtils.ts";
+import { trackItwKoStateAction } from "../../../analytics";
 import {
   ZendeskSubcategoryValue,
   useItwFailureSupportModal
 } from "../../../common/hooks/useItwFailureSupportModal.tsx";
-import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import {
   ItwFailure,
   ItwFailureType
 } from "../../../common/utils/ItwFailureTypes.ts";
 import { trackItwRemoteDeepLinkFailure } from "../analytics";
-import { trackItwKoStateAction } from "../../../analytics";
+import { ItwRemoteRequestPayload } from "../utils/itwRemoteTypeUtils.ts";
 
 type Props = {
   /**
@@ -60,7 +61,15 @@ export const ItwRemoteDeepLinkFailure = ({ failure, payload }: Props) => {
     }
   };
 
-  trackItwRemoteDeepLinkFailure(failure);
+  /**
+   * Using useEffect delays this tracking call
+   * until after all layout effects (including the parent’s) have run.
+   * This ensures trackItwRemoteDeepLinkFailure() is triggered
+   * only after trackItwRemoteStart(), maintaining the correct event order.
+   */
+  useEffect(() => {
+    trackItwRemoteDeepLinkFailure(failure);
+  }, [failure]);
 
   return (
     <>
