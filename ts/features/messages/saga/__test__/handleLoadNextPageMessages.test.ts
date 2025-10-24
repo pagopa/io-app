@@ -10,9 +10,26 @@ import {
 } from "../../__mocks__/messages";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { handleLoadNextPageMessages } from "../handleLoadNextPageMessages";
-import { BackendClient } from "../../../../api/__mocks__/backend";
+import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
+import { backendClientManager } from "../../../../api/BackendClientManager";
+
+// Mock the backendClientManager
+jest.mock("../../../../api/BackendClientManager");
+
+const mockGetMessages = jest.fn();
+const mockBackendClientManager = backendClientManager as jest.Mocked<
+  typeof backendClientManager
+>;
+
+beforeEach(() => {
+  jest.clearAllMocks();
+  mockBackendClientManager.getBackendClient.mockReturnValue({
+    getMessages: mockGetMessages
+  } as any);
+});
 
 describe("handleLoadNextPageMessages", () => {
+  const sessionToken = "mockSessionToken";
   const getMessagesPayload = {
     enrich_result_data: true,
     page_size: defaultRequestPayload.pageSize,
@@ -26,13 +43,14 @@ describe("handleLoadNextPageMessages", () => {
     )} with the parsed messages and pagination data`, () => {
       testSaga(
         handleLoadNextPageMessages,
-        BackendClient.getMessages,
         action.request(defaultRequestPayload)
       )
         .next()
+        .select(sessionTokenSelector)
+        .next(sessionToken)
         .call(
           withRefreshApiCall,
-          BackendClient.getMessages(getMessagesPayload),
+          mockGetMessages(getMessagesPayload),
           action.request(defaultRequestPayload)
         )
         .next(E.right({ status: 200, value: apiPayload }))
@@ -46,13 +64,14 @@ describe("handleLoadNextPageMessages", () => {
     it(`should put ${getType(action.failure)} with the error message`, () => {
       testSaga(
         handleLoadNextPageMessages,
-        BackendClient.getMessages,
         action.request(defaultRequestPayload)
       )
         .next()
+        .select(sessionTokenSelector)
+        .next(sessionToken)
         .call(
           withRefreshApiCall,
-          BackendClient.getMessages(getMessagesPayload),
+          mockGetMessages(getMessagesPayload),
           action.request(defaultRequestPayload)
         )
         .next(E.right({ status: 500, value: { title: "Backend error" } }))
@@ -71,10 +90,11 @@ describe("handleLoadNextPageMessages", () => {
     it(`should catch it and put ${getType(action.failure)}`, () => {
       testSaga(
         handleLoadNextPageMessages,
-        BackendClient.getMessages,
         action.request(defaultRequestPayload)
       )
         .next()
+        .select(sessionTokenSelector)
+        .next(sessionToken)
         .throw(new Error("I made a boo-boo, sir!"))
         .put(
           action.failure({

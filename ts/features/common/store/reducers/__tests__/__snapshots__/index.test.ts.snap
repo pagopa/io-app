@@ -170,6 +170,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "activeSessionLogin": {
       "isActiveSessionLogin": false,
       "isUserLoggedIn": false,
+      "refreshMessagesSection": false,
     },
     "cieLogin": {
       "isCieIDTourGuideEnabled": true,

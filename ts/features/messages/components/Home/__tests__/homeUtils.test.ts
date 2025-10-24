@@ -36,6 +36,7 @@ import {
   ArchivingStatus,
   INITIAL_STATE
 } from "../../../store/reducers/archiving";
+import { activeSessionLoginIntialState } from "../../../../authentication/activeSessionLogin/store/reducer";
 
 const createGlobalState = (
   archiveData: allPaginated.MessagePagePot,
@@ -58,6 +59,13 @@ const createGlobalState = (
         archiving: {
           ...INITIAL_STATE,
           status: archivingStatus
+        }
+      }
+    },
+    features: {
+      loginFeatures: {
+        activeSessionLogin: {
+          ...activeSessionLoginIntialState
         }
       }
     }
@@ -734,6 +742,14 @@ describe("getLoadNextPreviousPageMessagesActionIfAllowed", () => {
                         },
                         archiving: {
                           status: archivingStatus
+                        }
+                      }
+                    },
+                    features: {
+                      loginFeatures: {
+                        activeSessionLogin: {
+                          ...activeSessionLoginIntialState,
+                          refreshMessagesSection: true
                         }
                       }
                     }

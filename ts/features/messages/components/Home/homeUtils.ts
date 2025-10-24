@@ -215,18 +215,22 @@ export const getLoadPreviousPageMessagesActionIfAllowed = (
                 pipe(
                   state,
                   isDoingAnAsyncOperationOnMessages,
-                  B.fold(
-                    () =>
-                      loadPreviousPageMessages.request({
+                  B.fold(() => {
+                    if (
+                      state.features?.loginFeatures?.activeSessionLogin
+                        ?.refreshMessagesSection
+                    ) {
+                      return loadPreviousPageMessages.request({
                         pageSize: maximumItemsFromAPI,
                         cursor: previousPageMessageId,
                         filter: {
                           getArchived: allPaginated.shownCategory === "ARCHIVE"
                         },
                         fromUserAction: false
-                      }),
-                    constUndefined
-                  )
+                      });
+                    }
+                    return undefined;
+                  }, constUndefined)
                 )
               )
             )

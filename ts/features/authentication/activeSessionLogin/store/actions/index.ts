@@ -42,6 +42,10 @@ export const setLoggedOutUserWithDifferentCF = createStandardAction(
   "SET_LOGGED_OUT_USER_WITH_DIFFERENT_CF"
 )();
 
+export const setRefreshMessagesSection = createStandardAction(
+  "SET_REFRESH_MESSAGES_SECTION"
+)<boolean>();
+
 export type LoginInfoActions =
   | ActionType<typeof setStartActiveSessionLogin>
   | ActionType<typeof setRetryActiveSessionLogin>
@@ -51,4 +55,5 @@ export type LoginInfoActions =
   | ActionType<typeof consolidateActiveSessionLoginData>
   | ActionType<typeof setFastLoginOptSessionLogin>
   | ActionType<typeof setFinishedActiveSessionLoginFlow>
-  | ActionType<typeof setLoggedOutUserWithDifferentCF>;
+  | ActionType<typeof setLoggedOutUserWithDifferentCF>
+  | ActionType<typeof setRefreshMessagesSection>;

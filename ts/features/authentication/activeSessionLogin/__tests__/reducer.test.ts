@@ -82,7 +82,8 @@ describe("activeSessionLoginReducer", () => {
       loginInfo: {
         token: "token" as SessionToken,
         fastLoginOptIn: true
-      }
+      },
+      refreshMessagesSection: false
     };
     if (
       modifiedState &&
@@ -110,7 +111,8 @@ describe("activeSessionLoginReducer", () => {
       loginInfo: {
         token: "token" as SessionToken,
         fastLoginOptIn: true
-      }
+      },
+      refreshMessagesSection: false
     };
     const state = activeSessionLoginReducer(
       modifiedState,

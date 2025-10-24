@@ -8,6 +8,7 @@ import {
   setFinishedActiveSessionLoginFlow,
   setIdpSelectedActiveSessionLogin,
   setLoggedOutUserWithDifferentCF,
+  setRefreshMessagesSection,
   setStartActiveSessionLogin
 } from "../actions";
 import { SpidIdp } from "../../../../../utils/idps";
@@ -25,15 +26,17 @@ export type ActiveSessionLoginState = {
     fastLoginOptIn?: boolean;
     spidLoginInfo?: StandardLoginRequestInfo;
   };
+  refreshMessagesSection: boolean;
 };
 
-const initialState: ActiveSessionLoginState = {
+export const activeSessionLoginIntialState: ActiveSessionLoginState = {
   isActiveSessionLogin: false,
-  isUserLoggedIn: false
+  isUserLoggedIn: false,
+  refreshMessagesSection: false
 };
 
 export const activeSessionLoginReducer = (
-  state: ActiveSessionLoginState = initialState,
+  state: ActiveSessionLoginState = activeSessionLoginIntialState,
   action: Action
 ): ActiveSessionLoginState => {
   switch (action.type) {
@@ -73,15 +76,21 @@ export const activeSessionLoginReducer = (
         isUserLoggedIn: false
       };
 
+    case getType(setRefreshMessagesSection):
+      return {
+        ...state,
+        refreshMessagesSection: action.payload
+      };
+
     case getType(setFinishedActiveSessionLoginFlow):
     case getType(consolidateActiveSessionLoginData):
     case getType(setLoggedOutUserWithDifferentCF):
     case getType(sessionCorrupted):
-      return initialState;
+      return activeSessionLoginIntialState;
 
     default:
       return state;
   }
 };
 
-export const testable = isTestEnv ? initialState : undefined;
+export const testable = isTestEnv ? activeSessionLoginIntialState : undefined;

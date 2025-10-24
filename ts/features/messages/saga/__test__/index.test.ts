@@ -1,5 +1,4 @@
 import { testSaga } from "redux-saga-test-plan";
-import { SessionToken } from "../../../../types/SessionToken";
 import { clearCache } from "../../../settings/common/store/actions";
 import { logoutSuccess } from "../../../authentication/common/store/actions";
 import {
@@ -15,9 +14,7 @@ import {
   startPaymentStatusTracking,
   upsertMessageStatusAttributes
 } from "../../store/actions";
-import { KeyInfo } from "../../../lollipop/utils/crypto";
 import { retryDataAfterFastLoginSessionExpirationSelector } from "../../store/reducers/messageGetStatus";
-import { BackendClient } from "../../../../api/backend";
 import { retrievingDataPreconditionStatusAction } from "../../store/actions/preconditions";
 import { startProcessingMessageArchivingAction } from "../../store/actions/archiving";
 import { handleDownloadAttachment } from "../handleDownloadAttachment";
@@ -42,67 +39,32 @@ import { handlePaymentUpdateRequests } from "../handlePaymentUpdateRequests";
 import { watchMessagesSaga } from "..";
 
 describe("watchMessagesSaga", () => {
-  const backendClient = {
-    getMessages: jest.fn(),
-    getMessage: jest.fn(),
-    getThirdPartyMessagePrecondition: jest.fn(),
-    getThirdPartyMessage: jest.fn(),
-    upsertMessageStatusAttributes: jest.fn(),
-    getPaymentInfoV2: jest.fn()
-  } as unknown as BackendClient;
-
-  const bearerToken = "test-token" as SessionToken;
-  const keyInfo = {} as KeyInfo;
-
   it("should setup watchers and not retry if no retry data is present", () => {
-    testSaga(watchMessagesSaga, backendClient, bearerToken, keyInfo)
+    testSaga(watchMessagesSaga)
       .next()
-      .takeLatest(
-        loadNextPageMessages.request,
-        handleLoadNextPageMessages,
-        backendClient.getMessages
-      )
+      .takeLatest(loadNextPageMessages.request, handleLoadNextPageMessages)
       .next()
       .takeLatest(
         loadPreviousPageMessages.request,
-        handleLoadPreviousPageMessages,
-        backendClient.getMessages
+        handleLoadPreviousPageMessages
       )
       .next()
-      .takeLatest(
-        reloadAllMessages.request,
-        handleReloadAllMessages,
-        backendClient.getMessages
-      )
+      .takeLatest(reloadAllMessages.request, handleReloadAllMessages)
       .next()
-      .takeEvery(
-        loadMessageById.request,
-        handleLoadMessageById,
-        backendClient.getMessage
-      )
+      .takeEvery(loadMessageById.request, handleLoadMessageById)
       .next()
-      .takeLatest(
-        loadMessageDetails.request,
-        handleLoadMessageDetails,
-        backendClient.getMessage
-      )
+      .takeLatest(loadMessageDetails.request, handleLoadMessageDetails)
       .next()
       .takeLatest(
         retrievingDataPreconditionStatusAction,
-        handleMessagePrecondition,
-        backendClient.getThirdPartyMessagePrecondition
+        handleMessagePrecondition
       )
       .next()
-      .takeLatest(
-        loadThirdPartyMessage.request,
-        handleThirdPartyMessage,
-        backendClient.getThirdPartyMessage
-      )
+      .takeLatest(loadThirdPartyMessage.request, handleThirdPartyMessage)
       .next()
       .takeEvery(
         upsertMessageStatusAttributes.request,
-        raceUpsertMessageStatusAttributes,
-        backendClient.upsertMessageStatusAttributes
+        raceUpsertMessageStatusAttributes
       )
       .next()
       .takeLatest(
@@ -110,14 +72,9 @@ describe("watchMessagesSaga", () => {
         handleMessageArchivingRestoring
       )
       .next()
-      .takeLatest(
-        downloadAttachment.request,
-        handleDownloadAttachment,
-        bearerToken,
-        keyInfo
-      )
+      .takeLatest(downloadAttachment.request, handleDownloadAttachment)
       .next()
-      .fork(handlePaymentUpdateRequests, backendClient.getPaymentInfoV2)
+      .fork(handlePaymentUpdateRequests)
       .next()
       .takeEvery(removeCachedAttachment, handleClearAttachment)
       .next()
@@ -143,54 +100,31 @@ describe("watchMessagesSaga", () => {
       fromPushNotification: false
     };
 
-    testSaga(watchMessagesSaga, backendClient, bearerToken, keyInfo)
+    testSaga(watchMessagesSaga)
       .next()
-      .takeLatest(
-        loadNextPageMessages.request,
-        handleLoadNextPageMessages,
-        backendClient.getMessages
-      )
+      .takeLatest(loadNextPageMessages.request, handleLoadNextPageMessages)
       .next()
       .takeLatest(
         loadPreviousPageMessages.request,
-        handleLoadPreviousPageMessages,
-        backendClient.getMessages
+        handleLoadPreviousPageMessages
       )
       .next()
-      .takeLatest(
-        reloadAllMessages.request,
-        handleReloadAllMessages,
-        backendClient.getMessages
-      )
+      .takeLatest(reloadAllMessages.request, handleReloadAllMessages)
       .next()
-      .takeEvery(
-        loadMessageById.request,
-        handleLoadMessageById,
-        backendClient.getMessage
-      )
+      .takeEvery(loadMessageById.request, handleLoadMessageById)
       .next()
-      .takeLatest(
-        loadMessageDetails.request,
-        handleLoadMessageDetails,
-        backendClient.getMessage
-      )
+      .takeLatest(loadMessageDetails.request, handleLoadMessageDetails)
       .next()
       .takeLatest(
         retrievingDataPreconditionStatusAction,
-        handleMessagePrecondition,
-        backendClient.getThirdPartyMessagePrecondition
+        handleMessagePrecondition
       )
       .next()
-      .takeLatest(
-        loadThirdPartyMessage.request,
-        handleThirdPartyMessage,
-        backendClient.getThirdPartyMessage
-      )
+      .takeLatest(loadThirdPartyMessage.request, handleThirdPartyMessage)
       .next()
       .takeEvery(
         upsertMessageStatusAttributes.request,
-        raceUpsertMessageStatusAttributes,
-        backendClient.upsertMessageStatusAttributes
+        raceUpsertMessageStatusAttributes
       )
       .next()
       .takeLatest(
@@ -198,14 +132,9 @@ describe("watchMessagesSaga", () => {
         handleMessageArchivingRestoring
       )
       .next()
-      .takeLatest(
-        downloadAttachment.request,
-        handleDownloadAttachment,
-        bearerToken,
-        keyInfo
-      )
+      .takeLatest(downloadAttachment.request, handleDownloadAttachment)
       .next()
-      .fork(handlePaymentUpdateRequests, backendClient.getPaymentInfoV2)
+      .fork(handlePaymentUpdateRequests)
       .next()
       .takeEvery(removeCachedAttachment, handleClearAttachment)
       .next()

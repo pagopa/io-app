@@ -1,6 +1,5 @@
-import { call, put } from "typed-redux-saga/macro";
+import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { BackendClient } from "../../../api/backend";
 import {
   reloadAllMessages,
   reloadAllMessages as reloadAllMessagesAction
@@ -13,12 +12,25 @@ import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { errorToReason, unknownToReason } from "../utils";
 import { trackReloadAllMessagesFailure } from "../analytics";
 import { handleResponse } from "../utils/responseHandling";
+import { backendClientManager } from "../../../api/BackendClientManager";
+import { apiUrlPrefix } from "../../../config";
+import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 
 export function* handleReloadAllMessages(
-  getMessages: BackendClient["getMessages"],
   action: ActionType<typeof reloadAllMessages.request>
 ) {
   const { filter, pageSize, fromUserAction } = action.payload;
+
+  const sessionToken = yield* select(sessionTokenSelector);
+
+  if (!sessionToken) {
+    return;
+  }
+
+  const { getMessages } = backendClientManager.getBackendClient(
+    apiUrlPrefix,
+    sessionToken
+  );
 
   try {
     const response: SagaCallReturnType<typeof getMessages> = (yield* call(
