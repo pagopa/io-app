@@ -5616,7 +5616,8 @@
       }
     },
     "wallet": {
-      "preview": {
+      "card": {
+        "available": "Available",
         "validThrough": "Valid through {{endDate}}",
         "showAll": "View all"
       },
