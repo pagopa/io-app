@@ -16783,14 +16783,14 @@ __metadata:
 
 "react-native-webview@patch:react-native-webview@npm%3A13.16.0#./.yarn/patches/react-native-webview-npm-13.16.0-82f4e13202.patch::locator=italia-app%40workspace%3A.":
   version: 13.16.0
-  resolution: "react-native-webview@patch:react-native-webview@npm%3A13.16.0#./.yarn/patches/react-native-webview-npm-13.16.0-82f4e13202.patch::version=13.16.0&hash=c47d69&locator=italia-app%40workspace%3A."
+  resolution: "react-native-webview@patch:react-native-webview@npm%3A13.16.0#./.yarn/patches/react-native-webview-npm-13.16.0-82f4e13202.patch::version=13.16.0&hash=423529&locator=italia-app%40workspace%3A."
   dependencies:
     escape-string-regexp: ^4.0.0
     invariant: 2.2.4
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 20ca3a4bc78dc13e78c6ef7ac1dbfbab758d72fd1446219411a6d4fbb9bb1523d77ca8f554b318c14a5f7832e45c82c673384c9966a1a2dff4fefc22e5026f2e
+  checksum: 6623a68b91e638217741c2e8fc5527d64ff461c8b305d1b0593fbe8b6897f79761437a806125aa1ada46029fcbdc0676902d60908dab702de8b8f1fecbaa0da5
   languageName: node
   linkType: hard
 
