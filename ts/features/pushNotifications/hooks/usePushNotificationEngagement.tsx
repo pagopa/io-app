@@ -14,12 +14,16 @@ import {
   trackSystemNotificationPermissionScreenOutcome
 } from "../analytics";
 import { isTestEnv } from "../../../utils/environment";
+import { useIODispatch } from "../../../store/hooks";
+import { setSecurityAdviceReadyToShow } from "../../authentication/fastLogin/store/actions/securityAdviceActions";
 
 export const usePushNotificationEngagement = (
   flow: NotificationModalFlow,
   sendOpeningSource: SendOpeningSource,
-  sendUserType: SendUserType
+  sendUserType: SendUserType,
+  isAccess: boolean
 ) => {
+  const dispatch = useIODispatch();
   const { popToTop } = useIONavigation();
   const toast = useIOToast();
   const [isButtonPressed, setIsButtonPressed] = useState(false);
@@ -28,7 +32,12 @@ export const usePushNotificationEngagement = (
     const subscription = AppState.addEventListener(
       "change",
       appStateHandler(
-        popToTop,
+        () => {
+          if (isAccess) {
+            dispatch(setSecurityAdviceReadyToShow(true));
+          }
+          popToTop();
+        },
         () => {
           toast.success(
             I18n.t("features.pushNotifications.engagementScreen.toast")
@@ -40,7 +49,7 @@ export const usePushNotificationEngagement = (
     return () => {
       subscription.remove();
     };
-  }, [isButtonPressed, toast, popToTop]);
+  }, [isButtonPressed, toast, isAccess, dispatch, popToTop]);
 
   const onButtonPress = () => {
     trackSystemNotificationPermissionScreenOutcome(
@@ -57,19 +66,19 @@ export const usePushNotificationEngagement = (
 };
 
 type HandlerType = (
-  popToTop: () => void,
+  onReturnToApp: () => void,
   onSuccess: () => void,
   isButtonPressed: boolean
 ) => (nextAppState: AppStateStatus) => Promise<void>;
 
 const appStateHandler: HandlerType =
-  (popToTop, onSuccess, isButtonPressed) => async nextAppState => {
+  (onReturnToApp, onSuccess, isButtonPressed) => async nextAppState => {
     if (nextAppState === "active" && isButtonPressed) {
       const authorizationStatus = await checkNotificationPermissions();
       if (authorizationStatus) {
         onSuccess();
       }
-      popToTop();
+      onReturnToApp();
     }
   };
 
