@@ -12,7 +12,7 @@ export const selectIssuanceMode = (snapshot: MachineSnapshot) =>
   snapshot.context.mode || "issuing";
 
 export const isL3FeaturesEnabledSelector = (snapshot: MachineSnapshot) =>
-  snapshot.context.isL3 ?? false;
+  snapshot.context.level !== "l2";
 
 export const selectEidOption = (snapshot: MachineSnapshot) =>
   O.fromNullable(snapshot.context.eid);

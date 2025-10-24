@@ -41,12 +41,27 @@ export type CieContext = {
  */
 export type EidIssuanceMode = "issuance" | "reissuance" | "upgrade";
 
+/**
+ * The EidIssuanceLevel represents the different levels of eID issuance and
+ * determines which authentication method are allowed:
+ * - "l2" for Documenti su IO issuance with CIE+PIN, CIEID and SPID
+ * - "l2-fallback" for Documenti su IO issuance with CIEID and SPID
+ * - "l2-plus" for IT-Wallet issuance with CIE+PIN, CIEID and SPID plus a CIE authentication
+ * - "l3" for IT-Wallet issuance with CIE+PIN and CIEID
+ */
+export type EidIssuanceLevel = "l2" | "l2-fallback" | "l2-plus" | "l3";
+
 export type Context = {
   /**
    * The mode of eID issuance. This determines the flow and actions available in the
    * eID issuance process. Defaults to "issuance" if not specified.
    */
   mode: EidIssuanceMode | undefined;
+  /**
+   * The level of eID issuance, which determines the authentication methods allowed and
+   * the eID level that will be issuedL Documenti su IO (L2) or IT Wallet (L2+, L3)
+   */
+  level: EidIssuanceLevel | undefined;
   /**
    * The integrity key tag used to verify the integrity of the wallet instance attestation.
    * If this is provided the machine will skip the wallet instance attestation creation
@@ -79,15 +94,6 @@ export type Context = {
    */
   failure: IssuanceFailure | undefined;
   /**
-   * Flag to check if IT Wallet L3 features are enabled and thus we should allow to request
-   * a PID credential and upgrade the existing credentials to the new format.
-   */
-  isL3: boolean | undefined;
-  /**
-   * Flag to check if the user chose to fallback to L2 issuance
-   */
-  isL2Fallback: boolean;
-  /**
    * The credentials that need to be upgraded to the new format.
    */
   legacyCredentials: ReadonlyArray<StoredCredential>;
@@ -99,6 +105,7 @@ export type Context = {
 
 export const InitialContext: Context = {
   mode: undefined,
+  level: undefined,
   integrityKeyTag: undefined,
   walletInstanceAttestation: undefined,
   cieContext: undefined,
@@ -106,8 +113,6 @@ export const InitialContext: Context = {
   authenticationContext: undefined,
   eid: undefined,
   failure: undefined,
-  isL3: undefined,
-  isL2Fallback: false,
   legacyCredentials: [],
   failedCredentials: undefined
 };
