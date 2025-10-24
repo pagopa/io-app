@@ -138,6 +138,7 @@ import {
   waitForNavigatorServiceInitialization
 } from "../navigation/saga/navigation";
 import { checkShouldDisplaySendEngagementScreen } from "../features/pn/loginEngagement/sagas/checkShouldDisplaySendEngagementScreen";
+import { setRefreshMessagesSection } from "../features/authentication/activeSessionLogin/store/actions";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
@@ -179,6 +180,12 @@ export function* initializeApplicationSaga(
 
   const isActiveLoginSuccessProp =
     startupAction?.payload?.isActiveLoginSuccess ?? false;
+
+  yield* put(
+    setRefreshMessagesSection(
+      !(isActiveLoginSuccessProp || handleSessionExpiration)
+    )
+  );
 
   // Remove explicitly previous session data. This is done as completion of two
   // use cases:
