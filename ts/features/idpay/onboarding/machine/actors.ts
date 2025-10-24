@@ -34,30 +34,36 @@ export const createActorsImplementation = (
         serviceId: params.input
       });
 
-      const data: Promise<InitiativeDataDTO> = pipe(
-        dataResponse,
-        E.fold(
-          _ => Promise.reject(OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR),
-          ({ status, value }) => {
-            switch (status) {
-              case 200:
-                return Promise.resolve(value);
-              case 401:
-                return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
-              case 429:
-                return Promise.reject(
-                  OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS
-                );
-              default:
-                return Promise.reject(
-                  OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR
-                );
+      try {
+        const data: Promise<InitiativeDataDTO> = pipe(
+          dataResponse,
+          E.fold(
+            _ => Promise.reject(OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR),
+            ({ status, value }) => {
+              switch (status) {
+                case 200:
+                  return Promise.resolve(value);
+                case 401:
+                  return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
+                case 429:
+                  return Promise.reject(
+                    OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS
+                  );
+                default:
+                  return Promise.reject(
+                    OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR
+                  );
+              }
             }
-          }
-        )
-      );
+          )
+        );
 
-      return data;
+        return data;
+      } catch (error) {
+        return Promise.reject(
+          OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS
+        );
+      }
     }
   );
 
@@ -115,33 +121,37 @@ export const createActorsImplementation = (
       throw new Error("Initiative ID was not provided");
     }
 
-    const response = await client.initiativeDetail({
-      ...clientOptions,
-      initiativeId: params.input.value
-    });
+    try {
+      const response = await client.initiativeDetail({
+        ...clientOptions,
+        initiativeId: params.input.value
+      });
 
-    const dataPromise: Promise<O.Option<OnboardingInitiativeDTO>> = pipe(
-      response,
-      E.fold(
-        _ => Promise.reject(OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR),
-        ({ status, value }) => {
-          switch (status) {
-            case 200:
-              return Promise.resolve(O.some(value));
-            case 401:
-              return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
-            case 429:
-              return Promise.reject(
-                OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS
-              );
-            default:
-              return Promise.reject(mapErrorCodeToFailure(value.code));
+      const dataPromise: Promise<O.Option<OnboardingInitiativeDTO>> = pipe(
+        response,
+        E.fold(
+          _ => Promise.reject(OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR),
+          ({ status, value }) => {
+            switch (status) {
+              case 200:
+                return Promise.resolve(O.some(value));
+              case 401:
+                return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
+              case 429:
+                return Promise.reject(
+                  OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS
+                );
+              default:
+                return Promise.reject(mapErrorCodeToFailure(value.code));
+            }
           }
-        }
-      )
-    );
+        )
+      );
 
-    return dataPromise;
+      return dataPromise;
+    } catch (error) {
+      return Promise.reject(OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS);
+    }
   });
 
   const acceptRequiredCriteria = fromPromise<undefined, Context.Context>(
@@ -171,38 +181,44 @@ export const createActorsImplementation = (
         ...Object.values(selfDeclarationsTextAnswers)
       ] as Array<SelfConsentDTO>;
 
-      const response = await client.saveOnboarding({
-        ...clientOptions,
-        body: {
-          initiativeId: initiative.value.initiativeId,
-          pdndAccept: true,
-          confirmedTos: true,
-          selfDeclarationList: consentsArray
-        }
-      });
-
-      const dataPromise: Promise<undefined> = pipe(
-        response,
-        E.fold(
-          _ => Promise.reject(OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR),
-          ({ status, value }) => {
-            switch (status) {
-              case 202:
-                return Promise.resolve(undefined);
-              case 401:
-                return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
-              case 429:
-                return Promise.reject(
-                  OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS
-                );
-              default:
-                return Promise.reject(mapErrorCodeToFailure(value.code));
-            }
+      try {
+        const response = await client.saveOnboarding({
+          ...clientOptions,
+          body: {
+            initiativeId: initiative.value.initiativeId,
+            pdndAccept: true,
+            confirmedTos: true,
+            selfDeclarationList: consentsArray
           }
-        )
-      );
+        });
 
-      return dataPromise;
+        const dataPromise: Promise<undefined> = pipe(
+          response,
+          E.fold(
+            _ => Promise.reject(OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR),
+            ({ status, value }) => {
+              switch (status) {
+                case 202:
+                  return Promise.resolve(undefined);
+                case 401:
+                  return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
+                case 429:
+                  return Promise.reject(
+                    OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS
+                  );
+                default:
+                  return Promise.reject(mapErrorCodeToFailure(value.code));
+              }
+            }
+          )
+        );
+
+        return dataPromise;
+      } catch (error) {
+        return Promise.reject(
+          OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS
+        );
+      }
     }
   );
 
