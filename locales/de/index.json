@@ -953,7 +953,6 @@
     "opt_in": {
       "contextualHelpTitle": "Authentifizierung",
       "contextualHelpContent": "Hier findest du Informationen darüber, wie du dich bei IO authentifizieren kannst, sowie einige Sicherheitstipps.",
-      "news": "Neu",
       "title": "Ab sofort kannst du leichter auf IO zugreifen",
       "identity_check": "Du musst dich nicht mehr alle 30 Tage mit SPID oder CIE identifizieren, sondern nur noch einmal im Jahr oder wenn du die App verlässt",
       "security_suggests": "Einige Sicherheitstipps",

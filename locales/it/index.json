@@ -1141,7 +1141,6 @@
     "opt_in": {
       "contextualHelpTitle": "Autenticazione",
       "contextualHelpContent": "Qui puoi trovare le informazioni sulle modalità di autenticazione su IO e alcuni consigli di sicurezza.",
-      "news": "novità",
       "title": "Ora è più facile accedere!",
       "identity_check": "Non dovrai più identificarti con SPID o CIE ogni 30 giorni, ma solo una volta all’anno o se esci dall’app",
       "security_suggests": "Alcuni consigli di sicurezza",
