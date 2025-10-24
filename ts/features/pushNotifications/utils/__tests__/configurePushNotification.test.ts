@@ -176,17 +176,17 @@ describe("configurePushNotifications", () => {
       );
     });
   });
-  describe("NotificationPayload", () => {
+  describe("ComNotificationPayload", () => {
     it("should decode unrelated payload (since it is all optional)", () => {
       const payload = {};
-      const result = testable!.NotificationPayload.decode(payload);
+      const result = testable!.ComNotificationPayload.decode(payload);
       expect(E.isRight(result)).toBe(true);
     });
     it("should decode iOS payload properly", () => {
       const payload = {
         message_id: "01JQZYA0T36WN9ZWR4P4RPXZ6S"
       };
-      const result = testable!.NotificationPayload.decode(payload);
+      const result = testable!.ComNotificationPayload.decode(payload);
       expect(result).toEqual({
         _tag: "Right",
         right: {
@@ -200,11 +200,44 @@ describe("configurePushNotifications", () => {
           message_id: "01JQZYA0T36WN9ZWR4P4RPXZ6S"
         }
       };
-      const result = testable!.NotificationPayload.decode(payload);
+      const result = testable!.ComNotificationPayload.decode(payload);
       expect(result).toEqual({
         _tag: "Right",
         right: {
           data: { message_id: "01JQZYA0T36WN9ZWR4P4RPXZ6S" }
+        }
+      });
+    });
+  });
+  describe("ItwNotificationPayload", () => {
+    it("should decode unrelated payload (since it is all optional)", () => {
+      const payload = {};
+      const result = testable!.ItwNotificationPayload.decode(payload);
+      expect(E.isRight(result)).toBe(true);
+    });
+    it("should decode iOS payload properly", () => {
+      const payload = {
+        deepLink: "ioit://itw/some/deep/link"
+      };
+      const result = testable!.ItwNotificationPayload.decode(payload);
+      expect(result).toEqual({
+        _tag: "Right",
+        right: {
+          deepLink: "ioit://itw/some/deep/link"
+        }
+      });
+    });
+    it("should decode Android payload properly", () => {
+      const payload = {
+        data: {
+          deepLink: "ioit://itw/some/deep/link"
+        }
+      };
+      const result = testable!.ItwNotificationPayload.decode(payload);
+      expect(result).toEqual({
+        _tag: "Right",
+        right: {
+          data: { deepLink: "ioit://itw/some/deep/link" }
         }
       });
     });

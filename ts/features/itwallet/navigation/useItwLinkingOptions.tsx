@@ -11,7 +11,14 @@ import { ITW_ROUTES } from "./routes";
  */
 export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => {
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
-
+  // If itw is valid, enable this route
+  const itwValidRoute = isItwValid
+    ? {
+        [ITW_ROUTES.IDENTIFICATION.MODE_SELECTION]: {
+          path: "identification/mode-selection"
+        }
+      }
+    : {};
   return {
     [ITW_ROUTES.MAIN]: {
       path: "itw",
@@ -23,7 +30,8 @@ export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => {
           : ITW_ROUTES.DISCOVERY.INFO]: "discovery/info",
         [ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL]: {
           path: "presentation/credential-detail/:credentialType"
-        }
+        },
+        ...itwValidRoute
       }
     },
     [ITW_REMOTE_ROUTES.MAIN]: {
