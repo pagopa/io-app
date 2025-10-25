@@ -77,7 +77,7 @@ export const ItwIdentificationModeSelectionScreen = (
   useFocusEffect(
     useCallback(() => {
       if (eidReissuing) {
-        machineRef.send({ type: "start", mode: "reissuance" });
+        machineRef.send({ type: "start", mode: "reissuance", level: "l2" });
       }
     }, [eidReissuing, machineRef])
   );
@@ -126,7 +126,7 @@ export const ItwIdentificationModeSelectionScreen = (
       machineRef.send({
         type: "restart",
         mode: "issuance",
-        isL2Fallback: true
+        level: "l2-fallback"
       });
     }
   }, [isWalletAlreadyActivated, machineRef, routeName]);

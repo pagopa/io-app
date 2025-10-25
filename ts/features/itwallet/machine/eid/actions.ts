@@ -64,7 +64,7 @@ export const createEidIssuanceActionsImplementation = (
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
-      params: { isL3: context.isL3 }
+      params: { isL3: context.level !== "l2" }
     });
   },
 
@@ -255,8 +255,9 @@ export const createEidIssuanceActionsImplementation = (
   trackWalletInstanceCreation: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
-    const isL3 = context.isL3 && !context.isL2Fallback;
-    trackSaveCredentialSuccess(isL3 ? "ITW_PID" : "ITW_ID_V2");
+    trackSaveCredentialSuccess(
+      context.level === "l2" ? "ITW_ID_V2" : "ITW_PID"
+    );
     updateITWStatusAndPIDProperties(store.getState());
   },
   trackWalletInstanceRevocation: () => {

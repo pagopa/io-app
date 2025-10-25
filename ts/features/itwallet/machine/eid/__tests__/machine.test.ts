@@ -171,7 +171,7 @@ describe("itwEidIssuanceMachine", () => {
      * Start eID issuance
      */
 
-    actor.send({ type: "start" });
+    actor.send({ type: "start", mode: "issuance", level: "l2" });
 
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
@@ -210,7 +210,7 @@ describe("itwEidIssuanceMachine", () => {
      * Start eID issuance
      */
 
-    actor.send({ type: "start" });
+    actor.send({ type: "start", mode: "issuance", level: "l2" });
 
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
@@ -296,7 +296,7 @@ describe("itwEidIssuanceMachine", () => {
      * Restart the flow as L2 fallback from the beginning (TOS acceptance)
      */
 
-    actor.send({ type: "restart", mode: "issuance", isL2Fallback: true });
+    actor.send({ type: "restart", mode: "issuance", level: "l2-fallback" });
 
     await waitFor(() =>
       expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance")
@@ -349,14 +349,14 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
       mode: "issuance",
+      level: "l2-fallback",
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
       identification: {
         mode: "spid",
         level: "L2",
         idpId: idps[0].id
-      },
-      isL2Fallback: true
+      }
     });
 
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
@@ -402,6 +402,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
       mode: "issuance",
+      level: "l2-fallback",
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
       identification: {
@@ -412,8 +413,7 @@ describe("itwEidIssuanceMachine", () => {
       authenticationContext: expect.objectContaining({
         callbackUrl: "http://test.it"
       }),
-      eid: ItwStoredCredentialsMocks.eid,
-      isL2Fallback: true
+      eid: ItwStoredCredentialsMocks.eid
     });
 
     /**
@@ -731,7 +731,7 @@ describe("itwEidIssuanceMachine", () => {
      * Start eID issuance
      */
 
-    actor.send({ type: "start" });
+    actor.send({ type: "start", mode: "issuance", level: "l2" });
 
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
@@ -795,7 +795,7 @@ describe("itwEidIssuanceMachine", () => {
      * Start eID issuance
      */
 
-    actor.send({ type: "start" });
+    actor.send({ type: "start", mode: "issuance", level: "l2" });
 
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
@@ -875,10 +875,14 @@ describe("itwEidIssuanceMachine", () => {
      * Start eID issuance
      */
 
-    actor.send({ type: "start" });
+    actor.send({ type: "start", mode: "issuance", level: "l2" });
 
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
-    expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
+    expect(actor.getSnapshot().context).toStrictEqual({
+      ...InitialContext,
+      mode: "issuance",
+      level: "l2"
+    });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
 
@@ -932,7 +936,7 @@ describe("itwEidIssuanceMachine", () => {
      * Start eID issuance
      */
 
-    actor.send({ type: "start" });
+    actor.send({ type: "start", mode: "issuance", level: "l2" });
 
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
@@ -987,7 +991,7 @@ describe("itwEidIssuanceMachine", () => {
      * Start eID issuance
      */
 
-    actor.send({ type: "start" });
+    actor.send({ type: "start", mode: "issuance", level: "l2" });
 
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
@@ -1039,7 +1043,7 @@ describe("itwEidIssuanceMachine", () => {
      * Start eID issuance
      */
 
-    actor.send({ type: "start" });
+    actor.send({ type: "start", mode: "issuance", level: "l2" });
 
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
@@ -1148,7 +1152,7 @@ describe("itwEidIssuanceMachine", () => {
      * Start eID issuance
      */
 
-    actor.send({ type: "start" });
+    actor.send({ type: "start", mode: "issuance", level: "l2" });
 
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
@@ -1247,7 +1251,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().context).toStrictEqual(initialContext);
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
-    actor.send({ type: "start", mode: "reissuance" });
+    actor.send({ type: "start", mode: "reissuance", level: "l2" });
 
     expect(actor.getSnapshot().value).toStrictEqual(
       "TrustFederationVerification"
@@ -1271,7 +1275,8 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...initialContext,
-      mode: "reissuance"
+      mode: "reissuance",
+      level: "l2"
     });
 
     expect(navigateToIdentificationScreen).toHaveBeenCalledTimes(1);
@@ -1312,9 +1317,10 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...initialContext,
+      mode: "reissuance",
+      level: "l2",
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
-      mode: "reissuance",
       identification: {
         mode: "spid",
         level: "L2",
@@ -1368,9 +1374,10 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...initialContext,
+      mode: "reissuance",
+      level: "l2",
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
-      mode: "reissuance",
       identification: {
         mode: "spid",
         level: "L2",
@@ -1436,7 +1443,7 @@ describe("itwEidIssuanceMachine", () => {
     /**
      * Start eID issuance
      */
-    actor.send({ type: "start" });
+    actor.send({ type: "start", mode: "issuance", level: "l2" });
 
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
@@ -1604,7 +1611,7 @@ describe("itwEidIssuanceMachine", () => {
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA },
-        isL3: true,
+        level: "l3",
         cieContext: {
           isNFCEnabled: true,
           isCIEAuthenticationSupported: true
@@ -1656,7 +1663,7 @@ describe("itwEidIssuanceMachine", () => {
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA },
-        isL3: true,
+        level: "l3",
         cieContext: {
           isNFCEnabled: true,
           isCIEAuthenticationSupported: true
@@ -1716,10 +1723,10 @@ describe("itwEidIssuanceMachine", () => {
      * Start
      */
 
-    actor.send({ type: "start", isL3: true });
+    actor.send({ type: "start", mode: "issuance", level: "l3" });
 
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
-      isL3: true
+      level: "l3"
     });
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
@@ -1737,7 +1744,7 @@ describe("itwEidIssuanceMachine", () => {
         eid: ItwStoredCredentialsMocks.eid,
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA },
-        isL3: true,
+        level: "l3",
         legacyCredentials: [
           ItwStoredCredentialsMocks.mdl
         ] as ReadonlyArray<StoredCredential>
@@ -1766,7 +1773,7 @@ describe("itwEidIssuanceMachine", () => {
         mode: "upgrade",
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA },
-        isL3: true,
+        level: "l3",
         legacyCredentials: [] as ReadonlyArray<StoredCredential>
       }
     } as MachineSnapshot);
@@ -1788,7 +1795,7 @@ describe("itwEidIssuanceMachine", () => {
     hasValidWalletInstanceAttestation.mockImplementation(() => true);
 
     actor.start();
-    actor.send({ type: "start" });
+    actor.send({ type: "start", mode: "issuance", level: "l2" });
     actor.send({ type: "accept-tos" });
 
     expect(actor.getSnapshot().value).toStrictEqual(
@@ -1808,7 +1815,7 @@ describe("itwEidIssuanceMachine", () => {
     );
 
     actor.start();
-    actor.send({ type: "start", mode: "reissuance" });
+    actor.send({ type: "start", mode: "reissuance", level: "l2" });
 
     expect(actor.getSnapshot().value).toStrictEqual(
       "TrustFederationVerification"
@@ -1829,7 +1836,7 @@ describe("itwEidIssuanceMachine", () => {
     actor.start();
 
     // Start
-    actor.send({ type: "start", isL3: true, mode: "upgrade" });
+    actor.send({ type: "start", level: "l3", mode: "upgrade" });
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
 
     // Accept Wallet Provider TOS
@@ -1861,7 +1868,7 @@ describe("itwEidIssuanceMachine", () => {
         mode: "upgrade",
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA },
-        isL3: true,
+        level: "l3",
         legacyCredentials: [
           ItwStoredCredentialsMocks.mdl
         ] as ReadonlyArray<StoredCredential>
