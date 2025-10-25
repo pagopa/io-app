@@ -5993,7 +5993,8 @@
         "buttons": {
           "privacy": "Preferenze e Privacy",
           "unsubscribe": "Rimuovi {{initiativeName}}",
-          "requestHelp": "Chiedi aiuto"
+          "requestHelp": "Chiedi aiuto",
+          "staticCode": "Genera codice statico"
         }
       },
       "operationDetails": {
