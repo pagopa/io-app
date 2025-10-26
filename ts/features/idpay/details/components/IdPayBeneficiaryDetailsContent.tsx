@@ -33,7 +33,7 @@ import { useIODispatch } from "../../../../store/hooks";
 import { format } from "../../../../utils/dates";
 import { SERVICES_ROUTES } from "../../../services/common/navigation/routes";
 import { idPayGenerateStaticCode } from "../../barcode/store/actions";
-import useIDPayStaticCodeModal from "../../common/hooks/useIDPayStaticCodeModal";
+import { useIDPayStaticCodeModal } from "../../common/hooks/useIDPayStaticCodeModal";
 import { useIdPaySupportModal } from "../../common/hooks/useIdPaySupportModal";
 import { formatNumberCurrencyCentsOrDefault } from "../../common/utils/strings";
 import { IDPayDetailsRoutes } from "../navigation";
@@ -68,7 +68,9 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
 
   const { initiativeDetails, beneficiaryDetails, isLoading } = props;
   const dispatch = useIODispatch();
-  const { bottomSheet, present } = useIDPayStaticCodeModal();
+  const { bottomSheet, present } = useIDPayStaticCodeModal(
+    initiativeDetails?.initiativeId ?? ""
+  );
 
   if (isLoading) {
     return <BeneficiaryDetailsContentSkeleton />;
