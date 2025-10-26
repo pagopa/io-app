@@ -76,7 +76,7 @@ export const useIDPayStaticCodeModal = (
       <View style={styles.barcodeContainer}>
         <IconPlaceholder />
         <IOSkeleton shape="rectangle" width="100%" height={120} radius={4} />
-        <VSpacer size={14} />
+        <VSpacer size={12} />
         <View style={{ alignItems: "center" }}>
           <IOSkeleton
             shape="rectangle"
