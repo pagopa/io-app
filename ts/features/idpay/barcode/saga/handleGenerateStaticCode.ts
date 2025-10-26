@@ -1,5 +1,7 @@
+import { IOToast } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import {
@@ -38,27 +40,44 @@ export function* handleGenerateStaticCode(
       retrieveBarCodeTransactionResult,
       E.fold(
         () => {
-          put(
+          IOToast.error(
+            I18n.t(
+              "idpay.initiative.beneficiaryDetails.staticCodeModal.staticCodeErrorAlert"
+            )
+          );
+          return put(
             idPayGenerateStaticCode.failure({
               initiativeId: action.payload.initiativeId,
               error: genericError
             })
           );
         },
-        response =>
-          put(
-            response.status === 200
-              ? idPayGenerateStaticCode.success(response.value)
-              : idPayGenerateStaticCode.failure({
-                  initiativeId: action.payload.initiativeId,
-                  error: getGenericError(
-                    new Error(`response status code ${response.status}`)
-                  )
-                })
-          )
+        response => {
+          if (response.status === 200) {
+            return put(idPayGenerateStaticCode.success(response.value));
+          }
+          IOToast.error(
+            I18n.t(
+              "idpay.initiative.beneficiaryDetails.staticCodeModal.staticCodeErrorAlert"
+            )
+          );
+          return put(
+            idPayGenerateStaticCode.failure({
+              initiativeId: action.payload.initiativeId,
+              error: getGenericError(
+                new Error(`response status code ${response.status}`)
+              )
+            })
+          );
+        }
       )
     );
   } catch (error) {
+    IOToast.error(
+      I18n.t(
+        "idpay.initiative.beneficiaryDetails.staticCodeModal.staticCodeErrorAlert"
+      )
+    );
     yield* put(
       idPayGenerateStaticCode.failure({
         initiativeId: action.payload.initiativeId,
