@@ -33,15 +33,5 @@ export const idPayBarcodeSecondsTillExpireSelector = createSelector(
 
 export const idPayStaticCodeByInitiativeIdSelector = createSelector(
   idPayStaticCodeSelector,
-  state => (_initiativeId: string) => state
-);
-
-export const idPayStaticCodeValueSelector = createSelector(
-  idPayStaticCodeSelector,
-  state => {
-    if (pot.isSome(state)) {
-      return state.value.trxCode;
-    }
-    return "";
-  }
+  state => (initiativeId: string) => state[initiativeId] ?? pot.none
 );

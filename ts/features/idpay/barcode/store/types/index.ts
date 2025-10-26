@@ -10,7 +10,9 @@ export type IdPayBarcodeState = {
   >;
 };
 
-export type IdPayStaticCodeState = pot.Pot<
-  TransactionBarCodeResponse,
-  TransactionErrorDTO | NetworkError
->;
+export type IdPayStaticCodeState = {
+  [initiativeId: string]: pot.Pot<
+    TransactionBarCodeResponse,
+    TransactionErrorDTO | NetworkError
+  >;
+};
