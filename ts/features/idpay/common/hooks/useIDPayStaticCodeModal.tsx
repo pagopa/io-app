@@ -1,9 +1,12 @@
 import {
   Body,
+  bodyFontSize,
   ContentWrapper,
   H2,
+  h2FontSize,
   h3FontSize,
   h3LineHeight,
+  Icon,
   IOButton,
   IOColors,
   IOSkeleton,
@@ -15,7 +18,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { JSX } from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import { TransactionBarCodeResponse } from "../../../../../definitions/idpay/TransactionBarCodeResponse";
 import { useIOSelector } from "../../../../store/hooks";
@@ -37,25 +40,43 @@ export const useIDPayStaticCodeModal = (
 
   const isLoading = pot.isLoading(barcodePot);
 
+  const IconPlaceholder = () => (
+    <>
+      <VSpacer size={16} />
+      <View style={{ alignItems: "center" }}>
+        <Icon name="tag" size={32} />
+      </View>
+      <VSpacer size={16} />
+    </>
+  );
+
   const StaticCodeSkeleton = () => (
     <View>
-      <IOSkeleton shape="rectangle" width="80%" height={18} radius={4} />
-      <VSpacer size={24} />
-      <IOSkeleton shape="rectangle" width="100%" height={14} radius={4} />
+      <IOSkeleton
+        shape="rectangle"
+        width="80%"
+        height={h2FontSize}
+        radius={4}
+      />
+      <VSpacer size={16} />
+      <IOSkeleton
+        shape="rectangle"
+        width="100%"
+        height={bodyFontSize}
+        radius={4}
+      />
       <VSpacer size={8} />
-      <IOSkeleton shape="rectangle" width="75%" height={14} radius={4} />
-      <VSpacer size={32} />
-      <View
-        style={{
-          borderColor: IOColors["grey-100"],
-          borderWidth: 1,
-          padding: 16,
-          borderRadius: 8
-        }}
-      >
-        <VSpacer size={4} />
-        <IOSkeleton shape="rectangle" width="100%" height={32} radius={4} />
-        <VSpacer size={24} />
+      <IOSkeleton
+        shape="rectangle"
+        width="75%"
+        height={bodyFontSize}
+        radius={4}
+      />
+      <VSpacer size={24} />
+      <View style={styles.barcodeContainer}>
+        <IconPlaceholder />
+        <IOSkeleton shape="rectangle" width="100%" height={120} radius={4} />
+        <VSpacer size={14} />
         <View style={{ alignItems: "center" }}>
           <IOSkeleton
             shape="rectangle"
@@ -83,15 +104,8 @@ export const useIDPayStaticCodeModal = (
         )}
       </Body>
       <VSpacer size={24} />
-      <View
-        style={{
-          borderColor: IOColors["grey-100"],
-          borderWidth: 1,
-          padding: 16,
-          borderRadius: 8
-        }}
-      >
-        <VSpacer size={4} />
+      <View style={styles.barcodeContainer}>
+        <IconPlaceholder />
         <Barcode format="CODE128" value={barcode.trxCode} />
         <View style={{ alignItems: "center" }}>
           <IOText
@@ -156,3 +170,12 @@ export const useIDPayStaticCodeModal = (
 
   return bottomSheet;
 };
+
+const styles = StyleSheet.create({
+  barcodeContainer: {
+    borderColor: IOColors["grey-100"],
+    borderWidth: 1,
+    padding: 16,
+    borderRadius: 8
+  }
+});
