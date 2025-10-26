@@ -6,80 +6,153 @@ import {
   h3LineHeight,
   IOButton,
   IOColors,
+  IOSkeleton,
   IOText,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
 import { JSX } from "react";
 import { View } from "react-native";
 import Barcode from "react-native-barcode-builder";
+import { TransactionBarCodeResponse } from "../../../../../definitions/idpay/TransactionBarCodeResponse";
 import { useIOSelector } from "../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import { idPayStaticCodeValueSelector } from "../../barcode/store/selectors";
+import { idPayStaticCodeByInitiativeIdSelector } from "../../barcode/store/selectors";
 
 type IDPayFailureSupportModal = {
   bottomSheet: JSX.Element;
   present: () => void;
 };
 
-const useIDPayStaticCodeModal = (): IDPayFailureSupportModal => {
-  const barcode = useIOSelector(idPayStaticCodeValueSelector);
+export const useIDPayStaticCodeModal = (
+  initiativeId: string
+): IDPayFailureSupportModal => {
+  const barcodePot = useIOSelector(idPayStaticCodeByInitiativeIdSelector)(
+    initiativeId
+  );
 
-  const { bottomSheet, present } = useIOBottomSheetModal({
-    component:
-      barcode === "" ? (
-        <></>
-      ) : (
-        <>
-          <H2 weight="Semibold">Ecco il codice statico</H2>
-          <VSpacer size={16} />
-          <Body>
-            Usa questo codice, se richiesto da un venditore online in fase di
-            acquisto.
-          </Body>
-          <VSpacer size={24} />
-          <View
-            style={{
-              borderColor: IOColors["grey-100"],
-              borderWidth: 1,
-              padding: 16,
-              borderRadius: 8
-            }}
-          >
-            <VSpacer size={4} />
-            <Barcode format="CODE128" value={barcode} />
-            <View style={{ alignItems: "center" }}>
-              <IOText
-                font="FiraCode"
-                size={h3FontSize}
-                lineHeight={h3LineHeight}
-                weight="Medium"
-              >
-                {barcode}
-              </IOText>
-            </View>
-            <VSpacer size={32} />
-          </View>
-        </>
-      ),
-    title: "",
-    footer: (
-      <ContentWrapper>
-        <IOButton
-          fullWidth
-          variant="solid"
-          label={"Copia codice statico"}
-          onPress={() => clipboardSetStringWithFeedback(barcode)}
-        />
+  const isLoading = pot.isLoading(barcodePot);
+
+  const StaticCodeSkeleton = () => (
+    <View>
+      <IOSkeleton shape="rectangle" width="80%" height={18} radius={4} />
+      <VSpacer size={24} />
+      <IOSkeleton shape="rectangle" width="100%" height={14} radius={4} />
+      <VSpacer size={8} />
+      <IOSkeleton shape="rectangle" width="75%" height={14} radius={4} />
+      <VSpacer size={32} />
+      <View
+        style={{
+          borderColor: IOColors["grey-100"],
+          borderWidth: 1,
+          padding: 16,
+          borderRadius: 8
+        }}
+      >
+        <VSpacer size={4} />
+        <IOSkeleton shape="rectangle" width="100%" height={32} radius={4} />
+        <VSpacer size={24} />
+        <View style={{ alignItems: "center" }}>
+          <IOSkeleton
+            shape="rectangle"
+            width="50%"
+            height={h3FontSize}
+            radius={4}
+          />
+        </View>
         <VSpacer size={32} />
-      </ContentWrapper>
-    )
+      </View>
+    </View>
+  );
+
+  const SuccessContent = (barcode: TransactionBarCodeResponse) => (
+    <>
+      <H2 weight="Semibold">
+        {I18n.t(
+          "idpay.initiative.beneficiaryDetails.staticCodeModal.content.title"
+        )}
+      </H2>
+      <VSpacer size={16} />
+      <Body>
+        {I18n.t(
+          "idpay.initiative.beneficiaryDetails.staticCodeModal.content.subtitle"
+        )}
+      </Body>
+      <VSpacer size={24} />
+      <View
+        style={{
+          borderColor: IOColors["grey-100"],
+          borderWidth: 1,
+          padding: 16,
+          borderRadius: 8
+        }}
+      >
+        <VSpacer size={4} />
+        <Barcode format="CODE128" value={barcode.trxCode} />
+        <View style={{ alignItems: "center" }}>
+          <IOText
+            font="FiraCode"
+            size={h3FontSize}
+            lineHeight={h3LineHeight}
+            weight="Medium"
+          >
+            {barcode.trxCode}
+          </IOText>
+        </View>
+        <VSpacer size={32} />
+      </View>
+    </>
+  );
+
+  const StaticCodeBottomSheetContent = () => {
+    if (isLoading) {
+      return <StaticCodeSkeleton />;
+    }
+
+    return pipe(
+      barcodePot,
+      pot.toOption,
+      O.fold(
+        () => {
+          bottomSheet.dismiss();
+          return <></>;
+        },
+        barcode => <SuccessContent {...barcode} />
+      )
+    );
+  };
+
+  const FooterComponent = () =>
+    pipe(
+      barcodePot,
+      pot.toOption,
+      O.fold(
+        () => null,
+        barcode => (
+          <ContentWrapper>
+            <IOButton
+              fullWidth
+              variant="solid"
+              label={I18n.t(
+                "idpay.initiative.beneficiaryDetails.staticCodeModal.footer"
+              )}
+              onPress={() => clipboardSetStringWithFeedback(barcode.trxCode)}
+            />
+            <VSpacer size={32} />
+          </ContentWrapper>
+        )
+      )
+    );
+
+  const bottomSheet = useIOBottomSheetModal({
+    title: null,
+    component: <StaticCodeBottomSheetContent />,
+    footer: <FooterComponent />
   });
 
-  return {
-    bottomSheet,
-    present
-  };
+  return bottomSheet;
 };
-
-export default useIDPayStaticCodeModal;
