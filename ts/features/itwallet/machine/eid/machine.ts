@@ -171,7 +171,6 @@ export const itwEidIssuanceMachine = setup({
     restart: {
       target: "#itwEidIssuanceMachine.Idle",
       actions: [
-        assign(() => ({ ...InitialContext })),
         raise(({ event }) => ({
           type: "start",
           mode: event.mode,
