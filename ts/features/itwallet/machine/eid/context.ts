@@ -59,7 +59,7 @@ export type Context = {
   mode: EidIssuanceMode | undefined;
   /**
    * The level of eID issuance, which determines the authentication methods allowed and
-   * the eID level that will be issuedL Documenti su IO (L2) or IT Wallet (L2+, L3)
+   * the eID level that will be issued: Documenti su IO (L2) or IT Wallet (L2+, L3)
    */
   level: EidIssuanceLevel | undefined;
   /**
