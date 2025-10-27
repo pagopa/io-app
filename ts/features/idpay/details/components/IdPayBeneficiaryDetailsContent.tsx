@@ -33,6 +33,7 @@ import { useIODispatch } from "../../../../store/hooks";
 import { format } from "../../../../utils/dates";
 import { SERVICES_ROUTES } from "../../../services/common/navigation/routes";
 import { idPayGenerateStaticCode } from "../../barcode/store/actions";
+import { trackIDPayStaticCodeGeneration } from "../../common/analytics";
 import { useIDPayStaticCodeModal } from "../../common/hooks/useIDPayStaticCodeModal";
 import { useIdPaySupportModal } from "../../common/hooks/useIdPaySupportModal";
 import { formatNumberCurrencyCentsOrDefault } from "../../common/utils/strings";
@@ -69,7 +70,8 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
   const { initiativeDetails, beneficiaryDetails, isLoading } = props;
   const dispatch = useIODispatch();
   const { bottomSheet, present } = useIDPayStaticCodeModal(
-    initiativeDetails?.initiativeId ?? ""
+    initiativeDetails?.initiativeId ?? "",
+    initiativeDetails?.initiativeName ?? ""
   );
 
   if (isLoading) {
@@ -245,6 +247,10 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
       ));
 
   const handleGenerateStaticCode = () => {
+    trackIDPayStaticCodeGeneration({
+      initiativeId: initiativeDetails.initiativeId,
+      initiativeName: initiativeDetails.initiativeName
+    });
     dispatch(
       idPayGenerateStaticCode.request({
         initiativeId: initiativeDetails.initiativeId

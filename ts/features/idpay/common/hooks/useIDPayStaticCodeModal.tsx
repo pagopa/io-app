@@ -14,17 +14,23 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
+import { flow, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { JSX } from "react";
 import { StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import { TransactionBarCodeResponse } from "../../../../../definitions/idpay/TransactionBarCodeResponse";
+import { TransactionErrorDTO } from "../../../../../definitions/idpay/TransactionErrorDTO";
 import { useIOSelector } from "../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { idPayStaticCodeByInitiativeIdSelector } from "../../barcode/store/selectors";
+import {
+  trackIDPayStaticCodeGenerationCopy,
+  trackIDPayStaticCodeGenerationError,
+  trackIDPayStaticCodeGenerationSuccess
+} from "../analytics";
 
 type IDPayFailureSupportModal = {
   bottomSheet: JSX.Element;
@@ -32,7 +38,8 @@ type IDPayFailureSupportModal = {
 };
 
 export const useIDPayStaticCodeModal = (
-  initiativeId: string
+  initiativeId: string,
+  initiativeName: string
 ): IDPayFailureSupportModal => {
   const barcodePot = useIOSelector(idPayStaticCodeByInitiativeIdSelector)(
     initiativeId
@@ -127,15 +134,37 @@ export const useIDPayStaticCodeModal = (
       return <StaticCodeSkeleton />;
     }
 
+    const decodeFailure = flow(TransactionErrorDTO.decode, O.fromEither);
+
     return pipe(
       barcodePot,
       pot.toOption,
       O.fold(
         () => {
+          if (pot.isError(barcodePot)) {
+            const reason = pipe(
+              decodeFailure(barcodePot.error),
+              O.fold(
+                () => undefined,
+                failure => failure.code
+              )
+            );
+            trackIDPayStaticCodeGenerationError({
+              initiativeId,
+              initiativeName,
+              reason
+            });
+          }
           bottomSheet.dismiss();
           return <></>;
         },
-        barcode => <SuccessContent {...barcode} />
+        barcode => {
+          trackIDPayStaticCodeGenerationSuccess({
+            initiativeId,
+            initiativeName
+          });
+          return <SuccessContent {...barcode} />;
+        }
       )
     );
   };
@@ -154,7 +183,13 @@ export const useIDPayStaticCodeModal = (
               label={I18n.t(
                 "idpay.initiative.beneficiaryDetails.staticCodeModal.footer"
               )}
-              onPress={() => clipboardSetStringWithFeedback(barcode.trxCode)}
+              onPress={() => {
+                trackIDPayStaticCodeGenerationCopy({
+                  initiativeId,
+                  initiativeName
+                });
+                clipboardSetStringWithFeedback(barcode.trxCode);
+              }}
             />
             <VSpacer size={32} />
           </ContentWrapper>
