@@ -263,6 +263,14 @@ export function trackPNPaymentStatus(
   );
 }
 
-export function trackPNShowF24() {
-  void mixpanelTrack("PN_SHOW_F24", buildEventProperties("UX", "action"));
+export function trackPNShowF24(
+  openingSource: SendOpeningSource,
+  userType: SendUserType
+) {
+  const eventName = "PN_SHOW_F24";
+  const eventProps = buildEventProperties("UX", "action", {
+    opening_source: openingSource,
+    send_user: userType
+  });
+  void mixpanelTrack(eventName, eventProps);
 }

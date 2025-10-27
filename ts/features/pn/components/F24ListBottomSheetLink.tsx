@@ -59,9 +59,10 @@ export const F24ListBottomSheetLink = ({
         variant="link"
         label={I18n.t("features.pn.details.f24Section.showAll")}
         onPress={() => {
-          trackPNShowF24();
+          trackPNShowF24(sendOpeningSource, sendUserType);
           present();
         }}
+        testID="f24_list_bottomsheet_link_button"
       />
       {bottomSheet}
     </>
