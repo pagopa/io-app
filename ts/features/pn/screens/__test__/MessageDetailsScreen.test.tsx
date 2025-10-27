@@ -2,6 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { Action, Store } from "redux";
 import configureMockStore from "redux-mock-store";
+import { fireEvent } from "@testing-library/react-native";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -31,6 +32,7 @@ import * as AAR_SELECTORS from "../../aar/store/selectors";
 import { ATTACHMENT_CATEGORY } from "../../../messages/types/attachmentCategory";
 import * as AAR_ANALYTICS from "../../aar/analytics";
 import * as SEND_ANALYTICS from "../../analytics";
+import * as HARDWARE_BACK_BUTTON from "../../../../hooks/useHardwareBackButton";
 
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
@@ -39,6 +41,7 @@ jest.mock("react-redux", () => ({
 }));
 
 jest.mock("../../components/MessageDetails");
+jest.mock("../../aar/components/SendAARMessageDetailBottomSheetComponent");
 
 describe("MessageDetailsScreen", () => {
   beforeEach(() => {
@@ -281,6 +284,139 @@ describe("MessageDetailsScreen", () => {
       });
     });
   });
+
+  [undefined, false, true].forEach(isAarMessage =>
+    [false, true].forEach(isDelegate =>
+      it(`should ${
+        isAarMessage ? "" : "not "
+      }call trackSendAarNotificationClosure with proper parameters upon pressing the android back button (is AAR message ${isAarMessage}, is delegate ${isDelegate})`, () => {
+        const baseState = appReducer(
+          undefined,
+          applicationChangeState("active")
+        );
+        const mockStore = configureMockStore<GlobalState>();
+        const store: Store<GlobalState> = mockStore(baseState);
+
+        const sendMessage = {
+          attachments: [],
+          created_at: new Date(),
+          iun: "A IUN",
+          notificationStatusHistory: [],
+          recipients: [],
+          subject: "A subject"
+        } as unknown as PNMessage;
+        const sendMessagePotOption = pot.some(O.some(sendMessage));
+
+        jest
+          .spyOn(commonSelectors, "profileFiscalCodeSelector")
+          .mockImplementation(_state => "XXXYYY99Z88W777I");
+        jest
+          .spyOn(REDUCERS, "pnMessageFromIdSelector")
+          .mockImplementation((_state, _id) => sendMessagePotOption);
+        jest
+          .spyOn(AAR_SELECTORS, "isAarMessageDelegatedSelector")
+          .mockImplementation((_state, _messageId) => isDelegate);
+        const spiedOnMockedTrackSendAARNotificationClosure = jest
+          .spyOn(SEND_ANALYTICS, "trackSendAarNotificationClosure")
+          .mockImplementation();
+        const spiedOnMockedUseHardwareBackButton = jest
+          .spyOn(HARDWARE_BACK_BUTTON, "useHardwareBackButton")
+          .mockImplementation();
+
+        renderComponent(store, false, !!isAarMessage);
+
+        expect(spiedOnMockedUseHardwareBackButton.mock.calls.length).toBe(1);
+        expect(spiedOnMockedUseHardwareBackButton.mock.calls[0].length).toBe(1);
+        expect(
+          spiedOnMockedUseHardwareBackButton.mock.calls[0][0]
+        ).toBeDefined();
+
+        const useHardwareBackButtonCallback =
+          spiedOnMockedUseHardwareBackButton.mock.calls[0][0];
+        expect(typeof useHardwareBackButtonCallback).toBe("function");
+        const result = useHardwareBackButtonCallback();
+
+        if (isAarMessage) {
+          expect(
+            spiedOnMockedTrackSendAARNotificationClosure.mock.calls.length
+          ).toBe(1);
+          expect(
+            spiedOnMockedTrackSendAARNotificationClosure.mock.calls[0].length
+          ).toBe(1);
+          expect(
+            spiedOnMockedTrackSendAARNotificationClosure.mock.calls[0][0]
+          ).toBe(isDelegate ? "mandatory" : "recipient");
+          expect(result).toBe(true);
+        } else {
+          expect(
+            spiedOnMockedTrackSendAARNotificationClosure.mock.calls.length
+          ).toBe(0);
+          expect(result).toBe(false);
+        }
+      })
+    )
+  );
+
+  [undefined, false, true].forEach(isAarMessage =>
+    [false, true].forEach(isDelegate =>
+      it(`should ${
+        isAarMessage ? "" : "not "
+      }call trackSendAarNotificationClosure with proper parameters upon pressing the header's close button (is AAR message ${isAarMessage}, is delegate ${isDelegate})`, () => {
+        const baseState = appReducer(
+          undefined,
+          applicationChangeState("active")
+        );
+        const mockStore = configureMockStore<GlobalState>();
+        const store: Store<GlobalState> = mockStore(baseState);
+
+        const sendMessage = {
+          attachments: [],
+          created_at: new Date(),
+          iun: "A IUN",
+          notificationStatusHistory: [],
+          recipients: [],
+          subject: "A subject"
+        } as unknown as PNMessage;
+        const sendMessagePotOption = pot.some(O.some(sendMessage));
+
+        jest
+          .spyOn(commonSelectors, "profileFiscalCodeSelector")
+          .mockImplementation(_state => "XXXYYY99Z88W777I");
+        jest
+          .spyOn(REDUCERS, "pnMessageFromIdSelector")
+          .mockImplementation((_state, _id) => sendMessagePotOption);
+        jest
+          .spyOn(AAR_SELECTORS, "isAarMessageDelegatedSelector")
+          .mockImplementation((_state, _messageId) => isDelegate);
+        const spiedOnMockedTrackSendAARNotificationClosure = jest
+          .spyOn(SEND_ANALYTICS, "trackSendAarNotificationClosure")
+          .mockImplementation();
+
+        const { component } = renderComponent(store, false, !!isAarMessage);
+
+        if (isAarMessage) {
+          const headerCloseButton = component.getByTestId("AAR_close_button");
+          fireEvent.press(headerCloseButton);
+
+          expect(
+            spiedOnMockedTrackSendAARNotificationClosure.mock.calls.length
+          ).toBe(1);
+          expect(
+            spiedOnMockedTrackSendAARNotificationClosure.mock.calls[0].length
+          ).toBe(1);
+          expect(
+            spiedOnMockedTrackSendAARNotificationClosure.mock.calls[0][0]
+          ).toBe(isDelegate ? "mandatory" : "recipient");
+        } else {
+          component.getByTestId("support_close_button");
+
+          expect(
+            spiedOnMockedTrackSendAARNotificationClosure.mock.calls.length
+          ).toBe(0);
+        }
+      })
+    )
+  );
 });
 
 const renderComponent = (

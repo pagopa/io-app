@@ -21,7 +21,10 @@ import {
 import { profileFiscalCodeSelector } from "../../settings/common/store/selectors";
 import { SendAARMessageDetailBottomSheetComponent } from "../aar/components/SendAARMessageDetailBottomSheetComponent";
 import { terminateAarFlow } from "../aar/store/actions";
-import { trackPNUxSuccess } from "../analytics";
+import {
+  trackPNUxSuccess,
+  trackSendAarNotificationClosure
+} from "../analytics";
 import { MessageDetails } from "../components/MessageDetails";
 import { PnParamsList } from "../navigation/params";
 import {
@@ -39,6 +42,7 @@ import {
 } from "../utils";
 import { isAarMessageDelegatedSelector } from "../aar/store/selectors";
 import { trackSendAARFailure } from "../aar/analytics";
+import { SendUserType } from "../../pushNotifications/analytics";
 
 export type MessageDetailsScreenRouteParams = {
   messageId: string;
@@ -54,7 +58,8 @@ type MessageDetailsRouteProps = RouteProp<
 
 const useCorrectHeader = (
   isAAr: boolean,
-  aarBottomSheetRef: RefObject<(() => void) | undefined>
+  aarBottomSheetRef: RefObject<(() => void) | undefined>,
+  userType: SendUserType
 ) => {
   const { setOptions, goBack } = useIONavigation();
   const startSupportRequest = useOfflineToastGuard(useStartSupportRequest({}));
@@ -65,6 +70,7 @@ const useCorrectHeader = (
     firstAction: {
       icon: "closeLarge",
       onPress: () => {
+        trackSendAarNotificationClosure(userType);
         aarBottomSheetRef.current?.();
       },
       accessibilityLabel: I18n.t("global.buttons.close"),
@@ -79,7 +85,8 @@ const useCorrectHeader = (
       onPress: startSupportRequest,
       accessibilityLabel: I18n.t(
         "global.accessibility.contextualHelp.open.label"
-      )
+      ),
+      testID: "support_close_button"
     },
     goBack,
     backAccessibilityLabel: I18n.t("global.buttons.back")
@@ -108,18 +115,6 @@ export const MessageDetailsScreen = () => {
   } = route.params;
   const aarBottomSheetRef = useRef<() => void>(undefined);
 
-  useCorrectHeader(isAarMessage, aarBottomSheetRef);
-
-  const androidBackButtonCallback = useCallback(() => {
-    if (isAarMessage) {
-      aarBottomSheetRef.current?.();
-      return true;
-    }
-    return false;
-  }, [isAarMessage]);
-
-  useHardwareBackButton(androidBackButtonCallback);
-
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
   const sendMessagePot = useIOSelector(state =>
     pnMessageFromIdSelector(state, messageId)
@@ -127,6 +122,7 @@ export const MessageDetailsScreen = () => {
   const isAARDelegate = useIOSelector(state =>
     isAarMessageDelegatedSelector(state, messageId)
   );
+
   const sendMessageOrUndefined = O.getOrElseW(() => undefined)(
     pot.getOrElse(sendMessagePot, O.none)
   );
@@ -137,6 +133,19 @@ export const MessageDetailsScreen = () => {
     sendMessagePot
   );
   const paymentsCount = payments?.length ?? 0;
+
+  const sendUserType: SendUserType = isAARDelegate ? "mandatory" : "recipient";
+  const androidBackButtonCallback = useCallback(() => {
+    if (isAarMessage) {
+      trackSendAarNotificationClosure(sendUserType);
+      aarBottomSheetRef.current?.();
+      return true;
+    }
+    return false;
+  }, [isAarMessage, sendUserType]);
+
+  useHardwareBackButton(androidBackButtonCallback);
+  useCorrectHeader(isAarMessage, aarBottomSheetRef, sendUserType);
 
   useEffect(() => {
     dispatch(

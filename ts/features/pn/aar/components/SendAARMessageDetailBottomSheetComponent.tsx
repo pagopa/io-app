@@ -8,7 +8,7 @@ import PN_ROUTES from "../../navigation/routes";
 import { isPnServiceEnabled } from "../../reminderBanner/reducer/bannerDismiss";
 import { SendAARMessageDetailBottomSheet } from "./SendAARMessageDetailBottomSheet";
 
-type SendAARMessageDetailBottomSheetComponentProps = {
+export type SendAARMessageDetailBottomSheetComponentProps = {
   aarBottomSheetRef: RefObject<(() => void) | undefined>;
   isDelegate: boolean;
 };
