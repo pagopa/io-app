@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.17.0-rc.8](https://github.com/pagopa/io-app/compare/3.17.0-rc.7...3.17.0-rc.8) (2025-10-24)
+
+
+### Chores
+
+* [[IOAPPX-000](https://pagopa.atlassian.net/browse/IOAPPX-000)] bump RNCClipboard to version 1.16.3 ([#7530](https://github.com/pagopa/io-app/issues/7530)) ([79cc35d](https://github.com/pagopa/io-app/commit/79cc35dd09aa600eeeff28b348ebd00b595a44d1))
+
 ## [3.17.0-rc.7](https://github.com/pagopa/io-app/compare/3.17.0-rc.6...3.17.0-rc.7) (2025-10-23)
 
 

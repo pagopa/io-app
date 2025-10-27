@@ -1141,7 +1141,6 @@
     "opt_in": {
       "contextualHelpTitle": "Autenticazione",
       "contextualHelpContent": "Qui puoi trovare le informazioni sulle modalità di autenticazione su IO e alcuni consigli di sicurezza.",
-      "news": "novità",
       "title": "Ora è più facile accedere!",
       "identity_check": "Non dovrai più identificarti con SPID o CIE ogni 30 giorni, ma solo una volta all’anno o se esci dall’app",
       "security_suggests": "Alcuni consigli di sicurezza",
@@ -5776,7 +5775,7 @@
       "resultScreen": {
         "success": {
           "header": "Ecco il codice sconto!",
-          "body": "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:",
+          "body": "Chiedi al venditore di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:",
           "validUpTo": "Vale fino a ",
           "expiresIn": "Il codice scade tra ",
           "copyCodeCta": "Copia codice",
@@ -5831,7 +5830,8 @@
       }
     },
     "wallet": {
-      "preview": {
+      "card": {
+        "available": "Disponibile",
         "validThrough": "Valido fino al {{endDate}}",
         "showAll": "Vedi tutte"
       },
