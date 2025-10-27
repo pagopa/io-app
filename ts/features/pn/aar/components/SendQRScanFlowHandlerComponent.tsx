@@ -16,6 +16,7 @@ import {
 } from "../analytics";
 import { SendAARInitialFlowScreen } from "../screen/SendAARInitialFlowScreen";
 import { isAAREnabled } from "../store/selectors";
+import { NOTIFICATIONS_ROUTES } from "../../../pushNotifications/navigation/routes";
 
 export type SendQRScanHandlerScreenProps = {
   aarUrl: string;
@@ -74,7 +75,11 @@ const SendQrScanRedirect = ({ aarUrl }: SendQRScanHandlerScreenProps) => {
       navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
         screen: PN_ROUTES.MAIN,
         params: {
-          screen: PN_ROUTES.ENGAGEMENT_SCREEN
+          screen: PN_ROUTES.ENGAGEMENT_SCREEN,
+          params: {
+            sendOpeningSource: "aar",
+            sendUserType: "not_set"
+          }
         }
       });
       return;
@@ -86,11 +91,10 @@ const SendQrScanRedirect = ({ aarUrl }: SendQRScanHandlerScreenProps) => {
     const areNotificationPermissionsEnabled =
       areNotificationPermissionsEnabledSelector(state);
     if (!areNotificationPermissionsEnabled) {
-      navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-        screen: PN_ROUTES.MAIN,
-        params: {
-          screen: PN_ROUTES.QR_SCAN_PUSH_ENGAGEMENT
-        }
+      navigation.replace(NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT, {
+        flow: "send_notification_opening",
+        sendOpeningSource: "aar",
+        sendUserType: "not_set"
       });
       return;
     }

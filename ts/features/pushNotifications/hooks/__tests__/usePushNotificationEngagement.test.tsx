@@ -1,16 +1,20 @@
-import * as DESIGN_SYSTEM from "@pagopa/io-app-design-system";
 import { act } from "@testing-library/react-native";
 import * as RN from "react-native";
 import { createStore } from "redux";
-import * as USEIO from "../../../../../navigation/params/AppParamsList";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { appReducer } from "../../../../../store/reducers";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import * as NOTIF_UTILS from "../../../../pushNotifications/utils";
-import PN_ROUTES from "../../../navigation/routes";
-import * as MAIN_FILE from "../useAARpushEngagementScreenLogic";
-import * as analytics from "../../../../pushNotifications/analytics";
+import * as USEIO from "../../../../navigation/params/AppParamsList";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
+import { GlobalState } from "../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import * as NOTIF_UTILS from "../../utils";
+import { NOTIFICATIONS_ROUTES } from "../../navigation/routes";
+import * as MAIN_FILE from "../usePushNotificationEngagement";
+import * as analytics from "../../analytics";
+import {
+  NotificationModalFlow,
+  SendOpeningSource,
+  SendUserType
+} from "../../analytics";
 
 // eslint-disable-next-line functional/no-let
 let testingHookOutput = {
@@ -44,31 +48,50 @@ describe("UseEngamentScreenFocusLogic", () => {
     jest.resetAllMocks();
   });
 
-  it(" should set header and call openSystemNotificationSettingsScreen on button press, return {shouldRenderBlankPage:true} and track proper analytics event", async () => {
-    const spiedOnMockedAnalyticsOutcomeEvent = jest
-      .spyOn(analytics, "trackSystemNotificationPermissionScreenOutcome")
-      .mockImplementation();
-    renderHook();
-    expect(testOpenNotifications).toHaveBeenCalledTimes(0);
-    expect(testSetOptions).toHaveBeenCalledTimes(0);
-    expect(testingHookOutput.shouldRenderBlankPage).toBe(false);
+  (["authentication", "send_notification_opening", "access"] as const).forEach(
+    flow =>
+      (["aar", "message", "not_set"] as const).forEach(openingSource =>
+        (["recipient", "mandatory", "not_set"] as const).forEach(userType =>
+          it(`should set header and call openSystemNotificationSettingsScreen on button press, return {shouldRenderBlankPage:true} and track proper analytics event (flow ${flow} opening source ${openingSource} user type ${userType})`, async () => {
+            const spiedOnMockedAnalyticsOutcomeEvent = jest
+              .spyOn(
+                analytics,
+                "trackSystemNotificationPermissionScreenOutcome"
+              )
+              .mockImplementation();
 
-    act(testingHookOutput.onButtonPress);
+            renderHook(flow, openingSource, userType);
 
-    expect(testOpenNotifications).toHaveBeenCalledTimes(1);
-    expect(testSetOptions).toHaveBeenCalledTimes(1);
-    expect(testSetOptions).toHaveBeenCalledWith({ headerShown: false });
-    expect(testingHookOutput.shouldRenderBlankPage).toBe(true);
-    expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls.length).toBe(1);
-    expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0].length).toBe(2);
-    expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0][0]).toBe(
-      "activate"
-    );
-    expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0][1]).toBe(
-      "send_notification_opening"
-    );
-  });
+            expect(testOpenNotifications).toHaveBeenCalledTimes(0);
+            expect(testSetOptions).toHaveBeenCalledTimes(0);
+            expect(testingHookOutput.shouldRenderBlankPage).toBe(false);
 
+            act(testingHookOutput.onButtonPress);
+
+            expect(testOpenNotifications).toHaveBeenCalledTimes(1);
+            expect(testingHookOutput.shouldRenderBlankPage).toBe(true);
+            expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls.length).toBe(
+              1
+            );
+            expect(
+              spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0].length
+            ).toBe(4);
+            expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0][0]).toBe(
+              "activate"
+            );
+            expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0][1]).toBe(
+              flow
+            );
+            expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0][2]).toBe(
+              openingSource
+            );
+            expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0][3]).toBe(
+              userType
+            );
+          })
+        )
+      )
+  );
   it('should subscribe to a "change" appstate event, and unsubscribe on unmount', () => {
     const removeMock = jest.fn();
     const eventListenerMock = jest
@@ -85,6 +108,8 @@ describe("UseEngamentScreenFocusLogic", () => {
 });
 
 describe("appStateHandler", () => {
+  const mockNavigate = jest.fn();
+  const mockOnSuccess = jest.fn();
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -104,12 +129,6 @@ describe("appStateHandler", () => {
     it(`should handle the case where isActive=${isActive} and isPressed=${isPressed} and notifications ${
       isNotificationAuthorized ? "are" : "are not"
     } authorized`, async () => {
-      const mockNavigate = jest.fn();
-
-      const mockToastSuccess = jest
-        .spyOn(DESIGN_SYSTEM.IOToast, "success")
-        .mockImplementation(jest.fn());
-
       const mockCheckPermissions = jest
         .spyOn(NOTIF_UTILS, "checkNotificationPermissions")
         .mockImplementation(
@@ -118,21 +137,22 @@ describe("appStateHandler", () => {
 
       await MAIN_FILE.testable!.appStateHandler(
         mockNavigate,
+        mockOnSuccess,
         isPressed
       )(isActive ? "active" : "background");
 
       if (!isActive || !isPressed) {
         expect(mockCheckPermissions).toHaveBeenCalledTimes(0);
-        expect(mockToastSuccess).toHaveBeenCalledTimes(0);
+        expect(mockOnSuccess).toHaveBeenCalledTimes(0);
         expect(mockNavigate).toHaveBeenCalledTimes(0);
       }
 
       if (isActive && isPressed) {
         expect(mockCheckPermissions).toHaveBeenCalledTimes(1);
         if (isNotificationAuthorized) {
-          expect(mockToastSuccess).toHaveBeenCalledTimes(1);
+          expect(mockOnSuccess).toHaveBeenCalledTimes(1);
         } else {
-          expect(mockToastSuccess).toHaveBeenCalledTimes(0);
+          expect(mockOnSuccess).toHaveBeenCalledTimes(0);
         }
         expect(mockNavigate).toHaveBeenCalledTimes(1);
       }
@@ -140,9 +160,17 @@ describe("appStateHandler", () => {
   });
 });
 
-const renderHook = () => {
+const renderHook = (
+  flow: NotificationModalFlow = "send_notification_opening",
+  sendOpeningSource: SendOpeningSource = "not_set",
+  sendUserType: SendUserType = "not_set"
+) => {
   const Component = () => {
-    const hookOutput = MAIN_FILE.useAARPushEngagementScreenLogic();
+    const hookOutput = MAIN_FILE.usePushNotificationEngagement(
+      flow,
+      sendOpeningSource,
+      sendUserType
+    );
     testingHookOutput = hookOutput;
     return <></>;
   };
@@ -151,7 +179,7 @@ const renderHook = () => {
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => <Component />,
-    PN_ROUTES.QR_SCAN_PUSH_ENGAGEMENT,
+    NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT,
     {},
     store
   );

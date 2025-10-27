@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SendAARErrorComponent - Full Test Suite should match snapshot 1`] = `
+exports[`SendAARErrorComponent - Full Test Suite should match snapshot and call useDebugInfo to display proper debug data 1`] = `
 <View
   style={
     {

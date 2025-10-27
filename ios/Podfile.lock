@@ -3,7 +3,7 @@ PODS:
   - boost (1.84.0)
   - BVLinearGradient (2.5.6):
     - React
-  - CieSDK (0.1.11)
+  - CieSDK (0.1.12)
   - DoubleConversion (1.1.6)
   - fast_float (6.1.4)
   - FBLazyVector (0.78.2)
@@ -12,8 +12,8 @@ PODS:
   - hermes-engine (0.78.2):
     - hermes-engine/Pre-built (= 0.78.2)
   - hermes-engine/Pre-built (0.78.2)
-  - IoReactNativeCie (1.1.2):
-    - CieSDK (~> 0.1.11)
+  - IoReactNativeCie (1.2.0):
+    - CieSDK (~> 0.1.12)
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1905,7 +1905,7 @@ PODS:
     - React
   - RNCAsyncStorage (2.0.0):
     - React-Core
-  - RNCClipboard (1.14.2):
+  - RNCClipboard (1.16.3):
     - React-Core
   - RNCPushNotificationIOS (1.8.0):
     - React-Core
@@ -2617,14 +2617,14 @@ SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   BVLinearGradient: 44fd36b87f318e7933c4c91a6991442a5e3f5bcf
-  CieSDK: ad23ec4b2f86c1e505030e68105ea509443d6706
+  CieSDK: c79fdf33a7ee0b4e5924dcf1f5cfca0e0a7d7be0
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
   fast_float: 06eeec4fe712a76acc9376682e4808b05ce978b6
   FBLazyVector: e32d34492c519a2194ec9d7f5e7a79d11b73f91c
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
   glog: eb93e2f488219332457c3c4eafd2738ddc7e80b8
   hermes-engine: 2771b98fb813fdc6f92edd7c9c0035ecabf9fee7
-  IoReactNativeCie: 6e0a926d1dd883a0eaa1fb3f06bcdcf8ba92fc58
+  IoReactNativeCie: f80261dfe54b04080acabeaa9d10272c040949ae
   IoReactNativeIso18013: 4803432ad6e1b535a17fa4d581e97d9699d20882
   IOWalletCBOR: 92742ef1cbd1b627ba153d0c7c11b81ad22f45cc
   IOWalletProximity: 1836d6b5df0a64a97e09f355d15d5155f086f830
@@ -2721,7 +2721,7 @@ SPEC CHECKSUMS:
   RNBluetoothStateManager: 929f132d0dacf65cb4767a11e2803e47fdda9e73
   RNCalendarEvents: f90f73666b6bcbb3cc8a491ffbb5e48c0db3de37
   RNCAsyncStorage: 40367e8d25522dca9c3513c7b9815a184669bd97
-  RNCClipboard: 47593431a9e763a71950798683b28f691f16b98d
+  RNCClipboard: f6679d470d0da2bce2a37b0af7b9e0bf369ecda5
   RNCPushNotificationIOS: 9f3ee8e3b19b6d1941990d0e6306e89fc7610c83
   RNDeviceInfo: d863506092aef7e7af3a1c350c913d867d795047
   RNFlashList: ff5a0b3113c4cda0eaf4b94df8572ccad3c40fd5

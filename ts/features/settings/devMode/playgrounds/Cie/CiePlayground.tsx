@@ -1,11 +1,7 @@
 import {
   IOButton,
-  IOColors,
-  IOPictograms,
-  IOText,
   ListItemHeader,
-  OTPInput,
-  Pictogram
+  OTPInput
 } from "@pagopa/io-app-design-system";
 import { CieManager, NfcEvent } from "@pagopa/io-react-native-cie";
 import { createRef, useEffect, useState } from "react";
@@ -17,13 +13,13 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import Animated, { LinearTransition } from "react-native-reanimated";
 import WebView, { WebViewNavigation } from "react-native-webview";
 import { useHeaderHeight } from "@react-navigation/elements";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { CircularProgress } from "../../../../components/ui/CircularProgress";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
+import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import { useScreenEndMargin } from "../../../../../hooks/useScreenEndMargin";
+import { ReadStatusComponent } from "./components/ReadStatusComponent";
+import { ReadStatus } from "./types/ReadStatus";
 
 const iOSUserAgent =
   "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1";
@@ -31,56 +27,6 @@ const defaultUserAgent = Platform.select({
   ios: iOSUserAgent,
   default: undefined
 });
-
-export type ReadStatus = "idle" | "reading" | "error" | "success";
-
-const pictogramMap: Record<ReadStatus, IOPictograms> = {
-  idle: "smile",
-  reading: Platform.select({ ios: "nfcScaniOS", default: "nfcScanAndroid" }),
-  success: "success",
-  error: "fatalError"
-};
-
-const statusColorMap: Record<ReadStatus, IOColors> = {
-  idle: "blueIO-500",
-  reading: "blueIO-500",
-  success: "success-500",
-  error: "error-500"
-};
-
-type ReadStatusComponentProps = {
-  progress?: number;
-  status: ReadStatus;
-  step?: string;
-};
-
-const ReadStatusComponent = ({
-  progress = 0,
-  status,
-  step
-}: ReadStatusComponentProps) => (
-  <Animated.View layout={LinearTransition} style={styles.statusContainer}>
-    <CircularProgress
-      size={300}
-      radius={150}
-      progress={progress * 100}
-      strokeColor={IOColors[statusColorMap[status]]}
-      strokeBgColor={IOColors["grey-100"]}
-      strokeWidth={8}
-    >
-      <>
-        <Animated.View layout={LinearTransition}>
-          <Pictogram size={180} name={pictogramMap[status]} />
-        </Animated.View>
-        {status === "reading" && step && (
-          <IOText font="DMMono" color="black" weight="Bold" size={12}>
-            {step}
-          </IOText>
-        )}
-      </>
-    </CircularProgress>
-  </Animated.View>
-);
 
 type CiewWebViewProps = {
   uri: string;
@@ -290,11 +236,6 @@ const styles = StyleSheet.create({
     gap: 24
   },
   progressContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  statusContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
