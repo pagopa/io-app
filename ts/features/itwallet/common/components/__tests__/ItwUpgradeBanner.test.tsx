@@ -7,6 +7,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as selectors from "../../store/selectors";
+import * as itwLifecycleSelectors from "../../../lifecycle/store/selectors";
 import { ItwUpgradeBanner } from "../ItwUpgradeBanner";
 import { ITW_ROUTES } from "../../../navigation/routes";
 
@@ -43,12 +44,16 @@ describe("ItwUpgradeBanner", () => {
 
   it("should navigate to the Discovery Info Screen", async () => {
     jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockReturnValue(true);
+    jest
       .spyOn(selectors, "itwShouldRenderL3UpgradeBannerSelector")
       .mockReturnValue(true);
 
-    const { getByText } = renderComponent();
-
-    const button = getByText(I18n.t("features.itWallet.upgrade.banner.action"));
+    const { getAllByText } = renderComponent();
+    const [button] = getAllByText(
+      I18n.t("features.itWallet.upgrade.banner.documents.active.action")
+    );
     fireEvent.press(button);
 
     await waitFor(() => {
