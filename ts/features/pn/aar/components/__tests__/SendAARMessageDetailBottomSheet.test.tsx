@@ -1,20 +1,21 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import * as HOOKS from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
-import { sendVisitTheWebsiteUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import * as URL_UTILS from "../../../../../utils/url";
 import PN_ROUTES from "../../../navigation/routes";
-import { currentAARFlowData } from "../../store/selectors";
 import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
 import { sendAarMockStateFactory } from "../../utils/testUtils";
 import {
   SendAARMessageDetailBottomSheet,
   SendAARMessageDetailBottomSheetProps
 } from "../SendAARMessageDetailBottomSheet";
+import { SendUserType } from "../../../../pushNotifications/analytics";
+import * as ANALYTICS from "../../analytics";
+import * as REMOTE_CONFIG_SELECTORS from "../../../../../store/reducers/backendStatus/remoteConfig";
+import * as SELECTORS from "../../store/selectors";
+import * as URL_UTILS from "../../../../../utils/url";
 
 type DisplayingNotificationDataState = Extract<
   AARFlowState,
@@ -27,7 +28,8 @@ describe("BottomSheetContent", () => {
 
   const defaultProps: SendAARMessageDetailBottomSheetProps = {
     onPrimaryActionPress: mockOnPrimaryActionPress,
-    onSecondaryActionPress: mockOnSecondaryActionPress
+    onSecondaryActionPress: mockOnSecondaryActionPress,
+    userType: "recipient"
   };
 
   const stateWithMandateId =
@@ -40,35 +42,61 @@ describe("BottomSheetContent", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
 
-  it("calls openWebUrl when link is pressed", () => {
-    const openWebUrlSpy = jest
-      .spyOn(URL_UTILS, "openWebUrl")
-      .mockImplementation(jest.fn());
+  const sendUserTypes: ReadonlyArray<SendUserType> = [
+    "mandatory",
+    "not_set",
+    "recipient"
+  ];
 
-    const mockUrl = "https://example.com/test-url";
+  sendUserTypes.forEach(sendUserType => {
+    it(`calls openWebUrl when link is pressed and trackSendAarNotificationClosureExit with proper parameters (user type ${sendUserType})`, () => {
+      const openWebUrlSpy = jest
+        .spyOn(URL_UTILS, "openWebUrl")
+        .mockImplementation(jest.fn());
 
-    jest.spyOn(HOOKS, "useIOSelector").mockImplementation(selector => {
-      if (selector === currentAARFlowData) {
-        return stateWithMandateId;
-      }
-      if (selector === sendVisitTheWebsiteUrlSelector) {
-        return mockUrl;
-      }
-      return undefined;
+      const mockUrl = "https://example.com/test-url";
+
+      jest
+        .spyOn(SELECTORS, "currentAARFlowData")
+        .mockImplementation(() => stateWithMandateId);
+      jest
+        .spyOn(REMOTE_CONFIG_SELECTORS, "sendVisitTheWebsiteUrlSelector")
+        .mockImplementation(() => mockUrl);
+      const spiedOnMockedTrackSendAarNotificationClosureExit = jest
+        .spyOn(ANALYTICS, "trackSendAarNotificationClosureExit")
+        .mockImplementation();
+
+      const { getByTestId } = renderComponent({
+        ...defaultProps,
+        userType: sendUserType
+      });
+
+      const linkComponent = getByTestId("link");
+      expect(openWebUrlSpy).toHaveBeenCalledTimes(0);
+      fireEvent.press(linkComponent);
+
+      expect(openWebUrlSpy).toHaveBeenCalledWith(mockUrl);
+      expect(openWebUrlSpy).toHaveBeenCalledTimes(1);
+
+      expect(
+        spiedOnMockedTrackSendAarNotificationClosureExit.mock.calls.length
+      ).toBe(1);
+      expect(
+        spiedOnMockedTrackSendAarNotificationClosureExit.mock.calls[0].length
+      ).toBe(1);
+      expect(
+        spiedOnMockedTrackSendAarNotificationClosureExit.mock.calls[0][0]
+      ).toBe(sendUserType);
     });
-
-    const { getByTestId } = renderComponent(defaultProps);
-    const linkComponent = getByTestId("link");
-    expect(openWebUrlSpy).toHaveBeenCalledTimes(0);
-    fireEvent.press(linkComponent);
-    expect(openWebUrlSpy).toHaveBeenCalledWith(mockUrl);
-    expect(openWebUrlSpy).toHaveBeenCalledTimes(1);
   });
 
   it("calls onPrimaryActionPress when primary button is pressed", () => {
-    jest.spyOn(HOOKS, "useIOSelector").mockReturnValue(stateWithMandateId);
+    jest
+      .spyOn(SELECTORS, "currentAARFlowData")
+      .mockImplementation(() => stateWithMandateId);
 
     const { getByTestId } = renderComponent(defaultProps);
     expect(mockOnPrimaryActionPress).toHaveBeenCalledTimes(0);
@@ -78,7 +106,9 @@ describe("BottomSheetContent", () => {
   });
 
   it("calls onSecondaryActionPress when secondary button is pressed", () => {
-    jest.spyOn(HOOKS, "useIOSelector").mockReturnValue(stateWithMandateId);
+    jest
+      .spyOn(SELECTORS, "currentAARFlowData")
+      .mockImplementation(() => stateWithMandateId);
 
     const { getByTestId } = renderComponent(defaultProps);
     const buttonComponent = getByTestId("secondary_button");
@@ -89,7 +119,9 @@ describe("BottomSheetContent", () => {
 
   [stateWithMandateId, stateWithoutMandateId].forEach(state =>
     it(`should match snapshot when mandateId='${state.mandateId}'`, () => {
-      jest.spyOn(HOOKS, "useIOSelector").mockReturnValue(state);
+      jest
+        .spyOn(SELECTORS, "currentAARFlowData")
+        .mockImplementation(() => state);
 
       const { toJSON } = renderComponent(defaultProps);
       expect(toJSON()).toMatchSnapshot();

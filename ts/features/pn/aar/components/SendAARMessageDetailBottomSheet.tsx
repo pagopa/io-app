@@ -11,15 +11,19 @@ import { sendVisitTheWebsiteUrlSelector } from "../../../../store/reducers/backe
 import { openWebUrl } from "../../../../utils/url";
 import { currentAARFlowData } from "../store/selectors";
 import { sendAARFlowStates } from "../utils/stateUtils";
+import { trackSendAarNotificationClosureExit } from "../analytics";
+import { SendUserType } from "../../../pushNotifications/analytics";
 
 export type SendAARMessageDetailBottomSheetProps = {
   onPrimaryActionPress: () => void;
   onSecondaryActionPress: () => void;
+  userType: SendUserType;
 };
 
 export const SendAARMessageDetailBottomSheet = ({
   onPrimaryActionPress,
-  onSecondaryActionPress
+  onSecondaryActionPress,
+  userType
 }: SendAARMessageDetailBottomSheetProps) => {
   const currentFlow = useIOSelector(currentAARFlowData);
   const sendVisitTheWebsiteUrl = useIOSelector(sendVisitTheWebsiteUrlSelector);
@@ -30,6 +34,7 @@ export const SendAARMessageDetailBottomSheet = ({
       : undefined;
 
   const onLinkPress = () => {
+    trackSendAarNotificationClosureExit(userType);
     openWebUrl(sendVisitTheWebsiteUrl);
   };
 

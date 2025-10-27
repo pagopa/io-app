@@ -13,6 +13,8 @@ import * as BANNER from "../../../reminderBanner/reducer/bannerDismiss";
 import * as BOTTOM_SHEET from "../../../../../utils/hooks/bottomSheet";
 import * as IO_NAVIGATION from "../../../../../navigation/params/AppParamsList";
 
+jest.mock("../SendAARMessageDetailBottomSheet");
+
 describe("SendAARMessageDetailBottomSheetComponent", () => {
   beforeEach(() => {
     jest.clearAllMocks();

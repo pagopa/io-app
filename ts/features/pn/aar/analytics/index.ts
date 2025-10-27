@@ -116,3 +116,11 @@ export const trackSendAarNotificationClosureConfirm = (
   });
   void mixpanelTrack(eventName, eventProps);
 };
+
+export const trackSendAarNotificationClosureExit = (userType: SendUserType) => {
+  const eventName = "SEND_TEMPORARY_NOTIFICATION_CLOSURE_EXIT";
+  const eventProps = buildEventProperties("UX", "exit", {
+    send_user: userType
+  });
+  void mixpanelTrack(eventName, eventProps);
+};

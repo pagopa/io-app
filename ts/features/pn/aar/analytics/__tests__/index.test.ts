@@ -12,7 +12,8 @@ import {
   trackSendQRCodeScanRedirectDismissed,
   trackSendAarNotificationClosure,
   trackSendAarNotificationClosureBack,
-  trackSendAarNotificationClosureConfirm
+  trackSendAarNotificationClosureConfirm,
+  trackSendAarNotificationClosureExit
 } from "..";
 import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
 import * as mixpanel from "../../../../../mixpanel";
@@ -485,6 +486,25 @@ describe("index", () => {
         expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
           event_category: "UX",
           event_type: "action",
+          send_user: userType
+        });
+      });
+    });
+  });
+
+  describe("trackSendAarNotificationClosureExit", () => {
+    sendUserTypes.forEach(userType => {
+      it(`should call 'mixpanelTrack' with proper event name and parameters (userType ${userType})`, () => {
+        trackSendAarNotificationClosureExit(userType);
+
+        expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+        expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+        expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+          "SEND_TEMPORARY_NOTIFICATION_CLOSURE_EXIT"
+        );
+        expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+          event_category: "UX",
+          event_type: "exit",
           send_user: userType
         });
       });

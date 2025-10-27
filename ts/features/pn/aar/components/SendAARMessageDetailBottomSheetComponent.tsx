@@ -69,6 +69,7 @@ export const SendAARMessageDetailBottomSheetComponent = ({
           dismiss();
         }}
         onSecondaryActionPress={onSecondaryActionPress}
+        userType={userType}
       />
     )
   });
