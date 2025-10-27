@@ -49,7 +49,9 @@ export const trackIDPayStaticCodeGenerationCopy = (
   );
 };
 export const trackIDPayStaticCodeGenerationError = (
-  props: StaticCodeEventProperties
+  props: StaticCodeEventProperties & {
+    reason?: string;
+  }
 ) => {
   mixpanelTrack(
     "IDPAY_CODE_GENERATION_ERROR",

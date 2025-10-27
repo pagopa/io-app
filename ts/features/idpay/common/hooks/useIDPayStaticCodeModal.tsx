@@ -14,13 +14,14 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
+import { flow, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { JSX } from "react";
 import { StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import { TransactionBarCodeResponse } from "../../../../../definitions/idpay/TransactionBarCodeResponse";
+import { TransactionErrorDTO } from "../../../../../definitions/idpay/TransactionErrorDTO";
 import { useIOSelector } from "../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
@@ -133,15 +134,27 @@ export const useIDPayStaticCodeModal = (
       return <StaticCodeSkeleton />;
     }
 
+    const decodeFailure = flow(TransactionErrorDTO.decode, O.fromEither);
+
     return pipe(
       barcodePot,
       pot.toOption,
       O.fold(
         () => {
-          trackIDPayStaticCodeGenerationError({
-            initiativeId,
-            initiativeName
-          });
+          if (pot.isError(barcodePot)) {
+            const reason = pipe(
+              decodeFailure(barcodePot.error),
+              O.fold(
+                () => undefined,
+                failure => failure.code
+              )
+            );
+            trackIDPayStaticCodeGenerationError({
+              initiativeId,
+              initiativeName,
+              reason
+            });
+          }
           bottomSheet.dismiss();
           return <></>;
         },
