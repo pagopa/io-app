@@ -14,7 +14,7 @@ import {
 import { getThemeColorByCredentialType } from "../../utils/itwStyleUtils";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
-import { useItwEffectiveCredentialStatus } from "../../../presentation/details/hooks/useItwEffectiveCredentialStatus";
+import { useItwDisplayCredentialStatus } from "../../../presentation/details/hooks/useItwDisplayCredentialStatus";
 import { CardBackground } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
 import { CardColorScheme } from "./types";
@@ -59,7 +59,7 @@ export const ItwCredentialCard = ({
   const typefacePreference = useIOSelector(fontPreferenceSelector);
   const isItwPid = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const needsItwUpgrade = isItwPid && !isItwCredential;
-  const status = useItwEffectiveCredentialStatus(credentialStatus);
+  const status = useItwDisplayCredentialStatus(credentialStatus);
 
   const borderColorMap = useBorderColorByStatus();
 
