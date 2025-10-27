@@ -1,7 +1,10 @@
 import {
   Body,
   H3,
+  h3FontSize,
+  h3LineHeight,
   IOColors,
+  IOText,
   IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -33,8 +36,9 @@ import { IDPayDetailsRoutes } from "../../details/navigation";
 import { idpayInitiativeDetailsSelector } from "../../details/store";
 import { IdPayBarcodeExpireProgressBar } from "../components/IdPayBarcodeExpireProgressBar";
 import { IdPayBarcodeParamsList } from "../navigation/params";
-import { idPayBarcodeByInitiativeIdSelector } from "../store";
+
 import { idPayGenerateBarcode } from "../store/actions";
+import { idPayBarcodeByInitiativeIdSelector } from "../store/selectors";
 
 // -------------------- types --------------------
 
@@ -202,7 +206,16 @@ const SuccessContent = ({
       <View style={styles.barcodeContainer}>
         <VSpacer size={4} />
         <Barcode format="CODE128" value={trx} />
-        <H3 style={{ alignSelf: "center" }}>{trx}</H3>
+        <View style={{ alignItems: "center" }}>
+          <IOText
+            font="FiraCode"
+            size={h3FontSize}
+            lineHeight={h3LineHeight}
+            weight="Medium"
+          >
+            {trx}
+          </IOText>
+        </View>
         <VSpacer size={32} />
         <IdPayBarcodeExpireProgressBar
           barcode={barcode}
