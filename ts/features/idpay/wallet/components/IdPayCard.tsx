@@ -8,8 +8,8 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { format } from "date-fns";
-import { ImageURISource, StyleSheet, View } from "react-native";
 import I18n from "i18next";
+import { ImageURISource, StyleSheet, View } from "react-native";
 import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import WalletCardShape from "../../../../../img/features/idpay/wallet_card.svg";
 import DarkModeWalletCardShape from "../../../../../img/features/idpay/wallet_card_dark.svg";
@@ -99,7 +99,7 @@ export const IdPayCard = (props: IdPayCardProps) => {
             <>
               <VSpacer size={16} />
               <Body weight="Regular" color={available}>
-                Disponibile
+                {I18n.t("idpay.wallet.card.available")}
               </Body>
               <H3 testID="idpay-card-amount" color={amountColor}>
                 {formatNumberCentsToAmount(props.amount, true, "right")}
@@ -108,7 +108,7 @@ export const IdPayCard = (props: IdPayCardProps) => {
           )}
         </View>
         <Body weight="Regular" color={validationColor}>
-          {I18n.t("bonusCard.validUntil", {
+          {I18n.t("idpay.wallet.card.validThrough", {
             endDate: format(props.expireDate, "DD/MM/YY")
           })}
         </Body>
