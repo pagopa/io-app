@@ -1,62 +1,50 @@
-import { act, fireEvent } from "@testing-library/react-native";
+import { fireEvent } from "@testing-library/react-native";
 import { RefObject } from "react";
 import { createStore } from "redux";
-import * as BACK_BUTTON from "../../../../../hooks/useHardwareBackButton";
-import * as NAVIGATION from "../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import * as STORE_HOOKS from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import * as BOTTOM_SHEET from "../../../../../utils/hooks/bottomSheet";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { SendAARMessageDetailBottomSheetComponent } from "../SendAARMessageDetailBottomSheetComponent";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import PN_ROUTES from "../../../navigation/routes";
-import * as BANNER from "../../../reminderBanner/reducer/bannerDismiss";
-import { SendAARMessageDetailBottomSheetComponent } from "../SendAARMessageDetailBottomSheetComponent";
 import * as ANALYTICS from "../../analytics";
+import * as BANNER from "../../../reminderBanner/reducer/bannerDismiss";
+import * as BOTTOM_SHEET from "../../../../../utils/hooks/bottomSheet";
+import * as IO_NAVIGATION from "../../../../../navigation/params/AppParamsList";
 
 describe("SendAARMessageDetailBottomSheetComponent", () => {
-  const presentMock = jest.fn();
-  const dismissMock = jest.fn();
-  const replaceMock = jest.fn();
-  const popToTopMock = jest.fn();
-  const getStateMock = jest.fn();
-
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
 
-    jest.spyOn(BOTTOM_SHEET, "useIOBottomSheetModal").mockReturnValue({
-      bottomSheet: <></>,
-      present: presentMock,
-      dismiss: dismissMock
-    });
-
-    jest.spyOn(STORE_HOOKS, "useIOStore").mockReturnValue({
-      getState: getStateMock
-    } as any);
-
-    jest.spyOn(BACK_BUTTON, "useHardwareBackButton").mockImplementation();
-
-    jest.spyOn(NAVIGATION, "useIONavigation").mockReturnValue({
-      replace: replaceMock,
-      popToTop: popToTopMock
-    } as any);
-
-    jest.spyOn(BANNER, "isPnServiceEnabled").mockReturnValue(false);
+  it("should match snapshot", () => {
+    const { toJSON } = renderComponent();
+    expect(toJSON()).toMatchSnapshot();
   });
 
   it("should assign 'present' to aarBottomSheetRef on mount", () => {
+    const mockPresent = jest.fn();
+    const refUseIOBottomSheetModal = BOTTOM_SHEET.useIOBottomSheetModal;
+    jest
+      .spyOn(BOTTOM_SHEET, "useIOBottomSheetModal")
+      .mockImplementation(props => {
+        const { bottomSheet } = refUseIOBottomSheetModal(props);
+        return {
+          bottomSheet,
+          dismiss: jest.fn(),
+          present: mockPresent
+        };
+      });
     const { aarBottomSheetRef } = renderComponent();
-    expect(aarBottomSheetRef.current).toBe(presentMock);
+    expect(aarBottomSheetRef.current).toBe(mockPresent);
   });
 
-  [false, true].forEach(isDelegate =>
+  [false, true].forEach(isDelegate => {
     it(`should call trackSendAarNotificationClosureBack with proper parameters when the primary action is triggered (isDelegate ${isDelegate})`, () => {
       jest.restoreAllMocks();
-      /* const spiedOnMockedUseIOBottomSheetModal = jest.spyOn(
-        BOTTOM_SHEET,
-        "useIOBottomSheetModal"
-      ); */
+
       const spiedOnMockedTrackSendAarNotificationClosureBack = jest
         .spyOn(ANALYTICS, "trackSendAarNotificationClosureBack")
         .mockImplementation();
@@ -75,62 +63,91 @@ describe("SendAARMessageDetailBottomSheetComponent", () => {
       expect(
         spiedOnMockedTrackSendAarNotificationClosureBack.mock.calls[0][0]
       ).toBe(isDelegate ? "mandatory" : "recipient");
-    })
-  );
+    });
 
-  describe("onSecondaryActionPress navigation behavior", () => {
-    [false, true].forEach(isDelegate =>
-      test.each([
-        [false, "replace"],
-        [true, "popToTop"]
-      ])(
-        `when isPnServiceEnabled is %s and user is ${
-          isDelegate ? "delegate" : "recipient"
-        } it calls navigation.%s`,
-        async (isEnabled, navigationMethod) => {
-          getStateMock.mockReturnValue({});
-          (BANNER.isPnServiceEnabled as jest.Mock).mockReturnValue(isEnabled);
+    [undefined, false, true].forEach(sendServiceEnabled => {
+      it(`should call trackSendAarNotificationClosureConfirm, dismiss and ${
+        sendServiceEnabled ? "popToTop" : "navigate to engagement screen"
+      } (isDelegate ${isDelegate}, sendServiceEnabled ${sendServiceEnabled})`, () => {
+        const mockPopToTop = jest.fn();
+        const mockReplace = jest.fn();
+        jest.spyOn(IO_NAVIGATION, "useIONavigation").mockImplementation(
+          () =>
+            ({
+              popToTop: mockPopToTop,
+              replace: mockReplace
+            } as unknown as IO_NAVIGATION.IOStackNavigationProp<
+              IO_NAVIGATION.AppParamsList,
+              keyof IO_NAVIGATION.AppParamsList
+            >)
+        );
 
-          renderComponent(isDelegate);
-
-          await act(async () => {
-            (
-              BOTTOM_SHEET.useIOBottomSheetModal as jest.Mock
-            ).mock.calls[0][0].component.props.onSecondaryActionPress();
+        const mockDismiss = jest.fn();
+        const refUseIOBottomSheetModal = BOTTOM_SHEET.useIOBottomSheetModal;
+        jest
+          .spyOn(BOTTOM_SHEET, "useIOBottomSheetModal")
+          .mockImplementation(props => {
+            const { bottomSheet } = refUseIOBottomSheetModal(props);
+            return {
+              bottomSheet,
+              dismiss: mockDismiss,
+              present: jest.fn()
+            };
           });
 
-          expect(dismissMock).toHaveBeenCalledTimes(1);
-          expect(dismissMock).toHaveBeenCalled();
+        jest
+          .spyOn(BANNER, "isPnServiceEnabled")
+          .mockImplementation(() => sendServiceEnabled);
 
-          if (navigationMethod === "replace") {
-            expect(popToTopMock.mock.calls.length).toEqual(0);
-            expect(replaceMock).toHaveBeenCalledTimes(1);
-            expect(replaceMock).toHaveBeenCalledWith(
-              MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
-              {
-                screen: PN_ROUTES.MAIN,
-                params: {
-                  screen: PN_ROUTES.ENGAGEMENT_SCREEN,
-                  params: {
-                    sendOpeningSource: "aar",
-                    sendUserType: isDelegate ? "mandatory" : "recipient"
-                  }
-                }
+        const spiedOnMockedTrackSendAarNotificationClosureConfirm = jest
+          .spyOn(ANALYTICS, "trackSendAarNotificationClosureConfirm")
+          .mockImplementation();
+
+        const component = renderComponent(isDelegate);
+
+        const secondaryButton = component.getByTestId("secondary_button");
+        fireEvent.press(secondaryButton);
+
+        expect(
+          spiedOnMockedTrackSendAarNotificationClosureConfirm.mock.calls.length
+        ).toBe(1);
+        expect(
+          spiedOnMockedTrackSendAarNotificationClosureConfirm.mock.calls[0]
+            .length
+        ).toBe(1);
+        expect(
+          spiedOnMockedTrackSendAarNotificationClosureConfirm.mock.calls[0][0]
+        ).toBe(isDelegate ? "mandatory" : "recipient");
+
+        expect(mockDismiss.mock.calls.length).toBe(1);
+        expect(mockDismiss.mock.calls[0].length).toBe(0);
+
+        if (sendServiceEnabled) {
+          expect(mockPopToTop.mock.calls.length).toBe(1);
+          expect(mockPopToTop.mock.calls[0].length).toBe(0);
+
+          expect(mockReplace.mock.calls.length).toBe(0);
+        } else {
+          expect(mockPopToTop.mock.calls.length).toBe(0);
+
+          expect(mockReplace.mock.calls.length).toBe(1);
+          expect(mockReplace.mock.calls[0].length).toBe(2);
+          expect(mockReplace.mock.calls[0][0]).toBe(
+            MESSAGES_ROUTES.MESSAGES_NAVIGATOR
+          );
+          expect(mockReplace.mock.calls[0][1]).toEqual({
+            screen: PN_ROUTES.MAIN,
+            params: {
+              screen: PN_ROUTES.ENGAGEMENT_SCREEN,
+              params: {
+                sendOpeningSource: "aar",
+                sendUserType: isDelegate ? "mandatory" : "recipient"
               }
-            );
-          } else {
-            expect(popToTopMock.mock.calls.length).toEqual(1);
-            expect(popToTopMock.mock.calls[0].length).toEqual(0);
-            expect(replaceMock).toHaveBeenCalledTimes(0);
-          }
+            }
+          });
         }
-      )
-    );
-  });
-
-  it("should match snapshot", () => {
-    const { toJSON } = renderComponent();
-    expect(toJSON()).toMatchSnapshot();
+      });
+    });
   });
 });
 

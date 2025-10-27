@@ -7,7 +7,10 @@ import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import PN_ROUTES from "../../navigation/routes";
 import { isPnServiceEnabled } from "../../reminderBanner/reducer/bannerDismiss";
 import { SendUserType } from "../../../pushNotifications/analytics";
-import { trackSendAarNotificationClosureBack } from "../analytics";
+import {
+  trackSendAarNotificationClosureBack,
+  trackSendAarNotificationClosureConfirm
+} from "../analytics";
 import { SendAARMessageDetailBottomSheet } from "./SendAARMessageDetailBottomSheet";
 
 export type SendAARMessageDetailBottomSheetComponentProps = {
@@ -22,8 +25,13 @@ export const SendAARMessageDetailBottomSheetComponent = ({
   const navigation = useIONavigation();
   const store = useIOStore();
 
+  const userType: SendUserType = isDelegate ? "mandatory" : "recipient";
+
   const onSecondaryActionPress = () => {
+    trackSendAarNotificationClosureConfirm(userType);
+
     dismiss();
+
     const state = store.getState();
     // This selector returns undefined if service's preferences have
     // not been requested and loaded yet. But here, we are looking at
@@ -35,7 +43,6 @@ export const SendAARMessageDetailBottomSheetComponent = ({
     // retrieved. The undefined case is treated as a disabled service,
     // showing the activation flow to the user.
     const isSendServiceEnabled = isPnServiceEnabled(state) ?? false;
-
     if (isSendServiceEnabled) {
       navigation.popToTop();
       return;
@@ -58,7 +65,6 @@ export const SendAARMessageDetailBottomSheetComponent = ({
     component: (
       <SendAARMessageDetailBottomSheet
         onPrimaryActionPress={() => {
-          const userType: SendUserType = isDelegate ? "mandatory" : "recipient";
           trackSendAarNotificationClosureBack(userType);
           dismiss();
         }}
