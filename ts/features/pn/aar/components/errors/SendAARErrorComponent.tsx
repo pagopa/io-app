@@ -88,7 +88,9 @@ export const SendAARErrorComponent = () => {
 
     addTicketCustomField(zendeskCategoryId, zendeskSendCategory.value);
     addTicketCustomField("39752564743313", "io_problema_notifica_send_qr");
-    appendLog(JSON.stringify(assistanceErrorCode));
+    if (assistanceErrorCode != null && assistanceErrorCode.trim().length > 0) {
+      appendLog(assistanceErrorCode);
+    }
 
     dispatch(
       zendeskSupportStart({

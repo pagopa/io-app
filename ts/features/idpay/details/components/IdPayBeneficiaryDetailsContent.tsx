@@ -81,7 +81,7 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
   const endDateString = pipe(
     initiativeDetails.voucherEndDate,
     O.fromNullable,
-    O.map(formatDate("DD/MM/YYYY, HH:mm")),
+    O.map(formatDate("DD/MM/YYYY")),
     O.getOrElse(() => "-")
   );
 
@@ -122,7 +122,7 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
   const voucherStartDateString = pipe(
     initiativeDetails.voucherStartDate,
     O.fromNullable,
-    O.map(formatDate("DD MMM YYYY, HH:mm")),
+    O.map(formatDate("DD MMM YYYY")),
     O.getOrElse(() => "-")
   );
 

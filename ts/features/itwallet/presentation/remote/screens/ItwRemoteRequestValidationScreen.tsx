@@ -1,7 +1,7 @@
 import { useFocusEffect } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
 import I18n from "i18next";
-import { useCallback, useState } from "react";
+import { useCallback, useLayoutEffect, useState } from "react";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import {
@@ -30,11 +30,13 @@ const ItwRemoteRequestValidationScreen = ({ route }: ScreenProps) => {
 
   const startupStatus = useIOSelector(isStartupLoaded);
 
-  useFocusEffect(
-    useCallback(() => {
-      trackItwRemoteStart();
-    }, [])
-  );
+  /**
+   * Using useLayoutEffect here ensures that trackItwRemoteStart() runs
+   * as soon as the component is mounted, before any effect of its children.
+   */
+  useLayoutEffect(() => {
+    trackItwRemoteStart();
+  }, []);
 
   /**
    * There may be scenarios where the app is not running when the user opens the link,

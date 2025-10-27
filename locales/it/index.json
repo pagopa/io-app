@@ -1130,7 +1130,6 @@
     "opt_in": {
       "contextualHelpTitle": "Autenticazione",
       "contextualHelpContent": "Qui puoi trovare le informazioni sulle modalità di autenticazione su IO e alcuni consigli di sicurezza.",
-      "news": "novità",
       "title": "Ora è più facile accedere!",
       "identity_check": "Non dovrai più identificarti con SPID o CIE ogni 30 giorni, ma solo una volta all’anno o se esci dall’app",
       "security_suggests": "Alcuni consigli di sicurezza",
@@ -4079,6 +4078,7 @@
             "secondaryAction": "Non attivare SEND su IO"
           },
           "toast": "Hai attivato SEND su IO",
+          "rateLimitToast": "Non riusciamo ad attivare il servizio SEND, riprova più tardi",
           "activationErrorMessage": "Non riusciamo ad attivare il servizio SEND"
         }
       }
@@ -4418,8 +4418,8 @@
           "expiring": "In scadenza",
           "pending": "In lavorazione",
           "invalid": "Non valida",
-          "verificationExpiring": "Verifica",
-          "verificationExpired": "Verifica",
+          "verificationExpiring": "Azione richiesta",
+          "verificationExpired": "Azione richiesta",
           "upgradePending": "Da aggiornare",
           "unknown": "Non disponibile"
         },
@@ -5059,8 +5059,12 @@
           "expiring": {
             "content": "Mancano {{days}} giorni alla scadenza del documento."
           },
-          "verificationExpiring": {
-            "content": "Verifica la versione digitale del tuo documento entro il {{date}}."
+          "jwtVerification": {
+            "content": {
+              "jwtExpiring": "Verifica la versione digitale del tuo documento entro il {{date}} per continuare a usarlo senza limitazioni.",
+              "jwtExpired": "Verifica ora la versione digitale del tuo documento per continuare a usarlo senza limitazioni."
+            },
+            "action": "Inizia"
           }
         },
         "authSource": {
@@ -5080,9 +5084,10 @@
             "alert": {
               "documents": {
                 "valid": "L'ultima verifica è del {{date}}.",
-                "expiring": "Verifica la tua identità entro il {{date}}.",
-                "expired": "È necessario un rapido passaggio di verifica per continuare a usare Documenti su IO.",
-                "action": "Inizia"
+                "expiring": "Conferma la tua identità con CIE o SPID entro il {{date}} per continuare a usare Documenti su IO senza limitazioni.",
+                "expired": "Conferma la tua identità con CIE o SPID per continuare a usare Documenti su IO senza limitazioni.",
+                "action": "Inizia",
+                "offline": "Torna online e conferma la tua identità con CIE o SPID per continuare a usare Documenti su IO senza limitazioni."
               },
               "itw": {
                 "valid": "Hai attivato il tuo ID con CIE il {{date}}.",
@@ -5185,10 +5190,10 @@
         },
         "eid": {
           "verificationExpired": {
-            "title": "Verifica la tua identità",
-            "contentStart": "È un passaggio di sicurezza necessario per continuare ad usare ",
-            "contentBold": "Documenti su IO",
-            "contentEnd": ".",
+            "title": "Conferma la tua identità",
+            "contentStart": "È un passaggio necessario per continuare ad usare ",
+            "contentBold": "Documenti su IO ",
+            "contentEnd": "senza limitazioni.",
             "primaryAction": "Inizia"
           }
         },
@@ -5596,9 +5601,18 @@
       },
       "upgrade": {
         "banner": {
-          "title": "IT-Wallet per i tuoi documenti",
-          "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**. Garantito dallo Stato, accessibile solo a te.",
-          "action": "Ottieni IT-Wallet"
+          "documents": {
+            "active": {
+              "title": "Passa a IT-Wallet",
+              "description": "Aggiorna i tuoi documenti digitali e passa a funzionalità evolute con l’unico portafoglio digitale di Stato: pubblico, sicuro e gratuito. Garantito dallo Stato, accessibile solo a te.",
+              "action": "Passa a IT-Wallet"
+            },
+            "inactive": {
+              "title": "IT-Wallet per i tuoi documenti",
+              "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**. Garantito dallo Stato, accessibile solo a te.",
+              "action": "Ottieni IT-Wallet"
+            }
+          }
         }
       },
       "settings": {
@@ -5805,7 +5819,8 @@
       }
     },
     "wallet": {
-      "preview": {
+      "card": {
+        "available": "Disponibile",
         "validThrough": "Valido fino al {{endDate}}",
         "showAll": "Vedi tutte"
       },
@@ -5850,6 +5865,10 @@
           }
         },
         "initiativeDetailsScreen": {
+          "error": {
+            "title": "Il dettaglio dell'iniziativa non è al momento disponibile",
+            "subtitle": "Siamo già a lavoro per risolvere il problema\nRiprova tra un po'."
+          },
           "notConfigured": {
             "header": "Configura l'iniziativa!",
             "footer": "Aggiungi almeno un metodo per iniziare ad utilizzare {{initiative}}."
@@ -5942,7 +5961,7 @@
           "title": "Regole dell'iniziativa",
           "button": "Ok, ho capito"
         },
-        "spentUntilNow": "Speso finora",
+        "spentUntilNow": "Speso",
         "summary": "Riepilogo",
         "status": "Stato iniziativa",
         "voucherStatus": "Stato del bonus",
@@ -5977,7 +5996,7 @@
           "details": {
             "alerts": {
               "AUTHORIZED": "Questa transazione è in corso, ovvero è stata autorizzata ma non è ancora stata confermata dall’esercente.",
-              "CANCELLED": "Questa transazione è stata annullata dall’esercente, abbiamo riaccreditato l’importo sul portafoglio dell’iniziativa."
+              "CANCELLED": "Questa transazione è stata annullata dall’esercente."
             },
             "labels": {
               "business": "Esercente",
@@ -6044,7 +6063,7 @@
           "subtitleEnd": "Servizi"
         },
         "button": {
-          "continue": "Ho capito!"
+          "continue": "Ok, chiudi"
         }
       },
       "failure": {
@@ -6111,7 +6130,7 @@
       },
       "headerTitle": "Adesione all'iniziativa",
       "beforeContinue": {
-        "text": "Premendo Continua dichiari di aver letto, compreso e accettato l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni]({{tosUrl}}) d'uso.",
+        "text": "Premendo Continua dichiari di aver letto, compreso e accettato l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d'uso]({{tosUrl}}).",
         "requestBonus": "Richiedi il bonus"
       },
       "navigation": {
@@ -6175,13 +6194,19 @@
       "enableNotification": {
         "title": "Non perderti l’esito delle tue richieste",
         "subtitle": "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app.",
-        "action": "Attiva le notifiche",
-        "deny": "Non ora",
+        "action": "Attiva notifiche push",
+        "deny": "Non attivare",
         "success": "Hai attivato le notifiche push",
         "advice": "Consigliato"
       },
       "failToRetry": {
-        "contentTitle": "Stiamo per collegarti.\n Attendi qualche secondo..."
+        "contentTitle": "Stiamo per collegarti.\n Attendi qualche secondo...",
+        "slowDownSubtitle": "Non chiudere l’app, ci vorranno al massimo 10 secondi.",
+        "failureSubtitle": "Riprova tra qualche minuto o usa il sito dell’iniziativa per richiedere il bonus."
+      },
+      "disabledScreen": {
+        "title": "Stai per accedere all’iniziativa",
+        "subtitle": "Potrebbero volerci alcuni minuti. Non chiudere l’app: quando sarà tutto pronto, potrai richiedere il tuo bonus."
       },
       "preferences": {
         "enableEmailBanner": {
@@ -6194,7 +6219,8 @@
       "loading": {
         "subtitle": "Attendi qualche secondo",
         "title": "Stiamo elaborando la tua richiesta"
-      }
+      },
+      "initiativeImageAltText": "Immagine iniziativa"
     },
     "configuration": {
       "failureStates": {
@@ -6428,6 +6454,10 @@
       "chat": "Chiedi aiuto in chat",
       "additionalDataTitle": "Dati aggiuntivi",
       "copyAll": "Copia tutti"
+    },
+    "slowdowns_results_screen": {
+      "title": "Sembra che le cose vadano un po' a rilento",
+      "subtitle": "Potreste essere in tanti in questo momento.\nPuoi riprovare tra qualche minuto, o puoi richiedere il bonus dal sito dedicato."
     }
   },
   "barcodeScan": {

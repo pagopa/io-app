@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import { View } from "react-native";
 import {
-  Badge,
   ContentWrapper,
   FeatureInfo,
   H3,
@@ -152,14 +151,6 @@ const OptInScreen = () => {
             <Pictogram name="passcode" size={120} />
           </View>
         )}
-        <VSpacer size={24} />
-        <View style={{ alignSelf: "center" }}>
-          <Badge
-            text={I18n.t("authentication.opt_in.news")}
-            variant="highlight"
-            testID="badge-test"
-          />
-        </View>
         <VSpacer size={24} />
         <View accessible={true} ref={accessibilityFirstFocuseViewRef}>
           <H3

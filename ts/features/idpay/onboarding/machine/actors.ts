@@ -44,6 +44,10 @@ export const createActorsImplementation = (
                 return Promise.resolve(value);
               case 401:
                 return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
+              case 429:
+                return Promise.reject(
+                  OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS
+                );
               default:
                 return Promise.reject(
                   OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR
@@ -126,6 +130,10 @@ export const createActorsImplementation = (
               return Promise.resolve(O.some(value));
             case 401:
               return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
+            case 429:
+              return Promise.reject(
+                OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS
+              );
             default:
               return Promise.reject(mapErrorCodeToFailure(value.code));
           }
@@ -183,6 +191,10 @@ export const createActorsImplementation = (
                 return Promise.resolve(undefined);
               case 401:
                 return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
+              case 429:
+                return Promise.reject(
+                  OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS
+                );
               default:
                 return Promise.reject(mapErrorCodeToFailure(value.code));
             }
