@@ -19,3 +19,40 @@ export const trackIDPayDisabledFeatureIngressScreen = (
     buildEventProperties("UX", "screen_view", props)
   );
 };
+
+type StaticCodeEventProperties = {
+  initiativeName?: string;
+  initiativeId?: string;
+};
+export const trackIDPayStaticCodeGeneration = (
+  props: StaticCodeEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_STATIC_CODE_GENERATION",
+    buildEventProperties("UX", "action", props)
+  );
+};
+export const trackIDPayStaticCodeGenerationSuccess = (
+  props: StaticCodeEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_STATIC_CODE_UX_CONVERSION",
+    buildEventProperties("UX", "confirm", props)
+  );
+};
+export const trackIDPayStaticCodeGenerationCopy = (
+  props: StaticCodeEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_STATIC_CODE_COPY",
+    buildEventProperties("UX", "action", props)
+  );
+};
+export const trackIDPayStaticCodeGenerationError = (
+  props: StaticCodeEventProperties
+) => {
+  mixpanelTrack(
+    "IDPAY_CODE_GENERATION_ERROR",
+    buildEventProperties("KO", "screen_view", props)
+  );
+};

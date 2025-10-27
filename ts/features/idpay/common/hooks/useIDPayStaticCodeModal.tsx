@@ -25,6 +25,11 @@ import { useIOSelector } from "../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { idPayStaticCodeByInitiativeIdSelector } from "../../barcode/store/selectors";
+import {
+  trackIDPayStaticCodeGenerationCopy,
+  trackIDPayStaticCodeGenerationError,
+  trackIDPayStaticCodeGenerationSuccess
+} from "../analytics";
 
 type IDPayFailureSupportModal = {
   bottomSheet: JSX.Element;
@@ -32,7 +37,8 @@ type IDPayFailureSupportModal = {
 };
 
 export const useIDPayStaticCodeModal = (
-  initiativeId: string
+  initiativeId: string,
+  initiativeName: string
 ): IDPayFailureSupportModal => {
   const barcodePot = useIOSelector(idPayStaticCodeByInitiativeIdSelector)(
     initiativeId
@@ -132,10 +138,20 @@ export const useIDPayStaticCodeModal = (
       pot.toOption,
       O.fold(
         () => {
+          trackIDPayStaticCodeGenerationError({
+            initiativeId,
+            initiativeName
+          });
           bottomSheet.dismiss();
           return <></>;
         },
-        barcode => <SuccessContent {...barcode} />
+        barcode => {
+          trackIDPayStaticCodeGenerationSuccess({
+            initiativeId,
+            initiativeName
+          });
+          return <SuccessContent {...barcode} />;
+        }
       )
     );
   };
@@ -154,7 +170,13 @@ export const useIDPayStaticCodeModal = (
               label={I18n.t(
                 "idpay.initiative.beneficiaryDetails.staticCodeModal.footer"
               )}
-              onPress={() => clipboardSetStringWithFeedback(barcode.trxCode)}
+              onPress={() => {
+                trackIDPayStaticCodeGenerationCopy({
+                  initiativeId,
+                  initiativeName
+                });
+                clipboardSetStringWithFeedback(barcode.trxCode);
+              }}
             />
             <VSpacer size={32} />
           </ContentWrapper>
