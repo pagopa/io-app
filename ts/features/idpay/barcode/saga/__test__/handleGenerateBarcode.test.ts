@@ -1,7 +1,6 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
-import { handleGenerateBarcode } from "..";
 import {
   StatusEnum,
   TransactionBarCodeResponse
@@ -14,6 +13,7 @@ import { getNetworkError } from "../../../../../utils/errors";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { mockIDPayClient } from "../../../common/api/__mocks__/client";
 import { idPayGenerateBarcode } from "../../store/actions";
+import { handleGenerateBarcode } from "../handleGenerateBarcode";
 
 describe("handleGenerateBarcode test", () => {
   const initiativeId = "abcdef";

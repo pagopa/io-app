@@ -1,4 +1,7 @@
-import { IdPayBarcodeActions } from "../../../barcode/store/actions";
+import {
+  IdPayBarcodeActions,
+  IdPayStaticCodeActions
+} from "../../../barcode/store/actions";
 import { IdPayCodeActions } from "../../../code/store/actions";
 import { IDPayInitiativeConfigurationActions } from "../../../configuration/store/actions";
 import { IdPayInitiativeActions } from "../../../details/store/actions";
@@ -13,4 +16,5 @@ export type IdPayActions =
   | IdPayCodeActions
   | IDPayInitiativeConfigurationActions
   | IdPayBarcodeActions
+  | IdPayStaticCodeActions
   | IdPayUnsubscriptionActions;
