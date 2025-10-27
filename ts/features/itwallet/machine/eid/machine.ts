@@ -30,6 +30,7 @@ import {
 } from "./context";
 import { EidIssuanceEvents } from "./events";
 import { IssuanceFailureType, mapEventToFailure } from "./failure";
+import { isL3IssuanceFeaturesEnabled } from "./utils.ts";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -143,7 +144,8 @@ export const itwEidIssuanceMachine = setup({
     isReissuance: ({ context }) => context.mode === "reissuance",
     isUpgrade: ({ context }) => context.mode === "upgrade",
     isL2Fallback: ({ context }) => context.level === "l2-fallback",
-    isL3FeaturesEnabled: ({ context }) => context.level !== "l2",
+    isL3FeaturesEnabled: ({ context }) =>
+      isL3IssuanceFeaturesEnabled(context.level),
     isEligibleForItwSimplifiedActivation: notImplemented
   }
 }).createMachine({

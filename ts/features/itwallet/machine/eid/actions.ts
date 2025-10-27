@@ -37,6 +37,7 @@ import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
+import { isL3IssuanceFeaturesEnabled } from "./utils";
 
 export const createEidIssuanceActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
@@ -64,7 +65,7 @@ export const createEidIssuanceActionsImplementation = (
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
-      params: { isL3: context.level !== "l2" }
+      params: { isL3: isL3IssuanceFeaturesEnabled(context.level) }
     });
   },
 
