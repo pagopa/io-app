@@ -21,7 +21,7 @@ export const usePushNotificationEngagement = (
   flow: NotificationModalFlow,
   sendOpeningSource: SendOpeningSource,
   sendUserType: SendUserType,
-  isAccess: boolean
+  shouldSetSecurityAdviceUponLeaving: boolean
 ) => {
   const dispatch = useIODispatch();
   const { popToTop } = useIONavigation();
@@ -33,7 +33,7 @@ export const usePushNotificationEngagement = (
       "change",
       appStateHandler(
         () => {
-          if (isAccess) {
+          if (shouldSetSecurityAdviceUponLeaving) {
             dispatch(setSecurityAdviceReadyToShow(true));
           }
           popToTop();
@@ -49,7 +49,13 @@ export const usePushNotificationEngagement = (
     return () => {
       subscription.remove();
     };
-  }, [isButtonPressed, toast, isAccess, dispatch, popToTop]);
+  }, [
+    isButtonPressed,
+    toast,
+    shouldSetSecurityAdviceUponLeaving,
+    dispatch,
+    popToTop
+  ]);
 
   const onButtonPress = () => {
     trackSystemNotificationPermissionScreenOutcome(

@@ -115,15 +115,23 @@ describe("UseEngamentScreenFocusLogic", () => {
     sendOpeningSourceList.forEach(openingSource =>
       sendUserTypeList.forEach(userType =>
         it(`should execute navigation only when change event is called after the button is pressed. The dispatch ${
-          getIsAccess(flow) ? "has to be" : "hasn't to be"
+          getShouldSetSecurityAdviceUponLeaving(flow)
+            ? "has to be"
+            : "hasn't to be"
         } called when "flow" is "${flow}"`, async () => {
-          const isAccess = getIsAccess(flow);
+          const shouldSetSecurityAdviceUponLeaving =
+            getShouldSetSecurityAdviceUponLeaving(flow);
           const removeMock = jest.fn();
           const appStateSpy = jest
             .spyOn(RN.AppState, "addEventListener")
             .mockReturnValue({ remove: removeMock });
 
-          renderHook(flow, openingSource, userType, isAccess);
+          renderHook(
+            flow,
+            openingSource,
+            userType,
+            shouldSetSecurityAdviceUponLeaving
+          );
 
           expect(testingHookOutput.shouldRenderBlankPage).toBe(false);
 
@@ -152,7 +160,7 @@ describe("UseEngamentScreenFocusLogic", () => {
             updatedCallback("active");
           });
 
-          if (isAccess) {
+          if (shouldSetSecurityAdviceUponLeaving) {
             await waitFor(() => expect(mockDispatch).toHaveBeenCalledTimes(1));
             expect(mockDispatch).toHaveBeenCalledWith(
               setSecurityAdviceReadyToShow(true)
@@ -235,7 +243,9 @@ describe("appStateHandler", () => {
   });
 });
 
-function getIsAccess(flow: NotificationModalFlow): flow is "access" {
+function getShouldSetSecurityAdviceUponLeaving(
+  flow: NotificationModalFlow
+): flow is "access" {
   return flow === "access";
 }
 
@@ -243,14 +253,14 @@ const renderHook = (
   flow: NotificationModalFlow = "send_notification_opening",
   sendOpeningSource: SendOpeningSource = "not_set",
   sendUserType: SendUserType = "not_set",
-  isAccess: boolean = false
+  shouldSetSecurityAdviceUponLeaving: boolean = false
 ) => {
   const Component = () => {
     const hookOutput = MAIN_FILE.usePushNotificationEngagement(
       flow,
       sendOpeningSource,
       sendUserType,
-      isAccess
+      shouldSetSecurityAdviceUponLeaving
     );
     testingHookOutput = hookOutput;
     return <></>;
