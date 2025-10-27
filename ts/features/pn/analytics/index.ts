@@ -279,11 +279,3 @@ export function trackPNShowF24(
   });
   void mixpanelTrack(eventName, eventProps);
 }
-
-export const trackSendAarNotificationClosure = (userType: SendUserType) => {
-  const eventName = "SEND_TEMPORARY_NOTIFICATION_CLOSURE";
-  const eventProps = buildEventProperties("UX", "screen_view", {
-    send_user: userType
-  });
-  void mixpanelTrack(eventName, eventProps);
-};

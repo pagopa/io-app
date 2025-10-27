@@ -1,6 +1,7 @@
 import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
+import { SendUserType } from "../../../pushNotifications/analytics";
 import { SendAARFailurePhase } from "../utils/stateUtils";
 
 export const trackSendQRCodeScanRedirect = () => {
@@ -88,4 +89,12 @@ export const aarProblemJsonAnalyticsReport = (
           .join(",")
       : "";
   return `${responseCode} ${input.status}${titleReport} ${input.detail}${traceIdReport}${errorReport}`;
+};
+
+export const trackSendAarNotificationClosure = (userType: SendUserType) => {
+  const eventName = "SEND_TEMPORARY_NOTIFICATION_CLOSURE";
+  const eventProps = buildEventProperties("UX", "screen_view", {
+    send_user: userType
+  });
+  void mixpanelTrack(eventName, eventProps);
 };

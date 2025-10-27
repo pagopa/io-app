@@ -7,8 +7,7 @@ import {
   trackPNShowF24,
   trackPNShowTimeline,
   trackPNTimelineExternal,
-  trackPNUxSuccess,
-  trackSendAarNotificationClosure
+  trackPNUxSuccess
 } from "..";
 import * as MIXPANEL from "../../../../mixpanel";
 import { PaymentStatistics } from "../../../messages/store/reducers/payments";
@@ -312,29 +311,6 @@ describe("index", () => {
             opening_source: source,
             send_user: userType
           });
-        });
-      });
-    });
-  });
-
-  describe("trackSendAarNotificationClosure", () => {
-    sendUserTypes.forEach(userType => {
-      it(`should call 'mixpanelTrack' with proper event name and parameters (userType ${userType})`, () => {
-        const spiedOnMockedMixpanelTrack = jest
-          .spyOn(MIXPANEL, "mixpanelTrack")
-          .mockImplementation();
-
-        trackSendAarNotificationClosure(userType);
-
-        expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
-        expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
-        expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
-          "SEND_TEMPORARY_NOTIFICATION_CLOSURE"
-        );
-        expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
-          event_category: "UX",
-          event_type: "screen_view",
-          send_user: userType
         });
       });
     });

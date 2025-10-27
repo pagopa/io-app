@@ -9,10 +9,18 @@ import {
   trackSendAARFailure,
   trackSendQRCodeScanRedirect,
   trackSendQRCodeScanRedirectConfirmed,
-  trackSendQRCodeScanRedirectDismissed
+  trackSendQRCodeScanRedirectDismissed,
+  trackSendAarNotificationClosure
 } from "..";
 import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
 import * as mixpanel from "../../../../../mixpanel";
+import { SendUserType } from "../../../../pushNotifications/analytics";
+
+const sendUserTypes: ReadonlyArray<SendUserType> = [
+  "mandatory",
+  "not_set",
+  "recipient"
+];
 
 describe("index", () => {
   const spiedOnMockedMixpanelTrack = jest
@@ -420,6 +428,25 @@ describe("index", () => {
       expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
         event_category: "UX",
         event_type: "action"
+      });
+    });
+  });
+
+  describe("trackSendAarNotificationClosure", () => {
+    sendUserTypes.forEach(userType => {
+      it(`should call 'mixpanelTrack' with proper event name and parameters (userType ${userType})`, () => {
+        trackSendAarNotificationClosure(userType);
+
+        expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+        expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+        expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+          "SEND_TEMPORARY_NOTIFICATION_CLOSURE"
+        );
+        expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+          event_category: "UX",
+          event_type: "screen_view",
+          send_user: userType
+        });
       });
     });
   });

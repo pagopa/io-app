@@ -21,10 +21,7 @@ import {
 import { profileFiscalCodeSelector } from "../../settings/common/store/selectors";
 import { SendAARMessageDetailBottomSheetComponent } from "../aar/components/SendAARMessageDetailBottomSheetComponent";
 import { terminateAarFlow } from "../aar/store/actions";
-import {
-  trackPNUxSuccess,
-  trackSendAarNotificationClosure
-} from "../analytics";
+import { trackPNUxSuccess } from "../analytics";
 import { MessageDetails } from "../components/MessageDetails";
 import { PnParamsList } from "../navigation/params";
 import {
@@ -41,7 +38,10 @@ import {
   paymentsFromPNMessagePot
 } from "../utils";
 import { isAarMessageDelegatedSelector } from "../aar/store/selectors";
-import { trackSendAARFailure } from "../aar/analytics";
+import {
+  trackSendAARFailure,
+  trackSendAarNotificationClosure
+} from "../aar/analytics";
 import { SendUserType } from "../../pushNotifications/analytics";
 
 export type MessageDetailsScreenRouteParams = {

@@ -317,7 +317,7 @@ describe("MessageDetailsScreen", () => {
           .spyOn(AAR_SELECTORS, "isAarMessageDelegatedSelector")
           .mockImplementation((_state, _messageId) => isDelegate);
         const spiedOnMockedTrackSendAARNotificationClosure = jest
-          .spyOn(SEND_ANALYTICS, "trackSendAarNotificationClosure")
+          .spyOn(AAR_ANALYTICS, "trackSendAarNotificationClosure")
           .mockImplementation();
         const spiedOnMockedUseHardwareBackButton = jest
           .spyOn(HARDWARE_BACK_BUTTON, "useHardwareBackButton")
@@ -389,7 +389,7 @@ describe("MessageDetailsScreen", () => {
           .spyOn(AAR_SELECTORS, "isAarMessageDelegatedSelector")
           .mockImplementation((_state, _messageId) => isDelegate);
         const spiedOnMockedTrackSendAARNotificationClosure = jest
-          .spyOn(SEND_ANALYTICS, "trackSendAarNotificationClosure")
+          .spyOn(AAR_ANALYTICS, "trackSendAarNotificationClosure")
           .mockImplementation();
 
         const { component } = renderComponent(store, false, !!isAarMessage);
