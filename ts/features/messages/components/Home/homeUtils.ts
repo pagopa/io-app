@@ -31,6 +31,7 @@ import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import NavigationService from "../../../../navigation/NavigationService";
 import { trackMessageListEndReached, trackMessagesPage } from "../../analytics";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
+import { shouldRefreshMessagesSectionSelector } from "../../../authentication/activeSessionLogin/store/selectors";
 import {
   ListItemMessageEnhancedHeight,
   ListItemMessageStandardHeight
@@ -215,22 +216,25 @@ export const getLoadPreviousPageMessagesActionIfAllowed = (
                 pipe(
                   state,
                   isDoingAnAsyncOperationOnMessages,
-                  B.fold(() => {
-                    if (
-                      state.features?.loginFeatures?.activeSessionLogin
-                        ?.refreshMessagesSection
-                    ) {
-                      return loadPreviousPageMessages.request({
-                        pageSize: maximumItemsFromAPI,
-                        cursor: previousPageMessageId,
-                        filter: {
-                          getArchived: allPaginated.shownCategory === "ARCHIVE"
-                        },
-                        fromUserAction: false
-                      });
-                    }
-                    return undefined;
-                  }, constUndefined)
+                  B.fold(
+                    () =>
+                      pipe(
+                        state,
+                        shouldRefreshMessagesSectionSelector,
+                        B.fold(constUndefined, () =>
+                          loadPreviousPageMessages.request({
+                            pageSize: maximumItemsFromAPI,
+                            cursor: previousPageMessageId,
+                            filter: {
+                              getArchived:
+                                allPaginated.shownCategory === "ARCHIVE"
+                            },
+                            fromUserAction: false
+                          })
+                        )
+                      ),
+                    constUndefined
+                  )
                 )
               )
             )

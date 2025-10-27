@@ -32,7 +32,7 @@ export type ActiveSessionLoginState = {
 export const activeSessionLoginIntialState: ActiveSessionLoginState = {
   isActiveSessionLogin: false,
   isUserLoggedIn: false,
-  refreshMessagesSection: false
+  refreshMessagesSection: true
 };
 
 export const activeSessionLoginReducer = (
