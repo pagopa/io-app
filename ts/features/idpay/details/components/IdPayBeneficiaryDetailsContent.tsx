@@ -244,6 +244,15 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
         </View>
       ));
 
+  const handleGenerateStaticCode = () => {
+    dispatch(
+      idPayGenerateStaticCode.request({
+        initiativeId: initiativeDetails.initiativeId
+      })
+    );
+    present();
+  };
+
   const renderBeneficiaryDetailsContent = () => {
     switch (initiativeType) {
       case InitiativeRewardTypeEnum.DISCOUNT:
@@ -283,14 +292,7 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
                 label={I18n.t(
                   "idpay.initiative.beneficiaryDetails.buttons.staticCode"
                 )}
-                onPress={() => {
-                  dispatch(
-                    idPayGenerateStaticCode.request({
-                      initiativeId: initiativeDetails.initiativeId
-                    })
-                  );
-                  present();
-                }}
+                onPress={handleGenerateStaticCode}
               />
             )}
             <ListItemAction
