@@ -1141,7 +1141,6 @@
     "opt_in": {
       "contextualHelpTitle": "Authentication",
       "contextualHelpContent": "Here you can find information on how to authenticate on IO and some security tips.",
-      "news": "News",
       "title": "It is now easier to access!",
       "identity_check": "You’ll no longer have to identify yourself with SPID or CIE every 30 days, but only once a year or if you log out.",
       "security_suggests": "Safety tips",
@@ -5613,7 +5612,8 @@
       }
     },
     "wallet": {
-      "preview": {
+      "card": {
+        "available": "Available",
         "validThrough": "Valid through {{endDate}}",
         "showAll": "View all"
       },
