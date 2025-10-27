@@ -1,4 +1,4 @@
-import { act } from "@testing-library/react-native";
+import { act, fireEvent } from "@testing-library/react-native";
 import { RefObject } from "react";
 import { createStore } from "redux";
 import * as BACK_BUTTON from "../../../../../hooks/useHardwareBackButton";
@@ -13,6 +13,7 @@ import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import PN_ROUTES from "../../../navigation/routes";
 import * as BANNER from "../../../reminderBanner/reducer/bannerDismiss";
 import { SendAARMessageDetailBottomSheetComponent } from "../SendAARMessageDetailBottomSheetComponent";
+import * as ANALYTICS from "../../analytics";
 
 describe("SendAARMessageDetailBottomSheetComponent", () => {
   const presentMock = jest.fn();
@@ -48,6 +49,34 @@ describe("SendAARMessageDetailBottomSheetComponent", () => {
     const { aarBottomSheetRef } = renderComponent();
     expect(aarBottomSheetRef.current).toBe(presentMock);
   });
+
+  [false, true].forEach(isDelegate =>
+    it(`should call trackSendAarNotificationClosureBack with proper parameters when the primary action is triggered (isDelegate ${isDelegate})`, () => {
+      jest.restoreAllMocks();
+      /* const spiedOnMockedUseIOBottomSheetModal = jest.spyOn(
+        BOTTOM_SHEET,
+        "useIOBottomSheetModal"
+      ); */
+      const spiedOnMockedTrackSendAarNotificationClosureBack = jest
+        .spyOn(ANALYTICS, "trackSendAarNotificationClosureBack")
+        .mockImplementation();
+
+      const component = renderComponent(isDelegate);
+
+      const primaryButton = component.getByTestId("primary_button");
+      fireEvent.press(primaryButton);
+
+      expect(
+        spiedOnMockedTrackSendAarNotificationClosureBack.mock.calls.length
+      ).toBe(1);
+      expect(
+        spiedOnMockedTrackSendAarNotificationClosureBack.mock.calls[0].length
+      ).toBe(1);
+      expect(
+        spiedOnMockedTrackSendAarNotificationClosureBack.mock.calls[0][0]
+      ).toBe(isDelegate ? "mandatory" : "recipient");
+    })
+  );
 
   describe("onSecondaryActionPress navigation behavior", () => {
     [false, true].forEach(isDelegate =>

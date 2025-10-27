@@ -6,6 +6,8 @@ import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import PN_ROUTES from "../../navigation/routes";
 import { isPnServiceEnabled } from "../../reminderBanner/reducer/bannerDismiss";
+import { SendUserType } from "../../../pushNotifications/analytics";
+import { trackSendAarNotificationClosureBack } from "../analytics";
 import { SendAARMessageDetailBottomSheet } from "./SendAARMessageDetailBottomSheet";
 
 export type SendAARMessageDetailBottomSheetComponentProps = {
@@ -55,7 +57,11 @@ export const SendAARMessageDetailBottomSheetComponent = ({
     title: I18n.t("features.pn.aar.flow.closeNotification.title"),
     component: (
       <SendAARMessageDetailBottomSheet
-        onPrimaryActionPress={() => dismiss()}
+        onPrimaryActionPress={() => {
+          const userType: SendUserType = isDelegate ? "mandatory" : "recipient";
+          trackSendAarNotificationClosureBack(userType);
+          dismiss();
+        }}
         onSecondaryActionPress={onSecondaryActionPress}
       />
     )
