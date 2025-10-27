@@ -1,6 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { createStore } from "redux";
-import { fireEvent } from "@testing-library/react-native";
+import { fireEvent, render } from "@testing-library/react-native";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
@@ -15,8 +15,11 @@ import {
 } from "../../../pushNotifications/analytics";
 import * as ANALYTICS from "../../analytics";
 import * as BOTTOM_SHEET from "../../../../utils/hooks/bottomSheet";
+import * as URL_UTILS from "../../../../utils/url";
 
 jest.mock("../Timeline");
+
+const mockFrontendUrl = "https://www.domain.com/sendUrl";
 
 const sendOpeningSources: ReadonlyArray<SendOpeningSource> = [
   "aar",
@@ -62,7 +65,7 @@ describe("TimelineListItem", () => {
   });
   sendOpeningSources.forEach(openingSource =>
     sendUserTypes.forEach(userType => {
-      it(`Should call 'trackPNShowTimeline' upong press (source ${openingSource} user ${userType})`, () => {
+      it(`Should call 'trackPNShowTimeline' upon press (source ${openingSource} user ${userType})`, () => {
         const refUseIOBottomSheetModal = BOTTOM_SHEET.useIOBottomSheetModal;
         jest
           .spyOn(BOTTOM_SHEET, "useIOBottomSheetModal")
@@ -81,6 +84,7 @@ describe("TimelineListItem", () => {
           openingSource,
           userType
         );
+
         const pressable = component.getByTestId(
           "timeline_listitem_bottom_menu"
         );
@@ -93,6 +97,59 @@ describe("TimelineListItem", () => {
         );
         expect(spiedOnMockedTrackPNShowTimeline.mock.calls[0][1]).toBe(
           userType
+        );
+      });
+    })
+  );
+  sendOpeningSources.forEach(openingSource =>
+    sendUserTypes.forEach(userType => {
+      it(`Should call 'trackPNTimelineExternal' when tapping the internal bottom sheet CTA (source ${openingSource} user ${userType})`, () => {
+        const refUseIOBottomSheetModal = BOTTOM_SHEET.useIOBottomSheetModal;
+        const spiedOnMockedUseIOBottomSheetModal = jest
+          .spyOn(BOTTOM_SHEET, "useIOBottomSheetModal")
+          .mockImplementation(props => {
+            const { bottomSheet } = refUseIOBottomSheetModal(props);
+            return { present: jest.fn(), bottomSheet, dismiss: jest.fn() };
+          });
+        const spiedOnMockedHandleItemOnPress = jest
+          .spyOn(URL_UTILS, "handleItemOnPress")
+          .mockImplementation(_input => () => undefined);
+
+        const spiedOnMockedTrackPNTimelineExternal = jest
+          .spyOn(ANALYTICS, "trackPNTimelineExternal")
+          .mockImplementation();
+
+        renderComponent(fullHistory(), true, openingSource, userType);
+
+        // Unfortunately, bottom sheet's footer is not rendered since we have a mock
+        // in the jest.setup file that replaces the main view with a modal (that does
+        // not have the footer property). In order to render the footer, we have to
+        // extract the original property and render it indipendently
+        const bottomSheetProps =
+          spiedOnMockedUseIOBottomSheetModal.mock.calls[0][0];
+        const bottomSheetFooter = bottomSheetProps.footer;
+        const renderedBottomSheetFooter = render(<>{bottomSheetFooter}</>);
+
+        const pressable = renderedBottomSheetFooter.getByTestId(
+          "timeline_listitem_bottom_menu_alert"
+        );
+        fireEvent.press(pressable);
+
+        expect(spiedOnMockedTrackPNTimelineExternal.mock.calls.length).toBe(1);
+        expect(spiedOnMockedTrackPNTimelineExternal.mock.calls[0].length).toBe(
+          2
+        );
+        expect(spiedOnMockedTrackPNTimelineExternal.mock.calls[0][0]).toBe(
+          openingSource
+        );
+        expect(spiedOnMockedTrackPNTimelineExternal.mock.calls[0][1]).toBe(
+          userType
+        );
+
+        expect(spiedOnMockedHandleItemOnPress.mock.calls.length).toBe(1);
+        expect(spiedOnMockedHandleItemOnPress.mock.calls[0].length).toBe(1);
+        expect(spiedOnMockedHandleItemOnPress.mock.calls[0][0]).toBe(
+          mockFrontendUrl
         );
       });
     })
@@ -177,7 +234,7 @@ const renderComponent = (
             enabled: false
           },
           pn: {
-            frontend_url: "https://www.domain.com/sendUrl"
+            frontend_url: mockFrontendUrl
           },
           itw: {
             enabled: true,

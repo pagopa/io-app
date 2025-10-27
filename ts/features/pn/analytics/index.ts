@@ -172,11 +172,16 @@ export function trackPNPushOpened() {
   void mixpanelTrack("PN_PUSH_OPENED", buildEventProperties("UX", "action"));
 }
 
-export function trackPNTimelineExternal() {
-  void mixpanelTrack(
-    "PN_TIMELINE_EXTERNAL",
-    buildEventProperties("UX", "exit")
-  );
+export function trackPNTimelineExternal(
+  openingSource: SendOpeningSource,
+  userType: SendUserType
+) {
+  const eventName = "PN_TIMELINE_EXTERNAL";
+  const eventProps = buildEventProperties("UX", "exit", {
+    opening_source: openingSource,
+    send_user: userType
+  });
+  void mixpanelTrack(eventName, eventProps);
 }
 
 export function trackPNShowTimeline(

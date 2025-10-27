@@ -80,10 +80,11 @@ export const TimelineListItem = ({
           }
           onPress={() => {
             if (sendExternalUrl) {
-              trackPNTimelineExternal();
+              trackPNTimelineExternal(sendOpeningSource, sendUserType);
               handleItemOnPress(sendExternalUrl)();
             }
           }}
+          testID="timeline_listitem_bottom_menu_alert"
         />
       </View>
     ),
