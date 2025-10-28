@@ -5,7 +5,7 @@ import {
   ModuleNavigationAlt,
   VStack
 } from "@pagopa/io-app-design-system";
-import { useFocusEffect, useRoute } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { View } from "react-native";
@@ -42,30 +42,34 @@ export type ItwIdentificationModeSelectionScreenProps =
 
 const i18nNs = "features.itWallet.identification.modeSelection" as const;
 
-export const ItwIdentificationModeSelectionScreen = (
-  props: ItwIdentificationModeSelectionScreenProps
-) => {
-  const { eidReissuing } = props.route.params;
+export const ItwIdentificationModeSelectionScreen = ({
+  route
+}: ItwIdentificationModeSelectionScreenProps) => {
+  const { name: routeName, params } = route;
+  const { eidReissuing } = params;
+
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
   const mode = ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
+  const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
   const isWalletAlreadyActivated = useIOSelector(itwLifecycleIsValidSelector);
-  const { name: routeName } = useRoute();
 
   const disabledIdentificationMethods = useIOSelector(
     itwDisabledIdentificationMethodsSelector
   );
 
   const isCiePinDisabled = useMemo(
-    () => disabledIdentificationMethods.includes("CiePin"),
-    [disabledIdentificationMethods]
+    () =>
+      disabledIdentificationMethods.includes("CiePin") ||
+      level === "l2-fallback",
+    [disabledIdentificationMethods, level]
   );
   const isSpidDisabled = useMemo(
-    () => disabledIdentificationMethods.includes("SPID") || isL3,
-    [disabledIdentificationMethods, isL3]
+    () => disabledIdentificationMethods.includes("SPID") || level === "l3",
+    [disabledIdentificationMethods, level]
   );
   const isCieIdDisabled = useMemo(
     () => disabledIdentificationMethods.includes("CieID"),
@@ -157,7 +161,7 @@ export const ItwIdentificationModeSelectionScreen = (
                 textAlign="center"
                 label={I18n.t(`${i18nNs}.noCieCta`)}
                 onPress={handleNoCiePress}
-                testID={"noCieButton"}
+                testID={"noCieButtonTestID"}
               />
             </View>
           )}
@@ -177,10 +181,10 @@ const CiePinMethodModule = () => {
   }, [machineRef]);
 
   const { title, subtitle } = useMemo(() => {
-    if (level === "l2-plus") {
+    if (level === "l3-next") {
       return {
         title: I18n.t(`${i18nNs}.mode.ciePin.title`),
-        subtitle: I18n.t(`${i18nNs}.mode.ciePin.subtitle.l2-plus`)
+        subtitle: I18n.t(`${i18nNs}.mode.ciePin.subtitle.l3-next`)
       };
     }
 
@@ -191,7 +195,8 @@ const CiePinMethodModule = () => {
   }, [level]);
 
   const badgeProps: Badge | undefined = useMemo(() => {
-    if (level !== "l2" || mode !== "reissuance") {
+    if (level === "l2" && mode === "issuance") {
+      // Should not display the recommended badge for L2 issuance
       return undefined;
     }
 
@@ -224,10 +229,10 @@ const SpidMethodModule = () => {
   }, [machineRef]);
 
   const { title, subtitle } = useMemo(() => {
-    if (level === "l2-plus") {
+    if (level === "l3-next") {
       return {
-        title: I18n.t(`${i18nNs}.mode.spid.title.l2-plus`),
-        subtitle: I18n.t(`${i18nNs}.mode.spid.subtitle.l2-plus`)
+        title: I18n.t(`${i18nNs}.mode.spid.title.l3-next`),
+        subtitle: I18n.t(`${i18nNs}.mode.spid.subtitle.l3-next`)
       };
     }
 
@@ -257,10 +262,10 @@ const CieIdMethodModule = () => {
   }, [machineRef]);
 
   const { title, subtitle } = useMemo(() => {
-    if (level === "l2-plus") {
+    if (level === "l3-next") {
       return {
         title: I18n.t(`${i18nNs}.mode.cieId.title`),
-        subtitle: I18n.t(`${i18nNs}.mode.cieId.subtitle.l2-plus`)
+        subtitle: I18n.t(`${i18nNs}.mode.cieId.subtitle.l3-next`)
       };
     }
 

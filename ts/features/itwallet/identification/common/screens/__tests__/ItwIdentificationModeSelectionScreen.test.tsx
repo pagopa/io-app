@@ -5,6 +5,10 @@ import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as remoteConfigSelectors from "../../../../common/store/selectors/remoteConfig";
+import {
+  EidIssuanceLevel,
+  EidIssuanceMode
+} from "../../../../machine/eid/context.ts";
 import { itwEidIssuanceMachine } from "../../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../../machine/eid/provider";
 import { ITW_ROUTES } from "../../../../navigation/routes";
@@ -29,78 +33,112 @@ describe("ItwIdentificationModeSelectionScreen", () => {
     jest.clearAllMocks();
   });
 
-  it("should render the screen correctly", () => {
-    const component = renderComponent();
-    expect(component).toBeTruthy();
+  it("[issuance, l2] should show CiePin, CieId and SPID authentication methods", () => {
+    const component = renderComponent("issuance", "l2");
+
+    expect(component.queryByTestId("CiePinMethodModuleTestID")).not.toBeNull();
+    expect(component.queryByTestId("SpidMethodModuleTestID")).not.toBeNull();
+    expect(component.queryByTestId("CieIDMethodModuleTestID")).not.toBeNull();
+    expect(component.queryByTestId("CiePinRecommendedBadgeTestID")).toBeNull();
+    expect(component.queryByTestId("noCieButtonTestID")).toBeNull();
   });
 
-  describe("L2IdentificationView (L3 disabled)", () => {
-    it("should show all authentication methods in L2", () => {
-      const component = renderComponent();
+  it("[issuance, l2-fallback] should show CieId and SPID authentication methods", () => {
+    const component = renderComponent("issuance", "l2-fallback");
 
-      expect(component.queryByTestId("CieID")).not.toBeNull();
-      expect(component.queryByTestId("Spid")).not.toBeNull();
-      expect(component.queryByTestId("CiePin")).not.toBeNull();
-      expect(component.queryByTestId("noCieButton")).toBeNull();
-    });
+    expect(component.queryByTestId("CiePinMethodModuleTestID")).toBeNull();
+    expect(component.queryByTestId("SpidMethodModuleTestID")).not.toBeNull();
+    expect(component.queryByTestId("CieIDMethodModuleTestID")).not.toBeNull();
+    expect(component.queryByTestId("CiePinRecommendedBadgeTestID")).toBeNull();
+    expect(component.queryByTestId("noCieButtonTestID")).toBeNull();
+  });
 
-    it("should show all authentication methods in reissuing", () => {
-      const component = renderComponent(false, true);
+  it("[issuance, l3] should show CiePin and CieId authentication methods", () => {
+    const component = renderComponent("issuance", "l3");
 
-      expect(component.queryByTestId("CieID")).not.toBeNull();
-      expect(component.queryByTestId("Spid")).not.toBeNull();
-      expect(component.queryByTestId("CiePin")).not.toBeNull();
-      expect(component.queryByTestId("noCieButton")).toBeNull();
-    });
+    expect(component.queryByTestId("CiePinMethodModuleTestID")).not.toBeNull();
+    expect(component.queryByTestId("SpidMethodModuleTestID")).toBeNull();
+    expect(component.queryByTestId("CieIDMethodModuleTestID")).not.toBeNull();
+    expect(
+      component.queryByTestId("CiePinRecommendedBadgeTestID")
+    ).not.toBeNull();
+    expect(component.queryByTestId("noCieButtonTestID")).not.toBeNull();
+  });
 
-    it("should show all authentication methods in L3 except for SPID", () => {
-      const component = renderComponent(true, false);
+  it("[issuance, l3-next] should show CiePin (w/badge), CieId and SPID authentication methods", () => {
+    const component = renderComponent("issuance", "l3-next");
 
-      expect(component.queryByTestId("CieID")).not.toBeNull();
-      expect(component.queryByTestId("Spid")).toBeNull();
-      expect(component.queryByTestId("CiePin")).not.toBeNull();
-      expect(component.queryByTestId("noCieButton")).not.toBeNull();
-    });
+    expect(component.queryByTestId("CiePinMethodModuleTestID")).not.toBeNull();
+    expect(component.queryByTestId("SpidMethodModuleTestID")).not.toBeNull();
+    expect(component.queryByTestId("CieIDMethodModuleTestID")).not.toBeNull();
+    expect(
+      component.queryByTestId("CiePinRecommendedBadgeTestID")
+    ).not.toBeNull();
+    expect(component.queryByTestId("noCieButtonTestID")).not.toBeNull();
+  });
 
-    it("should show all authentication and no noCieButton methods in L3 reissuing mode except for SPID", () => {
-      const component = renderComponent(true, true);
+  it("[reissuance, l2] should show CiePin (w/badge), CieId and SPID authentication methods", () => {
+    const component = renderComponent("reissuance", "l2");
 
-      expect(component.queryByTestId("noCieButton")).toBeNull();
-      expect(component.queryByTestId("CieID")).not.toBeNull();
-      expect(component.queryByTestId("Spid")).toBeNull();
-      expect(component.queryByTestId("CiePin")).not.toBeNull();
-    });
+    expect(component.queryByTestId("CiePinMethodModuleTestID")).not.toBeNull();
+    expect(component.queryByTestId("SpidMethodModuleTestID")).not.toBeNull();
+    expect(component.queryByTestId("CieIDMethodModuleTestID")).not.toBeNull();
+    expect(
+      component.queryByTestId("CiePinRecommendedBadgeTestID")
+    ).not.toBeNull();
+    expect(component.queryByTestId("noCieButtonTestID")).toBeNull();
+  });
 
-    it("should not show SPID method when it is disabled", () => {
-      jest
-        .spyOn(
-          remoteConfigSelectors,
-          "itwDisabledIdentificationMethodsSelector"
-        )
-        .mockReturnValue(["SPID"]);
+  it("[reissuance, l3] should show CiePin (w/badge) and CieId authentication methods", () => {
+    const component = renderComponent("reissuance", "l3");
 
-      const component = renderComponent();
+    expect(component.queryByTestId("CiePinMethodModuleTestID")).not.toBeNull();
+    expect(component.queryByTestId("SpidMethodModuleTestID")).toBeNull();
+    expect(component.queryByTestId("CieIDMethodModuleTestID")).not.toBeNull();
+    expect(
+      component.queryByTestId("CiePinRecommendedBadgeTestID")
+    ).not.toBeNull();
+    expect(component.queryByTestId("noCieButtonTestID")).toBeNull();
+  });
 
-      expect(component.queryByTestId("CieID")).not.toBeNull();
-    });
+  it("should not show CiePin method when it is disabled", () => {
+    jest
+      .spyOn(remoteConfigSelectors, "itwDisabledIdentificationMethodsSelector")
+      .mockReturnValue(["CiePin"]);
 
-    it("should not show CieId method when it is disabled", () => {
-      jest
-        .spyOn(
-          remoteConfigSelectors,
-          "itwDisabledIdentificationMethodsSelector"
-        )
-        .mockReturnValue(["CieID"]);
+    const component = renderComponent("issuance", "l2");
 
-      const component = renderComponent();
+    expect(component.queryByTestId("CiePinMethodModuleTestID")).toBeNull();
+    expect(component.queryByTestId("SpidMethodModuleTestID")).not.toBeNull();
+    expect(component.queryByTestId("CieIDMethodModuleTestID")).not.toBeNull();
+  });
 
-      expect(component.queryByTestId("Spid")).not.toBeNull();
-      expect(component.queryByTestId("CieID")).toBeNull();
-    });
+  it("should not show SPID method when it is disabled", () => {
+    jest
+      .spyOn(remoteConfigSelectors, "itwDisabledIdentificationMethodsSelector")
+      .mockReturnValue(["SPID"]);
+
+    const component = renderComponent("issuance", "l2");
+
+    expect(component.queryByTestId("CiePinMethodModuleTestID")).not.toBeNull();
+    expect(component.queryByTestId("SpidMethodModuleTestID")).toBeNull();
+    expect(component.queryByTestId("CieIDMethodModuleTestID")).not.toBeNull();
+  });
+
+  it("should not show CieId method when it is disabled", () => {
+    jest
+      .spyOn(remoteConfigSelectors, "itwDisabledIdentificationMethodsSelector")
+      .mockReturnValue(["CieID"]);
+
+    const component = renderComponent("issuance", "l2");
+
+    expect(component.queryByTestId("CiePinMethodModuleTestID")).not.toBeNull();
+    expect(component.queryByTestId("SpidMethodModuleTestID")).not.toBeNull();
+    expect(component.queryByTestId("CieIDMethodModuleTestID")).toBeNull();
   });
 });
 
-const renderComponent = (isL3 = false, eidReissuing = false) => {
+const renderComponent = (mode: EidIssuanceMode, level: EidIssuanceLevel) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();
@@ -119,10 +157,11 @@ const renderComponent = (isL3 = false, eidReissuing = false) => {
     const initialSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
     const snapshot: typeof initialSnapshot = {
       ...initialSnapshot,
-      value: { UserIdentification: { Identification: isL3 ? "L3" : "L2" } },
+      value: { UserIdentification: "Identification" },
       context: {
         ...initialSnapshot.context,
-        level: isL3 ? "l3" : "l2",
+        mode,
+        level,
         cieContext: {
           isNFCEnabled: true,
           isCIEAuthenticationSupported: true
@@ -143,7 +182,7 @@ const renderComponent = (isL3 = false, eidReissuing = false) => {
   return renderScreenWithNavigationStoreContext<GlobalState>(
     WrappedComponent,
     ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
-    { eidReissuing },
+    { eidReissuing: mode === "reissuance" },
     store
   );
 };
