@@ -456,7 +456,8 @@ export const itwEidIssuanceMachine = setup({
             back: [
               {
                 guard: or(["isReissuance", "isL2Fallback"]),
-                target: "#itwEidIssuanceMachine.Idle"
+                target: "#itwEidIssuanceMachine.Idle",
+                actions: "navigateToTosScreen"
               },
               {
                 target: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
