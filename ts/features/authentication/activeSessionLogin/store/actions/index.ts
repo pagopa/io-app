@@ -2,6 +2,10 @@ import { ActionType, createStandardAction } from "typesafe-actions";
 import { SpidIdp } from "../../../../../utils/idps";
 import { SessionToken } from "../../../../../types/SessionToken";
 
+export const setActiveSessionLoginLocalFlag = createStandardAction(
+  "SET_ACTIVE_SESSION_LOGIN_LOCAL_FLAG"
+)<boolean>();
+
 export const setStartActiveSessionLogin = createStandardAction(
   "SET_START_ACTIVE_SESSION_LOGIN"
 )();
@@ -43,6 +47,7 @@ export const setLoggedOutUserWithDifferentCF = createStandardAction(
 )();
 
 export type LoginInfoActions =
+  | ActionType<typeof setActiveSessionLoginLocalFlag>
   | ActionType<typeof setStartActiveSessionLogin>
   | ActionType<typeof setRetryActiveSessionLogin>
   | ActionType<typeof setIdpSelectedActiveSessionLogin>

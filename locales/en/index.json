@@ -6339,6 +6339,13 @@
         "action": {
           "label": "Read more"
         }
+      },
+      "expirationBannerNew": {
+        "title": "Il {{date}} dovrai accedere di nuovo all’app",
+        "content": "Rinnova ora l’accesso con SPID o CIE per continuare a usare IO senza interruzioni",
+        "action": {
+          "label": "Accedi subito"
+        }
       }
     }
   },

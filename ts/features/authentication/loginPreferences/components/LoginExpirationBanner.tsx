@@ -18,6 +18,11 @@ import {
   trackLoginExpirationBannerClosure,
   trackLoginExpirationBannerPrompt
 } from "../analytics";
+import { isActiveSessionLoginEnabledSelector } from "../../activeSessionLogin/store/selectors";
+import { setStartActiveSessionLogin } from "../../activeSessionLogin/store/actions";
+import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
+import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 
 type Props = {
   handleOnClose: () => void;
@@ -29,23 +34,34 @@ type Props = {
 export const LoginExpirationBanner = ({ handleOnClose }: Props) => {
   const { name: routeName } = useRoute();
   const expirationDate = useIOSelector(formattedExpirationDateSelector);
+  const isActiveSessionLoginEnabled = useIOSelector(
+    isActiveSessionLoginEnabledSelector
+  );
   const { error } = useIOToast();
   const dispatch = useIODispatch();
+  const navigation = useIONavigation();
 
   useEffect(() => {
     trackLoginExpirationBannerPrompt();
   }, []);
 
   const handleOnPress = useCallback(() => {
-    trackHelpCenterCtaTapped(
-      BANNER_ID,
-      helpCenterHowToDoWhenSessionIsExpiredUrl,
-      routeName
-    );
-    openWebUrl(helpCenterHowToDoWhenSessionIsExpiredUrl, () => {
-      error(I18n.t("global.jserror.title"));
-    });
-  }, [error, routeName]);
+    if (isActiveSessionLoginEnabled) {
+      dispatch(setStartActiveSessionLogin());
+      navigation.navigate(SETTINGS_ROUTES.AUTHENTICATION, {
+        screen: AUTHENTICATION_ROUTES.LANDING_ACTIVE_SESSION_LOGIN
+      });
+    } else {
+      trackHelpCenterCtaTapped(
+        BANNER_ID,
+        helpCenterHowToDoWhenSessionIsExpiredUrl,
+        routeName
+      );
+      openWebUrl(helpCenterHowToDoWhenSessionIsExpiredUrl, () => {
+        error(I18n.t("global.jserror.title"));
+      });
+    }
+  }, [dispatch, error, isActiveSessionLoginEnabled, navigation, routeName]);
 
   const closeHandler = useCallback(() => {
     trackLoginExpirationBannerClosure();
@@ -53,20 +69,29 @@ export const LoginExpirationBanner = ({ handleOnClose }: Props) => {
     handleOnClose();
   }, [dispatch, handleOnClose]);
 
+  const title = isActiveSessionLoginEnabled
+    ? I18n.t("loginFeatures.loginPreferences.expirationBannerNew.title", {
+        date: expirationDate
+      })
+    : I18n.t("loginFeatures.loginPreferences.expirationBanner.title");
+
+  const content = isActiveSessionLoginEnabled
+    ? I18n.t("loginFeatures.loginPreferences.expirationBannerNew.content")
+    : I18n.t("loginFeatures.loginPreferences.expirationBanner.content", {
+        date: expirationDate
+      });
+
+  const action = isActiveSessionLoginEnabled
+    ? I18n.t("loginFeatures.loginPreferences.expirationBannerNew.action.label")
+    : I18n.t("loginFeatures.loginPreferences.expirationBanner.action.label");
+
   return (
     <View style={styles.margins}>
       <Banner
         testID="loginExpirationBanner"
-        title={I18n.t("loginFeatures.loginPreferences.expirationBanner.title")}
-        content={I18n.t(
-          "loginFeatures.loginPreferences.expirationBanner.content",
-          {
-            date: expirationDate
-          }
-        )}
-        action={I18n.t(
-          "loginFeatures.loginPreferences.expirationBanner.action.label"
-        )}
+        title={title}
+        content={content}
+        action={action}
         pictogramName="identityCheck"
         color="neutral"
         onClose={closeHandler}

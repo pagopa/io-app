@@ -3,8 +3,12 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { remoteConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isMinAppVersionSupported } from "../../../../../store/reducers/featureFlagWithMinAppVersionStatus";
-import { isActiveSessionLoginLocallyEnabledSelector } from "../../../loginPreferences/store/selectors";
 import { GlobalState } from "../../../../../store/reducers/types";
+
+export const isActiveSessionLoginLocallyEnabledSelector = (
+  state: GlobalState
+) =>
+  state.features.loginFeatures.activeSessionLogin.activeSessionLoginLocalFlag;
 
 export const isActiveSessionLoginRemotelyEnabledSelector = createSelector(
   remoteConfigSelector,

@@ -169,6 +169,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
   },
   "loginFeatures": {
     "activeSessionLogin": {
+      "activeSessionLoginLocalFlag": false,
       "isActiveSessionLogin": false,
       "isUserLoggedIn": false,
     },
@@ -199,7 +200,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "userFromSuccessLogin": false,
     },
     "loginPreferences": {
-      "activeSessionLoginLocalFlag": false,
       "showSessionExpirationBanner": true,
     },
     "nativeLogin": {

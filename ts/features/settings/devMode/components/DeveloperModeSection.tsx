@@ -51,11 +51,13 @@ import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { getDeviceId } from "../../../../utils/device";
 import { isDevEnv, isLocalEnv } from "../../../../utils/environment";
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
-import { isActiveSessionLoginLocallyEnabledSelector } from "../../../authentication/loginPreferences/store/selectors/index.ts";
-import { setActiveSessionLoginLocalFlag } from "../../../authentication/loginPreferences/store/actions/index.ts";
 import { ITW_ROUTES } from "../../../itwallet/navigation/routes.ts";
-import { setStartActiveSessionLogin } from "../../../authentication/activeSessionLogin/store/actions/index.ts";
+import {
+  setActiveSessionLoginLocalFlag,
+  setStartActiveSessionLogin
+} from "../../../authentication/activeSessionLogin/store/actions/index.ts";
 import { AUTHENTICATION_ROUTES } from "../../../authentication/common/navigation/routes.ts";
+import { isActiveSessionLoginLocallyEnabledSelector } from "../../../authentication/activeSessionLogin/store/selectors/index.ts";
 import ExperimentalDesignEnableSwitch from "./ExperimentalDesignEnableSwitch";
 
 type PlaygroundsNavListItem = {

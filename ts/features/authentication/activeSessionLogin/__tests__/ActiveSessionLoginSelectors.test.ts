@@ -1,10 +1,10 @@
 import * as O from "fp-ts/lib/Option";
 import {
   isActiveSessionLoginRemotelyEnabledSelector,
-  isActiveSessionLoginEnabledSelector
+  isActiveSessionLoginEnabledSelector,
+  isActiveSessionLoginLocallyEnabledSelector
 } from "../store/selectors";
 import { GlobalState } from "../../../../store/reducers/types";
-import { isActiveSessionLoginLocallyEnabledSelector } from "../../loginPreferences/store/selectors";
 
 // Mock DeviceInfo for version checks
 jest.mock("react-native-device-info", () => ({
@@ -74,7 +74,7 @@ describe("isActiveSessionLoginEnabledSelector (local and remote flags)", () => {
       }),
       features: {
         loginFeatures: {
-          loginPreferences: {
+          activeSessionLogin: {
             activeSessionLoginLocalFlag: localFlag
           }
         }

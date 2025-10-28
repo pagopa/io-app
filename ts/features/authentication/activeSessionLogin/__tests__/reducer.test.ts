@@ -10,12 +10,13 @@ import {
   setFinishedActiveSessionLoginFlow
 } from "../store/actions";
 import {
-  activeSessionLoginReducer,
   ActiveSessionLoginState,
-  testable
+  testable,
+  testableReducer
 } from "../store/reducer";
 
 const testableInitialState = testable!;
+const activeSessionLoginReducer = testableReducer!;
 
 describe("activeSessionLoginReducer", () => {
   it("should return initial state by default", () => {
@@ -77,6 +78,7 @@ describe("activeSessionLoginReducer", () => {
 
   it("should reset state on consolidateActiveSessionLoginData", () => {
     const modifiedState: ActiveSessionLoginState = {
+      activeSessionLoginLocalFlag: false,
       isActiveSessionLogin: true,
       isUserLoggedIn: true,
       loginInfo: {
@@ -105,6 +107,7 @@ describe("activeSessionLoginReducer", () => {
 
   it("should reset state on setFinishedActiveSessionLoginFlow", () => {
     const modifiedState: ActiveSessionLoginState = {
+      activeSessionLoginLocalFlag: false,
       isActiveSessionLogin: true,
       isUserLoggedIn: true,
       loginInfo: {

@@ -1,9 +1,12 @@
 import { getType } from "typesafe-actions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { PersistConfig, persistReducer } from "redux-persist";
 import { Action } from "../../../../../store/actions/types";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess,
   consolidateActiveSessionLoginData,
+  setActiveSessionLoginLocalFlag,
   setFastLoginOptSessionLogin,
   setFinishedActiveSessionLoginFlow,
   setIdpSelectedActiveSessionLogin,
@@ -17,6 +20,7 @@ import { isTestEnv } from "../../../../../utils/environment";
 import { sessionCorrupted } from "../../../common/store/actions";
 
 export type ActiveSessionLoginState = {
+  activeSessionLoginLocalFlag: boolean;
   isActiveSessionLogin: boolean;
   isUserLoggedIn: boolean;
   loginInfo?: {
@@ -28,15 +32,21 @@ export type ActiveSessionLoginState = {
 };
 
 const initialState: ActiveSessionLoginState = {
+  activeSessionLoginLocalFlag: false,
   isActiveSessionLogin: false,
   isUserLoggedIn: false
 };
 
-export const activeSessionLoginReducer = (
+const activeSessionLoginReducer = (
   state: ActiveSessionLoginState = initialState,
   action: Action
 ): ActiveSessionLoginState => {
   switch (action.type) {
+    case getType(setActiveSessionLoginLocalFlag):
+      return {
+        ...state,
+        activeSessionLoginLocalFlag: action.payload
+      };
     case getType(setStartActiveSessionLogin):
       return {
         ...state,
@@ -84,4 +94,22 @@ export const activeSessionLoginReducer = (
   }
 };
 
+const CURRENT_REDUX_OPT_IN_STORE_VERSION = -1;
+
+const persistConfig: PersistConfig = {
+  key: "activeSessionLogin",
+  storage: AsyncStorage,
+  version: CURRENT_REDUX_OPT_IN_STORE_VERSION,
+  whitelist: ["activeSessionLoginLocalFlag"]
+};
+
+export const activeSessionLoginPersistor = persistReducer<
+  ActiveSessionLoginState,
+  Action
+>(persistConfig, activeSessionLoginReducer);
+
 export const testable = isTestEnv ? initialState : undefined;
+
+export const testableReducer = isTestEnv
+  ? activeSessionLoginReducer
+  : undefined;

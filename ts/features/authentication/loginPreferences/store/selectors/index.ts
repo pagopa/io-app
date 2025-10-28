@@ -7,13 +7,24 @@ import { sessionInfoSelector } from "../../../common/store/selectors";
 import { remoteConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { apiLoginUrlPrefix } from "../../../../../config";
+import {
+  isActiveSessionLoginEnabledSelector,
+  isActiveSessionLoginLocallyEnabledSelector
+} from "../../../activeSessionLogin/store/selectors";
 
 /**
  * This selector returns a boolean that indicates whether to show
  * the sessionExpirationBanner or not
  */
-const showSessionExpirationBannerSelector = (state: GlobalState) =>
+const isVisibleSessionExpirationBannerSelector = (state: GlobalState) =>
   state.features.loginFeatures.loginPreferences.showSessionExpirationBanner;
+
+const showSessionExpirationBannerSelector = createSelector(
+  isVisibleSessionExpirationBannerSelector,
+  isActiveSessionLoginEnabledSelector,
+  (isVisible, isActiveSessionLoginEnabled) =>
+    isVisible || isActiveSessionLoginEnabled
+);
 
 /**
  * This selector combines control over the value of `expirationDate`,
@@ -25,8 +36,15 @@ export const isSessionExpirationBannerRenderableSelector = createSelector(
   sessionInfoSelector,
   remoteConfigSelector,
   showSessionExpirationBannerSelector,
+  isActiveSessionLoginLocallyEnabledSelector,
   isFastLoginEnabledSelector,
-  (sessionInfo, config, showSessionExpirationBanner, isFastLogin) =>
+  (
+    sessionInfo,
+    config,
+    showSessionExpirationBanner,
+    isActiveSessionLoginLocallyEnabled,
+    isFastLogin
+  ) =>
     pipe(
       O.Do,
       O.bind("expirationDate", () =>
@@ -47,26 +65,14 @@ export const isSessionExpirationBannerRenderableSelector = createSelector(
       ),
       O.map(
         ({ expirationDate, threshold }) =>
-          threshold >= 0 &&
-          showSessionExpirationBanner &&
-          differenceInDays(expirationDate, new Date()) <= threshold
+          (threshold >= 0 &&
+            showSessionExpirationBanner &&
+            differenceInDays(expirationDate, new Date()) <= threshold) ||
+          isActiveSessionLoginLocallyEnabled
       ),
       O.getOrElse(() => false)
     )
 );
-
-/**
- * Even if the activeSessionLogin has its own folder under features,
- * we preferd to keep the loginPreferences selectors here
- * because they are related to the login preferences in the app.
- *
- * In the future, once the activeSessionLogin feature is more mature,
- * this local feature flag selector and the related actions and state
- * have to be removed.
- */
-export const isActiveSessionLoginLocallyEnabledSelector = (
-  state: GlobalState
-) => state.features.loginFeatures.loginPreferences.activeSessionLoginLocalFlag;
 
 /**
  * This selector returns the remote API login URL prefix.
