@@ -1,18 +1,25 @@
-import { ContentWrapper, VStack } from "@pagopa/io-app-design-system";
+import {
+  ContentWrapper,
+  IOVisualCostants,
+  TabItem,
+  TabNavigation,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { ScrollView } from "react-native";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { ItwBannerSection } from "../components/ItwBannerSection";
-import { ItwClaimsList } from "../components/ItwClaimsList";
+import { ItwClaimsListSection } from "../components/ItwClaimsListSection";
+import { ItwCredentialsIssuanceSection } from "../components/ItwCredentialsIssuanceSection";
 import { ItwEnvironmentSection } from "../components/ItwEnvironmentSection";
-import { ItwIdentificationSection } from "../components/ItwIdentificationSection";
-import { ItwL3Section } from "../components/ItwL3Section";
+import { ItwIdentificationScreensSection } from "../components/ItwIdentificationScreensSection";
+import { ItwL3ScreensSection } from "../components/ItwL3ScreensSection";
 import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
+import { ItwPidIssuanceSection } from "../components/ItwPidIssuanceSection";
 import { ItwSkeumorphicCredentialSection } from "../components/ItwSkeumorphicCredentialSection";
-import { ItwReissuanceSection } from "../components/ItwEidReissuance";
-import { ItwL2Section } from "../components/ItwL2Section";
 
 /**
  * ITW Playground screen
@@ -20,6 +27,8 @@ import { ItwL2Section } from "../components/ItwL2Section";
  */
 const ItwPlayground = () => {
   const eidMachineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const { screenEndMargin } = useScreenEndMargin();
+  const [page, setPage] = useState(0);
 
   useHeaderSecondLevel({
     title: "Documenti su IO - Playgrounds"
@@ -32,19 +41,49 @@ const ItwPlayground = () => {
   );
 
   return (
-    <ScrollView contentContainerStyle={{ paddingBottom: 64 }}>
+    <ScrollView
+      contentContainerStyle={{
+        paddingTop: IOVisualCostants.appMarginDefault,
+        paddingBottom: screenEndMargin
+      }}
+    >
+      <TabNavigation
+        tabAlignment="start"
+        selectedIndex={page}
+        onItemPress={setPage}
+      >
+        <TabItem label="Environment" accessibilityLabel="Environment" />
+        <TabItem label="Issuance" accessibilityLabel="Issuance" />
+        <TabItem label="Screens" accessibilityLabel="Screens" />
+        <TabItem label="Components" accessibilityLabel="Components" />
+      </TabNavigation>
+      <VSpacer size={24} />
       <ContentWrapper>
-        <VStack space={8}>
-          <ItwLifecycleSection />
-          <ItwEnvironmentSection />
-          <ItwL3Section />
-          <ItwL2Section />
-          <ItwIdentificationSection />
-          <ItwReissuanceSection />
-          <ItwSkeumorphicCredentialSection />
-          <ItwBannerSection />
-          <ItwClaimsList />
-        </VStack>
+        {page === 0 && (
+          <>
+            <ItwEnvironmentSection />
+            <ItwLifecycleSection />
+          </>
+        )}
+        {page === 1 && (
+          <>
+            <ItwPidIssuanceSection />
+            <ItwCredentialsIssuanceSection />
+          </>
+        )}
+        {page === 2 && (
+          <>
+            <ItwL3ScreensSection />
+            <ItwIdentificationScreensSection />
+          </>
+        )}
+        {page === 3 && (
+          <>
+            <ItwSkeumorphicCredentialSection />
+            <ItwBannerSection />
+            <ItwClaimsListSection />
+          </>
+        )}
       </ContentWrapper>
     </ScrollView>
   );
