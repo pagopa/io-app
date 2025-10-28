@@ -23,6 +23,9 @@ import issuanceReducer, {
 import wiaReducer, {
   ItwWalletInstanceState
 } from "../../../walletInstance/store/reducers";
+import itwCredentialsCatalogueReducer, {
+  ItwCredentialsCatalogueState
+} from "../../../credentialsCatalogue/store/reducers";
 import environmentReducer, { ItwEnvironmentState } from "./environment";
 import preferencesReducer, { ItwPreferencesState } from "./preferences";
 import securePreferencesReducer, {
@@ -37,6 +40,7 @@ export type ItWalletState = {
   walletInstance: ItwWalletInstanceState & PersistPartial;
   preferences: ItwPreferencesState;
   securePreferences: ItwSecurePreferencesState & PersistPartial;
+  credentialsCatalogue: ItwCredentialsCatalogueState;
 };
 
 export type PersistedItWalletState = ReturnType<typeof persistedReducer>;
@@ -48,7 +52,8 @@ const itwReducer = combineReducers({
   credentials: itwCredentialsReducer,
   walletInstance: wiaReducer,
   preferences: preferencesReducer,
-  securePreferences: securePreferencesReducer
+  securePreferences: securePreferencesReducer,
+  credentialsCatalogue: itwCredentialsCatalogueReducer
 });
 
 const CURRENT_REDUX_ITW_STORE_VERSION = 6;
