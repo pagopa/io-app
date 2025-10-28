@@ -761,23 +761,27 @@ export const isAarRemoteEnabled = (state: GlobalState) => {
  * Returns true if the app supports the AAR in-app delegation feature (based on remote config).
  * If the remote value is missing, the feature is consider enabled.
  */
-export const isAarInAppDelegationRemoteEnabledSelector = (state: GlobalState) =>
-  pipe(
-    state,
-    remoteConfigSelector,
-    O.chainNullableK(config => config),
-    O.map(({ pn }) =>
-      pipe(
-        pn?.aar?.in_app_delegation?.min_app_version,
-        O.fromNullable,
-        O.map(min_app_version =>
-          isMinAppVersionSupported(O.some({ min_app_version }))
-        ),
-        O.getOrElse(() => true)
-      )
-    ),
-    O.getOrElse(() => false)
+export const isAarInAppDelegationRemoteEnabledSelector = (
+  state: GlobalState
+) => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isNone(remoteConfigOption)) {
+    // CDN data not available -> feature disabled
+    return false;
+  }
+
+  const aarMinAppVersion =
+    remoteConfigOption.value.pn?.aar?.in_app_delegation?.min_app_version;
+
+  if (aarMinAppVersion == null) {
+    // Missing AAR or in_app_delegation.min_app_version —> feature enabled
+    return true;
+  }
+
+  return isMinAppVersionSupported(
+    O.some({ min_app_version: aarMinAppVersion })
   );
+};
 
 export const isCaCBannerEnabledSelector = (state: GlobalState) =>
   pipe(
