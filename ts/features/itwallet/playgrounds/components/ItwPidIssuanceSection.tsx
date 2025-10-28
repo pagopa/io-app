@@ -52,14 +52,14 @@ export const ItwPidIssuanceSection = () => {
         onPress={startIssuance("l2")}
       />
       <ListItemNav
-        value="Start L2+ issuance"
-        description="Start L3 PID (IT Wallet) issuance with L2+ flow"
-        onPress={startIssuance("l2-plus")}
-      />
-      <ListItemNav
         value="Start L3 issuance"
         description="Start L3 PID (IT Wallet) issuance"
         onPress={startIssuance("l3")}
+      />
+      <ListItemNav
+        value="Start L2+ issuance"
+        description="Start L3 PID (IT Wallet) issuance with L2+ flow"
+        onPress={startIssuance("l3-next")}
       />
       <ListItemHeader label="PID upgrade" />
       <ListItemNav
