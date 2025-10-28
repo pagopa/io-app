@@ -285,7 +285,7 @@ const InnerNavigator = memo(() => {
       <Stack.Screen
         name={ITW_ROUTES.LANDING_SCREEN.EID_REISSUANCE}
         component={withItwEnabled(ItwIssuanceEidReissuanceLandingScreen)}
-        options={{ ...hiddenHeader }}
+        options={hiddenHeader}
       />
       {/* Proximity's flow routes */}
       <Stack.Group screenOptions={hiddenHeader}>
