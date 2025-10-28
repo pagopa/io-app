@@ -136,7 +136,7 @@ export const cieMachineActions = {
     }
 
     trackItWalletCieCardReadingUnexpectedFailure({
-      reason: failure?.name,
+      reason: failure?.name ?? "UNEXPECTED_ERROR",
       cie_reading_progress: progress
     });
   }
