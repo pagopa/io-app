@@ -729,6 +729,8 @@ export function* initializeApplicationSaga(
     yield* fork(checkShouldDisplaySendEngagementScreen, isFirstOnboarding);
   }
 
+  yield* put(setRefreshMessagesSection(true));
+
   yield* put(
     applicationInitialized({
       actionsToWaitFor: []
