@@ -5,14 +5,18 @@ import { ItwTags } from "../tags";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwEidIssuanceMachine } from "./machine";
 import { IdentificationContext } from "./context";
+import { isL3IssuanceFeaturesEnabled } from "./utils";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
 export const selectIssuanceMode = (snapshot: MachineSnapshot) =>
-  snapshot.context.mode || "issuing";
+  snapshot.context.mode || "issuance";
+
+export const selectIssuanceLevel = (snapshot: MachineSnapshot) =>
+  snapshot.context.level || "l2";
 
 export const isL3FeaturesEnabledSelector = (snapshot: MachineSnapshot) =>
-  snapshot.context.isL3 ?? false;
+  isL3IssuanceFeaturesEnabled(snapshot.context.level);
 
 export const selectEidOption = (snapshot: MachineSnapshot) =>
   O.fromNullable(snapshot.context.eid);
