@@ -9,7 +9,6 @@ import {
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { IdPayBarcodeRoutes } from "../../barcode/navigation/routes";
-import { idPayBarcodeSecondsTillExpireSelector } from "../../barcode/store";
 import { idPayGenerateBarcode } from "../../barcode/store/actions";
 import { IdPayPaymentRoutes } from "../../payment/navigation/routes";
 import {
@@ -17,11 +16,16 @@ import {
   trackIDPayDetailQRCodeScan
 } from "../analytics";
 import { idpayInitiativeDetailsSelector } from "../store";
+import { isIdPayQrCodeFeatureEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { idPayBarcodeSecondsTillExpireSelector } from "../../barcode/store/selectors";
 
 export const useIdPayDiscountDetailsBottomSheet = (initiativeId: string) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const barcodeSecondsSelector = useIOSelector(
     idPayBarcodeSecondsTillExpireSelector
+  );
+  const isQrCodeFeatureEnabled = useIOSelector(
+    isIdPayQrCodeFeatureEnabledSelector
   );
   const dispatch = useIODispatch();
 
@@ -49,24 +53,28 @@ export const useIdPayDiscountDetailsBottomSheet = (initiativeId: string) => {
 
   const DiscountInitiativeBottomSheetContent = () => (
     <>
-      <ListItemNav
-        value={I18n.t(
-          "idpay.initiative.discountDetails.bottomSheetOptions.scanQr"
-        )}
-        icon="qrCode"
-        onPress={() => {
-          bottomSheet.dismiss();
-          navigateToPaymentAuthorization();
-          trackIDPayDetailQRCodeScan({
-            initiativeId,
-            initiativeName
-          });
-        }}
-        accessibilityLabel={I18n.t(
-          "idpay.initiative.discountDetails.bottomSheetOptions.scanQr"
-        )}
-      />
-      <Divider />
+      {isQrCodeFeatureEnabled && (
+        <>
+          <ListItemNav
+            value={I18n.t(
+              "idpay.initiative.discountDetails.bottomSheetOptions.scanQr"
+            )}
+            icon="qrCode"
+            onPress={() => {
+              bottomSheet.dismiss();
+              navigateToPaymentAuthorization();
+              trackIDPayDetailQRCodeScan({
+                initiativeId,
+                initiativeName
+              });
+            }}
+            accessibilityLabel={I18n.t(
+              "idpay.initiative.discountDetails.bottomSheetOptions.scanQr"
+            )}
+          />
+          <Divider />
+        </>
+      )}
       <ListItemNav
         icon="barcode"
         value={I18n.t(

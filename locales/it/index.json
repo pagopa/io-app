@@ -1141,7 +1141,6 @@
     "opt_in": {
       "contextualHelpTitle": "Autenticazione",
       "contextualHelpContent": "Qui puoi trovare le informazioni sulle modalità di autenticazione su IO e alcuni consigli di sicurezza.",
-      "news": "novità",
       "title": "Ora è più facile accedere!",
       "identity_check": "Non dovrai più identificarti con SPID o CIE ogni 30 giorni, ma solo una volta all’anno o se esci dall’app",
       "security_suggests": "Alcuni consigli di sicurezza",
@@ -4430,8 +4429,8 @@
           "expiring": "In scadenza",
           "pending": "In lavorazione",
           "invalid": "Non valida",
-          "verificationExpiring": "Verifica",
-          "verificationExpired": "Verifica",
+          "verificationExpiring": "Azione richiesta",
+          "verificationExpired": "Azione richiesta",
           "upgradePending": "Da aggiornare",
           "unknown": "Non disponibile"
         },
@@ -5071,8 +5070,12 @@
           "expiring": {
             "content": "Mancano {{days}} giorni alla scadenza del documento."
           },
-          "verificationExpiring": {
-            "content": "Verifica la versione digitale del tuo documento entro il {{date}}."
+          "jwtVerification": {
+            "content": {
+              "jwtExpiring": "Verifica la versione digitale del tuo documento entro il {{date}} per continuare a usarlo senza limitazioni.",
+              "jwtExpired": "Verifica ora la versione digitale del tuo documento per continuare a usarlo senza limitazioni."
+            },
+            "action": "Inizia"
           }
         },
         "authSource": {
@@ -5092,9 +5095,10 @@
             "alert": {
               "documents": {
                 "valid": "L'ultima verifica è del {{date}}.",
-                "expiring": "Verifica la tua identità entro il {{date}}.",
-                "expired": "È necessario un rapido passaggio di verifica per continuare a usare Documenti su IO.",
-                "action": "Inizia"
+                "expiring": "Conferma la tua identità con CIE o SPID entro il {{date}} per continuare a usare Documenti su IO senza limitazioni.",
+                "expired": "Conferma la tua identità con CIE o SPID per continuare a usare Documenti su IO senza limitazioni.",
+                "action": "Inizia",
+                "offline": "Torna online e conferma la tua identità con CIE o SPID per continuare a usare Documenti su IO senza limitazioni."
               },
               "itw": {
                 "valid": "Hai attivato il tuo ID con CIE il {{date}}.",
@@ -5197,10 +5201,10 @@
         },
         "eid": {
           "verificationExpired": {
-            "title": "Verifica la tua identità",
-            "contentStart": "È un passaggio di sicurezza necessario per continuare ad usare ",
-            "contentBold": "Documenti su IO",
-            "contentEnd": ".",
+            "title": "Conferma la tua identità",
+            "contentStart": "È un passaggio necessario per continuare ad usare ",
+            "contentBold": "Documenti su IO ",
+            "contentEnd": "senza limitazioni.",
             "primaryAction": "Inizia"
           }
         },
@@ -5608,9 +5612,18 @@
       },
       "upgrade": {
         "banner": {
-          "title": "IT-Wallet per i tuoi documenti",
-          "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**. Garantito dallo Stato, accessibile solo a te.",
-          "action": "Ottieni IT-Wallet"
+          "documents": {
+            "active": {
+              "title": "Passa a IT-Wallet",
+              "description": "Aggiorna i tuoi documenti digitali e passa a funzionalità evolute con l’unico portafoglio digitale di Stato: pubblico, sicuro e gratuito. Garantito dallo Stato, accessibile solo a te.",
+              "action": "Passa a IT-Wallet"
+            },
+            "inactive": {
+              "title": "IT-Wallet per i tuoi documenti",
+              "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**. Garantito dallo Stato, accessibile solo a te.",
+              "action": "Ottieni IT-Wallet"
+            }
+          }
         }
       },
       "settings": {
@@ -5762,7 +5775,7 @@
       "resultScreen": {
         "success": {
           "header": "Ecco il codice sconto!",
-          "body": "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:",
+          "body": "Chiedi al venditore di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:",
           "validUpTo": "Vale fino a ",
           "expiresIn": "Il codice scade tra ",
           "copyCodeCta": "Copia codice",
@@ -5817,7 +5830,8 @@
       }
     },
     "wallet": {
-      "preview": {
+      "card": {
+        "available": "Disponibile",
         "validThrough": "Valido fino al {{endDate}}",
         "showAll": "Vedi tutte"
       },
@@ -5958,7 +5972,7 @@
           "title": "Regole dell'iniziativa",
           "button": "Ok, ho capito"
         },
-        "spentUntilNow": "Speso finora",
+        "spentUntilNow": "Speso",
         "summary": "Riepilogo",
         "status": "Stato iniziativa",
         "voucherStatus": "Stato del bonus",
@@ -5978,7 +5992,16 @@
         "buttons": {
           "privacy": "Preferenze e Privacy",
           "unsubscribe": "Rimuovi {{initiativeName}}",
-          "requestHelp": "Chiedi aiuto"
+          "requestHelp": "Chiedi aiuto",
+          "staticCode": "Genera codice statico"
+        },
+        "staticCodeModal": {
+          "content": {
+            "title": "Ecco il codice statico",
+            "subtitle": "Usa questo codice, se richiesto da un venditore online in fase di acquisto."
+          },
+          "footer": "Copia codice statico",
+          "staticCodeErrorAlert": "C’è stato un errore, riprova"
         }
       },
       "operationDetails": {
@@ -6060,7 +6083,7 @@
           "subtitleEnd": "Servizi"
         },
         "button": {
-          "continue": "Ho capito!"
+          "continue": "Ok, chiudi"
         }
       },
       "failure": {

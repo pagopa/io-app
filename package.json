@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "3.17.0-rc.6",
+  "version": "3.17.0-rc.8",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -58,7 +58,7 @@
     "@babel/plugin-transform-react-jsx": "^7.25.9",
     "@babel/plugin-transform-regenerator": "^7.18.6",
     "@gorhom/bottom-sheet": "^5.1.2",
-    "@pagopa/io-app-design-system": "5.11.8",
+    "@pagopa/io-app-design-system": "5.11.9",
     "@pagopa/io-pagopa-commons": "^3.1.0",
     "@pagopa/io-react-native-cie": "^1.2.0",
     "@pagopa/io-react-native-cieid": "^0.3.5",
@@ -75,7 +75,7 @@
     "@pagopa/react-native-cie": "^1.4.3",
     "@pagopa/ts-commons": "^10.15.0",
     "@react-native-async-storage/async-storage": "^2.0.0",
-    "@react-native-clipboard/clipboard": "^1.14.0",
+    "@react-native-clipboard/clipboard": "^1.16.3",
     "@react-native-community/netinfo": "11.4.1",
     "@react-native-community/push-notification-ios": "^1.8.0",
     "@react-native-cookies/cookies": "^6.2.1",
