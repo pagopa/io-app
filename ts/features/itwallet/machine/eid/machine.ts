@@ -88,6 +88,7 @@ export const itwEidIssuanceMachine = setup({
 
     trackWalletInstanceCreation: notImplemented,
     trackWalletInstanceRevocation: notImplemented,
+    trackIdentificationMethodSelected: notImplemented,
 
     /**
      * Context manipulation
@@ -427,20 +428,25 @@ export const itwEidIssuanceMachine = setup({
             "select-identification-mode": [
               {
                 guard: ({ event }) => event.mode === "spid",
+                actions: "trackIdentificationMethodSelected",
                 target: "#itwEidIssuanceMachine.UserIdentification.Spid"
               },
               {
                 guard: ({ event }) => event.mode === "ciePin",
+                actions: "trackIdentificationMethodSelected",
                 target: "#itwEidIssuanceMachine.UserIdentification.CiePin"
               },
               {
                 guard: ({ event }) => event.mode === "cieId",
-                actions: assign(({ context }) => ({
-                  identification: {
-                    mode: "cieId",
-                    level: context.level === "l2" ? "L2" : "L3"
-                  }
-                })),
+                actions: [
+                  "trackIdentificationMethodSelected",
+                  assign(({ context }) => ({
+                    identification: {
+                      mode: "cieId",
+                      level: context.level === "l2" ? "L2" : "L3"
+                    }
+                  }))
+                ],
                 target: "#itwEidIssuanceMachine.UserIdentification.CieID"
               }
             ],
