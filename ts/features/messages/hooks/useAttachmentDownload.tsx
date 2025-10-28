@@ -1,22 +1,22 @@
+import { useIOToast } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 import RNFS from "react-native-fs";
-import I18n from "i18next";
-import { useIOToast } from "@pagopa/io-app-design-system";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
+import { MESSAGES_ROUTES } from "../navigation/routes";
+import {
+  cancelPreviousAttachmentDownload,
+  clearRequestedAttachmentDownload,
+  downloadAttachment
+} from "../store/actions";
 import {
   downloadedMessageAttachmentSelector,
   hasErrorOccourredOnRequestedDownloadSelector,
   isDownloadingMessageAttachmentSelector,
   isRequestedAttachmentDownloadSelector
 } from "../store/reducers/downloads";
-import {
-  cancelPreviousAttachmentDownload,
-  clearRequestedAttachmentDownload,
-  downloadAttachment
-} from "../store/actions";
-import { MESSAGES_ROUTES } from "../navigation/routes";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { attachmentDisplayName } from "../utils/attachments";
 import {
   trackPNAttachmentDownloadFailure,
@@ -50,6 +50,10 @@ export const useAttachmentDownload = (
   );
   const isFetching = useIOSelector(state =>
     isDownloadingMessageAttachmentSelector(state, messageId, attachmentId)
+  );
+
+  const isDownloadError = useIOSelector(state =>
+    hasErrorOccourredOnRequestedDownloadSelector(state, messageId, attachmentId)
   );
 
   const attachmentCategory = attachment.category;
@@ -146,13 +150,7 @@ export const useAttachmentDownload = (
       isRequestedAttachmentDownloadSelector(state, messageId, attachmentId)
     ) {
       void checkPathAndNavigate(download.path);
-    } else if (
-      hasErrorOccourredOnRequestedDownloadSelector(
-        state,
-        messageId,
-        attachmentId
-      )
-    ) {
+    } else if (isDownloadError) {
       dispatch(clearRequestedAttachmentDownload());
       if (isSendAttachment) {
         trackPNAttachmentDownloadFailure(attachmentCategory);
@@ -167,6 +165,7 @@ export const useAttachmentDownload = (
     doNavigate,
     download,
     isSendAttachment,
+    isDownloadError,
     messageId,
     sendUserType,
     store,
