@@ -23,17 +23,11 @@ import { getBooleanSelfDeclarationListFromContext } from "./selectors";
  * The defaultRetryingFetch converts 429 responses to TransientError and retries,
  * but after max retries it returns either TransientError or "max-retries" string.
  */
-const isTooManyRequestsError = (error: unknown): boolean => {
-  if (error === "max-retries" || error === "retry-aborted") {
-    return true;
-  }
-  if (
-    error === TransientError ||
-    (error as Error)?.message === "TransientError"
-  ) {
-    return true;
-  }
-  return false;
+const isTooManyRequestsError = (error: unknown): boolean =>
+  error === "max-retries" ||
+  error === "retry-aborted" ||
+  error === TransientError ||
+  (error as Error)?.message === "TransientError";
 };
 
 /**
