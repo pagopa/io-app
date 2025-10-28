@@ -3,7 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useEffect, useRef, useState } from "react";
-import { View } from "react-native";
+import { Dimensions, View } from "react-native";
 import PagerView from "react-native-pager-view";
 import {
   SelfCriteriaMultiDTO,
@@ -73,7 +73,12 @@ const IdPayMultiValuePrerequisitesScreen = () => {
       initialPage={0}
     >
       {multiSelfDeclarations.map((selfDeclaration, index) => (
-        <View key={index}>
+        <View
+          key={index}
+          style={{
+            flex: 1
+          }}
+        >
           <MultiValuePrerequisiteItemScreenContent
             selfDeclaration={selfDeclaration}
             initiativeId={initiativeId}
