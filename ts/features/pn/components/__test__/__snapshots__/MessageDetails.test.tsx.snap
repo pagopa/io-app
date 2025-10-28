@@ -1385,7 +1385,7 @@ exports[`MessageDetails component should match the snapshot with default props (
                             />
                             <Text
                               allowFontScaling={true}
-                              dynamicTypeRamp="body"
+                              dynamicTypeRamp="footnote"
                               maxFontSizeMultiplier={1.5}
                               style={
                                 [
@@ -1393,15 +1393,58 @@ exports[`MessageDetails component should match the snapshot with default props (
                                   {
                                     "color": "#555C70",
                                     "fontFamily": "Titillio",
-                                    "fontSize": 16,
+                                    "fontSize": 14,
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
-                                    "lineHeight": 24,
+                                    "lineHeight": 21,
                                   },
                                 ]
                               }
                             >
-                              ######## abstract ########
+                              Hai
+                              <Text
+                                allowFontScaling={true}
+                                dynamicTypeRamp="footnote"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#555C70",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 14,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": 21,
+                                    },
+                                  ]
+                                }
+                              >
+                                 ricevuto una notifica SEND: è una comunicazione a valore legale inviata da 
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 14,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": 21,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Sender denomination
+                                </Text>
+                              </Text>
+                              . Consulta i documenti allegati per scoprire tutti i dettagli. 
+
+Se è previsto un pagamento, puoi farlo ora da IO con il tuo metodo preferito.
                             </Text>
                             <View
                               style={
@@ -1410,6 +1453,24 @@ exports[`MessageDetails component should match the snapshot with default props (
                                 }
                               }
                             />
+                            <View>
+                              Mock MessageDetailsAttachments
+                            </View>
+                            <View>
+                              Has Banner
+                            </View>
+                            <View>
+                              Is not disabled
+                            </View>
+                            <View>
+                              Is SEND
+                            </View>
+                            <View>
+                              Message Id: 01HRYR6C761DGH3S84HBBXMMKT
+                            </View>
+                            <View>
+                              Service Id: service_one
+                            </View>
                             <View
                               style={
                                 {
@@ -1443,9 +1504,6 @@ exports[`MessageDetails component should match the snapshot with default props (
                           </View>
                           <View>
                             01HRYR6C761DGH3S84HBBXMMKT
-                          </View>
-                          <View>
-                            service_one
                           </View>
                         </View>
                       </RCTScrollView>
