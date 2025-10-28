@@ -13,7 +13,11 @@ import {
   trackSendAarNotificationClosure,
   trackSendAarNotificationClosureBack,
   trackSendAarNotificationClosureConfirm,
-  trackSendAarNotificationClosureExit
+  trackSendAarNotificationClosureExit,
+  trackSendAarErrorScreenClosure,
+  trackSendAarErrorScreenDetails,
+  trackSendAarErrorScreenDetailsHelp,
+  trackSendAarErrorScreenDetailsCode
 } from "..";
 import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
 import * as mixpanel from "../../../../../mixpanel";
@@ -507,6 +511,70 @@ describe("index", () => {
           event_type: "exit",
           send_user: userType
         });
+      });
+    });
+  });
+
+  describe("trackSendAarErrorScreenClosure", () => {
+    it(`should call 'mixpanelTrack' with proper event name and parameters)`, () => {
+      trackSendAarErrorScreenClosure();
+
+      expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+        "SEND_AAR_ERROR_CLOSURE"
+      );
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "UX",
+        event_type: "action"
+      });
+    });
+  });
+
+  describe("trackSendAarErrorScreenDetails", () => {
+    it(`should call 'mixpanelTrack' with proper event name and parameters)`, () => {
+      trackSendAarErrorScreenDetails();
+
+      expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+        "SEND_AAR_ERROR_DETAIL"
+      );
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "UX",
+        event_type: "screen_view"
+      });
+    });
+  });
+
+  describe("trackSendAarErrorScreenDetailsHelp", () => {
+    it(`should call 'mixpanelTrack' with proper event name and parameters)`, () => {
+      trackSendAarErrorScreenDetailsHelp();
+
+      expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+        "SEND_AAR_ERROR_DETAIL_HELP"
+      );
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "UX",
+        event_type: "action"
+      });
+    });
+  });
+
+  describe("trackSendAarErrorScreenDetailsCode", () => {
+    it(`should call 'mixpanelTrack' with proper event name and parameters)`, () => {
+      trackSendAarErrorScreenDetailsCode();
+
+      expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+        "SEND_AAR_ERROR_DETAIL_CODE"
+      );
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "UX",
+        event_type: "action"
       });
     });
   });

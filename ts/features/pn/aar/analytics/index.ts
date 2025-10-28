@@ -124,3 +124,27 @@ export const trackSendAarNotificationClosureExit = (userType: SendUserType) => {
   });
   void mixpanelTrack(eventName, eventProps);
 };
+
+export const trackSendAarErrorScreenClosure = () => {
+  const eventName = "SEND_AAR_ERROR_CLOSURE";
+  const eventProps = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarErrorScreenDetails = () => {
+  const eventName = "SEND_AAR_ERROR_DETAIL";
+  const eventProps = buildEventProperties("UX", "screen_view");
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarErrorScreenDetailsHelp = () => {
+  const eventName = "SEND_AAR_ERROR_DETAIL_HELP";
+  const eventProps = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarErrorScreenDetailsCode = () => {
+  const eventName = "SEND_AAR_ERROR_DETAIL_CODE";
+  const eventProps = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, eventProps);
+};
