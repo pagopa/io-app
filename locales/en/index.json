@@ -5557,7 +5557,7 @@
       "resultScreen": {
         "success": {
           "header": "Ecco il codice sconto!",
-          "body": "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:",
+          "body": "Chiedi al venditore di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:",
           "validUpTo": "Vale fino a ",
           "expiresIn": "Il codice scade tra ",
           "copyCodeCta": "Copy code",
@@ -5774,7 +5774,16 @@
         "buttons": {
           "privacy": "Preferenze e Privacy",
           "unsubscribe": "Rimuovi {{initiativeName}}",
-          "requestHelp": "Chiedi aiuto"
+          "requestHelp": "Chiedi aiuto",
+          "staticCode": "Generate static code"
+        },
+        "staticCodeModal": {
+          "staticCodeErrorAlert": "C’è stato un errore, riprova",
+          "content": {
+            "title": "Ecco il codice statico",
+            "subtitle": "Usa questo codice, se richiesto da un venditore online in fase di acquisto."
+          },
+          "footer": "Copia codice statico"
         }
       },
       "operationDetails": {
