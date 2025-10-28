@@ -83,7 +83,9 @@ export const ItwIdentificationModeSelectionScreen = ({
       return {
         section: I18n.t(`${i18nNs}.section.reissuance`),
         title: I18n.t(`${i18nNs}.title.reissuance`),
-        description: I18n.t(`${i18nNs}.description.reissuance`)
+        description: I18n.t(`${i18nNs}.description.reissuance`, {
+          feature: featureName
+        })
       };
     }
 
