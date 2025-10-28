@@ -30,7 +30,7 @@ import {
 } from "./context";
 import { EidIssuanceEvents } from "./events";
 import { IssuanceFailureType, mapEventToFailure } from "./failure";
-import { isL3IssuanceFeaturesEnabled } from "./utils.ts";
+import { isL3IssuanceFeaturesEnabled } from "./utils";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
