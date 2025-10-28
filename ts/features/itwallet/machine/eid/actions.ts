@@ -78,9 +78,13 @@ export const createEidIssuanceActionsImplementation = (
   navigateToIdentificationScreen: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
-      params: { eidReissuing: context.mode === "reissuance" }
+    navigation.navigate({
+      key: `itw-identification-mode-selection-${context.level}-${context.mode}`,
+      name: ITW_ROUTES.MAIN,
+      params: {
+        screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
+        params: { eidReissuing: context.mode === "reissuance" }
+      }
     });
   },
 
