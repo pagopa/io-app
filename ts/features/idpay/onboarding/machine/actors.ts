@@ -28,7 +28,6 @@ const isTooManyRequestsError = (error: unknown): boolean =>
   error === "retry-aborted" ||
   error === TransientError ||
   (error as Error)?.message === "TransientError";
-};
 
 /**
  * Handles errors from API calls, specifically checking for 429 Too Many Requests
