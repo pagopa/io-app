@@ -194,6 +194,10 @@ export const getReloadAllMessagesActionForRefreshIfAllowed = (
     )
   );
 
+const shouldBlockPreviousPageMessagesLoading = (state: GlobalState) =>
+  isDoingAnAsyncOperationOnMessages(state) ||
+  !shouldRefreshMessagesSectionSelector(state);
+
 export const getLoadPreviousPageMessagesActionIfAllowed = (
   state: GlobalState
 ) =>
@@ -215,24 +219,17 @@ export const getLoadPreviousPageMessagesActionIfAllowed = (
               O.fold(constUndefined, previousPageMessageId =>
                 pipe(
                   state,
-                  isDoingAnAsyncOperationOnMessages,
+                  shouldBlockPreviousPageMessagesLoading,
                   B.fold(
                     () =>
-                      pipe(
-                        state,
-                        shouldRefreshMessagesSectionSelector,
-                        B.fold(constUndefined, () =>
-                          loadPreviousPageMessages.request({
-                            pageSize: maximumItemsFromAPI,
-                            cursor: previousPageMessageId,
-                            filter: {
-                              getArchived:
-                                allPaginated.shownCategory === "ARCHIVE"
-                            },
-                            fromUserAction: false
-                          })
-                        )
-                      ),
+                      loadPreviousPageMessages.request({
+                        pageSize: maximumItemsFromAPI,
+                        cursor: previousPageMessageId,
+                        filter: {
+                          getArchived: allPaginated.shownCategory === "ARCHIVE"
+                        },
+                        fromUserAction: false
+                      }),
                     constUndefined
                   )
                 )
