@@ -1,23 +1,12 @@
-import {
-  IOButton,
-  ListItemHeader,
-  ListItemNav
-} from "@pagopa/io-app-design-system";
+import { ListItemHeader, ListItemNav } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { Alert, View } from "react-native";
-import { useIOSelector } from "../../../../store/hooks";
-import {
-  itwLifecycleIsITWalletValidSelector,
-  itwLifecycleIsValidSelector
-} from "../../lifecycle/store/selectors";
 import { EidIssuanceLevel } from "../../machine/eid/context";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 
 export const ItwPidIssuanceSection = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const startIssuance = useCallback(
     (level: EidIssuanceLevel) => () => {
@@ -73,20 +62,16 @@ export const ItwPidIssuanceSection = () => {
         onPress={startIssuance("l3")}
       />
       <ListItemHeader label="PID upgrade" />
-      <IOButton
-        variant="solid"
-        color="danger"
-        label="Start L3 upgrade"
+      <ListItemNav
+        value="Start L3 upgrade"
+        description="Start L3 PID (IT Wallet) upgrade from L2"
         onPress={startUpgrade("l3")}
-        disabled={!isWalletValid || isItwL3}
       />
       <ListItemHeader label="PID reissuance" />
-      <IOButton
-        variant="solid"
-        color="danger"
-        label="Start L2 reissuance"
+      <ListItemNav
+        value="Start L2 reissuance"
+        description="Start L2 PID (Documenti su IO) reissuance"
         onPress={startReissuance("l2")}
-        disabled={!isWalletValid}
       />
     </View>
   );

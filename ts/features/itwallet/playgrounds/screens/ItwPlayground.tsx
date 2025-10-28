@@ -1,9 +1,8 @@
 import {
   ContentWrapper,
-  IOVisualCostants,
   TabItem,
   TabNavigation,
-  VSpacer
+  VStack
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useState } from "react";
@@ -13,7 +12,6 @@ import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { ItwBannerSection } from "../components/ItwBannerSection";
 import { ItwClaimsListSection } from "../components/ItwClaimsListSection";
-import { ItwCredentialsIssuanceSection } from "../components/ItwCredentialsIssuanceSection";
 import { ItwEnvironmentSection } from "../components/ItwEnvironmentSection";
 import { ItwIdentificationScreensSection } from "../components/ItwIdentificationScreensSection";
 import { ItwL3ScreensSection } from "../components/ItwL3ScreensSection";
@@ -41,12 +39,7 @@ const ItwPlayground = () => {
   );
 
   return (
-    <ScrollView
-      contentContainerStyle={{
-        paddingTop: IOVisualCostants.appMarginDefault,
-        paddingBottom: screenEndMargin
-      }}
-    >
+    <VStack space={16}>
       <TabNavigation
         tabAlignment="start"
         selectedIndex={page}
@@ -57,35 +50,39 @@ const ItwPlayground = () => {
         <TabItem label="Screens" accessibilityLabel="Screens" />
         <TabItem label="Components" accessibilityLabel="Components" />
       </TabNavigation>
-      <VSpacer size={24} />
-      <ContentWrapper>
-        {page === 0 && (
-          <>
-            <ItwEnvironmentSection />
-            <ItwLifecycleSection />
-          </>
-        )}
-        {page === 1 && (
-          <>
-            <ItwPidIssuanceSection />
-            <ItwCredentialsIssuanceSection />
-          </>
-        )}
-        {page === 2 && (
-          <>
-            <ItwL3ScreensSection />
-            <ItwIdentificationScreensSection />
-          </>
-        )}
-        {page === 3 && (
-          <>
-            <ItwSkeumorphicCredentialSection />
-            <ItwBannerSection />
-            <ItwClaimsListSection />
-          </>
-        )}
-      </ContentWrapper>
-    </ScrollView>
+      <ScrollView
+        contentContainerStyle={{
+          paddingBottom: screenEndMargin
+        }}
+      >
+        <ContentWrapper>
+          {page === 0 && (
+            <>
+              <ItwEnvironmentSection />
+              <ItwLifecycleSection />
+            </>
+          )}
+          {page === 1 && (
+            <>
+              <ItwPidIssuanceSection />
+            </>
+          )}
+          {page === 2 && (
+            <>
+              <ItwL3ScreensSection />
+              <ItwIdentificationScreensSection />
+            </>
+          )}
+          {page === 3 && (
+            <>
+              <ItwSkeumorphicCredentialSection />
+              <ItwBannerSection />
+              <ItwClaimsListSection />
+            </>
+          )}
+        </ContentWrapper>
+      </ScrollView>
+    </VStack>
   );
 };
 
