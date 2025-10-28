@@ -278,12 +278,12 @@ const InnerNavigator = memo(() => {
       />
       {/* Landing screens from deep links */}
       <Stack.Screen
-        name={ITW_ROUTES.LANDING_SCREEN.CREDENTIAL_ASYNC_FLOW_CONTINUATION}
+        name={ITW_ROUTES.LANDING.CREDENTIAL_ASYNC_FLOW_CONTINUATION}
         component={withItwEnabled(ItwIssuanceCredentialAsyncContinuationScreen)}
         options={hiddenHeader}
       />
       <Stack.Screen
-        name={ITW_ROUTES.LANDING_SCREEN.EID_REISSUANCE}
+        name={ITW_ROUTES.LANDING.EID_REISSUANCE}
         component={withItwEnabled(ItwIssuanceEidReissuanceLandingScreen)}
         options={hiddenHeader}
       />
