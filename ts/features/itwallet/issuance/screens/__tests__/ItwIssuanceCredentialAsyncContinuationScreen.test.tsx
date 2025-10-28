@@ -74,7 +74,7 @@ const renderComponent = (
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     ItwIssuanceCredentialAsyncContinuationScreen,
-    ITW_ROUTES.ISSUANCE.CREDENTIAL_ASYNC_FLOW_CONTINUATION,
+    ITW_ROUTES.LANDING_SCREEN.CREDENTIAL_ASYNC_FLOW_CONTINUATION,
     routeParams ?? {},
     store
   );
