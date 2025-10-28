@@ -20,7 +20,6 @@ import {
   trackItwUserWithoutL3Requirements
 } from "../../../analytics";
 import { itwDisabledIdentificationMethodsSelector } from "../../../common/store/selectors/remoteConfig";
-import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
@@ -55,7 +54,6 @@ export const ItwIdentificationModeSelectionScreen = ({
   );
   const mode = ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
   const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
-  const isWalletAlreadyActivated = useIOSelector(itwLifecycleIsValidSelector);
 
   const disabledIdentificationMethods = useIOSelector(
     itwDisabledIdentificationMethodsSelector
@@ -116,7 +114,7 @@ export const ItwIdentificationModeSelectionScreen = ({
   );
 
   const handleNoCiePress = useCallback(() => {
-    if (isWalletAlreadyActivated) {
+    if (mode === "upgrade") {
       trackItwUserWithoutL3Requirements({
         screen_name: routeName,
         reason: "user_without_cie",
@@ -132,7 +130,7 @@ export const ItwIdentificationModeSelectionScreen = ({
         level: "l2-fallback"
       });
     }
-  }, [isWalletAlreadyActivated, machineRef, routeName]);
+  }, [mode, machineRef, routeName]);
 
   if (isLoading) {
     return (
