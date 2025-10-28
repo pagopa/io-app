@@ -3,15 +3,15 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useEffect, useRef, useState } from "react";
-import { Dimensions, View } from "react-native";
+import { View } from "react-native";
 import PagerView from "react-native-pager-view";
 import {
   SelfCriteriaMultiDTO,
   _typeEnum as SelfCriteriaMultiTypeEnum
 } from "../../../../../definitions/idpay/SelfCriteriaMultiDTO";
 import {
-  _typeEnum as SelfCriteriaMultiTypeVariationEnum,
-  SelfCriteriaMultiTypeDTO
+  SelfCriteriaMultiTypeDTO,
+  _typeEnum as SelfCriteriaMultiTypeVariationEnum
 } from "../../../../../definitions/idpay/SelfCriteriaMultiTypeDTO";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
