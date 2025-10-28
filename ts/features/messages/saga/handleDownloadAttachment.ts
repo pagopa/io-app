@@ -47,10 +47,11 @@ import { handleRequestInit } from "./handleRequestInit";
 export function* handleDownloadAttachment(
   action: ActionType<typeof downloadAttachment.request>
 ): Generator<ReduxSagaEffect, void> {
-  const bearerToken = yield* select(sessionTokenSelector);
+  const sessionToken = yield* select(sessionTokenSelector);
   const keyInfo = yield* call(getKeyInfo);
 
-  if (!bearerToken) {
+  if (!sessionToken) {
+    // TODO: add MP tech event https://pagopa.atlassian.net/browse/IOPID-3528
     return;
   }
 
@@ -67,8 +68,14 @@ export function* handleDownloadAttachment(
   // user on generic attachments).
   yield* race({
     polling: ephemeralAARThirdPartyMessage
-      ? call(downloadAARAttachmentSaga, bearerToken, keyInfo, mandateId, action)
-      : call(downloadAttachmentWorker, bearerToken, keyInfo, action),
+      ? call(
+          downloadAARAttachmentSaga,
+          sessionToken,
+          keyInfo,
+          mandateId,
+          action
+        )
+      : call(downloadAttachmentWorker, sessionToken, keyInfo, action),
     cancelAction: take(cancelPreviousAttachmentDownload)
   });
 }

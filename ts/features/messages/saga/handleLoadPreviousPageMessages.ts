@@ -21,6 +21,7 @@ export function* handleLoadPreviousPageMessages(
   const sessionToken = yield* select(sessionTokenSelector);
 
   if (!sessionToken) {
+    // TODO: add MP tech event https://pagopa.atlassian.net/browse/IOPID-3528
     return;
   }
 
