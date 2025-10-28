@@ -274,7 +274,7 @@ const IdPayFailureScreen = () => {
   );
 
   useEffect(() => {
-    if (O.some(failureOption)) {
+    if (O.some(failureOption) && O.isSome(failureOption)) {
       trackIDPayOnboardingFailure({
         initiativeId,
         initiativeName,
