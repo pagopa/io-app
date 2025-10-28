@@ -11,6 +11,7 @@ import { pnMessagingServiceIdSelector } from "../../../../store/reducers/backend
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../types/SessionToken";
 import { isTestEnv } from "../../../../utils/environment";
+import { unknownToReason } from "../../../messages/utils";
 import { loadServicePreference } from "../../../services/details/store/actions/preference";
 import { servicePreferencePotByIdSelector } from "../../../services/details/store/selectors";
 import { isServicePreferenceResponseSuccess } from "../../../services/details/types/ServicePreferenceResponse";
@@ -28,6 +29,8 @@ export function* tryLoadSENDPreferences() {
     yield* put(loadServicePreference.request(pnServiceId));
   }
 }
+const tooManyRequestsError = new Error("timeout -- too many requests");
+
 function* handlePnActivation(
   upsertPnActivation: PnClient["upsertPNActivation"],
   action: ActionType<typeof pnActivationUpsert.request>
@@ -47,29 +50,40 @@ function* handlePnActivation(
     };
     const result = yield* call(upsertPnActivation, requestData);
 
-    if (E.isRight(result) && result.right.status === 204) {
-      yield* all([
-        call(trackPNServiceStatusChangeSuccess, activation_status),
-        put(pnActivationUpsert.success()),
-        call(tryLoadSENDPreferences)
-      ]);
-      action.payload.onSuccess?.();
+    if (E.isRight(result)) {
+      switch (result.right.status) {
+        case 204:
+          yield* all([
+            call(trackPNServiceStatusChangeSuccess, activation_status),
+            put(pnActivationUpsert.success()),
+            call(tryLoadSENDPreferences)
+          ]);
+          action.payload.onSuccess?.();
+          break;
+        case 429:
+          throw tooManyRequestsError;
+        default:
+          throw Error(
+            `Status code: ${result.right.status} Request data: ${JSON.stringify(
+              requestData
+            )}`
+          );
+      }
     } else if (E.isLeft(result)) {
       throw Error(readableReport(result.left));
-    } else {
-      throw Error(
-        `Status code: ${result.right.status} Request data: ${JSON.stringify(
-          requestData
-        )}`
-      );
     }
   } catch (e) {
+    const isRateLimitError = e === tooManyRequestsError;
     yield* all([
-      call(reportPNServiceStatusOnFailure, !activation_status, `${e}`),
+      call(
+        reportPNServiceStatusOnFailure,
+        !activation_status,
+        unknownToReason(e)
+      ),
       put(pnActivationUpsert.failure()),
       call(tryLoadSENDPreferences)
     ]);
-    action.payload.onFailure?.();
+    action.payload.onFailure?.(isRateLimitError);
   }
 }
 

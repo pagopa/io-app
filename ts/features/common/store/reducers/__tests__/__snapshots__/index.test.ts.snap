@@ -105,6 +105,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
         "kind": "PotNone",
       },
     },
+    "staticCode": {},
     "timeline": {
       "details": {
         "kind": "PotNone",
@@ -326,6 +327,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
     "bannerDismiss": {
       "dismissed": false,
+    },
+    "loginEngagement": {
+      "hasSendEngagementScreenBeenDismissed": false,
     },
   },
   "profileSettings": {},

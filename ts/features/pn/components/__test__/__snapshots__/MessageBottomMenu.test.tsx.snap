@@ -495,6 +495,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR,  all handled-status
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -1056,6 +1059,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -1615,6 +1621,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                         </View>
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -2206,6 +2215,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -2765,6 +2777,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                         </View>
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -3328,6 +3343,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -3887,6 +3905,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                         </View>
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -4450,6 +4471,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -5009,6 +5033,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                         </View>
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -5572,6 +5599,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -6131,6 +6161,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                         </View>
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -6722,6 +6755,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -7281,6 +7317,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                         </View>
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -7979,6 +8018,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -8673,6 +8715,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                         </View>
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -9371,6 +9416,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -10065,6 +10113,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                         </View>
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -10763,6 +10814,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -11459,6 +11513,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -12018,6 +12075,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                         </View>
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -12609,6 +12669,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -13168,6 +13231,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                         </View>
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -13776,6 +13842,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -14380,6 +14449,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                         </View>
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -14988,6 +15060,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -15592,6 +15667,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                         </View>
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -16200,6 +16278,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -16806,6 +16887,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -17365,6 +17449,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                         </View>
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -17956,6 +18043,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -18515,6 +18605,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                         </View>
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -19078,6 +19171,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -19637,6 +19733,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                         </View>
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -20200,6 +20299,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -20759,6 +20861,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                         </View>
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -21322,6 +21427,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, all handled-status 
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -21773,6 +21881,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, empty p
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -22222,6 +22333,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, empty p
                       >
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -22703,6 +22817,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, empty p
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -23152,6 +23269,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, empty p
                       >
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -23605,6 +23725,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, empty p
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -24054,6 +24177,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, empty p
                       >
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -24507,6 +24633,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, empty p
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -24956,6 +25085,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, empty p
                       >
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -25409,6 +25541,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, empty p
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -25860,6 +25995,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, multipl
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -26309,6 +26447,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, multipl
                       >
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -26790,6 +26931,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, multipl
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -27239,6 +27383,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, multipl
                       >
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -27827,6 +27974,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, multipl
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -28411,6 +28561,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, multipl
                       >
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -28999,6 +29152,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, multipl
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -29583,6 +29739,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, multipl
                       >
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -30171,6 +30330,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, multipl
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -30757,6 +30919,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, one pay
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -31206,6 +31371,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, one pay
                       >
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -31687,6 +31855,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, one pay
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -32136,6 +32307,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, one pay
                       >
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -32634,6 +32808,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, one pay
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -33128,6 +33305,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, one pay
                       >
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -33626,6 +33806,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, one pay
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -34120,6 +34303,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, one pay
                       >
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -34618,6 +34804,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, one pay
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -35114,6 +35303,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, undefin
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -35563,6 +35755,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, undefin
                       >
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -36044,6 +36239,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, undefin
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -36493,6 +36691,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, undefin
                       >
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -36946,6 +37147,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, undefin
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -37395,6 +37599,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, undefin
                       >
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -37848,6 +38055,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, undefin
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -38299,6 +38509,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, undefin
                           true
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -38748,6 +38961,9 @@ exports[`MessageBottomMenu should match snapshot, is an AAR, no history, undefin
                       >
                         <View>
                           true
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -39311,6 +39527,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR,  all handled-st
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -39872,6 +40091,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -40431,6 +40653,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                         </View>
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -41022,6 +41247,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -41581,6 +41809,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                         </View>
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -42144,6 +42375,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -42703,6 +42937,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                         </View>
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -43266,6 +43503,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -43825,6 +44065,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                         </View>
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -44388,6 +44631,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -44947,6 +45193,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                         </View>
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -45538,6 +45787,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -46097,6 +46349,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                         </View>
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -46795,6 +47050,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -47489,6 +47747,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                         </View>
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -48187,6 +48448,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -48881,6 +49145,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                         </View>
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -49579,6 +49846,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -50275,6 +50545,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -50834,6 +51107,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                         </View>
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -51425,6 +51701,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -51984,6 +52263,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                         </View>
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -52592,6 +52874,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -53196,6 +53481,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                         </View>
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -53804,6 +54092,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -54408,6 +54699,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                         </View>
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -55016,6 +55310,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -55622,6 +55919,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -56181,6 +56481,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                         </View>
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -56772,6 +57075,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -57331,6 +57637,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                         </View>
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -57894,6 +58203,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -58453,6 +58765,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                         </View>
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -59016,6 +59331,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -59575,6 +59893,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                         </View>
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -60138,6 +60459,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, all handled-sta
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -60589,6 +60913,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, emp
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -61038,6 +61365,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, emp
                       >
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -61519,6 +61849,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, emp
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -61968,6 +62301,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, emp
                       >
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -62421,6 +62757,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, emp
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -62870,6 +63209,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, emp
                       >
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -63323,6 +63665,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, emp
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -63772,6 +64117,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, emp
                       >
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -64225,6 +64573,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, emp
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -64676,6 +65027,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, mul
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -65125,6 +65479,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, mul
                       >
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -65606,6 +65963,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, mul
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -66055,6 +66415,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, mul
                       >
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -66643,6 +67006,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, mul
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -67227,6 +67593,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, mul
                       >
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -67815,6 +68184,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, mul
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -68399,6 +68771,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, mul
                       >
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -68987,6 +69362,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, mul
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -69573,6 +69951,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, one
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -70022,6 +70403,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, one
                       >
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -70503,6 +70887,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, one
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -70952,6 +71339,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, one
                       >
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -71450,6 +71840,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, one
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -71944,6 +72337,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, one
                       >
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -72442,6 +72838,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, one
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -72936,6 +73335,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, one
                       >
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -73434,6 +73836,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, one
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -73930,6 +74335,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, und
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -74379,6 +74787,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, und
                       >
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -74860,6 +75271,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, und
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -75309,6 +75723,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, und
                       >
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -75762,6 +76179,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, und
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -76211,6 +76631,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, und
                       >
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem
@@ -76664,6 +77087,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, und
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -77115,6 +77541,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, und
                           false
                         </View>
                         <View>
+                          Mock NeedHelp
+                        </View>
+                        <View>
                           Mock ShowMoreListItem
                         </View>
                         <View>
@@ -77564,6 +77993,9 @@ exports[`MessageBottomMenu should match snapshot, is not an AAR, no history, und
                       >
                         <View>
                           false
+                        </View>
+                        <View>
+                          Mock NeedHelp
                         </View>
                         <View>
                           Mock ShowMoreListItem

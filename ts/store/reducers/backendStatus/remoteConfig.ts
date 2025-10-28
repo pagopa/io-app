@@ -381,6 +381,26 @@ export const isIdPayEnabledSelector = createSelector(
     )
 );
 
+export const isIdPayOnboardingEnabledSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): boolean =>
+    pipe(
+      remoteConfig,
+      O.map(config => config.idPay.onboarding?.enabled ?? false),
+      O.getOrElse(() => false)
+    )
+);
+
+export const isIdPayDetailsEnabledSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): boolean =>
+    pipe(
+      remoteConfig,
+      O.map(config => config.idPay.initiative_details?.enabled ?? false),
+      O.getOrElse(() => false)
+    )
+);
+
 export const isIdPayEnabledInScanScreenSelector = (state: GlobalState) =>
   pipe(state, remoteConfigSelector, remoteConfig =>
     isPropertyWithMinAppVersionEnabled({
@@ -389,6 +409,17 @@ export const isIdPayEnabledInScanScreenSelector = (state: GlobalState) =>
       configPropertyName: "idPay",
       optionalLocalFlag: true,
       optionalConfig: "scan_screen"
+    })
+  );
+
+export const isIdPayQrCodeFeatureEnabledSelector = (state: GlobalState) =>
+  pipe(state, remoteConfigSelector, remoteConfig =>
+    isPropertyWithMinAppVersionEnabled({
+      remoteConfig,
+      mainLocalFlag: true,
+      configPropertyName: "idPay",
+      optionalLocalFlag: true,
+      optionalConfig: "qr_code_payments"
     })
   );
 
@@ -708,7 +739,7 @@ export const pnPrivacyUrlsSelector = createSelector(
  * Return true if the app supports the AAR feature (based on remote config).
  * If the remote value is missing, consider the feature as enabled.
  */
-export const isAARRemoteEnabled = (state: GlobalState) => {
+export const isAarRemoteEnabled = (state: GlobalState) => {
   const remoteConfigOption = remoteConfigSelector(state);
   if (O.isNone(remoteConfigOption)) {
     // CDN data not available, AAR is disabled

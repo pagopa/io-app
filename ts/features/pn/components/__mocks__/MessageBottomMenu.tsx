@@ -8,8 +8,7 @@ export const MessageBottomMenu = ({
   iun,
   messageId,
   paidNoticeCodes,
-  payments,
-  serviceId
+  payments
 }: MessageBottomMenuProps) => (
   <>
     <View>Mock MessageBottomMenu</View>
@@ -42,6 +41,5 @@ export const MessageBottomMenu = ({
           <View>{payment.noticeCode}</View>
         </View>
       ))}
-    <View>{serviceId}</View>
   </>
 );

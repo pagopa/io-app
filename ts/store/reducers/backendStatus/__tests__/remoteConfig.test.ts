@@ -10,7 +10,7 @@ import {
   fimsServiceConfiguration,
   fimsServiceIdInCookieDisabledListSelector,
   generateDynamicUrlSelector,
-  isAARRemoteEnabled,
+  isAarRemoteEnabled,
   isIOMarkdownEnabledForMessagesAndServicesSelector,
   isPnAppVersionSupportedSelector,
   isPremiumMessagesOptInOutEnabledSelector,
@@ -813,7 +813,7 @@ describe("isAARRemoteEnabled", () => {
       jest
         .spyOn(appVersion, "getAppVersion")
         .mockImplementation(() => "2.0.0.0");
-      const output = isAARRemoteEnabled(testData[0]);
+      const output = isAarRemoteEnabled(testData[0]);
       expect(output).toBe(testData[1]);
     })
   );

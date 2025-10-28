@@ -35,7 +35,6 @@ import {
   sessionInfoSelector,
   sessionTokenSelector
 } from "../features/authentication/common/store/selectors";
-import { setSecurityAdviceReadyToShow } from "../features/authentication/fastLogin/store/actions/securityAdviceActions";
 import { refreshSessionToken } from "../features/authentication/fastLogin/store/actions/tokenRefreshActions";
 import {
   isFastLoginEnabledSelector,
@@ -81,7 +80,6 @@ import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnbo
 import { watchAbortOnboardingSaga } from "../features/onboarding/saga/watchAbortOnboardingSaga";
 import { watchPaymentsSaga } from "../features/payments/common/saga";
 import { watchAarFlowSaga } from "../features/pn/aar/saga/watchAARFlowSaga";
-import { isAAREnabled } from "../features/pn/aar/store/selectors";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { maybeHandlePendingBackgroundActions } from "../features/pushNotifications/sagas/common";
 import { notificationPermissionsListener } from "../features/pushNotifications/sagas/notificationPermissionsListener";
@@ -122,6 +120,7 @@ import {
   startupTransientError
 } from "../store/actions/startup";
 import {
+  isAarRemoteEnabled,
   isIdPayEnabledSelector,
   isPnRemoteEnabledSelector,
   remoteConfigSelector
@@ -139,6 +138,7 @@ import {
   waitForMainNavigator,
   waitForNavigatorServiceInitialization
 } from "../navigation/saga/navigation";
+import { checkShouldDisplaySendEngagementScreen } from "../features/pn/loginEngagement/sagas/checkShouldDisplaySendEngagementScreen";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
@@ -267,7 +267,8 @@ export function* initializeApplicationSaga(
   }
 
   // ingress screen
-  const isBlockingScreen = yield* select(isBlockingScreenSelector);
+  // eslint-disable-next-line functional/no-let
+  let isBlockingScreen = yield* select(isBlockingScreenSelector);
   if (isBlockingScreen) {
     return;
   }
@@ -457,6 +458,11 @@ export function* initializeApplicationSaga(
   }
   yield* put(startupTransientError(startupTransientErrorInitialState));
 
+  isBlockingScreen = yield* select(isBlockingScreenSelector);
+  if (isBlockingScreen) {
+    return;
+  }
+
   // eslint-disable-next-line functional/no-let
   let userProfile = maybeUserProfile.value;
 
@@ -614,13 +620,13 @@ export function* initializeApplicationSaga(
     isPnRemoteEnabledSelector
   );
 
-  const aAREnabled = yield* select(isAAREnabled);
-
   if (pnEnabled) {
     // Start watching for PN actions
     yield* fork(watchPnSaga, sessionToken);
 
-    if (aAREnabled) {
+    const aarRemoteEnabled = yield* select(isAarRemoteEnabled);
+
+    if (aarRemoteEnabled) {
       yield* fork(watchAarFlowSaga, sessionToken, keyInfo);
     }
   }
@@ -710,10 +716,15 @@ export function* initializeApplicationSaga(
   yield* fork(watchEmailNotificationPreferencesSaga);
 
   // Check if we have any pending background action to be handled
-  yield* call(maybeHandlePendingBackgroundActions, true);
+  const isHandlingBackgroundActions = yield* call(
+    maybeHandlePendingBackgroundActions,
+    true
+  );
 
-  // This tells the security advice bottomsheet that it can be shown
-  yield* put(setSecurityAdviceReadyToShow(true));
+  if (!isHandlingBackgroundActions) {
+    // Check if should navigate to the send activation screen
+    yield* fork(checkShouldDisplaySendEngagementScreen, isFirstOnboarding);
+  }
 
   yield* put(
     applicationInitialized({

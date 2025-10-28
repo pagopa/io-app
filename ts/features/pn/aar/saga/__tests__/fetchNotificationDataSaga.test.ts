@@ -9,9 +9,12 @@ import { ThirdPartyMessage as AarThirdPartyMessage } from "../../../../../../def
 import { pnMessagingServiceIdSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../../types/SessionToken";
-import * as SAGA_UTILS from "../../../../services/common/saga/ getServiceDetails";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
+import * as serviceDetailsSaga from "../../../../services/common/saga/getServiceDetails";
 import { profileFiscalCodeSelector } from "../../../../settings/common/store/selectors";
 import { thirdPartyMessage } from "../../../__mocks__/pnMessage";
+import { trackSendAARFailure } from "../../analytics";
+import { SendAARClient } from "../../api/client";
 import {
   populateStoresWithEphemeralAarMessageData,
   setAarFlowState
@@ -20,18 +23,24 @@ import { currentAARFlowData } from "../../store/selectors";
 import { sendAARFlowStates } from "../../utils/stateUtils";
 import {
   mockEphemeralAarMessageDataActionPayload,
+  sendAarMockStateFactory,
   sendAarMockStates
 } from "../../utils/testUtils";
 import { fetchAarDataSaga, testable } from "../fetchNotificationDataSaga";
-import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
-import { SendAARClient } from "../../api/client";
 
 const mockCurrentState = {
   type: sendAARFlowStates.fetchingNotificationData,
   iun: "IUN123",
   mandateId: "MANDATE123",
-  fullNameDestinatario: "Mario Rossi"
+  recipientInfo: {
+    denomination: "Mario Rossi",
+    taxId: "RSSMRA74D22A001Q"
+  }
 };
+
+const fetchingNotificationDataRequestAction = setAarFlowState(
+  sendAarMockStateFactory.fetchingNotificationData()
+);
 
 const { aarMessageDataPayloadFromResponse } = testable!;
 const mockSessionToken = "token" as SessionToken;
@@ -42,35 +51,60 @@ const mockResolvedCall = (resolved: any) =>
   new Promise((res, _reject) => res(resolved)) as unknown as ReturnType<
     SendAARClient["getAARNotification"]
   >;
+
 describe("fetchAarDataSaga", () => {
   describe("error paths", () => {
     it("should early return if state is not fetchingNotificationData", () => {
-      testSaga(fetchAarDataSaga, jest.fn(), mockSessionToken)
+      testSaga(
+        fetchAarDataSaga,
+        jest.fn(),
+        mockSessionToken,
+        fetchingNotificationDataRequestAction
+      )
         .next()
         .select(currentAARFlowData)
         .next(sendAarMockStates[0])
-        .select(isPnTestEnabledSelector)
-        .next(true)
+        .call(
+          trackSendAARFailure,
+          "Fetch Notification",
+          "Called in wrong state (none)"
+        )
+        .next()
         .isDone();
     });
 
     it("should handle left result and set KO state", () => {
-      const mockFailure = E.left("error");
+      const mockFailure = E.left([]);
       const fetchData = jest
         .fn()
         .mockReturnValue(mockResolvedCall(mockFailure));
-      testSaga(fetchAarDataSaga, fetchData, mockSessionToken)
+      testSaga(
+        fetchAarDataSaga,
+        fetchData,
+        mockSessionToken,
+        fetchingNotificationDataRequestAction
+      )
         .next()
         .select(currentAARFlowData)
         .next(mockCurrentState)
         .select(isPnTestEnabledSelector)
         .next(true)
-        .call(withRefreshApiCall, fetchData())
+        .call(
+          withRefreshApiCall,
+          fetchData(),
+          fetchingNotificationDataRequestAction
+        )
         .next(mockFailure)
+        .call(trackSendAARFailure, "Fetch Notification", "Decoding failure ()")
+        .next()
         .put(
           setAarFlowState({
             type: sendAARFlowStates.ko,
-            previousState: mockCurrentState
+            previousState: mockCurrentState,
+            debugData: {
+              phase: "Fetch Notification",
+              reason: `Decoding failure ()`
+            }
           })
         )
         .next()
@@ -86,25 +120,47 @@ describe("fetchAarDataSaga", () => {
     });
 
     it("should handle status !== 200 and set KO state", () => {
-      const mockResolved = { status: 400, value: mockNotification };
+      const mockResolved = {
+        status: 400,
+        value: { status: 400, detail: "A detail" }
+      };
       const mockResolvedEither = E.right(mockResolved);
       const fetchData = jest
         .fn()
         .mockReturnValue(mockResolvedCall(mockResolvedEither));
 
-      testSaga(fetchAarDataSaga, fetchData, mockSessionToken)
+      testSaga(
+        fetchAarDataSaga,
+        fetchData,
+        mockSessionToken,
+        fetchingNotificationDataRequestAction
+      )
         .next()
         .select(currentAARFlowData)
         .next(mockCurrentState)
         .select(isPnTestEnabledSelector)
         .next(true)
-        .call(withRefreshApiCall, fetchData())
+        .call(
+          withRefreshApiCall,
+          fetchData(),
+          fetchingNotificationDataRequestAction
+        )
         .next(mockResolvedEither)
+        .call(
+          trackSendAARFailure,
+          "Fetch Notification",
+          "HTTP request failed (400 400 A detail)"
+        )
+        .next()
         .put(
           setAarFlowState({
             type: sendAARFlowStates.ko,
             previousState: mockCurrentState,
-            error: mockResolved.value as unknown as AARProblemJson
+            error: mockResolved.value as unknown as AARProblemJson,
+            debugData: {
+              phase: "Fetch Notification",
+              reason: `HTTP request failed (400 400 A detail)`
+            }
           })
         )
         .next()
@@ -123,17 +179,76 @@ describe("fetchAarDataSaga", () => {
       const fetchData = jest.fn().mockImplementation(() => {
         throw error;
       });
-      testSaga(fetchAarDataSaga, fetchData, mockSessionToken)
+      testSaga(
+        fetchAarDataSaga,
+        fetchData,
+        mockSessionToken,
+        fetchingNotificationDataRequestAction
+      )
         .next()
         .select(currentAARFlowData)
         .next(mockCurrentState)
         .select(isPnTestEnabledSelector)
         .next(true)
+        .call(
+          trackSendAARFailure,
+          "Fetch Notification",
+          "An error was thrown (fail)"
+        )
+        .next()
         .put(
           setAarFlowState({
             type: sendAARFlowStates.ko,
-            previousState: mockCurrentState
+            previousState: mockCurrentState,
+            debugData: {
+              phase: "Fetch Notification",
+              reason: `An error was thrown (fail)`
+            }
           })
+        )
+        .next()
+        .isDone();
+
+      expect(fetchData).toHaveBeenCalledWith({
+        Bearer: mockSessionTokenWithBearer,
+        iun: mockCurrentState.iun,
+        mandateId: mockCurrentState.mandateId,
+        "x-pagopa-pn-io-src": "QRCODE",
+        isTest: true
+      });
+    });
+
+    it("should call trackSendAARFailure with 'Fast login expiration' and stop on 401", () => {
+      const mockResolved = {
+        status: 401,
+        value: { status: 401, detail: "Unauthorized" }
+      };
+      const mockResolvedEither = E.right(mockResolved);
+      const fetchData = jest
+        .fn()
+        .mockReturnValue(mockResolvedCall(mockResolvedEither));
+
+      testSaga(
+        fetchAarDataSaga,
+        fetchData,
+        mockSessionToken,
+        fetchingNotificationDataRequestAction
+      )
+        .next()
+        .select(currentAARFlowData)
+        .next(mockCurrentState)
+        .select(isPnTestEnabledSelector)
+        .next(true)
+        .call(
+          withRefreshApiCall,
+          fetchData(),
+          fetchingNotificationDataRequestAction
+        )
+        .next(mockResolvedEither)
+        .call(
+          trackSendAARFailure,
+          "Fetch Notification",
+          "Fast login expiration"
         )
         .next()
         .isDone();
@@ -151,24 +266,44 @@ describe("fetchAarDataSaga", () => {
     it("should handle a non-parsable success payload and return", () => {
       const mockValue = E.right({ status: 200, value: mockNotification });
       const fetchData = jest.fn().mockReturnValue(mockResolvedCall(mockValue));
-      testSaga(fetchAarDataSaga, fetchData, mockSessionToken)
+      testSaga(
+        fetchAarDataSaga,
+        fetchData,
+        mockSessionToken,
+        fetchingNotificationDataRequestAction
+      )
         .next()
         .select(currentAARFlowData)
         .next(mockCurrentState)
         .select(isPnTestEnabledSelector)
         .next(true)
-        .call(withRefreshApiCall, fetchData())
+        .call(
+          withRefreshApiCall,
+          fetchData(),
+          fetchingNotificationDataRequestAction
+        )
         .next(mockValue)
         .call(
           aarMessageDataPayloadFromResponse,
           mockNotification,
           mockCurrentState.mandateId
         )
-        .next(undefined)
+        .next(E.left("Unable to retrieve user fiscal code"))
+        .call(
+          trackSendAARFailure,
+          "Fetch Notification",
+          "An error was thrown (Unable to retrieve user fiscal code)"
+        )
+        .next()
         .put(
           setAarFlowState({
             type: sendAARFlowStates.ko,
-            previousState: mockCurrentState
+            previousState: mockCurrentState,
+            debugData: {
+              phase: "Fetch Notification",
+              reason:
+                "An error was thrown (Unable to retrieve user fiscal code)"
+            }
           })
         )
         .next()
@@ -186,28 +321,36 @@ describe("fetchAarDataSaga", () => {
       const mockPayload = mockEphemeralAarMessageDataActionPayload;
       const mockValue = E.right({ status: 200, value: mockNotification });
       const fetchData = jest.fn().mockReturnValue(mockResolvedCall(mockValue));
-      // mockResolvedValue(mockValue);
-      testSaga(fetchAarDataSaga, fetchData, mockSessionToken)
+      testSaga(
+        fetchAarDataSaga,
+        fetchData,
+        mockSessionToken,
+        fetchingNotificationDataRequestAction
+      )
         .next()
         .select(currentAARFlowData)
         .next(mockCurrentState)
         .select(isPnTestEnabledSelector)
         .next(true)
-        .call(withRefreshApiCall, fetchData())
+        .call(
+          withRefreshApiCall,
+          fetchData(),
+          fetchingNotificationDataRequestAction
+        )
         .next(mockValue)
         .call(
           aarMessageDataPayloadFromResponse,
           mockNotification,
           mockCurrentState.mandateId
         )
-        .next(mockPayload)
+        .next(E.right(mockPayload))
         .put(populateStoresWithEphemeralAarMessageData(mockPayload))
         .next()
         .put(
           setAarFlowState({
             type: sendAARFlowStates.displayingNotificationData,
             notification: mockNotification,
-            fullNameDestinatario: mockCurrentState.fullNameDestinatario,
+            recipientInfo: mockCurrentState.recipientInfo,
             mandateId: mockPayload.mandateId,
             iun: mockPayload.iun,
             pnServiceId: mockPayload.pnServiceID
@@ -228,7 +371,7 @@ describe("fetchAarDataSaga", () => {
 });
 
 describe("aarMessageDataPayloadFromResponse", () => {
-  it("should return undefined if no pnServiceId can be found in the store", () => {
+  it("should return left etiher if no pnServiceId can be found in the store", () => {
     testSaga(
       aarMessageDataPayloadFromResponse,
       mockNotification,
@@ -239,16 +382,9 @@ describe("aarMessageDataPayloadFromResponse", () => {
       .next("CF")
       .select(pnMessagingServiceIdSelector)
       .next(undefined)
-      .returns(undefined);
+      .returns(E.left("Unable to retrieve sendServiceId"));
   });
-  it("should return undefined if no fiscalCode can be found in the store", () => {
-    const mockFn = jest.fn();
-    const getDetails = function* (_sid: NonEmptyString) {
-      yield* call(mockFn);
-      return undefined;
-    } as typeof SAGA_UTILS.getServiceDetails;
-    jest.spyOn(SAGA_UTILS, "getServiceDetails").mockImplementation(getDetails);
-
+  it("should return left either if no fiscalCode can be found in the store", () => {
     testSaga(
       aarMessageDataPayloadFromResponse,
       mockNotification,
@@ -257,35 +393,9 @@ describe("aarMessageDataPayloadFromResponse", () => {
       .next()
       .select(profileFiscalCodeSelector)
       .next(undefined)
-      .select(pnMessagingServiceIdSelector)
-      .next("SID")
-      .call(mockFn)
-      .next()
-      .returns(undefined);
+      .returns(E.left(`Unable to retrieve user fiscal code`));
   });
-  it("should return undefined if pnServiceDetails cannot be found or fetched", () => {
-    const mockFn = jest.fn();
-    const getDetails = function* (_sid: NonEmptyString) {
-      yield* call(mockFn);
-      return undefined;
-    } as typeof SAGA_UTILS.getServiceDetails;
-    jest.spyOn(SAGA_UTILS, "getServiceDetails").mockImplementation(getDetails);
-
-    testSaga(
-      aarMessageDataPayloadFromResponse,
-      mockNotification,
-      mockCurrentState.mandateId
-    )
-      .next()
-      .select(profileFiscalCodeSelector)
-      .next("CF")
-      .select(pnMessagingServiceIdSelector)
-      .next("SID")
-      .call(mockFn)
-      .next(undefined)
-      .returns(undefined);
-  });
-  it("should return undefined if an invalid message has been passed as parameter", () => {
+  it("should return left either if an invalid message has been passed as parameter", () => {
     testSaga(
       aarMessageDataPayloadFromResponse,
       {
@@ -299,9 +409,37 @@ describe("aarMessageDataPayloadFromResponse", () => {
       .select(pnMessagingServiceIdSelector)
       .next("SID")
       // function fails to decode the message
-      .returns(undefined);
+      .returns(
+        E.left(
+          `Unable to decode AAR notification into SEND ThirdPartyMessage (value undefined at root.details.subject is not a valid [string]\nvalue undefined at root.details.iun is not a valid [string]\nvalue undefined at root.details.recipients is not a valid [array of NotificationRecipient]\nvalue "WRONG_DATA_KIND" at root.details.notificationStatusHistory is not a valid [array of NotificationStatusHistoryElement])`
+        )
+      );
   });
-  it("should return undefined if a message without a valid `details` key has been passed as parameter", () => {
+  it("should return left either if SEND service preferences cannot be retrieved", () => {
+    const mockFn = jest.fn();
+    const getDetails = function* (_sid: NonEmptyString) {
+      yield* call(mockFn);
+      return undefined;
+    };
+    jest
+      .spyOn(serviceDetailsSaga, "getServiceDetails")
+      .mockImplementation(getDetails);
+
+    testSaga(
+      aarMessageDataPayloadFromResponse,
+      mockNotification,
+      mockCurrentState.mandateId
+    )
+      .next()
+      .select(profileFiscalCodeSelector)
+      .next("CF")
+      .select(pnMessagingServiceIdSelector)
+      .next("SID")
+      .call(mockFn)
+      .next(undefined)
+      .returns(E.left(`Unable to retrieve SEND service details`));
+  });
+  it("should return left either if a message without a valid `details` key has been passed as parameter", () => {
     const message = _.omit(
       thirdPartyMessage.third_party_message as PnThirdPartyMessage,
       "details"
@@ -310,8 +448,10 @@ describe("aarMessageDataPayloadFromResponse", () => {
     const getDetails = function* (_sid: NonEmptyString) {
       yield* call(mockFn);
       return { id: "SID" } as any;
-    } as typeof SAGA_UTILS.getServiceDetails;
-    jest.spyOn(SAGA_UTILS, "getServiceDetails").mockImplementation(getDetails);
+    } as typeof serviceDetailsSaga.getServiceDetails;
+    jest
+      .spyOn(serviceDetailsSaga, "getServiceDetails")
+      .mockImplementation(getDetails);
 
     testSaga(
       aarMessageDataPayloadFromResponse,
@@ -325,17 +465,19 @@ describe("aarMessageDataPayloadFromResponse", () => {
       .next("SID")
       .call(mockFn)
       .next({ id: "SID" } as any)
-      .returns(undefined);
+      .returns(E.left(`Field 'details' in the AAR Notification is missing`));
   });
-  it("should return a mapped object if a message with the required keys has been passed as parameter", () => {
+  it("should return a right either with mapped object if a message with the required keys has been passed as parameter", () => {
     const message =
       thirdPartyMessage.third_party_message as PnThirdPartyMessage;
     const mockFn = jest.fn();
     const getDetails = function* (_sid: NonEmptyString) {
       yield* call(mockFn);
       return { id: "SID" } as any;
-    } as typeof SAGA_UTILS.getServiceDetails;
-    jest.spyOn(SAGA_UTILS, "getServiceDetails").mockImplementation(getDetails);
+    } as typeof serviceDetailsSaga.getServiceDetails;
+    jest
+      .spyOn(serviceDetailsSaga, "getServiceDetails")
+      .mockImplementation(getDetails);
 
     testSaga(
       aarMessageDataPayloadFromResponse,
@@ -349,14 +491,16 @@ describe("aarMessageDataPayloadFromResponse", () => {
       .next("SID")
       .call(mockFn)
       .next({ id: "SID" } as any)
-      .returns({
-        iun: message.details?.iun,
-        thirdPartyMessage: message,
-        fiscalCode: message.details?.recipients?.[0]?.taxId ?? "CF",
-        pnServiceID: "SID",
-        markdown: "*".repeat(81) as NonEmptyString,
-        subject: message.details?.subject,
-        mandateId: mockCurrentState.mandateId
-      });
+      .returns(
+        E.right({
+          iun: message.details?.iun,
+          thirdPartyMessage: message,
+          fiscalCode: message.details?.recipients?.[0]?.taxId ?? "CF",
+          pnServiceID: "SID",
+          markdown: "*".repeat(81) as NonEmptyString,
+          subject: message.details?.subject,
+          mandateId: mockCurrentState.mandateId
+        })
+      );
   });
 });

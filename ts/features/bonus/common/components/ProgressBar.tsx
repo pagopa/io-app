@@ -30,7 +30,7 @@ export const ProgressBar: FunctionComponent<Props> = props => {
   const isDark = useIOThemeContext().themeType === "dark";
   const backgroundColor = isDark
     ? IOColors["blueIO-300"]
-    : IOColors["blueItalia-500"];
+    : IOColors["blueIO-500"];
 
   return (
     <View style={{ backgroundColor: IOColors["grey-100"], height: 4 }}>

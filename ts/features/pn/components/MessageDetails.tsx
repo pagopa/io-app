@@ -1,9 +1,3 @@
-import { useRef } from "react";
-import { ScrollView } from "react-native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as RA from "fp-ts/lib/ReadonlyArray";
-import * as SEP from "fp-ts/lib/Separated";
 import {
   ContentWrapper,
   Icon,
@@ -12,25 +6,32 @@ import {
   useFooterActionsMeasurements,
   useIOTheme
 } from "@pagopa/io-app-design-system";
+import * as O from "fp-ts/lib/Option";
+import * as RA from "fp-ts/lib/ReadonlyArray";
+import * as SEP from "fp-ts/lib/Separated";
+import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
+import { useRef } from "react";
+import { ScrollView } from "react-native";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { PNMessage } from "../store/types/types";
-import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
-import { MessageDetailsHeader } from "../../messages/components/MessageDetail/MessageDetailsHeader";
 import { MessageDetailsAttachments } from "../../messages/components/MessageDetail/MessageDetailsAttachments";
+import { MessageDetailsHeader } from "../../messages/components/MessageDetail/MessageDetailsHeader";
+import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
+import { PNMessage } from "../store/types/types";
 import {
   maxVisiblePaymentCount,
   shouldUseBottomSheetForPayments
 } from "../utils";
-import { MessageDetailsContent } from "./MessageDetailsContent";
+import { BannerAttachments } from "./BannerAttachments";
 import { F24Section } from "./F24Section";
 import { MessageBottomMenu } from "./MessageBottomMenu";
-import { MessagePayments } from "./MessagePayments";
-import { MessagePaymentBottomSheet } from "./MessagePaymentBottomSheet";
-import { MessageFooter } from "./MessageFooter";
 import { MessageCancelledContent } from "./MessageCancelledContent";
+import { MessageDetailsContent } from "./MessageDetailsContent";
+import { MessageFooter } from "./MessageFooter";
+import { MessagePaymentBottomSheet } from "./MessagePaymentBottomSheet";
+import { MessagePayments } from "./MessagePayments";
 
 export type MessageDetailsProps = {
   message: PNMessage;
@@ -105,9 +106,11 @@ export const MessageDetails = ({
             paidNoticeCodes={completedPaymentNoticeCodes}
             payments={payments}
           />
-          <MessageDetailsContent abstract={message.abstract} />
+          <VSpacer size={16} />
+          <MessageDetailsContent message={message} />
           <VSpacer size={16} />
           <MessageDetailsAttachments
+            banner={<BannerAttachments />}
             disabled={message.isCancelled}
             messageId={messageId}
             isPN
@@ -139,7 +142,6 @@ export const MessageDetails = ({
           messageId={messageId}
           paidNoticeCodes={completedPaymentNoticeCodes}
           payments={payments}
-          serviceId={serviceId}
         />
       </ScrollView>
       <MessageFooter

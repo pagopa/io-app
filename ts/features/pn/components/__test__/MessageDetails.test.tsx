@@ -14,6 +14,9 @@ import { toPNMessage } from "../../store/types/transformers";
 import { PNMessage } from "../../store/types/types";
 import { MessageDetails } from "../MessageDetails";
 
+jest.mock(
+  "../../../messages/components/MessageDetail/MessageDetailsAttachments"
+);
 jest.mock("../MessageBottomMenu");
 
 const pnMessage = pipe(thirdPartyMessage, toPNMessage, O.toUndefined)!;
