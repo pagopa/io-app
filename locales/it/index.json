@@ -6229,8 +6229,7 @@
         "subtitle": "Potrebbero volerci alcuni minuti. Non chiudere l'app: quando sarà tutto pronto, potrai richiedere il tuo bonus."
       },
       "featureDisabled": {
-        "title": "Funzionalità non disponibile",
-        "subtitle": "Questa funzionalità non è al momento disponibile."
+        "title": "L'iniziativa non è più disponibile"
       },
       "preferences": {
         "enableEmailBanner": {

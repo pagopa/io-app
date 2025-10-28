@@ -13,7 +13,7 @@ export const IdPayDisabledScreen = () => {
   const navigation = useIONavigation();
 
   useOnFirstRender(() => {
-    // TODO: Add analytics tracking if needed
+    // TODO: Add analytics tracking (https://pagopa.atlassian.net/browse/IOBP-2136)
     // trackIDPayFeatureDisabledScreen();
   });
 
@@ -31,7 +31,6 @@ export const IdPayDisabledScreen = () => {
       testID="idpay-feature-disabled-screen"
       pictogram="umbrella"
       title={I18n.t("idpay.onboarding.featureDisabled.title")}
-      subtitle={I18n.t("idpay.onboarding.featureDisabled.subtitle")}
       action={{
         label: I18n.t("global.buttons.close"),
         onPress: handleOnPressClose

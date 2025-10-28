@@ -6009,8 +6009,7 @@
         "subtitle": "This may take several minutes. Do not close the app: once everything is ready, you will be able to request your bonus."
       },
       "featureDisabled": {
-        "title": "Feature not available",
-        "subtitle": "This feature is not available at the moment."
+        "title": "The initiative is not available"
       },
       "preferences": {
         "enableEmailBanner": {
