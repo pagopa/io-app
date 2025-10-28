@@ -1141,7 +1141,6 @@
     "opt_in": {
       "contextualHelpTitle": "Authentication",
       "contextualHelpContent": "Here you can find information on how to authenticate on IO and some security tips.",
-      "news": "News",
       "title": "It is now easier to access!",
       "identity_check": "You’ll no longer have to identify yourself with SPID or CIE every 30 days, but only once a year or if you log out.",
       "security_suggests": "Safety tips",
@@ -5558,7 +5557,7 @@
       "resultScreen": {
         "success": {
           "header": "Ecco il codice sconto!",
-          "body": "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:",
+          "body": "Chiedi al venditore di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:",
           "validUpTo": "Vale fino a ",
           "expiresIn": "Il codice scade tra ",
           "copyCodeCta": "Copy code",
@@ -5613,7 +5612,8 @@
       }
     },
     "wallet": {
-      "preview": {
+      "card": {
+        "available": "Available",
         "validThrough": "Valid through {{endDate}}",
         "showAll": "View all"
       },
@@ -5774,7 +5774,16 @@
         "buttons": {
           "privacy": "Preferenze e Privacy",
           "unsubscribe": "Rimuovi {{initiativeName}}",
-          "requestHelp": "Chiedi aiuto"
+          "requestHelp": "Chiedi aiuto",
+          "staticCode": "Generate static code"
+        },
+        "staticCodeModal": {
+          "staticCodeErrorAlert": "C’è stato un errore, riprova",
+          "content": {
+            "title": "Ecco il codice statico",
+            "subtitle": "Usa questo codice, se richiesto da un venditore online in fase di acquisto."
+          },
+          "footer": "Copia codice statico"
         }
       },
       "operationDetails": {

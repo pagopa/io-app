@@ -30,6 +30,7 @@ import { OperationResultScreenContent } from "../../../../components/screens/Ope
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { getNetworkErrorMessage } from "../../../../utils/errors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { useFIMSAuthenticationFlow } from "../../../fims/common/hooks";
@@ -153,9 +154,13 @@ const IdPayInitiativeDetailsScreenComponent = () => {
 
   useOnFirstRender(
     () => {
-      trackIDPayDetailError({
-        initiativeId
-      });
+      if (pot.isError(initiativeDataPot)) {
+        trackIDPayDetailError({
+          initiativeId,
+          initiativeName,
+          reason: getNetworkErrorMessage(initiativeDataPot.error)
+        });
+      }
     },
     () => pot.isError(initiativeDataPot)
   );
