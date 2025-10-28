@@ -46,10 +46,12 @@ export type EidIssuanceMode = "issuance" | "reissuance" | "upgrade";
  * determines which authentication method are allowed:
  * - "l2": Documenti su IO issuance using CIE+PIN, CIEID, or SPID
  * - "l2-fallback": Documenti su IO issuance using CIEID or SPID (fallback mode)
- * - "l2-plus": IT Wallet issuance using CIE+PIN, CIEID, or SPID plus an additional CIE card authentication
- * - "l3" IT Wallet issuance using CIE+PIN or CIEID
+ * - "l3": IT Wallet issuance using CIE+PIN or CIEID
+ * - "l3-next" IT Wallet issuance using CIE+PIN, CIEID, or SPID plus an additional CIE card authentication
+ *
+ * Note: "l3" and "l3-next" will be merged once the new L2+/L3 flow will be available.
  */
-export type EidIssuanceLevel = "l2" | "l2-fallback" | "l2-plus" | "l3";
+export type EidIssuanceLevel = "l2" | "l2-fallback" | "l3" | "l3-next";
 
 export type Context = {
   /**
