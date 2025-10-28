@@ -461,7 +461,12 @@ export const itwEidIssuanceMachine = setup({
             },
             back: [
               {
-                guard: or(["isReissuance", "isL2Fallback"]),
+                guard: "isReissuance",
+                target: "#itwEidIssuanceMachine.Idle",
+                actions: "closeIssuance"
+              },
+              {
+                guard: "isL2Fallback",
                 target: "#itwEidIssuanceMachine.Idle",
                 actions: "navigateToTosScreen"
               },
