@@ -28,8 +28,8 @@ export const useSendActivationFlow = () => {
 
   const onSENDActivationSucceeded = () => {
     dispatch(setSendEngagementScreenHasBeenDismissed());
-    dispatch(setSecurityAdviceReadyToShow(true));
     if (notificationPermissionsEnabled) {
+      dispatch(setSecurityAdviceReadyToShow(true));
       popToTop();
     } else {
       replace(NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT, {
