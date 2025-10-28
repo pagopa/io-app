@@ -5,7 +5,7 @@ import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
-import { ServicesClient } from "../../common/api/servicesClient";
+import { ServicesClient } from "../../common/api/client";
 import { featuredServicesGet } from "../store/actions";
 
 /**

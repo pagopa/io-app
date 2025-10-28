@@ -3,7 +3,7 @@ import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 import { InstitutionServicesResource } from "../../../../../../definitions/services/InstitutionServicesResource";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
-import { ServicesClient } from "../../../common/api/__mocks__/servicesClient";
+import { ServicesClient } from "../../../common/api/__mocks__/client";
 import {
   PaginatedServicesGetPayload,
   paginatedServicesGet

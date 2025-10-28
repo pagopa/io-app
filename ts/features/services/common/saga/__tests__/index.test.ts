@@ -2,7 +2,7 @@ import { testSaga } from "redux-saga-test-plan";
 import { watchServicesSaga } from "..";
 import { BackendClient } from "../../../../../api/backend";
 import { SessionToken } from "../../../../../types/SessionToken";
-import { createServicesClient, ServicesClient } from "../../api/servicesClient";
+import { createServicesClient, ServicesClient } from "../../api/client";
 import { apiUrlPrefix } from "../../../../../config";
 import { watchServicesDetailsSaga } from "../../../details/saga";
 import { watchHomeSaga } from "../../../home/saga";
