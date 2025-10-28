@@ -9,7 +9,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { View } from "react-native";
-import CiePin from "../../../../../../img/features/itWallet/identification/cie_pin.svg";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
@@ -211,7 +210,7 @@ const CiePinMethodModule = () => {
       title={title}
       subtitle={subtitle}
       testID="CiePinMethodModuleTestID"
-      image={<CiePin width={28} height={32} />}
+      icon="cieCard"
       onPress={handleOnPress}
       badge={badgeProps}
     />
