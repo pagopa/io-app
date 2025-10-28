@@ -75,6 +75,7 @@ const useAlertPressHandler =
  * It contains messages that are statically defined in the app's locale or
  * dynamically extracted from the issuer configuration.
  */
+// eslint-disable-next-line sonarjs/cognitive-complexity
 const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
   const navigation = useIONavigation();
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
@@ -115,22 +116,41 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
   const isEidExpiring = eidStatus === "jwtExpiring";
   const isCredentialJwtExpiring = status === "jwtExpiring";
   const isCredentialJwtExpired = status === "jwtExpired";
+  const isOffline = offlineAccessReason !== undefined;
 
-  if (isCredentialJwtExpiring || isCredentialJwtExpired) {
-    // If the eID jwt is expired or expiring and the credential jwt is expiring, do not show any alert
-    // We do not handle the case where the eID jwt is expiring and the credential jwt is expired,
-    // as this situation should never occur.
-    if (
-      ((isEidExpired || isEidExpiring) && isCredentialJwtExpiring) ||
-      offlineAccessReason !== undefined
-    ) {
+  const isEidInvalid = isEidExpired || isEidExpiring;
+  const isCredentialJwtInvalid =
+    isCredentialJwtExpiring || isCredentialJwtExpired;
+
+  // Handle alerts only if the credential JWT is expiring or expired
+  if (isCredentialJwtInvalid) {
+    /**
+     * 1. Don't show any alert if:
+     * - The eID is expired or expiring AND the credential JWT is expiring
+     * - OR the app is offline but the credential JWT is not yet expired
+     */
+    const shouldHideAlert =
+      (isEidInvalid && isCredentialJwtExpiring) ||
+      (isOffline && !isCredentialJwtExpired);
+
+    if (shouldHideAlert) {
       return null;
     }
-    // If both the eID jwt and the credential jwt are expired, show the eID alert
-    if (isEidExpired && isCredentialJwtExpired && !isItwL3) {
+
+    /**
+     * 2. Show the eID lifecycle alert if:
+     * - Both the eID and the credential JWT are expired (and not in L3 mode)
+     * - OR the app is offline and the credential JWT is expired
+     */
+    const shouldShowEidAlert =
+      (!isItwL3 && isEidExpired && isCredentialJwtExpired) ||
+      (isOffline && isCredentialJwtExpired);
+
+    if (shouldShowEidAlert) {
       return <ItwEidLifecycleAlert navigation={navigation} />;
     }
 
+    // 3. In all other cases, show the generic JWT verification alert
     return (
       <JwtVerificationAlert
         credential={credential}

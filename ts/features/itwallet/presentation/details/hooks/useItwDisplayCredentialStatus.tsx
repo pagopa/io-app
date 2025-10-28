@@ -31,10 +31,20 @@ export const useItwDisplayCredentialStatus = (
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
   const isCredentialExcluded =
     excludedCredentialStatuses.includes(credentialStatus);
+  const isOffline = offlineAccessReason !== undefined;
 
-  // In offline mode show digital credential nearing expiration and expired as valid
-  if (offlineAccessReason !== undefined && !isCredentialExcluded) {
-    return "valid";
+  /** Offline logic:
+   * -  eID valid + credential jwtExpired → show actual status
+   * -  not excluded → treat as valid
+   */
+  if (isOffline) {
+    if (eidStatus === "valid" && credentialStatus === "jwtExpired") {
+      return credentialStatus;
+    }
+
+    if (!isCredentialExcluded) {
+      return "valid";
+    }
   }
 
   if (eidStatus === "valid" || isCredentialExcluded) {
