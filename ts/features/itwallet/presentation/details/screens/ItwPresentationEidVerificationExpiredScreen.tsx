@@ -1,15 +1,35 @@
 import { BodyProps } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+import { useCallback } from "react";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { useItwEidFeedbackBottomSheet } from "../../../common/hooks/useItwEidFeedbackBottomSheet.tsx";
+import ROUTES from "../../../../../navigation/routes.ts";
 
 export const ItwPresentationEidVerificationExpiredScreen = () => {
   const navigation = useIONavigation();
+
+  /**
+   * Fallback navigation action to main wallet home screen.
+   */
+  const fallbackNavigationAction = useCallback(() => {
+    navigation.reset({
+      index: 1,
+      routes: [
+        {
+          name: ROUTES.MAIN,
+          params: {
+            screen: ROUTES.WALLET_HOME
+          }
+        }
+      ]
+    });
+  }, [navigation]);
+
   const eidFeedbackBottomSheet = useItwEidFeedbackBottomSheet({
-    primaryAction: navigation.goBack,
-    secondaryAction: navigation.goBack
+    additionalPrimaryAction: fallbackNavigationAction,
+    additionalSecondaryAction: fallbackNavigationAction
   });
   const startEidReissuing = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
