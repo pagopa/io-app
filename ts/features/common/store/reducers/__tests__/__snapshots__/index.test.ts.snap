@@ -336,6 +336,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
   "services": {
     "details": {
       "dataById": {},
+      "favouritesById": {},
       "preferencesById": {},
     },
     "home": {

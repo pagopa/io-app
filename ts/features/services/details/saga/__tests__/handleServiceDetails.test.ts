@@ -9,7 +9,7 @@ import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { loadServiceDetail } from "../../store/actions/details";
 import { handleServiceDetails } from "../handleServiceDetails";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
-import { ServicesClient } from "../../../common/api/__mocks__/servicesClient";
+import { ServicesClient } from "../../../common/api/__mocks__/client";
 
 const mockedServiceId = "A01" as ServiceId;
 

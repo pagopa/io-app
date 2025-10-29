@@ -1,6 +1,6 @@
 import { SagaIterator } from "redux-saga";
 import { call, race, take, takeLatest } from "typed-redux-saga/macro";
-import { ServicesClient } from "../../common/api/servicesClient";
+import { ServicesClient } from "../../common/api/client";
 import { paginatedServicesGet } from "../store/actions";
 import { handleFindInstitutionServices } from "./handleFindInstitutionServices";
 
