@@ -44,12 +44,16 @@ export const thirdPartyByIdReducer = (
 ): ThirdPartyById => {
   switch (action.type) {
     case getType(loadThirdPartyMessage.request):
+      console.log("loadThirdPartyMessage req", action.payload.id);
       return toLoading(action.payload.id, state);
     case getType(loadThirdPartyMessage.success):
+      console.log("loadThirdPartyMessage success", action.payload.id);
       return toSome(action.payload.id, state, action.payload.content);
     case getType(loadThirdPartyMessage.failure):
+      console.log("loadThirdPartyMessage fail", action.payload.id);
       return toError(action.payload.id, state, action.payload.error);
     case getType(reloadAllMessages.request):
+      console.log("reloadAll");
       return initialState;
     case getType(populateStoresWithEphemeralAarMessageData):
       const {
@@ -62,6 +66,7 @@ export const thirdPartyByIdReducer = (
         fiscalCode
       } = action.payload;
 
+      console.log("populate", action.payload.iun);
       const ephemeralMessage: ThirdPartyMessageUnion = {
         kind: "AAR",
         mandateId,
@@ -83,6 +88,7 @@ export const thirdPartyByIdReducer = (
       return toSome(iun, state, ephemeralMessage);
 
     case getType(terminateAarFlow):
+      console.log("terminate", action.payload.messageId);
       if (action.payload.messageId === undefined) {
         return state;
       }

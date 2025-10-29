@@ -11,24 +11,25 @@ import {
   select,
   take
 } from "typed-redux-saga/macro";
-import { ActionType } from "typesafe-actions";
+import { ActionType, getType } from "typesafe-actions";
+import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 import { BackendClient } from "../../../api/backend";
+import { Action } from "../../../store/actions/types";
+import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPreferences";
+import { SagaCallReturnType } from "../../../types/utils";
+import { isTestEnv } from "../../../utils/environment";
+import { readablePrivacyReport } from "../../../utils/reporters";
+import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
+import { trackMessagePaymentFailure } from "../analytics";
 import {
+  PaymentError,
   cancelQueuedPaymentUpdates,
   isGenericError,
-  PaymentError,
   toGenericError,
   toSpecificError,
   toTimeoutError,
   updatePaymentForMessage
 } from "../store/actions";
-import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPreferences";
-import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
-import { SagaCallReturnType } from "../../../types/utils";
-import { readablePrivacyReport } from "../../../utils/reporters";
-import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
-import { isTestEnv } from "../../../utils/environment";
-import { trackMessagePaymentFailure } from "../analytics";
 
 const PaymentUpdateWorkerCount = 5;
 
@@ -82,7 +83,10 @@ function* paymentUpdateRequestWorker(
           isPagoPATestEnabled,
           getPaymentDataRequestFactory
         ),
-        wasCancelled: take(cancelQueuedPaymentUpdates)
+        wasCancelled: take((action: Action) => {
+          const isTrue = action.type === getType(cancelQueuedPaymentUpdates);
+          return isTrue && action.payload.messageId === messageId;
+        })
       });
     } catch (e) {
       const reason = yield* call(unknownErrorToPaymentError, e);

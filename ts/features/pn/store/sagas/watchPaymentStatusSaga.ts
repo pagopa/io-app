@@ -1,5 +1,5 @@
 import { call, delay, race, select, take } from "typed-redux-saga/macro";
-import { ActionType } from "typesafe-actions";
+import { ActionType, getType } from "typesafe-actions";
 import {
   cancelPNPaymentStatusTracking,
   startPNPaymentStatusTracking
@@ -11,6 +11,7 @@ import { trackPNPaymentStatus } from "../../analytics";
 import { getRptIdStringFromPayment } from "../../utils/rptId";
 import { paymentStatisticsForMessageUncachedSelector } from "../../../messages/store/reducers/payments";
 import { isTestEnv } from "../../../../utils/environment";
+import { Action } from "../../../../store/actions/types";
 
 /**
  * This saga is used to track a mixpanel event which is a report of
@@ -46,7 +47,11 @@ export function* watchPaymentStatusForMixpanelTracking(
       paymentCount,
       visibleRPTIds
     ),
-    cancelAction: take(cancelPNPaymentStatusTracking)
+    cancelAction: take(
+      (inputAction: Action) =>
+        inputAction.type === getType(cancelPNPaymentStatusTracking) &&
+        inputAction.payload.messageId === messageId
+    )
   });
 }
 

@@ -3,22 +3,25 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import { RefObject, useCallback, useEffect, useRef } from "react";
+import { RefObject, useCallback, useEffect, useMemo, useRef } from "react";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import { useOfflineToastGuard } from "../../../hooks/useOfflineToastGuard";
 import { useStartSupportRequest } from "../../../hooks/useStartSupportRequest";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import {
+  IOStackNavigationRouteProps,
+  useIONavigation
+} from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { isStrictSome } from "../../../utils/pot";
 import {
   cancelPreviousAttachmentDownload,
   cancelQueuedPaymentUpdates,
   updatePaymentForMessage
 } from "../../messages/store/actions";
 import { profileFiscalCodeSelector } from "../../settings/common/store/selectors";
+import { trackSendAARFailure } from "../aar/analytics";
 import { SendAARMessageDetailBottomSheetComponent } from "../aar/components/SendAARMessageDetailBottomSheetComponent";
 import { terminateAarFlow } from "../aar/store/actions";
 import { trackPNUxSuccess } from "../analytics";
@@ -29,15 +32,10 @@ import {
   startPNPaymentStatusTracking
 } from "../store/actions";
 import {
-  pnMessageFromIdSelector,
-  pnUserSelectedPaymentRptIdSelector
+  pnUserSelectedPaymentRptIdSelector,
+  testingSelector
 } from "../store/reducers";
-import {
-  containsF24FromPNMessagePot,
-  isCancelledFromPNMessagePot,
-  paymentsFromPNMessagePot
-} from "../utils";
-import { trackSendAARFailure } from "../aar/analytics";
+import { paymentsFromPNMessagePot } from "../utils";
 
 export type MessageDetailsScreenRouteParams = {
   messageId: string;
@@ -46,7 +44,7 @@ export type MessageDetailsScreenRouteParams = {
   isAarMessage?: boolean;
 };
 
-type MessageDetailsRouteProps = RouteProp<
+type MessageDetailsRouteProps = IOStackNavigationRouteProps<
   PnParamsList,
   "PN_ROUTES_MESSAGE_DETAILS"
 >;
@@ -93,13 +91,13 @@ const useCorrectHeader = (
   });
 };
 
-export const MessageDetailsScreen = () => {
+export const MessageDetailsScreen = (props: MessageDetailsRouteProps) => {
   const dispatch = useIODispatch();
-  const route = useRoute<MessageDetailsRouteProps>();
   // Be aware that when this screen displays an AAR message, messageId and IUN have
   // the same value. When displaying SEND's notifications via IO Messages, messageId
   // and IUN have differente values
-  const { messageId, serviceId, firstTimeOpening, isAarMessage } = route.params;
+  const { messageId, serviceId, firstTimeOpening, isAarMessage } =
+    props.route.params;
   const aarBottomSheetRef = useRef<() => void>(undefined);
 
   useCorrectHeader(!!isAarMessage, aarBottomSheetRef);
@@ -115,9 +113,23 @@ export const MessageDetailsScreen = () => {
   useHardwareBackButton(androidBackButtonCallback);
 
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
-  const sendMessagePot = useIOSelector(state =>
-    pnMessageFromIdSelector(state, messageId)
-  );
+  // const TPM = useIOSelector(state =>
+  //   thirdPartyFromIdSelector(state, messageId)
+  // );
+  // const sendMessagePot = useMemo(
+  //   () => pot.map(TPM, _ => toPNMessage(_)),
+  //   [TPM]
+  // );
+
+  const mySelector = useMemo(() => testingSelector(messageId), [messageId]);
+  const sendMessagePot = useIOSelector(mySelector);
+
+  // useIOSelector(
+  //   state => pnMessageFromIdSelector(state, messageId),
+  //   {
+  //     equalityFn: _.isEqual
+  //   }
+  // );
   const sendMessageOrUndefined = O.getOrElseW(() => undefined)(
     pot.getOrElse(sendMessagePot, O.none)
   );
@@ -129,6 +141,11 @@ export const MessageDetailsScreen = () => {
   );
   const paymentsCount = payments?.length ?? 0;
 
+  console.log(
+    `RERENDERING ${isAarMessage ? "AAR" : "STANDARD"}, MSGID:`,
+    messageId
+  );
+
   useEffect(() => {
     dispatch(
       startPNPaymentStatusTracking({
@@ -136,42 +153,59 @@ export const MessageDetailsScreen = () => {
         messageId
       })
     );
-
-    if (isStrictSome(sendMessagePot)) {
-      const isCancelled = isCancelledFromPNMessagePot(sendMessagePot);
-      const containsF24 = containsF24FromPNMessagePot(sendMessagePot);
-
-      trackPNUxSuccess(
-        paymentsCount,
-        firstTimeOpening,
-        isCancelled,
-        containsF24
-      );
-
-      if (sendMessageOrUndefined == null && isAarMessage) {
-        trackSendAARFailure(
-          "Show Notification",
-          "Screen rendering with undefined SEND message"
-        );
-      }
-    }
     return () => {
       dispatch(cancelPreviousAttachmentDownload());
       dispatch(cancelQueuedPaymentUpdates({ messageId }));
-      dispatch(cancelPNPaymentStatusTracking());
+      dispatch(cancelPNPaymentStatusTracking({ messageId }));
       if (isAarMessage) {
+        console.log("CLEANING AAR, MSGID:", messageId);
         dispatch(terminateAarFlow({ messageId }));
+      } else {
+        console.log("CLEANING STANDARD, MSGID:", messageId);
       }
     };
+  }, [dispatch, isAarMessage, messageId]);
+
+  const isCancelled = sendMessageOrUndefined?.isCancelled ?? false;
+  const containsF24 = false;
+  useEffect(() => {
+    // if (isAarMessage) {
+    //   console.log("MOUNTING AAR, MSGID:", messageId);
+    // } else {
+    //   console.log("MOUNTING STANDARD, MSGID:", messageId);
+    // }
+
+    // if (sendMessageOrUndefined != null) {
+
+    console.log("TRACKING Ux, MSGID:", messageId);
+    trackPNUxSuccess(paymentsCount, firstTimeOpening, isCancelled, containsF24);
+
+    // if (sendMessageOrUndefined == null && isAarMessage) {
+    trackSendAARFailure(
+      "Show Notification",
+      "Screen rendering with undefined SEND message"
+    );
+    // }
+    // }
   }, [
-    dispatch,
+    containsF24,
     firstTimeOpening,
-    messageId,
-    sendMessagePot,
-    paymentsCount,
     isAarMessage,
-    sendMessageOrUndefined
+    isCancelled,
+    messageId,
+    paymentsCount
   ]);
+
+  useEffect(
+    () => () => {
+      if (isAarMessage) {
+        console.log("UNMOUNT AAR TRIGGERED, MSGID:", messageId);
+      } else {
+        console.log("UNMOUNT STANDARD TRIGGERED, MSGID:", messageId);
+      }
+    },
+    [messageId, isAarMessage]
+  );
 
   const store = useIOStore();
   useFocusEffect(

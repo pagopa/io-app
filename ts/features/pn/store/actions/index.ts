@@ -25,9 +25,9 @@ export const pnActivationUpsert = createAsyncAction(
 export const startPNPaymentStatusTracking = createStandardAction(
   "PN_START_TRACKING_PAYMENT_STATUS"
 )<PNPaymentStatusTracking>();
-export const cancelPNPaymentStatusTracking = createAction(
+export const cancelPNPaymentStatusTracking = createStandardAction(
   "PN_CANCEL_PAYMENT_STATUS_TRACKING"
-);
+)<{ messageId: string }>();
 export const dismissPnActivationReminderBanner = createAction(
   "DISMISS_PN_ACTIVATION_REMINDER_BANNER"
 );
