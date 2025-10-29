@@ -2,6 +2,53 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.18.0-rc.1](https://github.com/pagopa/io-app/compare/3.18.0-rc.0...3.18.0-rc.1) (2025-10-28)
+
+
+### Features
+
+* [[IOBP-2127](https://pagopa.atlassian.net/browse/IOBP-2127)] Added IDPay disabled feature flag screen for the entire feature ([#7540](https://github.com/pagopa/io-app/issues/7540)) ([59b1521](https://github.com/pagopa/io-app/commit/59b152164c0e7a85d0a791645d1b6b11dabad188))
+* [[IOCOM-2686](https://pagopa.atlassian.net/browse/IOCOM-2686)] Remove UAL support for SEND dev env ([#7552](https://github.com/pagopa/io-app/issues/7552)) ([acd0825](https://github.com/pagopa/io-app/commit/acd0825849e6b28a0efeea66d8626957921da85c))
+
+
+### Bug Fixes
+
+* [[IOBP-2130](https://pagopa.atlassian.net/browse/IOBP-2130)] IDPay duplicated Mixpanel event ([#7556](https://github.com/pagopa/io-app/issues/7556)) ([2562a49](https://github.com/pagopa/io-app/commit/2562a49f1547550ba3c9d0d88b81b3dc30bf95fa))
+* [[IOBP-2133](https://pagopa.atlassian.net/browse/IOBP-2133)] IDPay Android sticky button ([#7550](https://github.com/pagopa/io-app/issues/7550)) ([a3489db](https://github.com/pagopa/io-app/commit/a3489dbcfa07b9622f817c98661c1afa39602abc))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-3217](https://pagopa.atlassian.net/browse/SIW-3217),[SIW-3218](https://pagopa.atlassian.net/browse/SIW-3218)] Alert Survey ([#7516](https://github.com/pagopa/io-app/issues/7516)) ([0fbae05](https://github.com/pagopa/io-app/commit/0fbae05df8ce88152645570dab62f38a76629127))
+* **IT Wallet:** [[SIW-3244](https://pagopa.atlassian.net/browse/SIW-3244)]  Fix mapped errors while reading CIE ([#7533](https://github.com/pagopa/io-app/issues/7533)) ([1cf3453](https://github.com/pagopa/io-app/commit/1cf34537bf66df43e637a1ae1a2ba5df3ef8958c))
+* **IT Wallet:** [[SIW-3251](https://pagopa.atlassian.net/browse/SIW-3251)] Hook to override credential status in eID reactivation flow ([#7532](https://github.com/pagopa/io-app/issues/7532)) ([acbb1bf](https://github.com/pagopa/io-app/commit/acbb1bf0ba8618e96de7c69568aa716b93037b47))
+
+## [3.18.0-rc.0](https://github.com/pagopa/io-app/compare/3.17.0-rc.8...3.18.0-rc.0) (2025-10-28)
+
+
+### Features
+
+* [[IOBP-2121](https://pagopa.atlassian.net/browse/IOBP-2121)] IDPay static code bottom sheet ([#7539](https://github.com/pagopa/io-app/issues/7539)) ([3a4275b](https://github.com/pagopa/io-app/commit/3a4275b4ca06248ca842982517dc6bbb71df89a0))
+* [[IOPAE-2215](https://pagopa.atlassian.net/browse/IOPAE-2215)] Add Favourite Services feature flag ([#7499](https://github.com/pagopa/io-app/issues/7499)) ([73abbab](https://github.com/pagopa/io-app/commit/73abbabee7b1711349244e2b7be8cef011f968c5))
+
+
+### Bug Fixes
+
+* [[IOBP-2122](https://pagopa.atlassian.net/browse/IOBP-2122)] `BannerErrorState` alignment property ([#7541](https://github.com/pagopa/io-app/issues/7541)) ([96bad49](https://github.com/pagopa/io-app/commit/96bad4910290e0a4cf66a4fcb4ae54bdfc579d1e))
+* [[IOBP-2134](https://pagopa.atlassian.net/browse/IOBP-2134)] IDPay add missing Android bottom inset to rules info modal component ([#7554](https://github.com/pagopa/io-app/issues/7554)) ([d514f0a](https://github.com/pagopa/io-app/commit/d514f0aaf6e632cff1c6b515bd4e2f5681507655))
+* [[IOCOM-2696](https://pagopa.atlassian.net/browse/IOCOM-2696)] Display security advice bottom-sheet after `PushNotificationEngagementScreen` ([#7536](https://github.com/pagopa/io-app/issues/7536)) ([340d9b3](https://github.com/pagopa/io-app/commit/340d9b3fb99a93671d56d09c220c86619df79cc8))
+* [[IOCOM-2697](https://pagopa.atlassian.net/browse/IOCOM-2697)] Show error toast when attachment download fails ([#7544](https://github.com/pagopa/io-app/issues/7544)) ([62c4d12](https://github.com/pagopa/io-app/commit/62c4d12acd8860eb6ff91b187567a43a58f35ae1))
+
+
+### Chores
+
+* [[IOBP-2117](https://pagopa.atlassian.net/browse/IOBP-2117)] IDPay update card end date localizations ([#7534](https://github.com/pagopa/io-app/issues/7534)) ([7e66d9f](https://github.com/pagopa/io-app/commit/7e66d9f08813c309beda785647f86aea0b6352d3))
+* [[IOBP-2123](https://pagopa.atlassian.net/browse/IOBP-2123)] IDPay update barcode copy ([#7538](https://github.com/pagopa/io-app/issues/7538)) ([3b84c29](https://github.com/pagopa/io-app/commit/3b84c296239eb41a958dc6b7479e9e95c79619d6))
+* [[IOBP-2126](https://pagopa.atlassian.net/browse/IOBP-2126)] IDPay add missing Mixpanel property to `IDPAY_DETAIL_ERROR` ([#7547](https://github.com/pagopa/io-app/issues/7547)) ([9fad823](https://github.com/pagopa/io-app/commit/9fad8239c986f302fc6f3cac261e76fec3eb3dc0))
+* [[IOBP-2128](https://pagopa.atlassian.net/browse/IOBP-2128)] IDPay static code Mixpanel events ([#7543](https://github.com/pagopa/io-app/issues/7543)) ([70ab2b1](https://github.com/pagopa/io-app/commit/70ab2b1824a4d2dc1cc62698be330603576cb10f))
+* [[IOPID-3517](https://pagopa.atlassian.net/browse/IOPID-3517)] remove news badge from `OptInScreen` ([#7535](https://github.com/pagopa/io-app/issues/7535)) ([e5e4cfd](https://github.com/pagopa/io-app/commit/e5e4cfd6c29271e04329ac2edaf07f2bb23090fc)), closes [/#diff-1a41b474934f9066f2db1cadb7430a2ef0e8c6023749c2fe21a6c87a581c00f3L4](https://github.com/pagopa///issues/diff-1a41b474934f9066f2db1cadb7430a2ef0e8c6023749c2fe21a6c87a581c00f3L4) [/#diff-1a41b474934f9066f2db1cadb7430a2ef0e8c6023749c2fe21a6c87a581c00f3L156-L163](https://github.com/pagopa///issues/diff-1a41b474934f9066f2db1cadb7430a2ef0e8c6023749c2fe21a6c87a581c00f3L156-L163) [/#diff-b51835014e229aa52cf467a40eccc646a59c7be9c38831375bd3f7259e9d53c7L1144](https://github.com/pagopa///issues/diff-b51835014e229aa52cf467a40eccc646a59c7be9c38831375bd3f7259e9d53c7L1144) [/#diff-630f1d93f8c51993bd958092aa8569047e21eb15bfc439474c16a2715aa00859L1144](https://github.com/pagopa///issues/diff-630f1d93f8c51993bd958092aa8569047e21eb15bfc439474c16a2715aa00859L1144) [/#diff-8fdc0e267a6e4e09390e8250d1e4fe861e5ed5e9473afa17d6b4cbcaa8f46f8eL956](https://github.com/pagopa///issues/diff-8fdc0e267a6e4e09390e8250d1e4fe861e5ed5e9473afa17d6b4cbcaa8f46f8eL956)
+* **IT Wallet:** [[SIW-3222](https://pagopa.atlassian.net/browse/SIW-3222)] Increased number of lines for text claim in credential details screen ([#7531](https://github.com/pagopa/io-app/issues/7531)) ([8f1e74b](https://github.com/pagopa/io-app/commit/8f1e74bd3786764046c6f225ce8462d4c7cc1512))
+
 ## [3.17.0-rc.8](https://github.com/pagopa/io-app/compare/3.17.0-rc.7...3.17.0-rc.8) (2025-10-24)
 
 
