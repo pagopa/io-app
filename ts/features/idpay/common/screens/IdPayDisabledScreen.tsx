@@ -3,6 +3,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { trackIDPayFeatureDisabledScreen } from "../analytics";
 
 /**
  * Screen displayed when the IDPay feature is disabled via feature flag.
@@ -13,8 +14,7 @@ export const IdPayDisabledScreen = () => {
   const navigation = useIONavigation();
 
   useOnFirstRender(() => {
-    // TODO: Add analytics tracking (https://pagopa.atlassian.net/browse/IOBP-2136)
-    // trackIDPayFeatureDisabledScreen();
+    trackIDPayFeatureDisabledScreen();
   });
 
   useHeaderSecondLevel({
