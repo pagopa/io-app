@@ -105,6 +105,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
         "kind": "PotNone",
       },
     },
+    "staticCode": {},
     "timeline": {
       "details": {
         "kind": "PotNone",

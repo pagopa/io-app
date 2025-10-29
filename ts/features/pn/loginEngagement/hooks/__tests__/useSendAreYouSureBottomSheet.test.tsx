@@ -1,8 +1,24 @@
 import { useFocusEffect } from "@react-navigation/native";
-import { renderHook, act } from "@testing-library/react-native";
+import {
+  renderHook,
+  act,
+  render,
+  fireEvent
+} from "@testing-library/react-native";
 import i18n from "i18next";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { useSendAreYouSureBottomSheet } from "../useSendAreYouSureBottomSheet";
+import {
+  trackSendActivationAccepted,
+  trackSendActivationDeclined,
+  trackSendNurturingDialogClosure
+} from "../../../analytics/send";
+
+const mockRequestSendActivation = jest.fn();
+
+jest.mock("../../../../../store/reducers/preferences", () => ({
+  isScreenReaderEnabledSelector: () => false
+}));
 
 jest.mock("../../../../../utils/hooks/bottomSheet", () => ({
   useIOBottomSheetModal: jest.fn()
@@ -29,15 +45,21 @@ jest.mock("react-native-safe-area-context", () => ({
 jest.mock("@react-navigation/stack", () => ({ createStackNavigator: jest.fn }));
 
 jest.mock("react-redux", () => ({
-  useDispatch: jest.fn(),
+  useDispatch: jest.fn().mockImplementation(jest.fn),
   useSelector: jest.fn().mockImplementation(fn => fn())
 }));
 
 jest.mock("../useSendActivationFlow", () => ({
-  useSendActivationFlow: jest.fn().mockReturnValue({
-    requestSendActivation: jest.fn(),
+  useSendActivationFlow: () => ({
+    requestSendActivation: mockRequestSendActivation,
     isActivating: false
   })
+}));
+
+jest.mock("../../../analytics/send", () => ({
+  trackSendNurturingDialogClosure: jest.fn(),
+  trackSendActivationDeclined: jest.fn(),
+  trackSendActivationAccepted: jest.fn()
 }));
 
 const useIOBottomSheetModalMock = useIOBottomSheetModal as jest.Mock;
@@ -78,6 +100,10 @@ describe(useSendAreYouSureBottomSheet, () => {
     const { result } = renderHook(() => useSendAreYouSureBottomSheet());
 
     expect(typeof result.current.presentAreYouSureBottomSheet).toBe("function");
+    expect(mockRequestSendActivation).not.toHaveBeenCalled();
+    expect(trackSendActivationAccepted).not.toHaveBeenCalled();
+    expect(trackSendActivationDeclined).not.toHaveBeenCalled();
+    expect(trackSendNurturingDialogClosure).not.toHaveBeenCalled();
   });
 
   it("should call present when presentAreYouSureBottomSheet is invoked", () => {
@@ -88,6 +114,10 @@ describe(useSendAreYouSureBottomSheet, () => {
     });
 
     expect(mockPresent).toHaveBeenCalledTimes(1);
+    expect(mockRequestSendActivation).not.toHaveBeenCalled();
+    expect(trackSendActivationAccepted).not.toHaveBeenCalled();
+    expect(trackSendActivationDeclined).not.toHaveBeenCalled();
+    expect(trackSendNurturingDialogClosure).not.toHaveBeenCalled();
   });
 
   it("should configure the bottom sheet with the correct title and component", () => {
@@ -103,6 +133,10 @@ describe(useSendAreYouSureBottomSheet, () => {
 
     const { component } = useIOBottomSheetModalMock.mock.calls[0][0];
     expect(component).toBeDefined();
+    expect(mockRequestSendActivation).not.toHaveBeenCalled();
+    expect(trackSendActivationAccepted).not.toHaveBeenCalled();
+    expect(trackSendActivationDeclined).not.toHaveBeenCalled();
+    expect(trackSendNurturingDialogClosure).not.toHaveBeenCalled();
   });
 
   it("should call dismiss on focus effect cleanup", () => {
@@ -134,5 +168,71 @@ describe(useSendAreYouSureBottomSheet, () => {
 
     // If the dependency (dismiss) hasn't changed, the callback function should be the same instance
     expect(firstRenderEffectCallback).toBe(secondRenderEffectCallback);
+    expect(mockRequestSendActivation).not.toHaveBeenCalled();
+    expect(trackSendActivationAccepted).not.toHaveBeenCalled();
+    expect(trackSendActivationDeclined).not.toHaveBeenCalled();
+    expect(trackSendNurturingDialogClosure).not.toHaveBeenCalled();
+  });
+
+  it("should not call trackSendNurturingDialogClosure on dismiss if send activation CTA was pressed", () => {
+    const { result } = renderHook(() => useSendAreYouSureBottomSheet());
+    const { getByTestId } = render(<>{result.current.areYouSureBottomSheet}</>);
+    const { onDismiss } = useIOBottomSheetModalMock.mock.calls[0][0];
+
+    // Simulate pressing the CTA button
+    const sendActivationCTA = getByTestId("sendActivationID");
+
+    fireEvent.press(sendActivationCTA);
+
+    expect(trackSendActivationAccepted).toHaveBeenCalledWith(
+      "nurturing_bottomsheet",
+      "access"
+    );
+    expect(mockRequestSendActivation).toHaveBeenCalledTimes(1);
+
+    // Simulate dismissing the bottom sheet
+    act(() => {
+      onDismiss();
+    });
+
+    expect(trackSendActivationDeclined).not.toHaveBeenCalled();
+    expect(trackSendNurturingDialogClosure).not.toHaveBeenCalled();
+  });
+
+  it("should not call trackSendNurturingDialogClosure on dismiss if send dismissal CTA was pressed", () => {
+    const { result } = renderHook(() => useSendAreYouSureBottomSheet());
+    const { getByTestId } = render(<>{result.current.areYouSureBottomSheet}</>);
+    const { onDismiss } = useIOBottomSheetModalMock.mock.calls[0][0];
+
+    // Simulate pressing the CTA button
+    const sendDismissalCTA = getByTestId("sendDismissalID");
+
+    fireEvent.press(sendDismissalCTA);
+
+    expect(trackSendActivationDeclined).toHaveBeenCalledWith("access");
+
+    // Simulate dismissing the bottom sheet
+    act(() => {
+      onDismiss();
+    });
+
+    expect(mockRequestSendActivation).not.toHaveBeenCalled();
+    expect(trackSendActivationAccepted).not.toHaveBeenCalled();
+    expect(trackSendNurturingDialogClosure).not.toHaveBeenCalled();
+  });
+
+  it("should call trackSendNurturingDialogClosure on dismiss", () => {
+    renderHook(() => useSendAreYouSureBottomSheet());
+    const { onDismiss } = useIOBottomSheetModalMock.mock.calls[0][0];
+
+    // Simulate dismissing the bottom sheet
+    act(() => {
+      onDismiss();
+    });
+
+    expect(trackSendActivationAccepted).not.toHaveBeenCalled();
+    expect(mockRequestSendActivation).not.toHaveBeenCalled();
+    expect(trackSendNurturingDialogClosure).toHaveBeenCalledTimes(1);
+    expect(trackSendNurturingDialogClosure).toHaveBeenCalledWith("access");
   });
 });
