@@ -88,6 +88,7 @@ const useAlertPressHandler =
     onTrack("open_bottom_sheet");
   };
 
+// Helper function that calculates which alert type should be shown.
 export const deriveCredentialAlertType = (
   props: CredentialAlertProps
   // eslint-disable-next-line sonarjs/cognitive-complexity
@@ -103,7 +104,13 @@ export const deriveCredentialAlertType = (
   const isCredentialJwtInvalid =
     isCredentialJwtExpiring || isCredentialJwtExpired;
 
+  // Handle alerts only if the credential JWT is expiring or expired
   if (isCredentialJwtInvalid) {
+    /**
+     * 1. Don't show any alert if:
+     * - The eID is expired or expiring AND the credential JWT is expiring
+     * - OR the app is offline but the credential JWT is not yet expired
+     */
     const shouldHideAlert =
       (isEidInvalid && isCredentialJwtExpiring) ||
       (isOffline && !isCredentialJwtExpired);
@@ -112,6 +119,11 @@ export const deriveCredentialAlertType = (
       return CredentialAlertType.NONE;
     }
 
+    /**
+     * 2. Show the eID lifecycle alert if:
+     * - Both the eID and the credential JWT are expired (and not in L3 mode)
+     * - OR the app is offline and the credential JWT is expired
+     */
     const shouldShowEidAlert =
       (!isItwL3 && isEidExpired && isCredentialJwtExpired) ||
       (isOffline && isCredentialJwtExpired);
@@ -119,17 +131,22 @@ export const deriveCredentialAlertType = (
     if (shouldShowEidAlert) {
       return CredentialAlertType.EID_LIFECYCLE;
     }
+    // 3. In all other cases where the JWT is invalid but no special condition applies,
+    // show the generic JWT verification alert
     return CredentialAlertType.JWT_VERIFICATION;
   }
 
+  // 4. If the credential status is "expiring", show the Document Expiring alert
   if (credentialStatus === "expiring") {
     return CredentialAlertType.DOCUMENT_EXPIRING;
   }
 
+  // 5. If there is a dynamic message provided by the issuer, show the Issuer Dynamic Error alert
   if (message) {
     return CredentialAlertType.ISSUER_DYNAMIC_ERROR;
   }
 
+  // 6. Fallback when the issuer does not provide a message for an expired credential
   if (credentialStatus === "expired") {
     return CredentialAlertType.DOCUMENT_EXPIRED;
   }
