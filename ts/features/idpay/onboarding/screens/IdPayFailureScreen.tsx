@@ -54,8 +54,8 @@ const IdPayFailureScreen = () => {
   );
 
   const accessDeniedAction =
-    initiativeConfig && initiativeConfig.url && initiativeConfig.url[locale]
-      ? getInstructionsButtonConfig(initiativeConfig.url[locale])
+    initiativeConfig && initiativeConfig.cac && initiativeConfig.cac[locale]
+      ? getInstructionsButtonConfig(initiativeConfig.cac[locale])
       : undefined;
 
   const defaultCloseAction = useMemo(
