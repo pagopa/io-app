@@ -6,6 +6,7 @@ import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import {
   ItwCredentialStatus,
+  ItwJwtCredentialStatus,
   StoredCredential
 } from "../../../common/utils/itwTypesUtils.ts";
 import {
@@ -62,6 +63,23 @@ type CredentialStatusAlertProps = {
   status?: ItwCredentialStatus;
 };
 
+export enum CredentialAlertType {
+  NONE = "NONE",
+  EID_LIFECYCLE = "EID_LIFECYCLE",
+  JWT_VERIFICATION = "JWT_VERIFICATION",
+  DOCUMENT_EXPIRING = "DOCUMENT_EXPIRING",
+  ISSUER_DYNAMIC_ERROR = "ISSUER_DYNAMIC_ERROR",
+  DOCUMENT_EXPIRED = "DOCUMENT_EXPIRED"
+}
+
+type CredentialAlertProps = {
+  eidStatus: ItwJwtCredentialStatus | undefined;
+  credentialStatus: ItwCredentialStatus | undefined;
+  message: Record<string, { title: string; description: string }> | undefined;
+  isOffline: boolean;
+  isItwL3: boolean;
+};
+
 const useAlertPressHandler =
   (onTrack: TrackCredentialAlert, bottomSheet: { present: () => void }) =>
   () => {
@@ -70,12 +88,60 @@ const useAlertPressHandler =
     onTrack("open_bottom_sheet");
   };
 
+export const deriveCredentialAlertType = (
+  props: CredentialAlertProps
+  // eslint-disable-next-line sonarjs/cognitive-complexity
+): CredentialAlertType => {
+  const { eidStatus, credentialStatus, message, isOffline, isItwL3 } = props;
+
+  const isEidExpired = eidStatus === "jwtExpired";
+  const isEidExpiring = eidStatus === "jwtExpiring";
+  const isCredentialJwtExpiring = credentialStatus === "jwtExpiring";
+  const isCredentialJwtExpired = credentialStatus === "jwtExpired";
+
+  const isEidInvalid = isEidExpired || isEidExpiring;
+  const isCredentialJwtInvalid =
+    isCredentialJwtExpiring || isCredentialJwtExpired;
+
+  if (isCredentialJwtInvalid) {
+    const shouldHideAlert =
+      (isEidInvalid && isCredentialJwtExpiring) ||
+      (isOffline && !isCredentialJwtExpired);
+
+    if (shouldHideAlert) {
+      return CredentialAlertType.NONE;
+    }
+
+    const shouldShowEidAlert =
+      (!isItwL3 && isEidExpired && isCredentialJwtExpired) ||
+      (isOffline && isCredentialJwtExpired);
+
+    if (shouldShowEidAlert) {
+      return CredentialAlertType.EID_LIFECYCLE;
+    }
+    return CredentialAlertType.JWT_VERIFICATION;
+  }
+
+  if (credentialStatus === "expiring") {
+    return CredentialAlertType.DOCUMENT_EXPIRING;
+  }
+
+  if (message) {
+    return CredentialAlertType.ISSUER_DYNAMIC_ERROR;
+  }
+
+  if (credentialStatus === "expired") {
+    return CredentialAlertType.DOCUMENT_EXPIRED;
+  }
+
+  return CredentialAlertType.NONE;
+};
+
 /**
  * This component renders an alert related to the credential status (expiring or invalid).
  * It contains messages that are statically defined in the app's locale or
  * dynamically extracted from the issuer configuration.
  */
-// eslint-disable-next-line sonarjs/cognitive-complexity
 const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
   const navigation = useIONavigation();
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
@@ -112,87 +178,53 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
     }
   };
 
-  const isEidExpired = eidStatus === "jwtExpired";
-  const isEidExpiring = eidStatus === "jwtExpiring";
-  const isCredentialJwtExpiring = status === "jwtExpiring";
-  const isCredentialJwtExpired = status === "jwtExpired";
-  const isOffline = offlineAccessReason !== undefined;
+  const alertType = deriveCredentialAlertType({
+    eidStatus,
+    credentialStatus: status,
+    message,
+    isOffline: offlineAccessReason !== undefined,
+    isItwL3
+  });
 
-  const isEidInvalid = isEidExpired || isEidExpiring;
-  const isCredentialJwtInvalid =
-    isCredentialJwtExpiring || isCredentialJwtExpired;
-
-  // Handle alerts only if the credential JWT is expiring or expired
-  if (isCredentialJwtInvalid) {
-    /**
-     * 1. Don't show any alert if:
-     * - The eID is expired or expiring AND the credential JWT is expiring
-     * - OR the app is offline but the credential JWT is not yet expired
-     */
-    const shouldHideAlert =
-      (isEidInvalid && isCredentialJwtExpiring) ||
-      (isOffline && !isCredentialJwtExpired);
-
-    if (shouldHideAlert) {
+  switch (alertType) {
+    case CredentialAlertType.NONE:
       return null;
-    }
-
-    /**
-     * 2. Show the eID lifecycle alert if:
-     * - Both the eID and the credential JWT are expired (and not in L3 mode)
-     * - OR the app is offline and the credential JWT is expired
-     */
-    const shouldShowEidAlert =
-      (!isItwL3 && isEidExpired && isCredentialJwtExpired) ||
-      (isOffline && isCredentialJwtExpired);
-
-    if (shouldShowEidAlert) {
+    case CredentialAlertType.EID_LIFECYCLE:
       return <ItwEidLifecycleAlert navigation={navigation} />;
-    }
-
-    // 3. In all other cases, show the generic JWT verification alert
-    return (
-      <JwtVerificationAlert
-        credential={credential}
-        onTrack={trackCredentialAlertEvent}
-        status={status}
-      />
-    );
+    case CredentialAlertType.JWT_VERIFICATION:
+      return (
+        <JwtVerificationAlert
+          credential={credential}
+          onTrack={trackCredentialAlertEvent}
+          status={status}
+        />
+      );
+    case CredentialAlertType.DOCUMENT_EXPIRING:
+      return (
+        <DocumentExpiringAlert
+          credential={credential}
+          onTrack={trackCredentialAlertEvent}
+        />
+      );
+    case CredentialAlertType.ISSUER_DYNAMIC_ERROR:
+      return (
+        <IssuerDynamicErrorAlert
+          message={message!}
+          credential={credential}
+          onTrack={trackCredentialAlertEvent}
+        />
+      );
+    case CredentialAlertType.DOCUMENT_EXPIRED:
+      return (
+        <Alert
+          testID="itwExpiredBannerTestID"
+          variant="error"
+          content={I18n.t(
+            "features.itWallet.presentation.alerts.expired.content"
+          )}
+        />
+      );
   }
-
-  if (status === "expiring") {
-    return (
-      <DocumentExpiringAlert
-        credential={credential}
-        onTrack={trackCredentialAlertEvent}
-      />
-    );
-  }
-
-  if (message) {
-    return (
-      <IssuerDynamicErrorAlert
-        message={message}
-        credential={credential}
-        onTrack={trackCredentialAlertEvent}
-      />
-    );
-  }
-
-  // Fallback when the issuer does not provide a message for an expired credential
-  if (status === "expired") {
-    return (
-      <Alert
-        testID="itwExpiredBannerTestID"
-        variant="error"
-        content={I18n.t(
-          "features.itWallet.presentation.alerts.expired.content"
-        )}
-      />
-    );
-  }
-
-  return null;
 };
 
 const JwtVerificationAlert = ({

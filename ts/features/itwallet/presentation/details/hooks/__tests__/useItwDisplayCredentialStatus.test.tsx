@@ -54,90 +54,22 @@ describe("useItwDisplayCredentialStatus", () => {
     jest.clearAllMocks();
   });
 
-  type Scenario = {
-    credentialStatus: ItwCredentialStatus;
-    eidStatus: ItwJwtCredentialStatus;
-    isOffline: boolean;
-    expected: ItwCredentialStatus;
-  };
-
-  const scenarios: ReadonlyArray<Scenario> = [
-    {
-      credentialStatus: "valid",
-      eidStatus: "jwtExpiring",
-      isOffline: true,
-      expected: "valid"
-    },
-    {
-      credentialStatus: "jwtExpiring",
-      eidStatus: "valid",
-      isOffline: true,
-      expected: "valid"
-    },
-    {
-      credentialStatus: "jwtExpired",
-      eidStatus: "valid",
-      isOffline: true,
-      expected: "jwtExpired"
-    },
-    {
-      credentialStatus: "expired",
-      eidStatus: "valid",
-      isOffline: true,
-      expected: "expired"
-    },
-    {
-      credentialStatus: "jwtExpired",
-      eidStatus: "jwtExpired",
-      isOffline: true,
-      expected: "valid"
-    },
-    {
-      credentialStatus: "jwtExpiring",
-      eidStatus: "jwtExpiring",
-      isOffline: false,
-      expected: "valid"
-    },
-    {
-      credentialStatus: "valid",
-      eidStatus: "jwtExpired",
-      isOffline: false,
-      expected: "valid"
-    },
-    {
-      credentialStatus: "jwtExpired",
-      eidStatus: "jwtExpired",
-      isOffline: false,
-      expected: "valid"
-    },
-    {
-      credentialStatus: "expiring",
-      eidStatus: "jwtExpired",
-      isOffline: false,
-      expected: "expiring"
-    },
-    {
-      credentialStatus: "expired",
-      eidStatus: "jwtExpired",
-      isOffline: false,
-      expected: "expired"
-    },
-    {
-      credentialStatus: "jwtExpiring",
-      eidStatus: "valid",
-      isOffline: false,
-      expected: "jwtExpiring"
-    },
-    {
-      credentialStatus: "jwtExpired",
-      eidStatus: "valid",
-      isOffline: false,
-      expected: "jwtExpired"
-    }
-  ];
-
-  test.each(scenarios)(
-    "$credentialStatus / $eidStatus / offline=$isOffline → $expected",
+  it.each`
+    credentialStatus | eidStatus        | isOffline | expected
+    ${"valid"}       | ${"jwtExpiring"} | ${true}   | ${"valid"}
+    ${"jwtExpiring"} | ${"valid"}       | ${true}   | ${"valid"}
+    ${"jwtExpired"}  | ${"valid"}       | ${true}   | ${"jwtExpired"}
+    ${"expired"}     | ${"valid"}       | ${true}   | ${"expired"}
+    ${"jwtExpired"}  | ${"jwtExpired"}  | ${true}   | ${"valid"}
+    ${"jwtExpiring"} | ${"jwtExpiring"} | ${false}  | ${"valid"}
+    ${"valid"}       | ${"jwtExpired"}  | ${false}  | ${"valid"}
+    ${"jwtExpired"}  | ${"jwtExpired"}  | ${false}  | ${"valid"}
+    ${"expiring"}    | ${"jwtExpired"}  | ${false}  | ${"expiring"}
+    ${"expired"}     | ${"jwtExpired"}  | ${false}  | ${"expired"}
+    ${"jwtExpiring"} | ${"valid"}       | ${false}  | ${"jwtExpiring"}
+    ${"jwtExpired"}  | ${"valid"}       | ${false}  | ${"jwtExpired"}
+  `(
+    "should return '$expected' for credentialStatus=$credentialStatus, eidStatus=$eidStatus, offline=$isOffline",
     ({ credentialStatus, eidStatus, isOffline, expected }) => {
       const result = renderHook(credentialStatus, eidStatus, isOffline);
       expect(result).toBe(expected);
