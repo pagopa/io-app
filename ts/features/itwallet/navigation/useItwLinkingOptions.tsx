@@ -16,7 +16,8 @@ export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => {
     [ITW_ROUTES.MAIN]: {
       path: "itw",
       screens: {
-        [ITW_ROUTES.ISSUANCE.CREDENTIAL_ASYNC_FLOW_CONTINUATION]:
+        [ITW_ROUTES.LANDING.EID_REISSUANCE]: "credential/reissuance/eid",
+        [ITW_ROUTES.LANDING.CREDENTIAL_ASYNC_FLOW_CONTINUATION]:
           "credential/issuance",
         [isItwValid
           ? ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN
