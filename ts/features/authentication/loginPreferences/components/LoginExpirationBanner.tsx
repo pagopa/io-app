@@ -48,8 +48,11 @@ export const LoginExpirationBanner = ({ handleOnClose }: Props) => {
   const handleOnPress = useCallback(() => {
     if (isActiveSessionLoginEnabled) {
       dispatch(setStartActiveSessionLogin());
-      navigation.navigate(SETTINGS_ROUTES.AUTHENTICATION, {
-        screen: AUTHENTICATION_ROUTES.LANDING_ACTIVE_SESSION_LOGIN
+      navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+        screen: SETTINGS_ROUTES.AUTHENTICATION,
+        params: {
+          screen: AUTHENTICATION_ROUTES.LANDING_ACTIVE_SESSION_LOGIN
+        }
       });
     } else {
       trackHelpCenterCtaTapped(

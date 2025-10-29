@@ -5,7 +5,6 @@ import {
 import { Platform } from "react-native";
 import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import { BarcodeScanScreen } from "../features/barcode/screens/BarcodeScanScreen";
-import AuthenticationNavigator from "../features/authentication/common/navigation/AuthenticationNavigator";
 import { CdcNavigator } from "../features/bonus/cdc/navigation/navigator.tsx";
 import { CDC_ROUTES } from "../features/bonus/cdc/navigation/routes.ts";
 import {
@@ -185,17 +184,6 @@ const AuthenticatedStackNavigator = () => {
           gestureEnabled: isGestureEnabled
         }}
         component={SettingsStackNavigator}
-      />
-
-      <Stack.Screen
-        name={SETTINGS_ROUTES.AUTHENTICATION}
-        options={{
-          ...hideHeaderOptions,
-          // ...TransitionPresets.ModalSlideFromBottomIOS,
-          presentation: "modal",
-          gestureEnabled: isGestureEnabled
-        }}
-        component={AuthenticationNavigator}
       />
 
       <Stack.Screen

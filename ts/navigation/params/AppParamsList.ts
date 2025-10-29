@@ -84,7 +84,6 @@ export type AppParamsList = {
   [SERVICES_ROUTES.SERVICES_NAVIGATOR]: NavigatorScreenParams<ServicesParamsList>;
   [SERVICES_ROUTES.SEARCH]: undefined;
   [SETTINGS_ROUTES.PROFILE_NAVIGATOR]: NavigatorScreenParams<SettingsParamsList>;
-  [SETTINGS_ROUTES.AUTHENTICATION]: NavigatorScreenParams<AuthenticationParamsList>;
 
   [ROUTES.BARCODE_SCAN]: undefined;
 

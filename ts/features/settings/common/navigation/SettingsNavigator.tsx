@@ -35,6 +35,7 @@ import { CiePlayground } from "../../devMode/playgrounds/Cie/CiePlayground";
 import { CieIasAndMrtdPlayground } from "../../devMode/playgrounds/Cie/CieIasAndMrtdPlayground";
 import { CieIasAndMrtdPlaygroundIntAuthResult } from "../../devMode/playgrounds/Cie/CieIasAndMrtdPlaygroundIntAuthResult";
 import { CieIasAndMrtdPlaygroundIntAuth } from "../../devMode/playgrounds/Cie/CieIasAndMrtdPlaygroundIntAuth";
+import AuthenticationNavigator from "../../../authentication/common/navigation/AuthenticationNavigator";
 import { SettingsParamsList } from "./params/SettingsParamsList";
 import { SETTINGS_ROUTES } from "./routes";
 
@@ -203,6 +204,15 @@ const SettingsStackNavigator = () => (
     <Stack.Screen
       name={SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_INTERNAL_AUTH_RESULTS}
       component={CieIasAndMrtdPlaygroundIntAuthResult}
+    />
+
+    <Stack.Screen
+      name={SETTINGS_ROUTES.AUTHENTICATION}
+      component={AuthenticationNavigator}
+      options={{
+        headerShown: false,
+        gestureEnabled: false
+      }}
     />
   </Stack.Navigator>
 );
