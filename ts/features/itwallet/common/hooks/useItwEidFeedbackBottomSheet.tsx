@@ -6,18 +6,18 @@ import { openWebUrl } from "../../../../utils/url.ts";
 import { IT_WALLET_SURVEY_EID_REISSUANCE_FAILURE } from "../utils/constants.ts";
 
 type ItwEidFeedbackBottomSheetProps = {
-  additionalPrimaryAction?: () => void;
-  additionalSecondaryAction?: () => void;
+  onPrimaryAction?: () => void;
+  onSecondaryAction?: () => void;
 };
 
 /**
  * Hook to open the feedback bottom sheet for the EID reissuance feature.
- * @param additionalPrimaryAction - Optional primary action to be executed when the primary button is pressed.
- * @param additionalSecondaryAction - Optional secondary action to be executed when the secondary button is pressed.
+ * @param onPrimaryAction - Optional primary action to be executed when the primary button is pressed.
+ * @param onSecondaryAction - Optional secondary action to be executed when the secondary button is pressed.
  */
 export const useItwEidFeedbackBottomSheet = ({
-  additionalPrimaryAction,
-  additionalSecondaryAction
+  onPrimaryAction,
+  onSecondaryAction
 }: ItwEidFeedbackBottomSheetProps = {}) => {
   const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
     title: I18n.t("features.itWallet.feedback.reissuance.bottomSheet.title"),
@@ -39,7 +39,7 @@ export const useItwEidFeedbackBottomSheet = ({
                 )}
                 onPress={() => {
                   openWebUrl(IT_WALLET_SURVEY_EID_REISSUANCE_FAILURE);
-                  additionalPrimaryAction?.();
+                  onPrimaryAction?.();
                   dismiss();
                 }}
               />
@@ -51,7 +51,7 @@ export const useItwEidFeedbackBottomSheet = ({
                     "features.itWallet.feedback.reissuance.bottomSheet.secondaryAction"
                   )}
                   onPress={() => {
-                    additionalSecondaryAction?.();
+                    onSecondaryAction?.();
                     dismiss();
                   }}
                 />

@@ -28,8 +28,8 @@ export const ItwPresentationEidVerificationExpiredScreen = () => {
   }, [navigation]);
 
   const eidFeedbackBottomSheet = useItwEidFeedbackBottomSheet({
-    additionalPrimaryAction: fallbackNavigationAction,
-    additionalSecondaryAction: fallbackNavigationAction
+    onPrimaryAction: fallbackNavigationAction,
+    onSecondaryAction: fallbackNavigationAction
   });
   const startEidReissuing = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
