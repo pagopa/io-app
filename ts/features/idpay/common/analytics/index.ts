@@ -58,3 +58,7 @@ export const trackIDPayStaticCodeGenerationError = (
     buildEventProperties("KO", "screen_view", props)
   );
 };
+
+export const trackIDPayFeatureDisabledScreen = () => {
+  mixpanelTrack("IDPAY_FEATURE_DISABLED", buildEventProperties("UX", "error"));
+};
