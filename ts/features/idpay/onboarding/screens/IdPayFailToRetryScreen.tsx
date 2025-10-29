@@ -165,16 +165,13 @@ const IngressScreenBlockingError = memo(() => {
 
   const locale = getFullLocale();
 
+  const websiteUrl: string = initiativeConfig?.url?.[locale] ?? "";
+
   const handleNavigateToWebsite = () => {
     trackIDPayIngressScreenCTA({
       initiativeId,
       initiativeName
     });
-
-    const websiteUrl =
-      initiativeConfig?.url && initiativeConfig.url[locale]
-        ? initiativeConfig.url[locale]
-        : "";
 
     openWebUrl(websiteUrl, () => IOToast.error(I18n.t("genericError")));
   };
@@ -190,10 +187,14 @@ const IngressScreenBlockingError = memo(() => {
         label: I18n.t("global.buttons.back"),
         onPress: () => machine.send({ type: "close" })
       }}
-      secondaryAction={{
-        label: I18n.t("global.buttons.visitWebsite"),
-        onPress: handleNavigateToWebsite
-      }}
+      secondaryAction={
+        websiteUrl === ""
+          ? undefined
+          : {
+              label: I18n.t("global.buttons.visitWebsite"),
+              onPress: handleNavigateToWebsite
+            }
+      }
     />
   );
 });
