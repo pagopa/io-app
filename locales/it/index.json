@@ -5047,6 +5047,18 @@
           "secondaryAction": "Chiudi"
         }
       },
+      "reissuanceLandingScreen": {
+        "notNecessary": {
+          "title": "Questo passaggio non è più necessario",
+          "subtitle": "È tutto pronto. Puoi gestire i tuoi documenti digitali nel Portafoglio.",
+          "primaryAction": "Vai al Portafoglio"
+        },
+        "itWalletActivation": {
+          "title": "Lo sapevi? Adesso puoi attivare IT-Wallet",
+          "subtitle": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: pubblico, sicuro e gratuito.",
+          "primaryAction": "Scopri di più"
+        }
+      },
       "presentation": {
         "alerts": {
           "statusAction": "Cosa posso fare?",
