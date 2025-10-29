@@ -5775,7 +5775,7 @@
       "resultScreen": {
         "success": {
           "header": "Ecco il codice sconto!",
-          "body": "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:",
+          "body": "Chiedi al venditore di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:",
           "validUpTo": "Vale fino a ",
           "expiresIn": "Il codice scade tra ",
           "copyCodeCta": "Copia codice",
@@ -5992,7 +5992,16 @@
         "buttons": {
           "privacy": "Preferenze e Privacy",
           "unsubscribe": "Rimuovi {{initiativeName}}",
-          "requestHelp": "Chiedi aiuto"
+          "requestHelp": "Chiedi aiuto",
+          "staticCode": "Genera codice statico"
+        },
+        "staticCodeModal": {
+          "content": {
+            "title": "Ecco il codice statico",
+            "subtitle": "Usa questo codice, se richiesto da un venditore online in fase di acquisto."
+          },
+          "footer": "Copia codice statico",
+          "staticCodeErrorAlert": "C’è stato un errore, riprova"
         }
       },
       "operationDetails": {
@@ -6216,8 +6225,11 @@
         "failureSubtitle": "Riprova tra qualche minuto o usa il sito dell’iniziativa per richiedere il bonus."
       },
       "disabledScreen": {
-        "title": "Stai per accedere all’iniziativa",
-        "subtitle": "Potrebbero volerci alcuni minuti. Non chiudere l’app: quando sarà tutto pronto, potrai richiedere il tuo bonus."
+        "title": "Stai per accedere all'iniziativa",
+        "subtitle": "Potrebbero volerci alcuni minuti. Non chiudere l'app: quando sarà tutto pronto, potrai richiedere il tuo bonus."
+      },
+      "featureDisabled": {
+        "title": "L'iniziativa non è più disponibile"
       },
       "preferences": {
         "enableEmailBanner": {
