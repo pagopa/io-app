@@ -10,6 +10,7 @@ import {
   fimsServiceConfiguration,
   fimsServiceIdInCookieDisabledListSelector,
   generateDynamicUrlSelector,
+  isAarInAppDelegationRemoteEnabledSelector,
   isAarRemoteEnabled,
   isIOMarkdownEnabledForMessagesAndServicesSelector,
   isPnAppVersionSupportedSelector,
@@ -817,6 +818,95 @@ describe("isAARRemoteEnabled", () => {
       expect(output).toBe(testData[1]);
     })
   );
+});
+
+describe("isAarInAppDelegationRemoteEnabledSelector", () => {
+  const cases = [
+    [{ remoteConfig: O.none } as GlobalState, false],
+    [{ remoteConfig: O.some({}) }, true],
+    [{ remoteConfig: O.some({ pn: {} }) }, true],
+    [{ remoteConfig: O.some({ pn: { aar: {} } }) }, true],
+    [
+      { remoteConfig: O.some({ pn: { aar: { in_app_delegation: {} } } }) },
+      true
+    ],
+    [
+      {
+        remoteConfig: O.some({
+          pn: { aar: { in_app_delegation: { min_app_version: {} } } }
+        })
+      },
+      false
+    ],
+    [
+      {
+        remoteConfig: O.some({
+          pn: {
+            aar: {
+              in_app_delegation: {
+                min_app_version: { ios: "0.0.0.0", android: "0.0.0.0" }
+              }
+            }
+          }
+        })
+      },
+      false
+    ],
+    [
+      {
+        remoteConfig: O.some({
+          pn: {
+            aar: {
+              in_app_delegation: {
+                min_app_version: { ios: "1.0.0.0", android: "1.0.0.0" }
+              }
+            }
+          }
+        })
+      },
+      true
+    ],
+    [
+      {
+        remoteConfig: O.some({
+          pn: {
+            aar: {
+              in_app_delegation: {
+                min_app_version: { ios: "2.0.0.0", android: "2.0.0.0" }
+              }
+            }
+          }
+        })
+      },
+      true
+    ],
+    [
+      {
+        remoteConfig: O.some({
+          pn: {
+            aar: {
+              in_app_delegation: {
+                min_app_version: { ios: "3.0.0.0", android: "3.0.0.0" }
+              }
+            }
+          }
+        })
+      },
+      false
+    ]
+  ] as ReadonlyArray<[GlobalState, boolean]>;
+
+  cases.forEach(([state, expected]) => {
+    it(`should return "${expected}" when remoteConfig is: ${JSON.stringify(
+      state.remoteConfig
+    )}`, () => {
+      jest
+        .spyOn(appVersion, "getAppVersion")
+        .mockImplementation(() => "2.0.0.0");
+
+      expect(isAarInAppDelegationRemoteEnabledSelector(state)).toBe(expected);
+    });
+  });
 });
 
 describe("sendAARDelegateUrlSelector", () => {

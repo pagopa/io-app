@@ -51,10 +51,15 @@ export const trackIDPayStaticCodeGenerationCopy = (
 export const trackIDPayStaticCodeGenerationError = (
   props: StaticCodeEventProperties & {
     reason?: string;
+    technicalMessage?: string;
   }
 ) => {
   mixpanelTrack(
     "IDPAY_CODE_GENERATION_ERROR",
     buildEventProperties("KO", "screen_view", props)
   );
+};
+
+export const trackIDPayFeatureDisabledScreen = () => {
+  mixpanelTrack("IDPAY_FEATURE_DISABLED", buildEventProperties("UX", "error"));
 };
