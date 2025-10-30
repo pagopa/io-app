@@ -5833,6 +5833,7 @@
       "card": {
         "available": "Disponibile",
         "validThrough": "Valido fino al {{endDate}}",
+        "ended": "Scaduto il {{endDate}}",
         "showAll": "Vedi tutte"
       },
       "initiativePairing": {
