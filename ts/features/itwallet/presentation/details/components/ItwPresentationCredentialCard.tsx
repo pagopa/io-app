@@ -13,17 +13,13 @@ import { ItwSkeumorphicCard } from "../../../common/components/ItwSkeumorphicCar
 import { FlipGestureDetector } from "../../../common/components/ItwSkeumorphicCard/FlipGestureDetector.tsx";
 import { getThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
-import {
-  itwCredentialStatusSelector,
-  itwCredentialsEidStatusSelector
-} from "../../../credentials/store/selectors";
+import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
-import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
 import { ItwBadge } from "../../../common/components/ItwBadge.tsx";
 import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
-import { getItwDisplayCredentialStatus } from "../utils";
+import { useItwDisplayCredentialStatus } from "../hooks/useItwDisplayCredentialStatus";
 import { ItwPresentationCredentialCardFlipButton } from "./ItwPresentationCredentialCardFlipButton.tsx";
 
 type Props = {
@@ -41,15 +37,7 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const { status: credentialStatus = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
-  const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
-  const isOffline = offlineAccessReason !== undefined;
-  const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
-
-  const status = getItwDisplayCredentialStatus(
-    credentialStatus,
-    eidStatus,
-    isOffline
-  );
+  const status = useItwDisplayCredentialStatus(credentialStatus);
 
   const handleFlipButtonPress = useCallback(() => {
     trackWalletShowBack(
