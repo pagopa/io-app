@@ -37,6 +37,7 @@ import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDial
 
 export type ItwIdentificationNavigationParams = {
   eidReissuing?: boolean;
+  animationEnabled?: boolean;
 };
 
 export type ItwIdentificationModeSelectionScreenProps =
