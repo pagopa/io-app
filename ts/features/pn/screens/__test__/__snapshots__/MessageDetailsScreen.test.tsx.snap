@@ -1286,7 +1286,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     }
                                     testID="body_nomandate"
                                   >
-                                    Tutte le tue notifiche e quelle per cui hai una delega sono disponibili sul sito di SEND - Notifiche Digitali
+                                    Tutte le tue notifiche sono disponibili sul sito di SEND - Notifiche Digitali
                                   </Text>
                                   <View
                                     accessibilityRole="link"
