@@ -6,7 +6,7 @@ import {
   TextInput
 } from "@pagopa/io-app-design-system";
 import { useState } from "react";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { WebViewSourceUri } from "react-native-webview/lib/WebViewTypes";
 import WebviewComponent from "../../../../components/WebviewComponent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -52,11 +52,15 @@ const CgnLandingPlayground = () => {
         </VStack>
       </ContentWrapper>
       <VSpacer size={16} />
-      <WebviewComponent
-        playgroundEnabled
-        key={`${reloadKey}_webview`}
-        source={source}
-      />
+      <View style={{ flex: 1 }}>
+        {source && (
+          <WebviewComponent
+            playgroundEnabled
+            key={`${reloadKey}_webview`}
+            source={source}
+          />
+        )}
+      </View>
       <FooterActions
         fixed={false}
         actions={{
