@@ -106,7 +106,7 @@ type Props = {
 
 /**
  * Navigate to the issuance machine. The entry point depends on
- * whether the user has Documenti su IO and only needs to reissue the eID
+ * whether the user has a valid Wallet and only needs to reissue the eID/PID
  * or does not have an active Wallet and needs to activate it first.
  */
 const NavigateToEidIssuanceMachine = ({ eidReissuing }: Props) => {
