@@ -53,10 +53,9 @@ const IdPayFailureScreen = () => {
     idPayInitiativeConfigSelector(initiativeId)
   );
 
-  const accessDeniedAction =
-    initiativeConfig && initiativeConfig.url && initiativeConfig.url[locale]
-      ? getInstructionsButtonConfig(initiativeConfig.url[locale])
-      : undefined;
+  const accessDeniedAction = initiativeConfig?.cac?.[locale]
+    ? getInstructionsButtonConfig(initiativeConfig.cac[locale] ?? "")
+    : undefined;
 
   const defaultCloseAction = useMemo(
     () => ({
@@ -274,7 +273,7 @@ const IdPayFailureScreen = () => {
   );
 
   useEffect(() => {
-    if (O.some(failureOption)) {
+    if (O.some(failureOption) && O.isSome(failureOption)) {
       trackIDPayOnboardingFailure({
         initiativeId,
         initiativeName,

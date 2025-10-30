@@ -22,8 +22,9 @@ import {
 import * as analytics from "../../../barcode/analytics";
 import { IOBarcodeOrigin } from "../../../barcode/types/IOBarcode";
 import { IdPayPaymentRoutes } from "../navigation/routes";
+import { IdPayFeatureFlagGuard } from "../../common/components/IdPayFeatureFlagGuard";
 
-const IDPayPaymentCodeScanScreen = () => {
+const IDPayPaymentCodeScan = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const openDeepLink = useOpenDeepLink();
 
@@ -103,5 +104,11 @@ const IDPayPaymentCodeScanScreen = () => {
     </>
   );
 };
+
+const IDPayPaymentCodeScanScreen = () => (
+  <IdPayFeatureFlagGuard>
+    <IDPayPaymentCodeScan />
+  </IdPayFeatureFlagGuard>
+);
 
 export { IDPayPaymentCodeScanScreen };

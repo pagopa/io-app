@@ -147,7 +147,7 @@ const PlainTextClaimItem = ({
 
   return (
     <ListItemInfo
-      numberOfLines={2}
+      numberOfLines={4}
       label={label}
       value={displayValue}
       onLongPress={isCopyable && !hidden ? handleLongPress : undefined}

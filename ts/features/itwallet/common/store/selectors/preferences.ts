@@ -82,11 +82,3 @@ export const itwIsWalletUpgradeMDLDetailsBannerHiddenSelector = (
 export const itwIsSimplifiedActivationRequired = (state: GlobalState) =>
   state.features.itWallet.preferences.isItwSimplifiedActivationRequired ??
   false;
-
-/**
- * Returns whether the reissuance feedback banner is hidden. Defaults to false.
- */
-export const itwIsReissuanceFeedbackBannerHiddenSelector = (
-  state: GlobalState
-) =>
-  state.features.itWallet.preferences.reissuanceFeedbackBannerHidden ?? false;

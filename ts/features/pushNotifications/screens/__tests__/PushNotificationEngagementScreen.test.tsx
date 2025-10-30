@@ -13,6 +13,7 @@ import {
   SendOpeningSource,
   SendUserType
 } from "../../analytics";
+import { setSecurityAdviceReadyToShow } from "../../../authentication/fastLogin/store/actions/securityAdviceActions";
 
 const notificationModalFlowList: Array<NotificationModalFlow> = [
   "send_notification_opening",
@@ -31,6 +32,8 @@ const sendUserTypeList: Array<SendUserType> = [
 ];
 
 const mockPopToTop = jest.fn();
+const mockDispatch = jest.fn();
+
 jest.mock("@react-navigation/native", () => {
   const navigationModule = jest.requireActual("@react-navigation/native");
   return {
@@ -41,6 +44,11 @@ jest.mock("@react-navigation/native", () => {
     })
   };
 });
+
+jest.mock("react-redux", () => ({
+  ...jest.requireActual("react-redux"),
+  useDispatch: () => mockDispatch
+}));
 
 describe("PushNotificationEngagementScreen", () => {
   const spiedOnMockedAnalyticsOutcomeEvent = jest
@@ -123,6 +131,14 @@ describe("PushNotificationEngagementScreen", () => {
           expect(spiedOnMockedAnalyticsOutcomeEvent.mock.calls[0][3]).toBe(
             userType
           );
+          if (flow === "access") {
+            expect(mockDispatch).toHaveBeenCalledTimes(1);
+            expect(mockDispatch).toHaveBeenCalledWith(
+              setSecurityAdviceReadyToShow(true)
+            );
+          } else {
+            expect(mockDispatch).not.toHaveBeenCalled();
+          }
         })
       )
     )
