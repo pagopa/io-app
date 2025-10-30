@@ -115,4 +115,18 @@ describe("itWalletReducer migrations", () => {
       preferences: { requestedCredentials: {} }
     });
   });
+
+  it("should migrate the store to version 7 and remove requestedCredentials", async () => {
+    const previousState = {
+      _persist: { version: 6, rehydrated: false },
+      preferences: { requestedCredentials: { MDL: true } }
+    };
+
+    const newState = await migrate(previousState, 7);
+
+    expect(newState).toEqual({
+      _persist: { version: 6, rehydrated: false },
+      preferences: {}
+    });
+  });
 });
