@@ -51,6 +51,7 @@ export const trackIDPayStaticCodeGenerationCopy = (
 export const trackIDPayStaticCodeGenerationError = (
   props: StaticCodeEventProperties & {
     reason?: string;
+    technicalMessage?: string;
   }
 ) => {
   mixpanelTrack(
