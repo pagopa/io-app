@@ -1,5 +1,4 @@
 import { IOToast } from "@pagopa/io-app-design-system";
-import { INonEmptyStringTag } from "@pagopa/ts-commons/lib/strings";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
@@ -58,21 +57,18 @@ const IdPayEnableMessageScreen = () => {
     O.toUndefined
   );
 
-  const servicePreferenceResponseSuccess = useIOSelector(state =>
-    servicePreferenceResponseSuccessByIdSelector(
-      state,
-      serviceId as string & INonEmptyStringTag
-    )
-  );
-
   const onActivate = () => {
-    if (!initiativeId || !servicePreferenceResponseSuccess) {
+    if (
+      !initiativeId ||
+      !isSuccessServicePreference ||
+      isLoadingServicePreference
+    ) {
       return;
     }
 
     dispatch(
       upsertServicePreference.request({
-        ...servicePreferenceResponseSuccess.value,
+        ...isSuccessServicePreference.value,
         id: serviceId as ServiceId,
         inbox: true
       })
