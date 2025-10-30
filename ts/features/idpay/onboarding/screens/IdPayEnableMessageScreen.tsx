@@ -18,6 +18,7 @@ import {
 import {
   trackIDPayOnboardingNotificationCancel,
   trackIDPayOnboardingNotificationError,
+  trackIDPayOnboardingNotificationOK,
   trackIDPayOnboardingNotificationPermission
 } from "../analytics";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
@@ -91,6 +92,7 @@ const IdPayEnableMessageScreen = () => {
         IOToast.error(I18n.t("global.genericError"));
         trackIDPayOnboardingNotificationError({ initiativeName, initiativeId });
       } else if (isSuccessServicePreference) {
+        trackIDPayOnboardingNotificationOK({ initiativeName, initiativeId });
         machine.send({ type: "next" });
       }
     }
