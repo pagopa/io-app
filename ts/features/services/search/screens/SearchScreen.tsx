@@ -29,7 +29,6 @@ import { getListItemAccessibilityLabelCount } from "../../../../utils/accessibil
 import * as analytics from "../../common/analytics";
 
 const INPUT_PADDING: IOSpacingScale = 16;
-const LIST_ITEM_HEIGHT: number = 70;
 const MIN_QUERY_LENGTH: number = 3;
 
 export const SearchScreen = () => {
@@ -211,7 +210,6 @@ export const SearchScreen = () => {
           paddingHorizontal: IOVisualCostants.appMarginDefault
         }}
         data={data?.institutions}
-        estimatedItemSize={LIST_ITEM_HEIGHT}
         keyboardDismissMode={Platform.select({
           ios: "interactive",
           default: "on-drag"

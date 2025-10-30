@@ -67,7 +67,7 @@ export const useWalletPaymentAuthorizationModal = ({
         new URLParse(resultUrl, true),
         ({ query }) => query.outcome,
         WalletPaymentOutcome.decode,
-        E.getOrElse(() => WalletPaymentOutcomeEnum.GENERIC_ERROR)
+        E.getOrElseW(() => WalletPaymentOutcomeEnum.GENERIC_ERROR)
       );
       handleAuthorizationOutcome(outcome);
     },
