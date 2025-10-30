@@ -1,37 +1,15 @@
 import {
-  H6,
-  IOButton,
-  IOColors,
-  IOVisualCostants,
-  VSpacer
+  ContentWrapper,
+  FooterActions,
+  VSpacer,
+  VStack,
+  TextInput
 } from "@pagopa/io-app-design-system";
 import { useState } from "react";
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  TextInput,
-  View
-} from "react-native";
+import { SafeAreaView } from "react-native";
 import { WebViewSourceUri } from "react-native-webview/lib/WebViewTypes";
 import WebviewComponent from "../../../../components/WebviewComponent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-
-const styles = StyleSheet.create({
-  textInput: {
-    padding: 8,
-    borderWidth: 1,
-    height: 40,
-    color: IOColors.black,
-    borderRadius: 8,
-    borderColor: IOColors["grey-450"]
-  },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  }
-});
 
 const CgnLandingPlayground = () => {
   const [navigationURI, setNavigationUri] = useState("https://google.it");
@@ -48,66 +26,60 @@ const CgnLandingPlayground = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView
-        contentContainerStyle={{
-          paddingHorizontal: IOVisualCostants.appMarginDefault,
-          flexGrow: 1
-        }}
-      >
-        <View>
-          <H6>{"Link alla landing"}</H6>
+      <ContentWrapper>
+        <VStack space={12}>
           <TextInput
+            placeholder={"Link alla landing"}
             accessibilityLabel="URL address"
-            style={styles.textInput}
             onChangeText={setNavigationUri}
             value={navigationURI}
-            keyboardType="url"
-            autoCapitalize="none"
-            autoCorrect={false}
+            textInputProps={{
+              keyboardType: "url",
+              autoCapitalize: "none",
+              autoCorrect: false
+            }}
           />
-          <VSpacer size={8} />
-          <H6>{"Referer"}</H6>
           <TextInput
+            placeholder={"Referer"}
             accessibilityLabel="Referer field"
-            style={styles.textInput}
             onChangeText={setRefererValue}
             value={refererValue}
+            textInputProps={{
+              autoCapitalize: "none",
+              autoCorrect: false
+            }}
           />
-        </View>
-        <VSpacer size={16} />
-        <View style={styles.row}>
-          <IOButton
-            variant="outline"
-            icon="reload"
-            label="Reload"
-            accessibilityLabel="Reload"
-            onPress={() => setReloadKey(r => r + 1)}
-          />
-          <IOButton
-            variant="solid"
-            label="Invia"
-            onPress={() => {
+        </VStack>
+      </ContentWrapper>
+      <VSpacer size={16} />
+      <WebviewComponent
+        playgroundEnabled
+        key={`${reloadKey}_webview`}
+        source={source}
+      />
+      <FooterActions
+        fixed={false}
+        actions={{
+          type: "TwoButtons",
+          primary: {
+            label: "Invia",
+            accessibilityLabel: "Invia",
+            onPress: () =>
               setSource({
                 uri: navigationURI,
                 headers: {
                   "X-PagoPa-CGN-Referer": refererValue
                 }
-              });
-            }}
-            accessibilityLabel={"Invia"}
-          />
-        </View>
-        <VSpacer size={16} />
-        <View style={{ flex: 1 }}>
-          {source && (
-            <WebviewComponent
-              playgroundEnabled
-              key={`${reloadKey}_webview`}
-              source={source}
-            />
-          )}
-        </View>
-      </ScrollView>
+              })
+          },
+          secondary: {
+            icon: "reload",
+            label: "Reload",
+            accessibilityLabel: "Reload",
+            onPress: () => setReloadKey(r => r + 1)
+          }
+        }}
+      />
     </SafeAreaView>
   );
 };
