@@ -5203,7 +5203,7 @@
         "eid": {
           "verificationExpired": {
             "title": "Conferma la tua identità",
-            "contentStart": "È un passaggio necessario per continuare ad usare ",
+            "contentStart": "È un passaggio necessario per continuare a usare ",
             "contentBold": "Documenti su IO ",
             "contentEnd": "senza limitazioni.",
             "primaryAction": "Inizia"
