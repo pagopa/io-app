@@ -2,26 +2,26 @@ import { IOToast } from "@pagopa/io-app-design-system";
 import { INonEmptyStringTag } from "@pagopa/ts-commons/lib/strings";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { useEffect } from "react";
 import I18n from "i18next";
+import { useEffect } from "react";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { useFirstRender } from "../../../services/common/hooks/useFirstRender";
 import { upsertServicePreference } from "../../../services/details/store/actions/preference";
 import {
   isErrorServicePreferenceSelector,
+  isLoadingServicePreferenceSelector,
   servicePreferenceResponseSuccessByIdSelector
 } from "../../../services/details/store/selectors";
+import {
+  trackIDPayOnboardingNotificationCancel,
+  trackIDPayOnboardingNotificationError,
+  trackIDPayOnboardingNotificationPermission
+} from "../analytics";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { selectInitiative } from "../machine/selectors";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import { useFirstRender } from "../../../services/common/hooks/useFirstRender";
-import {
-  trackIDPayOnboardingNotificationOK,
-  trackIDPayOnboardingNotificationCancel,
-  trackIDPayOnboardingNotificationPermission,
-  trackIDPayOnboardingNotificationError
-} from "../analytics";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 const IdPayEnableMessageScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
@@ -33,6 +33,14 @@ const IdPayEnableMessageScreen = () => {
 
   const isErrorServicePreference = useIOSelector(state =>
     isErrorServicePreferenceSelector(state, serviceId as ServiceId)
+  );
+
+  const isLoadingServicePreference = useIOSelector(state =>
+    isLoadingServicePreferenceSelector(state, serviceId as ServiceId)
+  );
+
+  const isSuccessServicePreference = useIOSelector(state =>
+    servicePreferenceResponseSuccessByIdSelector(state, serviceId as ServiceId)
   );
 
   const initiative = useSelector(selectInitiative);
@@ -56,16 +64,8 @@ const IdPayEnableMessageScreen = () => {
     )
   );
 
-  useEffect(() => {
-    if (!isFirstRender && isErrorServicePreference) {
-      IOToast.error(I18n.t("global.genericError"));
-    }
-  }, [isFirstRender, isErrorServicePreference]);
-
   const onActivate = () => {
     if (!initiativeId || !servicePreferenceResponseSuccess) {
-      IOToast.error(I18n.t("global.genericError"));
-      trackIDPayOnboardingNotificationError({ initiativeName, initiativeId });
       return;
     }
 
@@ -76,13 +76,33 @@ const IdPayEnableMessageScreen = () => {
         inbox: true
       })
     );
-
-    trackIDPayOnboardingNotificationOK({ initiativeName, initiativeId });
-
-    if (!isErrorServicePreference) {
-      machine.send({ type: "next" });
-    }
   };
+
+  // Since we need to wait for the service preference update to complete, we use an effect
+  // to listen for changes in the loading/error/success state of the service preference.
+  // Once the update is complete, we can proceed to the next step or show an error message.
+  // There could be a better way to handle this in the future.
+  useEffect(() => {
+    if (isFirstRender) {
+      return;
+    }
+    if (!isLoadingServicePreference) {
+      if (isErrorServicePreference) {
+        IOToast.error(I18n.t("global.genericError"));
+        trackIDPayOnboardingNotificationError({ initiativeName, initiativeId });
+      } else if (isSuccessServicePreference) {
+        machine.send({ type: "next" });
+      }
+    }
+  }, [
+    isLoadingServicePreference,
+    isErrorServicePreference,
+    isSuccessServicePreference,
+    initiativeName,
+    initiativeId,
+    machine,
+    isFirstRender
+  ]);
 
   const onCancel = () => {
     trackIDPayOnboardingNotificationCancel({ initiativeName, initiativeId });
