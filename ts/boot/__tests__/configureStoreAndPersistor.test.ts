@@ -580,7 +580,7 @@ describe("configureStoreAndPersistor", () => {
     });
     // Test for 48 to 49
     [false, true].forEach(isAarFeatureEnabled =>
-      it(`should migrate from 48 to 96 (is AAR feature enabled: ${isAarFeatureEnabled})`, () => {
+      it(`should migrate from 48 to 49 (is AAR feature enabled: ${isAarFeatureEnabled})`, () => {
         const basePersistedGlobalStateAt48 = {
           content: {
             idps: remoteUndefined,
