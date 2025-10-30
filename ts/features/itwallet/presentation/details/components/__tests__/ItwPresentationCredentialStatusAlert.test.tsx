@@ -1,6 +1,10 @@
 import { createStore } from "redux";
 import MockDate from "mockdate";
-import { ItwPresentationCredentialStatusAlert } from "../ItwPresentationCredentialStatusAlert";
+import {
+  CredentialAlertType,
+  ItwPresentationCredentialStatusAlert,
+  deriveCredentialAlertType
+} from "../ItwPresentationCredentialStatusAlert";
 import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
@@ -18,6 +22,11 @@ type TestCaseParams = [
   Record<string, { title: string; description: string }> | undefined
 ];
 
+const mockMessage = {
+  "it-IT": { title: "__Scaduto__", description: "__Scaduto__" },
+  "en-US": { title: "__Expired__", description: "__Expired__" }
+};
+
 describe("ItwPresentationCredentialStatusAlert", () => {
   beforeAll(() => {
     MockDate.set(new Date(2025, 1, 1));
@@ -32,13 +41,7 @@ describe("ItwPresentationCredentialStatusAlert", () => {
     ["jwtExpired", undefined],
     ["expiring", undefined],
     ["expired", undefined],
-    [
-      "invalid",
-      {
-        "it-IT": { title: "__Scaduto__", description: "__Scaduto__" },
-        "en-US": { title: "__Expired__", description: "__Expired__" }
-      }
-    ],
+    ["invalid", mockMessage],
     [
       "invalid",
       { "it-IT": { title: "__Scaduto__", description: "__Scaduto__" } }
@@ -56,6 +59,42 @@ describe("ItwPresentationCredentialStatusAlert", () => {
 
       const component = renderComponent();
       expect(component).toMatchSnapshot();
+    }
+  );
+
+  it.each`
+    credentialStatus | eidStatus        | isOffline | isItwL3  | message        | expected
+    ${"jwtExpiring"} | ${"jwtExpiring"} | ${false}  | ${false} | ${undefined}   | ${undefined}
+    ${"jwtExpiring"} | ${"jwtExpired"}  | ${false}  | ${false} | ${undefined}   | ${undefined}
+    ${"jwtExpired"}  | ${"jwtExpired"}  | ${false}  | ${false} | ${undefined}   | ${CredentialAlertType.EID_LIFECYCLE}
+    ${"expiring"}    | ${"jwtExpired"}  | ${false}  | ${false} | ${undefined}   | ${CredentialAlertType.DOCUMENT_EXPIRING}
+    ${"expired"}     | ${"jwtExpired"}  | ${false}  | ${false} | ${mockMessage} | ${CredentialAlertType.ISSUER_DYNAMIC_ERROR}
+    ${"expired"}     | ${"jwtExpired"}  | ${false}  | ${false} | ${undefined}   | ${CredentialAlertType.DOCUMENT_EXPIRED}
+    ${"jwtExpiring"} | ${"valid"}       | ${false}  | ${false} | ${undefined}   | ${CredentialAlertType.JWT_VERIFICATION}
+    ${"jwtExpired"}  | ${"valid"}       | ${false}  | ${false} | ${undefined}   | ${CredentialAlertType.JWT_VERIFICATION}
+    ${"valid"}       | ${"jwtExpiring"} | ${true}   | ${false} | ${undefined}   | ${undefined}
+    ${"jwtExpiring"} | ${"valid"}       | ${true}   | ${false} | ${undefined}   | ${undefined}
+    ${"jwtExpired"}  | ${"valid"}       | ${true}   | ${false} | ${undefined}   | ${CredentialAlertType.EID_LIFECYCLE}
+    ${"expired"}     | ${"valid"}       | ${true}   | ${false} | ${undefined}   | ${CredentialAlertType.DOCUMENT_EXPIRED}
+    ${"jwtExpired"}  | ${"jwtExpired"}  | ${true}   | ${false} | ${undefined}   | ${CredentialAlertType.EID_LIFECYCLE}
+  `(
+    "returns $expected when credential=$credentialStatus, eid=$eidStatus, offline=$isOffline, itwL3=$isItwL3",
+    ({
+      credentialStatus,
+      eidStatus,
+      isOffline,
+      isItwL3,
+      expected,
+      message
+    }) => {
+      const result = deriveCredentialAlertType({
+        credentialStatus,
+        eidStatus,
+        isOffline,
+        isItwL3,
+        message
+      });
+      expect(result).toBe(expected);
     }
   );
 });
