@@ -5,7 +5,6 @@ import { OperationResultScreenContent } from "../../../../../components/screens/
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { useItwEidFeedbackBottomSheet } from "../../../common/hooks/useItwEidFeedbackBottomSheet.tsx";
-import ROUTES from "../../../../../navigation/routes.ts";
 
 export const ItwPresentationEidVerificationExpiredScreen = () => {
   const navigation = useIONavigation();
@@ -14,17 +13,7 @@ export const ItwPresentationEidVerificationExpiredScreen = () => {
    * Fallback navigation action to main wallet home screen.
    */
   const fallbackNavigationAction = useCallback(() => {
-    navigation.reset({
-      index: 1,
-      routes: [
-        {
-          name: ROUTES.MAIN,
-          params: {
-            screen: ROUTES.WALLET_HOME
-          }
-        }
-      ]
-    });
+    navigation.popToTop();
   }, [navigation]);
 
   const eidFeedbackBottomSheet = useItwEidFeedbackBottomSheet({
