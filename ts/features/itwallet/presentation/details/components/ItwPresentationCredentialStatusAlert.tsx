@@ -64,7 +64,6 @@ type CredentialStatusAlertProps = {
 };
 
 export enum CredentialAlertType {
-  NONE = "NONE",
   EID_LIFECYCLE = "EID_LIFECYCLE",
   JWT_VERIFICATION = "JWT_VERIFICATION",
   DOCUMENT_EXPIRING = "DOCUMENT_EXPIRING",
@@ -92,7 +91,7 @@ const useAlertPressHandler =
 export const deriveCredentialAlertType = (
   props: CredentialAlertProps
   // eslint-disable-next-line sonarjs/cognitive-complexity
-): CredentialAlertType => {
+): CredentialAlertType | undefined => {
   const { eidStatus, credentialStatus, message, isOffline, isItwL3 } = props;
 
   const isEidExpired = eidStatus === "jwtExpired";
@@ -116,7 +115,7 @@ export const deriveCredentialAlertType = (
       (isOffline && !isCredentialJwtExpired);
 
     if (shouldHideAlert) {
-      return CredentialAlertType.NONE;
+      return undefined;
     }
 
     /**
@@ -151,7 +150,7 @@ export const deriveCredentialAlertType = (
     return CredentialAlertType.DOCUMENT_EXPIRED;
   }
 
-  return CredentialAlertType.NONE;
+  return undefined;
 };
 
 /**
@@ -203,9 +202,11 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
     isItwL3
   });
 
+  if (!alertType) {
+    return null;
+  }
+
   switch (alertType) {
-    case CredentialAlertType.NONE:
-      return null;
     case CredentialAlertType.EID_LIFECYCLE:
       return <ItwEidLifecycleAlert navigation={navigation} />;
     case CredentialAlertType.JWT_VERIFICATION:
