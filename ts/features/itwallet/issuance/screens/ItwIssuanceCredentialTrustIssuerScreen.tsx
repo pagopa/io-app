@@ -1,3 +1,4 @@
+import { useCallback, useRef } from "react";
 import {
   ContentWrapper,
   FeatureInfo,
@@ -12,7 +13,6 @@ import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
-import { useCallback } from "react";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
@@ -135,6 +135,7 @@ type ContentViewProps = {
  */
 const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const route = useRoute();
+  const hasScrolledToBottom = useRef(false);
   const privacyUrl = useIOSelector(state =>
     generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
@@ -143,7 +144,6 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isIssuing =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsIssuing);
-
   const theme = useIOTheme();
 
   const handleContinuePress = () => {
@@ -176,12 +176,18 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
     source: getCredentialNameFromType(eid.credentialType, "", isItwL3)
   }));
 
+  // Added hasScrolledToBottom ref to avoid sending multiple scroll-to-bottom events when navigating between screens
   const trackScrollToBottom = (crossed: boolean) => {
-    if (crossed) {
+    if (crossed && !hasScrolledToBottom.current) {
+      // eslint-disable-next-line functional/immutable-data
+      hasScrolledToBottom.current = true;
       trackIssuanceCredentialScrollToBottom(
         mixPanelCredential,
         ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER
       );
+    } else if (!crossed && hasScrolledToBottom.current) {
+      // eslint-disable-next-line functional/immutable-data
+      hasScrolledToBottom.current = false;
     }
   };
 

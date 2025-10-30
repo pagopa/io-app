@@ -1,4 +1,5 @@
 import { GlobalState } from "../../../../../store/reducers/types";
+import { isConnectedSelector } from "../../../../connectivity/store/selectors";
 import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import {
   itwCredentialsEidStatusSelector,
@@ -14,7 +15,6 @@ import {
   itwIsDiscoveryBannerHiddenSelector,
   itwIsFeedbackBannerHiddenSelector,
   itwIsL3EnabledSelector,
-  itwIsOfflineBannerHiddenSelector,
   itwIsWalletUpgradeMDLDetailsBannerHiddenSelector
 } from "./preferences";
 import {
@@ -91,19 +91,6 @@ export const itwOfflineAccessAvailableSelector = (state: GlobalState) =>
   itwLifecycleIsOperationalOrValid(state) && !itwIsWalletEmptySelector(state);
 
 /**
- * Returns if the offline banner should be visible. The banner is visible if:
- * - The user has online access (not available in the mini-app)
- * - The Wallet has a valid Wallet Instance
- * - The user did not close the banner
- * @param state the application global state
- * @returns true if the banner should be visible, false otherwise
- */
-export const itwShouldRenderOfflineBannerSelector = (state: GlobalState) =>
-  !offlineAccessReasonSelector(state) &&
-  itwLifecycleIsValidSelector(state) &&
-  !itwIsOfflineBannerHiddenSelector(state);
-
-/**
  * Returns if the L3 upgrade banner should be rendered. The banner is rendered if:
  * - The user has online access (not available in the mini-app)
  * - The IT Wallet feature flag is enabled
@@ -143,3 +130,18 @@ export const itwShouldRenderWalletUpgradeMDLDetailsBannerSelector = (
   itwIsL3EnabledSelector(state) &&
   !itwLifecycleIsITWalletValidSelector(state) &&
   !itwIsWalletUpgradeMDLDetailsBannerHiddenSelector(state);
+
+/**
+ * Returns whether the eID lifecycle alert should be hidden in wallet.
+ * When the ITW upgrade banner is displayed, the eID lifecycle alert
+ * is hidden so that the user does not need to perform eID reissuance.
+ * The alert is hidden if:
+ * - The new IT Wallet design is being rendered
+ * - The L3 upgrade banner is being displayed
+ * - The eID is expiring and the device is offline
+ */
+export const itwShouldHideEidLifecycleAlert = (state: GlobalState): boolean =>
+  itwShouldRenderNewItWalletSelector(state) ||
+  itwShouldRenderL3UpgradeBannerSelector(state) ||
+  (itwCredentialsEidStatusSelector(state) === "jwtExpiring" &&
+    !isConnectedSelector(state));

@@ -337,6 +337,7 @@
   "startup": {
     "title": "Stiamo preparando la tua esperienza su IO",
     "title2": "Ancora un po’ di pazienza...",
+    "subtitle2": "Non chiudere l’app, ci vorranno al massimo 20 secondi.",
     "authentication": "Utente autenticato",
     "sessionInfo": "Attributi SPID caricati",
     "profileInfo": "Profilo utente caricato",
@@ -1140,7 +1141,6 @@
     "opt_in": {
       "contextualHelpTitle": "Autenticazione",
       "contextualHelpContent": "Qui puoi trovare le informazioni sulle modalità di autenticazione su IO e alcuni consigli di sicurezza.",
-      "news": "novità",
       "title": "Ora è più facile accedere!",
       "identity_check": "Non dovrai più identificarti con SPID o CIE ogni 30 giorni, ma solo una volta all’anno o se esci dall’app",
       "security_suggests": "Alcuni consigli di sicurezza",
@@ -3845,13 +3845,6 @@
           "serviceActivated": "Hai attivato SEND su IO",
           "title": "Ricevi su IO le tue prossime notifiche SEND"
         },
-        "pushEngagement": {
-          "badge": "Consigliato",
-          "title": "Non perderti i messaggi importanti",
-          "body": "Attiva le notifiche push: se leggi subito le comunicazioni a valore legale, potresti risparmiare sui costi di raccomandata.",
-          "cta": "Attiva notifiche push",
-          "toast": "Hai attivato le notifiche push"
-        },
         "flow": {
           "aarTos": {
             "title": "Stai per aprire la notifica SEND",
@@ -3869,6 +3862,53 @@
           },
           "fetchingQrData": {
             "loadingText": "Recupero delle informazioni in corso"
+          },
+          "ko": {
+            "notAddresseeFinal": {
+              "title": "La comunicazione non è destinata a te",
+              "body": "Per accedere alle notifiche SEND per conto di un’altra persona, è necessario che chi ha ricevuto la comunicazione ti deleghi tramite il sito web di SEND.",
+              "primaryAction": "Come attivare una delega",
+              "secondaryAction": "Chiudi"
+            },
+            "GENERIC": {
+              "title": "Non riusciamo a recuperare i dati della notifica SEND",
+              "body": "Riprova più tardi.",
+              "primaryAction": "Chiudi",
+              "secondaryAction": "Mostra dettagli",
+              "detail": {
+                "subTitle": "Prendi nota del codice di errore, potrebbe servirti per richiedere assistenza.",
+                "supportTitle": "Contatta l'assistenza",
+                "chat": "Chiedi aiuto in chat",
+                "additionalDataTitle": "Dati aggiuntivi",
+                "errorCode": "Codice errore"
+              }
+            }
+          },
+          "displayingNotificationData": {
+            "headerText-through": " tramite",
+            "abstract": {
+              "title": {
+                "notDelegated": {
+                  "youHave": "Hai"
+                },
+                "delegated": {
+                  "theyHave": " ha"
+                },
+                "receivedFrom_withDenomination": " ricevuto una notifica SEND: è una comunicazione a valore legale inviata da ",
+                "receivedFrom_withoutDenomination": " ricevuto una notifica SEND: è una comunicazione a valore legale",
+                "checkDocuments": ". Consulta i documenti allegati per scoprire tutti i dettagli. \n\nSe è previsto un pagamento, puoi farlo ora da IO con il tuo metodo preferito."
+              }
+            }
+          },
+          "closeNotification": {
+            "title": "Vuoi chiudere la notifica SEND?",
+            "paragraph1": "Conserva il codice QR, ti servirà per rileggere la notifica in app",
+            "paragraph2": "Puoi inquadrarlo oppure caricare una sua foto su IO",
+            "paragraph3": "Tutte le tue notifiche sono disponibili sul sito di SEND - Notifiche Digitali",
+            "paragraphDelegate3": "Tutte le tue notifiche e quelle per cui hai una delega sono disponibili sul sito di SEND - Notifiche Digitali",
+            "link": "Vai sul sito di SEND",
+            "primaryAction": "Torna alla notifica",
+            "secondaryAction": "Chiudi la notifica"
           }
         }
       },
@@ -3959,7 +3999,16 @@
           "bottomSheetTitle": "Quale avviso vuoi pagare?"
         },
         "attachmentsSection": {
-          "title": "Allegati"
+          "title": "Allegati",
+          "banner": {
+            "action": "Scopri di più",
+            "content": "Gli atti sono disponibili online per 120 giorni. Salvali sul tuo dispositivo!"
+          },
+          "bottomSheet": {
+            "action": "Come calcolare i tempi?",
+            "content": "Gli atti sono disponibili su SEND per un periodo limitato: scarica i documenti allegati per conservarli sul tuo dispositivo.\n\nSe i documenti non sono più disponibili, contatta l'ente che li ha inviati.",
+            "title": "Disponibilità degli atti online"
+          }
         },
         "f24Section": {
           "title": "Modelli F24",
@@ -3978,7 +4027,7 @@
         "timeline": {
           "goToSend": "Accedi a SEND",
           "menuTitle": "Stato della notifica",
-          "newInfo": "Accedi alla versione web per vedere maggiori dettagli, le ricevute e le attestazioni opponibili a terzi.",
+          "newInfo": "Accedi a SEND dal tuo browser per avere tutti i dettagli, le ricevute e le attestazioni opponibili a terzi.",
           "title": "STATO DELLA NOTIFICA",
           "status": {
             "ACCEPTED": "Depositata",
@@ -3995,6 +4044,14 @@
           "expand": "mostra gli stati precedenti",
           "info": "Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio",
           "cta": "Accedi alla versione web"
+        },
+        "help": {
+          "needHelp": "Serve aiuto?",
+          "bottomSheet": {
+            "action": "Vai al centro assistenza",
+            "content": "Per qualsiasi dubbio sul contenuto della notifica SEND, contatta l'ente che te l'ha inviata. I contatti generalmente sono riportati negli allegati alla notifica.\n\nSe hai bisogno di supporto su SEND, consulta le risorse di assistenza",
+            "title": "Serve aiuto?"
+          }
         }
       },
       "qrCodeScan": {
@@ -4003,6 +4060,37 @@
             "title": "Per consultare i documenti vai sul sito di SEND",
             "firstCta": "Vai su SEND"
           }
+        }
+      },
+      "loginEngagement": {
+        "send": {
+          "topElement": {
+            "label": "Novità"
+          },
+          "title": "Ricevi su IO le comunicazioni a valore legale e risparmia",
+          "description": "Attiva SEND su IO per ricevere in app le comunicazioni a valore legale, come esiti di pratiche, rimborsi o multe, ed **evitare le raccomandate e i relativi costi.**",
+          "action": "Attiva SEND su IO",
+          "secondaryAction": "Non attivare SEND su IO",
+          "activationBottomSheet": {
+            "title": "Riceverai su IO le prossime\ncomunicazioni a valore legale",
+            "content": "Premendo **Continua** dichiari di aver letto l'[Informativa Privacy]({{privacyUrl}}) e di accettare i [Termini e Condizioni d'uso]({{tosUrl}}).",
+            "action": "Continua"
+          },
+          "areYouSureBottomSheet": {
+            "title": "Se non attivi SEND su IO,\nrischi di pagare di più",
+            "content": {
+              "features": {
+                "savingMoney": "Se leggi le comunicazioni a valore legale online in tempo, **eviti le raccomandate e risparmi.**",
+                "notification": "Con il servizio SEND su IO, **ti avvisiamo subito** quando c’è una comunicazione importante per te."
+              },
+              "privacyAndTos": "Premendo **Attiva SEND su IO** dichiari di aver letto l'[Informativa Privacy]({{privacyUrl}}) e di accettare i [Termini e Condizioni d'uso]({{tosUrl}})."
+            },
+            "action": "Attiva SEND su IO",
+            "secondaryAction": "Non attivare SEND su IO"
+          },
+          "toast": "Hai attivato SEND su IO",
+          "rateLimitToast": "Non riusciamo ad attivare il servizio SEND, riprova più tardi",
+          "activationErrorMessage": "Non riusciamo ad attivare il servizio SEND"
         }
       }
     },
@@ -4323,7 +4411,7 @@
         "dc": "Carta Europea della Disabilità",
         "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
         "ed": "Titoli accademici",
-        "ee": "Iscrizioni universitarie",
+        "ee": "Iscrizioni accademiche",
         "res": "Attestato di residenza"
       },
       "wallet": {
@@ -4341,8 +4429,8 @@
           "expiring": "In scadenza",
           "pending": "In lavorazione",
           "invalid": "Non valida",
-          "verificationExpiring": "Verifica",
-          "verificationExpired": "Verifica",
+          "verificationExpiring": "Azione richiesta",
+          "verificationExpired": "Azione richiesta",
           "upgradePending": "Da aggiornare",
           "unknown": "Non disponibile"
         },
@@ -4413,8 +4501,8 @@
       "discovery": {
         "banner": {
           "home": {
-            "title": "Novità: Documenti su IO, anche offline",
-            "content": "Da oggi puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet.",
+            "title": "Documenti su IO",
+            "content": "Puoi aggiungere al Portafoglio di IO i tuoi documenti digitali, disponibili anche senza connessione a internet.",
             "action": "Attiva Documenti su IO"
           },
           "homeActive": {
@@ -4508,15 +4596,10 @@
           "primaryAction": "Ottieni IT-Wallet",
           "dismissalDialog": {
             "title": "Vuoi rinunciare ai vantaggi di IT-Wallet?",
-            "body": "Otterrai una versione digitale dei tuoi documenti con funzionalità ridotte.",
-            "confirm": "Si, rinuncia",
-            "cancel": "No, torna indietro"
+            "body": "Potrai ottenere IT-Wallet in qualsiasi altro momento, se cambi idea.",
+            "confirm": "Sì, rinuncia",
+            "cancel": "No, continua"
           }
-        },
-        "offlineBanner": {
-          "title": "Novità: i tuoi documenti anche offline",
-          "content": "Da oggi puoi usare i tuoi documenti su IO anche senza connessione a internet.",
-          "action": "Scopri di più"
         },
         "ipzsPrivacy": {
           "title": "I tuoi Documenti su IO sono al sicuro",
@@ -4584,22 +4667,45 @@
             }
           },
           "l3": {
-            "screen": {
-              "title": "Verifica la tua identità con CIE",
-              "description": "È un passaggio di sicurezza necessario per ottenere IT-Wallet e associare i documenti alla tua identità.",
-              "primaryAction": "Inizia",
-              "secondaryAction": "Non ho la CIE",
-              "requirements": {
-                "header": "Avrai bisogno di:",
-                "card": "La tua Carta di Identità Elettronica (CIE)",
-                "pin": "Il PIN della CIE a 8 cifre"
-              },
-              "otherMethods": {
-                "header": "In alternativa:",
-                "title": "Continua sull'app CieID",
-                "subtitle": "Utile se hai già installato l’app CieID e registrato la CIE"
+            "section": "Ottieni IT-Wallet",
+            "title": "Verifica la tua identità con CIE (Carta di Identità Elettronica)",
+            "description": "È un passaggio di sicurezza necessario per associare i documenti digitali alla tua identità.",
+            "reissuing": {
+              "section": "Rinnovo ID",
+              "title": "Scegli come identificarti",
+              "description": "È un passaggio necessario per continuare ad usare IT-Wallet.",
+              "method": {
+                "ciePin": {
+                  "title": "Continua con il PIN della tua CIE",
+                  "subtitle": "Dovrai inserire il PIN di 8 cifre e appoggiare la CIE al telefono.",
+                  "badge": "scelta consigliata"
+                },
+                "cieId": {
+                  "title": "Continua con l'app CieID",
+                  "subtitle": "Dovrai autenticarti con l’app CieID e appoggiare la CIE al telefono."
+                },
+                "spid": {
+                  "title": "Continua con SPID",
+                  "subtitle": "Dovrai inserire il PIN di 8 cifre e appoggiare la CIE al telefono."
+                }
               }
             },
+            "method": {
+              "ciePin": {
+                "title": "Continua con il PIN della tua CIE",
+                "subtitle": "Dovrai inserire il PIN di 8 cifre e appoggiare la CIE al telefono.",
+                "badge": "scelta consigliata"
+              },
+              "cieId": {
+                "title": "Continua con l'app CieID",
+                "subtitle": "Dovrai autenticarti con l’app CieID e appoggiare la CIE al telefono."
+              },
+              "spid": {
+                "title": "Continua con SPID",
+                "subtitle": "Dovrai inserire il PIN di 8 cifre e appoggiare la CIE al telefono."
+              }
+            },
+            "noCie": "Non hai la Carta di Identità Elettronica?",
             "bottomSheet": {
               "cieId": {
                 "title": "Continua sull’app CieID",
@@ -4625,20 +4731,25 @@
           "prepare": {
             "pin": {
               "title": "Prepara il PIN della tua Carta di Identità Elettronica (CIE)",
-              "content": "Dovrai digitarlo per completare la verifica dell’identità.",
-              "buttonLink": "Cos’è il PIN della CIE?",
-              "cta": "Inserisci il PIN della CIE"
+              "description": "Dovrai digitarlo per completare la verifica dell’identità.",
+              "buttonLink": "Dove trovo il PIN della CIE?",
+              "cta": "Inizia"
             },
-            "card": {
-              "title": "Prepara la tua Carta di Identità Elettronica (CIE)",
-              "content": "Dovrai poggiare il retro del telefono sulla CIE, su una superficie stabile, e tenerli fermi per la lettura.",
+            "nfc": {
+              "title": "Posiziona la tua CIE su una superficie stabile per la lettura",
+              "description": "Dovrai poggiare il retro del telefono sulla carta e tenerlo fermo per la lettura.",
               "cta": "Inizia lettura CIE",
               "buttonLink": "Cos’è la CIE?"
             },
             "can": {
               "title": "Prepara la tua Carta di Identità Elettronica (CIE)",
-              "content": "Dovrai usarla e inserire il suo codice a 6 cifre (CAN) che trovi stampato sul fronte in basso a destra.",
+              "description": "Dovrai usarla e inserire il suo codice a 6 cifre (CAN) che trovi stampato sul fronte in basso a destra.",
               "buttonLink": "Cos’è il PIN della CIE?",
+              "cta": "Continua"
+            },
+            "card": {
+              "title": "Prepara la tua Carta di Identità Elettronica (CIE)",
+              "description": "Dovrai usarla e inserire il suo codice a 6 cifre (CAN) che trovi stampato sul fronte in basso a destra.",
               "cta": "Continua"
             }
           },
@@ -4797,8 +4908,8 @@
               "subtitle": "È l’ente riconosciuto dallo Stato a fornirti la versione digitale dei tuoi documenti.\n\n Per sapere come tratta i tuoi dati consulta l’[Informativa Privacy]({{privacyUrl}}). "
             },
             "authSource": {
-              "title": "Chi è?",
-              "subtitle": "È l’ente che detiene i dati contenuti all’interno del tuo documento."
+              "title": "Chi è",
+              "subtitle": "È l’ente o la banca dati digitale che detiene i dati contenuti all'interno del tuo documento."
             }
           },
           "actions": {
@@ -4828,7 +4939,12 @@
             "title": "È tutto pronto!",
             "subtitle": "Ora puoi aggiungere il primo documento al Portafoglio di IO.",
             "primaryAction": "Aggiungi primo documento",
-            "secondaryAction": "Continua più tardi"
+            "secondaryAction": "Continua più tardi",
+            "reissuance": {
+              "title": "Hai verificato la tua identità",
+              "subtitle": "Ora puoi continuare a usare Documenti su IO.",
+              "primaryAction": "Ok, chiudi"
+            }
           }
         },
         "emptyWallet": {
@@ -4954,8 +5070,12 @@
           "expiring": {
             "content": "Mancano {{days}} giorni alla scadenza del documento."
           },
-          "verificationExpiring": {
-            "content": "Verifica la versione digitale del tuo documento entro il {{date}}."
+          "jwtVerification": {
+            "content": {
+              "jwtExpiring": "Verifica la versione digitale del tuo documento entro il {{date}} per continuare a usarlo senza limitazioni.",
+              "jwtExpired": "Verifica ora la versione digitale del tuo documento per continuare a usarlo senza limitazioni."
+            },
+            "action": "Inizia"
           }
         },
         "authSource": {
@@ -4975,9 +5095,10 @@
             "alert": {
               "documents": {
                 "valid": "L'ultima verifica è del {{date}}.",
-                "expiring": "Verifica la tua identità entro il {{date}}.",
-                "expired": "È necessario un rapido passaggio di verifica per continuare a usare Documenti su IO.",
-                "action": "Inizia"
+                "expiring": "Conferma la tua identità con CIE o SPID entro il {{date}} per continuare a usare Documenti su IO senza limitazioni.",
+                "expired": "Conferma la tua identità con CIE o SPID per continuare a usare Documenti su IO senza limitazioni.",
+                "action": "Inizia",
+                "offline": "Torna online e conferma la tua identità con CIE o SPID per continuare a usare Documenti su IO senza limitazioni."
               },
               "itw": {
                 "valid": "Hai attivato il tuo ID con CIE il {{date}}.",
@@ -5062,6 +5183,13 @@
               "content": "Ottieni IT-Wallet per usare la tua Patente anche come documento d'identità!",
               "action": "Ottieni IT-Wallet"
             }
+          },
+          "newCredentialValidityAlert": {
+            "content": {
+              "education_degree": "I tuoi titoli accademici digitali hanno piena validità ufficiale.",
+              "education_enrollment": "Le tue iscrizioni accademiche digitali hanno piena validità ufficiale.",
+              "residency": "Il tuo attestato di residenza digitale ha piena validità ufficiale."
+            }
           }
         },
         "ctas": {
@@ -5073,14 +5201,14 @@
         },
         "eid": {
           "verificationExpired": {
-            "title": "Verifica la tua identità",
-            "contentStart": "È un passaggio di sicurezza necessario per continuare ad usare ",
-            "contentBold": "Documenti su IO",
-            "contentEnd": ".",
+            "title": "Conferma la tua identità",
+            "contentStart": "È un passaggio necessario per continuare ad usare ",
+            "contentBold": "Documenti su IO ",
+            "contentEnd": "senza limitazioni.",
             "primaryAction": "Inizia"
           }
         },
-        "statusAttestationUnknown": {
+        "statusAssertionUnknown": {
           "title": "Non siamo riusciti a caricare {{credentialName}}",
           "content": "Chiudi e riapri l'app per riprovare.",
           "primaryAction": "Ho capito"
@@ -5097,7 +5225,10 @@
             "0": "I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.",
             "1": "I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento."
           },
-          "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}})."
+          "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}}).",
+          "alert": {
+            "message": "Non potrai completare l'accesso ai servizi online."
+          }
         },
         "remote": {
           "loadingScreen": {
@@ -5375,6 +5506,19 @@
         "cta": "Disattiva IT-Wallet"
       },
       "feedback": {
+        "reissuance": {
+          "bottomSheet": {
+            "title": "Ti va di dirci perché?",
+            "content": "Hai deciso di non continuare: facci sapere il perché, così potremo migliorare la tua esperienza in app. Ci vorrà un minuto!",
+            "primaryAction": "Dicci la tua",
+            "secondaryAction": "Non ora"
+          },
+          "banner": {
+            "title": "Puoi dirci com’è andata?",
+            "content": "Raccontaci la tua esperienza con la verifica e aiutaci a migliorare.",
+            "action": "Inizia"
+          }
+        },
         "banner": {
           "title": "Dicci cosa ne pensi",
           "content": "Raccontaci la tua esperienza con la funzionalità Documenti su IO.",
@@ -5468,9 +5612,18 @@
       },
       "upgrade": {
         "banner": {
-          "title": "IT-Wallet per i tuoi documenti",
-          "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**.\nGarantito dallo Stato, accessibile solo a te.",
-          "action": "Ottieni IT-Wallet"
+          "documents": {
+            "active": {
+              "title": "Passa a IT-Wallet",
+              "description": "Aggiorna i tuoi documenti digitali e passa a funzionalità evolute con l’unico portafoglio digitale di Stato: pubblico, sicuro e gratuito. Garantito dallo Stato, accessibile solo a te.",
+              "action": "Passa a IT-Wallet"
+            },
+            "inactive": {
+              "title": "IT-Wallet per i tuoi documenti",
+              "description": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**. Garantito dallo Stato, accessibile solo a te.",
+              "action": "Ottieni IT-Wallet"
+            }
+          }
         }
       },
       "settings": {
@@ -5526,6 +5679,15 @@
             "content": "Stai per avviare il reissuing dell'eID e delle credenziali al momento ottenute."
           }
         }
+      }
+    },
+    "pushNotifications": {
+      "engagementScreen": {
+        "badge": "Consigliato",
+        "title": "Non perderti i messaggi importanti",
+        "body": "Attiva le notifiche push: se leggi subito le comunicazioni a valore legale, potresti risparmiare sui costi di raccomandata.",
+        "cta": "Attiva notifiche push",
+        "toast": "Hai attivato le notifiche push"
       }
     }
   },
@@ -5613,7 +5775,7 @@
       "resultScreen": {
         "success": {
           "header": "Ecco il codice sconto!",
-          "body": "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:",
+          "body": "Chiedi al venditore di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:",
           "validUpTo": "Vale fino a ",
           "expiresIn": "Il codice scade tra ",
           "copyCodeCta": "Copia codice",
@@ -5668,7 +5830,8 @@
       }
     },
     "wallet": {
-      "preview": {
+      "card": {
+        "available": "Disponibile",
         "validThrough": "Valido fino al {{endDate}}",
         "showAll": "Vedi tutte"
       },
@@ -5684,7 +5847,7 @@
       "initiativeOnboardedStatus": {
         "header": "Le mie richieste",
         "ON_WAITING_LIST": {
-          "label": "Verifica in corso"
+          "label": "In lista d'attesa"
         },
         "ON_EVALUATION": {
           "label": "Verifica in corso"
@@ -5713,6 +5876,10 @@
           }
         },
         "initiativeDetailsScreen": {
+          "error": {
+            "title": "Il dettaglio dell'iniziativa non è al momento disponibile",
+            "subtitle": "Siamo già a lavoro per risolvere il problema\nRiprova tra un po'."
+          },
           "notConfigured": {
             "header": "Configura l'iniziativa!",
             "footer": "Aggiungi almeno un metodo per iniziare ad utilizzare {{initiative}}."
@@ -5805,9 +5972,10 @@
           "title": "Regole dell'iniziativa",
           "button": "Ok, ho capito"
         },
-        "spentUntilNow": "Speso finora",
+        "spentUntilNow": "Speso",
         "summary": "Riepilogo",
         "status": "Stato iniziativa",
+        "voucherStatus": "Stato del bonus",
         "endDate": "Scadenza",
         "amount": "Saldo disponibile",
         "toBeRefunded": "In attesa di rimborso",
@@ -5818,13 +5986,22 @@
         "spendPercentage": "Percentuale riconosciuta",
         "spendValue": "Importo riconosciuto",
         "enrollmentDetails": "Dettagli dell'adesione",
-        "enrollmentDate": "Data",
+        "enrollmentDate": "Bonus emesso il",
         "protocolNumber": "Numero di protocollo",
         "lastUpdate": "Saldo aggiornato al {{dateString}}",
         "buttons": {
           "privacy": "Preferenze e Privacy",
           "unsubscribe": "Rimuovi {{initiativeName}}",
-          "requestHelp": "Chiedi aiuto"
+          "requestHelp": "Chiedi aiuto",
+          "staticCode": "Genera codice statico"
+        },
+        "staticCodeModal": {
+          "content": {
+            "title": "Ecco il codice statico",
+            "subtitle": "Usa questo codice, se richiesto da un venditore online in fase di acquisto."
+          },
+          "footer": "Copia codice statico",
+          "staticCodeErrorAlert": "C’è stato un errore, riprova"
         }
       },
       "operationDetails": {
@@ -5832,12 +6009,14 @@
           "labels": {
             "AUTHORIZED": "Autorizzata",
             "CANCELLED": "Annullata",
-            "REWARDED": "Eseguita"
+            "REWARDED": "Eseguita",
+            "REFUNDED": "Rimborsata",
+            "CAPTURED": "Eseguita"
           },
           "details": {
             "alerts": {
               "AUTHORIZED": "Questa transazione è in corso, ovvero è stata autorizzata ma non è ancora stata confermata dall’esercente.",
-              "CANCELLED": "Questa transazione è stata annullata dall’esercente, abbiamo riaccreditato l’importo sul portafoglio dell’iniziativa."
+              "CANCELLED": "Questa transazione è stata annullata dall’esercente."
             },
             "labels": {
               "business": "Esercente",
@@ -5898,10 +6077,13 @@
         "pleaseWait": "Un attimo di pazienza...",
         "requestSent": {
           "title": "La tua richiesta è stata inviata!",
-          "body": "Riceverai un messaggio con l’esito dell’operazione."
+          "subtitleStart": "Riceverai un ",
+          "subtitleBoldStart": "messaggio su IO ",
+          "subtitleCenter": "quando l’esito della tua richiesta sarà disponibile.\n\nPuoi verificare lo stato della tua richiesta dalla sezione ",
+          "subtitleEnd": "Servizi"
         },
         "button": {
-          "continue": "Ho capito!"
+          "continue": "Ok, chiudi"
         }
       },
       "failure": {
@@ -5910,7 +6092,7 @@
         },
         "message": {
           "GENERIC": {
-            "title": "Non riusciamo a inviare la richiesta per questa iniziativa",
+            "title": "Non è possibile completare la richiesta per questa iniziativa",
             "subtitle": "Siamo già a lavoro per risolvere. \nRiprova tra un po’."
           },
           "INITIATIVE_NOT_FOUND": {
@@ -5968,7 +6150,7 @@
       },
       "headerTitle": "Adesione all'iniziativa",
       "beforeContinue": {
-        "text": "Premendo Continua dichiari di aver letto, compreso e accettato l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni]({{tosUrl}}) d'uso.",
+        "text": "Premendo Continua dichiari di aver letto, compreso e accettato l'[Informativa Privacy]({{privacyUrl}}) e i [Termini e Condizioni d'uso]({{tosUrl}}).",
         "requestBonus": "Richiedi il bonus"
       },
       "navigation": {
@@ -6032,13 +6214,22 @@
       "enableNotification": {
         "title": "Non perderti l’esito delle tue richieste",
         "subtitle": "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app.",
-        "action": "Attiva le notifiche",
-        "deny": "Non ora",
+        "action": "Attiva notifiche push",
+        "deny": "Non attivare",
         "success": "Hai attivato le notifiche push",
         "advice": "Consigliato"
       },
       "failToRetry": {
-        "contentTitle": "Stiamo per collegarti.\n Attendi qualche secondo..."
+        "contentTitle": "Stiamo per collegarti.\n Attendi qualche secondo...",
+        "slowDownSubtitle": "Non chiudere l’app, ci vorranno al massimo 10 secondi.",
+        "failureSubtitle": "Riprova tra qualche minuto o usa il sito dell’iniziativa per richiedere il bonus."
+      },
+      "disabledScreen": {
+        "title": "Stai per accedere all'iniziativa",
+        "subtitle": "Potrebbero volerci alcuni minuti. Non chiudere l'app: quando sarà tutto pronto, potrai richiedere il tuo bonus."
+      },
+      "featureDisabled": {
+        "title": "L'iniziativa non è più disponibile"
       },
       "preferences": {
         "enableEmailBanner": {
@@ -6051,7 +6242,8 @@
       "loading": {
         "subtitle": "Attendi qualche secondo",
         "title": "Stiamo elaborando la tua richiesta"
-      }
+      },
+      "initiativeImageAltText": "Immagine iniziativa"
     },
     "configuration": {
       "failureStates": {
@@ -6235,7 +6427,7 @@
         "failure": {
           "GENERIC": {
             "title": "Non è stato possibile procedere con l'iniziativa richiesta",
-            "subtitle": "Siamo già a lavoro per risolvere.  Riprova tra un po’."
+            "subtitle": "Siamo già a lavoro per risolvere. Riprova tra un po’."
           },
           "TRANSACTION_EXPIRED": {
             "title": "Il codice è scaduto",
@@ -6285,6 +6477,10 @@
       "chat": "Chiedi aiuto in chat",
       "additionalDataTitle": "Dati aggiuntivi",
       "copyAll": "Copia tutti"
+    },
+    "slowdowns_results_screen": {
+      "title": "Sembra che le cose vadano un po' a rilento",
+      "subtitle": "Potreste essere in tanti in questo momento.\nPuoi riprovare tra qualche minuto, o puoi richiedere il bonus dal sito dedicato."
     }
   },
   "barcodeScan": {
@@ -6456,7 +6652,7 @@
       },
       "historyScreen": {
         "header": "I tuoi accessi a servizi di terze parti",
-        "body": "Qui puoi consultare le cronologia dei tuoi accessi a servizi esterni tramite IO e richiederne una copia via email."
+        "body": "Qui puoi consultare la cronologia dei tuoi accessi a servizi esterni tramite IO e richiederne una copia via email."
       }
     },
     "loadingScreen": {

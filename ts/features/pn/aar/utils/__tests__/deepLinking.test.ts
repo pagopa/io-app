@@ -3,7 +3,7 @@ import * as REMOTE_CONFIG from "../../../../../store/reducers/backendStatus/remo
 import { GlobalState } from "../../../../../store/reducers/types";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import PN_ROUTES from "../../../navigation/routes";
-import * as REDUCERS from "../../store/reducers";
+import * as SELECTORS from "../../store/selectors";
 import { isSendAARLink, navigateToSendAarFlowIfEnabled } from "../deepLinking";
 const testRegex = "^\\s*https:\\/\\/example\\.com\\/aar\\/.*";
 describe("DeepLinking utils", () => {
@@ -40,7 +40,7 @@ describe("DeepLinking utils", () => {
         const mockNav = jest.fn();
         const aarUrl = "www.example.com";
         jest
-          .spyOn(REDUCERS, "isAAREnabled")
+          .spyOn(SELECTORS, "isAAREnabled")
           .mockImplementation(() => isAAREnabled);
         jest.spyOn(NAV_SRV.default, "navigate").mockImplementation(mockNav);
 

@@ -13,12 +13,26 @@ describe("PN actions", () => {
         onSuccess: jest.fn(),
         onFailure: jest.fn()
       };
+      const payload_withRateLimitedFailure = {
+        value: true,
+        onSuccess: jest.fn(),
+        onFailure: jest.fn((_isRateLimitError?: boolean) => {
+          void null;
+        })
+      };
 
       const action = pnActivationUpsert.request(payload);
+      const action_rateLimited = pnActivationUpsert.request(
+        payload_withRateLimitedFailure
+      );
 
       expect(action).toEqual({
         type: "PN_ACTIVATION_UPSERT_REQUEST",
         payload
+      });
+      expect(action_rateLimited).toEqual({
+        type: "PN_ACTIVATION_UPSERT_REQUEST",
+        payload: payload_withRateLimitedFailure
       });
     });
 
@@ -40,14 +54,19 @@ describe("PN actions", () => {
   });
 
   describe("startPNPaymentStatusTracking", () => {
-    it("should create a start tracking action with the provided messageId", () => {
-      const messageId = "message-123";
+    [false, true].forEach(isAARNotification => {
+      it(`should create a start tracking action with the provided messageId and isAARNotification: ${isAARNotification}`, () => {
+        const messageId = "message-123";
 
-      const action = startPNPaymentStatusTracking(messageId);
+        const action = startPNPaymentStatusTracking({
+          isAARNotification,
+          messageId
+        });
 
-      expect(action).toEqual({
-        type: "PN_START_TRACKING_PAYMENT_STATUS",
-        payload: messageId
+        expect(action).toEqual({
+          type: "PN_START_TRACKING_PAYMENT_STATUS",
+          payload: { isAARNotification, messageId }
+        });
       });
     });
   });

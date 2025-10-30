@@ -337,32 +337,74 @@ describe("NestedObjectClaim", () => {
 });
 
 describe("DrivingPrivilegesCustomClaim", () => {
-  it("decodes an array of valid items", () => {
-    const good = [
-      {
-        vehicle_category_code: {
-          name: "Categoria",
-          value: "AB"
-        },
-        issue_date: {
-          name: {
-            "it-IT": "Data rilascio categoria",
-            "en-US": "Category issue date"
-          },
-          value: "2013-10-19"
-        },
-        expiry_date: {
-          name: {
-            "it-IT": "Data di scadenza della categoria",
-            "en-US": "Category expiry date"
-          },
-          value: "2034-04-04"
-        }
-      }
-    ];
+  const baseDrivingPrivilegeClaim = {
+    vehicle_category_code: {
+      name: "Categoria",
+      value: "AB"
+    },
+    issue_date: {
+      name: {
+        "it-IT": "Data rilascio categoria",
+        "en-US": "Category issue date"
+      },
+      value: "2013-10-19"
+    },
+    expiry_date: {
+      name: {
+        "it-IT": "Data di scadenza della categoria",
+        "en-US": "Category expiry date"
+      },
+      value: "2034-04-04"
+    }
+  };
 
-    const res = DrivingPrivilegesCustomClaim.decode(good);
+  it("decodes an array of valid items", () => {
+    const res = DrivingPrivilegesCustomClaim.decode([
+      baseDrivingPrivilegeClaim
+    ]);
     expect(E.isRight(res)).toBe(true);
+  });
+
+  it("decodes an array of valid items with category codes", () => {
+    const fullDrivingPrivilegeClaim = {
+      ...baseDrivingPrivilegeClaim,
+      codes: {
+        name: {
+          "it-IT": "Restrizioni e condizioni della categoria",
+          "en-US": "Category conditions/restrictions"
+        },
+        value: [
+          {
+            code: {
+              name: {
+                "it-IT": "Codice restrizione/condizione",
+                "en-US": "Condition/restriction code"
+              },
+              value: "95(10/04/26)"
+            }
+          },
+          {
+            code: {
+              name: {
+                "it-IT": "Codice restrizione/condizione",
+                "en-US": "Condition/restriction code"
+              },
+              value: "96(02/07/28)"
+            }
+          }
+        ]
+      }
+    };
+
+    const res = DrivingPrivilegesCustomClaim.decode([
+      fullDrivingPrivilegeClaim
+    ]);
+    expect(E.isRight(res)).toBe(true);
+    if (E.isRight(res)) {
+      expect(res.right[0].restrictions_conditions).toEqual(
+        "95(10/04/26), 96(02/07/28)"
+      );
+    }
   });
 });
 

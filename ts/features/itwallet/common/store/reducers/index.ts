@@ -51,7 +51,7 @@ const itwReducer = combineReducers({
   securePreferences: securePreferencesReducer
 });
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 5;
+const CURRENT_REDUX_ITW_STORE_VERSION = 7;
 
 export const migrations: MigrationManifest = {
   // Added preferences store
@@ -92,7 +92,15 @@ export const migrations: MigrationManifest = {
       "preferences.requestedCredentials",
       requestedCredentials
     );
-  }
+  },
+
+  // Removed offlineBannerHidden from preferences
+  "6": (state: PersistedState): PersistedState =>
+    _.omit(state, "preferences.offlineBannerHidden"),
+
+  // Removed reissuanceFeedbackBannerHidden from preferences
+  "7": (state: PersistedState): PersistedState =>
+    _.omit(state, "preferences.reissuanceFeedbackBannerHidden")
 };
 
 const itwPersistConfig: PersistConfig = {

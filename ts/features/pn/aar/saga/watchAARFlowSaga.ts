@@ -5,6 +5,7 @@ import { KeyInfo } from "../../../lollipop/utils/crypto";
 import { SendAARClient, createSendAARClientWithLollipop } from "../api/client";
 import { setAarFlowState } from "../store/actions";
 import { sendAARFlowStates } from "../utils/stateUtils";
+import { fetchAarDataSaga } from "./fetchNotificationDataSaga";
 import { fetchAARQrCodeSaga } from "./fetchQrCodeSaga";
 
 export function* aarFlowMasterSaga(
@@ -17,9 +18,16 @@ export function* aarFlowMasterSaga(
   switch (nextState.type) {
     case sendAARFlowStates.fetchingQRData:
       yield* fetchAARQrCodeSaga(
-        nextState.qrCode,
         sendAARClient.aarQRCodeCheck,
-        sessionToken
+        sessionToken,
+        action
+      );
+      break;
+    case sendAARFlowStates.fetchingNotificationData:
+      yield* fetchAarDataSaga(
+        sendAARClient.getAARNotification,
+        sessionToken,
+        action
       );
       break;
   }

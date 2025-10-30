@@ -2,11 +2,14 @@ import { CieManager } from "@pagopa/io-react-native-cie";
 import { ActionArgs } from "xstate";
 import I18n from "i18next";
 import {
+  CieCardReadingFailureReason,
   ItwFlow,
   trackItWalletCardReadingClose,
   trackItWalletCieCardReadingFailure,
   trackItWalletCieCardReadingSuccess,
+  trackItWalletCieCardReadingUnexpectedFailure,
   trackItWalletCieCardVerifyFailure,
+  trackItWalletErrorCardReading,
   trackItWalletErrorPin,
   trackItWalletLastErrorPin,
   trackItWalletSecondErrorPin
@@ -71,46 +74,70 @@ export const cieMachineActions = {
   },
 
   trackError: ({
-    context: { failure, isL3 }
+    context: { failure, isL3, readProgress }
   }: ActionArgs<CieContext, CieEvents, CieEvents>) => {
     const itw_flow: ItwFlow = isL3 ? "L3" : "L2";
+    // readProgress is a number between 0 and 1, mixpanel needs a number between 0 and 100
+    const progress = Number(((readProgress ?? 0) * 100).toFixed(0));
 
     if (isNfcError(failure)) {
       switch (failure.name) {
-        case "WEBVIEW_ERROR": // No tracking
-          return;
-        case "NOT_A_CIE":
-          trackItWalletCieCardReadingFailure({
-            reason: "unknown card",
-            itw_flow
-          });
-          return;
-        case "APDU_ERROR":
-          trackItWalletCieCardReadingFailure({
-            reason: failure.message,
-            itw_flow
-          });
+        case "TAG_LOST":
+          trackItWalletErrorCardReading(itw_flow, progress);
           return;
         case "WRONG_PIN":
           if (failure.attemptsLeft > 1) {
-            trackItWalletErrorPin(itw_flow);
+            trackItWalletErrorPin(itw_flow, progress);
           } else {
-            trackItWalletSecondErrorPin(itw_flow);
+            trackItWalletSecondErrorPin(itw_flow, progress);
           }
           return;
         case "CARD_BLOCKED":
-          trackItWalletLastErrorPin(itw_flow);
+          trackItWalletLastErrorPin(itw_flow, progress);
           return;
         case "CERTIFICATE_EXPIRED":
-        case "CERTIFICATE_REVOKED":
-          trackItWalletCieCardVerifyFailure(itw_flow);
+          trackItWalletCieCardVerifyFailure({
+            itw_flow,
+            reason: "CERTIFICATE_EXPIRED",
+            cie_reading_progress: progress
+          });
           return;
+        case "CERTIFICATE_REVOKED":
+          trackItWalletCieCardVerifyFailure({
+            itw_flow,
+            reason: "CERTIFICATE_REVOKED",
+            cie_reading_progress: progress
+          });
+          return;
+        case "NOT_A_CIE":
+          trackItWalletCieCardReadingFailure({
+            reason: CieCardReadingFailureReason.ON_TAG_DISCOVERED_NOT_CIE,
+            itw_flow,
+            cie_reading_progress: progress
+          });
+          return;
+        case "GENERIC_ERROR":
+        case "APDU_ERROR":
+        case "NO_INTERNET_CONNECTION":
+        case "AUTHENTICATION_ERROR":
+          trackItWalletCieCardReadingFailure({
+            reason: CieCardReadingFailureReason[failure.name],
+            itw_flow,
+            cie_reading_progress: progress
+          });
+          return;
+
         case "CANCELLED_BY_USER":
-          trackItWalletCardReadingClose();
+          trackItWalletCardReadingClose(progress);
+          return;
+        case "WEBVIEW_ERROR": // No tracking
           return;
       }
     }
 
-    trackItWalletCieCardReadingFailure({ reason: "KO", itw_flow });
+    trackItWalletCieCardReadingUnexpectedFailure({
+      reason: failure?.name ?? "UNEXPECTED_ERROR",
+      cie_reading_progress: progress
+    });
   }
 };

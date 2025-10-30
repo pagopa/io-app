@@ -15,13 +15,14 @@ import { ItwCieCardReaderScreen as ItwCieCardReaderL3Screen } from "../identific
 import { ItwCiePinScreen } from "../identification/cie/screens/ItwCiePinScreen.tsx";
 import { ItwCiePreparationCanScreen } from "../identification/cie/screens/ItwCiePreparationCanScreen.tsx";
 import { ItwCiePreparationCardScreen } from "../identification/cie/screens/ItwCiePreparationCardScreen.tsx";
+import { ItwCiePreparationNfcScreen } from "../identification/cie/screens/ItwCiePreparationNfcScreen.tsx";
 import { ItwCiePreparationPinScreen } from "../identification/cie/screens/ItwCiePreparationPinScreen.tsx";
 import { ItwIdentificationCieWarningScreen } from "../identification/cie/screens/ItwIdentificationCieWarningScreen.tsx";
 import ItwCieIdLoginScreen from "../identification/cieId/screens/ItwCieIdLoginScreen.tsx";
-import { ItwL2IdentificationModeSelectionScreen } from "../identification/common/screens/ItwL2IdentificationModeSelectionScreen.tsx";
-import { ItwL3IdentificationModeSelectionScreen } from "../identification/common/screens/ItwL3IdentificationModeSelectionScreen.tsx";
+import { ItwIdentificationModeSelectionScreen } from "../identification/common/screens/ItwIdentificationModeSelectionScreen.tsx";
 import { ItwIdentificationIdpSelectionScreen } from "../identification/spid/screens/ItwIdentificationIdpSelectionScreen.tsx";
 import ItwSpidIdpLoginScreen from "../identification/spid/screens/ItwSpidIdpLoginScreen.tsx";
+import { ItwIssuanceEidReissuanceLandingScreen } from "../issuance/screens/ItwIssuanceEidReissuanceLandingScreen";
 import { ItwIssuanceCredentialAsyncContinuationScreen } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
 import { ItwIssuanceCredentialFailureScreen } from "../issuance/screens/ItwIssuanceCredentialFailureScreen";
 import { ItwIssuanceCredentialPreviewScreen } from "../issuance/screens/ItwIssuanceCredentialPreviewScreen";
@@ -129,12 +130,11 @@ const InnerNavigator = memo(() => {
       />
       {/* IDENTIFICATION */}
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L2}
-        component={ItwL2IdentificationModeSelectionScreen}
-      />
-      <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION.L3}
-        component={ItwL3IdentificationModeSelectionScreen}
+        name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION}
+        component={ItwIdentificationModeSelectionScreen}
+        options={({ route }) => ({
+          animationEnabled: route.params.animationEnabled
+        })}
       />
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE_WARNING}
@@ -154,16 +154,20 @@ const InnerNavigator = memo(() => {
       />
       {/* IDENTIFICATION CIE */}
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION_SCREEN}
-        component={ItwCiePreparationCardScreen}
-      />
-      <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.CIE.PIN_PREPARATION_SCREEN}
+        name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.PIN_SCREEN}
         component={ItwCiePreparationPinScreen}
       />
       <Stack.Screen
-        name={ITW_ROUTES.IDENTIFICATION.CIE.CAN_PREPARATION_SCREEN}
+        name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.NFC_SCREEN}
+        component={ItwCiePreparationNfcScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CAN_SCREEN}
         component={ItwCiePreparationCanScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CARD_SCREEN}
+        component={ItwCiePreparationCardScreen}
       />
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN}
@@ -215,11 +219,6 @@ const InnerNavigator = memo(() => {
         /* gestureEnabled to false prevents going back to the loading screen, just go back to the home screen when swiping back.
          * TODO: [SIW-1375] better retry and go back handling logic for the issuance process
          */
-      />
-      <Stack.Screen
-        name={ITW_ROUTES.ISSUANCE.CREDENTIAL_ASYNC_FLOW_CONTINUATION}
-        component={withItwEnabled(ItwIssuanceCredentialAsyncContinuationScreen)}
-        options={hiddenHeader}
       />
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL}
@@ -276,6 +275,17 @@ const InnerNavigator = memo(() => {
         name={ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED}
         component={ItwPresentationEidVerificationExpiredScreen}
         options={{ headerShown: false }}
+      />
+      {/* Landing screens from deep links */}
+      <Stack.Screen
+        name={ITW_ROUTES.LANDING.CREDENTIAL_ASYNC_FLOW_CONTINUATION}
+        component={withItwEnabled(ItwIssuanceCredentialAsyncContinuationScreen)}
+        options={hiddenHeader}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.LANDING.EID_REISSUANCE}
+        component={withItwEnabled(ItwIssuanceEidReissuanceLandingScreen)}
+        options={hiddenHeader}
       />
       {/* Proximity's flow routes */}
       <Stack.Group screenOptions={hiddenHeader}>

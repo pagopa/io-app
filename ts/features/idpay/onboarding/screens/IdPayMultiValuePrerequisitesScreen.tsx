@@ -10,8 +10,8 @@ import {
   _typeEnum as SelfCriteriaMultiTypeEnum
 } from "../../../../../definitions/idpay/SelfCriteriaMultiDTO";
 import {
-  _typeEnum as SelfCriteriaMultiTypeVariationEnum,
-  SelfCriteriaMultiTypeDTO
+  SelfCriteriaMultiTypeDTO,
+  _typeEnum as SelfCriteriaMultiTypeVariationEnum
 } from "../../../../../definitions/idpay/SelfCriteriaMultiTypeDTO";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -73,7 +73,12 @@ const IdPayMultiValuePrerequisitesScreen = () => {
       initialPage={0}
     >
       {multiSelfDeclarations.map((selfDeclaration, index) => (
-        <View key={index}>
+        <View
+          key={index}
+          style={{
+            flex: 1
+          }}
+        >
           <MultiValuePrerequisiteItemScreenContent
             selfDeclaration={selfDeclaration}
             initiativeId={initiativeId}
@@ -111,7 +116,7 @@ const MultiValuePrerequisiteItemScreenContent = ({
   const handleContinuePress = () => {
     if (selectedValueIndex === undefined) {
       IOToast.error(
-        I18n.t("idpay.onboarding.boolPrerequisites.emptyValueError")
+        I18n.t("idpay.onboarding.multiPrerequisites.emptyValueError")
       );
       trackIDPayOnboardingAlert({
         screen: "multi_self_declaration",
