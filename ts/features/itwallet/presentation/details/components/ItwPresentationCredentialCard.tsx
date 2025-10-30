@@ -22,9 +22,9 @@ import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
 import { ItwBadge } from "../../../common/components/ItwBadge.tsx";
 import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
+import { getItwDisplayCredentialStatus } from "../utils";
 import { ItwPresentationCredentialCardFlipButton } from "./ItwPresentationCredentialCardFlipButton.tsx";
 import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
-import { getItwDisplayCredentialStatus } from "../utils";
 
 type Props = {
   credential: StoredCredential;
