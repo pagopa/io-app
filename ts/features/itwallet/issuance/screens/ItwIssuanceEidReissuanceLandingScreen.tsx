@@ -33,8 +33,8 @@ export const ItwIssuanceEidReissuanceLandingScreen = () => {
 
   const hasValidEid = eidStatus && eidStatus === "valid";
 
-  // The user has already activated IT-Wallet or there is no need to reissue the eID
-  if (isItWalletValid || hasValidEid) {
+  // eID/PID valid: no reissuance needed
+  if (hasValidEid) {
     return (
       <OperationResultScreenContent
         title={I18n.t(
@@ -62,8 +62,11 @@ export const ItwIssuanceEidReissuanceLandingScreen = () => {
     );
   }
 
-  // The user has no wallet active but can activate IT-Wallet
-  if (!isAnyWalletValid && canActivateItWallet) {
+  // Tell the user IT-Wallet is available when:
+  // - The eID is expiring/expired
+  // - The user is whitelisted
+  // - IT-Wallet is not yet active
+  if (canActivateItWallet && !isItWalletValid) {
     return (
       <OperationResultScreenContent
         title={I18n.t(
@@ -91,6 +94,9 @@ export const ItwIssuanceEidReissuanceLandingScreen = () => {
     );
   }
 
+  // Go directly to one of the issuance routes:
+  // - If the user has an active Wallet -> reissuance
+  // - Else -> Documenti su IO issuance
   return <NavigateToEidIssuanceMachine eidReissuing={isAnyWalletValid} />;
 };
 
