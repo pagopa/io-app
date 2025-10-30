@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.18.0-canary.7645](https://github.com/pagopa/io-app/compare/3.18.0-rc.2...3.18.0-canary.7645) (2025-10-30)
+
+
+### Features
+
+* Add AppState management for email validation polling ([d88032d](https://github.com/pagopa/io-app/commit/d88032d08fbe706ee53226ff01c7275e97b3649b))
+
 ## [3.18.0-rc.2](https://github.com/pagopa/io-app/compare/3.18.0-rc.1...3.18.0-rc.2) (2025-10-29)
 
 
