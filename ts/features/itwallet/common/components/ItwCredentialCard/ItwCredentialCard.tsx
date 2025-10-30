@@ -14,7 +14,9 @@ import {
 import { getThemeColorByCredentialType } from "../../utils/itwStyleUtils";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
-import { useItwDisplayCredentialStatus } from "../../../presentation/details/hooks/useItwDisplayCredentialStatus";
+import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
+import { itwCredentialsEidStatusSelector } from "../../../credentials/store/selectors";
+import { getItwDisplayCredentialStatus } from "../../../presentation/details/utils";
 import { CardBackground } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
 import { CardColorScheme } from "./types";
@@ -59,7 +61,15 @@ export const ItwCredentialCard = ({
   const typefacePreference = useIOSelector(fontPreferenceSelector);
   const isItwPid = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const needsItwUpgrade = isItwPid && !isItwCredential;
-  const status = useItwDisplayCredentialStatus(credentialStatus);
+  const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
+  const isOffline = offlineAccessReason !== undefined;
+  const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
+
+  const status = getItwDisplayCredentialStatus(
+    credentialStatus,
+    eidStatus,
+    isOffline
+  );
 
   const borderColorMap = useBorderColorByStatus();
 

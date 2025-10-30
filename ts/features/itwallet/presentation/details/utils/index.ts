@@ -3,16 +3,25 @@ import {
   ItwJwtCredentialStatus
 } from "../../../common/utils/itwTypesUtils";
 
+const EXCLUDED_CREDENTIAL_STATUSES: ReadonlyArray<ItwCredentialStatus> = [
+  "expired",
+  "expiring",
+  "invalid",
+  "unknown"
+];
+
 /**
  * Determines which credential status should be displayed in the UI
  * based on the current eID status and offline conditions.
  *
- * Behavior summary:
- * - "expired", "expiring", "invalid", and "unknown" statuses are never overridden.
- * - In offline mode:
- *   - If the eID is "valid" and the credential is "jwtExpired", keep the real status.
- *   - Otherwise, treat all non-excluded credentials as "valid".
- * - When the eID is not "valid", non-excluded credentials are displayed as "valid"
+ * Logic summary:
+ * - Excluded statuses ("expired", "expiring", "invalid", "unknown") are never overridden.
+ * - Offline:
+ *   - Show "jwtExpired" only if eID is valid.
+ *   - Otherwise, show "valid".
+ * - Online:
+ *   - Show actual credential status if eID is valid.
+ *   - Otherwise, show "valid".
  *
  * @param credentialStatus The actual credential status
  * @param eidStatus The current eID status
@@ -24,32 +33,23 @@ export const getItwDisplayCredentialStatus = (
   eidStatus: ItwJwtCredentialStatus | undefined,
   isOffline: boolean
 ): ItwCredentialStatus => {
-  const excludedCredentialStatuses: ReadonlyArray<ItwCredentialStatus> = [
-    "expired",
-    "expiring",
-    "invalid",
-    "unknown"
-  ];
-  const isCredentialExcluded =
-    excludedCredentialStatuses.includes(credentialStatus);
-
-  /** Offline logic:
-   * -  eID valid + credential jwtExpired → show actual status
-   * -  not excluded → treat as valid
-   */
-  if (isOffline) {
-    if (eidStatus === "valid" && credentialStatus === "jwtExpired") {
-      return credentialStatus;
-    }
-    if (!isCredentialExcluded) {
-      return "valid";
-    }
-  }
-
-  // When eID is valid or the credential is explicitly excluded → keep actual status
-  if (eidStatus === "valid" || isCredentialExcluded) {
+  // Excluded statuses are never overridden
+  if (EXCLUDED_CREDENTIAL_STATUSES.includes(credentialStatus)) {
     return credentialStatus;
   }
 
-  return "valid";
+  const isEidValid = eidStatus === "valid";
+
+  // Offline: preserve only jwtExpired if eid is valid
+  if (isOffline && isEidValid && credentialStatus === "jwtExpired") {
+    return credentialStatus;
+  }
+
+  // Offline or invalid eid → treat as "valid"
+  if (isOffline || !isEidValid) {
+    return "valid";
+  }
+
+  // Default: eid valid and online → keep real status
+  return credentialStatus;
 };

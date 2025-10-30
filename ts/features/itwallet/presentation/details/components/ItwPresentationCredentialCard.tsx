@@ -13,14 +13,18 @@ import { ItwSkeumorphicCard } from "../../../common/components/ItwSkeumorphicCar
 import { FlipGestureDetector } from "../../../common/components/ItwSkeumorphicCard/FlipGestureDetector.tsx";
 import { getThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
-import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
+import {
+  itwCredentialStatusSelector,
+  itwCredentialsEidStatusSelector
+} from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
 import { ItwBadge } from "../../../common/components/ItwBadge.tsx";
 import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
-import { useItwDisplayCredentialStatus } from "../hooks/useItwDisplayCredentialStatus.tsx";
 import { ItwPresentationCredentialCardFlipButton } from "./ItwPresentationCredentialCardFlipButton.tsx";
+import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
+import { getItwDisplayCredentialStatus } from "../utils";
 
 type Props = {
   credential: StoredCredential;
@@ -37,7 +41,15 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const { status: credentialStatus = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
-  const status = useItwDisplayCredentialStatus(credentialStatus);
+  const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
+  const isOffline = offlineAccessReason !== undefined;
+  const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
+
+  const status = getItwDisplayCredentialStatus(
+    credentialStatus,
+    eidStatus,
+    isOffline
+  );
 
   const handleFlipButtonPress = useCallback(() => {
     trackWalletShowBack(
