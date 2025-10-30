@@ -4487,7 +4487,8 @@
           "expirationDate": "Scadenza",
           "securityLevel": "Livello di sicurezza",
           "info": "Ulteriori info su questi dati",
-          "releasedBy": "Emissione IT-Wallet ID",
+          "releasedBy": "Emissione versione digitale",
+          "releasedByPid": "Emissione IT-Wallet ID",
           "attachments": "Allegati",
           "authenticSource": "Origine dei dati",
           "mdl": {
