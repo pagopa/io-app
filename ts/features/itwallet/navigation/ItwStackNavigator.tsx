@@ -116,7 +116,10 @@ const InnerNavigator = memo(() => {
       <Stack.Screen
         name={ITW_ROUTES.DISCOVERY.INFO}
         component={withItwEnabled(ItwDiscoveryInfoScreen)}
-        options={hiddenHeader}
+        options={({ route }) => ({
+          headerShown: false,
+          animationEnabled: route.params?.animationEnabled
+        })}
       />
       <Stack.Screen
         name={ITW_ROUTES.DISCOVERY.IPZS_PRIVACY}
