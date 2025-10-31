@@ -623,8 +623,7 @@
         "alertMessage": "The application must be restarted for the changes to take effect."
       },
       "pnEnvironment": {
-        "pnEnv": "SEND (PN)",
-        "aarEnv": "Avviso Avvenuta Ricezione (AAR)"
+        "pnEnv": "SEND (PN)"
       },
       "idpay": {
         "idpayTest": "IDPay",
