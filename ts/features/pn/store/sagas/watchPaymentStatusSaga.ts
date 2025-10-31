@@ -11,6 +11,10 @@ import { trackPNPaymentStatus } from "../../analytics";
 import { getRptIdStringFromPayment } from "../../utils/rptId";
 import { paymentStatisticsForMessageUncachedSelector } from "../../../messages/store/reducers/payments";
 import { isTestEnv } from "../../../../utils/environment";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../../pushNotifications/analytics";
 
 /**
  * This saga is used to track a mixpanel event which is a report of
@@ -21,7 +25,7 @@ import { isTestEnv } from "../../../../utils/environment";
 export function* watchPaymentStatusForMixpanelTracking(
   action: ActionType<typeof startPNPaymentStatusTracking>
 ) {
-  const { isAARNotification, messageId } = action.payload;
+  const { isAARNotification, isDelegate, messageId } = action.payload;
   const currentFiscalCode = yield* select(profileFiscalCodeSelector);
   const message = yield* select(pnMessageFromIdSelector, messageId);
 
@@ -42,6 +46,8 @@ export function* watchPaymentStatusForMixpanelTracking(
   yield* race({
     polling: call(
       generateSENDMessagePaymentStatistics,
+      isAARNotification,
+      isDelegate,
       messageId,
       paymentCount,
       visibleRPTIds
@@ -51,6 +57,8 @@ export function* watchPaymentStatusForMixpanelTracking(
 }
 
 function* generateSENDMessagePaymentStatistics(
+  isAarMessage: boolean,
+  isDelegate: boolean,
   messageId: string,
   paymentCount: number,
   paymentsRpdIds: ReadonlyArray<string>
@@ -71,7 +79,14 @@ function* generateSENDMessagePaymentStatistics(
       yield* delay(500);
     } else {
       // Payment statistics are ready, track them
-      yield* call(trackPNPaymentStatus, paymentStatistics);
+      const openingSource: SendOpeningSource = isAarMessage ? "aar" : "message";
+      const userType: SendUserType = isDelegate ? "mandatory" : "recipient";
+      yield* call(
+        trackPNPaymentStatus,
+        paymentStatistics,
+        openingSource,
+        userType
+      );
       // Exit the loop and end the saga
       return;
     }

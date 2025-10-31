@@ -37,12 +37,17 @@ import {
   isCancelledFromPNMessagePot,
   paymentsFromPNMessagePot
 } from "../utils";
-import { trackSendAARFailure } from "../aar/analytics";
+import { isAarMessageDelegatedSelector } from "../aar/store/selectors";
+import {
+  trackSendAARFailure,
+  trackSendAarNotificationClosure
+} from "../aar/analytics";
+import { SendUserType } from "../../pushNotifications/analytics";
 
 export type MessageDetailsScreenRouteParams = {
   messageId: string;
   serviceId: ServiceId;
-  firstTimeOpening: boolean;
+  firstTimeOpening: boolean | undefined;
   isAarMessage?: boolean;
 };
 
@@ -53,7 +58,8 @@ type MessageDetailsRouteProps = RouteProp<
 
 const useCorrectHeader = (
   isAAr: boolean,
-  aarBottomSheetRef: RefObject<(() => void) | undefined>
+  aarBottomSheetRef: RefObject<(() => void) | undefined>,
+  userType: SendUserType
 ) => {
   const { setOptions, goBack } = useIONavigation();
   const startSupportRequest = useOfflineToastGuard(useStartSupportRequest({}));
@@ -64,6 +70,7 @@ const useCorrectHeader = (
     firstAction: {
       icon: "closeLarge",
       onPress: () => {
+        trackSendAarNotificationClosure(userType);
         aarBottomSheetRef.current?.();
       },
       accessibilityLabel: I18n.t("global.buttons.close"),
@@ -78,7 +85,8 @@ const useCorrectHeader = (
       onPress: startSupportRequest,
       accessibilityLabel: I18n.t(
         "global.accessibility.contextualHelp.open.label"
-      )
+      ),
+      testID: "support_close_button"
     },
     goBack,
     backAccessibilityLabel: I18n.t("global.buttons.back")
@@ -99,25 +107,22 @@ export const MessageDetailsScreen = () => {
   // Be aware that when this screen displays an AAR message, messageId and IUN have
   // the same value. When displaying SEND's notifications via IO Messages, messageId
   // and IUN have differente values
-  const { messageId, serviceId, firstTimeOpening, isAarMessage } = route.params;
+  const {
+    messageId,
+    serviceId,
+    firstTimeOpening,
+    isAarMessage = false
+  } = route.params;
   const aarBottomSheetRef = useRef<() => void>(undefined);
-
-  useCorrectHeader(!!isAarMessage, aarBottomSheetRef);
-
-  const androidBackButtonCallback = useCallback(() => {
-    if (isAarMessage) {
-      aarBottomSheetRef.current?.();
-      return true;
-    }
-    return false;
-  }, [isAarMessage]);
-
-  useHardwareBackButton(androidBackButtonCallback);
 
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
   const sendMessagePot = useIOSelector(state =>
     pnMessageFromIdSelector(state, messageId)
   );
+  const isAARDelegate = useIOSelector(state =>
+    isAarMessageDelegatedSelector(state, messageId)
+  );
+
   const sendMessageOrUndefined = O.getOrElseW(() => undefined)(
     pot.getOrElse(sendMessagePot, O.none)
   );
@@ -129,10 +134,24 @@ export const MessageDetailsScreen = () => {
   );
   const paymentsCount = payments?.length ?? 0;
 
+  const sendUserType: SendUserType = isAARDelegate ? "mandatory" : "recipient";
+  const androidBackButtonCallback = useCallback(() => {
+    if (isAarMessage) {
+      trackSendAarNotificationClosure(sendUserType);
+      aarBottomSheetRef.current?.();
+      return true;
+    }
+    return false;
+  }, [isAarMessage, sendUserType]);
+
+  useHardwareBackButton(androidBackButtonCallback);
+  useCorrectHeader(isAarMessage, aarBottomSheetRef, sendUserType);
+
   useEffect(() => {
     dispatch(
       startPNPaymentStatusTracking({
         isAARNotification: !!isAarMessage,
+        isDelegate: isAARDelegate,
         messageId
       })
     );
@@ -140,12 +159,20 @@ export const MessageDetailsScreen = () => {
     if (isStrictSome(sendMessagePot)) {
       const isCancelled = isCancelledFromPNMessagePot(sendMessagePot);
       const containsF24 = containsF24FromPNMessagePot(sendMessagePot);
+      const openingSource = isAarMessage ? "aar" : "message";
+      const userType = !isAarMessage
+        ? "not_set"
+        : isAARDelegate
+        ? "mandatory"
+        : "recipient";
 
       trackPNUxSuccess(
         paymentsCount,
         firstTimeOpening,
         isCancelled,
-        containsF24
+        containsF24,
+        openingSource,
+        userType
       );
 
       if (sendMessageOrUndefined == null && isAarMessage) {
@@ -166,11 +193,12 @@ export const MessageDetailsScreen = () => {
   }, [
     dispatch,
     firstTimeOpening,
-    messageId,
-    sendMessagePot,
-    paymentsCount,
+    isAARDelegate,
     isAarMessage,
-    sendMessageOrUndefined
+    messageId,
+    paymentsCount,
+    sendMessageOrUndefined,
+    sendMessagePot
   ]);
 
   const store = useIOStore();
@@ -212,11 +240,12 @@ export const MessageDetailsScreen = () => {
         serviceId={serviceId}
         payments={payments}
         isAARMessage={isAarMessage}
+        isDelegate={isAARDelegate}
       />
       {isAarMessage && (
         <SendAARMessageDetailBottomSheetComponent
           aarBottomSheetRef={aarBottomSheetRef}
-          iun={messageId}
+          isDelegate={isAARDelegate}
         />
       )}
     </>

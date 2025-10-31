@@ -94,121 +94,154 @@ describe("watchPaymentStatusSaga", () => {
 
   describe("watchPaymentStatusForMixpanelTracking", () => {
     [false, true].forEach(isAARNotification => {
-      it(`should follow proper flow (isAARNotification: ${isAARNotification})`, () => {
-        testSaga(
-          watchPaymentStatusForMixpanelTracking,
-          startPNPaymentStatusTracking({ isAARNotification, messageId })
-        )
-          .next()
-          .select(profileFiscalCodeSelector)
-          .next(taxId)
-          .select(pnMessageFromIdSelector, messageId)
-          .next(pnMessage)
-          .call(
-            paymentsFromPNMessagePot,
-            isAARNotification ? undefined : taxId,
-            pnMessage
-          )
-          .next(pnMessage.recipients.map(rec => rec.payment))
-          .race({
-            polling: call(
-              testable!.generateSENDMessagePaymentStatistics,
+      [false, true].forEach(isDelegate => {
+        it(`should follow proper flow (isAARNotification: ${isAARNotification} isDelegate ${isDelegate})`, () => {
+          testSaga(
+            watchPaymentStatusForMixpanelTracking,
+            startPNPaymentStatusTracking({
+              isAARNotification,
               messageId,
-              6,
-              pnMessage.recipients
-                .slice(0, 5)
-                .map(rec =>
-                  getRptIdStringFromPayment(
-                    rec.payment as NotificationPaymentInfo
+              isDelegate
+            })
+          )
+            .next()
+            .select(profileFiscalCodeSelector)
+            .next(taxId)
+            .select(pnMessageFromIdSelector, messageId)
+            .next(pnMessage)
+            .call(
+              paymentsFromPNMessagePot,
+              isAARNotification ? undefined : taxId,
+              pnMessage
+            )
+            .next(pnMessage.recipients.map(rec => rec.payment))
+            .race({
+              polling: call(
+                testable!.generateSENDMessagePaymentStatistics,
+                isAARNotification,
+                isDelegate,
+                messageId,
+                6,
+                pnMessage.recipients
+                  .slice(0, 5)
+                  .map(rec =>
+                    getRptIdStringFromPayment(
+                      rec.payment as NotificationPaymentInfo
+                    )
                   )
-                )
-            ),
-            cancelAction: take(cancelPNPaymentStatusTracking)
-          })
-          .next(cancelPNPaymentStatusTracking)
-          .isDone();
+              ),
+              cancelAction: take(cancelPNPaymentStatusTracking)
+            })
+            .next(cancelPNPaymentStatusTracking)
+            .isDone();
+        });
       });
     });
   });
 
   describe("generateSENDMessagePaymentStatistics", () => {
-    it("should do nothing if payment count is zero", () => {
-      testSaga(testable!.generateSENDMessagePaymentStatistics, messageId, 0, [
-        paymentId1
-      ])
-        .next()
-        .isDone();
-    });
-    it("should do nothing if payment Ids is an empty array", () => {
-      testSaga(testable!.generateSENDMessagePaymentStatistics, messageId, 1, [])
-        .next()
-        .isDone();
-    });
-    it("should keep waiting if payments are not ready", () => {
-      const paymentIds = [
-        paymentId1,
-        paymentId2,
-        paymentId3,
-        paymentId4,
-        paymentId5
-      ];
-      testSaga(
-        testable!.generateSENDMessagePaymentStatistics,
-        messageId,
-        6,
-        paymentIds
-      )
-        .next()
-        .select(
-          paymentStatisticsForMessageUncachedSelector,
-          messageId,
-          6,
-          paymentIds
-        )
-        .next(undefined)
-        .delay(500)
-        .next()
-        .select(
-          paymentStatisticsForMessageUncachedSelector,
-          messageId,
-          6,
-          paymentIds
-        );
-    });
-    it("should call tracking method when payments are ready", () => {
-      const paymentIds = [
-        paymentId1,
-        paymentId2,
-        paymentId3,
-        paymentId4,
-        paymentId5
-      ];
-      const paymentStatistics = {
-        paymentCount: 6,
-        unpaidCount: 1,
-        paidCount: 1,
-        errorCount: 1,
-        expiredCount: 1,
-        revokedCount: 1,
-        ongoingCount: 0
-      };
-      testSaga(
-        testable!.generateSENDMessagePaymentStatistics,
-        messageId,
-        6,
-        paymentIds
-      )
-        .next()
-        .select(
-          paymentStatisticsForMessageUncachedSelector,
-          messageId,
-          6,
-          paymentIds
-        )
-        .next(paymentStatistics)
-        .call(trackPNPaymentStatus, paymentStatistics)
-        .next()
-        .isDone();
+    [false, true].forEach(isAarMessage => {
+      [false, true].forEach(isDelegate => {
+        it(`should do nothing if payment count is zero (isAarMessage ${isAarMessage} isDelegate ${isDelegate})`, () => {
+          testSaga(
+            testable!.generateSENDMessagePaymentStatistics,
+            isAarMessage,
+            isDelegate,
+            messageId,
+            0,
+            [paymentId1]
+          )
+            .next()
+            .isDone();
+        });
+        it(`should do nothing if payment Ids is an empty array (isAarMessage ${isAarMessage} isDelegate ${isDelegate})`, () => {
+          testSaga(
+            testable!.generateSENDMessagePaymentStatistics,
+            isAarMessage,
+            isDelegate,
+            messageId,
+            1,
+            []
+          )
+            .next()
+            .isDone();
+        });
+        it(`should keep waiting if payments are not ready (isAarMessage ${isAarMessage} isDelegate ${isDelegate})`, () => {
+          const paymentIds = [
+            paymentId1,
+            paymentId2,
+            paymentId3,
+            paymentId4,
+            paymentId5
+          ];
+          testSaga(
+            testable!.generateSENDMessagePaymentStatistics,
+            isAarMessage,
+            isDelegate,
+            messageId,
+            6,
+            paymentIds
+          )
+            .next()
+            .select(
+              paymentStatisticsForMessageUncachedSelector,
+              messageId,
+              6,
+              paymentIds
+            )
+            .next(undefined)
+            .delay(500)
+            .next()
+            .select(
+              paymentStatisticsForMessageUncachedSelector,
+              messageId,
+              6,
+              paymentIds
+            );
+        });
+        it(`should call tracking method when payments are ready (isAarMessage ${isAarMessage} isDelegate ${isDelegate})`, () => {
+          const paymentIds = [
+            paymentId1,
+            paymentId2,
+            paymentId3,
+            paymentId4,
+            paymentId5
+          ];
+          const paymentStatistics = {
+            paymentCount: 6,
+            unpaidCount: 1,
+            paidCount: 1,
+            errorCount: 1,
+            expiredCount: 1,
+            revokedCount: 1,
+            ongoingCount: 0
+          };
+          testSaga(
+            testable!.generateSENDMessagePaymentStatistics,
+            isAarMessage,
+            isDelegate,
+            messageId,
+            6,
+            paymentIds
+          )
+            .next()
+            .select(
+              paymentStatisticsForMessageUncachedSelector,
+              messageId,
+              6,
+              paymentIds
+            )
+            .next(paymentStatistics)
+            .call(
+              trackPNPaymentStatus,
+              paymentStatistics,
+              isAarMessage ? "aar" : "message",
+              isDelegate ? "mandatory" : "recipient"
+            )
+            .next()
+            .isDone();
+        });
+      });
     });
   });
 });

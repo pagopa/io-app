@@ -10,6 +10,10 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { MessageDetailsAttachments } from "../MessageDetailsAttachments";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import * as thirdPartySelectors from "../../../store/reducers/thirdPartyById";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../../../pushNotifications/analytics";
 
 jest.mock("../MessageDetailsAttachmentItem");
 
@@ -58,28 +62,42 @@ describe("MessageDetailsAttachments", () => {
     ]
   ];
 
+  const sendOpeningSources: ReadonlyArray<SendOpeningSource> = [
+    "aar",
+    "message",
+    "not_set"
+  ];
+  const sendUserTypes: ReadonlyArray<SendUserType> = [
+    "mandatory",
+    "not_set",
+    "recipient"
+  ];
+
   const reactComponent = <View>{"A banner"}</View>;
   attachments.forEach(attachmentArray =>
     [undefined, reactComponent].forEach(banner =>
       [undefined, false, true].forEach(disabled =>
-        [undefined, false, true].forEach(isSend =>
-          it(`should match snapshot (${
-            attachmentArray.length
-          } attachments) (has ${
-            banner ? "" : "no "
-          }banner) (disabled: ${disabled}) (isSend: ${isSend})`, () => {
-            jest
-              .spyOn(thirdPartySelectors, "thirdPartyMessageAttachments")
-              .mockImplementation((_state, _messageId) => attachmentArray);
-            const component = renderScreen(
-              messageId,
-              serviceId,
-              disabled,
-              isSend,
-              banner
-            );
-            expect(component.toJSON()).toMatchSnapshot();
-          })
+        sendOpeningSources.forEach(sendOpeningSource =>
+          sendUserTypes.forEach(sendUserType =>
+            it(`should match snapshot (${
+              attachmentArray.length
+            } attachments) (has ${
+              banner ? "" : "no "
+            }banner) (disabled: ${disabled}) (opening source: ${sendOpeningSource} user type: ${sendUserType})`, () => {
+              jest
+                .spyOn(thirdPartySelectors, "thirdPartyMessageAttachments")
+                .mockImplementation((_state, _messageId) => attachmentArray);
+              const component = renderScreen(
+                messageId,
+                serviceId,
+                disabled,
+                sendOpeningSource,
+                sendUserType,
+                banner
+              );
+              expect(component.toJSON()).toMatchSnapshot();
+            })
+          )
         )
       )
     )
@@ -90,7 +108,8 @@ const renderScreen = (
   messageId: string,
   serviceId: ServiceId,
   disabled: boolean | undefined,
-  isPN: boolean | undefined,
+  sendOpeningSource: SendOpeningSource,
+  sendUserType: SendUserType,
   banner: ReactNode | undefined
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
@@ -104,7 +123,8 @@ const renderScreen = (
         banner={banner}
         messageId={messageId}
         disabled={disabled}
-        isPN={isPN}
+        sendOpeningSource={sendOpeningSource}
+        sendUserType={sendUserType}
         serviceId={serviceId}
       />
     ),

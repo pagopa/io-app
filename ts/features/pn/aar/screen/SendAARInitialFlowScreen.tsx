@@ -9,6 +9,7 @@ import { SendAARTosComponent } from "../components/SendAARTosComponent";
 import { setAarFlowState } from "../store/actions";
 import { currentAARFlowData } from "../store/selectors";
 import { sendAARFlowStates } from "../utils/stateUtils";
+import { trackSendAARToS } from "../analytics";
 
 type SendAarInitialFlowScreenT = {
   qrCode: string;
@@ -56,12 +57,16 @@ export const SendAARInitialFlowScreen = ({
             screen: PN_ROUTES.MESSAGE_DETAILS,
             params: {
               messageId: flowData.iun,
-              firstTimeOpening: true,
+              firstTimeOpening: undefined,
               serviceId: flowData.pnServiceId,
               isAarMessage: true
             }
           }
         });
+        break;
+      }
+      case sendAARFlowStates.displayingAARToS: {
+        trackSendAARToS();
         break;
       }
     }

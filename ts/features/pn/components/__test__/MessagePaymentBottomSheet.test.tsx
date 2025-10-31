@@ -103,6 +103,8 @@ const renderComponent = (
         payments={payments}
         presentPaymentsBottomSheetRef={mockPresentPaymentsBottomSheetRef}
         serviceId={"01J5X3CYV736B41KSZS8DYR75Q" as ServiceId}
+        sendOpeningSource={"message"}
+        sendUserType={"recipient"}
       />
     ),
     PN_ROUTES.MESSAGE_DETAILS,

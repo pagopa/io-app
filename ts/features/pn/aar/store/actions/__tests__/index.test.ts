@@ -1,5 +1,6 @@
 import { FiscalCode, NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import {
+  EphemeralAarMessageDataActionPayload,
   populateStoresWithEphemeralAarMessageData,
   setAarFlowState,
   terminateAarFlow
@@ -40,7 +41,7 @@ describe("AARFlowStateActions", () => {
       markdown: {} as MessageBodyMarkdown,
       subject: "" as MessageSubject,
       mandateId: ""
-    };
+    } as unknown as EphemeralAarMessageDataActionPayload;
     const action = populateStoresWithEphemeralAarMessageData(params);
     expect(action).toMatchSnapshot();
   });

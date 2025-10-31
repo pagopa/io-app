@@ -4,8 +4,6 @@ import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import { call, put, select } from "typed-redux-saga/macro";
 import { MessageBodyMarkdown } from "../../../../../definitions/backend/MessageBodyMarkdown";
 import { MessageSubject } from "../../../../../definitions/backend/MessageSubject";
-import { ThirdPartyMessage as PnThirdPartyMessage } from "../../../../../definitions/pn/ThirdPartyMessage";
-import { ThirdPartyMessage as AarThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
 import { pnMessagingServiceIdSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../types/SessionToken";
@@ -22,6 +20,9 @@ import {
 } from "../store/actions";
 import { currentAARFlowData } from "../store/selectors";
 import { SendAARFailurePhase, sendAARFlowStates } from "../utils/stateUtils";
+import { trackPNNotificationLoadSuccess } from "../../analytics";
+import { SendUserType } from "../../../pushNotifications/analytics";
+import { ThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
 import {
   aarProblemJsonAnalyticsReport,
   trackSendAARFailure
@@ -44,14 +45,14 @@ export function* fetchAarDataSaga(
     );
     return;
   }
-  const isTest = yield* select(isPnTestEnabledSelector);
+  const isSendUATEnvironment = yield* select(isPnTestEnabledSelector);
   try {
     const fetchAarRequest = fetchData({
       Bearer: `Bearer ${sessionToken}`,
       iun: currentState.iun,
       mandateId: currentState.mandateId,
       "x-pagopa-pn-io-src": "QRCODE",
-      isTest
+      isTest: isSendUATEnvironment
     });
     const result = (yield* call(
       withRefreshApiCall,
@@ -144,51 +145,57 @@ export function* fetchAarDataSaga(
 }
 
 function* aarMessageDataPayloadFromResponse(
-  value: AarThirdPartyMessage,
+  sendMessage: ThirdPartyMessage,
   mandateId: string | undefined
 ): Generator<
   ReduxSagaEffect,
   E.Either<string, EphemeralAarMessageDataActionPayload>
 > {
-  const fiscalCode = yield* select(profileFiscalCodeSelector);
-  if (fiscalCode === undefined) {
-    return E.left(`Unable to retrieve user fiscal code`);
-  }
+  const sendUserType: SendUserType =
+    mandateId != null ? "mandatory" : "recipient";
 
-  const pnServiceID = yield* select(pnMessagingServiceIdSelector);
-  if (pnServiceID === undefined) {
-    return E.left(`Unable to retrieve sendServiceId`);
-  }
-
-  const sendMessageEither = PnThirdPartyMessage.decode(value);
-  if (E.isLeft(sendMessageEither)) {
-    return E.left(
-      `Unable to decode AAR notification into SEND ThirdPartyMessage (${readableReportSimplified(
-        sendMessageEither.left
-      )})`
-    );
-  }
-
-  // Make sure that the SEND service details are loaded. They are
-  // not needed here but in the SEND notification screen in order
-  // to display service details
-  const sendServiceDetails = yield* getServiceDetails(pnServiceID);
-  if (sendServiceDetails === undefined) {
-    return E.left(`Unable to retrieve SEND service details`);
-  }
-
-  const sendMessage = sendMessageEither.right;
   const details = sendMessage.details;
   if (details == null) {
     return E.left(`Field 'details' in the AAR Notification is missing`);
   }
 
-  const recipients = details?.recipients;
+  // Notification data has been properly retrieved
+  const hasAttachments =
+    sendMessage.attachments != null && sendMessage.attachments.length > 0;
+  const timelineOrUndefined = sendMessage.details?.notificationStatusHistory;
+  const lastTimelineStatus =
+    timelineOrUndefined != null && timelineOrUndefined.length > 0
+      ? timelineOrUndefined[timelineOrUndefined.length - 1].status
+      : undefined;
+  yield* call(
+    trackPNNotificationLoadSuccess,
+    hasAttachments,
+    lastTimelineStatus,
+    "aar",
+    sendUserType
+  );
+
+  // Service details (will be displayed in the SEND notification screen)
+  const sendServiceID = yield* select(pnMessagingServiceIdSelector);
+  if (sendServiceID === undefined) {
+    return E.left(`Unable to retrieve sendServiceId`);
+  }
+
+  const sendServiceDetails = yield* call(getServiceDetails, sendServiceID);
+  if (sendServiceDetails === undefined) {
+    return E.left(`Unable to retrieve SEND service details`);
+  }
+
+  const fiscalCode = yield* select(profileFiscalCodeSelector);
+  if (fiscalCode === undefined) {
+    return E.left(`Unable to retrieve user fiscal code`);
+  }
+
   const aarFlowState: EphemeralAarMessageDataActionPayload = {
     iun: details.iun as NonEmptyString,
     thirdPartyMessage: sendMessage,
-    fiscalCode: recipients?.[0]?.taxId ?? fiscalCode,
-    pnServiceID,
+    fiscalCode,
+    pnServiceID: sendServiceID,
     markdown: "*".repeat(81) as MessageBodyMarkdown,
     subject: details.subject as MessageSubject,
     mandateId

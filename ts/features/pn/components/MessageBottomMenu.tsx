@@ -13,6 +13,10 @@ import {
   ShowMoreSection
 } from "../../messages/components/MessageDetail/ShowMoreListItem";
 import { formatPaymentNoticeNumber } from "../../payments/common/utils";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../pushNotifications/analytics";
 import { TimelineListItem } from "./TimelineListItem";
 import { NeedHelp } from "./NeedHelp";
 
@@ -32,6 +36,8 @@ export type MessageBottomMenuProps = {
   messageId: string;
   paidNoticeCodes?: ReadonlyArray<string>;
   payments?: ReadonlyArray<NotificationPaymentInfo>;
+  sendOpeningSource: SendOpeningSource;
+  sendUserType: SendUserType;
 };
 
 const generateMessageSectionData = (
@@ -132,7 +138,9 @@ export const MessageBottomMenu = ({
   iun,
   messageId,
   paidNoticeCodes,
-  payments
+  payments,
+  sendOpeningSource,
+  sendUserType
 }: MessageBottomMenuProps) => {
   const theme = useIOTheme();
 
@@ -154,7 +162,11 @@ export const MessageBottomMenu = ({
         { backgroundColor: IOColors[theme["appBackground-secondary"]] }
       ]}
     >
-      <TimelineListItem history={history} />
+      <TimelineListItem
+        history={history}
+        sendOpeningSource={sendOpeningSource}
+        sendUserType={sendUserType}
+      />
       <NeedHelp />
       <ShowMoreListItem sections={showMoreSectionData} />
     </View>

@@ -42,6 +42,10 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { trackPNPaymentStart } from "../../../pn/analytics";
 import { formatAndValidateDueDate } from "../../../payments/checkout/utils";
 import {
+  SendOpeningSource,
+  SendUserType
+} from "../../../pushNotifications/analytics";
+import {
   computeAndTrackPaymentStart,
   shouldUpdatePaymentUponReturning
 } from "./detailsUtils";
@@ -55,6 +59,8 @@ type MessagePaymentItemProps = {
   noticeNumber: string;
   paymentAmount?: PaymentAmount;
   rptId: string;
+  sendOpeningSource: SendOpeningSource;
+  sendUserType: SendUserType;
   serviceId: ServiceId;
   willNavigateToPayment?: () => void;
 };
@@ -175,6 +181,8 @@ export const MessagePaymentItem = ({
   noSpaceOnTop = false,
   noticeNumber,
   rptId,
+  sendOpeningSource,
+  sendUserType,
   serviceId,
   willNavigateToPayment = undefined
 }: MessagePaymentItemProps) => {
@@ -205,7 +213,7 @@ export const MessagePaymentItem = ({
       dispatch,
       () => {
         if (isPNPayment) {
-          trackPNPaymentStart();
+          trackPNPaymentStart(sendOpeningSource, sendUserType);
         } else {
           computeAndTrackPaymentStart(serviceId, store.getState());
         }
@@ -219,6 +227,8 @@ export const MessagePaymentItem = ({
     isPNPayment,
     paymentStatusForUI,
     rptId,
+    sendOpeningSource,
+    sendUserType,
     serviceId,
     store,
     toast,

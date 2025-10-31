@@ -9,6 +9,7 @@ import {
 import { testable, useSendAarFlowManager } from "../useSendAarFlowManager";
 import { sendAarMockStates } from "../../utils/testUtils";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import * as ANALYTICS from "../../analytics";
 
 const mockPopToTop = jest.fn();
 const mockReset = jest.fn();
@@ -48,7 +49,12 @@ describe("useSendAarFlowManager", () => {
     );
   });
   Object.values(sendAARFlowStates).forEach(stateKind => {
-    it(`should navigate to a valid state when calling "goToNextState" when the state type is ${stateKind}`, () => {
+    it(`should navigate to a valid state when calling "goToNextState" when the state type is ${stateKind} and ${
+      stateKind === sendAARFlowStates.displayingAARToS ? "" : "not "
+    }call trackSendAARToSAccepted`, () => {
+      const spiedOnMockedTrackSendAARToSAccepted = jest
+        .spyOn(ANALYTICS, "trackSendAARToSAccepted")
+        .mockImplementation();
       mockSelector.mockImplementation(
         () =>
           ({
@@ -66,10 +72,19 @@ describe("useSendAarFlowManager", () => {
             stateKind,
             mockDispatch.mock.calls[0][0].payload.type as AARFlowStateName
           );
+          expect(spiedOnMockedTrackSendAARToSAccepted.mock.calls.length).toBe(
+            1
+          );
+          expect(
+            spiedOnMockedTrackSendAARToSAccepted.mock.calls[0].length
+          ).toBe(0);
           expect(mockDispatch).toHaveBeenCalledTimes(1);
           expect(isValid).toBe(true);
           break;
         default:
+          expect(spiedOnMockedTrackSendAARToSAccepted.mock.calls.length).toBe(
+            0
+          );
           expect(mockDispatch).not.toHaveBeenCalled();
           break;
       }

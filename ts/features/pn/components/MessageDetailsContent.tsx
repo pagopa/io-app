@@ -9,7 +9,7 @@ import {
 import { sendShowAbstractSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { isTestEnv } from "../../../utils/environment";
 
-type MessageDetailsContentProps = { message: PNMessage };
+export type MessageDetailsContentProps = { message: PNMessage };
 export const MessageDetailsContent = ({
   message
 }: MessageDetailsContentProps) => (

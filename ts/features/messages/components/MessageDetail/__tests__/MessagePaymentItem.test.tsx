@@ -146,6 +146,8 @@ const renderComponent = (
         rptId={rptId}
         noticeNumber={payment.noticeCode}
         serviceId={"01J5X34VA7H1726CQNTG14GNDH" as ServiceId}
+        sendOpeningSource={"not_set"}
+        sendUserType={"not_set"}
       />
     ),
     "DUMMY",
