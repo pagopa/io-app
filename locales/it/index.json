@@ -3762,6 +3762,15 @@
           "seconds_one": "1 secondo",
           "seconds_other": "{{seconds}} secondi"
         }
+      },
+      "playgrounds" : {
+        "link" : {
+          "placeholder" : "Link alla landing"
+        },
+        "referer" : {
+          "placeholder" : "Referer"
+        },
+        "send" : "Invia"
       }
     },
     "cdc": {
