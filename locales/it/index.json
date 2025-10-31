@@ -3763,14 +3763,14 @@
           "seconds_other": "{{seconds}} secondi"
         }
       },
-      "playgrounds" : {
-        "link" : {
-          "placeholder" : "Link alla landing"
+      "playgrounds": {
+        "link": {
+          "placeholder": "Link alla landing"
         },
-        "referer" : {
-          "placeholder" : "Referer"
+        "referer": {
+          "placeholder": "Referer"
         },
-        "send" : "Invia"
+        "send": "Invia"
       }
     },
     "cdc": {
