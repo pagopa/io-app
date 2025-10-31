@@ -5615,6 +5615,7 @@
       "card": {
         "available": "Available",
         "validThrough": "Valid through {{endDate}}",
+        "ended": "Expired on {{endDate}}",
         "showAll": "View all"
       },
       "initiativePairing": {
