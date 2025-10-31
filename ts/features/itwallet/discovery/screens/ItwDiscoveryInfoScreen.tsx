@@ -11,6 +11,7 @@ import { ItwPaywallComponent } from "../components/ItwPaywallComponent";
 
 export type ItwDiscoveryInfoScreenNavigationParams = {
   isL3?: boolean;
+  animationEnabled?: boolean;
 };
 
 export type ItwDiscoveryInfoScreenProps = IOStackNavigationRouteProps<

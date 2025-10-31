@@ -5048,6 +5048,18 @@
           "secondaryAction": "Chiudi"
         }
       },
+      "reissuanceLandingScreen": {
+        "notNecessary": {
+          "title": "Questo passaggio non è più necessario",
+          "subtitle": "È tutto pronto. Puoi gestire i tuoi documenti digitali nel Portafoglio.",
+          "primaryAction": "Vai al Portafoglio"
+        },
+        "itWalletActivation": {
+          "title": "Lo sapevi? Adesso puoi attivare IT-Wallet",
+          "subtitle": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: pubblico, sicuro e gratuito.",
+          "primaryAction": "Scopri di più"
+        }
+      },
       "presentation": {
         "alerts": {
           "statusAction": "Cosa posso fare?",
@@ -5203,7 +5215,7 @@
         "eid": {
           "verificationExpired": {
             "title": "Conferma la tua identità",
-            "contentStart": "È un passaggio necessario per continuare ad usare ",
+            "contentStart": "È un passaggio necessario per continuare a usare ",
             "contentBold": "Documenti su IO ",
             "contentEnd": "senza limitazioni.",
             "primaryAction": "Inizia"
@@ -5834,6 +5846,7 @@
       "card": {
         "available": "Disponibile",
         "validThrough": "Valido fino al {{endDate}}",
+        "ended": "Scaduto il {{endDate}}",
         "showAll": "Vedi tutte"
       },
       "initiativePairing": {
