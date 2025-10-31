@@ -3,7 +3,6 @@ import * as REMOTE_CONFIG from "../../../../../store/reducers/backendStatus/remo
 import { GlobalState } from "../../../../../store/reducers/types";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import PN_ROUTES from "../../../navigation/routes";
-// import * as SELECTORS from "../../store/selectors";
 import { isSendAARLink, navigateToSendAarFlowIfEnabled } from "../deepLinking";
 
 const testRegex = "^\\s*https:\\/\\/example\\.com\\/aar\\/.*";
