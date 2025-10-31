@@ -4,13 +4,13 @@ import {
   VStack,
   TextInput,
   FooterActionsInline,
-  useFooterActionsInlineMeasurements
+  useFooterActionsInlineMeasurements,
+  IOSpacing
 } from "@pagopa/io-app-design-system";
 import { useState } from "react";
 import { View } from "react-native";
 import { WebViewSourceUri } from "react-native-webview/lib/WebViewTypes";
 import I18n from "i18next";
-import { IOSpacing } from "@pagopa/io-app-design-system/src/core";
 import WebviewComponent from "../../../../components/WebviewComponent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
