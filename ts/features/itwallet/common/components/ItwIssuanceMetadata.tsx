@@ -13,6 +13,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { getAuthSource, getItwAuthSource } from "../utils/itwMetadataUtils.ts";
 import { isItwCredential } from "../utils/itwCredentialUtils.ts";
+import { CredentialType } from "../utils/itwMocksUtils";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 
 type ItwIssuanceMetadataProps = {
@@ -104,6 +105,18 @@ export const ItwIssuanceMetadata = ({
     ? getItwAuthSource(credential)
     : getAuthSource(credential);
 
+  const releasedByLabel = useMemo(
+    () =>
+      I18n.t(
+        `features.itWallet.verifiableCredentials.claims.${
+          itwCredential && credential.credentialType === CredentialType.PID
+            ? "releasedByPid"
+            : "releasedBy"
+        }`
+      ),
+    [credential.credentialType, itwCredential]
+  );
+
   const releaserNameBottomSheet: ItwMetadataIssuanceListItemProps["bottomSheet"] =
     useMemo(
       () => ({
@@ -158,9 +171,7 @@ export const ItwIssuanceMetadata = ({
       {authSource && releaserName && <Divider />}
       {releaserName && (
         <ItwMetadataIssuanceListItem
-          label={I18n.t(
-            "features.itWallet.verifiableCredentials.claims.releasedBy"
-          )}
+          label={releasedByLabel}
           value={releaserName}
           isPreview={isPreview}
           bottomSheet={releaserNameBottomSheet}
