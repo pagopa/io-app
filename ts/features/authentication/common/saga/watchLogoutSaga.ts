@@ -25,6 +25,7 @@ export function* logoutSaga({ payload }: ActionType<typeof logoutRequest>) {
   const keyInfo = yield* call(getKeyInfo);
 
   if (!sessionToken) {
+    // TODO: add MP tech event https://pagopa.atlassian.net/browse/IOPID-3528
     return;
   }
 

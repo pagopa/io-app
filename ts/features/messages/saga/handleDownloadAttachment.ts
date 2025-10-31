@@ -35,6 +35,8 @@ import {
 } from "../utils/attachments";
 import { isEphemeralAARThirdPartyMessage } from "../utils/thirdPartyById";
 import { downloadAARAttachmentSaga } from "../../pn/aar/saga/downloadAARAttachmentSaga";
+import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { getKeyInfo } from "../../lollipop/saga";
 import { handleRequestInit } from "./handleRequestInit";
 
 /**
@@ -43,10 +45,16 @@ import { handleRequestInit } from "./handleRequestInit";
  * @param action
  */
 export function* handleDownloadAttachment(
-  bearerToken: SessionToken,
-  keyInfo: KeyInfo,
   action: ActionType<typeof downloadAttachment.request>
 ): Generator<ReduxSagaEffect, void> {
+  const sessionToken = yield* select(sessionTokenSelector);
+  const keyInfo = yield* call(getKeyInfo);
+
+  if (!sessionToken) {
+    // TODO: add MP tech event https://pagopa.atlassian.net/browse/IOPID-3528
+    return;
+  }
+
   const messageId = action.payload.messageId;
   const { ephemeralAARThirdPartyMessage, mandateId } = yield* call(
     computeThirdPartyMessageData,
@@ -60,8 +68,14 @@ export function* handleDownloadAttachment(
   // user on generic attachments).
   yield* race({
     polling: ephemeralAARThirdPartyMessage
-      ? call(downloadAARAttachmentSaga, bearerToken, keyInfo, mandateId, action)
-      : call(downloadAttachmentWorker, bearerToken, keyInfo, action),
+      ? call(
+          downloadAARAttachmentSaga,
+          sessionToken,
+          keyInfo,
+          mandateId,
+          action
+        )
+      : call(downloadAttachmentWorker, sessionToken, keyInfo, action),
     cancelAction: take(cancelPreviousAttachmentDownload)
   });
 }
