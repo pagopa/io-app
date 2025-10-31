@@ -6,7 +6,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { useRef, useCallback, useEffect, useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View, AppState } from "react-native";
 import {
   IOPictogramSizeScale,
   Pictogram,
@@ -203,6 +203,22 @@ const EmailValidationSendEmailScreen = () => {
     isOnboarding,
     navigation
   ]);
+
+  // manage AppState to pause/resume polling when app goes to background/foreground
+  useEffect(() => {
+    const subscription = AppState.addEventListener("change", nextAppState => {
+      if (nextAppState === "background") {
+        stopPollingSaga();
+      } else if (nextAppState === "active" && !isEmailValidated) {
+        startPollingSaga();
+      }
+    });
+
+    // Cleanup: remove event listener when component unmounts
+    return () => {
+      subscription?.remove();
+    };
+  }, [isEmailValidated, startPollingSaga, stopPollingSaga]);
 
   useEffect(() => {
     if (
