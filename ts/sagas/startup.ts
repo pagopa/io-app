@@ -139,6 +139,8 @@ import {
   waitForNavigatorServiceInitialization
 } from "../navigation/saga/navigation";
 import { checkShouldDisplaySendEngagementScreen } from "../features/pn/loginEngagement/sagas/checkShouldDisplaySendEngagementScreen";
+import { navigateToActiveSessionLogin } from "../features/authentication/activeSessionLogin/saga/navigateToActiveSessionLogin";
+import { showSessionExpirationBlockingScreenSelector } from "../features/authentication/activeSessionLogin/store/selectors";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
@@ -720,6 +722,14 @@ export function* initializeApplicationSaga(
     maybeHandlePendingBackgroundActions,
     true
   );
+
+  const showSessionExpirationBlockingScreen = yield* select(
+    showSessionExpirationBlockingScreenSelector
+  );
+
+  if (!isHandlingBackgroundActions && showSessionExpirationBlockingScreen) {
+    yield* call(navigateToActiveSessionLogin);
+  }
 
   if (!isHandlingBackgroundActions) {
     // Check if should navigate to the send activation screen

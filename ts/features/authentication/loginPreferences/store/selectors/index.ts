@@ -7,24 +7,13 @@ import { sessionInfoSelector } from "../../../common/store/selectors";
 import { remoteConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { apiLoginUrlPrefix } from "../../../../../config";
-import {
-  isActiveSessionLoginEnabledSelector,
-  isActiveSessionLoginLocallyEnabledSelector
-} from "../../../activeSessionLogin/store/selectors";
 
 /**
  * This selector returns a boolean that indicates whether to show
  * the sessionExpirationBanner or not
  */
-const isVisibleSessionExpirationBannerSelector = (state: GlobalState) =>
+export const showSessionExpirationBannerSelector = (state: GlobalState) =>
   state.features.loginFeatures.loginPreferences.showSessionExpirationBanner;
-
-const showSessionExpirationBannerSelector = createSelector(
-  isVisibleSessionExpirationBannerSelector,
-  isActiveSessionLoginEnabledSelector,
-  (isVisible, isActiveSessionLoginEnabled) =>
-    isVisible || isActiveSessionLoginEnabled
-);
 
 /**
  * This selector combines control over the value of `expirationDate`,
@@ -36,15 +25,8 @@ export const isSessionExpirationBannerRenderableSelector = createSelector(
   sessionInfoSelector,
   remoteConfigSelector,
   showSessionExpirationBannerSelector,
-  isActiveSessionLoginLocallyEnabledSelector,
   isFastLoginEnabledSelector,
-  (
-    sessionInfo,
-    config,
-    showSessionExpirationBanner,
-    isActiveSessionLoginLocallyEnabled,
-    isFastLogin
-  ) =>
+  (sessionInfo, config, showSessionExpirationBanner, isFastLogin) =>
     pipe(
       O.Do,
       O.bind("expirationDate", () =>
@@ -65,10 +47,9 @@ export const isSessionExpirationBannerRenderableSelector = createSelector(
       ),
       O.map(
         ({ expirationDate, threshold }) =>
-          (threshold >= 0 &&
-            showSessionExpirationBanner &&
-            differenceInDays(expirationDate, new Date()) <= threshold) ||
-          isActiveSessionLoginLocallyEnabled
+          threshold >= 0 &&
+          showSessionExpirationBanner &&
+          differenceInDays(expirationDate, new Date()) <= threshold
       ),
       O.getOrElse(() => false)
     )

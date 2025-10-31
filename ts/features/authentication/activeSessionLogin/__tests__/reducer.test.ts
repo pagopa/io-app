@@ -84,6 +84,9 @@ describe("activeSessionLoginReducer", () => {
       loginInfo: {
         token: "token" as SessionToken,
         fastLoginOptIn: true
+      },
+      engagement: {
+        hasBlockingScreenBeenVisualized: false
       }
     };
     if (
@@ -113,6 +116,9 @@ describe("activeSessionLoginReducer", () => {
       loginInfo: {
         token: "token" as SessionToken,
         fastLoginOptIn: true
+      },
+      engagement: {
+        hasBlockingScreenBeenVisualized: false
       }
     };
     const state = activeSessionLoginReducer(

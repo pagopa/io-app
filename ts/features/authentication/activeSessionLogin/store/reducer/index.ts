@@ -11,7 +11,8 @@ import {
   setFinishedActiveSessionLoginFlow,
   setIdpSelectedActiveSessionLogin,
   setLoggedOutUserWithDifferentCF,
-  setStartActiveSessionLogin
+  setStartActiveSessionLogin,
+  setVisualizeActiveSessionLoginBlockingScreen
 } from "../actions";
 import { SpidIdp } from "../../../../../utils/idps";
 import { SessionToken } from "../../../../../types/SessionToken";
@@ -29,12 +30,18 @@ export type ActiveSessionLoginState = {
     fastLoginOptIn?: boolean;
     spidLoginInfo?: StandardLoginRequestInfo;
   };
+  engagement: {
+    hasBlockingScreenBeenVisualized: boolean;
+  };
 };
 
 const initialState: ActiveSessionLoginState = {
   activeSessionLoginLocalFlag: false,
   isActiveSessionLogin: false,
-  isUserLoggedIn: false
+  isUserLoggedIn: false,
+  engagement: {
+    hasBlockingScreenBeenVisualized: false
+  }
 };
 
 const activeSessionLoginReducer = (
@@ -46,6 +53,14 @@ const activeSessionLoginReducer = (
       return {
         ...state,
         activeSessionLoginLocalFlag: action.payload
+      };
+    case getType(setVisualizeActiveSessionLoginBlockingScreen):
+      return {
+        ...state,
+        engagement: {
+          ...state.engagement,
+          hasBlockingScreenBeenVisualized: true
+        }
       };
     case getType(setStartActiveSessionLogin):
       return {
@@ -82,13 +97,17 @@ const activeSessionLoginReducer = (
         ...state,
         isUserLoggedIn: false
       };
-
     case getType(setFinishedActiveSessionLoginFlow):
+      return {
+        isActiveSessionLogin: false,
+        isUserLoggedIn: false,
+        activeSessionLoginLocalFlag: state.activeSessionLoginLocalFlag,
+        engagement: { ...state.engagement }
+      };
     case getType(consolidateActiveSessionLoginData):
     case getType(setLoggedOutUserWithDifferentCF):
     case getType(sessionCorrupted):
       return initialState;
-
     default:
       return state;
   }
@@ -100,7 +119,7 @@ const persistConfig: PersistConfig = {
   key: "activeSessionLogin",
   storage: AsyncStorage,
   version: CURRENT_REDUX_OPT_IN_STORE_VERSION,
-  whitelist: ["activeSessionLoginLocalFlag"]
+  whitelist: ["activeSessionLoginLocalFlag", "engagement"]
 };
 
 export const activeSessionLoginPersistor = persistReducer<

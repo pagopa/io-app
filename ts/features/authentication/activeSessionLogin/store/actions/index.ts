@@ -10,6 +10,9 @@ export const setStartActiveSessionLogin = createStandardAction(
   "SET_START_ACTIVE_SESSION_LOGIN"
 )();
 
+export const setVisualizeActiveSessionLoginBlockingScreen =
+  createStandardAction("SET_VISUALIZE_ACTIVE_SESSION_LOGIN_BLOCKING_SCREEN")();
+
 export const setRetryActiveSessionLogin = createStandardAction(
   "SET_RETRY_ACTIVE_SESSION_LOGIN"
 )();
@@ -48,6 +51,7 @@ export const setLoggedOutUserWithDifferentCF = createStandardAction(
 
 export type LoginInfoActions =
   | ActionType<typeof setActiveSessionLoginLocalFlag>
+  | ActionType<typeof setVisualizeActiveSessionLoginBlockingScreen>
   | ActionType<typeof setStartActiveSessionLogin>
   | ActionType<typeof setRetryActiveSessionLogin>
   | ActionType<typeof setIdpSelectedActiveSessionLogin>

@@ -170,6 +170,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
   "loginFeatures": {
     "activeSessionLogin": {
       "activeSessionLoginLocalFlag": false,
+      "engagement": {
+        "hasBlockingScreenBeenVisualized": false,
+      },
       "isActiveSessionLogin": false,
       "isUserLoggedIn": false,
     },
