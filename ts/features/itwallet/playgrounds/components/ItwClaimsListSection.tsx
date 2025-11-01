@@ -1,9 +1,9 @@
 import { ListItemHeader, useIOTheme } from "@pagopa/io-app-design-system";
-import { View } from "react-native";
 import I18n from "i18next";
+import { View } from "react-native";
 import { ItwRequestedClaimsList } from "../../issuance/components/ItwRequestedClaimsList";
 
-export const ItwClaimsList = () => {
+export const ItwClaimsListSection = () => {
   const theme = useIOTheme();
 
   const mock = [

@@ -41,7 +41,8 @@ export const ItwLegacyDiscoveryInfoComponent = ({
     useCallback(() => {
       machineRef.send({
         type: "start",
-        isL3: false
+        mode: "issuance",
+        level: "l2"
       });
     }, [machineRef])
   );
