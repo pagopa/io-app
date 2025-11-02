@@ -1,6 +1,6 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useMemo, useRef } from "react";
-import RNScreenshotPrevent from "react-native-screenshot-prevent";
+import { CaptureProtection } from "react-native-capture-protection";
 import { v4 as uuidv4 } from "uuid";
 import { isDevEnv } from "../environment";
 
@@ -9,14 +9,14 @@ const activeTags: Set<string> = new Set();
 const preventScreenCapture = (tag: string) => {
   if (!activeTags.has(tag)) {
     activeTags.add(tag);
-    RNScreenshotPrevent.enableSecureView();
+    void CaptureProtection.prevent();
   }
 };
 
 const allowScreenCapture = (tag: string) => {
   activeTags.delete(tag);
   if (activeTags.size === 0) {
-    RNScreenshotPrevent.disableSecureView();
+    void CaptureProtection.allow();
   }
 };
 
@@ -44,7 +44,7 @@ export function usePreventScreenCapture(key?: string) {
 
       clearTimeout(timeoutRef.current);
 
-      preventScreenCapture(tag);
+      void preventScreenCapture(tag);
 
       return () => {
         // Here we wait a little after the blur event for navigation transition animations.
