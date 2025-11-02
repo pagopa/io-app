@@ -30,6 +30,7 @@ import {
 } from "./context";
 import { EidIssuanceEvents } from "./events";
 import { IssuanceFailureType, mapEventToFailure } from "./failure";
+import { isL3IssuanceFeaturesEnabled } from "./utils";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -112,7 +113,9 @@ export const itwEidIssuanceMachine = setup({
       };
     }),
     trackIntroScreen: ({ context }) => {
-      trackItWalletIntroScreen(context.isL3 ? "L3" : "L2");
+      trackItWalletIntroScreen(
+        isL3IssuanceFeaturesEnabled(context.level) ? "L3" : "L2"
+      );
     }
   },
   actors: {
@@ -142,8 +145,9 @@ export const itwEidIssuanceMachine = setup({
     isNFCEnabled: ({ context }) => context.cieContext?.isNFCEnabled || false,
     isReissuance: ({ context }) => context.mode === "reissuance",
     isUpgrade: ({ context }) => context.mode === "upgrade",
-    isL3FeaturesEnabled: ({ context }) => context.isL3 || false,
-    isL2Fallback: ({ context }) => context.isL2Fallback || false,
+    isL2Fallback: ({ context }) => context.level === "l2-fallback",
+    isL3FeaturesEnabled: ({ context }) =>
+      isL3IssuanceFeaturesEnabled(context.level),
     isEligibleForItwSimplifiedActivation: notImplemented
   }
 }).createMachine({
@@ -171,12 +175,10 @@ export const itwEidIssuanceMachine = setup({
     restart: {
       target: "#itwEidIssuanceMachine.Idle",
       actions: [
-        assign(() => ({ ...InitialContext })),
-        raise(({ event, context }) => ({
+        raise(({ event }) => ({
           type: "start",
           mode: event.mode,
-          isL3: event.isL3,
-          isL2Fallback: event.isL2Fallback ?? context.isL2Fallback
+          level: event.level
         }))
       ]
     }
@@ -186,10 +188,9 @@ export const itwEidIssuanceMachine = setup({
       description: "The machine is in idle, ready to start the issuance flow",
       on: {
         start: {
-          actions: assign(({ event, context }) => ({
+          actions: assign(({ event }) => ({
             mode: event.mode,
-            isL3: event.isL3,
-            isL2Fallback: event.isL2Fallback ?? context.isL2Fallback
+            level: event.level
           })),
           target: "EvaluatingIssuanceMode"
         },
@@ -479,9 +480,7 @@ export const itwEidIssuanceMachine = setup({
               description: "Navigates to the L3 identification screen",
               entry: [
                 "navigateToIdentificationScreen",
-                assign({
-                  isL2Fallback: false
-                })
+                assign({ level: "l3" })
               ],
               on: {
                 "select-identification-mode": [
@@ -502,7 +501,7 @@ export const itwEidIssuanceMachine = setup({
                 ],
                 "go-to-l2-identification": {
                   target: "L2",
-                  actions: assign({ isL2Fallback: true })
+                  actions: assign({ level: "l2-fallback" })
                 },
                 "go-to-cie-warning": {
                   target:
@@ -802,7 +801,7 @@ export const itwEidIssuanceMachine = setup({
                 "go-to-l2-identification": {
                   target:
                     "#itwEidIssuanceMachine.UserIdentification.Identification.L2",
-                  actions: assign({ isL2Fallback: true })
+                  actions: assign({ level: "l2-fallback" })
                 },
                 close: {
                   actions: "closeIssuance"
@@ -834,7 +833,7 @@ export const itwEidIssuanceMachine = setup({
               identification: context.identification,
               authenticationContext: context.authenticationContext,
               walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
-              isL3: context.isL3 && !context.isL2Fallback
+              level: context.level
             }),
             onDone: {
               actions: assign(({ event }) => ({ eid: event.output })),

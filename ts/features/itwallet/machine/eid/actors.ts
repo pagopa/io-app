@@ -31,14 +31,16 @@ import { itwCredentialUpgradeMachine } from "../upgrade/machine";
 import type {
   AuthenticationContext,
   CieContext,
+  EidIssuanceLevel,
   IdentificationContext
 } from "./context";
+import { isL3IssuanceFeaturesEnabled } from "./utils";
 
 export type RequestEidActorParams = {
   identification: IdentificationContext | undefined;
   walletInstanceAttestation: string | undefined;
   authenticationContext: AuthenticationContext | undefined;
-  isL3: boolean | undefined;
+  level: EidIssuanceLevel | undefined;
 };
 
 export type StartAuthFlowActorParams = {
@@ -176,7 +178,10 @@ export const createEidIssuanceActorsImplementation = (
         walletAttestation: input.walletInstanceAttestation
       });
 
-      trackItwRequest(input.identification.mode, input.isL3 ? "L3" : "L2");
+      trackItwRequest(
+        input.identification.mode,
+        isL3IssuanceFeaturesEnabled(input.level) ? "L3" : "L2"
+      );
 
       return issuanceUtils.getPid({
         ...authParams,
