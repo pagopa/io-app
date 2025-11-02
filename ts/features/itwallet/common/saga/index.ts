@@ -3,7 +3,7 @@ import { call, fork } from "typed-redux-saga/macro";
 import { watchItwCredentialsSaga } from "../../credentials/saga";
 import { checkCredentialsStatusAssertion } from "../../credentials/saga/checkCredentialsStatusAssertion";
 import { handleWalletCredentialsRehydration } from "../../credentials/saga/handleWalletCredentialsRehydration";
-import { checkHasNfcFeatureSaga } from "../../identification/common/saga/index.ts";
+import { checkHasNfcFeatureSaga } from "../../identification/common/saga";
 import { watchItwLifecycleSaga } from "../../lifecycle/saga";
 import { checkCurrentWalletInstanceStateSaga } from "../../lifecycle/saga/checkCurrentWalletInstanceStateSaga.ts";
 import { warmUpIntegrityServiceSaga } from "../../lifecycle/saga/checkIntegrityServiceReadySaga";
@@ -12,6 +12,7 @@ import {
   checkWalletInstanceStateSaga
 } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
 import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga.ts";
+import { checkEidExpiringSaga } from "../../pushNotifications/saga/checkEidExpiringSaga.ts";
 import { watchItwEnvironment } from "./environment";
 import { watchItwOfflineAccess } from "./offlineAccess.ts";
 
@@ -35,6 +36,9 @@ export function* watchItwSaga(): SagaIterator {
   yield* call(checkWalletInstanceStateSaga);
   yield* call(checkCurrentWalletInstanceStateSaga);
   yield* call(checkCredentialsStatusAssertion);
+
+  // Saga that handles eid expired verification
+  yield* call(checkEidExpiringSaga);
 }
 
 /**
