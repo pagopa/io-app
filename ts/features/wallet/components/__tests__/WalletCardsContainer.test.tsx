@@ -43,9 +43,7 @@ jest.mock("react-native-reanimated", () => ({
 }));
 
 const mockNavigate = jest.fn();
-const mockAddListener = jest.fn().mockImplementation(_event => {
-  return jest.fn();
-});
+const mockAddListener = jest.fn().mockImplementation(_event => jest.fn());
 
 jest.mock("@react-navigation/native", () => ({
   ...jest.requireActual<typeof import("@react-navigation/native")>(
