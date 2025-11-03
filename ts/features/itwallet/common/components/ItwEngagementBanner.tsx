@@ -68,7 +68,7 @@ export const ItwEngagementBanner = (props: WithTestID<Props>) => {
       accessibilityRole="button"
       onAccessibilityTap={onPress}
     >
-      <ItWalletDeck width={"40%"} height={"80%"} style={styles.deck} />
+      <ItWalletDeck width={105} height={145} style={styles.deck} />
       <StaticContent {...props} onClosePress={handleOnClosePress} />
     </View>
   );
@@ -130,7 +130,7 @@ const StaticContent = (props: Props) => {
           <IconButton
             color="contrast"
             accessibilityLabel="close"
-            icon="closeLarge"
+            icon="closeMedium"
             onPress={onClosePress}
           />
         </View>
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
   },
   deck: {
     position: "absolute",
-    right: 0,
+    right: -8,
     height: 0
   },
   logo: {
