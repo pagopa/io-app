@@ -2,12 +2,12 @@ import { ReactElement } from "react";
 import { GlobalState } from "../../../store/reducers/types";
 import { ItwDiscoveryBanner } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBanner";
 import { isItwPersistedDiscoveryBannerRenderableSelector } from "../../itwallet/common/store/selectors";
-import { LoginExpirationBanner } from "../../authentication/loginPreferences/components/LoginExpirationBanner";
 import { PNActivationReminderBanner } from "../../pn/reminderBanner/components/PNActivationReminderBanner";
 import { isPnActivationReminderBannerRenderableSelector } from "../../pn/reminderBanner/reducer/bannerDismiss";
 import { PushNotificationsBanner } from "../../pushNotifications/components/PushNotificationsBanner";
 import { isPushNotificationsBannerRenderableSelector } from "../../pushNotifications/store/selectors";
 import { showSessionExpirationBannerRenderableSelector } from "../../authentication/activeSessionLogin/store/selectors";
+import { LoginExpirationBanner } from "../../authentication/activeSessionLogin/components/LoginExpirationBanner";
 
 type ComponentWithCloseHandler = (closeHandler: () => void) => ReactElement;
 type ComponentAndLogic = {
