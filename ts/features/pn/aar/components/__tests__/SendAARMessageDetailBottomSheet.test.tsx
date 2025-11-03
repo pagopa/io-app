@@ -27,6 +27,7 @@ describe("BottomSheetContent", () => {
   const mockOnSecondaryActionPress = jest.fn();
 
   const defaultProps: SendAARMessageDetailBottomSheetProps = {
+    isDelegate: false,
     onPrimaryActionPress: mockOnPrimaryActionPress,
     onSecondaryActionPress: mockOnSecondaryActionPress,
     userType: "recipient"
@@ -34,11 +35,6 @@ describe("BottomSheetContent", () => {
 
   const stateWithMandateId =
     sendAarMockStateFactory.displayingNotificationData() as DisplayingNotificationDataState;
-
-  const stateWithoutMandateId = {
-    ...stateWithMandateId,
-    mandateId: undefined
-  } as DisplayingNotificationDataState;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -117,13 +113,9 @@ describe("BottomSheetContent", () => {
     expect(mockOnSecondaryActionPress).toHaveBeenCalledTimes(1);
   });
 
-  [stateWithMandateId, stateWithoutMandateId].forEach(state =>
-    it(`should match snapshot when mandateId='${state.mandateId}'`, () => {
-      jest
-        .spyOn(SELECTORS, "currentAARFlowData")
-        .mockImplementation(() => state);
-
-      const { toJSON } = renderComponent(defaultProps);
+  [false, true].forEach(isDelegate =>
+    it(`should match snapshot when isDelegate='${isDelegate}'`, () => {
+      const { toJSON } = renderComponent({ ...defaultProps, isDelegate });
       expect(toJSON()).toMatchSnapshot();
     })
   );

@@ -64,6 +64,7 @@ export const SendAARMessageDetailBottomSheetComponent = ({
     title: I18n.t("features.pn.aar.flow.closeNotification.title"),
     component: (
       <SendAARMessageDetailBottomSheet
+        isDelegate={isDelegate}
         onPrimaryActionPress={() => {
           trackSendAarNotificationClosureBack(userType);
           dismiss();

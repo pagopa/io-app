@@ -9,29 +9,23 @@ import { View } from "react-native";
 import { useIOSelector } from "../../../../store/hooks";
 import { sendVisitTheWebsiteUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { openWebUrl } from "../../../../utils/url";
-import { currentAARFlowData } from "../store/selectors";
-import { sendAARFlowStates } from "../utils/stateUtils";
 import { trackSendAarNotificationClosureExit } from "../analytics";
 import { SendUserType } from "../../../pushNotifications/analytics";
 
 export type SendAARMessageDetailBottomSheetProps = {
+  isDelegate: boolean;
   onPrimaryActionPress: () => void;
   onSecondaryActionPress: () => void;
   userType: SendUserType;
 };
 
 export const SendAARMessageDetailBottomSheet = ({
+  isDelegate,
   onPrimaryActionPress,
   onSecondaryActionPress,
   userType
 }: SendAARMessageDetailBottomSheetProps) => {
-  const currentFlow = useIOSelector(currentAARFlowData);
   const sendVisitTheWebsiteUrl = useIOSelector(sendVisitTheWebsiteUrlSelector);
-
-  const mandateId =
-    currentFlow.type === sendAARFlowStates.displayingNotificationData
-      ? currentFlow.mandateId
-      : undefined;
 
   const onLinkPress = () => {
     trackSendAarNotificationClosureExit(userType);
@@ -53,11 +47,11 @@ export const SendAARMessageDetailBottomSheet = ({
       <FeatureInfo
         body={
           <>
-            <BodySmall testID={mandateId ? "body_mandate" : "body_nomandate"}>
+            <BodySmall testID={isDelegate ? "body_mandate" : "body_nomandate"}>
               {I18n.t(
-                mandateId
-                  ? "features.pn.aar.flow.closeNotification.paragraph3"
-                  : "features.pn.aar.flow.closeNotification.paragraphDelegate3"
+                isDelegate
+                  ? "features.pn.aar.flow.closeNotification.paragraphDelegate3"
+                  : "features.pn.aar.flow.closeNotification.paragraph3"
               )}
             </BodySmall>
             <BodySmall
