@@ -1,4 +1,3 @@
-import { IOToast } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
@@ -85,7 +84,11 @@ const IdPayEnableMessageScreen = () => {
     }
     if (!isLoadingServicePreference) {
       if (isErrorServicePreference) {
-        IOToast.error(I18n.t("global.genericError"));
+        /*
+          Toast error intentionally omitted: error handling is managed within ServiceDetailsPreferences.
+          Uncomment below to enable toast notifications for debugging or testing purposes:
+          IOToast.error("I18n.t("global.genericError")");
+        */
         trackIDPayOnboardingNotificationError({ initiativeName, initiativeId });
       } else if (isSuccessServicePreference) {
         trackIDPayOnboardingNotificationOK({ initiativeName, initiativeId });
