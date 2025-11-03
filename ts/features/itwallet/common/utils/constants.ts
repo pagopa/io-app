@@ -9,6 +9,7 @@ export const HIDDEN_CLAIM_TEXT = "******";
  * The new Wallet L3 background color
  */
 export const WALLET_L3_BG_COLOR = IOColors["blueIO-500"];
+
 /**
  * Defines the colors used in the gradient of the ITW components
  */
@@ -25,6 +26,22 @@ export const itwGradientColors = [
   "#1943E8",
   "#0B3EE3"
 ];
+
+/**
+ * IT-Wallet background color
+ */
+export const IT_WALLET_BG_COLOR_LIGHT = "#F2F9FF";
+
+/**
+ * IT-Wallet brand colors
+ */
+export const ITW_BRAND_COLORS = {
+  orange: "#FFB357",
+  purple: "#CDD2FC",
+  lightBlue: "#7AC1FA",
+  blue: "#0066CC"
+};
+
 /**
  * IT-Wallet ID brand colors
  */
