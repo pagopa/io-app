@@ -210,7 +210,12 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
 
   switch (alertType) {
     case CredentialAlertType.EID_LIFECYCLE:
-      return <ItwEidLifecycleAlert navigation={navigation} />;
+      return (
+        <ItwEidLifecycleAlert
+          navigation={navigation}
+          currentScreenName={currentScreenName}
+        />
+      );
     case CredentialAlertType.JWT_VERIFICATION:
       return (
         <JwtVerificationAlert

@@ -8,11 +8,12 @@ import { ItwJwtCredentialStatus } from "../utils/itwTypesUtils";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 
 type Props = {
+  isItw: boolean;
   maybeEidStatus: ItwJwtCredentialStatus | undefined;
   navigation: ReturnType<typeof useIONavigation>;
   currentScreenName?: string;
   isOffline?: boolean;
-  skipTracking?: boolean;
+  skipViewTracking?: boolean;
 };
 
 /**
@@ -24,32 +25,40 @@ type Props = {
  *    the event can be retracked depending on the focus behavior.
  * 2. Banner tap event: triggered when the user tap the alert.
  *
- * If `skipTracking` is true or the eID status is valid, no tracking occurs.
+ * Tracking rules:
+ * - If `skipViewTracking` is true, only the visualized event is skipped.
+ * - If the eID status is valid, no visualized event is sent.
+ * - If `isItw` is true, no tracking is sent at all.
  *
+ * @param isItw Whether IT Wallet is active disables tracking entirely
  * @param maybeEidStatus The current eID status
+ * @param navigation Navigation object to listen for focus/blur events
+ * @param skipViewTracking Flag to disable only the view tracking (visualized)
  * @param currentScreenName Optional screen name to include in tracking
  * @param isOffline Whether the app is in offline mode
- * @param skipTracking Flag to disable tracking entirely
  * @returns trackAlertTap callback to track tap interactions on the alert
  */
-// eslint-disable-next-line functional/immutable-data
 export const useItwEidLifecycleAlertTracking = ({
+  isItw,
   maybeEidStatus,
   navigation,
+  skipViewTracking = false,
   currentScreenName,
-  isOffline = false,
-  skipTracking = false
+  isOffline = false
 }: Props) => {
   const hasTrackedRef = useRef(false);
   const isEidInvalid =
     maybeEidStatus === "jwtExpiring" || maybeEidStatus === "jwtExpired";
 
-  const shouldTrack = !skipTracking && isEidInvalid;
+  const shouldTrackVisualization = !skipViewTracking && isEidInvalid && !isItw;
 
-  const bannerId =
-    maybeEidStatus === "jwtExpiring"
-      ? "itwExpiringIdBanner"
-      : "itwExpiredIdBanner";
+  const bannerId = useMemo(
+    () =>
+      maybeEidStatus === "jwtExpiring"
+        ? "itwExpiringIdBanner"
+        : "itwExpiredIdBanner",
+    [maybeEidStatus]
+  );
 
   const alertProps = useMemo(
     () => ({
@@ -63,22 +72,24 @@ export const useItwEidLifecycleAlertTracking = ({
   );
 
   useEffect(() => {
-    if (!shouldTrack) {
+    if (!shouldTrackVisualization) {
       return;
     }
     const onFocus = () => {
       if (!hasTrackedRef.current) {
         trackITWalletBannerVisualized(alertProps);
+        // eslint-disable-next-line functional/immutable-data
         hasTrackedRef.current = true;
       }
     };
 
     const onBlur = () => {
+      // eslint-disable-next-line functional/immutable-data
       hasTrackedRef.current = false;
     };
 
     // We use navigation listeners for "focus" and "blur" here instead of "useFocusEffect"
-    // because this hook may be used inside a BottomSheet. 
+    // because this hook may be used inside a BottomSheet.
     const unsubscribeFocus = navigation.addListener("focus", onFocus);
     const unsubscribeBlur = navigation.addListener("blur", onBlur);
 
@@ -86,13 +97,13 @@ export const useItwEidLifecycleAlertTracking = ({
       unsubscribeFocus();
       unsubscribeBlur();
     };
-  }, [navigation, shouldTrack, alertProps]);
+  }, [navigation, shouldTrackVisualization, alertProps]);
 
   const trackAlertTap = useCallback(() => {
-    if (shouldTrack) {
+    if (!isItw) {
       trackItWalletBannerTap(alertProps);
     }
-  }, [shouldTrack, alertProps]);
+  }, [isItw, alertProps]);
 
   return { trackAlertTap };
 };

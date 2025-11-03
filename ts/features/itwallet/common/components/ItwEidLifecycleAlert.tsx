@@ -33,7 +33,7 @@ type Props = {
    */
   lifecycleStatus?: Array<ItwJwtCredentialStatus>;
   navigation: ReturnType<typeof useIONavigation>;
-  skipTracking?: boolean;
+  skipViewTracking?: boolean;
   currentScreenName?: string;
 };
 
@@ -43,7 +43,7 @@ type Props = {
 export const ItwEidLifecycleAlert = ({
   lifecycleStatus = defaultLifecycleStatus,
   navigation,
-  skipTracking,
+  skipViewTracking,
   currentScreenName
 }: Props) => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
@@ -53,11 +53,12 @@ export const ItwEidLifecycleAlert = ({
   const isOffline = offlineAccessReason !== undefined;
 
   const { trackAlertTap } = useItwEidLifecycleAlertTracking({
+    isItw,
     maybeEidStatus,
     navigation,
+    skipViewTracking,
     currentScreenName,
-    isOffline,
-    skipTracking
+    isOffline
   });
 
   const startEidReissuing = () => {
