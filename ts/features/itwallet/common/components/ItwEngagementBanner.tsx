@@ -7,8 +7,10 @@ import {
   WithTestID
 } from "@pagopa/io-app-design-system";
 import { TxtParagraphNode, TxtStrongNode } from "@textlint/ast-node-types";
-import { useMemo } from "react";
-import { AccessibilityRole, StyleSheet, View } from "react-native";
+import { constNull } from "fp-ts/lib/function";
+import I18n from "i18next";
+import { useCallback, useMemo } from "react";
+import { AccessibilityRole, Alert, StyleSheet, View } from "react-native";
 import ItWalletDeck from "../../../../../img/features/itWallet/brand/deck-4.svg";
 import ItWalletLogo from "../../../../../img/features/itWallet/brand/logo.svg";
 import IOMarkdown from "../../../../components/IOMarkdown";
@@ -16,20 +18,46 @@ import { getTxtNodeKey } from "../../../../components/IOMarkdown/renderRules";
 import { Renderer } from "../../../../components/IOMarkdown/types";
 import { IT_WALLET_BG_COLOR_LIGHT, ITW_BRAND_COLORS } from "../utils/constants";
 
+export type ItwEngagementBannerVariant =
+  | "activation"
+  | "upgrade"
+  | "upgrade_empty"
+  | "upgrade_expiring";
+
 type Props = {
-  title: string;
-  description: string;
-  action: string;
   onPress: () => void;
   onClosePress: () => void;
+  variant: ItwEngagementBannerVariant;
   // A11y related props
   accessibilityLabel?: string;
   accessibilityHint?: string;
   accessibilityRole?: AccessibilityRole;
 };
 
-export const ItwHighlightBanner = (props: WithTestID<Props>) => {
-  const { testID, onPress } = props;
+export const ItwEngagementBanner = (props: WithTestID<Props>) => {
+  const { testID, onPress, onClosePress } = props;
+
+  const handleOnClosePress = useCallback(() => {
+    Alert.alert(
+      I18n.t("features.itWallet.engagementBanner.dismissAlert.title"),
+      I18n.t("features.itWallet.engagementBanner.dismissAlert.description"),
+      [
+        {
+          text: I18n.t(
+            "features.itWallet.engagementBanner.dismissAlert.cancel"
+          ),
+          onPress: constNull
+        },
+        {
+          text: I18n.t(
+            "features.itWallet.engagementBanner.dismissAlert.confirm"
+          ),
+          style: "destructive",
+          onPress: onClosePress
+        }
+      ]
+    );
+  }, [onClosePress]);
 
   return (
     <View
@@ -41,22 +69,25 @@ export const ItwHighlightBanner = (props: WithTestID<Props>) => {
       onAccessibilityTap={onPress}
     >
       <ItWalletDeck width={"40%"} height={"80%"} style={styles.deck} />
-      <StaticContent {...props} />
+      <StaticContent {...props} onClosePress={handleOnClosePress} />
     </View>
   );
 };
 
 const StaticContent = (props: Props) => {
   const {
-    title,
-    description,
-    action,
+    variant,
     onPress,
     onClosePress,
     accessibilityHint,
     accessibilityLabel,
     accessibilityRole
   } = props;
+
+  const i18nNamespace = "features.itWallet.engagementBanner";
+  const title = I18n.t(`${i18nNamespace}.${variant}.title`);
+  const description = I18n.t(`${i18nNamespace}.${variant}.description`);
+  const action = I18n.t(`${i18nNamespace}.${variant}.action`);
 
   // Generates a complete fallbackAccessibilityLabel by concatenating the title, content, and action
   // if they are present. Removes markdown formatting characters like asterisks.

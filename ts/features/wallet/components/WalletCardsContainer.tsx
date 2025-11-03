@@ -4,14 +4,17 @@ import {
   useIOTheme,
   VStack
 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { memo, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
-import I18n from "i18next";
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../store/hooks";
+import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
+import { itwShouldRenderNewItWalletSelector } from "../../itwallet/common/store/selectors";
+import { WALLET_L3_BG_COLOR } from "../../itwallet/common/utils/constants";
 import { ItwWalletCardsContainer } from "../../itwallet/wallet/components/ItwWalletCardsContainer";
 import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
 import {
@@ -23,10 +26,6 @@ import {
   shouldRenderWalletEmptyStateSelector
 } from "../store/selectors";
 import { withWalletCategoryFilter } from "../utils";
-import { ItwUpgradeBanner } from "../../itwallet/common/components/ItwUpgradeBanner";
-import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
-import { WALLET_L3_BG_COLOR } from "../../itwallet/common/utils/constants";
-import { itwShouldRenderNewItWalletSelector } from "../../itwallet/common/store/selectors";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
@@ -90,7 +89,6 @@ const WalletCardsContainer = () => {
 const WalletBannersContainer = memo(() => (
   <VStack space={16}>
     <ItwEnvironmentAlert />
-    <ItwUpgradeBanner />
     <ItwWalletNotAvailableBanner />
     <ItwDiscoveryBannerStandalone />
     {/* Dummy view wich adds a spacer in case one of the above banners is rendered */}
