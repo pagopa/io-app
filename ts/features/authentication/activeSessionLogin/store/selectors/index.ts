@@ -7,7 +7,7 @@ import { isMinAppVersionSupported } from "../../../../../store/reducers/featureF
 import { GlobalState } from "../../../../../store/reducers/types";
 import { sessionInfoSelector } from "../../../common/store/selectors";
 import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
-import { showSessionExpirationBannerSelector } from "../../../loginPreferences/store/selectors";
+import { apiLoginUrlPrefix } from "../../../../../config";
 
 export const isActiveSessionLoginLocallyEnabledSelector = (
   state: GlobalState
@@ -53,6 +53,10 @@ export const activeSessionLoginInfoSelector = (state: GlobalState) =>
 export const hasBlockingScreenBeenVisualizedSelector = (state: GlobalState) =>
   state.features.loginFeatures.activeSessionLogin.engagement
     .hasBlockingScreenBeenVisualized;
+
+export const showSessionExpirationBannerSelector = (state: GlobalState) =>
+  state.features.loginFeatures.activeSessionLogin.engagement
+    .showSessionExpirationBanner;
 
 export const isSessionExpiringSelector = createSelector(
   sessionInfoSelector,
@@ -156,4 +160,19 @@ export const showSessionExpirationBannerRenderableSelector = createSelector(
     }
     return false;
   }
+);
+
+/**
+ * This selector returns the remote API login URL prefix.
+ * If the remote config does not provide a login URL,
+ * it falls back to the default API login URL prefix.
+ */
+export const remoteApiLoginUrlPrefixSelector = createSelector(
+  remoteConfigSelector,
+  remoteConfig =>
+    pipe(
+      remoteConfig,
+      O.chain(config => O.fromNullable(config.loginConfig?.loginUrl)),
+      O.getOrElse(() => apiLoginUrlPrefix)
+    )
 );

@@ -1,10 +1,14 @@
 import * as O from "fp-ts/lib/Option";
+import MockDate from "mockdate";
+import { GlobalState } from "../../../../store/reducers/types";
+
+// Import selectors after setting up the mock
 import {
   isActiveSessionLoginRemotelyEnabledSelector,
   isActiveSessionLoginEnabledSelector,
-  isActiveSessionLoginLocallyEnabledSelector
+  isActiveSessionLoginLocallyEnabledSelector,
+  showSessionExpirationBannerSelector
 } from "../store/selectors";
-import { GlobalState } from "../../../../store/reducers/types";
 
 // Mock DeviceInfo for version checks
 jest.mock("react-native-device-info", () => ({
@@ -135,5 +139,43 @@ describe("isActiveSessionLoginEnabledSelector (local and remote flags)", () => {
     expect(isActiveSessionLoginRemotelyEnabledSelector(state)).toBe(false);
     expect(isActiveSessionLoginLocallyEnabledSelector(state)).toBe(false);
     expect(isActiveSessionLoginEnabledSelector(state)).toBe(false);
+  });
+});
+
+// Mock for date consistency in tests
+MockDate.set(new Date(2025, 1, 19));
+
+describe("showSessionExpirationBannerSelector", () => {
+  it("should return the showSessionExpirationBanner value from engagement", () => {
+    const state = {
+      features: {
+        loginFeatures: {
+          activeSessionLogin: {
+            engagement: {
+              showSessionExpirationBanner: true,
+              hasBlockingScreenBeenVisualized: false
+            }
+          }
+        }
+      }
+    } as unknown as GlobalState;
+    expect(showSessionExpirationBannerSelector(state)).toBe(true);
+  });
+
+  it("should return false when showSessionExpirationBanner is false", () => {
+    const state = {
+      features: {
+        loginFeatures: {
+          activeSessionLogin: {
+            engagement: {
+              showSessionExpirationBanner: false,
+              hasBlockingScreenBeenVisualized: true
+            }
+          }
+        }
+      }
+    } as unknown as GlobalState;
+
+    expect(showSessionExpirationBannerSelector(state)).toBe(false);
   });
 });

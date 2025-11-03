@@ -516,7 +516,25 @@ const DeveloperTestEnvironmentSection = ({
   };
 
   const onActiveSessionLoginToggle = (enabled: boolean) => {
-    dispatch(setActiveSessionLoginLocalFlag(enabled));
+    if (enabled) {
+      Alert.alert(
+        "Attenzione",
+        "Per testare questa funzionalità dovrai chiudere e riaprire l'applicazione",
+        [
+          {
+            text: I18n.t("global.buttons.cancel"),
+            style: "cancel"
+          },
+          {
+            text: "Prosegui",
+            onPress: () => dispatch(setActiveSessionLoginLocalFlag(enabled))
+          }
+        ],
+        { cancelable: true }
+      );
+    } else {
+      dispatch(setActiveSessionLoginLocalFlag(enabled));
+    }
   };
 
   const onAarFeatureToggle = (enabled: boolean) => {

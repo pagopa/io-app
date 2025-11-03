@@ -172,6 +172,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "activeSessionLoginLocalFlag": false,
       "engagement": {
         "hasBlockingScreenBeenVisualized": false,
+        "showSessionExpirationBanner": true,
       },
       "isActiveSessionLogin": false,
       "isUserLoggedIn": false,
@@ -201,9 +202,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
     "loginInfo": {
       "userFromSuccessLogin": false,
-    },
-    "loginPreferences": {
-      "showSessionExpirationBanner": true,
     },
     "nativeLogin": {
       "enabled": true,

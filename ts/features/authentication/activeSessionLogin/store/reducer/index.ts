@@ -5,6 +5,7 @@ import { Action } from "../../../../../store/actions/types";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess,
+  closeSessionExpirationBanner,
   consolidateActiveSessionLoginData,
   setActiveSessionLoginLocalFlag,
   setFastLoginOptSessionLogin,
@@ -32,27 +33,30 @@ export type ActiveSessionLoginState = {
   };
   engagement: {
     hasBlockingScreenBeenVisualized: boolean;
+    showSessionExpirationBanner: boolean;
   };
 };
 
-const initialState: ActiveSessionLoginState = {
+export const activeSessionLoginInitialState: ActiveSessionLoginState = {
   activeSessionLoginLocalFlag: false,
   isActiveSessionLogin: false,
   isUserLoggedIn: false,
   engagement: {
-    hasBlockingScreenBeenVisualized: false
+    hasBlockingScreenBeenVisualized: false,
+    showSessionExpirationBanner: true
   }
 };
 
 const activeSessionLoginReducer = (
-  state: ActiveSessionLoginState = initialState,
+  state: ActiveSessionLoginState = activeSessionLoginInitialState,
   action: Action
 ): ActiveSessionLoginState => {
   switch (action.type) {
     case getType(setActiveSessionLoginLocalFlag):
       return {
         ...state,
-        activeSessionLoginLocalFlag: action.payload
+        activeSessionLoginLocalFlag: action.payload,
+        engagement: { ...activeSessionLoginInitialState.engagement }
       };
     case getType(setVisualizeActiveSessionLoginBlockingScreen):
       return {
@@ -60,6 +64,15 @@ const activeSessionLoginReducer = (
         engagement: {
           ...state.engagement,
           hasBlockingScreenBeenVisualized: true
+        }
+      };
+    case getType(closeSessionExpirationBanner):
+      return {
+        ...state,
+        activeSessionLoginLocalFlag: false,
+        engagement: {
+          hasBlockingScreenBeenVisualized: false,
+          showSessionExpirationBanner: false
         }
       };
     case getType(setStartActiveSessionLogin):
@@ -107,7 +120,7 @@ const activeSessionLoginReducer = (
     case getType(consolidateActiveSessionLoginData):
     case getType(setLoggedOutUserWithDifferentCF):
     case getType(sessionCorrupted):
-      return initialState;
+      return activeSessionLoginInitialState;
     default:
       return state;
   }
@@ -127,7 +140,7 @@ export const activeSessionLoginPersistor = persistReducer<
   Action
 >(persistConfig, activeSessionLoginReducer);
 
-export const testable = isTestEnv ? initialState : undefined;
+export const testable = isTestEnv ? activeSessionLoginInitialState : undefined;
 
 export const testableReducer = isTestEnv
   ? activeSessionLoginReducer

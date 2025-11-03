@@ -9,7 +9,6 @@ import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { openWebUrl } from "../../../../utils/url";
-import { closeSessionExpirationBanner } from "../store/actions";
 import { formattedExpirationDateSelector } from "../../common/store/selectors";
 import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../../../config";
 import { trackHelpCenterCtaTapped } from "../../../../utils/analytics";
@@ -19,7 +18,10 @@ import {
   trackLoginExpirationBannerPrompt
 } from "../analytics";
 import { isActiveSessionLoginEnabledSelector } from "../../activeSessionLogin/store/selectors";
-import { setStartActiveSessionLogin } from "../../activeSessionLogin/store/actions";
+import {
+  closeSessionExpirationBanner,
+  setStartActiveSessionLogin
+} from "../../activeSessionLogin/store/actions";
 import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";

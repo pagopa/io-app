@@ -73,10 +73,6 @@ import {
   AppearanceSettingsState
 } from "../../../appearanceSettings/store/reducers";
 import {
-  loginPreferencesPersistor,
-  LoginPreferencesState
-} from "../../../authentication/loginPreferences/store/reducers";
-import {
   activeSessionLoginPersistor,
   ActiveSessionLoginState
 } from "../../../authentication/activeSessionLogin/store/reducer";
@@ -92,7 +88,6 @@ type LoginFeaturesState = {
   cieLogin: CieLoginState & PersistPartial;
   loginInfo: LoginInfoState;
   spidLogin: SpidLoginState;
-  loginPreferences: LoginPreferencesState & PersistPartial;
   activeSessionLogin: ActiveSessionLoginState & PersistPartial;
 };
 
@@ -134,7 +129,6 @@ const rootReducer = combineReducers<FeaturesState, Action>({
     cieLogin: cieLoginPersistor,
     loginInfo: loginInfoReducer,
     spidLogin: spidLoginReducer,
-    loginPreferences: loginPreferencesPersistor,
     activeSessionLogin: activeSessionLoginPersistor
   }),
   wallet: walletReducer,
