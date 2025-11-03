@@ -272,6 +272,17 @@ type ItwCredentialInfoDetails = {
 };
 
 /**
+ * Actions that can trigger the eID reissuing flow.
+ * This type represents the user action that was performed immediately before
+ * the eID reissuing process is initiated.
+ * Add new values here when implementing additional flows that should start
+ * the reissuing procedure.
+ */
+export enum ItwEidReissuingTrigger {
+  ADD_CREDENTIAL = "add_credential"
+}
+
+/**
  * Actions that trigger the requirement for L3 upgrade.
  * This type represents the user action that was performed immediately before
  * the L3 mandatory upgrade screen was displayed.
@@ -1145,6 +1156,15 @@ export const trackItwAddCredentialNotTrustedIssuer = (
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_ADD_CREDENTIAL_NOT_TRUSTED_ISSUER,
     buildEventProperties("KO", "screen_view", properties)
+  );
+};
+
+export const trackItwEidReissuingMandatory = (
+  action: ItwEidReissuingTrigger
+) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_REISSUING_EID_MANDATORY,
+    buildEventProperties("KO", "screen_view", { action })
   );
 };
 

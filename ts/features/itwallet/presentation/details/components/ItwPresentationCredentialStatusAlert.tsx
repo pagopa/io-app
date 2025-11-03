@@ -1,5 +1,6 @@
 import { memo, useCallback } from "react";
 import { View } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import { Alert, IOButton, IOToast, VStack } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -83,6 +84,7 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
   );
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
+  const { name: currentScreenName } = useRoute();
 
   const trackCredentialAlertEvent = (action: CredentialAlertEvents): void => {
     if (!status) {
@@ -128,7 +130,12 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
     }
     // If both the eID jwt and the credential jwt are expired, show the eID alert
     if (isEidExpired && isCredentialJwtExpired && !isItwL3) {
-      return <ItwEidLifecycleAlert navigation={navigation} />;
+      return (
+        <ItwEidLifecycleAlert
+          navigation={navigation}
+          currentScreenName={currentScreenName}
+        />
+      );
     }
 
     return (

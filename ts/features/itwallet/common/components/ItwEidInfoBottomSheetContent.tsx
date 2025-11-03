@@ -93,7 +93,7 @@ const ItwEidInfoBottomSheetContent = ({
             "features.itWallet.presentation.bottomSheets.eidInfo.contentTop"
           )}
         />
-        <ItwEidLifecycleAlert navigation={navigation} />
+        <ItwEidLifecycleAlert navigation={navigation} skipTracking={true} />
         <View>
           {claims.map((claim, index) => (
             <Fragment key={index}>

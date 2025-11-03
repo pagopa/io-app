@@ -19,6 +19,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
+import { useItwEidLifecycleAlertTracking } from "../hooks/useItwEidLifecycleAlertTracking";
 
 const defaultLifecycleStatus: Array<ItwJwtCredentialStatus> = [
   "valid",
@@ -32,6 +33,8 @@ type Props = {
    */
   lifecycleStatus?: Array<ItwJwtCredentialStatus>;
   navigation: ReturnType<typeof useIONavigation>;
+  skipTracking?: boolean;
+  currentScreenName?: string;
 };
 
 /**
@@ -39,14 +42,26 @@ type Props = {
  */
 export const ItwEidLifecycleAlert = ({
   lifecycleStatus = defaultLifecycleStatus,
-  navigation
+  navigation,
+  skipTracking,
+  currentScreenName
 }: Props) => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
   const isItw = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
+  const isOffline = offlineAccessReason !== undefined;
+
+  const { trackAlertTap } = useItwEidLifecycleAlertTracking({
+    maybeEidStatus,
+    navigation,
+    currentScreenName,
+    isOffline,
+    skipTracking
+  });
 
   const startEidReissuing = () => {
+    trackAlertTap();
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
       params: {
