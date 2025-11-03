@@ -32,7 +32,7 @@ export type ItwIssuanceCredentialAsyncContinuationNavigationParams = {
 
 type ScreenProps = IOStackNavigationRouteProps<
   ItwParamsList,
-  "ITW_ISSUANCE_CREDENTIAL_ASYNC_FLOW_CONTINUATION"
+  "ITW_LANDING_SCREEN_CREDENTIAL_ASYNC_FLOW_CONTINUATION"
 >;
 
 const routeParams = t.type({

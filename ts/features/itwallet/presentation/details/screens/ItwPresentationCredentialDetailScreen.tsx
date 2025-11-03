@@ -7,7 +7,7 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/Option";
 import I18n from "i18next";
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import {
@@ -172,34 +172,38 @@ type ItwPresentationCredentialDetailProps = {
 export const ItwPresentationCredentialDetail = ({
   credential
 }: ItwPresentationCredentialDetailProps) => {
-  const itwProximityMachineRef = ItwProximityMachineContext.useActorRef();
-  const isCheckingPermissions =
-    ItwProximityMachineContext.useSelector(selectIsLoading);
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
-  const isMultilevel = isMultiLevelCredential(credential);
+  const itwProximityMachineRef = ItwProximityMachineContext.useActorRef();
+
+  const itwFeaturesEnabled = useItwFeaturesEnabled(credential);
   const isL3Credential = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
-  const mixPanelCredential = getMixPanelCredential(
-    credential.credentialType,
-    isL3Credential
+  const isCheckingPermissions =
+    ItwProximityMachineContext.useSelector(selectIsLoading);
+
+  const mixPanelCredential = useMemo(
+    () => getMixPanelCredential(credential.credentialType, isL3Credential),
+    [credential.credentialType, isL3Credential]
   );
-  const itwFeaturesEnabled = useItwFeaturesEnabled(credential);
 
   useDebugInfo(credential);
   usePreventScreenCapture();
 
-  useFocusEffect(() => {
-    if (status !== "jwtExpired") {
-      trackCredentialDetail({
-        credential: mixPanelCredential,
-        credential_status: CREDENTIAL_STATUS_MAP[status],
-        credential_type: isMultilevel ? "multiple" : "unique"
-      });
-    }
-  });
+  useFocusEffect(
+    useCallback(() => {
+      if (status !== "jwtExpired") {
+        const isMultilevel = isMultiLevelCredential(credential);
+        trackCredentialDetail({
+          credential: mixPanelCredential,
+          credential_status: CREDENTIAL_STATUS_MAP[status],
+          credential_type: isMultilevel ? "multiple" : "unique"
+        });
+      }
+    }, [status, credential, mixPanelCredential])
+  );
 
   /**
    * Show the credential trustmark screen after user identification

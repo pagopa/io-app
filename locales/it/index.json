@@ -623,8 +623,7 @@
         "alertMessage": "È necessario il riavvio dell'applicazione affinché le modifiche abbiano effetto."
       },
       "pnEnvironment": {
-        "pnEnv": "SEND (PN)",
-        "aarEnv": "Avviso Avvenuta Ricezione (AAR)"
+        "pnEnv": "SEND (PN)"
       },
       "idpay": {
         "idpayTest": "IDPay",
@@ -3762,6 +3761,15 @@
           "seconds_one": "1 secondo",
           "seconds_other": "{{seconds}} secondi"
         }
+      },
+      "playgrounds": {
+        "link": {
+          "placeholder": "Link alla landing"
+        },
+        "referer": {
+          "placeholder": "Referer"
+        },
+        "send": "Invia"
       }
     },
     "cdc": {
@@ -5047,6 +5055,18 @@
           "secondaryAction": "Chiudi"
         }
       },
+      "reissuanceLandingScreen": {
+        "notNecessary": {
+          "title": "Questo passaggio non è più necessario",
+          "subtitle": "È tutto pronto. Puoi gestire i tuoi documenti digitali nel Portafoglio.",
+          "primaryAction": "Vai al Portafoglio"
+        },
+        "itWalletActivation": {
+          "title": "Lo sapevi? Adesso puoi attivare IT-Wallet",
+          "subtitle": "Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: pubblico, sicuro e gratuito.",
+          "primaryAction": "Scopri di più"
+        }
+      },
       "presentation": {
         "alerts": {
           "statusAction": "Cosa posso fare?",
@@ -5202,7 +5222,7 @@
         "eid": {
           "verificationExpired": {
             "title": "Conferma la tua identità",
-            "contentStart": "È un passaggio necessario per continuare ad usare ",
+            "contentStart": "È un passaggio necessario per continuare a usare ",
             "contentBold": "Documenti su IO ",
             "contentEnd": "senza limitazioni.",
             "primaryAction": "Inizia"
@@ -5833,6 +5853,7 @@
       "card": {
         "available": "Disponibile",
         "validThrough": "Valido fino al {{endDate}}",
+        "ended": "Scaduto il {{endDate}}",
         "showAll": "Vedi tutte"
       },
       "initiativePairing": {
@@ -5992,7 +6013,16 @@
         "buttons": {
           "privacy": "Preferenze e Privacy",
           "unsubscribe": "Rimuovi {{initiativeName}}",
-          "requestHelp": "Chiedi aiuto"
+          "requestHelp": "Chiedi aiuto",
+          "staticCode": "Genera codice statico"
+        },
+        "staticCodeModal": {
+          "content": {
+            "title": "Ecco il codice statico",
+            "subtitle": "Usa questo codice, se richiesto da un venditore online in fase di acquisto."
+          },
+          "footer": "Copia codice statico",
+          "staticCodeErrorAlert": "C’è stato un errore, riprova"
         }
       },
       "operationDetails": {
@@ -6216,8 +6246,11 @@
         "failureSubtitle": "Riprova tra qualche minuto o usa il sito dell’iniziativa per richiedere il bonus."
       },
       "disabledScreen": {
-        "title": "Stai per accedere all’iniziativa",
-        "subtitle": "Potrebbero volerci alcuni minuti. Non chiudere l’app: quando sarà tutto pronto, potrai richiedere il tuo bonus."
+        "title": "Stai per accedere all'iniziativa",
+        "subtitle": "Potrebbero volerci alcuni minuti. Non chiudere l'app: quando sarà tutto pronto, potrai richiedere il tuo bonus."
+      },
+      "featureDisabled": {
+        "title": "L'iniziativa non è più disponibile"
       },
       "preferences": {
         "enableEmailBanner": {

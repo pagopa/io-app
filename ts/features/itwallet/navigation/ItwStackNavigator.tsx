@@ -2,12 +2,11 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { ComponentType, memo } from "react";
 import { useIOSelector } from "../../../store/hooks";
 import { isGestureEnabled } from "../../../utils/navigation";
-import { isConnectedSelector } from "../../connectivity/store/selectors";
 import { ItwGenericErrorContent } from "../common/components/ItwGenericErrorContent";
 import { isItwEnabledSelector } from "../common/store/selectors/remoteConfig";
+import { ItwDiscoveryInfoComponent } from "../discovery/components/ItwDiscoveryInfoComponent.tsx";
 import { ItwAlreadyActiveScreen } from "../discovery/screens/ItwAlreadyActiveScreen";
 import { ItwDiscoveryInfoScreen } from "../discovery/screens/ItwDiscoveryInfoScreen";
-import { ItwDiscoveryInfoComponent } from "../discovery/components/ItwDiscoveryInfoComponent.tsx";
 import ItwIpzsPrivacyScreen from "../discovery/screens/ItwIpzsPrivacyScreen";
 import { ItwActivateNfcScreen } from "../identification/cie/screens/ItwActivateNfcScreen.tsx";
 import { ItwCieCanScreen } from "../identification/cie/screens/ItwCieCanScreen.tsx";
@@ -28,6 +27,7 @@ import { ItwIssuanceCredentialPreviewScreen } from "../issuance/screens/ItwIssua
 import { ItwIssuanceCredentialTrustIssuerScreen } from "../issuance/screens/ItwIssuanceCredentialTrustIssuerScreen";
 import { ItwIssuanceEidFailureScreen } from "../issuance/screens/ItwIssuanceEidFailureScreen";
 import { ItwIssuanceEidPreviewScreen } from "../issuance/screens/ItwIssuanceEidPreviewScreen";
+import { ItwIssuanceEidReissuanceLandingScreen } from "../issuance/screens/ItwIssuanceEidReissuanceLandingScreen";
 import { ItwIssuanceEidResultScreen } from "../issuance/screens/ItwIssuanceEidResultScreen";
 import { ItwIssuanceInactiveITWalletScreen } from "../issuance/screens/ItwIssuanceInactiveITWalletScreen.tsx";
 import { ItwIssuanceUpcomingCredentialScreen } from "../issuance/screens/ItwIssuanceUpcomingCredentialScreen";
@@ -116,7 +116,10 @@ const InnerNavigator = memo(() => {
       <Stack.Screen
         name={ITW_ROUTES.DISCOVERY.INFO}
         component={withItwEnabled(ItwDiscoveryInfoScreen)}
-        options={hiddenHeader}
+        options={({ route }) => ({
+          headerShown: false,
+          animationEnabled: route.params?.animationEnabled
+        })}
       />
       <Stack.Screen
         name={ITW_ROUTES.DISCOVERY.IPZS_PRIVACY}
@@ -131,6 +134,9 @@ const InnerNavigator = memo(() => {
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION}
         component={ItwIdentificationModeSelectionScreen}
+        options={({ route }) => ({
+          animationEnabled: route.params.animationEnabled
+        })}
       />
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE_WARNING}
@@ -217,11 +223,6 @@ const InnerNavigator = memo(() => {
          */
       />
       <Stack.Screen
-        name={ITW_ROUTES.ISSUANCE.CREDENTIAL_ASYNC_FLOW_CONTINUATION}
-        component={withItwEnabled(ItwIssuanceCredentialAsyncContinuationScreen)}
-        options={hiddenHeader}
-      />
-      <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL}
         component={ItwIssuanceUpcomingCredentialScreen}
         options={hiddenHeader}
@@ -234,7 +235,7 @@ const InnerNavigator = memo(() => {
       {/* CREDENTIAL PRESENTATION */}
       <Stack.Screen
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL}
-        component={withItwEnabled(ItwPresentationCredentialDetailScreen)}
+        component={ItwPresentationCredentialDetailScreen}
         options={hiddenHeader}
       />
       <Stack.Screen
@@ -276,6 +277,17 @@ const InnerNavigator = memo(() => {
         name={ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED}
         component={ItwPresentationEidVerificationExpiredScreen}
         options={{ headerShown: false }}
+      />
+      {/* Landing screens from deep links */}
+      <Stack.Screen
+        name={ITW_ROUTES.LANDING.CREDENTIAL_ASYNC_FLOW_CONTINUATION}
+        component={withItwEnabled(ItwIssuanceCredentialAsyncContinuationScreen)}
+        options={hiddenHeader}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.LANDING.EID_REISSUANCE}
+        component={withItwEnabled(ItwIssuanceEidReissuanceLandingScreen)}
+        options={hiddenHeader}
       />
       {/* Proximity's flow routes */}
       <Stack.Group screenOptions={hiddenHeader}>
@@ -330,11 +342,5 @@ const withItwEnabled =
   <P extends Record<string, unknown>>(Screen: ComponentType<P>) =>
   (props: P) => {
     const isItwEnabled = useIOSelector(isItwEnabledSelector);
-    const isConnected = useIOSelector(isConnectedSelector);
-
-    // Show error content only if connected and IT Wallet is not enabled
-    if (isConnected && !isItwEnabled) {
-      return <ItwGenericErrorContent />;
-    }
-    return <Screen {...props} />;
+    return isItwEnabled ? <Screen {...props} /> : <ItwGenericErrorContent />;
   };
