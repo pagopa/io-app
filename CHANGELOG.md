@@ -2,6 +2,45 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.18.0-rc.2](https://github.com/pagopa/io-app/compare/3.18.0-rc.1...3.18.0-rc.2) (2025-10-29)
+
+
+### Features
+
+* [[IOCOM-2707](https://pagopa.atlassian.net/browse/IOCOM-2707)] Add AAR flow phase 3 remote FF selector ([#7549](https://github.com/pagopa/io-app/issues/7549)) ([3dde4d9](https://github.com/pagopa/io-app/commit/3dde4d963686bacd69132ebec4ebc81621d09d6b))
+* **IT Wallet:** [[SIW-3221](https://pagopa.atlassian.net/browse/SIW-3221)] Add eID reissuance landing screen for links ([#7525](https://github.com/pagopa/io-app/issues/7525)) ([a030e01](https://github.com/pagopa/io-app/commit/a030e0114d7d2f7ab07862153acc10f5bfab1fa4))
+
+
+### Bug Fixes
+
+* [[IOBP-2145](https://pagopa.atlassian.net/browse/IOBP-2145)] Adjust IDPay `CaC` url and missing navigate to website CTA ([#7559](https://github.com/pagopa/io-app/issues/7559)) ([98f7544](https://github.com/pagopa/io-app/commit/98f75449d321fec07c8acd28dca6f55379f0d00a))
+
+
+### Chores
+
+* [[IOBP-2136](https://pagopa.atlassian.net/browse/IOBP-2136)] add mixpanel idpay feature disable screen tracking ([#7558](https://github.com/pagopa/io-app/issues/7558)) ([4d8803c](https://github.com/pagopa/io-app/commit/4d8803c360df87ca24dcc5f44d5a094d36ebe2aa))
+
+## [3.18.0-rc.1](https://github.com/pagopa/io-app/compare/3.18.0-rc.0...3.18.0-rc.1) (2025-10-28)
+
+
+### Features
+
+* [[IOBP-2127](https://pagopa.atlassian.net/browse/IOBP-2127)] Added IDPay disabled feature flag screen for the entire feature ([#7540](https://github.com/pagopa/io-app/issues/7540)) ([59b1521](https://github.com/pagopa/io-app/commit/59b152164c0e7a85d0a791645d1b6b11dabad188))
+* [[IOCOM-2686](https://pagopa.atlassian.net/browse/IOCOM-2686)] Remove UAL support for SEND dev env ([#7552](https://github.com/pagopa/io-app/issues/7552)) ([acd0825](https://github.com/pagopa/io-app/commit/acd0825849e6b28a0efeea66d8626957921da85c))
+
+
+### Bug Fixes
+
+* [[IOBP-2130](https://pagopa.atlassian.net/browse/IOBP-2130)] IDPay duplicated Mixpanel event ([#7556](https://github.com/pagopa/io-app/issues/7556)) ([2562a49](https://github.com/pagopa/io-app/commit/2562a49f1547550ba3c9d0d88b81b3dc30bf95fa))
+* [[IOBP-2133](https://pagopa.atlassian.net/browse/IOBP-2133)] IDPay Android sticky button ([#7550](https://github.com/pagopa/io-app/issues/7550)) ([a3489db](https://github.com/pagopa/io-app/commit/a3489dbcfa07b9622f817c98661c1afa39602abc))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-3217](https://pagopa.atlassian.net/browse/SIW-3217),[SIW-3218](https://pagopa.atlassian.net/browse/SIW-3218)] Alert Survey ([#7516](https://github.com/pagopa/io-app/issues/7516)) ([0fbae05](https://github.com/pagopa/io-app/commit/0fbae05df8ce88152645570dab62f38a76629127))
+* **IT Wallet:** [[SIW-3244](https://pagopa.atlassian.net/browse/SIW-3244)]  Fix mapped errors while reading CIE ([#7533](https://github.com/pagopa/io-app/issues/7533)) ([1cf3453](https://github.com/pagopa/io-app/commit/1cf34537bf66df43e637a1ae1a2ba5df3ef8958c))
+* **IT Wallet:** [[SIW-3251](https://pagopa.atlassian.net/browse/SIW-3251)] Hook to override credential status in eID reactivation flow ([#7532](https://github.com/pagopa/io-app/issues/7532)) ([acbb1bf](https://github.com/pagopa/io-app/commit/acbb1bf0ba8618e96de7c69568aa716b93037b47))
+
 ## [3.18.0-rc.0](https://github.com/pagopa/io-app/compare/3.17.0-rc.8...3.18.0-rc.0) (2025-10-28)
 
 

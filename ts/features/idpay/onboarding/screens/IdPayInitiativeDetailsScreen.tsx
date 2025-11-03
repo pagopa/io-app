@@ -18,7 +18,6 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";
 import { loadServicePreference } from "../../../services/details/store/actions/preference";
 import { servicePreferenceResponseSuccessByIdSelector } from "../../../services/details/store/selectors";
-import { IdPayEnabledFeatureFlagGuard } from "../../common/components/IdPayEnabledFeatureFlagGuard";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import {
   trackIDPayOnboardingAppUpdateConfirm,
@@ -32,6 +31,7 @@ import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { selectInitiative } from "../machine/selectors";
 import { IdPayOnboardingParamsList } from "../navigation/params";
 import { generateSmallTosMarkdownRules } from "../utils/markdown";
+import { IdPayEnabledSubFeatureGuard } from "../../common/components/IdPayEnabledFeatureFlagGuard";
 
 export type InitiativeDetailsScreenParams = {
   serviceId?: string;
@@ -174,9 +174,9 @@ export const IdPayInitiativeDetailsScreen = () => {
   );
 
   const IdPayInitiativeDetails = () => (
-    <IdPayEnabledFeatureFlagGuard featureKey="idpay.onboarding">
+    <IdPayEnabledSubFeatureGuard featureKey="idpay.onboarding">
       <IdPayInitiativeDetailsScreenComponent />
-    </IdPayEnabledFeatureFlagGuard>
+    </IdPayEnabledSubFeatureGuard>
   );
 
   useOnFirstRender(
