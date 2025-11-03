@@ -122,11 +122,7 @@ export const ItwEidLifecycleAlert = ({
         }
       };
 
-      if (
-        offlineAccessReason !== undefined &&
-        eidStatus === "jwtExpired" &&
-        !isItw
-      ) {
+      if (offlineAccessReason !== undefined && !isItw) {
         return {
           testID: "itwEidLifecycleAlertTestID_offline",
           variant: "error",
