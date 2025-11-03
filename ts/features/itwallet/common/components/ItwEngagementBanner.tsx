@@ -10,7 +10,7 @@ import { TxtParagraphNode, TxtStrongNode } from "@textlint/ast-node-types";
 import { constNull } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
-import { AccessibilityRole, Alert, StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import ItWalletDeck from "../../../../../img/features/itWallet/brand/deck-4.svg";
 import ItWalletLogo from "../../../../../img/features/itWallet/brand/logo.svg";
 import IOMarkdown from "../../../../components/IOMarkdown";
@@ -25,13 +25,9 @@ export type ItwEngagementBannerVariant =
   | "upgrade_expiring";
 
 type Props = {
+  variant: ItwEngagementBannerVariant;
   onPress: () => void;
   onClosePress: () => void;
-  variant: ItwEngagementBannerVariant;
-  // A11y related props
-  accessibilityLabel?: string;
-  accessibilityHint?: string;
-  accessibilityRole?: AccessibilityRole;
 };
 
 export const ItwEngagementBanner = (props: WithTestID<Props>) => {
@@ -69,20 +65,13 @@ export const ItwEngagementBanner = (props: WithTestID<Props>) => {
       onAccessibilityTap={onPress}
     >
       <ItWalletDeck width={105} height={145} style={styles.deck} />
-      <StaticContent {...props} onClosePress={handleOnClosePress} />
+      <BannerContent {...props} onClosePress={handleOnClosePress} />
     </View>
   );
 };
 
-const StaticContent = (props: Props) => {
-  const {
-    variant,
-    onPress,
-    onClosePress,
-    accessibilityHint,
-    accessibilityLabel,
-    accessibilityRole
-  } = props;
+const BannerContent = (props: Props) => {
+  const { variant, onPress, onClosePress } = props;
 
   const i18nNamespace = "features.itWallet.engagementBanner";
   const title = I18n.t(`${i18nNamespace}.${variant}.title`);
@@ -91,7 +80,7 @@ const StaticContent = (props: Props) => {
 
   // Generates a complete fallbackAccessibilityLabel by concatenating the title, content, and action
   // if they are present. Removes markdown formatting characters like asterisks.
-  const fallbackAccessibilityLabel = [title, description, action]
+  const accessibilityLabel = [title, description, action]
     .filter(Boolean)
     .join("\n")
     .replace(/\*/g, "");
@@ -120,9 +109,8 @@ const StaticContent = (props: Props) => {
     <View
       accessible={true}
       // A11y related props
-      accessibilityLabel={accessibilityLabel ?? fallbackAccessibilityLabel}
-      accessibilityHint={accessibilityHint}
-      accessibilityRole={action !== undefined ? accessibilityRole : "text"}
+      accessibilityLabel={accessibilityLabel}
+      accessibilityRole={"button"}
     >
       <VStack space={16}>
         <View style={styles.logo}>

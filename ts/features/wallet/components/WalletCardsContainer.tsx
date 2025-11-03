@@ -4,12 +4,14 @@ import {
   useIOTheme,
   VStack
 } from "@pagopa/io-app-design-system";
+import { constNull } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { memo, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../store/hooks";
+import { ItwEngagementBanner } from "../../itwallet/common/components/ItwEngagementBanner";
 import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
@@ -89,6 +91,11 @@ const WalletCardsContainer = () => {
 const WalletBannersContainer = memo(() => (
   <VStack space={16}>
     <ItwEnvironmentAlert />
+    <ItwEngagementBanner
+      variant="activation"
+      onPress={constNull}
+      onClosePress={constNull}
+    />
     <ItwWalletNotAvailableBanner />
     <ItwDiscoveryBannerStandalone />
     {/* Dummy view wich adds a spacer in case one of the above banners is rendered */}

@@ -5644,12 +5644,12 @@
         "upgrade_empty": {
           "title": "Documenti personali, digitali e ufficiali.",
           "description": "Aggiungi i tuoi documenti su IO! IT-Wallet è il tuo nuovo portafoglio digitale: **semplice, sicuro, sempre con te**.",
-          "action": "Ottieni IT-Wallet"
+          "action": "Passa a IT-Wallet"
         },
         "upgrade_expiring": {
           "title": "IO dà il benvenuto a IT-Wallet",
           "description": "Porta i tuoi documenti digitali sull’unico portafoglio digitale di Stato: **sicuro, gratuito, tuo**.",
-          "action": "Aggiorna ora"
+          "action": "Passa a IT-Wallet"
         },
         "dismissAlert": {
           "title": "Vuoi rinunciare ai vantaggi di IT-Wallet?",

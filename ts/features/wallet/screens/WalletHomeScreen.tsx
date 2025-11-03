@@ -1,9 +1,10 @@
 import { IOColors, IOToast } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback, useEffect, useRef, useState } from "react";
-import Animated, { useAnimatedRef } from "react-native-reanimated";
-import { Dimensions, StyleSheet, View } from "react-native";
 import I18n from "i18next";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Dimensions, StyleSheet, View } from "react-native";
+import Animated, { useAnimatedRef } from "react-native-reanimated";
+import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import { IOScrollView } from "../../../components/ui/IOScrollView";
 import { useHeaderFirstLevel } from "../../../hooks/useHeaderFirstLevel";
 import { useTabItemPressWhenScreenActive } from "../../../hooks/useTabItemPressWhenScreenActive";
@@ -19,16 +20,15 @@ import {
   trackOpenWalletScreen,
   trackWalletAdd
 } from "../../itwallet/analytics";
+import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet.tsx";
+import { itwShouldRenderNewItWalletSelector } from "../../itwallet/common/store/selectors";
+import { WALLET_L3_BG_COLOR } from "../../itwallet/common/utils/constants";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
+import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import { walletUpdate } from "../store/actions";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
 import { isWalletScreenRefreshingSelector } from "../store/selectors";
-import { itwShouldRenderNewItWalletSelector } from "../../itwallet/common/store/selectors";
-import { WALLET_L3_BG_COLOR } from "../../itwallet/common/utils/constants";
-import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
-import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
-import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet.tsx";
 
 export type WalletHomeNavigationParams = Readonly<{
   // Triggers the "New element added" toast display once the user returns to this screen

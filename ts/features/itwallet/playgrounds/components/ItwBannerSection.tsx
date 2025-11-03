@@ -15,8 +15,7 @@ export const ItwBannerSection = () => {
       style={{
         marginHorizontal: -24,
         paddingHorizontal: 24,
-        paddingBottom: 24,
-        gap: 16
+        paddingBottom: 24
       }}
     >
       <ListItemHeader
