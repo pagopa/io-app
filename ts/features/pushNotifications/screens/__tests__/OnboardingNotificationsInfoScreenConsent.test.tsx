@@ -1,4 +1,4 @@
-import { constUndefined, constVoid } from "fp-ts/lib/function";
+import { constUndefined } from "fp-ts/lib/function";
 import { createStore } from "redux";
 import { AppState, AppStateStatus } from "react-native";
 import { fireEvent, waitFor } from "@testing-library/react-native";

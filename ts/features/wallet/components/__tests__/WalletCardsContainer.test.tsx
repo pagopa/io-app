@@ -496,13 +496,11 @@ describe("OtherWalletCardsContainer", () => {
       .spyOn(itwPreferencesSelectors, "itwIsPendingReviewSelector")
       .mockImplementation(() => true);
     const requestReview = jest.fn();
-    const { queryByTestId, debug } = renderComponent(() => (
+    const { queryByTestId } = renderComponent(() => (
       <AppFeedbackContext.Provider value={{ requestFeedback: requestReview }}>
         <ItwWalletCardsContainer />
       </AppFeedbackContext.Provider>
     ));
-
-    // debug();
 
     expect(queryByTestId(`walletCardsCategoryItwHeaderTestID`)).not.toBeNull();
     expect(queryByTestId(`walletCardTestID_itw_itw_4`)).not.toBeNull();
