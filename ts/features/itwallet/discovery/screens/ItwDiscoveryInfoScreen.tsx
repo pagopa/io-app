@@ -5,9 +5,9 @@ import { trackItWalletActivationStart } from "../../analytics/index.ts";
 import { itwHasNfcFeatureSelector } from "../../identification/common/store/selectors/index.ts";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider.tsx";
 import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
-import { ItwLegacyDiscoveryInfoComponent } from "../components/ItwLegacyDiscoveryInfoComponent.tsx";
+import { ItwDiscoveryInfoComponent } from "../components/ItwDiscoveryInfoComponent.tsx";
+import { ItwDiscoveryInfoLegacyComponent } from "../components/ItwDiscoveryInfoLegacyComponent.tsx";
 import { ItwNfcNotSupportedComponent } from "../components/ItwNfcNotSupportedComponent.tsx";
-import { ItwPaywallComponent } from "../components/ItwPaywallComponent";
 
 export type ItwDiscoveryInfoScreenNavigationParams = {
   isL3?: boolean;
@@ -37,7 +37,7 @@ export const ItwDiscoveryInfoScreen = ({
 
   if (!isL3) {
     return (
-      <ItwLegacyDiscoveryInfoComponent onContinuePress={handleContinuePress} />
+      <ItwDiscoveryInfoLegacyComponent onContinuePress={handleContinuePress} />
     );
   }
 
@@ -45,5 +45,5 @@ export const ItwDiscoveryInfoScreen = ({
     return <ItwNfcNotSupportedComponent />;
   }
 
-  return <ItwPaywallComponent onContinuePress={handleContinuePress} />;
+  return <ItwDiscoveryInfoComponent />;
 };
