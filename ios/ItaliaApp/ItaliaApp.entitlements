@@ -7,7 +7,6 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:continua.io.pagopa.it</string>
-		<string>applinks:cittadini.dev.notifichedigitali.it</string>
 		<string>applinks:cittadini.uat.notifichedigitali.it</string>
 		<string>applinks:cittadini.notifichedigitali.it</string>
 	</array>

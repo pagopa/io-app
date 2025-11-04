@@ -29,7 +29,6 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { sessionExpired } from "../../../authentication/common/store/actions";
 import { setDebugModeEnabled } from "../../../../store/actions/debug";
 import {
-  preferencesAarFeatureSetEnabled,
   preferencesIdPayTestSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
   preferencesPnTestEnvironmentSetEnabled
@@ -42,7 +41,6 @@ import {
 } from "../../../authentication/common/store/selectors";
 import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
 import {
-  isAARLocalEnabled,
   isIdPayLocallyEnabledSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
@@ -467,7 +465,6 @@ const DeveloperTestEnvironmentSection = ({
   const isActiveSessionLoginLocallyEnabled = useIOSelector(
     isActiveSessionLoginLocallyEnabledSelector
   );
-  const isAarFeatureEnabled = useIOSelector(isAARLocalEnabled);
 
   const onPagoPAEnvironmentToggle = (enabled: boolean) => {
     if (enabled) {
@@ -537,10 +534,6 @@ const DeveloperTestEnvironmentSection = ({
     }
   };
 
-  const onAarFeatureToggle = (enabled: boolean) => {
-    dispatch(preferencesAarFeatureSetEnabled({ isAarFeatureEnabled: enabled }));
-  };
-
   const testEnvironmentsListItems: ReadonlyArray<TestEnvironmentsListItem> = [
     {
       label: I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
@@ -555,11 +548,6 @@ const DeveloperTestEnvironmentSection = ({
       label: I18n.t("profile.main.pnEnvironment.pnEnv"),
       value: isPnTestEnabled,
       onSwitchValueChange: onPnEnvironmentToggle
-    },
-    {
-      label: I18n.t("profile.main.pnEnvironment.aarEnv"),
-      value: isAarFeatureEnabled,
-      onSwitchValueChange: onAarFeatureToggle
     },
     {
       label: I18n.t("profile.main.idpay.idpayTest"),

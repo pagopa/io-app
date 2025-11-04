@@ -10,7 +10,7 @@ type Props = {
   featureKey: IdPayFeatureKey;
 };
 
-export const IdPayDisabledFeatureAlert = ({ featureKey }: Props) => {
+export const IdPayDisabledSubFeatureAlert = ({ featureKey }: Props) => {
   const navigation = useIONavigation();
 
   useOnFirstRender(() => {
