@@ -242,7 +242,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                           </View>
                         </View>
                         <View>
-                          Wed Jan 01 2020 00:00:00 GMT+0000 (Tempo coordinato universale)
+                          Wed Jan 01 2020 00:00:00 GMT+0000 (Coordinated Universal Time)
                         </View>
                         <View>
                           731143-7-0317-8200-0
@@ -876,7 +876,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                           </View>
                         </View>
                         <View>
-                          Wed Jan 01 2020 00:00:00 GMT+0000 (Tempo coordinato universale)
+                          Wed Jan 01 2020 00:00:00 GMT+0000 (Coordinated Universal Time)
                         </View>
                         <View>
                           731143-7-0317-8200-0
@@ -1262,7 +1262,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     }
                                     testID="body_nomandate"
                                   >
-                                    Tutte le tue notifiche e quelle per cui hai una delega sono disponibili sul sito di SEND - Notifiche Digitali
+                                    Tutte le tue notifiche sono disponibili sul sito di SEND - Notifiche Digitali
                                   </Text>
                                   <View
                                     accessibilityRole="link"
