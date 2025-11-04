@@ -11,16 +11,16 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp.tsx";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 import { tosConfigSelector } from "../../../tos/store/selectors/index.ts";
 import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum.ts";
-import { trackItwIntroBack, trackOpenItwTos } from "../../analytics/index.ts";
+import {
+  trackItWalletActivationStart,
+  trackItwIntroBack,
+  trackOpenItwTos
+} from "../../analytics/index.ts";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog.tsx";
 import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig.ts";
 import { generateItwIOMarkdownRules } from "../../common/utils/markdown.tsx";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider.tsx";
 import { selectIsLoading } from "../../machine/eid/selectors.ts";
-
-export type ItwDiscoveryInfoComponentProps = {
-  onContinuePress: () => void;
-};
 
 /**
  * This is the component that shows the information about the discovery process
@@ -29,9 +29,7 @@ export type ItwDiscoveryInfoComponentProps = {
  *
  * @deprecated Superseded by the new `ItwDiscoveryInfoFallbackComponent`
  */
-export const ItwDiscoveryInfoLegacyComponent = ({
-  onContinuePress
-}: ItwDiscoveryInfoComponentProps) => {
+export const ItwDiscoveryInfoLegacyComponent = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const itwActivationDisabled = useIOSelector(itwIsActivationDisabledSelector);
@@ -77,6 +75,11 @@ export const ItwDiscoveryInfoLegacyComponent = ({
     }
   });
 
+  const handleContinuePress = useCallback(() => {
+    trackItWalletActivationStart("L2");
+    machineRef.send({ type: "accept-tos" });
+  }, [machineRef]);
+
   return (
     <IOScrollView
       includeContentMargins={false}
@@ -87,7 +90,7 @@ export const ItwDiscoveryInfoLegacyComponent = ({
           disabled: itwActivationDisabled,
           label: I18n.t("global.buttons.continue"),
           accessibilityLabel: I18n.t("global.buttons.continue"),
-          onPress: onContinuePress
+          onPress: handleContinuePress
         }
       }}
     >
