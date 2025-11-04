@@ -29,6 +29,10 @@ export type Context = {
    * - "reissuance": reissuing the eID on Documenti su IO, reissuing also owned credentials.
    */
   issuanceMode: EidIssuanceMode;
+  /**
+   * Error message in case of upgrade process failure
+   */
+  errorMessage?: string;
 };
 
 export const getInitialContext = (input: Input): Context => ({
@@ -37,5 +41,6 @@ export const getInitialContext = (input: Input): Context => ({
   credentials: input.credentials,
   credentialIndex: -1,
   failedCredentials: [],
-  issuanceMode: input.issuanceMode
+  issuanceMode: input.issuanceMode,
+  errorMessage: undefined
 });

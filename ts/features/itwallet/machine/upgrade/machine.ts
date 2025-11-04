@@ -26,6 +26,10 @@ export const itwCredentialUpgradeMachine = setup({
         ...context.failedCredentials,
         context.credentials[context.credentialIndex]
       ]
+    }),
+    setErrorMessage: assign({
+      errorMessage: ({ event }: { event: any }) =>
+        event.error?.message ?? "Unknown error"
     })
   },
   actors: {
@@ -70,7 +74,7 @@ export const itwCredentialUpgradeMachine = setup({
           target: "Checking"
         },
         onError: {
-          actions: ["setFailedCredential"],
+          actions: ["setErrorMessage", "setFailedCredential"],
           target: "Checking"
         }
       }
@@ -80,7 +84,8 @@ export const itwCredentialUpgradeMachine = setup({
     }
   },
   output: ({ context }) => ({
-    failedCredentials: context.failedCredentials
+    failedCredentials: context.failedCredentials,
+    errorMessage: context.errorMessage
   })
 });
 

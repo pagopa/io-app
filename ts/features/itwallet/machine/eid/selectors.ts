@@ -1,10 +1,11 @@
 import { StateFrom } from "xstate";
-import { pipe } from "fp-ts/lib/function";
+import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ItwTags } from "../tags";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwEidIssuanceMachine } from "./machine";
 import { IdentificationContext } from "./context";
+import { IssuanceFailure } from "./failure";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
@@ -54,4 +55,10 @@ export const selectUpgradeFailedCredentials = (snapshot: MachineSnapshot) =>
     snapshot.context.failedCredentials,
     O.fromNullable,
     O.getOrElse(() => [] as ReadonlyArray<StoredCredential>)
+  );
+
+export const selectFailureReason = (snapshot: MachineSnapshot) =>
+  pipe(
+    O.fromNullable(snapshot.context.failure),
+    O.fold(constNull, failure => failure.reason)
   );
