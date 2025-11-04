@@ -46,6 +46,7 @@ export const FimsHistoryNonEmptyContent = ({
   return (
     <>
       <FlashList
+        estimatedItemSize={117}
         ListHeaderComponent={FimsHistoryHeaderComponent}
         data={accesses?.data}
         contentContainerStyle={{

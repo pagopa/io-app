@@ -1,4 +1,4 @@
-import { constUndefined } from "fp-ts/lib/function";
+import { constUndefined, constVoid } from "fp-ts/lib/function";
 import { createStore } from "redux";
 import { AppState, AppStateStatus } from "react-native";
 import { fireEvent, waitFor } from "@testing-library/react-native";
@@ -31,6 +31,8 @@ const openSystemNotificationSettingsScreenSpy = jest
   .spyOn(notification, "openSystemNotificationSettingsScreen")
   .mockImplementation(constUndefined);
 
+const mockRemoveEventListener = jest.fn();
+
 describe("OnboardingNotificationsInfoScreenConsent", () => {
   beforeEach(() => {
     jest.resetAllMocks();
@@ -38,13 +40,18 @@ describe("OnboardingNotificationsInfoScreenConsent", () => {
     mockAccessibilityInfo(false);
   });
   it("should match snapshot", () => {
+    jest.spyOn(AppState, "addEventListener").mockImplementation(() => ({
+      remove: () => mockRemoveEventListener
+    }));
     const screen = renderScreen();
     expect(screen).toMatchSnapshot();
   });
 
   it("Click on the button continue check that the NOTIFICATIONS_INFO_SCREEN_CONSENT action is triggered", () => {
+    jest.spyOn(AppState, "addEventListener").mockImplementation(() => ({
+      remove: () => mockRemoveEventListener
+    }));
     const screen = renderScreen();
-
     const continueButton = screen.queryByTestId("continue-btn");
     expect(continueButton).not.toBeNull();
 
@@ -59,8 +66,10 @@ describe("OnboardingNotificationsInfoScreenConsent", () => {
   });
 
   it("Settings button should be there and its tap should call 'trackNotificationsOptInOpenSettings' and 'openSystemNotificationSettingsScreen'", () => {
+    jest.spyOn(AppState, "addEventListener").mockImplementation(() => ({
+      remove: () => mockRemoveEventListener
+    }));
     const screen = renderScreen();
-
     const settingsButton = screen.queryByTestId("settings-btn");
     expect(settingsButton).not.toBeUndefined();
 
@@ -71,20 +80,18 @@ describe("OnboardingNotificationsInfoScreenConsent", () => {
     }
   });
 
-  const mockRemoveEventListener = jest.fn();
   it("If AppState is active and permissions true trigger NOTIFICATIONS_INFO_SCREEN_CONSENT action", async () => {
     checkNotificationPermissions.mockImplementation(() =>
       Promise.resolve(true)
     );
+
     const appStateSpy = jest
       .spyOn(AppState, "addEventListener")
-      .mockReturnValue({
-        remove: mockRemoveEventListener
-      });
-
+      .mockImplementation(() => ({
+        remove: () => mockRemoveEventListener
+      }));
     const screen = renderScreen();
     expect(screen).not.toBeNull();
-
     appStateSpy.mock.calls[0][1]("active");
 
     await waitFor(() => {
@@ -127,7 +134,7 @@ describe("OnboardingNotificationsInfoScreenConsent", () => {
   appStateStatuses.forEach(appStateStatus => {
     it(`AppState '${appStateStatus}' does not trigger NOTIFICATIONS_INFO_SCREEN_CONSENT action`, () => {
       jest.spyOn(AppState, "addEventListener").mockReturnValue({
-        remove: mockRemoveEventListener
+        remove: () => mockRemoveEventListener
       });
       const screen = renderScreen(appStateStatus);
       expect(screen).not.toBeNull();

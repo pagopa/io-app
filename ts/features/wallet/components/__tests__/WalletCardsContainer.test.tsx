@@ -3,7 +3,7 @@ import _ from "lodash";
 
 import { ComponentType } from "react";
 import configureMockStore from "redux-mock-store";
-import { Alert, Pressable } from "react-native";
+import { Alert } from "react-native";
 import I18n from "i18next";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -496,11 +496,14 @@ describe("OtherWalletCardsContainer", () => {
       .spyOn(itwPreferencesSelectors, "itwIsPendingReviewSelector")
       .mockImplementation(() => true);
     const requestReview = jest.fn();
-    const { queryByTestId } = renderComponent(() => (
+    const { queryByTestId, debug } = renderComponent(() => (
       <AppFeedbackContext.Provider value={{ requestFeedback: requestReview }}>
         <ItwWalletCardsContainer />
       </AppFeedbackContext.Provider>
     ));
+
+    // debug();
+
     expect(queryByTestId(`walletCardsCategoryItwHeaderTestID`)).not.toBeNull();
     expect(queryByTestId(`walletCardTestID_itw_itw_4`)).not.toBeNull();
     expect(queryByTestId(`walletCardTestID_itw_itw_5`)).not.toBeNull();
@@ -508,7 +511,9 @@ describe("OtherWalletCardsContainer", () => {
     const mDLCredential = queryByTestId(`walletCardTestID_itw_itw_4`);
 
     if (mDLCredential) {
-      const pressableComponent = mDLCredential.findByType(Pressable);
+      const pressableComponent = mDLCredential.findByProps({
+        accessibilityRole: "button"
+      });
       pressableComponent.props.onPress();
     }
 
