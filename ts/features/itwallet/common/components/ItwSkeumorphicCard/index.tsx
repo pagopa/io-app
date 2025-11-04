@@ -1,6 +1,7 @@
-import { Tag, useScaleAnimation } from "@pagopa/io-app-design-system";
+import { IOColors, Tag, useScaleAnimation } from "@pagopa/io-app-design-system";
 import { memo, ReactNode, useMemo } from "react";
 
+import I18n from "i18next";
 import {
   AccessibilityProps,
   Pressable,
@@ -10,12 +11,11 @@ import {
   ViewStyle
 } from "react-native";
 import Animated from "react-native-reanimated";
-import I18n from "i18next";
 import { accessibilityLabelByStatus } from "../../utils/itwAccessibilityUtils";
 import {
-  useBorderColorByStatus,
   getCredentialNameFromType,
   tagPropsByStatus,
+  useBorderColorByStatus,
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
 import {
@@ -161,7 +161,15 @@ export const SKEUMORPHIC_CARD_ASPECT_RATIO = 16 / 10.09;
 
 const styles = StyleSheet.create({
   card: {
-    aspectRatio: SKEUMORPHIC_CARD_ASPECT_RATIO
+    aspectRatio: SKEUMORPHIC_CARD_ASPECT_RATIO,
+    shadowColor: IOColors.black,
+    shadowOffset: {
+      width: 0,
+      height: 4 // To avoid the shadow to be clipped by the header
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 5
   },
   tag: {
     position: "absolute",
