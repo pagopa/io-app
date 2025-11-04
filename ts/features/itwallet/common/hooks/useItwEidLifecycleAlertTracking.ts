@@ -52,23 +52,18 @@ export const useItwEidLifecycleAlertTracking = ({
 
   const shouldTrackVisualization = !skipViewTracking && isEidInvalid && !isItw;
 
-  const bannerId = useMemo(
-    () =>
-      maybeEidStatus === "jwtExpiring"
-        ? "itwExpiringIdBanner"
-        : "itwExpiredIdBanner",
-    [maybeEidStatus]
-  );
-
-  const alertProps = useMemo(
+  const trackingProperties = useMemo(
     () => ({
-      banner_id: bannerId,
+      banner_id:
+        maybeEidStatus === "jwtExpiring"
+          ? "itwExpiringIdBanner"
+          : "itwExpiredIdBanner",
       banner_page: currentScreenName ?? "not_available",
       banner_landing: isOffline
         ? "not_available"
         : ITW_SCREENVIEW_EVENTS.ITW_ID_METHOD
     }),
-    [bannerId, currentScreenName, isOffline]
+    [maybeEidStatus, currentScreenName, isOffline]
   );
 
   useEffect(() => {
@@ -77,7 +72,7 @@ export const useItwEidLifecycleAlertTracking = ({
     }
     const onFocus = () => {
       if (!hasTrackedRef.current) {
-        trackITWalletBannerVisualized(alertProps);
+        trackITWalletBannerVisualized(trackingProperties);
         // eslint-disable-next-line functional/immutable-data
         hasTrackedRef.current = true;
       }
@@ -97,13 +92,13 @@ export const useItwEidLifecycleAlertTracking = ({
       unsubscribeFocus();
       unsubscribeBlur();
     };
-  }, [navigation, shouldTrackVisualization, alertProps]);
+  }, [navigation, shouldTrackVisualization, trackingProperties]);
 
   const trackAlertTap = useCallback(() => {
     if (!isItw) {
-      trackItWalletBannerTap(alertProps);
+      trackItWalletBannerTap(trackingProperties);
     }
-  }, [isItw, alertProps]);
+  }, [isItw, trackingProperties]);
 
   return { trackAlertTap };
 };
