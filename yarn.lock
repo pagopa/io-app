@@ -3233,9 +3233,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-app-design-system@npm:5.11.9":
-  version: 5.11.9
-  resolution: "@pagopa/io-app-design-system@npm:5.11.9"
+"@pagopa/io-app-design-system@git://github.com/pagopa/io-app-design-system#SIW-3310-add-itwallet-icon":
+  version: 5.11.10
+  resolution: "@pagopa/io-app-design-system@https://github.com/pagopa/io-app-design-system.git#commit=3722d30b360f168373e1d2fff911802d5692fa6d"
   dependencies:
     auto-changelog: ^2.4.0
     lodash: ^4.17.21
@@ -3256,7 +3256,7 @@ __metadata:
     react-native-reanimated: "*"
     react-native-safe-area-context: "*"
     react-native-svg: "*"
-  checksum: f273e852950c32a367eab02ad26b358e9d6deaceaf11eb7f71aa0a6df9fd4845e1136bdb37164d59d33400cc8928a97085221c1eb6a799480d390821a4a72c9f
+  checksum: aaf2d913463edb7439bec2aa52ed116c248fb57ae18162a31a4eda03e56c8ab23f85d537d0819f28937e4025f51a7ea6f350ecd18b7ab676df5aef7c086ca656
   languageName: node
   linkType: hard
 
@@ -12035,7 +12035,7 @@ __metadata:
     "@babel/runtime": ^7.25.0
     "@gorhom/bottom-sheet": ^5.1.2
     "@jambit/eslint-plugin-typed-redux-saga": ^0.4.0
-    "@pagopa/io-app-design-system": 5.11.9
+    "@pagopa/io-app-design-system": "git://github.com/pagopa/io-app-design-system#SIW-3310-add-itwallet-icon"
     "@pagopa/io-pagopa-commons": ^3.1.0
     "@pagopa/io-react-native-cie": ^1.2.0
     "@pagopa/io-react-native-cieid": ^0.3.5
