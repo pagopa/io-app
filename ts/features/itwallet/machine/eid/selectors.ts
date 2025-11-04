@@ -1,11 +1,10 @@
-import { StateFrom } from "xstate";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { ItwTags } from "../tags";
+import { StateFrom } from "xstate";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { ItwEidIssuanceMachine } from "./machine";
+import { ItwTags } from "../tags";
 import { IdentificationContext } from "./context";
-import { IssuanceFailure } from "./failure";
+import { ItwEidIssuanceMachine } from "./machine";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
