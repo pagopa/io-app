@@ -194,14 +194,12 @@ export const ItwPresentationCredentialDetail = ({
 
   useFocusEffect(
     useCallback(() => {
-      if (status !== "jwtExpired") {
-        const isMultilevel = isMultiLevelCredential(credential);
-        trackCredentialDetail({
-          credential: mixPanelCredential,
-          credential_status: CREDENTIAL_STATUS_MAP[status],
-          credential_type: isMultilevel ? "multiple" : "unique"
-        });
-      }
+      const isMultilevel = isMultiLevelCredential(credential);
+      trackCredentialDetail({
+        credential: mixPanelCredential,
+        credential_status: CREDENTIAL_STATUS_MAP[status],
+        credential_type: isMultilevel ? "multiple" : "unique"
+      });
     }, [status, credential, mixPanelCredential])
   );
 
