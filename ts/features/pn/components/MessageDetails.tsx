@@ -136,6 +136,7 @@ export const MessageDetails = ({
         </ContentWrapper>
         <MessageBottomMenu
           history={message.notificationStatusHistory}
+          isAARMessage={isAARMessage}
           isCancelled={message.isCancelled}
           iun={message.iun}
           messageId={messageId}

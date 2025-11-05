@@ -20,10 +20,13 @@ import { pnFrontendUrlSelector } from "../../../store/reducers/backendStatus/rem
 import { Timeline, TimelineItemProps } from "./Timeline";
 
 const topBottomSheetMargin = 122;
-const timelineBottomMargin = 292;
+const baseFooterHeightWithAlert = 181;
+const timelineBottomMarginWithAlert = 288;
+const timelineBottomMarginWithoutAlert = 128;
 const timelineItemHeight = 70;
 
 export type TimelineListItemProps = {
+  hideFooter: boolean;
   history: NotificationStatusHistory;
 };
 
@@ -41,8 +44,16 @@ const generateTimelineData = (
     status: notificationStatusToTimelineStatus(historyItem.status)
   }));
 
-export const TimelineListItem = ({ history }: TimelineListItemProps) => {
-  const [footerHeight, setFooterHeight] = useState<number>(181);
+export const TimelineListItem = ({
+  hideFooter,
+  history
+}: TimelineListItemProps) => {
+  const baseFooterHeight = hideFooter ? 0 : baseFooterHeightWithAlert;
+  const [footerHeight, setFooterHeight] = useState<number>(baseFooterHeight);
+
+  const timelineBottomMargin = hideFooter
+    ? timelineBottomMarginWithoutAlert
+    : timelineBottomMarginWithAlert;
   const windowHeight = Dimensions.get("window").height;
   const snapPoint = Math.min(
     windowHeight - topBottomSheetMargin,
@@ -53,7 +64,7 @@ export const TimelineListItem = ({ history }: TimelineListItemProps) => {
   const { bottomSheet, present } = useIOBottomSheetModal({
     component: <Timeline data={timelineData} footerHeight={footerHeight} />,
     title: I18n.t("features.pn.details.timeline.menuTitle"),
-    footer: (
+    footer: !hideFooter ? (
       <View
         onLayout={layoutChangeEvent =>
           setFooterHeight(layoutChangeEvent.nativeEvent.layout.height)
@@ -76,6 +87,8 @@ export const TimelineListItem = ({ history }: TimelineListItemProps) => {
           }}
         />
       </View>
+    ) : (
+      <View />
     ),
     snapPoint: [snapPoint]
   });
