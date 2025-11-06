@@ -314,14 +314,14 @@ export const ItwPresentationCredentialDetail = ({
             />
           )}
           <ItwPresentationDetailsFooter credential={credential} />
-          {isL3Credential && <PowereByItWallet />}
+          {isL3Credential && <PoweredByItWallet />}
         </VStack>
       </ContentWrapper>
     </ItwPresentationDetailsScreenBase>
   );
 };
 
-const PowereByItWallet = () => (
+const PoweredByItWallet = () => (
   <View style={styles.poweredBy}>
     <BodySmall>
       {I18n.t("features.itWallet.presentation.credentialDetails.partOf")}
