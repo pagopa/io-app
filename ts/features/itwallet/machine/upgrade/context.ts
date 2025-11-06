@@ -1,6 +1,5 @@
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { EidIssuanceMode } from "../eid/context";
-import { IssuanceFailure } from "../eid/failure";
 import { UpgradeCredentialFailure } from "./failure";
 import { Input } from "./input";
 
