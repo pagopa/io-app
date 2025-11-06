@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 import StoreKit
-import SwiftUI
+import SwiftUICore
 
 
 /** `@objc` attribute exposes Swift methods to the Objective-C runtime**/
