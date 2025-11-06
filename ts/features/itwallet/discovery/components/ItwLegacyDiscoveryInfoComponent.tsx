@@ -41,7 +41,8 @@ export const ItwLegacyDiscoveryInfoComponent = ({
     useCallback(() => {
       machineRef.send({
         type: "start",
-        isL3: false
+        mode: "issuance",
+        level: "l2"
       });
     }, [machineRef])
   );
@@ -109,5 +110,10 @@ export const ItwLegacyDiscoveryInfoComponent = ({
 };
 
 const styles = StyleSheet.create({
-  hero: { resizeMode: "cover", width: "100%" }
+  hero: {
+    width: "100%",
+    height: "auto",
+    resizeMode: "cover",
+    aspectRatio: 4 / 3
+  }
 });
