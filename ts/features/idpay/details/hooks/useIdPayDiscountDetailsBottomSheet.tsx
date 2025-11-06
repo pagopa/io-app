@@ -9,7 +9,6 @@ import {
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { IdPayBarcodeRoutes } from "../../barcode/navigation/routes";
-import { idPayBarcodeSecondsTillExpireSelector } from "../../barcode/store";
 import { idPayGenerateBarcode } from "../../barcode/store/actions";
 import { IdPayPaymentRoutes } from "../../payment/navigation/routes";
 import {
@@ -18,6 +17,7 @@ import {
 } from "../analytics";
 import { idpayInitiativeDetailsSelector } from "../store";
 import { isIdPayQrCodeFeatureEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { idPayBarcodeSecondsTillExpireSelector } from "../../barcode/store/selectors";
 
 export const useIdPayDiscountDetailsBottomSheet = (initiativeId: string) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();

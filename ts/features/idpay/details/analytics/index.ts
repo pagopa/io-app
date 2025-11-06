@@ -216,7 +216,9 @@ export const trackIDPayDetailCodeGenerateNew = (
 };
 
 export const trackIDPayDetailError = (
-  props: DefaultOnboardingEventProperties
+  props: DefaultOnboardingEventProperties & {
+    reason?: string;
+  }
 ) => {
   mixpanelTrack(
     "IDPAY_DETAIL_ERROR",

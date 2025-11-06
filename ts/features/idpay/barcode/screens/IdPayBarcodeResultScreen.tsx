@@ -36,8 +36,9 @@ import { IDPayDetailsRoutes } from "../../details/navigation";
 import { idpayInitiativeDetailsSelector } from "../../details/store";
 import { IdPayBarcodeExpireProgressBar } from "../components/IdPayBarcodeExpireProgressBar";
 import { IdPayBarcodeParamsList } from "../navigation/params";
-import { idPayBarcodeByInitiativeIdSelector } from "../store";
+
 import { idPayGenerateBarcode } from "../store/actions";
+import { idPayBarcodeByInitiativeIdSelector } from "../store/selectors";
 
 // -------------------- types --------------------
 

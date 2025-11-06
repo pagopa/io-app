@@ -244,6 +244,8 @@ exports[`ItwDiscoveryInfoScreen should match the snapshot when isL3 is false 1`]
                                   "opacity": 0,
                                 },
                                 {
+                                  "aspectRatio": 1.3333333333333333,
+                                  "height": "auto",
                                   "resizeMode": "cover",
                                   "width": "100%",
                                 },
