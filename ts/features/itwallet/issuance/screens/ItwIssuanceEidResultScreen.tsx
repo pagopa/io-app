@@ -13,15 +13,14 @@ import {
 import { ItwReissuanceFeedbackBanner } from "../../common/components/ItwReissuanceFeedbackBanner.tsx";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import { serializeFailureReason } from "../../common/utils/itwStoreUtils.ts";
 import { StoredCredential } from "../../common/utils/itwTypesUtils.ts";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
-  selectUpgradeFailure,
   selectIsLoading,
   selectIssuanceMode,
-  selectUpgradeFailedCredentials
+  selectUpgradeFailedCredentials,
+  selectUpgradeFailure
 } from "../../machine/eid/selectors";
 
 export const ItwIssuanceEidResultScreen = () => {
@@ -41,10 +40,9 @@ export const ItwIssuanceEidResultScreen = () => {
 
   useEffect(() => {
     if (failedCredentials.length > 0 && failure) {
-      const serializedFailure = serializeFailureReason(failure);
       trackItwCredentialReissuingFailed({
-        reason: serializedFailure.reason,
-        type: serializedFailure.type,
+        reason: failure.reason,
+        type: failure.type,
         itw_flow
       });
     }
