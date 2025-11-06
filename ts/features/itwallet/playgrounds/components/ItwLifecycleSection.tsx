@@ -66,7 +66,7 @@ export const ItwLifecycleSection = () => {
       <ListItemInfo label="Lifecycle status" value={getLifecycleStateLabel()} />
       <ListItemHeader label="L3 Whitelist" />
       <ListItemInfo
-        label={"Fiscal code whitelisted"}
+        label="Fiscal code whitelisted"
         value={isFiscalCodeWhitelisted ? "YES" : "NO"}
       />
       <IOButton
