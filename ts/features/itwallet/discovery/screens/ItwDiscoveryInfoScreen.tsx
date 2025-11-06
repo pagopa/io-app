@@ -1,13 +1,15 @@
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { itwHasNfcFeatureSelector } from "../../identification/common/store/selectors/index.ts";
+import { EidIssuanceLevel } from "../../machine/eid/context.ts";
 import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
 import { ItwDiscoveryInfoComponent } from "../components/ItwDiscoveryInfoComponent.tsx";
+import { ItwDiscoveryInfoFallbackComponent } from "../components/ItwDiscoveryInfoFallbackComponent.tsx";
 import { ItwDiscoveryInfoLegacyComponent } from "../components/ItwDiscoveryInfoLegacyComponent.tsx";
 import { ItwNfcNotSupportedComponent } from "../components/ItwNfcNotSupportedComponent.tsx";
 
 export type ItwDiscoveryInfoScreenNavigationParams = {
-  isL3?: boolean;
+  level?: EidIssuanceLevel;
   animationEnabled?: boolean;
 };
 
@@ -22,11 +24,17 @@ export type ItwDiscoveryInfoScreenProps = IOStackNavigationRouteProps<
 export const ItwDiscoveryInfoScreen = ({
   route
 }: ItwDiscoveryInfoScreenProps) => {
-  const { isL3 = false } = route.params ?? {};
+  const { level = "l2" } = route.params ?? {};
   const hasNfcFeature = useIOSelector(itwHasNfcFeatureSelector);
 
-  if (!isL3) {
+  if (level === "l2") {
+    // Discovery screen for Documenti su IO
     return <ItwDiscoveryInfoLegacyComponent />;
+  }
+
+  if (level === "l2-fallback") {
+    // Discovery screen for Documenti su IO coming from IT-Wallet
+    return <ItwDiscoveryInfoFallbackComponent />;
   }
 
   if (!hasNfcFeature) {
