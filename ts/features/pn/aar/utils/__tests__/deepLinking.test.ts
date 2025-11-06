@@ -3,10 +3,15 @@ import * as REMOTE_CONFIG from "../../../../../store/reducers/backendStatus/remo
 import { GlobalState } from "../../../../../store/reducers/types";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import PN_ROUTES from "../../../navigation/routes";
-import * as SELECTORS from "../../store/selectors";
 import { isSendAARLink, navigateToSendAarFlowIfEnabled } from "../deepLinking";
+
 const testRegex = "^\\s*https:\\/\\/example\\.com\\/aar\\/.*";
+
 describe("DeepLinking utils", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
   describe("isSendAARLink", () => {
     [true, false].forEach(isValid => {
       it(`should return ${isValid} for a ${
@@ -40,7 +45,7 @@ describe("DeepLinking utils", () => {
         const mockNav = jest.fn();
         const aarUrl = "www.example.com";
         jest
-          .spyOn(SELECTORS, "isAAREnabled")
+          .spyOn(REMOTE_CONFIG, "isAarRemoteEnabled")
           .mockImplementation(() => isAAREnabled);
         jest.spyOn(NAV_SRV.default, "navigate").mockImplementation(mockNav);
 

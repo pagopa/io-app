@@ -203,17 +203,18 @@ type TrackItWalletCieCardReadingUnexpectedFailure = {
 };
 
 export type CieCardVerifyFailureReason =
-  | "certificate revoked"
-  | "certificate expired";
+  | "CERTIFICATE_EXPIRED"
+  | "CERTIFICATE_REVOKED";
 
-export const enum CieCardReadingFailureReason {
+export enum CieCardReadingFailureReason {
   KO = "KO",
-  unknownCard = "unknown card",
-  apduNotSupported = "ADPU not supported",
-  startNFCError = "start NFC error",
-  stopNFCError = "stop NFC error",
-  noInternetConnection = "no internet connection",
-  authenticationError = "authentication error"
+  ON_TAG_DISCOVERED_NOT_CIE = "ON_TAG_DISCOVERED_NOT_CIE",
+  GENERIC_ERROR = "GENERIC_ERROR",
+  APDU_ERROR = "APDU_ERROR",
+  START_NFC_ERROR = "START_NFC_ERROR",
+  STOP_NFC_ERROR = "STOP_NFC_ERROR",
+  NO_INTERNET_CONNECTION = "NO_INTERNET_CONNECTION",
+  AUTHENTICATION_ERROR = "AUTHENTICATION_ERROR"
 }
 
 export type ItwCredentialMixpanelStatus =

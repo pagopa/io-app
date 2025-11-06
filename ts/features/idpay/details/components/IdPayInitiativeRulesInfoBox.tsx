@@ -13,6 +13,7 @@ import { StyleSheet, View } from "react-native";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { markdownToPlainText } from "../../../../utils/markdown";
+import { isAndroid } from "../../../../utils/platform";
 
 type Props = {
   content: string;
@@ -23,7 +24,12 @@ const IdPayInitiativeRulesInfoBox = (props: Props) => {
   const { content } = props;
 
   const { bottomSheet, present } = useIOBottomSheetModal({
-    component: <IOMarkdown content={content} />,
+    component: (
+      <>
+        <IOMarkdown content={content} />
+        {isAndroid && <VSpacer size={24} />}
+      </>
+    ),
     title: I18n.t("idpay.initiative.beneficiaryDetails.infoModal.title")
   });
 
