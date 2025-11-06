@@ -56,8 +56,8 @@ export const selectUpgradeFailedCredentials = (snapshot: MachineSnapshot) =>
     O.getOrElse(() => [] as ReadonlyArray<StoredCredential>)
   );
 
-export const selectFailureReason = (snapshot: MachineSnapshot) =>
+export const selectUpgradeFailure = (snapshot: MachineSnapshot) =>
   pipe(
     O.fromNullable(snapshot.context.failure),
-    O.fold(constNull, failure => failure.reason)
+    O.fold(constNull, failure => failure)
   );

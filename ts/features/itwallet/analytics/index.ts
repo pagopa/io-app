@@ -159,6 +159,7 @@ type CredentialUnexpectedFailure = {
 type ItwCredentialReissuingFailedProperties = {
   reason: unknown;
   itw_flow: ItwFlow;
+  type: string;
 };
 
 type CredentialStatusAssertionFailure = {

@@ -29,7 +29,11 @@ import {
   InitialContext
 } from "./context";
 import { EidIssuanceEvents } from "./events";
-import { IssuanceFailureType, mapEventToFailure } from "./failure";
+import {
+  IssuanceFailure,
+  IssuanceFailureType,
+  mapEventToFailure
+} from "./failure";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -926,11 +930,7 @@ export const itwEidIssuanceMachine = setup({
           description: "Credentials upgrade completed successfully",
           actions: assign(({ event }) => ({
             failedCredentials: event.output.failedCredentials,
-            failure: {
-              type: IssuanceFailureType.UNEXPECTED,
-              reason:
-                event.output.errorMessage || "Unknown error during upgrade"
-            }
+            failure: event.output.failure as IssuanceFailure | undefined
           })),
           target: "#itwEidIssuanceMachine.Success"
         },

@@ -1,4 +1,5 @@
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { UpgradeCredentialFailure } from "./failure";
 
 export type Output = {
   /**
@@ -8,5 +9,5 @@ export type Output = {
   /**
    * Error message in case of upgrade process failure
    */
-  errorMessage?: string;
+  failure?: UpgradeCredentialFailure | undefined;
 };

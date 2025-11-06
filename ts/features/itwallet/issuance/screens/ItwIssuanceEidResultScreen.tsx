@@ -13,11 +13,12 @@ import {
 import { ItwReissuanceFeedbackBanner } from "../../common/components/ItwReissuanceFeedbackBanner.tsx";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
+import { serializeFailureReason } from "../../common/utils/itwStoreUtils.ts";
 import { StoredCredential } from "../../common/utils/itwTypesUtils.ts";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
-  selectFailureReason,
+  selectUpgradeFailure,
   selectIsLoading,
   selectIssuanceMode,
   selectUpgradeFailedCredentials
@@ -31,21 +32,23 @@ export const ItwIssuanceEidResultScreen = () => {
   const failedCredentials = ItwEidIssuanceMachineContext.useSelector(
     selectUpgradeFailedCredentials
   );
-  const errorMessage =
-    ItwEidIssuanceMachineContext.useSelector(selectFailureReason);
+  const failure =
+    ItwEidIssuanceMachineContext.useSelector(selectUpgradeFailure);
   const isL3Enabled = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
   const itw_flow = isL3Enabled ? "L3" : "reissuing_eID";
 
   useEffect(() => {
-    if (failedCredentials.length > 0) {
+    if (failedCredentials.length > 0 && failure) {
+      const serializedFailure = serializeFailureReason(failure);
       trackItwCredentialReissuingFailed({
-        reason: errorMessage || "Unknown error",
+        reason: serializedFailure.reason,
+        type: serializedFailure.type,
         itw_flow
       });
     }
-  }, [failedCredentials, errorMessage, itw_flow]);
+  }, [failedCredentials, failure, itw_flow]);
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();

@@ -1,5 +1,7 @@
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { EidIssuanceMode } from "../eid/context";
+import { IssuanceFailure } from "../eid/failure";
+import { UpgradeCredentialFailure } from "./failure";
 import { Input } from "./input";
 
 export type Context = {
@@ -32,7 +34,7 @@ export type Context = {
   /**
    * Error message in case of upgrade process failure
    */
-  errorMessage?: string;
+  failure?: UpgradeCredentialFailure | undefined;
 };
 
 export const getInitialContext = (input: Input): Context => ({
@@ -42,5 +44,5 @@ export const getInitialContext = (input: Input): Context => ({
   credentialIndex: -1,
   failedCredentials: [],
   issuanceMode: input.issuanceMode,
-  errorMessage: undefined
+  failure: undefined
 });
