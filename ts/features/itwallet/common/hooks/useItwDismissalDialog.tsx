@@ -27,9 +27,12 @@ type ItwDismissalDialogProps = {
  * @param customLabels - Optional object to override the default title, message, confirm button label, and cancel button label.
  * @returns a function that can be used to show the dialog
  */
-export const useItwDismissalDialog = (props: ItwDismissalDialogProps = {}) => {
+export const useItwDismissalDialog = ({
+  handleDismiss,
+  dismissalContext,
+  customLabels = {}
+}: ItwDismissalDialogProps = {}) => {
   const navigation = useIONavigation();
-  const { handleDismiss, dismissalContext, customLabels = {} } = props;
 
   const title =
     customLabels.title ?? I18n.t("features.itWallet.generic.alert.title");
