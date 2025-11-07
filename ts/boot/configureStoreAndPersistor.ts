@@ -57,7 +57,7 @@ import { isDevEnv, isTestEnv } from "../utils/environment";
 import { PersistedPreferencesState } from "../store/reducers/persistedPreferences";
 import { SpidIdps } from "../../definitions/content/SpidIdps";
 import { fromGeneratedToLocalSpidIdp } from "../utils/idps";
-// import { configureReactotron } from "./configureRectotron";
+import { configureReactotron } from "./configureRectotron";
 
 /**
  * Redux persist will migrate the store to the current version
@@ -672,7 +672,7 @@ const logger = createLogger({
 });
 
 // configure Reactotron if the app is running in dev mode
-// export const RTron = isDevEnv ? configureReactotron() : undefined;
+export const RTron = isDevEnv ? configureReactotron() : undefined;
 const sagaMiddleware = createSagaMiddleware();
 
 function configureStoreAndPersistor(): {
@@ -693,10 +693,9 @@ function configureStoreAndPersistor(): {
 
   // add Reactotron enhancer if the app is running in dev mode
   const enhancer: StoreEnhancer =
-    // RTron && RTron.createEnhancer
-    //   ? composeEnhancers(middlewares, RTron.createEnhancer())
-    // :
-    composeEnhancers(middlewares);
+    RTron && RTron.createEnhancer
+      ? composeEnhancers(middlewares, RTron.createEnhancer())
+      : composeEnhancers(middlewares);
 
   const store: Store = createStore<
     PersistedGlobalState,
