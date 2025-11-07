@@ -5477,6 +5477,7 @@
           "description": "È il tuo pass digitale per dimostrare chi sei, accedere ai servizi online e ottenere nuovi documenti.",
           "listItemHeader": "Dati del mio IT-Wallet ID",
           "cta": {
+            "info": "Parte di IT-Wallet",
             "revoke": "Disattiva IT-Wallet"
           },
           "dialog": {
@@ -5869,7 +5870,12 @@
       "initiativeOnboardedStatus": {
         "header": "Le mie richieste",
         "ON_WAITING_LIST": {
-          "label": "In lista d'attesa"
+          "label": "In lista d'attesa",
+          "accessibilityInfoLabel": "Pulsante informazioni",
+          "bottomSheet": {
+            "title": "Sei in lista d'attesa",
+            "content": "La tua richiesta per {{initiativeName}} è stata inserita **in lista d’attesa**, poiché al momento non ci sono fondi disponibili.\n\n\n###### ***Cosa succede ora?***\n\nNon devi fare nulla: la tua richiesta rimane valida. Riceverai un messaggio con l’esito se si renderanno disponibili nuove risorse.\n\n\n###### ***Hai attivato le notifiche?***\n\nSe non l’hai già fatto, attiva le notifiche push per non perderti i messaggi.\n[Leggi come fare](https://assistenza.ioapp.it/hc/it/articles/39312288127377-Come-attivare-le-notifiche-push-su-IO)"
+          }
         },
         "ON_EVALUATION": {
           "label": "Verifica in corso"
