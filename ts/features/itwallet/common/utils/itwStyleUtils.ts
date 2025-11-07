@@ -29,8 +29,8 @@ export const getThemeColorByCredentialType = (
       return {
         backgroundColor: withL3Design ? IT_WALLET_BG : "#744C63",
         textColor: withL3Design ? "#032D5C" : "#652035",
-        statusBarStyle: "dark-content",
-        variant: "neutral"
+        statusBarStyle: withL3Design ? "dark-content" : "light-content",
+        variant: withL3Design ? "neutral" : "contrast"
       };
     case CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD:
       return {
