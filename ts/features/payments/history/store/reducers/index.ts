@@ -405,7 +405,7 @@ const persistConfig: PersistConfig = {
   transforms: [createSetTransform(["receiptsOpened"])]
 };
 
-export const walletPaymentHistoryPersistor = persistReducer<
+const walletPaymentHistoryPersistor = persistReducer<
   PaymentsHistoryState,
   Action
 >(persistConfig, reducer);
