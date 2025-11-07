@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.19.0-canary.7663](https://github.com/pagopa/io-app/compare/3.19.0-rc.1...3.19.0-canary.7663) (2025-11-07)
+
+
+### Chores
+
+* remove main.jsbundle reference on iOS ([3a6313e](https://github.com/pagopa/io-app/commit/3a6313ec3c50d698506fb2cb860bed204a12a858))
+
 ## [3.19.0-rc.1](https://github.com/pagopa/io-app/compare/3.19.0-rc.0...3.19.0-rc.1) (2025-11-05)
 
 
