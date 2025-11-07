@@ -182,7 +182,7 @@
     "@babel/runtime": "^7.25.0",
     "@jambit/eslint-plugin-typed-redux-saga": "^0.4.0",
     "@pagopa/openapi-codegen-ts": "^14.0.1",
-    "@react-native-community/cli": "15.0.1",
+    "@react-native-community/cli": "17.0.1",
     "@react-native-community/cli-platform-android": "15.0.1",
     "@react-native-community/cli-platform-ios": "15.0.1",
     "@react-native/babel-preset": "0.78.2",
