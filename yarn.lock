@@ -3271,15 +3271,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-cie@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "@pagopa/io-react-native-cie@npm:1.2.0"
+"@pagopa/io-react-native-cie@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@pagopa/io-react-native-cie@npm:1.2.1"
   dependencies:
     zod: ^3.24.4
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 687e894a1a0dd0e86f28768072a22b0df29633316c2f1f8db8f193ed1cb0ee19b5539b4ddd87dcc229651c843090511ac46bed969d0111ca3ade772fed553c34
+  checksum: 050d53a84c0bfdc53b78cd564cfaa430c6cc7f3ec7e6a99961ed6e7fd99adbb43b44bac300b3efca7730adf391257721315a6f6309c373c5a257de54b52dbf38
   languageName: node
   linkType: hard
 
@@ -12037,7 +12037,7 @@ __metadata:
     "@jambit/eslint-plugin-typed-redux-saga": ^0.4.0
     "@pagopa/io-app-design-system": 5.11.9
     "@pagopa/io-pagopa-commons": ^3.1.0
-    "@pagopa/io-react-native-cie": ^1.2.0
+    "@pagopa/io-react-native-cie": ^1.2.1
     "@pagopa/io-react-native-cieid": ^0.3.5
     "@pagopa/io-react-native-crypto": ^1.2.3
     "@pagopa/io-react-native-http-client": 1.0.5
