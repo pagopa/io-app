@@ -1,4 +1,4 @@
-import { IOColors, Tag, useScaleAnimation } from "@pagopa/io-app-design-system";
+import { Tag, useScaleAnimation } from "@pagopa/io-app-design-system";
 import { memo, ReactNode, useMemo } from "react";
 
 import I18n from "i18next";
@@ -161,15 +161,7 @@ export const SKEUMORPHIC_CARD_ASPECT_RATIO = 16 / 10.09;
 
 const styles = StyleSheet.create({
   card: {
-    aspectRatio: SKEUMORPHIC_CARD_ASPECT_RATIO,
-    shadowColor: IOColors.black,
-    shadowOffset: {
-      width: 0,
-      height: 4 // To avoid the shadow to be clipped by the header
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 5
+    aspectRatio: SKEUMORPHIC_CARD_ASPECT_RATIO
   },
   tag: {
     position: "absolute",
