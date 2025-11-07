@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.19.0-canary.7666](https://github.com/pagopa/io-app/compare/3.19.0-rc.1...3.19.0-canary.7666) (2025-11-07)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-3296](https://pagopa.atlassian.net/browse/SIW-3296)] New IT-Wallet ID screen ([#7577](https://github.com/pagopa/io-app/issues/7577)) ([55d5c8c](https://github.com/pagopa/io-app/commit/55d5c8c59b5524f59048f02a6b2ba345004d56f4))
+
+
+### Chores
+
+* remove unwanted change ([280a0f9](https://github.com/pagopa/io-app/commit/280a0f97091a96e8e43c763df1a3ce525b52a66f))
+* rename ItaliaApp to IO ([1b08ab8](https://github.com/pagopa/io-app/commit/1b08ab827586e807d9449c2224ad20e4e9549768))
+
 ## [3.19.0-rc.1](https://github.com/pagopa/io-app/compare/3.19.0-rc.0...3.19.0-rc.1) (2025-11-05)
 
 
