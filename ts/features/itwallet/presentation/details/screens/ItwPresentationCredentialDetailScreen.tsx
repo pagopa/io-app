@@ -324,7 +324,7 @@ const PoweredByItWallet = () => (
     <BodySmall>
       {I18n.t("features.itWallet.presentation.credentialDetails.partOf")}
     </BodySmall>
-    <ITWalletLogoImage width={75} height={15} />
+    <ITWalletLogoImage width={75} height={15} accessibilityLabel="IT Wallet" />
   </View>
 );
 
