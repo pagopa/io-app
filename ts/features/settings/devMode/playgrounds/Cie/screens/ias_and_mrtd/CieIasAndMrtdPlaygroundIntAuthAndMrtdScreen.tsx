@@ -4,7 +4,11 @@ import {
   TextInput,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { CieManager, type NfcEvent } from "@pagopa/io-react-native-cie";
+import {
+  CieManager,
+  InternalAuthAndMrtdResponse,
+  type NfcEvent
+} from "@pagopa/io-react-native-cie";
 import { useEffect, useState } from "react";
 import {
   Alert,
@@ -27,6 +31,9 @@ import { ReadStatus } from "../../types/ReadStatus";
 export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
   const navigation = useIONavigation();
   const [status, setStatus] = useState<ReadStatus>("idle");
+  const [successResult, setSuccessResult] = useState<
+    InternalAuthAndMrtdResponse | undefined
+  >(undefined);
   const [event, setEvent] = useState<NfcEvent>();
   const [challenge, setChallenge] = useState<string>("");
   const [can, setCan] = useState<string>("");
@@ -56,20 +63,8 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
       }),
       // Start listening for attributes success
       CieManager.addListener("onInternalAuthAndMRTDWithPaceSuccess", result => {
+        setSuccessResult(result);
         setStatus("success");
-        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
-          screen:
-            SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_INTERNAL_AUTH_AND_MRTD_RESULTS,
-          params: {
-            result,
-            challenge,
-            encodedChallenge: encodeChallenge(
-              challenge,
-              isBase64Encoding ? "base64" : "hex"
-            ),
-            encoding: isBase64Encoding ? "base64" : "hex"
-          }
-        });
       })
     ];
 
@@ -79,7 +74,25 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
       // Ensure the reading is stopped when the screen is unmounted
       void CieManager.stopReading();
     };
-  }, [challenge, isBase64Encoding, navigation]);
+  }, []);
+
+  useEffect(() => {
+    if (status === "success" && successResult) {
+      navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+        screen:
+          SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_INTERNAL_AUTH_AND_MRTD_RESULTS,
+        params: {
+          result: successResult,
+          challenge,
+          encodedChallenge: encodeChallenge(
+            challenge,
+            isBase64Encoding ? "base64" : "hex"
+          ),
+          encoding: isBase64Encoding ? "base64" : "hex"
+        }
+      });
+    }
+  }, [status, navigation, challenge, isBase64Encoding, successResult]);
 
   const handleStartReading = async () => {
     setEvent(undefined);
@@ -150,7 +163,7 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
         <IOButton
           variant="solid"
           label={status === "reading" ? "Stop" : "Start sign and reading"}
-          disabled={challenge.length === 0}
+          disabled={challenge.length === 0 || can.length < 6}
           onPress={() =>
             status === "reading" ? handleStopReading() : handleStartReading()
           }

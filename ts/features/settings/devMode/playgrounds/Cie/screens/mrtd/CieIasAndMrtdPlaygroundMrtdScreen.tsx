@@ -3,7 +3,11 @@ import {
   ListItemSwitch,
   TextInput
 } from "@pagopa/io-app-design-system";
-import { CieManager, type NfcEvent } from "@pagopa/io-react-native-cie";
+import {
+  CieManager,
+  MrtdResponse,
+  type NfcEvent
+} from "@pagopa/io-react-native-cie";
 import { useEffect, useState } from "react";
 import {
   Alert,
@@ -25,6 +29,9 @@ import { ReadStatus } from "../../types/ReadStatus";
 export function CieIasAndMrtdPlaygroundMrtdScreen() {
   const navigation = useIONavigation();
   const [status, setStatus] = useState<ReadStatus>("idle");
+  const [successResult, setSuccessResult] = useState<MrtdResponse | undefined>(
+    undefined
+  );
   const [event, setEvent] = useState<NfcEvent>();
   const [can, setCan] = useState<string>("");
 
@@ -54,13 +61,7 @@ export function CieIasAndMrtdPlaygroundMrtdScreen() {
       // Start listening for attributes success
       CieManager.addListener("onMRTDWithPaceSuccess", result => {
         setStatus("success");
-        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
-          screen: SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_MRTD_RESULTS,
-          params: {
-            result,
-            encoding: isBase64Encoding ? "base64" : "hex"
-          }
-        });
+        setSuccessResult(result);
       })
     ];
 
@@ -70,7 +71,19 @@ export function CieIasAndMrtdPlaygroundMrtdScreen() {
       // Ensure the reading is stopped when the screen is unmounted
       void CieManager.stopReading();
     };
-  }, [isBase64Encoding, navigation]);
+  }, []);
+
+  useEffect(() => {
+    if (status === "success" && successResult) {
+      navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+        screen: SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_MRTD_RESULTS,
+        params: {
+          result: successResult,
+          encoding: isBase64Encoding ? "base64" : "hex"
+        }
+      });
+    }
+  }, [status, successResult, navigation, isBase64Encoding]);
 
   const handleStartReading = async () => {
     setEvent(undefined);
