@@ -41,5 +41,6 @@ export const ItwDiscoveryInfoScreen = ({
     return <ItwNfcNotSupportedComponent />;
   }
 
+  // Discovery screen for It-Wallet
   return <ItwDiscoveryInfoComponent />;
 };

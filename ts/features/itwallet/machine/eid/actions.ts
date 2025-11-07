@@ -65,7 +65,7 @@ export const createEidIssuanceActionsImplementation = (
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
-      params: { isL3: isL3IssuanceFeaturesEnabled(context.level) }
+      params: { level: context.level }
     });
   },
 

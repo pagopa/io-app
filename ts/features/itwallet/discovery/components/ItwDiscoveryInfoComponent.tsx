@@ -68,7 +68,8 @@ export const ItwDiscoveryInfoComponent = () => {
     useCallback(() => {
       machineRef.send({
         type: "start",
-        isL3: true
+        mode: "issuance",
+        level: "l3"
       });
     }, [machineRef])
   );
