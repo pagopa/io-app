@@ -66,7 +66,9 @@ const getApiFailureValue = (
     apiFailures.push("get profile");
   }
 
-  return apiFailures.join(", ");
+  const apiFailuresValue = apiFailures.join(", ");
+
+  return apiFailuresValue === "" ? "get session" : apiFailuresValue;
 };
 
 export const IngressScreen = () => {
