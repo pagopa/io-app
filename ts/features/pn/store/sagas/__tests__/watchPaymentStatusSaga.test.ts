@@ -15,6 +15,10 @@ import { getRptIdStringFromPayment } from "../../../utils/rptId";
 import { NotificationPaymentInfo } from "../../../../../../definitions/pn/NotificationPaymentInfo";
 import { paymentStatisticsForMessageUncachedSelector } from "../../../../messages/store/reducers/payments";
 import { trackPNPaymentStatus } from "../../../analytics";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../../../pushNotifications/analytics";
 
 describe("watchPaymentStatusSaga", () => {
   afterEach(() => {
@@ -92,123 +96,167 @@ describe("watchPaymentStatusSaga", () => {
     ]
   };
 
+  const sendOpeningSources: ReadonlyArray<SendOpeningSource> = [
+    "aar",
+    "message",
+    "not_set"
+  ];
+  const sendUserTypes: ReadonlyArray<SendUserType> = [
+    "mandatory",
+    "not_set",
+    "recipient"
+  ];
+
   describe("watchPaymentStatusForMixpanelTracking", () => {
-    [false, true].forEach(isAARNotification => {
-      it(`should follow proper flow (isAARNotification: ${isAARNotification})`, () => {
-        testSaga(
-          watchPaymentStatusForMixpanelTracking,
-          startPNPaymentStatusTracking({ isAARNotification, messageId })
-        )
-          .next()
-          .select(profileFiscalCodeSelector)
-          .next(taxId)
-          .select(pnMessageFromIdSelector, messageId)
-          .next(pnMessage)
-          .call(
-            paymentsFromPNMessagePot,
-            isAARNotification ? undefined : taxId,
-            pnMessage
+    sendOpeningSources.forEach(sendOpeningSource => {
+      sendUserTypes.forEach(sendUserType => {
+        it(`should follow proper flow (opening source: ${sendOpeningSource}, user type ${sendUserType})`, () => {
+          testSaga(
+            watchPaymentStatusForMixpanelTracking,
+            startPNPaymentStatusTracking({
+              openingSource: sendOpeningSource,
+              userType: sendUserType,
+              messageId
+            })
           )
-          .next(pnMessage.recipients.map(rec => rec.payment))
-          .race({
-            polling: call(
-              testable!.generateSENDMessagePaymentStatistics,
-              messageId,
-              6,
-              pnMessage.recipients
-                .slice(0, 5)
-                .map(rec =>
-                  getRptIdStringFromPayment(
-                    rec.payment as NotificationPaymentInfo
+            .next()
+            .select(profileFiscalCodeSelector)
+            .next(taxId)
+            .select(pnMessageFromIdSelector, messageId)
+            .next(pnMessage)
+            .call(
+              paymentsFromPNMessagePot,
+              sendOpeningSource === "message" ? taxId : undefined,
+              pnMessage
+            )
+            .next(pnMessage.recipients.map(rec => rec.payment))
+            .race({
+              polling: call(
+                testable!.generateSENDMessagePaymentStatistics,
+                sendOpeningSource,
+                sendUserType,
+                messageId,
+                6,
+                pnMessage.recipients
+                  .slice(0, 5)
+                  .map(rec =>
+                    getRptIdStringFromPayment(
+                      rec.payment as NotificationPaymentInfo
+                    )
                   )
-                )
-            ),
-            cancelAction: take(cancelPNPaymentStatusTracking)
-          })
-          .next(cancelPNPaymentStatusTracking)
-          .isDone();
+              ),
+              cancelAction: take(cancelPNPaymentStatusTracking)
+            })
+            .next(cancelPNPaymentStatusTracking)
+            .isDone();
+        });
       });
     });
   });
 
   describe("generateSENDMessagePaymentStatistics", () => {
-    it("should do nothing if payment count is zero", () => {
-      testSaga(testable!.generateSENDMessagePaymentStatistics, messageId, 0, [
-        paymentId1
-      ])
-        .next()
-        .isDone();
-    });
-    it("should do nothing if payment Ids is an empty array", () => {
-      testSaga(testable!.generateSENDMessagePaymentStatistics, messageId, 1, [])
-        .next()
-        .isDone();
-    });
-    it("should keep waiting if payments are not ready", () => {
-      const paymentIds = [
-        paymentId1,
-        paymentId2,
-        paymentId3,
-        paymentId4,
-        paymentId5
-      ];
-      testSaga(
-        testable!.generateSENDMessagePaymentStatistics,
-        messageId,
-        6,
-        paymentIds
-      )
-        .next()
-        .select(
-          paymentStatisticsForMessageUncachedSelector,
-          messageId,
-          6,
-          paymentIds
-        )
-        .next(undefined)
-        .delay(500)
-        .next()
-        .select(
-          paymentStatisticsForMessageUncachedSelector,
-          messageId,
-          6,
-          paymentIds
-        );
-    });
-    it("should call tracking method when payments are ready", () => {
-      const paymentIds = [
-        paymentId1,
-        paymentId2,
-        paymentId3,
-        paymentId4,
-        paymentId5
-      ];
-      const paymentStatistics = {
-        paymentCount: 6,
-        unpaidCount: 1,
-        paidCount: 1,
-        errorCount: 1,
-        expiredCount: 1,
-        revokedCount: 1,
-        ongoingCount: 0
-      };
-      testSaga(
-        testable!.generateSENDMessagePaymentStatistics,
-        messageId,
-        6,
-        paymentIds
-      )
-        .next()
-        .select(
-          paymentStatisticsForMessageUncachedSelector,
-          messageId,
-          6,
-          paymentIds
-        )
-        .next(paymentStatistics)
-        .call(trackPNPaymentStatus, paymentStatistics)
-        .next()
-        .isDone();
+    sendOpeningSources.forEach(sendOpeningSource => {
+      sendUserTypes.forEach(sendUserType => {
+        it(`should do nothing if payment count is zero (opening source: ${sendOpeningSource}, user type ${sendUserType})`, () => {
+          testSaga(
+            testable!.generateSENDMessagePaymentStatistics,
+            sendOpeningSource,
+            sendUserType,
+            messageId,
+            0,
+            [paymentId1]
+          )
+            .next()
+            .isDone();
+        });
+        it(`should do nothing if payment Ids is an empty array (opening source: ${sendOpeningSource}, user type ${sendUserType})`, () => {
+          testSaga(
+            testable!.generateSENDMessagePaymentStatistics,
+            sendOpeningSource,
+            sendUserType,
+            messageId,
+            1,
+            []
+          )
+            .next()
+            .isDone();
+        });
+        it(`should keep waiting if payments are not ready (opening source: ${sendOpeningSource}, user type ${sendUserType})`, () => {
+          const paymentIds = [
+            paymentId1,
+            paymentId2,
+            paymentId3,
+            paymentId4,
+            paymentId5
+          ];
+          testSaga(
+            testable!.generateSENDMessagePaymentStatistics,
+            sendOpeningSource,
+            sendUserType,
+            messageId,
+            6,
+            paymentIds
+          )
+            .next()
+            .select(
+              paymentStatisticsForMessageUncachedSelector,
+              messageId,
+              6,
+              paymentIds
+            )
+            .next(undefined)
+            .delay(500)
+            .next()
+            .select(
+              paymentStatisticsForMessageUncachedSelector,
+              messageId,
+              6,
+              paymentIds
+            );
+        });
+        it(`should call tracking method when payments are ready (opening source: ${sendOpeningSource}, user type ${sendUserType})`, () => {
+          const paymentIds = [
+            paymentId1,
+            paymentId2,
+            paymentId3,
+            paymentId4,
+            paymentId5
+          ];
+          const paymentStatistics = {
+            paymentCount: 6,
+            unpaidCount: 1,
+            paidCount: 1,
+            errorCount: 1,
+            expiredCount: 1,
+            revokedCount: 1,
+            ongoingCount: 0
+          };
+          testSaga(
+            testable!.generateSENDMessagePaymentStatistics,
+            sendOpeningSource,
+            sendUserType,
+            messageId,
+            6,
+            paymentIds
+          )
+            .next()
+            .select(
+              paymentStatisticsForMessageUncachedSelector,
+              messageId,
+              6,
+              paymentIds
+            )
+            .next(paymentStatistics)
+            .call(
+              trackPNPaymentStatus,
+              paymentStatistics,
+              sendOpeningSource,
+              sendUserType
+            )
+            .next()
+            .isDone();
+        });
+      });
     });
   });
 });

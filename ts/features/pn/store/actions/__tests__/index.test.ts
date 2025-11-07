@@ -1,4 +1,8 @@
 import {
+  SendOpeningSource,
+  SendUserType
+} from "../../../../pushNotifications/analytics";
+import {
   cancelPNPaymentStatusTracking,
   dismissPnActivationReminderBanner,
   pnActivationUpsert,
@@ -53,19 +57,37 @@ describe("PN actions", () => {
     });
   });
 
+  const sendOpeningSources: ReadonlyArray<SendOpeningSource> = [
+    "aar",
+    "message",
+    "not_set"
+  ];
+  const sendUserTypes: ReadonlyArray<SendUserType> = [
+    "mandatory",
+    "not_set",
+    "recipient"
+  ];
+
   describe("startPNPaymentStatusTracking", () => {
-    [false, true].forEach(isAARNotification => {
-      it(`should create a start tracking action with the provided messageId and isAARNotification: ${isAARNotification}`, () => {
-        const messageId = "message-123";
+    sendOpeningSources.forEach(sendOpeningSource => {
+      sendUserTypes.forEach(sendUserType => {
+        it(`should create a start tracking action with the provided messageId (opening source: ${sendOpeningSource}, user type ${sendUserType})`, () => {
+          const messageId = "message-123";
 
-        const action = startPNPaymentStatusTracking({
-          isAARNotification,
-          messageId
-        });
+          const action = startPNPaymentStatusTracking({
+            openingSource: sendOpeningSource,
+            userType: sendUserType,
+            messageId
+          });
 
-        expect(action).toEqual({
-          type: "PN_START_TRACKING_PAYMENT_STATUS",
-          payload: { isAARNotification, messageId }
+          expect(action).toEqual({
+            type: "PN_START_TRACKING_PAYMENT_STATUS",
+            payload: {
+              openingSource: sendOpeningSource,
+              userType: sendUserType,
+              messageId
+            }
+          });
         });
       });
     });
