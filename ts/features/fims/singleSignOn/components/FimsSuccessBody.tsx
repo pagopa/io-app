@@ -4,7 +4,6 @@ import {
   ContentWrapper,
   ForceScrollDownView,
   H2,
-  H6,
   hexToRgba,
   HStack,
   Icon,
@@ -12,7 +11,6 @@ import {
   IOColors,
   IOVisualCostants,
   ListItemHeader,
-  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -44,7 +42,6 @@ export const FimsFlowSuccessBody = ({
   consents,
   onAbort
 }: FimsSuccessBodyProps) => {
-  const theme = useIOTheme();
   const dispatch = useIODispatch();
   const store = useIOStore();
   const serviceId = consents.service_id as ServiceId;
@@ -174,12 +171,14 @@ const generateBottomSheetProps = (
       <VSpacer size={8} />
       <Body>
         {I18n.t("FIMS.consentsScreen.bottomSheet.body2")}
-        <H6
+        <Body
+          avoidPressable
+          weight="Semibold"
+          asLink
           onPress={() => privacyUrl && openWebUrl(privacyUrl)}
-          color="blueIO-500"
         >
           {I18n.t("FIMS.consentsScreen.bottomSheet.bodyPrivacy")}
-        </H6>
+        </Body>
       </Body>
     </>
   ),
