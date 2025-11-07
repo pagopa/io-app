@@ -406,7 +406,7 @@ exports[`SendAARMessageDetailBottomSheetComponent should match snapshot 1`] = `
                                 Mock SendAARMessageDetailBottomSheet
                               </View>
                               <View>
-                                Send user type: recipient
+                                Send user type: not_set
                               </View>
                               <View
                                 accessibilityLabel=""

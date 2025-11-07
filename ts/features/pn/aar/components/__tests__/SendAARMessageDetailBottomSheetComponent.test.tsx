@@ -12,8 +12,15 @@ import * as ANALYTICS from "../../analytics";
 import * as BANNER from "../../../reminderBanner/reducer/bannerDismiss";
 import * as BOTTOM_SHEET from "../../../../../utils/hooks/bottomSheet";
 import * as IO_NAVIGATION from "../../../../../navigation/params/AppParamsList";
+import { SendUserType } from "../../../../pushNotifications/analytics";
 
 jest.mock("../SendAARMessageDetailBottomSheet");
+
+const sendUserTypes: ReadonlyArray<SendUserType> = [
+  "mandatory",
+  "not_set",
+  "recipient"
+];
 
 describe("SendAARMessageDetailBottomSheetComponent", () => {
   beforeEach(() => {
@@ -22,7 +29,7 @@ describe("SendAARMessageDetailBottomSheetComponent", () => {
   });
 
   it("should match snapshot", () => {
-    const { toJSON } = renderComponent();
+    const { toJSON } = renderComponent("not_set");
     expect(toJSON()).toMatchSnapshot();
   });
 
@@ -39,19 +46,19 @@ describe("SendAARMessageDetailBottomSheetComponent", () => {
           present: mockPresent
         };
       });
-    const { aarBottomSheetRef } = renderComponent();
+    const { aarBottomSheetRef } = renderComponent("not_set");
     expect(aarBottomSheetRef.current).toBe(mockPresent);
   });
 
-  [false, true].forEach(isDelegate => {
-    it(`should call trackSendAarNotificationClosureBack with proper parameters when the primary action is triggered (isDelegate ${isDelegate})`, () => {
+  sendUserTypes.forEach(sendUserType => {
+    it(`should call trackSendAarNotificationClosureBack with proper parameters when the primary action is triggered (user type ${sendUserType})`, () => {
       jest.restoreAllMocks();
 
       const spiedOnMockedTrackSendAarNotificationClosureBack = jest
         .spyOn(ANALYTICS, "trackSendAarNotificationClosureBack")
         .mockImplementation();
 
-      const component = renderComponent(isDelegate);
+      const component = renderComponent(sendUserType);
 
       const primaryButton = component.getByTestId("primary_button");
       fireEvent.press(primaryButton);
@@ -64,13 +71,13 @@ describe("SendAARMessageDetailBottomSheetComponent", () => {
       ).toBe(1);
       expect(
         spiedOnMockedTrackSendAarNotificationClosureBack.mock.calls[0][0]
-      ).toBe(isDelegate ? "mandatory" : "recipient");
+      ).toBe(sendUserType);
     });
 
     [undefined, false, true].forEach(sendServiceEnabled => {
       it(`should call trackSendAarNotificationClosureConfirm, dismiss and ${
         sendServiceEnabled ? "popToTop" : "navigate to engagement screen"
-      } (isDelegate ${isDelegate}, sendServiceEnabled ${sendServiceEnabled})`, () => {
+      } (user type ${sendUserType}, sendServiceEnabled ${sendServiceEnabled})`, () => {
         const mockPopToTop = jest.fn();
         const mockReplace = jest.fn();
         jest.spyOn(IO_NAVIGATION, "useIONavigation").mockImplementation(
@@ -105,7 +112,7 @@ describe("SendAARMessageDetailBottomSheetComponent", () => {
           .spyOn(ANALYTICS, "trackSendAarNotificationClosureConfirm")
           .mockImplementation();
 
-        const component = renderComponent(isDelegate);
+        const component = renderComponent(sendUserType);
 
         const secondaryButton = component.getByTestId("secondary_button");
         fireEvent.press(secondaryButton);
@@ -119,7 +126,7 @@ describe("SendAARMessageDetailBottomSheetComponent", () => {
         ).toBe(1);
         expect(
           spiedOnMockedTrackSendAarNotificationClosureConfirm.mock.calls[0][0]
-        ).toBe(isDelegate ? "mandatory" : "recipient");
+        ).toBe(sendUserType);
 
         expect(mockDismiss.mock.calls.length).toBe(1);
         expect(mockDismiss.mock.calls[0].length).toBe(0);
@@ -143,7 +150,7 @@ describe("SendAARMessageDetailBottomSheetComponent", () => {
               screen: PN_ROUTES.ENGAGEMENT_SCREEN,
               params: {
                 sendOpeningSource: "aar",
-                sendUserType: isDelegate ? "mandatory" : "recipient"
+                sendUserType
               }
             }
           });
@@ -153,7 +160,7 @@ describe("SendAARMessageDetailBottomSheetComponent", () => {
   });
 });
 
-const renderComponent = (isDelegate: boolean = false) => {
+const renderComponent = (sendUserType: SendUserType) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const aarBottomSheetRef: RefObject<(() => void) | undefined> = {
     current: undefined
@@ -163,7 +170,7 @@ const renderComponent = (isDelegate: boolean = false) => {
     () => (
       <SendAARMessageDetailBottomSheetComponent
         aarBottomSheetRef={aarBottomSheetRef}
-        isDelegate={isDelegate}
+        sendUserType={sendUserType}
       />
     ),
     PN_ROUTES.MESSAGE_DETAILS,

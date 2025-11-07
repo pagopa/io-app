@@ -249,7 +249,7 @@ export const MessageDetailsScreen = () => {
       {isAarMessage && (
         <SendAARMessageDetailBottomSheetComponent
           aarBottomSheetRef={aarBottomSheetRef}
-          isDelegate={isAARDelegate}
+          sendUserType={sendUserType}
         />
       )}
     </>

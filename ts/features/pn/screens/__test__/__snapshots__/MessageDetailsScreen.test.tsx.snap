@@ -970,7 +970,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                           Ref container: set to jest.fn() internally
                         </View>
                         <View>
-                          Is delegate:   false
+                          User type:     recipient
                         </View>
                       </View>
                     </View>

@@ -3,7 +3,7 @@ import { SendAARMessageDetailBottomSheetComponentProps } from "../SendAARMessage
 
 export const SendAARMessageDetailBottomSheetComponent = ({
   aarBottomSheetRef,
-  isDelegate
+  sendUserType
 }: SendAARMessageDetailBottomSheetComponentProps) => {
   // eslint-disable-next-line functional/immutable-data
   aarBottomSheetRef.current = jest.fn();
@@ -11,7 +11,7 @@ export const SendAARMessageDetailBottomSheetComponent = ({
     <View>
       <View>{`Mock SendAARMessageDetailBottomSheetComponent`}</View>
       <View>{`Ref container: set to jest.fn() internally`}</View>
-      <View>{`Is delegate:   ${isDelegate}`}</View>
+      <View>{`User type:     ${sendUserType}`}</View>
     </View>
   );
 };

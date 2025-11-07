@@ -4,11 +4,11 @@ import { SendAARMessageDetailBottomSheetProps } from "../SendAARMessageDetailBot
 export const SendAARMessageDetailBottomSheet = ({
   onPrimaryActionPress,
   onSecondaryActionPress,
-  userType
+  sendUserType
 }: SendAARMessageDetailBottomSheetProps) => (
   <View>
     <View>{`Mock SendAARMessageDetailBottomSheet`}</View>
-    <View>{`Send user type: ${userType}`}</View>
+    <View>{`Send user type: ${sendUserType}`}</View>
     <Pressable
       accessibilityLabel=""
       onPress={onPrimaryActionPress}

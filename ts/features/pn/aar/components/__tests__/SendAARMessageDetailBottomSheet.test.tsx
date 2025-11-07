@@ -27,10 +27,9 @@ describe("BottomSheetContent", () => {
   const mockOnSecondaryActionPress = jest.fn();
 
   const defaultProps: SendAARMessageDetailBottomSheetProps = {
-    isDelegate: false,
     onPrimaryActionPress: mockOnPrimaryActionPress,
     onSecondaryActionPress: mockOnSecondaryActionPress,
-    userType: "recipient"
+    sendUserType: "recipient"
   };
 
   const stateWithMandateId =
@@ -47,13 +46,13 @@ describe("BottomSheetContent", () => {
     "recipient"
   ];
 
+  const mockUrl = "https://example.com/test-url";
+
   sendUserTypes.forEach(sendUserType => {
     it(`calls openWebUrl when link is pressed and trackSendAarNotificationClosureExit with proper parameters (user type ${sendUserType})`, () => {
       const openWebUrlSpy = jest
         .spyOn(URL_UTILS, "openWebUrl")
         .mockImplementation(jest.fn());
-
-      const mockUrl = "https://example.com/test-url";
 
       jest
         .spyOn(SELECTORS, "currentAARFlowData")
@@ -67,7 +66,7 @@ describe("BottomSheetContent", () => {
 
       const { getByTestId } = renderComponent({
         ...defaultProps,
-        userType: sendUserType
+        sendUserType
       });
 
       const linkComponent = getByTestId("link");
@@ -112,13 +111,6 @@ describe("BottomSheetContent", () => {
     fireEvent.press(buttonComponent);
     expect(mockOnSecondaryActionPress).toHaveBeenCalledTimes(1);
   });
-
-  [false, true].forEach(isDelegate =>
-    it(`should match snapshot when isDelegate='${isDelegate}'`, () => {
-      const { toJSON } = renderComponent({ ...defaultProps, isDelegate });
-      expect(toJSON()).toMatchSnapshot();
-    })
-  );
 });
 
 const renderComponent = (props: SendAARMessageDetailBottomSheetProps) => {

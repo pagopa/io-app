@@ -13,22 +13,21 @@ import { trackSendAarNotificationClosureExit } from "../analytics";
 import { SendUserType } from "../../../pushNotifications/analytics";
 
 export type SendAARMessageDetailBottomSheetProps = {
-  isDelegate: boolean;
   onPrimaryActionPress: () => void;
   onSecondaryActionPress: () => void;
-  userType: SendUserType;
+  sendUserType: SendUserType;
 };
 
 export const SendAARMessageDetailBottomSheet = ({
-  isDelegate,
   onPrimaryActionPress,
   onSecondaryActionPress,
-  userType
+  sendUserType
 }: SendAARMessageDetailBottomSheetProps) => {
+  const isDelegate = sendUserType === "mandatory";
   const sendVisitTheWebsiteUrl = useIOSelector(sendVisitTheWebsiteUrlSelector);
 
   const onLinkPress = () => {
-    trackSendAarNotificationClosureExit(userType);
+    trackSendAarNotificationClosureExit(sendUserType);
     openWebUrl(sendVisitTheWebsiteUrl);
   };
 

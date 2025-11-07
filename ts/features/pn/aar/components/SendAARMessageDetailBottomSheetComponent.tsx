@@ -15,20 +15,18 @@ import { SendAARMessageDetailBottomSheet } from "./SendAARMessageDetailBottomShe
 
 export type SendAARMessageDetailBottomSheetComponentProps = {
   aarBottomSheetRef: RefObject<(() => void) | undefined>;
-  isDelegate: boolean;
+  sendUserType: SendUserType;
 };
 
 export const SendAARMessageDetailBottomSheetComponent = ({
   aarBottomSheetRef,
-  isDelegate
+  sendUserType
 }: SendAARMessageDetailBottomSheetComponentProps) => {
   const navigation = useIONavigation();
   const store = useIOStore();
 
-  const userType: SendUserType = isDelegate ? "mandatory" : "recipient";
-
   const onSecondaryActionPress = () => {
-    trackSendAarNotificationClosureConfirm(userType);
+    trackSendAarNotificationClosureConfirm(sendUserType);
 
     dismiss();
 
@@ -54,7 +52,7 @@ export const SendAARMessageDetailBottomSheetComponent = ({
         screen: PN_ROUTES.ENGAGEMENT_SCREEN,
         params: {
           sendOpeningSource: "aar",
-          sendUserType: isDelegate ? "mandatory" : "recipient"
+          sendUserType
         }
       }
     });
@@ -64,13 +62,12 @@ export const SendAARMessageDetailBottomSheetComponent = ({
     title: I18n.t("features.pn.aar.flow.closeNotification.title"),
     component: (
       <SendAARMessageDetailBottomSheet
-        isDelegate={isDelegate}
         onPrimaryActionPress={() => {
-          trackSendAarNotificationClosureBack(userType);
+          trackSendAarNotificationClosureBack(sendUserType);
           dismiss();
         }}
         onSecondaryActionPress={onSecondaryActionPress}
-        userType={userType}
+        sendUserType={sendUserType}
       />
     )
   });
