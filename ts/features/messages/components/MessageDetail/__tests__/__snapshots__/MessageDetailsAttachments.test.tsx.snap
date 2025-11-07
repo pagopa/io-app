@@ -49043,78 +49043,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                       </View>
                       <View>
                         <View>
-                          Attachment category:     F24
-                        </View>
-                        <View>
-                          Attachment content-type: application/pdf
-                        </View>
-                        <View>
-                          Attachment id:           3
-                        </View>
-                        <View>
-                          Attachment name:         f24.pdf
-                        </View>
-                        <View>
-                          Attachment url:          https://an.url/f24
-                        </View>
-                      </View>
-                      <View>
-                        Has bottom spacer
-                      </View>
-                      <View>
-                        Is not disabled
-                      </View>
-                      <View>
-                        Send Opening Source aar
-                      </View>
-                      <View>
-                        Send User Type not_set
-                      </View>
-                      <View>
-                        Message Id: 01HNWYRT55GXGPXR16BW2MSBVY
-                      </View>
-                      <View>
-                        Service Id: 01JKAGWVQRFE1P8QAHZS743M90
-                      </View>
-                      <View
-                        accessibilityLabel=""
-                        accessibilityState={
-                          {
-                            "busy": undefined,
-                            "checked": undefined,
-                            "disabled": undefined,
-                            "expanded": undefined,
-                            "selected": undefined,
-                          }
-                        }
-                        accessibilityValue={
-                          {
-                            "max": undefined,
-                            "min": undefined,
-                            "now": undefined,
-                            "text": undefined,
-                          }
-                        }
-                        accessible={true}
-                        collapsable={false}
-                        focusable={true}
-                        onBlur={[Function]}
-                        onClick={[Function]}
-                        onFocus={[Function]}
-                        onResponderGrant={[Function]}
-                        onResponderMove={[Function]}
-                        onResponderRelease={[Function]}
-                        onResponderTerminate={[Function]}
-                        onResponderTerminationRequest={[Function]}
-                        onStartShouldSetResponder={[Function]}
-                      >
-                        Has no onPreNavigate callback
-                      </View>
-                      <View>
-                        Mock MessageDetailsAttachmentItem
-                      </View>
-                      <View>
-                        <View>
                           Attachment category:     PAGOPA
                         </View>
                         <View>
@@ -51074,78 +51002,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                       </View>
                       <View>
                         <View>
-                          Attachment category:     F24
-                        </View>
-                        <View>
-                          Attachment content-type: application/pdf
-                        </View>
-                        <View>
-                          Attachment id:           3
-                        </View>
-                        <View>
-                          Attachment name:         f24.pdf
-                        </View>
-                        <View>
-                          Attachment url:          https://an.url/f24
-                        </View>
-                      </View>
-                      <View>
-                        Has bottom spacer
-                      </View>
-                      <View>
-                        Is not disabled
-                      </View>
-                      <View>
-                        Send Opening Source message
-                      </View>
-                      <View>
-                        Send User Type not_set
-                      </View>
-                      <View>
-                        Message Id: 01HNWYRT55GXGPXR16BW2MSBVY
-                      </View>
-                      <View>
-                        Service Id: 01JKAGWVQRFE1P8QAHZS743M90
-                      </View>
-                      <View
-                        accessibilityLabel=""
-                        accessibilityState={
-                          {
-                            "busy": undefined,
-                            "checked": undefined,
-                            "disabled": undefined,
-                            "expanded": undefined,
-                            "selected": undefined,
-                          }
-                        }
-                        accessibilityValue={
-                          {
-                            "max": undefined,
-                            "min": undefined,
-                            "now": undefined,
-                            "text": undefined,
-                          }
-                        }
-                        accessible={true}
-                        collapsable={false}
-                        focusable={true}
-                        onBlur={[Function]}
-                        onClick={[Function]}
-                        onFocus={[Function]}
-                        onResponderGrant={[Function]}
-                        onResponderMove={[Function]}
-                        onResponderRelease={[Function]}
-                        onResponderTerminate={[Function]}
-                        onResponderTerminationRequest={[Function]}
-                        onStartShouldSetResponder={[Function]}
-                      >
-                        Has no onPreNavigate callback
-                      </View>
-                      <View>
-                        Mock MessageDetailsAttachmentItem
-                      </View>
-                      <View>
-                        <View>
                           Attachment category:     PAGOPA
                         </View>
                         <View>
@@ -52393,6 +52249,78 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                         </View>
                         <View>
                           Attachment url:          https://an.url/document
+                        </View>
+                      </View>
+                      <View>
+                        Has bottom spacer
+                      </View>
+                      <View>
+                        Is not disabled
+                      </View>
+                      <View>
+                        Send Opening Source not_set
+                      </View>
+                      <View>
+                        Send User Type mandatory
+                      </View>
+                      <View>
+                        Message Id: 01HNWYRT55GXGPXR16BW2MSBVY
+                      </View>
+                      <View>
+                        Service Id: 01JKAGWVQRFE1P8QAHZS743M90
+                      </View>
+                      <View
+                        accessibilityLabel=""
+                        accessibilityState={
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
+                            "disabled": undefined,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
+                          }
+                        }
+                        accessible={true}
+                        collapsable={false}
+                        focusable={true}
+                        onBlur={[Function]}
+                        onClick={[Function]}
+                        onFocus={[Function]}
+                        onResponderGrant={[Function]}
+                        onResponderMove={[Function]}
+                        onResponderRelease={[Function]}
+                        onResponderTerminate={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                      >
+                        Has no onPreNavigate callback
+                      </View>
+                      <View>
+                        Mock MessageDetailsAttachmentItem
+                      </View>
+                      <View>
+                        <View>
+                          Attachment category:     F24
+                        </View>
+                        <View>
+                          Attachment content-type: application/pdf
+                        </View>
+                        <View>
+                          Attachment id:           3
+                        </View>
+                        <View>
+                          Attachment name:         f24.pdf
+                        </View>
+                        <View>
+                          Attachment url:          https://an.url/f24
                         </View>
                       </View>
                       <View>
@@ -53830,6 +53758,78 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                       </View>
                       <View>
                         <View>
+                          Attachment category:     F24
+                        </View>
+                        <View>
+                          Attachment content-type: application/pdf
+                        </View>
+                        <View>
+                          Attachment id:           3
+                        </View>
+                        <View>
+                          Attachment name:         f24.pdf
+                        </View>
+                        <View>
+                          Attachment url:          https://an.url/f24
+                        </View>
+                      </View>
+                      <View>
+                        Has bottom spacer
+                      </View>
+                      <View>
+                        Is not disabled
+                      </View>
+                      <View>
+                        Send Opening Source not_set
+                      </View>
+                      <View>
+                        Send User Type recipient
+                      </View>
+                      <View>
+                        Message Id: 01HNWYRT55GXGPXR16BW2MSBVY
+                      </View>
+                      <View>
+                        Service Id: 01JKAGWVQRFE1P8QAHZS743M90
+                      </View>
+                      <View
+                        accessibilityLabel=""
+                        accessibilityState={
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
+                            "disabled": undefined,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
+                          }
+                        }
+                        accessible={true}
+                        collapsable={false}
+                        focusable={true}
+                        onBlur={[Function]}
+                        onClick={[Function]}
+                        onFocus={[Function]}
+                        onResponderGrant={[Function]}
+                        onResponderMove={[Function]}
+                        onResponderRelease={[Function]}
+                        onResponderTerminate={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                      >
+                        Has no onPreNavigate callback
+                      </View>
+                      <View>
+                        Mock MessageDetailsAttachmentItem
+                      </View>
+                      <View>
+                        <View>
                           Attachment category:     PAGOPA
                         </View>
                         <View>
@@ -55077,78 +55077,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                         </View>
                         <View>
                           Attachment url:          https://an.url/document
-                        </View>
-                      </View>
-                      <View>
-                        Has bottom spacer
-                      </View>
-                      <View>
-                        Is disabled
-                      </View>
-                      <View>
-                        Send Opening Source aar
-                      </View>
-                      <View>
-                        Send User Type not_set
-                      </View>
-                      <View>
-                        Message Id: 01HNWYRT55GXGPXR16BW2MSBVY
-                      </View>
-                      <View>
-                        Service Id: 01JKAGWVQRFE1P8QAHZS743M90
-                      </View>
-                      <View
-                        accessibilityLabel=""
-                        accessibilityState={
-                          {
-                            "busy": undefined,
-                            "checked": undefined,
-                            "disabled": undefined,
-                            "expanded": undefined,
-                            "selected": undefined,
-                          }
-                        }
-                        accessibilityValue={
-                          {
-                            "max": undefined,
-                            "min": undefined,
-                            "now": undefined,
-                            "text": undefined,
-                          }
-                        }
-                        accessible={true}
-                        collapsable={false}
-                        focusable={true}
-                        onBlur={[Function]}
-                        onClick={[Function]}
-                        onFocus={[Function]}
-                        onResponderGrant={[Function]}
-                        onResponderMove={[Function]}
-                        onResponderRelease={[Function]}
-                        onResponderTerminate={[Function]}
-                        onResponderTerminationRequest={[Function]}
-                        onStartShouldSetResponder={[Function]}
-                      >
-                        Has no onPreNavigate callback
-                      </View>
-                      <View>
-                        Mock MessageDetailsAttachmentItem
-                      </View>
-                      <View>
-                        <View>
-                          Attachment category:     F24
-                        </View>
-                        <View>
-                          Attachment content-type: application/pdf
-                        </View>
-                        <View>
-                          Attachment id:           3
-                        </View>
-                        <View>
-                          Attachment name:         f24.pdf
-                        </View>
-                        <View>
-                          Attachment url:          https://an.url/f24
                         </View>
                       </View>
                       <View>
@@ -57167,78 +57095,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                       </View>
                       <View>
                         <View>
-                          Attachment category:     F24
-                        </View>
-                        <View>
-                          Attachment content-type: application/pdf
-                        </View>
-                        <View>
-                          Attachment id:           3
-                        </View>
-                        <View>
-                          Attachment name:         f24.pdf
-                        </View>
-                        <View>
-                          Attachment url:          https://an.url/f24
-                        </View>
-                      </View>
-                      <View>
-                        Has bottom spacer
-                      </View>
-                      <View>
-                        Is disabled
-                      </View>
-                      <View>
-                        Send Opening Source message
-                      </View>
-                      <View>
-                        Send User Type not_set
-                      </View>
-                      <View>
-                        Message Id: 01HNWYRT55GXGPXR16BW2MSBVY
-                      </View>
-                      <View>
-                        Service Id: 01JKAGWVQRFE1P8QAHZS743M90
-                      </View>
-                      <View
-                        accessibilityLabel=""
-                        accessibilityState={
-                          {
-                            "busy": undefined,
-                            "checked": undefined,
-                            "disabled": undefined,
-                            "expanded": undefined,
-                            "selected": undefined,
-                          }
-                        }
-                        accessibilityValue={
-                          {
-                            "max": undefined,
-                            "min": undefined,
-                            "now": undefined,
-                            "text": undefined,
-                          }
-                        }
-                        accessible={true}
-                        collapsable={false}
-                        focusable={true}
-                        onBlur={[Function]}
-                        onClick={[Function]}
-                        onFocus={[Function]}
-                        onResponderGrant={[Function]}
-                        onResponderMove={[Function]}
-                        onResponderRelease={[Function]}
-                        onResponderTerminate={[Function]}
-                        onResponderTerminationRequest={[Function]}
-                        onStartShouldSetResponder={[Function]}
-                      >
-                        Has no onPreNavigate callback
-                      </View>
-                      <View>
-                        Mock MessageDetailsAttachmentItem
-                      </View>
-                      <View>
-                        <View>
                           Attachment category:     PAGOPA
                         </View>
                         <View>
@@ -58486,6 +58342,78 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                         </View>
                         <View>
                           Attachment url:          https://an.url/document
+                        </View>
+                      </View>
+                      <View>
+                        Has bottom spacer
+                      </View>
+                      <View>
+                        Is disabled
+                      </View>
+                      <View>
+                        Send Opening Source not_set
+                      </View>
+                      <View>
+                        Send User Type mandatory
+                      </View>
+                      <View>
+                        Message Id: 01HNWYRT55GXGPXR16BW2MSBVY
+                      </View>
+                      <View>
+                        Service Id: 01JKAGWVQRFE1P8QAHZS743M90
+                      </View>
+                      <View
+                        accessibilityLabel=""
+                        accessibilityState={
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
+                            "disabled": undefined,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
+                          }
+                        }
+                        accessible={true}
+                        collapsable={false}
+                        focusable={true}
+                        onBlur={[Function]}
+                        onClick={[Function]}
+                        onFocus={[Function]}
+                        onResponderGrant={[Function]}
+                        onResponderMove={[Function]}
+                        onResponderRelease={[Function]}
+                        onResponderTerminate={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                      >
+                        Has no onPreNavigate callback
+                      </View>
+                      <View>
+                        Mock MessageDetailsAttachmentItem
+                      </View>
+                      <View>
+                        <View>
+                          Attachment category:     F24
+                        </View>
+                        <View>
+                          Attachment content-type: application/pdf
+                        </View>
+                        <View>
+                          Attachment id:           3
+                        </View>
+                        <View>
+                          Attachment name:         f24.pdf
+                        </View>
+                        <View>
+                          Attachment url:          https://an.url/f24
                         </View>
                       </View>
                       <View>
@@ -59923,6 +59851,78 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                       </View>
                       <View>
                         <View>
+                          Attachment category:     F24
+                        </View>
+                        <View>
+                          Attachment content-type: application/pdf
+                        </View>
+                        <View>
+                          Attachment id:           3
+                        </View>
+                        <View>
+                          Attachment name:         f24.pdf
+                        </View>
+                        <View>
+                          Attachment url:          https://an.url/f24
+                        </View>
+                      </View>
+                      <View>
+                        Has bottom spacer
+                      </View>
+                      <View>
+                        Is disabled
+                      </View>
+                      <View>
+                        Send Opening Source not_set
+                      </View>
+                      <View>
+                        Send User Type recipient
+                      </View>
+                      <View>
+                        Message Id: 01HNWYRT55GXGPXR16BW2MSBVY
+                      </View>
+                      <View>
+                        Service Id: 01JKAGWVQRFE1P8QAHZS743M90
+                      </View>
+                      <View
+                        accessibilityLabel=""
+                        accessibilityState={
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
+                            "disabled": undefined,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
+                          }
+                        }
+                        accessible={true}
+                        collapsable={false}
+                        focusable={true}
+                        onBlur={[Function]}
+                        onClick={[Function]}
+                        onFocus={[Function]}
+                        onResponderGrant={[Function]}
+                        onResponderMove={[Function]}
+                        onResponderRelease={[Function]}
+                        onResponderTerminate={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                      >
+                        Has no onPreNavigate callback
+                      </View>
+                      <View>
+                        Mock MessageDetailsAttachmentItem
+                      </View>
+                      <View>
+                        <View>
                           Attachment category:     PAGOPA
                         </View>
                         <View>
@@ -61170,78 +61170,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                         </View>
                         <View>
                           Attachment url:          https://an.url/document
-                        </View>
-                      </View>
-                      <View>
-                        Has bottom spacer
-                      </View>
-                      <View>
-                        Is not disabled
-                      </View>
-                      <View>
-                        Send Opening Source aar
-                      </View>
-                      <View>
-                        Send User Type not_set
-                      </View>
-                      <View>
-                        Message Id: 01HNWYRT55GXGPXR16BW2MSBVY
-                      </View>
-                      <View>
-                        Service Id: 01JKAGWVQRFE1P8QAHZS743M90
-                      </View>
-                      <View
-                        accessibilityLabel=""
-                        accessibilityState={
-                          {
-                            "busy": undefined,
-                            "checked": undefined,
-                            "disabled": undefined,
-                            "expanded": undefined,
-                            "selected": undefined,
-                          }
-                        }
-                        accessibilityValue={
-                          {
-                            "max": undefined,
-                            "min": undefined,
-                            "now": undefined,
-                            "text": undefined,
-                          }
-                        }
-                        accessible={true}
-                        collapsable={false}
-                        focusable={true}
-                        onBlur={[Function]}
-                        onClick={[Function]}
-                        onFocus={[Function]}
-                        onResponderGrant={[Function]}
-                        onResponderMove={[Function]}
-                        onResponderRelease={[Function]}
-                        onResponderTerminate={[Function]}
-                        onResponderTerminationRequest={[Function]}
-                        onStartShouldSetResponder={[Function]}
-                      >
-                        Has no onPreNavigate callback
-                      </View>
-                      <View>
-                        Mock MessageDetailsAttachmentItem
-                      </View>
-                      <View>
-                        <View>
-                          Attachment category:     F24
-                        </View>
-                        <View>
-                          Attachment content-type: application/pdf
-                        </View>
-                        <View>
-                          Attachment id:           3
-                        </View>
-                        <View>
-                          Attachment name:         f24.pdf
-                        </View>
-                        <View>
-                          Attachment url:          https://an.url/f24
                         </View>
                       </View>
                       <View>
@@ -63260,78 +63188,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                       </View>
                       <View>
                         <View>
-                          Attachment category:     F24
-                        </View>
-                        <View>
-                          Attachment content-type: application/pdf
-                        </View>
-                        <View>
-                          Attachment id:           3
-                        </View>
-                        <View>
-                          Attachment name:         f24.pdf
-                        </View>
-                        <View>
-                          Attachment url:          https://an.url/f24
-                        </View>
-                      </View>
-                      <View>
-                        Has bottom spacer
-                      </View>
-                      <View>
-                        Is not disabled
-                      </View>
-                      <View>
-                        Send Opening Source message
-                      </View>
-                      <View>
-                        Send User Type not_set
-                      </View>
-                      <View>
-                        Message Id: 01HNWYRT55GXGPXR16BW2MSBVY
-                      </View>
-                      <View>
-                        Service Id: 01JKAGWVQRFE1P8QAHZS743M90
-                      </View>
-                      <View
-                        accessibilityLabel=""
-                        accessibilityState={
-                          {
-                            "busy": undefined,
-                            "checked": undefined,
-                            "disabled": undefined,
-                            "expanded": undefined,
-                            "selected": undefined,
-                          }
-                        }
-                        accessibilityValue={
-                          {
-                            "max": undefined,
-                            "min": undefined,
-                            "now": undefined,
-                            "text": undefined,
-                          }
-                        }
-                        accessible={true}
-                        collapsable={false}
-                        focusable={true}
-                        onBlur={[Function]}
-                        onClick={[Function]}
-                        onFocus={[Function]}
-                        onResponderGrant={[Function]}
-                        onResponderMove={[Function]}
-                        onResponderRelease={[Function]}
-                        onResponderTerminate={[Function]}
-                        onResponderTerminationRequest={[Function]}
-                        onStartShouldSetResponder={[Function]}
-                      >
-                        Has no onPreNavigate callback
-                      </View>
-                      <View>
-                        Mock MessageDetailsAttachmentItem
-                      </View>
-                      <View>
-                        <View>
                           Attachment category:     PAGOPA
                         </View>
                         <View>
@@ -64579,6 +64435,78 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                         </View>
                         <View>
                           Attachment url:          https://an.url/document
+                        </View>
+                      </View>
+                      <View>
+                        Has bottom spacer
+                      </View>
+                      <View>
+                        Is not disabled
+                      </View>
+                      <View>
+                        Send Opening Source not_set
+                      </View>
+                      <View>
+                        Send User Type mandatory
+                      </View>
+                      <View>
+                        Message Id: 01HNWYRT55GXGPXR16BW2MSBVY
+                      </View>
+                      <View>
+                        Service Id: 01JKAGWVQRFE1P8QAHZS743M90
+                      </View>
+                      <View
+                        accessibilityLabel=""
+                        accessibilityState={
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
+                            "disabled": undefined,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
+                          }
+                        }
+                        accessible={true}
+                        collapsable={false}
+                        focusable={true}
+                        onBlur={[Function]}
+                        onClick={[Function]}
+                        onFocus={[Function]}
+                        onResponderGrant={[Function]}
+                        onResponderMove={[Function]}
+                        onResponderRelease={[Function]}
+                        onResponderTerminate={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                      >
+                        Has no onPreNavigate callback
+                      </View>
+                      <View>
+                        Mock MessageDetailsAttachmentItem
+                      </View>
+                      <View>
+                        <View>
+                          Attachment category:     F24
+                        </View>
+                        <View>
+                          Attachment content-type: application/pdf
+                        </View>
+                        <View>
+                          Attachment id:           3
+                        </View>
+                        <View>
+                          Attachment name:         f24.pdf
+                        </View>
+                        <View>
+                          Attachment url:          https://an.url/f24
                         </View>
                       </View>
                       <View>
@@ -66016,6 +65944,78 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
                       </View>
                       <View>
                         <View>
+                          Attachment category:     F24
+                        </View>
+                        <View>
+                          Attachment content-type: application/pdf
+                        </View>
+                        <View>
+                          Attachment id:           3
+                        </View>
+                        <View>
+                          Attachment name:         f24.pdf
+                        </View>
+                        <View>
+                          Attachment url:          https://an.url/f24
+                        </View>
+                      </View>
+                      <View>
+                        Has bottom spacer
+                      </View>
+                      <View>
+                        Is not disabled
+                      </View>
+                      <View>
+                        Send Opening Source not_set
+                      </View>
+                      <View>
+                        Send User Type recipient
+                      </View>
+                      <View>
+                        Message Id: 01HNWYRT55GXGPXR16BW2MSBVY
+                      </View>
+                      <View>
+                        Service Id: 01JKAGWVQRFE1P8QAHZS743M90
+                      </View>
+                      <View
+                        accessibilityLabel=""
+                        accessibilityState={
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
+                            "disabled": undefined,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
+                          }
+                        }
+                        accessible={true}
+                        collapsable={false}
+                        focusable={true}
+                        onBlur={[Function]}
+                        onClick={[Function]}
+                        onFocus={[Function]}
+                        onResponderGrant={[Function]}
+                        onResponderMove={[Function]}
+                        onResponderRelease={[Function]}
+                        onResponderTerminate={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                      >
+                        Has no onPreNavigate callback
+                      </View>
+                      <View>
+                        Mock MessageDetailsAttachmentItem
+                      </View>
+                      <View>
+                        <View>
                           Attachment category:     PAGOPA
                         </View>
                         <View>
@@ -67257,78 +67257,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                         </View>
                         <View>
                           Attachment url:          https://an.url/document
-                        </View>
-                      </View>
-                      <View>
-                        Has bottom spacer
-                      </View>
-                      <View>
-                        Is not disabled
-                      </View>
-                      <View>
-                        Send Opening Source aar
-                      </View>
-                      <View>
-                        Send User Type not_set
-                      </View>
-                      <View>
-                        Message Id: 01HNWYRT55GXGPXR16BW2MSBVY
-                      </View>
-                      <View>
-                        Service Id: 01JKAGWVQRFE1P8QAHZS743M90
-                      </View>
-                      <View
-                        accessibilityLabel=""
-                        accessibilityState={
-                          {
-                            "busy": undefined,
-                            "checked": undefined,
-                            "disabled": undefined,
-                            "expanded": undefined,
-                            "selected": undefined,
-                          }
-                        }
-                        accessibilityValue={
-                          {
-                            "max": undefined,
-                            "min": undefined,
-                            "now": undefined,
-                            "text": undefined,
-                          }
-                        }
-                        accessible={true}
-                        collapsable={false}
-                        focusable={true}
-                        onBlur={[Function]}
-                        onClick={[Function]}
-                        onFocus={[Function]}
-                        onResponderGrant={[Function]}
-                        onResponderMove={[Function]}
-                        onResponderRelease={[Function]}
-                        onResponderTerminate={[Function]}
-                        onResponderTerminationRequest={[Function]}
-                        onStartShouldSetResponder={[Function]}
-                      >
-                        Has no onPreNavigate callback
-                      </View>
-                      <View>
-                        Mock MessageDetailsAttachmentItem
-                      </View>
-                      <View>
-                        <View>
-                          Attachment category:     F24
-                        </View>
-                        <View>
-                          Attachment content-type: application/pdf
-                        </View>
-                        <View>
-                          Attachment id:           3
-                        </View>
-                        <View>
-                          Attachment name:         f24.pdf
-                        </View>
-                        <View>
-                          Attachment url:          https://an.url/f24
                         </View>
                       </View>
                       <View>
@@ -69338,78 +69266,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                       </View>
                       <View>
                         <View>
-                          Attachment category:     F24
-                        </View>
-                        <View>
-                          Attachment content-type: application/pdf
-                        </View>
-                        <View>
-                          Attachment id:           3
-                        </View>
-                        <View>
-                          Attachment name:         f24.pdf
-                        </View>
-                        <View>
-                          Attachment url:          https://an.url/f24
-                        </View>
-                      </View>
-                      <View>
-                        Has bottom spacer
-                      </View>
-                      <View>
-                        Is not disabled
-                      </View>
-                      <View>
-                        Send Opening Source message
-                      </View>
-                      <View>
-                        Send User Type not_set
-                      </View>
-                      <View>
-                        Message Id: 01HNWYRT55GXGPXR16BW2MSBVY
-                      </View>
-                      <View>
-                        Service Id: 01JKAGWVQRFE1P8QAHZS743M90
-                      </View>
-                      <View
-                        accessibilityLabel=""
-                        accessibilityState={
-                          {
-                            "busy": undefined,
-                            "checked": undefined,
-                            "disabled": undefined,
-                            "expanded": undefined,
-                            "selected": undefined,
-                          }
-                        }
-                        accessibilityValue={
-                          {
-                            "max": undefined,
-                            "min": undefined,
-                            "now": undefined,
-                            "text": undefined,
-                          }
-                        }
-                        accessible={true}
-                        collapsable={false}
-                        focusable={true}
-                        onBlur={[Function]}
-                        onClick={[Function]}
-                        onFocus={[Function]}
-                        onResponderGrant={[Function]}
-                        onResponderMove={[Function]}
-                        onResponderRelease={[Function]}
-                        onResponderTerminate={[Function]}
-                        onResponderTerminationRequest={[Function]}
-                        onStartShouldSetResponder={[Function]}
-                      >
-                        Has no onPreNavigate callback
-                      </View>
-                      <View>
-                        Mock MessageDetailsAttachmentItem
-                      </View>
-                      <View>
-                        <View>
                           Attachment category:     PAGOPA
                         </View>
                         <View>
@@ -70651,6 +70507,78 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                         </View>
                         <View>
                           Attachment url:          https://an.url/document
+                        </View>
+                      </View>
+                      <View>
+                        Has bottom spacer
+                      </View>
+                      <View>
+                        Is not disabled
+                      </View>
+                      <View>
+                        Send Opening Source not_set
+                      </View>
+                      <View>
+                        Send User Type mandatory
+                      </View>
+                      <View>
+                        Message Id: 01HNWYRT55GXGPXR16BW2MSBVY
+                      </View>
+                      <View>
+                        Service Id: 01JKAGWVQRFE1P8QAHZS743M90
+                      </View>
+                      <View
+                        accessibilityLabel=""
+                        accessibilityState={
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
+                            "disabled": undefined,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
+                          }
+                        }
+                        accessible={true}
+                        collapsable={false}
+                        focusable={true}
+                        onBlur={[Function]}
+                        onClick={[Function]}
+                        onFocus={[Function]}
+                        onResponderGrant={[Function]}
+                        onResponderMove={[Function]}
+                        onResponderRelease={[Function]}
+                        onResponderTerminate={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                      >
+                        Has no onPreNavigate callback
+                      </View>
+                      <View>
+                        Mock MessageDetailsAttachmentItem
+                      </View>
+                      <View>
+                        <View>
+                          Attachment category:     F24
+                        </View>
+                        <View>
+                          Attachment content-type: application/pdf
+                        </View>
+                        <View>
+                          Attachment id:           3
+                        </View>
+                        <View>
+                          Attachment name:         f24.pdf
+                        </View>
+                        <View>
+                          Attachment url:          https://an.url/f24
                         </View>
                       </View>
                       <View>
@@ -72082,6 +72010,78 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                       </View>
                       <View>
                         <View>
+                          Attachment category:     F24
+                        </View>
+                        <View>
+                          Attachment content-type: application/pdf
+                        </View>
+                        <View>
+                          Attachment id:           3
+                        </View>
+                        <View>
+                          Attachment name:         f24.pdf
+                        </View>
+                        <View>
+                          Attachment url:          https://an.url/f24
+                        </View>
+                      </View>
+                      <View>
+                        Has bottom spacer
+                      </View>
+                      <View>
+                        Is not disabled
+                      </View>
+                      <View>
+                        Send Opening Source not_set
+                      </View>
+                      <View>
+                        Send User Type recipient
+                      </View>
+                      <View>
+                        Message Id: 01HNWYRT55GXGPXR16BW2MSBVY
+                      </View>
+                      <View>
+                        Service Id: 01JKAGWVQRFE1P8QAHZS743M90
+                      </View>
+                      <View
+                        accessibilityLabel=""
+                        accessibilityState={
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
+                            "disabled": undefined,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
+                          }
+                        }
+                        accessible={true}
+                        collapsable={false}
+                        focusable={true}
+                        onBlur={[Function]}
+                        onClick={[Function]}
+                        onFocus={[Function]}
+                        onResponderGrant={[Function]}
+                        onResponderMove={[Function]}
+                        onResponderRelease={[Function]}
+                        onResponderTerminate={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                      >
+                        Has no onPreNavigate callback
+                      </View>
+                      <View>
+                        Mock MessageDetailsAttachmentItem
+                      </View>
+                      <View>
+                        <View>
                           Attachment category:     PAGOPA
                         </View>
                         <View>
@@ -73323,78 +73323,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                         </View>
                         <View>
                           Attachment url:          https://an.url/document
-                        </View>
-                      </View>
-                      <View>
-                        Has bottom spacer
-                      </View>
-                      <View>
-                        Is disabled
-                      </View>
-                      <View>
-                        Send Opening Source aar
-                      </View>
-                      <View>
-                        Send User Type not_set
-                      </View>
-                      <View>
-                        Message Id: 01HNWYRT55GXGPXR16BW2MSBVY
-                      </View>
-                      <View>
-                        Service Id: 01JKAGWVQRFE1P8QAHZS743M90
-                      </View>
-                      <View
-                        accessibilityLabel=""
-                        accessibilityState={
-                          {
-                            "busy": undefined,
-                            "checked": undefined,
-                            "disabled": undefined,
-                            "expanded": undefined,
-                            "selected": undefined,
-                          }
-                        }
-                        accessibilityValue={
-                          {
-                            "max": undefined,
-                            "min": undefined,
-                            "now": undefined,
-                            "text": undefined,
-                          }
-                        }
-                        accessible={true}
-                        collapsable={false}
-                        focusable={true}
-                        onBlur={[Function]}
-                        onClick={[Function]}
-                        onFocus={[Function]}
-                        onResponderGrant={[Function]}
-                        onResponderMove={[Function]}
-                        onResponderRelease={[Function]}
-                        onResponderTerminate={[Function]}
-                        onResponderTerminationRequest={[Function]}
-                        onStartShouldSetResponder={[Function]}
-                      >
-                        Has no onPreNavigate callback
-                      </View>
-                      <View>
-                        Mock MessageDetailsAttachmentItem
-                      </View>
-                      <View>
-                        <View>
-                          Attachment category:     F24
-                        </View>
-                        <View>
-                          Attachment content-type: application/pdf
-                        </View>
-                        <View>
-                          Attachment id:           3
-                        </View>
-                        <View>
-                          Attachment name:         f24.pdf
-                        </View>
-                        <View>
-                          Attachment url:          https://an.url/f24
                         </View>
                       </View>
                       <View>
@@ -75404,78 +75332,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                       </View>
                       <View>
                         <View>
-                          Attachment category:     F24
-                        </View>
-                        <View>
-                          Attachment content-type: application/pdf
-                        </View>
-                        <View>
-                          Attachment id:           3
-                        </View>
-                        <View>
-                          Attachment name:         f24.pdf
-                        </View>
-                        <View>
-                          Attachment url:          https://an.url/f24
-                        </View>
-                      </View>
-                      <View>
-                        Has bottom spacer
-                      </View>
-                      <View>
-                        Is disabled
-                      </View>
-                      <View>
-                        Send Opening Source message
-                      </View>
-                      <View>
-                        Send User Type not_set
-                      </View>
-                      <View>
-                        Message Id: 01HNWYRT55GXGPXR16BW2MSBVY
-                      </View>
-                      <View>
-                        Service Id: 01JKAGWVQRFE1P8QAHZS743M90
-                      </View>
-                      <View
-                        accessibilityLabel=""
-                        accessibilityState={
-                          {
-                            "busy": undefined,
-                            "checked": undefined,
-                            "disabled": undefined,
-                            "expanded": undefined,
-                            "selected": undefined,
-                          }
-                        }
-                        accessibilityValue={
-                          {
-                            "max": undefined,
-                            "min": undefined,
-                            "now": undefined,
-                            "text": undefined,
-                          }
-                        }
-                        accessible={true}
-                        collapsable={false}
-                        focusable={true}
-                        onBlur={[Function]}
-                        onClick={[Function]}
-                        onFocus={[Function]}
-                        onResponderGrant={[Function]}
-                        onResponderMove={[Function]}
-                        onResponderRelease={[Function]}
-                        onResponderTerminate={[Function]}
-                        onResponderTerminationRequest={[Function]}
-                        onStartShouldSetResponder={[Function]}
-                      >
-                        Has no onPreNavigate callback
-                      </View>
-                      <View>
-                        Mock MessageDetailsAttachmentItem
-                      </View>
-                      <View>
-                        <View>
                           Attachment category:     PAGOPA
                         </View>
                         <View>
@@ -76717,6 +76573,78 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                         </View>
                         <View>
                           Attachment url:          https://an.url/document
+                        </View>
+                      </View>
+                      <View>
+                        Has bottom spacer
+                      </View>
+                      <View>
+                        Is disabled
+                      </View>
+                      <View>
+                        Send Opening Source not_set
+                      </View>
+                      <View>
+                        Send User Type mandatory
+                      </View>
+                      <View>
+                        Message Id: 01HNWYRT55GXGPXR16BW2MSBVY
+                      </View>
+                      <View>
+                        Service Id: 01JKAGWVQRFE1P8QAHZS743M90
+                      </View>
+                      <View
+                        accessibilityLabel=""
+                        accessibilityState={
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
+                            "disabled": undefined,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
+                          }
+                        }
+                        accessible={true}
+                        collapsable={false}
+                        focusable={true}
+                        onBlur={[Function]}
+                        onClick={[Function]}
+                        onFocus={[Function]}
+                        onResponderGrant={[Function]}
+                        onResponderMove={[Function]}
+                        onResponderRelease={[Function]}
+                        onResponderTerminate={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                      >
+                        Has no onPreNavigate callback
+                      </View>
+                      <View>
+                        Mock MessageDetailsAttachmentItem
+                      </View>
+                      <View>
+                        <View>
+                          Attachment category:     F24
+                        </View>
+                        <View>
+                          Attachment content-type: application/pdf
+                        </View>
+                        <View>
+                          Attachment id:           3
+                        </View>
+                        <View>
+                          Attachment name:         f24.pdf
+                        </View>
+                        <View>
+                          Attachment url:          https://an.url/f24
                         </View>
                       </View>
                       <View>
@@ -78148,6 +78076,78 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                       </View>
                       <View>
                         <View>
+                          Attachment category:     F24
+                        </View>
+                        <View>
+                          Attachment content-type: application/pdf
+                        </View>
+                        <View>
+                          Attachment id:           3
+                        </View>
+                        <View>
+                          Attachment name:         f24.pdf
+                        </View>
+                        <View>
+                          Attachment url:          https://an.url/f24
+                        </View>
+                      </View>
+                      <View>
+                        Has bottom spacer
+                      </View>
+                      <View>
+                        Is disabled
+                      </View>
+                      <View>
+                        Send Opening Source not_set
+                      </View>
+                      <View>
+                        Send User Type recipient
+                      </View>
+                      <View>
+                        Message Id: 01HNWYRT55GXGPXR16BW2MSBVY
+                      </View>
+                      <View>
+                        Service Id: 01JKAGWVQRFE1P8QAHZS743M90
+                      </View>
+                      <View
+                        accessibilityLabel=""
+                        accessibilityState={
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
+                            "disabled": undefined,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
+                          }
+                        }
+                        accessible={true}
+                        collapsable={false}
+                        focusable={true}
+                        onBlur={[Function]}
+                        onClick={[Function]}
+                        onFocus={[Function]}
+                        onResponderGrant={[Function]}
+                        onResponderMove={[Function]}
+                        onResponderRelease={[Function]}
+                        onResponderTerminate={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                      >
+                        Has no onPreNavigate callback
+                      </View>
+                      <View>
+                        Mock MessageDetailsAttachmentItem
+                      </View>
+                      <View>
+                        <View>
                           Attachment category:     PAGOPA
                         </View>
                         <View>
@@ -79389,78 +79389,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                         </View>
                         <View>
                           Attachment url:          https://an.url/document
-                        </View>
-                      </View>
-                      <View>
-                        Has bottom spacer
-                      </View>
-                      <View>
-                        Is not disabled
-                      </View>
-                      <View>
-                        Send Opening Source aar
-                      </View>
-                      <View>
-                        Send User Type not_set
-                      </View>
-                      <View>
-                        Message Id: 01HNWYRT55GXGPXR16BW2MSBVY
-                      </View>
-                      <View>
-                        Service Id: 01JKAGWVQRFE1P8QAHZS743M90
-                      </View>
-                      <View
-                        accessibilityLabel=""
-                        accessibilityState={
-                          {
-                            "busy": undefined,
-                            "checked": undefined,
-                            "disabled": undefined,
-                            "expanded": undefined,
-                            "selected": undefined,
-                          }
-                        }
-                        accessibilityValue={
-                          {
-                            "max": undefined,
-                            "min": undefined,
-                            "now": undefined,
-                            "text": undefined,
-                          }
-                        }
-                        accessible={true}
-                        collapsable={false}
-                        focusable={true}
-                        onBlur={[Function]}
-                        onClick={[Function]}
-                        onFocus={[Function]}
-                        onResponderGrant={[Function]}
-                        onResponderMove={[Function]}
-                        onResponderRelease={[Function]}
-                        onResponderTerminate={[Function]}
-                        onResponderTerminationRequest={[Function]}
-                        onStartShouldSetResponder={[Function]}
-                      >
-                        Has no onPreNavigate callback
-                      </View>
-                      <View>
-                        Mock MessageDetailsAttachmentItem
-                      </View>
-                      <View>
-                        <View>
-                          Attachment category:     F24
-                        </View>
-                        <View>
-                          Attachment content-type: application/pdf
-                        </View>
-                        <View>
-                          Attachment id:           3
-                        </View>
-                        <View>
-                          Attachment name:         f24.pdf
-                        </View>
-                        <View>
-                          Attachment url:          https://an.url/f24
                         </View>
                       </View>
                       <View>
@@ -81470,78 +81398,6 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                       </View>
                       <View>
                         <View>
-                          Attachment category:     F24
-                        </View>
-                        <View>
-                          Attachment content-type: application/pdf
-                        </View>
-                        <View>
-                          Attachment id:           3
-                        </View>
-                        <View>
-                          Attachment name:         f24.pdf
-                        </View>
-                        <View>
-                          Attachment url:          https://an.url/f24
-                        </View>
-                      </View>
-                      <View>
-                        Has bottom spacer
-                      </View>
-                      <View>
-                        Is not disabled
-                      </View>
-                      <View>
-                        Send Opening Source message
-                      </View>
-                      <View>
-                        Send User Type not_set
-                      </View>
-                      <View>
-                        Message Id: 01HNWYRT55GXGPXR16BW2MSBVY
-                      </View>
-                      <View>
-                        Service Id: 01JKAGWVQRFE1P8QAHZS743M90
-                      </View>
-                      <View
-                        accessibilityLabel=""
-                        accessibilityState={
-                          {
-                            "busy": undefined,
-                            "checked": undefined,
-                            "disabled": undefined,
-                            "expanded": undefined,
-                            "selected": undefined,
-                          }
-                        }
-                        accessibilityValue={
-                          {
-                            "max": undefined,
-                            "min": undefined,
-                            "now": undefined,
-                            "text": undefined,
-                          }
-                        }
-                        accessible={true}
-                        collapsable={false}
-                        focusable={true}
-                        onBlur={[Function]}
-                        onClick={[Function]}
-                        onFocus={[Function]}
-                        onResponderGrant={[Function]}
-                        onResponderMove={[Function]}
-                        onResponderRelease={[Function]}
-                        onResponderTerminate={[Function]}
-                        onResponderTerminationRequest={[Function]}
-                        onStartShouldSetResponder={[Function]}
-                      >
-                        Has no onPreNavigate callback
-                      </View>
-                      <View>
-                        Mock MessageDetailsAttachmentItem
-                      </View>
-                      <View>
-                        <View>
                           Attachment category:     PAGOPA
                         </View>
                         <View>
@@ -82783,6 +82639,78 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                         </View>
                         <View>
                           Attachment url:          https://an.url/document
+                        </View>
+                      </View>
+                      <View>
+                        Has bottom spacer
+                      </View>
+                      <View>
+                        Is not disabled
+                      </View>
+                      <View>
+                        Send Opening Source not_set
+                      </View>
+                      <View>
+                        Send User Type mandatory
+                      </View>
+                      <View>
+                        Message Id: 01HNWYRT55GXGPXR16BW2MSBVY
+                      </View>
+                      <View>
+                        Service Id: 01JKAGWVQRFE1P8QAHZS743M90
+                      </View>
+                      <View
+                        accessibilityLabel=""
+                        accessibilityState={
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
+                            "disabled": undefined,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
+                          }
+                        }
+                        accessible={true}
+                        collapsable={false}
+                        focusable={true}
+                        onBlur={[Function]}
+                        onClick={[Function]}
+                        onFocus={[Function]}
+                        onResponderGrant={[Function]}
+                        onResponderMove={[Function]}
+                        onResponderRelease={[Function]}
+                        onResponderTerminate={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                      >
+                        Has no onPreNavigate callback
+                      </View>
+                      <View>
+                        Mock MessageDetailsAttachmentItem
+                      </View>
+                      <View>
+                        <View>
+                          Attachment category:     F24
+                        </View>
+                        <View>
+                          Attachment content-type: application/pdf
+                        </View>
+                        <View>
+                          Attachment id:           3
+                        </View>
+                        <View>
+                          Attachment name:         f24.pdf
+                        </View>
+                        <View>
+                          Attachment url:          https://an.url/f24
                         </View>
                       </View>
                       <View>
@@ -84155,6 +84083,78 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
                         </View>
                         <View>
                           Attachment url:          https://an.url/document
+                        </View>
+                      </View>
+                      <View>
+                        Has bottom spacer
+                      </View>
+                      <View>
+                        Is not disabled
+                      </View>
+                      <View>
+                        Send Opening Source not_set
+                      </View>
+                      <View>
+                        Send User Type recipient
+                      </View>
+                      <View>
+                        Message Id: 01HNWYRT55GXGPXR16BW2MSBVY
+                      </View>
+                      <View>
+                        Service Id: 01JKAGWVQRFE1P8QAHZS743M90
+                      </View>
+                      <View
+                        accessibilityLabel=""
+                        accessibilityState={
+                          {
+                            "busy": undefined,
+                            "checked": undefined,
+                            "disabled": undefined,
+                            "expanded": undefined,
+                            "selected": undefined,
+                          }
+                        }
+                        accessibilityValue={
+                          {
+                            "max": undefined,
+                            "min": undefined,
+                            "now": undefined,
+                            "text": undefined,
+                          }
+                        }
+                        accessible={true}
+                        collapsable={false}
+                        focusable={true}
+                        onBlur={[Function]}
+                        onClick={[Function]}
+                        onFocus={[Function]}
+                        onResponderGrant={[Function]}
+                        onResponderMove={[Function]}
+                        onResponderRelease={[Function]}
+                        onResponderTerminate={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                      >
+                        Has no onPreNavigate callback
+                      </View>
+                      <View>
+                        Mock MessageDetailsAttachmentItem
+                      </View>
+                      <View>
+                        <View>
+                          Attachment category:     F24
+                        </View>
+                        <View>
+                          Attachment content-type: application/pdf
+                        </View>
+                        <View>
+                          Attachment id:           3
+                        </View>
+                        <View>
+                          Attachment name:         f24.pdf
+                        </View>
+                        <View>
+                          Attachment url:          https://an.url/f24
                         </View>
                       </View>
                       <View>

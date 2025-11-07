@@ -276,8 +276,12 @@ describe("MessageDetailsScreen", () => {
         expect(mockDispatch.mock.calls[0].length).toBe(1);
         expect(mockDispatch.mock.calls[0][0]).toEqual(
           startPNPaymentStatusTracking({
-            isAARNotification,
-            isDelegate,
+            openingSource: isAARNotification ? "aar" : "message",
+            userType: isAARNotification
+              ? isDelegate
+                ? "mandatory"
+                : "recipient"
+              : "not_set",
             messageId: message_1.id
           })
         );

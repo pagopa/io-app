@@ -15,6 +15,10 @@ import { getRptIdStringFromPayment } from "../../../utils/rptId";
 import { NotificationPaymentInfo } from "../../../../../../definitions/pn/NotificationPaymentInfo";
 import { paymentStatisticsForMessageUncachedSelector } from "../../../../messages/store/reducers/payments";
 import { trackPNPaymentStatus } from "../../../analytics";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../../../pushNotifications/analytics";
 
 describe("watchPaymentStatusSaga", () => {
   afterEach(() => {
@@ -92,16 +96,27 @@ describe("watchPaymentStatusSaga", () => {
     ]
   };
 
+  const sendOpeningSources: ReadonlyArray<SendOpeningSource> = [
+    "aar",
+    "message",
+    "not_set"
+  ];
+  const sendUserTypes: ReadonlyArray<SendUserType> = [
+    "mandatory",
+    "not_set",
+    "recipient"
+  ];
+
   describe("watchPaymentStatusForMixpanelTracking", () => {
-    [false, true].forEach(isAARNotification => {
-      [false, true].forEach(isDelegate => {
-        it(`should follow proper flow (isAARNotification: ${isAARNotification} isDelegate ${isDelegate})`, () => {
+    sendOpeningSources.forEach(sendOpeningSource => {
+      sendUserTypes.forEach(sendUserType => {
+        it(`should follow proper flow (opening source: ${sendOpeningSource}, user type ${sendUserType})`, () => {
           testSaga(
             watchPaymentStatusForMixpanelTracking,
             startPNPaymentStatusTracking({
-              isAARNotification,
-              messageId,
-              isDelegate
+              openingSource: sendOpeningSource,
+              userType: sendUserType,
+              messageId
             })
           )
             .next()
@@ -111,15 +126,15 @@ describe("watchPaymentStatusSaga", () => {
             .next(pnMessage)
             .call(
               paymentsFromPNMessagePot,
-              isAARNotification ? undefined : taxId,
+              sendOpeningSource === "message" ? taxId : undefined,
               pnMessage
             )
             .next(pnMessage.recipients.map(rec => rec.payment))
             .race({
               polling: call(
                 testable!.generateSENDMessagePaymentStatistics,
-                isAARNotification,
-                isDelegate,
+                sendOpeningSource,
+                sendUserType,
                 messageId,
                 6,
                 pnMessage.recipients
@@ -140,13 +155,13 @@ describe("watchPaymentStatusSaga", () => {
   });
 
   describe("generateSENDMessagePaymentStatistics", () => {
-    [false, true].forEach(isAarMessage => {
-      [false, true].forEach(isDelegate => {
-        it(`should do nothing if payment count is zero (isAarMessage ${isAarMessage} isDelegate ${isDelegate})`, () => {
+    sendOpeningSources.forEach(sendOpeningSource => {
+      sendUserTypes.forEach(sendUserType => {
+        it(`should do nothing if payment count is zero (opening source: ${sendOpeningSource}, user type ${sendUserType})`, () => {
           testSaga(
             testable!.generateSENDMessagePaymentStatistics,
-            isAarMessage,
-            isDelegate,
+            sendOpeningSource,
+            sendUserType,
             messageId,
             0,
             [paymentId1]
@@ -154,11 +169,11 @@ describe("watchPaymentStatusSaga", () => {
             .next()
             .isDone();
         });
-        it(`should do nothing if payment Ids is an empty array (isAarMessage ${isAarMessage} isDelegate ${isDelegate})`, () => {
+        it(`should do nothing if payment Ids is an empty array (opening source: ${sendOpeningSource}, user type ${sendUserType})`, () => {
           testSaga(
             testable!.generateSENDMessagePaymentStatistics,
-            isAarMessage,
-            isDelegate,
+            sendOpeningSource,
+            sendUserType,
             messageId,
             1,
             []
@@ -166,7 +181,7 @@ describe("watchPaymentStatusSaga", () => {
             .next()
             .isDone();
         });
-        it(`should keep waiting if payments are not ready (isAarMessage ${isAarMessage} isDelegate ${isDelegate})`, () => {
+        it(`should keep waiting if payments are not ready (opening source: ${sendOpeningSource}, user type ${sendUserType})`, () => {
           const paymentIds = [
             paymentId1,
             paymentId2,
@@ -176,8 +191,8 @@ describe("watchPaymentStatusSaga", () => {
           ];
           testSaga(
             testable!.generateSENDMessagePaymentStatistics,
-            isAarMessage,
-            isDelegate,
+            sendOpeningSource,
+            sendUserType,
             messageId,
             6,
             paymentIds
@@ -199,7 +214,7 @@ describe("watchPaymentStatusSaga", () => {
               paymentIds
             );
         });
-        it(`should call tracking method when payments are ready (isAarMessage ${isAarMessage} isDelegate ${isDelegate})`, () => {
+        it(`should call tracking method when payments are ready (opening source: ${sendOpeningSource}, user type ${sendUserType})`, () => {
           const paymentIds = [
             paymentId1,
             paymentId2,
@@ -218,8 +233,8 @@ describe("watchPaymentStatusSaga", () => {
           };
           testSaga(
             testable!.generateSENDMessagePaymentStatistics,
-            isAarMessage,
-            isDelegate,
+            sendOpeningSource,
+            sendUserType,
             messageId,
             6,
             paymentIds
@@ -235,8 +250,8 @@ describe("watchPaymentStatusSaga", () => {
             .call(
               trackPNPaymentStatus,
               paymentStatistics,
-              isAarMessage ? "aar" : "message",
-              isDelegate ? "mandatory" : "recipient"
+              sendOpeningSource,
+              sendUserType
             )
             .next()
             .isDone();

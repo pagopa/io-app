@@ -42,7 +42,10 @@ import {
   trackSendAARFailure,
   trackSendAarNotificationClosure
 } from "../aar/analytics";
-import { SendUserType } from "../../pushNotifications/analytics";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../pushNotifications/analytics";
 
 export type MessageDetailsScreenRouteParams = {
   messageId: string;
@@ -134,7 +137,12 @@ export const MessageDetailsScreen = () => {
   );
   const paymentsCount = payments?.length ?? 0;
 
-  const sendUserType: SendUserType = isAARDelegate ? "mandatory" : "recipient";
+  const sendOpeningSource: SendOpeningSource = isAarMessage ? "aar" : "message";
+  const sendUserType: SendUserType = isAarMessage
+    ? isAARDelegate
+      ? "mandatory"
+      : "recipient"
+    : "not_set";
   const androidBackButtonCallback = useCallback(() => {
     if (isAarMessage) {
       trackSendAarNotificationClosure(sendUserType);
@@ -150,8 +158,8 @@ export const MessageDetailsScreen = () => {
   useEffect(() => {
     dispatch(
       startPNPaymentStatusTracking({
-        isAARNotification: !!isAarMessage,
-        isDelegate: isAARDelegate,
+        openingSource: sendOpeningSource,
+        userType: sendUserType,
         messageId
       })
     );
@@ -159,20 +167,14 @@ export const MessageDetailsScreen = () => {
     if (isStrictSome(sendMessagePot)) {
       const isCancelled = isCancelledFromPNMessagePot(sendMessagePot);
       const containsF24 = containsF24FromPNMessagePot(sendMessagePot);
-      const openingSource = isAarMessage ? "aar" : "message";
-      const userType = !isAarMessage
-        ? "not_set"
-        : isAARDelegate
-        ? "mandatory"
-        : "recipient";
 
       trackPNUxSuccess(
         paymentsCount,
         firstTimeOpening,
         isCancelled,
         containsF24,
-        openingSource,
-        userType
+        sendOpeningSource,
+        sendUserType
       );
 
       if (sendMessageOrUndefined == null && isAarMessage) {
@@ -193,12 +195,13 @@ export const MessageDetailsScreen = () => {
   }, [
     dispatch,
     firstTimeOpening,
-    isAARDelegate,
     isAarMessage,
     messageId,
     paymentsCount,
     sendMessageOrUndefined,
-    sendMessagePot
+    sendMessagePot,
+    sendOpeningSource,
+    sendUserType
   ]);
 
   const store = useIOStore();
@@ -240,7 +243,8 @@ export const MessageDetailsScreen = () => {
         serviceId={serviceId}
         payments={payments}
         isAARMessage={isAarMessage}
-        isDelegate={isAARDelegate}
+        sendOpeningSource={sendOpeningSource}
+        sendUserType={sendUserType}
       />
       {isAarMessage && (
         <SendAARMessageDetailBottomSheetComponent

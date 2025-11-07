@@ -39,7 +39,7 @@ export const useAttachmentDownload = (
   onPreNavigate?: () => void
 ) => {
   const attachmentId = attachment.id;
-  const isSendAttachment = sendUserType !== "not_set";
+  const isSendAttachment = sendOpeningSource !== "not_set";
 
   const dispatch = useIODispatch();
   const store = useIOStore();
@@ -162,12 +162,10 @@ export const useAttachmentDownload = (
     attachmentId,
     checkPathAndNavigate,
     dispatch,
-    doNavigate,
     download,
-    isSendAttachment,
     isDownloadError,
+    isSendAttachment,
     messageId,
-    sendUserType,
     store,
     toast
   ]);

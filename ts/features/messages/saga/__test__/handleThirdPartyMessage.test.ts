@@ -277,7 +277,7 @@ describe("handleThirdPartyMessage", () => {
                 ).toBe("message");
                 expect(
                   spiedOnMockedTrackPNNotificationLoadSuccess.mock.calls[0][3]
-                ).toBe("recipient");
+                ).toBe("not_set");
               } else {
                 expect(
                   spiedOnMockedTrackPNNotificationLoadSuccess.mock.calls.length

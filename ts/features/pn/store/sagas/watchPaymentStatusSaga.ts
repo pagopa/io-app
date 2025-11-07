@@ -25,13 +25,12 @@ import {
 export function* watchPaymentStatusForMixpanelTracking(
   action: ActionType<typeof startPNPaymentStatusTracking>
 ) {
-  const { isAARNotification, isDelegate, messageId } = action.payload;
+  const { openingSource, userType, messageId } = action.payload;
   const currentFiscalCode = yield* select(profileFiscalCodeSelector);
   const message = yield* select(pnMessageFromIdSelector, messageId);
 
-  const fiscalCodeOrUndefined = isAARNotification
-    ? undefined
-    : currentFiscalCode;
+  const fiscalCodeOrUndefined =
+    openingSource === "message" ? currentFiscalCode : undefined;
   const payments = yield* call(
     paymentsFromPNMessagePot,
     fiscalCodeOrUndefined,
@@ -46,8 +45,8 @@ export function* watchPaymentStatusForMixpanelTracking(
   yield* race({
     polling: call(
       generateSENDMessagePaymentStatistics,
-      isAARNotification,
-      isDelegate,
+      openingSource,
+      userType,
       messageId,
       paymentCount,
       visibleRPTIds
@@ -57,8 +56,8 @@ export function* watchPaymentStatusForMixpanelTracking(
 }
 
 function* generateSENDMessagePaymentStatistics(
-  isAarMessage: boolean,
-  isDelegate: boolean,
+  openingSource: SendOpeningSource,
+  userType: SendUserType,
   messageId: string,
   paymentCount: number,
   paymentsRpdIds: ReadonlyArray<string>
@@ -79,8 +78,6 @@ function* generateSENDMessagePaymentStatistics(
       yield* delay(500);
     } else {
       // Payment statistics are ready, track them
-      const openingSource: SendOpeningSource = isAarMessage ? "aar" : "message";
-      const userType: SendUserType = isDelegate ? "mandatory" : "recipient";
       yield* call(
         trackPNPaymentStatus,
         paymentStatistics,

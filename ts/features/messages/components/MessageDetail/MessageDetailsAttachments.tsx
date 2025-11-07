@@ -31,7 +31,7 @@ export const MessageDetailsAttachments = ({
   const originalAttachments = useIOSelector(state =>
     thirdPartyMessageAttachments(state, messageId)
   );
-  const isSend = sendUserType !== "not_set";
+  const isSend = sendOpeningSource !== "not_set";
   const attachments = isSend
     ? originalAttachments.filter(
         attachment => attachment.category !== ATTACHMENT_CATEGORY.F24

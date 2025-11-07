@@ -289,7 +289,10 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                           Is AAR: false
                         </View>
                         <View>
-                          Is Delegate: false
+                          Opening Source: message
+                        </View>
+                        <View>
+                          User Type: not_set
                         </View>
                       </View>
                     </View>
@@ -953,7 +956,10 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                           Is AAR: true
                         </View>
                         <View>
-                          Is Delegate: false
+                          Opening Source: aar
+                        </View>
+                        <View>
+                          User Type: recipient
                         </View>
                       </View>
                       <View>

@@ -106,7 +106,7 @@ const trackSuccess = (
         hasAttachments,
         status,
         "message",
-        "recipient"
+        "not_set"
       );
     } else {
       trackPNNotificationLoadError(

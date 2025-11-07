@@ -120,14 +120,13 @@ export function trackPNAttachmentOpening(
   userType: SendUserType,
   category?: string
 ) {
-  void mixpanelTrack(
-    "PN_ATTACHMENT_OPENING",
-    buildEventProperties("UX", "action", {
-      category,
-      opening_source: openingSource,
-      send_user: userType
-    })
-  );
+  const eventName = "PN_ATTACHMENT_OPENING";
+  const props = buildEventProperties("UX", "action", {
+    category,
+    opening_source: openingSource,
+    send_user: userType
+  });
+  void mixpanelTrack(eventName, props);
 }
 
 export function trackPNAttachmentOpeningSuccess(
@@ -204,20 +203,19 @@ export function trackPNUxSuccess(
   openingSource: SendOpeningSource,
   userType: SendUserType
 ) {
-  void mixpanelTrack(
-    "PN_UX_SUCCESS",
-    buildEventProperties("UX", "screen_view", {
-      contains_payment: numberToYesNoOnThreshold(paymentCount),
-      first_time_opening:
-        firstTimeOpening != null ? booleanToYesNo(firstTimeOpening) : "not_set",
-      notification_status: isCancelled ? "cancelled" : "active",
-      contains_multipayment: numberToYesNoOnThreshold(paymentCount, 1),
-      count_payment: paymentCount,
-      contains_f24: containsF24,
-      opening_source: openingSource,
-      send_user: userType
-    })
-  );
+  const eventName = "PN_UX_SUCCESS";
+  const props = buildEventProperties("UX", "screen_view", {
+    contains_payment: numberToYesNoOnThreshold(paymentCount),
+    first_time_opening:
+      firstTimeOpening != null ? booleanToYesNo(firstTimeOpening) : "not_set",
+    notification_status: isCancelled ? "cancelled" : "active",
+    contains_multipayment: numberToYesNoOnThreshold(paymentCount, 1),
+    count_payment: paymentCount,
+    contains_f24: containsF24,
+    opening_source: openingSource,
+    send_user: userType
+  });
+  void mixpanelTrack(eventName, props);
 }
 
 export function trackPNPaymentStart(
@@ -252,20 +250,19 @@ export function trackPNPaymentStatus(
   openingSource: SendOpeningSource,
   userType: SendUserType
 ) {
-  void mixpanelTrack(
-    "PN_PAYMENT_STATUS",
-    buildEventProperties("TECH", undefined, {
-      count_payment: paymentCount,
-      count_unpaid: unpaidCount,
-      count_paid: paidCount,
-      count_error: errorCount,
-      count_expired: expiredCount,
-      count_revoked: revokedCount,
-      count_inprogress: ongoingCount,
-      opening_source: openingSource,
-      send_user: userType
-    })
-  );
+  const eventName = "PN_PAYMENT_STATUS";
+  const props = buildEventProperties("TECH", undefined, {
+    count_payment: paymentCount,
+    count_unpaid: unpaidCount,
+    count_paid: paidCount,
+    count_error: errorCount,
+    count_expired: expiredCount,
+    count_revoked: revokedCount,
+    count_inprogress: ongoingCount,
+    opening_source: openingSource,
+    send_user: userType
+  });
+  void mixpanelTrack(eventName, props);
 }
 
 export function trackPNShowF24(

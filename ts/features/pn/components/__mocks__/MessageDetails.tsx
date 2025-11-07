@@ -7,7 +7,8 @@ export const MessageDetails = ({
   serviceId,
   payments,
   isAARMessage,
-  isDelegate
+  sendOpeningSource,
+  sendUserType
 }: MessageDetailsProps) => (
   <View>
     <View>Mock MessageDetails</View>
@@ -70,6 +71,7 @@ export const MessageDetails = ({
         </View>
       ))}
     <View>{`Is AAR: ${isAARMessage}`}</View>
-    <View>{`Is Delegate: ${isDelegate}`}</View>
+    <View>{`Opening Source: ${sendOpeningSource}`}</View>
+    <View>{`User Type: ${sendUserType}`}</View>
   </View>
 );

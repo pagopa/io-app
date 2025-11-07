@@ -43,7 +43,8 @@ export type MessageDetailsProps = {
   serviceId: ServiceId;
   payments?: ReadonlyArray<NotificationPaymentInfo>;
   isAARMessage: boolean;
-  isDelegate: boolean;
+  sendOpeningSource: SendOpeningSource;
+  sendUserType: SendUserType;
 };
 
 export const MessageDetails = ({
@@ -52,7 +53,8 @@ export const MessageDetails = ({
   payments,
   serviceId,
   isAARMessage,
-  isDelegate
+  sendOpeningSource,
+  sendUserType
 }: MessageDetailsProps) => {
   const presentPaymentsBottomSheetRef = useRef<() => void>(undefined);
   const partitionedAttachments = pipe(
@@ -75,8 +77,6 @@ export const MessageDetails = ({
     : undefined;
 
   const maybeMessageDate = isAARMessage ? undefined : message.created_at;
-  const sendOpeningSource: SendOpeningSource = isAARMessage ? "aar" : "message";
-  const sendUserType: SendUserType = isDelegate ? "mandatory" : "recipient";
   return (
     <>
       <ScrollView
