@@ -146,6 +146,7 @@ export const ItwDiscoveryInfoComponent = () => {
 
   return (
     <IOScrollViewWithReveal
+      testID="itwDiscoveryInfoComponentTestID"
       animatedRef={animatedRef}
       hideAnchorAction={hideAnchorLink}
       actions={{

@@ -83,6 +83,7 @@ export const ItwDiscoveryInfoLegacyComponent = () => {
 
   return (
     <IOScrollView
+      testID="itwDiscoveryInfoLegacyComponentTestID"
       includeContentMargins={false}
       actions={{
         type: "SingleButton",

@@ -70,6 +70,7 @@ export const ItwNfcNotSupportedComponent = () => {
 
   return (
     <OperationResultScreenContent
+      testID="itwNfcNotSupportedComponentTestID"
       title={I18n.t("features.itWallet.discovery.nfcNotSupported.title")}
       subtitle={I18n.t("features.itWallet.discovery.nfcNotSupported.subtitle")}
       pictogram="attention"

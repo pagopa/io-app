@@ -79,6 +79,7 @@ export const ItwDiscoveryInfoFallbackComponent = () => {
 
   return (
     <IOScrollView
+      testID="itwDiscoveryInfoFallbackComponentTestID"
       includeContentMargins={false}
       actions={{
         type: "SingleButton",
