@@ -5476,6 +5476,7 @@
           "description": "È il tuo pass digitale per dimostrare chi sei, accedere ai servizi online e ottenere nuovi documenti.",
           "listItemHeader": "Dati del mio IT-Wallet ID",
           "cta": {
+            "info": "Parte di IT-Wallet",
             "revoke": "Disattiva IT-Wallet"
           },
           "dialog": {
