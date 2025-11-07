@@ -3,11 +3,15 @@
 exports[`FimsClaims component renders correctly with 2 claims and renders 1 Dividers 1`] = `
 <View
   style={
-    {
-      "backgroundColor": "#F4F5F8",
-      "borderRadius": 8,
-      "paddingHorizontal": 24,
-    }
+    [
+      {
+        "borderRadius": 8,
+        "paddingHorizontal": 24,
+      },
+      {
+        "backgroundColor": "#F4F5F8",
+      },
+    ]
   }
 >
   <View
@@ -190,11 +194,15 @@ exports[`FimsClaims component renders correctly with 2 claims and renders 1 Divi
 exports[`FimsClaims component renders correctly with 3 claims and renders 2 Dividers 1`] = `
 <View
   style={
-    {
-      "backgroundColor": "#F4F5F8",
-      "borderRadius": 8,
-      "paddingHorizontal": 24,
-    }
+    [
+      {
+        "borderRadius": 8,
+        "paddingHorizontal": 24,
+      },
+      {
+        "backgroundColor": "#F4F5F8",
+      },
+    ]
   }
 >
   <View
@@ -464,11 +472,15 @@ exports[`FimsClaims component renders correctly with 3 claims and renders 2 Divi
 exports[`FimsClaims component renders correctly with a single claim and does not render Divider 1`] = `
 <View
   style={
-    {
-      "backgroundColor": "#F4F5F8",
-      "borderRadius": 8,
-      "paddingHorizontal": 24,
-    }
+    [
+      {
+        "borderRadius": 8,
+        "paddingHorizontal": 24,
+      },
+      {
+        "backgroundColor": "#F4F5F8",
+      },
+    ]
   }
 >
   <View
@@ -564,11 +576,15 @@ exports[`FimsClaims component renders correctly with a single claim and does not
 exports[`FimsClaims component renders correctly with an empty claims list and does not render Divider 1`] = `
 <View
   style={
-    {
-      "backgroundColor": "#F4F5F8",
-      "borderRadius": 8,
-      "paddingHorizontal": 24,
-    }
+    [
+      {
+        "borderRadius": 8,
+        "paddingHorizontal": 24,
+      },
+      {
+        "backgroundColor": "#F4F5F8",
+      },
+    ]
   }
 />
 `;
