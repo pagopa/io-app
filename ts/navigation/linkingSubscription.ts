@@ -2,6 +2,7 @@ import { Linking } from "react-native";
 import { Action, Dispatch, Store } from "redux";
 import { isLoggedIn } from "../features/authentication/common/store/utils/guards";
 import { storeLinkingUrl } from "../features/linking/actions";
+import { isExternalDeepLink } from "../features/linking/sagas";
 import { resetMessageArchivingAction } from "../features/messages/store/actions/archiving";
 import { isArchivingDisabledSelector } from "../features/messages/store/reducers/archiving";
 import {
@@ -9,6 +10,7 @@ import {
   navigateToSendAarFlowIfEnabled
 } from "../features/pn/aar/utils/deepLinking";
 import { processUtmLink } from "../features/utmLink";
+import { walletUpdate } from "../features/wallet/store/actions";
 import { GlobalState } from "../store/reducers/types";
 
 export const linkingSubscription =
@@ -27,6 +29,11 @@ export const linkingSubscription =
       }
 
       if (isLoggedIn(state.authentication)) {
+        // Trigger wallet update for external deep links
+        if (isExternalDeepLink(url)) {
+          dispatch(walletUpdate());
+        }
+
         // only when logged in we can navigate to the AAR screen.
         if (isSendAARLink(state, url)) {
           navigateToSendAarFlowIfEnabled(state, url);
