@@ -6,7 +6,6 @@ import {
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
-import { constNull } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { StyleSheet } from "react-native";
@@ -19,7 +18,11 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp.tsx";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 import { tosConfigSelector } from "../../../tos/store/selectors/index.ts";
 import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum.ts";
-import { trackItwIntroBack, trackOpenItwTos } from "../../analytics/index.ts";
+import {
+  trackItWalletActivationStart,
+  trackItwIntroBack,
+  trackOpenItwTos
+} from "../../analytics/index.ts";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog.tsx";
 import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig.ts";
 import { generateItwIOMarkdownRules } from "../../common/utils/markdown.tsx";
@@ -77,6 +80,11 @@ export const ItwDiscoveryInfoFallbackComponent = () => {
     }
   });
 
+  const handleContinuePress = useCallback(() => {
+    trackItWalletActivationStart("L2");
+    machineRef.send({ type: "accept-tos" });
+  }, [machineRef]);
+
   return (
     <IOScrollView
       testID="itwDiscoveryInfoFallbackComponentTestID"
@@ -92,7 +100,7 @@ export const ItwDiscoveryInfoFallbackComponent = () => {
           accessibilityLabel: I18n.t(
             "features.itWallet.discovery.screen.diw.actions.primary"
           ),
-          onPress: constNull
+          onPress: handleContinuePress
         }
       }}
     >
