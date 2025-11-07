@@ -11,13 +11,18 @@ import { useCallback, useMemo } from "react";
 import { View } from "react-native";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
-import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
+import {
+  IOStackNavigationRouteProps,
+  useIONavigation
+} from "../../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../../navigation/routes";
 import { useIOSelector } from "../../../../../store/hooks";
 import {
   trackItWalletIDMethod,
   trackItwUserWithoutL3Bottomsheet,
   trackItwUserWithoutL3Requirements
 } from "../../../analytics";
+import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { itwDisabledIdentificationMethodsSelector } from "../../../common/store/selectors/remoteConfig";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
@@ -30,6 +35,7 @@ import { ItwParamsList } from "../../../navigation/ItwParamsList";
 
 export type ItwIdentificationNavigationParams = {
   eidReissuing?: boolean;
+  animationEnabled?: boolean;
 };
 
 export type ItwIdentificationModeSelectionScreenProps =
@@ -46,6 +52,7 @@ export const ItwIdentificationModeSelectionScreen = ({
   const { name: routeName, params } = route;
   const { eidReissuing } = params;
 
+  const navigation = useIONavigation();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
@@ -133,6 +140,26 @@ export const ItwIdentificationModeSelectionScreen = ({
     }
   }, [mode, machineRef, routeName]);
 
+  const dismissalDialog = useItwDismissalDialog({
+    customLabels: {
+      body: ""
+    },
+    handleDismiss: () => {
+      navigation.reset({
+        index: 1,
+        routes: [
+          {
+            name: ROUTES.MAIN,
+            params: {
+              screen: ROUTES.WALLET_HOME,
+              params: { requiredEidFeedback: true }
+            }
+          }
+        ]
+      });
+    }
+  });
+
   if (isLoading) {
     return (
       <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
@@ -147,6 +174,7 @@ export const ItwIdentificationModeSelectionScreen = ({
       }}
       description={description}
       headerActionsProp={{ showHelp: true }}
+      goBack={eidReissuing ? dismissalDialog.show : undefined}
     >
       <ContentWrapper>
         <VStack space={16}>

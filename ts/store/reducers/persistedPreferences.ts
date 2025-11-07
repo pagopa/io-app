@@ -22,7 +22,6 @@ import {
   preferencesExperimentalDesignEnabled,
   preferencesFontSet,
   TypefaceChoice,
-  preferencesAarFeatureSetEnabled,
   preferencesThemeSet
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
@@ -52,7 +51,6 @@ export type PersistedPreferencesState = Readonly<{
   isExperimentalDesignEnabled: boolean;
   fontPreference: TypefaceChoice;
   themePreference: ColorModeChoice;
-  isAarFeatureEnabled: boolean;
 }>;
 
 export const initialPreferencesState: PersistedPreferencesState = {
@@ -68,11 +66,9 @@ export const initialPreferencesState: PersistedPreferencesState = {
   isIdPayTestEnabled: false,
   isExperimentalDesignEnabled: false,
   fontPreference: "comfortable",
-  themePreference: "light",
-  isAarFeatureEnabled: false
+  themePreference: "light"
 };
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 export default function preferencesReducer(
   state: PersistedPreferencesState = initialPreferencesState,
   action: Action
@@ -179,13 +175,6 @@ export default function preferencesReducer(
     };
   }
 
-  if (isActionOf(preferencesAarFeatureSetEnabled, action)) {
-    return {
-      ...state,
-      isAarFeatureEnabled: action.payload.isAarFeatureEnabled
-    };
-  }
-
   return state;
 }
 
@@ -233,9 +222,6 @@ export const fontPreferenceSelector = (state: GlobalState): TypefaceChoice =>
 
 export const themePreferenceSelector = (state: GlobalState): ColorModeChoice =>
   state.persistedPreferences.themePreference ?? "light";
-
-export const isAARLocalEnabled = (state: GlobalState) =>
-  state.persistedPreferences.isAarFeatureEnabled;
 
 // returns the preferred language as an Option from the persisted store
 export const preferredLanguageSelector = createSelector<

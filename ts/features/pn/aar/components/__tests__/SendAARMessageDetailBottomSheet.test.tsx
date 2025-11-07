@@ -26,6 +26,7 @@ describe("BottomSheetContent", () => {
   const mockOnSecondaryActionPress = jest.fn();
 
   const defaultProps: SendAARMessageDetailBottomSheetProps = {
+    isDelegate: false,
     onPrimaryActionPress: mockOnPrimaryActionPress,
     onSecondaryActionPress: mockOnSecondaryActionPress
   };
@@ -87,11 +88,15 @@ describe("BottomSheetContent", () => {
     expect(mockOnSecondaryActionPress).toHaveBeenCalledTimes(1);
   });
 
-  [stateWithMandateId, stateWithoutMandateId].forEach(state =>
-    it(`should match snapshot when mandateId='${state.mandateId}'`, () => {
-      jest.spyOn(HOOKS, "useIOSelector").mockReturnValue(state);
+  [false, true].forEach(isDelegate =>
+    it(`should match snapshot when isDelegate='${isDelegate}'`, () => {
+      jest
+        .spyOn(HOOKS, "useIOSelector")
+        .mockReturnValue(
+          isDelegate ? stateWithMandateId : stateWithoutMandateId
+        );
 
-      const { toJSON } = renderComponent(defaultProps);
+      const { toJSON } = renderComponent({ ...defaultProps, isDelegate });
       expect(toJSON()).toMatchSnapshot();
     })
   );

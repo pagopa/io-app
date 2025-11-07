@@ -284,7 +284,7 @@ export const createEidIssuanceActionsImplementation = (
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     trackSaveCredentialSuccess(
-      context.level === "l2" ? "ITW_ID_V2" : "ITW_PID"
+      isL3IssuanceFeaturesEnabled(context.level) ? "ITW_PID" : "ITW_ID_V2"
     );
     updateITWStatusAndPIDProperties(store.getState());
   },

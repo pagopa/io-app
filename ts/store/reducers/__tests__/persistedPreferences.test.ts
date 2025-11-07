@@ -2,7 +2,6 @@ import { GlobalState } from "../types";
 import { appReducer } from "../index";
 import preferencesReducer, {
   initialPreferencesState,
-  isAARLocalEnabled,
   isExperimentalDesignEnabledSelector,
   isMixpanelEnabled
 } from "../persistedPreferences";
@@ -16,10 +15,7 @@ import {
 } from "../../../features/authentication/common/store/actions";
 import { differentProfileLoggedIn } from "../../actions/crossSessions";
 import { clearCache } from "../../../features/settings/common/store/actions";
-import {
-  preferencesAarFeatureSetEnabled,
-  preferencesExperimentalDesignEnabled
-} from "../../actions/persistedPreferences";
+import { preferencesExperimentalDesignEnabled } from "../../actions/persistedPreferences";
 
 describe("persistedPreferences", () => {
   describe("isExperimentalDesignEnabledSelector", () => {
@@ -95,30 +91,6 @@ describe("persistedPreferences", () => {
           })
         );
         expect(state.isExperimentalDesignEnabled).toBe(value);
-      })
-    );
-    [false, true].forEach(value =>
-      it(`should set 'isAarFeatureEnabled' to '${value}' upon receiving action 'preferencesAarFeatureSetEnabled' set to '${value}'`, () => {
-        const state = preferencesReducer(
-          undefined,
-          preferencesAarFeatureSetEnabled({
-            isAarFeatureEnabled: value
-          })
-        );
-        expect(state.isAarFeatureEnabled).toBe(value);
-      })
-    );
-  });
-  describe("isAARLocalEnabled", () => {
-    [false, true].forEach(value =>
-      it(`should return '${value}' when 'persistedPreferences.isAarFeatureEnabled' is '${value}'`, () => {
-        const state = {
-          persistedPreferences: {
-            isAarFeatureEnabled: value
-          }
-        } as GlobalState;
-        const isAarFeatureEnabled = isAARLocalEnabled(state);
-        expect(isAarFeatureEnabled).toBe(value);
       })
     );
   });

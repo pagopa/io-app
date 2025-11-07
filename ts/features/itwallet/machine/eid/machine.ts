@@ -114,7 +114,9 @@ export const itwEidIssuanceMachine = setup({
       };
     }),
     trackIntroScreen: ({ context }) => {
-      trackItWalletIntroScreen(context.level === "l2" ? "L2" : "L3");
+      trackItWalletIntroScreen(
+        isL3IssuanceFeaturesEnabled(context.level) ? "L3" : "L2"
+      );
     }
   },
   actors: {

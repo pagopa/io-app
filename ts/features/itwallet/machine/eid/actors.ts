@@ -34,6 +34,7 @@ import type {
   EidIssuanceLevel,
   IdentificationContext
 } from "./context";
+import { isL3IssuanceFeaturesEnabled } from "./utils";
 
 export type RequestEidActorParams = {
   identification: IdentificationContext | undefined;
@@ -179,7 +180,7 @@ export const createEidIssuanceActorsImplementation = (
 
       trackItwRequest(
         input.identification.mode,
-        input.level === "l2" ? "L2" : "L3"
+        isL3IssuanceFeaturesEnabled(input.level) ? "L3" : "L2"
       );
 
       return issuanceUtils.getPid({

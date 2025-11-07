@@ -62,7 +62,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 48;
+const CURRENT_REDUX_STORE_VERSION = 49;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -607,6 +607,26 @@ const migrations: MigrationManifest = {
       persistedPreferences: {
         ...typedState.persistedPreferences,
         themePreference: "light"
+      }
+    };
+  },
+  // Remove 'isAarFeatureEnabled' from 'persistedPreferences'
+  "49": (state: PersistedState) => {
+    // Be aware that 'typedState' is not the entire content of 'state'.
+    // We cast it to a partial type to represent the legacy part
+    // that we want to convert but the instance of 'state' contains
+    // all of the persisted data (which is later spread)
+    const typedState = state as {
+      persistedPreferences: {
+        isAarFeatureEnabled: boolean;
+      };
+    };
+    const { isAarFeatureEnabled, ...restPersistedPreferences } =
+      typedState.persistedPreferences;
+    return {
+      ...state,
+      persistedPreferences: {
+        ...restPersistedPreferences
       }
     };
   }

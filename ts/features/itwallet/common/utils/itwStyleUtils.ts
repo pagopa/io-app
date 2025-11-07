@@ -3,7 +3,7 @@ import { IOColors } from "@pagopa/io-app-design-system";
 import { HeaderSecondLevelHookProps } from "../../../../hooks/useHeaderSecondLevel";
 import { getCredentialNameFromType } from "./itwCredentialUtils";
 import { CredentialType } from "./itwMocksUtils";
-import { IT_WALLET_ID_BG_LIGHT } from "./constants";
+import { IT_WALLET_BG } from "./constants";
 
 export type CredentialTheme = {
   backgroundColor: string;
@@ -20,7 +20,7 @@ export const getThemeColorByCredentialType = (
     case CredentialType.PID:
     default:
       return {
-        backgroundColor: withL3Design ? IT_WALLET_ID_BG_LIGHT : "#295699",
+        backgroundColor: withL3Design ? IT_WALLET_BG : "#295699",
         textColor: "#032D5C",
         statusBarStyle: "light-content",
         variant: withL3Design ? "neutral" : "contrast"
