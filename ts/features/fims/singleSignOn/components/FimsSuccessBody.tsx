@@ -130,11 +130,7 @@ export const FimsFlowSuccessBody = ({
           {/* TODO: We need to add a variant of `Avatar` that
           lets you set a custom icon with a custom colour. */}
           <View style={styles.outlineContainer}>
-            <Icon
-              name="productIOApp"
-              size={"100%"}
-              color={theme["interactiveElem-default"]}
-            />
+            <Icon name="productIOApp" size={"100%"} color={"blueIO-500"} />
           </View>
           <Icon name="transactions" color="grey-450" />
           <Avatar logoUri={serviceLogo} size={"small"} />
@@ -199,6 +195,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderColor: hexToRgba(IOColors.black, 0.1),
     borderCurve: "continuous",
+    backgroundColor: IOColors.white,
     width: IOVisualCostants.avatarSizeSmall,
     height: IOVisualCostants.avatarSizeSmall
   }
