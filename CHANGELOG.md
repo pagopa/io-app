@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.19.0-rc.3](https://github.com/pagopa/io-app/compare/3.19.0-rc.2...3.19.0-rc.3) (2025-11-07)
+
+
+### Features
+
+* [[IOCOM-2586](https://pagopa.atlassian.net/browse/IOCOM-2586)] AAR Phase 2 tracking ([#7546](https://github.com/pagopa/io-app/issues/7546)) ([4cb1086](https://github.com/pagopa/io-app/commit/4cb10860f3f2e8908fdf436606615db608c15177))
+
+## [3.19.0-rc.2](https://github.com/pagopa/io-app/compare/3.19.0-rc.1...3.19.0-rc.2) (2025-11-07)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-3296](https://pagopa.atlassian.net/browse/SIW-3296)] New IT-Wallet ID screen ([#7577](https://github.com/pagopa/io-app/issues/7577)) ([55d5c8c](https://github.com/pagopa/io-app/commit/55d5c8c59b5524f59048f02a6b2ba345004d56f4))
+
+
+### Bug Fixes
+
+* [[IOCOM-2690](https://pagopa.atlassian.net/browse/IOCOM-2690)] Adjust FIMS consent screen Dark Mode appearance ([#7580](https://github.com/pagopa/io-app/issues/7580)) ([84a3f6b](https://github.com/pagopa/io-app/commit/84a3f6b369ca3535c6ec27fca36bb0a632285b57))
+
+
+### Chores
+
+* [[IOBP-2162](https://pagopa.atlassian.net/browse/IOBP-2162),[IOBP-2116](https://pagopa.atlassian.net/browse/IOBP-2116)] add info bottom sheet to idpay on waiting list item ([#7585](https://github.com/pagopa/io-app/issues/7585)) ([deb0837](https://github.com/pagopa/io-app/commit/deb08379315e1498a5255f79dbf36c03aecb4e4f))
+
 ## [3.19.0-rc.1](https://github.com/pagopa/io-app/compare/3.19.0-rc.0...3.19.0-rc.1) (2025-11-05)
 
 
