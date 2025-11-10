@@ -1,6 +1,4 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
-import { pnUserSelectedPaymentRptIdSelector } from "..";
+import { sendUserSelectedPaymentRptIdSelector } from "..";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { PNMessage } from "../../types/types";
@@ -9,7 +7,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 describe("pnUserSelectedPaymentRptIdSelector", () => {
   const p3CreditorTaxId = "01234567890";
   const p3NoticeCode = "012345678912345630";
-  const pnMessage = {
+  const sendMessage = {
     recipients: [
       {
         payment: {
@@ -30,88 +28,43 @@ describe("pnUserSelectedPaymentRptIdSelector", () => {
         }
       }
     ]
-  };
-  const maybePNMessage = O.some(pnMessage) as O.Option<PNMessage>;
-  const pnMessagePot = pot.some(maybePNMessage) as pot.Pot<
-    O.Option<PNMessage>,
-    Error
-  >;
-  it("should return undefined when the pot is none", () => {
+  } as unknown as PNMessage;
+
+  it("should return undefined when the message is undefined", () => {
     const appState = appReducer(undefined, applicationChangeState("active"));
-    const internalPNMessagePot = pot.none;
-    const pnUserSelectedPaymentRptId = pnUserSelectedPaymentRptIdSelector(
+    const pnUserSelectedPaymentRptId = sendUserSelectedPaymentRptIdSelector(
       appState,
-      internalPNMessagePot
-    );
-    expect(pnUserSelectedPaymentRptId).toBeUndefined();
-  });
-  it("should return undefined when the pot is noneLoading", () => {
-    const appState = appReducer(undefined, applicationChangeState("active"));
-    const internalPNMessagePot = pot.noneLoading;
-    const pnUserSelectedPaymentRptId = pnUserSelectedPaymentRptIdSelector(
-      appState,
-      internalPNMessagePot
-    );
-    expect(pnUserSelectedPaymentRptId).toBeUndefined();
-  });
-  it("should return undefined when the pot is noneUpdating", () => {
-    const appState = appReducer(undefined, applicationChangeState("active"));
-    const internalPNMessagePot = pot.noneUpdating(maybePNMessage);
-    const pnUserSelectedPaymentRptId = pnUserSelectedPaymentRptIdSelector(
-      appState,
-      internalPNMessagePot
-    );
-    expect(pnUserSelectedPaymentRptId).toBeUndefined();
-  });
-  it("should return undefined when the pot is noneError", () => {
-    const appState = appReducer(undefined, applicationChangeState("active"));
-    const internalPNMessagePot = pot.noneError(new Error());
-    const pnUserSelectedPaymentRptId = pnUserSelectedPaymentRptIdSelector(
-      appState,
-      internalPNMessagePot
-    );
-    expect(pnUserSelectedPaymentRptId).toBeUndefined();
-  });
-  it("should return undefined when the pot some with Option.None", () => {
-    const appState = appReducer(undefined, applicationChangeState("active"));
-    const internalPNMessagePot = pot.some(O.none);
-    const pnUserSelectedPaymentRptId = pnUserSelectedPaymentRptIdSelector(
-      appState,
-      internalPNMessagePot
+      undefined
     );
     expect(pnUserSelectedPaymentRptId).toBeUndefined();
   });
   it("should return undefined when recipients are empty", () => {
     const appState = appReducer(undefined, applicationChangeState("active"));
-    const internalPNMessagePot = pot.some(
-      O.some({
-        recipients: []
-      })
-    ) as pot.Pot<O.Option<PNMessage>, Error>;
-    const pnUserSelectedPaymentRptId = pnUserSelectedPaymentRptIdSelector(
+    const emptyRecipientsSendMessage = {
+      recipients: []
+    } as unknown as PNMessage;
+    const pnUserSelectedPaymentRptId = sendUserSelectedPaymentRptIdSelector(
       appState,
-      internalPNMessagePot
+      emptyRecipientsSendMessage
     );
     expect(pnUserSelectedPaymentRptId).toBeUndefined();
   });
   it("should return undefined when recipients do not have a payment", () => {
     const appState = appReducer(undefined, applicationChangeState("active"));
-    const internalPNMessagePot = pot.some(
-      O.some({
-        recipients: [{}, {}, {}]
-      })
-    ) as pot.Pot<O.Option<PNMessage>, Error>;
-    const pnUserSelectedPaymentRptId = pnUserSelectedPaymentRptIdSelector(
+    const noPaymentsSendMessage = {
+      recipients: [{}, {}, {}]
+    } as unknown as PNMessage;
+    const pnUserSelectedPaymentRptId = sendUserSelectedPaymentRptIdSelector(
       appState,
-      internalPNMessagePot
+      noPaymentsSendMessage
     );
     expect(pnUserSelectedPaymentRptId).toBeUndefined();
   });
   it("should return undefined when there are no user selected payments", () => {
     const appState = appReducer(undefined, applicationChangeState("active"));
-    const pnUserSelectedPaymentRptId = pnUserSelectedPaymentRptIdSelector(
+    const pnUserSelectedPaymentRptId = sendUserSelectedPaymentRptIdSelector(
       appState,
-      pnMessagePot
+      sendMessage
     );
     expect(pnUserSelectedPaymentRptId).toBeUndefined();
   });
@@ -134,9 +87,9 @@ describe("pnUserSelectedPaymentRptIdSelector", () => {
         }
       }
     } as GlobalState;
-    const pnUserSelectedPaymentRptId = pnUserSelectedPaymentRptIdSelector(
+    const pnUserSelectedPaymentRptId = sendUserSelectedPaymentRptIdSelector(
       finalState,
-      pnMessagePot
+      sendMessage
     );
     expect(pnUserSelectedPaymentRptId).toBe(rptId);
   });

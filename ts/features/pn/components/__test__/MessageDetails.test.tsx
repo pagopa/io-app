@@ -1,5 +1,3 @@
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import { ComponentProps } from "react";
 import configureMockStore from "redux-mock-store";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -8,7 +6,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import * as MSG_DETAILS_HEADER from "../../../messages/components/MessageDetail/MessageDetailsHeader";
 import { thirdPartyMessage } from "../../__mocks__/pnMessage";
-import { toPNMessage } from "../../store/types/transformers";
+import { toSENDMessage } from "../../store/types/transformers";
 import { PNMessage } from "../../store/types/types";
 import { MessageDetails } from "../MessageDetails";
 import PN_ROUTES from "../../navigation/routes";
@@ -59,11 +57,7 @@ describe("MessageDetails component", () => {
         it(`should ${
           sendOpeningSource === "aar" ? "" : "NOT"
         } display the message date, opening source ${sendOpeningSource}, user type ${sendUserType}`, () => {
-          const pnMessage = pipe(
-            thirdPartyMessage,
-            toPNMessage,
-            O.toUndefined
-          )!;
+          const pnMessage = toSENDMessage(thirdPartyMessage)!;
           const headerSpy = jest.spyOn(
             MSG_DETAILS_HEADER,
             "MessageDetailsHeader"
@@ -92,11 +86,7 @@ describe("MessageDetails component", () => {
         it(`should ${
           sendOpeningSource === "aar" ? "NOT " : ""
         }allow navigation to service details, opening source ${sendOpeningSource}, user type ${sendUserType}`, () => {
-          const pnMessage = pipe(
-            thirdPartyMessage,
-            toPNMessage,
-            O.toUndefined
-          )!;
+          const pnMessage = toSENDMessage(thirdPartyMessage)!;
           const headerSpy = jest.spyOn(
             MSG_DETAILS_HEADER,
             "MessageDetailsHeader"
