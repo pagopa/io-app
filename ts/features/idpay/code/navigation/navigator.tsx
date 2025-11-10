@@ -1,8 +1,4 @@
-import { ParamListBase, RouteProp } from "@react-navigation/native";
-import {
-  StackNavigationProp,
-  createStackNavigator
-} from "@react-navigation/stack";
+import { createStackNavigator } from "@react-navigation/stack";
 import { IdPayCodeDisplayScreen } from "../screens/IdPayCodeDisplayScreen";
 import { IdPayCodeOnboardingScreen } from "../screens/IdPayCodeOnboardingScreen";
 import { IdPayCodeRenewScreen } from "../screens/IdPayCodeRenewScreen";
@@ -40,16 +36,3 @@ export const IdPayCodeNavigator = () => (
     </Stack.Navigator>
   </IdPayFeatureFlagGuard>
 );
-
-type IdPayCodeStackNavigationRouteProps<
-  ParamList extends ParamListBase,
-  RouteName extends keyof ParamList = string
-> = {
-  navigation: IdPayCodeStackNavigationProp<ParamList, RouteName>;
-  route: RouteProp<ParamList, RouteName>;
-};
-
-type IdPayCodeStackNavigationProp<
-  ParamList extends ParamListBase,
-  RouteName extends keyof ParamList = string
-> = StackNavigationProp<ParamList, RouteName>;
