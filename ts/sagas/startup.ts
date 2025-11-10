@@ -729,9 +729,7 @@ export function* initializeApplicationSaga(
 
   if (!isHandlingBackgroundActions && showSessionExpirationBlockingScreen) {
     yield* call(navigateToActiveSessionLogin);
-  }
-
-  if (!isHandlingBackgroundActions) {
+  } else if (!isHandlingBackgroundActions) {
     // Check if should navigate to the send activation screen
     yield* fork(checkShouldDisplaySendEngagementScreen, isFirstOnboarding);
   }
