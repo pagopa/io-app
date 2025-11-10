@@ -48,6 +48,17 @@ export const paginatedInstitutionsLastPageSelector = createSelector(
 export const featuredServicesPotSelector = (state: GlobalState) =>
   state.features.services.home.featuredServices;
 
+export const isLoadingFeaturedServicesSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    featuredServicesPotSelector,
+    featuredServicesPot =>
+      pot.isLoading(featuredServicesPot) && !pot.isSome(featuredServicesPot)
+  );
+
+export const isErrorFeaturedServicesSelector = (state: GlobalState) =>
+  pipe(state, featuredServicesPotSelector, pot.isError);
+
 export const featuredServicesSelector = createSelector(
   featuredServicesPotSelector,
   featuredServicesPot =>
@@ -60,11 +71,17 @@ export const featuredServicesSelector = createSelector(
     )
 );
 
-export const isLoadingFeaturedServicesSelector = (state: GlobalState) =>
-  pipe(state, featuredServicesPotSelector, pot.isLoading);
+export const isFeaturedServiceListEmptySelector = (state: GlobalState) =>
+  pipe(
+    state,
+    featuredServicesSelector,
+    featuredServices => featuredServices.length === 0
+  );
 
-export const isErrorFeaturedServicesSelector = (state: GlobalState) =>
-  pipe(state, featuredServicesPotSelector, pot.isError);
+export const shouldRenderFeaturedServiceListSelector = (state: GlobalState) =>
+  isLoadingFeaturedServicesSelector(state) ||
+  isErrorFeaturedServicesSelector(state) ||
+  !isFeaturedServiceListEmptySelector(state);
 
 export const featuredInstitutionsPotSelector = (state: GlobalState) =>
   state.features.services.home.featuredInstitutions;
