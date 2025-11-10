@@ -61,6 +61,7 @@ describe("PushNotificationEngagementScreen", () => {
     const screen = renderScreen();
     expect(screen.toJSON()).toMatchSnapshot();
   });
+
   notificationModalFlowList.forEach(flow =>
     sendOpeningSourceList.forEach(sendOpeningSource =>
       sendUserTypeList.forEach(sendUserType =>

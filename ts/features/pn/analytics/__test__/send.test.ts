@@ -4,6 +4,7 @@ import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
 import {
   NotificationModalFlow,
+  SendOpeningSource,
   SendUserType
 } from "../../../pushNotifications/analytics";
 
@@ -11,6 +12,11 @@ const notificationModalFlowList: Array<NotificationModalFlow> = [
   "authentication",
   "send_notification_opening",
   "access"
+];
+const sendOpeningSources: Array<SendOpeningSource> = [
+  "aar",
+  "message",
+  "not_set"
 ];
 const sendUserList: Array<SendUserType> = ["mandatory", "recipient", "not_set"];
 const sendActivationSourceList: Array<SendActivationSource> = [
@@ -23,49 +29,69 @@ jest.mock("../../../../mixpanel", () => ({
 }));
 
 notificationModalFlowList.forEach(flow =>
+  sendOpeningSources.forEach(sendOpeningSource =>
+    sendUserList.forEach(send_user => {
+      describe(`SEND events when flow is "${flow}" send_user is "${send_user}" and opening source is "${sendOpeningSource}"`, () => {
+        beforeEach(jest.clearAllMocks);
+
+        it(`should track "SEND_ACTIVATION_MODAL_DIALOG" event with the properties => flow = "${flow}" send_user = "${send_user}" opening source = "${sendOpeningSource}"`, () => {
+          sendEvents.trackSendActivationModalDialog(
+            flow,
+            sendOpeningSource,
+            send_user
+          );
+
+          expect(mixpanelTrack).toHaveBeenCalledWith(
+            "SEND_ACTIVATION_MODAL_DIALOG",
+            buildEventProperties("UX", "screen_view", {
+              flow,
+              opening_source: sendOpeningSource,
+              send_user
+            })
+          );
+        });
+        it(`should track "SEND_ACTIVATION_MODAL_DIALOG_ACTIVATION_START" event with the properties => flow = "${flow}" send_user = "${send_user}" opening source = "${sendOpeningSource}"`, () => {
+          sendEvents.trackSendActivationModalDialogActivationStart(
+            flow,
+            sendOpeningSource,
+            send_user
+          );
+
+          expect(mixpanelTrack).toHaveBeenCalledWith(
+            "SEND_ACTIVATION_MODAL_DIALOG_ACTIVATION_START",
+            buildEventProperties("UX", "action", {
+              flow,
+              opening_source: sendOpeningSource,
+              send_user
+            })
+          );
+        });
+        it(`should track "SEND_ACTIVATION_MODAL_DIALOG_DISMISSED" event with the properties => flow = "${flow}" send_user = "${send_user}" opening source = "${sendOpeningSource}"`, () => {
+          sendEvents.trackSendActivationModalDialogActivationDismissed(
+            flow,
+            sendOpeningSource,
+            send_user
+          );
+
+          expect(mixpanelTrack).toHaveBeenCalledWith(
+            "SEND_ACTIVATION_MODAL_DIALOG_DISMISSED",
+            buildEventProperties("UX", "action", {
+              flow,
+              opening_source: sendOpeningSource,
+              send_user
+            })
+          );
+        });
+      });
+    })
+  )
+);
+
+notificationModalFlowList.forEach(flow =>
   sendUserList.forEach(send_user => {
     describe(`SEND events when flow is "${flow}" and send_user is "${send_user}"`, () => {
       beforeEach(jest.clearAllMocks);
 
-      it(`should track "SEND_ACTIVATION_MODAL_DIALOG" event with the properties => flow = "${flow}" and send_user = "${send_user}"`, () => {
-        sendEvents.trackSendActivationModalDialog(flow, send_user);
-
-        expect(mixpanelTrack).toHaveBeenCalledWith(
-          "SEND_ACTIVATION_MODAL_DIALOG",
-          buildEventProperties("UX", "screen_view", {
-            flow,
-            send_user
-          })
-        );
-      });
-      it(`should track "SEND_ACTIVATION_MODAL_DIALOG_ACTIVATION_START" event with the properties => flow = "${flow}" and send_user = "${send_user}"`, () => {
-        sendEvents.trackSendActivationModalDialogActivationStart(
-          flow,
-          send_user
-        );
-
-        expect(mixpanelTrack).toHaveBeenCalledWith(
-          "SEND_ACTIVATION_MODAL_DIALOG_ACTIVATION_START",
-          buildEventProperties("UX", "action", {
-            flow,
-            send_user
-          })
-        );
-      });
-      it(`should track "SEND_ACTIVATION_MODAL_DIALOG_DISMISSED" event with the properties => flow = "${flow}" and send_user = "${send_user}"`, () => {
-        sendEvents.trackSendActivationModalDialogActivationDismissed(
-          flow,
-          send_user
-        );
-
-        expect(mixpanelTrack).toHaveBeenCalledWith(
-          "SEND_ACTIVATION_MODAL_DIALOG_DISMISSED",
-          buildEventProperties("UX", "action", {
-            flow,
-            send_user
-          })
-        );
-      });
       it(`should track "SEND_ACCEPTANCE_DIALOG" event with the properties => flow = "${flow}" and send_user = "${send_user}"`, () => {
         sendEvents.trackSendAcceptanceDialog(flow, send_user);
 
