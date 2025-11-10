@@ -33,7 +33,7 @@ export const ItwL3Section = () => {
   const navigation = useIONavigation();
 
   const navigateToTosL3Screen = useCallback(() => {
-    machineRef.send({ type: "start", isL3: true });
+    machineRef.send({ type: "start", mode: "issuance", level: "l3" });
   }, [machineRef]);
 
   const handleCredentialPress = (credentialType: CredentialL3Key) => {

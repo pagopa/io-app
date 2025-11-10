@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "3.18.0-rc.3",
+  "version": "3.19.0-rc.3",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -58,7 +58,7 @@
     "@babel/plugin-transform-react-jsx": "^7.25.9",
     "@babel/plugin-transform-regenerator": "^7.18.6",
     "@gorhom/bottom-sheet": "^5.1.2",
-    "@pagopa/io-app-design-system": "5.11.9",
+    "@pagopa/io-app-design-system": "5.11.11",
     "@pagopa/io-pagopa-commons": "^3.1.0",
     "@pagopa/io-react-native-cie": "^1.2.0",
     "@pagopa/io-react-native-cieid": "^0.3.5",
