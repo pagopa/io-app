@@ -37,6 +37,7 @@ import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { IdentificationBackActionType } from "../../identification/store/reducers";
 import { profileSelector } from "../../settings/common/store/selectors";
 import { sessionInfoSelector } from "../../authentication/common/store/selectors";
+import { checkSessionErrorSelector } from "../store/selectors";
 import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import { ProfileError } from "../../settings/common/store/types";
@@ -47,7 +48,8 @@ const TIMEOUT_BLOCKING_SCREEN = (25 * 1000) as Millisecond;
 const getApiFailureValue = (
   isConnected: boolean | undefined,
   sessionLoaded: O.Option<PublicSession>,
-  profileLoaded: pot.Pot<InitializedProfile, ProfileError>
+  profileLoaded: pot.Pot<InitializedProfile, ProfileError>,
+  checkSession: boolean
 ): string => {
   const apiFailures: Array<string> = [];
 
@@ -57,7 +59,8 @@ const getApiFailureValue = (
   }
 
   // Add "get session" if sessionLoaded is None (error loading session)
-  if (O.isNone(sessionLoaded)) {
+  // OR if there was a checkCurrentSession.failure
+  if (O.isNone(sessionLoaded) || checkSession) {
     apiFailures.push("get session");
   }
 
@@ -66,9 +69,7 @@ const getApiFailureValue = (
     apiFailures.push("get profile");
   }
 
-  const apiFailuresValue = apiFailures.join(", ");
-
-  return apiFailuresValue === "" ? "get session" : apiFailuresValue;
+  return apiFailures.join(", ");
 };
 
 export const IngressScreen = () => {
@@ -250,6 +251,7 @@ const IngressScreenBlockingError = memo(() => {
   const isConnected = useIOSelector(isConnectedSelector);
   const profileLoaded = useIOSelector(profileSelector);
   const sessionLoaded = useIOSelector(sessionInfoSelector);
+  const hasCheckSessionError = useIOSelector(checkSessionErrorSelector);
 
   useEffect(() => {
     setAccessibilityFocus(operationRef);
@@ -261,7 +263,12 @@ const IngressScreenBlockingError = memo(() => {
     if (isMixpanelEnabled !== false) {
       if (isBackendStatusLoaded) {
         void trackIngressTimeout(
-          getApiFailureValue(isConnected, sessionLoaded, profileLoaded)
+          getApiFailureValue(
+            isConnected,
+            sessionLoaded,
+            profileLoaded,
+            hasCheckSessionError
+          )
         );
       } else {
         void trackIngressCdnSystemError();
@@ -272,7 +279,8 @@ const IngressScreenBlockingError = memo(() => {
     isConnected,
     isMixpanelEnabled,
     profileLoaded,
-    sessionLoaded
+    sessionLoaded,
+    hasCheckSessionError
   ]);
 
   return (
