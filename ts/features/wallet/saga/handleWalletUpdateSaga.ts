@@ -16,5 +16,5 @@ export function* handleWalletUpdateSaga() {
   // Updates the CGN details
   yield* put(cgnDetails.request());
   // Updates the CGN EYCA status
-  // yield* put(cgnEycaStatus.request());
+  yield* put(cgnEycaStatus.request());
 }
