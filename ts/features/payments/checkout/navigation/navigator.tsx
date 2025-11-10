@@ -77,14 +77,3 @@ export const PaymentsCheckoutNavigator = () => (
     />
   </Stack.Navigator>
 );
-
-export type PaymentsCheckoutStackNavigationProp<
-  ParamList extends ParamListBase,
-  RouteName extends keyof ParamList = string
-> = StackNavigationProp<PaymentsCheckoutParamsList & ParamList, RouteName>;
-
-export type PaymentsCheckoutStackNavigation =
-  PaymentsCheckoutStackNavigationProp<
-    PaymentsCheckoutParamsList,
-    keyof PaymentsCheckoutParamsList
-  >;
