@@ -7,24 +7,17 @@ import {
   clearRequestedAttachmentDownload,
   downloadAttachment,
   getMessageDataAction,
-  isGenericError,
-  isSpecificError,
-  isTimeoutError,
   loadMessageById,
   loadMessageDetails,
   loadNextPageMessages,
   loadPreviousPageMessages,
   loadThirdPartyMessage,
-  PaymentError,
   reloadAllMessages,
   removeCachedAttachment,
   requestAutomaticMessagesRefresh,
   resetGetMessageDataAction,
   setShownMessageCategoryAction,
   startPaymentStatusTracking,
-  toGenericError,
-  toSpecificError,
-  toTimeoutError,
   updatePaymentForMessage,
   upsertMessageStatusAttributes
 } from "..";
@@ -33,6 +26,12 @@ import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProb
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
 import { UIMessage, UIMessageDetails } from "../../../types";
+import {
+  MessagePaymentError,
+  toGenericError,
+  toSpecificError,
+  toTimeoutError
+} from "../../../types/paymentErrors";
 import {
   thirdPartyKind,
   ThirdPartyMessageUnion
@@ -47,11 +46,11 @@ describe("index", () => {
     id: "1",
     url: "https://an.url"
   } as ThirdPartyAttachment;
-  const genericError: PaymentError = toGenericError("An error occurred");
-  const specificError: PaymentError = toSpecificError(
+  const genericError: MessagePaymentError = toGenericError("An error occurred");
+  const specificError: MessagePaymentError = toSpecificError(
     Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
   );
-  const timeoutError: PaymentError = toTimeoutError();
+  const timeoutError: MessagePaymentError = toTimeoutError();
   const paymentId = "00123456789001122334455667788";
 
   describe("getMessageDataAction.request", () =>
@@ -600,51 +599,6 @@ describe("index", () => {
         messageId,
         path: "/path/attachment"
       });
-    });
-  });
-
-  describe("isGenericError", () => {
-    it("should return true for a generic error", () => {
-      const output = isGenericError(genericError);
-      expect(output).toBe(true);
-    });
-    it("should return false for a specific error", () => {
-      const output = isGenericError(specificError);
-      expect(output).toBe(false);
-    });
-    it("should return false for a timeout error", () => {
-      const output = isGenericError(timeoutError);
-      expect(output).toBe(false);
-    });
-  });
-
-  describe("isSpecificError", () => {
-    it("should return false for a generic error", () => {
-      const output = isSpecificError(genericError);
-      expect(output).toBe(false);
-    });
-    it("should return true for a specific error", () => {
-      const output = isSpecificError(specificError);
-      expect(output).toBe(true);
-    });
-    it("should return false for a timeout error", () => {
-      const output = isSpecificError(timeoutError);
-      expect(output).toBe(false);
-    });
-  });
-
-  describe("isTimeoutError", () => {
-    it("should return false for a generic error", () => {
-      const output = isTimeoutError(genericError);
-      expect(output).toBe(false);
-    });
-    it("should return false for a specific error", () => {
-      const output = isTimeoutError(specificError);
-      expect(output).toBe(false);
-    });
-    it("should return true for a timeout error", () => {
-      const output = isTimeoutError(timeoutError);
-      expect(output).toBe(true);
     });
   });
 

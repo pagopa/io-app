@@ -9,7 +9,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { remoteError, remoteReady } from "../../../../common/model/RemoteValue";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { toSpecificError } from "../../../messages/store/actions";
+import { toSpecificError } from "../../../messages/types/paymentErrors";
 import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
 
 describe("MessagePaymentBottomSheet", () => {

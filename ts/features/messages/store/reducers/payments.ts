@@ -21,10 +21,6 @@ import {
 import {
   addUserSelectedPaymentRptId,
   cancelQueuedPaymentUpdates,
-  isGenericError,
-  isSpecificError,
-  isTimeoutError,
-  PaymentError,
   reloadAllMessages,
   updatePaymentForMessage
 } from "../actions";
@@ -42,6 +38,11 @@ import {
   isPaidPaymentFromDetailV2Enum,
   isRevokedPaymentFromDetailV2Enum
 } from "../../../../utils/payment";
+import {
+  isMessageSpecificError,
+  isTimeoutOrGenericOrOngoingPaymentError,
+  MessagePaymentError
+} from "../../types/paymentErrors";
 import { messagePaymentDataSelector } from "./detailsById";
 
 export type MultiplePaymentState = {
@@ -52,7 +53,9 @@ export type MultiplePaymentState = {
 };
 
 export type SinglePaymentState = {
-  [key: string]: RemoteValue<PaymentInfoResponse, PaymentError> | undefined;
+  [key: string]:
+    | RemoteValue<PaymentInfoResponse, MessagePaymentError>
+    | undefined;
 };
 
 export type PaymentStatistics = {
@@ -149,7 +152,7 @@ export const paymentsReducer = (
   return state;
 };
 
-export const shouldUpdatePaymentSelector = (
+export const shouldRetrievePaymentDataSelector = (
   state: GlobalState,
   messageId: string,
   paymentId: string
@@ -159,7 +162,7 @@ export const paymentStatusForUISelector = (
   state: GlobalState,
   messageId: string,
   paymentId: string
-): RemoteValue<PaymentInfoResponse, PaymentError> =>
+): RemoteValue<PaymentInfoResponse, MessagePaymentError> =>
   pipe(paymentStateSelector(state, messageId, paymentId), remoteValue =>
     isLoading(remoteValue) ? remoteUndefined : remoteValue
   );
@@ -233,23 +236,22 @@ const paymentStateSelector = (
     state.entities.messages.payments.paymentStatusListById[messageId],
     O.fromNullable,
     O.chainNullableK(multiplePaymentState => multiplePaymentState[paymentId]),
-    O.getOrElse<RemoteValue<PaymentInfoResponse, PaymentError>>(
+    O.getOrElse<RemoteValue<PaymentInfoResponse, MessagePaymentError>>(
       () => remoteUndefined
     )
   );
 
-const purgePaymentsWithIncompleteData = (state: SinglePaymentState) => {
-  const isTimeoutOrGenericError = (input: RemoteValue<unknown, PaymentError>) =>
-    isError(input) &&
-    (isTimeoutError(input.error) || isGenericError(input.error));
-
-  return Object.entries(state).reduce((acc, [key, value]) => {
-    if (value == null || isLoading(value) || isTimeoutOrGenericError(value)) {
+const purgePaymentsWithIncompleteData = (state: SinglePaymentState) =>
+  Object.entries(state).reduce((acc, [key, value]) => {
+    if (
+      value == null ||
+      isLoading(value) ||
+      isTimeoutOrGenericOrOngoingPaymentError(value)
+    ) {
       return { ...acc, [key]: undefined };
     }
     return { ...acc, [key]: value };
   }, {} as SinglePaymentState);
-};
 
 export const paymentStatisticsForMessageUncachedSelector = (
   state: GlobalState,
@@ -281,9 +283,9 @@ export const paymentStatisticsForMessageUncachedSelector = (
 
 const paymentErrorToPaymentStatistics = (
   accumulator: PaymentStatistics,
-  paymentError: PaymentError
+  paymentError: MessagePaymentError
 ): PaymentStatistics => {
-  if (isSpecificError(paymentError)) {
+  if (isMessageSpecificError(paymentError)) {
     const details = paymentError.details;
     if (isPaidPaymentFromDetailV2Enum(details)) {
       return {

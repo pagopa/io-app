@@ -3,10 +3,7 @@ import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProb
 import { PaymentInfoResponse } from "../../../../../../definitions/backend/PaymentInfoResponse";
 import {
   cancelQueuedPaymentUpdates,
-  reloadAllMessages,
-  toGenericError,
-  toSpecificError,
-  toTimeoutError
+  reloadAllMessages
 } from "../../../../messages/store/actions";
 import { Action } from "../../../../../store/actions/types";
 import { appReducer } from "../../../../../store/reducers";
@@ -26,7 +23,7 @@ import {
   paymentStatusForUISelector,
   userSelectedPaymentRptIdSelector,
   paymentsReducer,
-  shouldUpdatePaymentSelector,
+  shouldRetrievePaymentDataSelector,
   isUserSelectedPaymentSelector,
   canNavigateToPaymentFromMessageSelector,
   paymentsButtonStateSelector,
@@ -42,6 +39,11 @@ import * as versionInfo from "../../../../../common/versionInfo/store/reducers/v
 import * as profile from "../../../../settings/common/store/selectors";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import {
+  toGenericError,
+  toSpecificError,
+  toTimeoutError
+} from "../../../types/paymentErrors";
 
 describe("Messages payments reducer's tests", () => {
   it("Should match initial state upon initialization", () => {
@@ -385,7 +387,7 @@ describe("Messages payments reducer's tests", () => {
 });
 
 describe("PN Payments selectors' tests", () => {
-  it("shouldUpdatePaymentSelector should return true for an unmatching message Id", () => {
+  it("shouldRetrievePaymentDataSelector should return true for an unmatching message Id", () => {
     const startingState = appReducer(undefined, {} as Action);
     const updatePaymentForMessageAction = updatePaymentForMessage.request({
       messageId: "m1",
@@ -393,10 +395,14 @@ describe("PN Payments selectors' tests", () => {
       serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const state = appReducer(startingState, updatePaymentForMessageAction);
-    const shouldUpdatePayment = shouldUpdatePaymentSelector(state, "m2", "p1");
+    const shouldUpdatePayment = shouldRetrievePaymentDataSelector(
+      state,
+      "m2",
+      "p1"
+    );
     expect(shouldUpdatePayment).toBeTruthy();
   });
-  it("shouldUpdatePaymentSelector should return true for a matching message Id with an unmatching payment Id", () => {
+  it("shouldRetrievePaymentDataSelector should return true for a matching message Id with an unmatching payment Id", () => {
     const startingState = appReducer(undefined, {} as Action);
     const updatePaymentForMessageAction = updatePaymentForMessage.request({
       messageId: "m1",
@@ -404,10 +410,14 @@ describe("PN Payments selectors' tests", () => {
       serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const state = appReducer(startingState, updatePaymentForMessageAction);
-    const shouldUpdatePayment = shouldUpdatePaymentSelector(state, "m1", "p2");
+    const shouldUpdatePayment = shouldRetrievePaymentDataSelector(
+      state,
+      "m1",
+      "p2"
+    );
     expect(shouldUpdatePayment).toBeTruthy();
   });
-  it("shouldUpdatePaymentSelector should return false for a matching <message Id, payment Id> pair", () => {
+  it("shouldRetrievePaymentDataSelector should return false for a matching <message Id, payment Id> pair", () => {
     const startingState = appReducer(undefined, {} as Action);
     const updatePaymentForMessageAction = updatePaymentForMessage.request({
       messageId: "m1",
@@ -415,7 +425,11 @@ describe("PN Payments selectors' tests", () => {
       serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
     });
     const state = appReducer(startingState, updatePaymentForMessageAction);
-    const shouldUpdatePayment = shouldUpdatePaymentSelector(state, "m1", "p1");
+    const shouldUpdatePayment = shouldRetrievePaymentDataSelector(
+      state,
+      "m1",
+      "p1"
+    );
     expect(shouldUpdatePayment).toBeFalsy();
   });
   it("paymentStatusForUISelector should return remoteUndefined for an unmatching message Id", () => {

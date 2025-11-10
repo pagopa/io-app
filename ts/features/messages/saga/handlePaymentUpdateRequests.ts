@@ -15,11 +15,6 @@ import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../../api/backend";
 import {
   cancelQueuedPaymentUpdates,
-  isGenericError,
-  PaymentError,
-  toGenericError,
-  toSpecificError,
-  toTimeoutError,
   updatePaymentForMessage
 } from "../store/actions";
 import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPreferences";
@@ -29,6 +24,13 @@ import { readablePrivacyReport } from "../../../utils/reporters";
 import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 import { isTestEnv } from "../../../utils/environment";
 import { trackMessagePaymentFailure } from "../analytics";
+import {
+  isMessageGenericError,
+  toGenericError,
+  toSpecificError,
+  toTimeoutError,
+  MessagePaymentError
+} from "../types/paymentErrors";
 
 const PaymentUpdateWorkerCount = 5;
 
@@ -147,7 +149,7 @@ function* updatePaymentInfo(
   }
 }
 
-const unknownErrorToPaymentError = (e: unknown): PaymentError => {
+const unknownErrorToPaymentError = (e: unknown): MessagePaymentError => {
   const reason = unknownErrorToString(e);
   const lowerCaseReason = reason.toLowerCase();
   if (lowerCaseReason === "max-retries" || lowerCaseReason === "aborted") {
@@ -173,8 +175,8 @@ const unknownErrorToString = (e: unknown): string => {
   return "Unknown error with no data";
 };
 
-const trackPaymentErrorIfNeeded = (error: PaymentError) => {
-  if (isGenericError(error)) {
+const trackPaymentErrorIfNeeded = (error: MessagePaymentError) => {
+  if (isMessageGenericError(error)) {
     trackMessagePaymentFailure(error.message);
   }
 };

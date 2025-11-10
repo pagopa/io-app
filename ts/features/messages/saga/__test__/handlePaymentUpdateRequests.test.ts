@@ -9,9 +9,6 @@ import {
 } from "../handlePaymentUpdateRequests";
 import {
   cancelQueuedPaymentUpdates,
-  toGenericError,
-  toSpecificError,
-  toTimeoutError,
   updatePaymentForMessage,
   UpdatePaymentForMessageSuccess
 } from "../../store/actions";
@@ -20,6 +17,11 @@ import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { isPagoPATestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import * as MIXPANEL from "../../../../mixpanel";
+import {
+  toGenericError,
+  toSpecificError,
+  toTimeoutError
+} from "../../types/paymentErrors";
 
 describe("handlePaymentUpdateRequests", () => {
   afterEach(() => {

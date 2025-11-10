@@ -6,9 +6,6 @@ import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import {
   cancelPaymentStatusTracking,
   startPaymentStatusTracking,
-  toGenericError,
-  toSpecificError,
-  toTimeoutError,
   updatePaymentForMessage,
   UpdatePaymentForMessageSuccess
 } from "../../store/actions";
@@ -17,9 +14,13 @@ import {
   paymentStatusFromPaymentUpdateResult,
   testable
 } from "../handlePaymentStatusForAnalyticsTracking";
-
 import { serviceDetailsByIdSelector } from "../../../services/details/store/selectors";
 import { trackPaymentStatus } from "../../analytics";
+import {
+  toGenericError,
+  toSpecificError,
+  toTimeoutError
+} from "../../types/paymentErrors";
 
 const messageId = "01JWX68NS39VA6YVWX0R10E3VM";
 const paymentId = "01234567890123456789012345678901234567890";

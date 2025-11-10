@@ -1,10 +1,10 @@
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import {
-  toSpecificError,
   updatePaymentForMessage,
   UpdatePaymentForMessageFailure
 } from "../../../../features/messages/store/actions";
+import { toSpecificError } from "../../../../features/messages/types/paymentErrors";
 import { isPaidPaymentFromDetailV2Enum } from "../../../../utils/payment";
 import { paymentByRptIdReducer, PaymentByRptIdState } from "../payments";
 

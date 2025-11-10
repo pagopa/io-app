@@ -10,7 +10,7 @@ import { remoteError, remoteReady } from "../../../../common/model/RemoteValue";
 import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { toSpecificError } from "../../../messages/store/actions";
+import { toSpecificError } from "../../../messages/types/paymentErrors";
 
 const globalMessageId = "01HTFFDYS8VQ779EA4M5WB9YWA";
 const globalMaxVisiblePaymentCount = 5;

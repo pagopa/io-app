@@ -1,8 +1,5 @@
 import { appReducer } from "../../../../../store/reducers";
-import {
-  toSpecificError,
-  updatePaymentForMessage
-} from "../../../../messages/store/actions";
+import { updatePaymentForMessage } from "../../../../messages/store/actions";
 import { paymentsButtonStateSelector } from "../payments";
 import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
 import { reproduceSequence } from "../../../../../utils/tests";
@@ -10,6 +7,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { Action } from "../../../../../store/actions/types";
 import { NotificationPaymentInfo } from "../../../../../../definitions/pn/NotificationPaymentInfo";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { toSpecificError } from "../../../../messages/types/paymentErrors";
 
 describe("paymentsButtonStateSelector", () => {
   it("should return hidden for an unmatching message Id on store", () => {

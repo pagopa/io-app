@@ -5,13 +5,11 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { MessagePaymentItem } from "../MessagePaymentItem";
 import { NotificationPaymentInfo } from "../../../../../../definitions/pn/NotificationPaymentInfo";
 import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
-import {
-  toSpecificError,
-  updatePaymentForMessage
-} from "../../../store/actions";
+import { updatePaymentForMessage } from "../../../store/actions";
 import { PaymentInfoResponse } from "../../../../../../definitions/backend/PaymentInfoResponse";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { toSpecificError } from "../../../types/paymentErrors";
 
 describe("MessagePaymentItem component", () => {
   it("Should match the snapshot for a loading item", () => {
