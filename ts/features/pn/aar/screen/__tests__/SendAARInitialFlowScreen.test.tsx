@@ -12,6 +12,8 @@ import { setAarFlowState } from "../../store/actions";
 import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
 import { SendAARInitialFlowScreen } from "../SendAARInitialFlowScreen";
 import * as SELECTORS from "../../store/selectors";
+import { sendAarMockStates } from "../../utils/testUtils";
+import * as ANALYTICS from "../../analytics";
 
 const mockReplace = jest.fn();
 const mockSetOptions = jest.fn();
@@ -55,6 +57,26 @@ describe("SendAARInitialFlowScreen", () => {
       } else {
         const data = await waitFor(() => findByTestId("LoadingScreenContent"));
         expect(data).toBeDefined();
+      }
+    });
+  });
+
+  sendAarMockStates.forEach(state => {
+    it(`should ${
+      state.type === sendAARFlowStates.displayingAARToS ? "" : "not "
+    }call 'trackSendAARToS' when state is ${state.type}`, () => {
+      const spiedOnMockedTrackSendAARToS = jest
+        .spyOn(ANALYTICS, "trackSendAARToS")
+        .mockImplementation();
+      flowStateSelectorSpy.mockReturnValue(state);
+
+      renderComponent();
+
+      if (state.type === sendAARFlowStates.displayingAARToS) {
+        expect(spiedOnMockedTrackSendAARToS.mock.calls.length).toBe(1);
+        expect(spiedOnMockedTrackSendAARToS.mock.calls[0].length).toBe(0);
+      } else {
+        expect(spiedOnMockedTrackSendAARToS.mock.calls.length).toBe(0);
       }
     });
   });
@@ -142,7 +164,7 @@ describe("SendAARInitialFlowScreen", () => {
             screen: PN_ROUTES.MESSAGE_DETAILS,
             params: {
               messageId: "TEST_IUN",
-              firstTimeOpening: true,
+              firstTimeOpening: undefined,
               serviceId: "SERVICE_ID",
               isAarMessage: true
             }

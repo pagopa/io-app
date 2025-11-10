@@ -71,13 +71,17 @@ describe("SendEngagementScreen", () => {
     );
     expect(
       spiedOnMockedTrackSendActivationModalDialog.mock.calls[0].length
-    ).toBe(2);
+    ).toBe(3);
     expect(spiedOnMockedTrackSendActivationModalDialog.mock.calls[0][0]).toBe(
       expectedFlow
     );
     expect(spiedOnMockedTrackSendActivationModalDialog.mock.calls[0][1]).toBe(
+      DEFAULT_OPENING_SOURCE
+    );
+    expect(spiedOnMockedTrackSendActivationModalDialog.mock.calls[0][2]).toBe(
       DEFAULT_USER_TYPE
     );
+
     expect(
       spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock.calls
         .length
@@ -106,13 +110,14 @@ describe("SendEngagementScreen", () => {
     );
     expect(
       spiedOnMockedTrackSendActivationModalDialog.mock.calls[0].length
-    ).toBe(2);
+    ).toBe(3);
     expect(spiedOnMockedTrackSendActivationModalDialog.mock.calls[0][0]).toBe(
       expectedFlow
     );
     expect(spiedOnMockedTrackSendActivationModalDialog.mock.calls[0][1]).toBe(
       DEFAULT_USER_TYPE
     );
+
     expect(
       spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock.calls
         .length
@@ -120,7 +125,7 @@ describe("SendEngagementScreen", () => {
     expect(
       spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock
         .calls[0].length
-    ).toBe(2);
+    ).toBe(3);
     expect(
       spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock
         .calls[0][0]
@@ -128,7 +133,12 @@ describe("SendEngagementScreen", () => {
     expect(
       spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock
         .calls[0][1]
+    ).toBe(DEFAULT_OPENING_SOURCE);
+    expect(
+      spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock
+        .calls[0][2]
     ).toBe(DEFAULT_USER_TYPE);
+
     expect(
       spiedOnMockedTrackSendActivationModalDialogActivationStart.mock.calls
         .length
@@ -138,7 +148,7 @@ describe("SendEngagementScreen", () => {
   [false, true].forEach(systemNotificationsEnabled =>
     (["aar", "message", "not_set"] as const).forEach(sendOpeningSource =>
       (["recipient", "mandatory", "not_set"] as const).forEach(sendUserType =>
-        it(`should dispatch a 'pnActivationUpsert.request' and track proper analytics when pressing the primary action, with proper flow for success and failure actions (systemNotificationsEnabled: ${systemNotificationsEnabled})`, () => {
+        it(`should dispatch a 'pnActivationUpsert.request' and track proper analytics when pressing the primary action, with proper flow for success and failure actions (systemNotificationsEnabled: ${systemNotificationsEnabled} openingSource: ${sendOpeningSource} userType: ${sendUserType})`, () => {
           const mockPopToTop = jest.fn();
           const mockReplace = jest.fn();
           const mockSetOptions = jest.fn();
@@ -168,17 +178,22 @@ describe("SendEngagementScreen", () => {
           ).toBe(1);
           expect(
             spiedOnMockedTrackSendActivationModalDialog.mock.calls[0].length
-          ).toBe(2);
+          ).toBe(3);
           expect(
             spiedOnMockedTrackSendActivationModalDialog.mock.calls[0][0]
           ).toBe(expectedFlow);
           expect(
             spiedOnMockedTrackSendActivationModalDialog.mock.calls[0][1]
+          ).toBe(sendOpeningSource);
+          expect(
+            spiedOnMockedTrackSendActivationModalDialog.mock.calls[0][2]
           ).toBe(sendUserType);
+
           expect(
             spiedOnMockedTrackSendActivationModalDialogActivationDismissed.mock
               .calls.length
           ).toBe(0);
+
           expect(
             spiedOnMockedTrackSendActivationModalDialogActivationStart.mock
               .calls.length
@@ -186,7 +201,7 @@ describe("SendEngagementScreen", () => {
           expect(
             spiedOnMockedTrackSendActivationModalDialogActivationStart.mock
               .calls[0].length
-          ).toBe(2);
+          ).toBe(3);
           expect(
             spiedOnMockedTrackSendActivationModalDialogActivationStart.mock
               .calls[0][0]
@@ -194,6 +209,10 @@ describe("SendEngagementScreen", () => {
           expect(
             spiedOnMockedTrackSendActivationModalDialogActivationStart.mock
               .calls[0][1]
+          ).toBe(sendOpeningSource);
+          expect(
+            spiedOnMockedTrackSendActivationModalDialogActivationStart.mock
+              .calls[0][2]
           ).toBe(sendUserType);
 
           const expectedAction = pnActivationUpsert.request({

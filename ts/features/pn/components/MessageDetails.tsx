@@ -24,6 +24,10 @@ import {
   maxVisiblePaymentCount,
   shouldUseBottomSheetForPayments
 } from "../utils";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../pushNotifications/analytics";
 import { BannerAttachments } from "./BannerAttachments";
 import { F24Section } from "./F24Section";
 import { MessageBottomMenu } from "./MessageBottomMenu";
@@ -38,7 +42,9 @@ export type MessageDetailsProps = {
   messageId: string;
   serviceId: ServiceId;
   payments?: ReadonlyArray<NotificationPaymentInfo>;
-  isAARMessage?: boolean;
+  isAARMessage: boolean;
+  sendOpeningSource: SendOpeningSource;
+  sendUserType: SendUserType;
 };
 
 export const MessageDetails = ({
@@ -46,7 +52,9 @@ export const MessageDetails = ({
   messageId,
   payments,
   serviceId,
-  isAARMessage = false
+  isAARMessage,
+  sendOpeningSource,
+  sendUserType
 }: MessageDetailsProps) => {
   const presentPaymentsBottomSheetRef = useRef<() => void>(undefined);
   const partitionedAttachments = pipe(
@@ -113,8 +121,9 @@ export const MessageDetails = ({
             banner={<BannerAttachments />}
             disabled={message.isCancelled}
             messageId={messageId}
-            isPN
             serviceId={serviceId}
+            sendOpeningSource={sendOpeningSource}
+            sendUserType={sendUserType}
           />
           <VSpacer size={16} />
           <MessagePayments
@@ -125,12 +134,16 @@ export const MessageDetails = ({
             maxVisiblePaymentCount={maxVisiblePaymentCount}
             presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
             serviceId={serviceId}
+            sendOpeningSource={sendOpeningSource}
+            sendUserType={sendUserType}
           />
           <VSpacer size={16} />
           <F24Section
             messageId={messageId}
             isCancelled={message.isCancelled}
             serviceId={serviceId}
+            sendOpeningSource={sendOpeningSource}
+            sendUserType={sendUserType}
           />
           <VSpacer size={16} />
         </ContentWrapper>
@@ -141,16 +154,19 @@ export const MessageDetails = ({
           messageId={messageId}
           paidNoticeCodes={completedPaymentNoticeCodes}
           payments={payments}
+          sendOpeningSource={sendOpeningSource}
+          sendUserType={sendUserType}
         />
       </ScrollView>
       <MessageFooter
         messageId={messageId}
-        serviceId={serviceId}
         payments={payments}
         maxVisiblePaymentCount={maxVisiblePaymentCount}
         isCancelled={isCancelled}
         presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
         onMeasure={handleFooterActionsMeasurements}
+        sendOpeningSource={sendOpeningSource}
+        sendUserType={sendUserType}
       />
       {shouldUseBottomSheetForPayments(isCancelled, payments) && (
         <MessagePaymentBottomSheet
@@ -158,6 +174,8 @@ export const MessageDetails = ({
           payments={payments}
           presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
           serviceId={serviceId}
+          sendOpeningSource={sendOpeningSource}
+          sendUserType={sendUserType}
         />
       )}
     </>

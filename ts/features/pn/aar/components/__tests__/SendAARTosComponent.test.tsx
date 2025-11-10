@@ -12,6 +12,7 @@ import * as FLOW_MANAGER from "../../hooks/useSendAarFlowManager";
 import * as SELECTORS from "../../store/selectors";
 import { sendAARFlowStates } from "../../utils/stateUtils";
 import { SendAARTosComponent } from "../SendAARTosComponent";
+import * as ANALYTICS from "../../analytics";
 
 const qrCodeMock = "TEST";
 const mockPrivacyUrls = {
@@ -51,13 +52,19 @@ describe("SendAARTosComponent", () => {
     fireEvent.press(button);
     expect(mockGoNextState).toHaveBeenCalledTimes(1);
   });
-  it("quits out of the flow on secondary button press", () => {
+  it("quits out of the flow on secondary button press and call 'trackSendAARToSDismissed' ", () => {
+    const spiedOnMockedTrackSendAARToSDismissed = jest
+      .spyOn(ANALYTICS, "trackSendAARToSDismissed")
+      .mockImplementation();
+
     const { getByTestId } = renderComponent(qrCodeMock);
 
     const button = getByTestId("secondary_button");
     expect(mockTerminateFlow).toHaveBeenCalledTimes(0);
     fireEvent.press(button);
     expect(mockTerminateFlow).toHaveBeenCalledTimes(1);
+    expect(spiedOnMockedTrackSendAARToSDismissed.mock.calls.length).toBe(1);
+    expect(spiedOnMockedTrackSendAARToSDismissed.mock.calls[0].length).toBe(0);
   });
   it("should match snapshot", () => {
     const { toJSON } = renderComponent(qrCodeMock);
