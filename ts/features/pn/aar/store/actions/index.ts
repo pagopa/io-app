@@ -2,7 +2,7 @@ import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { ActionType, createStandardAction } from "typesafe-actions";
 import { MessageBodyMarkdown } from "../../../../../../definitions/backend/MessageBodyMarkdown";
 import { MessageSubject } from "../../../../../../definitions/backend/MessageSubject";
-import { ThirdPartyMessage } from "../../../../../../definitions/pn/ThirdPartyMessage";
+import { ThirdPartyMessage } from "../../../../../../definitions/pn/aar/ThirdPartyMessage";
 import { AARFlowState } from "../../utils/stateUtils";
 
 export type EphemeralAarMessageDataActionPayload = {

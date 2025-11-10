@@ -2,6 +2,7 @@ import { mixpanelTrack } from "../../../mixpanel";
 import { buildEventProperties } from "../../../utils/analytics";
 import {
   NotificationModalFlow,
+  SendOpeningSource,
   SendUserType
 } from "../../pushNotifications/analytics";
 
@@ -9,41 +10,46 @@ export type SendActivationSource = "tos_bottomsheet" | "nurturing_bottomsheet";
 
 export const trackSendActivationModalDialog = (
   flow: NotificationModalFlow,
-  send_user: SendUserType = "not_set"
+  sendSource: SendOpeningSource = "not_set",
+  sendUser: SendUserType = "not_set"
 ) => {
-  void mixpanelTrack(
-    "SEND_ACTIVATION_MODAL_DIALOG",
-    buildEventProperties("UX", "screen_view", {
-      send_user,
-      flow
-    })
-  );
+  const eventName = "SEND_ACTIVATION_MODAL_DIALOG";
+  const properties = buildEventProperties("UX", "screen_view", {
+    flow,
+    opening_source: sendSource,
+    send_user: sendUser
+  });
+  mixpanelTrack(eventName, properties);
 };
 
 export const trackSendActivationModalDialogActivationStart = (
   flow: NotificationModalFlow,
-  send_user: SendUserType = "not_set"
+  sendSource: SendOpeningSource = "not_set",
+  sendUser: SendUserType = "not_set"
 ) => {
-  void mixpanelTrack(
-    "SEND_ACTIVATION_MODAL_DIALOG_ACTIVATION_START",
-    buildEventProperties("UX", "action", {
-      send_user,
-      flow
-    })
-  );
+  const eventName = "SEND_ACTIVATION_MODAL_DIALOG_ACTIVATION_START";
+  const properties = buildEventProperties("UX", "action", {
+    flow,
+    opening_source: sendSource,
+    send_user: sendUser
+  });
+  mixpanelTrack(eventName, properties);
 };
+
 export const trackSendActivationModalDialogActivationDismissed = (
   flow: NotificationModalFlow,
-  send_user: SendUserType = "not_set"
+  sendSource: SendOpeningSource = "not_set",
+  sendUser: SendUserType = "not_set"
 ) => {
-  void mixpanelTrack(
-    "SEND_ACTIVATION_MODAL_DIALOG_DISMISSED",
-    buildEventProperties("UX", "action", {
-      send_user,
-      flow
-    })
-  );
+  const eventName = "SEND_ACTIVATION_MODAL_DIALOG_DISMISSED";
+  const properties = buildEventProperties("UX", "action", {
+    flow,
+    opening_source: sendSource,
+    send_user: sendUser
+  });
+  mixpanelTrack(eventName, properties);
 };
+
 export const trackSendAcceptanceDialog = (
   flow: NotificationModalFlow,
   send_user: SendUserType = "not_set"

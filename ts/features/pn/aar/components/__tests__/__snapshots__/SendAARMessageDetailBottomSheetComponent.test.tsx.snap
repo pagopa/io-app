@@ -365,7 +365,131 @@ exports[`SendAARMessageDetailBottomSheetComponent should match snapshot 1`] = `
                           "flex": 1,
                         }
                       }
-                    />
+                    >
+                      <Modal
+                        accessible={false}
+                        backdropComponent={[Function]}
+                        backgroundStyle={
+                          {
+                            "backgroundColor": "#FFFFFF",
+                          }
+                        }
+                        enableDismissOnClose={true}
+                        enableDynamicSizing={true}
+                        footerComponent={[Function]}
+                        handleComponent={[Function]}
+                        hardwareAccelerated={false}
+                        importantForAccessibility="yes"
+                        maxDynamicContentSize={1334}
+                        onDismiss={[Function]}
+                        style={
+                          {
+                            "borderCurve": "continuous",
+                            "borderTopLeftRadius": 24,
+                            "borderTopRightRadius": 24,
+                            "overflow": "hidden",
+                          }
+                        }
+                        visible={true}
+                      >
+                        <RCTScrollView
+                          overScrollMode="never"
+                          style={
+                            {
+                              "paddingHorizontal": 24,
+                            }
+                          }
+                        >
+                          <View>
+                            <View>
+                              <View>
+                                Mock SendAARMessageDetailBottomSheet
+                              </View>
+                              <View>
+                                Send user type: not_set
+                              </View>
+                              <View
+                                accessibilityLabel=""
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
+                                }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
+                                testID="primary_button"
+                              >
+                                Mock Primary Action
+                              </View>
+                              <View
+                                accessibilityLabel=""
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": undefined,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
+                                }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
+                                testID="secondary_button"
+                              >
+                                Mock Secondary Action
+                              </View>
+                            </View>
+                            <View
+                              style={
+                                {
+                                  "height": 0,
+                                }
+                              }
+                            />
+                          </View>
+                        </RCTScrollView>
+                      </Modal>
+                    </View>
                   </View>
                 </View>
               </View>
