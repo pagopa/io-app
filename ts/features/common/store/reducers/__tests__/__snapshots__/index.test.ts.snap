@@ -129,6 +129,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
   },
   "ingress": {
+    "checkSession": {
+      "hasError": false,
+    },
     "isBlockingScreen": false,
   },
   "itWallet": {
