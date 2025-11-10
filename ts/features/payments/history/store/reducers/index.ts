@@ -72,7 +72,7 @@ const INITIAL_STATE: PaymentsHistoryState = {
   paymentsOngoingFailed: {}
 };
 
-export const ARCHIVE_SIZE = 15;
+const ARCHIVE_SIZE = 15;
 
 const reducer = (
   state: PaymentsHistoryState = INITIAL_STATE,

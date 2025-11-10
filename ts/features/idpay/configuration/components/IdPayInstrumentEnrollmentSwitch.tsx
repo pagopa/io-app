@@ -98,7 +98,7 @@ const IdPayInstrumentEnrollmentSwitch = (
   );
 };
 
-export const cardLogoByBrand: {
+const cardLogoByBrand: {
   [key in CreditCardType]: IOLogoPaymentType | undefined;
 } = {
   MASTERCARD: "mastercard",

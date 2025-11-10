@@ -21,17 +21,6 @@ export const trackPaymentsReceiptListing = () => {
   );
 };
 
-export const trackPaymentsOpenOldReceiptListing = (
-  entryPoint: "payments_receipt_listing"
-) => {
-  mixpanelTrack(
-    "OPEN_RECEIPT_OLD_LISTING",
-    buildEventProperties("UX", "action", {
-      entry_point: entryPoint
-    })
-  );
-};
-
 export const trackPaymentsOpenReceipt = (
   props: Partial<PaymentReceiptAnalyticsProps>
 ) => {
