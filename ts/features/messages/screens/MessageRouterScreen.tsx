@@ -96,19 +96,19 @@ export const MessageRouterScreen = (props: NavigationProps): ReactElement => {
           StackActions.replace(MESSAGES_ROUTES.MESSAGE_GREEN_PASS)
         );
       } else if (data.isPNMessage) {
-        navigation.dispatch(
-          StackActions.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-            screen: PN_ROUTES.MAIN,
+        navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+          screen: PN_ROUTES.MAIN,
+          params: {
+            screen: PN_ROUTES.MESSAGE_DETAILS,
             params: {
-              screen: PN_ROUTES.MESSAGE_DETAILS,
-              params: {
-                messageId: data.messageId,
-                serviceId: data.serviceId,
-                firstTimeOpening: data.firstTimeOpening
-              }
+              messageId: data.messageId,
+              serviceId: data.serviceId,
+              firstTimeOpening: data.firstTimeOpening,
+              sendOpeningSource: "message",
+              sendUserType: "not_set"
             }
-          })
-        );
+          }
+        });
       } else {
         navigation.dispatch(
           StackActions.replace(MESSAGES_ROUTES.MESSAGE_DETAIL, {
