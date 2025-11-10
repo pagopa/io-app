@@ -14,7 +14,7 @@ type ValidInstrumentType =
   | InstrumentTypeEnum.IDPAYCODE
   | InstrumentTypeEnum.APP_IO_PAYMENT;
 
-export type PaymentMethodSwitchRef = {
+type PaymentMethodSwitchRef = {
   switchStatus: boolean;
   setSwitchStatus: (status: boolean) => void;
 };

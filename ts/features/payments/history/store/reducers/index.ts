@@ -51,7 +51,7 @@ import * as receiptsAnalytics from "../../../receipts/analytics";
 import { createSetTransform } from "../../../../../store/transforms/setTransform";
 import * as analytics from "../../../checkout/analytics";
 
-export type PaymentsOngoingFailedClockTime = {
+type PaymentsOngoingFailedClockTime = {
   wallClock: number;
   appClock: number;
 };

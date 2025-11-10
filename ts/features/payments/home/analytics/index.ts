@@ -5,7 +5,7 @@ import {
   PaymentsAnalyticsHomeStatus
 } from "../../common/types/PaymentAnalytics";
 
-export type PaymentHomeAnalyticsProps = {
+type PaymentHomeAnalyticsProps = {
   payments_home_status: PaymentsAnalyticsHomeStatus;
   saved_payment_method: number;
   wallet_item: "payment_method";

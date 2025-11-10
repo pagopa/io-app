@@ -5,7 +5,7 @@ import { ReceiptsCategoryFilter } from "../types";
 
 export type HideReceiptTrigger = "tap" | "swipe";
 
-export type PaymentReceiptAnalyticsProps = {
+type PaymentReceiptAnalyticsProps = {
   organization_name: string;
   payment_status: string;
   first_time_opening: boolean;

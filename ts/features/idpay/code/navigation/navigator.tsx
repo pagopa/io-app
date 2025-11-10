@@ -41,7 +41,7 @@ export const IdPayCodeNavigator = () => (
   </IdPayFeatureFlagGuard>
 );
 
-export type IdPayCodeStackNavigationRouteProps<
+type IdPayCodeStackNavigationRouteProps<
   ParamList extends ParamListBase,
   RouteName extends keyof ParamList = string
 > = {
@@ -49,7 +49,7 @@ export type IdPayCodeStackNavigationRouteProps<
   route: RouteProp<ParamList, RouteName>;
 };
 
-export type IdPayCodeStackNavigationProp<
+type IdPayCodeStackNavigationProp<
   ParamList extends ParamListBase,
   RouteName extends keyof ParamList = string
 > = StackNavigationProp<ParamList, RouteName>;
