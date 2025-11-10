@@ -53,7 +53,7 @@ export const isLoadingFeaturedServicesSelector = (state: GlobalState) =>
     state,
     featuredServicesPotSelector,
     featuredServicesPot =>
-      pot.isLoading(featuredServicesPot) && !pot.isSome(featuredServicesPot)
+      pot.isLoading(featuredServicesPot) && pot.isNone(featuredServicesPot)
   );
 
 export const isErrorFeaturedServicesSelector = (state: GlobalState) =>

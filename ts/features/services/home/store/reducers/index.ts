@@ -128,7 +128,7 @@ const reducer = (
     case getType(featuredServicesGet.failure):
       return {
         ...state,
-        featuredServices: pot.noneError(action.payload)
+        featuredServices: pot.toError(pot.none, action.payload)
       };
   }
   return state;
