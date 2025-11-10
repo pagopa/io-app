@@ -4,6 +4,10 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../../pushNotifications/analytics";
 
 type TogglePnActivationRequestPaylad = {
   value: boolean;
@@ -12,7 +16,8 @@ type TogglePnActivationRequestPaylad = {
 };
 
 type PNPaymentStatusTracking = {
-  isAARNotification: boolean;
+  openingSource: SendOpeningSource;
+  userType: SendUserType;
   messageId: string;
 };
 
