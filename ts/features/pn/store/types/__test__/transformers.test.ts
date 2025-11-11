@@ -3,9 +3,6 @@ import { toSENDMessage } from "../transformers";
 
 describe("transformers", () => {
   describe("toSENDMessage", () => {
-    // returns undefined if decode fails
-    // returns undefined if details are missing
-    // return data
     it("should return undefined if decode fails", () => {
       const thirdPartyMessage = {
         created_at: new Date(),
