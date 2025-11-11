@@ -5,6 +5,9 @@ export type DigitalCredentialsCatalogue = Awaited<
   ReturnType<typeof CredentialsCatalogue.fetchAndParseCatalogue>
 >;
 
+export type DigitalCredentialMetadata =
+  DigitalCredentialsCatalogue["credentials"][number];
+
 /**
  * Fetch the Digital Credentials Catalogue.
  *
