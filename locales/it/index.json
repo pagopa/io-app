@@ -5210,7 +5210,9 @@
             "content": {
               "education_degree": "I tuoi titoli accademici digitali hanno piena validità ufficiale.",
               "education_enrollment": "Le tue iscrizioni accademiche digitali hanno piena validità ufficiale.",
-              "residency": "Il tuo attestato di residenza digitale ha piena validità ufficiale."
+              "residency": "Il tuo attestato di residenza digitale ha piena validità ufficiale.",
+              "education_diploma": "I tuoi Diplomi digitali hanno piena validità ufficiale.",
+              "school_enrollment": "La tua iscrizione scolastica digitale ha piena validità ufficiale."
             }
           }
         },
