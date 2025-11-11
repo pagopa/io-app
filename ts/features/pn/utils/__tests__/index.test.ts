@@ -541,7 +541,8 @@ describe("paymentsFromPNMessagePot", () => {
 const sendOpeningSources: ReadonlyArray<SendOpeningSource> = [
   "aar",
   "message",
-  "not_set"
+  "not_set",
+  "not_an_opening_source" as SendOpeningSource
 ];
 
 describe("openingSourceIsAarMessage", () => {

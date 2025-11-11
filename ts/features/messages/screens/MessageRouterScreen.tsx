@@ -1,6 +1,5 @@
 import { ReactElement, useCallback, useEffect, useRef } from "react";
 import { View } from "react-native";
-import { StackActions } from "@react-navigation/native";
 import { Body, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import {
@@ -92,9 +91,9 @@ export const MessageRouterScreen = (props: NavigationProps): ReactElement => {
       );
 
       if (data.isLegacyGreenPass) {
-        navigation.dispatch(
-          StackActions.replace(MESSAGES_ROUTES.MESSAGE_GREEN_PASS)
-        );
+        navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+          screen: MESSAGES_ROUTES.MESSAGE_GREEN_PASS
+        });
       } else if (data.isPNMessage) {
         navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
           screen: PN_ROUTES.MAIN,
@@ -110,12 +109,13 @@ export const MessageRouterScreen = (props: NavigationProps): ReactElement => {
           }
         });
       } else {
-        navigation.dispatch(
-          StackActions.replace(MESSAGES_ROUTES.MESSAGE_DETAIL, {
+        navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+          screen: MESSAGES_ROUTES.MESSAGE_DETAIL,
+          params: {
             messageId: data.messageId,
             serviceId: data.serviceId
-          })
-        );
+          }
+        });
       }
     },
     [fromPushNotification, navigation]
