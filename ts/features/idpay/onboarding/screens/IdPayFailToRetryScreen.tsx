@@ -1,4 +1,5 @@
 /* eslint-disable functional/immutable-data */
+import { Body, IOToast } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -8,9 +9,12 @@ import { AccessibilityInfo, View } from "react-native";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import ModalSectionStatusComponent from "../../../../components/SectionStatus/modal";
-import { useIODispatch } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { idPayInitiativeConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { getFullLocale } from "../../../../utils/locale";
+import { openWebUrl } from "../../../../utils/url";
 import { trackIngressServicesSlowDown } from "../../../ingress/analytics";
 import { setIsBlockingScreen } from "../../../ingress/store/actions";
 import {
@@ -30,6 +34,8 @@ export const IdPayFailToRetryScreen = () => {
   const [contentTitle, setContentTitle] = useState(
     I18n.t("idpay.onboarding.failToRetry.contentTitle")
   );
+  const [showSubtitle, setShowSubtitle] = useState(false);
+
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
 
@@ -66,6 +72,7 @@ export const IdPayFailToRetryScreen = () => {
       setTimeout(() => {
         machine.send({ type: "retryConnection" });
         setContentTitle(I18n.t("startup.title2"));
+        setShowSubtitle(true);
         timeouts.shift();
       }, TIMEOUT_CHANGE_LABEL)
     );
@@ -75,6 +82,7 @@ export const IdPayFailToRetryScreen = () => {
         if (!isFirstCallInPending) {
           machine.send({ type: "retryConnection" });
         }
+        setShowSubtitle(false);
         setShowBlockingScreen(true);
         dispatch(setIsBlockingScreen());
         timeouts.shift();
@@ -109,7 +117,15 @@ export const IdPayFailToRetryScreen = () => {
         testID="ingress-screen-loader-id"
         contentTitle={contentTitle}
         animatedPictogramSource="waiting"
-      />
+      >
+        {showSubtitle && (
+          <View style={{ alignItems: "center" }}>
+            <Body style={{ textAlign: "center" }}>
+              {I18n.t("idpay.onboarding.failToRetry.slowDownSubtitle")}
+            </Body>
+          </View>
+        )}
+      </LoadingScreenContent>
     </>
   );
 };
@@ -143,26 +159,42 @@ const IngressScreenBlockingError = memo(() => {
     })
   );
 
+  const initiativeConfig = useIOSelector(
+    idPayInitiativeConfigSelector(initiativeId)
+  );
+
+  const locale = getFullLocale();
+
+  const websiteUrl: string = initiativeConfig?.url?.[locale] ?? "";
+
+  const handleNavigateToWebsite = () => {
+    trackIDPayIngressScreenCTA({
+      initiativeId,
+      initiativeName
+    });
+
+    openWebUrl(websiteUrl, () => IOToast.error(I18n.t("genericError")));
+  };
+
   return (
     <OperationResultScreenContent
       ref={operationRef}
       testID="device-blocking-screen-id"
       pictogram="time"
       title={I18n.t("startup.slowdowns_results_screen.title")}
-      subtitle={I18n.t("startup.slowdowns_results_screen.subtitle")}
+      subtitle={I18n.t("idpay.onboarding.failToRetry.failureSubtitle")}
       action={{
-        label: I18n.t("global.buttons.close"),
+        label: I18n.t("global.buttons.back"),
         onPress: () => machine.send({ type: "close" })
       }}
-      secondaryAction={{
-        label: I18n.t("global.buttons.visitWebsite"),
-        onPress: () => {
-          trackIDPayIngressScreenCTA({
-            initiativeId,
-            initiativeName
-          });
-        }
-      }}
+      secondaryAction={
+        websiteUrl === ""
+          ? undefined
+          : {
+              label: I18n.t("global.buttons.visitWebsite"),
+              onPress: handleNavigateToWebsite
+            }
+      }
     />
   );
 });

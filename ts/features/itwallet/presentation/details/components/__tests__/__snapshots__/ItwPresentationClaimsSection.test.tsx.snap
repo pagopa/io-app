@@ -678,7 +678,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
                                   maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
+                                  numberOfLines={4}
                                   style={
                                     [
                                       {},
@@ -864,7 +864,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
                                   maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
+                                  numberOfLines={4}
                                   style={
                                     [
                                       {},
@@ -957,7 +957,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
                                   maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
+                                  numberOfLines={4}
                                   style={
                                     [
                                       {},
@@ -1050,7 +1050,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
                                   maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
+                                  numberOfLines={4}
                                   style={
                                     [
                                       {},
@@ -1236,7 +1236,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
                                   maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
+                                  numberOfLines={4}
                                   style={
                                     [
                                       {},
@@ -1329,7 +1329,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
                                   maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
+                                  numberOfLines={4}
                                   style={
                                     [
                                       {},
@@ -1422,7 +1422,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
                                   maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
+                                  numberOfLines={4}
                                   style={
                                     [
                                       {},
@@ -1515,7 +1515,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
                                   maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
+                                  numberOfLines={4}
                                   style={
                                     [
                                       {},
@@ -2644,7 +2644,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     maxFontSizeMultiplier={1.5}
-                                    numberOfLines={2}
+                                    numberOfLines={4}
                                     style={
                                       [
                                         {},
@@ -2875,7 +2875,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     maxFontSizeMultiplier={1.5}
-                                    numberOfLines={2}
+                                    numberOfLines={4}
                                     style={
                                       [
                                         {},
@@ -3013,7 +3013,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     maxFontSizeMultiplier={1.5}
-                                    numberOfLines={2}
+                                    numberOfLines={4}
                                     style={
                                       [
                                         {},
@@ -3151,7 +3151,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     maxFontSizeMultiplier={1.5}
-                                    numberOfLines={2}
+                                    numberOfLines={4}
                                     style={
                                       [
                                         {},
@@ -3433,7 +3433,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     maxFontSizeMultiplier={1.5}
-                                    numberOfLines={2}
+                                    numberOfLines={4}
                                     style={
                                       [
                                         {},
@@ -3571,7 +3571,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     maxFontSizeMultiplier={1.5}
-                                    numberOfLines={2}
+                                    numberOfLines={4}
                                     style={
                                       [
                                         {},
@@ -3665,7 +3665,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   allowFontScaling={true}
                                   dynamicTypeRamp="headline"
                                   maxFontSizeMultiplier={1.5}
-                                  numberOfLines={2}
+                                  numberOfLines={4}
                                   style={
                                     [
                                       {},
@@ -3802,7 +3802,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     allowFontScaling={true}
                                     dynamicTypeRamp="headline"
                                     maxFontSizeMultiplier={1.5}
-                                    numberOfLines={2}
+                                    numberOfLines={4}
                                     style={
                                       [
                                         {},

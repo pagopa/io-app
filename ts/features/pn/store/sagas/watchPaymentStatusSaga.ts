@@ -11,6 +11,10 @@ import { trackPNPaymentStatus } from "../../analytics";
 import { getRptIdStringFromPayment } from "../../utils/rptId";
 import { paymentStatisticsForMessageUncachedSelector } from "../../../messages/store/reducers/payments";
 import { isTestEnv } from "../../../../utils/environment";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../../pushNotifications/analytics";
 
 /**
  * This saga is used to track a mixpanel event which is a report of
@@ -21,12 +25,15 @@ import { isTestEnv } from "../../../../utils/environment";
 export function* watchPaymentStatusForMixpanelTracking(
   action: ActionType<typeof startPNPaymentStatusTracking>
 ) {
-  const messageId = action.payload;
+  const { openingSource, userType, messageId } = action.payload;
   const currentFiscalCode = yield* select(profileFiscalCodeSelector);
   const message = yield* select(pnMessageFromIdSelector, messageId);
+
+  const fiscalCodeOrUndefined =
+    openingSource === "message" ? currentFiscalCode : undefined;
   const payments = yield* call(
     paymentsFromPNMessagePot,
-    currentFiscalCode,
+    fiscalCodeOrUndefined,
     message
   );
   const visibleRPTIds =
@@ -38,6 +45,8 @@ export function* watchPaymentStatusForMixpanelTracking(
   yield* race({
     polling: call(
       generateSENDMessagePaymentStatistics,
+      openingSource,
+      userType,
       messageId,
       paymentCount,
       visibleRPTIds
@@ -47,6 +56,8 @@ export function* watchPaymentStatusForMixpanelTracking(
 }
 
 function* generateSENDMessagePaymentStatistics(
+  openingSource: SendOpeningSource,
+  userType: SendUserType,
   messageId: string,
   paymentCount: number,
   paymentsRpdIds: ReadonlyArray<string>
@@ -67,7 +78,12 @@ function* generateSENDMessagePaymentStatistics(
       yield* delay(500);
     } else {
       // Payment statistics are ready, track them
-      yield* call(trackPNPaymentStatus, paymentStatistics);
+      yield* call(
+        trackPNPaymentStatus,
+        paymentStatistics,
+        openingSource,
+        userType
+      );
       // Exit the loop and end the saga
       return;
     }

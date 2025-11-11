@@ -1,7 +1,11 @@
 import { View } from "react-native";
 import { TimelineListItemProps } from "../TimelineListItem";
 
-export const TimelineListItem = ({ history }: TimelineListItemProps) => (
+export const TimelineListItem = ({
+  history,
+  sendOpeningSource,
+  sendUserType
+}: TimelineListItemProps) => (
   <>
     {history.map((pieceOfHistory, index) => (
       <View key={`poh_${index}`}>
@@ -17,5 +21,7 @@ export const TimelineListItem = ({ history }: TimelineListItemProps) => (
         <View>{pieceOfHistory.status}</View>
       </View>
     ))}
+    <View>{`Opening Source: ${sendOpeningSource}`}</View>
+    <View>{`User Type: ${sendUserType}`}</View>
   </>
 );

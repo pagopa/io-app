@@ -37,6 +37,7 @@ import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
+import { isL3IssuanceFeaturesEnabled } from "./utils";
 
 export const createEidIssuanceActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
@@ -64,7 +65,7 @@ export const createEidIssuanceActionsImplementation = (
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
-      params: { isL3: context.isL3 }
+      params: { isL3: isL3IssuanceFeaturesEnabled(context.level) }
     });
   },
 
@@ -189,8 +190,23 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  closeIssuance: () => {
-    navigation.popToTop();
+  closeIssuance: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    navigation.reset({
+      index: 1,
+      routes: [
+        {
+          name: ROUTES.MAIN,
+          params: {
+            screen: ROUTES.WALLET_HOME,
+            params: {
+              requiredEidFeedback: context.mode === "reissuance"
+            }
+          }
+        }
+      ]
+    });
   },
 
   storeIntegrityKeyTag: ({
@@ -240,8 +256,9 @@ export const createEidIssuanceActionsImplementation = (
   trackWalletInstanceCreation: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
-    const isL3 = context.isL3 && !context.isL2Fallback;
-    trackSaveCredentialSuccess(isL3 ? "ITW_PID" : "ITW_ID_V2");
+    trackSaveCredentialSuccess(
+      isL3IssuanceFeaturesEnabled(context.level) ? "ITW_PID" : "ITW_ID_V2"
+    );
     updateITWStatusAndPIDProperties(store.getState());
   },
   trackWalletInstanceRevocation: () => {

@@ -14,6 +14,7 @@ import PN_ROUTES from "../../../navigation/routes";
 import * as ANALYTICS from "../../analytics";
 import * as INITIAL_FLOW from "../../screen/SendAARInitialFlowScreen";
 import { SendQRScanFlowHandlerComponent } from "../SendQRScanFlowHandlerComponent";
+import { NOTIFICATIONS_ROUTES } from "../../../../pushNotifications/navigation/routes";
 
 const sendNotificationServiceId = "01G40DWQGKY5GRWSNM4303VNRP" as ServiceId;
 const aarUrl = "https://example.com";
@@ -128,7 +129,11 @@ describe("SendQRScanFlowHandlerComponent", () => {
           expect(mockReplace.mock.calls[0][1]).toEqual({
             screen: PN_ROUTES.MAIN,
             params: {
-              screen: PN_ROUTES.ENGAGEMENT_SCREEN
+              screen: PN_ROUTES.ENGAGEMENT_SCREEN,
+              params: {
+                sendOpeningSource: "aar",
+                sendUserType: "not_set"
+              }
             }
           });
           expect(mockPopToTop.mock.calls.length).toBe(0);
@@ -136,13 +141,12 @@ describe("SendQRScanFlowHandlerComponent", () => {
           expect(mockReplace.mock.calls.length).toBe(1);
           expect(mockReplace.mock.calls[0].length).toBe(2);
           expect(mockReplace.mock.calls[0][0]).toBe(
-            MESSAGES_ROUTES.MESSAGES_NAVIGATOR
+            NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT
           );
-          expect(mockReplace.mock.calls[0][1]).toEqual({
-            screen: PN_ROUTES.MAIN,
-            params: {
-              screen: PN_ROUTES.QR_SCAN_PUSH_ENGAGEMENT
-            }
+          expect(mockReplace.mock.calls[0][1]).toMatchObject({
+            flow: "send_notification_opening",
+            sendOpeningSource: "aar",
+            sendUserType: "not_set"
           });
           expect(mockPopToTop.mock.calls.length).toBe(0);
         } else {

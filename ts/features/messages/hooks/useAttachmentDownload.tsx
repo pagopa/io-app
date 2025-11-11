@@ -1,23 +1,23 @@
+import { useIOToast } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 import RNFS from "react-native-fs";
-import { IOToast } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
+import { MESSAGES_ROUTES } from "../navigation/routes";
+import {
+  cancelPreviousAttachmentDownload,
+  clearRequestedAttachmentDownload,
+  downloadAttachment
+} from "../store/actions";
 import {
   downloadedMessageAttachmentSelector,
   hasErrorOccourredOnRequestedDownloadSelector,
   isDownloadingMessageAttachmentSelector,
   isRequestedAttachmentDownloadSelector
 } from "../store/reducers/downloads";
-import {
-  cancelPreviousAttachmentDownload,
-  clearRequestedAttachmentDownload,
-  downloadAttachment
-} from "../store/actions";
-import { MESSAGES_ROUTES } from "../navigation/routes";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
-import { attachmentDisplayName } from "../store/reducers/transformers";
+import { attachmentDisplayName } from "../utils/attachments";
 import {
   trackPNAttachmentDownloadFailure,
   trackPNAttachmentOpening
@@ -25,18 +25,25 @@ import {
 import { trackThirdPartyMessageAttachmentShowPreview } from "../analytics";
 import PN_ROUTES from "../../pn/navigation/routes";
 import NavigationService from "../../../navigation/NavigationService";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../pushNotifications/analytics";
 
 export const useAttachmentDownload = (
   messageId: string,
   attachment: ThirdPartyAttachment,
-  isPN: boolean,
+  sendOpeningSource: SendOpeningSource,
+  sendUserType: SendUserType,
   serviceId: ServiceId,
   onPreNavigate?: () => void
 ) => {
   const attachmentId = attachment.id;
+  const isSendAttachment = sendOpeningSource !== "not_set";
 
   const dispatch = useIODispatch();
   const store = useIOStore();
+  const toast = useIOToast();
 
   const download = useIOSelector(state =>
     downloadedMessageAttachmentSelector(state, messageId, attachmentId)
@@ -45,12 +52,20 @@ export const useAttachmentDownload = (
     isDownloadingMessageAttachmentSelector(state, messageId, attachmentId)
   );
 
+  const isDownloadError = useIOSelector(state =>
+    hasErrorOccourredOnRequestedDownloadSelector(state, messageId, attachmentId)
+  );
+
   const attachmentCategory = attachment.category;
   const doNavigate = useCallback(() => {
     dispatch(clearRequestedAttachmentDownload());
     onPreNavigate?.();
-    if (isPN) {
-      trackPNAttachmentOpening(attachmentCategory);
+    if (isSendAttachment) {
+      trackPNAttachmentOpening(
+        sendOpeningSource,
+        sendUserType,
+        attachmentCategory
+      );
       NavigationService.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
         screen: PN_ROUTES.MAIN,
         params: {
@@ -75,11 +90,14 @@ export const useAttachmentDownload = (
     attachmentCategory,
     attachmentId,
     dispatch,
-    isPN,
+    isSendAttachment,
     messageId,
     onPreNavigate,
+    sendOpeningSource,
+    sendUserType,
     serviceId
   ]);
+
   const checkPathAndNavigate = useCallback(
     async (downloadPath: string) => {
       if (await RNFS.exists(downloadPath)) {
@@ -95,7 +113,7 @@ export const useAttachmentDownload = (
       return;
     }
 
-    if (!isPN) {
+    if (!isSendAttachment) {
       trackThirdPartyMessageAttachmentShowPreview();
     }
 
@@ -109,18 +127,18 @@ export const useAttachmentDownload = (
         downloadAttachment.request({
           attachment,
           messageId,
-          skipMixpanelTrackingOnFailure: isPN,
+          skipMixpanelTrackingOnFailure: isSendAttachment,
           serviceId
         })
       );
     }
   }, [
-    attachment,
+    isFetching,
+    isSendAttachment,
     dispatch,
     download,
     doNavigate,
-    isFetching,
-    isPN,
+    attachment,
     messageId,
     serviceId
   ]);
@@ -132,29 +150,24 @@ export const useAttachmentDownload = (
       isRequestedAttachmentDownloadSelector(state, messageId, attachmentId)
     ) {
       void checkPathAndNavigate(download.path);
-    } else if (
-      hasErrorOccourredOnRequestedDownloadSelector(
-        state,
-        messageId,
-        attachmentId
-      )
-    ) {
+    } else if (isDownloadError) {
       dispatch(clearRequestedAttachmentDownload());
-      if (isPN) {
+      if (isSendAttachment) {
         trackPNAttachmentDownloadFailure(attachmentCategory);
       }
-      IOToast.error(I18n.t("messageDetails.attachments.failing.details"));
+      toast.error(I18n.t("messageDetails.attachments.failing.details"));
     }
   }, [
     attachmentCategory,
     attachmentId,
     checkPathAndNavigate,
     dispatch,
-    doNavigate,
     download,
-    isPN,
+    isDownloadError,
+    isSendAttachment,
     messageId,
-    store
+    store,
+    toast
   ]);
 
   const displayName = attachmentDisplayName(attachment);

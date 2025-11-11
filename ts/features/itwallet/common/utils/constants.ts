@@ -35,3 +35,27 @@ export const IT_WALLET_ID_GRADIENT = ["#D5D5FF", "#CEE2FA"];
  * IT-Wallet ID logo
  */
 export const IT_WALLET_ID_LOGO: IOIcons = "sparkles";
+
+/**
+ * Styling
+ */
+export const IT_WALLET_BG = "#F2F9FF";
+
+export const IT_WALLET_GRADIENT = [
+  "#FFB357",
+  "#FFEABD",
+  "#1968F0",
+  "#CDD2FC",
+  "#FFB357",
+  "#1968F0",
+  "#DCE3FC"
+];
+
+/**
+ * Qualtrics survey URLs
+ */
+
+export const IT_WALLET_SURVEY_EID_REISSUANCE_SUCCESS =
+  "https://pagopa.qualtrics.com/jfe/form/SV_3JmGHi0IjGYESYC";
+export const IT_WALLET_SURVEY_EID_REISSUANCE_FAILURE =
+  "https://pagopa.qualtrics.com/jfe/form/SV_5bhV8w1e2ujl9xs";

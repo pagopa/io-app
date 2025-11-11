@@ -3,12 +3,17 @@ import I18n from "i18next";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { useAttachmentDownload } from "../../hooks/useAttachmentDownload";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../../pushNotifications/analytics";
 
-type MessageDetailsAttachmentItemProps = {
+export type MessageDetailsAttachmentItemProps = {
   attachment: ThirdPartyAttachment;
   bottomSpacer?: boolean;
   disabled?: boolean;
-  isPN?: boolean;
+  sendOpeningSource: SendOpeningSource;
+  sendUserType: SendUserType;
   messageId: string;
   onPreNavigate?: () => void;
   serviceId: ServiceId;
@@ -18,7 +23,8 @@ export const MessageDetailsAttachmentItem = ({
   attachment,
   bottomSpacer,
   disabled = false,
-  isPN = false,
+  sendOpeningSource,
+  sendUserType,
   messageId,
   onPreNavigate = undefined,
   serviceId
@@ -27,7 +33,8 @@ export const MessageDetailsAttachmentItem = ({
     useAttachmentDownload(
       messageId,
       attachment,
-      isPN,
+      sendOpeningSource,
+      sendUserType,
       serviceId,
       onPreNavigate
     );

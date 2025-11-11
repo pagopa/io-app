@@ -381,6 +381,48 @@ export const isIdPayEnabledSelector = createSelector(
     )
 );
 
+export const isIdPayOnboardingEnabledSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): boolean =>
+    pipe(
+      remoteConfig,
+      O.map(config => config.idPay.onboarding?.enabled ?? false),
+      O.getOrElse(() => false)
+    )
+);
+
+export const isIdPayDetailsEnabledSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): boolean =>
+    pipe(
+      remoteConfig,
+      O.map(config => config.idPay.initiative_details?.enabled ?? false),
+      O.getOrElse(() => false)
+    )
+);
+
+export const isIdPayEnabledInScanScreenSelector = (state: GlobalState) =>
+  pipe(state, remoteConfigSelector, remoteConfig =>
+    isPropertyWithMinAppVersionEnabled({
+      remoteConfig,
+      mainLocalFlag: true,
+      configPropertyName: "idPay",
+      optionalLocalFlag: true,
+      optionalConfig: "scan_screen"
+    })
+  );
+
+export const isIdPayQrCodeFeatureEnabledSelector = (state: GlobalState) =>
+  pipe(state, remoteConfigSelector, remoteConfig =>
+    isPropertyWithMinAppVersionEnabled({
+      remoteConfig,
+      mainLocalFlag: true,
+      configPropertyName: "idPay",
+      optionalLocalFlag: true,
+      optionalConfig: "qr_code_payments"
+    })
+  );
+
 export const isIdPayCiePaymentCodeEnabledSelector = (state: GlobalState) =>
   pipe(state, remoteConfigSelector, remoteConfig =>
     isPropertyWithMinAppVersionEnabled({
@@ -697,7 +739,7 @@ export const pnPrivacyUrlsSelector = createSelector(
  * Return true if the app supports the AAR feature (based on remote config).
  * If the remote value is missing, consider the feature as enabled.
  */
-export const isAARRemoteEnabled = (state: GlobalState) => {
+export const isAarRemoteEnabled = (state: GlobalState) => {
   const remoteConfigOption = remoteConfigSelector(state);
   if (O.isNone(remoteConfigOption)) {
     // CDN data not available, AAR is disabled
@@ -707,6 +749,32 @@ export const isAARRemoteEnabled = (state: GlobalState) => {
   const aarMinAppVersion = remoteConfigOption.value.pn?.aar?.min_app_version;
   if (aarMinAppVersion == null) {
     // Either AAR configuration missing or min_app_version missing in AAR configuration. AAR is enabled
+    return true;
+  }
+
+  return isMinAppVersionSupported(
+    O.some({ min_app_version: aarMinAppVersion })
+  );
+};
+
+/**
+ * Returns true if the app supports the AAR in-app delegation feature (based on remote config).
+ * If the remote value is missing, the feature is consider enabled.
+ */
+export const isAarInAppDelegationRemoteEnabledSelector = (
+  state: GlobalState
+) => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isNone(remoteConfigOption)) {
+    // CDN data not available -> feature disabled
+    return false;
+  }
+
+  const aarMinAppVersion =
+    remoteConfigOption.value.pn?.aar?.in_app_delegation?.min_app_version;
+
+  if (aarMinAppVersion == null) {
+    // Missing AAR or in_app_delegation.min_app_version —> feature enabled
     return true;
   }
 
@@ -747,3 +815,64 @@ export const sendAARDelegateUrlSelector = (state: GlobalState) =>
     O.chainNullableK(config => config.pn.aar?.delegate_url),
     O.getOrElse(() => fallbackSendAARDelegateUrl)
   );
+
+export const sendShowAbstractSelector = (state: GlobalState) => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isSome(remoteConfigOption)) {
+    const abstractShownOrUndefined = remoteConfigOption.value.pn?.abstractShown;
+    if (abstractShownOrUndefined == null) {
+      // Data has been removed from CDN, there is no
+      // need to keep the abstract hidden anymore
+      return true;
+    }
+    // Data is set in the CDN, return its value
+    return abstractShownOrUndefined;
+  }
+  // No data from CDN, abstract must be hidden
+  return false;
+};
+
+export const sendCustomServiceCenterUrlSelector = (state: GlobalState) => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isSome(remoteConfigOption)) {
+    const customerServiceCenterUrlOrUndefined =
+      remoteConfigOption.value.pn?.customerServiceCenterUrl?.trim();
+    if (
+      customerServiceCenterUrlOrUndefined != null &&
+      customerServiceCenterUrlOrUndefined.length > 0
+    ) {
+      return customerServiceCenterUrlOrUndefined;
+    }
+  }
+  return "https://assistenza.notifichedigitali.it/hc";
+};
+
+export const sendEstimateTimelinesUrlSelector = (state: GlobalState) => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isSome(remoteConfigOption)) {
+    const estimateTimelinesUrlOrUndefined =
+      remoteConfigOption.value.pn?.estimateTimelinesUrl?.trim();
+    if (
+      estimateTimelinesUrlOrUndefined != null &&
+      estimateTimelinesUrlOrUndefined.length > 0
+    ) {
+      return estimateTimelinesUrlOrUndefined;
+    }
+  }
+  return "https://notifichedigitali.it/perfezionamento";
+};
+
+export const sendVisitTheWebsiteUrlSelector = (state: GlobalState) => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isSome(remoteConfigOption)) {
+    const visitTheWebsiteUrlOrUndefined =
+      remoteConfigOption.value.pn?.visitTheSENDWebsiteUrl?.trim();
+    if (
+      visitTheWebsiteUrlOrUndefined != null &&
+      visitTheWebsiteUrlOrUndefined.length > 0
+    ) {
+      return visitTheWebsiteUrlOrUndefined;
+    }
+  }
+  return "https://cittadini.notifichedigitali.it/auth/login";
+};

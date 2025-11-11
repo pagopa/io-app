@@ -29,7 +29,6 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { sessionExpired } from "../../../authentication/common/store/actions";
 import { setDebugModeEnabled } from "../../../../store/actions/debug";
 import {
-  preferencesAarFeatureSetEnabled,
   preferencesIdPayTestSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
   preferencesPnTestEnvironmentSetEnabled
@@ -42,7 +41,6 @@ import {
 } from "../../../authentication/common/store/selectors";
 import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
 import {
-  isAARLocalEnabled,
   isIdPayLocallyEnabledSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
@@ -396,6 +394,13 @@ const PlaygroundsSection = () => {
         })
     },
     {
+      value: "CIE IAS+MRTD",
+      onPress: () =>
+        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+          screen: SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND
+        })
+    },
+    {
       value: "Active session login playground",
       onPress: () => {
         dispatch(setStartActiveSessionLogin());
@@ -458,7 +463,6 @@ const DeveloperTestEnvironmentSection = ({
   const isActiveSessionLoginLocallyEnabled = useIOSelector(
     isActiveSessionLoginLocallyEnabledSelector
   );
-  const isAarFeatureEnabled = useIOSelector(isAARLocalEnabled);
 
   const onPagoPAEnvironmentToggle = (enabled: boolean) => {
     if (enabled) {
@@ -510,10 +514,6 @@ const DeveloperTestEnvironmentSection = ({
     dispatch(setActiveSessionLoginLocalFlag(enabled));
   };
 
-  const onAarFeatureToggle = (enabled: boolean) => {
-    dispatch(preferencesAarFeatureSetEnabled({ isAarFeatureEnabled: enabled }));
-  };
-
   const testEnvironmentsListItems: ReadonlyArray<TestEnvironmentsListItem> = [
     {
       label: I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
@@ -528,11 +528,6 @@ const DeveloperTestEnvironmentSection = ({
       label: I18n.t("profile.main.pnEnvironment.pnEnv"),
       value: isPnTestEnabled,
       onSwitchValueChange: onPnEnvironmentToggle
-    },
-    {
-      label: I18n.t("profile.main.pnEnvironment.aarEnv"),
-      value: isAarFeatureEnabled,
-      onSwitchValueChange: onAarFeatureToggle
     },
     {
       label: I18n.t("profile.main.idpay.idpayTest"),

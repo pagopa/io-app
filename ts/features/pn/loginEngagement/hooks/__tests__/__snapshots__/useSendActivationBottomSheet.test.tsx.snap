@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`useSendActivationBottomSheet should match the snapshot 1`] = `
+<Modal
+  accessible={false}
+  backdropComponent={[Function]}
+  backgroundStyle={
+    {
+      "backgroundColor": "#FFFFFF",
+    }
+  }
+  enableDismissOnClose={true}
+  enableDynamicSizing={true}
+  footerComponent={[Function]}
+  handleComponent={[Function]}
+  importantForAccessibility="yes"
+  maxDynamicContentSize={NaN}
+  onDismiss={[Function]}
+  ref={
+    {
+      "current": null,
+    }
+  }
+  style={
+    {
+      "borderCurve": "continuous",
+      "borderTopLeftRadius": 24,
+      "borderTopRightRadius": 24,
+      "overflow": "hidden",
+    }
+  }
+>
+  <ScrollView
+    overScrollMode="never"
+    style={
+      {
+        "paddingHorizontal": 24,
+      }
+    }
+  >
+    <VStack
+      space={24}
+    >
+      <Memo(IOMarkdown)
+        content="Premendo **Continua** dichiari di aver letto l'[Informativa Privacy](PRIVACY_URL) e di accettare i [Termini e Condizioni d'uso](TOS_URL)."
+      />
+      <ForwardRef
+        label="Continua"
+        loading={false}
+        onPress={[Function]}
+        testID="sendActivationID"
+      />
+      <View />
+    </VStack>
+    <View
+      style={
+        {
+          "height": 0,
+        }
+      }
+    />
+  </ScrollView>
+</Modal>
+`;

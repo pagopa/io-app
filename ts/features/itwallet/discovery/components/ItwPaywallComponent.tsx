@@ -11,7 +11,8 @@ import {
   Icon,
   VSpacer,
   VStack,
-  useIOTheme
+  useIOTheme,
+  useIOToast
 } from "@pagopa/io-app-design-system";
 import {
   Canvas,
@@ -20,6 +21,7 @@ import {
   vec
 } from "@shopify/react-native-skia";
 import { TxtLinkNode, TxtParagraphNode } from "@textlint/ast-node-types";
+import I18n from "i18next";
 import { useCallback, useRef, useState } from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
 import Animated, {
@@ -28,7 +30,6 @@ import Animated, {
   useScrollViewOffset,
   useSharedValue
 } from "react-native-reanimated";
-import I18n from "i18next";
 import ItwHero from "../../../../../img/features/itWallet/l3/itw_hero.svg";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import {
@@ -42,15 +43,15 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { itwGradientColors } from "../../common/utils/constants.ts";
-import { tosConfigSelector } from "../../../tos/store/selectors";
-import { selectIsLoading } from "../../machine/eid/selectors";
-import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
-import { trackItwDiscoveryPlus, trackItwIntroBack } from "../../analytics";
-import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
-import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
+import { tosConfigSelector } from "../../../tos/store/selectors";
+import { trackItwDiscoveryPlus, trackItwIntroBack } from "../../analytics";
+import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
+import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
+import { itwGradientColors } from "../../common/utils/constants.ts";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors/index.ts";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
+import { selectIsLoading } from "../../machine/eid/selectors";
 
 const markdownRules = {
   Paragraph(paragraph: TxtParagraphNode, render: Renderer) {
@@ -90,6 +91,7 @@ export const ItwPaywallComponent = ({
 }: ItwPaywallComponentProps) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const theme = useIOTheme();
+  const { info: toastInfo } = useIOToast();
 
   const { tos_url } = useIOSelector(tosConfigSelector);
   const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
@@ -100,8 +102,8 @@ export const ItwPaywallComponent = ({
   useOnFirstRender(() => {
     machineRef.send({
       type: "start",
-      isL3: true,
-      mode: isWalletValid ? "upgrade" : "issuance"
+      mode: isWalletValid ? "upgrade" : "issuance",
+      level: "l3"
     });
   });
 
@@ -114,6 +116,10 @@ export const ItwPaywallComponent = ({
     goBack: () => {
       trackItwIntroBack("L3");
       dismissalDialog.show();
+    },
+    onStartSupportRequest: () => {
+      toastInfo(I18n.t("features.itWallet.generic.featureUnavailable.title"));
+      return false;
     }
   });
 
@@ -342,7 +348,7 @@ const ProductHighlights = () => {
       content: I18n.t(
         "features.itWallet.discovery.paywall.productHighlights.3.content"
       ),
-      icon: "website",
+      icon: "navQrWallet",
       title: I18n.t(
         "features.itWallet.discovery.paywall.productHighlights.3.title"
       )
@@ -351,7 +357,7 @@ const ProductHighlights = () => {
       content: I18n.t(
         "features.itWallet.discovery.paywall.productHighlights.4.content"
       ),
-      icon: "navQrWallet",
+      icon: "euStars",
       title: I18n.t(
         "features.itWallet.discovery.paywall.productHighlights.4.title"
       )
