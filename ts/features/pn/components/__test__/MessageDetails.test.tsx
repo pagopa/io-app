@@ -56,9 +56,10 @@ describe("MessageDetails component", () => {
     });
     sendOpeningSources.forEach(sendOpeningSource =>
       sendUserTypes.forEach(sendUserType => {
+        const isAARMessage = sendOpeningSource === "aar";
         it(`should ${
-          sendOpeningSource === "aar" ? "" : "NOT"
-        } display the message date, opening source ${sendOpeningSource}, user type ${sendUserType}`, () => {
+          isAARMessage ? "" : "NOT "
+        }display the message date, opening source ${sendOpeningSource}, user type ${sendUserType}`, () => {
           const pnMessage = pipe(
             thirdPartyMessage,
             toPNMessage,
@@ -68,8 +69,7 @@ describe("MessageDetails component", () => {
             MSG_DETAILS_HEADER,
             "MessageDetailsHeader"
           );
-          const messageId =
-            sendOpeningSource === "aar" ? pnMessage.iun : mockMessageId;
+          const messageId = isAARMessage ? pnMessage.iun : mockMessageId;
           const props = generateComponentProperties(
             messageId,
             pnMessage,
@@ -82,7 +82,7 @@ describe("MessageDetails component", () => {
           expect(mockCalls).toBeDefined();
           const passedDate = mockCalls.createdAt;
 
-          if (sendOpeningSource === "aar") {
+          if (isAARMessage) {
             expect(passedDate).toBeUndefined();
           } else {
             expect(passedDate).toEqual(pnMessage.created_at);
@@ -90,7 +90,7 @@ describe("MessageDetails component", () => {
         });
 
         it(`should ${
-          sendOpeningSource === "aar" ? "NOT " : ""
+          isAARMessage ? "NOT " : ""
         }allow navigation to service details, opening source ${sendOpeningSource}, user type ${sendUserType}`, () => {
           const pnMessage = pipe(
             thirdPartyMessage,
@@ -101,8 +101,7 @@ describe("MessageDetails component", () => {
             MSG_DETAILS_HEADER,
             "MessageDetailsHeader"
           );
-          const messageId =
-            sendOpeningSource === "aar" ? pnMessage.iun : mockMessageId;
+          const messageId = isAARMessage ? pnMessage.iun : mockMessageId;
           const props = generateComponentProperties(
             messageId,
             pnMessage,
@@ -115,7 +114,7 @@ describe("MessageDetails component", () => {
           expect(mockCalls).toBeDefined();
           const canNavigateToServiceDetails =
             mockCalls.canNavigateToServiceDetails;
-          if (sendOpeningSource === "aar") {
+          if (isAARMessage) {
             expect(canNavigateToServiceDetails).toBe(false);
           } else {
             expect(canNavigateToServiceDetails).toBe(true);
