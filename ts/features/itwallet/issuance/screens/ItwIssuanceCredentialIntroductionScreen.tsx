@@ -2,6 +2,7 @@ import { Body, H2, VSpacer, VStack } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { sequenceS } from "fp-ts/lib/Apply";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
@@ -9,6 +10,7 @@ import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import {
   selectCredentialTypeOption,
+  selectIntroductionTextOption,
   selectIsLoading
 } from "../../machine/credential/selectors";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
@@ -18,6 +20,10 @@ export const ItwIssuanceCredentialIntroductionScreen = () => {
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
     selectCredentialTypeOption
   );
+  const introductionTextOption =
+    ItwCredentialIssuanceMachineContext.useSelector(
+      selectIntroductionTextOption
+    );
 
   useHeaderSecondLevel({
     title: "",
@@ -25,19 +31,26 @@ export const ItwIssuanceCredentialIntroductionScreen = () => {
   });
 
   return pipe(
-    credentialTypeOption,
+    sequenceS(O.Monad)({
+      credentialType: credentialTypeOption,
+      markdownContent: introductionTextOption
+    }),
     O.fold(
       () => <ItwGenericErrorContent />, // This should never happen
-      credentialType => <ContentView credentialType={credentialType} />
+      innerProps => <ContentView {...innerProps} />
     )
   );
 };
 
 type ContentViewProps = {
   credentialType: string;
+  markdownContent: string;
 };
 
-export const ContentView = ({ credentialType }: ContentViewProps) => {
+export const ContentView = ({
+  credentialType,
+  markdownContent
+}: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const isLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
@@ -58,7 +71,7 @@ export const ContentView = ({ credentialType }: ContentViewProps) => {
         <Body>Leggi con attenzione cosa troverai</Body>
       </VStack>
       <VSpacer size={16} />
-      <IOMarkdown content="Titoli conseguiti con il nuovo ordinamento e i titoli post-laurea dal 2017" />
+      <IOMarkdown content={markdownContent} />
     </IOScrollView>
   );
 };

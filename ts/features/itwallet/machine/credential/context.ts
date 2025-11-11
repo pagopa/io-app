@@ -5,6 +5,7 @@ import {
   StoredCredential,
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
+import { DigitalCredentialMetadata } from "../../common/utils/itwCredentialsCatalogueUtils";
 import { CredentialIssuanceFailure } from "./failure";
 
 /**
@@ -59,6 +60,7 @@ export type Context = {
    * The failure that occurred during the credential issuance process, if any.
    */
   failure: CredentialIssuanceFailure | undefined;
+  credentialsCatalogue: Record<string, DigitalCredentialMetadata> | undefined;
 };
 
 export const InitialContext: Context = {
@@ -73,5 +75,6 @@ export const InitialContext: Context = {
   codeVerifier: undefined,
   requestedCredential: undefined,
   credentials: undefined,
-  failure: undefined
+  failure: undefined,
+  credentialsCatalogue: undefined
 };

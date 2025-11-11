@@ -1,4 +1,5 @@
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { StateFrom } from "xstate";
 import { ItwTags } from "../tags";
 import { CredentialFormat } from "../../common/utils/itwTypesUtils";
@@ -32,3 +33,12 @@ export const selectCredentialOption = (snapshot: MachineSnapshot) =>
 
 export const selectFailureOption = (snapshot: MachineSnapshot) =>
   O.fromNullable(snapshot.context.failure);
+
+export const selectIntroductionTextOption = ({ context }: MachineSnapshot) =>
+  pipe(
+    O.fromNullable(context.credentialType),
+    O.chainNullableK(type => context.credentialsCatalogue?.[type]),
+    O.chainNullableK(
+      metadata => metadata.authentic_sources[0]?.user_information
+    )
+  );

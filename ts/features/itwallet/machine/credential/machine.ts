@@ -1,4 +1,4 @@
-import { assign, fromPromise, not, setup } from "xstate";
+import { and, assign, fromPromise, not, setup } from "xstate";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import {
@@ -86,7 +86,8 @@ export const itwCredentialIssuanceMachine = setup({
     isDeferredIssuance: notImplemented,
     hasValidWalletInstanceAttestation: notImplemented,
     isStatusError: notImplemented,
-    isEidExpired: notImplemented
+    isEidExpired: notImplemented,
+    hasIntroductionText: notImplemented
   }
 }).createMachine({
   id: "itwCredentialIssuanceMachine",
@@ -117,8 +118,15 @@ export const itwCredentialIssuanceMachine = setup({
           target: "Idle"
         },
         {
+          guard: and([
+            ({ context }) => context.mode === "issuance",
+            "hasIntroductionText"
+          ]),
+          target: "CredentialIntroduction"
+        },
+        {
           guard: ({ context }) => context.mode === "issuance",
-          target: "CredentialIntroduction", // target: "TrustFederationVerification"
+          target: "TrustFederationVerification",
           actions: ["trackStartAddCredential"]
         },
         {
