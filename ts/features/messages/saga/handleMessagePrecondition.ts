@@ -37,7 +37,7 @@ export function* handleMessagePrecondition(
 
   if (!sessionToken) {
     trackUndefinedBearerToken(
-      UndefinedBearerTokenPhase.previousMessagesLoading
+      UndefinedBearerTokenPhase.thirdPartyMessagePrecondition
     );
     return;
   }

@@ -536,7 +536,7 @@ export const trackMessagePaymentFailure = (reason: string) => {
 
 export enum UndefinedBearerTokenPhase {
   attachmentDownload = "attachmentDownload",
-  previousMessagesLoading = "previousMessagesLoading",
+  thirdPartyMessagePrecondition = "thirdPartyMessagePrecondition",
   thirdPartyMessageLoading = "thirdPartyMessageLoading",
   messageByIdLoading = "messageByIdLoading",
   messageDetailLoading = "messageDetailLoading",
