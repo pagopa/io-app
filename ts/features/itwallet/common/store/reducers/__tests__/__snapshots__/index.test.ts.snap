@@ -18,9 +18,7 @@ exports[`itWalletReducer should match snapshot [if this test fails, remember to 
       "_tag": "None",
     },
   },
-  "preferences": {
-    "requestedCredentials": {},
-  },
+  "preferences": {},
   "securePreferences": {
     "offlineAccessCounter": 0,
   },

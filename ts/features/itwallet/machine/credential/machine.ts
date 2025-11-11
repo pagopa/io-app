@@ -49,8 +49,6 @@ export const itwCredentialIssuanceMachine = setup({
 
     storeWalletInstanceAttestation: notImplemented,
     storeCredential: notImplemented,
-    flagCredentialAsRequested: notImplemented,
-    unflagCredentialAsRequested: notImplemented,
 
     /**
      * Analytics actions
@@ -81,7 +79,6 @@ export const itwCredentialIssuanceMachine = setup({
   },
   guards: {
     isSessionExpired: notImplemented,
-    isDeferredIssuance: notImplemented,
     hasValidWalletInstanceAttestation: notImplemented,
     isStatusError: notImplemented,
     isEidExpired: notImplemented
@@ -101,8 +98,7 @@ export const itwCredentialIssuanceMachine = setup({
           target: "EvaluateFlow",
           actions: assign(({ event }) => ({
             credentialType: event.credentialType,
-            mode: event.mode,
-            isAsyncContinuation: event.isAsyncContinuation ?? false // TODO to be removed in [SIW-2839]
+            mode: event.mode
           }))
         }
       }
@@ -224,10 +220,6 @@ export const itwCredentialIssuanceMachine = setup({
     DisplayingTrustIssuer: {
       entry: ["trackCredentialIssuingDataShare"],
       always: {
-        // If we are in the async continuation flow means we are already showing the trust issuer screen
-        // but on a different route. We need to avoid a navigation to show a "double" navigation animation.
-        // TODO to be removed in [SIW-2839]
-        guard: ({ context }) => !context.isAsyncContinuation,
         actions: "navigateToTrustIssuerScreen"
       },
       on: {
@@ -306,12 +298,7 @@ export const itwCredentialIssuanceMachine = setup({
       entry: "navigateToCredentialPreviewScreen",
       on: {
         "add-to-wallet": {
-          actions: [
-            "storeCredential",
-            "navigateToWallet",
-            "trackAddCredential",
-            "unflagCredentialAsRequested"
-          ]
+          actions: ["storeCredential", "navigateToWallet", "trackAddCredential"]
         },
         close: {
           target: "Completed",
@@ -324,16 +311,6 @@ export const itwCredentialIssuanceMachine = setup({
     },
     Failure: {
       entry: ["navigateToFailureScreen"],
-      always: [
-        {
-          guard: "isDeferredIssuance",
-          actions: "flagCredentialAsRequested"
-        },
-        {
-          guard: "isStatusError",
-          actions: "unflagCredentialAsRequested"
-        }
-      ],
       on: {
         close: {
           actions: "closeIssuance"
