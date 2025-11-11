@@ -291,16 +291,17 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
             />
             {renderTableRow(enrollmentData)}
             <VSpacer size={16} />
-            {initiativeDetails.voucherStatus !== VoucherStatusEnum.USED && (
-              <ListItemAction
-                icon="docAttach"
-                variant="primary"
-                label={I18n.t(
-                  "idpay.initiative.beneficiaryDetails.buttons.staticCode"
-                )}
-                onPress={handleGenerateStaticCode}
-              />
-            )}
+            {initiativeDetails.voucherStatus !== VoucherStatusEnum.USED &&
+              initiativeDetails.voucherStatus !== VoucherStatusEnum.EXPIRED && (
+                <ListItemAction
+                  icon="docAttach"
+                  variant="primary"
+                  label={I18n.t(
+                    "idpay.initiative.beneficiaryDetails.buttons.staticCode"
+                  )}
+                  onPress={handleGenerateStaticCode}
+                />
+              )}
             <ListItemAction
               icon="security"
               variant="primary"
