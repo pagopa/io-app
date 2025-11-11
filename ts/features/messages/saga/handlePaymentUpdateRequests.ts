@@ -28,7 +28,11 @@ import { SagaCallReturnType } from "../../../types/utils";
 import { readablePrivacyReport } from "../../../utils/reporters";
 import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 import { isTestEnv } from "../../../utils/environment";
-import { trackMessagePaymentFailure } from "../analytics";
+import {
+  trackMessagePaymentFailure,
+  trackUndefinedBearerToken,
+  UndefinedBearerTokenPhase
+} from "../analytics";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 import { apiUrlPrefix } from "../../../config";
 import { backendClientManager } from "../../../api/BackendClientManager";
@@ -39,7 +43,7 @@ export function* handlePaymentUpdateRequests() {
   const sessionToken = yield* select(sessionTokenSelector);
 
   if (!sessionToken) {
-    // TODO: add MP tech event https://pagopa.atlassian.net/browse/IOPID-3528
+    trackUndefinedBearerToken(UndefinedBearerTokenPhase.getPaymentsInfo);
     return;
   }
 

@@ -7,7 +7,11 @@ import { CreatedMessageWithContentAndAttachments } from "../../../../definitions
 import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../types/utils";
 import { errorToReason, unknownToReason } from "../utils";
-import { trackLoadMessageByIdFailure } from "../analytics";
+import {
+  trackLoadMessageByIdFailure,
+  trackUndefinedBearerToken,
+  UndefinedBearerTokenPhase
+} from "../analytics";
 import { handleResponse } from "../utils/responseHandling";
 import { backendClientManager } from "../../../api/BackendClientManager";
 import { apiUrlPrefix } from "../../../config";
@@ -21,7 +25,7 @@ export function* handleLoadMessageById(
   const sessionToken = yield* select(sessionTokenSelector);
 
   if (!sessionToken) {
-    // TODO: add MP tech event https://pagopa.atlassian.net/browse/IOPID-3528
+    trackUndefinedBearerToken(UndefinedBearerTokenPhase.messageByIdLoading);
     return;
   }
 

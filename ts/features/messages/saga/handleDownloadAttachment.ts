@@ -23,7 +23,9 @@ import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import {
   trackThirdPartyMessageAttachmentBadFormat,
   trackThirdPartyMessageAttachmentDownloadFailed,
-  trackThirdPartyMessageAttachmentUnavailable
+  trackThirdPartyMessageAttachmentUnavailable,
+  trackUndefinedBearerToken,
+  UndefinedBearerTokenPhase
 } from "../analytics";
 import { thirdPartyMessageSelector } from "../store/reducers/thirdPartyById";
 import { KeyInfo } from "../../lollipop/utils/crypto";
@@ -51,7 +53,7 @@ export function* handleDownloadAttachment(
   const keyInfo = yield* call(getKeyInfo);
 
   if (!sessionToken) {
-    // TODO: add MP tech event https://pagopa.atlassian.net/browse/IOPID-3528
+    trackUndefinedBearerToken(UndefinedBearerTokenPhase.attachmentDownload);
     return;
   }
 

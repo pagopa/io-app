@@ -7,7 +7,11 @@ import { PaginatedPublicMessagesCollection } from "../../../../definitions/backe
 import { convertUnknownToError, getError } from "../../../utils/errors";
 import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { errorToReason, unknownToReason } from "../utils";
-import { trackLoadPreviousPageMessagesFailure } from "../analytics";
+import {
+  trackLoadPreviousPageMessagesFailure,
+  trackUndefinedBearerToken,
+  UndefinedBearerTokenPhase
+} from "../analytics";
 import { handleResponse } from "../utils/responseHandling";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 import { backendClientManager } from "../../../api/BackendClientManager";
@@ -21,7 +25,9 @@ export function* handleLoadPreviousPageMessages(
   const sessionToken = yield* select(sessionTokenSelector);
 
   if (!sessionToken) {
-    // TODO: add MP tech event https://pagopa.atlassian.net/browse/IOPID-3528
+    trackUndefinedBearerToken(
+      UndefinedBearerTokenPhase.previousPageMessagesLoading
+    );
     return;
   }
 

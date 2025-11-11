@@ -7,7 +7,11 @@ import { convertUnknownToError } from "../../../utils/errors";
 import { isTestEnv } from "../../../utils/environment";
 import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
-import { trackDisclaimerLoadError } from "../analytics";
+import {
+  trackDisclaimerLoadError,
+  trackUndefinedBearerToken,
+  UndefinedBearerTokenPhase
+} from "../analytics";
 import {
   errorPreconditionStatusAction,
   idlePreconditionStatusAction,
@@ -32,7 +36,9 @@ export function* handleMessagePrecondition(
   const sessionToken = yield* select(sessionTokenSelector);
 
   if (!sessionToken) {
-    // TODO: add MP tech event https://pagopa.atlassian.net/browse/IOPID-3528
+    trackUndefinedBearerToken(
+      UndefinedBearerTokenPhase.previousMessagesLoading
+    );
     return;
   }
 

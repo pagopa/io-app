@@ -23,7 +23,9 @@ import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { errorToReason, unknownToReason } from "../utils";
 import {
   trackArchivedRestoredMessages,
-  trackUpsertMessageStatusAttributesFailure
+  trackUpsertMessageStatusAttributesFailure,
+  trackUndefinedBearerToken,
+  UndefinedBearerTokenPhase
 } from "../analytics";
 import { handleResponse } from "../utils/responseHandling";
 import {
@@ -185,7 +187,9 @@ export function* raceUpsertMessageStatusAttributes(
   const sessionToken = yield* select(sessionTokenSelector);
 
   if (!sessionToken) {
-    // TODO: add MP tech event https://pagopa.atlassian.net/browse/IOPID-3528
+    trackUndefinedBearerToken(
+      UndefinedBearerTokenPhase.upsertMessageStatusAttributes
+    );
     return;
   }
 

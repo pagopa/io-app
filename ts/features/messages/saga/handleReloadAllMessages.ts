@@ -10,7 +10,11 @@ import { PaginatedPublicMessagesCollection } from "../../../../definitions/backe
 import { getError } from "../../../utils/errors";
 import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { errorToReason, unknownToReason } from "../utils";
-import { trackReloadAllMessagesFailure } from "../analytics";
+import {
+  trackReloadAllMessagesFailure,
+  trackUndefinedBearerToken,
+  UndefinedBearerTokenPhase
+} from "../analytics";
 import { handleResponse } from "../utils/responseHandling";
 import { backendClientManager } from "../../../api/BackendClientManager";
 import { apiUrlPrefix } from "../../../config";
@@ -24,7 +28,9 @@ export function* handleReloadAllMessages(
   const sessionToken = yield* select(sessionTokenSelector);
 
   if (!sessionToken) {
-    // TODO: add MP tech event https://pagopa.atlassian.net/browse/IOPID-3528
+    trackUndefinedBearerToken(
+      UndefinedBearerTokenPhase.reloadAllMessagesLoading
+    );
     return;
   }
 

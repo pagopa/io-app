@@ -533,3 +533,22 @@ export const trackMessagePaymentFailure = (reason: string) => {
   const props = buildEventProperties("KO", undefined, { reason });
   void mixpanelTrack(eventName, props);
 };
+
+export enum UndefinedBearerTokenPhase {
+  attachmentDownload = "attachmentDownload",
+  previousMessagesLoading = "previousMessagesLoading",
+  thirdPartyMessageLoading = "thirdPartyMessageLoading",
+  messageByIdLoading = "messageByIdLoading",
+  messageDetailLoading = "messageDetailLoading",
+  nextPageMessagesLoading = "nextPageMessagesLoading",
+  previousPageMessagesLoading = "previousPageMessagesLoading",
+  getPaymentsInfo = "getPaymentsInfo",
+  reloadAllMessagesLoading = "reloadAllMessages",
+  upsertMessageStatusAttributes = "upsertMessageStatusAttributes"
+}
+
+export const trackUndefinedBearerToken = (phase: UndefinedBearerTokenPhase) => {
+  const eventName = "UNDEFINED_BEARER_TOKEN";
+  const props = buildEventProperties("TECH", "error", { phase });
+  void mixpanelTrack(eventName, props);
+};
