@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.19.0-canary.7677](https://github.com/pagopa/io-app/compare/3.19.0-rc.4...3.19.0-canary.7677) (2025-11-11)
+
+
+### Bug Fixes
+
+* listeners hell during input insertion ([d6950f4](https://github.com/pagopa/io-app/commit/d6950f4610451a52e79a146dbd9bf9c5a6d890ea))
+* result screen routes ([7423350](https://github.com/pagopa/io-app/commit/74233501994c89c8ba79703825a88d60c606eec1))
+
+
+### Chores
+
+* add all NIS+MRTD playground ([5d84d11](https://github.com/pagopa/io-app/commit/5d84d116652562f327c30e46b5940a521f37054d))
+
 ## [3.19.0-rc.4](https://github.com/pagopa/io-app/compare/3.19.0-rc.3...3.19.0-rc.4) (2025-11-10)
 
 
