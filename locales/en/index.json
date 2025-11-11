@@ -623,8 +623,7 @@
         "alertMessage": "The application must be restarted for the changes to take effect."
       },
       "pnEnvironment": {
-        "pnEnv": "SEND (PN)",
-        "aarEnv": "Avviso Avvenuta Ricezione (AAR)"
+        "pnEnv": "SEND (PN)"
       },
       "idpay": {
         "idpayTest": "IDPay",
@@ -5610,6 +5609,7 @@
       "card": {
         "available": "Available",
         "validThrough": "Valid through {{endDate}}",
+        "ended": "Expired on {{endDate}}",
         "showAll": "View all"
       },
       "initiativePairing": {
@@ -5624,7 +5624,12 @@
       "initiativeOnboardedStatus": {
         "header": "My requests",
         "ON_WAITING_LIST": {
-          "label": "On waiting list"
+          "label": "On waiting list",
+          "accessibilityInfoLabel": "Info button",
+          "bottomSheet": {
+            "title": "On waiting list",
+            "content": "Your request for {{initiativeName}} has been placed on **waiting list**, as there are currently no funds available.\n\n\n###### ***What happens now?***\n\nYou don’t need to do anything: your request remains valid. You will receive a message with the outcome as soon as new resources become available.\n\n\n###### ***Have you enabled notifications?***\n\nIf you haven’t already, enable push notifications to not miss any messages.\n[Read how to do it](https://assistenza.ioapp.it/hc/it/articles/39312288127377-Come-attivare-le-notifiche-push-su-IO)"
+          }
         },
         "ON_EVALUATION": {
           "label": "On evaluation"

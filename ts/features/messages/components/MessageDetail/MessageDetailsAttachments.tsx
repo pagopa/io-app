@@ -5,27 +5,34 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useIOSelector } from "../../../../store/hooks";
 import { thirdPartyMessageAttachments } from "../../store/reducers/thirdPartyById";
 import { ATTACHMENT_CATEGORY } from "../../types/attachmentCategory";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../../pushNotifications/analytics";
 import { MessageDetailsAttachmentItem } from "./MessageDetailsAttachmentItem";
 
 export type MessageDetailsAttachmentsProps = {
   banner?: ReactNode;
   disabled?: boolean;
-  isPN?: boolean;
   messageId: string;
   serviceId: ServiceId;
+  sendOpeningSource: SendOpeningSource;
+  sendUserType: SendUserType;
 };
 
 export const MessageDetailsAttachments = ({
   banner,
   disabled = false,
-  isPN = false,
   messageId,
-  serviceId
+  serviceId,
+  sendOpeningSource,
+  sendUserType
 }: MessageDetailsAttachmentsProps) => {
   const originalAttachments = useIOSelector(state =>
     thirdPartyMessageAttachments(state, messageId)
   );
-  const attachments = isPN
+  const isSend = sendOpeningSource !== "not_set";
+  const attachments = isSend
     ? originalAttachments.filter(
         attachment => attachment.category !== ATTACHMENT_CATEGORY.F24
       )
@@ -47,7 +54,8 @@ export const MessageDetailsAttachments = ({
         <MessageDetailsAttachmentItem
           attachment={attachment}
           bottomSpacer={index + 1 < attachmentCount}
-          isPN={isPN}
+          sendOpeningSource={sendOpeningSource}
+          sendUserType={sendUserType}
           disabled={disabled}
           key={`MessageAttachment_${index}`}
           messageId={messageId}

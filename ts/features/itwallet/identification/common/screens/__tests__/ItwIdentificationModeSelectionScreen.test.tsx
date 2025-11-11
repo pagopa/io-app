@@ -122,7 +122,7 @@ const renderComponent = (isL3 = false, eidReissuing = false) => {
       value: { UserIdentification: { Identification: isL3 ? "L3" : "L2" } },
       context: {
         ...initialSnapshot.context,
-        isL3,
+        level: isL3 ? "l3" : "l2",
         cieContext: {
           isNFCEnabled: true,
           isCIEAuthenticationSupported: true

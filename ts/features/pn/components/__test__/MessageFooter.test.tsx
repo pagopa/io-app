@@ -5,7 +5,6 @@ import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWr
 import { MessageFooter } from "../MessageFooter";
 import * as standardPayments from "../../../messages/store/reducers/payments";
 import * as payments from "../../store/reducers/payments";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { mockAccessibilityInfo } from "../../../../utils/testAccessibility";
 
 describe("MessageFooter", () => {
@@ -62,12 +61,13 @@ const renderScreen = (
     () => (
       <MessageFooter
         messageId={messageId}
-        serviceId={"01J5ZQFP9Q24CEJK6GJ2105H7C" as ServiceId}
         maxVisiblePaymentCount={maxVisiblePaymentCount}
         isCancelled={isCancelled}
         payments={undefined}
         presentPaymentsBottomSheetRef={mockRef}
         onMeasure={() => void 0}
+        sendOpeningSource={"aar"}
+        sendUserType={"recipient"}
       />
     ),
     "DUMMY",
