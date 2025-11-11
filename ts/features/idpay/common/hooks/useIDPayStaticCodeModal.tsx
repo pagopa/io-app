@@ -149,10 +149,20 @@ export const useIDPayStaticCodeModal = (
                 failure => failure.code
               )
             );
+
+            const technicalMessage = pipe(
+              decodeFailure(barcodePot.error),
+              O.fold(
+                () => undefined,
+                failure => failure.message
+              )
+            );
+
             trackIDPayStaticCodeGenerationError({
               initiativeId,
               initiativeName,
-              reason
+              reason,
+              technicalMessage
             });
           }
           bottomSheet.dismiss();

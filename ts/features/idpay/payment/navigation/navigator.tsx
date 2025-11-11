@@ -6,6 +6,7 @@ import {
 import { IDPayPaymentAuthorizationScreen } from "../screens/IDPayPaymentAuthorizationScreen";
 import { IDPayPaymentCodeInputScreen } from "../screens/IDPayPaymentCodeInputScreen";
 import { IDPayPaymentResultScreen } from "../screens/IDPayPaymentResultScreen";
+import { IdPayFeatureFlagGuard } from "../../common/components/IdPayFeatureFlagGuard";
 import { IdPayPaymentParamsList } from "./params";
 import { IdPayPaymentRoutes } from "./routes";
 
@@ -13,7 +14,9 @@ const Stack = createStackNavigator<IdPayPaymentParamsList>();
 
 export const IdPayPaymentNavigator = () => (
   <IdPayPaymentMachineProvider>
-    <InnerNavigation />
+    <IdPayFeatureFlagGuard>
+      <InnerNavigation />
+    </IdPayFeatureFlagGuard>
   </IdPayPaymentMachineProvider>
 );
 
