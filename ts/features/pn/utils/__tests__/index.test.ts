@@ -1,7 +1,10 @@
 import * as O from "fp-ts/lib/Option";
 import {
   canShowMorePaymentsLink,
+  doesSENDMessageIncludeF24,
   extractPNOptInMessageInfoIfAvailable,
+  getNotificationStatusInfo,
+  isSENDMessageCancelled,
   maxVisiblePaymentCount,
   notificationStatusToTimelineStatus,
   openingSourceIsAarMessage,
@@ -14,6 +17,7 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 import { PNMessage } from "../../store/types/types";
 import { SendOpeningSource } from "../../../pushNotifications/analytics";
+import { ATTACHMENT_CATEGORY } from "../../../messages/types/attachmentCategory";
 
 const navigateToServiceLink = () =>
   "ioit://services/service-detail?serviceId=optInServiceId&activate=true";
@@ -262,6 +266,78 @@ describe("maxVisiblePaymentCount", () => {
   });
 });
 
+describe("getNotificationStatusInfo", () => {
+  [
+    ["IN_VALIDATION", "IN VALIDATION"],
+    ["ACCEPTED", "Depositata"],
+    ["REFUSED", "REFUSED"],
+    ["DELIVERING", "Invio in corso"],
+    ["DELIVERED", "Consegnata"],
+    ["VIEWED", "Avvenuto accesso"],
+    ["EFFECTIVE_DATE", "Perfezionata per decorrenza termini"],
+    ["PAID", "Pagata"],
+    ["UNREACHABLE", "Destinatario irreperibile"],
+    ["CANCELLED", "Annullata"],
+    ["UNMAPPED", "UNMAPPED"]
+  ].forEach(([notificationStatus, expectedOutput]) => {
+    it(`should output '${expectedOutput}' for status '${notificationStatus}'`, () => {
+      const output = getNotificationStatusInfo(notificationStatus);
+      expect(output).toBe(expectedOutput);
+    });
+  });
+});
+
+describe("notificationStatusToTimelineStatus", () => {
+  it("should return 'viewed' for 'VIEWED'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("VIEWED");
+    expect(timelineStatus).toBe("viewed");
+  });
+  it("should return 'effective' for 'EFFECTIVE_DATE'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("EFFECTIVE_DATE");
+    expect(timelineStatus).toBe("effective");
+  });
+  it("should return 'unreachable' for 'UNREACHABLE'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("UNREACHABLE");
+    expect(timelineStatus).toBe("unreachable");
+  });
+  it("should return 'cancelled' for 'CANCELLED'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("CANCELLED");
+    expect(timelineStatus).toBe("cancelled");
+  });
+  it("should return 'default' for 'IN_VALIDATION'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("IN_VALIDATION");
+    expect(timelineStatus).toBe("default");
+  });
+  it("should return 'default' for 'ACCEPTED'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("ACCEPTED");
+    expect(timelineStatus).toBe("default");
+  });
+  it("should return 'default' for 'REFUSED'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("REFUSED");
+    expect(timelineStatus).toBe("default");
+  });
+  it("should return 'default' for 'DELIVERING'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("DELIVERING");
+    expect(timelineStatus).toBe("default");
+  });
+  it("should return 'default' for 'DELIVERED'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("DELIVERED");
+    expect(timelineStatus).toBe("default");
+  });
+  it("should return 'default' for 'PAID'", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("PAID");
+    expect(timelineStatus).toBe("default");
+  });
+  it("should return 'default' for empty string", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("");
+    expect(timelineStatus).toBe("default");
+  });
+  it("should return 'default' for unmapped string", () => {
+    const timelineStatus = notificationStatusToTimelineStatus("whatever");
+    expect(timelineStatus).toBe("default");
+  });
+});
+
 describe("extractPNOptInMessageInfoIfAvailable", () => {
   isPNOptInMessageTestInput.forEach(testData => {
     it(testData.testDescription, () => {
@@ -271,6 +347,125 @@ describe("extractPNOptInMessageInfoIfAvailable", () => {
         testData.input.state
       );
       expect(isPNOptInMessageInfo).toEqual(testData.output);
+    });
+  });
+});
+
+describe("paymentsFromSendMessage", () => {
+  const userFiscalCode = "RSSMRA80A10H501A";
+
+  it(`should return undefined when the message is undefined`, () => {
+    const output = paymentsFromSendMessage(userFiscalCode, undefined);
+    expect(output).toBe(undefined);
+  });
+  const noPaymentRecipients = {
+    recipients: [{}, {}, {}]
+  } as unknown as PNMessage;
+  it(`should return undefined when message has empty recipients`, () => {
+    const output = paymentsFromSendMessage(userFiscalCode, noPaymentRecipients);
+    expect(output).toBe(undefined);
+  });
+  const recipientsWithTaxId = {
+    recipients: [
+      {
+        payment: {
+          creditorTaxId: "c1",
+          noticeCode: "n1"
+        },
+        taxId: userFiscalCode
+      },
+      {
+        payment: {
+          creditorTaxId: "c2",
+          noticeCode: "n2"
+        },
+        taxId: "NotMatchingTaxId"
+      },
+      {
+        taxId: userFiscalCode
+      },
+      {
+        taxId: "NotMatchingTaxId"
+      }
+    ]
+  } as unknown as PNMessage;
+  it(`should return one matching payments when the message is defined and the input fiscal code is undefined`, () => {
+    const output = paymentsFromSendMessage(userFiscalCode, recipientsWithTaxId);
+    expect(output).toEqual([
+      {
+        creditorTaxId: "c1",
+        noticeCode: "n1"
+      }
+    ]);
+  });
+  it(`should return two matching payments when the message pot is defined and the input fiscal code is undefined`, () => {
+    const output = paymentsFromSendMessage(undefined, recipientsWithTaxId);
+    expect(output).toEqual([
+      {
+        creditorTaxId: "c1",
+        noticeCode: "n1"
+      },
+      {
+        creditorTaxId: "c2",
+        noticeCode: "n2"
+      }
+    ]);
+  });
+});
+
+describe("isSENDMessageCancelled", () => {
+  it("should return false for undefined input", () => {
+    const output = isSENDMessageCancelled(undefined);
+    expect(output).toBe(false);
+  });
+  [undefined, false, true].forEach(isCancelled => {
+    it(`should return ${!!isCancelled} when 'isCancelled' is ${isCancelled}`, () => {
+      const sendMessage = {
+        isCancelled
+      } as PNMessage;
+      const output = isSENDMessageCancelled(sendMessage);
+      expect(output).toBe(!!isCancelled);
+    });
+  });
+});
+
+describe("doesSENDMessageIncludeF24", () => {
+  it("should return false for undefined input", () => {
+    const output = doesSENDMessageIncludeF24(undefined);
+    expect(output).toBe(false);
+  });
+  [
+    [undefined, false] as const,
+    [[], false] as const,
+    [[{ category: ATTACHMENT_CATEGORY.DOCUMENT }], false] as const,
+    [[{ category: ATTACHMENT_CATEGORY.F24 }], true] as const,
+    [
+      [
+        { category: ATTACHMENT_CATEGORY.DOCUMENT },
+        { category: ATTACHMENT_CATEGORY.DOCUMENT }
+      ],
+      false
+    ] as const,
+    [
+      [
+        { category: ATTACHMENT_CATEGORY.DOCUMENT },
+        { category: ATTACHMENT_CATEGORY.F24 }
+      ],
+      true
+    ] as const
+  ].forEach(([attachments, expectedOutput]) => {
+    const lengthDescription =
+      attachments != null ? ` with ${attachments.length} elements` : ``;
+    it(`should return ${expectedOutput} when 'attachments' is ${
+      attachments != null ? "" : "not "
+    }defined${lengthDescription} and has ${
+      expectedOutput ? "" : "no "
+    }F24`, () => {
+      const sendMessage = {
+        attachments
+      } as PNMessage;
+      const output = doesSENDMessageIncludeF24(sendMessage);
+      expect(output).toBe(expectedOutput);
     });
   });
 });
@@ -336,57 +531,6 @@ describe("canShowMorePaymentsLink", () => {
   });
 });
 
-describe("notificationStatusToTimelineStatus", () => {
-  it("should return 'viewed' for 'VIEWED'", () => {
-    const timelineStatus = notificationStatusToTimelineStatus("VIEWED");
-    expect(timelineStatus).toBe("viewed");
-  });
-  it("should return 'effective' for 'EFFECTIVE_DATE'", () => {
-    const timelineStatus = notificationStatusToTimelineStatus("EFFECTIVE_DATE");
-    expect(timelineStatus).toBe("effective");
-  });
-  it("should return 'unreachable' for 'UNREACHABLE'", () => {
-    const timelineStatus = notificationStatusToTimelineStatus("UNREACHABLE");
-    expect(timelineStatus).toBe("unreachable");
-  });
-  it("should return 'cancelled' for 'CANCELLED'", () => {
-    const timelineStatus = notificationStatusToTimelineStatus("CANCELLED");
-    expect(timelineStatus).toBe("cancelled");
-  });
-  it("should return 'default' for 'IN_VALIDATION'", () => {
-    const timelineStatus = notificationStatusToTimelineStatus("IN_VALIDATION");
-    expect(timelineStatus).toBe("default");
-  });
-  it("should return 'default' for 'ACCEPTED'", () => {
-    const timelineStatus = notificationStatusToTimelineStatus("ACCEPTED");
-    expect(timelineStatus).toBe("default");
-  });
-  it("should return 'default' for 'REFUSED'", () => {
-    const timelineStatus = notificationStatusToTimelineStatus("REFUSED");
-    expect(timelineStatus).toBe("default");
-  });
-  it("should return 'default' for 'DELIVERING'", () => {
-    const timelineStatus = notificationStatusToTimelineStatus("DELIVERING");
-    expect(timelineStatus).toBe("default");
-  });
-  it("should return 'default' for 'DELIVERED'", () => {
-    const timelineStatus = notificationStatusToTimelineStatus("DELIVERED");
-    expect(timelineStatus).toBe("default");
-  });
-  it("should return 'default' for 'PAID'", () => {
-    const timelineStatus = notificationStatusToTimelineStatus("PAID");
-    expect(timelineStatus).toBe("default");
-  });
-  it("should return 'default' for empty string", () => {
-    const timelineStatus = notificationStatusToTimelineStatus("");
-    expect(timelineStatus).toBe("default");
-  });
-  it("should return 'default' for unmapped string", () => {
-    const timelineStatus = notificationStatusToTimelineStatus("whatever");
-    expect(timelineStatus).toBe("default");
-  });
-});
-
 describe("shouldUseBottomSheetForPayments", () => {
   it("should return false, cancelled message, undefined payments", () => {
     const showMorePayments = shouldUseBottomSheetForPayments(true, undefined);
@@ -445,68 +589,6 @@ describe("shouldUseBottomSheetForPayments", () => {
     );
     const showMorePayments = shouldUseBottomSheetForPayments(false, payments);
     expect(showMorePayments).toBe(true);
-  });
-});
-
-describe("paymentsFromSendMessage", () => {
-  const userFiscalCode = "RSSMRA80A10H501A";
-
-  it(`should return undefined when the message is undefined`, () => {
-    const output = paymentsFromSendMessage(userFiscalCode, undefined);
-    expect(output).toBe(undefined);
-  });
-  const noPaymentRecipients = {
-    recipients: [{}, {}, {}]
-  } as unknown as PNMessage;
-  it(`should return undefined when message has empty recipients`, () => {
-    const output = paymentsFromSendMessage(userFiscalCode, noPaymentRecipients);
-    expect(output).toBe(undefined);
-  });
-  const recipientsWithTaxId = {
-    recipients: [
-      {
-        payment: {
-          creditorTaxId: "c1",
-          noticeCode: "n1"
-        },
-        taxId: userFiscalCode
-      },
-      {
-        payment: {
-          creditorTaxId: "c2",
-          noticeCode: "n2"
-        },
-        taxId: "NotMatchingTaxId"
-      },
-      {
-        taxId: userFiscalCode
-      },
-      {
-        taxId: "NotMatchingTaxId"
-      }
-    ]
-  } as unknown as PNMessage;
-  it(`should return one matching payments when the message is defined and the input fiscal code is undefined`, () => {
-    const output = paymentsFromSendMessage(userFiscalCode, recipientsWithTaxId);
-    expect(output).toEqual([
-      {
-        creditorTaxId: "c1",
-        noticeCode: "n1"
-      }
-    ]);
-  });
-  it(`should return two matching payments when the message pot is defined and the input fiscal code is undefined`, () => {
-    const output = paymentsFromSendMessage(undefined, recipientsWithTaxId);
-    expect(output).toEqual([
-      {
-        creditorTaxId: "c1",
-        noticeCode: "n1"
-      },
-      {
-        creditorTaxId: "c2",
-        noticeCode: "n2"
-      }
-    ]);
   });
 });
 
