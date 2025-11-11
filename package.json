@@ -8,7 +8,7 @@
     "sync": "yarn setup && bundle && (cd ios && bundle exec pod install) && yarn generate",
     "run-ios": "react-native run-ios",
     "run-android": "react-native run-android",
-    "dev:run-android": "yarn run-android --mode=productionDebug",
+    "dev:run-android": "yarn run-android --mode=productionDebug --active-arch-only",
     "push-hint": "echo \"To publish changes without checks run:\ngit push --no-verify --follow-tags origin $(git rev-parse --abbrev-ref HEAD)\"",
     "pre-cycle": "scripts/changelog/check_git_status.sh && node scripts/changelog/prepare_to_new_cycle.js",
     "release-rc": "scripts/changelog/check_git_status.sh && standard-version -t \"\" --prerelease rc --no-verify && yarn push-hint",
