@@ -2950,7 +2950,13 @@
           "a11y": {
             "title": "Featured Services"
           },
-          "title": "Featured"
+          "title": "Featured",
+          "error": {
+            "banner": {
+              "label": "We couldn't load the list of featured services",
+              "cta": "Try again"
+            }
+          }
         },
         "institutions": {
           "title": "Featured Institutions"
