@@ -4420,7 +4420,9 @@
         "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
         "ed": "Titoli accademici",
         "ee": "Iscrizioni accademiche",
-        "res": "Attestato di residenza"
+        "res": "Attestato di residenza",
+        "edip": "Diplomi",
+        "se": "Frequenza scolastica"
       },
       "wallet": {
         "active": "Attivo",

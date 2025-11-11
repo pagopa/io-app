@@ -25,7 +25,9 @@ export enum CredentialType {
   PID = "PersonIdentificationData",
   EDUCATION_DEGREE = "education_degree",
   EDUCATION_ENROLLMENT = "education_enrollment",
-  RESIDENCY = "residency"
+  RESIDENCY = "residency",
+  EDUCATION_DIPLOMA = "education_diploma",
+  SCHOOL_ENROLLMENT = "school_enrollment"
 }
 
 export const ItwStoredCredentialsMocks = {
