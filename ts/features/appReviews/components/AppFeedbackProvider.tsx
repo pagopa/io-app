@@ -79,7 +79,6 @@ export const AppFeedbackProvider = ({ children }: PropsWithChildren) => {
       />
     )
   });
-  present()
 
   useEffect(() => {
     if (topic === undefined || !canAskFeedback) {
