@@ -1,8 +1,11 @@
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
+import { remoteError } from "../../../../common/model/RemoteValue";
+import { isOngoingPaymentFromDetailV2Enum } from "../../../../utils/payment";
 import {
   isMessagePaymentGenericError,
   isMessagePaymentSpecificError,
   isMessagePaymentTimeoutError,
+  isTimeoutOrGenericOrOngoingPaymentError,
   MessagePaymentError,
   toGenericMessagePaymentError,
   toSpecificMessagePaymentError,
@@ -11,9 +14,8 @@ import {
 
 const genericError: MessagePaymentError =
   toGenericMessagePaymentError("An error occurred");
-const specificError: MessagePaymentError = toSpecificMessagePaymentError(
-  Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
-);
+const duplicatePaymentError: MessagePaymentError =
+  toSpecificMessagePaymentError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO);
 const timeoutError: MessagePaymentError = toTimeoutMessagePaymentError();
 
 describe("isMessagePaymentGenericError", () => {
@@ -22,7 +24,7 @@ describe("isMessagePaymentGenericError", () => {
     expect(output).toBe(true);
   });
   it("should return false for a specific error", () => {
-    const output = isMessagePaymentGenericError(specificError);
+    const output = isMessagePaymentGenericError(duplicatePaymentError);
     expect(output).toBe(false);
   });
   it("should return false for a timeout error", () => {
@@ -37,7 +39,7 @@ describe("isMessagePaymentSpecificError", () => {
     expect(output).toBe(false);
   });
   it("should return true for a specific error", () => {
-    const output = isMessagePaymentSpecificError(specificError);
+    const output = isMessagePaymentSpecificError(duplicatePaymentError);
     expect(output).toBe(true);
   });
   it("should return false for a timeout error", () => {
@@ -52,13 +54,29 @@ describe("isMessagePaymentTimeoutError", () => {
     expect(output).toBe(false);
   });
   it("should return false for a specific error", () => {
-    const output = isMessagePaymentTimeoutError(specificError);
+    const output = isMessagePaymentTimeoutError(duplicatePaymentError);
     expect(output).toBe(false);
   });
   it("should return true for a timeout error", () => {
     const output = isMessagePaymentTimeoutError(timeoutError);
     expect(output).toBe(true);
   });
+});
+
+describe("isTimeoutOrGenericOrOngoingPaymentError", () => {
+  it.each([
+    { input: remoteError(genericError), expected: true },
+    { input: remoteError(timeoutError), expected: true },
+    ...Object.values(Detail_v2Enum).map(detail => ({
+      input: remoteError(toSpecificMessagePaymentError(detail)),
+      expected: isOngoingPaymentFromDetailV2Enum(detail)
+    }))
+  ])(
+    'should return "$expected" when error is "$input.error.details"',
+    ({ input, expected }) => {
+      expect(isTimeoutOrGenericOrOngoingPaymentError(input)).toBe(expected);
+    }
+  );
 });
 
 describe("toGenericMessagePaymentError", () => {
