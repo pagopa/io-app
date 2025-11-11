@@ -23,12 +23,16 @@ import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { walletUpdate } from "../store/actions";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
-import { isWalletScreenRefreshingSelector } from "../store/selectors";
+import {
+  isWalletScreenRefreshingSelector,
+  selectBottomSheetSurveyVisible
+} from "../store/selectors";
 import { itwShouldRenderNewItWalletSelector } from "../../itwallet/common/store/selectors";
 import { WALLET_L3_BG_COLOR } from "../../itwallet/common/utils/constants";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet.tsx";
+import { walletSetBottomSheetSurveyVisible } from "../store/actions/bottomSheet.ts";
 
 export type WalletHomeNavigationParams = Readonly<{
   // Triggers the "New element added" toast display once the user returns to this screen
@@ -49,13 +53,20 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   const dispatch = useIODispatch();
   const isRefreshingContent = useIOSelector(isWalletScreenRefreshingSelector);
   const hasNewItwInterface = useIOSelector(itwShouldRenderNewItWalletSelector);
+  const isBottomSheetSurveyVisible = useIOSelector(
+    selectBottomSheetSurveyVisible
+  );
 
   const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
   const isRequiredEidFeedback = useRef(
     route.params?.requiredEidFeedback || false
   );
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
-  const itwFeedbackBottomSheet = useItwEidFeedbackBottomSheet();
+  const itwFeedbackBottomSheet = useItwEidFeedbackBottomSheet({
+    onPrimaryAction: () => {
+      dispatch(walletSetBottomSheetSurveyVisible(false));
+    }
+  });
 
   // We need to use a local state to separate the UI state from the redux state
   // This prevents to display the refresh indicator when the refresh is triggered by other components
@@ -123,12 +134,17 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
         // eslint-disable-next-line functional/immutable-data
         isNewElementAdded.current = false;
       }
-      if (isRequiredEidFeedback.current) {
+      if (isRequiredEidFeedback.current && isBottomSheetSurveyVisible) {
         itwFeedbackBottomSheet.present();
         // eslint-disable-next-line functional/immutable-data
         isRequiredEidFeedback.current = false;
       }
-    }, [isNewElementAdded, isRequiredEidFeedback, itwFeedbackBottomSheet])
+    }, [
+      isNewElementAdded,
+      isRequiredEidFeedback,
+      itwFeedbackBottomSheet,
+      isBottomSheetSurveyVisible
+    ])
   );
 
   const handleRefreshWallet = useCallback(() => {
