@@ -31,7 +31,7 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdResultScreen() {
     useRoute<
       RouteProp<
         SettingsParamsList,
-        "CIE_IAS_AND_MRTD_PLAYGROUND_INTERNAL_AUTH_RESULTS"
+        "CIE_IAS_AND_MRTD_PLAYGROUND_INTERNAL_AUTH_AND_MRTD_RESULTS"
       >
     >();
   const { result, challenge, encodedChallenge, encoding } = route.params;

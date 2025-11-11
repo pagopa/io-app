@@ -27,17 +27,10 @@ export function CieIasAndMrtdPlaygroundMrtdResultScreen() {
 
   const route =
     useRoute<
-      RouteProp<
-        SettingsParamsList,
-        "CIE_IAS_AND_MRTD_PLAYGROUND_INTERNAL_AUTH_RESULTS"
-      >
+      RouteProp<SettingsParamsList, "CIE_IAS_AND_MRTD_PLAYGROUND_MRTD_RESULTS">
     >();
-  const { result, challenge, encodedChallenge, encoding } = route.params;
-  const resultString = JSON.stringify(
-    { challenge, encoding, encodedChallenge, ...result },
-    null,
-    2
-  );
+  const { result, encoding } = route.params;
+  const resultString = JSON.stringify({ encoding, ...result }, null, 2);
 
   const handleCopy = async () => {
     Clipboard.setString(resultString);
