@@ -1,5 +1,5 @@
 /* eslint-disable functional/immutable-data */
-import { Body } from "@pagopa/io-app-design-system";
+import { Body, IOToast } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -9,9 +9,12 @@ import { AccessibilityInfo, View } from "react-native";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import ModalSectionStatusComponent from "../../../../components/SectionStatus/modal";
-import { useIODispatch } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { idPayInitiativeConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { getFullLocale } from "../../../../utils/locale";
+import { openWebUrl } from "../../../../utils/url";
 import { trackIngressServicesSlowDown } from "../../../ingress/analytics";
 import { setIsBlockingScreen } from "../../../ingress/store/actions";
 import {
@@ -156,6 +159,23 @@ const IngressScreenBlockingError = memo(() => {
     })
   );
 
+  const initiativeConfig = useIOSelector(
+    idPayInitiativeConfigSelector(initiativeId)
+  );
+
+  const locale = getFullLocale();
+
+  const websiteUrl: string = initiativeConfig?.url?.[locale] ?? "";
+
+  const handleNavigateToWebsite = () => {
+    trackIDPayIngressScreenCTA({
+      initiativeId,
+      initiativeName
+    });
+
+    openWebUrl(websiteUrl, () => IOToast.error(I18n.t("genericError")));
+  };
+
   return (
     <OperationResultScreenContent
       ref={operationRef}
@@ -167,15 +187,14 @@ const IngressScreenBlockingError = memo(() => {
         label: I18n.t("global.buttons.back"),
         onPress: () => machine.send({ type: "close" })
       }}
-      secondaryAction={{
-        label: I18n.t("global.buttons.visitWebsite"),
-        onPress: () => {
-          trackIDPayIngressScreenCTA({
-            initiativeId,
-            initiativeName
-          });
-        }
-      }}
+      secondaryAction={
+        websiteUrl === ""
+          ? undefined
+          : {
+              label: I18n.t("global.buttons.visitWebsite"),
+              onPress: handleNavigateToWebsite
+            }
+      }
     />
   );
 });

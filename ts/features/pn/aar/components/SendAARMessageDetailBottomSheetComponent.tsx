@@ -1,31 +1,35 @@
 import I18n from "i18next";
 import { RefObject } from "react";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIOSelector, useIOStore } from "../../../../store/hooks";
+import { useIOStore } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import PN_ROUTES from "../../navigation/routes";
 import { isPnServiceEnabled } from "../../reminderBanner/reducer/bannerDismiss";
-import { isAarMessageDelegatedSelector } from "../store/selectors";
+import { SendUserType } from "../../../pushNotifications/analytics";
+import {
+  trackSendAarNotificationClosureBack,
+  trackSendAarNotificationClosureConfirm
+} from "../analytics";
 import { SendAARMessageDetailBottomSheet } from "./SendAARMessageDetailBottomSheet";
 
-type SendAARMessageDetailBottomSheetComponentProps = {
+export type SendAARMessageDetailBottomSheetComponentProps = {
   aarBottomSheetRef: RefObject<(() => void) | undefined>;
-  iun: string;
+  sendUserType: SendUserType;
 };
 
 export const SendAARMessageDetailBottomSheetComponent = ({
   aarBottomSheetRef,
-  iun
+  sendUserType
 }: SendAARMessageDetailBottomSheetComponentProps) => {
   const navigation = useIONavigation();
   const store = useIOStore();
-  const isDelegate = useIOSelector(state =>
-    isAarMessageDelegatedSelector(state, iun)
-  );
 
   const onSecondaryActionPress = () => {
+    trackSendAarNotificationClosureConfirm(sendUserType);
+
     dismiss();
+
     const state = store.getState();
     // This selector returns undefined if service's preferences have
     // not been requested and loaded yet. But here, we are looking at
@@ -37,7 +41,6 @@ export const SendAARMessageDetailBottomSheetComponent = ({
     // retrieved. The undefined case is treated as a disabled service,
     // showing the activation flow to the user.
     const isSendServiceEnabled = isPnServiceEnabled(state) ?? false;
-
     if (isSendServiceEnabled) {
       navigation.popToTop();
       return;
@@ -49,7 +52,7 @@ export const SendAARMessageDetailBottomSheetComponent = ({
         screen: PN_ROUTES.ENGAGEMENT_SCREEN,
         params: {
           sendOpeningSource: "aar",
-          sendUserType: isDelegate ? "mandatory" : "recipient"
+          sendUserType
         }
       }
     });
@@ -59,8 +62,12 @@ export const SendAARMessageDetailBottomSheetComponent = ({
     title: I18n.t("features.pn.aar.flow.closeNotification.title"),
     component: (
       <SendAARMessageDetailBottomSheet
-        onPrimaryActionPress={() => dismiss()}
+        onPrimaryActionPress={() => {
+          trackSendAarNotificationClosureBack(sendUserType);
+          dismiss();
+        }}
         onSecondaryActionPress={onSecondaryActionPress}
+        sendUserType={sendUserType}
       />
     )
   });
