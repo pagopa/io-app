@@ -2953,7 +2953,7 @@
           "title": "In primo piano",
           "error": {
             "banner": {
-              "label": "Non siamo riusciti a caricare la lista dei servizi in evidenza",
+              "label": "Non siamo riusciti a caricare la lista dei servizi in primo piano",
               "cta": "Prova di nuovo"
             }
           }

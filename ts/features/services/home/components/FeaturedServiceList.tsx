@@ -72,7 +72,7 @@ export const FeaturedServiceList = () => {
   const Content = () => {
     if (isLoading) {
       return (
-        <FeaturedServicesCarouselSkeleton testID="feature-service-list-skeleton" />
+        <FeaturedServicesCarouselSkeleton testID="featured-service-list-skeleton" />
       );
     }
 
@@ -84,7 +84,7 @@ export const FeaturedServiceList = () => {
             "services.home.featured.services.error.banner.cta"
           )}
           onPress={fetchFeaturedServices}
-          testID="feature-service-list-error"
+          testID="featured-service-list-error"
         />
       );
     }
@@ -92,7 +92,7 @@ export const FeaturedServiceList = () => {
     return (
       <FeaturedServicesCarousel
         services={mappedServices}
-        testID="feature-service-list"
+        testID="featured-service-list"
       />
     );
   };

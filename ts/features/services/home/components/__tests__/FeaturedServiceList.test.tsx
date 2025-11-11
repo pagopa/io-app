@@ -51,7 +51,7 @@ describe("FeaturedServiceList", () => {
     "should render skeleton when featuredServices is %s",
     featuredServicesPot => {
       const { queryByTestId } = renderComponent(featuredServicesPot);
-      expect(queryByTestId("feature-service-list-skeleton")).not.toBeNull();
+      expect(queryByTestId("featured-service-list-skeleton")).not.toBeNull();
     }
   );
 
@@ -60,14 +60,14 @@ describe("FeaturedServiceList", () => {
     pot.someLoading(MOCK_FEATURED_SERVICES)
   ])("should render when featuredServices is %s", featuredServicesPot => {
     const { queryByTestId } = renderComponent(featuredServicesPot);
-    expect(queryByTestId("feature-service-list")).not.toBeNull();
+    expect(queryByTestId("featured-service-list")).not.toBeNull();
   });
 
   it.each([pot.noneError(getNetworkError(new Error("GenericError")))])(
     "should render error banner when featuredServices is %s",
     featuredServicesPot => {
       const { queryByTestId } = renderComponent(featuredServicesPot);
-      expect(queryByTestId("feature-service-list-error")).not.toBeNull();
+      expect(queryByTestId("featured-service-list-error")).not.toBeNull();
     }
   );
 });
