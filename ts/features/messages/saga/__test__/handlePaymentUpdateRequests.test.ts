@@ -20,47 +20,65 @@ import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { isPagoPATestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import * as MIXPANEL from "../../../../mixpanel";
+import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
+import { backendClientManager } from "../../../../api/BackendClientManager";
+
+jest.mock("../../../../api/BackendClientManager");
+
+const mockGetPaymentInfoV2 = jest.fn();
+const mockBackendClientManager = backendClientManager as jest.Mocked<
+  typeof backendClientManager
+>;
+
+beforeEach(() => {
+  jest.clearAllMocks();
+  mockBackendClientManager.getBackendClient.mockReturnValue({
+    getPaymentInfoV2: mockGetPaymentInfoV2
+  } as any);
+});
 
 describe("handlePaymentUpdateRequests", () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
+  const sessionToken = "mockSessionToken";
   const messageId = "01JWXM7Q90CX4S57P855JZ63PC";
   const paymentId = "0123456789012345678901234567890";
   const serviceId = "01JWXM8C2NJT15SC930ZKGCRDB" as ServiceId;
   describe("handlePaymentUpdateRequests", () => {
     it("should follow proper flow", () => {
-      const mockGetPaymentDataRequestFactory = jest.fn();
       const mockActionChannel = channel();
-      testSaga(handlePaymentUpdateRequests, mockGetPaymentDataRequestFactory)
+      testSaga(handlePaymentUpdateRequests)
         .next()
+        .select(sessionTokenSelector)
+        .next(sessionToken)
         .actionChannel(updatePaymentForMessage.request)
         .next(mockActionChannel)
         .all([
           fork(
             testable!.paymentUpdateRequestWorker as any,
             mockActionChannel,
-            mockGetPaymentDataRequestFactory
+            mockGetPaymentInfoV2
           ),
           fork(
             testable!.paymentUpdateRequestWorker as any,
             mockActionChannel,
-            mockGetPaymentDataRequestFactory
+            mockGetPaymentInfoV2
           ),
           fork(
             testable!.paymentUpdateRequestWorker as any,
             mockActionChannel,
-            mockGetPaymentDataRequestFactory
+            mockGetPaymentInfoV2
           ),
           fork(
             testable!.paymentUpdateRequestWorker as any,
             mockActionChannel,
-            mockGetPaymentDataRequestFactory
+            mockGetPaymentInfoV2
           ),
           fork(
             testable!.paymentUpdateRequestWorker as any,
             mockActionChannel,
-            mockGetPaymentDataRequestFactory
+            mockGetPaymentInfoV2
           )
         ])
         .next()
@@ -77,7 +95,6 @@ describe("handlePaymentUpdateRequests", () => {
       const mockChannel = channel() as Channel<
         ActionType<typeof updatePaymentForMessage.request>
       >;
-      const mockGetPaymentDataRequestFactory = jest.fn();
       const paymentActionRequest = updatePaymentForMessage.request({
         messageId,
         paymentId,
@@ -87,7 +104,7 @@ describe("handlePaymentUpdateRequests", () => {
       testSaga(
         testable!.paymentUpdateRequestWorker,
         mockChannel,
-        mockGetPaymentDataRequestFactory
+        mockGetPaymentInfoV2
       )
         .next()
         .take(mockChannel)
@@ -99,7 +116,7 @@ describe("handlePaymentUpdateRequests", () => {
             testable!.updatePaymentInfo,
             paymentActionRequest,
             true,
-            mockGetPaymentDataRequestFactory
+            mockGetPaymentInfoV2
           ),
           wasCancelled: take(cancelQueuedPaymentUpdates)
         })
@@ -110,7 +127,6 @@ describe("handlePaymentUpdateRequests", () => {
       const mockChannel = channel() as Channel<
         ActionType<typeof updatePaymentForMessage.request>
       >;
-      const mockGetPaymentDataRequestFactory = jest.fn();
       const paymentActionRequest = updatePaymentForMessage.request({
         messageId,
         paymentId,
@@ -124,7 +140,7 @@ describe("handlePaymentUpdateRequests", () => {
       testSaga(
         testable!.paymentUpdateRequestWorker,
         mockChannel,
-        mockGetPaymentDataRequestFactory
+        mockGetPaymentInfoV2
       )
         .next()
         .take(mockChannel)
@@ -136,7 +152,7 @@ describe("handlePaymentUpdateRequests", () => {
             testable!.updatePaymentInfo,
             paymentActionRequest,
             true,
-            mockGetPaymentDataRequestFactory
+            mockGetPaymentInfoV2
           ),
           wasCancelled: take(cancelQueuedPaymentUpdates)
         })
@@ -165,18 +181,17 @@ describe("handlePaymentUpdateRequests", () => {
         paymentId,
         serviceId
       });
-      const mockGetPaymentDataRequestFactory = jest.fn();
       const output = tryCatchErrorOrUndefined(() => {
         testSaga(
           testable!.updatePaymentInfo,
           paymentActionRequest,
           true,
-          mockGetPaymentDataRequestFactory
+          mockGetPaymentInfoV2
         )
           .next()
           .call(
             withRefreshApiCall,
-            mockGetPaymentDataRequestFactory({ rptId: paymentId, test: true }),
+            mockGetPaymentInfoV2({ rptId: paymentId, test: true }),
             paymentActionRequest
           )
           .next(E.left([]));
@@ -190,18 +205,17 @@ describe("handlePaymentUpdateRequests", () => {
           paymentId,
           serviceId
         });
-        const mockGetPaymentDataRequestFactory = jest.fn();
         const output = tryCatchErrorOrUndefined(() => {
           testSaga(
             testable!.updatePaymentInfo,
             paymentActionRequest,
             true,
-            mockGetPaymentDataRequestFactory
+            mockGetPaymentInfoV2
           )
             .next()
             .call(
               withRefreshApiCall,
-              mockGetPaymentDataRequestFactory({
+              mockGetPaymentInfoV2({
                 rptId: paymentId,
                 test: true
               }),
@@ -225,18 +239,17 @@ describe("handlePaymentUpdateRequests", () => {
         paymentId,
         serviceId
       });
-      const mockGetPaymentDataRequestFactory = jest.fn();
       const output = tryCatchErrorOrUndefined(() => {
         testSaga(
           testable!.updatePaymentInfo,
           paymentActionRequest,
           true,
-          mockGetPaymentDataRequestFactory
+          mockGetPaymentInfoV2
         )
           .next()
           .call(
             withRefreshApiCall,
-            mockGetPaymentDataRequestFactory({
+            mockGetPaymentInfoV2({
               rptId: paymentId,
               test: true
             }),
@@ -265,18 +278,17 @@ describe("handlePaymentUpdateRequests", () => {
         paymentId,
         serviceId
       });
-      const mockGetPaymentDataRequestFactory = jest.fn();
       const output = tryCatchErrorOrUndefined(() => {
         testSaga(
           testable!.updatePaymentInfo,
           paymentActionRequest,
           true,
-          mockGetPaymentDataRequestFactory
+          mockGetPaymentInfoV2
         )
           .next()
           .call(
             withRefreshApiCall,
-            mockGetPaymentDataRequestFactory({
+            mockGetPaymentInfoV2({
               rptId: paymentId,
               test: true
             }),
@@ -296,18 +308,17 @@ describe("handlePaymentUpdateRequests", () => {
         paymentId,
         serviceId
       });
-      const mockGetPaymentDataRequestFactory = jest.fn();
 
       testSaga(
         testable!.updatePaymentInfo,
         paymentActionRequest,
         true,
-        mockGetPaymentDataRequestFactory
+        mockGetPaymentInfoV2
       )
         .next()
         .call(
           withRefreshApiCall,
-          mockGetPaymentDataRequestFactory({
+          mockGetPaymentInfoV2({
             rptId: paymentId,
             test: true
           }),
