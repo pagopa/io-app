@@ -28,9 +28,9 @@ import { ThirdPartyAttachment } from "../../../../../../definitions/backend/Thir
 import { UIMessage, UIMessageDetails } from "../../../types";
 import {
   MessagePaymentError,
-  toGenericError,
-  toSpecificError,
-  toTimeoutError
+  toGenericMessagePaymentError,
+  toSpecificMessagePaymentError,
+  toTimeoutMessagePaymentError
 } from "../../../types/paymentErrors";
 import {
   thirdPartyKind,
@@ -46,11 +46,12 @@ describe("index", () => {
     id: "1",
     url: "https://an.url"
   } as ThirdPartyAttachment;
-  const genericError: MessagePaymentError = toGenericError("An error occurred");
-  const specificError: MessagePaymentError = toSpecificError(
+  const genericError: MessagePaymentError =
+    toGenericMessagePaymentError("An error occurred");
+  const specificError: MessagePaymentError = toSpecificMessagePaymentError(
     Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
   );
-  const timeoutError: MessagePaymentError = toTimeoutError();
+  const timeoutError: MessagePaymentError = toTimeoutMessagePaymentError();
   const paymentId = "00123456789001122334455667788";
 
   describe("getMessageDataAction.request", () =>
@@ -602,9 +603,9 @@ describe("index", () => {
     });
   });
 
-  describe("toGenericError", () => {
+  describe("toGenericMessagePaymentError", () => {
     it("should build a generic error with expected parameters", () => {
-      const anError = toGenericError("An error occurred");
+      const anError = toGenericMessagePaymentError("An error occurred");
       expect(anError).toEqual({
         type: "generic",
         message: "An error occurred"
@@ -612,9 +613,11 @@ describe("index", () => {
     });
   });
 
-  describe("toSpecificError", () => {
+  describe("toSpecificMessagePaymentError", () => {
     it("should build a specific error with expected parameters", () => {
-      const anError = toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO);
+      const anError = toSpecificMessagePaymentError(
+        Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+      );
       expect(anError).toEqual({
         type: "specific",
         details: Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
@@ -622,9 +625,9 @@ describe("index", () => {
     });
   });
 
-  describe("toTimeoutError", () => {
+  describe("toTimeoutMessagePaymentError", () => {
     it("should build a timeout error with expected parameters", () => {
-      const anError = toTimeoutError();
+      const anError = toTimeoutMessagePaymentError();
       expect(anError).toEqual({
         type: "timeout"
       });

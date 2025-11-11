@@ -26,9 +26,9 @@ import { isTestEnv } from "../../../utils/environment";
 import { trackMessagePaymentFailure } from "../analytics";
 import {
   isMessagePaymentGenericError,
-  toGenericError,
-  toSpecificError,
-  toTimeoutError,
+  toGenericMessagePaymentError,
+  toSpecificMessagePaymentError,
+  toTimeoutMessagePaymentError,
   MessagePaymentError
 } from "../types/paymentErrors";
 
@@ -153,12 +153,12 @@ const unknownErrorToPaymentError = (e: unknown): MessagePaymentError => {
   const reason = unknownErrorToString(e);
   const lowerCaseReason = reason.toLowerCase();
   if (lowerCaseReason === "max-retries" || lowerCaseReason === "aborted") {
-    return toTimeoutError();
+    return toTimeoutMessagePaymentError();
   }
   if (reason in Detail_v2Enum) {
-    return toSpecificError(reason as Detail_v2Enum);
+    return toSpecificMessagePaymentError(reason as Detail_v2Enum);
   }
-  return toGenericError(reason);
+  return toGenericMessagePaymentError(reason);
 };
 
 const unknownErrorToString = (e: unknown): string => {

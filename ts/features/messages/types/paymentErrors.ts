@@ -28,14 +28,18 @@ export const isTimeoutOrGenericOrOngoingPaymentError = (
     isMessagePaymentGenericError(input.error) ||
     isOngoingPaymentFromDetailV2Enum(input.error.details));
 
-export const toGenericError = (message: string): MessagePaymentError => ({
+export const toGenericMessagePaymentError = (
+  message: string
+): MessagePaymentError => ({
   type: "generic",
   message
 });
-export const toSpecificError = (
+export const toSpecificMessagePaymentError = (
   details: Detail_v2Enum
 ): MessagePaymentError => ({
   type: "specific",
   details
 });
-export const toTimeoutError = (): MessagePaymentError => ({ type: "timeout" });
+export const toTimeoutMessagePaymentError = (): MessagePaymentError => ({
+  type: "timeout"
+});

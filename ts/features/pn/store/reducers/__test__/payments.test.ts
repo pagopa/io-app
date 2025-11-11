@@ -7,7 +7,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { Action } from "../../../../../store/actions/types";
 import { NotificationPaymentInfo } from "../../../../../../definitions/pn/NotificationPaymentInfo";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
-import { toSpecificError } from "../../../../messages/types/paymentErrors";
+import { toSpecificMessagePaymentError } from "../../../../messages/types/paymentErrors";
 
 describe("paymentsButtonStateSelector", () => {
   it("should return hidden for an unmatching message Id on store", () => {
@@ -30,31 +30,41 @@ describe("paymentsButtonStateSelector", () => {
       updatePaymentForMessage.failure({
         messageId: "m1",
         paymentId: "c1n1",
-        reason: toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO),
+        reason: toSpecificMessagePaymentError(
+          Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+        ),
         serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
       }),
       updatePaymentForMessage.failure({
         messageId: "m1",
         paymentId: "c1n2",
-        reason: toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO),
+        reason: toSpecificMessagePaymentError(
+          Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+        ),
         serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
       }),
       updatePaymentForMessage.failure({
         messageId: "m1",
         paymentId: "c1n3",
-        reason: toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO),
+        reason: toSpecificMessagePaymentError(
+          Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+        ),
         serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
       }),
       updatePaymentForMessage.failure({
         messageId: "m1",
         paymentId: "c1n4",
-        reason: toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO),
+        reason: toSpecificMessagePaymentError(
+          Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+        ),
         serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
       }),
       updatePaymentForMessage.failure({
         messageId: "m1",
         paymentId: "c1n5",
-        reason: toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO),
+        reason: toSpecificMessagePaymentError(
+          Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+        ),
         serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
       })
     ];
@@ -98,31 +108,41 @@ describe("paymentsButtonStateSelector", () => {
       updatePaymentForMessage.failure({
         messageId: "m1",
         paymentId: "c1n6",
-        reason: toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO),
+        reason: toSpecificMessagePaymentError(
+          Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+        ),
         serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
       }),
       updatePaymentForMessage.failure({
         messageId: "m1",
         paymentId: "c1n7",
-        reason: toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO),
+        reason: toSpecificMessagePaymentError(
+          Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+        ),
         serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
       }),
       updatePaymentForMessage.failure({
         messageId: "m1",
         paymentId: "c1n8",
-        reason: toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO),
+        reason: toSpecificMessagePaymentError(
+          Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+        ),
         serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
       }),
       updatePaymentForMessage.failure({
         messageId: "m1",
         paymentId: "c1n9",
-        reason: toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO),
+        reason: toSpecificMessagePaymentError(
+          Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+        ),
         serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
       }),
       updatePaymentForMessage.failure({
         messageId: "m1",
         paymentId: "c1n10",
-        reason: toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO),
+        reason: toSpecificMessagePaymentError(
+          Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+        ),
         serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
       })
     ];
@@ -166,31 +186,41 @@ describe("paymentsButtonStateSelector", () => {
       updatePaymentForMessage.failure({
         messageId: "m1",
         paymentId: "c1n5",
-        reason: toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO),
+        reason: toSpecificMessagePaymentError(
+          Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+        ),
         serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
       }),
       updatePaymentForMessage.failure({
         messageId: "m1",
         paymentId: "c1n7",
-        reason: toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO),
+        reason: toSpecificMessagePaymentError(
+          Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+        ),
         serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
       }),
       updatePaymentForMessage.failure({
         messageId: "m1",
         paymentId: "c1n8",
-        reason: toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO),
+        reason: toSpecificMessagePaymentError(
+          Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+        ),
         serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
       }),
       updatePaymentForMessage.failure({
         messageId: "m1",
         paymentId: "c1n9",
-        reason: toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO),
+        reason: toSpecificMessagePaymentError(
+          Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+        ),
         serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
       }),
       updatePaymentForMessage.failure({
         messageId: "m1",
         paymentId: "c1n10",
-        reason: toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO),
+        reason: toSpecificMessagePaymentError(
+          Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+        ),
         serviceId: "01J5X2R3J2MQKABRPC61ZSJDZ3" as ServiceId
       })
     ];

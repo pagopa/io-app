@@ -18,9 +18,9 @@ import { isPagoPATestEnabledSelector } from "../../../../store/reducers/persiste
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import * as MIXPANEL from "../../../../mixpanel";
 import {
-  toGenericError,
-  toSpecificError,
-  toTimeoutError
+  toGenericMessagePaymentError,
+  toSpecificMessagePaymentError,
+  toTimeoutMessagePaymentError
 } from "../../types/paymentErrors";
 
 describe("handlePaymentUpdateRequests", () => {
@@ -119,7 +119,7 @@ describe("handlePaymentUpdateRequests", () => {
         serviceId
       });
       const error = Error(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO);
-      const paymentError = toSpecificError(
+      const paymentError = toSpecificMessagePaymentError(
         Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
       );
 
@@ -341,26 +341,26 @@ describe("handlePaymentUpdateRequests", () => {
   describe("unknownErrorToPaymentError", () => {
     it("should return a timeout error for max-retries Error", () => {
       const output = testable!.unknownErrorToPaymentError(Error("max-retries"));
-      expect(output).toEqual(toTimeoutError());
+      expect(output).toEqual(toTimeoutMessagePaymentError());
     });
     it("should return a timeout error for aborted Error", () => {
       const output = testable!.unknownErrorToPaymentError(Error("aborted"));
-      expect(output).toEqual(toTimeoutError());
+      expect(output).toEqual(toTimeoutMessagePaymentError());
     });
     it("should return a timeout error for max-retries string", () => {
       const output = testable!.unknownErrorToPaymentError("max-retries");
-      expect(output).toEqual(toTimeoutError());
+      expect(output).toEqual(toTimeoutMessagePaymentError());
     });
     it("should return a timeout error for aborted string", () => {
       const output = testable!.unknownErrorToPaymentError("aborted");
-      expect(output).toEqual(toTimeoutError());
+      expect(output).toEqual(toTimeoutMessagePaymentError());
     });
     it("should return a specifc error for Detail_v2Enum code Error", () => {
       const output = testable!.unknownErrorToPaymentError(
         Error(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
       );
       expect(output).toEqual(
-        toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
+        toSpecificMessagePaymentError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
       );
     });
     it("should return a specifc error for Detail_v2Enum code", () => {
@@ -368,14 +368,16 @@ describe("handlePaymentUpdateRequests", () => {
         Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
       );
       expect(output).toEqual(
-        toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
+        toSpecificMessagePaymentError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
       );
     });
     it("should return a generic error for a generic error", () => {
       const output = testable!.unknownErrorToPaymentError(
         Error("Some generic error")
       );
-      expect(output).toEqual(toGenericError("Some generic error"));
+      expect(output).toEqual(
+        toGenericMessagePaymentError("Some generic error")
+      );
     });
   });
 
@@ -404,7 +406,9 @@ describe("handlePaymentUpdateRequests", () => {
         .spyOn(MIXPANEL, "mixpanelTrack")
         .mockImplementation((_event, _properties) => undefined);
 
-      testable!.trackPaymentErrorIfNeeded(toGenericError("An error"));
+      testable!.trackPaymentErrorIfNeeded(
+        toGenericMessagePaymentError("An error")
+      );
 
       expect(spyOnMixpanelTrack.mock.calls.length).toBe(1);
       expect(spyOnMixpanelTrack.mock.calls[0].length).toBe(2);
@@ -424,7 +428,7 @@ describe("handlePaymentUpdateRequests", () => {
         .mockImplementation((_event, _properties) => undefined);
 
       testable!.trackPaymentErrorIfNeeded(
-        toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO)
+        toSpecificMessagePaymentError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO)
       );
 
       expect(spyOnMixpanelTrack.mock.calls.length).toBe(0);
@@ -434,7 +438,7 @@ describe("handlePaymentUpdateRequests", () => {
         .spyOn(MIXPANEL, "mixpanelTrack")
         .mockImplementation((_event, _properties) => undefined);
 
-      testable!.trackPaymentErrorIfNeeded(toTimeoutError());
+      testable!.trackPaymentErrorIfNeeded(toTimeoutMessagePaymentError());
 
       expect(spyOnMixpanelTrack.mock.calls.length).toBe(0);
     });

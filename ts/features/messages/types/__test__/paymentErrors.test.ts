@@ -4,16 +4,17 @@ import {
   isMessagePaymentSpecificError,
   isMessagePaymentTimeoutError,
   MessagePaymentError,
-  toGenericError,
-  toSpecificError,
-  toTimeoutError
+  toGenericMessagePaymentError,
+  toSpecificMessagePaymentError,
+  toTimeoutMessagePaymentError
 } from "../paymentErrors";
 
-const genericError: MessagePaymentError = toGenericError("An error occurred");
-const specificError: MessagePaymentError = toSpecificError(
+const genericError: MessagePaymentError =
+  toGenericMessagePaymentError("An error occurred");
+const specificError: MessagePaymentError = toSpecificMessagePaymentError(
   Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
 );
-const timeoutError: MessagePaymentError = toTimeoutError();
+const timeoutError: MessagePaymentError = toTimeoutMessagePaymentError();
 
 describe("isMessagePaymentGenericError", () => {
   it("should return true for a generic error", () => {
