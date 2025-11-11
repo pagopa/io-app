@@ -190,10 +190,6 @@ export const MessagePaymentItem = ({
   const store = useIOStore();
   const toast = useIOToast();
 
-  const shouldUpdatePayment = useIOSelector(state =>
-    shouldRetrievePaymentDataSelector(state, messageId, rptId)
-  );
-
   const paymentStatusForUI = useIOSelector(state =>
     paymentStatusForUISelector(state, messageId, rptId)
   );
@@ -234,6 +230,16 @@ export const MessagePaymentItem = ({
     willNavigateToPayment
   ]);
   useEffect(() => {
+    // Since this data is only used to dispatch the update action and shouldn't
+    // cause the component to re-render when it changes, the selector can be
+    // called directly inside this useEffect.
+    // There's no need to call it outside with a `useSelector`.
+    const shouldUpdatePayment = shouldRetrievePaymentDataSelector(
+      store.getState(),
+      messageId,
+      rptId
+    );
+
     if (shouldUpdatePayment) {
       const updateAction = updatePaymentForMessage.request({
         messageId,
@@ -242,7 +248,8 @@ export const MessagePaymentItem = ({
       });
       dispatch(updateAction);
     }
-  }, [dispatch, messageId, rptId, serviceId, shouldUpdatePayment]);
+  }, [dispatch, messageId, rptId, serviceId, store]);
+
   return (
     <View>
       {!noSpaceOnTop && <VSpacer size={index > 0 ? 8 : 24} />}
