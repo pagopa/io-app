@@ -250,13 +250,19 @@ const isPNOptInMessageTestInput: Array<IsPNOptInMessageTestInputType> = [
   }
 ];
 
+const sendOpeningSources: ReadonlyArray<SendOpeningSource> = [
+  "aar",
+  "message",
+  "not_set"
+];
+
 describe("maxVisiblePaymentCount", () => {
   it("should return 5", () => {
     expect(maxVisiblePaymentCount).toBe(5);
   });
 });
 
-describe("isPNOptInMessage", () => {
+describe("extractPNOptInMessageInfoIfAvailable", () => {
   isPNOptInMessageTestInput.forEach(testData => {
     it(testData.testDescription, () => {
       const isPNOptInMessageInfo = extractPNOptInMessageInfoIfAvailable(
@@ -503,12 +509,6 @@ describe("paymentsFromSendMessage", () => {
     ]);
   });
 });
-
-const sendOpeningSources: ReadonlyArray<SendOpeningSource> = [
-  "aar",
-  "message",
-  "not_set"
-];
 
 describe("openingSourceIsAarMessage", () => {
   sendOpeningSources.forEach(sendOpeningSource => {

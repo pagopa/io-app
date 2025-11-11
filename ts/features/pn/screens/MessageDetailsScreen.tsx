@@ -150,6 +150,7 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
   useHardwareBackButton(androidBackButtonCallback);
   useCorrectHeader(isAarMessage, aarBottomSheetRef, sendUserType);
 
+  // useEffect for payment tracking and resource dealloaction
   useEffect(() => {
     dispatch(
       startPNPaymentStatusTracking({
@@ -168,6 +169,7 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
     };
   }, [dispatch, isAarMessage, messageId, sendOpeningSource, sendUserType]);
 
+  // useEffect for analytics tracking
   useEffect(() => {
     if (sendMessageOrUndefined != null) {
       const isCancelled = isSENDMessageCancelled(sendMessageOrUndefined);
@@ -196,6 +198,7 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
     sendUserType
   ]);
 
+  // useFocusEffect to track and update an user-selected payment
   const store = useIOStore();
   useFocusEffect(
     useCallback(() => {
