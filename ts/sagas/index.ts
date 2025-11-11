@@ -11,6 +11,7 @@ import { watchUtmLinkSaga } from "../features/utmLink/saga";
 import connectivityStatusSaga from "../features/connectivity/saga";
 import { watchIdentification } from "../features/identification/sagas";
 import { watchLogoutSaga } from "../features/authentication/common/saga/watchLogoutSaga";
+import { watchMessagesSaga } from "../features/messages/saga";
 import backendStatusSaga from "./backendStatus";
 import { watchContentSaga } from "./contentLoaders";
 import { loadSystemPreferencesSaga } from "./preferences";
@@ -24,6 +25,7 @@ export default function* root() {
     call(watchIdentification),
     call(watchApplicationActivitySaga),
     call(startupSaga),
+    call(watchMessagesSaga),
     call(backendStatusSaga),
     call(connectivityStatusSaga),
     call(versionInfoSaga),
