@@ -57,9 +57,9 @@ export const PushNotificationEngagementScreen = ({
   return (
     <PushNotificationEngagementScreenContent
       flow={flow}
+      onPressActivate={onButtonPress}
       sendOpeningSource={sendOpeningSource}
       sendUserType={sendUserType}
-      onPressActivate={onButtonPress}
       shouldSetSecurityAdviceUponLeaving={shouldSetSecurityAdviceUponLeaving}
     />
   );
@@ -72,10 +72,10 @@ type Props = {
 
 const PushNotificationEngagementScreenContent = ({
   flow,
+  onPressActivate,
   sendOpeningSource,
   sendUserType,
-  shouldSetSecurityAdviceUponLeaving,
-  onPressActivate
+  shouldSetSecurityAdviceUponLeaving
 }: Props) => {
   const dispatch = useIODispatch();
   const { popToTop, setOptions } = useIONavigation();
