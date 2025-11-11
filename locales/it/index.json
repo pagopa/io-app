@@ -2950,7 +2950,13 @@
           "a11y": {
             "title": "Servizi in primo piano"
           },
-          "title": "In primo piano"
+          "title": "In primo piano",
+          "error": {
+            "banner": {
+              "label": "Non siamo riusciti a caricare la lista dei servizi in primo piano",
+              "cta": "Prova di nuovo"
+            }
+          }
         },
         "institutions": {
           "title": "Enti in evidenza"
