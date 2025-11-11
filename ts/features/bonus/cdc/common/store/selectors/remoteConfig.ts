@@ -26,7 +26,6 @@ export const cdcCtaConfigSelector = createSelector(
 
 /**
  * Return true if the CdC wallet visibility feature is enabled by remote config and the app version is supported
- * TODO: Use this selector when implementing the CdC wallet feature (https://pagopa.atlassian.net/browse/IOBP-1776)
  */
 export const isCdCWalletVisibilityEnabledSelector = (state: GlobalState) =>
   pipe(state, remoteConfigSelector, remoteConfig =>
