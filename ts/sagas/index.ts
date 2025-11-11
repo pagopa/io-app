@@ -13,6 +13,7 @@ import { watchIdentification } from "../features/identification/sagas";
 import { watchLogoutSaga } from "../features/authentication/common/saga/watchLogoutSaga";
 import { watchWalletSaga } from "../features/wallet/saga";
 import { watchExternalWalletUpdateSaga } from "../features/wallet/saga/watchExternalWalletUpdateSaga";
+import { watchMessagesSaga } from "../features/messages/saga";
 import backendStatusSaga from "./backendStatus";
 import { watchContentSaga } from "./contentLoaders";
 import { loadSystemPreferencesSaga } from "./preferences";
@@ -26,6 +27,7 @@ export default function* root() {
     call(watchIdentification),
     call(watchApplicationActivitySaga),
     call(startupSaga),
+    call(watchMessagesSaga),
     call(backendStatusSaga),
     call(connectivityStatusSaga),
     call(versionInfoSaga),
