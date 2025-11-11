@@ -66,8 +66,9 @@ describe("MessageDetailsScreen", () => {
   // eslint-disable-next-line sonarjs/cognitive-complexity
   sendOpeningSources.forEach(sendOpeningSource => {
     sendUserTypes.forEach(sendUserType => {
+      const isAarMessage = sendOpeningSource === "aar";
       it(`should match the snapshot when there is an error${
-        sendOpeningSource === "aar" ? " and dispatch trackSendAARFailure" : ""
+        isAarMessage ? " and dispatch trackSendAARFailure" : ""
       } (opening source ${sendOpeningSource}, user type ${sendUserType})`, () => {
         const spiedOnMockedTrackSendAARFailure = jest
           .spyOn(AAR_ANALYTICS, "trackSendAARFailure")
@@ -101,7 +102,7 @@ describe("MessageDetailsScreen", () => {
         );
         expect(component).toMatchSnapshot();
 
-        if (sendOpeningSource === "aar") {
+        if (isAarMessage) {
           expect(spiedOnMockedTrackSendAARFailure.mock.calls.length).toBe(1);
           expect(spiedOnMockedTrackSendAARFailure.mock.calls[0].length).toBe(2);
           expect(spiedOnMockedTrackSendAARFailure.mock.calls[0][0]).toBe(
@@ -276,10 +277,9 @@ describe("MessageDetailsScreen", () => {
               }
             },
             pn: {
-              aarFlow:
-                sendOpeningSource === "aar"
-                  ? sendAarMockStateFactory.displayingNotificationData()
-                  : sendAarMockStateFactory.none()
+              aarFlow: isAarMessage
+                ? sendAarMockStateFactory.displayingNotificationData()
+                : sendAarMockStateFactory.none()
             }
           },
           remoteConfig: O.none,
@@ -302,7 +302,7 @@ describe("MessageDetailsScreen", () => {
       });
 
       it(`should ${
-        sendOpeningSource === "aar" ? "" : "not "
+        isAarMessage ? "" : "not "
       }call trackSendAarNotificationClosure with proper parameters upon pressing the android back button (opening source ${sendOpeningSource}, user type ${sendUserType})`, () => {
         const baseState = appReducer(
           undefined,
@@ -347,7 +347,7 @@ describe("MessageDetailsScreen", () => {
         expect(typeof useHardwareBackButtonCallback).toBe("function");
         const result = useHardwareBackButtonCallback();
 
-        if (sendOpeningSource === "aar") {
+        if (isAarMessage) {
           expect(
             spiedOnMockedTrackSendAARNotificationClosure.mock.calls.length
           ).toBe(1);
@@ -367,7 +367,7 @@ describe("MessageDetailsScreen", () => {
       });
 
       it(`should ${
-        sendOpeningSource === "aar" ? "" : "not "
+        isAarMessage ? "" : "not "
       }call trackSendAarNotificationClosure with proper parameters upon pressing the header's close button (opening source ${sendOpeningSource}, user type ${sendUserType})`, () => {
         const baseState = appReducer(
           undefined,
@@ -403,7 +403,7 @@ describe("MessageDetailsScreen", () => {
           sendUserType
         );
 
-        if (sendOpeningSource === "aar") {
+        if (isAarMessage) {
           const headerCloseButton = component.getByTestId("AAR_close_button");
           fireEvent.press(headerCloseButton);
 
