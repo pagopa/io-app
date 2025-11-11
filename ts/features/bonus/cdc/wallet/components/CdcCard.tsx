@@ -23,7 +23,7 @@ const CDC_ORGANIZATION_LOGO =
   "https://assets.cdn.io.pagopa.it/logos/organizations/1199250158.png";
 
 /**
- * Component that renders the ID PAy card in the wallet
+ * Component that renders the CdC wallet card in the wallet
  */
 export const CdcCard = (props: CdcCardProps) => {
   const useCdcCardStyles = () => {
