@@ -72,7 +72,7 @@
     "@pagopa/io-react-native-wallet": "^2.2.0",
     "@pagopa/io-react-native-wallet-legacy": "npm:@pagopa/io-react-native-wallet@0.30.0",
     "@pagopa/io-react-native-zendesk": "^0.3.30",
-    "@pagopa/react-native-cie": "^1.5.0-beta.0",
+    "@pagopa/react-native-cie": "^1.5.0",
     "@pagopa/ts-commons": "^10.15.0",
     "@react-native-async-storage/async-storage": "^2.0.0",
     "@react-native-clipboard/clipboard": "^1.16.3",
