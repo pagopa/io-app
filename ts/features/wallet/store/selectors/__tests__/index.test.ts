@@ -10,7 +10,8 @@ import {
   selectWalletCategories,
   shouldRenderWalletCategorySelector,
   shouldRenderWalletEmptyStateSelector,
-  shouldRenderItwCardsContainerSelector
+  shouldRenderItwCardsContainerSelector,
+  selectBottomSheetSurveyVisible
 } from "..";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
@@ -483,5 +484,22 @@ describe("shouldRenderItwCardsContainerSelector", () => {
     const shouldRenderItwCardsContainer =
       shouldRenderItwCardsContainerSelector(globalState);
     expect(shouldRenderItwCardsContainer).toBe(false);
+  });
+});
+
+describe("selectBottomSheetSurveyVisible", () => {
+  it("should return if the bottom sheet is visible", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+
+    const isBottomSheetSurveyVisible = selectBottomSheetSurveyVisible(
+      _.merge(
+        globalState,
+        _.set(globalState, "features.wallet.bottomSheet", {
+          bottomSheetSurveyVisible: false
+        })
+      )
+    );
+
+    expect(isBottomSheetSurveyVisible).toBe(false);
   });
 });
