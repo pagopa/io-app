@@ -38,3 +38,16 @@ export const isCdCWalletVisibilityEnabledSelector = (state: GlobalState) =>
       optionalConfig: "walletVisibility"
     })
   );
+
+/**
+ * Return the remote config about CDC wallet visibility.
+ */
+export const cdcWalletVisibilityConfigSelector = createSelector(
+  cdcRemoteConfigSelector,
+  cdcConfig =>
+    pipe(
+      cdcConfig,
+      O.map(cdc => cdc.walletVisibility?.configurations),
+      O.toUndefined
+    )
+);

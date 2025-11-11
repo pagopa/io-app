@@ -2,7 +2,10 @@ import {
   Avatar,
   Body,
   H6,
-  useIOThemeContext
+  HStack,
+  Icon,
+  useIOThemeContext,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
 import I18n from "i18next";
@@ -15,6 +18,10 @@ export type CdcCardProps = {
   expireDate: Date;
 };
 
+// TODO: Edit this logo when the organization logo is available
+const CDC_ORGANIZATION_LOGO =
+  "https://assets.cdn.io.pagopa.it/logos/organizations/1199250158.png";
+
 /**
  * Component that renders the ID PAy card in the wallet
  */
@@ -24,36 +31,17 @@ export const CdcCard = (props: CdcCardProps) => {
 
     const isDarkMode = themeType === "dark";
 
-    const initiativeTitle = isDarkMode
+    const textColor = isDarkMode
       ? ("blueIO-50" as const)
-      : ("blueIO-850" as const);
-
-    const available = isDarkMode ? ("white" as const) : ("blueIO-850" as const);
-
-    const amountColor = isDarkMode
-      ? ("blueIO-300" as const)
-      : ("blueIO-500" as const);
-
-    const validationColor = isDarkMode
-      ? ("blueIO-100" as const)
       : ("blueIO-850" as const);
 
     return {
       isDarkMode,
-      initiativeTitle,
-      available,
-      amountColor,
-      validationColor
+      textColor
     };
   };
 
-  const {
-    isDarkMode,
-    initiativeTitle,
-    available,
-    amountColor,
-    validationColor
-  } = useCdcCardStyles();
+  const { isDarkMode, textColor } = useCdcCardStyles();
 
   return (
     <View style={styles.container}>
@@ -63,26 +51,31 @@ export const CdcCard = (props: CdcCardProps) => {
       <View style={styles.content}>
         <View>
           <View style={styles.header}>
-            <H6
-              color={initiativeTitle}
-              ellipsizeMode="tail"
-              numberOfLines={1}
+            <HStack
+              space={8}
               style={{
                 width: "80%"
               }}
             >
-              Carta della cultura
-            </H6>
+              <H6 color={textColor} ellipsizeMode="tail" numberOfLines={1}>
+                {I18n.t("bonus.cdc.wallet.card.title")}
+              </H6>
+              <Icon name="multiCard" color={textColor} />
+            </HStack>
             <Avatar
               size="small"
               logoUri={{
-                uri: "https://assets.cdn.io.pagopa.it/logos/organizations/1199250158.png"
+                uri: CDC_ORGANIZATION_LOGO
               }}
             />
           </View>
+          <VSpacer size={32} />
+          <Body weight="Regular" color={textColor}>
+            {I18n.t("bonus.cdc.wallet.card.organization")}
+          </Body>
         </View>
-        <Body weight="Regular" color={validationColor}>
-          {I18n.t("idpay.wallet.card.validThrough", {
+        <Body weight="Regular" color={textColor}>
+          {I18n.t("bonus.cdc.wallet.card.validThrough", {
             endDate: format(props.expireDate, "DD/MM/YY")
           })}
         </Body>

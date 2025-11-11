@@ -4,7 +4,7 @@ import { defaultRetryingFetch } from "../../../../../utils/fetch";
 export const createCdcClient = (baseUrl: string, sessionToken: string) =>
   createClient<"Bearer">({
     baseUrl,
-    basePath: "/session-wallet/v1",
+    basePath: "/api/v1/cdc",
     fetchApi: defaultRetryingFetch(),
     withDefaults: op => params => {
       const paramsWithDefaults = {
