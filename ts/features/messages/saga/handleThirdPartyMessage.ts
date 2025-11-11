@@ -26,6 +26,7 @@ import { thirdPartyKind } from "../types/thirdPartyById";
 import { backendClientManager } from "../../../api/BackendClientManager";
 import { apiUrlPrefix } from "../../../config";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { isTestEnv } from "../../../utils/environment";
 
 export function* handleThirdPartyMessage(
   action: ActionType<typeof loadThirdPartyMessage.request>
@@ -109,9 +110,21 @@ const trackSuccess = (
 
     if (O.isSome(pnMessageOption)) {
       const pnMessage = pnMessageOption.value;
-      trackPNNotificationLoadSuccess(pnMessage);
+      const hasAttachments =
+        pnMessage.attachments != null && pnMessage.attachments.length > 0;
+      const timeline = pnMessage.notificationStatusHistory;
+      const status =
+        timeline.length > 0 ? timeline[timeline.length - 1].status : undefined;
+      trackPNNotificationLoadSuccess(
+        hasAttachments,
+        status,
+        "message",
+        "not_set"
+      );
     } else {
-      trackPNNotificationLoadError();
+      trackPNNotificationLoadError(
+        "Unable convert the third party message to SEND message structure"
+      );
     }
   } else {
     const attachments = messageFromApi.third_party_message.attachments;
@@ -138,3 +151,5 @@ const trackFailure = (
     trackPNNotificationLoadError(reason);
   }
 };
+
+export const testable = isTestEnv ? { trackSuccess, trackFailure } : undefined;
