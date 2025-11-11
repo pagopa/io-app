@@ -1,6 +1,6 @@
 import { CieError, NfcError } from "@pagopa/io-react-native-cie";
-import { WebViewError } from "../utils/error";
 import { EnvType } from "../../../common/utils/environment";
+import { WebViewError } from "../utils/error";
 import { CieInput } from "./input";
 
 export type CieContext = {

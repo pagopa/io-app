@@ -6,20 +6,30 @@ import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import PN_ROUTES from "../../navigation/routes";
 import { isPnServiceEnabled } from "../../reminderBanner/reducer/bannerDismiss";
+import { SendUserType } from "../../../pushNotifications/analytics";
+import {
+  trackSendAarNotificationClosureBack,
+  trackSendAarNotificationClosureConfirm
+} from "../analytics";
 import { SendAARMessageDetailBottomSheet } from "./SendAARMessageDetailBottomSheet";
 
-type SendAARMessageDetailBottomSheetComponentProps = {
+export type SendAARMessageDetailBottomSheetComponentProps = {
   aarBottomSheetRef: RefObject<(() => void) | undefined>;
+  sendUserType: SendUserType;
 };
 
 export const SendAARMessageDetailBottomSheetComponent = ({
-  aarBottomSheetRef
+  aarBottomSheetRef,
+  sendUserType
 }: SendAARMessageDetailBottomSheetComponentProps) => {
   const navigation = useIONavigation();
   const store = useIOStore();
 
   const onSecondaryActionPress = () => {
+    trackSendAarNotificationClosureConfirm(sendUserType);
+
     dismiss();
+
     const state = store.getState();
     // This selector returns undefined if service's preferences have
     // not been requested and loaded yet. But here, we are looking at
@@ -31,7 +41,6 @@ export const SendAARMessageDetailBottomSheetComponent = ({
     // retrieved. The undefined case is treated as a disabled service,
     // showing the activation flow to the user.
     const isSendServiceEnabled = isPnServiceEnabled(state) ?? false;
-
     if (isSendServiceEnabled) {
       navigation.popToTop();
       return;
@@ -40,7 +49,11 @@ export const SendAARMessageDetailBottomSheetComponent = ({
     navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
       screen: PN_ROUTES.MAIN,
       params: {
-        screen: PN_ROUTES.ENGAGEMENT_SCREEN
+        screen: PN_ROUTES.ENGAGEMENT_SCREEN,
+        params: {
+          sendOpeningSource: "aar",
+          sendUserType
+        }
       }
     });
   };
@@ -49,8 +62,12 @@ export const SendAARMessageDetailBottomSheetComponent = ({
     title: I18n.t("features.pn.aar.flow.closeNotification.title"),
     component: (
       <SendAARMessageDetailBottomSheet
-        onPrimaryActionPress={() => dismiss()}
+        onPrimaryActionPress={() => {
+          trackSendAarNotificationClosureBack(sendUserType);
+          dismiss();
+        }}
         onSecondaryActionPress={onSecondaryActionPress}
+        sendUserType={sendUserType}
       />
     )
   });

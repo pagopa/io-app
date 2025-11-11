@@ -94,7 +94,7 @@ export const createCredentialIssuanceActionsImplementation = (
   },
 
   navigateToEidVerificationExpiredScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
+    navigation.replace(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED
     });
   },

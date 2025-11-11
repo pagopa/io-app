@@ -57,7 +57,11 @@ export const IdPayInitiativeStatusItem = ({
           flexDirection: "row"
         }}
       >
-        <H6>{I18n.t("idpay.initiative.beneficiaryDetails.status")}</H6>
+        <H6>
+          {voucherStatus
+            ? I18n.t("idpay.initiative.beneficiaryDetails.voucherStatus")
+            : I18n.t("idpay.initiative.beneficiaryDetails.status")}
+        </H6>
         <Badge
           text={statusString}
           variant={getStatusBadgeVariant(voucherStatus ?? status)}

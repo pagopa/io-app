@@ -553,7 +553,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
                               ]
                             }
                           >
-                            Valida fino al 12/23
+                            Valido fino al 02/12/23
                           </Text>
                         </View>
                       </View>

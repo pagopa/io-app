@@ -19,6 +19,7 @@ import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
 import { ItwBadge } from "../../../common/components/ItwBadge.tsx";
 import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
+import { useItwDisplayCredentialStatus } from "../hooks/useItwDisplayCredentialStatus";
 import { ItwPresentationCredentialCardFlipButton } from "./ItwPresentationCredentialCardFlipButton.tsx";
 
 type Props = {
@@ -33,10 +34,10 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
   const navigation = useIONavigation();
   const [isFlipped, setIsFlipped] = useState(false);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
-
-  const { status = "valid" } = useIOSelector(state =>
+  const { status: credentialStatus = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
+  const status = useItwDisplayCredentialStatus(credentialStatus);
 
   const handleFlipButtonPress = useCallback(() => {
     trackWalletShowBack(
