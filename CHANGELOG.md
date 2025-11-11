@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.19.0-rc.4](https://github.com/pagopa/io-app/compare/3.19.0-rc.3...3.19.0-rc.4) (2025-11-10)
+
+
+### Bug Fixes
+
+* [[IOBP-2165](https://pagopa.atlassian.net/browse/IOBP-2165)] IdPay CIE code remote feature flag ([#7589](https://github.com/pagopa/io-app/issues/7589)) ([8a00257](https://github.com/pagopa/io-app/commit/8a002570619bfce771e751aec1ce88e32e73b375))
+* [[IOBP-2173](https://pagopa.atlassian.net/browse/IOBP-2173)] track the correct event when app update requested ([#7592](https://github.com/pagopa/io-app/issues/7592)) ([9aae38d](https://github.com/pagopa/io-app/commit/9aae38d0b6958889a612b82ff50883b1972893d3))
+* **IT Wallet:** [[SIW-3266](https://pagopa.atlassian.net/browse/SIW-3266)] Replace issuer label IT translation for pid detail ([#7560](https://github.com/pagopa/io-app/issues/7560)) ([43a9064](https://github.com/pagopa/io-app/commit/43a9064cab7914cae8a5bd73cb684accf02b7b34))
+
+
+### Chores
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Temporary disables wallet url from app cold stard ([#7593](https://github.com/pagopa/io-app/issues/7593)) ([f1c135a](https://github.com/pagopa/io-app/commit/f1c135a0c4bff6067cde7f390c9b2bfca419c9d4))
+
 ## [3.19.0-rc.3](https://github.com/pagopa/io-app/compare/3.19.0-rc.2...3.19.0-rc.3) (2025-11-07)
 
 
