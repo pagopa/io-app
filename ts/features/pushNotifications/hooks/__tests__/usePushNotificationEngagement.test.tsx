@@ -178,6 +178,7 @@ describe("UseEngamentScreenFocusLogic", () => {
       )
     )
   );
+
   it('should subscribe to a "change" appstate event, and unsubscribe on unmount', () => {
     const removeMock = jest.fn();
     const eventListenerMock = jest

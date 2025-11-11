@@ -374,6 +374,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                         onResponderTerminationRequest={[Function]}
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
+                        testID="timeline_listitem_bottom_menu"
                       >
                         <View
                           accessibilityElementsHidden={true}
@@ -1142,6 +1143,7 @@ exports[`TimelineListItem Should match snapshot, all handled-status items histor
                         onResponderTerminationRequest={[Function]}
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
+                        testID="timeline_listitem_bottom_menu"
                       >
                         <View
                           accessibilityElementsHidden={true}
@@ -1910,6 +1912,7 @@ exports[`TimelineListItem Should match snapshot, no history, no link 1`] = `
                         onResponderTerminationRequest={[Function]}
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
+                        testID="timeline_listitem_bottom_menu"
                       >
                         <View
                           accessibilityElementsHidden={true}
@@ -2478,6 +2481,7 @@ exports[`TimelineListItem Should match snapshot, no history, with link 1`] = `
                         onResponderTerminationRequest={[Function]}
                         onStartShouldSetResponder={[Function]}
                         onTouchEnd={[Function]}
+                        testID="timeline_listitem_bottom_menu"
                       >
                         <View
                           accessibilityElementsHidden={true}

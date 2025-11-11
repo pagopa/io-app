@@ -2950,7 +2950,13 @@
           "a11y": {
             "title": "Servizi in primo piano"
           },
-          "title": "In primo piano"
+          "title": "In primo piano",
+          "error": {
+            "banner": {
+              "label": "Non siamo riusciti a caricare la lista dei servizi in primo piano",
+              "cta": "Prova di nuovo"
+            }
+          }
         },
         "institutions": {
           "title": "Enti in evidenza"
@@ -4496,6 +4502,7 @@
           "securityLevel": "Livello di sicurezza",
           "info": "Ulteriori info su questi dati",
           "releasedBy": "Emissione versione digitale",
+          "releasedByPid": "Emissione IT-Wallet ID",
           "attachments": "Allegati",
           "authenticSource": "Origine dei dati",
           "mdl": {
@@ -5869,7 +5876,12 @@
       "initiativeOnboardedStatus": {
         "header": "Le mie richieste",
         "ON_WAITING_LIST": {
-          "label": "In lista d'attesa"
+          "label": "In lista d'attesa",
+          "accessibilityInfoLabel": "Pulsante informazioni",
+          "bottomSheet": {
+            "title": "Sei in lista d'attesa",
+            "content": "La tua richiesta per {{initiativeName}} è stata inserita **in lista d’attesa**, poiché al momento non ci sono fondi disponibili.\n\n\n###### ***Cosa succede ora?***\n\nNon devi fare nulla: la tua richiesta rimane valida. Riceverai un messaggio con l’esito se si renderanno disponibili nuove risorse.\n\n\n###### ***Hai attivato le notifiche?***\n\nSe non l’hai già fatto, attiva le notifiche push per non perderti i messaggi.\n[Leggi come fare](https://assistenza.ioapp.it/hc/it/articles/39312288127377-Come-attivare-le-notifiche-push-su-IO)"
+          }
         },
         "ON_EVALUATION": {
           "label": "Verifica in corso"

@@ -467,6 +467,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -1001,6 +1007,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
                         </View>
                         <View>
                           Mock NeedHelp
@@ -1567,6 +1579,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -2101,6 +2119,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
                         </View>
                         <View>
                           Mock NeedHelp
@@ -2639,6 +2663,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -3173,6 +3203,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
                         </View>
                         <View>
                           Mock NeedHelp
@@ -3711,6 +3747,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -4245,6 +4287,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
                         </View>
                         <View>
                           Mock NeedHelp
@@ -4783,6 +4831,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -5319,6 +5373,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -5853,6 +5913,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
                         </View>
                         <View>
                           Mock NeedHelp
@@ -6419,6 +6485,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -6953,6 +7025,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
                         </View>
                         <View>
                           Mock NeedHelp
@@ -7626,6 +7704,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -8295,6 +8379,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
                         </View>
                         <View>
                           Mock NeedHelp
@@ -8968,6 +9058,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -9637,6 +9733,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
                         </View>
                         <View>
                           Mock NeedHelp
@@ -10310,6 +10412,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -10981,6 +11089,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -11515,6 +11629,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
                         </View>
                         <View>
                           Mock NeedHelp
@@ -12081,6 +12201,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -12615,6 +12741,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
                         </View>
                         <View>
                           Mock NeedHelp
@@ -13198,6 +13330,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -13777,6 +13915,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
                         </View>
                         <View>
                           Mock NeedHelp
@@ -14360,6 +14504,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -14939,6 +15089,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
                         </View>
                         <View>
                           Mock NeedHelp
@@ -15522,6 +15678,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -16103,6 +16265,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -16637,6 +16805,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
                         </View>
                         <View>
                           Mock NeedHelp
@@ -17203,6 +17377,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -17737,6 +17917,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
                         </View>
                         <View>
                           Mock NeedHelp
@@ -18275,6 +18461,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -18809,6 +19001,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
                         </View>
                         <View>
                           Mock NeedHelp
@@ -19347,6 +19545,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -19881,6 +20085,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           <View>
                             PAID
                           </View>
+                        </View>
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
                         </View>
                         <View>
                           Mock NeedHelp
@@ -20419,6 +20629,12 @@ exports[`MessageBottomMenu should match snapshot, all handled-status items histo
                           </View>
                         </View>
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -20845,6 +21061,12 @@ exports[`MessageBottomMenu should match snapshot, no history, empty payments, ca
                         }
                       >
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -21270,6 +21492,12 @@ exports[`MessageBottomMenu should match snapshot, no history, empty payments, ca
                           ]
                         }
                       >
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
                         <View>
                           Mock NeedHelp
                         </View>
@@ -21725,6 +21953,12 @@ exports[`MessageBottomMenu should match snapshot, no history, empty payments, ca
                         }
                       >
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -22150,6 +22384,12 @@ exports[`MessageBottomMenu should match snapshot, no history, empty payments, no
                           ]
                         }
                       >
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
                         <View>
                           Mock NeedHelp
                         </View>
@@ -22577,6 +22817,12 @@ exports[`MessageBottomMenu should match snapshot, no history, empty payments, no
                         }
                       >
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -23002,6 +23248,12 @@ exports[`MessageBottomMenu should match snapshot, no history, empty payments, no
                           ]
                         }
                       >
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
                         <View>
                           Mock NeedHelp
                         </View>
@@ -23429,6 +23681,12 @@ exports[`MessageBottomMenu should match snapshot, no history, empty payments, un
                         }
                       >
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -23854,6 +24112,12 @@ exports[`MessageBottomMenu should match snapshot, no history, empty payments, un
                           ]
                         }
                       >
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
                         <View>
                           Mock NeedHelp
                         </View>
@@ -24281,6 +24545,12 @@ exports[`MessageBottomMenu should match snapshot, no history, empty payments, un
                         }
                       >
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -24707,6 +24977,12 @@ exports[`MessageBottomMenu should match snapshot, no history, multiple payments,
                         }
                       >
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -25132,6 +25408,12 @@ exports[`MessageBottomMenu should match snapshot, no history, multiple payments,
                           ]
                         }
                       >
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
                         <View>
                           Mock NeedHelp
                         </View>
@@ -25587,6 +25869,12 @@ exports[`MessageBottomMenu should match snapshot, no history, multiple payments,
                         }
                       >
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -26012,6 +26300,12 @@ exports[`MessageBottomMenu should match snapshot, no history, multiple payments,
                           ]
                         }
                       >
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
                         <View>
                           Mock NeedHelp
                         </View>
@@ -26574,6 +26868,12 @@ exports[`MessageBottomMenu should match snapshot, no history, multiple payments,
                         }
                       >
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -27134,6 +27434,12 @@ exports[`MessageBottomMenu should match snapshot, no history, multiple payments,
                           ]
                         }
                       >
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
                         <View>
                           Mock NeedHelp
                         </View>
@@ -27696,6 +28002,12 @@ exports[`MessageBottomMenu should match snapshot, no history, multiple payments,
                         }
                       >
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -28256,6 +28568,12 @@ exports[`MessageBottomMenu should match snapshot, no history, multiple payments,
                           ]
                         }
                       >
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
                         <View>
                           Mock NeedHelp
                         </View>
@@ -28818,6 +29136,12 @@ exports[`MessageBottomMenu should match snapshot, no history, multiple payments,
                         }
                       >
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -29379,6 +29703,12 @@ exports[`MessageBottomMenu should match snapshot, no history, one payment, cance
                         }
                       >
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -29804,6 +30134,12 @@ exports[`MessageBottomMenu should match snapshot, no history, one payment, cance
                           ]
                         }
                       >
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
                         <View>
                           Mock NeedHelp
                         </View>
@@ -30259,6 +30595,12 @@ exports[`MessageBottomMenu should match snapshot, no history, one payment, cance
                         }
                       >
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -30684,6 +31026,12 @@ exports[`MessageBottomMenu should match snapshot, no history, one payment, not c
                           ]
                         }
                       >
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
                         <View>
                           Mock NeedHelp
                         </View>
@@ -31156,6 +31504,12 @@ exports[`MessageBottomMenu should match snapshot, no history, one payment, not c
                         }
                       >
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -31626,6 +31980,12 @@ exports[`MessageBottomMenu should match snapshot, no history, one payment, not c
                           ]
                         }
                       >
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
                         <View>
                           Mock NeedHelp
                         </View>
@@ -32098,6 +32458,12 @@ exports[`MessageBottomMenu should match snapshot, no history, one payment, undef
                         }
                       >
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -32568,6 +32934,12 @@ exports[`MessageBottomMenu should match snapshot, no history, one payment, undef
                           ]
                         }
                       >
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
                         <View>
                           Mock NeedHelp
                         </View>
@@ -33040,6 +33412,12 @@ exports[`MessageBottomMenu should match snapshot, no history, one payment, undef
                         }
                       >
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -33511,6 +33889,12 @@ exports[`MessageBottomMenu should match snapshot, no history, undefined payments
                         }
                       >
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -33936,6 +34320,12 @@ exports[`MessageBottomMenu should match snapshot, no history, undefined payments
                           ]
                         }
                       >
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
                         <View>
                           Mock NeedHelp
                         </View>
@@ -34391,6 +34781,12 @@ exports[`MessageBottomMenu should match snapshot, no history, undefined payments
                         }
                       >
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -34816,6 +35212,12 @@ exports[`MessageBottomMenu should match snapshot, no history, undefined payments
                           ]
                         }
                       >
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
                         <View>
                           Mock NeedHelp
                         </View>
@@ -35243,6 +35645,12 @@ exports[`MessageBottomMenu should match snapshot, no history, undefined payments
                         }
                       >
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -35668,6 +36076,12 @@ exports[`MessageBottomMenu should match snapshot, no history, undefined payments
                           ]
                         }
                       >
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
                         <View>
                           Mock NeedHelp
                         </View>
@@ -36095,6 +36509,12 @@ exports[`MessageBottomMenu should match snapshot, no history, undefined payments
                         }
                       >
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -36521,6 +36941,12 @@ exports[`MessageBottomMenu should match snapshot, no history, undefined payments
                         }
                       >
                         <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
+                        <View>
                           Mock NeedHelp
                         </View>
                         <View>
@@ -36946,6 +37372,12 @@ exports[`MessageBottomMenu should match snapshot, no history, undefined payments
                           ]
                         }
                       >
+                        <View>
+                          Opening Source: not_set
+                        </View>
+                        <View>
+                          User Type: not_set
+                        </View>
                         <View>
                           Mock NeedHelp
                         </View>
