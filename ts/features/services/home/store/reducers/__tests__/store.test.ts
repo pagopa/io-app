@@ -278,13 +278,6 @@ describe("Services home featuredServices reducer", () => {
     store.dispatch(featuredServicesGet.failure(MOCK_NETWORK_ERROR));
     expect(
       store.getState().features.services.home.featuredServices
-    ).toStrictEqual(
-      pot.someError(
-        {
-          services: MOCK_FEATURED_SERVICES
-        },
-        MOCK_NETWORK_ERROR
-      )
-    );
+    ).toStrictEqual(pot.noneError(MOCK_NETWORK_ERROR));
   });
 });

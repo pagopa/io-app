@@ -73,7 +73,6 @@ import { watchEmailNotificationPreferencesSaga } from "../features/mailCheck/sag
 import { checkEmailSaga } from "../features/mailCheck/sagas/checkEmailSaga";
 import { watchEmailValidationSaga } from "../features/mailCheck/sagas/emailValidationPollingSaga";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
-import { watchMessagesSaga } from "../features/messages/saga";
 import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
 import { checkAcknowledgedFingerprintSaga } from "../features/onboarding/saga/biometric/checkAcknowledgedFingerprintSaga";
 import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnboardingSaga";
@@ -140,6 +139,7 @@ import {
 } from "../navigation/saga/navigation";
 import { checkShouldDisplaySendEngagementScreen } from "../features/pn/loginEngagement/sagas/checkShouldDisplaySendEngagementScreen";
 import { watchCdcSaga } from "../features/bonus/cdc/common/saga";
+import { setRefreshMessagesSection } from "../features/authentication/activeSessionLogin/store/actions";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
@@ -181,6 +181,12 @@ export function* initializeApplicationSaga(
 
   const isActiveLoginSuccessProp =
     startupAction?.payload?.isActiveLoginSuccess ?? false;
+
+  yield* put(
+    setRefreshMessagesSection(
+      !(isActiveLoginSuccessProp || handleSessionExpiration)
+    )
+  );
 
   // Remove explicitly previous session data. This is done as completion of two
   // use cases:
@@ -360,9 +366,6 @@ export function* initializeApplicationSaga(
 
   // Start watching for Services actions
   yield* fork(watchServicesSaga, backendClient, sessionToken);
-
-  // Start watching for Messages actions
-  yield* fork(watchMessagesSaga, backendClient, sessionToken, keyInfo);
 
   // start watching for FIMS actions
   yield* fork(watchFimsSaga, sessionToken);
@@ -729,6 +732,8 @@ export function* initializeApplicationSaga(
     // Check if should navigate to the send activation screen
     yield* fork(checkShouldDisplaySendEngagementScreen, isFirstOnboarding);
   }
+
+  yield* put(setRefreshMessagesSection(true));
 
   yield* put(
     applicationInitialized({
