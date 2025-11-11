@@ -7,7 +7,11 @@ import { convertUnknownToError } from "../../../utils/errors";
 import { isTestEnv } from "../../../utils/environment";
 import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
-import { trackDisclaimerLoadError } from "../analytics";
+import {
+  trackDisclaimerLoadError,
+  trackUndefinedBearerToken,
+  UndefinedBearerTokenPhase
+} from "../analytics";
 import {
   errorPreconditionStatusAction,
   idlePreconditionStatusAction,
@@ -22,11 +26,25 @@ import {
   preconditionsMessageIdSelector
 } from "../store/reducers/messagePrecondition";
 import { isIOMarkdownEnabledForMessagesAndServicesSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { backendClientManager } from "../../../api/BackendClientManager";
+import { apiUrlPrefix } from "../../../config";
+import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 
 export function* handleMessagePrecondition(
-  getThirdPartyMessagePrecondition: BackendClient["getThirdPartyMessagePrecondition"],
   action: ActionType<typeof retrievingDataPreconditionStatusAction>
 ) {
+  const sessionToken = yield* select(sessionTokenSelector);
+
+  if (!sessionToken) {
+    trackUndefinedBearerToken(
+      UndefinedBearerTokenPhase.thirdPartyMessagePrecondition
+    );
+    return;
+  }
+
+  const { getThirdPartyMessagePrecondition } =
+    backendClientManager.getBackendClient(apiUrlPrefix, sessionToken);
+
   yield* race({
     response: call(
       messagePreconditionWorker,

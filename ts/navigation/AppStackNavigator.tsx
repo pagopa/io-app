@@ -149,7 +149,15 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
         [ROUTES.PAGE_NOT_FOUND]: "*"
       }
     },
-    subscribe: linkingSubscription(dispatch, store)
+    subscribe: linkingSubscription(dispatch, store),
+    getInitialURL: async () => {
+      const initialUrl = await Linking.getInitialURL();
+      // check if the url contains main/wallet to remap the url
+      if (initialUrl && /\/main\/wallet(?:[/?#]|$)/.test(initialUrl)) {
+        return initialUrl.replace(/\/main\/wallet(?=\/|[?#]|$)/, "");
+      }
+      return initialUrl;
+    }
   };
 
   /**

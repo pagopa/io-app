@@ -74,7 +74,7 @@ export const ItwPidIssuanceSection = () => {
         onPress={startReissuance("l2")}
       />
       <ListItemNav
-        value="Start L2 reissuance"
+        value="Start L3 reissuance"
         description="Start L3 PID (IT Wallet) reissuance"
         onPress={startReissuance("l3-next")}
       />
