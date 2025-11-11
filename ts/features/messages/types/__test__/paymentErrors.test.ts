@@ -60,3 +60,34 @@ describe("isMessagePaymentTimeoutError", () => {
     expect(output).toBe(true);
   });
 });
+
+describe("toGenericMessagePaymentError", () => {
+  it("should build a generic error with expected parameters", () => {
+    const anError = toGenericMessagePaymentError("An error occurred");
+    expect(anError).toEqual({
+      type: "generic",
+      message: "An error occurred"
+    });
+  });
+});
+
+describe("toSpecificMessagePaymentError", () => {
+  it("should build a specific error with expected parameters", () => {
+    const anError = toSpecificMessagePaymentError(
+      Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+    );
+    expect(anError).toEqual({
+      type: "specific",
+      details: Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+    });
+  });
+});
+
+describe("toTimeoutMessagePaymentError", () => {
+  it("should build a timeout error with expected parameters", () => {
+    const anError = toTimeoutMessagePaymentError();
+    expect(anError).toEqual({
+      type: "timeout"
+    });
+  });
+});
