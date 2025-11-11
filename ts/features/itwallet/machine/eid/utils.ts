@@ -5,4 +5,4 @@ import { EidIssuanceLevel } from "./context";
  * L3 features are enabled for levels "l3" and "l3-next".
  */
 export const isL3IssuanceFeaturesEnabled = (level?: EidIssuanceLevel) =>
-  level?.startsWith("l3") || false;
+  level === "l3" || level === "l3-next";
