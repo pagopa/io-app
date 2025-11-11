@@ -16,6 +16,16 @@ import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { serviceDetailsByIdSelector } from "../../../services/details/store/selectors";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { ThirdPartyMessageUnion } from "../../types/thirdPartyById";
+import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
+import { backendClientManager } from "../../../../api/BackendClientManager";
+
+// Mock the backendClientManager
+jest.mock("../../../../api/BackendClientManager");
+
+const mockGetThirdPartyMessage = jest.fn();
+const mockBackendClientManager = backendClientManager as jest.Mocked<
+  typeof backendClientManager
+>;
 
 describe("handleThirdPartyMessage", () => {
   const serviceDetails = {
@@ -27,17 +37,22 @@ describe("handleThirdPartyMessage", () => {
     }
   } as unknown as ServiceDetails;
 
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockBackendClientManager.getBackendClient.mockReturnValue({
+      getThirdPartyMessage: () => mockGetThirdPartyMessage
+    } as any);
+  });
+
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   describe("handleThirdPartyMessage saga", () => {
     it("should follow the proper flow when everything goes well", () => {
-      const mockGetThirdPartyMessageRequest = jest.fn();
-      const mockGetThirdPartyMessageFactory = () =>
-        mockGetThirdPartyMessageRequest;
       const messageId = "01K813A7EVHP2W5ZAYDSTX9J0E";
       const serviceId = "01K813ACAMDW4DRVXK0CEGFHGM" as ServiceId;
+      const sessionToken = "mockSessionToken";
       const action = loadThirdPartyMessage.request({
         id: messageId,
         serviceId,
@@ -45,13 +60,15 @@ describe("handleThirdPartyMessage", () => {
       });
       const thirdPartyMessage = {};
       const result = E.right({ status: 200, value: thirdPartyMessage });
-      testSaga(handleThirdPartyMessage, mockGetThirdPartyMessageFactory, action)
+      testSaga(handleThirdPartyMessage, action)
         .next()
+        .select(sessionTokenSelector)
+        .next(sessionToken)
         .select(serviceDetailsByIdSelector, serviceId)
         .next(serviceDetails)
         .call(
           withRefreshApiCall,
-          mockGetThirdPartyMessageRequest({ id: messageId }),
+          mockGetThirdPartyMessage({ id: messageId }),
           action
         )
         .next(result)
