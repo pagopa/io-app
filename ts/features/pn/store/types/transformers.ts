@@ -1,4 +1,4 @@
-import { isLeft } from "fp-ts/lib/either";
+import { isLeft } from "fp-ts/lib/Either";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { ThirdPartyMessage } from "../../../../../definitions/pn/ThirdPartyMessage";
 import { PNMessage } from "./types";
