@@ -38,7 +38,7 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { trackPNPaymentStart } from "../../../pn/analytics";
 import { formatAndValidateDueDate } from "../../../payments/checkout/utils";
 import {
-  isMessageSpecificError,
+  isMessagePaymentSpecificError,
   MessagePaymentError
 } from "../../types/paymentErrors";
 import {
@@ -73,7 +73,7 @@ type ProcessedPaymentUIData = {
 const paymentNoticeStatusFromPaymentError = (
   reason: MessagePaymentError
 ): Exclude<PaymentNoticeStatus, "default"> => {
-  const errorType = isMessageSpecificError(reason)
+  const errorType = isMessagePaymentSpecificError(reason)
     ? getV2ErrorMainType(reason.details)
     : reason.type;
   switch (errorType) {

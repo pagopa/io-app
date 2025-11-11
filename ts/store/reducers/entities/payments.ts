@@ -13,7 +13,7 @@ import {
   UpdatePaymentForMessageFailure
 } from "../../../features/messages/store/actions";
 import { isPaidPaymentFromDetailV2Enum } from "../../../utils/payment";
-import { isMessageSpecificError } from "../../../features/messages/types/paymentErrors";
+import { isMessagePaymentSpecificError } from "../../../features/messages/types/paymentErrors";
 
 export type PaidReason = Readonly<
   | {
@@ -73,7 +73,7 @@ const paymentByRptIdStateFromUpdatePaymentForMessageFailure = (
 ): PaymentByRptIdState => {
   // Only paid payments are tracked from the reducer, ignore the others
   const isPaidPayment =
-    isMessageSpecificError(payload.reason) &&
+    isMessagePaymentSpecificError(payload.reason) &&
     isPaidPaymentFromDetailV2Enum(payload.reason.details);
   if (!isPaidPayment) {
     return state;

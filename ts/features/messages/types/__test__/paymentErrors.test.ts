@@ -1,8 +1,8 @@
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import {
-  isMessageGenericError,
-  isMessageSpecificError,
-  isMessageTimeoutError,
+  isMessagePaymentGenericError,
+  isMessagePaymentSpecificError,
+  isMessagePaymentTimeoutError,
   MessagePaymentError,
   toGenericError,
   toSpecificError,
@@ -15,47 +15,47 @@ const specificError: MessagePaymentError = toSpecificError(
 );
 const timeoutError: MessagePaymentError = toTimeoutError();
 
-describe("isMessageGenericError", () => {
+describe("isMessagePaymentGenericError", () => {
   it("should return true for a generic error", () => {
-    const output = isMessageGenericError(genericError);
+    const output = isMessagePaymentGenericError(genericError);
     expect(output).toBe(true);
   });
   it("should return false for a specific error", () => {
-    const output = isMessageGenericError(specificError);
+    const output = isMessagePaymentGenericError(specificError);
     expect(output).toBe(false);
   });
   it("should return false for a timeout error", () => {
-    const output = isMessageGenericError(timeoutError);
+    const output = isMessagePaymentGenericError(timeoutError);
     expect(output).toBe(false);
   });
 });
 
-describe("isMessageSpecificError", () => {
+describe("isMessagePaymentSpecificError", () => {
   it("should return false for a generic error", () => {
-    const output = isMessageSpecificError(genericError);
+    const output = isMessagePaymentSpecificError(genericError);
     expect(output).toBe(false);
   });
   it("should return true for a specific error", () => {
-    const output = isMessageSpecificError(specificError);
+    const output = isMessagePaymentSpecificError(specificError);
     expect(output).toBe(true);
   });
   it("should return false for a timeout error", () => {
-    const output = isMessageSpecificError(timeoutError);
+    const output = isMessagePaymentSpecificError(timeoutError);
     expect(output).toBe(false);
   });
 });
 
-describe("isMessageTimeoutError", () => {
+describe("isMessagePaymentTimeoutError", () => {
   it("should return false for a generic error", () => {
-    const output = isMessageTimeoutError(genericError);
+    const output = isMessagePaymentTimeoutError(genericError);
     expect(output).toBe(false);
   });
   it("should return false for a specific error", () => {
-    const output = isMessageTimeoutError(specificError);
+    const output = isMessagePaymentTimeoutError(specificError);
     expect(output).toBe(false);
   });
   it("should return true for a timeout error", () => {
-    const output = isMessageTimeoutError(timeoutError);
+    const output = isMessagePaymentTimeoutError(timeoutError);
     expect(output).toBe(true);
   });
 });

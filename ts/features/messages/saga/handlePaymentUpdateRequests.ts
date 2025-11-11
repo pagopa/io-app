@@ -25,7 +25,7 @@ import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJso
 import { isTestEnv } from "../../../utils/environment";
 import { trackMessagePaymentFailure } from "../analytics";
 import {
-  isMessageGenericError,
+  isMessagePaymentGenericError,
   toGenericError,
   toSpecificError,
   toTimeoutError,
@@ -176,7 +176,7 @@ const unknownErrorToString = (e: unknown): string => {
 };
 
 const trackPaymentErrorIfNeeded = (error: MessagePaymentError) => {
-  if (isMessageGenericError(error)) {
+  if (isMessagePaymentGenericError(error)) {
     trackMessagePaymentFailure(error.message);
   }
 };

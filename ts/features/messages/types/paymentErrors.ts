@@ -10,13 +10,13 @@ export type MessageGenericError = { type: "generic"; message: string };
 export type MessageSpecificError = { type: "specific"; details: Detail_v2Enum };
 export type MessageTimeoutError = { type: "timeout" };
 
-export const isMessageGenericError = (
+export const isMessagePaymentGenericError = (
   error: MessagePaymentError
 ): error is MessageGenericError => error.type === "generic";
-export const isMessageSpecificError = (
+export const isMessagePaymentSpecificError = (
   error: MessagePaymentError
 ): error is MessageSpecificError => error.type === "specific";
-export const isMessageTimeoutError = (
+export const isMessagePaymentTimeoutError = (
   error: MessagePaymentError
 ): error is MessageTimeoutError => error.type === "timeout";
 
@@ -24,8 +24,8 @@ export const isTimeoutOrGenericOrOngoingPaymentError = (
   input: RemoteValue<unknown, MessagePaymentError>
 ) =>
   isError(input) &&
-  (isMessageTimeoutError(input.error) ||
-    isMessageGenericError(input.error) ||
+  (isMessagePaymentTimeoutError(input.error) ||
+    isMessagePaymentGenericError(input.error) ||
     isOngoingPaymentFromDetailV2Enum(input.error.details));
 
 export const toGenericError = (message: string): MessagePaymentError => ({

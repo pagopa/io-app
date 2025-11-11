@@ -39,7 +39,7 @@ import {
   isRevokedPaymentFromDetailV2Enum
 } from "../../../../utils/payment";
 import {
-  isMessageSpecificError,
+  isMessagePaymentSpecificError,
   isTimeoutOrGenericOrOngoingPaymentError,
   MessagePaymentError
 } from "../../types/paymentErrors";
@@ -285,7 +285,7 @@ const paymentErrorToPaymentStatistics = (
   accumulator: PaymentStatistics,
   paymentError: MessagePaymentError
 ): PaymentStatistics => {
-  if (isMessageSpecificError(paymentError)) {
+  if (isMessagePaymentSpecificError(paymentError)) {
     const details = paymentError.details;
     if (isPaidPaymentFromDetailV2Enum(details)) {
       return {
