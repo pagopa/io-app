@@ -268,16 +268,14 @@ jest.mock("react-native-bluetooth-state-manager", () => ({
   getState: jest.fn().mockResolvedValue(true)
 }));
 
-jest.mock("@pagopa/io-react-native-iso18013", () => {
-  return {
-    CBOR: {
-      decodeIssuerSigned: jest.fn(() => Promise.resolve("test"))
-    },
-    COSE: {
-      verify: jest.fn(() => Promise.resolve(true))
-    }
-  };
-});
+jest.mock("@pagopa/io-react-native-iso18013", () => ({
+  CBOR: {
+    decodeIssuerSigned: jest.fn(() => Promise.resolve("test"))
+  },
+  COSE: {
+    verify: jest.fn(() => Promise.resolve(true))
+  }
+}));
 
 jest.mock("@pagopa/io-react-native-cie", () => ({
   CieManager: jest.fn()
