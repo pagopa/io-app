@@ -18,8 +18,7 @@ export type CdcCardProps = {
 };
 
 // TODO: Edit this logo when the organization logo is available
-const CDC_ORGANIZATION_LOGO =
-  "https://assets.cdn.io.pagopa.it/logos/organizations/1199250158.png";
+const CDC_ORGANIZATION_LOGO = `https://assets.cdn.io.pagopa.it/logos/services/01jv4m365chazn5c0fdr62dcvd.png`;
 
 /**
  * Component that renders the CdC wallet card in the wallet

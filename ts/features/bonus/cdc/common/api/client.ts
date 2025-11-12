@@ -9,7 +9,7 @@ export const createCdcClient = (baseUrl: string, sessionToken: string) =>
     withDefaults: op => params => {
       const paramsWithDefaults = {
         ...params,
-        Bearer: sessionToken
+        Bearer: "Bearer " + sessionToken
       } as Parameters<typeof op>[0];
 
       return op(paramsWithDefaults);
