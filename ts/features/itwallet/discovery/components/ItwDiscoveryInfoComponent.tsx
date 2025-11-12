@@ -207,17 +207,19 @@ export const ItwDiscoveryInfoComponent = () => {
             )}
           />
         </VStack>
-        <VSpacer size={32} />
-        <Divider />
-        <View
-          ref={productHighlightsRef}
-          onLayout={event => {
-            setProductHighlightsLayout({
-              y: event.nativeEvent.layout.y,
-              height: event.nativeEvent.layout.height
-            });
-          }}
-        >
+      </ContentWrapper>
+      <VSpacer size={32} />
+      <View
+        ref={productHighlightsRef}
+        onLayout={event => {
+          setProductHighlightsLayout({
+            y: event.nativeEvent.layout.y,
+            height: event.nativeEvent.layout.height
+          });
+        }}
+      >
+        <ContentWrapper>
+          <Divider />
           <DetailBlock
             title={I18n.t(
               "features.itWallet.discovery.screen.itw.details.1.title"
@@ -257,19 +259,19 @@ export const ItwDiscoveryInfoComponent = () => {
             )}
             icon="euStars"
           />
-        </View>
 
-        <VSpacer size={24} />
-        <IOMarkdown
-          content={I18n.t("features.itWallet.discovery.screen.itw.tos", {
-            tos_url
-          })}
-          rules={generateItwIOMarkdownRules({
-            linkCallback: trackOpenItwTos,
-            paragraphSize: "small"
-          })}
-        />
-      </ContentWrapper>
+          <VSpacer size={24} />
+          <IOMarkdown
+            content={I18n.t("features.itWallet.discovery.screen.itw.tos", {
+              tos_url
+            })}
+            rules={generateItwIOMarkdownRules({
+              linkCallback: trackOpenItwTos,
+              paragraphSize: "small"
+            })}
+          />
+        </ContentWrapper>
+      </View>
     </IOScrollViewWithReveal>
   );
 };
