@@ -19,20 +19,6 @@ export const thirdPartySenderDenominationSelector = (
     O.toUndefined
   );
 
-export const isAarMessageDelegatedSelector = (
-  state: GlobalState,
-  iun: string
-): boolean => {
-  const currentState = currentAARFlowData(state);
-  const isCorrectState =
-    currentState.type === sendAARFlowStates.fetchingNotificationData ||
-    currentState.type === sendAARFlowStates.displayingNotificationData;
-  return (
-    isCorrectState &&
-    currentState.iun === iun &&
-    currentState.mandateId !== undefined
-  );
-};
 export const aarAdresseeDenominationSelector = (
   state: GlobalState,
   iun: string

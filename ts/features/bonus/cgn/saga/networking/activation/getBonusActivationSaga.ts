@@ -25,7 +25,7 @@ const statusProgressRecord: Record<403 | 409, CgnActivationProgressEnum> = {
   409: CgnActivationProgressEnum.EXISTS
 };
 
-export type CgnStatusPollingSaga = ReturnType<typeof handleCgnStatusPolling>;
+type CgnStatusPollingSaga = ReturnType<typeof handleCgnStatusPolling>;
 
 /**
  * Function that handles the activation of a CGN
