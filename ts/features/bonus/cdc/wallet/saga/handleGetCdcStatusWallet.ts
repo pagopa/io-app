@@ -43,8 +43,7 @@ export function* handleGetCdcStatusWallet(
         ])
       );
       yield* put(getCdcStatusWallet.success(cdcInfo));
-    } else if (cdcStatusResponse.right.status === 401) {
-      // TODO: When the swagger definition is updated, here must be added the logic to handle the 404 status instead of the 401 status
+    } else if (cdcStatusResponse.right.status === 404) {
       yield* put(getCdcStatusWallet.cancel());
     } else {
       yield* put(
