@@ -8,7 +8,17 @@ import { WalletPreferencesActions } from "./preferences";
  */
 export const walletUpdate = createStandardAction("WALLET_UPDATE")();
 
-type WalletBaseActions = ActionType<typeof walletUpdate>;
+/**
+ * Action for external wallet update requests.
+ * This action is dispatched only when wallet updates are needed due to external deep links.
+ */
+export const externalWalletUpdate = createStandardAction(
+  "EXTERNAL_WALLET_UPDATE"
+)();
+
+type WalletBaseActions = ActionType<
+  typeof walletUpdate | typeof externalWalletUpdate
+>;
 
 export type WalletActions =
   | WalletBaseActions
