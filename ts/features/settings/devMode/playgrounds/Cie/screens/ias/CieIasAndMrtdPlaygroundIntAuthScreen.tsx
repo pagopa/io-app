@@ -3,7 +3,11 @@ import {
   ListItemSwitch,
   TextInput
 } from "@pagopa/io-app-design-system";
-import { CieManager, type NfcEvent } from "@pagopa/io-react-native-cie";
+import {
+  CieManager,
+  InternalAuthResponse,
+  type NfcEvent
+} from "@pagopa/io-react-native-cie";
 import { useEffect, useState } from "react";
 import {
   Alert,
@@ -15,17 +19,20 @@ import {
 } from "react-native";
 
 import { useHeaderHeight } from "@react-navigation/elements";
-import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import { useScreenEndMargin } from "../../../../../hooks/useScreenEndMargin";
-import { ReadStatusComponent } from "./components/ReadStatusComponent";
-import { encodeChallenge } from "./utils/encoding";
-import { ReadStatus } from "./types/ReadStatus";
+import { SETTINGS_ROUTES } from "../../../../../common/navigation/routes";
+import { useIONavigation } from "../../../../../../../navigation/params/AppParamsList";
+import { useHeaderSecondLevel } from "../../../../../../../hooks/useHeaderSecondLevel";
+import { useScreenEndMargin } from "../../../../../../../hooks/useScreenEndMargin";
+import { ReadStatusComponent } from "../../components/ReadStatusComponent";
+import { encodeChallenge } from "../../utils/encoding";
+import { ReadStatus } from "../../types/ReadStatus";
 
-export function CieIasAndMrtdPlaygroundIntAuth() {
+export function CieIasAndMrtdPlaygroundIntAuthScreen() {
   const navigation = useIONavigation();
   const [status, setStatus] = useState<ReadStatus>("idle");
+  const [successResult, setSuccessResult] = useState<
+    InternalAuthResponse | undefined
+  >(undefined);
   const [event, setEvent] = useState<NfcEvent>();
   const [challenge, setChallenge] = useState<string>("");
 
@@ -34,7 +41,7 @@ export function CieIasAndMrtdPlaygroundIntAuth() {
     setIsBase64Encoding(previousState => !previousState);
 
   useHeaderSecondLevel({
-    title: "CIE IAT+MRTD Playground (Internal Auth)"
+    title: "Internal Auth"
   });
 
   const headerHeight = useHeaderHeight();
@@ -53,25 +60,10 @@ export function CieIasAndMrtdPlaygroundIntAuth() {
         );
       }),
       // Start listening for attributes success
-      CieManager.addListener(
-        "onInternalAuthenticationSuccess",
-        internalAutheticationResult => {
-          setStatus("success");
-          navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
-            screen:
-              SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_INTERNAL_AUTH_RESULTS,
-            params: {
-              result: internalAutheticationResult,
-              challenge,
-              encodedChallenge: encodeChallenge(
-                challenge,
-                isBase64Encoding ? "base64" : "hex"
-              ),
-              encoding: isBase64Encoding ? "base64" : "hex"
-            }
-          });
-        }
-      )
+      CieManager.addListener("onInternalAuthenticationSuccess", result => {
+        setStatus("success");
+        setSuccessResult(result);
+      })
     ];
 
     return () => {
@@ -80,16 +72,27 @@ export function CieIasAndMrtdPlaygroundIntAuth() {
       // Ensure the reading is stopped when the screen is unmounted
       void CieManager.stopReading();
     };
-  }, [challenge, isBase64Encoding, navigation]);
+  }, []);
+
+  useEffect(() => {
+    if (status === "success" && successResult) {
+      navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+        screen:
+          SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_INTERNAL_AUTH_RESULTS,
+        params: {
+          result: successResult,
+          challenge,
+          encodedChallenge: encodeChallenge(
+            challenge,
+            isBase64Encoding ? "base64" : "hex"
+          ),
+          encoding: isBase64Encoding ? "base64" : "hex"
+        }
+      });
+    }
+  }, [status, navigation, challenge, isBase64Encoding, successResult]);
 
   const handleStartReading = async () => {
-    if (Platform.OS === "android") {
-      return Alert.alert(
-        "Not supported",
-        "Internal authentication is not supported on Android"
-      );
-    }
-
     setEvent(undefined);
     setStatus("reading");
 
@@ -129,11 +132,6 @@ export function CieIasAndMrtdPlaygroundIntAuth() {
       >
         <View style={styles.progressContainer}>
           <ReadStatusComponent
-            /**
-             * TODO: https://pagopa.atlassian.net/browse/IOPID-3434
-             * Android and iOS native part must be updated
-             * to provide a progress float value from 0 to 1
-             * */
             progress={event?.progress}
             status={status}
             step={event?.name}
@@ -154,7 +152,7 @@ export function CieIasAndMrtdPlaygroundIntAuth() {
         </View>
         <IOButton
           variant="solid"
-          label={status === "reading" ? "Stop" : "Sign challenge"}
+          label={status === "reading" ? "Stop" : "Start sign"}
           disabled={challenge.length === 0}
           onPress={() =>
             status === "reading" ? handleStopReading() : handleStartReading()
