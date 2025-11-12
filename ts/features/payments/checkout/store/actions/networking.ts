@@ -24,7 +24,7 @@ export const paymentsGetPaymentDetailsAction = createAsyncAction(
   "PAYMENTS_GET_PAYMENT_DETAILS_FAILURE"
 )<RptId, PaymentRequestsGetResponse, NetworkError | WalletPaymentFailure>();
 
-export type PaymentMethodsRequest = {
+type PaymentMethodsRequest = {
   amount?: number;
 };
 
@@ -50,7 +50,7 @@ export const paymentsGetRecentPaymentMethodUsedAction = createAsyncAction(
   "PAYMENTS_GET_RECENT_PAYMENT_METHOD_FAILURE"
 )<undefined, UserLastPaymentMethodResponse, NetworkError>();
 
-export type CalculateFeePayload = {
+type CalculateFeePayload = {
   paymentMethodId: string;
   idPsp?: string;
 };

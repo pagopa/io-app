@@ -59,7 +59,7 @@ export function* handleStartActivation(
   }
 }
 
-export type GetEycaStatus = "COMPLETED" | "PROCESSING" | "ERROR" | "NOT_FOUND";
+type GetEycaStatus = "COMPLETED" | "PROCESSING" | "ERROR" | "NOT_FOUND";
 /**
  * ask for the current status of EYCA activation
  * it returns the status {@link GetEycaStatus} - right case

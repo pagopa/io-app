@@ -29,7 +29,7 @@ type Props = {
   onAuthorizationOutcome: (outcome: WalletPaymentOutcome) => void;
 };
 
-export type WalletPaymentAuthorizationModal = {
+type WalletPaymentAuthorizationModal = {
   isLoading: boolean;
   isError: boolean;
   isPendingAuthorization: boolean;
