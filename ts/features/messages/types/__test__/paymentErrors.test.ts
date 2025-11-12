@@ -69,7 +69,9 @@ describe("isTimeoutOrGenericOrOngoingPaymentError", () => {
     { input: remoteError(timeoutError), expected: true },
     ...Object.values(Detail_v2Enum).map(detail => ({
       input: remoteError(toSpecificMessagePaymentError(detail)),
-      expected: isOngoingPaymentFromDetailV2Enum(detail)
+      expected:
+        detail === Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO ||
+        detail === Detail_v2Enum.PPT_PAGAMENTO_IN_CORSO
     }))
   ])(
     'should return "$expected" when error is "$input.error.details"',
