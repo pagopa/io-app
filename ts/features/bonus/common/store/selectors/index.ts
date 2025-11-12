@@ -6,20 +6,18 @@ import { BonusAvailable } from "../../../../../../definitions/content/BonusAvail
 import { BonusesAvailable } from "../../../../../../definitions/content/BonusesAvailable";
 import { GlobalState } from "../../../../../store/reducers/types";
 
-import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
 import { BonusVisibilityEnum } from "../../../../../../definitions/content/BonusVisibility";
-import { servicesDetailsSelector } from "../../../../services/details/store/selectors";
 import { mapBonusIdFeatureFlag } from "../../utils";
 import { AvailableBonusTypesState } from "../reducers/availableBonusesTypes";
 
 /**
  * return all available bonus: visibile, hidden or experimental
  */
-export const allAvailableBonusTypesSelector = (
+const allAvailableBonusTypesSelector = (
   state: GlobalState
 ): AvailableBonusTypesState => state.bonus.availableBonusTypes;
 
-export const experimentalAndVisibleBonus = (bonus: BonusAvailable): boolean =>
+const experimentalAndVisibleBonus = (bonus: BonusAvailable): boolean =>
   [BonusVisibilityEnum.experimental, BonusVisibilityEnum.visible].some(
     v => v === bonus.visibility
   );
@@ -79,19 +77,4 @@ export const availableBonusTypesSelectorFromId = (idBonusType: number) =>
       pot.map(ab, abs => abs.find(i => i.id_type === idBonusType)),
       undefined
     )
-  );
-
-export const serviceFromAvailableBonusSelector = (idBonusType: number) =>
-  createSelector(
-    supportedAvailableBonusSelector,
-    servicesDetailsSelector,
-    (supportedBonus, servicesById): O.Option<ServiceDetails> =>
-      pipe(
-        supportedBonus.find(sp => sp.id_type === idBonusType),
-        O.fromNullable,
-        O.chainNullableK(bonus =>
-          bonus.service_id ? servicesById[bonus.service_id] : undefined
-        ),
-        O.chainNullableK(pot.toUndefined)
-      )
   );

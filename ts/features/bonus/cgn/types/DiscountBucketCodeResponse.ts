@@ -32,7 +32,3 @@ type DiscountBucketCodeResponseFailure =
 export type DiscountBucketCodeResponse =
   | DiscountBucketCodeResponseSuccess
   | DiscountBucketCodeResponseFailure;
-
-export const isDiscountBucketCodeResponseSuccess = (
-  dbc: DiscountBucketCodeResponse
-): dbc is DiscountBucketCodeResponseSuccess => dbc.kind === "success";
