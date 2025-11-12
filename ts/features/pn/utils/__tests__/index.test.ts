@@ -389,7 +389,7 @@ describe("paymentsFromSendMessage", () => {
       }
     ]
   } as unknown as PNMessage;
-  it(`should return one matching payments when the message is defined and the input fiscal code is undefined`, () => {
+  it(`should return one matching payments when the message is defined and the input fiscal code is defined`, () => {
     const output = paymentsFromSendMessage(userFiscalCode, recipientsWithTaxId);
     expect(output).toEqual([
       {
@@ -398,7 +398,7 @@ describe("paymentsFromSendMessage", () => {
       }
     ]);
   });
-  it(`should return two matching payments when the message pot is defined and the input fiscal code is undefined`, () => {
+  it(`should return two matching payments when the message is defined and the input fiscal code is undefined`, () => {
     const output = paymentsFromSendMessage(undefined, recipientsWithTaxId);
     expect(output).toEqual([
       {
