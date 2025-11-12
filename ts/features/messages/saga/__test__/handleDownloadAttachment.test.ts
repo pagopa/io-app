@@ -24,6 +24,8 @@ import {
 import { KeyInfo } from "../../../lollipop/utils/crypto";
 import { downloadAARAttachmentSaga } from "../../../pn/aar/saga/downloadAARAttachmentSaga";
 import { thirdPartyMessageSelector } from "../../store/reducers/thirdPartyById";
+import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
+import { getKeyInfo } from "../../../lollipop/saga";
 import * as analytics from "../../analytics";
 
 const messageId = "01JTT75QYSHWBTNTFM3CZZ17SH";
@@ -61,13 +63,12 @@ jest.mock("react-native-blob-util", () => ({
 describe("handleDownloadAttachment", () => {
   describe("handleDownloadAttachment", () => {
     it("should race 'downloadAttachmentWorker' if it is not an AAR Third Party message and terminate if the cancel action is received", () => {
-      testSaga(
-        handleDownloadAttachment,
-        sessionToken,
-        keyInfo,
-        downloadAttachmentRequest
-      )
+      testSaga(handleDownloadAttachment, downloadAttachmentRequest)
         .next()
+        .select(sessionTokenSelector)
+        .next(sessionToken)
+        .call(getKeyInfo)
+        .next(keyInfo)
         .call(testable!.computeThirdPartyMessageData, messageId)
         .next({ ephemeralAARThirdPartyMessage: false, mandateId: undefined })
         .race({
@@ -83,13 +84,12 @@ describe("handleDownloadAttachment", () => {
         .isDone();
     });
     it("should race 'downloadAttachmentWorker' if it is not an AAR Third Party message and terminate when such saga is done", () => {
-      testSaga(
-        handleDownloadAttachment,
-        sessionToken,
-        keyInfo,
-        downloadAttachmentRequest
-      )
+      testSaga(handleDownloadAttachment, downloadAttachmentRequest)
         .next()
+        .select(sessionTokenSelector)
+        .next(sessionToken)
+        .call(getKeyInfo)
+        .next(keyInfo)
         .call(testable!.computeThirdPartyMessageData, messageId)
         .next({ ephemeralAARThirdPartyMessage: false, mandateId: undefined })
         .race({
@@ -105,13 +105,12 @@ describe("handleDownloadAttachment", () => {
         .isDone();
     });
     it("should race 'downloadAARAttachmentSaga' if it is an AAR Third Party message and terminate if the cancel action is received", () => {
-      testSaga(
-        handleDownloadAttachment,
-        sessionToken,
-        keyInfo,
-        downloadAttachmentRequest
-      )
+      testSaga(handleDownloadAttachment, downloadAttachmentRequest)
         .next()
+        .select(sessionTokenSelector)
+        .next(sessionToken)
+        .call(getKeyInfo)
+        .next(keyInfo)
         .call(testable!.computeThirdPartyMessageData, messageId)
         .next({ ephemeralAARThirdPartyMessage: true, mandateId })
         .race({
@@ -128,13 +127,12 @@ describe("handleDownloadAttachment", () => {
         .isDone();
     });
     it("should race 'downloadAARAttachmentSaga' if it is an AAR Third Party message and terminate when such saga is done", () => {
-      testSaga(
-        handleDownloadAttachment,
-        sessionToken,
-        keyInfo,
-        downloadAttachmentRequest
-      )
+      testSaga(handleDownloadAttachment, downloadAttachmentRequest)
         .next()
+        .select(sessionTokenSelector)
+        .next(sessionToken)
+        .call(getKeyInfo)
+        .next(keyInfo)
         .call(testable!.computeThirdPartyMessageData, messageId)
         .next({ ephemeralAARThirdPartyMessage: true, mandateId })
         .race({
