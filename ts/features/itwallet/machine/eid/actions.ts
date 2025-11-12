@@ -8,6 +8,7 @@ import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import {
+  trackItWalletIDMethodSelected,
   trackItwDeactivated,
   trackSaveCredentialSuccess,
   updateITWStatusAndPIDProperties
@@ -253,19 +254,6 @@ export const createEidIssuanceActionsImplementation = (
     toast.success(I18n.t("features.itWallet.issuance.credentialResult.toast"));
   },
 
-  trackWalletInstanceCreation: ({
-    context
-  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
-    trackSaveCredentialSuccess(
-      isL3IssuanceFeaturesEnabled(context.level) ? "ITW_PID" : "ITW_ID_V2"
-    );
-    updateITWStatusAndPIDProperties(store.getState());
-  },
-  trackWalletInstanceRevocation: () => {
-    const isItwL3 = itwLifecycleIsITWalletValidSelector(store.getState());
-    trackItwDeactivated(store.getState(), isItwL3 ? "ITW_PID" : "ITW_ID_V2");
-  },
-
   storeAuthLevel: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
@@ -290,5 +278,31 @@ export const createEidIssuanceActionsImplementation = (
   >(() => {
     const pid = itwCredentialsEidSelector(store.getState());
     return { eid: O.toUndefined(pid) };
-  })
+  }),
+
+  trackWalletInstanceCreation: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    trackSaveCredentialSuccess(
+      isL3IssuanceFeaturesEnabled(context.level) ? "ITW_PID" : "ITW_ID_V2"
+    );
+    updateITWStatusAndPIDProperties(store.getState());
+  },
+
+  trackWalletInstanceRevocation: () => {
+    const isItwL3 = itwLifecycleIsITWalletValidSelector(store.getState());
+    trackItwDeactivated(store.getState(), isItwL3 ? "ITW_PID" : "ITW_ID_V2");
+  },
+
+  trackIdentificationMethodSelected: ({
+    context,
+    event
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assertEvent(event, "select-identification-mode");
+
+    trackItWalletIDMethodSelected({
+      ITW_ID_method: event.mode,
+      itw_flow: isL3IssuanceFeaturesEnabled(context.level) ? "L3" : "L2"
+    });
+  }
 });

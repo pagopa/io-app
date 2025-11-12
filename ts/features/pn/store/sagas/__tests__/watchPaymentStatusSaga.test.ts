@@ -9,13 +9,13 @@ import {
 } from "../../../../pushNotifications/analytics";
 import { profileFiscalCodeSelector } from "../../../../settings/common/store/selectors";
 import { trackPNPaymentStatus } from "../../../analytics";
-import { paymentsFromPNMessagePot } from "../../../utils";
+import { paymentsFromSendMessage } from "../../../utils";
 import { getRptIdStringFromPayment } from "../../../utils/rptId";
 import {
   cancelPNPaymentStatusTracking,
   startPNPaymentStatusTracking
 } from "../../actions";
-import { pnMessageFromIdSelector } from "../../reducers";
+import { sendMessageFromIdSelector } from "../../reducers";
 import {
   testable,
   watchPaymentStatusForMixpanelTracking
@@ -123,10 +123,10 @@ describe("watchPaymentStatusSaga", () => {
             .next()
             .select(profileFiscalCodeSelector)
             .next(taxId)
-            .select(pnMessageFromIdSelector, messageId)
+            .select(sendMessageFromIdSelector, messageId)
             .next(pnMessage)
             .call(
-              paymentsFromPNMessagePot,
+              paymentsFromSendMessage,
               sendOpeningSource === "message" ? taxId : undefined,
               pnMessage
             )

@@ -4,9 +4,9 @@ import {
   cancelPNPaymentStatusTracking,
   startPNPaymentStatusTracking
 } from "../actions";
-import { maxVisiblePaymentCount, paymentsFromPNMessagePot } from "../../utils";
+import { maxVisiblePaymentCount, paymentsFromSendMessage } from "../../utils";
 import { profileFiscalCodeSelector } from "../../../settings/common/store/selectors";
-import { pnMessageFromIdSelector } from "../reducers";
+import { sendMessageFromIdSelector } from "../reducers";
 import { trackPNPaymentStatus } from "../../analytics";
 import { getRptIdStringFromPayment } from "../../utils/rptId";
 import { paymentStatisticsForMessageUncachedSelector } from "../../../messages/store/reducers/payments";
@@ -28,12 +28,12 @@ export function* watchPaymentStatusForMixpanelTracking(
 ) {
   const { openingSource, userType, messageId } = action.payload;
   const currentFiscalCode = yield* select(profileFiscalCodeSelector);
-  const message = yield* select(pnMessageFromIdSelector, messageId);
+  const message = yield* select(sendMessageFromIdSelector, messageId);
 
   const fiscalCodeOrUndefined =
     openingSource === "message" ? currentFiscalCode : undefined;
   const payments = yield* call(
-    paymentsFromPNMessagePot,
+    paymentsFromSendMessage,
     fiscalCodeOrUndefined,
     message
   );
