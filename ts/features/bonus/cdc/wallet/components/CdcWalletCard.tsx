@@ -10,8 +10,6 @@ import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks
 import { CdcCard, CdcCardProps } from "./CdcCard";
 
 const WrappedCdcCard = (props: CdcCardProps) => {
-  const { ...cardProps } = props;
-
   const cdcWalletConfig = useIOSelector(cdcWalletVisibilityConfigSelector);
   const isMixpanelEnabled = useIOSelector(isMixpanelEnabledSelector) ?? false;
 
@@ -32,7 +30,7 @@ const WrappedCdcCard = (props: CdcCardProps) => {
 
   return (
     <WalletCardPressableBase onPress={handleOnPress}>
-      <CdcCard {...cardProps} />
+      <CdcCard {...props} />
     </WalletCardPressableBase>
   );
 };
