@@ -25,22 +25,13 @@ const CDC_ORGANIZATION_LOGO =
  * Component that renders the CdC wallet card in the wallet
  */
 export const CdcCard = (props: CdcCardProps) => {
-  const useCdcCardStyles = () => {
-    const { themeType } = useIOThemeContext();
+  const { themeType } = useIOThemeContext();
 
-    const isDarkMode = themeType === "dark";
+  const isDarkMode = themeType === "dark";
 
-    const textColor = isDarkMode
-      ? ("blueIO-50" as const)
-      : ("blueIO-850" as const);
-
-    return {
-      isDarkMode,
-      textColor
-    };
-  };
-
-  const { isDarkMode, textColor } = useCdcCardStyles();
+  const textColor = isDarkMode
+    ? ("blueIO-50" as const)
+    : ("blueIO-850" as const);
 
   return (
     <View style={styles.container}>
