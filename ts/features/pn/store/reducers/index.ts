@@ -1,7 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as RA from "fp-ts/lib/ReadonlyArray";
 import { combineReducers } from "redux";
 import { PersistPartial } from "redux-persist";
 import { createSelector } from "reselect";
@@ -16,7 +13,7 @@ import {
   PnBannerDismissState
 } from "../../reminderBanner/reducer/bannerDismiss";
 import { getRptIdStringFromPayment } from "../../utils/rptId";
-import { toPNMessage } from "../types/transformers";
+import { toSENDMessage } from "../types/transformers";
 import { PNMessage } from "../types/types";
 import {
   persistedSendLoginEngagementReducer,
@@ -38,36 +35,35 @@ export const pnReducer = combineReducers<PnState, Action>({
   loginEngagement: persistedSendLoginEngagementReducer
 });
 
-export const pnMessageFromIdSelector = createSelector(
+export const sendMessageFromIdSelector = createSelector(
   thirdPartyFromIdSelector,
-  thirdPartyMessage => pot.map(thirdPartyMessage, _ => toPNMessage(_))
+  thirdPartyMessagePot => {
+    const thirdPartyMessage = pot.getOrElse(thirdPartyMessagePot, undefined);
+    if (thirdPartyMessage == null) {
+      return undefined;
+    }
+    // Be aware that this call generates a new instance so
+    // we have to cache the function using createSelector
+    return toSENDMessage(thirdPartyMessage);
+  }
 );
 
-export const pnUserSelectedPaymentRptIdSelector = (
+export const sendUserSelectedPaymentRptIdSelector = (
   state: GlobalState,
-  pnMessagePot: pot.Pot<O.Option<PNMessage>, Error>
-) =>
-  pipe(
-    pnMessagePot,
-    pot.toOption,
-    O.flatten,
-    O.map(message => message.recipients),
-    O.chain(recipients =>
-      pipe(
-        recipients,
-        RA.findFirstMap(recipient =>
-          pipe(
-            recipient.payment,
-            O.fromNullable,
-            O.map(getRptIdStringFromPayment),
-            O.map(rptId => isUserSelectedPaymentSelector(state, rptId)),
-            O.getOrElse(() => false)
-          )
-            ? O.fromNullable(recipient.payment)
-            : O.none
-        )
-      )
-    ),
-    O.map(getRptIdStringFromPayment),
-    O.toUndefined
-  );
+  sendMessage: PNMessage | undefined
+) => {
+  const recipients = sendMessage?.recipients;
+  if (recipients == null) {
+    return undefined;
+  }
+  for (const recipient of recipients) {
+    const payment = recipient.payment;
+    if (payment != null) {
+      const paymentRptId = getRptIdStringFromPayment(payment);
+      if (isUserSelectedPaymentSelector(state, paymentRptId)) {
+        return paymentRptId;
+      }
+    }
+  }
+  return undefined;
+};

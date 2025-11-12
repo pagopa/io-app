@@ -1,5 +1,3 @@
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import { ComponentProps } from "react";
 import configureMockStore from "redux-mock-store";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -8,7 +6,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import * as MSG_DETAILS_HEADER from "../../../messages/components/MessageDetail/MessageDetailsHeader";
 import { thirdPartyMessage } from "../../__mocks__/pnMessage";
-import { toPNMessage } from "../../store/types/transformers";
+import { toSENDMessage } from "../../store/types/transformers";
 import { PNMessage } from "../../store/types/types";
 import { MessageDetails } from "../MessageDetails";
 import PN_ROUTES from "../../navigation/routes";
@@ -56,23 +54,19 @@ describe("MessageDetails component", () => {
     });
     sendOpeningSources.forEach(sendOpeningSource =>
       sendUserTypes.forEach(sendUserType => {
-        const isAARMessage = sendOpeningSource === "aar";
         it(`should ${
-          isAARMessage ? "" : "NOT "
-        }display the message date, opening source ${sendOpeningSource}, user type ${sendUserType}`, () => {
-          const pnMessage = pipe(
-            thirdPartyMessage,
-            toPNMessage,
-            O.toUndefined
-          )!;
+          sendOpeningSource === "aar" ? "" : "NOT"
+        } display the message date, opening source ${sendOpeningSource}, user type ${sendUserType}`, () => {
+          const sendMessage = toSENDMessage(thirdPartyMessage)!;
           const headerSpy = jest.spyOn(
             MSG_DETAILS_HEADER,
             "MessageDetailsHeader"
           );
-          const messageId = isAARMessage ? pnMessage.iun : mockMessageId;
+          const messageId =
+            sendOpeningSource === "aar" ? sendMessage.iun : mockMessageId;
           const props = generateComponentProperties(
             messageId,
-            pnMessage,
+            sendMessage,
             mockServiceId,
             sendOpeningSource,
             sendUserType
@@ -82,29 +76,26 @@ describe("MessageDetails component", () => {
           expect(mockCalls).toBeDefined();
           const passedDate = mockCalls.createdAt;
 
-          if (isAARMessage) {
+          if (sendOpeningSource === "aar") {
             expect(passedDate).toBeUndefined();
           } else {
-            expect(passedDate).toEqual(pnMessage.created_at);
+            expect(passedDate).toEqual(sendMessage.created_at);
           }
         });
 
         it(`should ${
-          isAARMessage ? "NOT " : ""
+          sendOpeningSource === "aar" ? "NOT " : ""
         }allow navigation to service details, opening source ${sendOpeningSource}, user type ${sendUserType}`, () => {
-          const pnMessage = pipe(
-            thirdPartyMessage,
-            toPNMessage,
-            O.toUndefined
-          )!;
+          const sendMessage = toSENDMessage(thirdPartyMessage)!;
           const headerSpy = jest.spyOn(
             MSG_DETAILS_HEADER,
             "MessageDetailsHeader"
           );
-          const messageId = isAARMessage ? pnMessage.iun : mockMessageId;
+          const messageId =
+            sendOpeningSource === "aar" ? sendMessage.iun : mockMessageId;
           const props = generateComponentProperties(
             messageId,
-            pnMessage,
+            sendMessage,
             mockServiceId,
             sendOpeningSource,
             sendUserType
@@ -114,7 +105,7 @@ describe("MessageDetails component", () => {
           expect(mockCalls).toBeDefined();
           const canNavigateToServiceDetails =
             mockCalls.canNavigateToServiceDetails;
-          if (isAARMessage) {
+          if (sendOpeningSource === "aar") {
             expect(canNavigateToServiceDetails).toBe(false);
           } else {
             expect(canNavigateToServiceDetails).toBe(true);

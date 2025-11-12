@@ -725,7 +725,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={391}
+                handlerTag={71}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -1294,7 +1294,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={780}
+                handlerTag={140}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -1863,7 +1863,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={1169}
+                handlerTag={209}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -2519,7 +2519,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={1558}
+                handlerTag={278}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -3175,7 +3175,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={1947}
+                handlerTag={347}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -3831,7 +3831,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={2336}
+                handlerTag={416}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -4487,7 +4487,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={2725}
+                handlerTag={485}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -5143,7 +5143,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={3114}
+                handlerTag={554}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -5799,7 +5799,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={1168}
+                handlerTag={208}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -6642,7 +6642,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={1557}
+                handlerTag={277}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -7485,7 +7485,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={1946}
+                handlerTag={346}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -8328,7 +8328,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={2335}
+                handlerTag={415}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -9171,7 +9171,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={2724}
+                handlerTag={484}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -10014,7 +10014,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={3113}
+                handlerTag={553}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -11594,7 +11594,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={390}
+                handlerTag={70}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -12331,7 +12331,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={779}
+                handlerTag={139}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
