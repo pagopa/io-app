@@ -1091,7 +1091,6 @@ describe("itwEidIssuanceMachine", () => {
     // Select identification mode
     actor.send({ type: "select-identification-mode", mode: "cieId" });
 
-
     await waitFor(() =>
       expect(actor.getSnapshot().value).toStrictEqual({
         UserIdentification: {
@@ -1336,7 +1335,6 @@ describe("itwEidIssuanceMachine", () => {
     expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
 
     // EID obtained
-
 
     await waitFor(() =>
       expect(actor.getSnapshot().value).toStrictEqual({
@@ -1848,7 +1846,6 @@ describe("itwEidIssuanceMachine", () => {
     const actor = createActor(mockedMachine, { snapshot });
 
     actor.start();
-
 
     actor.subscribe(snap => {
       if (snap.matches("CredentialsUpgrade")) {
