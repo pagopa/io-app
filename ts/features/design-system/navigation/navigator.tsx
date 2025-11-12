@@ -47,6 +47,7 @@ import { DSIOScrollViewCentredContent } from "../core/DSIOScrollViewCentredConte
 import { DSIOScrollViewScreenWithLargeHeader } from "../core/DSIOScrollViewWithLargeHeader";
 import { DSIOScrollViewWithListItems } from "../core/DSIOScrollViewWithListItems";
 import { DSIOScrollViewWithoutActions } from "../core/DSIOScrollViewWithoutActions";
+import { DSITWalletBrandExploration_1 } from "../core/DSITWalletBrandExploration_1";
 import { DSIcons } from "../core/DSIcons";
 import { DSIridescentTrustmark } from "../core/DSIridescentTrustmark";
 import { DSLayout } from "../core/DSLayout";
@@ -388,6 +389,16 @@ export const DesignSystemNavigator = () => {
           options={{
             headerTitle:
               DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.IRIDESCENT_TRUSTMARK.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ITWALLET_BRAND_1.route}
+          component={DSITWalletBrandExploration_1}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ITWALLET_BRAND_1.title,
+            headerShown: false
           }}
         />
 
