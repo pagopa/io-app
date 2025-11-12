@@ -29,6 +29,12 @@ import {
   currentAARFlowStateErrorDebugInfoSelector
 } from "../../store/selectors";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
+import {
+  trackSendAarErrorScreenClosure,
+  trackSendAarErrorScreenDetails,
+  trackSendAarErrorScreenDetailsCode,
+  trackSendAarErrorScreenDetailsHelp
+} from "../../analytics";
 
 const bottomComponent = (
   onAssistancePress: () => void,
@@ -65,7 +71,10 @@ const bottomComponent = (
           icon="ladybug"
           value={assistanceErrorCode}
           numberOfLines={2}
-          onPress={() => clipboardSetStringWithFeedback(assistanceErrorCode)}
+          onPress={() => {
+            trackSendAarErrorScreenDetailsCode();
+            clipboardSetStringWithFeedback(assistanceErrorCode);
+          }}
           testID="error_code_value"
         />
         <VSpacer size={24} />
@@ -82,6 +91,8 @@ export const SendAARErrorComponent = () => {
   );
 
   const zendeskAssistanceLogAndStart = () => {
+    trackSendAarErrorScreenDetailsHelp();
+
     dismiss();
     resetCustomFields();
     resetLog();
@@ -124,12 +135,18 @@ export const SendAARErrorComponent = () => {
         subtitle={I18n.t("features.pn.aar.flow.ko.GENERIC.body")}
         action={{
           label: I18n.t("features.pn.aar.flow.ko.GENERIC.primaryAction"),
-          onPress: terminateFlow,
+          onPress: () => {
+            trackSendAarErrorScreenClosure();
+            terminateFlow();
+          },
           testID: "primary_button"
         }}
         secondaryAction={{
           label: I18n.t("features.pn.aar.flow.ko.GENERIC.secondaryAction"),
-          onPress: present,
+          onPress: () => {
+            trackSendAarErrorScreenDetails();
+            present();
+          },
           testID: "secondary_button"
         }}
       />

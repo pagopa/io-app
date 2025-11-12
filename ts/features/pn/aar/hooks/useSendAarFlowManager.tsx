@@ -5,6 +5,7 @@ import { setAarFlowState, terminateAarFlow } from "../store/actions";
 import { currentAARFlowData } from "../store/selectors";
 import { AARFlowState, sendAARFlowStates } from "../utils/stateUtils";
 import { isTestEnv } from "../../../../utils/environment";
+import { trackSendAARToSAccepted } from "../analytics";
 
 type SendAarFlowManager = {
   terminateFlow: () => void;
@@ -41,6 +42,7 @@ export const useSendAarFlowManager = (): SendAarFlowManager => {
   const goToNextState = () => {
     switch (currentFlowData.type) {
       case sendAARFlowStates.displayingAARToS:
+        trackSendAARToSAccepted();
         dispatch(
           setAarFlowState({
             type: sendAARFlowStates.fetchingQRData,

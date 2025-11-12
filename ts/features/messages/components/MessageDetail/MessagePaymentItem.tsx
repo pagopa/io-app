@@ -15,15 +15,11 @@ import {
   useIOSelector,
   useIOStore
 } from "../../../../store/hooks";
-import {
-  isSpecificError,
-  PaymentError,
-  updatePaymentForMessage
-} from "../../store/actions";
+import { updatePaymentForMessage } from "../../store/actions";
 import {
   canNavigateToPaymentFromMessageSelector,
   paymentStatusForUISelector,
-  shouldUpdatePaymentSelector
+  shouldRetrievePaymentDataSelector
 } from "../../store/reducers/payments";
 import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
 import { RemoteValue, fold } from "../../../../common/model/RemoteValue";
@@ -42,6 +38,14 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { trackPNPaymentStart } from "../../../pn/analytics";
 import { formatAndValidateDueDate } from "../../../payments/checkout/utils";
 import {
+  isMessagePaymentSpecificError,
+  MessagePaymentError
+} from "../../types/paymentErrors";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../../pushNotifications/analytics";
+import {
   computeAndTrackPaymentStart,
   shouldUpdatePaymentUponReturning
 } from "./detailsUtils";
@@ -55,6 +59,8 @@ type MessagePaymentItemProps = {
   noticeNumber: string;
   paymentAmount?: PaymentAmount;
   rptId: string;
+  sendOpeningSource: SendOpeningSource;
+  sendUserType: SendUserType;
   serviceId: ServiceId;
   willNavigateToPayment?: () => void;
 };
@@ -65,9 +71,9 @@ type ProcessedPaymentUIData = {
 };
 
 const paymentNoticeStatusFromPaymentError = (
-  reason: PaymentError
+  reason: MessagePaymentError
 ): Exclude<PaymentNoticeStatus, "default"> => {
-  const errorType = isSpecificError(reason)
+  const errorType = isMessagePaymentSpecificError(reason)
     ? getV2ErrorMainType(reason.details)
     : reason.type;
   switch (errorType) {
@@ -84,7 +90,7 @@ const paymentNoticeStatusFromPaymentError = (
 };
 
 const processedUIPaymentFromPaymentError = (
-  reason: PaymentError
+  reason: MessagePaymentError
 ): ProcessedPaymentUIData =>
   pipe(reason, paymentNoticeStatusFromPaymentError, paymentNoticeStatus => ({
     paymentNoticeStatus,
@@ -107,7 +113,7 @@ const modulePaymentNoticeForUndefinedOrLoadingPayment = () => (
 const modulePaymentNoticeFromPaymentStatus = (
   hideExpirationDate: boolean,
   noticeNumber: string,
-  paymentStatus: RemoteValue<PaymentInfoResponse, PaymentError>,
+  paymentStatus: RemoteValue<PaymentInfoResponse, MessagePaymentError>,
   paymentCallback: () => void
 ) =>
   fold(
@@ -175,6 +181,8 @@ export const MessagePaymentItem = ({
   noSpaceOnTop = false,
   noticeNumber,
   rptId,
+  sendOpeningSource,
+  sendUserType,
   serviceId,
   willNavigateToPayment = undefined
 }: MessagePaymentItemProps) => {
@@ -182,17 +190,12 @@ export const MessagePaymentItem = ({
   const store = useIOStore();
   const toast = useIOToast();
 
-  const shouldUpdatePayment = shouldUpdatePaymentSelector(
-    store.getState(),
-    messageId,
-    rptId
-  );
   const paymentStatusForUI = useIOSelector(state =>
     paymentStatusForUISelector(state, messageId, rptId)
   );
 
-  const canNavigateToPayment = useIOSelector(state =>
-    canNavigateToPaymentFromMessageSelector(state)
+  const canNavigateToPayment = useIOSelector(
+    canNavigateToPaymentFromMessageSelector
   );
 
   const startPaymentCallback = useCallback(() => {
@@ -205,7 +208,7 @@ export const MessagePaymentItem = ({
       dispatch,
       () => {
         if (isPNPayment) {
-          trackPNPaymentStart();
+          trackPNPaymentStart(sendOpeningSource, sendUserType);
         } else {
           computeAndTrackPaymentStart(serviceId, store.getState());
         }
@@ -219,12 +222,24 @@ export const MessagePaymentItem = ({
     isPNPayment,
     paymentStatusForUI,
     rptId,
+    sendOpeningSource,
+    sendUserType,
     serviceId,
     store,
     toast,
     willNavigateToPayment
   ]);
   useEffect(() => {
+    // Since this data is only used to dispatch the update action and shouldn't
+    // cause the component to re-render when it changes, the selector can be
+    // called directly inside this useEffect.
+    // There's no need to call it outside with a `useSelector`.
+    const shouldUpdatePayment = shouldRetrievePaymentDataSelector(
+      store.getState(),
+      messageId,
+      rptId
+    );
+
     if (shouldUpdatePayment) {
       const updateAction = updatePaymentForMessage.request({
         messageId,
@@ -233,7 +248,8 @@ export const MessagePaymentItem = ({
       });
       dispatch(updateAction);
     }
-  }, [dispatch, messageId, rptId, serviceId, shouldUpdatePayment]);
+  }, [dispatch, messageId, rptId, serviceId, store]);
+
   return (
     <View>
       {!noSpaceOnTop && <VSpacer size={index > 0 ? 8 : 24} />}

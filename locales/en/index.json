@@ -2950,7 +2950,13 @@
           "a11y": {
             "title": "Featured Services"
           },
-          "title": "Featured"
+          "title": "Featured",
+          "error": {
+            "banner": {
+              "label": "We couldn't load the list of featured services",
+              "cta": "Try again"
+            }
+          }
         },
         "institutions": {
           "title": "Featured Institutions"
@@ -4603,27 +4609,6 @@
           "primaryAction": "Apri impostazioni",
           "secondaryAction": "Continua"
         },
-        "mode": {
-          "l2": {
-            "title": "Verifica la tua identità",
-            "description": "È un passaggio di sicurezza necessario per aggiungere i tuoi documenti digitali su IO.",
-            "header": "Scegli come identificarti",
-            "method": {
-              "spid": {
-                "title": "Usa SPID",
-                "subtitle": "Necessarie credenziali e app (o SMS)"
-              },
-              "ciePin": {
-                "title": "Usa CIE + PIN",
-                "subtitle": "Usa la Carta di Identità Elettronica e il suo PIN a 8 cifre"
-              },
-              "cieId": {
-                "title": "Usa l'app CieID",
-                "subtitle": "Necessarie credenziali e app CieID"
-              }
-            }
-          }
-        },
         "cie": {
           "inputPin": {
             "title": "Inserisci il PIN della CIE",
@@ -5629,7 +5614,12 @@
       "initiativeOnboardedStatus": {
         "header": "My requests",
         "ON_WAITING_LIST": {
-          "label": "On waiting list"
+          "label": "On waiting list",
+          "accessibilityInfoLabel": "Info button",
+          "bottomSheet": {
+            "title": "On waiting list",
+            "content": "Your request for {{initiativeName}} has been placed on **waiting list**, as there are currently no funds available.\n\n\n###### ***What happens now?***\n\nYou don’t need to do anything: your request remains valid. You will receive a message with the outcome as soon as new resources become available.\n\n\n###### ***Have you enabled notifications?***\n\nIf you haven’t already, enable push notifications to not miss any messages.\n[Read how to do it](https://assistenza.ioapp.it/hc/it/articles/39312288127377-Come-attivare-le-notifiche-push-su-IO)"
+          }
         },
         "ON_EVALUATION": {
           "label": "On evaluation"
