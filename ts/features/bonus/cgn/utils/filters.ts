@@ -12,7 +12,7 @@ import {
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 import { TranslationKeys } from "../../../../../locales/locales";
 
-export type Category = {
+type Category = {
   type: ProductCategory;
   icon: IOCategoryIcons;
   nameKey: TranslationKeys;
@@ -118,24 +118,6 @@ export const categories: Record<ProductCategory, Category> = {
 export const getCategorySpecs = (
   category: ProductCategory
 ): O.Option<Category> => O.fromNullable(categories[category]);
-
-export type OrderType = {
-  label: TranslationKeys;
-  value: string;
-};
-
-export const orders: Record<string, OrderType> = {
-  distance: {
-    label: "bonus.cgn.merchantsList.filter.order.byDistance",
-    value: "distance"
-  },
-  name: {
-    label: "bonus.cgn.merchantsList.filter.order.byName",
-    value: "alphabetical"
-  }
-};
-
-export const CATEGORY_GRADIENT_ANGLE = 57.23;
 
 export const orderCategoriesByNameKey = (
   categories: ReadonlyArray<ProductCategoryWithNewDiscountsCount>

@@ -1,10 +1,9 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { loadThirdPartyMessage } from "../store/actions";
-import { toPNMessage } from "../../pn/store/types/transformers";
+import { toSENDMessage } from "../../pn/store/types/transformers";
 import {
   trackPNNotificationLoadError,
   trackPNNotificationLoadSuccess
@@ -29,6 +28,7 @@ import { backendClientManager } from "../../../api/BackendClientManager";
 import { apiUrlPrefix } from "../../../config";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 import { isTestEnv } from "../../../utils/environment";
+import { getKeyInfo } from "../../lollipop/saga";
 
 export function* handleThirdPartyMessage(
   action: ActionType<typeof loadThirdPartyMessage.request>
@@ -44,9 +44,12 @@ export function* handleThirdPartyMessage(
     return;
   }
 
+  const keyInfo = yield* call(getKeyInfo);
+
   const { getThirdPartyMessage } = backendClientManager.getBackendClient(
     apiUrlPrefix,
-    sessionToken
+    sessionToken,
+    keyInfo
   );
 
   // This method is called by `handleLoadMessageData` saga, which makes
@@ -110,13 +113,13 @@ const trackSuccess = (
     tag
   );
   if (tag === TagEnum.PN) {
-    const pnMessageOption = toPNMessage(messageFromApi);
+    const sendMessageOrUndefined = toSENDMessage(messageFromApi);
 
-    if (O.isSome(pnMessageOption)) {
-      const pnMessage = pnMessageOption.value;
+    if (sendMessageOrUndefined != null) {
       const hasAttachments =
-        pnMessage.attachments != null && pnMessage.attachments.length > 0;
-      const timeline = pnMessage.notificationStatusHistory;
+        sendMessageOrUndefined.attachments != null &&
+        sendMessageOrUndefined.attachments.length > 0;
+      const timeline = sendMessageOrUndefined.notificationStatusHistory;
       const status =
         timeline.length > 0 ? timeline[timeline.length - 1].status : undefined;
       trackPNNotificationLoadSuccess(

@@ -1,38 +1,23 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { thirdPartyFromIdSelector } from "../../../../messages/store/reducers/thirdPartyById";
-import { toPNMessage } from "../../../store/types/transformers";
+import { toSENDMessage } from "../../../store/types/transformers";
 import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
 
 export const thirdPartySenderDenominationSelector = (
   state: GlobalState,
   ioMessageId: string
-) =>
-  pipe(
-    thirdPartyFromIdSelector(state, ioMessageId),
-    pot.toOption,
-    O.flatMap(toPNMessage),
-    O.map(data => data.senderDenomination),
-    O.toUndefined
-  );
-
-export const isAarMessageDelegatedSelector = (
-  state: GlobalState,
-  iun: string
-): boolean => {
-  const currentState = currentAARFlowData(state);
-  const isCorrectState =
-    currentState.type === sendAARFlowStates.fetchingNotificationData ||
-    currentState.type === sendAARFlowStates.displayingNotificationData;
-  return (
-    isCorrectState &&
-    currentState.iun === iun &&
-    currentState.mandateId !== undefined
-  );
+) => {
+  const thirdPartyMessagePot = thirdPartyFromIdSelector(state, ioMessageId);
+  const thirdPartyMessage = pot.getOrElse(thirdPartyMessagePot, undefined);
+  if (thirdPartyMessage == null) {
+    return undefined;
+  }
+  const sendMessage = toSENDMessage(thirdPartyMessage);
+  return sendMessage?.senderDenomination;
 };
+
 export const aarAdresseeDenominationSelector = (
   state: GlobalState,
   iun: string

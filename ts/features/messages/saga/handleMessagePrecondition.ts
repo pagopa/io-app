@@ -29,6 +29,7 @@ import { isIOMarkdownEnabledForMessagesAndServicesSelector } from "../../../stor
 import { backendClientManager } from "../../../api/BackendClientManager";
 import { apiUrlPrefix } from "../../../config";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { getKeyInfo } from "../../lollipop/saga";
 
 export function* handleMessagePrecondition(
   action: ActionType<typeof retrievingDataPreconditionStatusAction>
@@ -42,8 +43,10 @@ export function* handleMessagePrecondition(
     return;
   }
 
+  const keyInfo = yield* call(getKeyInfo);
+
   const { getThirdPartyMessagePrecondition } =
-    backendClientManager.getBackendClient(apiUrlPrefix, sessionToken);
+    backendClientManager.getBackendClient(apiUrlPrefix, sessionToken, keyInfo);
 
   yield* race({
     response: call(
