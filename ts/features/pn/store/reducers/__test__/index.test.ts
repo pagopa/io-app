@@ -168,41 +168,41 @@ describe("sendUserSelectedPaymentRptIdSelector", () => {
 
   it("should return undefined when the message is undefined", () => {
     const appState = appReducer(undefined, applicationChangeState("active"));
-    const pnUserSelectedPaymentRptId = sendUserSelectedPaymentRptIdSelector(
+    const sendUserSelectedPaymentRptId = sendUserSelectedPaymentRptIdSelector(
       appState,
       undefined
     );
-    expect(pnUserSelectedPaymentRptId).toBeUndefined();
+    expect(sendUserSelectedPaymentRptId).toBeUndefined();
   });
   it("should return undefined when recipients are empty", () => {
     const appState = appReducer(undefined, applicationChangeState("active"));
     const emptyRecipientsSendMessage = {
       recipients: []
     } as unknown as PNMessage;
-    const pnUserSelectedPaymentRptId = sendUserSelectedPaymentRptIdSelector(
+    const sendUserSelectedPaymentRptId = sendUserSelectedPaymentRptIdSelector(
       appState,
       emptyRecipientsSendMessage
     );
-    expect(pnUserSelectedPaymentRptId).toBeUndefined();
+    expect(sendUserSelectedPaymentRptId).toBeUndefined();
   });
   it("should return undefined when recipients do not have a payment", () => {
     const appState = appReducer(undefined, applicationChangeState("active"));
     const noPaymentsSendMessage = {
       recipients: [{}, {}, {}]
     } as unknown as PNMessage;
-    const pnUserSelectedPaymentRptId = sendUserSelectedPaymentRptIdSelector(
+    const sendUserSelectedPaymentRptId = sendUserSelectedPaymentRptIdSelector(
       appState,
       noPaymentsSendMessage
     );
-    expect(pnUserSelectedPaymentRptId).toBeUndefined();
+    expect(sendUserSelectedPaymentRptId).toBeUndefined();
   });
   it("should return undefined when there are no user selected payments", () => {
     const appState = appReducer(undefined, applicationChangeState("active"));
-    const pnUserSelectedPaymentRptId = sendUserSelectedPaymentRptIdSelector(
+    const sendUserSelectedPaymentRptId = sendUserSelectedPaymentRptIdSelector(
       appState,
       sendMessage
     );
-    expect(pnUserSelectedPaymentRptId).toBeUndefined();
+    expect(sendUserSelectedPaymentRptId).toBeUndefined();
   });
   it("should return undefined when user selected payments do not match", () => {
     const appState = appReducer(undefined, applicationChangeState("active"));
@@ -223,10 +223,10 @@ describe("sendUserSelectedPaymentRptIdSelector", () => {
         }
       }
     } as GlobalState;
-    const pnUserSelectedPaymentRptId = sendUserSelectedPaymentRptIdSelector(
+    const sendUserSelectedPaymentRptId = sendUserSelectedPaymentRptIdSelector(
       finalState,
       sendMessage
     );
-    expect(pnUserSelectedPaymentRptId).toBe(rptId);
+    expect(sendUserSelectedPaymentRptId).toBe(rptId);
   });
 });

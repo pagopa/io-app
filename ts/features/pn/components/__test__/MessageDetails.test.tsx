@@ -57,16 +57,16 @@ describe("MessageDetails component", () => {
         it(`should ${
           sendOpeningSource === "aar" ? "" : "NOT"
         } display the message date, opening source ${sendOpeningSource}, user type ${sendUserType}`, () => {
-          const pnMessage = toSENDMessage(thirdPartyMessage)!;
+          const sendMessage = toSENDMessage(thirdPartyMessage)!;
           const headerSpy = jest.spyOn(
             MSG_DETAILS_HEADER,
             "MessageDetailsHeader"
           );
           const messageId =
-            sendOpeningSource === "aar" ? pnMessage.iun : mockMessageId;
+            sendOpeningSource === "aar" ? sendMessage.iun : mockMessageId;
           const props = generateComponentProperties(
             messageId,
-            pnMessage,
+            sendMessage,
             mockServiceId,
             sendOpeningSource,
             sendUserType
@@ -79,23 +79,23 @@ describe("MessageDetails component", () => {
           if (sendOpeningSource === "aar") {
             expect(passedDate).toBeUndefined();
           } else {
-            expect(passedDate).toEqual(pnMessage.created_at);
+            expect(passedDate).toEqual(sendMessage.created_at);
           }
         });
 
         it(`should ${
           sendOpeningSource === "aar" ? "NOT " : ""
         }allow navigation to service details, opening source ${sendOpeningSource}, user type ${sendUserType}`, () => {
-          const pnMessage = toSENDMessage(thirdPartyMessage)!;
+          const sendMessage = toSENDMessage(thirdPartyMessage)!;
           const headerSpy = jest.spyOn(
             MSG_DETAILS_HEADER,
             "MessageDetailsHeader"
           );
           const messageId =
-            sendOpeningSource === "aar" ? pnMessage.iun : mockMessageId;
+            sendOpeningSource === "aar" ? sendMessage.iun : mockMessageId;
           const props = generateComponentProperties(
             messageId,
-            pnMessage,
+            sendMessage,
             mockServiceId,
             sendOpeningSource,
             sendUserType
