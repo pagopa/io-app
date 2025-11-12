@@ -140,6 +140,7 @@ import {
 import { checkShouldDisplaySendEngagementScreen } from "../features/pn/loginEngagement/sagas/checkShouldDisplaySendEngagementScreen";
 import { watchCdcSaga } from "../features/bonus/cdc/common/saga";
 import { setRefreshMessagesSection } from "../features/authentication/activeSessionLogin/store/actions";
+import { watchMessagesSaga } from "../features/messages/saga";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
@@ -366,6 +367,9 @@ export function* initializeApplicationSaga(
 
   // Start watching for Services actions
   yield* fork(watchServicesSaga, backendClient, sessionToken);
+
+  // Start watching for Messages actions
+  yield* fork(watchMessagesSaga);
 
   // start watching for FIMS actions
   yield* fork(watchFimsSaga, sessionToken);
