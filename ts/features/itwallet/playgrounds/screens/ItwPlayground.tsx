@@ -18,6 +18,7 @@ import { ItwL3ScreensSection } from "../components/ItwL3ScreensSection";
 import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
 import { ItwPidIssuanceSection } from "../components/ItwPidIssuanceSection";
 import { ItwSkeumorphicCredentialSection } from "../components/ItwSkeumorphicCredentialSection";
+import { ItwWalletIdStatusSection } from "../components/ItwWalletIdStatusSection";
 
 /**
  * ITW Playground screen
@@ -75,6 +76,7 @@ const ItwPlayground = () => {
           )}
           {page === 3 && (
             <>
+              <ItwWalletIdStatusSection />
               <ItwSkeumorphicCredentialSection />
               <ItwBannerSection />
               <ItwClaimsListSection />
