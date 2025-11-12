@@ -3486,27 +3486,6 @@
         }
       },
       "identification": {
-        "mode": {
-          "l2": {
-            "title": "Überprüfe deine Identität",
-            "description": "Dies ist ein notwendiger Schritt, um die Sicherheit deiner Daten zu gewährleisten.",
-            "header": "Wähle, wie du dich identifizieren willst",
-            "method": {
-              "spid": {
-                "title": "SPID",
-                "subtitle": "Zugangsdaten und App (oder SMS) verwenden"
-              },
-              "ciePin": {
-                "title": "CIE + PIN",
-                "subtitle": "Elektronische Identitätskarte und PIN verwenden"
-              },
-              "cieId": {
-                "title": "CieID",
-                "subtitle": "CieID-Zugangsdaten und -App verwenden"
-              }
-            }
-          }
-        },
         "nfc": {
           "title": "NFC aktivieren, um fortzufahren",
           "description": "Damit IO deine CIE lesen kann, aktiviere NFC in den Einstellungen deines Geräts.",

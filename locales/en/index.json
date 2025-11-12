@@ -4562,27 +4562,6 @@
           "primaryAction": "Apri impostazioni",
           "secondaryAction": "Continua"
         },
-        "mode": {
-          "l2": {
-            "title": "Verifica la tua identità",
-            "description": "È un passaggio di sicurezza necessario per aggiungere i tuoi documenti digitali su IO.",
-            "header": "Scegli come identificarti",
-            "method": {
-              "spid": {
-                "title": "Usa SPID",
-                "subtitle": "Necessarie credenziali e app (o SMS)"
-              },
-              "ciePin": {
-                "title": "Usa CIE + PIN",
-                "subtitle": "Usa la Carta di Identità Elettronica e il suo PIN a 8 cifre"
-              },
-              "cieId": {
-                "title": "Usa l'app CieID",
-                "subtitle": "Necessarie credenziali e app CieID"
-              }
-            }
-          }
-        },
         "cie": {
           "inputPin": {
             "title": "Inserisci il PIN della CIE",
