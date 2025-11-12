@@ -12,7 +12,6 @@ import {
   take
 } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { BackendClient } from "../../../api/backend";
 import {
   cancelQueuedPaymentUpdates,
   updatePaymentForMessage
@@ -42,16 +41,6 @@ import { backendClientManager } from "../../../api/BackendClientManager";
 const PaymentUpdateWorkerCount = 5;
 
 export function* handlePaymentUpdateRequests() {
-  const sessionToken = yield* select(sessionTokenSelector);
-
-  if (!sessionToken) {
-    trackUndefinedBearerToken(UndefinedBearerTokenPhase.getPaymentsInfo);
-    return;
-  }
-
-  const { getPaymentInfoV2: getPaymentDataRequestFactory } =
-    backendClientManager.getBackendClient(apiUrlPrefix, sessionToken);
-
   // Create a channel where 'updatePaymentForMessage.request' actions will be enqueued
   const paymentUpdateChannel = yield* actionChannel(
     updatePaymentForMessage.request
@@ -60,18 +49,13 @@ export function* handlePaymentUpdateRequests() {
   // Create workers to process 'updatePaymentForMessage.request' actions 'concurrently'
   yield* all(
     [...Array(PaymentUpdateWorkerCount).keys()].map(() =>
-      fork(
-        paymentUpdateRequestWorker,
-        paymentUpdateChannel,
-        getPaymentDataRequestFactory
-      )
+      fork(paymentUpdateRequestWorker, paymentUpdateChannel)
     )
   );
 
   while (true) {
     // Listen for cancellation request
     yield* take(cancelQueuedPaymentUpdates);
-
     // Flush the channel
     yield* flush(paymentUpdateChannel);
   }
@@ -80,8 +64,7 @@ export function* handlePaymentUpdateRequests() {
 function* paymentUpdateRequestWorker(
   paymentStatusChannel: Channel<
     ActionType<typeof updatePaymentForMessage.request>
-  >,
-  getPaymentDataRequestFactory: BackendClient["getPaymentInfoV2"]
+  >
 ) {
   while (true) {
     // Listen for 'updatePaymentForMessage.request' action in the channel
@@ -96,8 +79,7 @@ function* paymentUpdateRequestWorker(
         hasVerifiedPayment: call(
           updatePaymentInfo,
           paymentStatusRequest,
-          isPagoPATestEnabled,
-          getPaymentDataRequestFactory
+          isPagoPATestEnabled
         ),
         wasCancelled: take(cancelQueuedPaymentUpdates)
       });
@@ -117,10 +99,19 @@ function* paymentUpdateRequestWorker(
 
 function* updatePaymentInfo(
   paymentStatusRequest: ActionType<typeof updatePaymentForMessage.request>,
-  isPagoPATestEnabled: boolean,
-  getPaymentDataRequestFactory: BackendClient["getPaymentInfoV2"]
+  isPagoPATestEnabled: boolean
 ) {
   const { messageId, paymentId, serviceId } = paymentStatusRequest.payload;
+
+  const sessionToken = yield* select(sessionTokenSelector);
+
+  if (!sessionToken) {
+    trackUndefinedBearerToken(UndefinedBearerTokenPhase.getPaymentsInfo);
+    return;
+  }
+
+  const { getPaymentInfoV2: getPaymentDataRequestFactory } =
+    backendClientManager.getBackendClient(apiUrlPrefix, sessionToken);
 
   const getPaymentDataRequest = getPaymentDataRequestFactory({
     rptId: paymentId,

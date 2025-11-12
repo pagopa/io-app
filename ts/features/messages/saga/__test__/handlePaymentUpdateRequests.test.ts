@@ -43,7 +43,7 @@ describe("handlePaymentUpdateRequests", () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
-  const sessionToken = "mockSessionToken";
+
   const messageId = "01JWXM7Q90CX4S57P855JZ63PC";
   const paymentId = "0123456789012345678901234567890";
   const serviceId = "01JWXM8C2NJT15SC930ZKGCRDB" as ServiceId;
@@ -52,36 +52,14 @@ describe("handlePaymentUpdateRequests", () => {
       const mockActionChannel = channel();
       testSaga(handlePaymentUpdateRequests)
         .next()
-        .select(sessionTokenSelector)
-        .next(sessionToken)
         .actionChannel(updatePaymentForMessage.request)
         .next(mockActionChannel)
         .all([
-          fork(
-            testable!.paymentUpdateRequestWorker as any,
-            mockActionChannel,
-            mockGetPaymentInfoV2
-          ),
-          fork(
-            testable!.paymentUpdateRequestWorker as any,
-            mockActionChannel,
-            mockGetPaymentInfoV2
-          ),
-          fork(
-            testable!.paymentUpdateRequestWorker as any,
-            mockActionChannel,
-            mockGetPaymentInfoV2
-          ),
-          fork(
-            testable!.paymentUpdateRequestWorker as any,
-            mockActionChannel,
-            mockGetPaymentInfoV2
-          ),
-          fork(
-            testable!.paymentUpdateRequestWorker as any,
-            mockActionChannel,
-            mockGetPaymentInfoV2
-          )
+          fork(testable!.paymentUpdateRequestWorker as any, mockActionChannel),
+          fork(testable!.paymentUpdateRequestWorker as any, mockActionChannel),
+          fork(testable!.paymentUpdateRequestWorker as any, mockActionChannel),
+          fork(testable!.paymentUpdateRequestWorker as any, mockActionChannel),
+          fork(testable!.paymentUpdateRequestWorker as any, mockActionChannel)
         ])
         .next()
         .take(cancelQueuedPaymentUpdates)
@@ -103,11 +81,7 @@ describe("handlePaymentUpdateRequests", () => {
         serviceId
       });
 
-      testSaga(
-        testable!.paymentUpdateRequestWorker,
-        mockChannel,
-        mockGetPaymentInfoV2
-      )
+      testSaga(testable!.paymentUpdateRequestWorker, mockChannel)
         .next()
         .take(mockChannel)
         .next(paymentActionRequest)
@@ -117,8 +91,7 @@ describe("handlePaymentUpdateRequests", () => {
           hasVerifiedPayment: call(
             testable!.updatePaymentInfo,
             paymentActionRequest,
-            true,
-            mockGetPaymentInfoV2
+            true
           ),
           wasCancelled: take(cancelQueuedPaymentUpdates)
         })
@@ -139,11 +112,7 @@ describe("handlePaymentUpdateRequests", () => {
         Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
       );
 
-      testSaga(
-        testable!.paymentUpdateRequestWorker,
-        mockChannel,
-        mockGetPaymentInfoV2
-      )
+      testSaga(testable!.paymentUpdateRequestWorker, mockChannel)
         .next()
         .take(mockChannel)
         .next(paymentActionRequest)
@@ -153,8 +122,7 @@ describe("handlePaymentUpdateRequests", () => {
           hasVerifiedPayment: call(
             testable!.updatePaymentInfo,
             paymentActionRequest,
-            true,
-            mockGetPaymentInfoV2
+            true
           ),
           wasCancelled: take(cancelQueuedPaymentUpdates)
         })
@@ -177,20 +145,19 @@ describe("handlePaymentUpdateRequests", () => {
   });
 
   describe("updatePaymentInfo", () => {
+    const sessionToken = "mockSessionToken";
     it("should return an error if API result is a left", () => {
       const paymentActionRequest = updatePaymentForMessage.request({
         messageId,
         paymentId,
         serviceId
       });
+
       const output = tryCatchErrorOrUndefined(() => {
-        testSaga(
-          testable!.updatePaymentInfo,
-          paymentActionRequest,
-          true,
-          mockGetPaymentInfoV2
-        )
+        testSaga(testable!.updatePaymentInfo, paymentActionRequest, true)
           .next()
+          .select(sessionTokenSelector)
+          .next(sessionToken)
           .call(
             withRefreshApiCall,
             mockGetPaymentInfoV2({ rptId: paymentId, test: true }),
@@ -208,13 +175,10 @@ describe("handlePaymentUpdateRequests", () => {
           serviceId
         });
         const output = tryCatchErrorOrUndefined(() => {
-          testSaga(
-            testable!.updatePaymentInfo,
-            paymentActionRequest,
-            true,
-            mockGetPaymentInfoV2
-          )
+          testSaga(testable!.updatePaymentInfo, paymentActionRequest, true)
             .next()
+            .select(sessionTokenSelector)
+            .next(sessionToken)
             .call(
               withRefreshApiCall,
               mockGetPaymentInfoV2({
@@ -242,13 +206,10 @@ describe("handlePaymentUpdateRequests", () => {
         serviceId
       });
       const output = tryCatchErrorOrUndefined(() => {
-        testSaga(
-          testable!.updatePaymentInfo,
-          paymentActionRequest,
-          true,
-          mockGetPaymentInfoV2
-        )
+        testSaga(testable!.updatePaymentInfo, paymentActionRequest, true)
           .next()
+          .select(sessionTokenSelector)
+          .next(sessionToken)
           .call(
             withRefreshApiCall,
             mockGetPaymentInfoV2({
@@ -281,13 +242,10 @@ describe("handlePaymentUpdateRequests", () => {
         serviceId
       });
       const output = tryCatchErrorOrUndefined(() => {
-        testSaga(
-          testable!.updatePaymentInfo,
-          paymentActionRequest,
-          true,
-          mockGetPaymentInfoV2
-        )
+        testSaga(testable!.updatePaymentInfo, paymentActionRequest, true)
           .next()
+          .select(sessionTokenSelector)
+          .next(sessionToken)
           .call(
             withRefreshApiCall,
             mockGetPaymentInfoV2({
@@ -311,13 +269,10 @@ describe("handlePaymentUpdateRequests", () => {
         serviceId
       });
 
-      testSaga(
-        testable!.updatePaymentInfo,
-        paymentActionRequest,
-        true,
-        mockGetPaymentInfoV2
-      )
+      testSaga(testable!.updatePaymentInfo, paymentActionRequest, true)
         .next()
+        .select(sessionTokenSelector)
+        .next(sessionToken)
         .call(
           withRefreshApiCall,
           mockGetPaymentInfoV2({
