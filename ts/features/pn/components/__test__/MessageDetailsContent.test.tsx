@@ -6,14 +6,15 @@ import * as USEIO_HOOKS from "../../../../store/hooks";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { thirdPartyMessage } from "../../__mocks__/pnMessage";
-import {
-  aarAdresseeDenominationSelector,
-  isAarMessageDelegatedSelector
-} from "../../aar/store/selectors";
+import { aarAdresseeDenominationSelector } from "../../aar/store/selectors";
 import PN_ROUTES from "../../navigation/routes";
 import { toPNMessage } from "../../store/types/transformers";
-import { PNMessage } from "../../store/types/types";
-import { MessageDetailsContent, testable } from "../MessageDetailsContent";
+import {
+  MessageDetailsContent,
+  MessageDetailsContentProps,
+  testable
+} from "../MessageDetailsContent";
+import { SendUserType } from "../../../pushNotifications/analytics";
 
 jest.mock("../../aar/store/selectors", () => ({
   ...jest.requireActual("../../aar/store/selectors"),
@@ -29,12 +30,8 @@ const mockMessageWithoutDenomination = _.omit(
   "senderDenomination"
 );
 
-const mockSelectors = (
-  denomination: string | undefined,
-  isDelegated: boolean
-) => {
+const mockSelectors = (denomination: string | undefined) => {
   (aarAdresseeDenominationSelector as jest.Mock).mockReturnValue(denomination);
-  (isAarMessageDelegatedSelector as jest.Mock).mockReturnValue(isDelegated);
 };
 
 describe("MessageDetailsContent component", () => {
@@ -42,11 +39,16 @@ describe("MessageDetailsContent component", () => {
     jest.clearAllMocks();
   });
 
-  const testCases = [true, false].flatMap(isDelegated =>
+  const sendUserTypes: ReadonlyArray<SendUserType> = [
+    "mandatory",
+    "not_set",
+    "recipient"
+  ];
+  const testCases = sendUserTypes.flatMap(sendUserType =>
     [true, false].flatMap(hasAarAdresseeDenomination =>
       [true, false].flatMap(isAbstractEnabled =>
         [true, false].map(hasSenderDenomination => ({
-          isDelegated,
+          sendUserType,
           hasAarAdresseeDenomination,
           hasSenderDenomination,
           isAbstractEnabled
@@ -56,17 +58,17 @@ describe("MessageDetailsContent component", () => {
   );
 
   const runSnapshotTest = ({
-    isDelegated,
+    sendUserType,
     hasAarAdresseeDenomination,
     hasSenderDenomination,
     isAbstractEnabled
   }: {
-    isDelegated: boolean;
+    sendUserType: SendUserType;
     hasAarAdresseeDenomination: boolean;
     hasSenderDenomination: boolean;
     isAbstractEnabled: boolean;
   }) => {
-    it(`should match snapshot when ${isDelegated ? "is" : "isn't"} delegated, ${
+    it(`should match snapshot when user type is ${sendUserType}, ${
       hasAarAdresseeDenomination ? "has" : "does not have"
     } a valid Aar Adressee denomination, ${
       hasSenderDenomination ? "has" : "doesn't have"
@@ -74,15 +76,18 @@ describe("MessageDetailsContent component", () => {
       isAbstractEnabled ? "enabled" : "disabled"
     } by feature flag`, () => {
       mockSelectors(
-        hasAarAdresseeDenomination ? "AAR Denomination" : undefined,
-        isDelegated
+        hasAarAdresseeDenomination ? "AAR Denomination" : undefined
       );
       jest
         .spyOn(USEIO_HOOKS, "useIOSelector")
         .mockReturnValue(isAbstractEnabled);
-      const { toJSON } = renderMessageDetails(
-        hasSenderDenomination ? mockMessage : mockMessageWithoutDenomination
-      );
+      const props: MessageDetailsContentProps = {
+        message: hasSenderDenomination
+          ? mockMessage
+          : mockMessageWithoutDenomination,
+        sendUserType
+      };
+      const { toJSON } = renderMessageDetails(props);
       expect(toJSON()).toMatchSnapshot();
     });
   };
@@ -116,11 +121,16 @@ describe("MaybeAbstract subcomponent", () => {
   });
 });
 
-const renderMessageDetails = (props: PNMessage) => {
+const renderMessageDetails = (props: MessageDetailsContentProps) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, globalState as any);
   return renderScreenWithNavigationStoreContext(
-    () => <MessageDetailsContent message={props} />,
+    () => (
+      <MessageDetailsContent
+        message={props.message}
+        sendUserType={props.sendUserType}
+      />
+    ),
     PN_ROUTES.MESSAGE_DETAILS,
     {},
     store
