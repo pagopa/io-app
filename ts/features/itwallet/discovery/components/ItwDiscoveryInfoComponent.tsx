@@ -8,6 +8,7 @@ import {
   Icon,
   IOColors,
   IOIcons,
+  useIOTheme,
   useIOToast,
   VSpacer,
   VStack
@@ -276,26 +277,46 @@ export const ItwDiscoveryInfoComponent = () => {
 const FeatureBlock = (props: {
   content: string;
   image: React.ReactElement;
-}) => (
-  <HStack space={16} style={styles.feature}>
-    {props.image}
-    <BodySmall style={{ flex: 1, flexWrap: "wrap" }}>{props.content}</BodySmall>
-  </HStack>
-);
+}) => {
+  const theme = useIOTheme();
+
+  return (
+    <HStack
+      space={16}
+      style={{
+        ...styles.feature,
+        borderColor: IOColors[theme["cardBorder-default"]]
+      }}
+    >
+      {props.image}
+      <BodySmall style={{ flex: 1, flexWrap: "wrap" }}>
+        {props.content}
+      </BodySmall>
+    </HStack>
+  );
+};
 
 const DetailBlock = (props: {
   title: string;
   content: string;
   icon: IOIcons;
-}) => (
-  <VStack space={8} style={styles.detail}>
-    <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-      <H4>{props.title}</H4>
-      <Icon name={props.icon} size={24} color="blueIO-500" />
-    </View>
-    <IOMarkdown content={props.content} />
-  </VStack>
-);
+}) => {
+  const theme = useIOTheme();
+
+  return (
+    <VStack space={8} style={styles.detail}>
+      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <H4>{props.title}</H4>
+        <Icon
+          name={props.icon}
+          size={24}
+          color={theme["interactiveElem-default"]}
+        />
+      </View>
+      <IOMarkdown content={props.content} />
+    </VStack>
+  );
+};
 
 const styles = StyleSheet.create({
   hero: {
@@ -309,8 +330,8 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderWidth: 1,
-    borderColor: IOColors["grey-50"],
-    borderRadius: 8
+    borderRadius: 8,
+    borderCurve: "continuous"
   },
   detail: {
     paddingVertical: 16
