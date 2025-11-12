@@ -2,7 +2,7 @@ import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
 import { WalletOnboardingOutcomeEnum } from "../types/OnboardingOutcomeEnum";
 
-export type PaymentOnboardingAnalyticsProps = {
+type PaymentOnboardingAnalyticsProps = {
   payment_method_selected: string;
 };
 
