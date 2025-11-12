@@ -1,6 +1,5 @@
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { remoteError } from "../../../../common/model/RemoteValue";
-import { isOngoingPaymentFromDetailV2Enum } from "../../../../utils/payment";
 import {
   isMessagePaymentGenericError,
   isMessagePaymentSpecificError,
