@@ -14,11 +14,6 @@ import {
 import { ActionType } from "typesafe-actions";
 import {
   cancelQueuedPaymentUpdates,
-  isGenericError,
-  PaymentError,
-  toGenericError,
-  toSpecificError,
-  toTimeoutError,
   updatePaymentForMessage
 } from "../store/actions";
 import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPreferences";
@@ -27,6 +22,13 @@ import { SagaCallReturnType } from "../../../types/utils";
 import { readablePrivacyReport } from "../../../utils/reporters";
 import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 import { isTestEnv } from "../../../utils/environment";
+import {
+  isMessagePaymentGenericError,
+  toGenericMessagePaymentError,
+  toSpecificMessagePaymentError,
+  toTimeoutMessagePaymentError,
+  MessagePaymentError
+} from "../types/paymentErrors";
 import {
   trackMessagePaymentFailure,
   trackUndefinedBearerToken,
@@ -153,16 +155,16 @@ function* updatePaymentInfo(
   }
 }
 
-const unknownErrorToPaymentError = (e: unknown): PaymentError => {
+const unknownErrorToPaymentError = (e: unknown): MessagePaymentError => {
   const reason = unknownErrorToString(e);
   const lowerCaseReason = reason.toLowerCase();
   if (lowerCaseReason === "max-retries" || lowerCaseReason === "aborted") {
-    return toTimeoutError();
+    return toTimeoutMessagePaymentError();
   }
   if (reason in Detail_v2Enum) {
-    return toSpecificError(reason as Detail_v2Enum);
+    return toSpecificMessagePaymentError(reason as Detail_v2Enum);
   }
-  return toGenericError(reason);
+  return toGenericMessagePaymentError(reason);
 };
 
 const unknownErrorToString = (e: unknown): string => {
@@ -179,8 +181,8 @@ const unknownErrorToString = (e: unknown): string => {
   return "Unknown error with no data";
 };
 
-const trackPaymentErrorIfNeeded = (error: PaymentError) => {
-  if (isGenericError(error)) {
+const trackPaymentErrorIfNeeded = (error: MessagePaymentError) => {
+  if (isMessagePaymentGenericError(error)) {
     trackMessagePaymentFailure(error.message);
   }
 };
