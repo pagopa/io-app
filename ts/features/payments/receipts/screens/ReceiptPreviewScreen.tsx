@@ -5,7 +5,6 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { RouteProp } from "@react-navigation/native";
 import { useState } from "react";
 import { Platform, View } from "react-native";
 import Pdf from "react-native-pdf";
@@ -17,14 +16,8 @@ import { useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import * as analytics from "../analytics";
-import { PaymentsReceiptParamsList } from "../navigation/params";
 import { walletReceiptPotSelector } from "../store/selectors";
 import { RECEIPT_DOCUMENT_TYPE_PREFIX } from "../utils";
-
-export type ReceiptPreviewScreenProps = RouteProp<
-  PaymentsReceiptParamsList,
-  "PAYMENT_RECEIPT_PREVIEW_SCREEN"
->;
 
 const ReceiptPreviewScreen = () => {
   const theme = useIOTheme();
