@@ -13,6 +13,7 @@ import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { TimelineStatus } from "../components/Timeline";
+import { SendOpeningSource } from "../../pushNotifications/analytics";
 
 export const maxVisiblePaymentCount = 5;
 
@@ -141,3 +142,6 @@ export const shouldUseBottomSheetForPayments = (
   payments?: ReadonlyArray<NotificationPaymentInfo>
 ): payments is ReadonlyArray<NotificationPaymentInfo> =>
   !isCancelled && (payments?.length ?? 0) > 1;
+
+export const openingSourceIsAarMessage = (openingSource: SendOpeningSource) =>
+  openingSource === "aar";
