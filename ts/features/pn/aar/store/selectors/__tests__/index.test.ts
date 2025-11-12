@@ -6,7 +6,6 @@ import {
   currentAARFlowStateAssistanceErrorCode,
   currentAARFlowStateErrorDebugInfoSelector,
   currentAARFlowStateType,
-  isAarMessageDelegatedSelector,
   thirdPartySenderDenominationSelector
 } from "..";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -179,45 +178,6 @@ describe("currentAARFlowStateAssistanceErrorCode", () => {
   });
 });
 
-describe("isAarMessageDelegatedSelector", () => {
-  sendAarMockStates.forEach(state => {
-    const mandate = (state as Extract<AARFlowState, { mandateId?: string }>)
-      .mandateId;
-    it(`should return ${mandate !== undefined} when state is ${
-      state.type
-    }, and mandateId is ${mandate}`, () => {
-      const mockGlobalState = {
-        features: {
-          pn: {
-            aarFlow: state
-          }
-        }
-      } as unknown as GlobalState;
-
-      const result = isAarMessageDelegatedSelector(
-        mockGlobalState,
-        "000000000001"
-      );
-      expect(result).toBe(mandate !== undefined);
-    });
-  });
-  it("should return false when the passed iun is different from the one in the state", () => {
-    const state = sendAarMockStateFactory.displayingNotificationData();
-    const mockGlobalState = {
-      features: {
-        pn: {
-          aarFlow: state
-        }
-      }
-    } as unknown as GlobalState;
-
-    const result = isAarMessageDelegatedSelector(
-      mockGlobalState,
-      "different-iun"
-    );
-    expect(result).toBe(false);
-  });
-});
 describe("aarAdresseeDenominationSelector", () => {
   sendAarMockStates.forEach(state => {
     const fullName = (

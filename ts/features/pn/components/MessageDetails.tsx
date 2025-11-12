@@ -22,6 +22,7 @@ import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 import { PNMessage } from "../store/types/types";
 import {
   maxVisiblePaymentCount,
+  openingSourceIsAarMessage,
   shouldUseBottomSheetForPayments
 } from "../utils";
 import {
@@ -42,7 +43,6 @@ export type MessageDetailsProps = {
   messageId: string;
   serviceId: ServiceId;
   payments?: ReadonlyArray<NotificationPaymentInfo>;
-  isAARMessage: boolean;
   sendOpeningSource: SendOpeningSource;
   sendUserType: SendUserType;
 };
@@ -52,7 +52,6 @@ export const MessageDetails = ({
   messageId,
   payments,
   serviceId,
-  isAARMessage,
   sendOpeningSource,
   sendUserType
 }: MessageDetailsProps) => {
@@ -76,7 +75,8 @@ export const MessageDetails = ({
     ? message.completedPayments
     : undefined;
 
-  const maybeMessageDate = isAARMessage ? undefined : message.created_at;
+  const isAarMessage = openingSourceIsAarMessage(sendOpeningSource);
+  const maybeMessageDate = isAarMessage ? undefined : message.created_at;
   return (
     <>
       <ScrollView
@@ -91,7 +91,7 @@ export const MessageDetails = ({
             subject={message.subject}
             createdAt={maybeMessageDate}
             thirdPartySenderDenomination={message.senderDenomination}
-            canNavigateToServiceDetails={!isAARMessage}
+            canNavigateToServiceDetails={!isAarMessage}
           >
             <Tag
               text={I18n.t("features.pn.details.badge.legalValue")}
@@ -115,7 +115,10 @@ export const MessageDetails = ({
             payments={payments}
           />
           <VSpacer size={16} />
-          <MessageDetailsContent message={message} />
+          <MessageDetailsContent
+            message={message}
+            sendUserType={sendUserType}
+          />
           <VSpacer size={16} />
           <MessageDetailsAttachments
             banner={<BannerAttachments />}
