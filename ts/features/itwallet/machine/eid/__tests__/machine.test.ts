@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-identical-functions */
 import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
 import {
@@ -34,57 +35,64 @@ type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 const T_INTEGRITY_KEY = "abc";
 const T_WIA: string = "abcdefg";
 
+/**
+ * Actions
+ */
+const onInit = jest.fn();
+const navigateToTosScreen = jest.fn();
+const navigateToIpzsPrivacyScreen = jest.fn();
+const navigateToIdpSelectionScreen = jest.fn();
+const navigateToEidPreviewScreen = jest.fn();
+const navigateToSpidLoginScreen = jest.fn();
+const navigateToWalletRevocationScreen = jest.fn();
+const navigateToSuccessScreen = jest.fn();
+const navigateToFailureScreen = jest.fn();
+const navigateToWallet = jest.fn();
+const navigateToCredentialCatalog = jest.fn();
+const navigateToCiePreparationScreen = jest.fn();
+const navigateToCiePinPreparationScreen = jest.fn();
+const navigateToCiePinScreen = jest.fn();
+const navigateToCieReadCardScreen = jest.fn();
+const navigateToNfcInstructionsScreen = jest.fn();
+const navigateToCieIdLoginScreen = jest.fn();
+const navigateToCieWarningScreen = jest.fn();
+const navigateToIdentificationScreen = jest.fn();
+const storeIntegrityKeyTag = jest.fn();
+const cleanupIntegrityKeyTag = jest.fn();
+const storeWalletInstanceAttestation = jest.fn();
+const storeEidCredential = jest.fn();
+const closeIssuance = jest.fn();
+const handleSessionExpired = jest.fn();
+const resetWalletInstance = jest.fn();
+const trackWalletInstanceCreation = jest.fn();
+const trackWalletInstanceRevocation = jest.fn();
+const trackIdentificationMethodSelected = jest.fn();
+const storeAuthLevel = jest.fn();
+const freezeSimplifiedActivationRequirements = jest.fn();
+const clearSimplifiedActivationRequirements = jest.fn();
+const loadPidIntoContext = jest.fn();
+
+/**
+ * Actors
+ */
+const verifyTrustFederation = jest.fn();
+const createWalletInstance = jest.fn();
+const getCieStatus = jest.fn();
+const getWalletAttestation = jest.fn();
+const requestEid = jest.fn();
+const startAuthFlow = jest.fn();
+
+/**
+ * Guards
+ */
+const issuedEidMatchesAuthenticatedUser = jest.fn();
+const isSessionExpired = jest.fn();
+const isOperationAborted = jest.fn();
+const hasValidWalletInstanceAttestation = jest.fn();
+const isEligibleForItwSimplifiedActivation = jest.fn();
+const revokeWalletInstance = jest.fn();
+
 describe("itwEidIssuanceMachine", () => {
-  const onInit = jest.fn();
-  const navigateToTosScreen = jest.fn();
-  const navigateToIpzsPrivacyScreen = jest.fn();
-  const navigateToIdpSelectionScreen = jest.fn();
-  const navigateToEidPreviewScreen = jest.fn();
-  const navigateToSpidLoginScreen = jest.fn();
-  const navigateToWalletRevocationScreen = jest.fn();
-  const navigateToSuccessScreen = jest.fn();
-  const navigateToFailureScreen = jest.fn();
-  const navigateToWallet = jest.fn();
-  const navigateToCredentialCatalog = jest.fn();
-  const navigateToCiePreparationScreen = jest.fn();
-  const navigateToCiePinPreparationScreen = jest.fn();
-  const navigateToCiePinScreen = jest.fn();
-  const navigateToCieReadCardScreen = jest.fn();
-  const navigateToNfcInstructionsScreen = jest.fn();
-  const navigateToCieIdLoginScreen = jest.fn();
-  const navigateToCieWarningScreen = jest.fn();
-  const navigateToIdentificationScreen = jest.fn();
-  const storeIntegrityKeyTag = jest.fn();
-  const cleanupIntegrityKeyTag = jest.fn();
-  const storeWalletInstanceAttestation = jest.fn();
-  const storeEidCredential = jest.fn();
-  const closeIssuance = jest.fn();
-  const handleSessionExpired = jest.fn();
-
-  const verifyTrustFederation = jest.fn();
-  const createWalletInstance = jest.fn();
-  const getCieStatus = jest.fn();
-  const getWalletAttestation = jest.fn();
-  const requestEid = jest.fn();
-  const startAuthFlow = jest.fn();
-
-  const issuedEidMatchesAuthenticatedUser = jest.fn();
-  const isSessionExpired = jest.fn();
-  const isOperationAborted = jest.fn();
-  const hasValidWalletInstanceAttestation = jest.fn();
-  const hasIntegrityKeyTag = jest.fn();
-  const isL3FeaturesEnabled = jest.fn();
-  const isL2Fallback = jest.fn();
-  const isEligibleForItwSimplifiedActivation = jest.fn();
-  const resetWalletInstance = jest.fn();
-  const trackWalletInstanceCreation = jest.fn();
-  const trackWalletInstanceRevocation = jest.fn();
-  const revokeWalletInstance = jest.fn();
-  const storeAuthLevel = jest.fn();
-  const freezeSimplifiedActivationRequirements = jest.fn();
-  const clearSimplifiedActivationRequirements = jest.fn();
-  const loadPidIntoContext = jest.fn();
-
   const mockedMachine = itwEidIssuanceMachine.provide({
     actions: {
       onInit,
@@ -115,6 +123,7 @@ describe("itwEidIssuanceMachine", () => {
       resetWalletInstance,
       trackWalletInstanceCreation,
       trackWalletInstanceRevocation,
+      trackIdentificationMethodSelected,
       storeAuthLevel,
       freezeSimplifiedActivationRequirements,
       clearSimplifiedActivationRequirements,
@@ -142,11 +151,8 @@ describe("itwEidIssuanceMachine", () => {
       issuedEidMatchesAuthenticatedUser,
       isSessionExpired,
       isOperationAborted,
-      hasValidWalletInstanceAttestation,
-      hasIntegrityKeyTag,
-      isL3FeaturesEnabled,
-      isL2Fallback,
-      isEligibleForItwSimplifiedActivation
+      isEligibleForItwSimplifiedActivation,
+      hasValidWalletInstanceAttestation
     }
   });
 
@@ -157,7 +163,8 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("Should fail if trust federation verification fails", async () => {
-    isL3FeaturesEnabled.mockImplementation(() => true);
+    verifyTrustFederation.mockImplementation(() => Promise.reject());
+
     const actor = createActor(mockedMachine);
     actor.start();
 
@@ -171,7 +178,7 @@ describe("itwEidIssuanceMachine", () => {
      * Start eID issuance
      */
 
-    actor.send({ type: "start" });
+    actor.send({ type: "start", mode: "issuance", level: "l2" });
 
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
@@ -180,8 +187,6 @@ describe("itwEidIssuanceMachine", () => {
     /**
      * Accept TOS and verify trust
      */
-
-    verifyTrustFederation.mockImplementation(() => Promise.reject());
 
     actor.send({ type: "accept-tos" });
 
@@ -194,9 +199,22 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
   });
 
-  it("Should obtain an eID (SPID) from L3 Identification", async () => {
-    isL3FeaturesEnabled.mockImplementation(() => true);
-    isL2Fallback.mockImplementation(({ context }) => !!context.isL2Fallback);
+  it("Should obtain an eID (SPID) from L3 Identification with fallback", async () => {
+    verifyTrustFederation.mockImplementation(() => Promise.resolve());
+    createWalletInstance.mockImplementation(
+      () =>
+        new Promise(resolve => setTimeout(() => resolve(T_INTEGRITY_KEY), 10))
+    );
+    getWalletAttestation.mockImplementation(
+      () =>
+        new Promise(resolve => setTimeout(() => resolve({ jwt: T_WIA }), 10))
+    );
+    startAuthFlow.mockImplementation(() => Promise.resolve({}));
+    requestEid.mockImplementation(() =>
+      Promise.resolve(ItwStoredCredentialsMocks.eid)
+    );
+    issuedEidMatchesAuthenticatedUser.mockImplementation(() => true);
+
     const actor = createActor(mockedMachine);
     actor.start();
 
@@ -210,7 +228,7 @@ describe("itwEidIssuanceMachine", () => {
      * Start eID issuance
      */
 
-    actor.send({ type: "start" });
+    actor.send({ type: "start", mode: "issuance", level: "l3" });
 
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
@@ -219,17 +237,6 @@ describe("itwEidIssuanceMachine", () => {
     /**
      * Accept TOS and verify trust
      */
-
-    verifyTrustFederation.mockImplementation(() => Promise.resolve());
-
-    createWalletInstance.mockImplementation(
-      () =>
-        new Promise(resolve => setTimeout(() => resolve(T_INTEGRITY_KEY), 10))
-    );
-    getWalletAttestation.mockImplementation(
-      () =>
-        new Promise(resolve => setTimeout(() => resolve({ jwt: T_WIA }), 10))
-    );
 
     actor.send({ type: "accept-tos" });
 
@@ -285,9 +292,7 @@ describe("itwEidIssuanceMachine", () => {
 
     await waitFor(() =>
       expect(actor.getSnapshot().value).toStrictEqual({
-        UserIdentification: {
-          Identification: "L3"
-        }
+        UserIdentification: "Identification"
       })
     );
     expect(navigateToIdentificationScreen).toHaveBeenCalledTimes(1);
@@ -296,7 +301,7 @@ describe("itwEidIssuanceMachine", () => {
      * Restart the flow as L2 fallback from the beginning (TOS acceptance)
      */
 
-    actor.send({ type: "restart", mode: "issuance", isL2Fallback: true });
+    actor.send({ type: "restart", mode: "issuance", level: "l2-fallback" });
 
     await waitFor(() =>
       expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance")
@@ -306,9 +311,7 @@ describe("itwEidIssuanceMachine", () => {
 
     await waitFor(() =>
       expect(actor.getSnapshot().value).toStrictEqual({
-        UserIdentification: {
-          Identification: "L2"
-        }
+        UserIdentification: "Identification"
       })
     );
 
@@ -325,18 +328,11 @@ describe("itwEidIssuanceMachine", () => {
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(navigateToIdpSelectionScreen).toHaveBeenCalledTimes(1);
+    expect(trackIdentificationMethodSelected).toHaveBeenCalledTimes(1);
 
     /**
      * Choose first IDP in list for SPID identification
      */
-
-    startAuthFlow.mockImplementation(() => Promise.resolve({}));
-
-    requestEid.mockImplementation(() =>
-      Promise.resolve(ItwStoredCredentialsMocks.eid)
-    );
-
-    issuedEidMatchesAuthenticatedUser.mockImplementation(() => true);
 
     actor.send({ type: "select-spid-idp", idp: idps[0] });
 
@@ -349,14 +345,14 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
       mode: "issuance",
+      level: "l2-fallback",
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
       identification: {
         mode: "spid",
         level: "L2",
         idpId: idps[0].id
-      },
-      isL2Fallback: true
+      }
     });
 
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
@@ -402,6 +398,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
       mode: "issuance",
+      level: "l2-fallback",
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
       identification: {
@@ -412,8 +409,7 @@ describe("itwEidIssuanceMachine", () => {
       authenticationContext: expect.objectContaining({
         callbackUrl: "http://test.it"
       }),
-      eid: ItwStoredCredentialsMocks.eid,
-      isL2Fallback: true
+      eid: ItwStoredCredentialsMocks.eid
     });
 
     /**
@@ -436,8 +432,10 @@ describe("itwEidIssuanceMachine", () => {
     ).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
-      value: { UserIdentification: { Identification: "L2" } },
+      value: { UserIdentification: "Identification" },
       context: {
+        level: "l2",
+        mode: "issuance",
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA }
       }
@@ -464,6 +462,8 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
+      level: "l2",
+      mode: "issuance",
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
       identification: {
@@ -501,7 +501,6 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("Should obtain an eID (Cie+PIN)", async () => {
-    isL3FeaturesEnabled.mockImplementation(() => true);
     /** Initial part is the same as the previous test, we can start from the identification */
 
     const initialSnapshot: MachineSnapshot = createActor(
@@ -509,7 +508,7 @@ describe("itwEidIssuanceMachine", () => {
     ).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
-      value: { UserIdentification: { Identification: "L3" } },
+      value: { UserIdentification: "Identification" },
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA },
@@ -711,7 +710,6 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("Should skip Wallet Instance creation", async () => {
-    hasIntegrityKeyTag.mockImplementation(() => true);
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
@@ -731,7 +729,7 @@ describe("itwEidIssuanceMachine", () => {
      * Start eID issuance
      */
 
-    actor.send({ type: "start" });
+    actor.send({ type: "start", mode: "issuance", level: "l2" });
 
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
@@ -771,9 +769,7 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("Should skip Wallet Instance Attestation obtainment", async () => {
-    isL3FeaturesEnabled.mockImplementation(() => true);
     hasValidWalletInstanceAttestation.mockImplementation(() => true);
-    hasIntegrityKeyTag.mockImplementation(() => true);
 
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
@@ -795,7 +791,7 @@ describe("itwEidIssuanceMachine", () => {
      * Start eID issuance
      */
 
-    actor.send({ type: "start" });
+    actor.send({ type: "start", mode: "issuance", level: "l2" });
 
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
@@ -804,13 +800,6 @@ describe("itwEidIssuanceMachine", () => {
     /**
      * Accept TOS and request WIA
      */
-
-    createWalletInstance.mockImplementation(() =>
-      Promise.resolve(T_INTEGRITY_KEY)
-    );
-    getWalletAttestation.mockImplementation(() =>
-      Promise.resolve({ jwt: T_WIA })
-    );
 
     actor.send({ type: "accept-tos" });
 
@@ -830,9 +819,7 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "accept-ipzs-privacy" });
 
     expect(actor.getSnapshot().value).toStrictEqual({
-      UserIdentification: {
-        Identification: "L3"
-      }
+      UserIdentification: "Identification"
     });
   });
 
@@ -860,8 +847,6 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("Should return to TOS acceptance if session expires when creating a Wallet Instance", async () => {
-    hasValidWalletInstanceAttestation.mockImplementation(() => false);
-
     const actor = createActor(mockedMachine);
     actor.start();
 
@@ -875,10 +860,14 @@ describe("itwEidIssuanceMachine", () => {
      * Start eID issuance
      */
 
-    actor.send({ type: "start" });
+    actor.send({ type: "start", mode: "issuance", level: "l2" });
 
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
-    expect(actor.getSnapshot().context).toStrictEqual(InitialContext);
+    expect(actor.getSnapshot().context).toStrictEqual({
+      ...InitialContext,
+      mode: "issuance",
+      level: "l2"
+    });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
 
@@ -932,7 +921,7 @@ describe("itwEidIssuanceMachine", () => {
      * Start eID issuance
      */
 
-    actor.send({ type: "start" });
+    actor.send({ type: "start", mode: "issuance", level: "l2" });
 
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
@@ -987,7 +976,7 @@ describe("itwEidIssuanceMachine", () => {
      * Start eID issuance
      */
 
-    actor.send({ type: "start" });
+    actor.send({ type: "start", mode: "issuance", level: "l2" });
 
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
@@ -1039,7 +1028,7 @@ describe("itwEidIssuanceMachine", () => {
      * Start eID issuance
      */
 
-    actor.send({ type: "start" });
+    actor.send({ type: "start", mode: "issuance", level: "l2" });
 
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
@@ -1091,7 +1080,7 @@ describe("itwEidIssuanceMachine", () => {
     ).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
-      value: { UserIdentification: { Identification: "L2" } }
+      value: { UserIdentification: "Identification" }
     } as MachineSnapshot);
 
     const actor = createActor(mockedMachine, {
@@ -1102,7 +1091,6 @@ describe("itwEidIssuanceMachine", () => {
     // Select identification mode
     actor.send({ type: "select-identification-mode", mode: "cieId" });
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
     await waitFor(() =>
       expect(actor.getSnapshot().value).toStrictEqual({
         UserIdentification: {
@@ -1148,7 +1136,7 @@ describe("itwEidIssuanceMachine", () => {
      * Start eID issuance
      */
 
-    actor.send({ type: "start" });
+    actor.send({ type: "start", mode: "issuance", level: "l2" });
 
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
@@ -1240,14 +1228,13 @@ describe("itwEidIssuanceMachine", () => {
     actor.start();
 
     hasValidWalletInstanceAttestation.mockImplementation(() => true);
-    hasIntegrityKeyTag.mockImplementation(() => true);
     verifyTrustFederation.mockImplementation(() => Promise.resolve());
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
     expect(actor.getSnapshot().context).toStrictEqual(initialContext);
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
-    actor.send({ type: "start", mode: "reissuance" });
+    actor.send({ type: "start", mode: "reissuance", level: "l2" });
 
     expect(actor.getSnapshot().value).toStrictEqual(
       "TrustFederationVerification"
@@ -1256,22 +1243,19 @@ describe("itwEidIssuanceMachine", () => {
 
     const intermediateState1 = await waitForActor(actor, snapshot1 =>
       snapshot1.matches({
-        UserIdentification: {
-          Identification: "L2"
-        }
+        UserIdentification: "Identification"
       })
     );
     expect(intermediateState1.value).toStrictEqual({
-      UserIdentification: {
-        Identification: "L2"
-      }
+      UserIdentification: "Identification"
     });
 
     expect(verifyTrustFederation).toHaveBeenCalledTimes(1);
 
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...initialContext,
-      mode: "reissuance"
+      mode: "reissuance",
+      level: "l2"
     });
 
     expect(navigateToIdentificationScreen).toHaveBeenCalledTimes(1);
@@ -1312,9 +1296,10 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...initialContext,
+      mode: "reissuance",
+      level: "l2",
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
-      mode: "reissuance",
       identification: {
         mode: "spid",
         level: "L2",
@@ -1351,7 +1336,6 @@ describe("itwEidIssuanceMachine", () => {
 
     // EID obtained
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
     await waitFor(() =>
       expect(actor.getSnapshot().value).toStrictEqual({
         Issuance: "DisplayingPreview"
@@ -1368,9 +1352,10 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...initialContext,
+      mode: "reissuance",
+      level: "l2",
       integrityKeyTag: T_INTEGRITY_KEY,
       walletInstanceAttestation: { jwt: T_WIA },
-      mode: "reissuance",
       identification: {
         mode: "spid",
         level: "L2",
@@ -1389,7 +1374,7 @@ describe("itwEidIssuanceMachine", () => {
     ).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
-      value: { UserIdentification: { Identification: "L2" } },
+      value: { UserIdentification: "Identification" },
       context: {
         mode: "reissuance"
       }
@@ -1406,13 +1391,12 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("Should go back to IpzsPrivacyAcceptance state if mode is 'issuing'", async () => {
-    isL3FeaturesEnabled.mockImplementation(() => true);
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
 
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
-      value: { UserIdentification: { Identification: "L3" } }
+      value: { UserIdentification: "Identification" }
     } as MachineSnapshot);
 
     const actor = createActor(mockedMachine, {
@@ -1436,7 +1420,7 @@ describe("itwEidIssuanceMachine", () => {
     /**
      * Start eID issuance
      */
-    actor.send({ type: "start" });
+    actor.send({ type: "start", mode: "issuance", level: "l2" });
 
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
@@ -1507,7 +1491,6 @@ describe("itwEidIssuanceMachine", () => {
         new Promise(resolve => setTimeout(() => resolve({ jwt: T_WIA }), 10))
     );
 
-    hasIntegrityKeyTag.mockImplementation(() => false);
     hasValidWalletInstanceAttestation.mockImplementation(() => true);
 
     actor.start();
@@ -1547,7 +1530,6 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("Should navigate to CieWarning screen when 'go-to-cie-warning' event is received", async () => {
-    isL3FeaturesEnabled.mockImplementation(() => true);
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
@@ -1556,7 +1538,7 @@ describe("itwEidIssuanceMachine", () => {
       undefined,
       initialSnapshot,
       {
-        value: { UserIdentification: { Identification: "L3" } },
+        value: { UserIdentification: "Identification" },
         context: {
           ...InitialContext,
           integrityKeyTag: T_INTEGRITY_KEY,
@@ -1572,9 +1554,7 @@ describe("itwEidIssuanceMachine", () => {
     actor.start();
 
     expect(actor.getSnapshot().value).toStrictEqual({
-      UserIdentification: {
-        Identification: "L3"
-      }
+      UserIdentification: "Identification"
     });
 
     const testWarningType: CieWarningType = "card";
@@ -1595,16 +1575,15 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("Should navigate to InsertingCardPin through the preparation screens if L3 is enabled", async () => {
-    isL3FeaturesEnabled.mockImplementation(() => true);
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
-      value: { UserIdentification: { Identification: "L3" } },
+      value: { UserIdentification: "Identification" },
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA },
-        isL3: true,
+        level: "l3",
         cieContext: {
           isNFCEnabled: true,
           isCIEAuthenticationSupported: true
@@ -1647,16 +1626,15 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("Should return to PreparationPin when navigating back from CieWarning", async () => {
-    isL3FeaturesEnabled.mockImplementation(() => true);
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
-      value: { UserIdentification: { Identification: "L3" } },
+      value: { UserIdentification: "Identification" },
       context: {
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA },
-        isL3: true,
+        level: "l3",
         cieContext: {
           isNFCEnabled: true,
           isCIEAuthenticationSupported: true
@@ -1716,10 +1694,10 @@ describe("itwEidIssuanceMachine", () => {
      * Start
      */
 
-    actor.send({ type: "start", isL3: true });
+    actor.send({ type: "start", mode: "issuance", level: "l3" });
 
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
-      isL3: true
+      level: "l3"
     });
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
@@ -1737,7 +1715,7 @@ describe("itwEidIssuanceMachine", () => {
         eid: ItwStoredCredentialsMocks.eid,
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA },
-        isL3: true,
+        level: "l3",
         legacyCredentials: [
           ItwStoredCredentialsMocks.mdl
         ] as ReadonlyArray<StoredCredential>
@@ -1766,7 +1744,7 @@ describe("itwEidIssuanceMachine", () => {
         mode: "upgrade",
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA },
-        isL3: true,
+        level: "l3",
         legacyCredentials: [] as ReadonlyArray<StoredCredential>
       }
     } as MachineSnapshot);
@@ -1784,11 +1762,10 @@ describe("itwEidIssuanceMachine", () => {
     verifyTrustFederation.mockImplementation(
       () => new Promise(resolve => setTimeout(() => resolve({}), 6000))
     );
-    hasIntegrityKeyTag.mockImplementation(() => true);
     hasValidWalletInstanceAttestation.mockImplementation(() => true);
 
     actor.start();
-    actor.send({ type: "start" });
+    actor.send({ type: "start", mode: "issuance", level: "l2" });
     actor.send({ type: "accept-tos" });
 
     expect(actor.getSnapshot().value).toStrictEqual(
@@ -1808,7 +1785,7 @@ describe("itwEidIssuanceMachine", () => {
     );
 
     actor.start();
-    actor.send({ type: "start", mode: "reissuance" });
+    actor.send({ type: "start", mode: "reissuance", level: "l2" });
 
     expect(actor.getSnapshot().value).toStrictEqual(
       "TrustFederationVerification"
@@ -1821,7 +1798,6 @@ describe("itwEidIssuanceMachine", () => {
   });
 
   it("Should start the simplified activation flow without credentials", async () => {
-    hasIntegrityKeyTag.mockImplementation(() => true);
     hasValidWalletInstanceAttestation.mockImplementation(() => true);
     isEligibleForItwSimplifiedActivation.mockImplementation(() => true);
 
@@ -1829,7 +1805,7 @@ describe("itwEidIssuanceMachine", () => {
     actor.start();
 
     // Start
-    actor.send({ type: "start", isL3: true, mode: "upgrade" });
+    actor.send({ type: "start", level: "l3", mode: "upgrade" });
     expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
 
     // Accept Wallet Provider TOS
@@ -1861,7 +1837,7 @@ describe("itwEidIssuanceMachine", () => {
         mode: "upgrade",
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA },
-        isL3: true,
+        level: "l3",
         legacyCredentials: [
           ItwStoredCredentialsMocks.mdl
         ] as ReadonlyArray<StoredCredential>
@@ -1871,7 +1847,6 @@ describe("itwEidIssuanceMachine", () => {
 
     actor.start();
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
     actor.subscribe(snap => {
       if (snap.matches("CredentialsUpgrade")) {
         onDone();

@@ -5,6 +5,7 @@ import {
   extractPNOptInMessageInfoIfAvailable,
   maxVisiblePaymentCount,
   notificationStatusToTimelineStatus,
+  openingSourceIsAarMessage,
   paymentsFromPNMessagePot,
   shouldUseBottomSheetForPayments
 } from "..";
@@ -13,6 +14,7 @@ import { CTAS } from "../../../../types/LocalizedCTAs";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 import { PNMessage } from "../../store/types/types";
+import { SendOpeningSource } from "../../../pushNotifications/analytics";
 
 const navigateToServiceLink = () =>
   "ioit://services/service-detail?serviceId=optInServiceId&activate=true";
@@ -532,6 +534,23 @@ describe("paymentsFromPNMessagePot", () => {
           noticeCode: "n2"
         }
       ]);
+    });
+  });
+});
+
+const sendOpeningSources: ReadonlyArray<SendOpeningSource> = [
+  "aar",
+  "message",
+  "not_set",
+  "not_an_opening_source" as SendOpeningSource
+];
+
+describe("openingSourceIsAarMessage", () => {
+  sendOpeningSources.forEach(sendOpeningSource => {
+    const isAar = sendOpeningSource === "aar";
+    it(`should output '${isAar}' when opening source is '${sendOpeningSource}'`, () => {
+      const output = openingSourceIsAarMessage(sendOpeningSource);
+      expect(output).toBe(isAar);
     });
   });
 });

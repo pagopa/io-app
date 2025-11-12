@@ -18,7 +18,7 @@ import {
 } from "../machine/selectors";
 import { getPDNDCriteriaDescription } from "../utils/strings";
 
-export const IdPayPDNDPrerequisitesScreen = () => {
+const IdPayPDNDPrerequisitesScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
 

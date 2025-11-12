@@ -54,6 +54,21 @@ export const IT_WALLET_ID_GRADIENT = ["#D5D5FF", "#CEE2FA"];
 export const IT_WALLET_ID_LOGO: IOIcons = "sparkles";
 
 /**
+ * Styling
+ */
+export const IT_WALLET_BG = "#F2F9FF";
+
+export const IT_WALLET_GRADIENT = [
+  "#FFB357",
+  "#FFEABD",
+  "#1968F0",
+  "#CDD2FC",
+  "#FFB357",
+  "#1968F0",
+  "#DCE3FC"
+];
+
+/**
  * Qualtrics survey URLs
  */
 

@@ -2,61 +2,61 @@ import { IbanDTO } from "../../../../../definitions/idpay/IbanDTO";
 import { IbanPutDTO } from "../../../../../definitions/idpay/IbanPutDTO";
 import { ConfigurationMode } from "../types";
 
-export type StartConfiguration = {
+type StartConfiguration = {
   readonly type: "start-configuration";
   readonly initiativeId: string;
   readonly mode: ConfigurationMode;
 };
 
-export type ConfirmIbanOnboarding = {
+type ConfirmIbanOnboarding = {
   readonly type: "confirm-iban-onboarding";
   readonly ibanBody: IbanPutDTO;
 };
 
-export type NewIbanOnboarding = {
+type NewIbanOnboarding = {
   readonly type: "new-iban-onboarding";
 };
 
-export type EnrollIban = {
+type EnrollIban = {
   readonly type: "enroll-iban";
   readonly iban: IbanDTO;
 };
 
-export type EnrollInstrument = {
+type EnrollInstrument = {
   readonly type: "enroll-instrument";
   readonly walletId: string;
 };
 
-export type DeleteInstrument = {
+type DeleteInstrument = {
   readonly type: "delete-instrument";
   readonly instrumentId: string;
   readonly walletId: string;
 };
 
-export type UpdateInstrumentSuccess = {
+type UpdateInstrumentSuccess = {
   readonly type: "update-instrument-success";
   readonly walletId: string;
   readonly enrolling: boolean;
 };
 
-export type UpdateInstrumentFailure = {
+type UpdateInstrumentFailure = {
   readonly type: "update-instrument-failure";
   readonly walletId: string;
 };
 
-export type SkipInstruments = {
+type SkipInstruments = {
   readonly type: "skip-instruments";
 };
 
-export type Next = {
+type Next = {
   readonly type: "next";
 };
 
-export type Back = {
+type Back = {
   readonly type: "back";
 };
 
-export type Close = {
+type Close = {
   readonly type: "close";
 };
 
