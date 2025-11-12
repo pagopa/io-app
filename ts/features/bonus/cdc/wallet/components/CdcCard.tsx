@@ -14,7 +14,6 @@ import WalletCardShape from "../../../../../../img/features/cdc/cdc_wallet_card.
 import DarkModeWalletCardShape from "../../../../../../img/features/cdc/cdc_wallet_card_dark.svg";
 
 export type CdcCardProps = {
-  numberOfCards: number;
   expireDate: Date;
 };
 

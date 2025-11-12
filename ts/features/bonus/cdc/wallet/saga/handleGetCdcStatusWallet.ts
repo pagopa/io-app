@@ -38,8 +38,7 @@ export function* handleGetCdcStatusWallet(
             type: "cdc",
             category: "bonus",
             key: "cdc_card",
-            expireDate: cdcInfo.expiration_date,
-            numberOfCards: cdcInfo.number_of_cards
+            expireDate: cdcInfo.expiration_date
           }
         ])
       );
