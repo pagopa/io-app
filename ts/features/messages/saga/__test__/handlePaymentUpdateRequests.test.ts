@@ -24,6 +24,8 @@ import {
   handlePaymentUpdateRequests,
   testable
 } from "../handlePaymentUpdateRequests";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { Action } from "../../../../store/actions/types";
 
 jest.mock("../../../../api/BackendClientManager");
 
@@ -111,11 +113,7 @@ describe("handlePaymentUpdateRequests", () => {
             // success case
             expect(hasVerifiedPayment.type).toEqual("CALL");
             const callArgs = hasVerifiedPayment.payload.args;
-            expect(callArgs).toEqual([
-              paymentActionRequest,
-              true,
-              mockGetPaymentInfoV2
-            ]);
+            expect(callArgs).toEqual([paymentActionRequest, true]);
             // cancel case
             const cancelEffectPattern = wasCancelled.payload.pattern;
             const sameMsgIdResult = cancelEffectPattern(
