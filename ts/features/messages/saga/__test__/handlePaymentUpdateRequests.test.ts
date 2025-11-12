@@ -1,27 +1,29 @@
 import * as E from "fp-ts/lib/Either";
-import { ActionType } from "typesafe-actions";
-import { testSaga } from "redux-saga-test-plan";
 import { Channel, channel } from "redux-saga";
-import { call, fork, take } from "redux-saga/effects";
+import { testSaga } from "redux-saga-test-plan";
+import { fork } from "redux-saga/effects";
+import { ActionType } from "typesafe-actions";
+import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import { backendClientManager } from "../../../../api/BackendClientManager";
+import * as MIXPANEL from "../../../../mixpanel";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { Action } from "../../../../store/actions/types";
+import { isPagoPATestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
+import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import {
-  handlePaymentUpdateRequests,
-  testable
-} from "../handlePaymentUpdateRequests";
-import {
+  UpdatePaymentForMessageSuccess,
   cancelQueuedPaymentUpdates,
   toGenericError,
   toSpecificError,
   toTimeoutError,
-  updatePaymentForMessage,
-  UpdatePaymentForMessageSuccess
+  updatePaymentForMessage
 } from "../../store/actions";
-import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import { isPagoPATestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
-import * as MIXPANEL from "../../../../mixpanel";
-import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import { backendClientManager } from "../../../../api/BackendClientManager";
+import {
+  handlePaymentUpdateRequests,
+  testable
+} from "../handlePaymentUpdateRequests";
 
 jest.mock("../../../../api/BackendClientManager");
 
@@ -91,7 +93,7 @@ describe("handlePaymentUpdateRequests", () => {
   });
 
   describe("paymentUpdateRequestWorker", () => {
-    it("should follow proper flow when using paymentDataRequest API (isTest true)", () => {
+    it("should follow proper flow when using paymentDataRequest API (isTest true), and only terminate the worker if the dispatched cancel action has the same messageId as the worker as payload ", () => {
       const mockChannel = channel() as Channel<
         ActionType<typeof updatePaymentForMessage.request>
       >;
@@ -111,17 +113,51 @@ describe("handlePaymentUpdateRequests", () => {
         .next(paymentActionRequest)
         .select(isPagoPATestEnabledSelector)
         .next(true)
-        .race({
-          hasVerifiedPayment: call(
-            testable!.updatePaymentInfo,
-            paymentActionRequest,
-            true,
-            mockGetPaymentInfoV2
-          ),
-          wasCancelled: take(cancelQueuedPaymentUpdates)
-        })
-        .next(cancelQueuedPaymentUpdates({ messageId }))
-        .take(mockChannel);
+        .inspect(
+          (effect: {
+            type: string;
+            payload: {
+              hasVerifiedPayment: {
+                type: string;
+                payload: {
+                  fn: GeneratorFunction;
+                  args: Array<any>;
+                };
+              };
+              wasCancelled: {
+                type: string;
+                payload: {
+                  pattern: (actionParam: Action) => boolean;
+                };
+              };
+            };
+          }) => {
+            expect(effect.type).toBe("RACE");
+            const { hasVerifiedPayment, wasCancelled } = effect.payload;
+            // success case
+            expect(hasVerifiedPayment.type).toEqual("CALL");
+            const callArgs = hasVerifiedPayment.payload.args;
+            expect(callArgs).toEqual([
+              paymentActionRequest,
+              true,
+              mockGetPaymentInfoV2
+            ]);
+            // cancel case
+            const cancelEffectPattern = wasCancelled.payload.pattern;
+            const sameMsgIdResult = cancelEffectPattern(
+              cancelQueuedPaymentUpdates({ messageId })
+            );
+            const differentMsgIdResult = cancelEffectPattern(
+              cancelQueuedPaymentUpdates({ messageId: "differentMessageId" })
+            );
+            const wrongActionResult = cancelEffectPattern(
+              applicationChangeState("active")
+            );
+            expect(sameMsgIdResult).toBe(true);
+            expect(differentMsgIdResult).toBe(false);
+            expect(wrongActionResult).toBe(false);
+          }
+        );
     });
     it("should properly handle a thrown Error", () => {
       const mockChannel = channel() as Channel<
@@ -136,7 +172,6 @@ describe("handlePaymentUpdateRequests", () => {
       const paymentError = toSpecificError(
         Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
       );
-
       testSaga(
         testable!.paymentUpdateRequestWorker,
         mockChannel,
@@ -147,15 +182,6 @@ describe("handlePaymentUpdateRequests", () => {
         .next(paymentActionRequest)
         .select(isPagoPATestEnabledSelector)
         .next(true)
-        .race({
-          hasVerifiedPayment: call(
-            testable!.updatePaymentInfo,
-            paymentActionRequest,
-            true,
-            mockGetPaymentInfoV2
-          ),
-          wasCancelled: take(cancelQueuedPaymentUpdates)
-        })
         .throw(error)
         .call(testable!.unknownErrorToPaymentError, error)
         .next(paymentError)
