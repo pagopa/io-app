@@ -32,7 +32,7 @@ const cardsWithBuffer = extendedCardsData.map((colorString, index) => ({
   color: colorString
 }));
 
-export const DSITWalletBrandExploration_1 = () => {
+export const DSItwBrandExploration_1 = () => {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollViewOffset(scrollRef);
 
@@ -41,7 +41,7 @@ export const DSITWalletBrandExploration_1 = () => {
       ref={scrollRef}
       style={styles.container}
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ backgroundColor: "#F3F4F6" }}
+      contentContainerStyle={{ backgroundColor: "#CBD1FE" }}
     >
       {/* Hero Section with Cards */}
       <View style={styles.heroSection}>
@@ -88,18 +88,18 @@ function Card({ color, index, scrollOffset, totalCards }: CardProps) {
     // Cards positioned at different X offsets, like slides in a row
     const cardOffset = (index - totalCards / 2) * 20; // Space between cards
 
-    // Horizontal translation: cards advance from their offset position to center
-    const translateX = interpolate(
-      scrollOffset.value,
-      [0, SCROLL_RANGE],
-      [-SCREEN_WIDTH * 0.25, SCREEN_WIDTH * 0.25]
-    );
+    // // Horizontal translation: cards advance from their offset position to center
+    // const translateX = interpolate(
+    //   scrollOffset.value,
+    //   [0, SCROLL_RANGE],
+    //   [-SCREEN_WIDTH * 0.25, SCREEN_WIDTH * 0.25]
+    // );
 
-    const translateY = interpolate(
-      scrollOffset.value,
-      [0, SCROLL_RANGE],
-      [-SCREEN_WIDTH * 0.25, SCREEN_WIDTH * 0.25]
-    );
+    // const translateY = interpolate(
+    //   scrollOffset.value,
+    //   [0, SCROLL_RANGE],
+    //   [-SCREEN_WIDTH * 0.25, SCREEN_WIDTH * 0.25]
+    // );
 
     // Rotation: perspective effect based on X position
     const rotateY = interpolate(
@@ -120,8 +120,8 @@ function Card({ color, index, scrollOffset, totalCards }: CardProps) {
       // top: index * 20,
       zIndex: index + 1,
       transform: [
-        { translateX: translateX + index * 35 - 100 },
-        { translateY: translateY + index * 10 },
+        { translateX: index * 35 - SCREEN_WIDTH * 0.8 },
+        { translateY: index * 10 },
         { skewY: "-15deg" }
 
         // { rotateY: `${45}deg` }
