@@ -28,6 +28,7 @@ import { backendClientManager } from "../../../api/BackendClientManager";
 import { apiUrlPrefix } from "../../../config";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 import { isTestEnv } from "../../../utils/environment";
+import { getKeyInfo } from "../../lollipop/saga";
 
 export function* handleThirdPartyMessage(
   action: ActionType<typeof loadThirdPartyMessage.request>
@@ -43,9 +44,12 @@ export function* handleThirdPartyMessage(
     return;
   }
 
+  const keyInfo = yield* call(getKeyInfo);
+
   const { getThirdPartyMessage } = backendClientManager.getBackendClient(
     apiUrlPrefix,
-    sessionToken
+    sessionToken,
+    keyInfo
   );
 
   // This method is called by `handleLoadMessageData` saga, which makes

@@ -73,6 +73,11 @@ export const ItwPidIssuanceSection = () => {
         description="Start L2 PID (Documenti su IO) reissuance"
         onPress={startReissuance("l2")}
       />
+      <ListItemNav
+        value="Start L3 reissuance"
+        description="Start L3 PID (IT Wallet) reissuance"
+        onPress={startReissuance("l3-next")}
+      />
     </View>
   );
 };
