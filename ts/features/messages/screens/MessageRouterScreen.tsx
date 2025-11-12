@@ -1,6 +1,5 @@
 import { ReactElement, useCallback, useEffect, useRef } from "react";
 import { View } from "react-native";
-import { StackActions } from "@react-navigation/native";
 import { Body, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import {
@@ -92,30 +91,31 @@ export const MessageRouterScreen = (props: NavigationProps): ReactElement => {
       );
 
       if (data.isLegacyGreenPass) {
-        navigation.dispatch(
-          StackActions.replace(MESSAGES_ROUTES.MESSAGE_GREEN_PASS)
-        );
+        navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+          screen: MESSAGES_ROUTES.MESSAGE_GREEN_PASS
+        });
       } else if (data.isPNMessage) {
-        navigation.dispatch(
-          StackActions.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-            screen: PN_ROUTES.MAIN,
+        navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+          screen: PN_ROUTES.MAIN,
+          params: {
+            screen: PN_ROUTES.MESSAGE_DETAILS,
             params: {
-              screen: PN_ROUTES.MESSAGE_DETAILS,
-              params: {
-                messageId: data.messageId,
-                serviceId: data.serviceId,
-                firstTimeOpening: data.firstTimeOpening
-              }
+              messageId: data.messageId,
+              serviceId: data.serviceId,
+              firstTimeOpening: data.firstTimeOpening,
+              sendOpeningSource: "message",
+              sendUserType: "not_set"
             }
-          })
-        );
+          }
+        });
       } else {
-        navigation.dispatch(
-          StackActions.replace(MESSAGES_ROUTES.MESSAGE_DETAIL, {
+        navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+          screen: MESSAGES_ROUTES.MESSAGE_DETAIL,
+          params: {
             messageId: data.messageId,
             serviceId: data.serviceId
-          })
-        );
+          }
+        });
       }
     },
     [fromPushNotification, navigation]
