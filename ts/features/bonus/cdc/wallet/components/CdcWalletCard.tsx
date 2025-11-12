@@ -9,8 +9,6 @@ import { getDeviceId } from "../../../../../utils/device";
 import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
 import { CdcCard, CdcCardProps } from "./CdcCard";
 
-export type CdcWalletCardProps = CdcCardProps;
-
 const WrappedCdcCard = (props: CdcCardProps) => {
   const { ...cardProps } = props;
 
