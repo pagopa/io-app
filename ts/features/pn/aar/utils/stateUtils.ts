@@ -138,7 +138,7 @@ type ErrorState = {
 export type AARFlowStateName =
   SendAARFlowStatesType[keyof SendAARFlowStatesType];
 
-const sendAARFlowStatesPhase2 = {
+const sendAARFlowDefaultStates = {
   none: "none",
   displayingAARToS: "displayingAARToS",
   fetchingQRData: "fetchingQRData",
@@ -148,7 +148,7 @@ const sendAARFlowStatesPhase2 = {
   ko: "ko"
 } as const;
 
-const sendAARFlowStatesPhase3 = {
+const sendAARFlowDelegatedStates = {
   notAddressee: "notAddressee",
   creatingMandate: "creatingMandate",
   cieCanAdvisory: "cieCanAdvisory",
@@ -160,15 +160,15 @@ const sendAARFlowStatesPhase3 = {
 } as const;
 
 export const sendAARFlowStates = {
-  ...sendAARFlowStatesPhase2,
-  ...sendAARFlowStatesPhase3
+  ...sendAARFlowDefaultStates,
+  ...sendAARFlowDelegatedStates
 } as const;
 
-const validAARStatusTransitionsPhase2 = new Map<
-  AARFlowStatePhase2["type"],
+const validAARStatusDefaultTransitions = new Map<
+  AARFlowDefaultState["type"],
   Set<
-    | AARFlowStatePhase2["type"]
-    | Extract<AARFlowStatePhase3, { type: "notAddressee" }>["type"]
+    | AARFlowDefaultState["type"]
+    | Extract<AARFlowDelegatedState, { type: "notAddressee" }>["type"]
   >
 >([
   [sendAARFlowStates.none, new Set([sendAARFlowStates.displayingAARToS])],
@@ -203,12 +203,12 @@ const validAARStatusTransitionsPhase2 = new Map<
   ]
 ]);
 
-const validAARStatusTransitionsPhase3 = new Map<
-  AARFlowStatePhase3["type"],
+const validAARStatusDelegatedTransitions = new Map<
+  AARFlowDelegatedState["type"],
   Set<
-    | AARFlowStatePhase3["type"]
+    | AARFlowDelegatedState["type"]
     | Extract<
-        AARFlowStatePhase2,
+        AARFlowDefaultState,
         { type: "ko" | "displayingNotificationData" }
       >["type"]
   >
@@ -263,7 +263,7 @@ const validAARStatusTransitionsPhase3 = new Map<
 export const validAARStatusTransitions = new Map<
   AARFlowState["type"],
   Set<AARFlowState["type"]>
->([...validAARStatusTransitionsPhase2, ...validAARStatusTransitionsPhase3]);
+>([...validAARStatusDefaultTransitions, ...validAARStatusDelegatedTransitions]);
 
 export const isValidAARStateTransition = (
   currentType: AARFlowStateName,
@@ -273,7 +273,16 @@ export const isValidAARStateTransition = (
   return allowedNextStates?.has(nextType) ?? false;
 };
 
-type AARFlowStatePhase3 =
+type AARFlowDefaultState =
+  | NotInitialized
+  | DisplayingTos
+  | FetchQR
+  | FetchNotification
+  | DisplayingNotification
+  | FinalNotAddressee
+  | ErrorState;
+
+type AARFlowDelegatedState =
   | NotAddressee
   | CreateMandate
   | CieCanAdvisory
@@ -283,13 +292,4 @@ type AARFlowStatePhase3 =
   | CieScanning
   | ValidateMandate;
 
-type AARFlowStatePhase2 =
-  | NotInitialized
-  | DisplayingTos
-  | FetchQR
-  | FetchNotification
-  | DisplayingNotification
-  | FinalNotAddressee
-  | ErrorState;
-
-export type AARFlowState = AARFlowStatePhase2 | AARFlowStatePhase3;
+export type AARFlowState = AARFlowDefaultState | AARFlowDelegatedState;
