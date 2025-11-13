@@ -62,6 +62,8 @@ type ProfileProperties = {
   ITW_PG_V3: ItwCredentialMixpanelStatus;
   ITW_TS_V3: ItwCredentialMixpanelStatus;
   ITW_CED_V3: ItwCredentialMixpanelStatus;
+  ITW_EDIP?: ItwCredentialMixpanelStatus;
+  ITW_SE?: ItwCredentialMixpanelStatus;
   LOGIN_METHOD: string;
   LOGIN_SESSION: LoginSessionDuration;
   NOTIFICATION_CONFIGURATION: NotificationPreferenceConfiguration;
@@ -140,6 +142,14 @@ export const updateMixpanelProfileProperties = async (
         ),
         ITW_CED_V2: getMixpanelCredentialStatus(
           CredentialType.EUROPEAN_DISABILITY_CARD,
+          state
+        ),
+        ITW_EDIP: getMixpanelCredentialStatus(
+          CredentialType.EDUCATION_DIPLOMA,
+          state
+        ),
+        ITW_SE: getMixpanelCredentialStatus(
+          CredentialType.SCHOOL_ENROLLMENT,
           state
         )
       }),

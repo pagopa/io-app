@@ -71,6 +71,8 @@ export const mixPanelCredentials = [
   "ITW_ED",
   "ITW_EE",
   "ITW_RES",
+  "ITW_EDIP",
+  "ITW_SE",
   "UNKNOWN"
 ] as const;
 
@@ -118,7 +120,9 @@ export const CREDENTIALS_MAP: Record<
   EuropeanDisabilityCard: { V2: "ITW_CED_V2", V3: "ITW_CED_V3" },
   education_degree: "ITW_ED",
   education_enrollment: "ITW_EE",
-  residency: "ITW_RES"
+  residency: "ITW_RES",
+  education_diploma: "ITW_EDIP",
+  school_enrollment: "ITW_SE"
 };
 
 type BackToWallet = {
