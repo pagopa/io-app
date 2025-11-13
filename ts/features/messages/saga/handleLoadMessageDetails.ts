@@ -1,21 +1,38 @@
-import { call, put } from "typed-redux-saga/macro";
+import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import { BackendClient } from "../../../api/backend";
 import { loadMessageDetails } from "../store/actions";
 import { SagaCallReturnType } from "../../../types/utils";
 import { getError } from "../../../utils/errors";
 import { toUIMessageDetails } from "../store/reducers/transformers";
 import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { errorToReason, unknownToReason } from "../utils";
-import { trackLoadMessageDetailsFailure } from "../analytics";
+import {
+  trackLoadMessageDetailsFailure,
+  trackUndefinedBearerToken,
+  UndefinedBearerTokenPhase
+} from "../analytics";
 import { handleResponse } from "../utils/responseHandling";
+import { backendClientManager } from "../../../api/BackendClientManager";
+import { apiUrlPrefix } from "../../../config";
+import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 
 export function* handleLoadMessageDetails(
-  getMessage: BackendClient["getMessage"],
   action: ActionType<typeof loadMessageDetails.request>
 ) {
   const id = action.payload.id;
+
+  const sessionToken = yield* select(sessionTokenSelector);
+
+  if (!sessionToken) {
+    trackUndefinedBearerToken(UndefinedBearerTokenPhase.messageDetailLoading);
+    return;
+  }
+
+  const { getMessage } = backendClientManager.getBackendClient(
+    apiUrlPrefix,
+    sessionToken
+  );
 
   try {
     const response = (yield* call(
