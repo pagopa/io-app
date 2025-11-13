@@ -1,19 +1,20 @@
 import { call, delay, race, select, take } from "typed-redux-saga/macro";
-import { ActionType } from "typesafe-actions";
-import {
-  cancelPNPaymentStatusTracking,
-  startPNPaymentStatusTracking
-} from "../actions";
-import { maxVisiblePaymentCount, paymentsFromSendMessage } from "../../utils";
-import { profileFiscalCodeSelector } from "../../../settings/common/store/selectors";
-import { trackPNPaymentStatus } from "../../analytics";
-import { getRptIdStringFromPayment } from "../../utils/rptId";
-import { paymentStatisticsForMessageUncachedSelector } from "../../../messages/store/reducers/payments";
+import { ActionType, isActionOf } from "typesafe-actions";
+import { Action } from "../../../../store/actions/types";
 import { isTestEnv } from "../../../../utils/environment";
+import { paymentStatisticsForMessageUncachedSelector } from "../../../messages/store/reducers/payments";
 import {
   SendOpeningSource,
   SendUserType
 } from "../../../pushNotifications/analytics";
+import { profileFiscalCodeSelector } from "../../../settings/common/store/selectors";
+import { trackPNPaymentStatus } from "../../analytics";
+import { maxVisiblePaymentCount, paymentsFromSendMessage } from "../../utils";
+import { getRptIdStringFromPayment } from "../../utils/rptId";
+import {
+  cancelPNPaymentStatusTracking,
+  startPNPaymentStatusTracking
+} from "../actions";
 import { curriedSendMessageFromIdSelector } from "../reducers";
 
 /**
@@ -51,7 +52,11 @@ export function* watchPaymentStatusForMixpanelTracking(
       paymentCount,
       visibleRPTIds
     ),
-    cancelAction: take(cancelPNPaymentStatusTracking)
+    cancelAction: take(
+      (actionParam: Action) =>
+        isActionOf(cancelPNPaymentStatusTracking, actionParam) &&
+        actionParam.payload.messageId === messageId
+    )
   });
 }
 

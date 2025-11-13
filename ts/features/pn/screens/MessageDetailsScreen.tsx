@@ -164,7 +164,7 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
     return () => {
       dispatch(cancelPreviousAttachmentDownload());
       dispatch(cancelQueuedPaymentUpdates({ messageId }));
-      dispatch(cancelPNPaymentStatusTracking());
+      dispatch(cancelPNPaymentStatusTracking({ messageId }));
       if (isAarMessage) {
         dispatch(terminateAarFlow({ messageId }));
       }

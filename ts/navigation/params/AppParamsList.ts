@@ -23,8 +23,8 @@ import { IdPayBarcodeRoutes } from "../../features/idpay/barcode/navigation/rout
 import { IdPayCodeParamsList } from "../../features/idpay/code/navigation/params";
 import { IdPayCodeRoutes } from "../../features/idpay/code/navigation/routes";
 
-import { CdcBonusRequestParamsList } from "../../features/bonus/cdc/navigation/params.ts";
-import { CDC_ROUTES } from "../../features/bonus/cdc/navigation/routes.ts";
+import { CdcBonusRequestParamsList } from "../../features/bonus/cdc/common/navigation/params.ts";
+import { CDC_ROUTES } from "../../features/bonus/cdc/common/navigation/routes.ts";
 import { IdPayConfigurationParamsList } from "../../features/idpay/configuration/navigation/params";
 import { IdPayConfigurationRoutes } from "../../features/idpay/configuration/navigation/routes";
 import {
