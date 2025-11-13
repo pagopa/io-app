@@ -12,7 +12,11 @@ describe("ItwWalletIdStatus", () => {
     "should match snapshot when PID status is %p",
     pidStatus => {
       const component = render(
-        <ItwWalletIdStatus pidStatus={pidStatus} onPress={constNull} />
+        <ItwWalletIdStatus
+          pidStatus={pidStatus}
+          pidExpiration="2026-11-12T14:11:48.000Z"
+          onPress={constNull}
+        />
       );
 
       expect(component).toMatchSnapshot();
