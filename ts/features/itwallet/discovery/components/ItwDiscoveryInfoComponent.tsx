@@ -2,7 +2,7 @@ import {
   BodySmall,
   ContentWrapper,
   Divider,
-  H3,
+  H2,
   H4,
   HStack,
   Icon,
@@ -173,7 +173,7 @@ export const ItwDiscoveryInfoComponent = () => {
       />
       <VSpacer size={24} />
       <ContentWrapper>
-        <H3>{I18n.t("features.itWallet.discovery.screen.itw.title")}</H3>
+        <H2>{I18n.t("features.itWallet.discovery.screen.itw.title")}</H2>
         <VSpacer size={24} />
         <VStack space={16}>
           <FeatureBlock

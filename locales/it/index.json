@@ -4570,7 +4570,7 @@
             }
           },
           "itw": {
-            "title": "L’unico portafoglio digitale di Stato: pubblico, sicuro, gratuito.",
+            "title": "IO è il tuo portafoglio digitale di Stato: pubblico, sicuro, gratuito.",
             "features": {
               "1": "Usi la tua Patente su IO come documento di riconoscimento",
               "2": "Ti basta il tuo telefono per dimostrare la tua identità",
@@ -4581,7 +4581,7 @@
             "details": {
               "1": {
                 "title": "Facile, sicuro, ufficiale",
-                "content": "Ottienilo con la tua **Carta di Identità Elettronica (CIE)** per associarlo alla tua identità.\n\nIT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantenerli al sicuro."
+                "content": "Ottienilo con la tua **Carta di Identità Elettronica (CIE)** per associarlo alla tua identità.\n\nIl portafoglio IT-Wallet di IO usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantenerli al sicuro."
               },
               "2": {
                 "title": "Nuovi documenti in arrivo",
@@ -4589,7 +4589,7 @@
               },
               "3": {
                 "title": "Tutto nelle tue mani",
-                "content": "Con IT-Wallet mostri il codice QR della tua Patente digitale: chi verifica non dovrà tenere in mano il tuo dispositivo."
+                "content": "Mostri il codice QR della tua Patente digitale: chi verifica non dovrà tenere in mano il tuo dispositivo."
               },
               "4": {
                 "title": "Progettato con l’Europa",
