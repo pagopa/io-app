@@ -11,37 +11,26 @@ import {
 import Clipboard from "@react-native-clipboard/clipboard";
 import { IOButton } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import { SettingsParamsList } from "../../../common/navigation/params/SettingsParamsList";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import { MrtdResponse } from "@pagopa/io-react-native-cie";
+import { SettingsParamsList } from "../../../../../common/navigation/params/SettingsParamsList";
+import { useHeaderSecondLevel } from "../../../../../../../hooks/useHeaderSecondLevel";
 
-export type CieIasAndMrtdAuthResultNavParams = {
-  // TODO: https://pagopa.atlassian.net/browse/IOPID-3434
-  // Replace `any` with the actual type of the result once the SDK is updated.
-  // Add type here: https://github.com/pagopa/io-react-native-cie/blob/16850bb3b95acd67c53e2e1407f50fc48cca2456/src/index.ts#L6
-  result: any;
-  challenge: string;
-  encodedChallenge: string;
+export type CieMrtdResultNavParams = {
+  result: MrtdResponse;
   encoding: "base64" | "hex";
 };
 
-export function CieIasAndMrtdPlaygroundIntAuthResult() {
+export function CieIasAndMrtdPlaygroundMrtdResultScreen() {
   useHeaderSecondLevel({
-    title: "CIE IAT+MRTD Playground (Internal Auth Result)"
+    title: "IAS+MRTD Result"
   });
 
   const route =
     useRoute<
-      RouteProp<
-        SettingsParamsList,
-        "CIE_IAS_AND_MRTD_PLAYGROUND_INTERNAL_AUTH_RESULTS"
-      >
+      RouteProp<SettingsParamsList, "CIE_IAS_AND_MRTD_PLAYGROUND_MRTD_RESULTS">
     >();
-  const { result, challenge, encodedChallenge, encoding } = route.params;
-  const resultString = JSON.stringify(
-    { challenge, encoding, encodedChallenge, ...result },
-    null,
-    2
-  );
+  const { result, encoding } = route.params;
+  const resultString = JSON.stringify({ encoding, ...result }, null, 2);
 
   const handleCopy = async () => {
     Clipboard.setString(resultString);
