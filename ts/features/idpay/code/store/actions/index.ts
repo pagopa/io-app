@@ -16,7 +16,7 @@ export const idPayGetCodeStatus = createAsyncAction(
   "IDPAY_GET_CODE_STATUS_FAILURE"
 )<undefined, CheckEnrollmentDTO, NetworkError>();
 
-export type IdPayGenerateCodePayload = {
+type IdPayGenerateCodePayload = {
   initiativeId?: string;
 };
 
@@ -29,7 +29,7 @@ export const idPayGenerateCode = createAsyncAction(
   "IDPAY_GENERATE_CODE_FAILURE"
 )<IdPayGenerateCodePayload, GenerateCodeRespDTO, NetworkError>();
 
-export type IdPayEnrollCodePayload = {
+type IdPayEnrollCodePayload = {
   initiativeId: string;
 };
 
@@ -48,7 +48,7 @@ export const idPayEnrollCode = createAsyncAction(
 export const idPayResetCode =
   createStandardAction("IDPAY_RESET_CODE")<undefined>();
 
-export type IdPayCodeCieBannerClosePayloadType = {
+type IdPayCodeCieBannerClosePayloadType = {
   initiativeId: string;
 };
 

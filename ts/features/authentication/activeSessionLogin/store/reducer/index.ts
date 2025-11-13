@@ -13,7 +13,8 @@ import {
   setIdpSelectedActiveSessionLogin,
   setLoggedOutUserWithDifferentCF,
   setStartActiveSessionLogin,
-  setVisualizeActiveSessionLoginBlockingScreen
+  setVisualizeActiveSessionLoginBlockingScreen,
+  setRefreshMessagesSection
 } from "../actions";
 import { SpidIdp } from "../../../../../utils/idps";
 import { SessionToken } from "../../../../../types/SessionToken";
@@ -35,6 +36,7 @@ export type ActiveSessionLoginState = {
     hasBlockingScreenBeenVisualized: boolean;
     showSessionExpirationBanner: boolean;
   };
+  refreshMessagesSection: boolean;
 };
 
 export const activeSessionLoginInitialState: ActiveSessionLoginState = {
@@ -44,7 +46,8 @@ export const activeSessionLoginInitialState: ActiveSessionLoginState = {
   engagement: {
     hasBlockingScreenBeenVisualized: false,
     showSessionExpirationBanner: true
-  }
+  },
+  refreshMessagesSection: true
 };
 
 const activeSessionLoginReducer = (
@@ -110,12 +113,20 @@ const activeSessionLoginReducer = (
         ...state,
         isUserLoggedIn: false
       };
+
+    case getType(setRefreshMessagesSection):
+      return {
+        ...state,
+        refreshMessagesSection: action.payload
+      };
+
     case getType(setFinishedActiveSessionLoginFlow):
       return {
         isActiveSessionLogin: false,
         isUserLoggedIn: false,
         activeSessionLoginLocalFlag: state.activeSessionLoginLocalFlag,
-        engagement: { ...state.engagement }
+        engagement: { ...state.engagement },
+        refreshMessagesSection: state.refreshMessagesSection
       };
     case getType(consolidateActiveSessionLoginData):
     case getType(setLoggedOutUserWithDifferentCF):

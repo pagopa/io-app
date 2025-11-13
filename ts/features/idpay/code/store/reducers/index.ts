@@ -118,7 +118,7 @@ const persistConfig: PersistConfig = {
   whitelist: ["isIdPayInitiativeBannerClosed"]
 };
 
-export const idPayCodePersistor = persistReducer<IdPayCodeState, Action>(
+const idPayCodePersistor = persistReducer<IdPayCodeState, Action>(
   persistConfig,
   reducer
 );

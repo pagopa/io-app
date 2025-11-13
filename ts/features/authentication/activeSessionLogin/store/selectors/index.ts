@@ -176,3 +176,6 @@ export const remoteApiLoginUrlPrefixSelector = createSelector(
       O.getOrElse(() => apiLoginUrlPrefix)
     )
 );
+export const shouldRefreshMessagesSectionSelector = (state: GlobalState) =>
+  state?.features?.loginFeatures?.activeSessionLogin?.refreshMessagesSection ??
+  true;
