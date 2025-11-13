@@ -11,7 +11,7 @@ export type SendAARFailurePhase =
   | "Fetch QRCode"
   | "Show Notification";
 
-type RecipientInfo = {
+export type RecipientInfo = {
   denomination: string;
   taxId: string;
 };
@@ -139,6 +139,7 @@ export type AARFlowStateName =
   SendAARFlowStatesType[keyof SendAARFlowStatesType];
 
 const sendAARFlowStatesPhase2 = {
+  none: "none",
   displayingAARToS: "displayingAARToS",
   fetchingQRData: "fetchingQRData",
   fetchingNotificationData: "fetchingNotificationData",
@@ -159,7 +160,6 @@ const sendAARFlowStatesPhase3 = {
 } as const;
 
 export const sendAARFlowStates = {
-  none: "none",
   ...sendAARFlowStatesPhase2,
   ...sendAARFlowStatesPhase3
 } as const;
@@ -248,11 +248,11 @@ const validAARStatusTransitionsPhase3 = new Map<
     sendAARFlowStates.cieScanning,
     new Set([
       sendAARFlowStates.cieScanningAdvisory,
-      sendAARFlowStates.creatingMandate
+      sendAARFlowStates.validatingMandate
     ])
   ],
   [
-    sendAARFlowStates.creatingMandate,
+    sendAARFlowStates.validatingMandate,
     new Set([
       sendAARFlowStates.ko,
       sendAARFlowStates.displayingNotificationData
