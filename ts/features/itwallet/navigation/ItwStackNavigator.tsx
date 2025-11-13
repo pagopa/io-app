@@ -4,7 +4,7 @@ import { useIOSelector } from "../../../store/hooks";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { ItwGenericErrorContent } from "../common/components/ItwGenericErrorContent";
 import { isItwEnabledSelector } from "../common/store/selectors/remoteConfig";
-import { ItwDiscoveryInfoComponent } from "../discovery/components/ItwDiscoveryInfoComponent.tsx";
+import { ItwDiscoveryInfoFallbackComponent } from "../discovery/components/ItwDiscoveryInfoFallbackComponent.tsx";
 import { ItwAlreadyActiveScreen } from "../discovery/screens/ItwAlreadyActiveScreen";
 import { ItwDiscoveryInfoScreen } from "../discovery/screens/ItwDiscoveryInfoScreen";
 import ItwIpzsPrivacyScreen from "../discovery/screens/ItwIpzsPrivacyScreen";
@@ -324,7 +324,7 @@ const InnerNavigator = memo(() => {
         />
         <Stack.Screen
           name={ITW_ROUTES.PLAYGROUNDS.DISCOVERY_INFO_NEW}
-          component={ItwDiscoveryInfoComponent}
+          component={ItwDiscoveryInfoFallbackComponent}
         />
       </Stack.Group>
       <Stack.Screen name={ITW_ROUTES.SETTINGS} component={ItwSettingsScreen} />
