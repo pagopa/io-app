@@ -141,7 +141,7 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
             navigation.replace(ITW_ROUTES.MAIN, {
               screen: ITW_ROUTES.DISCOVERY.INFO,
               params: {
-                isL3
+                level: isL3 ? "l3" : "l2"
               }
             })
         }}
