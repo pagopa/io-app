@@ -138,6 +138,8 @@ import {
   waitForNavigatorServiceInitialization
 } from "../navigation/saga/navigation";
 import { checkShouldDisplaySendEngagementScreen } from "../features/pn/loginEngagement/sagas/checkShouldDisplaySendEngagementScreen";
+import { navigateToActiveSessionLogin } from "../features/authentication/activeSessionLogin/saga/navigateToActiveSessionLogin";
+import { showSessionExpirationBlockingScreenSelector } from "../features/authentication/activeSessionLogin/store/selectors";
 import { setRefreshMessagesSection } from "../features/authentication/activeSessionLogin/store/actions";
 import { watchMessagesSaga } from "../features/messages/saga";
 import { previousInstallationDataDeleteSaga } from "./installation";
@@ -728,7 +730,13 @@ export function* initializeApplicationSaga(
     true
   );
 
-  if (!isHandlingBackgroundActions) {
+  const showSessionExpirationBlockingScreen = yield* select(
+    showSessionExpirationBlockingScreenSelector
+  );
+
+  if (!isHandlingBackgroundActions && showSessionExpirationBlockingScreen) {
+    yield* call(navigateToActiveSessionLogin);
+  } else if (!isHandlingBackgroundActions) {
     // Check if should navigate to the send activation screen
     yield* fork(checkShouldDisplaySendEngagementScreen, isFirstOnboarding);
   }

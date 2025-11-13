@@ -47,14 +47,14 @@ import {
 import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
 import { usePosteIDApp2AppEducational } from "../../../login/idp/hooks/usePosteIDApp2AppEducational";
 import { getSpidErrorCodeDescription } from "../../../login/idp/utils/spidErrorCode";
-import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess
 } from "../../store/actions";
 import {
   idpSelectedActiveSessionLoginSelector,
-  activeSessionUserLoggedSelector
+  activeSessionUserLoggedSelector,
+  remoteApiLoginUrlPrefixSelector
 } from "../../store/selectors";
 import { ErrorType as SpidLoginErrorType } from "../../../login/idp/store/types";
 import useActiveSessionLoginNavigation from "../../utils/useActiveSessionLoginNavigation";

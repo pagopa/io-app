@@ -19,7 +19,6 @@ import { onLoginUriChanged } from "../../../common/utils/login";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
 import {
   getCieIDLoginUri,
   isAuthenticationUrl
@@ -30,7 +29,10 @@ import {
   CIE_ID_ERROR_MESSAGE,
   IO_LOGIN_CIE_SOURCE_APP
 } from "../../../login/cie/utils/cie";
-import { activeSessionUserLoggedSelector } from "../../store/selectors";
+import {
+  activeSessionUserLoggedSelector,
+  remoteApiLoginUrlPrefixSelector
+} from "../../store/selectors";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess,
