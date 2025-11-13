@@ -46,13 +46,13 @@ type IDPayFailureSupportModal = {
 export const useIDPayStaticCodeModal = (
   props: Props
 ): IDPayFailureSupportModal => {
+  const { initiativeId, initiativeName, onDismiss } = props;
+
   const barcodePot = useIOSelector(idPayStaticCodeByInitiativeIdSelector)(
-    props.initiativeId
+    initiativeId
   );
 
   const isLoading = pot.isLoading(barcodePot);
-
-  const { initiativeId, initiativeName, onDismiss } = props;
 
   const IconPlaceholder = () => (
     <>
