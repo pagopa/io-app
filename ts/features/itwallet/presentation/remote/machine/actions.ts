@@ -29,7 +29,7 @@ export const createRemoteActionsImplementation = (
   navigateToDiscoveryScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
-      params: { isL3: true } // To continue with the presentation, IT-Wallet must be activated
+      params: { level: "l3" } // To continue with the presentation, IT-Wallet must be activated
     });
   },
 
