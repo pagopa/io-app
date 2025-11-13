@@ -36,10 +36,10 @@ platform :ios do
 
     # build the app
     gym(
-      scheme: "ItaliaApp",
+      scheme: "IO",
       clean: true,
       export_method: "app-store",
-      workspace: "ItaliaApp.xcworkspace",
+      workspace: "IO.xcworkspace",
       include_symbols: false
     )
   end
@@ -70,10 +70,10 @@ platform :ios do
 
     # build the app
     gym(
-      scheme: "ItaliaApp",
+      scheme: "IO",
       clean: true,
       export_method: "app-store",
-      workspace: "ItaliaApp.xcworkspace",
+      workspace: "IO.xcworkspace",
       include_symbols: false
     )
 
@@ -121,11 +121,11 @@ platform :ios do
 
     # build the app
     gym(
-      scheme: "ItaliaApp",
+      scheme: "IO",
       clean: true,
       export_method: "app-store",
       configuration: "Canary",
-      workspace: "ItaliaApp.xcworkspace",
+      workspace: "IO.xcworkspace",
       include_symbols: false
     )
 
