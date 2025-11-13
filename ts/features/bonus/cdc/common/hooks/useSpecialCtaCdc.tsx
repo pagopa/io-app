@@ -1,12 +1,12 @@
 import { useCallback, useMemo } from "react";
 import I18n from "i18next";
-import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { isCdcAppVersionSupportedSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
+import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { isCdcAppVersionSupportedSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { CDC_ROUTES } from "../navigation/routes";
-import * as analytics from "../analytics";
+import * as analytics from "../../analytics";
+import { loadAvailableBonuses } from "../../../common/store/actions/availableBonusesTypes";
 /**
  * Hook to handle the CDC flow request
  */
