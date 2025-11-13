@@ -284,7 +284,7 @@
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = M2X5YQ4BJ7;
 						LastSwiftMigration = 1160;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -564,8 +564,8 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
@@ -584,8 +584,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = it.pagopa.app.io;
 				PRODUCT_NAME = IO;
-				PROVISIONING_PROFILE = "0848c226-68ec-4314-ad27-50803db95257";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development it.pagopa.app.io";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ItaliaApp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.2;
@@ -602,8 +601,8 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
@@ -622,8 +621,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = it.pagopa.app.io;
 				PRODUCT_NAME = IO;
-				PROVISIONING_PROFILE = "0848c226-68ec-4314-ad27-50803db95257";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore it.pagopa.app.io";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ItaliaApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.2;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -845,12 +843,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = M2X5YQ4BJ7;
+				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ItaliaApp/Info.plist;
@@ -866,9 +862,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = it.pagopa.app.io.canary;
 				PRODUCT_NAME = IO;
-				PROVISIONING_PROFILE = "0848c226-68ec-4314-ad27-50803db95257";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore it.pagopa.app.io.canary";
 				SWIFT_OBJC_BRIDGING_HEADER = "ItaliaApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.2;
 				VERSIONING_SYSTEM = "apple-generic";
