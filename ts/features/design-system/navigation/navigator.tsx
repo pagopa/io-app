@@ -47,7 +47,7 @@ import { DSIOScrollViewCentredContent } from "../core/DSIOScrollViewCentredConte
 import { DSIOScrollViewScreenWithLargeHeader } from "../core/DSIOScrollViewWithLargeHeader";
 import { DSIOScrollViewWithListItems } from "../core/DSIOScrollViewWithListItems";
 import { DSIOScrollViewWithoutActions } from "../core/DSIOScrollViewWithoutActions";
-import { DSItwBrandExploration_1 } from "../core/DSItwBrandExploration_1";
+import { DSItwBrandExploration } from "../core/DSItwBrandExploration";
 import { DSIcons } from "../core/DSIcons";
 import { DSIridescentTrustmark } from "../core/DSIridescentTrustmark";
 import { DSLayout } from "../core/DSLayout";
@@ -393,11 +393,13 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ITWALLET_BRAND_1.route}
-          component={DSItwBrandExploration_1}
+          name={
+            DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ITW_BRAND_EXPLORATION.route
+          }
+          component={DSItwBrandExploration}
           options={{
             headerTitle:
-              DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ITWALLET_BRAND_1.title,
+              DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ITW_BRAND_EXPLORATION.title,
             headerShown: false
           }}
         />
