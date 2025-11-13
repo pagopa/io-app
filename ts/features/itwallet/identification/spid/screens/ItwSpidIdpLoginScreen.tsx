@@ -1,25 +1,25 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { memo, useCallback, useMemo, useState } from "react";
 import { Linking, StyleSheet, View } from "react-native";
 import { WebView, WebViewNavigation } from "react-native-webview";
-import I18n from "i18next";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
 } from "../../../../../hooks/useHeaderSecondLevel";
-import { originSchemasWhiteList } from "../../../../authentication/common/utils/originSchemasWhiteList";
+import { useIOSelector } from "../../../../../store/hooks";
 import { getIntentFallbackUrl } from "../../../../authentication/common/utils/login";
+import { originSchemasWhiteList } from "../../../../authentication/common/utils/originSchemasWhiteList";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
+import { selectItwEnv } from "../../../common/store/selectors/environment";
+import { getEnv } from "../../../common/utils/environment";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   selectAuthUrlOption,
   selectIsLoading
 } from "../../../machine/eid/selectors";
-import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
-import { useIOSelector } from "../../../../../store/hooks";
-import { selectItwEnv } from "../../../common/store/selectors/environment";
-import { getEnv } from "../../../common/utils/environment";
 
 const styles = StyleSheet.create({
   webViewWrapper: { flex: 1 }
@@ -96,7 +96,9 @@ const ItwSpidIdpLoginScreen = () => {
 
   // Setup header properties
   const headerProps: HeaderSecondLevelHookProps = {
-    title: I18n.t("features.itWallet.identification.mode.l2.title"),
+    title: I18n.t(
+      "features.itWallet.identification.modeSelection.mode.spid.title.default"
+    ),
     supportRequest: false,
     goBack: dismissalDialog.show
   };

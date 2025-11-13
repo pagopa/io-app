@@ -13,11 +13,11 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { CTA } from "../../../../../types/LocalizedCTAs";
 import * as analytics from "../../../analytics";
 import {
-  PaymentError,
-  toGenericError,
-  toSpecificError,
-  toTimeoutError
-} from "../../../store/actions";
+  toGenericMessagePaymentError,
+  toSpecificMessagePaymentError,
+  toTimeoutMessagePaymentError,
+  MessagePaymentError
+} from "../../../types/paymentErrors";
 import {
   computeAndTrackCTAPressAnalytics,
   computeAndTrackPaymentStart,
@@ -125,11 +125,19 @@ describe("detailsUtils", () => {
           } as PaymentInfoResponse),
           true
         ],
-        [remoteError<PaymentError>(toGenericError("An error occurred")), true],
-        [remoteError<PaymentError>(toTimeoutError()), true],
         [
-          remoteError<PaymentError>(
-            toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
+          remoteError<MessagePaymentError>(
+            toGenericMessagePaymentError("An error occurred")
+          ),
+          true
+        ],
+        [
+          remoteError<MessagePaymentError>(toTimeoutMessagePaymentError()),
+          true
+        ],
+        [
+          remoteError<MessagePaymentError>(
+            toSpecificMessagePaymentError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO)
           ),
           false
         ]

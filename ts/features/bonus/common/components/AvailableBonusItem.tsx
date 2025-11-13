@@ -7,7 +7,7 @@ import { BonusAvailable } from "../../../../../definitions/content/BonusAvailabl
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import { getRemoteLocale } from "../../../messages/utils/ctas";
 
-export type AvailableBonusItemState = "incoming" | "active" | "completed";
+type AvailableBonusItemState = "incoming" | "active" | "completed";
 
 type Props = {
   bonusItem: BonusAvailable;

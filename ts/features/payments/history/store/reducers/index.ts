@@ -51,7 +51,7 @@ import * as receiptsAnalytics from "../../../receipts/analytics";
 import { createSetTransform } from "../../../../../store/transforms/setTransform";
 import * as analytics from "../../../checkout/analytics";
 
-export type PaymentsOngoingFailedClockTime = {
+type PaymentsOngoingFailedClockTime = {
   wallClock: number;
   appClock: number;
 };
@@ -72,7 +72,7 @@ const INITIAL_STATE: PaymentsHistoryState = {
   paymentsOngoingFailed: {}
 };
 
-export const ARCHIVE_SIZE = 15;
+const ARCHIVE_SIZE = 15;
 
 const reducer = (
   state: PaymentsHistoryState = INITIAL_STATE,
@@ -405,7 +405,7 @@ const persistConfig: PersistConfig = {
   transforms: [createSetTransform(["receiptsOpened"])]
 };
 
-export const walletPaymentHistoryPersistor = persistReducer<
+const walletPaymentHistoryPersistor = persistReducer<
   PaymentsHistoryState,
   Action
 >(persistConfig, reducer);

@@ -1,6 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { isGestureEnabled } from "../../../../utils/navigation";
-import CdcBonusRequestInformationTos from "../activation/screens/CdcBonusRequestInformationTos";
+import { isGestureEnabled } from "../../../../../utils/navigation";
+import CdcBonusRequestInformationTos from "../../activation/screens/CdcBonusRequestInformationTos";
 import { CdcBonusRequestParamsList } from "./params";
 import { CDC_ROUTES } from "./routes";
 

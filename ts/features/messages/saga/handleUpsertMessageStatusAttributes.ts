@@ -23,7 +23,9 @@ import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { errorToReason, unknownToReason } from "../utils";
 import {
   trackArchivedRestoredMessages,
-  trackUpsertMessageStatusAttributesFailure
+  trackUpsertMessageStatusAttributesFailure,
+  trackUndefinedBearerToken,
+  UndefinedBearerTokenPhase
 } from "../analytics";
 import { handleResponse } from "../utils/responseHandling";
 import {
@@ -35,6 +37,9 @@ import {
 import { nextQueuedMessageDataUncachedSelector } from "../store/reducers/archiving";
 import { paginatedMessageFromIdForCategorySelector } from "../store/reducers/allPaginated";
 import { MessageListCategory } from "../types/messageListCategory";
+import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { backendClientManager } from "../../../api/BackendClientManager";
+import { apiUrlPrefix } from "../../../config";
 
 /**
  * @throws invalid payload
@@ -177,9 +182,20 @@ export function* handleMessageArchivingRestoring(
 // Be aware that this saga is execute with a takeEvery, in order to remain
 // compatible with the old messages home way of archiving messages
 export function* raceUpsertMessageStatusAttributes(
-  putMessage: BackendClient["upsertMessageStatusAttributes"],
   action: ActionType<typeof upsertMessageStatusAttributes.request>
 ) {
+  const sessionToken = yield* select(sessionTokenSelector);
+
+  if (!sessionToken) {
+    trackUndefinedBearerToken(
+      UndefinedBearerTokenPhase.upsertMessageStatusAttributes
+    );
+    return;
+  }
+
+  const { upsertMessageStatusAttributes: putMessage } =
+    backendClientManager.getBackendClient(apiUrlPrefix, sessionToken);
+
   yield* race({
     task: call(handleUpsertMessageStatusAttributes, putMessage, action),
     cancel: take(resetMessageArchivingAction)
