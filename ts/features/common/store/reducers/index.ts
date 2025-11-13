@@ -84,6 +84,7 @@ import {
   BackgroundLinkingState,
   backgroundLinkingReducer
 } from "../../../linking/reducers";
+import cdcReducer, { CdcState } from "../../../bonus/cdc/common/store/reducers";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
@@ -116,6 +117,7 @@ export type FeaturesState = {
   utmLink: UtmLinkState;
   connectivityStatus: ConnectivityState;
   backgroundLinking: BackgroundLinkingState;
+  cdc: CdcState;
 };
 
 export type PersistedFeaturesState = FeaturesState & PersistPartial;
@@ -148,7 +150,8 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   appFeedback: appFeedbackPersistor,
   utmLink: utmLinkReducer,
   connectivityStatus: connectivityStateReducer,
-  backgroundLinking: backgroundLinkingReducer
+  backgroundLinking: backgroundLinkingReducer,
+  cdc: cdcReducer
 });
 
 const CURRENT_REDUX_FEATURES_STORE_VERSION = 1;
