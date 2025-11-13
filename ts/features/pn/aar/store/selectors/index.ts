@@ -28,6 +28,14 @@ export const aarAdresseeDenominationSelector = (
     case sendAARFlowStates.fetchingNotificationData:
     case sendAARFlowStates.displayingNotificationData:
     case sendAARFlowStates.notAddresseeFinal:
+    case sendAARFlowStates.notAddressee:
+    case sendAARFlowStates.creatingMandate:
+    case sendAARFlowStates.cieCanAdvisory:
+    case sendAARFlowStates.cieCanInsertion:
+    case sendAARFlowStates.cieScanningAdvisory:
+    case sendAARFlowStates.androidNFCActivation:
+    case sendAARFlowStates.cieScanning:
+    case sendAARFlowStates.validatingMandate:
       if (iun === currentState.iun) {
         return currentState.recipientInfo.denomination;
       }

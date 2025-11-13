@@ -5,10 +5,9 @@ import { EphemeralAarMessageDataActionPayload } from "../store/actions";
 import { ThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
 import { AARFlowState, sendAARFlowStates } from "./stateUtils";
 
-export const sendAarMockStateFactory: Record<
-  AARFlowState["type"],
-  () => AARFlowState
-> = {
+export const sendAarMockStateFactory: {
+  [K in AARFlowState["type"]]: () => Extract<AARFlowState, { type: K }>;
+} = {
   none: () => ({ type: "none" }),
   displayingAARToS: () => ({
     type: "displayingAARToS",
@@ -45,6 +44,103 @@ export const sendAarMockStateFactory: Record<
     },
     qrCode: "https://www.google.com",
     iun: "000000000001"
+  }),
+  notAddressee: () => ({
+    type: "notAddressee",
+    recipientInfo: {
+      denomination: "Mario Rossi",
+      taxId: "RSSMRA74D22A001Q"
+    },
+    qrCode: "https://www.google.com",
+    iun: "000000000001"
+  }),
+  creatingMandate: () => ({
+    type: "creatingMandate",
+    recipientInfo: {
+      denomination: "Mario Rossi",
+      taxId: "RSSMRA74D22A001Q"
+    },
+    qrCode: "https://www.google.com",
+    iun: "000000000001"
+  }),
+  cieCanAdvisory: () => ({
+    type: "cieCanAdvisory",
+    recipientInfo: {
+      denomination: "Mario Rossi",
+      taxId: "RSSMRA74D22A001Q"
+    },
+    iun: "000000000001",
+    mandateId: "test_id",
+    timeToLive: "",
+    validationCode: "validation_code"
+  }),
+  cieCanInsertion: () => ({
+    type: "cieCanInsertion",
+    recipientInfo: {
+      denomination: "Mario Rossi",
+      taxId: "RSSMRA74D22A001Q"
+    },
+    iun: "000000000001",
+    mandateId: "test_id",
+    timeToLive: "",
+    validationCode: "validation_code"
+  }),
+  cieScanningAdvisory: () => ({
+    type: "cieScanningAdvisory",
+    recipientInfo: {
+      denomination: "Mario Rossi",
+      taxId: "RSSMRA74D22A001Q"
+    },
+    iun: "000000000001",
+    mandateId: "test_id",
+    timeToLive: "",
+    validationCode: "validation_code",
+    can: "123456"
+  }),
+  androidNFCActivation: () => ({
+    type: "androidNFCActivation",
+    recipientInfo: {
+      denomination: "Mario Rossi",
+      taxId: "RSSMRA74D22A001Q"
+    },
+    iun: "000000000001",
+    mandateId: "test_id",
+    timeToLive: "",
+    validationCode: "validation_code",
+    can: "123456"
+  }),
+  cieScanning: () => ({
+    type: "cieScanning",
+    recipientInfo: {
+      denomination: "Mario Rossi",
+      taxId: "RSSMRA74D22A001Q"
+    },
+    iun: "000000000001",
+    mandateId: "test_id",
+    timeToLive: "",
+    validationCode: "validation_code",
+    can: "123456"
+  }),
+  validatingMandate: () => ({
+    type: "validatingMandate",
+    recipientInfo: {
+      denomination: "Mario Rossi",
+      taxId: "RSSMRA74D22A001Q"
+    },
+    iun: "000000000001",
+    mandateId: "test_id",
+    signedVerificationCode: "signed_validation_code",
+    mrtdData: {
+      dg1: "",
+      dg11: "",
+      sod: ""
+    },
+    nisData: {
+      nis: "",
+      publicKey: "",
+      signedChallenge: "",
+      sod: ""
+    }
   }),
   ko: () => ({
     type: "ko",

@@ -1,3 +1,4 @@
+import { InternalAuthAndMrtdResponse } from "@pagopa/io-react-native-cie";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
 import { ThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
@@ -52,6 +53,78 @@ type FinalNotAddressee = {
   iun: string;
 };
 
+type NotAddressee = {
+  type: SendAARFlowStatesType["notAddressee"];
+  recipientInfo: RecipientInfo;
+  qrCode: string;
+  iun: string;
+};
+
+type CreateMandate = {
+  type: SendAARFlowStatesType["creatingMandate"];
+  recipientInfo: RecipientInfo;
+  qrCode: string;
+  iun: string;
+};
+
+type CieCanAdvisory = {
+  type: SendAARFlowStatesType["cieCanAdvisory"];
+  recipientInfo: RecipientInfo;
+  iun: string;
+  validationCode: string;
+  timeToLive: string;
+  mandateId: string;
+};
+
+type CieCanInsertion = {
+  type: SendAARFlowStatesType["cieCanInsertion"];
+  recipientInfo: RecipientInfo;
+  iun: string;
+  validationCode: string;
+  timeToLive: string;
+  mandateId: string;
+};
+
+type CieScanningAdvisory = {
+  type: SendAARFlowStatesType["cieScanningAdvisory"];
+  recipientInfo: RecipientInfo;
+  iun: string;
+  validationCode: string;
+  timeToLive: string;
+  mandateId: string;
+  can: string;
+};
+
+type AndroidNFCActivation = {
+  type: SendAARFlowStatesType["androidNFCActivation"];
+  recipientInfo: RecipientInfo;
+  iun: string;
+  validationCode: string;
+  timeToLive: string;
+  mandateId: string;
+  can: string;
+};
+
+type CieScanning = {
+  type: SendAARFlowStatesType["cieScanning"];
+  recipientInfo: RecipientInfo;
+  iun: string;
+  validationCode: string;
+  timeToLive: string;
+  mandateId: string;
+  can: string;
+};
+
+type ValidateMandate = {
+  type: SendAARFlowStatesType["validatingMandate"];
+  recipientInfo: RecipientInfo;
+  iun: string;
+  mandateId: string;
+  mrtdData: InternalAuthAndMrtdResponse["mrtd_data"];
+  nisData: InternalAuthAndMrtdResponse["nis_data"];
+  signedVerificationCode: string;
+};
+
 type ErrorState = {
   type: SendAARFlowStatesType["ko"];
   previousState: AARFlowState;
@@ -65,8 +138,7 @@ type ErrorState = {
 export type AARFlowStateName =
   SendAARFlowStatesType[keyof SendAARFlowStatesType];
 
-export const sendAARFlowStates = {
-  none: "none",
+const sendAARFlowStatesPhase2 = {
   displayingAARToS: "displayingAARToS",
   fetchingQRData: "fetchingQRData",
   fetchingNotificationData: "fetchingNotificationData",
@@ -75,9 +147,29 @@ export const sendAARFlowStates = {
   ko: "ko"
 } as const;
 
-export const validAARStatusTransitions = new Map<
-  AARFlowState["type"],
-  Set<AARFlowState["type"]>
+const sendAARFlowStatesPhase3 = {
+  notAddressee: "notAddressee",
+  creatingMandate: "creatingMandate",
+  cieCanAdvisory: "cieCanAdvisory",
+  cieCanInsertion: "cieCanInsertion",
+  cieScanningAdvisory: "cieScanningAdvisory",
+  androidNFCActivation: "androidNFCActivation",
+  validatingMandate: "validatingMandate",
+  cieScanning: "cieScanning"
+} as const;
+
+export const sendAARFlowStates = {
+  none: "none",
+  ...sendAARFlowStatesPhase2,
+  ...sendAARFlowStatesPhase3
+} as const;
+
+const validAARStatusTransitionsPhase2 = new Map<
+  AARFlowStatePhase2["type"],
+  Set<
+    | AARFlowStatePhase2["type"]
+    | Extract<AARFlowStatePhase3, { type: "notAddressee" }>["type"]
+  >
 >([
   [sendAARFlowStates.none, new Set([sendAARFlowStates.displayingAARToS])],
   [
@@ -89,6 +181,7 @@ export const validAARStatusTransitions = new Map<
     new Set([
       sendAARFlowStates.fetchingNotificationData,
       sendAARFlowStates.notAddresseeFinal,
+      sendAARFlowStates.notAddressee,
       sendAARFlowStates.ko
     ])
   ],
@@ -109,6 +202,69 @@ export const validAARStatusTransitions = new Map<
     ])
   ]
 ]);
+
+const validAARStatusTransitionsPhase3 = new Map<
+  AARFlowStatePhase3["type"],
+  Set<
+    | AARFlowStatePhase3["type"]
+    | Extract<
+        AARFlowStatePhase2,
+        { type: "ko" | "displayingNotificationData" }
+      >["type"]
+  >
+>([
+  [
+    sendAARFlowStates.notAddressee,
+    new Set([sendAARFlowStates.creatingMandate])
+  ],
+  [
+    sendAARFlowStates.creatingMandate,
+    new Set([sendAARFlowStates.cieCanAdvisory, sendAARFlowStates.ko])
+  ],
+  [
+    sendAARFlowStates.cieCanAdvisory,
+    new Set([sendAARFlowStates.cieCanInsertion])
+  ],
+  [
+    sendAARFlowStates.cieCanInsertion,
+    new Set([
+      sendAARFlowStates.cieCanAdvisory,
+      sendAARFlowStates.cieScanningAdvisory
+    ])
+  ],
+  [
+    sendAARFlowStates.cieScanningAdvisory,
+    new Set([
+      sendAARFlowStates.cieCanInsertion,
+      sendAARFlowStates.androidNFCActivation,
+      sendAARFlowStates.cieScanning
+    ])
+  ],
+  [
+    sendAARFlowStates.androidNFCActivation,
+    new Set([sendAARFlowStates.cieScanning])
+  ],
+  [
+    sendAARFlowStates.cieScanning,
+    new Set([
+      sendAARFlowStates.cieScanningAdvisory,
+      sendAARFlowStates.creatingMandate
+    ])
+  ],
+  [
+    sendAARFlowStates.creatingMandate,
+    new Set([
+      sendAARFlowStates.ko,
+      sendAARFlowStates.displayingNotificationData
+    ])
+  ]
+]);
+
+export const validAARStatusTransitions = new Map<
+  AARFlowState["type"],
+  Set<AARFlowState["type"]>
+>([...validAARStatusTransitionsPhase2, ...validAARStatusTransitionsPhase3]);
+
 export const isValidAARStateTransition = (
   currentType: AARFlowStateName,
   nextType: AARFlowStateName
@@ -116,7 +272,18 @@ export const isValidAARStateTransition = (
   const allowedNextStates = validAARStatusTransitions.get(currentType);
   return allowedNextStates?.has(nextType) ?? false;
 };
-export type AARFlowState =
+
+type AARFlowStatePhase3 =
+  | NotAddressee
+  | CreateMandate
+  | CieCanAdvisory
+  | CieCanInsertion
+  | CieScanningAdvisory
+  | AndroidNFCActivation
+  | CieScanning
+  | ValidateMandate;
+
+type AARFlowStatePhase2 =
   | NotInitialized
   | DisplayingTos
   | FetchQR
@@ -124,3 +291,5 @@ export type AARFlowState =
   | DisplayingNotification
   | FinalNotAddressee
   | ErrorState;
+
+export type AARFlowState = AARFlowStatePhase2 | AARFlowStatePhase3;
