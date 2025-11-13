@@ -38,35 +38,47 @@ export const DSItwBrandExploration = () => {
   const scrollOffset = useScrollViewOffset(scrollRef);
 
   return (
-    <Animated.ScrollView
-      ref={scrollRef}
-      style={styles.container}
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ backgroundColor: SCREEN_BGs.hero }}
-    >
-      <View style={styles.heroSection}>
-        <View style={styles.cardsContainer}>
-          {cardsWithBuffer.map((card, index) => (
-            <Card
-              key={card.id}
-              color={card.color}
-              index={index}
-              scrollOffset={scrollOffset}
-              totalCards={cardsWithBuffer.length}
-            />
-          ))}
-        </View>
-      </View>
-
-      {/* Scrollable Content Below */}
-      <ContentWrapper
-        style={{ paddingVertical: 24, backgroundColor: SCREEN_BGs.page }}
+    <>
+      <View
+        style={{
+          backgroundColor: SCREEN_BGs.hero,
+          position: "absolute",
+          left: 0,
+          right: 0,
+          top: 0,
+          height: 400
+        }}
+      />
+      <Animated.ScrollView
+        ref={scrollRef}
+        style={styles.container}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ backgroundColor: SCREEN_BGs.hero }}
       >
-        {[...Array(50)].map((_el, i) => (
-          <Body key={`body-${i}`}>Repeated text</Body>
-        ))}
-      </ContentWrapper>
-    </Animated.ScrollView>
+        <View style={styles.heroSection}>
+          <View style={styles.cardsContainer}>
+            {cardsWithBuffer.map((card, index) => (
+              <Card
+                key={card.id}
+                color={card.color}
+                index={index}
+                scrollOffset={scrollOffset}
+                totalCards={cardsWithBuffer.length}
+              />
+            ))}
+          </View>
+        </View>
+
+        {/* Scrollable Content Below */}
+        <ContentWrapper
+          style={{ paddingVertical: 24, backgroundColor: SCREEN_BGs.page }}
+        >
+          {[...Array(50)].map((_el, i) => (
+            <Body key={`body-${i}`}>Repeated text</Body>
+          ))}
+        </ContentWrapper>
+      </Animated.ScrollView>
+    </>
   );
 };
 
