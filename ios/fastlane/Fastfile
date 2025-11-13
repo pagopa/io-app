@@ -88,7 +88,6 @@ platform :ios do
       targets: ["ItaliaApp"],
       build_configurations: ["Release"],
       profile_name: "match AppStore it.pagopa.app.io",
-      profile_uuid: "0848c226-68ec-4314-ad27-50803db95257",
       code_sign_identity: "iPhone Distribution",
       sdk: "iphoneos*",
     )
