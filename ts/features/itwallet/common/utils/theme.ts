@@ -1,8 +1,4 @@
-import { IOColors, useIOThemeContext } from "@pagopa/io-app-design-system";
-import { StatusBarStyle } from "react-native";
-import { HeaderSecondLevelHookProps } from "../../../../hooks/useHeaderSecondLevel";
-import { getCredentialNameFromType } from "./itwCredentialUtils";
-import { CredentialType } from "./itwMocksUtils";
+import { useIOThemeContext } from "@pagopa/io-app-design-system";
 
 export const ITW_BRAND_GRADIENT = [
   "#FFB357",
@@ -14,18 +10,28 @@ export const ITW_BRAND_GRADIENT = [
   "#DCE3FC"
 ];
 
-const themeKeys = ["background"] as const;
+const themeKeys = [
+  // Screens
+  "header-background",
+  // Banners
+  "banner-background",
+  "banner-border"
+] as const;
 
 export type ItWalletTheme = {
   [K in (typeof themeKeys)[number]]: string;
 };
 
 const itWalletLightTheme: ItWalletTheme = {
-  background: "#F2F9FF"
+  "banner-background": "#F2F9FF",
+  "banner-border": "#DCE3FC",
+  "header-background": "#F2F9FF"
 };
 
 const itWalletDarkTheme: ItWalletTheme = {
-  background: "#0F2433"
+  "banner-background": "#0F2433",
+  "banner-border": "#142C3C",
+  "header-background": "#0F2433"
 };
 
 const ItWalletThemes = {

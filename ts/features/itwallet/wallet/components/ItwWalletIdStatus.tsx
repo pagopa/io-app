@@ -6,7 +6,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
 import { constNull } from "fp-ts/lib/function";
-import { ComponentProps, PropsWithChildren, useMemo } from "react";
+import { ComponentProps } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 import BackgroundImageValid from "../../../../../img/features/itWallet/brand/itw_deck_status.svg";
@@ -47,57 +47,7 @@ export const ItwWalletIdStatus = ({
   pidStatus = "valid",
   pidExpiration
 }: ItwWalletIdStatusProps) => {
-  const content = useMemo(() => {
-    switch (pidStatus) {
-      case "valid":
-        return undefined;
-      case "jwtExpiring":
-        return (
-          <Body color="black" style={styles.content}>
-            Conferma la tua identità entro il{" "}
-            <Body weight="Semibold">
-              {format(pidExpiration || "", "DD/MM/YYYY")}
-            </Body>
-          </Body>
-        );
-      case "jwtExpired":
-        return (
-          <Body color="black" style={styles.content}>
-            Conferma la tua identità per continuare con i tuoi documenti
-          </Body>
-        );
-    }
-  }, [pidStatus, pidExpiration]);
-
-  return (
-    <ItwWalletIdStatusContainer onPress={onPress} pidStatus={pidStatus}>
-      {/* Header  */}
-      <View style={styles.header}>
-        <ItWalletIdLogoImage width={103} height={24} />
-        <Icon size={16} {...statusIconPropsByPidStatus[pidStatus]} />
-      </View>
-
-      {/* Content  */}
-      {content}
-
-      {/* Optional Action Button  */}
-      {pidStatus === "jwtExpired" && (
-        <View pointerEvents="none">
-          <IOButton variant="link" label="Inizia" onPress={constNull} />
-        </View>
-      )}
-    </ItwWalletIdStatusContainer>
-  );
-};
-
-const ItwWalletIdStatusContainer = ({
-  onPress,
-  pidStatus = "valid",
-  children
-}: PropsWithChildren<
-  Pick<ItwWalletIdStatusProps, "onPress" | "pidStatus">
->) => {
-  const itWalletTheme = useItWalletTheme();
+  const theme = useItWalletTheme();
   const { onPressIn, onPressOut, scaleAnimatedStyle } =
     useScaleAnimation("slight");
 
@@ -117,7 +67,10 @@ const ItwWalletIdStatusContainer = ({
         style={[
           styles.container,
           scaleAnimatedStyle,
-          { backgroundColor: itWalletTheme.background }
+          {
+            backgroundColor: theme["banner-background"],
+            borderColor: theme["banner-border"]
+          }
         ]}
       >
         {/* Background Image  */}
@@ -132,7 +85,33 @@ const ItwWalletIdStatusContainer = ({
           height={100}
         />
 
-        {children}
+        {/* Header  */}
+        <View style={styles.header}>
+          <ItWalletIdLogoImage width={103} height={24} />
+          <Icon size={16} {...statusIconPropsByPidStatus[pidStatus]} />
+        </View>
+
+        {/* Content  */}
+        {pidStatus === "jwtExpiring" && (
+          <Body style={styles.content}>
+            Conferma la tua identità entro il{" "}
+            <Body weight="Semibold">
+              {format(pidExpiration || "", "DD/MM/YYYY")}
+            </Body>
+          </Body>
+        )}
+        {pidStatus === "jwtExpired" && (
+          <Body style={styles.content}>
+            Conferma la tua identità per continuare con i tuoi documenti
+          </Body>
+        )}
+
+        {/* Optional Action Button  */}
+        {pidStatus === "jwtExpired" && (
+          <View pointerEvents="none">
+            <IOButton variant="link" label="Inizia" onPress={constNull} />
+          </View>
+        )}
       </Animated.View>
     </Pressable>
   );
