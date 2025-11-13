@@ -33,6 +33,9 @@ platform :ios do
 
     # Install pods
     cocoapods
+    
+    # Temporary disables automatic code signing to avoid issues during build
+    disable_automatic_code_signing(path: "ItaliaApp.xcodeproj")
 
     # build the app
     gym(
@@ -42,6 +45,9 @@ platform :ios do
       workspace: "ItaliaApp.xcworkspace",
       include_symbols: false
     )
+
+    # Re-enables automatic code signing after build
+    enable_automatic_code_signing(path: "ItaliaApp.xcodeproj")
   end
 
   desc "Submit a new Beta Build to TestFlight"
@@ -68,6 +74,9 @@ platform :ios do
     # Install pods
     cocoapods
 
+    # Temporary disables automatic code signing to avoid issues during build
+    disable_automatic_code_signing(path: "ItaliaApp.xcodeproj")
+
     # build the app
     gym(
       scheme: "ItaliaApp",
@@ -76,6 +85,9 @@ platform :ios do
       workspace: "ItaliaApp.xcworkspace",
       include_symbols: false
     )
+    
+    # Re-enables automatic code signing after build
+    enable_automatic_code_signing(path: "ItaliaApp.xcodeproj")
 
     previous_tag = sh("git tag --sort=-taggerdate | grep \\\\-rc\\\\. | sed -n '2 p' | tr -d '\n'")
 
@@ -119,6 +131,9 @@ platform :ios do
     # Install pods
     cocoapods
 
+    # Temporary disables automatic code signing to avoid issues during build
+    disable_automatic_code_signing(path: "ItaliaApp.xcodeproj")
+
     # build the app
     gym(
       scheme: "ItaliaApp",
@@ -128,6 +143,9 @@ platform :ios do
       workspace: "ItaliaApp.xcworkspace",
       include_symbols: false
     )
+
+    # Re-enables automatic code signing after build
+    enable_automatic_code_signing(path: "ItaliaApp.xcodeproj")
 
     previous_tag = sh("git tag --sort=-taggerdate | grep \\\\-canary\\\\. | sed -n '2 p' | tr -d '\n'")
 
