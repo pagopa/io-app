@@ -29,7 +29,7 @@ import { trackHelpCenterCtaTapped } from "../../../../utils/analytics";
 
 export const HC_PAYMENT_CANCELED_ERROR_ID = "PAYMENT_CANCELED_ERROR";
 
-export const PAYMENT_ONGOING_FAILURE_WAIT_TIME = 15 * 60 * 1000; // 15 minutes
+const PAYMENT_ONGOING_FAILURE_WAIT_TIME = 15 * 60 * 1000; // 15 minutes
 
 type Props = {
   failure: WalletPaymentFailure;

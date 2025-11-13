@@ -1,17 +1,15 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import {
   aarAdresseeDenominationSelector,
   currentAARFlowData,
   currentAARFlowStateAssistanceErrorCode,
   currentAARFlowStateErrorDebugInfoSelector,
   currentAARFlowStateType,
-  isAarMessageDelegatedSelector,
   thirdPartySenderDenominationSelector
 } from "..";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { thirdPartyFromIdSelector } from "../../../../../messages/store/reducers/thirdPartyById";
-import { toPNMessage } from "../../../../store/types/transformers";
+import { toSENDMessage } from "../../../../store/types/transformers";
 import { AARFlowState, sendAARFlowStates } from "../../../utils/stateUtils";
 import {
   sendAarMockStateFactory,
@@ -28,7 +26,7 @@ jest.mock("../../../../../messages/store/reducers/thirdPartyById", () => ({
   thirdPartyFromIdSelector: jest.fn()
 }));
 jest.mock("../../../../store/types/transformers", () => ({
-  toPNMessage: jest.fn()
+  toSENDMessage: jest.fn()
 }));
 
 describe("thirdPartySenderDenominationSelector", () => {
@@ -38,9 +36,9 @@ describe("thirdPartySenderDenominationSelector", () => {
 
   it("should return senderDenomination when all data is present", () => {
     (thirdPartyFromIdSelector as jest.Mock).mockReturnValue(pot.some({}));
-    (toPNMessage as jest.Mock).mockReturnValue(
-      O.some({ senderDenomination: "Denomination" })
-    );
+    (toSENDMessage as jest.Mock).mockReturnValue({
+      senderDenomination: "Denomination"
+    });
 
     const result = thirdPartySenderDenominationSelector(
       mockState,
@@ -59,9 +57,9 @@ describe("thirdPartySenderDenominationSelector", () => {
     expect(result).toBeUndefined();
   });
 
-  it("should return undefined if toPNMessage returns none", () => {
+  it("should return undefined if toPNMessage returns undefined", () => {
     (thirdPartyFromIdSelector as jest.Mock).mockReturnValue(pot.some({}));
-    (toPNMessage as jest.Mock).mockReturnValue(O.none);
+    (toSENDMessage as jest.Mock).mockReturnValue(undefined);
 
     const result = thirdPartySenderDenominationSelector(
       mockState,
@@ -72,7 +70,7 @@ describe("thirdPartySenderDenominationSelector", () => {
 
   it("should return undefined if senderDenomination is missing", () => {
     (thirdPartyFromIdSelector as jest.Mock).mockReturnValue(pot.some({}));
-    (toPNMessage as jest.Mock).mockReturnValue(O.some({}));
+    (toSENDMessage as jest.Mock).mockReturnValue({});
 
     const result = thirdPartySenderDenominationSelector(
       mockState,
@@ -179,45 +177,6 @@ describe("currentAARFlowStateAssistanceErrorCode", () => {
   });
 });
 
-describe("isAarMessageDelegatedSelector", () => {
-  sendAarMockStates.forEach(state => {
-    const mandate = (state as Extract<AARFlowState, { mandateId?: string }>)
-      .mandateId;
-    it(`should return ${mandate !== undefined} when state is ${
-      state.type
-    }, and mandateId is ${mandate}`, () => {
-      const mockGlobalState = {
-        features: {
-          pn: {
-            aarFlow: state
-          }
-        }
-      } as unknown as GlobalState;
-
-      const result = isAarMessageDelegatedSelector(
-        mockGlobalState,
-        "000000000001"
-      );
-      expect(result).toBe(mandate !== undefined);
-    });
-  });
-  it("should return false when the passed iun is different from the one in the state", () => {
-    const state = sendAarMockStateFactory.displayingNotificationData();
-    const mockGlobalState = {
-      features: {
-        pn: {
-          aarFlow: state
-        }
-      }
-    } as unknown as GlobalState;
-
-    const result = isAarMessageDelegatedSelector(
-      mockGlobalState,
-      "different-iun"
-    );
-    expect(result).toBe(false);
-  });
-});
 describe("aarAdresseeDenominationSelector", () => {
   sendAarMockStates.forEach(state => {
     const fullName = (
