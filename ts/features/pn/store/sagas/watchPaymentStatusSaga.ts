@@ -1,5 +1,5 @@
 import { call, delay, race, select, take } from "typed-redux-saga/macro";
-import { ActionType } from "typesafe-actions";
+import { ActionType, isActionOf } from "typesafe-actions";
 import {
   cancelPNPaymentStatusTracking,
   startPNPaymentStatusTracking
@@ -15,6 +15,7 @@ import {
   SendOpeningSource,
   SendUserType
 } from "../../../pushNotifications/analytics";
+import { Action } from "../../../../store/actions/types";
 
 /**
  * This saga is used to track a mixpanel event which is a report of
@@ -51,7 +52,11 @@ export function* watchPaymentStatusForMixpanelTracking(
       paymentCount,
       visibleRPTIds
     ),
-    cancelAction: take(cancelPNPaymentStatusTracking)
+    cancelAction: take(
+      (actionParam: Action) =>
+        isActionOf(cancelPNPaymentStatusTracking, actionParam) &&
+        actionParam.payload.messageId === messageId
+    )
   });
 }
 

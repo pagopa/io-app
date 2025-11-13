@@ -95,10 +95,12 @@ describe("PN actions", () => {
 
   describe("cancelPNPaymentStatusTracking", () => {
     it("should create a cancel tracking action", () => {
-      const action = cancelPNPaymentStatusTracking();
+      const messageId = "message-123";
+      const action = cancelPNPaymentStatusTracking({ messageId });
 
       expect(action).toEqual({
-        type: "PN_CANCEL_PAYMENT_STATUS_TRACKING"
+        type: "PN_CANCEL_PAYMENT_STATUS_TRACKING",
+        payload: { messageId }
       });
     });
   });
