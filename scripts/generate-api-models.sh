@@ -1,8 +1,8 @@
 #!/bin/bash
 
-IO_BACKEND_VERSION=v17.5.1
+IO_BACKEND_VERSION=v17.5.2
 # need to change after merge on io-services-metadata
-IO_SERVICES_METADATA_VERSION=1.0.90
+IO_SERVICES_METADATA_VERSION=1.0.91
 # Session manager version
 IO_SESSION_MANAGER_VERSION=1.8.0
 # IO Wallet Backend version
@@ -47,6 +47,7 @@ declare -a apis=(
   "./definitions/itw https://raw.githubusercontent.com/pagopa/io-backend/$IO_WALLET_BACKEND_VERSION/api_io_wallet.yaml"
   # Connectivity APIs (used for connectivity checks)
   "./definitions/connectivity https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_public.yaml"
+  "./definitions/cdc https://raw.githubusercontent.com/pagopa/io-backend/refs/tags/$IO_BACKEND_VERSION/openapi/generated/api_cdc.yaml"
 )
 
 for elem in "${apis[@]}"; do
