@@ -19,22 +19,34 @@ import {
   loadServicePreference,
   upsertServicePreference
 } from "../actions/preference";
+import {
+  getFavouriteService,
+  toggleFavouriteService
+} from "../actions/favourite";
 
 export type ServicePreferencePot = pot.Pot<
   ServicePreferenceResponse,
   WithServiceID<NetworkError>
 >;
 
+type FavouriteService = pot.Pot<
+  boolean,
+  WithServiceID<{ error: NetworkError }>
+>;
+
 export type ServicesDetailsState = {
   dataById: Record<string, pot.Pot<ServiceDetails, Error>>;
   preferencesById: Record<string, ServicePreferencePot>;
+  favouritesById: Record<string, FavouriteService>;
 };
 
 const INITIAL_STATE: ServicesDetailsState = {
   dataById: {},
-  preferencesById: {}
+  preferencesById: {},
+  favouritesById: {}
 };
 
+// eslint-disable-next-line complexity
 const reducer = (
   state: ServicesDetailsState = INITIAL_STATE,
   action: Action
@@ -129,6 +141,59 @@ const reducer = (
         preferencesById: {
           ...state.preferencesById,
           [action.payload.id]: pot.toError(currentPreference, action.payload)
+        }
+      };
+    // Favourite service actions
+    case getType(getFavouriteService.request):
+      return {
+        ...state,
+        favouritesById: {
+          ...state.favouritesById,
+          [action.payload]: pot.toLoading(
+            state.favouritesById[action.payload] ?? pot.none
+          )
+        }
+      };
+
+    case getType(getFavouriteService.success):
+      return {
+        ...state,
+        favouritesById: {
+          ...state.favouritesById,
+          [action.payload]: pot.some(true)
+        }
+      };
+
+    case getType(getFavouriteService.failure):
+      return {
+        ...state,
+        favouritesById: {
+          ...state.favouritesById,
+          [action.payload.id]: pot.someError(false, action.payload)
+        }
+      };
+
+    case getType(toggleFavouriteService.request):
+      // Optimistically update the current value
+      // while the request is in progress
+      return {
+        ...state,
+        favouritesById: {
+          ...state.favouritesById,
+          [action.payload.id]: pot.toUpdating(
+            pot.some(action.payload.isFavourite),
+            action.payload.isFavourite
+          )
+        }
+      };
+
+    case getType(toggleFavouriteService.success):
+    case getType(toggleFavouriteService.failure):
+      return {
+        ...state,
+        favouritesById: {
+          ...state.favouritesById,
+          [action.payload.id]: pot.some(action.payload.isFavourite)
         }
       };
 
