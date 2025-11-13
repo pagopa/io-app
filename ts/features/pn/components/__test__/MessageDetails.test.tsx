@@ -1,5 +1,3 @@
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import { ComponentProps } from "react";
 import configureMockStore from "redux-mock-store";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -8,7 +6,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import * as MSG_DETAILS_HEADER from "../../../messages/components/MessageDetail/MessageDetailsHeader";
 import { thirdPartyMessage } from "../../__mocks__/pnMessage";
-import { toPNMessage } from "../../store/types/transformers";
+import { toSENDMessage } from "../../store/types/transformers";
 import { PNMessage } from "../../store/types/types";
 import { MessageDetails } from "../MessageDetails";
 import PN_ROUTES from "../../navigation/routes";
@@ -54,76 +52,66 @@ describe("MessageDetails component", () => {
     beforeEach(() => {
       jest.clearAllMocks();
     });
-    [true, false].forEach(isAARMessage =>
-      sendOpeningSources.forEach(sendOpeningSource =>
-        sendUserTypes.forEach(sendUserType => {
-          it(`should ${
-            isAARMessage ? "" : "NOT"
-          } display the message date when isAARMessage is ${isAARMessage}, opening source ${sendOpeningSource}, user type ${sendUserType}`, () => {
-            const pnMessage = pipe(
-              thirdPartyMessage,
-              toPNMessage,
-              O.toUndefined
-            )!;
-            const headerSpy = jest.spyOn(
-              MSG_DETAILS_HEADER,
-              "MessageDetailsHeader"
-            );
-            const messageId = isAARMessage ? pnMessage.iun : mockMessageId;
-            const props = generateComponentProperties(
-              messageId,
-              pnMessage,
-              mockServiceId,
-              isAARMessage,
-              sendOpeningSource,
-              sendUserType
-            );
-            renderComponent(props);
-            const mockCalls = headerSpy.mock.calls[0][0];
-            expect(mockCalls).toBeDefined();
-            const passedDate = mockCalls.createdAt;
+    sendOpeningSources.forEach(sendOpeningSource =>
+      sendUserTypes.forEach(sendUserType => {
+        it(`should ${
+          sendOpeningSource === "aar" ? "" : "NOT"
+        } display the message date, opening source ${sendOpeningSource}, user type ${sendUserType}`, () => {
+          const sendMessage = toSENDMessage(thirdPartyMessage)!;
+          const headerSpy = jest.spyOn(
+            MSG_DETAILS_HEADER,
+            "MessageDetailsHeader"
+          );
+          const messageId =
+            sendOpeningSource === "aar" ? sendMessage.iun : mockMessageId;
+          const props = generateComponentProperties(
+            messageId,
+            sendMessage,
+            mockServiceId,
+            sendOpeningSource,
+            sendUserType
+          );
+          renderComponent(props);
+          const mockCalls = headerSpy.mock.calls[0][0];
+          expect(mockCalls).toBeDefined();
+          const passedDate = mockCalls.createdAt;
 
-            if (isAARMessage) {
-              expect(passedDate).toBeUndefined();
-            } else {
-              expect(passedDate).toEqual(pnMessage.created_at);
-            }
-          });
+          if (sendOpeningSource === "aar") {
+            expect(passedDate).toBeUndefined();
+          } else {
+            expect(passedDate).toEqual(sendMessage.created_at);
+          }
+        });
 
-          it(`should ${
-            isAARMessage ? "NOT " : ""
-          }allow navigation to service details when isAARMessage is ${isAARMessage}, opening source ${sendOpeningSource}, user type ${sendUserType}`, () => {
-            const pnMessage = pipe(
-              thirdPartyMessage,
-              toPNMessage,
-              O.toUndefined
-            )!;
-            const headerSpy = jest.spyOn(
-              MSG_DETAILS_HEADER,
-              "MessageDetailsHeader"
-            );
-            const messageId = isAARMessage ? pnMessage.iun : mockMessageId;
-            const props = generateComponentProperties(
-              messageId,
-              pnMessage,
-              mockServiceId,
-              isAARMessage,
-              sendOpeningSource,
-              sendUserType
-            );
-            renderComponent(props);
-            const mockCalls = headerSpy.mock.calls[0][0];
-            expect(mockCalls).toBeDefined();
-            const canNavigateToServiceDetails =
-              mockCalls.canNavigateToServiceDetails;
-            if (isAARMessage) {
-              expect(canNavigateToServiceDetails).toBe(false);
-            } else {
-              expect(canNavigateToServiceDetails).toBe(true);
-            }
-          });
-        })
-      )
+        it(`should ${
+          sendOpeningSource === "aar" ? "NOT " : ""
+        }allow navigation to service details, opening source ${sendOpeningSource}, user type ${sendUserType}`, () => {
+          const sendMessage = toSENDMessage(thirdPartyMessage)!;
+          const headerSpy = jest.spyOn(
+            MSG_DETAILS_HEADER,
+            "MessageDetailsHeader"
+          );
+          const messageId =
+            sendOpeningSource === "aar" ? sendMessage.iun : mockMessageId;
+          const props = generateComponentProperties(
+            messageId,
+            sendMessage,
+            mockServiceId,
+            sendOpeningSource,
+            sendUserType
+          );
+          renderComponent(props);
+          const mockCalls = headerSpy.mock.calls[0][0];
+          expect(mockCalls).toBeDefined();
+          const canNavigateToServiceDetails =
+            mockCalls.canNavigateToServiceDetails;
+          if (sendOpeningSource === "aar") {
+            expect(canNavigateToServiceDetails).toBe(false);
+          } else {
+            expect(canNavigateToServiceDetails).toBe(true);
+          }
+        });
+      })
     );
   });
 });
@@ -132,7 +120,6 @@ const generateComponentProperties = (
   messageId: string,
   message: PNMessage,
   serviceId: ServiceId,
-  isAARMessage: boolean,
   sendOpeningSource: SendOpeningSource,
   sendUserType: SendUserType,
   payments?: ReadonlyArray<NotificationPaymentInfo>
@@ -141,7 +128,6 @@ const generateComponentProperties = (
   message,
   payments,
   serviceId,
-  isAARMessage,
   sendOpeningSource,
   sendUserType
 });

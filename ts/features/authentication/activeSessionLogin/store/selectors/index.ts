@@ -41,3 +41,7 @@ export const isActiveSessionFastLoginEnabledSelector = (state: GlobalState) =>
 
 export const activeSessionLoginInfoSelector = (state: GlobalState) =>
   state.features.loginFeatures.activeSessionLogin?.loginInfo;
+
+export const shouldRefreshMessagesSectionSelector = (state: GlobalState) =>
+  state?.features?.loginFeatures?.activeSessionLogin?.refreshMessagesSection ??
+  true;

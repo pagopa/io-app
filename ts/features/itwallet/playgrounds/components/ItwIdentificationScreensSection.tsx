@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 
-export const ItwIdentificationSection = () => {
+export const ItwIdentificationScreensSection = () => {
   const navigation = useIONavigation();
 
   return (

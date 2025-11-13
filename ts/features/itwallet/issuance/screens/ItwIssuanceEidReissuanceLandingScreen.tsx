@@ -1,22 +1,22 @@
-import { useCallback } from "react";
-import I18n from "i18next";
 import { useNavigation } from "@react-navigation/native";
+import I18n from "i18next";
+import { useCallback } from "react";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import {
   IOStackNavigationProp,
   useIONavigation
 } from "../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
 import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector
 } from "../../lifecycle/store/selectors";
-import { ITW_ROUTES } from "../../navigation/routes";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
-import ROUTES from "../../../../navigation/routes";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
-import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 /**
  * Landing screen for the eID reissuing flow started from a message.
@@ -83,7 +83,7 @@ export const ItwIssuanceEidReissuanceLandingScreen = () => {
           onPress: () =>
             navigation.replace(ITW_ROUTES.MAIN, {
               screen: ITW_ROUTES.DISCOVERY.INFO,
-              params: { isL3: true }
+              params: { level: "l3" }
             })
         }}
         secondaryAction={{
@@ -120,7 +120,6 @@ const NavigateToEidIssuanceMachine = ({ eidReissuing }: Props) => {
       });
     }
     navigation.replace(ITW_ROUTES.DISCOVERY.INFO, {
-      isL3: false,
       animationEnabled: false
     });
   }, [navigation, eidReissuing]);

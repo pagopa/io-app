@@ -22,9 +22,7 @@ type BaseProps = {
   actions?: IOScrollViewActions;
 };
 
-export type BonusScreenComponentProps = BaseProps &
-  SupportRequestParams &
-  BonusCard;
+type BonusScreenComponentProps = BaseProps & SupportRequestParams & BonusCard;
 
 const BonusCardScreenComponent = ({
   title,

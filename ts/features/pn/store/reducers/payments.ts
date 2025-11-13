@@ -12,7 +12,7 @@ import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentI
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 import { getRptIdStringFromPayment } from "../../../pn/utils/rptId";
 import { SinglePaymentState } from "../../../messages/store/reducers/payments";
-import { PaymentError } from "../../../messages/store/actions";
+import { MessagePaymentError } from "../../../messages/types/paymentErrors";
 
 export const paymentsButtonStateSelector = (
   state: GlobalState,
@@ -75,7 +75,9 @@ const errorPaymentStatistics = (previousStatistics: PaymentStatistics) => ({
 const computePaymentStatistics =
   (previousStatistics: PaymentStatistics) =>
   (
-    maybePaymentStatus: O.Option<RemoteValue<PaymentInfoResponse, PaymentError>>
+    maybePaymentStatus: O.Option<
+      RemoteValue<PaymentInfoResponse, MessagePaymentError>
+    >
   ) =>
     pipe(
       maybePaymentStatus,
