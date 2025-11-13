@@ -1,18 +1,23 @@
 import {
+  BodySmall,
   ButtonSolidProps,
   FooterActions,
+  HStack,
   useFooterActionsMeasurements,
   useIOToast
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { Fragment, ReactNode } from "react";
+import { StyleSheet } from "react-native";
 import Animated, {
   useAnimatedRef,
   useAnimatedScrollHandler,
   useSharedValue
 } from "react-native-reanimated";
+import ITWalletLogoImage from "../../../../../../img/features/itWallet/brand/itw_logo.svg";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
+import { isItwCredential } from "../../../common/utils/itwCredentialUtils.ts";
 import { getHeaderPropsByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 
@@ -35,6 +40,7 @@ const ItwPresentationDetailsScreenBase = ({
   const itwFeaturesEnabled = useItwFeaturesEnabled(credential);
   const toast = useIOToast();
   const scrollTranslationY = useSharedValue(0);
+  const isL3Credential = isItwCredential(credential);
 
   const { footerActionsMeasurements, handleFooterActionsMeasurements } =
     useFooterActionsMeasurements();
@@ -85,6 +91,7 @@ const ItwPresentationDetailsScreenBase = ({
         decelerationRate="normal"
       >
         {children}
+        {isL3Credential && <PoweredByItWallet />}
       </Animated.ScrollView>
       {ctaProps && (
         <FooterActions
@@ -98,5 +105,22 @@ const ItwPresentationDetailsScreenBase = ({
     </Fragment>
   );
 };
+
+const PoweredByItWallet = () => (
+  <HStack space={8} style={styles.poweredBy}>
+    <BodySmall>
+      {I18n.t("features.itWallet.presentation.credentialDetails.poweredBy")}
+    </BodySmall>
+    <ITWalletLogoImage width={75} height={15} accessibilityLabel="IT Wallet" />
+  </HStack>
+);
+
+const styles = StyleSheet.create({
+  poweredBy: {
+    marginTop: 16,
+    justifyContent: "center",
+    alignItems: "center"
+  }
+});
 
 export { ItwPresentationDetailsScreenBase };

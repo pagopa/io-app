@@ -5171,7 +5171,8 @@
               "education_enrollment": "Le tue iscrizioni accademiche digitali hanno piena validità ufficiale.",
               "residency": "Il tuo attestato di residenza digitale ha piena validità ufficiale."
             }
-          }
+          },
+          "poweredBy": "Parte di"
         },
         "ctas": {
           "trustmark": "Mostra certificato di autenticità",
