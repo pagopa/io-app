@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.20.0-canary.7702](https://github.com/pagopa/io-app/compare/3.20.0-rc.1...3.20.0-canary.7702) (2025-11-13)
+
+
+### Features
+
+* [[IOBP-1776](https://pagopa.atlassian.net/browse/IOBP-1776)] add cdc wallet card components, saga and scaffolding implementation ([#7606](https://github.com/pagopa/io-app/issues/7606)) ([39faa3c](https://github.com/pagopa/io-app/commit/39faa3cfd297d3b3ab2bd36865ee11bfc88b04c2))
+* **IT Wallet:** [[SIW-3308](https://pagopa.atlassian.net/browse/SIW-3308)] New IT-Wallet discovery screen ([#7576](https://github.com/pagopa/io-app/issues/7576)) ([b3f6e1c](https://github.com/pagopa/io-app/commit/b3f6e1c097b80d7916cf371fa6c07dadb817a1f1))
+
+
+### Bug Fixes
+
+* [[IOBP-2175](https://pagopa.atlassian.net/browse/IOBP-2175)] Hide static code button for expired voucher ([#7605](https://github.com/pagopa/io-app/issues/7605)) ([a664ad3](https://github.com/pagopa/io-app/commit/a664ad385c72c02658ec7079a9a68fceffcfa3fd))
+* [[IOCOM-2741](https://pagopa.atlassian.net/browse/IOCOM-2741)] SEND payment logic cancellation fix ([#7610](https://github.com/pagopa/io-app/issues/7610)) ([2c67da8](https://github.com/pagopa/io-app/commit/2c67da873c62cab6680d56fa585d8de62adca711))
+* [[IOPID-0000](https://pagopa.atlassian.net/browse/IOPID-0000)] apply fix on saml request decode ([#7397](https://github.com/pagopa/io-app/issues/7397)) ([cc9fd1d](https://github.com/pagopa/io-app/commit/cc9fd1d53d6b8875d9fdb2a005f2461912c65fbd))
+
+
+### Chores
+
+* [[IOAPPX-510](https://pagopa.atlassian.net/browse/IOAPPX-510)] Update import in the app review module on iOS ([#7609](https://github.com/pagopa/io-app/issues/7609)) ([ce1b983](https://github.com/pagopa/io-app/commit/ce1b9834c29c6351b93f0495828eb4100c5240b2))
+
 ## [3.20.0-rc.1](https://github.com/pagopa/io-app/compare/3.20.0-rc.0...3.20.0-rc.1) (2025-11-12)
 
 
