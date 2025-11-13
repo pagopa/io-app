@@ -40,7 +40,10 @@ platform :ios do
       path: "ItaliaApp.xcodeproj",
       team_id: "M2X5YQ4BJ7",
       profile_name: "match AppStore it.pagopa.app.io",
-      profile_uuid: "0848c226-68ec-4314-ad27-50803db95257"
+      targets: ["ItaliaApp"],
+      build_configurations: ["Release"],
+      code_sign_identity: "iPhone Distribution",
+      sdk: "iphoneos*",
     )
 
     # build the app
@@ -82,8 +85,12 @@ platform :ios do
       use_automatic_signing: false,
       path: "ItaliaApp.xcodeproj",
       team_id: "M2X5YQ4BJ7",
+      targets: ["ItaliaApp"],
+      build_configurations: ["Release"],
       profile_name: "match AppStore it.pagopa.app.io",
-      profile_uuid: "0848c226-68ec-4314-ad27-50803db95257"
+      profile_uuid: "0848c226-68ec-4314-ad27-50803db95257",
+      code_sign_identity: "iPhone Distribution",
+      sdk: "iphoneos*",
     )
 
     # build the app
@@ -142,8 +149,11 @@ platform :ios do
       use_automatic_signing: false,
       path: "ItaliaApp.xcodeproj",
       team_id: "M2X5YQ4BJ7",
+      targets: ["ItaliaApp"],
+      build_configurations: ["Canary"],
       profile_name: "match AppStore it.pagopa.app.io.canary",
-      profile_uuid: "0848c226-68ec-4314-ad27-50803db95257"
+      code_sign_identity: "iPhone Distribution",
+      sdk: "iphoneos*",
     )
 
     # build the app
