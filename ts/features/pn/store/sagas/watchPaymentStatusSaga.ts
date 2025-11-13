@@ -54,7 +54,7 @@ export function* watchPaymentStatusForMixpanelTracking(
     ),
     cancelAction: take(
       (actionParam: Action) =>
-        isActionOf(cancelPNPaymentStatusTracking)(actionParam) &&
+        isActionOf(cancelPNPaymentStatusTracking, actionParam) &&
         actionParam.payload.messageId === messageId
     )
   });

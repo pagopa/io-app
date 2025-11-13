@@ -85,7 +85,7 @@ function* paymentUpdateRequestWorker(
         wasCancelled: take(
           // only cancel the worker if the request is for its messageId
           (actionParam: Action) =>
-            isActionOf(cancelQueuedPaymentUpdates)(actionParam) &&
+            isActionOf(cancelQueuedPaymentUpdates, actionParam) &&
             actionParam.payload.messageId === messageId
         )
       });
