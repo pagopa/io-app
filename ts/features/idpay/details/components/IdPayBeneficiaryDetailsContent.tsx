@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
-import { ReactNode } from "react";
+import { ReactNode, useCallback } from "react";
 import { View } from "react-native";
 import {
   InitiativeDTO,
@@ -38,6 +38,10 @@ import { useIDPayStaticCodeModal } from "../../common/hooks/useIDPayStaticCodeMo
 import { useIdPaySupportModal } from "../../common/hooks/useIdPaySupportModal";
 import { formatNumberCurrencyCentsOrDefault } from "../../common/utils/strings";
 import { IDPayDetailsRoutes } from "../navigation";
+import {
+  idPayBeneficiaryDetailsGet,
+  idPayOnboardingStatusGet
+} from "../store/actions";
 import {
   IdPayInitiativeRulesInfoBox,
   IdPayInitiativeRulesInfoBoxSkeleton
@@ -69,9 +73,27 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
 
   const { initiativeDetails, beneficiaryDetails, isLoading } = props;
   const dispatch = useIODispatch();
+
+  const handleDismiss = useCallback(() => {
+    if (!initiativeDetails?.initiativeId) {
+      return;
+    }
+    dispatch(
+      idPayBeneficiaryDetailsGet.request({
+        initiativeId: initiativeDetails.initiativeId
+      })
+    );
+    dispatch(
+      idPayOnboardingStatusGet.request({
+        initiativeId: initiativeDetails.initiativeId
+      })
+    );
+  }, [dispatch, initiativeDetails]);
+
   const { bottomSheet, present } = useIDPayStaticCodeModal(
     initiativeDetails?.initiativeId ?? "",
-    initiativeDetails?.initiativeName ?? ""
+    initiativeDetails?.initiativeName ?? "",
+    handleDismiss
   );
 
   if (isLoading) {

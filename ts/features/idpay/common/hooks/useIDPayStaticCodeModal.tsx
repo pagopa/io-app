@@ -39,7 +39,8 @@ type IDPayFailureSupportModal = {
 
 export const useIDPayStaticCodeModal = (
   initiativeId: string,
-  initiativeName: string
+  initiativeName: string,
+  onDismiss: () => void
 ): IDPayFailureSupportModal => {
   const barcodePot = useIOSelector(idPayStaticCodeByInitiativeIdSelector)(
     initiativeId
@@ -210,7 +211,8 @@ export const useIDPayStaticCodeModal = (
   const bottomSheet = useIOBottomSheetModal({
     title: null,
     component: <StaticCodeBottomSheetContent />,
-    footer: <FooterComponent />
+    footer: <FooterComponent />,
+    onDismiss
   });
 
   return bottomSheet;
