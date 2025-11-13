@@ -138,6 +138,7 @@ import {
   waitForNavigatorServiceInitialization
 } from "../navigation/saga/navigation";
 import { checkShouldDisplaySendEngagementScreen } from "../features/pn/loginEngagement/sagas/checkShouldDisplaySendEngagementScreen";
+import { watchCdcSaga } from "../features/bonus/cdc/common/saga";
 import { setRefreshMessagesSection } from "../features/authentication/activeSessionLogin/store/actions";
 import { watchMessagesSaga } from "../features/messages/saga";
 import { previousInstallationDataDeleteSaga } from "./installation";
@@ -657,6 +658,9 @@ export function* initializeApplicationSaga(
   const walletToken = maybeSessionInformation.value.walletToken as string;
   // Start watching for Wallet V3 actions
   yield* fork(watchPaymentsSaga, walletToken);
+
+  // Start watching for CDC actions
+  yield* fork(watchCdcSaga, sessionToken);
 
   // Check that profile is up to date (e.g. inbox enabled)
   yield* call(checkProfileEnabledSaga, userProfile);
