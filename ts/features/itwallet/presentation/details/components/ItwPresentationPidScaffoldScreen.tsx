@@ -10,8 +10,8 @@ import { StyleSheet, View } from "react-native";
 import ITWalletIDImage from "../../../../../../img/features/itWallet/brand/itw_id.svg";
 import ITWalletLogoImage from "../../../../../../img/features/itWallet/brand/itw_logo.svg";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
-import { IT_WALLET_BG } from "../../../common/utils/constants";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import { useItWalletTheme } from "../../../common/utils/theme";
 import { ItwPresentationDetailsScreenBase } from "./ItwPresentationDetailsScreenBase";
 
 type Props = {
@@ -21,31 +21,37 @@ type Props = {
 export const ItwPresentationPidScaffoldScreen = ({
   credential,
   children
-}: PropsWithChildren<Props>) => (
-  <ItwPresentationDetailsScreenBase credential={credential}>
-    <FocusAwareStatusBar backgroundColor={IT_WALLET_BG} />
-    <View style={[styles.header, styles.scrollHack]}>
-      <ContentWrapper>
-        <VStack space={8} style={styles.content}>
-          <View style={styles.logo}>
-            <ITWalletLogoImage width={120} height={25} />
-            <ITWalletIDImage width={46} height={32} />
-          </View>
-          <Body color="black">
-            {I18n.t("features.itWallet.presentation.itWalletId.description")}
-          </Body>
-        </VStack>
-      </ContentWrapper>
-    </View>
-    {/** TODO: [SIW-3307] Add IT-Wallet gradient line  */}
-    <ContentWrapper>{children}</ContentWrapper>
-  </ItwPresentationDetailsScreenBase>
-);
+}: PropsWithChildren<Props>) => {
+  const itWalletTheme = useItWalletTheme();
+
+  return (
+    <ItwPresentationDetailsScreenBase credential={credential}>
+      <FocusAwareStatusBar backgroundColor={itWalletTheme.background} />
+      <View
+        style={[
+          styles.scrollHack,
+          { backgroundColor: itWalletTheme.background }
+        ]}
+      >
+        <ContentWrapper>
+          <VStack space={8} style={styles.content}>
+            <View style={styles.logo}>
+              <ITWalletLogoImage width={120} height={25} />
+              <ITWalletIDImage width={46} height={32} />
+            </View>
+            <Body color="black">
+              {I18n.t("features.itWallet.presentation.itWalletId.description")}
+            </Body>
+          </VStack>
+        </ContentWrapper>
+      </View>
+      {/** TODO: [SIW-3307] Add IT-Wallet gradient line  */}
+      <ContentWrapper>{children}</ContentWrapper>
+    </ItwPresentationDetailsScreenBase>
+  );
+};
 
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: IT_WALLET_BG
-  },
   logo: {
     flexDirection: "row",
     alignItems: "center",

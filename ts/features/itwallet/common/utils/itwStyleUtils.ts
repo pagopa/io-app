@@ -3,7 +3,7 @@ import { IOColors } from "@pagopa/io-app-design-system";
 import { HeaderSecondLevelHookProps } from "../../../../hooks/useHeaderSecondLevel";
 import { getCredentialNameFromType } from "./itwCredentialUtils";
 import { CredentialType } from "./itwMocksUtils";
-import { IT_WALLET_BG } from "./constants";
+import { useItWalletTheme } from "./theme";
 
 export type CredentialTheme = {
   backgroundColor: string;
@@ -12,15 +12,17 @@ export type CredentialTheme = {
   variant?: HeaderSecondLevelHookProps["variant"];
 };
 
-export const getThemeColorByCredentialType = (
+export const useThemeColorByCredentialType = (
   credentialType: string,
   withL3Design?: boolean
 ): CredentialTheme => {
+  const theme = useItWalletTheme();
+
   switch (credentialType) {
     case CredentialType.PID:
     default:
       return {
-        backgroundColor: withL3Design ? IT_WALLET_BG : "#295699",
+        backgroundColor: withL3Design ? theme.background : "#295699",
         textColor: "#032D5C",
         statusBarStyle: "light-content",
         variant: withL3Design ? "neutral" : "contrast"
@@ -68,11 +70,11 @@ export const getThemeColorByCredentialType = (
   }
 };
 
-export const getHeaderPropsByCredentialType = (
+export const useHeaderPropsByCredentialType = (
   credentialType: string,
   withL3Design: boolean
 ) => {
-  const { backgroundColor, variant } = getThemeColorByCredentialType(
+  const { backgroundColor, variant } = useThemeColorByCredentialType(
     credentialType,
     withL3Design
   );
