@@ -2959,7 +2959,13 @@
           }
         },
         "institutions": {
-          "title": "Featured Institutions"
+          "title": "Featured Institutions",
+          "error": {
+            "banner": {
+              "label": "We couldn't load the list of featured institutions",
+              "cta": "Try again"
+            }
+          }
         }
       },
       "institutions": {
