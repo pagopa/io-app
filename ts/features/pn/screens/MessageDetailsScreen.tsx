@@ -1,7 +1,7 @@
 import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import { RefObject, useCallback, useEffect, useRef } from "react";
+import { RefObject, useCallback, useEffect, useMemo, useRef } from "react";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
@@ -18,7 +18,15 @@ import {
   cancelQueuedPaymentUpdates,
   updatePaymentForMessage
 } from "../../messages/store/actions";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../pushNotifications/analytics";
 import { profileFiscalCodeSelector } from "../../settings/common/store/selectors";
+import {
+  trackSendAARFailure,
+  trackSendAarNotificationClosure
+} from "../aar/analytics";
 import { SendAARMessageDetailBottomSheetComponent } from "../aar/components/SendAARMessageDetailBottomSheetComponent";
 import { terminateAarFlow } from "../aar/store/actions";
 import { trackPNUxSuccess } from "../analytics";
@@ -29,7 +37,7 @@ import {
   startPNPaymentStatusTracking
 } from "../store/actions";
 import {
-  sendMessageFromIdSelector,
+  curriedSendMessageFromIdSelector,
   sendUserSelectedPaymentRptIdSelector
 } from "../store/reducers";
 import {
@@ -38,14 +46,6 @@ import {
   openingSourceIsAarMessage,
   paymentsFromSendMessage
 } from "../utils";
-import {
-  trackSendAARFailure,
-  trackSendAarNotificationClosure
-} from "../aar/analytics";
-import {
-  SendOpeningSource,
-  SendUserType
-} from "../../pushNotifications/analytics";
 
 export type MessageDetailsScreenRouteParams = {
   messageId: string;
@@ -127,9 +127,11 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
   const aarBottomSheetRef = useRef<() => void>(undefined);
 
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
-  const sendMessageOrUndefined = useIOSelector(state =>
-    sendMessageFromIdSelector(state, messageId)
+  const messageFromIdSelector = useMemo(
+    () => curriedSendMessageFromIdSelector(messageId),
+    [messageId]
   );
+  const sendMessageOrUndefined = useIOSelector(messageFromIdSelector);
 
   const isAarMessage = openingSourceIsAarMessage(sendOpeningSource);
   const fiscalCodeOrUndefined = isAarMessage ? undefined : currentFiscalCode;

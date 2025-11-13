@@ -35,18 +35,21 @@ export const pnReducer = combineReducers<PnState, Action>({
   loginEngagement: persistedSendLoginEngagementReducer
 });
 
-export const sendMessageFromIdSelector = createSelector(
-  thirdPartyFromIdSelector,
-  thirdPartyMessagePot => {
-    const thirdPartyMessage = pot.getOrElse(thirdPartyMessagePot, undefined);
-    if (thirdPartyMessage == null) {
-      return undefined;
+/*
+this selector is curried to allow
+memoization per messageId in components
+*/
+export const curriedSendMessageFromIdSelector = (messageId: string) =>
+  createSelector(
+    (state: GlobalState) => thirdPartyFromIdSelector(state, messageId),
+    data => {
+      const thirdPartyMessage = pot.getOrElse(data, undefined);
+      if (thirdPartyMessage == null) {
+        return undefined;
+      }
+      return toSENDMessage(thirdPartyMessage);
     }
-    // Be aware that this call generates a new instance so
-    // we have to cache the function using createSelector
-    return toSENDMessage(thirdPartyMessage);
-  }
-);
+  );
 
 export const sendUserSelectedPaymentRptIdSelector = (
   state: GlobalState,

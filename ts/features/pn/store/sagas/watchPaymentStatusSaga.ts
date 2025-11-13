@@ -6,7 +6,6 @@ import {
 } from "../actions";
 import { maxVisiblePaymentCount, paymentsFromSendMessage } from "../../utils";
 import { profileFiscalCodeSelector } from "../../../settings/common/store/selectors";
-import { sendMessageFromIdSelector } from "../reducers";
 import { trackPNPaymentStatus } from "../../analytics";
 import { getRptIdStringFromPayment } from "../../utils/rptId";
 import { paymentStatisticsForMessageUncachedSelector } from "../../../messages/store/reducers/payments";
@@ -15,6 +14,7 @@ import {
   SendOpeningSource,
   SendUserType
 } from "../../../pushNotifications/analytics";
+import { curriedSendMessageFromIdSelector } from "../reducers";
 
 /**
  * This saga is used to track a mixpanel event which is a report of
@@ -27,7 +27,7 @@ export function* watchPaymentStatusForMixpanelTracking(
 ) {
   const { openingSource, userType, messageId } = action.payload;
   const currentFiscalCode = yield* select(profileFiscalCodeSelector);
-  const message = yield* select(sendMessageFromIdSelector, messageId);
+  const message = yield* select(curriedSendMessageFromIdSelector(messageId));
 
   const fiscalCodeOrUndefined =
     openingSource === "message" ? currentFiscalCode : undefined;
