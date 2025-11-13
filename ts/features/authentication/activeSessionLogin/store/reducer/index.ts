@@ -13,7 +13,7 @@ import {
   setIdpSelectedActiveSessionLogin,
   setLoggedOutUserWithDifferentCF,
   setStartActiveSessionLogin,
-  setVisualizeActiveSessionLoginBlockingScreen,
+  setActiveSessionLoginBlockingScreenHasBeenVisualized,
   setRefreshMessagesSection
 } from "../actions";
 import { SpidIdp } from "../../../../../utils/idps";
@@ -61,7 +61,7 @@ const activeSessionLoginReducer = (
         activeSessionLoginLocalFlag: action.payload,
         engagement: { ...activeSessionLoginInitialState.engagement }
       };
-    case getType(setVisualizeActiveSessionLoginBlockingScreen):
+    case getType(setActiveSessionLoginBlockingScreenHasBeenVisualized):
       return {
         ...state,
         engagement: {
@@ -137,12 +137,12 @@ const activeSessionLoginReducer = (
   }
 };
 
-const CURRENT_REDUX_OPT_IN_STORE_VERSION = -1;
+const CURRENT_REDUX_ACTIVE_SESSION_STATE_STORE_VERSION = -1;
 
 const persistConfig: PersistConfig = {
   key: "activeSessionLogin",
   storage: AsyncStorage,
-  version: CURRENT_REDUX_OPT_IN_STORE_VERSION,
+  version: CURRENT_REDUX_ACTIVE_SESSION_STATE_STORE_VERSION,
   whitelist: ["activeSessionLoginLocalFlag", "engagement"]
 };
 

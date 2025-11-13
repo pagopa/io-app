@@ -90,6 +90,20 @@ export const isSessionExpiringSelector = createSelector(
     )
 );
 
+/**
+ * Determines whether to show the session expiration blocking screen.
+ * The conditions are explicitly mapped for better readability and maintainability
+ *
+ * This selector controls the display of a full-screen modal that appears when:
+ * 1. The user's session is about to expire AND the active session login feature
+ *    is remotely enabled AND the blocking screen hasn't been shown yet
+ * 2. OR when testing locally with the local flag enabled AND the blocking screen
+ *    hasn't been shown yet
+ *
+ * The blocking screen is shown BEFORE the banner and serves as the primary
+ * notification method. Once dismissed, it sets hasBlockingScreenBeenVisualized
+ * to true, which then allows the banner to be shown instead.
+ */
 export const showSessionExpirationBlockingScreenSelector = createSelector(
   isSessionExpiringSelector,
   isActiveSessionLoginLocallyEnabledSelector,
@@ -101,7 +115,8 @@ export const showSessionExpirationBlockingScreenSelector = createSelector(
     isActiveSessionLoginRemotelyEnabled,
     hasBlockingScreenBeenVisualized
   ) => {
-    // production
+    // production: show blocking screen when session is expiring,
+    // feature is remotely enabled, and screen hasn't been shown yet
     if (
       isSessionExpiring &&
       isActiveSessionLoginRemotelyEnabled &&
@@ -109,7 +124,8 @@ export const showSessionExpirationBlockingScreenSelector = createSelector(
     ) {
       return true;
     }
-    // testing
+    // testing: show blocking screen when local flag is enabled
+    // and screen hasn't been shown yet (ignores session expiration for testing)
     if (
       isActiveSessionLoginLocallyEnabled &&
       !hasBlockingScreenBeenVisualized
@@ -120,6 +136,24 @@ export const showSessionExpirationBlockingScreenSelector = createSelector(
   }
 );
 
+/**
+ * Determines whether to show the session expiration banner.
+ * The conditions are explicitly mapped for better readability and maintainability
+ *
+ * This selector controls the display of a banner that appears in different scenarios:
+ * 1. Legacy mode: When active session login is NOT remotely enabled, but the session
+ *    is expiring and the banner flag is true (maintains old behavior)
+ * 2. Production mode: When the session is expiring, active session login is remotely
+ *    enabled, the blocking screen has already been shown, and the banner flag is true
+ * 3. Testing mode: When local testing is enabled, the blocking screen has been shown,
+ *    and the banner flag is true (ignores session expiration for testing)
+ *
+ * The banner serves as a persistent reminder after the blocking screen has been dismissed,
+ * or as the primary notification method in legacy mode when the new blocking screen
+ * feature is disabled.
+ *
+ * the banner even when other conditions are met (useful for user dismissal).
+ */
 export const showSessionExpirationBannerRenderableSelector = createSelector(
   isSessionExpiringSelector,
   isActiveSessionLoginLocallyEnabledSelector,
@@ -133,7 +167,8 @@ export const showSessionExpirationBannerRenderableSelector = createSelector(
     hasBlockingScreenBeenVisualized,
     showSessionExpirationBanner
   ) => {
-    // as-is
+    // Legacy mode: show banner when active session login is disabled remotely,
+    // session is expiring, and banner hasn't been dismissed by user
     if (
       !isActiveSessionLoginRemotelyEnabled &&
       isSessionExpiring &&
@@ -141,7 +176,8 @@ export const showSessionExpirationBannerRenderableSelector = createSelector(
     ) {
       return true;
     }
-    // production
+    // Production mode: show banner after blocking screen has been shown,
+    // when session is expiring, feature is enabled, and banner hasn't been dismissed
     if (
       isSessionExpiring &&
       isActiveSessionLoginRemotelyEnabled &&
@@ -150,7 +186,9 @@ export const showSessionExpirationBannerRenderableSelector = createSelector(
     ) {
       return true;
     }
-    // testing
+    // Testing mode: show banner after blocking screen has been shown,
+    // when local flag is enabled and banner hasn't been dismissed
+    // (ignores session expiration for testing purposes)
     if (
       isActiveSessionLoginLocallyEnabled &&
       hasBlockingScreenBeenVisualized &&

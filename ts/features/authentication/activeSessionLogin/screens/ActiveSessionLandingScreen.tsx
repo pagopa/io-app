@@ -11,7 +11,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback, useEffect, useLayoutEffect, useRef } from "react";
+import { useCallback, useLayoutEffect, useRef } from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import I18n from "i18next";
@@ -34,7 +34,8 @@ import { isCieLoginUatEnabledSelector } from "../../login/cie/store/selectors";
 import { SpidLevel } from "../../login/cie/utils";
 import useNavigateToLoginMethod from "../../login/hooks/useNavigateToLoginMethod";
 import { LandingSessionExpiredComponent } from "../../login/landing/components/LandingSessionExpiredComponent";
-import { setVisualizeActiveSessionLoginBlockingScreen } from "../store/actions";
+import { setActiveSessionLoginBlockingScreenHasBeenVisualized } from "../store/actions";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 const SPACE_BETWEEN_BUTTONS = 8;
 const SPACE_AROUND_BUTTON_LINK = 16;
@@ -61,12 +62,9 @@ export const ActiveSessionLandingScreen = () => {
     navigateToCieIdLoginScreen(SPID_LEVEL);
   }, [navigateToCieIdLoginScreen]);
 
-  useEffect(
-    () => () => {
-      dispatch(setVisualizeActiveSessionLoginBlockingScreen());
-    },
-    [dispatch]
-  );
+  useOnFirstRender(() => {
+    dispatch(setActiveSessionLoginBlockingScreenHasBeenVisualized());
+  });
 
   const {
     present,

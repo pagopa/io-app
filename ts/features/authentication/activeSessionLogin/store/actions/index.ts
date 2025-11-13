@@ -10,7 +10,7 @@ export const setStartActiveSessionLogin = createStandardAction(
   "SET_START_ACTIVE_SESSION_LOGIN"
 )();
 
-export const setVisualizeActiveSessionLoginBlockingScreen =
+export const setActiveSessionLoginBlockingScreenHasBeenVisualized =
   createStandardAction("SET_VISUALIZE_ACTIVE_SESSION_LOGIN_BLOCKING_SCREEN")();
 
 export const setRetryActiveSessionLogin = createStandardAction(
@@ -58,7 +58,7 @@ export const setRefreshMessagesSection = createStandardAction(
 
 export type LoginInfoActions =
   | ActionType<typeof setActiveSessionLoginLocalFlag>
-  | ActionType<typeof setVisualizeActiveSessionLoginBlockingScreen>
+  | ActionType<typeof setActiveSessionLoginBlockingScreenHasBeenVisualized>
   | ActionType<typeof setStartActiveSessionLogin>
   | ActionType<typeof setRetryActiveSessionLogin>
   | ActionType<typeof setIdpSelectedActiveSessionLogin>
