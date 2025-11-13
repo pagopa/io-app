@@ -1,7 +1,7 @@
 import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import { RefObject, useCallback, useEffect, useMemo, useRef } from "react";
+import { RefObject, useCallback, useEffect, useRef } from "react";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
@@ -127,11 +127,9 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
   const aarBottomSheetRef = useRef<() => void>(undefined);
 
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
-  const messageFromIdSelector = useMemo(
-    () => curriedSendMessageFromIdSelector(messageId),
-    [messageId]
+  const sendMessageOrUndefined = useIOSelector(
+    curriedSendMessageFromIdSelector(messageId)
   );
-  const sendMessageOrUndefined = useIOSelector(messageFromIdSelector);
 
   const isAarMessage = openingSourceIsAarMessage(sendOpeningSource);
   const fiscalCodeOrUndefined = isAarMessage ? undefined : currentFiscalCode;
