@@ -3,7 +3,18 @@ import { MessageBodyMarkdown } from "../../../../../definitions/backend/MessageB
 import { MessageSubject } from "../../../../../definitions/backend/MessageSubject";
 import { EphemeralAarMessageDataActionPayload } from "../store/actions";
 import { ThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
-import { AARFlowState, sendAARFlowStates } from "./stateUtils";
+import { AARFlowState, RecipientInfo, sendAARFlowStates } from "./stateUtils";
+
+const iun = "000000000001";
+const recipientInfo: RecipientInfo = {
+  denomination: "Mario Rossi",
+  taxId: "RSSMRA74D22A001Q"
+};
+const qrCode = "https://www.google.com";
+const pnServiceId = "SERVICEID123" as NonEmptyString;
+const mandateId = "MANDATE123";
+const validationCode = "validation_code";
+const can = "123456";
 
 export const sendAarMockStateFactory: {
   [K in AARFlowState["type"]]: () => Extract<AARFlowState, { type: K }>;
@@ -11,124 +22,91 @@ export const sendAarMockStateFactory: {
   none: () => ({ type: "none" }),
   displayingAARToS: () => ({
     type: "displayingAARToS",
-    qrCode: "https://www.google.com"
+    qrCode
   }),
   fetchingQRData: () => ({
     type: "fetchingQRData",
-    qrCode: "https://www.google.com"
+    qrCode
   }),
   fetchingNotificationData: () => ({
     type: "fetchingNotificationData",
-    iun: "000000000001",
-    recipientInfo: {
-      denomination: "Mario Rossi",
-      taxId: "RSSMRA74D22A001Q"
-    }
+    iun,
+    recipientInfo
   }),
   displayingNotificationData: () => ({
     type: "displayingNotificationData",
-    recipientInfo: {
-      denomination: "Mario Rossi",
-      taxId: "RSSMRA74D22A001Q"
-    },
+    recipientInfo,
     notification: {},
-    iun: "000000000001",
-    pnServiceId: "SERVICEID123" as NonEmptyString,
-    mandateId: "MANDATE123"
+    iun,
+    pnServiceId,
+    mandateId
   }),
   notAddresseeFinal: () => ({
     type: "notAddresseeFinal",
-    recipientInfo: {
-      denomination: "Mario Rossi",
-      taxId: "RSSMRA74D22A001Q"
-    },
-    qrCode: "https://www.google.com",
-    iun: "000000000001"
+    recipientInfo,
+    qrCode,
+    iun
   }),
   notAddressee: () => ({
     type: "notAddressee",
-    recipientInfo: {
-      denomination: "Mario Rossi",
-      taxId: "RSSMRA74D22A001Q"
-    },
-    qrCode: "https://www.google.com",
-    iun: "000000000001"
+    recipientInfo,
+    qrCode,
+    iun
   }),
   creatingMandate: () => ({
     type: "creatingMandate",
-    recipientInfo: {
-      denomination: "Mario Rossi",
-      taxId: "RSSMRA74D22A001Q"
-    },
-    qrCode: "https://www.google.com",
-    iun: "000000000001"
+    recipientInfo,
+    qrCode,
+    iun
   }),
   cieCanAdvisory: () => ({
     type: "cieCanAdvisory",
-    recipientInfo: {
-      denomination: "Mario Rossi",
-      taxId: "RSSMRA74D22A001Q"
-    },
-    iun: "000000000001",
-    mandateId: "test_id",
+    recipientInfo,
+    iun,
+    mandateId,
     timeToLive: "",
-    validationCode: "validation_code"
+    validationCode
   }),
   cieCanInsertion: () => ({
     type: "cieCanInsertion",
-    recipientInfo: {
-      denomination: "Mario Rossi",
-      taxId: "RSSMRA74D22A001Q"
-    },
-    iun: "000000000001",
-    mandateId: "test_id",
+    recipientInfo,
+    iun,
+    mandateId,
     timeToLive: "",
-    validationCode: "validation_code"
+    validationCode
   }),
   cieScanningAdvisory: () => ({
     type: "cieScanningAdvisory",
-    recipientInfo: {
-      denomination: "Mario Rossi",
-      taxId: "RSSMRA74D22A001Q"
-    },
-    iun: "000000000001",
-    mandateId: "test_id",
+    recipientInfo,
+    iun,
+    mandateId,
     timeToLive: "",
-    validationCode: "validation_code",
-    can: "123456"
+    validationCode,
+    can
   }),
   androidNFCActivation: () => ({
     type: "androidNFCActivation",
-    recipientInfo: {
-      denomination: "Mario Rossi",
-      taxId: "RSSMRA74D22A001Q"
-    },
-    iun: "000000000001",
-    mandateId: "test_id",
+    recipientInfo,
+    iun,
+    mandateId,
     timeToLive: "",
-    validationCode: "validation_code",
-    can: "123456"
+    validationCode,
+    can
   }),
   cieScanning: () => ({
     type: "cieScanning",
-    recipientInfo: {
-      denomination: "Mario Rossi",
-      taxId: "RSSMRA74D22A001Q"
-    },
-    iun: "000000000001",
-    mandateId: "test_id",
+    recipientInfo,
+    iun,
+    mandateId,
     timeToLive: "",
-    validationCode: "validation_code",
-    can: "123456"
+    validationCode,
+    can
   }),
   validatingMandate: () => ({
     type: "validatingMandate",
-    recipientInfo: {
-      denomination: "Mario Rossi",
-      taxId: "RSSMRA74D22A001Q"
-    },
-    iun: "000000000001",
-    mandateId: "test_id",
+    recipientInfo,
+    iun,
+    mandateId,
     signedVerificationCode: "signed_validation_code",
     mrtdData: {
       dg1: "",
@@ -161,7 +139,7 @@ export const mockEphemeralAarMessageDataActionPayload: EphemeralAarMessageDataAc
     iun: "IUN123" as NonEmptyString,
     thirdPartyMessage: {} as unknown as ThirdPartyMessage,
     fiscalCode: "TAXCODE123" as FiscalCode,
-    pnServiceID: "SERVICEID123" as NonEmptyString,
+    pnServiceID: pnServiceId,
     markdown: "*".repeat(81) as MessageBodyMarkdown,
     subject: "subject" as MessageSubject,
     mandateId: "MANDATE123"
