@@ -35,12 +35,12 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
   testID="itwWalletIdStatusTestID"
 >
   <View
+    onLayout={[Function]}
     style={
       [
         {
           "borderCurve": "continuous",
           "borderRadius": 16,
-          "borderWidth": 1,
           "gap": 6,
           "marginHorizontal": -8,
           "overflow": "hidden",
@@ -301,6 +301,346 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
         </View>
       </View>
     </View>
+    <View
+      style={
+        {
+          "height": 0,
+          "position": "absolute",
+          "width": 0,
+        }
+      }
+    >
+      <skGroup
+        blendMode="colorBurn"
+        opacity={0}
+      >
+        <skGroup
+          blendMode="colorDodge"
+        >
+          <skRect
+            height={0}
+            transform={
+              {
+                "get": [Function],
+                "value": [
+                  {
+                    "translateY": undefined,
+                  },
+                ],
+              }
+            }
+            width={0}
+            x={0}
+            y={-0}
+          >
+            <skLinearGradient
+              colors={
+                [
+                  "rgba(255, 179, 87, 1)",
+                  "rgba(255, 234, 189, 1)",
+                  "rgba(25, 104, 240, 1)",
+                  "rgba(205, 210, 252, 1)",
+                  "rgba(255, 179, 87, 1)",
+                  "rgba(25, 104, 240, 1)",
+                  "rgba(220, 227, 252, 1)",
+                ]
+              }
+              end={
+                JsiSkPoint {
+                  "CanvasKit": {
+                    "MakeBlendMode": [MockFunction],
+                    "MakeCanvas": [MockFunction],
+                    "MakeColor": [MockFunction],
+                    "MakeColorFilter": [MockFunction],
+                    "MakeFont": [MockFunction],
+                    "MakeImage": [MockFunction],
+                    "MakeImageFilter": [MockFunction],
+                    "MakeManagedAnimation": [MockFunction],
+                    "MakeMatrix": [MockFunction],
+                    "MakePaint": [MockFunction],
+                    "MakePath": [MockFunction],
+                    "MakePicture": [MockFunction],
+                    "MakeRuntimeEffect": [MockFunction],
+                    "MakeShader": [MockFunction],
+                    "MakeSkottieAnimation": [MockFunction],
+                    "MakeTextBlob": [MockFunction],
+                    "MakeTypeface": [MockFunction],
+                    "MakeVertices": [MockFunction],
+                  },
+                  "__typename__": "Point",
+                  "dispose": [Function],
+                  "ref": Float32Array [
+                    0,
+                    0,
+                  ],
+                }
+              }
+              mode="decal"
+              positions={
+                [
+                  0,
+                  0.2,
+                  0.4,
+                  0.6,
+                  0.8,
+                  0.9,
+                  1,
+                ]
+              }
+              start={
+                JsiSkPoint {
+                  "CanvasKit": {
+                    "MakeBlendMode": [MockFunction],
+                    "MakeCanvas": [MockFunction],
+                    "MakeColor": [MockFunction],
+                    "MakeColorFilter": [MockFunction],
+                    "MakeFont": [MockFunction],
+                    "MakeImage": [MockFunction],
+                    "MakeImageFilter": [MockFunction],
+                    "MakeManagedAnimation": [MockFunction],
+                    "MakeMatrix": [MockFunction],
+                    "MakePaint": [MockFunction],
+                    "MakePath": [MockFunction],
+                    "MakePicture": [MockFunction],
+                    "MakeRuntimeEffect": [MockFunction],
+                    "MakeShader": [MockFunction],
+                    "MakeSkottieAnimation": [MockFunction],
+                    "MakeTextBlob": [MockFunction],
+                    "MakeTypeface": [MockFunction],
+                    "MakeVertices": [MockFunction],
+                  },
+                  "__typename__": "Point",
+                  "dispose": [Function],
+                  "ref": Float32Array [
+                    -0,
+                    0,
+                  ],
+                }
+              }
+            />
+          </skRect>
+        </skGroup>
+      </skGroup>
+      <skGroup
+        layer={true}
+      >
+        <skLayer>
+          <skPaint
+            blendMode="src"
+          />
+          <skGroup>
+            <skGroup
+              blendMode="colorDodge"
+              opacity={1}
+            >
+              <skGroup
+                blendMode="colorDodge"
+              >
+                <skRect
+                  height={0}
+                  transform={
+                    {
+                      "get": [Function],
+                      "value": [
+                        {
+                          "translateY": undefined,
+                        },
+                      ],
+                    }
+                  }
+                  width={0}
+                  x={0}
+                  y={-0}
+                >
+                  <skLinearGradient
+                    colors={
+                      [
+                        "rgba(255, 179, 87, 1)",
+                        "rgba(255, 234, 189, 1)",
+                        "rgba(25, 104, 240, 1)",
+                        "rgba(205, 210, 252, 1)",
+                        "rgba(255, 179, 87, 1)",
+                        "rgba(25, 104, 240, 1)",
+                        "rgba(220, 227, 252, 1)",
+                      ]
+                    }
+                    end={
+                      JsiSkPoint {
+                        "CanvasKit": {
+                          "MakeBlendMode": [MockFunction],
+                          "MakeCanvas": [MockFunction],
+                          "MakeColor": [MockFunction],
+                          "MakeColorFilter": [MockFunction],
+                          "MakeFont": [MockFunction],
+                          "MakeImage": [MockFunction],
+                          "MakeImageFilter": [MockFunction],
+                          "MakeManagedAnimation": [MockFunction],
+                          "MakeMatrix": [MockFunction],
+                          "MakePaint": [MockFunction],
+                          "MakePath": [MockFunction],
+                          "MakePicture": [MockFunction],
+                          "MakeRuntimeEffect": [MockFunction],
+                          "MakeShader": [MockFunction],
+                          "MakeSkottieAnimation": [MockFunction],
+                          "MakeTextBlob": [MockFunction],
+                          "MakeTypeface": [MockFunction],
+                          "MakeVertices": [MockFunction],
+                        },
+                        "__typename__": "Point",
+                        "dispose": [Function],
+                        "ref": Float32Array [
+                          0,
+                          0,
+                        ],
+                      }
+                    }
+                    mode="decal"
+                    positions={
+                      [
+                        0,
+                        0.2,
+                        0.4,
+                        0.6,
+                        0.8,
+                        0.9,
+                        1,
+                      ]
+                    }
+                    start={
+                      JsiSkPoint {
+                        "CanvasKit": {
+                          "MakeBlendMode": [MockFunction],
+                          "MakeCanvas": [MockFunction],
+                          "MakeColor": [MockFunction],
+                          "MakeColorFilter": [MockFunction],
+                          "MakeFont": [MockFunction],
+                          "MakeImage": [MockFunction],
+                          "MakeImageFilter": [MockFunction],
+                          "MakeManagedAnimation": [MockFunction],
+                          "MakeMatrix": [MockFunction],
+                          "MakePaint": [MockFunction],
+                          "MakePath": [MockFunction],
+                          "MakePicture": [MockFunction],
+                          "MakeRuntimeEffect": [MockFunction],
+                          "MakeShader": [MockFunction],
+                          "MakeSkottieAnimation": [MockFunction],
+                          "MakeTextBlob": [MockFunction],
+                          "MakeTypeface": [MockFunction],
+                          "MakeVertices": [MockFunction],
+                        },
+                        "__typename__": "Point",
+                        "dispose": [Function],
+                        "ref": Float32Array [
+                          -0,
+                          0,
+                        ],
+                      }
+                    }
+                  />
+                </skRect>
+              </skGroup>
+            </skGroup>
+            <skLayer>
+              <skPaint
+                blendMode="dstIn"
+              />
+              <skGroup>
+                <skLayer>
+                  <skPaint>
+                    <skMatrixColorFilter
+                      matrix={
+                        [
+                          1,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          1,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          1,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          1,
+                          0,
+                        ]
+                      }
+                    />
+                  </skPaint>
+                  <skGroup>
+                    <skRRect
+                      color="red"
+                      height={0}
+                      r={16}
+                      strokeJoin="round"
+                      strokeWidth={3}
+                      style="stroke"
+                      width={0}
+                      x={0}
+                      y={0}
+                    />
+                  </skGroup>
+                </skLayer>
+              </skGroup>
+            </skLayer>
+          </skGroup>
+        </skLayer>
+        <skGroup
+          blendMode="srcIn"
+        >
+          <skLayer>
+            <skPaint>
+              <skMatrixColorFilter
+                matrix={
+                  [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                  ]
+                }
+              />
+            </skPaint>
+            <skGroup>
+              <skRRect
+                color="red"
+                height={0}
+                r={16}
+                strokeJoin="round"
+                strokeWidth={3}
+                style="stroke"
+                width={0}
+                x={0}
+                y={0}
+              />
+            </skGroup>
+          </skLayer>
+        </skGroup>
+      </skGroup>
+    </View>
   </View>
 </View>
 `;
@@ -340,12 +680,12 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpiring
   testID="itwWalletIdStatusTestID"
 >
   <View
+    onLayout={[Function]}
     style={
       [
         {
           "borderCurve": "continuous",
           "borderRadius": 16,
-          "borderWidth": 1,
           "gap": 6,
           "marginHorizontal": -8,
           "overflow": "hidden",
@@ -496,6 +836,346 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpiring
         12/11/2026
       </Text>
     </Text>
+    <View
+      style={
+        {
+          "height": 0,
+          "position": "absolute",
+          "width": 0,
+        }
+      }
+    >
+      <skGroup
+        blendMode="colorBurn"
+        opacity={0}
+      >
+        <skGroup
+          blendMode="colorDodge"
+        >
+          <skRect
+            height={0}
+            transform={
+              {
+                "get": [Function],
+                "value": [
+                  {
+                    "translateY": undefined,
+                  },
+                ],
+              }
+            }
+            width={0}
+            x={0}
+            y={-0}
+          >
+            <skLinearGradient
+              colors={
+                [
+                  "rgba(255, 179, 87, 1)",
+                  "rgba(255, 234, 189, 1)",
+                  "rgba(25, 104, 240, 1)",
+                  "rgba(205, 210, 252, 1)",
+                  "rgba(255, 179, 87, 1)",
+                  "rgba(25, 104, 240, 1)",
+                  "rgba(220, 227, 252, 1)",
+                ]
+              }
+              end={
+                JsiSkPoint {
+                  "CanvasKit": {
+                    "MakeBlendMode": [MockFunction],
+                    "MakeCanvas": [MockFunction],
+                    "MakeColor": [MockFunction],
+                    "MakeColorFilter": [MockFunction],
+                    "MakeFont": [MockFunction],
+                    "MakeImage": [MockFunction],
+                    "MakeImageFilter": [MockFunction],
+                    "MakeManagedAnimation": [MockFunction],
+                    "MakeMatrix": [MockFunction],
+                    "MakePaint": [MockFunction],
+                    "MakePath": [MockFunction],
+                    "MakePicture": [MockFunction],
+                    "MakeRuntimeEffect": [MockFunction],
+                    "MakeShader": [MockFunction],
+                    "MakeSkottieAnimation": [MockFunction],
+                    "MakeTextBlob": [MockFunction],
+                    "MakeTypeface": [MockFunction],
+                    "MakeVertices": [MockFunction],
+                  },
+                  "__typename__": "Point",
+                  "dispose": [Function],
+                  "ref": Float32Array [
+                    0,
+                    0,
+                  ],
+                }
+              }
+              mode="decal"
+              positions={
+                [
+                  0,
+                  0.2,
+                  0.4,
+                  0.6,
+                  0.8,
+                  0.9,
+                  1,
+                ]
+              }
+              start={
+                JsiSkPoint {
+                  "CanvasKit": {
+                    "MakeBlendMode": [MockFunction],
+                    "MakeCanvas": [MockFunction],
+                    "MakeColor": [MockFunction],
+                    "MakeColorFilter": [MockFunction],
+                    "MakeFont": [MockFunction],
+                    "MakeImage": [MockFunction],
+                    "MakeImageFilter": [MockFunction],
+                    "MakeManagedAnimation": [MockFunction],
+                    "MakeMatrix": [MockFunction],
+                    "MakePaint": [MockFunction],
+                    "MakePath": [MockFunction],
+                    "MakePicture": [MockFunction],
+                    "MakeRuntimeEffect": [MockFunction],
+                    "MakeShader": [MockFunction],
+                    "MakeSkottieAnimation": [MockFunction],
+                    "MakeTextBlob": [MockFunction],
+                    "MakeTypeface": [MockFunction],
+                    "MakeVertices": [MockFunction],
+                  },
+                  "__typename__": "Point",
+                  "dispose": [Function],
+                  "ref": Float32Array [
+                    -0,
+                    0,
+                  ],
+                }
+              }
+            />
+          </skRect>
+        </skGroup>
+      </skGroup>
+      <skGroup
+        layer={true}
+      >
+        <skLayer>
+          <skPaint
+            blendMode="src"
+          />
+          <skGroup>
+            <skGroup
+              blendMode="colorDodge"
+              opacity={1}
+            >
+              <skGroup
+                blendMode="colorDodge"
+              >
+                <skRect
+                  height={0}
+                  transform={
+                    {
+                      "get": [Function],
+                      "value": [
+                        {
+                          "translateY": undefined,
+                        },
+                      ],
+                    }
+                  }
+                  width={0}
+                  x={0}
+                  y={-0}
+                >
+                  <skLinearGradient
+                    colors={
+                      [
+                        "rgba(255, 179, 87, 1)",
+                        "rgba(255, 234, 189, 1)",
+                        "rgba(25, 104, 240, 1)",
+                        "rgba(205, 210, 252, 1)",
+                        "rgba(255, 179, 87, 1)",
+                        "rgba(25, 104, 240, 1)",
+                        "rgba(220, 227, 252, 1)",
+                      ]
+                    }
+                    end={
+                      JsiSkPoint {
+                        "CanvasKit": {
+                          "MakeBlendMode": [MockFunction],
+                          "MakeCanvas": [MockFunction],
+                          "MakeColor": [MockFunction],
+                          "MakeColorFilter": [MockFunction],
+                          "MakeFont": [MockFunction],
+                          "MakeImage": [MockFunction],
+                          "MakeImageFilter": [MockFunction],
+                          "MakeManagedAnimation": [MockFunction],
+                          "MakeMatrix": [MockFunction],
+                          "MakePaint": [MockFunction],
+                          "MakePath": [MockFunction],
+                          "MakePicture": [MockFunction],
+                          "MakeRuntimeEffect": [MockFunction],
+                          "MakeShader": [MockFunction],
+                          "MakeSkottieAnimation": [MockFunction],
+                          "MakeTextBlob": [MockFunction],
+                          "MakeTypeface": [MockFunction],
+                          "MakeVertices": [MockFunction],
+                        },
+                        "__typename__": "Point",
+                        "dispose": [Function],
+                        "ref": Float32Array [
+                          0,
+                          0,
+                        ],
+                      }
+                    }
+                    mode="decal"
+                    positions={
+                      [
+                        0,
+                        0.2,
+                        0.4,
+                        0.6,
+                        0.8,
+                        0.9,
+                        1,
+                      ]
+                    }
+                    start={
+                      JsiSkPoint {
+                        "CanvasKit": {
+                          "MakeBlendMode": [MockFunction],
+                          "MakeCanvas": [MockFunction],
+                          "MakeColor": [MockFunction],
+                          "MakeColorFilter": [MockFunction],
+                          "MakeFont": [MockFunction],
+                          "MakeImage": [MockFunction],
+                          "MakeImageFilter": [MockFunction],
+                          "MakeManagedAnimation": [MockFunction],
+                          "MakeMatrix": [MockFunction],
+                          "MakePaint": [MockFunction],
+                          "MakePath": [MockFunction],
+                          "MakePicture": [MockFunction],
+                          "MakeRuntimeEffect": [MockFunction],
+                          "MakeShader": [MockFunction],
+                          "MakeSkottieAnimation": [MockFunction],
+                          "MakeTextBlob": [MockFunction],
+                          "MakeTypeface": [MockFunction],
+                          "MakeVertices": [MockFunction],
+                        },
+                        "__typename__": "Point",
+                        "dispose": [Function],
+                        "ref": Float32Array [
+                          -0,
+                          0,
+                        ],
+                      }
+                    }
+                  />
+                </skRect>
+              </skGroup>
+            </skGroup>
+            <skLayer>
+              <skPaint
+                blendMode="dstIn"
+              />
+              <skGroup>
+                <skLayer>
+                  <skPaint>
+                    <skMatrixColorFilter
+                      matrix={
+                        [
+                          1,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          1,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          1,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          1,
+                          0,
+                        ]
+                      }
+                    />
+                  </skPaint>
+                  <skGroup>
+                    <skRRect
+                      color="red"
+                      height={0}
+                      r={16}
+                      strokeJoin="round"
+                      strokeWidth={3}
+                      style="stroke"
+                      width={0}
+                      x={0}
+                      y={0}
+                    />
+                  </skGroup>
+                </skLayer>
+              </skGroup>
+            </skLayer>
+          </skGroup>
+        </skLayer>
+        <skGroup
+          blendMode="srcIn"
+        >
+          <skLayer>
+            <skPaint>
+              <skMatrixColorFilter
+                matrix={
+                  [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                  ]
+                }
+              />
+            </skPaint>
+            <skGroup>
+              <skRRect
+                color="red"
+                height={0}
+                r={16}
+                strokeJoin="round"
+                strokeWidth={3}
+                style="stroke"
+                width={0}
+                x={0}
+                y={0}
+              />
+            </skGroup>
+          </skLayer>
+        </skGroup>
+      </skGroup>
+    </View>
   </View>
 </View>
 `;
@@ -535,12 +1215,12 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "valid" 1`] 
   testID="itwWalletIdStatusTestID"
 >
   <View
+    onLayout={[Function]}
     style={
       [
         {
           "borderCurve": "continuous",
           "borderRadius": 16,
-          "borderWidth": 1,
           "gap": 6,
           "marginHorizontal": -8,
           "overflow": "hidden",
@@ -646,6 +1326,346 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "valid" 1`] 
           />
         </RNSVGGroup>
       </RNSVGSvgView>
+    </View>
+    <View
+      style={
+        {
+          "height": 0,
+          "position": "absolute",
+          "width": 0,
+        }
+      }
+    >
+      <skGroup
+        blendMode="colorBurn"
+        opacity={0}
+      >
+        <skGroup
+          blendMode="colorDodge"
+        >
+          <skRect
+            height={0}
+            transform={
+              {
+                "get": [Function],
+                "value": [
+                  {
+                    "translateY": undefined,
+                  },
+                ],
+              }
+            }
+            width={0}
+            x={0}
+            y={-0}
+          >
+            <skLinearGradient
+              colors={
+                [
+                  "rgba(255, 179, 87, 1)",
+                  "rgba(255, 234, 189, 1)",
+                  "rgba(25, 104, 240, 1)",
+                  "rgba(205, 210, 252, 1)",
+                  "rgba(255, 179, 87, 1)",
+                  "rgba(25, 104, 240, 1)",
+                  "rgba(220, 227, 252, 1)",
+                ]
+              }
+              end={
+                JsiSkPoint {
+                  "CanvasKit": {
+                    "MakeBlendMode": [MockFunction],
+                    "MakeCanvas": [MockFunction],
+                    "MakeColor": [MockFunction],
+                    "MakeColorFilter": [MockFunction],
+                    "MakeFont": [MockFunction],
+                    "MakeImage": [MockFunction],
+                    "MakeImageFilter": [MockFunction],
+                    "MakeManagedAnimation": [MockFunction],
+                    "MakeMatrix": [MockFunction],
+                    "MakePaint": [MockFunction],
+                    "MakePath": [MockFunction],
+                    "MakePicture": [MockFunction],
+                    "MakeRuntimeEffect": [MockFunction],
+                    "MakeShader": [MockFunction],
+                    "MakeSkottieAnimation": [MockFunction],
+                    "MakeTextBlob": [MockFunction],
+                    "MakeTypeface": [MockFunction],
+                    "MakeVertices": [MockFunction],
+                  },
+                  "__typename__": "Point",
+                  "dispose": [Function],
+                  "ref": Float32Array [
+                    0,
+                    0,
+                  ],
+                }
+              }
+              mode="decal"
+              positions={
+                [
+                  0,
+                  0.2,
+                  0.4,
+                  0.6,
+                  0.8,
+                  0.9,
+                  1,
+                ]
+              }
+              start={
+                JsiSkPoint {
+                  "CanvasKit": {
+                    "MakeBlendMode": [MockFunction],
+                    "MakeCanvas": [MockFunction],
+                    "MakeColor": [MockFunction],
+                    "MakeColorFilter": [MockFunction],
+                    "MakeFont": [MockFunction],
+                    "MakeImage": [MockFunction],
+                    "MakeImageFilter": [MockFunction],
+                    "MakeManagedAnimation": [MockFunction],
+                    "MakeMatrix": [MockFunction],
+                    "MakePaint": [MockFunction],
+                    "MakePath": [MockFunction],
+                    "MakePicture": [MockFunction],
+                    "MakeRuntimeEffect": [MockFunction],
+                    "MakeShader": [MockFunction],
+                    "MakeSkottieAnimation": [MockFunction],
+                    "MakeTextBlob": [MockFunction],
+                    "MakeTypeface": [MockFunction],
+                    "MakeVertices": [MockFunction],
+                  },
+                  "__typename__": "Point",
+                  "dispose": [Function],
+                  "ref": Float32Array [
+                    -0,
+                    0,
+                  ],
+                }
+              }
+            />
+          </skRect>
+        </skGroup>
+      </skGroup>
+      <skGroup
+        layer={true}
+      >
+        <skLayer>
+          <skPaint
+            blendMode="src"
+          />
+          <skGroup>
+            <skGroup
+              blendMode="colorDodge"
+              opacity={1}
+            >
+              <skGroup
+                blendMode="colorDodge"
+              >
+                <skRect
+                  height={0}
+                  transform={
+                    {
+                      "get": [Function],
+                      "value": [
+                        {
+                          "translateY": undefined,
+                        },
+                      ],
+                    }
+                  }
+                  width={0}
+                  x={0}
+                  y={-0}
+                >
+                  <skLinearGradient
+                    colors={
+                      [
+                        "rgba(255, 179, 87, 1)",
+                        "rgba(255, 234, 189, 1)",
+                        "rgba(25, 104, 240, 1)",
+                        "rgba(205, 210, 252, 1)",
+                        "rgba(255, 179, 87, 1)",
+                        "rgba(25, 104, 240, 1)",
+                        "rgba(220, 227, 252, 1)",
+                      ]
+                    }
+                    end={
+                      JsiSkPoint {
+                        "CanvasKit": {
+                          "MakeBlendMode": [MockFunction],
+                          "MakeCanvas": [MockFunction],
+                          "MakeColor": [MockFunction],
+                          "MakeColorFilter": [MockFunction],
+                          "MakeFont": [MockFunction],
+                          "MakeImage": [MockFunction],
+                          "MakeImageFilter": [MockFunction],
+                          "MakeManagedAnimation": [MockFunction],
+                          "MakeMatrix": [MockFunction],
+                          "MakePaint": [MockFunction],
+                          "MakePath": [MockFunction],
+                          "MakePicture": [MockFunction],
+                          "MakeRuntimeEffect": [MockFunction],
+                          "MakeShader": [MockFunction],
+                          "MakeSkottieAnimation": [MockFunction],
+                          "MakeTextBlob": [MockFunction],
+                          "MakeTypeface": [MockFunction],
+                          "MakeVertices": [MockFunction],
+                        },
+                        "__typename__": "Point",
+                        "dispose": [Function],
+                        "ref": Float32Array [
+                          0,
+                          0,
+                        ],
+                      }
+                    }
+                    mode="decal"
+                    positions={
+                      [
+                        0,
+                        0.2,
+                        0.4,
+                        0.6,
+                        0.8,
+                        0.9,
+                        1,
+                      ]
+                    }
+                    start={
+                      JsiSkPoint {
+                        "CanvasKit": {
+                          "MakeBlendMode": [MockFunction],
+                          "MakeCanvas": [MockFunction],
+                          "MakeColor": [MockFunction],
+                          "MakeColorFilter": [MockFunction],
+                          "MakeFont": [MockFunction],
+                          "MakeImage": [MockFunction],
+                          "MakeImageFilter": [MockFunction],
+                          "MakeManagedAnimation": [MockFunction],
+                          "MakeMatrix": [MockFunction],
+                          "MakePaint": [MockFunction],
+                          "MakePath": [MockFunction],
+                          "MakePicture": [MockFunction],
+                          "MakeRuntimeEffect": [MockFunction],
+                          "MakeShader": [MockFunction],
+                          "MakeSkottieAnimation": [MockFunction],
+                          "MakeTextBlob": [MockFunction],
+                          "MakeTypeface": [MockFunction],
+                          "MakeVertices": [MockFunction],
+                        },
+                        "__typename__": "Point",
+                        "dispose": [Function],
+                        "ref": Float32Array [
+                          -0,
+                          0,
+                        ],
+                      }
+                    }
+                  />
+                </skRect>
+              </skGroup>
+            </skGroup>
+            <skLayer>
+              <skPaint
+                blendMode="dstIn"
+              />
+              <skGroup>
+                <skLayer>
+                  <skPaint>
+                    <skMatrixColorFilter
+                      matrix={
+                        [
+                          1,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          1,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          1,
+                          0,
+                          0,
+                          0,
+                          0,
+                          0,
+                          1,
+                          0,
+                        ]
+                      }
+                    />
+                  </skPaint>
+                  <skGroup>
+                    <skRRect
+                      color="red"
+                      height={0}
+                      r={16}
+                      strokeJoin="round"
+                      strokeWidth={3}
+                      style="stroke"
+                      width={0}
+                      x={0}
+                      y={0}
+                    />
+                  </skGroup>
+                </skLayer>
+              </skGroup>
+            </skLayer>
+          </skGroup>
+        </skLayer>
+        <skGroup
+          blendMode="srcIn"
+        >
+          <skLayer>
+            <skPaint>
+              <skMatrixColorFilter
+                matrix={
+                  [
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                  ]
+                }
+              />
+            </skPaint>
+            <skGroup>
+              <skRRect
+                color="red"
+                height={0}
+                r={16}
+                strokeJoin="round"
+                strokeWidth={3}
+                style="stroke"
+                width={0}
+                x={0}
+                y={0}
+              />
+            </skGroup>
+          </skLayer>
+        </skGroup>
+      </skGroup>
     </View>
   </View>
 </View>

@@ -10,15 +10,12 @@ import { ScrollView } from "react-native";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
-import { ItwBannerSection } from "../components/ItwBannerSection";
-import { ItwClaimsListSection } from "../components/ItwClaimsListSection";
+import { ItwComponentsSection } from "../components/ItwComponentsSection";
 import { ItwEnvironmentSection } from "../components/ItwEnvironmentSection";
 import { ItwIdentificationScreensSection } from "../components/ItwIdentificationScreensSection";
 import { ItwL3ScreensSection } from "../components/ItwL3ScreensSection";
 import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
 import { ItwPidIssuanceSection } from "../components/ItwPidIssuanceSection";
-import { ItwSkeumorphicCredentialSection } from "../components/ItwSkeumorphicCredentialSection";
-import { ItwWalletIdStatusSection } from "../components/ItwWalletIdStatusSection";
 
 /**
  * ITW Playground screen
@@ -63,25 +60,14 @@ const ItwPlayground = () => {
               <ItwLifecycleSection />
             </>
           )}
-          {page === 1 && (
-            <>
-              <ItwPidIssuanceSection />
-            </>
-          )}
+          {page === 1 && <ItwPidIssuanceSection />}
           {page === 2 && (
             <>
               <ItwL3ScreensSection />
               <ItwIdentificationScreensSection />
             </>
           )}
-          {page === 3 && (
-            <>
-              <ItwWalletIdStatusSection />
-              <ItwSkeumorphicCredentialSection />
-              <ItwBannerSection />
-              <ItwClaimsListSection />
-            </>
-          )}
+          {page === 3 && <ItwComponentsSection />}
         </ContentWrapper>
       </ScrollView>
     </VStack>

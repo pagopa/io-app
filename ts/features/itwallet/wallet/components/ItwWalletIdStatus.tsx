@@ -6,12 +6,16 @@ import {
 } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
 import { constNull } from "fp-ts/lib/function";
-import { ComponentProps } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { ComponentProps, useState } from "react";
+import { LayoutChangeEvent, Pressable, StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 import BackgroundImageValid from "../../../../../img/features/itWallet/brand/itw_deck_status.svg";
 import BackgroundImageExpired from "../../../../../img/features/itWallet/brand/itw_deck_status_expired.svg";
 import ItWalletIdLogoImage from "../../../../../img/features/itWallet/brand/itw_id_logo.svg";
+import {
+  ItwIridescentBorder,
+  ItwIridescentBorderVariant
+} from "../../common/components/ItwIridescentBorder";
 import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils";
 import { useItWalletTheme } from "../../common/utils/theme";
 
@@ -51,8 +55,27 @@ export const ItwWalletIdStatus = ({
   const { onPressIn, onPressOut, scaleAnimatedStyle } =
     useScaleAnimation("slight");
 
+  const [size, setSize] = useState<{ width: number; height: number }>({
+    width: 0,
+    height: 0
+  });
+
   const BackgroundImage =
     pidStatus !== "jwtExpired" ? BackgroundImageValid : BackgroundImageExpired;
+
+  const handleOnLayout = (event: LayoutChangeEvent) => {
+    const { width, height } = event.nativeEvent.layout;
+    setSize({ width, height });
+  };
+
+  const borderVariantByPidStatus: Record<
+    ItwJwtCredentialStatus,
+    ItwIridescentBorderVariant
+  > = {
+    valid: "default",
+    jwtExpiring: "warning",
+    jwtExpired: "error"
+  };
 
   return (
     <Pressable
@@ -64,6 +87,7 @@ export const ItwWalletIdStatus = ({
       accessibilityRole="button"
     >
       <Animated.View
+        onLayout={handleOnLayout}
         style={[
           styles.container,
           scaleAnimatedStyle,
@@ -112,6 +136,13 @@ export const ItwWalletIdStatus = ({
             <IOButton variant="link" label="Inizia" onPress={constNull} />
           </View>
         )}
+
+        {/* Iridescent border with giroscope  */}
+        <ItwIridescentBorder
+          width={size.width}
+          height={size.height}
+          variant={borderVariantByPidStatus[pidStatus]}
+        />
       </Animated.View>
     </Pressable>
   );
@@ -120,10 +151,9 @@ export const ItwWalletIdStatus = ({
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: -8,
-    padding: 16,
-    borderWidth: 1,
     borderRadius: 16,
     borderCurve: "continuous",
+    padding: 16,
     gap: 6,
     overflow: "hidden"
   },
