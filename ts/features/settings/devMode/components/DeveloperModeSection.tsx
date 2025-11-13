@@ -403,7 +403,9 @@ const PlaygroundsSection = () => {
         })
     },
     {
-      value: "Active session login playground",
+      value: I18n.t(
+        "profile.main.loginEnvironment.activeSession.playground.title"
+      ),
       onPress: () => {
         dispatch(setStartActiveSessionLogin());
         navigation.navigate(SETTINGS_ROUTES.AUTHENTICATION, {
@@ -515,15 +517,21 @@ const DeveloperTestEnvironmentSection = ({
   const onActiveSessionLoginToggle = (enabled: boolean) => {
     if (enabled) {
       Alert.alert(
-        "Attenzione",
-        "Per testare questa funzionalità dovrai chiudere e riaprire l'applicazione",
+        I18n.t(
+          "profile.main.loginEnvironment.activeSession.localFeatureFlag.alertTitle"
+        ),
+        I18n.t(
+          "profile.main.loginEnvironment.activeSession.localFeatureFlag.alertMessage"
+        ),
         [
           {
             text: I18n.t("global.buttons.cancel"),
             style: "cancel"
           },
           {
-            text: "Prosegui",
+            text: I18n.t(
+              "profile.main.loginEnvironment.activeSession.localFeatureFlag.alertConfirmButton"
+            ),
             onPress: () => dispatch(setActiveSessionLoginLocalFlag(enabled))
           }
         ],
@@ -556,7 +564,12 @@ const DeveloperTestEnvironmentSection = ({
       onSwitchValueChange: onIdPayTestToggle
     },
     {
-      label: I18n.t("profile.main.loginEnvironment.activeSession.switchTitle"),
+      label: I18n.t(
+        "profile.main.loginEnvironment.activeSession.localFeatureFlag.switchTitle"
+      ),
+      description: I18n.t(
+        "profile.main.loginEnvironment.activeSession.localFeatureFlag.switchDescription"
+      ),
       value: isActiveSessionLoginLocallyEnabled,
       onSwitchValueChange: onActiveSessionLoginToggle
     }

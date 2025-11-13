@@ -631,7 +631,16 @@
       },
       "loginEnvironment": {
         "activeSession": {
-          "switchTitle": "Login a sessione attiva"
+          "localFeatureFlag": {
+            "switchTitle": "Login a sessione attiva",
+            "switchDescription": "La modifica richiede il riavvio dell'app",
+            "alertTitle": "Attenzione",
+            "alertMessage": "Per testare questa funzionalità dovrai chiudere e riaprire l'applicazione",
+            "alertConfirmButton": "Prosegui"
+          },
+          "playground": {
+            "title": "Login a sessione attiva playground"
+          }
         }
       },
       "trial": {
