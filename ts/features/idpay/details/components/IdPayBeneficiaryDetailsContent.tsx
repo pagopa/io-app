@@ -90,11 +90,11 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
     );
   }, [dispatch, initiativeDetails]);
 
-  const { bottomSheet, present } = useIDPayStaticCodeModal(
-    initiativeDetails?.initiativeId ?? "",
-    initiativeDetails?.initiativeName ?? "",
-    handleDismiss
-  );
+  const { bottomSheet, present } = useIDPayStaticCodeModal({
+    initiativeId: initiativeDetails?.initiativeId ?? "",
+    initiativeName: initiativeDetails?.initiativeName ?? "",
+    onDismiss: handleDismiss
+  });
 
   if (isLoading) {
     return <BeneficiaryDetailsContentSkeleton />;

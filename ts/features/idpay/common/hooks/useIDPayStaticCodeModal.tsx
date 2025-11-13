@@ -32,21 +32,27 @@ import {
   trackIDPayStaticCodeGenerationSuccess
 } from "../analytics";
 
+type Props = {
+  initiativeId: string;
+  initiativeName: string;
+  onDismiss: () => void;
+};
+
 type IDPayFailureSupportModal = {
   bottomSheet: JSX.Element;
   present: () => void;
 };
 
 export const useIDPayStaticCodeModal = (
-  initiativeId: string,
-  initiativeName: string,
-  onDismiss: () => void
+  props: Props
 ): IDPayFailureSupportModal => {
   const barcodePot = useIOSelector(idPayStaticCodeByInitiativeIdSelector)(
-    initiativeId
+    props.initiativeId
   );
 
   const isLoading = pot.isLoading(barcodePot);
+
+  const { initiativeId, initiativeName, onDismiss } = props;
 
   const IconPlaceholder = () => (
     <>
