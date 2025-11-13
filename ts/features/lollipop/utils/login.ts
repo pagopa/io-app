@@ -31,7 +31,7 @@ export const lollipopSamlVerify = (
     const decodedSamlRequest = decodeURIComponent(urlEncodedSamlRequest);
     // Result is a base64 encoded string, so decode it to obtain the (server) original XML
     const xmlSamlRequest = pako.inflateRaw(
-      Buffer.from(decodedSamlRequest, "base64"),
+      new Uint8Array(Buffer.from(decodedSamlRequest, "base64")),
       {
         to: "string"
       }
