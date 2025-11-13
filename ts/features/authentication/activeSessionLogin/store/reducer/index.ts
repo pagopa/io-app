@@ -20,7 +20,11 @@ import { SpidIdp } from "../../../../../utils/idps";
 import { SessionToken } from "../../../../../types/SessionToken";
 import { StandardLoginRequestInfo } from "../../../login/idp/store/types";
 import { isTestEnv } from "../../../../../utils/environment";
-import { sessionCorrupted } from "../../../common/store/actions";
+import {
+  sessionCorrupted,
+  logoutSuccess,
+  logoutFailure
+} from "../../../common/store/actions";
 
 export type ActiveSessionLoginState = {
   activeSessionLoginLocalFlag: boolean;
@@ -131,6 +135,8 @@ const activeSessionLoginReducer = (
     case getType(consolidateActiveSessionLoginData):
     case getType(setLoggedOutUserWithDifferentCF):
     case getType(sessionCorrupted):
+    case getType(logoutSuccess):
+    case getType(logoutFailure):
       return activeSessionLoginInitialState;
     default:
       return state;
