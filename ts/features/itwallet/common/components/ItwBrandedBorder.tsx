@@ -6,11 +6,9 @@ import {
   Mask,
   OpacityMatrix,
   Paint,
-  Rect,
   RoundedRect,
   Circle as SkiaCircle,
   Group as SkiaGroup,
-  LinearGradient as SkiaLinearGradient,
   RadialGradient as SkiaRadialGradient,
   vec
 } from "@shopify/react-native-skia";
@@ -24,11 +22,7 @@ import {
   useDerivedValue,
   useSharedValue
 } from "react-native-reanimated";
-import {
-  ITW_BRAND_GRADIENT,
-  ITW_BRAND_GRADIENT_ERROR,
-  ITW_BRAND_GRADIENT_WARNING
-} from "../utils/theme";
+import { ItwSkiaBrandedGradient } from "./ItwSkiaBrandedGradient";
 
 export type ItwIridescentBorderVariant = "default" | "warning" | "error";
 
@@ -104,48 +98,6 @@ export const ItwBrandedBorder = ({
     return [{ translateX }, { scale: lightScaleMultiplier }];
   });
 
-  const skiaGradientTranslateY = useDerivedValue(() => [
-    {
-      translateY: interpolate(
-        relativeRoll.value,
-        [-quaternionRange, quaternionRange],
-        [-height, height],
-        Extrapolation.CLAMP
-      )
-    }
-  ]);
-
-  /* Makes gradient slightly bigger to handle animation overflow */
-  const gradientX = -width * 0.3;
-  const gradientY = -height;
-  const gradientHeight = height * 3;
-
-  const gradientByVariant = {
-    default: ITW_BRAND_GRADIENT,
-    warning: ITW_BRAND_GRADIENT_WARNING,
-    error: ITW_BRAND_GRADIENT_ERROR
-  };
-
-  const BrandedGradient = () => (
-    <SkiaGroup blendMode={"colorDodge"}>
-      <Rect
-        x={0}
-        y={gradientY}
-        width={width}
-        height={gradientHeight}
-        transform={skiaGradientTranslateY}
-      >
-        <SkiaLinearGradient
-          mode="decal"
-          start={vec(gradientX, 0)}
-          end={vec(width, width)}
-          colors={gradientByVariant[variant]}
-          positions={[0, 0.2, 0.4, 0.6, 0.8, 0.9, 1]}
-        />
-      </Rect>
-    </SkiaGroup>
-  );
-
   const BoxLight = () => (
     <SkiaGroup opacity={lightSkiaOpacity} origin={vec(width / 2, height / 2)}>
       <SkiaCircle
@@ -196,14 +148,22 @@ export const ItwBrandedBorder = ({
       <BoxLight />
 
       <SkiaGroup blendMode={"colorBurn"} opacity={0.05}>
-        <BrandedGradient />
+        <ItwSkiaBrandedGradient
+          width={width}
+          height={height}
+          variant={variant}
+        />
       </SkiaGroup>
 
       <Mask
         mode="alpha"
         mask={
           <SkiaGroup blendMode={"colorDodge"} opacity={gradientBorderOpacity}>
-            <BrandedGradient />
+            <ItwSkiaBrandedGradient
+              width={width}
+              height={height}
+              variant={variant}
+            />
           </SkiaGroup>
         }
       >
