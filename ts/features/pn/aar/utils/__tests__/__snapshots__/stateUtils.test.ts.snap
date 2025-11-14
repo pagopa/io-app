@@ -48,8 +48,8 @@ Map {
     "creatingMandate",
   },
   "creatingMandate" => Set {
+    "cieCanAdvisory",
     "ko",
-    "displayingNotificationData",
   },
   "cieCanAdvisory" => Set {
     "cieCanInsertion",
@@ -68,7 +68,11 @@ Map {
   },
   "cieScanning" => Set {
     "cieScanningAdvisory",
-    "creatingMandate",
+    "validatingMandate",
+  },
+  "validatingMandate" => Set {
+    "ko",
+    "displayingNotificationData",
   },
 }
 `;
