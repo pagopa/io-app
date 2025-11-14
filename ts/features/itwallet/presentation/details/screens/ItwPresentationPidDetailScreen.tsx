@@ -1,14 +1,23 @@
 import { ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
+import { Canvas } from "@shopify/react-native-skia";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useCallback } from "react";
+import { useWindowDimensions } from "react-native";
 import { useIOSelector } from "../../../../../store/hooks";
 import {
   mapPIDStatusToMixpanel,
   trackCredentialDetail
 } from "../../../analytics";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import {
+  ItwBrandedSkiaGradient,
+  ItwSkiaBrandedGradientVariant
+} from "../../../common/components/ItwBrandedSkiaGradient";
+import {
+  ItwJwtCredentialStatus,
+  StoredCredential
+} from "../../../common/utils/itwTypesUtils";
 import {
   itwCredentialsEidSelector,
   itwCredentialsEidStatusSelector
@@ -35,8 +44,13 @@ export const ItwPresentationPidDetailScreen = () => {
 
   const getContent = (credential: StoredCredential) => (
     <ItwPresentationDetailsScreenBase credential={credential}>
+      {/* Header with logo and description */}
       <ItwPresentationPidDetailHeader />
-      {/** TODO: [SIW-3307] Add IT-Wallet gradient line  */}
+
+      {/* Brand gradient below header */}
+      <PidStatusGradient />
+
+      {/* Page content */}
       <ContentWrapper>
         <VSpacer size={16} />
         <ItwPresentationPidDetail credential={credential} />
@@ -47,4 +61,28 @@ export const ItwPresentationPidDetailScreen = () => {
   );
 
   return pipe(pidOption, O.fold(constNull, getContent));
+};
+
+const PidStatusGradient = () => {
+  const { width } = useWindowDimensions();
+  const pidStatus = useIOSelector(itwCredentialsEidStatusSelector);
+
+  const borderVariantByPidStatus: Record<
+    ItwJwtCredentialStatus,
+    ItwSkiaBrandedGradientVariant
+  > = {
+    valid: "default",
+    jwtExpiring: "warning",
+    jwtExpired: "error"
+  };
+
+  return (
+    <Canvas style={{ width, height: 3 }}>
+      <ItwBrandedSkiaGradient
+        width={width}
+        height={3}
+        variant={borderVariantByPidStatus[pidStatus || "valid"]}
+      />
+    </Canvas>
+  );
 };

@@ -25,13 +25,12 @@ import {
 } from "react-native-reanimated";
 import { useItWalletTheme } from "../utils/theme";
 import { ItwBranderSkiaBorder } from "./ItwBrandedSkiaBorder";
-
-export type ItwIridescentBorderVariant = "default" | "warning" | "error";
+import { ItwSkiaBrandedGradientVariant } from "./ItwBrandedSkiaGradient";
 
 type ItwIridescentBorderProps = {
   width: LayoutRectangle["width"];
   height: LayoutRectangle["height"];
-  variant?: ItwIridescentBorderVariant;
+  variant?: ItwSkiaBrandedGradientVariant;
   borderThickness?: number;
   cornerRadius?: number;
 };
