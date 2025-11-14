@@ -4,12 +4,10 @@ import { isLoggedIn } from "../features/authentication/common/store/utils/guards
 import { storeLinkingUrl } from "../features/linking/actions";
 import { resetMessageArchivingAction } from "../features/messages/store/actions/archiving";
 import { isArchivingDisabledSelector } from "../features/messages/store/reducers/archiving";
-import {
-  isSendAARLink,
-  navigateToSendAarFlowIfEnabled
-} from "../features/pn/aar/utils/deepLinking";
+import { isSendAARLink } from "../features/pn/aar/utils/deepLinking";
 import { processUtmLink } from "../features/utmLink";
 import { GlobalState } from "../store/reducers/types";
+import { tryInitiateAarFlow } from "../features/pn/aar/store/actions";
 
 export const linkingSubscription =
   (dispatch: Dispatch<Action>, store: Store<Readonly<GlobalState>>) =>
@@ -29,7 +27,7 @@ export const linkingSubscription =
       if (isLoggedIn(state.authentication)) {
         // only when logged in we can navigate to the AAR screen.
         if (isSendAARLink(state, url)) {
-          navigateToSendAarFlowIfEnabled(state, url, dispatch);
+          dispatch(tryInitiateAarFlow({ aarUrl: url }));
         }
       } else {
         // If we are not logged in, we store the URL to be processed later

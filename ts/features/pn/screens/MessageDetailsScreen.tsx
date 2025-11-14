@@ -1,6 +1,7 @@
 import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
+import _ from "lodash";
 import { RefObject, useCallback, useEffect, useRef } from "react";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
@@ -29,6 +30,7 @@ import {
 } from "../aar/analytics";
 import { SendAARMessageDetailBottomSheetComponent } from "../aar/components/SendAARMessageDetailBottomSheetComponent";
 import { terminateAarFlow } from "../aar/store/actions";
+import { sendAARFlowStates } from "../aar/utils/stateUtils";
 import { trackPNUxSuccess } from "../analytics";
 import { MessageDetails } from "../components/MessageDetails";
 import { PnParamsList } from "../navigation/params";
@@ -164,7 +166,12 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
       dispatch(cancelQueuedPaymentUpdates({ messageId }));
       dispatch(cancelPNPaymentStatusTracking({ messageId }));
       if (isAarMessage) {
-        dispatch(terminateAarFlow({ messageId }));
+        dispatch(
+          terminateAarFlow({
+            messageId,
+            currentFlowState: sendAARFlowStates.displayingNotificationData
+          })
+        );
       }
     };
   }, [dispatch, isAarMessage, messageId, sendOpeningSource, sendUserType]);

@@ -3,7 +3,7 @@ import { ActionType, createStandardAction } from "typesafe-actions";
 import { MessageBodyMarkdown } from "../../../../../../definitions/backend/MessageBodyMarkdown";
 import { MessageSubject } from "../../../../../../definitions/backend/MessageSubject";
 import { ThirdPartyMessage } from "../../../../../../definitions/pn/aar/ThirdPartyMessage";
-import { AARFlowState } from "../../utils/stateUtils";
+import { AARFlowState, AARFlowStateName } from "../../utils/stateUtils";
 
 export type EphemeralAarMessageDataActionPayload = {
   iun: NonEmptyString;
@@ -16,7 +16,15 @@ export type EphemeralAarMessageDataActionPayload = {
 };
 export type TerminateAarFlowPayload = {
   messageId?: string;
+  currentFlowState?: AARFlowStateName;
 };
+export type InitiateAarFlowPayload = {
+  aarUrl: string;
+};
+
+export const tryInitiateAarFlow = createStandardAction(
+  "TRY_INITIATE_AAR_FLOW"
+)<InitiateAarFlowPayload>();
 
 export const setAarFlowState =
   createStandardAction("SET_AAR_FLOW_STATE")<AARFlowState>();
@@ -32,4 +40,5 @@ export type AARFlowStateActions = ActionType<
   | typeof setAarFlowState
   | typeof terminateAarFlow
   | typeof populateStoresWithEphemeralAarMessageData
+  | typeof tryInitiateAarFlow
 >;

@@ -3,10 +3,15 @@ import { apiUrlPrefix } from "../../../../config";
 import { SessionToken } from "../../../../types/SessionToken";
 import { KeyInfo } from "../../../lollipop/utils/crypto";
 import { SendAARClient, createSendAARClientWithLollipop } from "../api/client";
-import { setAarFlowState, terminateAarFlow } from "../store/actions";
+import {
+  tryInitiateAarFlow,
+  setAarFlowState,
+  terminateAarFlow
+} from "../store/actions";
 import { sendAARFlowStates } from "../utils/stateUtils";
 import { fetchAarDataSaga } from "./fetchNotificationDataSaga";
 import { fetchAARQrCodeSaga } from "./fetchQrCodeSaga";
+import { initiateAarFlowIfEnabled } from "./InitiateAarFlowIfEnabledSaga";
 
 export function* aarFlowMasterSaga(
   sendAARClient: SendAARClient,
@@ -47,4 +52,5 @@ export function* watchAarFlowSaga(
     sendAARClient,
     sessionToken
   );
+  yield* takeLatest(tryInitiateAarFlow, initiateAarFlowIfEnabled);
 }
