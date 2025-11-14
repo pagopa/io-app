@@ -156,7 +156,9 @@ export const ItwIdentificationModeSelectionScreen = ({
             name: ROUTES.MAIN,
             params: {
               screen: ROUTES.WALLET_HOME,
-              params: { requiredEidFeedback: isBottomSheetForQuitReissuingSurveyVisible }
+              params: {
+                requiredEidFeedback: isBottomSheetForQuitReissuingSurveyVisible
+              }
             }
           }
         ]
