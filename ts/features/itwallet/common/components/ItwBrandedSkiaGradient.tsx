@@ -106,7 +106,7 @@ export const ItwBrandedSkiaGradient = ({
       <SkiaLinearGradient
         mode="mirror"
         start={vec(gradientX, 0)}
-        end={vec(width, width)}
+        end={vec(width / 3, width)}
         colors={gradientByVariant[variant]}
       />
     </Rect>

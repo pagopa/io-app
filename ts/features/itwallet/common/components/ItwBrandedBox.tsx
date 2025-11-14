@@ -42,7 +42,7 @@ const lightSize: LayoutRectangle["width"] = 250;
 const visibleLightPercentage = 0.25; // Visible light when it's near box boundaries
 
 /**
- * Renders a branded iridescent border using Skia and device rotation sensor data
+ * Renders a box with IT-Wallet branded animated border and light effect.
  */
 export const ItwBrandedBox = ({
   borderThickness = 3,
