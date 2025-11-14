@@ -29,8 +29,6 @@ import { ItwBranderSkiaBorder } from "./ItwBrandedSkiaBorder";
 export type ItwIridescentBorderVariant = "default" | "warning" | "error";
 
 type ItwIridescentBorderProps = {
-  width: LayoutRectangle["width"];
-  height: LayoutRectangle["height"];
   variant?: ItwIridescentBorderVariant;
   borderThickness?: number;
   cornerRadius?: number;
@@ -157,8 +155,7 @@ export const ItwBrandedBox = ({
       style={[
         styles.container,
         {
-          backgroundColor: theme["banner-background"],
-          borderColor: theme["banner-border"]
+          backgroundColor: theme["banner-background"]
         }
       ]}
     >

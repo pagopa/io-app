@@ -34,8 +34,7 @@ const themeKeys = [
   // Screens
   "header-background",
   // Banners
-  "banner-background",
-  "banner-border"
+  "banner-background"
 ] as const;
 
 export type ItWalletTheme = {
@@ -44,13 +43,11 @@ export type ItWalletTheme = {
 
 const itWalletLightTheme: ItWalletTheme = {
   "banner-background": "#F2F9FF",
-  "banner-border": "#DCE3FC",
   "header-background": "#F2F9FF"
 };
 
 const itWalletDarkTheme: ItWalletTheme = {
   "banner-background": "#0F2433",
-  "banner-border": "#142C3C",
   "header-background": "#0F2433"
 };
 
@@ -59,6 +56,9 @@ const ItWalletThemes = {
   dark: itWalletDarkTheme
 };
 
+/**
+ * Returns IT-Wallet specific theme colors based on the current app theme (light/dark).
+ */
 export const useItWalletTheme = () => {
   const { themeType } = useIOThemeContext();
   return ItWalletThemes[themeType ?? "light"];

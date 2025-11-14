@@ -55,7 +55,7 @@ export const ItwBrandedSkiaGradient = ({
   /* Makes gradient slightly bigger to handle animation overflow */
   const gradientX = -width * 0.2;
   const gradientY = -height;
-  const gradientWidth = width * 1.5;
+  const gradientWidth = width * 2;
   const gradientHeight = height * 3;
 
   useAnimatedReaction(
