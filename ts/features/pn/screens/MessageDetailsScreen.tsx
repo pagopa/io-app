@@ -18,7 +18,15 @@ import {
   cancelQueuedPaymentUpdates,
   updatePaymentForMessage
 } from "../../messages/store/actions";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../pushNotifications/analytics";
 import { profileFiscalCodeSelector } from "../../settings/common/store/selectors";
+import {
+  trackSendAARFailure,
+  trackSendAarNotificationClosure
+} from "../aar/analytics";
 import { SendAARMessageDetailBottomSheetComponent } from "../aar/components/SendAARMessageDetailBottomSheetComponent";
 import { terminateAarFlow } from "../aar/store/actions";
 import { trackPNUxSuccess } from "../analytics";
@@ -38,14 +46,6 @@ import {
   openingSourceIsAarMessage,
   paymentsFromSendMessage
 } from "../utils";
-import {
-  trackSendAARFailure,
-  trackSendAarNotificationClosure
-} from "../aar/analytics";
-import {
-  SendOpeningSource,
-  SendUserType
-} from "../../pushNotifications/analytics";
 
 export type MessageDetailsScreenRouteParams = {
   messageId: string;
@@ -162,7 +162,7 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
     return () => {
       dispatch(cancelPreviousAttachmentDownload());
       dispatch(cancelQueuedPaymentUpdates({ messageId }));
-      dispatch(cancelPNPaymentStatusTracking());
+      dispatch(cancelPNPaymentStatusTracking({ messageId }));
       if (isAarMessage) {
         dispatch(terminateAarFlow({ messageId }));
       }

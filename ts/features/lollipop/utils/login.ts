@@ -29,12 +29,13 @@ export const lollipopSamlVerify = (
   // SAMLRequest is URL encoded, so decode it
   try {
     const decodedSamlRequest = decodeURIComponent(urlEncodedSamlRequest);
-    const buffer = Buffer.from(decodedSamlRequest, "base64");
-    const uint8Array = new Uint8Array(buffer);
     // Result is a base64 encoded string, so decode it to obtain the (server) original XML
-    const xmlSamlRequest = pako.inflateRaw(uint8Array, {
-      to: "string"
-    });
+    const xmlSamlRequest = pako.inflateRaw(
+      new Uint8Array(Buffer.from(decodedSamlRequest, "base64")),
+      {
+        to: "string"
+      }
+    );
 
     // Convert XML to Json (in order not to include a XML Parser library)
     parseStringPromise(xmlSamlRequest)
