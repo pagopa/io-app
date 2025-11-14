@@ -1,12 +1,12 @@
 import { call, delay, race, select, take } from "typed-redux-saga/macro";
-import { ActionType } from "typesafe-actions";
+import { ActionType, isActionOf } from "typesafe-actions";
 import {
   cancelPNPaymentStatusTracking,
   startPNPaymentStatusTracking
 } from "../actions";
-import { maxVisiblePaymentCount, paymentsFromPNMessagePot } from "../../utils";
+import { maxVisiblePaymentCount, paymentsFromSendMessage } from "../../utils";
 import { profileFiscalCodeSelector } from "../../../settings/common/store/selectors";
-import { pnMessageFromIdSelector } from "../reducers";
+import { sendMessageFromIdSelector } from "../reducers";
 import { trackPNPaymentStatus } from "../../analytics";
 import { getRptIdStringFromPayment } from "../../utils/rptId";
 import { paymentStatisticsForMessageUncachedSelector } from "../../../messages/store/reducers/payments";
@@ -15,6 +15,7 @@ import {
   SendOpeningSource,
   SendUserType
 } from "../../../pushNotifications/analytics";
+import { Action } from "../../../../store/actions/types";
 
 /**
  * This saga is used to track a mixpanel event which is a report of
@@ -27,12 +28,12 @@ export function* watchPaymentStatusForMixpanelTracking(
 ) {
   const { openingSource, userType, messageId } = action.payload;
   const currentFiscalCode = yield* select(profileFiscalCodeSelector);
-  const message = yield* select(pnMessageFromIdSelector, messageId);
+  const message = yield* select(sendMessageFromIdSelector, messageId);
 
   const fiscalCodeOrUndefined =
     openingSource === "message" ? currentFiscalCode : undefined;
   const payments = yield* call(
-    paymentsFromPNMessagePot,
+    paymentsFromSendMessage,
     fiscalCodeOrUndefined,
     message
   );
@@ -51,7 +52,11 @@ export function* watchPaymentStatusForMixpanelTracking(
       paymentCount,
       visibleRPTIds
     ),
-    cancelAction: take(cancelPNPaymentStatusTracking)
+    cancelAction: take(
+      (actionParam: Action) =>
+        isActionOf(cancelPNPaymentStatusTracking, actionParam) &&
+        actionParam.payload.messageId === messageId
+    )
   });
 }
 

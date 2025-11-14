@@ -5,8 +5,8 @@ import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { ID_CDC_TYPE } from "../../../../common/utils";
-import { CDC_ROUTES } from "../../../navigation/routes";
 import CdcBonusRequestInformationTos from "../CdcBonusRequestInformationTos";
+import { CDC_ROUTES } from "../../../common/navigation/routes";
 
 const renderComponent = (state: GlobalState) => {
   const store = createStore(appReducer, state as any);

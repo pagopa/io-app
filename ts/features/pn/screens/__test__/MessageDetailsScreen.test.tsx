@@ -66,9 +66,8 @@ describe("MessageDetailsScreen", () => {
   // eslint-disable-next-line sonarjs/cognitive-complexity
   sendOpeningSources.forEach(sendOpeningSource => {
     sendUserTypes.forEach(sendUserType => {
-      const isAarMessage = sendOpeningSource === "aar";
       it(`should match the snapshot when there is an error${
-        isAarMessage ? " and dispatch trackSendAARFailure" : ""
+        sendOpeningSource === "aar" ? " and dispatch trackSendAARFailure" : ""
       } (opening source ${sendOpeningSource}, user type ${sendUserType})`, () => {
         const spiedOnMockedTrackSendAARFailure = jest
           .spyOn(AAR_ANALYTICS, "trackSendAARFailure")
@@ -102,7 +101,7 @@ describe("MessageDetailsScreen", () => {
         );
         expect(component).toMatchSnapshot();
 
-        if (isAarMessage) {
+        if (sendOpeningSource === "aar") {
           expect(spiedOnMockedTrackSendAARFailure.mock.calls.length).toBe(1);
           expect(spiedOnMockedTrackSendAARFailure.mock.calls[0].length).toBe(2);
           expect(spiedOnMockedTrackSendAARFailure.mock.calls[0][0]).toBe(
@@ -173,38 +172,21 @@ describe("MessageDetailsScreen", () => {
                     ]
                   : []
               } as unknown as PNMessage;
-              [
-                pot.none,
-                pot.noneLoading,
-                pot.noneUpdating(O.none),
-                pot.noneError(Error()),
-                pot.some(O.none),
-                pot.some(O.some(sendMessage)),
-                pot.someLoading(O.none),
-                pot.someLoading(O.some(sendMessage)),
-                pot.someUpdating(O.none, O.some(sendMessage)),
-                pot.someUpdating(O.some(sendMessage), O.none),
-                pot.someError(O.none, Error()),
-                pot.someError(O.some(sendMessage), Error())
-              ].forEach(messagePot =>
+              [undefined, sendMessage].forEach(sendMessageOrUndefined =>
                 [false, true].forEach(isDelegate => {
-                  const isSomePot = pot.isSome(messagePot);
-                  const isSomeOption =
-                    isSomePot && O.isSome(pot.getOrElse(messagePot, O.none));
-                  const potOptionDescription = isSomePot
-                    ? `pot ${messagePot.kind} option ${
-                        isSomeOption ? "some" : "none"
-                      }`
-                    : `pot ${messagePot.kind}`;
                   it(`should ${
-                    messagePot.kind === "PotSome" ? "" : "not "
-                  }call 'trackPNUxSuccess' with proper parameters (${potOptionDescription} opening source ${sendOpeningSource} user type ${sendUserType} firstTimeOpening ${firstTimeOpening} paymentCount ${paymentCount} isCancelled ${isCancelled} containsF24 ${containsF24} isDelegate ${isDelegate})`, () => {
+                    sendMessageOrUndefined != null ? "" : "not "
+                  }call 'trackPNUxSuccess' with proper parameters (message ${
+                    sendMessageOrUndefined != null ? "defined" : "undefined"
+                  } opening source ${sendOpeningSource} user type ${sendUserType} firstTimeOpening ${firstTimeOpening} paymentCount ${paymentCount} isCancelled ${isCancelled} containsF24 ${containsF24} isDelegate ${isDelegate})`, () => {
                     jest
                       .spyOn(commonSelectors, "profileFiscalCodeSelector")
                       .mockImplementation(_state => fakeProfileFiscalCode);
                     jest
-                      .spyOn(REDUCERS, "pnMessageFromIdSelector")
-                      .mockImplementation((_state, _id) => messagePot);
+                      .spyOn(REDUCERS, "sendMessageFromIdSelector")
+                      .mockImplementation(
+                        (_state, _id) => sendMessageOrUndefined
+                      );
                     const spiedOnMockedTrackPNExSuccess = jest
                       .spyOn(SEND_ANALYTICS, "trackPNUxSuccess")
                       .mockImplementation();
@@ -223,7 +205,7 @@ describe("MessageDetailsScreen", () => {
                       sendUserType
                     );
 
-                    if (messagePot.kind === "PotSome") {
+                    if (sendMessageOrUndefined != null) {
                       expect(
                         spiedOnMockedTrackPNExSuccess.mock.calls.length
                       ).toBe(1);
@@ -232,16 +214,16 @@ describe("MessageDetailsScreen", () => {
                       ).toBe(6);
                       expect(
                         spiedOnMockedTrackPNExSuccess.mock.calls[0][0]
-                      ).toBe(isSomeOption ? paymentCount : 0);
+                      ).toBe(paymentCount);
                       expect(
                         spiedOnMockedTrackPNExSuccess.mock.calls[0][1]
                       ).toBe(firstTimeOpening);
                       expect(
                         spiedOnMockedTrackPNExSuccess.mock.calls[0][2]
-                      ).toBe(isSomeOption ? isCancelled : false);
+                      ).toBe(isCancelled);
                       expect(
                         spiedOnMockedTrackPNExSuccess.mock.calls[0][3]
-                      ).toBe(isSomeOption ? containsF24 : false);
+                      ).toBe(containsF24);
                       expect(
                         spiedOnMockedTrackPNExSuccess.mock.calls[0][4]
                       ).toBe(sendOpeningSource);
@@ -277,9 +259,10 @@ describe("MessageDetailsScreen", () => {
               }
             },
             pn: {
-              aarFlow: isAarMessage
-                ? sendAarMockStateFactory.displayingNotificationData()
-                : sendAarMockStateFactory.none()
+              aarFlow:
+                sendOpeningSource === "aar"
+                  ? sendAarMockStateFactory.displayingNotificationData()
+                  : sendAarMockStateFactory.none()
             }
           },
           remoteConfig: O.none,
@@ -302,7 +285,7 @@ describe("MessageDetailsScreen", () => {
       });
 
       it(`should ${
-        isAarMessage ? "" : "not "
+        sendOpeningSource === "aar" ? "" : "not "
       }call trackSendAarNotificationClosure with proper parameters upon pressing the android back button (opening source ${sendOpeningSource}, user type ${sendUserType})`, () => {
         const baseState = appReducer(
           undefined,
@@ -319,14 +302,13 @@ describe("MessageDetailsScreen", () => {
           recipients: [],
           subject: "A subject"
         } as unknown as PNMessage;
-        const sendMessagePotOption = pot.some(O.some(sendMessage));
 
         jest
           .spyOn(commonSelectors, "profileFiscalCodeSelector")
           .mockImplementation(_state => "XXXYYY99Z88W777I");
         jest
-          .spyOn(REDUCERS, "pnMessageFromIdSelector")
-          .mockImplementation((_state, _id) => sendMessagePotOption);
+          .spyOn(REDUCERS, "sendMessageFromIdSelector")
+          .mockImplementation((_state, _id) => sendMessage);
         const spiedOnMockedTrackSendAARNotificationClosure = jest
           .spyOn(AAR_ANALYTICS, "trackSendAarNotificationClosure")
           .mockImplementation();
@@ -347,7 +329,7 @@ describe("MessageDetailsScreen", () => {
         expect(typeof useHardwareBackButtonCallback).toBe("function");
         const result = useHardwareBackButtonCallback();
 
-        if (isAarMessage) {
+        if (sendOpeningSource === "aar") {
           expect(
             spiedOnMockedTrackSendAARNotificationClosure.mock.calls.length
           ).toBe(1);
@@ -367,7 +349,7 @@ describe("MessageDetailsScreen", () => {
       });
 
       it(`should ${
-        isAarMessage ? "" : "not "
+        sendOpeningSource === "aar" ? "" : "not "
       }call trackSendAarNotificationClosure with proper parameters upon pressing the header's close button (opening source ${sendOpeningSource}, user type ${sendUserType})`, () => {
         const baseState = appReducer(
           undefined,
@@ -384,14 +366,13 @@ describe("MessageDetailsScreen", () => {
           recipients: [],
           subject: "A subject"
         } as unknown as PNMessage;
-        const sendMessagePotOption = pot.some(O.some(sendMessage));
 
         jest
           .spyOn(commonSelectors, "profileFiscalCodeSelector")
           .mockImplementation(_state => "XXXYYY99Z88W777I");
         jest
-          .spyOn(REDUCERS, "pnMessageFromIdSelector")
-          .mockImplementation((_state, _id) => sendMessagePotOption);
+          .spyOn(REDUCERS, "sendMessageFromIdSelector")
+          .mockImplementation((_state, _id) => sendMessage);
         const spiedOnMockedTrackSendAARNotificationClosure = jest
           .spyOn(AAR_ANALYTICS, "trackSendAarNotificationClosure")
           .mockImplementation();
@@ -403,7 +384,7 @@ describe("MessageDetailsScreen", () => {
           sendUserType
         );
 
-        if (isAarMessage) {
+        if (sendOpeningSource === "aar") {
           const headerCloseButton = component.getByTestId("AAR_close_button");
           fireEvent.press(headerCloseButton);
 

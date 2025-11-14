@@ -1,4 +1,3 @@
-import * as O from "fp-ts/Option";
 import _ from "lodash";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -8,7 +7,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWr
 import { thirdPartyMessage } from "../../__mocks__/pnMessage";
 import { aarAdresseeDenominationSelector } from "../../aar/store/selectors";
 import PN_ROUTES from "../../navigation/routes";
-import { toPNMessage } from "../../store/types/transformers";
+import { toSENDMessage } from "../../store/types/transformers";
 import {
   MessageDetailsContent,
   MessageDetailsContentProps,
@@ -24,7 +23,7 @@ jest.mock("../../aar/store/selectors", () => ({
   isAarMessageDelegatedSelector: jest.fn().mockReturnValue(true)
 }));
 
-const mockMessage = O.toUndefined(toPNMessage(thirdPartyMessage))!;
+const mockMessage = toSENDMessage(thirdPartyMessage)!;
 const mockMessageWithoutDenomination = _.omit(
   mockMessage,
   "senderDenomination"

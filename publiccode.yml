@@ -9,7 +9,7 @@ releaseDate: "2024-11-21"
 url: "https://github.com/pagopa/io-app"
 applicationSuite: IO
 landingURL: "https://ioapp.it/"
-softwareVersion: 3.19.0-rc.4
+softwareVersion: 3.20.0-rc.2
 developmentStatus: beta
 softwareType: standalone/mobile
 roadmap: "https://ioapp.it/"
