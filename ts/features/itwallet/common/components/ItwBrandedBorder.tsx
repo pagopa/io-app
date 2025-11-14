@@ -3,7 +3,6 @@ import { useIOThemeContext } from "@pagopa/io-app-design-system";
 import {
   Canvas,
   ColorMatrix,
-  Group,
   Mask,
   OpacityMatrix,
   Paint,
@@ -208,7 +207,7 @@ export const ItwBrandedBorder = ({
           </SkiaGroup>
         }
       >
-        <Group
+        <SkiaGroup
           layer={
             <Paint>
               <ColorMatrix matrix={OpacityMatrix(gradientTickOpacity)} />
@@ -225,7 +224,7 @@ export const ItwBrandedBorder = ({
             strokeJoin={"round"}
             style={"stroke"}
           />
-        </Group>
+        </SkiaGroup>
       </Mask>
     </Canvas>
   );

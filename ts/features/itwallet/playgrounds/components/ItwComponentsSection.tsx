@@ -6,13 +6,16 @@ import {
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
+import { Canvas } from "@shopify/react-native-skia";
 import I18n from "i18next";
 import { useState } from "react";
-import { View } from "react-native";
+import { useWindowDimensions, View } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { DSComponentViewerBox } from "../../../design-system/components/DSComponentViewerBox";
 import { ItwHighlightBanner } from "../../common/components/ItwHighlightBanner";
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
+import { ItwSkiaBrandedGradient } from "../../common/components/ItwSkiaBrandedGradient";
 import { getCredentialStatusObject } from "../../common/utils/itwCredentialStatusUtils";
 import { ItwStoredCredentialsMocks } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
@@ -20,6 +23,41 @@ import { ItwRequestedClaimsList } from "../../issuance/components/ItwRequestedCl
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwPresentationCredentialCardFlipButton } from "../../presentation/details/components/ItwPresentationCredentialCardFlipButton";
 import { ItwWalletIdStatus } from "../../wallet/components/ItwWalletIdStatus";
+
+const ItwWalletBrandSection = () => {
+  const { width } = useWindowDimensions();
+  const marginHorizontal = 24;
+  return (
+    <View
+      style={{
+        marginHorizontal: -marginHorizontal,
+        paddingHorizontal: marginHorizontal,
+        paddingBottom: 24
+      }}
+    >
+      <ListItemHeader label="IT-Wallet Gradient" />
+      <VStack space={8}>
+        {["default", "warning", "error"].map(variant => (
+          <DSComponentViewerBox
+            key={`itwallet-gradient-${variant}`}
+            name={variant}
+          >
+            <Canvas
+              key={variant}
+              style={{ width: width - marginHorizontal * 2, height: 100 }}
+            >
+              <ItwSkiaBrandedGradient
+                width={width - marginHorizontal * 2}
+                height={100}
+                variant={variant as any}
+              />
+            </Canvas>
+          </DSComponentViewerBox>
+        ))}
+      </VStack>
+    </View>
+  );
+};
 
 const ItwWalletIdStatusSection = () => (
   <View
@@ -207,6 +245,7 @@ export const ItwClaimsListSection = () => {
 
 export const ItwComponentsSection = () => (
   <>
+    <ItwWalletBrandSection />
     <ItwWalletIdStatusSection />
     <ItwSkeumorphicCredentialSection />
     <ItwBannerSection />
