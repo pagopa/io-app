@@ -21,8 +21,8 @@ import { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
 import {
   trackSendActivationModalDialog,
-  trackSendActivationModalDialogActivationStart,
-  trackSendActivationModalDialogActivationDismissed
+  trackSendActivationModalDialogActivationDismissed,
+  trackSendActivationModalDialogActivationStart
 } from "../../analytics/send";
 
 const flow: NotificationModalFlow = "send_notification_opening";
@@ -39,6 +39,7 @@ type SendEngagementScreenProps = IOStackNavigationRouteProps<
 
 export const SendEngagementScreen = ({ route }: SendEngagementScreenProps) => {
   const { sendOpeningSource, sendUserType } = route.params;
+
   const [screenStatus, setScreenStatus] = useState<
     "Waiting" | "Activating" | "Failed"
   >("Waiting");
@@ -76,7 +77,11 @@ export const SendEngagementScreen = ({ route }: SendEngagementScreenProps) => {
 
   const onActivateService = useCallback(
     (isRetry: boolean = false) => {
-      trackSendActivationModalDialogActivationStart(flow, sendUserType);
+      trackSendActivationModalDialogActivationStart(
+        flow,
+        sendOpeningSource,
+        sendUserType
+      );
       if (isRetry) {
         navigation.setOptions({
           headerShown: true
@@ -94,29 +99,34 @@ export const SendEngagementScreen = ({ route }: SendEngagementScreenProps) => {
     [
       dispatch,
       navigation,
-      sendUserType,
       onSENDActivationFailed,
-      onSENDActivationSucceeded
+      onSENDActivationSucceeded,
+      sendOpeningSource,
+      sendUserType
     ]
   );
   const onClose = useCallback(() => {
     if (screenStatus !== "Activating") {
-      trackSendActivationModalDialogActivationDismissed(flow, sendUserType);
+      trackSendActivationModalDialogActivationDismissed(
+        flow,
+        sendOpeningSource,
+        sendUserType
+      );
       navigation.popToTop();
     }
-  }, [navigation, screenStatus, sendUserType]);
+  }, [navigation, screenStatus, sendOpeningSource, sendUserType]);
 
   useEffect(() => {
     if (screenStatus === "Waiting") {
       // Make sure that nothing sets screenStatus to Waiting,
       // otherwise there will be a double event tracking
-      trackSendActivationModalDialog(flow, sendUserType);
+      trackSendActivationModalDialog(flow, sendOpeningSource, sendUserType);
     } else if (screenStatus === "Failed") {
       // Here multiple tracking is fine, since we want
       // to track it every time that the user retries it
       sendBannerMixpanelEvents.bannerKO("aar");
     }
-  }, [screenStatus, sendUserType]);
+  }, [screenStatus, sendOpeningSource, sendUserType]);
 
   if (screenStatus === "Failed") {
     return (

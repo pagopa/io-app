@@ -63,7 +63,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		015E4FBE7D1D4C2485C73321 /* TitilliumSansPro-SemiboldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumSansPro-SemiboldItalic.otf"; path = "../assets/fonts/TitilliumSansPro/TitilliumSansPro-SemiboldItalic.otf"; sourceTree = "<group>"; };
 		094EE36E37734495BB363E62 /* Titillio-ExtraboldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Titillio-ExtraboldItalic.otf"; path = "../assets/fonts/Titillio/Titillio-ExtraboldItalic.otf"; sourceTree = "<group>"; };
 		132CADD7BDBB46C7AB1DC348 /* TitilliumSansPro-BlackItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumSansPro-BlackItalic.otf"; path = "../assets/fonts/TitilliumSansPro/TitilliumSansPro-BlackItalic.otf"; sourceTree = "<group>"; };
@@ -116,7 +115,7 @@
 		F2B1630C2B753C9D00F6E487 /* TitilliumSansPro-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "TitilliumSansPro-Bold.otf"; path = "../assets/fonts/TitilliumSansPro/TitilliumSansPro-Bold.otf"; sourceTree = "<group>"; };
 		F6095D182BC6E01F000EA253 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = ItaliaApp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		F820513E31C7443CB7F5A99E /* TitilliumSansPro-ThinItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumSansPro-ThinItalic.otf"; path = "../assets/fonts/TitilliumSansPro/TitilliumSansPro-ThinItalic.otf"; sourceTree = "<group>"; };
-		F9BF48C6EC30493DBDB754CA /* FiraCode-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraCode-Medium.ttf"; path = "../assets/fonts/FiraCode/FiraCode-Medium.ttf"; sourceTree = "<group>"; };
+		F9BF48C6EC30493DBDB754CA /* FiraCode-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "FiraCode-Medium.ttf"; path = "../assets/fonts/FiraCode/FiraCode-Medium.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,7 +146,6 @@
 				F6095D182BC6E01F000EA253 /* PrivacyInfo.xcprivacy */,
 				7A83F0572152B12C000C6389 /* ItaliaApp.entitlements */,
 				133638FC213D788900B0C079 /* InfoPlist.strings */,
-				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				F09FEB0D231818E3007071DB /* Localizable.strings */,
@@ -283,15 +281,10 @@
 				LastUpgradeCheck = 1160;
 				ORGANIZATIONNAME = "";
 				TargetAttributes = {
-					00E356ED1AD99517003FC87E = {
-						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = M2X5YQ4BJ7;
-						TestTargetID = 13B07F861A680F5B00A75B9A;
-					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = M2X5YQ4BJ7;
 						LastSwiftMigration = 1160;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -571,9 +564,9 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				ENABLE_BITCODE = NO;
@@ -591,8 +584,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = it.pagopa.app.io;
 				PRODUCT_NAME = IO;
-				PROVISIONING_PROFILE = "0848c226-68ec-4314-ad27-50803db95257";
-				PROVISIONING_PROFILE_SPECIFIER = "match Development it.pagopa.app.io";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ItaliaApp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.2;
@@ -609,9 +601,9 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				ENABLE_BITCODE = NO;
@@ -629,8 +621,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = it.pagopa.app.io;
 				PRODUCT_NAME = IO;
-				PROVISIONING_PROFILE = "0848c226-68ec-4314-ad27-50803db95257";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore it.pagopa.app.io";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ItaliaApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.2;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -852,12 +843,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = M2X5YQ4BJ7;
+				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ItaliaApp/Info.plist;
@@ -873,9 +862,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = it.pagopa.app.io.canary;
 				PRODUCT_NAME = IO;
-				PROVISIONING_PROFILE = "0848c226-68ec-4314-ad27-50803db95257";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore it.pagopa.app.io.canary";
 				SWIFT_OBJC_BRIDGING_HEADER = "ItaliaApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.2;
 				VERSIONING_SYSTEM = "apple-generic";

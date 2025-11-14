@@ -10,7 +10,6 @@ import I18n from "i18next";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import { WalletApplicationStatusEnum } from "../../../../../definitions/pagopa/walletv3/WalletApplicationStatus";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
-import { PaymentSupportStatus } from "../../../../types/paymentMethodCapabilities";
 import { getDateFromExpiryDate, isExpiredDate } from "../../../../utils/dates";
 import { WalletPaymentPspSortType } from "../../checkout/types";
 import { PaymentCardProps } from "../components/PaymentCard";
@@ -22,7 +21,7 @@ import { contentRepoUrl } from "../../../../config";
 import { LevelEnum } from "../../../../../definitions/content/SectionStatus";
 import { AlertVariant, ListItemTransactionStatus } from "./types";
 
-export const TRANSACTION_LOGO_CDN = `${contentRepoUrl}/logos/organizations`;
+const TRANSACTION_LOGO_CDN = `${contentRepoUrl}/logos/organizations`;
 
 /**
  * A simple function to get the corresponding translated badge text,
@@ -83,7 +82,7 @@ export const isPaymentMethodExpired = (
  * @param paymentMethod
  * @param walletFunction
  */
-export const hasApplicationEnabled = (
+const hasApplicationEnabled = (
   paymentMethod: WalletInfo | undefined,
   walletApplication: string
 ): boolean =>
@@ -98,37 +97,6 @@ export const hasApplicationEnabled = (
  */
 export const hasPaymentFeature = (paymentMethod: WalletInfo): boolean =>
   hasApplicationEnabled(paymentMethod, "PAGOPA");
-
-/**
- * Check if a payment method is supported or not
- * If the payment method have the enableable function pagoPA, can always pay ("available")
- * "available" -> can pay
- * "arriving" -> will pay
- * "notAvailable" -> can't pay
- * "onboardableNotImplemented" -> can onboard a card that can pay but is not yet implemented
- */
-export const isPaymentSupported = (
-  paymentMethod: WalletInfo
-): PaymentSupportStatus => {
-  const paymentSupported: O.Option<PaymentSupportStatus> = hasPaymentFeature(
-    paymentMethod
-  )
-    ? O.some("available")
-    : O.none;
-
-  const notAvailableCustomRepresentation = O.some(
-    "notAvailable" as PaymentSupportStatus
-  );
-
-  return pipe(
-    paymentSupported,
-    O.alt(() => notAvailableCustomRepresentation),
-    O.getOrElseW(() => "notAvailable" as const)
-  );
-};
-
-export const WALLET_PAYMENT_TERMS_AND_CONDITIONS_URL =
-  "https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/";
 
 /**
  * Function that returns a sorted list of psp based on the given sortType

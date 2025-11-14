@@ -2950,7 +2950,13 @@
           "a11y": {
             "title": "Featured Services"
           },
-          "title": "Featured"
+          "title": "Featured",
+          "error": {
+            "banner": {
+              "label": "We couldn't load the list of featured services",
+              "cta": "Try again"
+            }
+          }
         },
         "institutions": {
           "title": "Featured Institutions"
@@ -3764,10 +3770,18 @@
       }
     },
     "cdc": {
+      "wallet": {
+        "card": {
+          "title": "Cultura Card",
+          "organization": "Ministry of Culture",
+          "validThrough": "Valid through {{endDate}}"
+        }
+      },
       "serviceEntryPoint": {
         "notAvailable": "The service is not available at this time. Try later."
       },
-      "request": "Request Carta della Cultura"
+      "request": "Request Carta della Cultura",
+      "usage": "Use Carta della Cultura"
     }
   },
   "features": {
@@ -4511,15 +4525,6 @@
             "action": "Inizia"
           }
         },
-        "title": "La versione digitale dei tuoi documenti, su IO",
-        "content": "Aggiungi la versione digitale dei tuoi documenti personali al Portafoglio dell'app! \n\n Hanno lo **stesso valore legale** di quelli fisici, in specifici contesti d'uso. \n\n ###### È facile e veloce \n Continua per attivare la nuova funzionalità in meno di 3 minuti: oltre **6 Milioni** di persone stanno già usando i **Documenti su IO**!",
-        "tos": "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d’uso]({{tos_url}}).",
-        "dismissalDialog": {
-          "title": "Vuoi rinunciare ai documenti digitali su IO?",
-          "body": "Potrai attivarli in qualsiasi altro momento, se cambi idea.",
-          "confirm": "Si, rinuncia",
-          "cancel": "No, torna indietro"
-        },
         "upcomingWalletBanner": {
           "title": "Novità in arrivo: i tuoi Documenti su IO",
           "content": "Presto potrai aggiungere anche tu le versioni digitali dei tuoi documenti personali, come Patente e Tessera Sanitaria, al tuo Portafoglio di IO!",
@@ -4540,44 +4545,6 @@
               "continue": "Scopri di più",
               "cancel": "Chiudi"
             }
-          }
-        },
-        "paywall": {
-          "badge": "Novità",
-          "description": "L'unico portafoglio digitale di Stato: pubblico, sicuro, gratuito.",
-          "featureHighlights": {
-            "1": "Usi la tua Patente su IO come documento di riconoscimento",
-            "2": "Ti basta il tuo telefono per dimostrare la tua identità",
-            "3": "Hai tutto ciò che ti serve anche se lasci a casa il portafoglio",
-            "4": "I nuovi documenti digitali ufficiali, solo sull’app IO",
-            "5": "Accedi in pochi tocchi ai servizi digitali della PA"
-          },
-          "productHighlights": {
-            "1": {
-              "title": "Facile, sicuro, ufficiale",
-              "content": "Ottienilo con la tua **Carta di Identità Elettronica (CIE)** e il suo **PIN per associarlo alla tua identità**.\n\n\nIT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantenerli al sicuro."
-            },
-            "2": {
-              "title": "Nuovi documenti in arrivo",
-              "content": "Titoli di studio, attestati di residenza e altri: potrai aggiungere all’app IO nuovi documenti ufficiali."
-            },
-            "3": {
-              "title": "Tutto nelle tue mani",
-              "content": "Con IT-Wallet mostri il codice QR della tua Patente digitale: chi verifica non dovrà tenere in mano il tuo dispositivo."
-            },
-            "4": {
-              "title": "Progettato con l'Europa",
-              "content": "IT-Wallet si integrerà al Portafoglio Digitale Europeo: potrai usare i tuoi documenti con pieno valore legale in tutta Europa."
-            }
-          },
-          "tos": "Premendo **Ottieni IT-Wallet** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d’uso]({{tos_url}})",
-          "anchorAction": "Scopri tutti i vantaggi",
-          "primaryAction": "Ottieni IT-Wallet",
-          "dismissalDialog": {
-            "title": "Vuoi rinunciare ai vantaggi di IT-Wallet?",
-            "body": "Potrai ottenere IT-Wallet in qualsiasi altro momento, se cambi idea.",
-            "confirm": "Sì, rinuncia",
-            "cancel": "No, continua"
           }
         },
         "ipzsPrivacy": {
@@ -4602,27 +4569,6 @@
           },
           "primaryAction": "Apri impostazioni",
           "secondaryAction": "Continua"
-        },
-        "mode": {
-          "l2": {
-            "title": "Verifica la tua identità",
-            "description": "È un passaggio di sicurezza necessario per aggiungere i tuoi documenti digitali su IO.",
-            "header": "Scegli come identificarti",
-            "method": {
-              "spid": {
-                "title": "Usa SPID",
-                "subtitle": "Necessarie credenziali e app (o SMS)"
-              },
-              "ciePin": {
-                "title": "Usa CIE + PIN",
-                "subtitle": "Usa la Carta di Identità Elettronica e il suo PIN a 8 cifre"
-              },
-              "cieId": {
-                "title": "Usa l'app CieID",
-                "subtitle": "Necessarie credenziali e app CieID"
-              }
-            }
-          }
         },
         "cie": {
           "inputPin": {
@@ -5629,7 +5575,12 @@
       "initiativeOnboardedStatus": {
         "header": "My requests",
         "ON_WAITING_LIST": {
-          "label": "On waiting list"
+          "label": "On waiting list",
+          "accessibilityInfoLabel": "Info button",
+          "bottomSheet": {
+            "title": "On waiting list",
+            "content": "Your request for {{initiativeName}} has been placed on **waiting list**, as there are currently no funds available.\n\n\n###### ***What happens now?***\n\nYou don’t need to do anything: your request remains valid. You will receive a message with the outcome as soon as new resources become available.\n\n\n###### ***Have you enabled notifications?***\n\nIf you haven’t already, enable push notifications to not miss any messages.\n[Read how to do it](https://assistenza.ioapp.it/hc/it/articles/39312288127377-Come-attivare-le-notifiche-push-su-IO)"
+          }
         },
         "ON_EVALUATION": {
           "label": "On evaluation"

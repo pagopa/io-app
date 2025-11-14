@@ -1,8 +1,4 @@
-import { ParamListBase } from "@react-navigation/native";
-import {
-  createStackNavigator,
-  StackNavigationProp
-} from "@react-navigation/stack";
+import { createStackNavigator } from "@react-navigation/stack";
 import { isGestureEnabled } from "../../../../utils/navigation";
 import { PaymentsOnboardingFeedbackScreen } from "../screens/PaymentsOnboardingFeedbackScreen";
 import { PaymentsOnboardingSelectMethodScreen } from "../screens/PaymentsOnboardingSelectMethodScreen";
@@ -30,14 +26,3 @@ export const PaymentsOnboardingNavigator = () => (
     />
   </Stack.Navigator>
 );
-
-export type PaymentsOnboardingStackNavigationProp<
-  ParamList extends ParamListBase,
-  RouteName extends keyof ParamList = string
-> = StackNavigationProp<PaymentsOnboardingParamsList & ParamList, RouteName>;
-
-export type PaymentsOnboardingStackNavigation =
-  PaymentsOnboardingStackNavigationProp<
-    PaymentsOnboardingParamsList,
-    keyof PaymentsOnboardingParamsList
-  >;

@@ -54,7 +54,7 @@ type PaymentsOnboardingFeedbackScreenRouteProps = RouteProp<
   "PAYMENT_ONBOARDING_RESULT_FEEDBACK"
 >;
 
-export const pictogramByOutcome: Record<
+const pictogramByOutcome: Record<
   WalletOnboardingOutcome,
   IOPictograms | IOAnimatedPictograms
 > = {
