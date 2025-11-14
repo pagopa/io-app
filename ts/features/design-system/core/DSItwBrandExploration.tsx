@@ -104,8 +104,8 @@ const Card = ({ color, index, scrollOffset, totalCards }: CardProps) => {
   /* VISUAL PARAMETERS */
   /* The horizontal and vertical offset (in px) between successive cards,
   used to create a staggered stacking effect and simulate depth. */
-  const staggeredCardOffsetX = 35;
-  const staggeredCardOffsetY = 25;
+  const staggeredCardOffset =
+    Platform.OS === "android" ? { x: 32, y: 14 } : { x: 35, y: 25 };
 
   /* Number of pixels required to move the animated wave crest by one card. */
   const pixelsPerCard = 55;
@@ -128,7 +128,7 @@ const Card = ({ color, index, scrollOffset, totalCards }: CardProps) => {
 
   /* Derived parameters */
   const center = totalCards / 2;
-  const baseY = index * staggeredCardOffsetY;
+  const baseY = index * staggeredCardOffset.y;
 
   const animatedStyle = useAnimatedStyle(() => {
     const curvePeakPos = center + scrollOffset.value / pixelsPerCard;
@@ -141,11 +141,19 @@ const Card = ({ color, index, scrollOffset, totalCards }: CardProps) => {
     value because the card needs to move up, not down. */
     const animatedWaveY = -curveAmplitude * curveFunction;
 
+    /*  Android and iOS render the 'skew' property differently,
+    so we need to differentiate the parameters based on the
+    operating system. */
+    const depthEffect =
+      Platform.OS === "android"
+        ? [{ perspective: 750 }, { rotateY: "-45deg" }]
+        : [{ skewY: "-15deg" }];
+
     return {
       zIndex: index + 1,
       transform: [
-        { skewY: "-15deg" },
-        { translateX: index * staggeredCardOffsetX },
+        ...depthEffect,
+        { translateX: index * staggeredCardOffset.x },
         { translateY: withSpring(baseY + animatedWaveY, cardSpringConf) }
       ]
     };
@@ -171,7 +179,7 @@ const styles = StyleSheet.create({
   },
   cardsContainer: {
     position: "relative",
-    top: Platform.OS === "android" ? "50%" : "55%",
+    top: "55%",
     left: "-25%"
   },
   card: {
