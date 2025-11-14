@@ -2,17 +2,18 @@
 import { useIOThemeContext } from "@pagopa/io-app-design-system";
 import {
   Canvas,
-  ColorMatrix,
-  Mask,
-  OpacityMatrix,
-  Paint,
-  RoundedRect,
   Circle as SkiaCircle,
   Group as SkiaGroup,
   RadialGradient as SkiaRadialGradient,
   vec
 } from "@shopify/react-native-skia";
-import { LayoutRectangle } from "react-native";
+import { PropsWithChildren, useState } from "react";
+import {
+  LayoutChangeEvent,
+  LayoutRectangle,
+  StyleSheet,
+  View
+} from "react-native";
 import {
   Extrapolation,
   interpolate,
@@ -22,7 +23,8 @@ import {
   useDerivedValue,
   useSharedValue
 } from "react-native-reanimated";
-import { ItwSkiaBrandedGradient } from "./ItwSkiaBrandedGradient";
+import { useItWalletTheme } from "../utils/theme";
+import { ItwBranderSkiaBorder } from "./ItwBrandedSkiaBorder";
 
 export type ItwIridescentBorderVariant = "default" | "warning" | "error";
 
@@ -30,7 +32,7 @@ type ItwIridescentBorderProps = {
   width: LayoutRectangle["width"];
   height: LayoutRectangle["height"];
   variant?: ItwIridescentBorderVariant;
-  thickness?: number;
+  borderThickness?: number;
   cornerRadius?: number;
 };
 
@@ -42,20 +44,23 @@ const visibleLightPercentage = 0.25; // Visible light when it's near box boundar
 /**
  * Renders a branded iridescent border using Skia and device rotation sensor data
  */
-export const ItwBrandedBorder = ({
-  width,
-  height,
-  thickness = 3,
+export const ItwBrandedBox = ({
+  borderThickness = 3,
   cornerRadius = 16,
-  variant = "default"
-}: ItwIridescentBorderProps) => {
+  variant = "default",
+  children
+}: PropsWithChildren<ItwIridescentBorderProps>) => {
+  const theme = useItWalletTheme();
   const { themeType } = useIOThemeContext();
   const isLightMode = themeType === "light";
 
+  const [size, setSize] = useState<{ width: number; height: number }>({
+    width: 0,
+    height: 0
+  });
+
   /* Styles */
-  const gradientTickOpacity = isLightMode ? 1 : 0.8;
   const lightSkiaOpacity = isLightMode ? 0.4 : 0.05;
-  const gradientBorderOpacity = isLightMode ? 1.0 : 0.5;
 
   /* Sensors */
   const rotationSensor = useAnimatedSensor(SensorType.ROTATION);
@@ -81,7 +86,8 @@ export const ItwBrandedBorder = ({
   );
 
   /* Set translate boundaries for the main light */
-  const maxTranslateX = (width - (lightSize ?? 0) * visibleLightPercentage) / 2;
+  const maxTranslateX =
+    (size.width - (lightSize ?? 0) * visibleLightPercentage) / 2;
 
   /* We don't need to look at the whole quaternion range,
       just a very small part of it. */
@@ -98,16 +104,19 @@ export const ItwBrandedBorder = ({
     return [{ translateX }, { scale: lightScaleMultiplier }];
   });
 
-  const BoxLight = () => (
-    <SkiaGroup opacity={lightSkiaOpacity} origin={vec(width / 2, height / 2)}>
+  const SkiaLight = () => (
+    <SkiaGroup
+      opacity={lightSkiaOpacity}
+      origin={vec(size.width / 2, size.height / 2)}
+    >
       <SkiaCircle
-        cx={(width ?? 0) / 2}
-        cy={(height ?? 0) / 2}
+        cx={(size.width ?? 0) / 2}
+        cy={(size.height ?? 0) / 2}
         r={lightSize / 2}
         transform={skiaLightTranslateX}
       >
         <SkiaRadialGradient
-          c={vec((width ?? 0) / 2, (height ?? 0) / 2)}
+          c={vec((size.width ?? 0) / 2, (size.height ?? 0) / 2)}
           r={lightSize / 2}
           /* There are many stops because it's an easing gradient. */
           positions={[
@@ -137,55 +146,55 @@ export const ItwBrandedBorder = ({
     </SkiaGroup>
   );
 
+  const handleOnLayout = (event: LayoutChangeEvent) => {
+    const { width, height } = event.nativeEvent.layout;
+    setSize({ width, height });
+  };
+
   return (
-    <Canvas
-      style={{
-        position: "absolute",
-        height,
-        width
-      }}
-    >
-      <BoxLight />
-
-      <SkiaGroup blendMode={"colorBurn"} opacity={0.05}>
-        <ItwSkiaBrandedGradient
-          width={width}
-          height={height}
-          variant={variant}
-        />
-      </SkiaGroup>
-
-      <Mask
-        mode="alpha"
-        mask={
-          <SkiaGroup blendMode={"colorDodge"} opacity={gradientBorderOpacity}>
-            <ItwSkiaBrandedGradient
-              width={width}
-              height={height}
-              variant={variant}
-            />
-          </SkiaGroup>
+    <View
+      onLayout={handleOnLayout}
+      style={[
+        styles.container,
+        {
+          backgroundColor: theme["banner-background"],
+          borderColor: theme["banner-border"]
         }
+      ]}
+    >
+      {/* Box content */}
+      {children}
+
+      {/* Skia Canvas for border and light effect */}
+      <Canvas
+        style={{
+          position: "absolute",
+          height: size.height,
+          width: size.width
+        }}
       >
-        <SkiaGroup
-          layer={
-            <Paint>
-              <ColorMatrix matrix={OpacityMatrix(gradientTickOpacity)} />
-            </Paint>
-          }
-        >
-          <RoundedRect
-            x={0}
-            y={0}
-            width={width}
-            height={height}
-            r={cornerRadius}
-            strokeWidth={thickness}
-            strokeJoin={"round"}
-            style={"stroke"}
-          />
-        </SkiaGroup>
-      </Mask>
-    </Canvas>
+        {/* Animated light effect */}
+        <SkiaLight />
+
+        {/* Animated gradient border */}
+        <ItwBranderSkiaBorder
+          width={size.width}
+          height={size.height}
+          variant={variant}
+          thickness={borderThickness}
+          cornerRadius={cornerRadius}
+        />
+      </Canvas>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    borderRadius: 16,
+    borderCurve: "continuous",
+    padding: 16,
+    gap: 6,
+    overflow: "hidden"
+  }
+});

@@ -12,10 +12,10 @@ import { useState } from "react";
 import { useWindowDimensions, View } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { DSComponentViewerBox } from "../../../design-system/components/DSComponentViewerBox";
+import { ItwBrandedSkiaGradient } from "../../common/components/ItwBrandedSkiaGradient";
 import { ItwHighlightBanner } from "../../common/components/ItwHighlightBanner";
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
-import { ItwSkiaBrandedGradient } from "../../common/components/ItwSkiaBrandedGradient";
 import { getCredentialStatusObject } from "../../common/utils/itwCredentialStatusUtils";
 import { ItwStoredCredentialsMocks } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
@@ -46,7 +46,7 @@ const ItwWalletBrandSection = () => {
               key={variant}
               style={{ width: width - marginHorizontal * 2, height: 100 }}
             >
-              <ItwSkiaBrandedGradient
+              <ItwBrandedSkiaGradient
                 width={width - marginHorizontal * 2}
                 height={100}
                 variant={variant as any}

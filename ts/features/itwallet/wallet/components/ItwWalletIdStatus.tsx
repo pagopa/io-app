@@ -13,11 +13,10 @@ import BackgroundImageValid from "../../../../../img/features/itWallet/brand/itw
 import BackgroundImageExpired from "../../../../../img/features/itWallet/brand/itw_deck_status_expired.svg";
 import ItWalletIdLogoImage from "../../../../../img/features/itWallet/brand/itw_id_logo.svg";
 import {
-  ItwBrandedBorder,
+  ItwBrandedBox,
   ItwIridescentBorderVariant
-} from "../../common/components/ItwBrandedBorder";
+} from "../../common/components/ItwBrandedBox";
 import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils";
-import { useItWalletTheme } from "../../common/utils/theme";
 
 type ItwWalletIdStatusProps = {
   pidStatus?: ItwJwtCredentialStatus;
@@ -51,7 +50,6 @@ export const ItwWalletIdStatus = ({
   pidStatus = "valid",
   pidExpiration
 }: ItwWalletIdStatusProps) => {
-  const theme = useItWalletTheme();
   const { onPressIn, onPressOut, scaleAnimatedStyle } =
     useScaleAnimation("slight");
 
@@ -88,61 +86,54 @@ export const ItwWalletIdStatus = ({
     >
       <Animated.View
         onLayout={handleOnLayout}
-        style={[
-          styles.container,
-          scaleAnimatedStyle,
-          {
-            backgroundColor: theme["banner-background"],
-            borderColor: theme["banner-border"]
-          }
-        ]}
+        style={[styles.container, scaleAnimatedStyle]}
       >
-        {/* Background Image  */}
-        <BackgroundImage
-          style={[
-            styles.backgroundImage,
-            pidStatus === "valid"
-              ? styles.backgroundImageStickyTop
-              : styles.backgroundImageStickyBottom
-          ]}
-          width={72}
-          height={100}
-        />
-
-        {/* Header  */}
-        <View style={styles.header}>
-          <ItWalletIdLogoImage width={103} height={24} />
-          <Icon size={16} {...statusIconPropsByPidStatus[pidStatus]} />
-        </View>
-
-        {/* Content  */}
-        {pidStatus === "jwtExpiring" && (
-          <Body style={styles.content}>
-            Conferma la tua identità entro il{" "}
-            <Body weight="Semibold">
-              {format(pidExpiration || "", "DD/MM/YYYY")}
-            </Body>
-          </Body>
-        )}
-        {pidStatus === "jwtExpired" && (
-          <Body style={styles.content}>
-            Conferma la tua identità per continuare con i tuoi documenti
-          </Body>
-        )}
-
-        {/* Optional Action Button  */}
-        {pidStatus === "jwtExpired" && (
-          <View pointerEvents="none">
-            <IOButton variant="link" label="Inizia" onPress={constNull} />
-          </View>
-        )}
-
-        {/* Iridescent border with giroscope  */}
-        <ItwBrandedBorder
+        {/* Branded Box with animated border and light effect */}
+        <ItwBrandedBox
           width={size.width}
           height={size.height}
           variant={borderVariantByPidStatus[pidStatus]}
-        />
+        >
+          {/* Background Image  */}
+          <BackgroundImage
+            style={[
+              styles.backgroundImage,
+              pidStatus === "valid"
+                ? styles.backgroundImageStickyTop
+                : styles.backgroundImageStickyBottom
+            ]}
+            width={72}
+            height={100}
+          />
+
+          {/* Header  */}
+          <View style={styles.header}>
+            <ItWalletIdLogoImage width={103} height={24} />
+            <Icon size={16} {...statusIconPropsByPidStatus[pidStatus]} />
+          </View>
+
+          {/* Content  */}
+          {pidStatus === "jwtExpiring" && (
+            <Body style={styles.content}>
+              Conferma la tua identità entro il{" "}
+              <Body weight="Semibold">
+                {format(pidExpiration || "", "DD/MM/YYYY")}
+              </Body>
+            </Body>
+          )}
+          {pidStatus === "jwtExpired" && (
+            <Body style={styles.content}>
+              Conferma la tua identità per continuare con i tuoi documenti
+            </Body>
+          )}
+
+          {/* Optional Action Button  */}
+          {pidStatus === "jwtExpired" && (
+            <View pointerEvents="none">
+              <IOButton variant="link" label="Inizia" onPress={constNull} />
+            </View>
+          )}
+        </ItwBrandedBox>
       </Animated.View>
     </Pressable>
   );
@@ -150,12 +141,7 @@ export const ItwWalletIdStatus = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: -8,
-    borderRadius: 16,
-    borderCurve: "continuous",
-    padding: 16,
-    gap: 6,
-    overflow: "hidden"
+    marginHorizontal: -8
   },
   backgroundImage: {
     position: "absolute",

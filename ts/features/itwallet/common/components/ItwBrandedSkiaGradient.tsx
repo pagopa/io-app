@@ -1,5 +1,6 @@
 /* eslint-disable functional/immutable-data */
 import {
+  Canvas,
   Rect,
   LinearGradient as SkiaLinearGradient,
   vec
@@ -29,10 +30,11 @@ type ItwIridescentBorderProps = {
 };
 
 /**
- * Renders the IT-Wallet branded gradient using Skia and device rotation sensor data.
- * WARNING: this component must be placed inside a Canvas component
+ * WARNING: this component must be placed inside a {@link Canvas} component.
+ *
+ * Renders an animated IT-Wallet branded border using Skia and device rotation sensor data.
  */
-export const ItwSkiaBrandedGradient = ({
+export const ItwBrandedSkiaGradient = ({
   width,
   height,
   variant = "default"
