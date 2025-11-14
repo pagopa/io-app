@@ -1,9 +1,10 @@
 import { IOColors, IOToast } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback, useEffect, useRef, useState } from "react";
-import Animated, { useAnimatedRef } from "react-native-reanimated";
-import { Dimensions, StyleSheet, View } from "react-native";
 import I18n from "i18next";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Dimensions, StyleSheet, View } from "react-native";
+import Animated, { useAnimatedRef } from "react-native-reanimated";
+import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import { IOScrollView } from "../../../components/ui/IOScrollView";
 import { useHeaderFirstLevel } from "../../../hooks/useHeaderFirstLevel";
 import { useTabItemPressWhenScreenActive } from "../../../hooks/useTabItemPressWhenScreenActive";
@@ -19,20 +20,16 @@ import {
   trackOpenWalletScreen,
   trackWalletAdd
 } from "../../itwallet/analytics";
-import { ITW_ROUTES } from "../../itwallet/navigation/routes";
-import { WalletCardsContainer } from "../components/WalletCardsContainer";
-import { walletUpdate } from "../store/actions";
-import { walletToggleLoadingState } from "../store/actions/placeholders";
-import {
-  isWalletScreenRefreshingSelector,
-  selectBottomSheetSurveyVisible
-} from "../store/selectors";
+import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet.tsx";
+import { itwSetBottomSheetForQuitReissuingSurveyVisible } from "../../itwallet/common/store/actions/preferences.ts";
 import { itwShouldRenderNewItWalletSelector } from "../../itwallet/common/store/selectors";
 import { WALLET_L3_BG_COLOR } from "../../itwallet/common/utils/constants";
+import { ITW_ROUTES } from "../../itwallet/navigation/routes";
+import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
-import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
-import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet.tsx";
-import { walletSetBottomSheetSurveyVisible } from "../store/actions/bottomSheet.ts";
+import { walletUpdate } from "../store/actions";
+import { walletToggleLoadingState } from "../store/actions/placeholders";
+import { isWalletScreenRefreshingSelector } from "../store/selectors";
 
 export type WalletHomeNavigationParams = Readonly<{
   // Triggers the "New element added" toast display once the user returns to this screen
@@ -53,9 +50,6 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   const dispatch = useIODispatch();
   const isRefreshingContent = useIOSelector(isWalletScreenRefreshingSelector);
   const hasNewItwInterface = useIOSelector(itwShouldRenderNewItWalletSelector);
-  const isBottomSheetSurveyVisible = useIOSelector(
-    selectBottomSheetSurveyVisible
-  );
 
   const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
   const isRequiredEidFeedback = useRef(
@@ -64,7 +58,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
   const itwFeedbackBottomSheet = useItwEidFeedbackBottomSheet({
     onPrimaryAction: () => {
-      dispatch(walletSetBottomSheetSurveyVisible(false));
+      dispatch(itwSetBottomSheetForQuitReissuingSurveyVisible(false));
     }
   });
 
@@ -134,17 +128,12 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
         // eslint-disable-next-line functional/immutable-data
         isNewElementAdded.current = false;
       }
-      if (isRequiredEidFeedback.current && isBottomSheetSurveyVisible) {
+      if (isRequiredEidFeedback.current) {
         itwFeedbackBottomSheet.present();
         // eslint-disable-next-line functional/immutable-data
         isRequiredEidFeedback.current = false;
       }
-    }, [
-      isNewElementAdded,
-      isRequiredEidFeedback,
-      itwFeedbackBottomSheet,
-      isBottomSheetSurveyVisible
-    ])
+    }, [isNewElementAdded, isRequiredEidFeedback, itwFeedbackBottomSheet])
   );
 
   const handleRefreshWallet = useCallback(() => {

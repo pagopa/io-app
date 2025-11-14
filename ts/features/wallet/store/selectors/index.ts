@@ -182,11 +182,3 @@ export const shouldRenderItwCardsContainerSelector = (state: GlobalState) =>
   (isItwEnabledSelector(state) || !isConnectedSelector(state)) &&
   itwLifecycleIsValidSelector(state) &&
   !itwIsWalletInstanceStatusFailureSelector(state);
-
-/**
- * Selects the state that indicates whether the bottom sheet survey is visible.
- * Returns `true` if the bottom sheet is visible, `false` if the user has already
- * checked the survey, with the state being persisted through Redux.
- */
-export const selectBottomSheetSurveyVisible = (state: GlobalState) =>
-  state.features.wallet.bottomSheet.bottomSheetSurveyVisible;

@@ -2,7 +2,6 @@ import { ActionType, createStandardAction } from "typesafe-actions";
 import { WalletCardsActions } from "./cards";
 import { WalletPlaceholdersActions } from "./placeholders";
 import { WalletPreferencesActions } from "./preferences";
-import { WalletBottomSheetActions } from "./bottomSheet";
 
 /**
  * Action to trigger the update of the wallet screen content
@@ -15,5 +14,4 @@ export type WalletActions =
   | WalletBaseActions
   | WalletCardsActions
   | WalletPreferencesActions
-  | WalletPlaceholdersActions
-  | WalletBottomSheetActions;
+  | WalletPlaceholdersActions;

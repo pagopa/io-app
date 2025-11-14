@@ -34,6 +34,7 @@ import {
 } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
+import { itwIsBottomSheetForQuitReissuingSurveyVisible } from "../../../common/store/selectors/preferences";
 
 export type ItwIdentificationNavigationParams = {
   eidReissuing?: boolean;
@@ -57,6 +58,9 @@ export const ItwIdentificationModeSelectionScreen = (
     isL3FeaturesEnabledSelector
   );
   const isWalletAlreadyActivated = useIOSelector(itwLifecycleIsValidSelector);
+  const isBottomSheetForQuitReissuingSurveyVisible = useIOSelector(
+    itwIsBottomSheetForQuitReissuingSurveyVisible
+  );
   const { name: routeName } = useRoute();
 
   const ns = useMemo(() => {
@@ -169,7 +173,9 @@ export const ItwIdentificationModeSelectionScreen = (
           name: ROUTES.MAIN,
           params: {
             screen: ROUTES.WALLET_HOME,
-            params: { requiredEidFeedback: true }
+            params: {
+              requiredEidFeedback: isBottomSheetForQuitReissuingSurveyVisible
+            }
           }
         }
       ]
