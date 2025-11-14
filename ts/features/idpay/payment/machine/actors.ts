@@ -153,7 +153,7 @@ export const createActorsImplementation = (
  * @param code Error code from backend
  * @returns The associated failure state
  */
-export const mapErrorCodeToFailure = (
+const mapErrorCodeToFailure = (
   code: TransactionErrorCodeEnum
 ): PaymentFailureEnum => {
   switch (code) {

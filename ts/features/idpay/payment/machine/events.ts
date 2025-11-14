@@ -1,18 +1,18 @@
-export type AuthorizePayment = {
+type AuthorizePayment = {
   readonly type: "authorize-payment";
   readonly trxCode: string;
   readonly data_entry?: "qr_code" | "manual";
 };
 
-export type Next = {
+type Next = {
   readonly type: "next";
 };
 
-export type Back = {
+type Back = {
   readonly type: "back";
 };
 
-export type Close = {
+type Close = {
   readonly type: "close";
 };
 

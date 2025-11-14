@@ -4,13 +4,12 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { isValidPaymentMethod } from "../../utils";
-import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
 import { WalletApplicationStatusEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletApplicationStatus";
 import { WalletLastUsageTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletLastUsageType";
 import { WalletApplicationNameEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletApplicationName";
 import { UIWalletInfoDetails } from "../../../common/types/UIWalletInfoDetails";
 import { isPaymentMethodExpired } from "../../../common/utils";
-import { selectPaymentsCheckoutState, walletPaymentDetailsSelector } from ".";
+import { selectPaymentsCheckoutState } from ".";
 
 export const walletPaymentUserWalletsSelector = createSelector(
   selectPaymentsCheckoutState,
@@ -77,26 +76,6 @@ export const walletRecentPaymentMethodSelector = createSelector(
   // }
 );
 
-export const walletPaymentMethodByIdSelector = createSelector(
-  walletPaymentAllMethodsSelector,
-  methodsPot => (id: string) =>
-    pipe(
-      methodsPot,
-      pot.toOption,
-      O.chainNullableK(methods => methods.find(_ => _.id === id))
-    )
-);
-
-export const walletPaymentUserWalletByIdSelector = createSelector(
-  walletPaymentUserWalletsSelector,
-  methodsPot => (id: string) =>
-    pipe(
-      methodsPot,
-      pot.toOption,
-      O.chainNullableK(methods => methods.find(_ => _.walletId === id))
-    )
-);
-
 export const walletPaymentSelectedWalletOptionSelector = createSelector(
   selectPaymentsCheckoutState,
   state => state.selectedWallet
@@ -142,36 +121,6 @@ export const walletPaymentSelectedPaymentMethodManagementOptionSelector =
         O.map(({ methodManagement }) => methodManagement)
       )
   );
-
-export const notHasValidPaymentMethodsSelector = createSelector(
-  walletPaymentAllMethodsSelector,
-  walletPaymentEnabledUserWalletsSelector,
-  walletPaymentDetailsSelector,
-  (_allMethodsPot, userWalletsPot, paymentDetailsPot) => {
-    // TODO: Uncomment the following lines when the "payment as a guest" feature will be implemented
-    // https://pagopa.atlassian.net/browse/IOBP-794
-    // ========================================
-    // const allMethods = pipe(
-    //   allMethodsPot,
-    //   pot.toOption,
-    //   O.getOrElse(() => [] as PaymentMethodsResponse["paymentMethods"])
-    // );
-    // ========================================
-    const userWallets = pipe(
-      userWalletsPot,
-      pot.toOption,
-      O.getOrElse(() => [] as Wallets["wallets"])
-    );
-
-    return (
-      // pot.isSome(allMethodsPot) &&
-      // _.isEmpty(allMethods) &&
-      pot.isSome(userWalletsPot) &&
-      _.isEmpty(userWallets) &&
-      pot.isSome(paymentDetailsPot)
-    );
-  }
-);
 
 export const isPaymentsPspBannerClosedSelector = (paymentMethodName: string) =>
   createSelector(

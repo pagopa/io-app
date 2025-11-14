@@ -162,7 +162,7 @@ export const idpayOperationListSelector = createSelector(
     )
 );
 
-export const idpayOperationListLengthSelector = createSelector(
+const idpayOperationListLengthSelector = createSelector(
   idpayOperationListSelector,
   operationList => operationList.length
 );
@@ -227,17 +227,4 @@ export const idPayBeneficiaryDetailsSelector = createSelector(
   initiative => initiative.beneficiaryDetails
 );
 
-export const idPayOnboardingStatusSelector = createSelector(
-  idpayInitativeSelector,
-  initiative => initiative.onboardingStatus
-);
-
-export const idPayInitiativeTypeSelector = createSelector(
-  idpayInitiativeDetailsSelector,
-  details =>
-    pot.getOrElse(
-      pot.map(details, details => details.initiativeRewardType),
-      undefined
-    )
-);
 export default reducer;
