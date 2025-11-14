@@ -1,27 +1,26 @@
 import * as E from "fp-ts/lib/Either";
-import { testSaga } from "redux-saga-test-plan";
 import ReactNativeBlobUtil from "react-native-blob-util";
+import { testSaga } from "redux-saga-test-plan";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
+import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../../types/SessionToken";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { KeyInfo } from "../../../../lollipop/utils/crypto";
 import { downloadAttachment } from "../../../../messages/store/actions";
-import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
+import { unknownToReason } from "../../../../messages/utils";
+import * as attachmentsUtils from "../../../../messages/utils/attachments";
+import * as analytics from "../../analytics";
+import * as client from "../../api/client";
 import {
   downloadAARAttachmentSaga,
   testable
 } from "../downloadAARAttachmentSaga";
-import { unknownToReason } from "../../../../messages/utils";
-import * as analytics from "../../analytics";
-import * as attachmentsUtils from "../../../../messages/utils/attachments";
-import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
-import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
-import * as client from "../../api/client";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 
 // Mock external dependencies
 const mockRNBUFetch = jest.fn();
 
 jest.mock("../../../../messages/utils");
-jest.mock("../../analytics");
 jest.mock("react-native-blob-util", () => ({
   config: jest.fn().mockImplementation(() => ({
     fetch: mockRNBUFetch
@@ -81,7 +80,8 @@ describe("downloadAARAttachmentSaga", () => {
             keyInfo,
             attachment.url,
             useUATEnvironment,
-            mandateIdVariant
+            mandateIdVariant,
+            downloadRequestAction
           )
           .next(prevalidatedUrl)
           .call(
@@ -124,10 +124,11 @@ describe("downloadAARAttachmentSaga", () => {
             keyInfo,
             attachment.url,
             useUATEnvironment,
-            mandateId
+            mandateId,
+            downloadRequestAction
           )
           .throw(error)
-          .call(analytics.trackSendAARAttachmentDownloadFailure, reason)
+          .call(analytics.trackSendAARFailure, "Download Attachment", reason)
           .next()
           .put(
             downloadAttachment.failure({
@@ -158,7 +159,8 @@ describe("downloadAARAttachmentSaga", () => {
             keyInfo,
             attachment.url,
             useUATEnvironment,
-            mandateId
+            mandateId,
+            downloadRequestAction
           )
           .next(prevalidatedUrl)
           .call(
@@ -197,7 +199,8 @@ describe("getAttachmentPrevalidatedUrl", () => {
           keyInfo,
           attachment.url,
           useUATEnvironment,
-          mandateIdVariant
+          mandateIdVariant,
+          downloadRequestAction
         )
           .next()
           .call(
@@ -206,7 +209,8 @@ describe("getAttachmentPrevalidatedUrl", () => {
             keyInfo,
             attachment.url,
             useUATEnvironment,
-            mandateIdVariant
+            mandateIdVariant,
+            downloadRequestAction
           )
           .next(url)
           .returns(url)
@@ -225,7 +229,8 @@ describe("getAttachmentPrevalidatedUrl", () => {
           keyInfo,
           attachment.url,
           useUATEnvironment,
-          mandateIdVariant
+          mandateIdVariant,
+          downloadRequestAction
         )
           .next()
           .call(
@@ -234,7 +239,8 @@ describe("getAttachmentPrevalidatedUrl", () => {
             keyInfo,
             attachment.url,
             useUATEnvironment,
-            mandateIdVariant
+            mandateIdVariant,
+            downloadRequestAction
           )
           .next(retryAfter)
           .call(
@@ -250,7 +256,8 @@ describe("getAttachmentPrevalidatedUrl", () => {
             keyInfo,
             attachment.url,
             useUATEnvironment,
-            mandateIdVariant
+            mandateIdVariant,
+            downloadRequestAction
           )
           .next(url)
           .returns(url)
@@ -284,10 +291,15 @@ describe("getAttachmentMetadata", () => {
           keyInfo,
           attachment.url,
           useUATEnvironment,
-          mandateIdVariant
+          mandateIdVariant,
+          downloadRequestAction
         )
           .next()
-          .call(withRefreshApiCall, mockedGetNotificationAttachment)
+          .call(
+            withRefreshApiCall,
+            mockedGetNotificationAttachment,
+            downloadRequestAction
+          )
           .next(response)
           .returns("https://success.url")
           .next()
@@ -317,10 +329,15 @@ describe("getAttachmentMetadata", () => {
           keyInfo,
           attachment.url,
           useUATEnvironment,
-          mandateIdVariant
+          mandateIdVariant,
+          downloadRequestAction
         )
           .next()
-          .call(withRefreshApiCall, mockedGetNotificationAttachment)
+          .call(
+            withRefreshApiCall,
+            mockedGetNotificationAttachment,
+            downloadRequestAction
+          )
           .next(response)
           .returns(10)
           .next()
@@ -358,14 +375,21 @@ describe("getAttachmentMetadata", () => {
             keyInfo,
             attachment.url,
             useUATEnvironment,
-            mandateIdVariant
+            mandateIdVariant,
+            downloadRequestAction
           )
             .next()
-            .call(withRefreshApiCall, mockedGetNotificationAttachment)
+            .call(
+              withRefreshApiCall,
+              mockedGetNotificationAttachment,
+              downloadRequestAction
+            )
             .next(response);
         } catch (e: unknown) {
           expectionThrown = true;
-          expect(e).toEqual(Error(`value "error" at root (decoder info n/a)`));
+          expect(e).toEqual(
+            Error(`Decoding failure (value "error" at root (decoder info n/a))`)
+          );
         }
         expect(expectionThrown).toBe(true);
         expect(mockedGetNotificationAttachmentInput.mock.calls.length).toBe(1);
@@ -402,16 +426,21 @@ describe("getAttachmentMetadata", () => {
             keyInfo,
             attachment.url,
             useUATEnvironment,
-            mandateIdVariant
+            mandateIdVariant,
+            downloadRequestAction
           )
             .next()
-            .call(withRefreshApiCall, mockedGetNotificationAttachment)
+            .call(
+              withRefreshApiCall,
+              mockedGetNotificationAttachment,
+              downloadRequestAction
+            )
             .next(response);
         } catch (e: unknown) {
           expectionThrown = true;
           expect(e).toEqual(
             Error(
-              `500 401 Access denied Remote server has denied access. Check your API key`
+              `HTTP request failed (500 401 Access denied Remote server has denied access. Check your API key)`
             )
           );
         }
@@ -443,16 +472,21 @@ describe("getAttachmentMetadata", () => {
             keyInfo,
             attachment.url,
             useUATEnvironment,
-            mandateIdVariant
+            mandateIdVariant,
+            downloadRequestAction
           )
             .next()
-            .call(withRefreshApiCall, mockedGetNotificationAttachment)
+            .call(
+              withRefreshApiCall,
+              mockedGetNotificationAttachment,
+              downloadRequestAction
+            )
             .next(response);
         } catch (e: unknown) {
           expectionThrown = true;
           expect(e).toEqual(
             Error(
-              `Both 'retryAfter' and 'url' fields are invalid (undefined) (undefined)`
+              `Both 'retryAfter' and 'url' fields are missing or invalid (undefined) (undefined)`
             )
           );
         }
@@ -461,6 +495,60 @@ describe("getAttachmentMetadata", () => {
         expect(mockedGetNotificationAttachmentInput.mock.calls[0].length).toBe(
           1
         );
+        expect(mockedGetNotificationAttachmentInput.mock.calls[0][0]).toEqual({
+          Bearer: `Bearer ${bearerToken}`,
+          urlEncodedBase64AttachmentUrl: encodedUrl,
+          "x-pagopa-pn-io-src": "QRCODE",
+          mandateId: mandateIdVariant,
+          isTest: useUATEnvironment
+        });
+      });
+      it(`should throw FAST_LOGIN_EXPIRED and call trackSendAARFailure with 'Fast login expiration' on 401 response (mandateId: ${mandateIdVariant} isUAT: ${useUATEnvironment})`, () => {
+        const response = E.right({
+          status: 401,
+          value: {
+            status: 401,
+            title: "Unauthorized",
+            detail: "Your session has expired"
+          }
+        });
+
+        const {
+          mockedGetNotificationAttachment,
+          mockedGetNotificationAttachmentInput
+        } = generateMocks(response);
+
+        // eslint-disable-next-line functional/no-let
+        let expectionThrown = false;
+        try {
+          testSaga(
+            testable!.getAttachmentMetadata,
+            bearerToken,
+            keyInfo,
+            attachment.url,
+            useUATEnvironment,
+            mandateIdVariant,
+            downloadRequestAction
+          )
+            .next()
+            .call(
+              withRefreshApiCall,
+              mockedGetNotificationAttachment,
+              downloadRequestAction
+            )
+            .next(response)
+            .call(
+              analytics.trackSendAARFailure,
+              "Download Attachment",
+              "Fast login expired"
+            );
+        } catch (e: unknown) {
+          expectionThrown = true;
+          expect(e).toEqual(new Error("FAST_LOGIN_EXPIRED"));
+        }
+
+        expect(expectionThrown).toBe(true);
+        expect(mockedGetNotificationAttachmentInput.mock.calls.length).toBe(1);
         expect(mockedGetNotificationAttachmentInput.mock.calls[0][0]).toEqual({
           Bearer: `Bearer ${bearerToken}`,
           urlEncodedBase64AttachmentUrl: encodedUrl,

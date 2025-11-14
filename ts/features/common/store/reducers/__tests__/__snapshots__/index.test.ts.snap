@@ -10,6 +10,13 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "showAppearanceBanner": true,
   },
   "backgroundLinking": {},
+  "cdc": {
+    "wallet": {
+      "cdcStatus": {
+        "kind": "PotNoneLoading",
+      },
+    },
+  },
   "connectivityStatus": {
     "isConnected": undefined,
   },
@@ -105,6 +112,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
         "kind": "PotNone",
       },
     },
+    "staticCode": {},
     "timeline": {
       "details": {
         "kind": "PotNone",
@@ -170,6 +178,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "activeSessionLogin": {
       "isActiveSessionLogin": false,
       "isUserLoggedIn": false,
+      "refreshMessagesSection": true,
     },
     "cieLogin": {
       "isCieIDTourGuideEnabled": true,

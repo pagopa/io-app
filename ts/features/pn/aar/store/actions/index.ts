@@ -2,8 +2,8 @@ import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { ActionType, createStandardAction } from "typesafe-actions";
 import { MessageBodyMarkdown } from "../../../../../../definitions/backend/MessageBodyMarkdown";
 import { MessageSubject } from "../../../../../../definitions/backend/MessageSubject";
-import { ThirdPartyMessage } from "../../../../../../definitions/pn/ThirdPartyMessage";
-import { AARFlowState, AARFlowStateName } from "../../utils/stateUtils";
+import { ThirdPartyMessage } from "../../../../../../definitions/pn/aar/ThirdPartyMessage";
+import { AARFlowState } from "../../utils/stateUtils";
 
 export type EphemeralAarMessageDataActionPayload = {
   iun: NonEmptyString;
@@ -16,7 +16,6 @@ export type EphemeralAarMessageDataActionPayload = {
 };
 export type TerminateAarFlowPayload = {
   messageId?: string;
-  currentState?: AARFlowStateName;
 };
 
 export const setAarFlowState =

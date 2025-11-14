@@ -3,6 +3,9 @@ import { EmailInsertScreenNavigationParams } from "../../../userData/shared/scre
 import { SendEmailValidationScreenProp } from "../../../userData/shared/screens/EmailValidationSendEmailScreen";
 import { SETTINGS_ROUTES } from "../routes";
 import { AuthenticationParamsList } from "../../../../authentication/common/navigation/params/AuthenticationParamsList";
+import { CieIasResultNavParams } from "../../../devMode/playgrounds/Cie/screens/ias/CieIasAndMrtdPlaygroundIntAuthResultScreen";
+import { CieMrtdResultNavParams } from "../../../devMode/playgrounds/Cie/screens/mrtd/CieIasAndMrtdPlaygroundMrtdResultScreen";
+import { CieIasAndMrtdResultNavParams } from "../../../devMode/playgrounds/Cie/screens/ias_and_mrtd/CieIasAndMrtdPlaygroundIntAuthAndMrtdResultScreen";
 
 export type SettingsParamsList = {
   [SETTINGS_ROUTES.PROFILE_PRIVACY_MAIN]: undefined;
@@ -36,6 +39,13 @@ export type SettingsParamsList = {
   [SETTINGS_ROUTES.IO_MARKDOWN_PLAYGROUND]: undefined;
   [SETTINGS_ROUTES.APP_FEEDBACK_PLAYGROUND]: undefined;
   [SETTINGS_ROUTES.CIE_PLAYGROUND]: undefined;
+  [SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND]: undefined;
+  [SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_MRTD]: undefined;
+  [SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_MRTD_RESULTS]: CieMrtdResultNavParams;
+  [SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_INTERNAL_AUTH]: undefined;
+  [SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_INTERNAL_AUTH_RESULTS]: CieIasResultNavParams;
+  [SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_INTERNAL_AUTH_AND_MRTD]: undefined;
+  [SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_INTERNAL_AUTH_AND_MRTD_RESULTS]: CieIasAndMrtdResultNavParams;
   [SETTINGS_ROUTES.SETTINGS_MAIN]: undefined;
   [SETTINGS_ROUTES.AUTHENTICATION]: NavigatorScreenParams<AuthenticationParamsList>;
 };

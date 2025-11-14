@@ -953,7 +953,6 @@
     "opt_in": {
       "contextualHelpTitle": "Authentifizierung",
       "contextualHelpContent": "Hier findest du Informationen darüber, wie du dich bei IO authentifizieren kannst, sowie einige Sicherheitstipps.",
-      "news": "Neu",
       "title": "Ab sofort kannst du leichter auf IO zugreifen",
       "identity_check": "Du musst dich nicht mehr alle 30 Tage mit SPID oder CIE identifizieren, sondern nur noch einmal im Jahr oder wenn du die App verlässt",
       "security_suggests": "Einige Sicherheitstipps",
@@ -3468,9 +3467,6 @@
             "action": "Start"
           }
         },
-        "title": "Die digitale Version deiner Dokumente in IO",
-        "content": "###### Dokumente in IO: So funktioniert es \n Du kannst jetzt die **digitale Version deiner persönlichen Dokumente**, wie z. B. deinen Führerschein und deine Gesundheitskarte, zu deinem IO-Konto hinzufügen.\n\nAktiviere die Funktion **Dokumente in IO**, um sie immer auf deinem Gerät zur Hand zu haben.  \n ###### Es geht schnell und einfach \n Du benötigst deine **SPID** oder **CIE** (Elektronische Identitätskarte) Zugangsdaten, um die Aktivierung abzuschließen: dies ist ein notwendiger Sicherheitsschritt, um die Sicherheit deiner Daten zu gewährleisten.",
-        "tos": "Indem du auf **Weiter** tippst, bestätigst du, dass du die [Datenschutzbestimmungen und Nutzungsbedingungen]({{tos_url}}) gelesen und verstanden hast.",
         "upcomingWalletBanner": {
           "title": "Demnächst: deine Dokumente in IO",
           "content": "Bald kannst du digitale Versionen deiner persönlichen Dokumente wie Führerschein und Gesundheitskarte in dein IO-Konto einfügen!",
@@ -3490,27 +3486,6 @@
         }
       },
       "identification": {
-        "mode": {
-          "l2": {
-            "title": "Überprüfe deine Identität",
-            "description": "Dies ist ein notwendiger Schritt, um die Sicherheit deiner Daten zu gewährleisten.",
-            "header": "Wähle, wie du dich identifizieren willst",
-            "method": {
-              "spid": {
-                "title": "SPID",
-                "subtitle": "Zugangsdaten und App (oder SMS) verwenden"
-              },
-              "ciePin": {
-                "title": "CIE + PIN",
-                "subtitle": "Elektronische Identitätskarte und PIN verwenden"
-              },
-              "cieId": {
-                "title": "CieID",
-                "subtitle": "CieID-Zugangsdaten und -App verwenden"
-              }
-            }
-          }
-        },
         "nfc": {
           "title": "NFC aktivieren, um fortzufahren",
           "description": "Damit IO deine CIE lesen kann, aktiviere NFC in den Einstellungen deines Geräts.",
@@ -3664,9 +3639,6 @@
           },
           "expiring": {
             "content": "Es verbleiben noch {{days}} Tage, bevor das Dokument abläuft."
-          },
-          "verificationExpiring": {
-            "content": "Überprüfe die digitale Version deines Dokuments bis zum {{date}}."
           }
         },
         "bottomSheets": {

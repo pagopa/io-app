@@ -97,6 +97,30 @@ describe("watchPnSaga", () => {
           expect(onFailure).not.toHaveBeenCalled();
         });
     });
+    it("should handle a debounce response (429)", () => {
+      mockUpsertPNActivation.mockResolvedValueOnce(E.right({ status: 429 }));
+
+      return expectSaga(
+        handlePnActivation,
+        mockUpsertPNActivation,
+        requestAction
+      )
+        .provide([
+          [select(isPnTestEnabledSelector), false],
+          [select(pnMessagingServiceIdSelector), mockServiceId],
+          [select(servicePreferencePotByIdSelector, mockServiceId), pot.none],
+          [call(reportPNServiceStatusOnFailure, false, "A reason"), undefined]
+        ])
+        .put(pnActivationUpsert.failure())
+        .call(tryLoadSENDPreferences)
+        .run()
+        .then(() => {
+          expect(trackPNServiceStatusChangeSuccess).not.toHaveBeenCalled();
+          expect(onSuccess).not.toHaveBeenCalled();
+          expect(onFailure).toHaveBeenCalled();
+          expect(onFailure).toHaveBeenCalledWith(true);
+        });
+    });
 
     for (const resolvedValue of [
       E.left(["API error"]),
@@ -121,6 +145,7 @@ describe("watchPnSaga", () => {
           .run()
           .then(() => {
             expect(onFailure).toHaveBeenCalled();
+            expect(onFailure).toHaveBeenCalledWith(false);
             expect(onSuccess).not.toHaveBeenCalled();
           });
       });
@@ -147,6 +172,7 @@ describe("watchPnSaga", () => {
         .then(() => {
           expect(onFailure).toHaveBeenCalled();
           expect(onSuccess).not.toHaveBeenCalled();
+          expect(onSuccess).not.toHaveBeenCalledWith(false);
         });
     });
   });

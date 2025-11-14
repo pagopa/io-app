@@ -18,12 +18,12 @@ export function* aarFlowMasterSaga(
   switch (nextState.type) {
     case sendAARFlowStates.fetchingQRData:
       yield* raceWithTerminateFlow(
-        fetchAARQrCodeSaga(sendAARClient.aarQRCodeCheck, sessionToken)
+        fetchAARQrCodeSaga(sendAARClient.aarQRCodeCheck, sessionToken, action)
       );
       break;
     case sendAARFlowStates.fetchingNotificationData:
       yield* raceWithTerminateFlow(
-        fetchAarDataSaga(sendAARClient.getAARNotification, sessionToken)
+        fetchAarDataSaga(sendAARClient.getAARNotification, sessionToken, action)
       );
       break;
   }

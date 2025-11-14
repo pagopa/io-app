@@ -1,3 +1,4 @@
+import { SendEngagementScreenNavigationParams } from "../aar/screen/SendEngagementScreen";
 import { SendQRScanFlowScreenProps } from "../aar/screen/SendQRScanFlowScreen";
 import { MessageAttachmentScreenRouteParams } from "../screens/MessageAttachmentScreen";
 import { MessageDetailsScreenRouteParams } from "../screens/MessageDetailsScreen";
@@ -12,8 +13,7 @@ export type PnParamsList = {
   [PN_ROUTES.ACTIVATION_BANNER_FLOW]: undefined;
   // QR SCAN
   [PN_ROUTES.QR_SCAN_FLOW]: SendQRScanFlowScreenProps;
-  [PN_ROUTES.ENGAGEMENT_SCREEN]: undefined;
-  [PN_ROUTES.QR_SCAN_PUSH_ENGAGEMENT]: undefined;
+  [PN_ROUTES.ENGAGEMENT_SCREEN]: SendEngagementScreenNavigationParams;
   // SEND ENGAGEMENT
   [PN_ROUTES.SEND_ENGAGEMENT_ON_FIRST_APP_OPENING]: undefined;
   [PN_ROUTES.SEND_ENGAGEMENT_ACTIVATION_ERROR]: undefined;

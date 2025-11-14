@@ -1,7 +1,7 @@
 import { ErrorActorEvent } from "xstate";
 import { SpidIdp } from "../../../../utils/idps";
 import { CieWarningType } from "../../identification/cie/utils/types";
-import { EidIssuanceMode } from "./context";
+import { EidIssuanceLevel, EidIssuanceMode } from "./context";
 
 export type IdentificationMode = "spid" | "ciePin" | "cieId";
 
@@ -13,9 +13,8 @@ export type IdentificationMode = "spid" | "ciePin" | "cieId";
  */
 export type Start = {
   type: "start" | "restart";
-  mode?: EidIssuanceMode;
-  isL3?: boolean;
-  isL2Fallback?: boolean;
+  mode: EidIssuanceMode;
+  level: EidIssuanceLevel;
 };
 
 export type AcceptTos = {

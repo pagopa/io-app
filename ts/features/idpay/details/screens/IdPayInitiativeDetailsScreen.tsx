@@ -8,15 +8,15 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useNavigation, useRoute } from "@react-navigation/core";
+import { useRoute } from "@react-navigation/core";
 import { RouteProp, useFocusEffect } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useCallback } from "react";
+import I18n from "i18next";
+import { useCallback, useLayoutEffect } from "react";
 import { Linking, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
-import I18n from "i18next";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import {
   InitiativeDTO,
@@ -26,17 +26,25 @@ import {
 import { BonusCardScreenComponent } from "../../../../components/BonusCard";
 import { BonusCardCounter } from "../../../../components/BonusCard/BonusCardCounter";
 import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../../navigation/params/AppParamsList";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { getNetworkErrorMessage } from "../../../../utils/errors";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { useFIMSAuthenticationFlow } from "../../../fims/common/hooks";
 import { IdPayCodeCieBanner } from "../../code/components/IdPayCodeCieBanner";
 import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
 import { ConfigurationMode } from "../../configuration/types";
+import {
+  trackIDPayDetailAuthorizationStart,
+  trackIDPayDetailBottomSheetLanding,
+  trackIDPayDetailError,
+  trackIDPayDetailInfoAction,
+  trackIDPayDetailLanding,
+  trackIDPayDetailRetailersClick
+} from "../analytics";
 import { IdPayInitiativeDiscountSettingsComponent } from "../components/IdPayInitiativeDiscountSettingsComponent";
 import { IdPayInitiativeLastUpdateCounter } from "../components/IdPayInitiativeLastUpdateCounter";
 import { IdPayInitiativeRefundSettingsComponent } from "../components/IdPayInitiativeRefundSettingsComponent";
@@ -53,13 +61,6 @@ import {
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
 import { IdPayCardStatus } from "../utils";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import {
-  trackIDPayDetailAuthorizationStart,
-  trackIDPayDetailInfoAction,
-  trackIDPayDetailLanding,
-  trackIDPayDetailRetailersClick
-} from "../analytics";
 
 export type IdPayInitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -75,7 +76,7 @@ const IdPayInitiativeDetailsScreenComponent = () => {
 
   const { initiativeId } = route.params;
 
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const initiativeDataPot = useIOSelector(idpayInitiativeDetailsSelector);
 
@@ -133,15 +134,55 @@ const IdPayInitiativeDetailsScreenComponent = () => {
     initiativeNeedsConfigurationSelector
   );
 
-  useOnFirstRender(() => {
-    if (pot.isSome(initiativeDataPot)) {
+  useOnFirstRender(
+    () =>
       trackIDPayDetailLanding({
         initiativeName,
         initiativeId,
         status: initiative.voucherStatus
+      }),
+    () => pot.isSome(initiativeDataPot)
+  );
+
+  useLayoutEffect(() => {
+    if (pot.isError(initiativeDataPot)) {
+      navigation.setOptions({
+        headerShown: false
       });
     }
-  });
+  }, [initiativeDataPot, navigation]);
+
+  useOnFirstRender(
+    () => {
+      if (pot.isError(initiativeDataPot)) {
+        trackIDPayDetailError({
+          initiativeId,
+          initiativeName,
+          reason: getNetworkErrorMessage(initiativeDataPot.error)
+        });
+      }
+    },
+    () => pot.isError(initiativeDataPot)
+  );
+
+  if (pot.isError(initiativeDataPot)) {
+    return (
+      <OperationResultScreenContent
+        pictogram="umbrella"
+        enableAnimatedPictogram
+        title={I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.error.title"
+        )}
+        subtitle={I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.error.subtitle"
+        )}
+        action={{
+          label: I18n.t("global.buttons.back"),
+          onPress: () => navigation.pop()
+        }}
+      />
+    );
+  }
 
   if (!pot.isSome(initiativeDataPot)) {
     return (
@@ -366,10 +407,14 @@ const IdPayInitiativeDetailsScreenComponent = () => {
         const useBonusButton = {
           label: I18n.t("idpay.initiative.discountDetails.authorizeButton"),
           onPress: () => {
-            discountBottomSheet.present();
             trackIDPayDetailAuthorizationStart({
               initiativeId,
               initiativeName: initiative.initiativeName
+            });
+            discountBottomSheet.present();
+            trackIDPayDetailBottomSheetLanding({
+              initiativeId,
+              initiativeName
             });
           }
         };

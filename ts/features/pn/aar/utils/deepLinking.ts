@@ -1,19 +1,21 @@
 import { StackActions } from "@react-navigation/native";
 import * as O from "fp-ts/Option";
 import { pipe } from "fp-ts/lib/function";
-import { Action } from "redux";
 import NavigationService from "../../../../navigation/NavigationService";
-import { pnAARQRCodeRegexSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import {
+  isAarRemoteEnabled,
+  pnAARQRCodeRegexSelector
+} from "../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../store/reducers/types";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import PN_ROUTES from "../../navigation/routes";
 import { terminateAarFlow } from "../store/actions";
 import {
   currentAARFlowStateType,
-  currentAarFlowIunSelector,
-  isAAREnabled
+  currentAarFlowIunSelector
 } from "../store/selectors";
 import { sendAARFlowStates } from "./stateUtils";
+import { Action } from "../../../../store/actions/types";
 export const isSendAARLink = (state: GlobalState, url: string) =>
   pipe(
     state,
@@ -31,7 +33,7 @@ export const navigateToSendAarFlowIfEnabled = (
   aarUrl: string,
   dispatchFn: (action: Action) => void
 ) => {
-  if (isAAREnabled(state)) {
+  if (isAarRemoteEnabled(state)) {
     if (currentAARFlowStateType(state) !== sendAARFlowStates.none) {
       const maybeMessageIun = currentAarFlowIunSelector(state);
       dispatchFn(terminateAarFlow({ messageId: maybeMessageIun }));

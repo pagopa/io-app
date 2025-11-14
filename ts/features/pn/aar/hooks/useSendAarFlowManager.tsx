@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { trackSendAARToSAccepted } from "../analytics";
 import { setAarFlowState, terminateAarFlow } from "../store/actions";
 import { currentAARFlowData } from "../store/selectors";
 import {
@@ -34,6 +35,7 @@ export const useSendAarFlowManager = (): SendAarFlowManager => {
   const goToNextState = () => {
     switch (currentFlowData.type) {
       case sendAARFlowStates.displayingAARToS:
+        trackSendAARToSAccepted();
         dispatch(
           setAarFlowState({
             type: sendAARFlowStates.fetchingQRData,

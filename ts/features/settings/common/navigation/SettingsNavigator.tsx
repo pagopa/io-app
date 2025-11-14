@@ -31,8 +31,15 @@ import ProfileMainScreen from "../screens/ProfileMainScreen";
 import { IOMarkdownPlayground } from "../../devMode/playgrounds/IOMarkdownPlayground";
 import { AppFeedbackPlayground } from "../../devMode/playgrounds/AppFeedbackPlayground";
 import AppearancePreferenceScreen from "../../preferences/screens/AppearancePreferenceScreen";
-import { CiePlayground } from "../../devMode/playgrounds/CiePlayground";
+import { CiePlayground } from "../../devMode/playgrounds/Cie/CiePlayground";
 import AuthenticationNavigator from "../../../authentication/common/navigation/AuthenticationNavigator";
+import { CieIasAndMrtdPlayground } from "../../devMode/playgrounds/Cie/CieIasAndMrtdPlayground";
+import { CieIasAndMrtdPlaygroundIntAuthResultScreen } from "../../devMode/playgrounds/Cie/screens/ias/CieIasAndMrtdPlaygroundIntAuthResultScreen";
+import { CieIasAndMrtdPlaygroundIntAuthScreen } from "../../devMode/playgrounds/Cie/screens/ias/CieIasAndMrtdPlaygroundIntAuthScreen";
+import { CieIasAndMrtdPlaygroundIntAuthAndMrtdResultScreen } from "../../devMode/playgrounds/Cie/screens/ias_and_mrtd/CieIasAndMrtdPlaygroundIntAuthAndMrtdResultScreen";
+import { CieIasAndMrtdPlaygroundMrtdScreen } from "../../devMode/playgrounds/Cie/screens/mrtd/CieIasAndMrtdPlaygroundMrtdScreen";
+import { CieIasAndMrtdPlaygroundMrtdResultScreen } from "../../devMode/playgrounds/Cie/screens/mrtd/CieIasAndMrtdPlaygroundMrtdResultScreen";
+import { CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen } from "../../devMode/playgrounds/Cie/screens/ias_and_mrtd/CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen";
 import { SettingsParamsList } from "./params/SettingsParamsList";
 import { SETTINGS_ROUTES } from "./routes";
 
@@ -189,6 +196,36 @@ const SettingsStackNavigator = () => (
     <Stack.Screen
       name={SETTINGS_ROUTES.CIE_PLAYGROUND}
       component={CiePlayground}
+    />
+    <Stack.Screen
+      name={SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND}
+      component={CieIasAndMrtdPlayground}
+    />
+    <Stack.Screen
+      name={SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_INTERNAL_AUTH}
+      component={CieIasAndMrtdPlaygroundIntAuthScreen}
+    />
+    <Stack.Screen
+      name={SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_INTERNAL_AUTH_RESULTS}
+      component={CieIasAndMrtdPlaygroundIntAuthResultScreen}
+    />
+    <Stack.Screen
+      name={SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_MRTD}
+      component={CieIasAndMrtdPlaygroundMrtdScreen}
+    />
+    <Stack.Screen
+      name={SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_MRTD_RESULTS}
+      component={CieIasAndMrtdPlaygroundMrtdResultScreen}
+    />
+    <Stack.Screen
+      name={SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_INTERNAL_AUTH_AND_MRTD}
+      component={CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen}
+    />
+    <Stack.Screen
+      name={
+        SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_INTERNAL_AUTH_AND_MRTD_RESULTS
+      }
+      component={CieIasAndMrtdPlaygroundIntAuthAndMrtdResultScreen}
     />
     <Stack.Screen
       name={SETTINGS_ROUTES.AUTHENTICATION}

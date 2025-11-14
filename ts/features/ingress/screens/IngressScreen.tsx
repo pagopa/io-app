@@ -4,8 +4,11 @@
  */
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { AccessibilityInfo, View } from "react-native";
 import I18n from "i18next";
+import { Body, ContentWrapper } from "@pagopa/io-app-design-system";
 import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { trackIngressScreen } from "../../settings/common/analytics";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
@@ -30,10 +33,41 @@ import { isConnectedSelector } from "../../connectivity/store/selectors";
 import { identificationRequest } from "../../identification/store/actions";
 import { OfflineAccessReasonEnum } from "../store/reducer";
 import { itwOfflineAccessAvailableSelector } from "../../itwallet/common/store/selectors";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { IdentificationBackActionType } from "../../identification/store/reducers";
+import { profileSelector } from "../../settings/common/store/selectors";
+import { sessionInfoSelector } from "../../authentication/common/store/selectors";
+import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
+import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
+import { ProfileError } from "../../settings/common/store/types";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
-const TIMEOUT_BLOCKING_SCREEN = (10 * 1000) as Millisecond;
+const TIMEOUT_BLOCKING_SCREEN = (25 * 1000) as Millisecond;
+
+const getApiFailureValue = (
+  isConnected: boolean | undefined,
+  sessionLoaded: O.Option<PublicSession>,
+  profileLoaded: pot.Pot<InitializedProfile, ProfileError>
+): string => {
+  const apiFailures: Array<string> = [];
+
+  // Add "ping" if isConnected is undefined
+  if (isConnected === undefined) {
+    apiFailures.push("ping");
+  }
+
+  // Add "get session" if sessionLoaded is None (error loading session)
+  if (O.isNone(sessionLoaded)) {
+    apiFailures.push("get session");
+  }
+
+  // Add "get profile" if profileLoaded is error or someError
+  if (pot.isError(profileLoaded)) {
+    apiFailures.push("get profile");
+  }
+
+  return apiFailures.join(", ");
+};
 
 export const IngressScreen = () => {
   const isMixpanelInitialized = useIOSelector(isMixpanelInitializedSelector);
@@ -46,18 +80,21 @@ export const IngressScreen = () => {
 
   const [showBlockingScreen, setShowBlockingScreen] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
-  const [contentTitle, setContentTitle] = useState<string>(
-    I18n.t("startup.title")
-  );
+  const [content, setContent] = useState<{
+    title: string;
+    subtitle?: string;
+  }>({
+    title: I18n.t("startup.title")
+  });
 
   useEffect(() => {
     // Since the screen is shown for a very short time,
     // we prefer to announce the content to the screen reader,
     // instead of focusing the first element.
-    AccessibilityInfo.announceForAccessibilityWithOptions(contentTitle, {
+    AccessibilityInfo.announceForAccessibilityWithOptions(content.title, {
       queue: true
     });
-  }, [contentTitle]);
+  }, [content]);
 
   useEffect(() => {
     // `isMixpanelEnabled` mustn't be `false`
@@ -71,7 +108,10 @@ export const IngressScreen = () => {
 
     timeouts.push(
       setTimeout(() => {
-        setContentTitle(I18n.t("startup.title2"));
+        setContent({
+          title: I18n.t("startup.title2"),
+          subtitle: I18n.t("startup.subtitle2")
+        });
         setShowBanner(true);
         if (isOfflineAccessAvailable) {
           trackSettingsDiscoverBannerVisualized();
@@ -82,8 +122,8 @@ export const IngressScreen = () => {
 
     timeouts.push(
       setTimeout(() => {
-        setShowBlockingScreen(true);
         dispatch(setIsBlockingScreen());
+        setShowBlockingScreen(true);
         timeouts.shift();
       }, TIMEOUT_BLOCKING_SCREEN)
     );
@@ -149,7 +189,7 @@ export const IngressScreen = () => {
       />
       <LoadingScreenContent
         testID="ingress-screen-loader-id"
-        contentTitle={contentTitle}
+        contentTitle={content.title}
         animatedPictogramSource="waiting"
         banner={{
           showBanner: isOfflineAccessAvailable && showBanner,
@@ -165,7 +205,13 @@ export const IngressScreen = () => {
             }
           }
         }}
-      />
+      >
+        {content.subtitle && (
+          <ContentWrapper style={{ alignItems: "center" }}>
+            <Body style={{ textAlign: "center" }}>{content.subtitle}</Body>
+          </ContentWrapper>
+        )}
+      </LoadingScreenContent>
     </>
   );
 };
@@ -173,6 +219,11 @@ export const IngressScreen = () => {
 const IngressScreenNoInternetConnection = memo(() => {
   const isMixpanelEnabled = useIOSelector(isMixpanelEnabledSelector);
   const isMixpanelInitialized = useIOSelector(isMixpanelInitializedSelector);
+  const dispatch = useIODispatch();
+
+  useOnFirstRender(() => {
+    dispatch(setIsBlockingScreen());
+  });
 
   useEffect(() => {
     if (isMixpanelInitialized && isMixpanelEnabled !== false) {
@@ -194,6 +245,9 @@ const IngressScreenBlockingError = memo(() => {
   const operationRef = useRef<View>(null);
   const isBackendStatusLoaded = useIOSelector(isBackendStatusLoadedSelector);
   const isMixpanelEnabled = useIOSelector(isMixpanelEnabledSelector);
+  const isConnected = useIOSelector(isConnectedSelector);
+  const profileLoaded = useIOSelector(profileSelector);
+  const sessionLoaded = useIOSelector(sessionInfoSelector);
 
   useEffect(() => {
     setAccessibilityFocus(operationRef);
@@ -204,12 +258,20 @@ const IngressScreenBlockingError = memo(() => {
     // If mixpanel is not initialized at that time, we have an issue spanning, system-wide.
     if (isMixpanelEnabled !== false) {
       if (isBackendStatusLoaded) {
-        void trackIngressTimeout();
+        void trackIngressTimeout(
+          getApiFailureValue(isConnected, sessionLoaded, profileLoaded)
+        );
       } else {
         void trackIngressCdnSystemError();
       }
     }
-  }, [isBackendStatusLoaded, isMixpanelEnabled]);
+  }, [
+    isBackendStatusLoaded,
+    isConnected,
+    isMixpanelEnabled,
+    profileLoaded,
+    sessionLoaded
+  ]);
 
   return (
     <OperationResultScreenContent
