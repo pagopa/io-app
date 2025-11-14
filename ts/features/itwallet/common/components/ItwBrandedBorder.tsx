@@ -37,6 +37,8 @@ type ItwIridescentBorderProps = {
   width: LayoutRectangle["width"];
   height: LayoutRectangle["height"];
   variant?: ItwIridescentBorderVariant;
+  thickness?: number;
+  cornerRadius?: number;
 };
 
 /* Light */
@@ -44,9 +46,14 @@ const lightScaleMultiplier = 1;
 const lightSize: LayoutRectangle["width"] = 250;
 const visibleLightPercentage = 0.25; // Visible light when it's near box boundaries
 
-export const ItwIridescentBorder = ({
+/**
+ * Renders a branded iridescent border using Skia and device rotation sensor data
+ */
+export const ItwBrandedBorder = ({
   width,
   height,
+  thickness = 3,
+  cornerRadius = 16,
   variant = "default"
 }: ItwIridescentBorderProps) => {
   const { themeType } = useIOThemeContext();
@@ -213,8 +220,8 @@ export const ItwIridescentBorder = ({
             y={0}
             width={width}
             height={height}
-            r={16}
-            strokeWidth={3}
+            r={cornerRadius}
+            strokeWidth={thickness}
             strokeJoin={"round"}
             style={"stroke"}
           />

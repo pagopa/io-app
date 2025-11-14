@@ -13,9 +13,9 @@ import BackgroundImageValid from "../../../../../img/features/itWallet/brand/itw
 import BackgroundImageExpired from "../../../../../img/features/itWallet/brand/itw_deck_status_expired.svg";
 import ItWalletIdLogoImage from "../../../../../img/features/itWallet/brand/itw_id_logo.svg";
 import {
-  ItwIridescentBorder,
+  ItwBrandedBorder,
   ItwIridescentBorderVariant
-} from "../../common/components/ItwIridescentBorder";
+} from "../../common/components/ItwBrandedBorder";
 import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils";
 import { useItWalletTheme } from "../../common/utils/theme";
 
@@ -138,7 +138,7 @@ export const ItwWalletIdStatus = ({
         )}
 
         {/* Iridescent border with giroscope  */}
-        <ItwIridescentBorder
+        <ItwBrandedBorder
           width={size.width}
           height={size.height}
           variant={borderVariantByPidStatus[pidStatus]}
