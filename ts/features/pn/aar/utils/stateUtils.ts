@@ -1,4 +1,3 @@
-import { InternalAuthAndMrtdResponse } from "@pagopa/io-react-native-cie";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
 import { ThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
@@ -14,6 +13,19 @@ export type SendAARFailurePhase =
 export type RecipientInfo = {
   denomination: string;
   taxId: string;
+};
+
+type MrtdData = {
+  sod: string;
+  dg1: string;
+  dg11: string;
+};
+
+type NisData = {
+  sod: string;
+  nis: string;
+  publicKey: string;
+  signedChallenge: string;
 };
 
 type NotInitialized = {
@@ -115,8 +127,8 @@ type ValidateMandate = {
   recipientInfo: RecipientInfo;
   iun: string;
   mandateId: string;
-  mrtdData: InternalAuthAndMrtdResponse["mrtd_data"];
-  nisData: InternalAuthAndMrtdResponse["nis_data"];
+  mrtdData: MrtdData;
+  nisData: NisData;
   signedVerificationCode: string;
 };
 
