@@ -171,12 +171,9 @@ export const sendAARFlowStates = {
   ...sendAARFlowDelegatedStates
 } as const;
 
-const validAARStatusDefaultTransitions = new Map<
-  AARFlowDefaultState["type"],
-  Set<
-    | AARFlowDefaultState["type"]
-    | Extract<AARFlowDelegatedState, { type: "notAddressee" }>["type"]
-  >
+export const validAARStatusTransitions = new Map<
+  AARFlowState["type"],
+  Set<AARFlowState["type"]>
 >([
   [sendAARFlowStates.none, new Set([sendAARFlowStates.displayingAARToS])],
   [
@@ -207,19 +204,7 @@ const validAARStatusDefaultTransitions = new Map<
       sendAARFlowStates.fetchingQRData,
       sendAARFlowStates.fetchingNotificationData
     ])
-  ]
-]);
-
-const validAARStatusDelegatedTransitions = new Map<
-  AARFlowDelegatedState["type"],
-  Set<
-    | AARFlowDelegatedState["type"]
-    | Extract<
-        AARFlowDefaultState,
-        { type: "ko" | "displayingNotificationData" }
-      >["type"]
-  >
->([
+  ],
   [
     sendAARFlowStates.notAddressee,
     new Set([sendAARFlowStates.creatingMandate])
@@ -266,11 +251,6 @@ const validAARStatusDelegatedTransitions = new Map<
     ])
   ]
 ]);
-
-export const validAARStatusTransitions = new Map<
-  AARFlowState["type"],
-  Set<AARFlowState["type"]>
->([...validAARStatusDefaultTransitions, ...validAARStatusDelegatedTransitions]);
 
 export const isValidAARStateTransition = (
   currentType: AARFlowStateName,
