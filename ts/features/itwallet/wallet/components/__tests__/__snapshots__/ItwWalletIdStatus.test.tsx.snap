@@ -35,7 +35,6 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
   testID="itwWalletIdStatusTestID"
 >
   <View
-    onLayout={[Function]}
     style={
       [
         {
@@ -64,7 +63,6 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
           },
           {
             "backgroundColor": "#F2F9FF",
-            "borderColor": "#DCE3FC",
           },
         ]
       }
@@ -688,7 +686,6 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpiring
   testID="itwWalletIdStatusTestID"
 >
   <View
-    onLayout={[Function]}
     style={
       [
         {
@@ -717,7 +714,6 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpiring
           },
           {
             "backgroundColor": "#F2F9FF",
-            "borderColor": "#DCE3FC",
           },
         ]
       }
@@ -1231,7 +1227,6 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "valid" 1`] 
   testID="itwWalletIdStatusTestID"
 >
   <View
-    onLayout={[Function]}
     style={
       [
         {
@@ -1260,7 +1255,6 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "valid" 1`] 
           },
           {
             "backgroundColor": "#F2F9FF",
-            "borderColor": "#DCE3FC",
           },
         ]
       }
