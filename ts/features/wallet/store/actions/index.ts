@@ -4,21 +4,11 @@ import { WalletPlaceholdersActions } from "./placeholders";
 import { WalletPreferencesActions } from "./preferences";
 
 /**
- * Action to trigger the update of the wallet screen content
+ * Action for requesting an update of the wallet info that can be called by any screen/saga
  */
 export const walletUpdate = createStandardAction("WALLET_UPDATE")();
 
-/**
- * Action for external wallet update requests.
- * This action is dispatched only when wallet updates are needed due to external deep links.
- */
-export const externalWalletUpdate = createStandardAction(
-  "EXTERNAL_WALLET_UPDATE"
-)();
-
-type WalletBaseActions = ActionType<
-  typeof walletUpdate | typeof externalWalletUpdate
->;
+type WalletBaseActions = ActionType<typeof walletUpdate>;
 
 export type WalletActions =
   | WalletBaseActions

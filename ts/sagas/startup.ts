@@ -152,6 +152,7 @@ import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
 import { checkItWalletIdentitySaga } from "./startup/checkItWalletIdentitySaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
+import { handleDeepLinkStartupSaga } from "./startup/handleDeepLinkStartupSaga";
 
 export const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 
@@ -714,11 +715,15 @@ export function* initializeApplicationSaga(
   // Watch for checking the user email notifications preferences
   yield* fork(watchEmailNotificationPreferencesSaga);
 
+  // Handle deep links that may require wallet updates during startup
+  // This should be called after authentication but before background actions
+  const isHandlingDeepLink = yield* call(handleDeepLinkStartupSaga);
+
   // Check if we have any pending background action to be handled
-  const isHandlingBackgroundActions = yield* call(
-    maybeHandlePendingBackgroundActions,
-    true
-  );
+  // Skip this if we just handled a deep link to avoid conflicts
+  const isHandlingBackgroundActions = isHandlingDeepLink
+    ? false
+    : yield* call(maybeHandlePendingBackgroundActions, true);
 
   if (!isHandlingBackgroundActions) {
     // Check if should navigate to the send activation screen
