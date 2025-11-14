@@ -24,7 +24,7 @@ import {
   useSharedValue
 } from "react-native-reanimated";
 import { useItWalletTheme } from "../utils/theme";
-import { ItwBranderSkiaBorder } from "./ItwBrandedSkiaBorder";
+import { ItwBrandedSkiaBorder } from "./ItwBrandedSkiaBorder";
 
 export type ItwIridescentBorderVariant = "default" | "warning" | "error";
 
