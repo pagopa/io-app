@@ -9,16 +9,16 @@ import { StyleSheet, View } from "react-native";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { getMixPanelCredential, trackWalletShowBack } from "../../../analytics";
+import { ItwBadge } from "../../../common/components/ItwBadge.tsx";
 import { ItwSkeumorphicCard } from "../../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../../common/components/ItwSkeumorphicCard/FlipGestureDetector.tsx";
-import { getThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
+import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
+import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
+import { useThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
-import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
-import { ItwBadge } from "../../../common/components/ItwBadge.tsx";
-import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
 import { useItwDisplayCredentialStatus } from "../hooks/useItwDisplayCredentialStatus";
 import { ItwPresentationCredentialCardFlipButton } from "./ItwPresentationCredentialCardFlipButton.tsx";
 
@@ -59,7 +59,7 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
     });
   };
 
-  const { backgroundColor } = getThemeColorByCredentialType(
+  const { backgroundColor } = useThemeColorByCredentialType(
     credential.credentialType,
     itwFeaturesEnabled
   );

@@ -1,0 +1,1696 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired" 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  testID="itwWalletIdStatusTestID"
+>
+  <View
+    onLayout={[Function]}
+    style={
+      [
+        {
+          "marginHorizontal": -8,
+        },
+        {
+          "transform": [
+            {
+              "scale": undefined,
+            },
+          ],
+        },
+      ]
+    }
+  >
+    <View
+      onLayout={[Function]}
+      style={
+        [
+          {
+            "borderCurve": "continuous",
+            "borderRadius": 16,
+            "gap": 6,
+            "overflow": "hidden",
+            "padding": 16,
+          },
+          {
+            "backgroundColor": "#F2F9FF",
+            "borderColor": "#DCE3FC",
+          },
+        ]
+      }
+    >
+      <SvgMock
+        height={100}
+        style={
+          [
+            {
+              "position": "absolute",
+              "right": -1,
+            },
+            {
+              "bottom": -5,
+            },
+          ]
+        }
+        width={72}
+      />
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "gap": 8,
+          }
+        }
+      >
+        <SvgMock
+          height={24}
+          width={103}
+        />
+        <RNSVGSvgView
+          accessibilityElementsHidden={true}
+          accessibilityLabel=""
+          accessible={false}
+          align="xMidYMid"
+          bbHeight={16}
+          bbWidth={16}
+          color="#D13333"
+          focusable={false}
+          height={16}
+          importantForAccessibility="no-hide-descendants"
+          meetOrSlice={0}
+          minX={0}
+          minY={0}
+          style={
+            [
+              {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              {
+                "flex": 0,
+                "height": 16,
+                "width": 16,
+              },
+            ]
+          }
+          testID="itwWalletIdStatusExpiredIconTestID"
+          vbHeight={24}
+          vbWidth={24}
+          width={16}
+        >
+          <RNSVGGroup
+            fill={
+              {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+          >
+            <RNSVGPath
+              clipRule={0}
+              d="M7.00702 1c-.73494 0-1.41405.39209-1.78152 1.02856L.2756 11.0274c-.36747.6365-.36747 1.4206 0 2.0571l4.9499 8.8783c.36747.6365 1.04658 1.0286 1.78152 1.0286h9.94288c.7349 0 1.414-.3921 1.7815-1.0286l4.993-8.8783c.3675-.6365.3675-1.4206 0-2.0571l-4.993-8.99884C18.3639 1.39209 17.6848 1 16.9499 1H7.00702Zm5.02608 13.5549c.5676 0 1.0283-.4601 1.0283-1.0277V5.52583c0-.56758-.4601-1.02769-1.0277-1.02769-.5676 0-1.0282.46011-1.0282 1.02769v8.00137c0 .5676.4601 1.0277 1.0276 1.0277Zm0 1.9431c.8436 0 1.5275.6839 1.5275 1.5275 0 .8436-.6839 1.5275-1.5275 1.5275-.8436 0-1.5274-.6839-1.5274-1.5275 0-.8436.6838-1.5275 1.5274-1.5275Z"
+              fill={
+                {
+                  "type": 2,
+                }
+              }
+              fillRule={0}
+              propList={
+                [
+                  "fill",
+                  "fillRule",
+                ]
+              }
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+      <Text
+        allowFontScaling={true}
+        dynamicTypeRamp="body"
+        maxFontSizeMultiplier={1.5}
+        style={
+          [
+            {},
+            {
+              "color": "#555C70",
+              "fontFamily": "Titillio",
+              "fontSize": 16,
+              "fontStyle": "normal",
+              "fontWeight": "400",
+              "lineHeight": 24,
+            },
+            {
+              "maxWidth": "80%",
+            },
+          ]
+        }
+      >
+        Conferma la tua identità per continuare con i tuoi documenti
+      </Text>
+      <View
+        pointerEvents="none"
+      >
+        <View
+          accessibilityLabel="Inizia"
+          accessibilityRole="button"
+          accessibilityState={
+            {
+              "busy": false,
+              "checked": undefined,
+              "disabled": false,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          hitSlop={
+            {
+              "bottom": 14,
+              "left": 24,
+              "right": 24,
+              "top": 14,
+            }
+          }
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "alignSelf": "flex-start",
+            }
+          }
+        >
+          <View
+            style={
+              [
+                {
+                  "alignItems": "center",
+                  "borderCurve": "continuous",
+                  "elevation": 0,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "overflow": "hidden",
+                  "textAlignVertical": "center",
+                },
+                false,
+                {},
+                {
+                  "paddingHorizontal": 0,
+                },
+                {
+                  "backgroundColor": "transparent",
+                  "borderColor": "#0B3EE3",
+                  "borderRadius": 8,
+                  "borderWidth": 0,
+                  "height": undefined,
+                },
+                {},
+              ]
+            }
+          >
+            <View
+              style={
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  {
+                    "columnGap": 8,
+                  },
+                  false,
+                ]
+              }
+            >
+              <Text
+                accessibilityElementsHidden={true}
+                accessible={false}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
+                importantForAccessibility="no-hide-descendants"
+                maxFontSizeMultiplier={1.5}
+                numberOfLines={1}
+                style={
+                  [
+                    {},
+                    {
+                      "color": "#0E0F13",
+                      "fontFamily": "Titillio",
+                      "fontSize": 16,
+                      "fontStyle": "normal",
+                      "fontWeight": "600",
+                      "lineHeight": 20,
+                    },
+                    [
+                      {
+                        "textAlign": "auto",
+                      },
+                      {
+                        "color": "#0B3EE3",
+                      },
+                      {
+                        "color": undefined,
+                      },
+                    ],
+                  ]
+                }
+              >
+                Inizia
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "height": 0,
+            "position": "absolute",
+            "width": 0,
+          }
+        }
+      >
+        <skGroup
+          opacity={0.4}
+          origin={
+            JsiSkPoint {
+              "CanvasKit": {
+                "MakeBlendMode": [MockFunction],
+                "MakeCanvas": [MockFunction],
+                "MakeColor": [MockFunction],
+                "MakeColorFilter": [MockFunction],
+                "MakeFont": [MockFunction],
+                "MakeImage": [MockFunction],
+                "MakeImageFilter": [MockFunction],
+                "MakeManagedAnimation": [MockFunction],
+                "MakeMatrix": [MockFunction],
+                "MakePaint": [MockFunction],
+                "MakePath": [MockFunction],
+                "MakePicture": [MockFunction],
+                "MakeRuntimeEffect": [MockFunction],
+                "MakeShader": [MockFunction],
+                "MakeSkottieAnimation": [MockFunction],
+                "MakeTextBlob": [MockFunction],
+                "MakeTypeface": [MockFunction],
+                "MakeVertices": [MockFunction],
+              },
+              "__typename__": "Point",
+              "dispose": [Function],
+              "ref": Float32Array [
+                0,
+                0,
+              ],
+            }
+          }
+        >
+          <skCircle
+            cx={0}
+            cy={0}
+            r={125}
+            transform={
+              {
+                "get": [Function],
+                "value": [
+                  {
+                    "translateX": undefined,
+                  },
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <skRadialGradient
+              c={
+                JsiSkPoint {
+                  "CanvasKit": {
+                    "MakeBlendMode": [MockFunction],
+                    "MakeCanvas": [MockFunction],
+                    "MakeColor": [MockFunction],
+                    "MakeColorFilter": [MockFunction],
+                    "MakeFont": [MockFunction],
+                    "MakeImage": [MockFunction],
+                    "MakeImageFilter": [MockFunction],
+                    "MakeManagedAnimation": [MockFunction],
+                    "MakeMatrix": [MockFunction],
+                    "MakePaint": [MockFunction],
+                    "MakePath": [MockFunction],
+                    "MakePicture": [MockFunction],
+                    "MakeRuntimeEffect": [MockFunction],
+                    "MakeShader": [MockFunction],
+                    "MakeSkottieAnimation": [MockFunction],
+                    "MakeTextBlob": [MockFunction],
+                    "MakeTypeface": [MockFunction],
+                    "MakeVertices": [MockFunction],
+                  },
+                  "__typename__": "Point",
+                  "dispose": [Function],
+                  "ref": Float32Array [
+                    0,
+                    0,
+                  ],
+                }
+              }
+              colors={
+                [
+                  "rgba(255,255,255,1)",
+                  "rgba(255,255,255,0.987)",
+                  "rgba(255,255,255,0.95)",
+                  "rgba(255,255,255,0.89)",
+                  "rgba(255,255,255,0.825)",
+                  "rgba(255,255,255,0.74)",
+                  "rgba(255,255,255,0.65)",
+                  "rgba(255,255,255,0.55)",
+                  "rgba(255,255,255,0.45)",
+                  "rgba(255,255,255,0.35)",
+                  "rgba(255,255,255,0.26)",
+                  "rgba(255,255,255,0.175)",
+                  "rgba(255,255,255,0.1)",
+                  "rgba(255,255,255,0.05)",
+                  "rgba(255,255,255,0.01)",
+                  "rgba(255,255,255,0)",
+                ]
+              }
+              positions={
+                [
+                  0,
+                  0.081,
+                  0.155,
+                  0.225,
+                  0.29,
+                  0.353,
+                  0.412,
+                  0.471,
+                  0.529,
+                  0.588,
+                  0.647,
+                  0.71,
+                  0.775,
+                  0.845,
+                  0.919,
+                  1,
+                ]
+              }
+              r={125}
+            />
+          </skCircle>
+        </skGroup>
+        <skGroup
+          layer={true}
+        >
+          <skLayer>
+            <skPaint
+              blendMode="src"
+            />
+            <skGroup>
+              <skGroup
+                blendMode="colorDodge"
+                opacity={1}
+              >
+                <skRect
+                  height={0}
+                  transform={
+                    {
+                      "get": [Function],
+                      "value": [
+                        {
+                          "translateY": undefined,
+                        },
+                      ],
+                    }
+                  }
+                  width={0}
+                  x={0}
+                  y={-0}
+                >
+                  <skLinearGradient
+                    colors={
+                      [
+                        "rgba(255, 87, 87, 1)",
+                        "rgba(255, 189, 189, 1)",
+                        "rgba(255, 87, 87, 1)",
+                        "rgba(252, 205, 205, 1)",
+                        "rgba(255, 87, 87, 1)",
+                        "rgba(255, 189, 189, 1)",
+                        "rgba(220, 227, 252, 1)",
+                      ]
+                    }
+                    end={
+                      JsiSkPoint {
+                        "CanvasKit": {
+                          "MakeBlendMode": [MockFunction],
+                          "MakeCanvas": [MockFunction],
+                          "MakeColor": [MockFunction],
+                          "MakeColorFilter": [MockFunction],
+                          "MakeFont": [MockFunction],
+                          "MakeImage": [MockFunction],
+                          "MakeImageFilter": [MockFunction],
+                          "MakeManagedAnimation": [MockFunction],
+                          "MakeMatrix": [MockFunction],
+                          "MakePaint": [MockFunction],
+                          "MakePath": [MockFunction],
+                          "MakePicture": [MockFunction],
+                          "MakeRuntimeEffect": [MockFunction],
+                          "MakeShader": [MockFunction],
+                          "MakeSkottieAnimation": [MockFunction],
+                          "MakeTextBlob": [MockFunction],
+                          "MakeTypeface": [MockFunction],
+                          "MakeVertices": [MockFunction],
+                        },
+                        "__typename__": "Point",
+                        "dispose": [Function],
+                        "ref": Float32Array [
+                          0,
+                          0,
+                        ],
+                      }
+                    }
+                    mode="mirror"
+                    start={
+                      JsiSkPoint {
+                        "CanvasKit": {
+                          "MakeBlendMode": [MockFunction],
+                          "MakeCanvas": [MockFunction],
+                          "MakeColor": [MockFunction],
+                          "MakeColorFilter": [MockFunction],
+                          "MakeFont": [MockFunction],
+                          "MakeImage": [MockFunction],
+                          "MakeImageFilter": [MockFunction],
+                          "MakeManagedAnimation": [MockFunction],
+                          "MakeMatrix": [MockFunction],
+                          "MakePaint": [MockFunction],
+                          "MakePath": [MockFunction],
+                          "MakePicture": [MockFunction],
+                          "MakeRuntimeEffect": [MockFunction],
+                          "MakeShader": [MockFunction],
+                          "MakeSkottieAnimation": [MockFunction],
+                          "MakeTextBlob": [MockFunction],
+                          "MakeTypeface": [MockFunction],
+                          "MakeVertices": [MockFunction],
+                        },
+                        "__typename__": "Point",
+                        "dispose": [Function],
+                        "ref": Float32Array [
+                          -0,
+                          0,
+                        ],
+                      }
+                    }
+                  />
+                </skRect>
+              </skGroup>
+              <skLayer>
+                <skPaint
+                  blendMode="dstIn"
+                />
+                <skGroup>
+                  <skLayer>
+                    <skPaint>
+                      <skMatrixColorFilter
+                        matrix={
+                          [
+                            1,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            1,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            1,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            1,
+                            0,
+                          ]
+                        }
+                      />
+                    </skPaint>
+                    <skGroup>
+                      <skRRect
+                        height={0}
+                        r={16}
+                        strokeJoin="round"
+                        strokeWidth={3}
+                        style="stroke"
+                        width={0}
+                        x={0}
+                        y={0}
+                      />
+                    </skGroup>
+                  </skLayer>
+                </skGroup>
+              </skLayer>
+            </skGroup>
+          </skLayer>
+          <skGroup
+            blendMode="srcIn"
+          >
+            <skLayer>
+              <skPaint>
+                <skMatrixColorFilter
+                  matrix={
+                    [
+                      1,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      1,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      1,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      1,
+                      0,
+                    ]
+                  }
+                />
+              </skPaint>
+              <skGroup>
+                <skRRect
+                  height={0}
+                  r={16}
+                  strokeJoin="round"
+                  strokeWidth={3}
+                  style="stroke"
+                  width={0}
+                  x={0}
+                  y={0}
+                />
+              </skGroup>
+            </skLayer>
+          </skGroup>
+        </skGroup>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpiring" 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  testID="itwWalletIdStatusTestID"
+>
+  <View
+    onLayout={[Function]}
+    style={
+      [
+        {
+          "marginHorizontal": -8,
+        },
+        {
+          "transform": [
+            {
+              "scale": undefined,
+            },
+          ],
+        },
+      ]
+    }
+  >
+    <View
+      onLayout={[Function]}
+      style={
+        [
+          {
+            "borderCurve": "continuous",
+            "borderRadius": 16,
+            "gap": 6,
+            "overflow": "hidden",
+            "padding": 16,
+          },
+          {
+            "backgroundColor": "#F2F9FF",
+            "borderColor": "#DCE3FC",
+          },
+        ]
+      }
+    >
+      <SvgMock
+        height={100}
+        style={
+          [
+            {
+              "position": "absolute",
+              "right": -1,
+            },
+            {
+              "bottom": -5,
+            },
+          ]
+        }
+        width={72}
+      />
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "gap": 8,
+          }
+        }
+      >
+        <SvgMock
+          height={24}
+          width={103}
+        />
+        <RNSVGSvgView
+          accessibilityElementsHidden={true}
+          accessibilityLabel=""
+          accessible={false}
+          align="xMidYMid"
+          bbHeight={16}
+          bbWidth={16}
+          color="#A5822A"
+          focusable={false}
+          height={16}
+          importantForAccessibility="no-hide-descendants"
+          meetOrSlice={0}
+          minX={0}
+          minY={0}
+          style={
+            [
+              {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              {
+                "flex": 0,
+                "height": 16,
+                "width": 16,
+              },
+            ]
+          }
+          testID="itwWalletIdStatusExpiringIconTestID"
+          vbHeight={24}
+          vbWidth={24}
+          width={16}
+        >
+          <RNSVGGroup
+            fill={
+              {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+          >
+            <RNSVGPath
+              clipRule={0}
+              d="m15.523 3.047 7.926 13.813c1.566 2.73-.392 6.14-3.523 6.14H4.074C.942 23-1.015 19.59.55 16.86L8.477 3.047c1.566-2.73 5.48-2.73 7.046 0Zm-3.495 13.458a1.528 1.528 0 1 1 0 3.056 1.528 1.528 0 0 1 0-3.056Zm0-1.944c.568 0 1.029-.46 1.029-1.028V5.528a1.028 1.028 0 0 0-2.057 0v8.005c0 .567.46 1.028 1.029 1.028Z"
+              fill={
+                {
+                  "type": 2,
+                }
+              }
+              fillRule={0}
+              propList={
+                [
+                  "fill",
+                  "fillRule",
+                ]
+              }
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+      <Text
+        allowFontScaling={true}
+        dynamicTypeRamp="body"
+        maxFontSizeMultiplier={1.5}
+        style={
+          [
+            {},
+            {
+              "color": "#555C70",
+              "fontFamily": "Titillio",
+              "fontSize": 16,
+              "fontStyle": "normal",
+              "fontWeight": "400",
+              "lineHeight": 24,
+            },
+            {
+              "maxWidth": "80%",
+            },
+          ]
+        }
+      >
+        Conferma la tua identità entro il
+         
+        <Text
+          allowFontScaling={true}
+          dynamicTypeRamp="body"
+          maxFontSizeMultiplier={1.5}
+          style={
+            [
+              {},
+              {
+                "color": "#555C70",
+                "fontFamily": "Titillio",
+                "fontSize": 16,
+                "fontStyle": "normal",
+                "fontWeight": "600",
+                "lineHeight": 24,
+              },
+            ]
+          }
+        >
+          12/11/2026
+        </Text>
+      </Text>
+      <View
+        style={
+          {
+            "height": 0,
+            "position": "absolute",
+            "width": 0,
+          }
+        }
+      >
+        <skGroup
+          opacity={0.4}
+          origin={
+            JsiSkPoint {
+              "CanvasKit": {
+                "MakeBlendMode": [MockFunction],
+                "MakeCanvas": [MockFunction],
+                "MakeColor": [MockFunction],
+                "MakeColorFilter": [MockFunction],
+                "MakeFont": [MockFunction],
+                "MakeImage": [MockFunction],
+                "MakeImageFilter": [MockFunction],
+                "MakeManagedAnimation": [MockFunction],
+                "MakeMatrix": [MockFunction],
+                "MakePaint": [MockFunction],
+                "MakePath": [MockFunction],
+                "MakePicture": [MockFunction],
+                "MakeRuntimeEffect": [MockFunction],
+                "MakeShader": [MockFunction],
+                "MakeSkottieAnimation": [MockFunction],
+                "MakeTextBlob": [MockFunction],
+                "MakeTypeface": [MockFunction],
+                "MakeVertices": [MockFunction],
+              },
+              "__typename__": "Point",
+              "dispose": [Function],
+              "ref": Float32Array [
+                0,
+                0,
+              ],
+            }
+          }
+        >
+          <skCircle
+            cx={0}
+            cy={0}
+            r={125}
+            transform={
+              {
+                "get": [Function],
+                "value": [
+                  {
+                    "translateX": undefined,
+                  },
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <skRadialGradient
+              c={
+                JsiSkPoint {
+                  "CanvasKit": {
+                    "MakeBlendMode": [MockFunction],
+                    "MakeCanvas": [MockFunction],
+                    "MakeColor": [MockFunction],
+                    "MakeColorFilter": [MockFunction],
+                    "MakeFont": [MockFunction],
+                    "MakeImage": [MockFunction],
+                    "MakeImageFilter": [MockFunction],
+                    "MakeManagedAnimation": [MockFunction],
+                    "MakeMatrix": [MockFunction],
+                    "MakePaint": [MockFunction],
+                    "MakePath": [MockFunction],
+                    "MakePicture": [MockFunction],
+                    "MakeRuntimeEffect": [MockFunction],
+                    "MakeShader": [MockFunction],
+                    "MakeSkottieAnimation": [MockFunction],
+                    "MakeTextBlob": [MockFunction],
+                    "MakeTypeface": [MockFunction],
+                    "MakeVertices": [MockFunction],
+                  },
+                  "__typename__": "Point",
+                  "dispose": [Function],
+                  "ref": Float32Array [
+                    0,
+                    0,
+                  ],
+                }
+              }
+              colors={
+                [
+                  "rgba(255,255,255,1)",
+                  "rgba(255,255,255,0.987)",
+                  "rgba(255,255,255,0.95)",
+                  "rgba(255,255,255,0.89)",
+                  "rgba(255,255,255,0.825)",
+                  "rgba(255,255,255,0.74)",
+                  "rgba(255,255,255,0.65)",
+                  "rgba(255,255,255,0.55)",
+                  "rgba(255,255,255,0.45)",
+                  "rgba(255,255,255,0.35)",
+                  "rgba(255,255,255,0.26)",
+                  "rgba(255,255,255,0.175)",
+                  "rgba(255,255,255,0.1)",
+                  "rgba(255,255,255,0.05)",
+                  "rgba(255,255,255,0.01)",
+                  "rgba(255,255,255,0)",
+                ]
+              }
+              positions={
+                [
+                  0,
+                  0.081,
+                  0.155,
+                  0.225,
+                  0.29,
+                  0.353,
+                  0.412,
+                  0.471,
+                  0.529,
+                  0.588,
+                  0.647,
+                  0.71,
+                  0.775,
+                  0.845,
+                  0.919,
+                  1,
+                ]
+              }
+              r={125}
+            />
+          </skCircle>
+        </skGroup>
+        <skGroup
+          layer={true}
+        >
+          <skLayer>
+            <skPaint
+              blendMode="src"
+            />
+            <skGroup>
+              <skGroup
+                blendMode="colorDodge"
+                opacity={1}
+              >
+                <skRect
+                  height={0}
+                  transform={
+                    {
+                      "get": [Function],
+                      "value": [
+                        {
+                          "translateY": undefined,
+                        },
+                      ],
+                    }
+                  }
+                  width={0}
+                  x={0}
+                  y={-0}
+                >
+                  <skLinearGradient
+                    colors={
+                      [
+                        "rgba(255, 179, 87, 1)",
+                        "rgba(255, 234, 189, 1)",
+                        "rgba(255, 179, 87, 1)",
+                        "rgba(205, 210, 252, 1)",
+                        "rgba(255, 179, 87, 1)",
+                        "rgba(255, 234, 189, 1)",
+                        "rgba(220, 227, 252, 1)",
+                      ]
+                    }
+                    end={
+                      JsiSkPoint {
+                        "CanvasKit": {
+                          "MakeBlendMode": [MockFunction],
+                          "MakeCanvas": [MockFunction],
+                          "MakeColor": [MockFunction],
+                          "MakeColorFilter": [MockFunction],
+                          "MakeFont": [MockFunction],
+                          "MakeImage": [MockFunction],
+                          "MakeImageFilter": [MockFunction],
+                          "MakeManagedAnimation": [MockFunction],
+                          "MakeMatrix": [MockFunction],
+                          "MakePaint": [MockFunction],
+                          "MakePath": [MockFunction],
+                          "MakePicture": [MockFunction],
+                          "MakeRuntimeEffect": [MockFunction],
+                          "MakeShader": [MockFunction],
+                          "MakeSkottieAnimation": [MockFunction],
+                          "MakeTextBlob": [MockFunction],
+                          "MakeTypeface": [MockFunction],
+                          "MakeVertices": [MockFunction],
+                        },
+                        "__typename__": "Point",
+                        "dispose": [Function],
+                        "ref": Float32Array [
+                          0,
+                          0,
+                        ],
+                      }
+                    }
+                    mode="mirror"
+                    start={
+                      JsiSkPoint {
+                        "CanvasKit": {
+                          "MakeBlendMode": [MockFunction],
+                          "MakeCanvas": [MockFunction],
+                          "MakeColor": [MockFunction],
+                          "MakeColorFilter": [MockFunction],
+                          "MakeFont": [MockFunction],
+                          "MakeImage": [MockFunction],
+                          "MakeImageFilter": [MockFunction],
+                          "MakeManagedAnimation": [MockFunction],
+                          "MakeMatrix": [MockFunction],
+                          "MakePaint": [MockFunction],
+                          "MakePath": [MockFunction],
+                          "MakePicture": [MockFunction],
+                          "MakeRuntimeEffect": [MockFunction],
+                          "MakeShader": [MockFunction],
+                          "MakeSkottieAnimation": [MockFunction],
+                          "MakeTextBlob": [MockFunction],
+                          "MakeTypeface": [MockFunction],
+                          "MakeVertices": [MockFunction],
+                        },
+                        "__typename__": "Point",
+                        "dispose": [Function],
+                        "ref": Float32Array [
+                          -0,
+                          0,
+                        ],
+                      }
+                    }
+                  />
+                </skRect>
+              </skGroup>
+              <skLayer>
+                <skPaint
+                  blendMode="dstIn"
+                />
+                <skGroup>
+                  <skLayer>
+                    <skPaint>
+                      <skMatrixColorFilter
+                        matrix={
+                          [
+                            1,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            1,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            1,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            1,
+                            0,
+                          ]
+                        }
+                      />
+                    </skPaint>
+                    <skGroup>
+                      <skRRect
+                        height={0}
+                        r={16}
+                        strokeJoin="round"
+                        strokeWidth={3}
+                        style="stroke"
+                        width={0}
+                        x={0}
+                        y={0}
+                      />
+                    </skGroup>
+                  </skLayer>
+                </skGroup>
+              </skLayer>
+            </skGroup>
+          </skLayer>
+          <skGroup
+            blendMode="srcIn"
+          >
+            <skLayer>
+              <skPaint>
+                <skMatrixColorFilter
+                  matrix={
+                    [
+                      1,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      1,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      1,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      1,
+                      0,
+                    ]
+                  }
+                />
+              </skPaint>
+              <skGroup>
+                <skRRect
+                  height={0}
+                  r={16}
+                  strokeJoin="round"
+                  strokeWidth={3}
+                  style="stroke"
+                  width={0}
+                  x={0}
+                  y={0}
+                />
+              </skGroup>
+            </skLayer>
+          </skGroup>
+        </skGroup>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`ItwWalletIdStatus should match snapshot when PID status is "valid" 1`] = `
+<View
+  accessibilityRole="button"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  testID="itwWalletIdStatusTestID"
+>
+  <View
+    onLayout={[Function]}
+    style={
+      [
+        {
+          "marginHorizontal": -8,
+        },
+        {
+          "transform": [
+            {
+              "scale": undefined,
+            },
+          ],
+        },
+      ]
+    }
+  >
+    <View
+      onLayout={[Function]}
+      style={
+        [
+          {
+            "borderCurve": "continuous",
+            "borderRadius": 16,
+            "gap": 6,
+            "overflow": "hidden",
+            "padding": 16,
+          },
+          {
+            "backgroundColor": "#F2F9FF",
+            "borderColor": "#DCE3FC",
+          },
+        ]
+      }
+    >
+      <SvgMock
+        height={100}
+        style={
+          [
+            {
+              "position": "absolute",
+              "right": -1,
+            },
+            {
+              "top": -8,
+            },
+          ]
+        }
+        width={72}
+      />
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "gap": 8,
+          }
+        }
+      >
+        <SvgMock
+          height={24}
+          width={103}
+        />
+        <RNSVGSvgView
+          accessibilityElementsHidden={true}
+          accessibilityLabel=""
+          accessible={false}
+          align="xMidYMid"
+          bbHeight={16}
+          bbWidth={16}
+          color="#427940"
+          focusable={false}
+          height={16}
+          importantForAccessibility="no-hide-descendants"
+          meetOrSlice={0}
+          minX={0}
+          minY={0}
+          style={
+            [
+              {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              {
+                "flex": 0,
+                "height": 16,
+                "width": 16,
+              },
+            ]
+          }
+          testID="itwWalletIdStatusValidIconTestID"
+          vbHeight={24}
+          vbWidth={24}
+          width={16}
+        >
+          <RNSVGGroup
+            fill={
+              {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+          >
+            <RNSVGPath
+              clipRule={0}
+              d="M0 12C0 5.373 5.373 0 12 0s12 5.373 12 12-5.373 12-12 12S0 18.627 0 12Zm17.707-1.293a1 1 0 0 0-1.414-1.414L10 15.586l-3.293-3.293a1 1 0 0 0-1.414 1.414L8.586 17a2 2 0 0 0 2.828 0l6.293-6.293Z"
+              fill={
+                {
+                  "type": 2,
+                }
+              }
+              fillRule={0}
+              propList={
+                [
+                  "fill",
+                  "fillRule",
+                ]
+              }
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+      <View
+        style={
+          {
+            "height": 0,
+            "position": "absolute",
+            "width": 0,
+          }
+        }
+      >
+        <skGroup
+          opacity={0.4}
+          origin={
+            JsiSkPoint {
+              "CanvasKit": {
+                "MakeBlendMode": [MockFunction],
+                "MakeCanvas": [MockFunction],
+                "MakeColor": [MockFunction],
+                "MakeColorFilter": [MockFunction],
+                "MakeFont": [MockFunction],
+                "MakeImage": [MockFunction],
+                "MakeImageFilter": [MockFunction],
+                "MakeManagedAnimation": [MockFunction],
+                "MakeMatrix": [MockFunction],
+                "MakePaint": [MockFunction],
+                "MakePath": [MockFunction],
+                "MakePicture": [MockFunction],
+                "MakeRuntimeEffect": [MockFunction],
+                "MakeShader": [MockFunction],
+                "MakeSkottieAnimation": [MockFunction],
+                "MakeTextBlob": [MockFunction],
+                "MakeTypeface": [MockFunction],
+                "MakeVertices": [MockFunction],
+              },
+              "__typename__": "Point",
+              "dispose": [Function],
+              "ref": Float32Array [
+                0,
+                0,
+              ],
+            }
+          }
+        >
+          <skCircle
+            cx={0}
+            cy={0}
+            r={125}
+            transform={
+              {
+                "get": [Function],
+                "value": [
+                  {
+                    "translateX": undefined,
+                  },
+                  {
+                    "scale": 1,
+                  },
+                ],
+              }
+            }
+          >
+            <skRadialGradient
+              c={
+                JsiSkPoint {
+                  "CanvasKit": {
+                    "MakeBlendMode": [MockFunction],
+                    "MakeCanvas": [MockFunction],
+                    "MakeColor": [MockFunction],
+                    "MakeColorFilter": [MockFunction],
+                    "MakeFont": [MockFunction],
+                    "MakeImage": [MockFunction],
+                    "MakeImageFilter": [MockFunction],
+                    "MakeManagedAnimation": [MockFunction],
+                    "MakeMatrix": [MockFunction],
+                    "MakePaint": [MockFunction],
+                    "MakePath": [MockFunction],
+                    "MakePicture": [MockFunction],
+                    "MakeRuntimeEffect": [MockFunction],
+                    "MakeShader": [MockFunction],
+                    "MakeSkottieAnimation": [MockFunction],
+                    "MakeTextBlob": [MockFunction],
+                    "MakeTypeface": [MockFunction],
+                    "MakeVertices": [MockFunction],
+                  },
+                  "__typename__": "Point",
+                  "dispose": [Function],
+                  "ref": Float32Array [
+                    0,
+                    0,
+                  ],
+                }
+              }
+              colors={
+                [
+                  "rgba(255,255,255,1)",
+                  "rgba(255,255,255,0.987)",
+                  "rgba(255,255,255,0.95)",
+                  "rgba(255,255,255,0.89)",
+                  "rgba(255,255,255,0.825)",
+                  "rgba(255,255,255,0.74)",
+                  "rgba(255,255,255,0.65)",
+                  "rgba(255,255,255,0.55)",
+                  "rgba(255,255,255,0.45)",
+                  "rgba(255,255,255,0.35)",
+                  "rgba(255,255,255,0.26)",
+                  "rgba(255,255,255,0.175)",
+                  "rgba(255,255,255,0.1)",
+                  "rgba(255,255,255,0.05)",
+                  "rgba(255,255,255,0.01)",
+                  "rgba(255,255,255,0)",
+                ]
+              }
+              positions={
+                [
+                  0,
+                  0.081,
+                  0.155,
+                  0.225,
+                  0.29,
+                  0.353,
+                  0.412,
+                  0.471,
+                  0.529,
+                  0.588,
+                  0.647,
+                  0.71,
+                  0.775,
+                  0.845,
+                  0.919,
+                  1,
+                ]
+              }
+              r={125}
+            />
+          </skCircle>
+        </skGroup>
+        <skGroup
+          layer={true}
+        >
+          <skLayer>
+            <skPaint
+              blendMode="src"
+            />
+            <skGroup>
+              <skGroup
+                blendMode="colorDodge"
+                opacity={1}
+              >
+                <skRect
+                  height={0}
+                  transform={
+                    {
+                      "get": [Function],
+                      "value": [
+                        {
+                          "translateY": undefined,
+                        },
+                      ],
+                    }
+                  }
+                  width={0}
+                  x={0}
+                  y={-0}
+                >
+                  <skLinearGradient
+                    colors={
+                      [
+                        "rgba(255, 179, 87, 1)",
+                        "rgba(255, 234, 189, 1)",
+                        "rgba(25, 104, 240, 1)",
+                        "rgba(205, 210, 252, 1)",
+                        "rgba(255, 179, 87, 1)",
+                        "rgba(25, 104, 240, 1)",
+                        "rgba(220, 227, 252, 1)",
+                      ]
+                    }
+                    end={
+                      JsiSkPoint {
+                        "CanvasKit": {
+                          "MakeBlendMode": [MockFunction],
+                          "MakeCanvas": [MockFunction],
+                          "MakeColor": [MockFunction],
+                          "MakeColorFilter": [MockFunction],
+                          "MakeFont": [MockFunction],
+                          "MakeImage": [MockFunction],
+                          "MakeImageFilter": [MockFunction],
+                          "MakeManagedAnimation": [MockFunction],
+                          "MakeMatrix": [MockFunction],
+                          "MakePaint": [MockFunction],
+                          "MakePath": [MockFunction],
+                          "MakePicture": [MockFunction],
+                          "MakeRuntimeEffect": [MockFunction],
+                          "MakeShader": [MockFunction],
+                          "MakeSkottieAnimation": [MockFunction],
+                          "MakeTextBlob": [MockFunction],
+                          "MakeTypeface": [MockFunction],
+                          "MakeVertices": [MockFunction],
+                        },
+                        "__typename__": "Point",
+                        "dispose": [Function],
+                        "ref": Float32Array [
+                          0,
+                          0,
+                        ],
+                      }
+                    }
+                    mode="mirror"
+                    start={
+                      JsiSkPoint {
+                        "CanvasKit": {
+                          "MakeBlendMode": [MockFunction],
+                          "MakeCanvas": [MockFunction],
+                          "MakeColor": [MockFunction],
+                          "MakeColorFilter": [MockFunction],
+                          "MakeFont": [MockFunction],
+                          "MakeImage": [MockFunction],
+                          "MakeImageFilter": [MockFunction],
+                          "MakeManagedAnimation": [MockFunction],
+                          "MakeMatrix": [MockFunction],
+                          "MakePaint": [MockFunction],
+                          "MakePath": [MockFunction],
+                          "MakePicture": [MockFunction],
+                          "MakeRuntimeEffect": [MockFunction],
+                          "MakeShader": [MockFunction],
+                          "MakeSkottieAnimation": [MockFunction],
+                          "MakeTextBlob": [MockFunction],
+                          "MakeTypeface": [MockFunction],
+                          "MakeVertices": [MockFunction],
+                        },
+                        "__typename__": "Point",
+                        "dispose": [Function],
+                        "ref": Float32Array [
+                          -0,
+                          0,
+                        ],
+                      }
+                    }
+                  />
+                </skRect>
+              </skGroup>
+              <skLayer>
+                <skPaint
+                  blendMode="dstIn"
+                />
+                <skGroup>
+                  <skLayer>
+                    <skPaint>
+                      <skMatrixColorFilter
+                        matrix={
+                          [
+                            1,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            1,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            1,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            1,
+                            0,
+                          ]
+                        }
+                      />
+                    </skPaint>
+                    <skGroup>
+                      <skRRect
+                        height={0}
+                        r={16}
+                        strokeJoin="round"
+                        strokeWidth={3}
+                        style="stroke"
+                        width={0}
+                        x={0}
+                        y={0}
+                      />
+                    </skGroup>
+                  </skLayer>
+                </skGroup>
+              </skLayer>
+            </skGroup>
+          </skLayer>
+          <skGroup
+            blendMode="srcIn"
+          >
+            <skLayer>
+              <skPaint>
+                <skMatrixColorFilter
+                  matrix={
+                    [
+                      1,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      1,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      1,
+                      0,
+                      0,
+                      0,
+                      0,
+                      0,
+                      1,
+                      0,
+                    ]
+                  }
+                />
+              </skPaint>
+              <skGroup>
+                <skRRect
+                  height={0}
+                  r={16}
+                  strokeJoin="round"
+                  strokeWidth={3}
+                  style="stroke"
+                  width={0}
+                  x={0}
+                  y={0}
+                />
+              </skGroup>
+            </skLayer>
+          </skGroup>
+        </skGroup>
+      </View>
+    </View>
+  </View>
+</View>
+`;

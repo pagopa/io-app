@@ -1,85 +1,76 @@
-import { StatusBarStyle } from "react-native";
 import { IOColors } from "@pagopa/io-app-design-system";
 import { HeaderSecondLevelHookProps } from "../../../../hooks/useHeaderSecondLevel";
+import { getLuminance } from "../../../../utils/color";
 import { getCredentialNameFromType } from "./itwCredentialUtils";
 import { CredentialType } from "./itwMocksUtils";
-import { IT_WALLET_BG } from "./constants";
+import { useItWalletTheme } from "./theme";
 
 export type CredentialTheme = {
   backgroundColor: string;
   textColor: string;
-  statusBarStyle: StatusBarStyle;
-  variant?: HeaderSecondLevelHookProps["variant"];
 };
 
-export const getThemeColorByCredentialType = (
+export const useThemeColorByCredentialType = (
   credentialType: string,
   withL3Design?: boolean
 ): CredentialTheme => {
+  const theme = useItWalletTheme();
+
   switch (credentialType) {
     case CredentialType.PID:
     default:
       return {
-        backgroundColor: withL3Design ? IT_WALLET_BG : "#295699",
-        textColor: "#032D5C",
-        statusBarStyle: "light-content",
-        variant: withL3Design ? "neutral" : "contrast"
+        backgroundColor: withL3Design ? theme["header-background"] : "#295699",
+        textColor: "#032D5C"
       };
     case CredentialType.DRIVING_LICENSE:
       return {
         backgroundColor: withL3Design ? IOColors["blueIO-500"] : "#744C63",
-        textColor: withL3Design ? "#032D5C" : "#652035",
-        statusBarStyle: "light-content"
+        textColor: withL3Design ? "#032D5C" : "#652035"
       };
     case CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD:
       return {
         backgroundColor: "#B3DCF9",
-        textColor: "#032D5C",
-        statusBarStyle: "dark-content",
-        variant: "neutral"
+        textColor: "#032D5C"
       };
     case CredentialType.EUROPEAN_DISABILITY_CARD:
       return {
         backgroundColor: "#315B76",
-        textColor: "#17406F",
-        statusBarStyle: "light-content"
+        textColor: "#17406F"
       };
     case CredentialType.EDUCATION_DEGREE:
       return {
         backgroundColor: "#F2F1CE",
-        textColor: IOColors.black,
-        statusBarStyle: "dark-content",
-        variant: "neutral"
+        textColor: IOColors.black
       };
     case CredentialType.EDUCATION_ENROLLMENT:
       return {
         backgroundColor: "#E0F2CE",
-        textColor: IOColors.black,
-        statusBarStyle: "dark-content",
-        variant: "neutral"
+        textColor: IOColors.black
       };
     case CredentialType.RESIDENCY:
       return {
         backgroundColor: "#F2E4CE",
-        textColor: IOColors.black,
-        statusBarStyle: "dark-content",
-        variant: "neutral"
+        textColor: IOColors.black
       };
   }
 };
 
-export const getHeaderPropsByCredentialType = (
+export const useHeaderPropsByCredentialType = (
   credentialType: string,
   withL3Design: boolean
 ) => {
-  const { backgroundColor, variant } = getThemeColorByCredentialType(
+  const { backgroundColor } = useThemeColorByCredentialType(
     credentialType,
     withL3Design
   );
 
+  const variant: HeaderSecondLevelHookProps["variant"] =
+    getLuminance(backgroundColor) < 0.5 ? "contrast" : "neutral";
+
   return {
     title: getCredentialNameFromType(credentialType, "", withL3Design),
-    variant: variant ?? "contrast",
+    variant,
     backgroundColor
   };
 };
