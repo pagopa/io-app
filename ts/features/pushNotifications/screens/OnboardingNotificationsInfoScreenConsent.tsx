@@ -140,7 +140,6 @@ export const OnboardingNotificationsInfoScreenConsent = () => {
         }
       }
     );
-
     return () => {
       subscription.remove();
     };

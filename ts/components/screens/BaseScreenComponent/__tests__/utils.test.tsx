@@ -1,11 +1,11 @@
+import { Linking } from "react-native";
 import * as utilsUrl from "../../../../utils/url";
 import * as markdownUtils from "../../../ui/Markdown/handlers/link";
 import { handleOnLinkClicked } from "../utils";
 
-// Linking.openURL doesn't work properly in test mode
-jest.mock("react-native/Libraries/Linking/Linking", () => ({
-  openURL: jest.fn(() => Promise.resolve())
-}));
+jest
+  .spyOn(Linking, "openURL")
+  .mockImplementation(jest.fn(() => Promise.resolve()));
 
 describe("handleOnLinkClicked", () => {
   const spy_deriveCustomHandledLink = jest.spyOn(

@@ -3,7 +3,7 @@ import _ from "lodash";
 
 import { ComponentType } from "react";
 import configureMockStore from "redux-mock-store";
-import { Alert, Pressable } from "react-native";
+import { Alert } from "react-native";
 import I18n from "i18next";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -501,6 +501,7 @@ describe("OtherWalletCardsContainer", () => {
         <ItwWalletCardsContainer />
       </AppFeedbackContext.Provider>
     ));
+
     expect(queryByTestId(`walletCardsCategoryItwHeaderTestID`)).not.toBeNull();
     expect(queryByTestId(`walletCardTestID_itw_itw_4`)).not.toBeNull();
     expect(queryByTestId(`walletCardTestID_itw_itw_5`)).not.toBeNull();
@@ -508,7 +509,9 @@ describe("OtherWalletCardsContainer", () => {
     const mDLCredential = queryByTestId(`walletCardTestID_itw_itw_4`);
 
     if (mDLCredential) {
-      const pressableComponent = mDLCredential.findByType(Pressable);
+      const pressableComponent = mDLCredential.findByProps({
+        accessibilityRole: "button"
+      });
       pressableComponent.props.onPress();
     }
 

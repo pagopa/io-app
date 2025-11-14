@@ -256,7 +256,7 @@ exports[`SendEngagementOnFirstAppOpenScreen should match the snapshot 1`] = `
                     "paddingVertical": 6,
                   },
                   {
-                    "backgroundColor": "#DBF9FA",
+                    "backgroundColor": "rgba(97,220,223,0.2)",
                   },
                 ]
               }
@@ -270,7 +270,7 @@ exports[`SendEngagementOnFirstAppOpenScreen should match the snapshot 1`] = `
                   [
                     {},
                     {
-                      "color": "#003B3D",
+                      "color": "#61DCDF",
                       "fontFamily": "Titillio",
                       "fontSize": 12,
                       "fontStyle": "normal",
