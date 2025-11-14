@@ -25,8 +25,7 @@ import {
 } from "react-native-reanimated";
 import { useItWalletTheme } from "../utils/theme";
 import { ItwBranderSkiaBorder } from "./ItwBrandedSkiaBorder";
-
-export type ItwIridescentBorderVariant = "default" | "warning" | "error";
+import { ItwSkiaBrandedGradientVariant } from "./ItwBrandedSkiaGradient";
 
 type ItwIridescentBorderProps = {
   variant?: ItwIridescentBorderVariant;

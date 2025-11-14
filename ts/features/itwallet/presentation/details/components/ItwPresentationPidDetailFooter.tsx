@@ -49,8 +49,10 @@ const ItwPresentationPidDetailFooter = ({ credential }: Props) => {
     <View>
       <ListItemAction
         variant="primary"
-        icon="productITWallet"
-        label={I18n.t("features.itWallet.presentation.itWalletId.cta.info")}
+        icon="website"
+        label={I18n.t(
+          "features.itWallet.presentation.credentialDetails.discoverItWallet"
+        )}
         onPress={useNotAvailableToastGuard(constVoid)}
       />
       <ListItemAction
