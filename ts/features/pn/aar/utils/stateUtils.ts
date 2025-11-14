@@ -71,27 +71,24 @@ type CieCanAdvisory = {
   type: SendAARFlowStatesType["cieCanAdvisory"];
   recipientInfo: RecipientInfo;
   iun: string;
-  validationCode: string;
-  timeToLive: string;
   mandateId: string;
+  verificationCode: string;
 };
 
 type CieCanInsertion = {
   type: SendAARFlowStatesType["cieCanInsertion"];
   recipientInfo: RecipientInfo;
   iun: string;
-  validationCode: string;
-  timeToLive: string;
   mandateId: string;
+  verificationCode: string;
 };
 
 type CieScanningAdvisory = {
   type: SendAARFlowStatesType["cieScanningAdvisory"];
   recipientInfo: RecipientInfo;
   iun: string;
-  validationCode: string;
-  timeToLive: string;
   mandateId: string;
+  verificationCode: string;
   can: string;
 };
 
@@ -99,9 +96,8 @@ type AndroidNFCActivation = {
   type: SendAARFlowStatesType["androidNFCActivation"];
   recipientInfo: RecipientInfo;
   iun: string;
-  validationCode: string;
-  timeToLive: string;
   mandateId: string;
+  verificationCode: string;
   can: string;
 };
 
@@ -109,9 +105,8 @@ type CieScanning = {
   type: SendAARFlowStatesType["cieScanning"];
   recipientInfo: RecipientInfo;
   iun: string;
-  validationCode: string;
-  timeToLive: string;
   mandateId: string;
+  verificationCode: string;
   can: string;
 };
 

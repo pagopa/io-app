@@ -13,7 +13,7 @@ const recipientInfo: RecipientInfo = {
 const qrCode = "https://www.google.com";
 const pnServiceId = "SERVICEID123" as NonEmptyString;
 const mandateId = "MANDATE123";
-const validationCode = "validation_code";
+const verificationCode = "validation_code";
 const can = "123456";
 
 export const sendAarMockStateFactory: {
@@ -64,24 +64,21 @@ export const sendAarMockStateFactory: {
     recipientInfo,
     iun,
     mandateId,
-    timeToLive: "",
-    validationCode
+    verificationCode
   }),
   cieCanInsertion: () => ({
     type: "cieCanInsertion",
     recipientInfo,
     iun,
     mandateId,
-    timeToLive: "",
-    validationCode
+    verificationCode
   }),
   cieScanningAdvisory: () => ({
     type: "cieScanningAdvisory",
     recipientInfo,
     iun,
     mandateId,
-    timeToLive: "",
-    validationCode,
+    verificationCode,
     can
   }),
   androidNFCActivation: () => ({
@@ -89,8 +86,7 @@ export const sendAarMockStateFactory: {
     recipientInfo,
     iun,
     mandateId,
-    timeToLive: "",
-    validationCode,
+    verificationCode,
     can
   }),
   cieScanning: () => ({
@@ -98,8 +94,7 @@ export const sendAarMockStateFactory: {
     recipientInfo,
     iun,
     mandateId,
-    timeToLive: "",
-    validationCode,
+    verificationCode,
     can
   }),
   validatingMandate: () => ({
