@@ -1,4 +1,5 @@
 import {
+  Body,
   IOToast,
   ListItemHeader,
   ListItemSwitch,
@@ -12,6 +13,7 @@ import { useState } from "react";
 import { useWindowDimensions, View } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { DSComponentViewerBox } from "../../../design-system/components/DSComponentViewerBox";
+import { ItwBrandedBox } from "../../common/components/ItwBrandedBox";
 import { ItwBrandedSkiaGradient } from "../../common/components/ItwBrandedSkiaGradient";
 import { ItwHighlightBanner } from "../../common/components/ItwHighlightBanner";
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
@@ -44,14 +46,27 @@ const ItwWalletBrandSection = () => {
           >
             <Canvas
               key={variant}
-              style={{ width: width - marginHorizontal * 2, height: 100 }}
+              style={{ width: width - marginHorizontal * 2, height: 50 }}
             >
               <ItwBrandedSkiaGradient
                 width={width - marginHorizontal * 2}
-                height={100}
+                height={50}
                 variant={variant as any}
               />
             </Canvas>
+          </DSComponentViewerBox>
+        ))}
+      </VStack>
+      <ListItemHeader label="IT-Wallet Box" />
+      <VStack space={8}>
+        {["default", "warning", "error"].map(variant => (
+          <DSComponentViewerBox key={`itwallet-box-${variant}`} name={variant}>
+            <ItwBrandedBox variant={variant as any}>
+              <Body>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua
+              </Body>
+            </ItwBrandedBox>
           </DSComponentViewerBox>
         ))}
       </VStack>

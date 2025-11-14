@@ -6,7 +6,6 @@ import {
 import { memo, useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar.tsx";
-import { getLuminance } from "../../../../../utils/color.ts";
 import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
@@ -36,10 +35,11 @@ const ItwPresentationDetailsHeader = ({
   const { isExperimental } = useIOExperimentalDesign();
   const itwFeaturesEnabled = useItwFeaturesEnabled(credential);
 
-  const { backgroundColor, textColor } = useThemeColorByCredentialType(
-    credential.credentialType as CredentialType,
-    itwFeaturesEnabled
-  );
+  const { backgroundColor, textColor, statusBarStyle } =
+    useThemeColorByCredentialType(
+      credential.credentialType as CredentialType,
+      itwFeaturesEnabled
+    );
 
   const headerContent = useMemo(() => {
     if (credentialsWithSkeumorphicCard.includes(credential.credentialType)) {
@@ -69,9 +69,7 @@ const ItwPresentationDetailsHeader = ({
     <View>
       <FocusAwareStatusBar
         backgroundColor={backgroundColor}
-        barStyle={
-          getLuminance(backgroundColor) > 0.5 ? "light-content" : "dark-content"
-        }
+        barStyle={statusBarStyle}
       />
       {headerContent}
     </View>
