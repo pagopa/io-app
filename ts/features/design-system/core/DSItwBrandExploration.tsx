@@ -1,5 +1,5 @@
 import { Body, ContentWrapper } from "@pagopa/io-app-design-system";
-import { StyleSheet, View } from "react-native";
+import { Dimensions, Platform, StyleSheet, View } from "react-native";
 import Animated, {
   SharedValue,
   useAnimatedRef,
@@ -8,6 +8,7 @@ import Animated, {
   withSpring,
   WithSpringConfig
 } from "react-native-reanimated";
+import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 
 const CARDS = [
   "#034578", // Dark blue
@@ -33,6 +34,8 @@ const cardsWithBuffer = extendedCardsData.map((colorString, index) => ({
   color: colorString
 }));
 
+const { width: SCREEN_WIDTH } = Dimensions.get("window");
+
 export const DSItwBrandExploration = () => {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollViewOffset(scrollRef);
@@ -48,6 +51,10 @@ export const DSItwBrandExploration = () => {
           top: 0,
           height: 400
         }}
+      />
+      <FocusAwareStatusBar
+        barStyle={"dark-content"}
+        backgroundColor={SCREEN_BGs.hero}
       />
       <Animated.ScrollView
         ref={scrollRef}
@@ -71,7 +78,11 @@ export const DSItwBrandExploration = () => {
 
         {/* Scrollable Content Below */}
         <ContentWrapper
-          style={{ paddingVertical: 24, backgroundColor: SCREEN_BGs.page }}
+          style={{
+            paddingVertical: 24,
+            backgroundColor: SCREEN_BGs.page,
+            zIndex: 100
+          }}
         >
           {[...Array(50)].map((_el, i) => (
             <Body key={`body-${i}`}>Repeated text</Body>
@@ -132,7 +143,6 @@ const Card = ({ color, index, scrollOffset, totalCards }: CardProps) => {
 
     return {
       zIndex: index + 1,
-      transformOrigin: "left center",
       transform: [
         { skewY: "-15deg" },
         { translateX: index * staggeredCardOffsetX },
@@ -161,15 +171,14 @@ const styles = StyleSheet.create({
   },
   cardsContainer: {
     position: "relative",
-    top: "55%",
+    top: Platform.OS === "android" ? "50%" : "55%",
     left: "-25%"
   },
   card: {
-    aspectRatio: 9 / 16,
     position: "absolute",
-    width: "30%",
+    aspectRatio: 9 / 16,
+    width: SCREEN_WIDTH * 0.3,
     borderRadius: 16,
-    borderCurve: "continuous",
-    transformOrigin: "bottom center"
+    borderCurve: "continuous"
   }
 });
