@@ -24,6 +24,7 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwRequestedClaimsList } from "../../issuance/components/ItwRequestedClaimsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwPresentationCredentialCardFlipButton } from "../../presentation/details/components/ItwPresentationCredentialCardFlipButton";
+import { ItwWalletIdStatus } from "../../wallet/components/ItwWalletIdStatus";
 
 const ItwWalletBrandSection = () => {
   const { width } = useWindowDimensions();
@@ -72,6 +73,26 @@ const ItwWalletBrandSection = () => {
     </View>
   );
 };
+
+const ItwWalletIdStatusSection = () => (
+  <View
+    style={{
+      marginHorizontal: -24,
+      paddingHorizontal: 24,
+      paddingBottom: 24
+    }}
+  >
+    <ListItemHeader label="IT-Wallet ID" />
+    <VStack space={8}>
+      <ItwWalletIdStatus pidStatus="valid" />
+      <ItwWalletIdStatus
+        pidStatus="jwtExpiring"
+        pidExpiration="2026-11-12T14:11:48.000Z"
+      />
+      <ItwWalletIdStatus pidStatus="jwtExpired" />
+    </VStack>
+  </View>
+);
 
 const ItwSkeumorphicCredentialSection = () => {
   const [valuesHidden, setValuesHidden] = useState(false);
@@ -240,6 +261,7 @@ export const ItwClaimsListSection = () => {
 export const ItwComponentsSection = () => (
   <>
     <ItwWalletBrandSection />
+    <ItwWalletIdStatusSection />
     <ItwSkeumorphicCredentialSection />
     <ItwBannerSection />
     <ItwClaimsListSection />
