@@ -233,14 +233,7 @@ describe("Services home featuredInstitutions reducer", () => {
     store.dispatch(featuredInstitutionsGet.failure(MOCK_NETWORK_ERROR));
     expect(
       store.getState().features.services.home.featuredInstitutions
-    ).toStrictEqual(
-      pot.someError(
-        {
-          institutions: MOCK_INSTITUTIONS
-        },
-        MOCK_NETWORK_ERROR
-      )
-    );
+    ).toStrictEqual(pot.noneError(MOCK_NETWORK_ERROR));
   });
 });
 
