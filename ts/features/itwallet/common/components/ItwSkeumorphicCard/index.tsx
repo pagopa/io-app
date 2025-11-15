@@ -1,6 +1,7 @@
 import { Tag, useScaleAnimation } from "@pagopa/io-app-design-system";
 import { memo, ReactNode, useMemo } from "react";
 
+import I18n from "i18next";
 import {
   AccessibilityProps,
   Pressable,
@@ -10,12 +11,11 @@ import {
   ViewStyle
 } from "react-native";
 import Animated from "react-native-reanimated";
-import I18n from "i18next";
 import { accessibilityLabelByStatus } from "../../utils/itwAccessibilityUtils";
 import {
-  useBorderColorByStatus,
   getCredentialNameFromType,
   tagPropsByStatus,
+  useBorderColorByStatus,
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
 import {
