@@ -37,7 +37,7 @@ import {
   startPNPaymentStatusTracking
 } from "../store/actions";
 import {
-  sendMessageFromIdSelector,
+  curriedSendMessageFromIdSelector,
   sendUserSelectedPaymentRptIdSelector
 } from "../store/reducers";
 import {
@@ -127,8 +127,8 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
   const aarBottomSheetRef = useRef<() => void>(undefined);
 
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
-  const sendMessageOrUndefined = useIOSelector(state =>
-    sendMessageFromIdSelector(state, messageId)
+  const sendMessageOrUndefined = useIOSelector(
+    curriedSendMessageFromIdSelector(messageId)
   );
 
   const isAarMessage = openingSourceIsAarMessage(sendOpeningSource);

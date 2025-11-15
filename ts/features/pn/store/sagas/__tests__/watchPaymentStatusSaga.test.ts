@@ -15,11 +15,11 @@ import {
   cancelPNPaymentStatusTracking,
   startPNPaymentStatusTracking
 } from "../../actions";
-import { sendMessageFromIdSelector } from "../../reducers";
 import {
   testable,
   watchPaymentStatusForMixpanelTracking
 } from "../watchPaymentStatusSaga";
+import * as REDUCERS from "../../reducers";
 
 describe("watchPaymentStatusSaga", () => {
   afterEach(() => {
@@ -112,6 +112,13 @@ describe("watchPaymentStatusSaga", () => {
     sendOpeningSources.forEach(sendOpeningSource => {
       sendUserTypes.forEach(sendUserType => {
         it(`should follow proper flow (opening source: ${sendOpeningSource}, user type ${sendUserType})`, () => {
+          const selectorMock = jest.fn() as unknown as ReturnType<
+            typeof REDUCERS.curriedSendMessageFromIdSelector
+          >;
+          jest
+            .spyOn(REDUCERS, "curriedSendMessageFromIdSelector")
+            .mockImplementation(_ => selectorMock);
+
           testSaga(
             watchPaymentStatusForMixpanelTracking,
             startPNPaymentStatusTracking({
@@ -123,7 +130,7 @@ describe("watchPaymentStatusSaga", () => {
             .next()
             .select(profileFiscalCodeSelector)
             .next(taxId)
-            .select(sendMessageFromIdSelector, messageId)
+            .select(selectorMock)
             .next(pnMessage)
             .call(
               paymentsFromSendMessage,
