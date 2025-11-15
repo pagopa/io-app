@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.20.0-rc.3](https://github.com/pagopa/io-app/compare/3.20.0-rc.2...3.20.0-rc.3) (2025-11-14)
+
+
+### Features
+
+* **AAR:** [[IOCOM-2744](https://pagopa.atlassian.net/browse/IOCOM-2744)] Add phase 3 states ([#7613](https://github.com/pagopa/io-app/issues/7613)) ([18d3a97](https://github.com/pagopa/io-app/commit/18d3a9700e7f3224de26f0139c90de30ac600386))
+
 ## [3.20.0-rc.2](https://github.com/pagopa/io-app/compare/3.20.0-rc.1...3.20.0-rc.2) (2025-11-13)
 
 
