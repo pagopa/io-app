@@ -1,10 +1,10 @@
-import { StateFrom } from "xstate";
-import { pipe } from "fp-ts/lib/function";
+import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { ItwTags } from "../tags";
+import { StateFrom } from "xstate";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import { ItwEidIssuanceMachine } from "./machine";
+import { ItwTags } from "../tags";
 import { IdentificationContext } from "./context";
+import { ItwEidIssuanceMachine } from "./machine";
 import { isL3IssuanceFeaturesEnabled } from "./utils";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
@@ -58,4 +58,10 @@ export const selectUpgradeFailedCredentials = (snapshot: MachineSnapshot) =>
     snapshot.context.failedCredentials,
     O.fromNullable,
     O.getOrElse(() => [] as ReadonlyArray<StoredCredential>)
+  );
+
+export const selectUpgradeFailure = (snapshot: MachineSnapshot) =>
+  pipe(
+    O.fromNullable(snapshot.context.failure),
+    O.fold(constNull, failure => failure)
   );

@@ -1,30 +1,52 @@
+import { Body } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
-import { Body } from "@pagopa/io-app-design-system";
 import { useEffect } from "react";
+import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
-import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import {
   trackAddFirstCredential,
   trackBackToWallet,
-  trackCredentialUpgradeFailed
+  trackItwCredentialReissuingFailed
 } from "../../analytics";
+import { ItwReissuanceFeedbackBanner } from "../../common/components/ItwReissuanceFeedbackBanner.tsx";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
+import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
+import { StoredCredential } from "../../common/utils/itwTypesUtils.ts";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
+  isL3FeaturesEnabledSelector,
   selectIsLoading,
   selectIssuanceMode,
-  selectUpgradeFailedCredentials
+  selectUpgradeFailedCredentials,
+  selectUpgradeFailure
 } from "../../machine/eid/selectors";
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import { ItwReissuanceFeedbackBanner } from "../../common/components/ItwReissuanceFeedbackBanner.tsx";
 
 export const ItwIssuanceEidResultScreen = () => {
   const route = useRoute();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const issuanceMode =
     ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
+  const failedCredentials = ItwEidIssuanceMachineContext.useSelector(
+    selectUpgradeFailedCredentials
+  );
+  const failure =
+    ItwEidIssuanceMachineContext.useSelector(selectUpgradeFailure);
+  const isL3Enabled = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
+  const itw_flow = isL3Enabled ? "L3" : "reissuing_eID";
+
+  useEffect(() => {
+    if (failedCredentials.length > 0 && failure) {
+      trackItwCredentialReissuingFailed({
+        reason: failure.reason,
+        type: failure.type,
+        itw_flow
+      });
+    }
+  }, [failedCredentials, failure, itw_flow]);
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
@@ -37,7 +59,11 @@ export const ItwIssuanceEidResultScreen = () => {
   const handleBackToWallet = () => machineRef.send({ type: "go-to-wallet" });
 
   if (issuanceMode === "upgrade") {
-    return <ItwIssuanceEidUpgradeResultContent />;
+    return (
+      <ItwIssuanceEidUpgradeResultContent
+        failedCredentials={failedCredentials}
+      />
+    );
   }
 
   if (issuanceMode === "reissuance") {
@@ -71,20 +97,15 @@ export const ItwIssuanceEidResultScreen = () => {
   );
 };
 
-const ItwIssuanceEidUpgradeResultContent = () => {
+const ItwIssuanceEidUpgradeResultContent = ({
+  failedCredentials
+}: {
+  failedCredentials: ReadonlyArray<StoredCredential>;
+}) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
-  const failedCredentials = ItwEidIssuanceMachineContext.useSelector(
-    selectUpgradeFailedCredentials
-  );
 
   const handleBackToWallet = () => machineRef.send({ type: "go-to-wallet" });
-
-  useEffect(() => {
-    if (failedCredentials.length > 0) {
-      trackCredentialUpgradeFailed();
-    }
-  }, [failedCredentials]);
 
   if (isLoading) {
     return (
@@ -144,8 +165,6 @@ const ItwIssuanceEidReissuanceResultContent = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const route = useRoute();
-
-  // TODO [SIW-3038] Add Mixpanel events if the credentials reissuing fails
 
   if (isLoading) {
     return (

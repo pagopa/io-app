@@ -4,6 +4,7 @@ import { Context, getInitialContext } from "./context";
 import { Input } from "./input";
 import { Output } from "./output";
 import { CredentialUpgradeEvents } from "./events";
+import { mapUpgradeEventToFailure } from "./failure";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -26,6 +27,9 @@ export const itwCredentialUpgradeMachine = setup({
         ...context.failedCredentials,
         context.credentials[context.credentialIndex]
       ]
+    }),
+    setFailure: assign({
+      failure: ({ event }) => mapUpgradeEventToFailure(event)
     })
   },
   actors: {
@@ -70,7 +74,7 @@ export const itwCredentialUpgradeMachine = setup({
           target: "Checking"
         },
         onError: {
-          actions: ["setFailedCredential"],
+          actions: ["setFailure", "setFailedCredential"],
           target: "Checking"
         }
       }
@@ -80,7 +84,8 @@ export const itwCredentialUpgradeMachine = setup({
     }
   },
   output: ({ context }) => ({
-    failedCredentials: context.failedCredentials
+    failedCredentials: context.failedCredentials,
+    failure: context.failure
   })
 });
 

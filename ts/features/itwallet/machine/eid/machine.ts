@@ -29,7 +29,11 @@ import {
   InitialContext
 } from "./context";
 import { EidIssuanceEvents } from "./events";
-import { IssuanceFailureType, mapEventToFailure } from "./failure";
+import {
+  IssuanceFailure,
+  IssuanceFailureType,
+  mapEventToFailure
+} from "./failure";
 import { isL3IssuanceFeaturesEnabled } from "./utils";
 
 const notImplemented = () => {
@@ -887,7 +891,8 @@ export const itwEidIssuanceMachine = setup({
         onDone: {
           description: "Credentials upgrade completed successfully",
           actions: assign(({ event }) => ({
-            failedCredentials: event.output.failedCredentials
+            failedCredentials: event.output.failedCredentials,
+            failure: event.output.failure as IssuanceFailure | undefined
           })),
           target: "#itwEidIssuanceMachine.Success"
         },

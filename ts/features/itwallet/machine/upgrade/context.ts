@@ -1,5 +1,6 @@
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { EidIssuanceMode } from "../eid/context";
+import { UpgradeCredentialFailure } from "./failure";
 import { Input } from "./input";
 
 export type Context = {
@@ -29,6 +30,10 @@ export type Context = {
    * - "reissuance": reissuing the eID on Documenti su IO, reissuing also owned credentials.
    */
   issuanceMode: EidIssuanceMode;
+  /**
+   * Error message in case of upgrade process failure
+   */
+  failure?: UpgradeCredentialFailure | undefined;
 };
 
 export const getInitialContext = (input: Input): Context => ({
@@ -37,5 +42,6 @@ export const getInitialContext = (input: Input): Context => ({
   credentials: input.credentials,
   credentialIndex: -1,
   failedCredentials: [],
-  issuanceMode: input.issuanceMode
+  issuanceMode: input.issuanceMode,
+  failure: undefined
 });

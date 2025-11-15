@@ -156,6 +156,12 @@ type CredentialUnexpectedFailure = {
   type: string;
 };
 
+type ItwCredentialReissuingFailedProperties = {
+  reason: unknown;
+  itw_flow: ItwFlow;
+  type: string;
+};
+
 type CredentialStatusAssertionFailure = {
   credential: MixPanelCredential;
   credential_status: string;
@@ -283,7 +289,8 @@ export enum ItwL3UpgradeTrigger {
   ADD_CREDENTIAL = "add_credential"
 }
 
-export type ItwFlow = "L2" | "L3" | "not_available";
+// TODO: Add reissuing_PID when the L3 PID reissuance flow is ready
+export type ItwFlow = "L2" | "L3" | "reissuing_eID" | "not_available";
 
 export type ItwScreenFlowContext = {
   screen_name: string;
@@ -1149,6 +1156,15 @@ export const trackItwAddCredentialNotTrustedIssuer = (
   );
 };
 
+export const trackItwCredentialReissuingFailed = (
+  properties: ItwCredentialReissuingFailedProperties
+) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_CREDENTIAL_REISSUING_FAILED,
+    buildEventProperties("KO", "screen_view", properties)
+  );
+};
+
 // #endregion ERRORS
 
 // #region PROFILE PROPERTIES
@@ -1463,12 +1479,5 @@ export const trackStartCredentialUpgrade = (credential: MixPanelCredential) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_START_REISSUING,
     buildEventProperties("UX", "action", { credential })
-  );
-};
-
-export const trackCredentialUpgradeFailed = () => {
-  void mixpanelTrack(
-    ITW_ERRORS_EVENTS.ITW_CREDENTIAL_REISSUING_FAILED,
-    buildEventProperties("KO", "screen_view")
   );
 };
