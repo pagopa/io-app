@@ -7,7 +7,8 @@ import {
   itwAuthLevelSelector,
   itwIsDiscoveryBannerHiddenSelector,
   itwIsFeedbackBannerHiddenSelector,
-  itwRequestedCredentialsSelector
+  itwRequestedCredentialsSelector,
+  itwIsBottomSheetForQuitReissuingSurveyVisible
 } from "../preferences";
 import { ItwAuthLevel } from "../../../utils/itwTypesUtils.ts";
 
@@ -115,5 +116,24 @@ describe("itwAuthLevelSelector", () => {
     };
 
     expect(itwAuthLevelSelector(updatedState)).toBeUndefined();
+  });
+});
+
+describe("itwBottomSheetForQuitReissuingSurveyVisible", () => {
+  afterEach(() => {
+    // Always reset the date after each test to avoid side effects
+    MockDate.reset();
+  });
+
+  it("should set the visibility state of the bottom sheet", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+
+    const updatedState = _.set(globalState, "features.itWallet.preferences", {
+      isBottomSheetForQuitReissuingSurveyVisible: false
+    });
+
+    expect(itwIsBottomSheetForQuitReissuingSurveyVisible(updatedState)).toBe(
+      false
+    );
   });
 });

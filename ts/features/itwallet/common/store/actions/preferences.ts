@@ -49,6 +49,11 @@ export const itwClearSimplifiedActivationRequirements = createStandardAction(
   "ITW_CLEAR_SIMPLIFIED_ACTIVATION_REQUIREMENTS"
 )<void>();
 
+export const itwSetBottomSheetForQuitReissuingSurveyVisible =
+  createStandardAction(
+    "ITW_SET_BOTTOM_SHEET_FOR_QUIT_REISSUING_SURVEY_VISIBLE"
+  )<boolean>();
+
 export type ItwPreferencesActions =
   | ActionType<typeof itwCloseFeedbackBanner>
   | ActionType<typeof itwCloseDiscoveryBanner>
@@ -61,4 +66,5 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwSetFiscalCodeWhitelisted>
   | ActionType<typeof itwSetWalletUpgradeMDLDetailsBannerHidden>
   | ActionType<typeof itwFreezeSimplifiedActivationRequirements>
-  | ActionType<typeof itwClearSimplifiedActivationRequirements>;
+  | ActionType<typeof itwClearSimplifiedActivationRequirements>
+  | ActionType<typeof itwSetBottomSheetForQuitReissuingSurveyVisible>;
