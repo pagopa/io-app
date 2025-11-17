@@ -156,7 +156,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
       },
     },
     "preferences": {
-      "isPidReissuingSurveyHidden": false,
       "requestedCredentials": {},
     },
     "securePreferences": {
