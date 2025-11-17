@@ -3,48 +3,117 @@ import { MessageBodyMarkdown } from "../../../../../definitions/backend/MessageB
 import { MessageSubject } from "../../../../../definitions/backend/MessageSubject";
 import { EphemeralAarMessageDataActionPayload } from "../store/actions";
 import { ThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
-import { AARFlowState, sendAARFlowStates } from "./stateUtils";
+import { AARFlowState, RecipientInfo, sendAARFlowStates } from "./stateUtils";
 
-export const sendAarMockStateFactory: Record<
-  AARFlowState["type"],
-  () => AARFlowState
-> = {
+const iun = "000000000001";
+const recipientInfo: RecipientInfo = {
+  denomination: "Mario Rossi",
+  taxId: "RSSMRA74D22A001Q"
+};
+const qrCode = "https://www.google.com";
+const pnServiceId = "SERVICEID123" as NonEmptyString;
+const mandateId = "MANDATE123";
+const verificationCode = "validation_code";
+const can = "123456";
+
+export const sendAarMockStateFactory: {
+  [K in AARFlowState["type"]]: () => Extract<AARFlowState, { type: K }>;
+} = {
   none: () => ({ type: "none" }),
   displayingAARToS: () => ({
     type: "displayingAARToS",
-    qrCode: "https://www.google.com"
+    qrCode
   }),
   fetchingQRData: () => ({
     type: "fetchingQRData",
-    qrCode: "https://www.google.com"
+    qrCode
   }),
   fetchingNotificationData: () => ({
     type: "fetchingNotificationData",
-    iun: "000000000001",
-    recipientInfo: {
-      denomination: "Mario Rossi",
-      taxId: "RSSMRA74D22A001Q"
-    }
+    iun,
+    recipientInfo
   }),
   displayingNotificationData: () => ({
     type: "displayingNotificationData",
-    recipientInfo: {
-      denomination: "Mario Rossi",
-      taxId: "RSSMRA74D22A001Q"
-    },
+    recipientInfo,
     notification: {},
-    iun: "000000000001",
-    pnServiceId: "SERVICEID123" as NonEmptyString,
-    mandateId: "MANDATE123"
+    iun,
+    pnServiceId,
+    mandateId
   }),
   notAddresseeFinal: () => ({
     type: "notAddresseeFinal",
-    recipientInfo: {
-      denomination: "Mario Rossi",
-      taxId: "RSSMRA74D22A001Q"
+    recipientInfo,
+    qrCode,
+    iun
+  }),
+  notAddressee: () => ({
+    type: "notAddressee",
+    recipientInfo,
+    qrCode,
+    iun
+  }),
+  creatingMandate: () => ({
+    type: "creatingMandate",
+    recipientInfo,
+    qrCode,
+    iun
+  }),
+  cieCanAdvisory: () => ({
+    type: "cieCanAdvisory",
+    recipientInfo,
+    iun,
+    mandateId,
+    verificationCode
+  }),
+  cieCanInsertion: () => ({
+    type: "cieCanInsertion",
+    recipientInfo,
+    iun,
+    mandateId,
+    verificationCode
+  }),
+  cieScanningAdvisory: () => ({
+    type: "cieScanningAdvisory",
+    recipientInfo,
+    iun,
+    mandateId,
+    verificationCode,
+    can
+  }),
+  androidNFCActivation: () => ({
+    type: "androidNFCActivation",
+    recipientInfo,
+    iun,
+    mandateId,
+    verificationCode,
+    can
+  }),
+  cieScanning: () => ({
+    type: "cieScanning",
+    recipientInfo,
+    iun,
+    mandateId,
+    verificationCode,
+    can
+  }),
+  validatingMandate: () => ({
+    type: "validatingMandate",
+    recipientInfo,
+    iun,
+    mandateId,
+    signedVerificationCode: "signed_validation_code",
+    mrtdData: {
+      dg1: "",
+      dg11: "",
+      sod: ""
     },
-    qrCode: "https://www.google.com",
-    iun: "000000000001"
+    nisData: {
+      nis: "",
+      publicKey: "",
+      signedChallenge: "",
+      sod: ""
+    }
   }),
   ko: () => ({
     type: "ko",
@@ -65,7 +134,7 @@ export const mockEphemeralAarMessageDataActionPayload: EphemeralAarMessageDataAc
     iun: "IUN123" as NonEmptyString,
     thirdPartyMessage: {} as unknown as ThirdPartyMessage,
     fiscalCode: "TAXCODE123" as FiscalCode,
-    pnServiceID: "SERVICEID123" as NonEmptyString,
+    pnServiceID: pnServiceId,
     markdown: "*".repeat(81) as MessageBodyMarkdown,
     subject: "subject" as MessageSubject,
     mandateId: "MANDATE123"
