@@ -891,8 +891,7 @@ export const itwEidIssuanceMachine = setup({
         onDone: {
           description: "Credentials upgrade completed successfully",
           actions: assign(({ event }) => ({
-            failedCredentials: event.output.failedCredentials,
-            failure: event.output.failure as IssuanceFailure | undefined
+            failedCredentials: event.output.failedCredentials
           })),
           target: "#itwEidIssuanceMachine.Success"
         },

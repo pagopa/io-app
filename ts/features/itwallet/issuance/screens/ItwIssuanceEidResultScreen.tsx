@@ -6,6 +6,7 @@ import LoadingScreenContent from "../../../../components/screens/LoadingScreenCo
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import {
+  getMixPanelCredential,
   trackAddFirstCredential,
   trackBackToWallet,
   trackItwCredentialReissuingFailed
@@ -19,9 +20,10 @@ import {
   isL3FeaturesEnabledSelector,
   selectIsLoading,
   selectIssuanceMode,
-  selectUpgradeFailedCredentials,
-  selectUpgradeFailure
+  selectUpgradeFailedCredentials
 } from "../../machine/eid/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors/index.ts";
+import { useIOSelector } from "../../../../store/hooks.ts";
 
 export const ItwIssuanceEidResultScreen = () => {
   const route = useRoute();
@@ -31,22 +33,25 @@ export const ItwIssuanceEidResultScreen = () => {
   const failedCredentials = ItwEidIssuanceMachineContext.useSelector(
     selectUpgradeFailedCredentials
   );
-  const failure =
-    ItwEidIssuanceMachineContext.useSelector(selectUpgradeFailure);
-  const isL3Enabled = ItwEidIssuanceMachineContext.useSelector(
-    isL3FeaturesEnabledSelector
-  );
-  const itw_flow = isL3Enabled ? "L3" : "reissuing_eID";
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+
+  const itw_flow = isItwL3 ? "L3" : "reissuing_eID";
 
   useEffect(() => {
-    if (failedCredentials.length > 0 && failure) {
-      trackItwCredentialReissuingFailed({
-        reason: failure.reason,
-        type: failure.type,
-        itw_flow
+    if (failedCredentials.length > 0) {
+      failedCredentials.forEach(failedCredential => {
+        trackItwCredentialReissuingFailed({
+          credential_failed: getMixPanelCredential(
+            failedCredential.credentialType,
+            isItwL3
+          ),
+          reason: failedCredential?.failure?.reason,
+          type: failedCredential?.failure?.type ?? "",
+          itw_flow
+        });
       });
     }
-  }, [failedCredentials, failure, itw_flow]);
+  }, [failedCredentials, itw_flow, isItwL3]);
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();

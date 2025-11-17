@@ -158,6 +158,7 @@ type CredentialUnexpectedFailure = {
 
 type ItwCredentialReissuingFailedProperties = {
   reason: unknown;
+  credential_failed: MixPanelCredential;
   itw_flow: ItwFlow;
   type: string;
 };

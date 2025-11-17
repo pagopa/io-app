@@ -1,4 +1,5 @@
 import { assign, fromPromise, setup } from "xstate";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { UpgradeCredentialOutput, UpgradeCredentialParams } from "./actors";
 import { Context, getInitialContext } from "./context";
 import { Input } from "./input";
@@ -23,13 +24,21 @@ export const itwCredentialUpgradeMachine = setup({
       credentialIndex: ({ context }) => context.credentialIndex + 1
     }),
     setFailedCredential: assign({
-      failedCredentials: ({ context }) => [
-        ...context.failedCredentials,
-        context.credentials[context.credentialIndex]
-      ]
-    }),
-    setFailure: assign({
-      failure: ({ event }) => mapUpgradeEventToFailure(event)
+      failedCredentials: ({ context, event }) => {
+        const current = context.credentials[context.credentialIndex];
+
+        const failedEvent = mapUpgradeEventToFailure(event);
+
+        const failedCredential: StoredCredential = {
+          ...current,
+          failure: {
+            type: failedEvent.type,
+            reason: failedEvent.reason
+          }
+        };
+
+        return [...context.failedCredentials, failedCredential];
+      }
     })
   },
   actors: {
@@ -74,7 +83,7 @@ export const itwCredentialUpgradeMachine = setup({
           target: "Checking"
         },
         onError: {
-          actions: ["setFailure", "setFailedCredential"],
+          actions: ["setFailedCredential"],
           target: "Checking"
         }
       }
@@ -84,8 +93,7 @@ export const itwCredentialUpgradeMachine = setup({
     }
   },
   output: ({ context }) => ({
-    failedCredentials: context.failedCredentials,
-    failure: context.failure
+    failedCredentials: context.failedCredentials
   })
 });
 

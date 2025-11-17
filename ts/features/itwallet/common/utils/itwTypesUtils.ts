@@ -1,9 +1,9 @@
-import { type Credential as LegacyCredential } from "@pagopa/io-react-native-wallet-legacy";
 import {
   Credential,
   Trust,
   WalletInstance
 } from "@pagopa/io-react-native-wallet";
+import { type Credential as LegacyCredential } from "@pagopa/io-react-native-wallet-legacy";
 import { CredentialType } from "./itwMocksUtils.ts";
 
 /**
@@ -116,6 +116,13 @@ export type StoredCredential = {
   jwt: {
     expiration: string;
     issuedAt?: string;
+  };
+  /**
+   * Error message in case of failure retriving the credential
+   */
+  failure?: {
+    type: string;
+    reason: unknown;
   };
 };
 
