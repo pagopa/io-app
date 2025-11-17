@@ -23,6 +23,8 @@ const SCREEN_BGs = {
   page: "#F2F8FF"
 };
 
+const HERO_SECTION_HEIGHT = 400;
+
 const PATTERN_SIZE = 3;
 const endPattern = CARDS.slice(-PATTERN_SIZE);
 const startPattern = CARDS.slice(0, PATTERN_SIZE);
@@ -34,7 +36,7 @@ const cardsWithBuffer = extendedCardsData.map((colorString, index) => ({
   color: colorString
 }));
 
-const { width: SCREEN_WIDTH } = Dimensions.get("window");
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 export const DSItwBrandExploration = () => {
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
@@ -49,7 +51,7 @@ export const DSItwBrandExploration = () => {
           left: 0,
           right: 0,
           top: 0,
-          height: 400
+          height: SCREEN_HEIGHT * 0.8
         }}
       />
       <FocusAwareStatusBar
@@ -184,7 +186,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   heroSection: {
-    height: 400
+    height: HERO_SECTION_HEIGHT
   },
   cardsContainer: {
     position: "relative",
