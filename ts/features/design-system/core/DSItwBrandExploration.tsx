@@ -118,7 +118,7 @@ const Card = ({ color, index, scrollOffset, totalCards }: CardProps) => {
 
   /* GAUSSIAN CURVE ATTRIBUTES */
   /* Amplitude of the curve, or the maximum vertical movement of the card.
-  We use a sligthly reduced value on Android to normalize the
+  We use a slightly reduced value on Android to normalise the
   effect compared to iOS */
   const curveAmplitude = Platform.OS === "android" ? 40 : 60;
 
