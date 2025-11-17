@@ -17,8 +17,7 @@ import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
 
 describe("IT Wallet preferences reducer", () => {
   const INITIAL_STATE: ItwPreferencesState = {
-    requestedCredentials: {},
-    isPidReissuingSurveyHidden: false
+    requestedCredentials: {}
   };
 
   it("should return the initial state", () => {
