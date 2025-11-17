@@ -2959,7 +2959,13 @@
           }
         },
         "institutions": {
-          "title": "Enti in evidenza"
+          "title": "Enti in evidenza",
+          "error": {
+            "banner": {
+              "label": "Non siamo riusciti a caricare la lista degli enti in evidenza",
+              "cta": "Prova di nuovo"
+            }
+          }
         }
       },
       "institutions": {
