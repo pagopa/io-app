@@ -9,7 +9,7 @@ import * as O from "fp-ts/lib/Option";
 import { AccessibilityInfo, View } from "react-native";
 import I18n from "i18next";
 import { Body, ContentWrapper } from "@pagopa/io-app-design-system";
-import _ from "lodash";
+import { isEqual } from "lodash";
 import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { trackIngressScreen } from "../../settings/common/analytics";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
@@ -251,8 +251,8 @@ const IngressScreenBlockingError = memo(() => {
   const isBackendStatusLoaded = useIOSelector(isBackendStatusLoadedSelector);
   const isMixpanelEnabled = useIOSelector(isMixpanelEnabledSelector);
   const isConnected = useIOSelector(isConnectedSelector);
-  const profileLoaded = useIOSelector(profileSelector, _.isEqual);
-  const sessionLoaded = useIOSelector(sessionInfoSelector, _.isEqual);
+  const profileLoaded = useIOSelector(profileSelector, isEqual);
+  const sessionLoaded = useIOSelector(sessionInfoSelector, isEqual);
   const hasCheckSessionError = useIOSelector(checkSessionErrorSelector);
 
   useEffect(() => {
