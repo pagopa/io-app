@@ -117,8 +117,10 @@ const Card = ({ color, index, scrollOffset, totalCards }: CardProps) => {
   };
 
   /* GAUSSIAN CURVE ATTRIBUTES */
-  /* Amplitude of the curve, or the maximum vertical movement of the card */
-  const curveAmplitude = 60;
+  /* Amplitude of the curve, or the maximum vertical movement of the card.
+  We use a sligthly reduced value on Android to normalize the
+  effect compared to iOS */
+  const curveAmplitude = Platform.OS === "android" ? 40 : 60;
 
   /* Sigma is the standard deviation of the Gaussian curve.
   A small value means the curve is more narrow and steep,
@@ -126,12 +128,19 @@ const Card = ({ color, index, scrollOffset, totalCards }: CardProps) => {
   Depending on this value, the curve will move more or less cards. */
   const curveSigma = 0.8;
 
-  /* Derived parameters */
-  const center = totalCards / 2;
+  /* DERIVED PARAMETERS */
+  /* On iOS, the `curveOffset` is at the middle of the stack of cards:
+     you can traverse the stack in reverse thanks to the inertial
+     scroll's negative values.
+     As Android does not support inertial scrolling, it's positioned
+     within the initial area (10–20%) of the stack. This allows the user
+     to traverse the entire card stack using positive values. */
+  const curveOffset =
+    Platform.OS === "android" ? totalCards * 0.2 : totalCards / 2;
   const baseY = index * staggeredCardOffset.y;
 
   const animatedStyle = useAnimatedStyle(() => {
-    const curvePeakPos = center + scrollOffset.value / pixelsPerCard;
+    const curvePeakPos = curveOffset + scrollOffset.value / pixelsPerCard;
     const distance = index - curvePeakPos;
 
     /* Gaussian curve formula */
