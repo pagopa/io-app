@@ -49,10 +49,9 @@ export const itwClearSimplifiedActivationRequirements = createStandardAction(
   "ITW_CLEAR_SIMPLIFIED_ACTIVATION_REQUIREMENTS"
 )<void>();
 
-export const itwSetBottomSheetForQuitReissuingSurveyVisible =
-  createStandardAction(
-    "ITW_SET_BOTTOM_SHEET_FOR_QUIT_REISSUING_SURVEY_VISIBLE"
-  )<boolean>();
+export const itwSetPidReissuingSurveyHidden = createStandardAction(
+  "ITW_SET_PID_REISSUING_SURVEY_HIDDEN"
+)<boolean>();
 
 export type ItwPreferencesActions =
   | ActionType<typeof itwCloseFeedbackBanner>
@@ -67,4 +66,4 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwSetWalletUpgradeMDLDetailsBannerHidden>
   | ActionType<typeof itwFreezeSimplifiedActivationRequirements>
   | ActionType<typeof itwClearSimplifiedActivationRequirements>
-  | ActionType<typeof itwSetBottomSheetForQuitReissuingSurveyVisible>;
+  | ActionType<typeof itwSetPidReissuingSurveyHidden>;

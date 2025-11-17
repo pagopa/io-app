@@ -36,6 +36,7 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { itwIsPidReissuingSurveyHidden } from "../../common/store/selectors/preferences";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 import { isL3IssuanceFeaturesEnabled } from "./utils";
@@ -52,11 +53,13 @@ export const createEidIssuanceActionsImplementation = (
       const walletInstanceAttestation =
         itwWalletInstanceAttestationSelector(state);
       const credentials = itwCredentialsSelector(state);
+      const isPidReissuingSurveyHidden = itwIsPidReissuingSurveyHidden(state);
 
       return {
         integrityKeyTag: O.toUndefined(storedIntegrityKeyTag),
         walletInstanceAttestation,
-        legacyCredentials: Object.values(credentials)
+        legacyCredentials: Object.values(credentials),
+        isPidReissuingSurveyHidden
       };
     }
   ),
@@ -202,7 +205,9 @@ export const createEidIssuanceActionsImplementation = (
           params: {
             screen: ROUTES.WALLET_HOME,
             params: {
-              requiredEidFeedback: context.mode === "reissuance"
+              requiredEidFeedback:
+                context.mode === "reissuance" &&
+                !context.isPidReissuingSurveyHidden
             }
           }
         }

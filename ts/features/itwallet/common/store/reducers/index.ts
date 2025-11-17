@@ -51,7 +51,7 @@ const itwReducer = combineReducers({
   securePreferences: securePreferencesReducer
 });
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 8;
+const CURRENT_REDUX_ITW_STORE_VERSION = 7;
 
 export const migrations: MigrationManifest = {
   // Added preferences store
@@ -100,11 +100,7 @@ export const migrations: MigrationManifest = {
 
   // Removed reissuanceFeedbackBannerHidden from preferences
   "7": (state: PersistedState): PersistedState =>
-    _.omit(state, "preferences.reissuanceFeedbackBannerHidden"),
-
-  // Added isBottomSheetForQuitReissuingSurveyVisible to preferences store and set it to true by default
-  "8": (state: PersistedState): PersistedState =>
-    _.omit(state, "preferences.isBottomSheetForQuitReissuingSurveyVisible")
+    _.omit(state, "preferences.reissuanceFeedbackBannerHidden")
 };
 
 const itwPersistConfig: PersistConfig = {

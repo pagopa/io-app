@@ -14,7 +14,7 @@ import {
   itwSetWalletUpgradeMDLDetailsBannerHidden,
   itwFreezeSimplifiedActivationRequirements,
   itwClearSimplifiedActivationRequirements,
-  itwSetBottomSheetForQuitReissuingSurveyVisible
+  itwSetPidReissuingSurveyHidden
 } from "../actions/preferences";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
@@ -46,12 +46,11 @@ export type ItwPreferencesState = {
   isItwSimplifiedActivationRequired?: boolean;
   // Indicates whether the bottom sheet survey is visible when the user quits
   // the reissuing flow only for the first time
-  isBottomSheetForQuitReissuingSurveyVisible?: boolean;
+  isPidReissuingSurveyHidden?: boolean;
 };
 
 export const itwPreferencesInitialState: ItwPreferencesState = {
-  requestedCredentials: {},
-  isBottomSheetForQuitReissuingSurveyVisible: true
+  requestedCredentials: {}
 };
 
 const reducer = (
@@ -167,10 +166,10 @@ const reducer = (
       return rest;
     }
 
-    case getType(itwSetBottomSheetForQuitReissuingSurveyVisible): {
+    case getType(itwSetPidReissuingSurveyHidden): {
       return {
         ...state,
-        isBottomSheetForQuitReissuingSurveyVisible: action.payload
+        isPidReissuingSurveyHidden: action.payload
       };
     }
 

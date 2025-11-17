@@ -21,7 +21,7 @@ import {
   trackWalletAdd
 } from "../../itwallet/analytics";
 import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet.tsx";
-import { itwSetBottomSheetForQuitReissuingSurveyVisible } from "../../itwallet/common/store/actions/preferences.ts";
+import { itwSetPidReissuingSurveyHidden } from "../../itwallet/common/store/actions/preferences.ts";
 import { itwShouldRenderNewItWalletSelector } from "../../itwallet/common/store/selectors";
 import { WALLET_L3_BG_COLOR } from "../../itwallet/common/utils/constants";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
@@ -58,7 +58,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
   const itwFeedbackBottomSheet = useItwEidFeedbackBottomSheet({
     onPrimaryAction: () => {
-      dispatch(itwSetBottomSheetForQuitReissuingSurveyVisible(false));
+      dispatch(itwSetPidReissuingSurveyHidden(true));
     }
   });
 

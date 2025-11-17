@@ -32,7 +32,7 @@ import {
   selectIssuanceMode
 } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
-import { itwIsBottomSheetForQuitReissuingSurveyVisible } from "../../../common/store/selectors/preferences";
+import { itwIsPidReissuingSurveyHidden } from "../../../common/store/selectors/preferences";
 
 export type ItwIdentificationNavigationParams = {
   eidReissuing?: boolean;
@@ -61,12 +61,13 @@ export const ItwIdentificationModeSelectionScreen = ({
   );
   const mode = ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
   const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
-  const isBottomSheetForQuitReissuingSurveyVisible = useIOSelector(
-    itwIsBottomSheetForQuitReissuingSurveyVisible
-  );
 
   const disabledIdentificationMethods = useIOSelector(
     itwDisabledIdentificationMethodsSelector
+  );
+
+  const isPidReissuingSurveyHidden = useIOSelector(
+    itwIsPidReissuingSurveyHidden
   );
 
   const isCiePinDisabled = useMemo(
@@ -157,7 +158,7 @@ export const ItwIdentificationModeSelectionScreen = ({
             params: {
               screen: ROUTES.WALLET_HOME,
               params: {
-                requiredEidFeedback: isBottomSheetForQuitReissuingSurveyVisible
+                requiredEidFeedback: !isPidReissuingSurveyHidden
               }
             }
           }
