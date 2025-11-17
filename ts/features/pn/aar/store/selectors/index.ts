@@ -25,14 +25,15 @@ export const aarAdresseeDenominationSelector = (
   const currentState = currentAARFlowData(state);
 
   switch (currentState.type) {
-    case sendAARFlowStates.fetchingNotificationData:
-    case sendAARFlowStates.displayingNotificationData:
-    case sendAARFlowStates.notAddresseeFinal:
+    case sendAARFlowStates.none:
+    case sendAARFlowStates.ko:
+    case sendAARFlowStates.displayingAARToS:
+    case sendAARFlowStates.fetchingQRData:
+      return undefined;
+    default:
       if (iun === currentState.iun) {
         return currentState.recipientInfo.denomination;
       }
-      return undefined;
-    default:
       return undefined;
   }
 };
