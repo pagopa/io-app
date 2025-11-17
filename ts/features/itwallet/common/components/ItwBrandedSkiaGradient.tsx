@@ -53,9 +53,7 @@ export const ItwBrandedSkiaGradient = ({
   };
 
   /* Makes gradient slightly bigger to handle animation overflow */
-  const gradientX = -width * 0.2;
   const gradientY = -height;
-  const gradientWidth = width * 2;
   const gradientHeight = height * 3;
 
   useAnimatedReaction(
@@ -99,13 +97,13 @@ export const ItwBrandedSkiaGradient = ({
     <Rect
       x={0}
       y={gradientY}
-      width={gradientWidth}
+      width={width}
       height={gradientHeight}
       transform={skiaGradientTransform}
     >
       <SkiaLinearGradient
         mode="mirror"
-        start={vec(gradientX, 0)}
+        start={vec(0, 0)}
         end={vec(width / 3, width)}
         colors={gradientByVariant[variant]}
       />
