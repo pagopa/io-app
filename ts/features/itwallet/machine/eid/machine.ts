@@ -29,11 +29,7 @@ import {
   InitialContext
 } from "./context";
 import { EidIssuanceEvents } from "./events";
-import {
-  IssuanceFailure,
-  IssuanceFailureType,
-  mapEventToFailure
-} from "./failure";
+import { IssuanceFailureType, mapEventToFailure } from "./failure";
 import { isL3IssuanceFeaturesEnabled } from "./utils";
 
 const notImplemented = () => {

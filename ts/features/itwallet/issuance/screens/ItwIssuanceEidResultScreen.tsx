@@ -4,6 +4,7 @@ import I18n from "i18next";
 import { useEffect } from "react";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { useIOSelector } from "../../../../store/hooks.ts";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import {
   getMixPanelCredential,
@@ -15,15 +16,13 @@ import { ItwReissuanceFeedbackBanner } from "../../common/components/ItwReissuan
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils.ts";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors/index.ts";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
-  isL3FeaturesEnabledSelector,
   selectIsLoading,
   selectIssuanceMode,
   selectUpgradeFailedCredentials
 } from "../../machine/eid/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors/index.ts";
-import { useIOSelector } from "../../../../store/hooks.ts";
 
 export const ItwIssuanceEidResultScreen = () => {
   const route = useRoute();

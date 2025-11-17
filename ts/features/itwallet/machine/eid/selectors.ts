@@ -1,4 +1,4 @@
-import { constNull, pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { StateFrom } from "xstate";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
