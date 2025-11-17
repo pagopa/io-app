@@ -1,6 +1,7 @@
 import {
   ContentWrapper,
   IOSpacingScale,
+  VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
 
@@ -9,7 +10,6 @@ import { StyleSheet, View } from "react-native";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { getMixPanelCredential, trackWalletShowBack } from "../../../analytics";
-import { ItwBadge } from "../../../common/components/ItwBadge.tsx";
 import { ItwSkeumorphicCard } from "../../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../../common/components/ItwSkeumorphicCard/FlipGestureDetector.tsx";
 import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
@@ -77,12 +77,8 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
           />
         </FlipGestureDetector>
       </CardContainer>
-      <ContentWrapper
-        style={
-          itwFeaturesEnabled ? styles.horizontalLayout : styles.centeredLayout
-        }
-      >
-        {itwFeaturesEnabled && <ItwBadge />}
+      <VSpacer size={8} />
+      <ContentWrapper style={styles.centeredLayout}>
         <ItwPresentationCredentialCardFlipButton
           isFlipped={isFlipped}
           handleOnPress={handleFlipButtonPress}
@@ -121,11 +117,6 @@ const styles = StyleSheet.create({
     right: 0,
     left: 0,
     zIndex: -1
-  },
-  horizontalLayout: {
-    marginTop: 10,
-    flexDirection: "row",
-    justifyContent: "space-between"
   },
   centeredLayout: {
     alignSelf: "center"
