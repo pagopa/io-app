@@ -3779,10 +3779,18 @@
       }
     },
     "cdc": {
+      "wallet": {
+        "card": {
+          "title": "Cultura Card",
+          "organization": "Ministry of Culture",
+          "validThrough": "Valid through {{endDate}}"
+        }
+      },
       "serviceEntryPoint": {
         "notAvailable": "The service is not available at this time. Try later."
       },
-      "request": "Request Carta della Cultura"
+      "request": "Request Carta della Cultura",
+      "usage": "Use Carta della Cultura"
     }
   },
   "features": {

@@ -3788,10 +3788,18 @@
       }
     },
     "cdc": {
+      "wallet": {
+        "card": {
+          "title": "Carta della Cultura",
+          "organization": "Ministero della Cultura",
+          "validThrough": "Valida fino al {{endDate}}"
+        }
+      },
       "serviceEntryPoint": {
         "notAvailable": "Il servizio non è disponibile in questo momento. Riprova più tardi."
       },
-      "request": "Richiedi Carta della Cultura"
+      "request": "Richiedi Carta della Cultura",
+      "usage": "Usa Carta della Cultura"
     }
   },
   "features": {
