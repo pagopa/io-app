@@ -9,6 +9,7 @@ import * as O from "fp-ts/lib/Option";
 import { AccessibilityInfo, View } from "react-native";
 import I18n from "i18next";
 import { Body, ContentWrapper } from "@pagopa/io-app-design-system";
+import _ from "lodash";
 import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { trackIngressScreen } from "../../settings/common/analytics";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
@@ -246,11 +247,12 @@ const IngressScreenNoInternetConnection = memo(() => {
 
 const IngressScreenBlockingError = memo(() => {
   const operationRef = useRef<View>(null);
+  const hasTrackedRef = useRef(false);
   const isBackendStatusLoaded = useIOSelector(isBackendStatusLoadedSelector);
   const isMixpanelEnabled = useIOSelector(isMixpanelEnabledSelector);
   const isConnected = useIOSelector(isConnectedSelector);
-  const profileLoaded = useIOSelector(profileSelector);
-  const sessionLoaded = useIOSelector(sessionInfoSelector);
+  const profileLoaded = useIOSelector(profileSelector, _.isEqual);
+  const sessionLoaded = useIOSelector(sessionInfoSelector, _.isEqual);
   const hasCheckSessionError = useIOSelector(checkSessionErrorSelector);
 
   useEffect(() => {
@@ -262,16 +264,19 @@ const IngressScreenBlockingError = memo(() => {
     // If mixpanel is not initialized at that time, we have an issue spanning, system-wide.
     if (isMixpanelEnabled !== false) {
       if (isBackendStatusLoaded) {
-        void trackIngressTimeout(
-          getApiFailureValue(
-            isConnected,
-            sessionLoaded,
-            profileLoaded,
-            hasCheckSessionError
-          )
+        const apiFailureValue = getApiFailureValue(
+          isConnected,
+          sessionLoaded,
+          profileLoaded,
+          hasCheckSessionError
         );
+        if (apiFailureValue !== "" && !hasTrackedRef.current) {
+          void trackIngressTimeout(apiFailureValue);
+          hasTrackedRef.current = true;
+        }
       } else {
         void trackIngressCdnSystemError();
+        hasTrackedRef.current = true;
       }
     }
   }, [
