@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.20.0-canary.7718](https://github.com/pagopa/io-app/compare/3.20.0-rc.3...3.20.0-canary.7718) (2025-11-17)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-3311](https://pagopa.atlassian.net/browse/SIW-3311)] New details screen for IT-Wallet credentials ([#7579](https://github.com/pagopa/io-app/issues/7579)) ([4b5246a](https://github.com/pagopa/io-app/commit/4b5246a7235e4955636e5f19f50a2c88f35e7217))
+* add expiration banner and active session login feature flags ([405e514](https://github.com/pagopa/io-app/commit/405e51441f479e8832d8b11c6dfca81f4a15c8b7))
+* Add localized feature flag for active session login in settings ([4b7b372](https://github.com/pagopa/io-app/commit/4b7b372fc6abebd4c84351d3a707462bfc05c920))
+* add Login Expiration Banner component and analytics tracking ([ab970a5](https://github.com/pagopa/io-app/commit/ab970a5fe3b6e9d5fe4a3085c81d9fdc0f659c59))
+* implement engagement for active session login and update related selectors ([501eb54](https://github.com/pagopa/io-app/commit/501eb54ba7d887628ac933ece0a5cd10be752bfc))
+* implement session expiration banner functionality and remove login preferences module ([a34c18c](https://github.com/pagopa/io-app/commit/a34c18cb604f93770df13e2c730597471403e79d))
+* Integrate active session login initial state into root reducer ([04c90cd](https://github.com/pagopa/io-app/commit/04c90cd85510d9c08712183e7ba72fdaf048f5f8))
+* integrate AuthenticationNavigator into Settings and update navigation parameters ([1f40e8b](https://github.com/pagopa/io-app/commit/1f40e8b2fec06d24d6a2635414cc439ff48145d0))
+
 ## [3.20.0-rc.3](https://github.com/pagopa/io-app/compare/3.20.0-rc.2...3.20.0-rc.3) (2025-11-14)
 
 
