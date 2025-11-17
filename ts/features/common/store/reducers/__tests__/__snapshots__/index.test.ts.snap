@@ -156,6 +156,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
       },
     },
     "preferences": {
+      "isBottomSheetForQuitReissuingSurveyVisible": true,
       "requestedCredentials": {},
     },
     "securePreferences": {
@@ -374,9 +375,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "utmSource": undefined,
   },
   "wallet": {
-    "bottomSheet": {
-      "bottomSheetSurveyVisible": true,
-    },
     "cards": {},
     "placeholders": {
       "isLoading": false,
