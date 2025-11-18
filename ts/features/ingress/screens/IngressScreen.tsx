@@ -9,6 +9,7 @@ import * as O from "fp-ts/lib/Option";
 import { AccessibilityInfo, View } from "react-native";
 import I18n from "i18next";
 import { Body, ContentWrapper } from "@pagopa/io-app-design-system";
+import { isEqual } from "lodash";
 import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { trackIngressScreen } from "../../settings/common/analytics";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
@@ -37,6 +38,7 @@ import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { IdentificationBackActionType } from "../../identification/store/reducers";
 import { profileSelector } from "../../settings/common/store/selectors";
 import { sessionInfoSelector } from "../../authentication/common/store/selectors";
+import { checkSessionErrorSelector } from "../store/selectors";
 import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import { ProfileError } from "../../settings/common/store/types";
@@ -47,7 +49,8 @@ const TIMEOUT_BLOCKING_SCREEN = (25 * 1000) as Millisecond;
 const getApiFailureValue = (
   isConnected: boolean | undefined,
   sessionLoaded: O.Option<PublicSession>,
-  profileLoaded: pot.Pot<InitializedProfile, ProfileError>
+  profileLoaded: pot.Pot<InitializedProfile, ProfileError>,
+  checkSession: boolean
 ): string => {
   const apiFailures: Array<string> = [];
 
@@ -57,7 +60,8 @@ const getApiFailureValue = (
   }
 
   // Add "get session" if sessionLoaded is None (error loading session)
-  if (O.isNone(sessionLoaded)) {
+  // OR if there was a checkCurrentSession.failure
+  if (O.isNone(sessionLoaded) || checkSession) {
     apiFailures.push("get session");
   }
 
@@ -243,11 +247,13 @@ const IngressScreenNoInternetConnection = memo(() => {
 
 const IngressScreenBlockingError = memo(() => {
   const operationRef = useRef<View>(null);
+  const hasTrackedRef = useRef(false);
   const isBackendStatusLoaded = useIOSelector(isBackendStatusLoadedSelector);
   const isMixpanelEnabled = useIOSelector(isMixpanelEnabledSelector);
   const isConnected = useIOSelector(isConnectedSelector);
-  const profileLoaded = useIOSelector(profileSelector);
-  const sessionLoaded = useIOSelector(sessionInfoSelector);
+  const profileLoaded = useIOSelector(profileSelector, isEqual);
+  const sessionLoaded = useIOSelector(sessionInfoSelector, isEqual);
+  const hasCheckSessionError = useIOSelector(checkSessionErrorSelector);
 
   useEffect(() => {
     setAccessibilityFocus(operationRef);
@@ -258,11 +264,19 @@ const IngressScreenBlockingError = memo(() => {
     // If mixpanel is not initialized at that time, we have an issue spanning, system-wide.
     if (isMixpanelEnabled !== false) {
       if (isBackendStatusLoaded) {
-        void trackIngressTimeout(
-          getApiFailureValue(isConnected, sessionLoaded, profileLoaded)
+        const apiFailureValue = getApiFailureValue(
+          isConnected,
+          sessionLoaded,
+          profileLoaded,
+          hasCheckSessionError
         );
+        if (apiFailureValue !== "" && !hasTrackedRef.current) {
+          void trackIngressTimeout(apiFailureValue);
+          hasTrackedRef.current = true;
+        }
       } else {
         void trackIngressCdnSystemError();
+        hasTrackedRef.current = true;
       }
     }
   }, [
@@ -270,7 +284,8 @@ const IngressScreenBlockingError = memo(() => {
     isConnected,
     isMixpanelEnabled,
     profileLoaded,
-    sessionLoaded
+    sessionLoaded,
+    hasCheckSessionError
   ]);
 
   return (
