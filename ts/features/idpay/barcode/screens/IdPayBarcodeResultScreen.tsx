@@ -265,6 +265,8 @@ const BarcodeExpiredContent = ({
 };
 
 const LoadingScreen = () => (
+  /* TODO: We should use a `LoadingScreenContent` component, to avoid
+    duplicates of the loading screen throughout the app */
   <SafeAreaView style={styles.loadingWrapper}>
     <LoadingIndicator />
     <VSpacer size={24} />
