@@ -37,10 +37,10 @@ import { getIdpLoginUri } from "../../../common/utils/login";
 import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { isCieLoginUatEnabledSelector } from "../store/selectors";
 import { cieFlowForDevServerEnabled } from "../utils";
-import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
 import {
   isActiveSessionFastLoginEnabledSelector,
-  isActiveSessionLoginSelector
+  isActiveSessionLoginSelector,
+  remoteApiLoginUrlPrefixSelector
 } from "../../../activeSessionLogin/store/selectors";
 import { hashedProfileFiscalCodeSelector } from "../../../../../store/reducers/crossSessions";
 
