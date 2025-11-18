@@ -18,7 +18,11 @@ describe("aarFlowReducer and related functions", () => {
   describe("Basic reducer behavior and selectors", () => {
     sendAarMockStates.forEach(payload => {
       [payload, "non_valid", undefined].forEach(actionParamFlowState => {
-        it(`state '${payload.type}' should reset upon receiving terminateAarFlow`, () => {
+        it(`state '${payload.type}' should${
+          actionParamFlowState === "non_valid" ? " not" : ""
+        } reset upon receiving terminateAarFlow with ${
+          actionParamFlowState === "non_valid" ? "an invalid" : "a valid"
+        } flowState as parameter`, () => {
           const actionPayload: TerminateAarFlowPayload = {
             messageId: "test",
             currentFlowState: actionParamFlowState as
