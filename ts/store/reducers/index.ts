@@ -29,6 +29,7 @@ import authenticationReducer, {
 import { fastLoginOptInInitialState } from "../../features/authentication/fastLogin/store/reducers/optInReducer";
 import { cieReducer } from "../../features/authentication/login/cie/store/reducers";
 import { cieLoginInitialState } from "../../features/authentication/login/cie/store/reducers/cieLogin";
+import { activeSessionLoginInitialState } from "../../features/authentication/activeSessionLogin/store/reducer";
 import bonusReducer from "../../features/bonus/common/store/reducers";
 import { featuresPersistor } from "../../features/common/store/reducers";
 import {
@@ -262,8 +263,10 @@ export function createRootReducer(
                       .isCieIDTourGuideEnabled,
                   _persist: state.features.loginFeatures.cieLogin._persist
                 },
-                loginPreferences: {
-                  ...state.features.loginFeatures.loginPreferences
+                activeSessionLogin: {
+                  ...activeSessionLoginInitialState,
+                  _persist:
+                    state.features.loginFeatures.activeSessionLogin._persist
                 }
               },
               profileSettings: {
