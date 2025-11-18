@@ -3,7 +3,6 @@ import { fireEvent } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
 import { Action, Store } from "redux";
 import configureMockStore from "redux-mock-store";
-import { createSelector } from "reselect";
 import * as HARDWARE_BACK_BUTTON from "../../../../hooks/useHardwareBackButton";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
@@ -59,15 +58,14 @@ const sendUserTypes: ReadonlyArray<SendUserType> = [
 ];
 
 const getMockCurriedSelector = (response: PNMessage | undefined) =>
-  jest.fn().mockImplementation(
-    (_id: string) =>
-      createSelector(
-        state => state,
-        _state => response
-      ) as unknown as ReturnType<
-        typeof REDUCERS.curriedSendMessageFromIdSelector
-      >
-  );
+  jest
+    .fn()
+    .mockImplementation(
+      (_id: string) =>
+        ((_state: GlobalState) => response) as unknown as ReturnType<
+          typeof REDUCERS.curriedSendMessageFromIdSelector
+        >
+    );
 
 describe("MessageDetailsScreen", () => {
   beforeEach(() => {
