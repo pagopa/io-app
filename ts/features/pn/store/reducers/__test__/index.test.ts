@@ -6,8 +6,8 @@ import {
 } from "..";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { PNMessage } from "../../types/types";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { ThirdPartyMessage } from "../../../../../../definitions/pn/ThirdPartyMessage";
 
 describe("pnReducer", () => {
   it("should match snapshot", () => {
@@ -88,11 +88,7 @@ describe("sendMessageFromIdSelector", () => {
       } as unknown as GlobalState;
       const output = sendMessageFromIdSelector(state, sendMessageId);
       if (shouldReturnSendMessage) {
-        expect(output).toEqual({
-          attachments: sendMessage.attachments,
-          created_at: thirdPartyMessage.created_at,
-          ...sendMessage.details
-        });
+        expect(output).toEqual(sendMessage);
       } else {
         expect(output).toBeUndefined();
       }
@@ -144,27 +140,29 @@ describe("sendUserSelectedPaymentRptIdSelector", () => {
   const p3CreditorTaxId = "01234567890";
   const p3NoticeCode = "012345678912345630";
   const sendMessage = {
-    recipients: [
-      {
-        payment: {
-          noticeCode: "012345678912345610",
-          creditorTaxId: "01234567890"
+    details: {
+      recipients: [
+        {
+          payment: {
+            noticeCode: "012345678912345610",
+            creditorTaxId: "01234567890"
+          }
+        },
+        {
+          payment: {
+            noticeCode: "012345678912345620",
+            creditorTaxId: "01234567890"
+          }
+        },
+        {
+          payment: {
+            noticeCode: p3NoticeCode,
+            creditorTaxId: p3CreditorTaxId
+          }
         }
-      },
-      {
-        payment: {
-          noticeCode: "012345678912345620",
-          creditorTaxId: "01234567890"
-        }
-      },
-      {
-        payment: {
-          noticeCode: p3NoticeCode,
-          creditorTaxId: p3CreditorTaxId
-        }
-      }
-    ]
-  } as unknown as PNMessage;
+      ]
+    }
+  } as unknown as ThirdPartyMessage;
 
   it("should return undefined when the message is undefined", () => {
     const appState = appReducer(undefined, applicationChangeState("active"));
@@ -177,8 +175,10 @@ describe("sendUserSelectedPaymentRptIdSelector", () => {
   it("should return undefined when recipients are empty", () => {
     const appState = appReducer(undefined, applicationChangeState("active"));
     const emptyRecipientsSendMessage = {
-      recipients: []
-    } as unknown as PNMessage;
+      details: {
+        recipients: []
+      }
+    } as unknown as ThirdPartyMessage;
     const sendUserSelectedPaymentRptId = sendUserSelectedPaymentRptIdSelector(
       appState,
       emptyRecipientsSendMessage
@@ -188,8 +188,10 @@ describe("sendUserSelectedPaymentRptIdSelector", () => {
   it("should return undefined when recipients do not have a payment", () => {
     const appState = appReducer(undefined, applicationChangeState("active"));
     const noPaymentsSendMessage = {
-      recipients: [{}, {}, {}]
-    } as unknown as PNMessage;
+      details: {
+        recipients: [{}, {}, {}]
+      }
+    } as unknown as ThirdPartyMessage;
     const sendUserSelectedPaymentRptId = sendUserSelectedPaymentRptIdSelector(
       appState,
       noPaymentsSendMessage

@@ -27,7 +27,6 @@ import PN_ROUTES from "../../navigation/routes";
 import { startPNPaymentStatusTracking } from "../../store/actions";
 import { MessageDetailsScreen } from "../MessageDetailsScreen";
 import * as REDUCERS from "../../store/reducers";
-import { PNMessage } from "../../store/types/types";
 import { ATTACHMENT_CATEGORY } from "../../../messages/types/attachmentCategory";
 import * as AAR_ANALYTICS from "../../aar/analytics";
 import * as SEND_ANALYTICS from "../../analytics";
@@ -36,6 +35,7 @@ import {
   SendOpeningSource,
   SendUserType
 } from "../../../pushNotifications/analytics";
+import { ThirdPartyMessage } from "../../../../../definitions/pn/ThirdPartyMessage";
 
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
@@ -158,12 +158,14 @@ describe("MessageDetailsScreen", () => {
             [false, true].forEach(containsF24 => {
               const fakeProfileFiscalCode = "XXXYYY99Z00A123B";
               const sendMessage = {
-                notificationStatusHistory: [],
-                isCancelled,
-                recipients:
-                  paymentCount > 0
-                    ? [{ taxId: fakeProfileFiscalCode, payment: {} }]
-                    : [],
+                details: {
+                  notificationStatusHistory: [],
+                  isCancelled,
+                  recipients:
+                    paymentCount > 0
+                      ? [{ taxId: fakeProfileFiscalCode, payment: {} }]
+                      : []
+                },
                 attachments: containsF24
                   ? [
                       {
@@ -171,7 +173,7 @@ describe("MessageDetailsScreen", () => {
                       }
                     ]
                   : []
-              } as unknown as PNMessage;
+              } as unknown as ThirdPartyMessage;
               [undefined, sendMessage].forEach(sendMessageOrUndefined =>
                 [false, true].forEach(isDelegate => {
                   it(`should ${
@@ -296,12 +298,13 @@ describe("MessageDetailsScreen", () => {
 
         const sendMessage = {
           attachments: [],
-          created_at: new Date(),
-          iun: "A IUN",
-          notificationStatusHistory: [],
-          recipients: [],
-          subject: "A subject"
-        } as unknown as PNMessage;
+          details: {
+            iun: "A IUN",
+            notificationStatusHistory: [],
+            recipients: [],
+            subject: "A subject"
+          }
+        } as ThirdPartyMessage;
 
         jest
           .spyOn(commonSelectors, "profileFiscalCodeSelector")
@@ -360,12 +363,14 @@ describe("MessageDetailsScreen", () => {
 
         const sendMessage = {
           attachments: [],
-          created_at: new Date(),
-          iun: "A IUN",
-          notificationStatusHistory: [],
-          recipients: [],
-          subject: "A subject"
-        } as unknown as PNMessage;
+          details: {
+            created_at: new Date(),
+            iun: "A IUN",
+            notificationStatusHistory: [],
+            recipients: [],
+            subject: "A subject"
+          }
+        } as ThirdPartyMessage;
 
         jest
           .spyOn(commonSelectors, "profileFiscalCodeSelector")

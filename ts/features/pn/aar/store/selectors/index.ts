@@ -1,9 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
+import { isLeft } from "fp-ts/lib/Either";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { thirdPartyFromIdSelector } from "../../../../messages/store/reducers/thirdPartyById";
-import { toSENDMessage } from "../../../store/types/transformers";
 import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
+import { ThirdPartyMessage } from "../../../../../../definitions/pn/ThirdPartyMessage";
 
 export const thirdPartySenderDenominationSelector = (
   state: GlobalState,
@@ -14,8 +15,13 @@ export const thirdPartySenderDenominationSelector = (
   if (thirdPartyMessage == null) {
     return undefined;
   }
-  const sendMessage = toSENDMessage(thirdPartyMessage);
-  return sendMessage?.senderDenomination;
+  const sendThirdPartyMessageEither = ThirdPartyMessage.decode(
+    thirdPartyMessage.third_party_message
+  );
+  if (isLeft(sendThirdPartyMessageEither)) {
+    return undefined;
+  }
+  return sendThirdPartyMessageEither.right?.details?.senderDenomination;
 };
 
 export const aarAdresseeDenominationSelector = (

@@ -37,6 +37,7 @@ import {
   startPNPaymentStatusTracking
 } from "../store/actions";
 import {
+  sendMessageCreationDateSelector,
   sendMessageFromIdSelector,
   sendUserSelectedPaymentRptIdSelector
 } from "../store/reducers";
@@ -130,6 +131,9 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
   const sendMessageOrUndefined = useIOSelector(state =>
     sendMessageFromIdSelector(state, messageId)
   );
+  const sendMessageCreationDate = useIOSelector(state =>
+    sendMessageCreationDateSelector(state, messageId)
+  );
 
   const isAarMessage = openingSourceIsAarMessage(sendOpeningSource);
   const fiscalCodeOrUndefined = isAarMessage ? undefined : currentFiscalCode;
@@ -219,7 +223,8 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
     }, [dispatch, messageId, sendMessageOrUndefined, serviceId, store])
   );
 
-  if (sendMessageOrUndefined == null) {
+  const sendMessageDetails = sendMessageOrUndefined?.details;
+  if (sendMessageDetails == null) {
     return (
       <OperationResultScreenContent
         pictogram="umbrella"
@@ -233,7 +238,9 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
   return (
     <>
       <MessageDetails
-        message={sendMessageOrUndefined}
+        attachments={sendMessageOrUndefined?.attachments}
+        createdAt={sendMessageCreationDate}
+        message={sendMessageDetails}
         messageId={messageId}
         serviceId={serviceId}
         payments={payments}

@@ -3,7 +3,6 @@ import * as E from "fp-ts/lib/Either";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { loadThirdPartyMessage } from "../store/actions";
-import { toSENDMessage } from "../../pn/store/types/transformers";
 import {
   trackPNNotificationLoadError,
   trackPNNotificationLoadSuccess
@@ -29,6 +28,7 @@ import { apiUrlPrefix } from "../../../config";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 import { isTestEnv } from "../../../utils/environment";
 import { getKeyInfo } from "../../lollipop/saga";
+import { ThirdPartyMessage } from "../../../../definitions/pn/ThirdPartyMessage";
 
 export function* handleThirdPartyMessage(
   action: ActionType<typeof loadThirdPartyMessage.request>
@@ -113,15 +113,22 @@ const trackSuccess = (
     tag
   );
   if (tag === TagEnum.PN) {
-    const sendMessageOrUndefined = toSENDMessage(messageFromApi);
+    const sendThirdPartyMessageEither = ThirdPartyMessage.decode(
+      messageFromApi.third_party_message
+    );
+    if (
+      E.isRight(sendThirdPartyMessageEither) &&
+      sendThirdPartyMessageEither.right.details != null
+    ) {
+      const attachments = sendThirdPartyMessageEither.right.attachments;
+      const hasAttachments = attachments != null && attachments.length > 0;
 
-    if (sendMessageOrUndefined != null) {
-      const hasAttachments =
-        sendMessageOrUndefined.attachments != null &&
-        sendMessageOrUndefined.attachments.length > 0;
-      const timeline = sendMessageOrUndefined.notificationStatusHistory;
+      const details = sendThirdPartyMessageEither.right.details;
+      const timeline = details.notificationStatusHistory;
+
       const status =
         timeline.length > 0 ? timeline[timeline.length - 1].status : undefined;
+
       trackPNNotificationLoadSuccess(
         hasAttachments,
         status,
