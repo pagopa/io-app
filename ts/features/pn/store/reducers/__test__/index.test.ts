@@ -16,8 +16,15 @@ describe("pnReducer", () => {
   });
 });
 
-describe("sendMessageFromIdSelector", () => {
+describe("curriedSendMessageFromIdSelector", () => {
   const sendMessageId = "01K9S27NM5BFCJWYFB71F2HT8Y";
+  it("should be a curried function returning a selector, for memoization reasons", () => {
+    const selector = curriedSendMessageFromIdSelector(sendMessageId);
+    const resultFunction = selector.resultFunc;
+    expect(resultFunction).not.toBeNull(); // make sure the selector is defined with `createSelector`
+    const argumentCount = resultFunction.length;
+    expect(argumentCount).toBe(1); // the returned selector should only have the state as argument
+  });
   it("should return undefined when there is nothing in the store", () => {
     const state = {
       entities: {
