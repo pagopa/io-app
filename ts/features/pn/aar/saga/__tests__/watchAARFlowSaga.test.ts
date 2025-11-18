@@ -1,42 +1,56 @@
 import { testSaga } from "redux-saga-test-plan";
-import { call } from "typed-redux-saga";
+import { Effect } from "redux-saga/effects";
+import { take, takeLatest } from "typed-redux-saga/macro";
 import { SessionToken } from "../../../../../types/SessionToken";
 import { KeyInfo } from "../../../../lollipop/utils/crypto";
-import * as SEND_CLIENT from "../../api/client";
-import { setAarFlowState } from "../../store/actions";
-import * as FETCH_QR_SAGA from "../fetchQrCodeSaga";
-import { aarFlowMasterSaga, watchAarFlowSaga } from "../watchAARFlowSaga";
+import {
+  setAarFlowState,
+  terminateAarFlow,
+  tryInitiateAarFlow
+} from "../../store/actions";
 import { sendAARFlowStates } from "../../utils/stateUtils";
-import * as FETCH_DATA_SAGA from "../fetchNotificationDataSaga";
+import { initiateAarFlowIfEnabled } from "../InitiateAarFlowIfEnabledSaga";
+import { aarFlowMasterSaga, watchAarFlowSaga } from "../watchAARFlowSaga";
+import { fetchAARQrCodeSaga } from "../fetchQrCodeSaga";
+import {
+  SendAARClient,
+  createSendAARClientWithLollipop
+} from "../../api/client";
+import { apiUrlPrefix } from "../../../../../config";
+import { fetchAarDataSaga } from "../fetchNotificationDataSaga";
+
+const mockSessionToken = "mock-session-token" as SessionToken;
+const mockKeyInfo = {} as KeyInfo;
+
+const mockSendAARClient: SendAARClient = {
+  aarQRCodeCheck: jest.fn(),
+  getAARNotification: jest.fn(),
+  getNotificationAttachment: jest.fn()
+};
 
 describe("watchAarFlowSaga", () => {
-  const mockSessionToken = "mock-session-token" as SessionToken;
-  const mockKeyInfo = {} as KeyInfo;
-
-  const mockSendAARClient: SEND_CLIENT.SendAARClient = {
-    aarQRCodeCheck: jest.fn(),
-    getAARNotification: jest.fn(),
-    getNotificationAttachment: jest.fn()
-  };
-  const mockCreateClient = jest.spyOn(
-    SEND_CLIENT,
-    "createSendAARClientWithLollipop"
-  );
-
   beforeEach(() => {
     jest.clearAllMocks();
-    mockCreateClient.mockImplementation(() => mockSendAARClient);
   });
 
-  it("should register takeLatest for setAarFlowState", () => {
-    testSaga(watchAarFlowSaga, mockSessionToken, mockKeyInfo)
-      .next()
-      .takeLatest(
+  it("should race takeLatest(setAarFlowState) and take(terminateAarFlow)", () => {
+    const raceEffect = {
+      task: takeLatest(
         setAarFlowState,
         aarFlowMasterSaga,
         mockSendAARClient,
         mockSessionToken
-      )
+      ),
+      cancel: take(terminateAarFlow)
+    } as unknown as { [key: string]: Effect };
+
+    testSaga(watchAarFlowSaga, mockSessionToken, mockKeyInfo)
+      .next()
+      .call(createSendAARClientWithLollipop, apiUrlPrefix, mockKeyInfo)
+      .next(mockSendAARClient)
+      .race(raceEffect)
+      .next()
+      .takeLatest(tryInitiateAarFlow, initiateAarFlowIfEnabled)
       .next()
       .isDone();
   });
@@ -45,12 +59,6 @@ describe("watchAarFlowSaga", () => {
     const qrCode = "TESTETST";
 
     it("should call fetchQrCodeSaga when an updateState action has fetchingQRData as payload", () => {
-      const mockFn = jest.fn();
-      jest
-        .spyOn(FETCH_QR_SAGA, "fetchAARQrCodeSaga")
-        .mockImplementation(function* (_client: any, _token: string) {
-          yield* call(mockFn);
-        } as typeof FETCH_QR_SAGA.fetchAARQrCodeSaga);
       const action = setAarFlowState({
         type: sendAARFlowStates.fetchingQRData,
         qrCode
@@ -58,17 +66,16 @@ describe("watchAarFlowSaga", () => {
 
       testSaga(aarFlowMasterSaga, mockSendAARClient, mockSessionToken, action)
         .next()
-        .call(mockFn) // this equates to switching the saga to the aar qr one
+        .call(
+          fetchAARQrCodeSaga,
+          mockSendAARClient.aarQRCodeCheck,
+          mockSessionToken,
+          action
+        )
         .next()
         .isDone();
     });
     it("should call the fetchAarDataSaga when an updateState action has getAARNotification as payload", () => {
-      const mockFn = jest.fn();
-      jest
-        .spyOn(FETCH_DATA_SAGA, "fetchAarDataSaga")
-        .mockImplementation(function* (_client: any, _token: string) {
-          yield* call(mockFn);
-        } as typeof FETCH_DATA_SAGA.fetchAarDataSaga);
       const action = setAarFlowState({
         type: sendAARFlowStates.fetchingNotificationData,
         recipientInfo: {
@@ -80,7 +87,12 @@ describe("watchAarFlowSaga", () => {
 
       testSaga(aarFlowMasterSaga, mockSendAARClient, mockSessionToken, action)
         .next()
-        .call(mockFn) // this equates to switching the saga to the aar qr one
+        .call(
+          fetchAarDataSaga,
+          mockSendAARClient.getAARNotification,
+          mockSessionToken,
+          action
+        )
         .next()
         .isDone();
     });
