@@ -23,8 +23,8 @@ import Animated, {
   useSharedValue,
   withSpring
 } from "react-native-reanimated";
-import { CircularProgress } from "../../../../../components/ui/CircularProgress";
-import { setAccessibilityFocus } from "../../../../../utils/accessibility";
+import { CircularProgress } from "../../../../components/ui/CircularProgress";
+import { setAccessibilityFocus } from "../../../../utils/accessibility";
 
 const accessibityTimeout = 100 as Millisecond;
 
@@ -226,7 +226,7 @@ const ContentAndroid = (props: CieCardReadContentProps) => (
 /**
  * Renders the read progress screen content based on the platform
  */
-export const ItwCieCardReadContent = Platform.select({
+export const CieCardReadContent = Platform.select({
   ios: ContentIos,
   default: ContentAndroid
 });
