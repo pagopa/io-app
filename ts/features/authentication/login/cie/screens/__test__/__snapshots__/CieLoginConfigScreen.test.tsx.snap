@@ -348,7 +348,15 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
                           }
                         }
                       >
-                        <RCTSafeAreaView
+                        <RNCSafeAreaView
+                          edges={
+                            {
+                              "bottom": "additive",
+                              "left": "additive",
+                              "right": "additive",
+                              "top": "additive",
+                            }
+                          }
                           style={
                             {
                               "flex": 1,
@@ -560,7 +568,7 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
                               />
                             </View>
                           </View>
-                        </RCTSafeAreaView>
+                        </RNCSafeAreaView>
                       </View>
                     </View>
                   </View>
