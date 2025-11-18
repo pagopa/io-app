@@ -1,28 +1,22 @@
 import { testSaga } from "redux-saga-test-plan";
 import { handleStoredLinkingUrlIfNeeded } from "..";
-import {
-  isSendAARLink,
-  navigateToSendAarFlowIfEnabled
-} from "../../../pn/aar/utils/deepLinking";
+import { tryInitiateAarFlow } from "../../../pn/aar/store/actions";
+import { isSendAARLink } from "../../../pn/aar/utils/deepLinking";
 import { clearLinkingUrl } from "../../actions";
 import { storedLinkingUrlSelector } from "../../reducers";
-import { GlobalState } from "../../../../store/reducers/types";
 
 describe("handleStoredLinkingUrlIfNeeded", () => {
   const aarUrl = "https://example.com/aar";
   it("should navigate to the AAR screen and clear the linking url state when there is a valid AAR url returned by the linking selector", () => {
-    const state = {} as GlobalState;
     testSaga(handleStoredLinkingUrlIfNeeded)
       .next()
       .select(storedLinkingUrlSelector)
       .next(aarUrl)
       .select(isSendAARLink, aarUrl)
       .next(true)
-      .select()
-      .next(state)
       .put(clearLinkingUrl())
       .next()
-      .call(navigateToSendAarFlowIfEnabled, state, aarUrl)
+      .put(tryInitiateAarFlow({ aarUrl }))
       .next()
       .isDone();
   });
