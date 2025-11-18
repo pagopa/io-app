@@ -1,7 +1,7 @@
 import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback, useMemo } from "react";
 import I18n from "i18next";
+import { useCallback, useMemo } from "react";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -14,7 +14,6 @@ import {
   ItwEidInfoBottomSheetTitle
 } from "../../common/components/ItwEidInfoBottomSheetContent";
 import { ItwEidLifecycleAlert } from "../../common/components/ItwEidLifecycleAlert";
-import { ItwFeedbackBanner } from "../../common/components/ItwFeedbackBanner";
 import { ItwWalletId } from "../../common/components/ItwWalletId.tsx";
 import { ItwWalletReadyBanner } from "../../common/components/ItwWalletReadyBanner";
 import { useItwPendingReviewRequest } from "../../common/hooks/useItwPendingReviewRequest";
@@ -131,7 +130,6 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
               )}
             </>
           }
-          bottomElement={<ItwFeedbackBanner />}
         />
       </VStack>
       {eidInfoBottomSheet.bottomSheet}
