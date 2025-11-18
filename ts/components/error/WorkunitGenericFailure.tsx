@@ -1,10 +1,10 @@
 import { FooterActions } from "@pagopa/io-app-design-system";
 
+import I18n from "i18next";
 import { ReactElement } from "react";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import I18n from "i18next";
 import image from "../../../img/servicesStatus/error-detail-icon.png";
 import { navigateBack } from "../../store/actions/navigation";
 import { InfoScreenComponent } from "../infoScreen/InfoScreenComponent";

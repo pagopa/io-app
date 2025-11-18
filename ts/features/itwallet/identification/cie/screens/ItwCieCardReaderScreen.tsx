@@ -1,8 +1,8 @@
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import { useCallback, useEffect } from "react";
-import { SafeAreaView } from "react-native";
 import I18n from "i18next";
+import { useCallback, useEffect } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { trackItWalletCieCardReading } from "../../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
@@ -11,12 +11,12 @@ import {
   selectAuthUrlOption,
   selectCiePin
 } from "../../../machine/eid/selectors";
+import { ItwCieCardReadFailureContent } from "../components/ItwCieCardReadFailureContent";
+import { ItwCieCardReadProgressContent } from "../components/ItwCieCardReadProgressContent";
 import {
   ItwCieAuthenticationWebview,
   ItwCieAuthorizationWebview
 } from "../components/ItwCieWebView";
-import { ItwCieCardReadProgressContent } from "../components/ItwCieCardReadProgressContent";
-import { ItwCieCardReadFailureContent } from "../components/ItwCieCardReadFailureContent";
 import {
   ItwCieMachineContext,
   ItwCieMachineProvider

@@ -1,6 +1,7 @@
 import { ContentWrapper, OTPInput } from "@pagopa/io-app-design-system";
 import { useEffect, useState } from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { ScrollView } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import CieLoginConfigScreenContent from "../components/CieLoginConfigScreenContent";
 
@@ -21,6 +22,9 @@ const PinView = (props: PinViewProps) => (
   </>
 );
 
+/**
+ * @deprecated Use one of the `IOScrollView…` components instead.
+ */
 const CieLoginConfigScreen = () => {
   const [locked, setLocked] = useState(true);
   const [pin, setPin] = useState("");
