@@ -9,23 +9,14 @@ import {
   CieCardReadContentProps
 } from "../../../common/components/cie/CieCardReadContent";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import {
-  aarCieScanningStateSelector,
-  currentAARFlowData
-} from "../store/selectors";
+import { aarCieScanningStateSelector } from "../store/selectors";
 import { sendAARFlowStates } from "../utils/stateUtils";
 import { SendAARLoadingComponent } from "../components/SendAARLoadingComponent";
 import { setAarFlowState } from "../store/actions";
 import { isDefined } from "../../../../utils/guards";
 import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
-import { PnParamsList } from "../../navigation/params";
 
-type Props = {
-  navigation: IOStackNavigationProp<PnParamsList, "SEND_AAR_CIE_CARD_READING">;
-};
-
-export const SendAARCieCardReadingScreen = ({ navigation }: Props) => {
+export const SendAARCieCardReadingScreen = () => {
   const dispatch = useIODispatch();
   const { terminateFlow } = useSendAarFlowManager();
   const maybeCieScanningState = useIOSelector(aarCieScanningStateSelector);
@@ -108,12 +99,11 @@ export const SendAARCieCardReadingScreen = ({ navigation }: Props) => {
           label: i18n.t("global.buttons.close"),
           onPress: () => {
             terminateFlow();
-            navigation.popToTop();
           }
         }
       }
     }),
-    [cancelAction, terminateFlow, navigation]
+    [cancelAction, terminateFlow]
   );
 
   if (!isDefined(maybeCieScanningState)) {
