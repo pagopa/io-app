@@ -1,5 +1,4 @@
 import {
-  BodySmall,
   ContentWrapper,
   Optional,
   VSpacer,
@@ -9,8 +8,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/Option";
 import I18n from "i18next";
 import React, { useCallback, useMemo } from "react";
-import { StyleSheet, View } from "react-native";
-import ITWalletLogoImage from "../../../../../../img/features/itWallet/brand/itw_logo.svg";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import {
@@ -28,6 +25,7 @@ import {
   trackWalletCredentialShowTrustmark
 } from "../../../analytics";
 import ItwCredentialNotFound from "../../../common/components/ItwCredentialNotFound.tsx";
+import { PoweredByItWalletText } from "../../../common/components/PoweredByItWalletText.tsx";
 import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
 import { itwSetReviewPending } from "../../../common/store/actions/preferences.ts";
 import {
@@ -312,27 +310,9 @@ export const ItwPresentationCredentialDetail = ({
             />
           )}
           <ItwPresentationDetailsFooter credential={credential} />
-          {isL3Credential && <PoweredByItWallet />}
+          {isL3Credential && <PoweredByItWalletText />}
         </VStack>
       </ContentWrapper>
     </ItwPresentationDetailsScreenBase>
   );
 };
-
-const PoweredByItWallet = () => (
-  <View style={styles.poweredBy}>
-    <BodySmall>
-      {I18n.t("features.itWallet.presentation.credentialDetails.partOf")}
-    </BodySmall>
-    <ITWalletLogoImage width={75} height={15} accessibilityLabel="IT Wallet" />
-  </View>
-);
-
-const styles = StyleSheet.create({
-  poweredBy: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 8
-  }
-});
