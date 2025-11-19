@@ -3,10 +3,9 @@ import { testSaga } from "redux-saga-test-plan";
 import NavigationService from "../../../../../navigation/NavigationService";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import PN_ROUTES from "../../../navigation/routes";
-import { initiateAarFlowIfEnabled } from "../InitiateAarFlowIfEnabledSaga";
+import { initiateAarFlowIfEnabled } from "../initiateAarFlowIfEnabledSaga";
 import { terminateAarFlow, tryInitiateAarFlow } from "../../store/actions";
 import { sendAARFlowStates } from "../../utils/stateUtils";
-import { isAarRemoteEnabled } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import {
   currentAARFlowStateType,
   currentAarFlowIunSelector
@@ -22,17 +21,6 @@ describe("initiateAarFlowIfEnabled saga", () => {
     jest.clearAllMocks();
   });
 
-  it("should return early if AAR is not enabled", () => {
-    testSaga(initiateAarFlowIfEnabled, action)
-      .next()
-      .select(isAarRemoteEnabled)
-      .next(false)
-      .isDone();
-
-    expect(NavigationService.dispatchNavigationAction).not.toHaveBeenCalled();
-    expect(NavigationService.navigate).not.toHaveBeenCalled();
-  });
-
   it("should terminate current flow and replace navigation if flow state is not none", () => {
     const mockNavigate =
       NavigationService.dispatchNavigationAction as jest.Mock;
@@ -40,8 +28,6 @@ describe("initiateAarFlowIfEnabled saga", () => {
 
     testSaga(initiateAarFlowIfEnabled, action)
       .next()
-      .select(isAarRemoteEnabled)
-      .next(true)
       .select(currentAARFlowStateType)
       .next(mockCurrentState)
       .select(currentAarFlowIunSelector)
@@ -67,8 +53,6 @@ describe("initiateAarFlowIfEnabled saga", () => {
 
     testSaga(initiateAarFlowIfEnabled, action)
       .next()
-      .select(isAarRemoteEnabled)
-      .next(true)
       .select(currentAARFlowStateType)
       .next(sendAARFlowStates.none)
       .call(mockNavigate, MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {

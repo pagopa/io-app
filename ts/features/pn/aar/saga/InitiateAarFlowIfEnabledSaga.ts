@@ -1,10 +1,9 @@
 import { StackActions } from "@react-navigation/native";
 import { call, put, select } from "typed-redux-saga/macro";
 import NavigationService from "../../../../navigation/NavigationService";
-import { isAarRemoteEnabled } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import PN_ROUTES from "../../navigation/routes";
-import { tryInitiateAarFlow, terminateAarFlow } from "../store/actions";
+import { terminateAarFlow, tryInitiateAarFlow } from "../store/actions";
 import {
   currentAARFlowStateType,
   currentAarFlowIunSelector
@@ -14,10 +13,6 @@ import { sendAARFlowStates } from "../utils/stateUtils";
 export function* initiateAarFlowIfEnabled(
   action: ReturnType<typeof tryInitiateAarFlow>
 ) {
-  const isAarEnabled = yield* select(isAarRemoteEnabled);
-  if (!isAarEnabled) {
-    return;
-  }
   const aarUrl = action.payload.aarUrl;
   const currentFlowState = yield* select(currentAARFlowStateType);
   if (currentFlowState !== sendAARFlowStates.none) {

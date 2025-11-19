@@ -10,7 +10,7 @@ import {
   tryInitiateAarFlow
 } from "../store/actions";
 import { sendAARFlowStates } from "../utils/stateUtils";
-import { initiateAarFlowIfEnabled } from "./InitiateAarFlowIfEnabledSaga";
+import { initiateAarFlowIfEnabled } from "./initiateAarFlowIfEnabledSaga";
 import { fetchAarDataSaga } from "./fetchNotificationDataSaga";
 import { fetchAARQrCodeSaga } from "./fetchQrCodeSaga";
 
