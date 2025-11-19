@@ -40,6 +40,17 @@ export function* aarFlowMasterSaga(
   }
 }
 
+function* raceWithTerminateFlow(
+  sendAARClient: SendAARClient,
+  sessionToken: SessionToken,
+  action: ReturnType<typeof setAarFlowState>
+) {
+  yield* race({
+    task: call(aarFlowMasterSaga, sendAARClient, sessionToken, action),
+    cancel: take(terminateAarFlow)
+  });
+}
+
 export function* watchAarFlowSaga(
   sessionToken: SessionToken,
   keyInfo: KeyInfo
@@ -50,14 +61,11 @@ export function* watchAarFlowSaga(
     keyInfo
   );
 
-  yield* race({
-    task: takeLatest(
-      setAarFlowState,
-      aarFlowMasterSaga,
-      sendAARClient,
-      sessionToken
-    ),
-    cancel: take(terminateAarFlow)
-  });
+  yield* takeLatest(
+    setAarFlowState,
+    raceWithTerminateFlow,
+    sendAARClient,
+    sessionToken
+  );
   yield* takeLatest(tryInitiateAarFlow, initiateAarFlowIfEnabled);
 }

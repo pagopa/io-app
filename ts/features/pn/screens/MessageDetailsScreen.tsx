@@ -179,7 +179,7 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
   }, [dispatch, isAarMessage, messageId, sendOpeningSource, sendUserType]);
 
   // useEffect for analytics tracking
-  useEffect(() => {
+  useOnFirstRender(() => {
     if (sendMessageOrUndefined != null) {
       const isCancelled = isSENDMessageCancelled(sendMessageOrUndefined);
       const containsF24 = doesSENDMessageIncludeF24(sendMessageOrUndefined);
@@ -198,14 +198,7 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
         "Screen rendering with undefined SEND message"
       );
     }
-  }, [
-    firstTimeOpening,
-    isAarMessage,
-    paymentsCount,
-    sendMessageOrUndefined,
-    sendOpeningSource,
-    sendUserType
-  ]);
+  });
 
   // useFocusEffect to track and update an user-selected payment
   const store = useIOStore();
