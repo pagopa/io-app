@@ -1,10 +1,11 @@
 import {
   AARFlowState,
   isValidAARStateTransition,
+  maybeIunFromAarFlowState,
   sendAARFlowStates,
   validAARStatusTransitions
 } from "../stateUtils";
-import { sendAarStateNames } from "../testUtils";
+import { sendAarMockStates, sendAarStateNames } from "../testUtils";
 
 function splitAllowedFromNotallowedTransitions(
   ...aarAllowedTransitions: Array<AARFlowState["type"]>
@@ -116,6 +117,27 @@ describe("stateUtils", () => {
     });
     it("flowStates", () => {
       expect(sendAARFlowStates).toMatchSnapshot();
+    });
+  });
+  describe("maybeIunFromAarFlowState", () => {
+    it("should handle all the possible states", () => {
+      sendAarMockStates.forEach(state => {
+        switch (state.type) {
+          case sendAARFlowStates.notAddresseeFinal:
+          case sendAARFlowStates.fetchingNotificationData:
+          case sendAARFlowStates.displayingNotificationData:
+            expect(maybeIunFromAarFlowState(state)).toBe(state.iun);
+            break;
+          case sendAARFlowStates.ko:
+            expect(maybeIunFromAarFlowState(state)).toBe(
+              maybeIunFromAarFlowState(state.previousState)
+            );
+            break;
+          default:
+            expect(maybeIunFromAarFlowState(state)).toBeUndefined();
+            break;
+        }
+      });
     });
   });
 });
