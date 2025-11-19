@@ -11,7 +11,6 @@ import connectivityStatusSaga from "../features/connectivity/saga";
 import { watchIdentification } from "../features/identification/sagas";
 import { watchUtmLinkSaga } from "../features/utmLink/saga";
 import { watchWalletSaga } from "../features/wallet/saga";
-import { watchExternalWalletUpdateSaga } from "../features/wallet/saga/watchExternalWalletUpdateSaga";
 import { watchZendeskSupportSaga } from "../features/zendesk/saga";
 import backendStatusSaga from "./backendStatus";
 import { watchContentSaga } from "./contentLoaders";
