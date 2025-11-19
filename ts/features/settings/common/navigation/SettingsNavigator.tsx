@@ -32,8 +32,8 @@ import { IOMarkdownPlayground } from "../../devMode/playgrounds/IOMarkdownPlaygr
 import { AppFeedbackPlayground } from "../../devMode/playgrounds/AppFeedbackPlayground";
 import AppearancePreferenceScreen from "../../preferences/screens/AppearancePreferenceScreen";
 import { CiePlayground } from "../../devMode/playgrounds/Cie/CiePlayground";
-import AuthenticationNavigator from "../../../authentication/common/navigation/AuthenticationNavigator";
 import { CieIasAndMrtdPlayground } from "../../devMode/playgrounds/Cie/CieIasAndMrtdPlayground";
+import AuthenticationNavigator from "../../../authentication/common/navigation/AuthenticationNavigator";
 import { CieIasAndMrtdPlaygroundIntAuthResultScreen } from "../../devMode/playgrounds/Cie/screens/ias/CieIasAndMrtdPlaygroundIntAuthResultScreen";
 import { CieIasAndMrtdPlaygroundIntAuthScreen } from "../../devMode/playgrounds/Cie/screens/ias/CieIasAndMrtdPlaygroundIntAuthScreen";
 import { CieIasAndMrtdPlaygroundIntAuthAndMrtdResultScreen } from "../../devMode/playgrounds/Cie/screens/ias_and_mrtd/CieIasAndMrtdPlaygroundIntAuthAndMrtdResultScreen";
@@ -227,6 +227,7 @@ const SettingsStackNavigator = () => (
       }
       component={CieIasAndMrtdPlaygroundIntAuthAndMrtdResultScreen}
     />
+
     <Stack.Screen
       name={SETTINGS_ROUTES.AUTHENTICATION}
       component={AuthenticationNavigator}
