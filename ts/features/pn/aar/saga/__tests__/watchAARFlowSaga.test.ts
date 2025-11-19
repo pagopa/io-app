@@ -1,8 +1,13 @@
 import { testSaga } from "redux-saga-test-plan";
-import { Effect } from "redux-saga/effects";
-import { take, takeLatest } from "typed-redux-saga/macro";
+import { Effect, call } from "redux-saga/effects";
+import { take } from "typed-redux-saga/macro";
+import { apiUrlPrefix } from "../../../../../config";
 import { SessionToken } from "../../../../../types/SessionToken";
 import { KeyInfo } from "../../../../lollipop/utils/crypto";
+import {
+  SendAARClient,
+  createSendAARClientWithLollipop
+} from "../../api/client";
 import {
   setAarFlowState,
   terminateAarFlow,
@@ -10,14 +15,12 @@ import {
 } from "../../store/actions";
 import { sendAARFlowStates } from "../../utils/stateUtils";
 import { initiateAarFlowIfEnabled } from "../InitiateAarFlowIfEnabledSaga";
-import { aarFlowMasterSaga, watchAarFlowSaga } from "../watchAARFlowSaga";
-import { fetchAARQrCodeSaga } from "../fetchQrCodeSaga";
-import {
-  SendAARClient,
-  createSendAARClientWithLollipop
-} from "../../api/client";
-import { apiUrlPrefix } from "../../../../../config";
 import { fetchAarDataSaga } from "../fetchNotificationDataSaga";
+import { fetchAARQrCodeSaga } from "../fetchQrCodeSaga";
+import { testable, watchAarFlowSaga } from "../watchAARFlowSaga";
+const { aarFlowMasterSaga, raceWithTerminateFlow } = testable as NonNullable<
+  typeof testable
+>;
 
 const mockSessionToken = "mock-session-token" as SessionToken;
 const mockKeyInfo = {} as KeyInfo;
@@ -34,21 +37,16 @@ describe("watchAarFlowSaga", () => {
   });
 
   it("should race takeLatest(setAarFlowState) and take(terminateAarFlow)", () => {
-    const raceEffect = {
-      task: takeLatest(
-        setAarFlowState,
-        aarFlowMasterSaga,
-        mockSendAARClient,
-        mockSessionToken
-      ),
-      cancel: take(terminateAarFlow)
-    } as unknown as { [key: string]: Effect };
-
     testSaga(watchAarFlowSaga, mockSessionToken, mockKeyInfo)
       .next()
       .call(createSendAARClientWithLollipop, apiUrlPrefix, mockKeyInfo)
       .next(mockSendAARClient)
-      .race(raceEffect)
+      .takeLatest(
+        setAarFlowState,
+        raceWithTerminateFlow,
+        mockSendAARClient,
+        mockSessionToken
+      )
       .next()
       .takeLatest(tryInitiateAarFlow, initiateAarFlowIfEnabled)
       .next()
@@ -105,6 +103,33 @@ describe("watchAarFlowSaga", () => {
       testSaga(aarFlowMasterSaga, mockSendAARClient, mockSessionToken, action)
         .next()
         .isDone();
+    });
+  });
+  describe("raceWithTerminateFlow", () => {
+    const action = setAarFlowState({
+      type: sendAARFlowStates.fetchingQRData,
+      qrCode: "TESTETST"
+    });
+    it("should race aarFlowMasterSaga and take terminateAarFlow", () => {
+      const saga = testSaga(
+        raceWithTerminateFlow,
+        mockSendAARClient,
+        mockSessionToken,
+        action
+      )
+        .next()
+        .race({
+          task: call(
+            aarFlowMasterSaga,
+            mockSendAARClient,
+            mockSessionToken,
+            action
+          ),
+          cancel: take(terminateAarFlow)
+        } as unknown as { [key: string]: Effect });
+
+      saga.next("task").isDone();
+      saga.next("cancel").isDone();
     });
   });
 });

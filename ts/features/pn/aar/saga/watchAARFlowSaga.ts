@@ -1,6 +1,7 @@
 import { call, race, take, takeLatest } from "typed-redux-saga/macro";
 import { apiUrlPrefix } from "../../../../config";
 import { SessionToken } from "../../../../types/SessionToken";
+import { isTestEnv } from "../../../../utils/environment";
 import { KeyInfo } from "../../../lollipop/utils/crypto";
 import { SendAARClient, createSendAARClientWithLollipop } from "../api/client";
 import {
@@ -13,7 +14,7 @@ import { initiateAarFlowIfEnabled } from "./InitiateAarFlowIfEnabledSaga";
 import { fetchAarDataSaga } from "./fetchNotificationDataSaga";
 import { fetchAARQrCodeSaga } from "./fetchQrCodeSaga";
 
-export function* aarFlowMasterSaga(
+function* aarFlowMasterSaga(
   sendAARClient: SendAARClient,
   sessionToken: SessionToken,
   action: ReturnType<typeof setAarFlowState>
@@ -69,3 +70,9 @@ export function* watchAarFlowSaga(
   );
   yield* takeLatest(tryInitiateAarFlow, initiateAarFlowIfEnabled);
 }
+export const testable = isTestEnv
+  ? {
+      raceWithTerminateFlow,
+      aarFlowMasterSaga
+    }
+  : null;
