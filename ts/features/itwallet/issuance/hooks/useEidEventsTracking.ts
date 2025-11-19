@@ -5,6 +5,7 @@ import {
   IssuanceFailureType
 } from "../../machine/eid/failure";
 import {
+  ItwFlow,
   trackIdNotMatch,
   trackItwCieIdCieNotRegistered,
   trackItwIdRequestFailure,
@@ -25,12 +26,14 @@ type Params = {
  * Track errors occurred during the eID issuance process for analytics.
  */
 export const useEidEventsTracking = ({ failure, identification }: Params) => {
+  const itwFlow: ItwFlow = identification?.level ?? "not_available";
+
   useEffect(() => {
     if (
       failure.type === IssuanceFailureType.NOT_MATCHING_IDENTITY &&
       identification
     ) {
-      return trackIdNotMatch(identification.mode);
+      return trackIdNotMatch(identification.mode, itwFlow);
     }
 
     if (failure.type === IssuanceFailureType.UNSUPPORTED_DEVICE) {
@@ -42,7 +45,8 @@ export const useEidEventsTracking = ({ failure, identification }: Params) => {
         ITW_ID_method: identification.mode,
         reason: failure.reason,
         type: failure.type,
-        caused_by: "CredentialIssuer"
+        caused_by: "CredentialIssuer",
+        itw_flow: identification.level
       });
     }
 
@@ -54,7 +58,8 @@ export const useEidEventsTracking = ({ failure, identification }: Params) => {
         ITW_ID_method: identification.mode,
         reason: failure.reason,
         type: failure.type,
-        caused_by: "WalletProvider"
+        caused_by: "WalletProvider",
+        itw_flow: identification.level
       });
     }
 
@@ -74,9 +79,9 @@ export const useEidEventsTracking = ({ failure, identification }: Params) => {
        */
       return trackItwIdRequestUnexpectedFailure(
         shouldSerializeReason(failure)
-          ? serializeFailureReason(failure)
-          : failure
+          ? { ...serializeFailureReason(failure), itw_flow: itwFlow }
+          : { ...failure, itw_flow: itwFlow }
       );
     }
-  }, [failure, identification]);
+  }, [failure, identification, itwFlow]);
 };
