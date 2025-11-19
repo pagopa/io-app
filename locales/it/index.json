@@ -631,7 +631,16 @@
       },
       "loginEnvironment": {
         "activeSession": {
-          "switchTitle": "Login a sessione attiva"
+          "localFeatureFlag": {
+            "switchTitle": "Login a sessione attiva",
+            "switchDescription": "La modifica richiede il riavvio dell'app",
+            "alertTitle": "Attenzione",
+            "alertMessage": "Per testare questa funzionalità dovrai chiudere e riaprire l'applicazione",
+            "alertConfirmButton": "Prosegui"
+          },
+          "playground": {
+            "title": "Login a sessione attiva playground"
+          }
         }
       },
       "trial": {
@@ -849,8 +858,8 @@
         "linkButtonLabel": "Non ricordi come accedere?"
       },
       "active_session_login": {
-        "title": "Accedi subito",
-        "body": "Autenticati ora per usare l’app senza interruzioni. Così sarà sempre pronta quando ti serve."
+        "title": " Sta per scadere l’accesso",
+        "body": "Autenticati ora per non perderti comunicazioni importanti e per avere l’app sempre pronta quando ti serve."
       },
       "cie_bottom_sheet": {
         "title": "Come vuoi entrare?",
@@ -2959,7 +2968,13 @@
           }
         },
         "institutions": {
-          "title": "Enti in evidenza"
+          "title": "Enti in evidenza",
+          "error": {
+            "banner": {
+              "label": "Non siamo riusciti a caricare la lista degli enti in evidenza",
+              "cta": "Prova di nuovo"
+            }
+          }
         }
       },
       "institutions": {
@@ -3779,10 +3794,18 @@
       }
     },
     "cdc": {
+      "wallet": {
+        "card": {
+          "title": "Carta della Cultura",
+          "organization": "Ministero della Cultura",
+          "validThrough": "Valida fino al {{endDate}}"
+        }
+      },
       "serviceEntryPoint": {
         "notAvailable": "Il servizio non è disponibile in questo momento. Riprova più tardi."
       },
-      "request": "Richiedi Carta della Cultura"
+      "request": "Richiedi Carta della Cultura",
+      "usage": "Usa Carta della Cultura"
     }
   },
   "features": {
@@ -4534,23 +4557,80 @@
             "action": "Inizia"
           }
         },
-        "title": "Inizia con Documenti su IO",
-        "content": "Se non puoi ancora ottenere IT-Wallet perché non hai la CIE, il suo PIN o il tuo dispositivo non lo supporta, attiva Documenti su IO:",
-        "featureHighlights": {
-          "1": "Ottieni una versione digitale dei documenti con funzionalità ridotte e disponibile per un tempo limitato",
-          "2": "Hai a disposizione la Patente di guida, la Tessera sanitaria - Tessera europea di assicurazione malattia e la Carta Europea della Disabilità",
-          "3": "Puoi usare la tua Patente su IO per dimostrare la tua idoneità alla guida"
-        },
-        "contentBottom": "###### Ricorda\n\nPotrai sempre ottenere IT-Wallet in futuro: hai bisogno di un dispositivo con tecnologia NFC e della tua Carta di Identità Elettronica (CIE).",
-        "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d'uso]({{tos_url}}).",
-        "actions": {
-          "continue": "Continua con SPID o CieID"
-        },
-        "dismissalDialog": {
-          "title": "Vuoi rinunciare ai documenti digitali su IO?",
-          "body": "Potrai attivarli in qualsiasi altro momento, se cambi idea.",
-          "confirm": "Si, rinuncia",
-          "cancel": "No, torna indietro"
+        "screen": {
+          "legacy": {
+            "title": "La versione digitale dei tuoi documenti, su IO",
+            "content": "Aggiungi la versione digitale dei tuoi documenti personali al Portafoglio dell'app! \n\n Hanno lo **stesso valore legale** di quelli fisici, in specifici contesti d'uso. \n\n ###### È facile e veloce \n Continua per attivare la nuova funzionalità in meno di 3 minuti: oltre **6 Milioni** di persone stanno già usando i **Documenti su IO**!",
+            "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d'uso]({{tos_url}}).",
+            "actions": {
+              "primary": "Continua"
+            },
+            "dismissalDialog": {
+              "title": "Vuoi rinunciare ai documenti digitali su IO?",
+              "body": "Potrai attivarli in qualsiasi altro momento, se cambi idea.",
+              "confirm": "Si, rinuncia",
+              "cancel": "No, continua"
+            }
+          },
+          "diw": {
+            "title": "Inizia con Documenti su IO",
+            "content": "Se non puoi ancora ottenere IT-Wallet perché non hai la CIE, il suo PIN o il tuo dispositivo non lo supporta, attiva Documenti su IO:",
+            "featureHighlights": {
+              "1": "Ottieni una versione digitale dei documenti con funzionalità ridotte e disponibile per un tempo limitato",
+              "2": "Hai a disposizione la Patente di guida, la Tessera sanitaria - Tessera europea di assicurazione malattia e la Carta Europea della Disabilità",
+              "3": "Puoi usare la tua Patente su IO per dimostrare la tua idoneità alla guida"
+            },
+            "contentBottom": "###### Ricorda\n\nPotrai sempre ottenere IT-Wallet in futuro: hai bisogno di un dispositivo con tecnologia NFC e della tua Carta di Identità Elettronica (CIE).",
+            "tos": "Premendo **Continua con SPID o CieID** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d'uso]({{tos_url}}).",
+            "actions": {
+              "primary": "Continua con SPID o CieID"
+            },
+            "dismissalDialog": {
+              "title": "Vuoi rinunciare ai documenti digitali su IO?",
+              "body": "Potrai attivarli in qualsiasi altro momento, se cambi idea.",
+              "confirm": "Si, rinuncia",
+              "cancel": "No, continua"
+            }
+          },
+          "itw": {
+            "title": "IO è il tuo portafoglio digitale di Stato: pubblico, sicuro, gratuito.",
+            "features": {
+              "1": "Usi la tua Patente su IO come documento di riconoscimento",
+              "2": "Ti basta il tuo telefono per dimostrare la tua identità",
+              "3": "Hai tutto ciò che ti serve anche se lasci a casa il portafoglio",
+              "4": "I nuovi documenti digitali ufficiali, solo sull’app IO",
+              "5": "Accedi in pochi tocchi ai servizi digitali della PA"
+            },
+            "details": {
+              "1": {
+                "title": "Facile, sicuro, ufficiale",
+                "content": "Ottienilo con la tua **Carta di Identità Elettronica (CIE)** per associarlo alla tua identità.\n\nIl portafoglio IT-Wallet di IO usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantenerli al sicuro."
+              },
+              "2": {
+                "title": "Nuovi documenti in arrivo",
+                "content": "Titoli di studio, attestato di residenza e altri: potrai aggiungere all’app IO nuovi documenti ufficiali."
+              },
+              "3": {
+                "title": "Tutto nelle tue mani",
+                "content": "Mostri il codice QR della tua Patente digitale: chi verifica non dovrà tenere in mano il tuo dispositivo."
+              },
+              "4": {
+                "title": "Progettato con l’Europa",
+                "content": "IT-Wallet si integrerà al Portafoglio Digitale Europeo: potrai usare i tuoi documenti con pieno valore legale in tutta Europa."
+              }
+            },
+            "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d'uso]({{tos_url}}).",
+            "actions": {
+              "primary": "Continua",
+              "anchor": "Scopri tutti i vantaggi"
+            },
+            "dismissalDialog": {
+              "title": "Vuoi rinunciare ai vantaggi di IT-Wallet?",
+              "body": "Potrai ottenere IT-Wallet in qualsiasi altro momento, se cambi idea.",
+              "confirm": "Si, rinuncia",
+              "cancel": "No, continua"
+            }
+          }
         },
         "upcomingWalletBanner": {
           "title": "Novità in arrivo: i tuoi Documenti su IO",
@@ -4572,48 +4652,6 @@
               "continue": "Scopri di più",
               "cancel": "Chiudi"
             }
-          }
-        },
-        "legacy": {
-          "title": "La versione digitale dei tuoi documenti, su IO",
-          "content": "Aggiungi la versione digitale dei tuoi documenti personali al Portafoglio dell'app! \n\n Hanno lo **stesso valore legale** di quelli fisici, in specifici contesti d'uso. \n\n ###### È facile e veloce \n Continua per attivare la nuova funzionalità in meno di 3 minuti: oltre **6 Milioni** di persone stanno già usando i **Documenti su IO**!"
-        },
-        "paywall": {
-          "badge": "Novità",
-          "description": "L'unico portafoglio digitale di Stato: pubblico, sicuro, gratuito.",
-          "featureHighlights": {
-            "1": "Usi la tua Patente su IO come documento di riconoscimento",
-            "2": "Ti basta il tuo telefono per dimostrare la tua identità",
-            "3": "Hai tutto ciò che ti serve anche se lasci a casa il portafoglio",
-            "4": "I nuovi documenti digitali ufficiali, solo sull’app IO",
-            "5": "Accedi in pochi tocchi ai servizi digitali della PA"
-          },
-          "productHighlights": {
-            "1": {
-              "title": "Facile, sicuro, ufficiale",
-              "content": "Ottienilo con la tua **Carta di Identità Elettronica (CIE)** e il suo **PIN per associarlo alla tua identità**.\n\n\nIT-Wallet usa sistemi di sicurezza avanzati per proteggere i tuoi dati e mantenerli al sicuro."
-            },
-            "2": {
-              "title": "Nuovi documenti in arrivo",
-              "content": "Titoli di studio, attestati di residenza e altri: potrai aggiungere all’app IO nuovi documenti ufficiali."
-            },
-            "3": {
-              "title": "Tutto nelle tue mani",
-              "content": "Con IT-Wallet mostri il codice QR della tua Patente digitale: chi verifica non dovrà tenere in mano il tuo dispositivo."
-            },
-            "4": {
-              "title": "Progettato con l'Europa",
-              "content": "IT-Wallet si integrerà al Portafoglio Digitale Europeo: potrai usare i tuoi documenti con pieno valore legale in tutta Europa."
-            }
-          },
-          "tos": "Premendo **Ottieni IT-Wallet** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d’uso]({{tos_url}})",
-          "anchorAction": "Scopri tutti i vantaggi",
-          "primaryAction": "Ottieni IT-Wallet",
-          "dismissalDialog": {
-            "title": "Vuoi rinunciare ai vantaggi di IT-Wallet?",
-            "body": "Potrai ottenere IT-Wallet in qualsiasi altro momento, se cambi idea.",
-            "confirm": "Sì, rinuncia",
-            "cancel": "No, continua"
           }
         },
         "ipzsPrivacy": {
@@ -4639,105 +4677,44 @@
           "primaryAction": "Apri impostazioni",
           "secondaryAction": "Continua"
         },
-        "mode": {
-          "l2": {
-            "title": "Verifica la tua identità",
-            "description": "È un passaggio necessario per garantire la sicurezza dei tuoi dati.",
-            "header": "Scegli come identificarti",
-            "section": "",
-            "reissuing": {
-              "title": "Scegli come identificarti",
-              "description": "È un passaggio necessario per continuare ad usare Documenti su IO.",
-              "section": "Verifica di identità",
-              "method": {
-                "ciePin": {
-                  "title": "Continua con CIE + PIN",
-                  "subtitle": "Dovrai usare la Carta di Identità Elettronica (CIE) e inserire il suo PIN di 8 cifre.",
-                  "badge": "scelta consigliata"
-                },
-                "cieId": {
-                  "title": "Continua con l'app CieID",
-                  "subtitle": "Dovrai usare credenziali e app CieID"
-                },
-                "spid": {
-                  "title": "Continua con SPID",
-                  "subtitle": "Dovrai usare credenziali e app (o SMS)"
-                }
-              }
-            },
-            "method": {
-              "spid": {
-                "title": "Continua con SPID",
-                "subtitle": "Dovrai usare credenziali e app (o SMS)"
-              },
-              "ciePin": {
-                "title": "Usa CIE + PIN",
-                "subtitle": "Usa la Carta di Identità Elettronica e il suo PIN a 8 cifre",
-                "badge": "scelta consigliata"
-              },
-              "cieId": {
-                "title": "Continua con CieID",
-                "subtitle": "Dovrai usare credenziali e app CieID"
-              }
-            }
+        "modeSelection": {
+          "section": {
+            "issuance": "Ottieni {{ feature }}",
+            "reissuance": "Conferma identità"
           },
-          "l3": {
-            "section": "Ottieni IT-Wallet",
-            "title": "Verifica la tua identità con CIE (Carta di Identità Elettronica)",
-            "description": "È un passaggio di sicurezza necessario per associare i documenti digitali alla tua identità.",
-            "reissuing": {
-              "section": "Rinnovo ID",
-              "title": "Scegli come identificarti",
-              "description": "È un passaggio necessario per continuare ad usare IT-Wallet.",
-              "method": {
-                "ciePin": {
-                  "title": "Continua con il PIN della tua CIE",
-                  "subtitle": "Dovrai inserire il PIN di 8 cifre e appoggiare la CIE al telefono.",
-                  "badge": "scelta consigliata"
-                },
-                "cieId": {
-                  "title": "Continua con l'app CieID",
-                  "subtitle": "Dovrai autenticarti con l’app CieID e appoggiare la CIE al telefono."
-                },
-                "spid": {
-                  "title": "Continua con SPID",
-                  "subtitle": "Dovrai inserire il PIN di 8 cifre e appoggiare la CIE al telefono."
-                }
+          "title": {
+            "issuance": "Conferma la tua identità",
+            "reissuance": "Scegli come identificarti"
+          },
+          "description": {
+            "issuance": "È un passaggio di sicurezza necessario per associare i documenti digitali alla tua identità. ",
+            "reissuance": "È un passaggio necessario per continuare ad usare {{ feature }} senza limitazioni."
+          },
+          "noCieCta": "Non hai la Carta di Identità Elettronica?",
+          "mode": {
+            "ciePin": {
+              "title": "Continua con CIE + PIN",
+              "subtitle": {
+                "default": "Dovrai usare la Carta di Identità Elettronica (CIE) e inserire il suo PIN di 8 cifre.",
+                "l3-next": "Ha una durata di 12 mesi"
+              },
+              "badge": "scelta consigliata"
+            },
+            "cieId": {
+              "title": "Continua con l’app CieID",
+              "subtitle": {
+                "default": "Dovrai usare credenziali e app CieID",
+                "l3-next": "Ha una durata di 12 mesi"
               }
             },
-            "method": {
-              "ciePin": {
-                "title": "Continua con il PIN della tua CIE",
-                "subtitle": "Dovrai inserire il PIN di 8 cifre e appoggiare la CIE al telefono.",
-                "badge": "scelta consigliata"
+            "spid": {
+              "title": {
+                "default": "Continua con SPID",
+                "l3-next": "Continua con SPID + CIE"
               },
-              "cieId": {
-                "title": "Continua con l'app CieID",
-                "subtitle": "Dovrai autenticarti con l’app CieID e appoggiare la CIE al telefono."
-              },
-              "spid": {
-                "title": "Continua con SPID",
-                "subtitle": "Dovrai inserire il PIN di 8 cifre e appoggiare la CIE al telefono."
-              }
-            },
-            "noCie": "Non hai la Carta di Identità Elettronica?",
-            "bottomSheet": {
-              "cieId": {
-                "title": "Continua sull’app CieID",
-                "content": "Per completare la verifica della tua identità sull’app CieID avrai bisogno di:\n\n * La Carta di Identità Elettronica\n * Il PIN a 8 cifre della CIE\n\nSe hai già installato l’app e hai già registrato la CIE, usa l’app CieID come alternativa più veloce.",
-                "primaryAction": "Continua sull’app CieID",
-                "secondaryAction": "Non ora"
-              },
-              "noCie": {
-                "title": "Se non hai  la CIE puoi continuare senza i vantaggi di IT-Wallet",
-                "content": "Puoi usare SPID o CieID (livello 2) per ottenere una versione dei tuoi documenti digitali con funzionalità ridotte.",
-                "warnings": [
-                  "Non potrai usare la Patente come documento d'identità",
-                  "Non potrai usare IT-Wallet per accedere ai servizi digitali della PA",
-                  "Non potrai ottenere i nuovi documenti disponibili solo con IT-Wallet"
-                ],
-                "primaryAction": "Continua senza IT-Wallet",
-                "secondaryAction": "Torna indietro"
+              "subtitle": {
+                "default": "Dovrai usare credenziali e app (o SMS)",
+                "l3-next": "Ha una durata di 90 giorni"
               }
             }
           }
@@ -5217,7 +5194,8 @@
               "education_enrollment": "Le tue iscrizioni accademiche digitali hanno piena validità ufficiale.",
               "residency": "Il tuo attestato di residenza digitale ha piena validità ufficiale."
             }
-          }
+          },
+          "partOf": "Parte di"
         },
         "ctas": {
           "trustmark": "Mostra certificato di autenticità",
@@ -6599,6 +6577,13 @@
         "content": "Il {{date}} dovrai accedere di nuovo con SPID o CIE",
         "action": {
           "label": "Leggi come fare"
+        }
+      },
+      "expirationBannerNew": {
+        "title": "Il {{date}} dovrai accedere di nuovo all’app",
+        "content": "Rinnova ora l’accesso con SPID o CIE per continuare a usare IO senza interruzioni",
+        "action": {
+          "label": "Accedi subito"
         }
       }
     }

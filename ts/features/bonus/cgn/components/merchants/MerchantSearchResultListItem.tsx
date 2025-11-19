@@ -13,8 +13,8 @@ import CGN_ROUTES from "../../navigation/routes";
 import { SearchItem } from "../../../../../../definitions/cgn/merchants/SearchItem";
 import { highlightSearchText } from "../../../../../utils/highlightSearchText";
 
-export const TEXT_LEGNTH_WITH_BADGE = 60;
-export const TEXT_LEGNTH_WITHOUT_BADGE = 100;
+const TEXT_LEGNTH_WITH_BADGE = 60;
+const TEXT_LEGNTH_WITHOUT_BADGE = 100;
 
 const styles = StyleSheet.create({
   listItemTextContainer: {

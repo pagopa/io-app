@@ -1,23 +1,22 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { thirdPartyFromIdSelector } from "../../../../messages/store/reducers/thirdPartyById";
-import { toPNMessage } from "../../../store/types/transformers";
+import { toSENDMessage } from "../../../store/types/transformers";
 import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
 
 export const thirdPartySenderDenominationSelector = (
   state: GlobalState,
   ioMessageId: string
-) =>
-  pipe(
-    thirdPartyFromIdSelector(state, ioMessageId),
-    pot.toOption,
-    O.flatMap(toPNMessage),
-    O.map(data => data.senderDenomination),
-    O.toUndefined
-  );
+) => {
+  const thirdPartyMessagePot = thirdPartyFromIdSelector(state, ioMessageId);
+  const thirdPartyMessage = pot.getOrElse(thirdPartyMessagePot, undefined);
+  if (thirdPartyMessage == null) {
+    return undefined;
+  }
+  const sendMessage = toSENDMessage(thirdPartyMessage);
+  return sendMessage?.senderDenomination;
+};
 
 export const aarAdresseeDenominationSelector = (
   state: GlobalState,
@@ -26,14 +25,15 @@ export const aarAdresseeDenominationSelector = (
   const currentState = currentAARFlowData(state);
 
   switch (currentState.type) {
-    case sendAARFlowStates.fetchingNotificationData:
-    case sendAARFlowStates.displayingNotificationData:
-    case sendAARFlowStates.notAddresseeFinal:
+    case sendAARFlowStates.none:
+    case sendAARFlowStates.ko:
+    case sendAARFlowStates.displayingAARToS:
+    case sendAARFlowStates.fetchingQRData:
+      return undefined;
+    default:
       if (iun === currentState.iun) {
         return currentState.recipientInfo.denomination;
       }
-      return undefined;
-    default:
       return undefined;
   }
 };

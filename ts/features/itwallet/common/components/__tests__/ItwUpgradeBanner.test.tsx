@@ -1,15 +1,15 @@
-import configureMockStore from "redux-mock-store";
 import { fireEvent, waitFor } from "@testing-library/react-native";
 import I18n from "i18next";
+import configureMockStore from "redux-mock-store";
 import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import * as selectors from "../../store/selectors";
 import * as itwLifecycleSelectors from "../../../lifecycle/store/selectors";
-import { ItwUpgradeBanner } from "../ItwUpgradeBanner";
 import { ITW_ROUTES } from "../../../navigation/routes";
+import * as selectors from "../../store/selectors";
+import { ItwUpgradeBanner } from "../ItwUpgradeBanner";
 
 const mockNavigate = jest.fn();
 
@@ -60,7 +60,7 @@ describe("ItwUpgradeBanner", () => {
       expect(mockNavigate).toHaveBeenCalledTimes(1);
       expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
         screen: ITW_ROUTES.DISCOVERY.INFO,
-        params: { isL3: true }
+        params: { level: "l3" }
       });
     });
   });
