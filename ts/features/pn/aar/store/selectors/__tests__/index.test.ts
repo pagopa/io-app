@@ -5,12 +5,17 @@ import {
   currentAARFlowStateAssistanceErrorCode,
   currentAARFlowStateErrorDebugInfoSelector,
   currentAARFlowStateType,
+  currentAarFlowIunSelector,
   thirdPartySenderDenominationSelector
 } from "..";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { thirdPartyFromIdSelector } from "../../../../../messages/store/reducers/thirdPartyById";
 import { toSENDMessage } from "../../../../store/types/transformers";
-import { AARFlowState, sendAARFlowStates } from "../../../utils/stateUtils";
+import {
+  AARFlowState,
+  maybeIunFromAarFlowState,
+  sendAARFlowStates
+} from "../../../utils/stateUtils";
 import {
   sendAarMockStateFactory,
   sendAarMockStates
@@ -451,6 +456,25 @@ describe("currentAARFlowStateErrorDebugInfoSelector", () => {
       phase: debugData.phase,
       reason: debugData.reason,
       traceId: "trace-123"
+    });
+  });
+});
+
+describe("currentAarFlowIunSelector", () => {
+  sendAarMockStates.forEach(state => {
+    const mockGlobalState = {
+      features: {
+        pn: {
+          aarFlow: state
+        }
+      }
+    } as unknown as GlobalState;
+
+    const selectorValue = currentAarFlowIunSelector(mockGlobalState);
+    const maybeIunValue = maybeIunFromAarFlowState(state);
+
+    it(`its return value should match maybeIunFromAarFlowState output -- state: ${state.type}`, () => {
+      expect(selectorValue).toBe(maybeIunValue);
     });
   });
 });
