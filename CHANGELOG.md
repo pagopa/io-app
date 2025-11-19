@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.20.0-rc.6](https://github.com/pagopa/io-app/compare/3.20.0-rc.5...3.20.0-rc.6) (2025-11-19)
+
+
+### Features
+
+* [[IOCOM-2637](https://pagopa.atlassian.net/browse/IOCOM-2637)] SEND AAR double scan handling ([#7621](https://github.com/pagopa/io-app/issues/7621)) ([191bba8](https://github.com/pagopa/io-app/commit/191bba8588f0b5473b4f7c1a62ad0278b1672d6c))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-3373](https://pagopa.atlassian.net/browse/SIW-3373)] Fix copy for ITW_LANDING_SCEEN_EID_REISSUANCE secondary action ([#7629](https://github.com/pagopa/io-app/issues/7629)) ([786869d](https://github.com/pagopa/io-app/commit/786869d026397e695e385546273056e3f1138f89))
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Forced portrait mode for Android devices ([#7628](https://github.com/pagopa/io-app/issues/7628)) ([47c5b0b](https://github.com/pagopa/io-app/commit/47c5b0bbeb0e07c5fac4d71b49eacf98726643b1))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-3223](https://pagopa.atlassian.net/browse/SIW-3223)] eID reissuance tracking ([#7572](https://github.com/pagopa/io-app/issues/7572)) ([152ed3c](https://github.com/pagopa/io-app/commit/152ed3c7b64d639b4e28e1e13c40ff141064ac14))
+
 ## [3.20.0-rc.5](https://github.com/pagopa/io-app/compare/3.20.0-rc.4...3.20.0-rc.5) (2025-11-18)
 
 
