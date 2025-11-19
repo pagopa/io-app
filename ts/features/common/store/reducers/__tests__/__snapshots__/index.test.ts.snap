@@ -136,6 +136,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
   },
   "ingress": {
+    "checkSession": {
+      "hasError": false,
+    },
     "isBlockingScreen": false,
   },
   "itWallet": {
@@ -181,6 +184,11 @@ exports[`featuresPersistor should match snapshot 1`] = `
   },
   "loginFeatures": {
     "activeSessionLogin": {
+      "activeSessionLoginLocalFlag": false,
+      "engagement": {
+        "hasBlockingScreenBeenVisualized": false,
+        "showSessionExpirationBanner": true,
+      },
       "isActiveSessionLogin": false,
       "isUserLoggedIn": false,
       "refreshMessagesSection": true,
@@ -210,10 +218,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
     "loginInfo": {
       "userFromSuccessLogin": false,
-    },
-    "loginPreferences": {
-      "activeSessionLoginLocalFlag": false,
-      "showSessionExpirationBanner": true,
     },
     "nativeLogin": {
       "enabled": true,
