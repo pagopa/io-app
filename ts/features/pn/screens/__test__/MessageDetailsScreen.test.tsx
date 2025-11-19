@@ -1,8 +1,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { fireEvent } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
 import { Action, Store } from "redux";
 import configureMockStore from "redux-mock-store";
-import { fireEvent } from "@testing-library/react-native";
+import * as HARDWARE_BACK_BUTTON from "../../../../hooks/useHardwareBackButton";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -19,23 +20,22 @@ import {
   toUIMessage,
   toUIMessageDetails
 } from "../../../messages/store/reducers/transformers";
-import { loadServiceDetail } from "../../../services/details/store/actions/details";
-import * as commonSelectors from "../../../settings/common/store/selectors";
-import { thirdPartyMessage } from "../../__mocks__/pnMessage";
-import { sendAarMockStateFactory } from "../../aar/utils/testUtils";
-import PN_ROUTES from "../../navigation/routes";
-import { startPNPaymentStatusTracking } from "../../store/actions";
-import { MessageDetailsScreen } from "../MessageDetailsScreen";
-import * as REDUCERS from "../../store/reducers";
-import { PNMessage } from "../../store/types/types";
 import { ATTACHMENT_CATEGORY } from "../../../messages/types/attachmentCategory";
-import * as AAR_ANALYTICS from "../../aar/analytics";
-import * as SEND_ANALYTICS from "../../analytics";
-import * as HARDWARE_BACK_BUTTON from "../../../../hooks/useHardwareBackButton";
 import {
   SendOpeningSource,
   SendUserType
 } from "../../../pushNotifications/analytics";
+import { loadServiceDetail } from "../../../services/details/store/actions/details";
+import * as commonSelectors from "../../../settings/common/store/selectors";
+import { thirdPartyMessage } from "../../__mocks__/pnMessage";
+import * as AAR_ANALYTICS from "../../aar/analytics";
+import { sendAarMockStateFactory } from "../../aar/utils/testUtils";
+import * as SEND_ANALYTICS from "../../analytics";
+import PN_ROUTES from "../../navigation/routes";
+import { startPNPaymentStatusTracking } from "../../store/actions";
+import * as REDUCERS from "../../store/reducers";
+import { PNMessage } from "../../store/types/types";
+import { MessageDetailsScreen } from "../MessageDetailsScreen";
 
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({
@@ -56,6 +56,16 @@ const sendUserTypes: ReadonlyArray<SendUserType> = [
   "not_set",
   "recipient"
 ];
+
+const getMockCurriedSelector = (response: PNMessage | undefined) =>
+  jest
+    .fn()
+    .mockImplementation(
+      (_id: string) =>
+        ((_state: GlobalState) => response) as unknown as ReturnType<
+          typeof REDUCERS.curriedSendMessageFromIdSelector
+        >
+    );
 
 describe("MessageDetailsScreen", () => {
   beforeEach(() => {
@@ -183,9 +193,9 @@ describe("MessageDetailsScreen", () => {
                       .spyOn(commonSelectors, "profileFiscalCodeSelector")
                       .mockImplementation(_state => fakeProfileFiscalCode);
                     jest
-                      .spyOn(REDUCERS, "sendMessageFromIdSelector")
+                      .spyOn(REDUCERS, "curriedSendMessageFromIdSelector")
                       .mockImplementation(
-                        (_state, _id) => sendMessageOrUndefined
+                        getMockCurriedSelector(sendMessageOrUndefined)
                       );
                     const spiedOnMockedTrackPNExSuccess = jest
                       .spyOn(SEND_ANALYTICS, "trackPNUxSuccess")
@@ -307,8 +317,8 @@ describe("MessageDetailsScreen", () => {
           .spyOn(commonSelectors, "profileFiscalCodeSelector")
           .mockImplementation(_state => "XXXYYY99Z88W777I");
         jest
-          .spyOn(REDUCERS, "sendMessageFromIdSelector")
-          .mockImplementation((_state, _id) => sendMessage);
+          .spyOn(REDUCERS, "curriedSendMessageFromIdSelector")
+          .mockImplementation(getMockCurriedSelector(sendMessage));
         const spiedOnMockedTrackSendAARNotificationClosure = jest
           .spyOn(AAR_ANALYTICS, "trackSendAarNotificationClosure")
           .mockImplementation();
@@ -371,8 +381,8 @@ describe("MessageDetailsScreen", () => {
           .spyOn(commonSelectors, "profileFiscalCodeSelector")
           .mockImplementation(_state => "XXXYYY99Z88W777I");
         jest
-          .spyOn(REDUCERS, "sendMessageFromIdSelector")
-          .mockImplementation((_state, _id) => sendMessage);
+          .spyOn(REDUCERS, "curriedSendMessageFromIdSelector")
+          .mockImplementation(getMockCurriedSelector(sendMessage));
         const spiedOnMockedTrackSendAARNotificationClosure = jest
           .spyOn(AAR_ANALYTICS, "trackSendAarNotificationClosure")
           .mockImplementation();
