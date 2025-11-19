@@ -11,10 +11,10 @@ import {
 import {
   setAarFlowState,
   terminateAarFlow,
-  tryInitiateAarFlow
+  initiateAarFlow
 } from "../../store/actions";
 import { sendAARFlowStates } from "../../utils/stateUtils";
-import { initiateAarFlowIfEnabled } from "../initiateAarFlowIfEnabledSaga";
+import { initiateAarFlowSaga } from "../initiateAarFlowSaga";
 import { fetchAarDataSaga } from "../fetchNotificationDataSaga";
 import { fetchAARQrCodeSaga } from "../fetchQrCodeSaga";
 import { testable, watchAarFlowSaga } from "../watchAARFlowSaga";
@@ -48,7 +48,7 @@ describe("watchAarFlowSaga", () => {
         mockSessionToken
       )
       .next()
-      .takeLatest(tryInitiateAarFlow, initiateAarFlowIfEnabled)
+      .takeLatest(initiateAarFlow, initiateAarFlowSaga)
       .next()
       .isDone();
   });

@@ -7,10 +7,10 @@ import { SendAARClient, createSendAARClientWithLollipop } from "../api/client";
 import {
   setAarFlowState,
   terminateAarFlow,
-  tryInitiateAarFlow
+  initiateAarFlow
 } from "../store/actions";
 import { sendAARFlowStates } from "../utils/stateUtils";
-import { initiateAarFlowIfEnabled } from "./initiateAarFlowIfEnabledSaga";
+import { initiateAarFlowSaga } from "./initiateAarFlowSaga";
 import { fetchAarDataSaga } from "./fetchNotificationDataSaga";
 import { fetchAARQrCodeSaga } from "./fetchQrCodeSaga";
 
@@ -68,7 +68,7 @@ export function* watchAarFlowSaga(
     sendAARClient,
     sessionToken
   );
-  yield* takeLatest(tryInitiateAarFlow, initiateAarFlowIfEnabled);
+  yield* takeLatest(initiateAarFlow, initiateAarFlowSaga);
 }
 export const testable = isTestEnv
   ? {

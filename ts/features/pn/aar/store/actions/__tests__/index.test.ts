@@ -4,7 +4,7 @@ import {
   populateStoresWithEphemeralAarMessageData,
   setAarFlowState,
   terminateAarFlow,
-  tryInitiateAarFlow
+  initiateAarFlow
 } from "..";
 import { ThirdPartyMessage } from "../../../../../../../definitions/pn/ThirdPartyMessage";
 import { AARFlowState, sendAARFlowStates } from "../../../utils/stateUtils";
@@ -35,7 +35,7 @@ describe("AARFlowStateActions", () => {
 
   it('tryInitiateAarFlow action should have correct type="TRY_INITIATE_AAR_FLOW"', () => {
     const aarUrl = "https://example.com/aar";
-    const action = tryInitiateAarFlow({ aarUrl });
+    const action = initiateAarFlow({ aarUrl });
     expect(action).toMatchSnapshot();
   });
 

@@ -3,15 +3,15 @@ import { call, put, select } from "typed-redux-saga/macro";
 import NavigationService from "../../../../navigation/NavigationService";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import PN_ROUTES from "../../navigation/routes";
-import { terminateAarFlow, tryInitiateAarFlow } from "../store/actions";
+import { terminateAarFlow, initiateAarFlow } from "../store/actions";
 import {
   currentAARFlowStateType,
   currentAarFlowIunSelector
 } from "../store/selectors";
 import { sendAARFlowStates } from "../utils/stateUtils";
 
-export function* initiateAarFlowIfEnabled(
-  action: ReturnType<typeof tryInitiateAarFlow>
+export function* initiateAarFlowSaga(
+  action: ReturnType<typeof initiateAarFlow>
 ) {
   const aarUrl = action.payload.aarUrl;
   const currentFlowState = yield* select(currentAARFlowStateType);

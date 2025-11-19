@@ -22,9 +22,8 @@ export type InitiateAarFlowPayload = {
   aarUrl: string;
 };
 
-export const tryInitiateAarFlow = createStandardAction(
-  "TRY_INITIATE_AAR_FLOW"
-)<InitiateAarFlowPayload>();
+export const initiateAarFlow =
+  createStandardAction("INITIATE_AAR_FLOW")<InitiateAarFlowPayload>();
 
 export const setAarFlowState =
   createStandardAction("SET_AAR_FLOW_STATE")<AARFlowState>();
@@ -40,5 +39,5 @@ export type AARFlowStateActions = ActionType<
   | typeof setAarFlowState
   | typeof terminateAarFlow
   | typeof populateStoresWithEphemeralAarMessageData
-  | typeof tryInitiateAarFlow
+  | typeof initiateAarFlow
 >;

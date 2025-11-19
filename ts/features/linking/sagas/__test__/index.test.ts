@@ -1,6 +1,6 @@
 import { testSaga } from "redux-saga-test-plan";
 import { handleStoredLinkingUrlIfNeeded } from "..";
-import { tryInitiateAarFlow } from "../../../pn/aar/store/actions";
+import { initiateAarFlow } from "../../../pn/aar/store/actions";
 import { isSendAARLink } from "../../../pn/aar/utils/deepLinking";
 import { clearLinkingUrl } from "../../actions";
 import { storedLinkingUrlSelector } from "../../reducers";
@@ -16,7 +16,7 @@ describe("handleStoredLinkingUrlIfNeeded", () => {
       .next(true)
       .put(clearLinkingUrl())
       .next()
-      .put(tryInitiateAarFlow({ aarUrl }))
+      .put(initiateAarFlow({ aarUrl }))
       .next()
       .isDone();
   });

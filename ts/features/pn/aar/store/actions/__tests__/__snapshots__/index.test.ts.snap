@@ -22,6 +22,6 @@ exports[`AARFlowStateActions tryInitiateAarFlow action should have correct type=
   "payload": {
     "aarUrl": "https://example.com/aar",
   },
-  "type": "TRY_INITIATE_AAR_FLOW",
+  "type": "INITIATE_AAR_FLOW",
 }
 `;

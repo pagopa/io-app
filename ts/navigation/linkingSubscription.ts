@@ -7,7 +7,7 @@ import { isArchivingDisabledSelector } from "../features/messages/store/reducers
 import { isSendAARLink } from "../features/pn/aar/utils/deepLinking";
 import { processUtmLink } from "../features/utmLink";
 import { GlobalState } from "../store/reducers/types";
-import { tryInitiateAarFlow } from "../features/pn/aar/store/actions";
+import { initiateAarFlow } from "../features/pn/aar/store/actions";
 
 export const linkingSubscription =
   (dispatch: Dispatch<Action>, store: Store<Readonly<GlobalState>>) =>
@@ -27,7 +27,7 @@ export const linkingSubscription =
       if (isLoggedIn(state.authentication)) {
         // only when logged in we can navigate to the AAR screen.
         if (isSendAARLink(state, url)) {
-          dispatch(tryInitiateAarFlow({ aarUrl: url }));
+          dispatch(initiateAarFlow({ aarUrl: url }));
         }
       } else {
         // If we are not logged in, we store the URL to be processed later

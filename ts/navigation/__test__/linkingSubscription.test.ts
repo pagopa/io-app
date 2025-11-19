@@ -10,7 +10,7 @@ import { applicationChangeState } from "../../store/actions/application";
 import { appReducer } from "../../store/reducers";
 import { GlobalState } from "../../store/reducers/types";
 import { linkingSubscription } from "../linkingSubscription";
-import { tryInitiateAarFlow } from "../../features/pn/aar/store/actions";
+import { initiateAarFlow } from "../../features/pn/aar/store/actions";
 
 describe("linkingSubscription", () => {
   beforeEach(() => {
@@ -116,7 +116,7 @@ describe("linkingSubscription", () => {
 
           if (isAARLink) {
             expect(mockDispatch).toHaveBeenCalledWith(
-              tryInitiateAarFlow({ aarUrl: testUrl })
+              initiateAarFlow({ aarUrl: testUrl })
             );
           } else {
             expect(mockNav).not.toHaveBeenCalled();

@@ -3,8 +3,8 @@ import { testSaga } from "redux-saga-test-plan";
 import NavigationService from "../../../../../navigation/NavigationService";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import PN_ROUTES from "../../../navigation/routes";
-import { initiateAarFlowIfEnabled } from "../initiateAarFlowIfEnabledSaga";
-import { terminateAarFlow, tryInitiateAarFlow } from "../../store/actions";
+import { initiateAarFlowSaga } from "../initiateAarFlowSaga";
+import { terminateAarFlow, initiateAarFlow } from "../../store/actions";
 import { sendAARFlowStates } from "../../utils/stateUtils";
 import {
   currentAARFlowStateType,
@@ -15,7 +15,7 @@ jest.mock("../../../../../navigation/NavigationService");
 
 describe("initiateAarFlowIfEnabled saga", () => {
   const aarUrl = "https://example.com/aar";
-  const action = tryInitiateAarFlow({ aarUrl });
+  const action = initiateAarFlow({ aarUrl });
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -26,7 +26,7 @@ describe("initiateAarFlowIfEnabled saga", () => {
       NavigationService.dispatchNavigationAction as jest.Mock;
     const mockCurrentState = sendAARFlowStates.fetchingQRData;
 
-    testSaga(initiateAarFlowIfEnabled, action)
+    testSaga(initiateAarFlowSaga, action)
       .next()
       .select(currentAARFlowStateType)
       .next(mockCurrentState)
@@ -51,7 +51,7 @@ describe("initiateAarFlowIfEnabled saga", () => {
   it("should navigate to QR_SCAN_FLOW if flow state is none", () => {
     const mockNavigate = NavigationService.navigate as jest.Mock;
 
-    testSaga(initiateAarFlowIfEnabled, action)
+    testSaga(initiateAarFlowSaga, action)
       .next()
       .select(currentAARFlowStateType)
       .next(sendAARFlowStates.none)
