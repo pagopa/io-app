@@ -3,6 +3,7 @@ import { cgnDetails } from "../../bonus/cgn/store/actions/details";
 import { cgnEycaStatus } from "../../bonus/cgn/store/actions/eyca/details";
 import { idPayWalletGet } from "../../idpay/wallet/store/actions";
 import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
+import { getCdcStatusWallet } from "../../bonus/cdc/wallet/store/actions";
 
 /**
  * This saga handles the update of the wallet screen
@@ -17,4 +18,6 @@ export function* handleWalletUpdateSaga() {
   yield* put(cgnDetails.request());
   // Updates the CGN EYCA status
   yield* put(cgnEycaStatus.request());
+  // Updates the CDC status
+  yield* put(getCdcStatusWallet.request());
 }

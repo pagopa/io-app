@@ -18,6 +18,7 @@ import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils
 import { ThirdPartyMessageUnion } from "../../types/thirdPartyById";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { backendClientManager } from "../../../../api/BackendClientManager";
+import { getKeyInfo } from "../../../lollipop/saga";
 
 // Mock the backendClientManager
 jest.mock("../../../../api/BackendClientManager");
@@ -53,6 +54,7 @@ describe("handleThirdPartyMessage", () => {
       const messageId = "01K813A7EVHP2W5ZAYDSTX9J0E";
       const serviceId = "01K813ACAMDW4DRVXK0CEGFHGM" as ServiceId;
       const sessionToken = "mockSessionToken";
+      const keyInfo = {};
       const action = loadThirdPartyMessage.request({
         id: messageId,
         serviceId,
@@ -64,6 +66,8 @@ describe("handleThirdPartyMessage", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .call(getKeyInfo)
+        .next(keyInfo)
         .select(serviceDetailsByIdSelector, serviceId)
         .next(serviceDetails)
         .call(

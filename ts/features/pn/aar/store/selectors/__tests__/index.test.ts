@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import {
   aarAdresseeDenominationSelector,
   currentAARFlowData,
@@ -10,7 +9,7 @@ import {
 } from "..";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { thirdPartyFromIdSelector } from "../../../../../messages/store/reducers/thirdPartyById";
-import { toPNMessage } from "../../../../store/types/transformers";
+import { toSENDMessage } from "../../../../store/types/transformers";
 import { AARFlowState, sendAARFlowStates } from "../../../utils/stateUtils";
 import {
   sendAarMockStateFactory,
@@ -27,7 +26,7 @@ jest.mock("../../../../../messages/store/reducers/thirdPartyById", () => ({
   thirdPartyFromIdSelector: jest.fn()
 }));
 jest.mock("../../../../store/types/transformers", () => ({
-  toPNMessage: jest.fn()
+  toSENDMessage: jest.fn()
 }));
 
 describe("thirdPartySenderDenominationSelector", () => {
@@ -37,9 +36,9 @@ describe("thirdPartySenderDenominationSelector", () => {
 
   it("should return senderDenomination when all data is present", () => {
     (thirdPartyFromIdSelector as jest.Mock).mockReturnValue(pot.some({}));
-    (toPNMessage as jest.Mock).mockReturnValue(
-      O.some({ senderDenomination: "Denomination" })
-    );
+    (toSENDMessage as jest.Mock).mockReturnValue({
+      senderDenomination: "Denomination"
+    });
 
     const result = thirdPartySenderDenominationSelector(
       mockState,
@@ -58,9 +57,9 @@ describe("thirdPartySenderDenominationSelector", () => {
     expect(result).toBeUndefined();
   });
 
-  it("should return undefined if toPNMessage returns none", () => {
+  it("should return undefined if toPNMessage returns undefined", () => {
     (thirdPartyFromIdSelector as jest.Mock).mockReturnValue(pot.some({}));
-    (toPNMessage as jest.Mock).mockReturnValue(O.none);
+    (toSENDMessage as jest.Mock).mockReturnValue(undefined);
 
     const result = thirdPartySenderDenominationSelector(
       mockState,
@@ -71,7 +70,7 @@ describe("thirdPartySenderDenominationSelector", () => {
 
   it("should return undefined if senderDenomination is missing", () => {
     (thirdPartyFromIdSelector as jest.Mock).mockReturnValue(pot.some({}));
-    (toPNMessage as jest.Mock).mockReturnValue(O.some({}));
+    (toSENDMessage as jest.Mock).mockReturnValue({});
 
     const result = thirdPartySenderDenominationSelector(
       mockState,

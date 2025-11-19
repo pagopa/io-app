@@ -3,22 +3,21 @@
  */
 import { all, call } from "typed-redux-saga/macro";
 import versionInfoSaga from "../common/versionInfo/saga/versionInfo";
-import { watchTokenRefreshSaga } from "../features/authentication/fastLogin/saga/tokenRefreshSaga";
-import { watchPendingActionsSaga } from "../features/authentication/fastLogin/saga/pendingActionsSaga";
-import { watchZendeskSupportSaga } from "../features/zendesk/saga";
 import { zendeskEnabled } from "../config";
-import { watchUtmLinkSaga } from "../features/utmLink/saga";
+import { watchLogoutSaga } from "../features/authentication/common/saga/watchLogoutSaga";
+import { watchPendingActionsSaga } from "../features/authentication/fastLogin/saga/pendingActionsSaga";
+import { watchTokenRefreshSaga } from "../features/authentication/fastLogin/saga/tokenRefreshSaga";
 import connectivityStatusSaga from "../features/connectivity/saga";
 import { watchIdentification } from "../features/identification/sagas";
-import { watchLogoutSaga } from "../features/authentication/common/saga/watchLogoutSaga";
+import { watchUtmLinkSaga } from "../features/utmLink/saga";
 import { watchWalletSaga } from "../features/wallet/saga";
-import { watchMessagesSaga } from "../features/messages/saga";
+import { watchExternalWalletUpdateSaga } from "../features/wallet/saga/watchExternalWalletUpdateSaga";
+import { watchZendeskSupportSaga } from "../features/zendesk/saga";
 import backendStatusSaga from "./backendStatus";
 import { watchContentSaga } from "./contentLoaders";
 import { loadSystemPreferencesSaga } from "./preferences";
-import { startupSaga } from "./startup";
 import { removePersistedStatesSaga } from "./removePersistedStates";
-
+import { startupSaga } from "./startup";
 import { watchApplicationActivitySaga } from "./startup/watchApplicationActivitySaga";
 
 export default function* root() {
@@ -26,7 +25,6 @@ export default function* root() {
     call(watchIdentification),
     call(watchApplicationActivitySaga),
     call(startupSaga),
-    call(watchMessagesSaga),
     call(backendStatusSaga),
     call(connectivityStatusSaga),
     call(versionInfoSaga),

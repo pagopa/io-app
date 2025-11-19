@@ -88,6 +88,7 @@ export const itwEidIssuanceMachine = setup({
 
     trackWalletInstanceCreation: notImplemented,
     trackWalletInstanceRevocation: notImplemented,
+    trackIdentificationMethodSelected: notImplemented,
 
     /**
      * Context manipulation
@@ -248,7 +249,7 @@ export const itwEidIssuanceMachine = setup({
           {
             // When reissuing or fallback to L2, if both integrity key tag and wallet instance attestation are valid,
             guard: or(["isReissuance", "isL2Fallback"]),
-            target: "UserIdentification.Identification.L2"
+            target: "UserIdentification.Identification"
           },
           {
             // If both integrity key tag and wallet instance attestation are valid,
@@ -421,97 +422,60 @@ export const itwEidIssuanceMachine = setup({
       initial: "Identification",
       states: {
         Identification: {
-          initial: "EvaluateInitialState",
-          states: {
-            EvaluateInitialState: {
-              description:
-                "Identification phase needs different behaviors depending on the level of identification",
-              always: [
-                {
-                  guard: and(["isL3FeaturesEnabled", not("isL2Fallback")]),
-                  target: "L3"
-                },
-                {
-                  target: "L2"
-                }
-              ]
-            },
-            L2: {
-              description: "Navigates to the L2 identification screen",
-              entry: "navigateToIdentificationScreen",
-              on: {
-                "select-identification-mode": [
-                  {
-                    guard: ({ event }) => event.mode === "spid",
-                    target: "#itwEidIssuanceMachine.UserIdentification.Spid"
-                  },
-                  {
-                    guard: ({ event }) => event.mode === "ciePin",
-                    target: "#itwEidIssuanceMachine.UserIdentification.CiePin"
-                  },
-                  {
-                    guard: ({ event }) => event.mode === "cieId",
-                    actions: assign(() => ({
-                      identification: {
-                        mode: "cieId",
-                        level: "L2"
-                      }
-                    })),
-                    target: "#itwEidIssuanceMachine.UserIdentification.CieID"
-                  }
+          description: "Selection of the identification method",
+          always: {
+            actions: "navigateToIdentificationScreen"
+          },
+          on: {
+            "select-identification-mode": [
+              {
+                guard: ({ event }) => event.mode === "spid",
+                actions: "trackIdentificationMethodSelected",
+                target: "#itwEidIssuanceMachine.UserIdentification.Spid"
+              },
+              {
+                guard: ({ event }) => event.mode === "ciePin",
+                actions: "trackIdentificationMethodSelected",
+                target: "#itwEidIssuanceMachine.UserIdentification.CiePin"
+              },
+              {
+                guard: ({ event }) => event.mode === "cieId",
+                actions: [
+                  "trackIdentificationMethodSelected",
+                  assign(({ context }) => ({
+                    identification: {
+                      mode: "cieId",
+                      level: context.level === "l2" ? "L2" : "L3"
+                    }
+                  }))
                 ],
-                back: [
-                  {
-                    guard: or(["isReissuance", "isL2Fallback"]),
-                    target: "#itwEidIssuanceMachine.Idle"
-                  },
-                  {
-                    guard: "isL3FeaturesEnabled",
-                    target:
-                      "#itwEidIssuanceMachine.UserIdentification.Identification.L3"
-                  },
-                  {
-                    target: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
-                  }
-                ]
+                target: "#itwEidIssuanceMachine.UserIdentification.CieID"
               }
+            ],
+            "go-to-l2-identification": {
+              target:
+                "#itwEidIssuanceMachine.UserIdentification.Identification",
+              actions: assign({ level: "l2-fallback" })
             },
-            L3: {
-              description: "Navigates to the L3 identification screen",
-              entry: [
-                "navigateToIdentificationScreen",
-                assign({ level: "l3" })
-              ],
-              on: {
-                "select-identification-mode": [
-                  {
-                    guard: ({ event }) => event.mode === "ciePin",
-                    target: "#itwEidIssuanceMachine.UserIdentification.CiePin"
-                  },
-                  {
-                    guard: ({ event }) => event.mode === "cieId",
-                    actions: assign(() => ({
-                      identification: {
-                        mode: "cieId",
-                        level: "L3"
-                      }
-                    })),
-                    target: "#itwEidIssuanceMachine.UserIdentification.CieID"
-                  }
-                ],
-                "go-to-l2-identification": {
-                  target: "L2",
-                  actions: assign({ level: "l2-fallback" })
-                },
-                "go-to-cie-warning": {
-                  target:
-                    "#itwEidIssuanceMachine.UserIdentification.CiePin.CieWarning.Identification"
-                },
-                back: {
-                  target: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
-                }
+            "go-to-cie-warning": {
+              target:
+                "#itwEidIssuanceMachine.UserIdentification.CiePin.CieWarning.Identification"
+            },
+            back: [
+              {
+                guard: "isReissuance",
+                target: "#itwEidIssuanceMachine.Idle",
+                actions: "closeIssuance"
+              },
+              {
+                guard: "isL2Fallback",
+                target: "#itwEidIssuanceMachine.Idle",
+                actions: "navigateToTosScreen"
+              },
+              {
+                target: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
               }
-            }
+            ]
           }
         },
         CieID: {
@@ -563,8 +527,7 @@ export const itwEidIssuanceMachine = setup({
           },
           on: {
             back: {
-              target:
-                "#itwEidIssuanceMachine.UserIdentification.Identification.EvaluateInitialState"
+              target: "#itwEidIssuanceMachine.UserIdentification.Identification"
             }
           },
           onDone: {
@@ -593,7 +556,7 @@ export const itwEidIssuanceMachine = setup({
                 },
                 back: {
                   target:
-                    "#itwEidIssuanceMachine.UserIdentification.Identification.L2"
+                    "#itwEidIssuanceMachine.UserIdentification.Identification"
                 }
               }
             },
@@ -783,7 +746,7 @@ export const itwEidIssuanceMachine = setup({
               states: {
                 Identification: {
                   on: {
-                    back: "#itwEidIssuanceMachine.UserIdentification.Identification.L3"
+                    back: "#itwEidIssuanceMachine.UserIdentification.Identification"
                   }
                 },
                 PreparationCie: {
@@ -800,7 +763,7 @@ export const itwEidIssuanceMachine = setup({
               on: {
                 "go-to-l2-identification": {
                   target:
-                    "#itwEidIssuanceMachine.UserIdentification.Identification.L2",
+                    "#itwEidIssuanceMachine.UserIdentification.Identification",
                   actions: assign({ level: "l2-fallback" })
                 },
                 close: {
