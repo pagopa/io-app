@@ -10,6 +10,7 @@ import { applicationChangeState } from "../../store/actions/application";
 import { appReducer } from "../../store/reducers";
 import { GlobalState } from "../../store/reducers/types";
 import { linkingSubscription } from "../linkingSubscription";
+import { initiateAarFlow } from "../../features/pn/aar/store/actions";
 
 describe("linkingSubscription", () => {
   beforeEach(() => {
@@ -91,19 +92,11 @@ describe("linkingSubscription", () => {
       } logged in, and the link passed ${
         isAARLink ? "is" : "isn't"
       } a valid AAR link`, () => {
-        const {
-          store,
-          mockDispatch,
-          mockCurrySubscription,
-          addEventListenerSpy
-        } = initializeTests();
+        const { mockDispatch, mockCurrySubscription, addEventListenerSpy } =
+          initializeTests();
         const mockNav = jest.fn();
         const testUrl = `https://example.com/${isAARLink}/${isLoggedIn}`;
-        const mockState = store.getState();
 
-        jest
-          .spyOn(DEEP_LINKING, "navigateToSendAarFlowIfEnabled")
-          .mockImplementation(mockNav);
         jest
           .spyOn(UTIL_GUARDS, "isLoggedIn")
           .mockImplementation(() => isLoggedIn);
@@ -122,7 +115,9 @@ describe("linkingSubscription", () => {
           );
 
           if (isAARLink) {
-            expect(mockNav).toHaveBeenCalledWith(mockState, testUrl);
+            expect(mockDispatch).toHaveBeenCalledWith(
+              initiateAarFlow({ aarUrl: testUrl })
+            );
           } else {
             expect(mockNav).not.toHaveBeenCalled();
           }
@@ -156,7 +151,6 @@ const initializeTests = () => {
   const mockCurrySubscription = linkingSubscription(mockDispatch, store);
 
   return {
-    store,
     addEventListenerSpy,
     mockCurrySubscription,
     mockDispatch
