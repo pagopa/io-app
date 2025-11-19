@@ -87,3 +87,15 @@ export const currentAARFlowStateErrorDebugInfoSelector = createSelector(
     return emptyInstance;
   }
 );
+
+export const aarCanAndVerificationCodeSelector = (state: GlobalState) => {
+  const currentState = currentAARFlowData(state);
+
+  if (currentState.type === sendAARFlowStates.cieScanning) {
+    return {
+      can: currentState.can,
+      verificationCode: currentState.verificationCode
+    };
+  }
+  return undefined;
+};
