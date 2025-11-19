@@ -3946,6 +3946,21 @@
             "link": "Vai sul sito di SEND",
             "primaryAction": "Torna alla notifica",
             "secondaryAction": "Chiudi la notifica"
+          },
+          "cieScanning": {
+            "idle": {
+              "title": "Poggia il retro del telefono sulla CIE"
+            },
+            "reading": {
+              "title": "La lettura è in corso...",
+              "subtitle": "Non muovere il telefono."
+            },
+            "success": {
+              "title": "Lettura completata!"
+            }
+          },
+          "validatingMandate": {
+            "loadingText": "Verifica della Carta di Identità Elettronica in corso"
           }
         }
       },

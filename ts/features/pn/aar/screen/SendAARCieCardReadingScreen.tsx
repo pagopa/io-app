@@ -8,30 +8,63 @@ import {
   CieCardReadContent,
   CieCardReadContentProps
 } from "../../../common/components/cie/CieCardReadContent";
-import { useIOSelector } from "../../../../store/hooks";
-import { aarCanAndVerificationCodeSelector } from "../store/selectors";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import {
+  aarCieScanningStateSelector,
+  currentAARFlowData
+} from "../store/selectors";
+import { sendAARFlowStates } from "../utils/stateUtils";
+import { SendAARLoadingComponent } from "../components/SendAARLoadingComponent";
+import { setAarFlowState } from "../store/actions";
+import { isDefined } from "../../../../utils/guards";
+import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { PnParamsList } from "../../navigation/params";
 
-export const SendAARCieCardReadingScreen = () => {
-  const maybeCanAndVerificatonCode = useIOSelector(
-    aarCanAndVerificationCodeSelector
-  );
-  const { startReading, stopReading, readStatus, progress } =
+type Props = {
+  navigation: IOStackNavigationProp<PnParamsList, "SEND_AAR_CIE_CARD_READING">;
+};
+
+export const SendAARCieCardReadingScreen = ({ navigation }: Props) => {
+  const dispatch = useIODispatch();
+  const { terminateFlow } = useSendAarFlowManager();
+  const maybeCieScanningState = useIOSelector(aarCieScanningStateSelector);
+  const { startReading, stopReading, readStatus, progress, data } =
     useCieInternalAuthAndMrtdReading();
 
   useEffect(() => {
     if (
-      maybeCanAndVerificatonCode?.can &&
-      maybeCanAndVerificatonCode.verificationCode
+      readStatus === ReadStatus.SUCCESS &&
+      isDefined(maybeCieScanningState) &&
+      isDefined(data)
     ) {
+      const { iun, recipientInfo, mandateId } = maybeCieScanningState;
+
+      dispatch(
+        setAarFlowState({
+          type: sendAARFlowStates.validatingMandate,
+          iun,
+          recipientInfo,
+          mandateId,
+          mrtdData: data.mrtd_data,
+          nisData: data.nis_data,
+          signedVerificationCode: data.nis_data.signedChallenge
+        })
+      );
+    }
+  }, [readStatus, data, maybeCieScanningState, dispatch]);
+
+  useEffect(() => {
+    if (maybeCieScanningState?.can && maybeCieScanningState.verificationCode) {
       void startReading(
-        maybeCanAndVerificatonCode.can,
-        maybeCanAndVerificatonCode.verificationCode,
+        maybeCieScanningState.can,
+        maybeCieScanningState.verificationCode,
         "hex"
       );
     }
   }, [
-    maybeCanAndVerificatonCode?.can,
-    maybeCanAndVerificatonCode?.verificationCode,
+    maybeCieScanningState?.can,
+    maybeCieScanningState?.verificationCode,
     startReading
   ]);
 
@@ -52,29 +85,46 @@ export const SendAARCieCardReadingScreen = () => {
   } = useMemo(
     () => ({
       [ReadStatus.IDLE]: {
-        title: "Poggia il retro del telefono sulla CIE",
+        title: i18n.t("features.pn.aar.flow.cieScanning.idle.title"),
         pictogram: "nfcScaniOS",
         secondaryAction: cancelAction
       },
       [ReadStatus.READING]: {
-        title: "La lettura è in corso...",
-        subtitle: "Non muovere il telefono.",
+        title: i18n.t("features.pn.aar.flow.cieScanning.reading.title"),
+        subtitle: i18n.t("features.pn.aar.flow.cieScanning.reading.subtitle"),
         pictogram: "nfcScaniOS",
         secondaryAction: cancelAction
       },
       [ReadStatus.SUCCESS]: {
-        title: "Lettura completata!",
+        title: i18n.t("features.pn.aar.flow.cieScanning.success.title"),
         pictogram: "success"
       },
       // TODO: [IOCOM-2752] Handle errors
       [ReadStatus.ERROR]: {
         pictogram: "attention",
         title: "Qualcosa è andato storto.",
-        secondaryAction: cancelAction
+        secondaryAction: {
+          variant: "link",
+          label: i18n.t("global.buttons.close"),
+          onPress: () => {
+            terminateFlow();
+            navigation.popToTop();
+          }
+        }
       }
     }),
-    [cancelAction]
+    [cancelAction, terminateFlow, navigation]
   );
+
+  if (!isDefined(maybeCieScanningState)) {
+    return (
+      <SendAARLoadingComponent
+        contentTitle={i18n.t(
+          "features.pn.aar.flow.validatingMandate.loadingText"
+        )}
+      />
+    );
+  }
 
   return <CieCardReadContent progress={progress} {...contentMap[readStatus]} />;
 };

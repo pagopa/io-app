@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
+import { Optional } from "@pagopa/io-app-design-system";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { thirdPartyFromIdSelector } from "../../../../messages/store/reducers/thirdPartyById";
 import { toSENDMessage } from "../../../store/types/transformers";
@@ -88,14 +89,15 @@ export const currentAARFlowStateErrorDebugInfoSelector = createSelector(
   }
 );
 
-export const aarCanAndVerificationCodeSelector = (state: GlobalState) => {
+export const aarCieScanningStateSelector = (
+  state: GlobalState
+): Optional<
+  Extract<AARFlowState, { type: typeof sendAARFlowStates.cieScanning }>
+> => {
   const currentState = currentAARFlowData(state);
 
   if (currentState.type === sendAARFlowStates.cieScanning) {
-    return {
-      can: currentState.can,
-      verificationCode: currentState.verificationCode
-    };
+    return currentState;
   }
   return undefined;
 };
