@@ -103,10 +103,6 @@ export type Context = {
    * Credentials that failed the upgrade process.
    */
   failedCredentials: ReadonlyArray<StoredCredential> | undefined;
-  /**
-   * Indicates whether the bottom sheet of survey is visible.
-   */
-  isPidReissuingSurveyHidden?: boolean;
 };
 
 export const InitialContext: Context = {

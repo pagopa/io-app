@@ -103,5 +103,5 @@ export const itwIsSimplifiedActivationRequired = (state: GlobalState) =>
  * Returns `true` if the bottom sheet is visible, `false` if the user has already
  * checked the survey, with the state being persisted through Redux.
  */
-export const itwIsPidReissuingSurveyHidden = (state: GlobalState) =>
+export const itwIsPidReissuingSurveyHiddenSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.isPidReissuingSurveyHidden;

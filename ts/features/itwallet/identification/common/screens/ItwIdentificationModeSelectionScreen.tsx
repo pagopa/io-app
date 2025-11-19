@@ -11,11 +11,7 @@ import { useCallback, useMemo } from "react";
 import { View } from "react-native";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
-import {
-  IOStackNavigationRouteProps,
-  useIONavigation
-} from "../../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../../navigation/routes";
+import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
 import {
   trackItWalletIDMethod,
@@ -32,7 +28,6 @@ import {
   selectIssuanceMode
 } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
-import { itwIsPidReissuingSurveyHidden } from "../../../common/store/selectors/preferences";
 
 export type ItwIdentificationNavigationParams = {
   eidReissuing?: boolean;
@@ -53,7 +48,6 @@ export const ItwIdentificationModeSelectionScreen = ({
   const { name: routeName, params } = route;
   const { eidReissuing } = params;
 
-  const navigation = useIONavigation();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
@@ -64,10 +58,6 @@ export const ItwIdentificationModeSelectionScreen = ({
 
   const disabledIdentificationMethods = useIOSelector(
     itwDisabledIdentificationMethodsSelector
-  );
-
-  const isPidReissuingSurveyHidden = useIOSelector(
-    itwIsPidReissuingSurveyHidden
   );
 
   const isCiePinDisabled = useMemo(
@@ -150,20 +140,7 @@ export const ItwIdentificationModeSelectionScreen = ({
       body: ""
     },
     handleDismiss: () => {
-      navigation.reset({
-        index: 1,
-        routes: [
-          {
-            name: ROUTES.MAIN,
-            params: {
-              screen: ROUTES.WALLET_HOME,
-              params: {
-                requiredEidFeedback: !isPidReissuingSurveyHidden
-              }
-            }
-          }
-        ]
-      });
+      machineRef.send({ type: "close" });
     }
   });
 

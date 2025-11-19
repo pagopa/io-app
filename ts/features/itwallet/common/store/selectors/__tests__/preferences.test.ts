@@ -8,7 +8,7 @@ import {
   itwIsDiscoveryBannerHiddenSelector,
   itwIsFeedbackBannerHiddenSelector,
   itwRequestedCredentialsSelector,
-  itwIsPidReissuingSurveyHidden
+  itwIsPidReissuingSurveyHiddenSelector
 } from "../preferences";
 import { ItwAuthLevel } from "../../../utils/itwTypesUtils.ts";
 
@@ -119,7 +119,7 @@ describe("itwAuthLevelSelector", () => {
   });
 });
 
-describe("itwIsPidReissuingSurveyHidden", () => {
+describe("itwIsPidReissuingSurveyHiddenSelector", () => {
   afterEach(() => {
     // Always reset the date after each test to avoid side effects
     MockDate.reset();
@@ -132,6 +132,6 @@ describe("itwIsPidReissuingSurveyHidden", () => {
       isPidReissuingSurveyHidden: true
     });
 
-    expect(itwIsPidReissuingSurveyHidden(updatedState)).toBe(true);
+    expect(itwIsPidReissuingSurveyHiddenSelector(updatedState)).toBe(true);
   });
 });
