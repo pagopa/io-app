@@ -15,3 +15,13 @@ exports[`AARFlowStateActions should match snapshot for populateStoresWithEphemer
   "type": "POPULATE_STORES_WITH_EPHEMERAL_AAR_MESSAGE_DATA",
 }
 `;
+
+exports[`AARFlowStateActions tryInitiateAarFlow action should have correct type="TRY_INITIATE_AAR_FLOW" 1`] = `
+{
+  "meta": undefined,
+  "payload": {
+    "aarUrl": "https://example.com/aar",
+  },
+  "type": "INITIATE_AAR_FLOW",
+}
+`;
