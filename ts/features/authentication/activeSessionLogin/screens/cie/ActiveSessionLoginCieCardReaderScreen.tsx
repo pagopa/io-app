@@ -54,21 +54,12 @@ import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../../../../utils/supportAssistance";
-// import {
-//   trackLoginCieCardReaderScreen,
-//   trackLoginCieCardReadingError,
-//   trackLoginCieCardReadingSuccess
-// } from "../../../common/analytics/cieAnalytics";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import CieCardReadingAnimation, {
   ReadingState
 } from "../../../login/cie/components/CieCardReadingAnimation";
-import {
-  // CieAuthenticationErrorPayload,
-  CieAuthenticationErrorReason
-  // cieAuthenticationError
-} from "../../../login/cie/store/actions";
+import { CieAuthenticationErrorReason } from "../../../login/cie/store/actions";
 import { isCieLoginUatEnabledSelector } from "../../../login/cie/store/selectors";
 import { getCieUatEndpoint } from "../../../login/cie/utils/endpoints";
 import {
@@ -80,10 +71,11 @@ import {
   getTextForState,
   TextForState
 } from "../../shared/utils";
-
-// The MP events related to this page have been commented on,
-// pending their correct integration into the flow.
-// Task: https://pagopa.atlassian.net/browse/IOPID-3343
+import {
+  trackLoginCieCardReadingError,
+  trackLoginCieCardReadingSuccess
+} from "../../../common/analytics/cieAnalytics";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 
 type setErrorParameter = {
   eventReason: CieAuthenticationErrorReason;
@@ -178,7 +170,7 @@ const ActiveSessionLoginCieCardReaderScreen = () => {
         });
         break;
       case ReadingState.error:
-        // trackLoginCieCardReadingError();
+        trackLoginCieCardReadingError(true);
         setTextState(getTextForState(ReadingState.error, errorMessage));
         break;
       case ReadingState.completed:
@@ -240,6 +232,7 @@ const ActiveSessionLoginCieCardReaderScreen = () => {
 
       setTimeout(
         () => {
+          void trackLoginCieCardReadingSuccess(true);
           navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
             screen:
               AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE_ACTIVE_SESSION_LOGIN,
@@ -340,7 +333,7 @@ const ActiveSessionLoginCieCardReaderScreen = () => {
 
   const handleCieError = useCallback(
     (error: Error) => {
-      // trackLoginCieCardReadingError();
+      trackLoginCieCardReadingError(true);
       handleSendAssistanceLog(choosenTool, error.message);
       setError({ eventReason: "GENERIC", errorDescription: error.message });
     },
@@ -394,9 +387,11 @@ const ActiveSessionLoginCieCardReaderScreen = () => {
     [authorizationUri, ciePin, handleCieError, handleCieEvent, handleCieSuccess]
   );
 
-  useEffect(() => {
-    // trackLoginCieCardReaderScreen();
+  useOnFirstRender(() => {
+    void trackLoginCieCardReadingSuccess(true);
+  });
 
+  useEffect(() => {
     const checkScreenReader = async () => {
       const srEnabled = await isScreenReaderEnabled();
       setIsScreenReaderEnabledState(srEnabled);

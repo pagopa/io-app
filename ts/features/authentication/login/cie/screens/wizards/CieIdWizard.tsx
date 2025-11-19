@@ -4,7 +4,6 @@ import {
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useEffect } from "react";
 import I18n from "i18next";
 import { useIONavigation } from "../../../../../../navigation/params/AppParamsList";
 import { IOScrollViewActions } from "../../../../../../components/ui/IOScrollView";
@@ -16,8 +15,10 @@ import {
   trackWizardCieIdSelected
 } from "../../analytics";
 import { SpidLevel } from "../../utils";
-import { useIOStore } from "../../../../../../store/hooks";
+import { useIOSelector, useIOStore } from "../../../../../../store/hooks";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
+import { isActiveSessionLoginSelector } from "../../../../activeSessionLogin/store/selectors";
+import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender";
 
 export const CIE_ID_LINK =
   "https://www.cartaidentita.interno.gov.it/info-utili/cie-id/";
@@ -29,10 +30,11 @@ const CieIdWizard = () => {
   const { navigate } = useIONavigation();
   const label = I18n.t("authentication.wizards.cie_id_wizard.title");
   const { navigateToCieIdLoginScreen } = useNavigateToLoginMethod();
+  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
 
-  useEffect(() => {
-    void trackCieIdWizardScreen();
-  }, []);
+  useOnFirstRender(() => {
+    void trackCieIdWizardScreen(isActiveSessionLogin);
+  });
 
   const screenActions = (): IOScrollViewActions => ({
     type: "TwoButtons",

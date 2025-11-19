@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../../../../components/ui/IOScrollViewWithLargeHeader";
 import useNavigateToLoginMethod from "../../../hooks/useNavigateToLoginMethod";
@@ -8,15 +7,19 @@ import {
   trackWizardSpidSelected
 } from "../../analytics";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
+import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender";
+import { isActiveSessionLoginSelector } from "../../../../activeSessionLogin/store/selectors";
+import { useIOSelector } from "../../../../../../store/hooks";
 
 const SpidWizard = () => {
   const { navigate } = useIONavigation();
   const { navigateToIdpSelection } = useNavigateToLoginMethod();
   const label = I18n.t("authentication.wizards.spid_wizard.title");
+  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
 
-  useEffect(() => {
-    void trackSpidWizardScreen();
-  }, []);
+  useOnFirstRender(() => {
+    void trackSpidWizardScreen(isActiveSessionLogin);
+  });
 
   return (
     <IOScrollViewWithLargeHeader
@@ -33,7 +36,7 @@ const SpidWizard = () => {
             "authentication.wizards.spid_wizard.actions.primary.label"
           ),
           onPress: () => {
-            void trackWizardSpidSelected();
+            void trackWizardSpidSelected(isActiveSessionLogin);
             navigateToIdpSelection();
           }
         },

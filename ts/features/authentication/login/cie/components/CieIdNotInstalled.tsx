@@ -6,6 +6,8 @@ import { OperationResultScreenContent } from "../../../../../components/screens/
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { openWebUrl } from "../../../../../utils/url";
 import { trackCieIdNotInstalledDownloadAction } from "../analytics";
+import { useIOSelector } from "../../../../../store/hooks";
+import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
 
 export const CIE_ID_IOS_LINK =
   "https://apps.apple.com/it/app/cieid/id1504644677";
@@ -20,6 +22,7 @@ export type CieIdNotInstalledProps = {
 const CieIdNotInstalled = ({ isUat }: CieIdNotInstalledProps) => {
   const { popToTop } = useIONavigation();
   const { error } = useIOToast();
+  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
 
   return (
     <OperationResultScreenContent
@@ -32,7 +35,7 @@ const CieIdNotInstalled = ({ isUat }: CieIdNotInstalledProps) => {
           "authentication.cie_id.cie_not_installed.primary_action_label"
         ),
         onPress: () => {
-          void trackCieIdNotInstalledDownloadAction();
+          void trackCieIdNotInstalledDownloadAction(isActiveSessionLogin);
           openWebUrl(
             Platform.select({
               ios: CIE_ID_IOS_LINK,

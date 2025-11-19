@@ -37,7 +37,10 @@ describe("CieIdAuthUrlError", () => {
 
   it("Should call trackCieIdNoWhitelistUrl on first render", () => {
     render(<CieIdAuthUrlError />);
-    expect(analytics.trackCieIdNoWhitelistUrl).toHaveBeenCalledWith(mockUrl);
+    expect(analytics.trackCieIdNoWhitelistUrl).toHaveBeenCalledWith(
+      mockUrl,
+      undefined
+    );
   });
 
   it("Should render the correct title and subtitle", () => {

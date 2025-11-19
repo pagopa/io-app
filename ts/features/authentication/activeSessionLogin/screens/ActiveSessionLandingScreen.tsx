@@ -20,14 +20,6 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-// import {
-//   loginCieWizardSelected,
-//   trackCieBottomSheetScreenView,
-//   trackCieIDLoginSelected,
-//   trackCieLoginSelected,
-//   trackCiePinLoginSelected,
-//    trackSpidLoginSelected
-// } from "../../common/analytics";
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
 
 import { isCieLoginUatEnabledSelector } from "../../login/cie/store/selectors";
@@ -36,14 +28,20 @@ import useNavigateToLoginMethod from "../../login/hooks/useNavigateToLoginMethod
 import { LandingSessionExpiredComponent } from "../../login/landing/components/LandingSessionExpiredComponent";
 import { setActiveSessionLoginBlockingScreenHasBeenVisualized } from "../store/actions";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import {
+  loginCieWizardSelected,
+  trackCieBottomSheetScreenView
+} from "../../common/analytics";
+import {
+  trackLoginReauthEngagement,
+  trackLoginReauthEngagementCieSelected,
+  trackLoginReauthEngagementDismissed,
+  trackLoginReauthEngagementSpidSelected
+} from "./analytics";
 
 const SPACE_BETWEEN_BUTTONS = 8;
 const SPACE_AROUND_BUTTON_LINK = 16;
 const SPID_LEVEL: SpidLevel = "SpidL2";
-
-// The MP events related to this page have been commented on,
-// pending their correct integration into the flow.
-// Task: https://pagopa.atlassian.net/browse/IOPID-3343
 
 export const ActiveSessionLandingScreen = () => {
   const insets = useSafeAreaInsets();
@@ -58,11 +56,12 @@ export const ActiveSessionLandingScreen = () => {
   } = useNavigateToLoginMethod();
 
   const handleNavigateToCieIdLoginScreen = useCallback(() => {
-    // void trackCieIDLoginSelected(store.getState(), SPID_LEVEL);
+    // void trackCieIDLoginSelected(store.getState(), SPID_LEVEL); // miss on ASL
     navigateToCieIdLoginScreen(SPID_LEVEL);
   }, [navigateToCieIdLoginScreen]);
 
   useOnFirstRender(() => {
+    void trackLoginReauthEngagement();
     dispatch(setActiveSessionLoginBlockingScreenHasBeenVisualized());
   });
 
@@ -106,8 +105,7 @@ export const ActiveSessionLandingScreen = () => {
         <VSpacer size={24} />
         <Banner
           onPress={() => {
-            // void loginCieWizardSelected();
-
+            void loginCieWizardSelected(true);
             navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
               screen: AUTHENTICATION_ROUTES.CIE_ID_WIZARD
             });
@@ -141,14 +139,19 @@ export const ActiveSessionLandingScreen = () => {
   );
 
   const navigateToCiePinScreen = useCallback(() => {
-    // void trackCieLoginSelected();
+    void trackLoginReauthEngagementCieSelected();
     if (isCieSupported) {
-      // void trackCieBottomSheetScreenView();
+      void trackCieBottomSheetScreenView(true);
       present();
     } else {
       handleNavigateToCieIdLoginScreen();
     }
   }, [isCieSupported, present, handleNavigateToCieIdLoginScreen]);
+
+  const handleClosePress = useCallback(() => {
+    void trackLoginReauthEngagementDismissed();
+    navigation.goBack();
+  }, [navigation]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -159,12 +162,12 @@ export const ActiveSessionLandingScreen = () => {
           firstAction={{
             icon: "closeLarge",
             accessibilityLabel: I18n.t("global.buttons.close"),
-            onPress: navigation.goBack
+            onPress: handleClosePress
           }}
         />
       )
     });
-  }, [navigation]);
+  }, [navigation, handleClosePress]);
 
   return (
     <View style={{ flex: 1 }} testID="LandingScreen">
@@ -198,7 +201,7 @@ export const ActiveSessionLandingScreen = () => {
           label={I18n.t("authentication.landing.loginSpid")}
           icon="spid"
           onPress={() => {
-            // void trackSpidLoginSelected();
+            void trackLoginReauthEngagementSpidSelected();
             navigateToIdpSelection();
           }}
           testID="landing-button-login-spid"

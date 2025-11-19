@@ -104,7 +104,7 @@ const useNavigateToLoginMethod = () => {
         // logic for mismatches between the required security level
         // and the actual security level).
         // TASK: https://pagopa.atlassian.net/browse/IOPID-3343
-        // dispatch(cieIDSetSelectedSecurityLevel(spidLevel));
+        // dispatch(cieIDSetSelectedSecurityLevel(spidLevel)); // miss on ASL (check it)
         dispatch(setIdpSelectedActiveSessionLogin(IdpCIE_ID));
       } else {
         dispatch(idpSelected(IdpCIE_ID));

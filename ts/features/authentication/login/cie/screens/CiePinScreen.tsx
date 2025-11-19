@@ -73,11 +73,6 @@ import {
 } from "../../../activeSessionLogin/store/selectors";
 import useActiveSessionLoginNavigation from "../../../activeSessionLogin/utils/useActiveSessionLoginNavigation";
 
-// The MP events related to this page have been commented on
-// (or disabled for active session login),
-// pending their correct integration into the flow.
-// Task: https://pagopa.atlassian.net/browse/IOPID-3343
-
 const CIE_PIN_LENGTH = 8;
 
 const getContextualHelp = (): ContextualHelpPropsMarkdown => ({
@@ -100,9 +95,7 @@ const CiePinScreen = () => {
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
 
   useOnFirstRender(() => {
-    if (!isActiveSessionLogin) {
-      trackLoginCiePinScreen();
-    }
+    trackLoginCiePinScreen(isActiveSessionLogin);
   });
 
   const requestNfcEnabledCheck = useCallback(
@@ -257,9 +250,7 @@ const CiePinScreen = () => {
               asLink
               accessibilityRole="button"
               onPress={() => {
-                if (!isActiveSessionLogin) {
-                  trackLoginCiePinInfo();
-                }
+                trackLoginCiePinInfo(isActiveSessionLogin);
                 present();
               }}
             >

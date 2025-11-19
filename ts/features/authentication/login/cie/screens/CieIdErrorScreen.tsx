@@ -38,11 +38,11 @@ const CieIdErrorScreen = () => {
 
   useEffect(() => {
     if (isCieSupported) {
-      void trackCieIdErrorCiePinFallbackScreen();
+      void trackCieIdErrorCiePinFallbackScreen(isActiveSessionLogin);
     } else {
-      void trackCieIdErrorSpidFallbackScreen();
+      void trackCieIdErrorSpidFallbackScreen(isActiveSessionLogin);
     }
-  }, [isCieSupported]);
+  }, [isActiveSessionLogin, isCieSupported]);
 
   const subtitle = I18n.t(isCieSupported ? CIE_PIN_DESC : SPID_DESC);
   const primaryActionLabel = I18n.t(
@@ -74,7 +74,7 @@ const CieIdErrorScreen = () => {
         accessibilityLabel: primaryActionLabel,
         onPress: () => {
           if (isCieSupported) {
-            void trackCieIdErrorCiePinSelected();
+            void trackCieIdErrorCiePinSelected(isActiveSessionLogin);
             // Since this screen will only be accessible after the user has already
             // made their choice on the Opt-In screen, we can navigate directly to it
             dispatch(idpSelected(IdpCIE));
@@ -82,7 +82,7 @@ const CieIdErrorScreen = () => {
               screen: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
             });
           } else {
-            void trackCieIdErrorSpidSelected();
+            void trackCieIdErrorSpidSelected(isActiveSessionLogin);
             // Since this screen will only be accessible after the user has already
             // made their choice on the Opt-In screen, we can navigate directly to it
             navigate(AUTHENTICATION_ROUTES.MAIN, {

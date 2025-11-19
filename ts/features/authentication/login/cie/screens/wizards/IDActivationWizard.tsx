@@ -5,12 +5,14 @@ import {
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useEffect } from "react";
 import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../../../navigation/params/AppParamsList";
 import { openWebUrl } from "../../../../../../utils/url";
 import { trackIdpActivationWizardScreen } from "../../analytics";
+import { isActiveSessionLoginSelector } from "../../../../activeSessionLogin/store/selectors";
+import { useIOSelector } from "../../../../../../store/hooks";
+import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender";
 
 export const REQUEST_CIE_URL =
   "https://www.cartaidentita.interno.gov.it/richiedi/";
@@ -22,10 +24,11 @@ const IDActivationWizard = () => {
   const { popToTop } = useIONavigation();
   const { error } = useIOToast();
   const label = I18n.t("authentication.wizards.id_activation_wizard.title");
+  const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
 
-  useEffect(() => {
-    void trackIdpActivationWizardScreen();
-  }, []);
+  useOnFirstRender(() => {
+    void trackIdpActivationWizardScreen(isActiveSessionLogin);
+  });
 
   const handleOpenLink = (url: string) => () => {
     openWebUrl(url, () => {

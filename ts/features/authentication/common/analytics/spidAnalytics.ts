@@ -63,49 +63,49 @@ function trackMissingSAMLResponseError(properties?: EventProperties) {
     buildEventProperties("KO", undefined, properties)
   );
 }
-
+// miss on ASL (check it)
 export function trackLoginSpidError(
   errorCode?: string,
   properties?: EventProperties
 ) {
   switch (errorCode) {
     case AUTH_ERRORS.ERROR_19: {
-      trackLoginSpidAttemptsError(properties);
+      trackLoginSpidAttemptsError(properties); // ok
       return;
     }
     case AUTH_ERRORS.ERROR_20: {
-      trackLoginSpid2StepError(properties);
+      trackLoginSpid2StepError(properties); // ok
       return;
     }
     case AUTH_ERRORS.ERROR_21: {
-      trackLoginSpidTimeoutError(properties);
+      trackLoginSpidTimeoutError(properties); // ok
       return;
     }
     case AUTH_ERRORS.ERROR_22: {
-      trackLoginSpidDataSharingError(properties);
+      trackLoginSpidDataSharingError(properties); // ok
       return;
     }
     case AUTH_ERRORS.ERROR_23: {
-      trackLoginSpidIdentityError(properties);
+      trackLoginSpidIdentityError(properties); // ok
       return;
     }
     case AUTH_ERRORS.ERROR_25:
     case AUTH_ERRORS.CIEID_IOS_OPERATION_CANCELED_MESSAGE:
     case AUTH_ERRORS.CIEID_OPERATION_CANCEL: {
-      trackLoginSpidCancelError(properties);
+      trackLoginSpidCancelError(properties); // ok
       return;
     }
     case AUTH_ERRORS.MISSING_SAML_RESPONSE: {
-      trackMissingSAMLResponseError(properties);
+      trackMissingSAMLResponseError(properties); // ok
       return;
     }
     default: {
-      trackLoginSpidGenericError(properties);
+      trackLoginSpidGenericError(properties); // ok
       return;
     }
   }
 }
-
+// miss on ASL
 export async function trackLoginSpidIdpSelected(
   idp: string,
   state: GlobalState
