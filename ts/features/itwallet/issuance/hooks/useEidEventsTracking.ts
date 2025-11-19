@@ -46,7 +46,7 @@ export const useEidEventsTracking = ({ failure, identification }: Params) => {
         reason: failure.reason,
         type: failure.type,
         caused_by: "CredentialIssuer",
-        itw_flow: identification.level
+        itw_flow: itwFlow
       });
     }
 
@@ -59,7 +59,7 @@ export const useEidEventsTracking = ({ failure, identification }: Params) => {
         reason: failure.reason,
         type: failure.type,
         caused_by: "WalletProvider",
-        itw_flow: identification.level
+        itw_flow: itwFlow
       });
     }
 
@@ -67,7 +67,7 @@ export const useEidEventsTracking = ({ failure, identification }: Params) => {
       failure.type === IssuanceFailureType.CIE_NOT_REGISTERED &&
       identification
     ) {
-      return trackItwCieIdCieNotRegistered(identification.level);
+      return trackItwCieIdCieNotRegistered(itwFlow);
     }
 
     if (failure.type === IssuanceFailureType.UNEXPECTED) {
