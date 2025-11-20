@@ -46,7 +46,6 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const eidExpiration = useIOSelector(itwCredentialsEidExpirationSelector);
   const isEidExpired = eidStatus === "jwtExpired";
   const iconColor = useItwStatusIconColor(isEidExpired);
-  const { name: currentScreenName } = useRoute();
 
   useItwPendingReviewRequest();
 
