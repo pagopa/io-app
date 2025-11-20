@@ -3,7 +3,6 @@ import { type CredentialIssuanceFailure } from "../../machine/credential/failure
 import { type IssuanceFailure } from "../../machine/eid/failure";
 import { RemoteFailure } from "../../presentation/remote/machine/failure.ts";
 import { ProximityFailure } from "../../presentation/proximity/machine/failure.ts";
-import { UpgradeCredentialFailure } from "../../machine/upgrade/failure.ts";
 
 interface PollForStoreValueOptions<T> {
   getState: () => GlobalState;
@@ -71,7 +70,6 @@ export const serializeFailureReason = (
     | CredentialIssuanceFailure
     | RemoteFailure
     | ProximityFailure
-    | UpgradeCredentialFailure
 ) => {
   const reason = !failure.reason
     ? "Reason not provided"
