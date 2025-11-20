@@ -32,7 +32,9 @@ export const useThemeColorByCredentialType = (
         };
       case CredentialType.DRIVING_LICENSE:
         return {
-          backgroundColor: withL3Design ? IOColors["blueIO-500"] : "#744C63",
+          backgroundColor: withL3Design
+            ? theme["header-background"]
+            : "#744C63",
           textColor: withL3Design ? "#032D5C" : "#652035"
         };
       case CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD:

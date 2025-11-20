@@ -3,7 +3,11 @@ import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { thirdPartyFromIdSelector } from "../../../../messages/store/reducers/thirdPartyById";
 import { toSENDMessage } from "../../../store/types/transformers";
-import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
+import {
+  AARFlowState,
+  maybeIunFromAarFlowState,
+  sendAARFlowStates
+} from "../../utils/stateUtils";
 
 export const thirdPartySenderDenominationSelector = (
   state: GlobalState,
@@ -25,16 +29,23 @@ export const aarAdresseeDenominationSelector = (
   const currentState = currentAARFlowData(state);
 
   switch (currentState.type) {
-    case sendAARFlowStates.fetchingNotificationData:
-    case sendAARFlowStates.displayingNotificationData:
-    case sendAARFlowStates.notAddresseeFinal:
+    case sendAARFlowStates.none:
+    case sendAARFlowStates.ko:
+    case sendAARFlowStates.displayingAARToS:
+    case sendAARFlowStates.fetchingQRData:
+      return undefined;
+    default:
       if (iun === currentState.iun) {
         return currentState.recipientInfo.denomination;
       }
       return undefined;
-    default:
-      return undefined;
   }
+};
+export const currentAarFlowIunSelector = (
+  state: GlobalState
+): string | undefined => {
+  const currentState = currentAARFlowData(state);
+  return maybeIunFromAarFlowState(currentState);
 };
 
 export const currentAARFlowData = (state: GlobalState) =>

@@ -26,7 +26,7 @@ type ItwIridescentBorderProps = {
  *
  * Renders an animated IT-Wallet branded gradient using Skia and device rotation sensor data.
  */
-export const ItwBranderSkiaBorder = ({
+export const ItwBrandedSkiaBorder = ({
   width,
   height,
   thickness = 3,

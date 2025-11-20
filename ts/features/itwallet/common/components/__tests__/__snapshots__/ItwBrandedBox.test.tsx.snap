@@ -187,13 +187,13 @@ exports[`ItwBrandedBox should render correctly for variant default 1`] = `
               <skLinearGradient
                 colors={
                   [
-                    "rgba(255, 179, 87, 1)",
-                    "rgba(255, 234, 189, 1)",
-                    "rgba(25, 104, 240, 1)",
-                    "rgba(205, 210, 252, 1)",
-                    "rgba(255, 179, 87, 1)",
-                    "rgba(25, 104, 240, 1)",
                     "rgba(220, 227, 252, 1)",
+                    "rgba(25, 104, 240, 1)",
+                    "rgba(255, 179, 87, 1)",
+                    "rgba(205, 210, 252, 1)",
+                    "rgba(25, 104, 240, 1)",
+                    "rgba(255, 234, 189, 1)",
+                    "rgba(255, 179, 87, 1)",
                   ]
                 }
                 end={
@@ -252,7 +252,7 @@ exports[`ItwBrandedBox should render correctly for variant default 1`] = `
                     "__typename__": "Point",
                     "dispose": [Function],
                     "ref": Float32Array [
-                      -0,
+                      0,
                       0,
                     ],
                   }
@@ -614,7 +614,7 @@ exports[`ItwBrandedBox should render correctly for variant error 1`] = `
                     "__typename__": "Point",
                     "dispose": [Function],
                     "ref": Float32Array [
-                      -0,
+                      0,
                       0,
                     ],
                   }
@@ -976,7 +976,7 @@ exports[`ItwBrandedBox should render correctly for variant warning 1`] = `
                     "__typename__": "Point",
                     "dispose": [Function],
                     "ref": Float32Array [
-                      -0,
+                      0,
                       0,
                     ],
                   }

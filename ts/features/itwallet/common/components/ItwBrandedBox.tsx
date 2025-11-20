@@ -174,7 +174,7 @@ export const ItwBrandedBox = ({
         <SkiaLight />
 
         {/* Animated gradient border */}
-        <ItwBranderSkiaBorder
+        <ItwBrandedSkiaBorder
           width={size.width}
           height={size.height}
           variant={variant}
