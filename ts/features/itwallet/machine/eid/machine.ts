@@ -30,7 +30,6 @@ import {
 } from "./context";
 import { EidIssuanceEvents } from "./events";
 import { IssuanceFailureType, mapEventToFailure } from "./failure";
-import { isL3IssuanceFeaturesEnabled } from "./utils";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -114,9 +113,7 @@ export const itwEidIssuanceMachine = setup({
       };
     }),
     trackIntroScreen: ({ context }) => {
-      trackItWalletIntroScreen(
-        isL3IssuanceFeaturesEnabled(context.level) ? "L3" : "L2"
-      );
+      trackItWalletIntroScreen(context.level === "l3" ? "L3" : "L2");
     }
   },
   actors: {
@@ -147,8 +144,7 @@ export const itwEidIssuanceMachine = setup({
     isReissuance: ({ context }) => context.mode === "reissuance",
     isUpgrade: ({ context }) => context.mode === "upgrade",
     isL2Fallback: ({ context }) => context.level === "l2-fallback",
-    isL3FeaturesEnabled: ({ context }) =>
-      isL3IssuanceFeaturesEnabled(context.level),
+    isL3FeaturesEnabled: ({ context }) => context.level === "l3",
     isEligibleForItwSimplifiedActivation: notImplemented
   }
 }).createMachine({
