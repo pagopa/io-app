@@ -2978,7 +2978,13 @@
         }
       },
       "institutions": {
-        "title": "Nazionali"
+        "title": "Nazionali",
+        "error": {
+          "banner": {
+            "label": "Non siamo riusciti a caricare la lista degli enti nazionali",
+            "cta": "Prova di nuovo"
+          }
+        }
       },
       "searchLink": "Cerca tra tutti i servizi locali disponibili"
     },
