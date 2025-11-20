@@ -8,19 +8,27 @@ import { MessagePaymentItem } from "../../messages/components/MessageDetail/Mess
 import { cancelQueuedPaymentUpdates } from "../../messages/store/actions";
 import { getRptIdStringFromPayment } from "../utils/rptId";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../pushNotifications/analytics";
 
 export type MessagePaymentBottomSheetProps = {
   messageId: string;
   payments: ReadonlyArray<NotificationPaymentInfo>;
   presentPaymentsBottomSheetRef: MutableRefObject<(() => void) | undefined>;
   serviceId: ServiceId;
+  sendOpeningSource: SendOpeningSource;
+  sendUserType: SendUserType;
 };
 
 export const MessagePaymentBottomSheet = ({
   messageId,
   payments,
   presentPaymentsBottomSheetRef,
-  serviceId
+  serviceId,
+  sendOpeningSource,
+  sendUserType
 }: MessagePaymentBottomSheetProps) => {
   const dispatch = useIODispatch();
   const windowHeight = Dimensions.get("window").height;
@@ -42,6 +50,8 @@ export const MessagePaymentBottomSheet = ({
               noSpaceOnTop={index === 0}
               serviceId={serviceId}
               willNavigateToPayment={() => dismiss()}
+              sendOpeningSource={sendOpeningSource}
+              sendUserType={sendUserType}
             />
           );
         })}

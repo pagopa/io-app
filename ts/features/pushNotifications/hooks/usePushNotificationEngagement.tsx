@@ -9,11 +9,21 @@ import {
 } from "../utils";
 import {
   NotificationModalFlow,
+  SendOpeningSource,
+  SendUserType,
   trackSystemNotificationPermissionScreenOutcome
 } from "../analytics";
 import { isTestEnv } from "../../../utils/environment";
+import { useIODispatch } from "../../../store/hooks";
+import { setSecurityAdviceReadyToShow } from "../../authentication/fastLogin/store/actions/securityAdviceActions";
 
-export const usePushNotificationEngagement = (flow: NotificationModalFlow) => {
+export const usePushNotificationEngagement = (
+  flow: NotificationModalFlow,
+  sendOpeningSource: SendOpeningSource,
+  sendUserType: SendUserType,
+  shouldSetSecurityAdviceUponLeaving: boolean
+) => {
+  const dispatch = useIODispatch();
   const { popToTop } = useIONavigation();
   const toast = useIOToast();
   const [isButtonPressed, setIsButtonPressed] = useState(false);
@@ -22,7 +32,12 @@ export const usePushNotificationEngagement = (flow: NotificationModalFlow) => {
     const subscription = AppState.addEventListener(
       "change",
       appStateHandler(
-        popToTop,
+        () => {
+          if (shouldSetSecurityAdviceUponLeaving) {
+            dispatch(setSecurityAdviceReadyToShow(true));
+          }
+          popToTop();
+        },
         () => {
           toast.success(
             I18n.t("features.pushNotifications.engagementScreen.toast")
@@ -34,10 +49,21 @@ export const usePushNotificationEngagement = (flow: NotificationModalFlow) => {
     return () => {
       subscription.remove();
     };
-  }, [isButtonPressed, toast, popToTop]);
+  }, [
+    isButtonPressed,
+    toast,
+    shouldSetSecurityAdviceUponLeaving,
+    dispatch,
+    popToTop
+  ]);
 
   const onButtonPress = () => {
-    trackSystemNotificationPermissionScreenOutcome("activate", flow);
+    trackSystemNotificationPermissionScreenOutcome(
+      "activate",
+      flow,
+      sendOpeningSource,
+      sendUserType
+    );
     openSystemNotificationSettingsScreen();
     setIsButtonPressed(true);
   };
@@ -46,19 +72,19 @@ export const usePushNotificationEngagement = (flow: NotificationModalFlow) => {
 };
 
 type HandlerType = (
-  popToTop: () => void,
+  onReturnToApp: () => void,
   onSuccess: () => void,
   isButtonPressed: boolean
 ) => (nextAppState: AppStateStatus) => Promise<void>;
 
 const appStateHandler: HandlerType =
-  (popToTop, onSuccess, isButtonPressed) => async nextAppState => {
+  (onReturnToApp, onSuccess, isButtonPressed) => async nextAppState => {
     if (nextAppState === "active" && isButtonPressed) {
       const authorizationStatus = await checkNotificationPermissions();
       if (authorizationStatus) {
         onSuccess();
       }
-      popToTop();
+      onReturnToApp();
     }
   };
 

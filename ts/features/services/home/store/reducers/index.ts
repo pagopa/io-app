@@ -37,7 +37,7 @@ const reducer = (
   action: Action
 ): ServicesHomeState => {
   switch (action.type) {
-    // Get Institutions actions
+    // Institutions actions
     case getType(paginatedInstitutionsGet.request):
       if (pot.isNone(state.paginatedInstitutions)) {
         return {
@@ -86,19 +86,11 @@ const reducer = (
         })
       };
 
-    // Get FeaturedInstitutions actions
+    // Featured Institutions actions
     case getType(featuredInstitutionsGet.request):
-      if (pot.isNone(state.featuredInstitutions)) {
-        return {
-          ...state,
-          featuredInstitutions: pot.noneLoading
-        };
-      }
       return {
         ...state,
-        featuredInstitutions: pot.toUpdating(state.featuredInstitutions, {
-          institutions: []
-        })
+        featuredInstitutions: pot.toLoading(state.featuredInstitutions)
       };
     case getType(featuredInstitutionsGet.success):
       return {
@@ -108,25 +100,14 @@ const reducer = (
     case getType(featuredInstitutionsGet.failure):
       return {
         ...state,
-        featuredInstitutions: pot.toError(
-          state.featuredInstitutions,
-          action.payload
-        )
+        featuredInstitutions: pot.toError(pot.none, action.payload)
       };
 
-    // Get FeaturedServices actions
+    // Featured Services actions
     case getType(featuredServicesGet.request):
-      if (pot.isNone(state.featuredServices)) {
-        return {
-          ...state,
-          featuredServices: pot.noneLoading
-        };
-      }
       return {
         ...state,
-        featuredServices: pot.toUpdating(state.featuredServices, {
-          services: []
-        })
+        featuredServices: pot.toLoading(state.featuredServices)
       };
     case getType(featuredServicesGet.success):
       return {
@@ -136,7 +117,7 @@ const reducer = (
     case getType(featuredServicesGet.failure):
       return {
         ...state,
-        featuredServices: pot.toError(state.featuredServices, action.payload)
+        featuredServices: pot.toError(pot.none, action.payload)
       };
   }
   return state;

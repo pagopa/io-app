@@ -22,6 +22,8 @@ import * as itwWalletInstanceSelectors from "../../../itwallet/walletInstance/st
 import * as itwPreferencesSelectors from "../../../itwallet/common/store/selectors/preferences";
 import { WalletCardsState } from "../../store/reducers/cards";
 import * as walletSelectors from "../../store/selectors";
+import * as connectivitySelectors from "../../../connectivity/store/selectors";
+import * as ingressSelectors from "../../../ingress/store/selectors";
 import { WalletCard } from "../../types";
 import {
   ItwWalletCardsContainer,
@@ -41,13 +43,15 @@ jest.mock("react-native-reanimated", () => ({
 }));
 
 const mockNavigate = jest.fn();
+const mockAddListener = jest.fn().mockImplementation(_event => jest.fn());
 
 jest.mock("@react-navigation/native", () => ({
   ...jest.requireActual<typeof import("@react-navigation/native")>(
     "@react-navigation/native"
   ),
   useNavigation: () => ({
-    navigate: mockNavigate
+    navigate: mockNavigate,
+    addListener: mockAddListener
   })
 }));
 
@@ -280,6 +284,12 @@ describe("ItwWalletCardsContainer", () => {
   ])(
     "if the eid status is %p, the eid lifecycle alert should be rendered %p times",
     (eidStatus, renderCount) => {
+      jest
+        .spyOn(connectivitySelectors, "isConnectedSelector")
+        .mockReturnValue(true);
+      jest
+        .spyOn(ingressSelectors, "offlineAccessReasonSelector")
+        .mockReturnValue(undefined);
       jest
         .spyOn(itwCredentialsSelectors, "itwCredentialsEidSelector")
         .mockImplementation(() => O.some(ItwStoredCredentialsMocks.eid));

@@ -9,14 +9,20 @@ import {
 } from "../../../navigation/params/AppParamsList";
 import {
   NotificationModalFlow,
+  SendOpeningSource,
+  SendUserType,
   trackSystemNotificationPermissionScreenOutcome,
   trackSystemNotificationPermissionScreenShown
 } from "../analytics";
 import { NOTIFICATIONS_ROUTES } from "../navigation/routes";
 import { usePushNotificationEngagement } from "../hooks/usePushNotificationEngagement";
+import { useIODispatch } from "../../../store/hooks";
+import { setSecurityAdviceReadyToShow } from "../../authentication/fastLogin/store/actions/securityAdviceActions";
 
 export type PushNotificationEngagementScreenNavigationParams = {
   flow: NotificationModalFlow;
+  sendOpeningSource: SendOpeningSource;
+  sendUserType: SendUserType;
 };
 type PushNotificationEngagementScreenProps = NativeStackScreenProps<
   AppParamsList,
@@ -26,13 +32,23 @@ type PushNotificationEngagementScreenProps = NativeStackScreenProps<
 export const PushNotificationEngagementScreen = ({
   route
 }: PushNotificationEngagementScreenProps) => {
-  const { flow } = route.params;
+  const { flow, sendOpeningSource, sendUserType } = route.params;
+  const shouldSetSecurityAdviceUponLeaving = flow === "access";
   const { shouldRenderBlankPage, onButtonPress } =
-    usePushNotificationEngagement(flow);
+    usePushNotificationEngagement(
+      flow,
+      sendOpeningSource,
+      sendUserType,
+      shouldSetSecurityAdviceUponLeaving
+    );
 
   useEffect(() => {
-    trackSystemNotificationPermissionScreenShown(flow);
-  }, [flow]);
+    trackSystemNotificationPermissionScreenShown(
+      flow,
+      sendOpeningSource,
+      sendUserType
+    );
+  }, [flow, sendOpeningSource, sendUserType]);
 
   if (shouldRenderBlankPage) {
     return null;
@@ -42,24 +58,47 @@ export const PushNotificationEngagementScreen = ({
     <PushNotificationEngagementScreenContent
       flow={flow}
       onPressActivate={onButtonPress}
+      sendOpeningSource={sendOpeningSource}
+      sendUserType={sendUserType}
+      shouldSetSecurityAdviceUponLeaving={shouldSetSecurityAdviceUponLeaving}
     />
   );
 };
 
 type Props = {
   onPressActivate: () => void;
+  shouldSetSecurityAdviceUponLeaving: boolean;
 } & PushNotificationEngagementScreenNavigationParams;
 
 const PushNotificationEngagementScreenContent = ({
   flow,
-  onPressActivate
+  onPressActivate,
+  sendOpeningSource,
+  sendUserType,
+  shouldSetSecurityAdviceUponLeaving
 }: Props) => {
+  const dispatch = useIODispatch();
   const { popToTop, setOptions } = useIONavigation();
 
   const handleCloseScreen = useCallback(() => {
-    trackSystemNotificationPermissionScreenOutcome("dismiss", flow);
+    if (shouldSetSecurityAdviceUponLeaving) {
+      dispatch(setSecurityAdviceReadyToShow(true));
+    }
+    trackSystemNotificationPermissionScreenOutcome(
+      "dismiss",
+      flow,
+      sendOpeningSource,
+      sendUserType
+    );
     popToTop();
-  }, [flow, popToTop]);
+  }, [
+    flow,
+    sendOpeningSource,
+    sendUserType,
+    shouldSetSecurityAdviceUponLeaving,
+    dispatch,
+    popToTop
+  ]);
 
   useEffect(() => {
     setOptions({

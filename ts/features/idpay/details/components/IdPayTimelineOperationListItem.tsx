@@ -57,7 +57,7 @@ const emptyAmountTransaction = {
   amountAccessibilityLabel: ""
 };
 
-export type TimelineOperationListItemProps = WithTestID<
+type TimelineOperationListItemProps = WithTestID<
   | {
       isLoading?: false;
       operation: OperationListDTO;
@@ -138,17 +138,16 @@ const getTransactionOperationProps = (
 
   const isQRCode = channel === ChannelEnum.QRCODE;
 
-  // CANCELLED operations must be considered as REVERSAL (see IOBP-391)
-  const isReversal =
-    status === TransactionStatusEnum.CANCELLED ||
-    operationType === TransactionOperationTypeEnum.REVERSAL;
+  const iconName =
+    channel === ChannelEnum.QRCODE || channel === ChannelEnum.BARCODE
+      ? "merchant"
+      : "creditCard";
+
+  const isCancelled = status === TransactionStatusEnum.CANCELLED;
+  const isReversal = operationType === TransactionOperationTypeEnum.REVERSAL;
 
   const paymentLogoIcon: ListItemTransactionLogo = brand || (
-    <Icon
-      name={isQRCode ? "merchant" : "creditCard"}
-      color="grey-300"
-      testID="genericLogoTestID"
-    />
+    <Icon name={iconName} color="grey-300" testID="genericLogoTestID" />
   );
 
   const title: string =
@@ -166,7 +165,7 @@ const getTransactionOperationProps = (
   );
 
   const getAccruedString = () => {
-    const signString = isReversal ? "" : "-";
+    const signString = isReversal ? "" : "−";
     const accruedString = `${formatAbsNumberAmountCentsOrDefault(
       accruedCents
     )} €`;
@@ -181,6 +180,17 @@ const getTransactionOperationProps = (
       subtitle,
       transaction: {
         badge: getBadgePropsByTransactionStatus("reversal")
+      }
+    };
+  }
+
+  if (isCancelled) {
+    return {
+      paymentLogoIcon,
+      title,
+      subtitle,
+      transaction: {
+        badge: getBadgePropsByTransactionStatus("cancelled")
       }
     };
   }
@@ -390,7 +400,7 @@ export const getOperationSubtitleWithAmount = (
   amount: number | undefined,
   withMinusSign: boolean = false
 ): string => {
-  const signString = withMinusSign ? "-" : "";
+  const signString = withMinusSign ? "−" : "";
   const amountString = `${formatAbsNumberAmountCentsOrDefault(amount)} €`;
 
   return `${getOperationSubtitle(

@@ -94,9 +94,9 @@ const persistConfig: PersistConfig = {
   whitelist: ["isWalletPayPalBannerClosed"]
 };
 
-export const persistedReducer = persistReducer<
-  PaymentsMethodDetailsState,
-  Action
->(persistConfig, reducer);
+const persistedReducer = persistReducer<PaymentsMethodDetailsState, Action>(
+  persistConfig,
+  reducer
+);
 
 export default persistedReducer;

@@ -3233,9 +3233,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-app-design-system@npm:5.11.7":
-  version: 5.11.7
-  resolution: "@pagopa/io-app-design-system@npm:5.11.7"
+"@pagopa/io-app-design-system@npm:5.11.12":
+  version: 5.11.12
+  resolution: "@pagopa/io-app-design-system@npm:5.11.12"
   dependencies:
     auto-changelog: ^2.4.0
     lodash: ^4.17.21
@@ -3256,7 +3256,7 @@ __metadata:
     react-native-reanimated: "*"
     react-native-safe-area-context: "*"
     react-native-svg: "*"
-  checksum: c8a31810024df042583ea6037ce877596a4b191a11ab2518df0fa31205827d6154b3aea91817f927caa8bdf038e38b4f2724c24d22d9731cd3e2fa1ac47841d4
+  checksum: 0828c034f442a217d1c29d955261712d835a724a7522fbf12c59bb8ae71bb6dbe2e87e324a1cfdd4f9d1d3dd4b743af04d3fb73868a51a9b50877a6ed64ca595
   languageName: node
   linkType: hard
 
@@ -3271,15 +3271,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-cie@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "@pagopa/io-react-native-cie@npm:1.2.0"
+"@pagopa/io-react-native-cie@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@pagopa/io-react-native-cie@npm:1.2.1"
   dependencies:
     zod: ^3.24.4
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 687e894a1a0dd0e86f28768072a22b0df29633316c2f1f8db8f193ed1cb0ee19b5539b4ddd87dcc229651c843090511ac46bed969d0111ca3ade772fed553c34
+  checksum: 050d53a84c0bfdc53b78cd564cfaa430c6cc7f3ec7e6a99961ed6e7fd99adbb43b44bac300b3efca7730adf391257721315a6f6309c373c5a257de54b52dbf38
   languageName: node
   linkType: hard
 
@@ -3511,9 +3511,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-clipboard/clipboard@npm:^1.14.0":
-  version: 1.14.2
-  resolution: "@react-native-clipboard/clipboard@npm:1.14.2"
+"@react-native-clipboard/clipboard@npm:^1.16.3":
+  version: 1.16.3
+  resolution: "@react-native-clipboard/clipboard@npm:1.16.3"
   peerDependencies:
     react: ">= 16.9.0"
     react-native: ">= 0.61.5"
@@ -3524,7 +3524,7 @@ __metadata:
       optional: true
     react-native-windows:
       optional: true
-  checksum: a14c7de784f78c360b41fc723221d1091ccf59dc12ff5dcadf11c7fe078ae081afa1b95f2fe3cf0d4fcd25bc0e2a04cc56fb85aff8437de19cb2eba7d95362df
+  checksum: 3d9944fc2c4acbecf917e752cc36ec92c4dcdb590c94c81c78c24df9ddd4b02448e252eb39e0949000b01046cfdfe2b03e1676c5e3ac0fe7eb3bf6b649970c27
   languageName: node
   linkType: hard
 
@@ -12035,9 +12035,9 @@ __metadata:
     "@babel/runtime": ^7.25.0
     "@gorhom/bottom-sheet": ^5.1.2
     "@jambit/eslint-plugin-typed-redux-saga": ^0.4.0
-    "@pagopa/io-app-design-system": 5.11.7
+    "@pagopa/io-app-design-system": 5.11.12
     "@pagopa/io-pagopa-commons": ^3.1.0
-    "@pagopa/io-react-native-cie": ^1.2.0
+    "@pagopa/io-react-native-cie": ^1.2.1
     "@pagopa/io-react-native-cieid": ^0.3.5
     "@pagopa/io-react-native-crypto": ^1.2.3
     "@pagopa/io-react-native-http-client": 1.0.5
@@ -12053,7 +12053,7 @@ __metadata:
     "@pagopa/react-native-cie": ^1.4.3
     "@pagopa/ts-commons": ^10.15.0
     "@react-native-async-storage/async-storage": ^2.0.0
-    "@react-native-clipboard/clipboard": ^1.14.0
+    "@react-native-clipboard/clipboard": ^1.16.3
     "@react-native-community/cli": 15.0.1
     "@react-native-community/cli-platform-android": 15.0.1
     "@react-native-community/cli-platform-ios": 15.0.1

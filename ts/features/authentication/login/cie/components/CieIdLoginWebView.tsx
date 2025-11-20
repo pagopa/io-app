@@ -32,7 +32,7 @@ import {
 } from "../utils/cie";
 import { useOnboardingAbortAlert } from "../../../../onboarding/hooks/useOnboardingAbortAlert";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
+import { remoteApiLoginUrlPrefixSelector } from "../../../activeSessionLogin/store/selectors";
 import { LoadingOverlay } from "../shared/LoadingSpinnerOverlay";
 import {
   CieIdLoginProps,

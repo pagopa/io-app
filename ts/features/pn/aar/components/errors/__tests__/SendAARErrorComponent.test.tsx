@@ -21,6 +21,7 @@ import {
   testable
 } from "../../errors/SendAARErrorComponent";
 import * as debugHooks from "../../../../../../hooks/useDebugInfo";
+import * as ANALYTICS from "../../../analytics";
 
 const { bottomComponent } = testable!;
 
@@ -50,14 +51,27 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
     jest.restoreAllMocks();
   });
 
-  it("quits out of the flow on primary button press", () => {
+  it("quits out of the flow on primary button press and calls trackSendAarErrorScreenClosure", () => {
+    const spiedOnMockedTrackSendAarErrorScreenClosure = jest
+      .spyOn(ANALYTICS, "trackSendAarErrorScreenClosure")
+      .mockImplementation();
+
     const { getByTestId } = renderComponent();
+
     const button = getByTestId("primary_button");
     fireEvent.press(button);
+
     expect(mockTerminateFlow).toHaveBeenCalledTimes(1);
+
+    expect(spiedOnMockedTrackSendAarErrorScreenClosure.mock.calls.length).toBe(
+      1
+    );
+    expect(
+      spiedOnMockedTrackSendAarErrorScreenClosure.mock.calls[0].length
+    ).toBe(0);
   });
 
-  it("calls present() on secondary button press", () => {
+  it("calls present() and trackSendAarErrorScreenDetails on secondary button press", () => {
     const presentMock = jest.fn();
     const dismissMock = jest.fn();
     jest.spyOn(BOTTOM_SHEET, "useIOBottomSheetModal").mockReturnValue({
@@ -65,14 +79,26 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
       present: presentMock,
       dismiss: dismissMock
     });
+    const spiedOnMockedTrackSendAarErrorScreenDetails = jest
+      .spyOn(ANALYTICS, "trackSendAarErrorScreenDetails")
+      .mockImplementation();
 
     const { getByTestId } = renderComponent();
+
     const button = getByTestId("secondary_button");
     fireEvent.press(button);
+
     expect(presentMock).toHaveBeenCalledTimes(1);
+
+    expect(spiedOnMockedTrackSendAarErrorScreenDetails.mock.calls.length).toBe(
+      1
+    );
+    expect(
+      spiedOnMockedTrackSendAarErrorScreenDetails.mock.calls[0].length
+    ).toBe(0);
   });
 
-  it("calls present() on assistance button press", () => {
+  it("calls the primary callback on assistance button press", () => {
     const renderedBottomComponent = bottomComponent(
       mockAssistance,
       assistanceErrorCode
@@ -87,8 +113,10 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
     });
 
     const { getByTestId } = renderComponent();
+
     const button = getByTestId("button_assistance");
     fireEvent.press(button);
+
     expect(mockAssistance).toHaveBeenCalledTimes(1);
   });
 
@@ -97,11 +125,14 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
     expect(getByText(assistanceErrorCode)).toBeTruthy();
   });
 
-  it("copies error codes to clipboard on press", async () => {
+  it("copies error codes to clipboard on press and calls trackSendAarErrorScreenDetailsCode", async () => {
     const clipboardSpy = jest.spyOn(
       CLIPBOARD,
       "clipboardSetStringWithFeedback"
     );
+    const spiedOnMockedTrackSendAarErrorScreenDetailsCode = jest
+      .spyOn(ANALYTICS, "trackSendAarErrorScreenDetailsCode")
+      .mockImplementation();
 
     const { getByText } = renderComponent();
     const copyButton = getByText(assistanceErrorCode);
@@ -109,6 +140,12 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
     fireEvent.press(copyButton);
 
     expect(clipboardSpy).toHaveBeenCalledWith(assistanceErrorCode);
+    expect(
+      spiedOnMockedTrackSendAarErrorScreenDetailsCode.mock.calls.length
+    ).toBe(1);
+    expect(
+      spiedOnMockedTrackSendAarErrorScreenDetailsCode.mock.calls[0].length
+    ).toBe(0);
   });
 
   it("does not render error code section when assistanceErrorCode is empty", async () => {
@@ -158,6 +195,10 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
         return { present, bottomSheet, dismiss: dismissMock };
       });
 
+    const spiedOnMockedTrackSendAarErrorScreenDetailsHelp = jest
+      .spyOn(ANALYTICS, "trackSendAarErrorScreenDetailsHelp")
+      .mockImplementation();
+
     const resetCustomFields = jest.spyOn(
       SUPPORT_ASSISTANCE,
       "resetCustomFields"
@@ -172,6 +213,13 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
     const { getByTestId } = renderComponent();
     const buttonAssistance = getByTestId("button_assistance");
     fireEvent.press(buttonAssistance);
+
+    expect(
+      spiedOnMockedTrackSendAarErrorScreenDetailsHelp.mock.calls.length
+    ).toBe(1);
+    expect(
+      spiedOnMockedTrackSendAarErrorScreenDetailsHelp.mock.calls[0].length
+    ).toBe(0);
 
     expect(dismissMock).toHaveBeenCalledTimes(1);
 
@@ -193,7 +241,7 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
     );
 
     expect(appendLog).toHaveBeenCalledTimes(1);
-    expect(appendLog).toHaveBeenCalledWith(JSON.stringify(assistanceErrorCode));
+    expect(appendLog).toHaveBeenCalledWith(assistanceErrorCode);
 
     expect(mockDispatch.mock.calls.length).toBe(2);
     expect(mockDispatch.mock.calls[0].length).toBe(1);
@@ -224,6 +272,23 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
       appendLog.mock.invocationCallOrder[0]
     );
   });
+
+  [undefined, null, "", "   "].forEach(emptyAssistanceErrorCode =>
+    it(`zendeskAssistanceLogAndStart should not append log if assistanceErrorCode is (${emptyAssistanceErrorCode})`, () => {
+      jest
+        .spyOn(SELECTORS, "currentAARFlowStateAssistanceErrorCode")
+        .mockReturnValue(emptyAssistanceErrorCode as string);
+
+      const appendLog = jest.spyOn(SUPPORT_ASSISTANCE, "appendLog");
+
+      const { getByTestId } = renderComponent();
+
+      const buttonAssistance = getByTestId("button_assistance");
+      fireEvent.press(buttonAssistance);
+
+      expect(appendLog).toHaveBeenCalledTimes(0);
+    })
+  );
 });
 
 const renderComponent = () => {

@@ -197,17 +197,18 @@ type TrackItWalletCieCardReadingUnexpectedFailure = {
 };
 
 export type CieCardVerifyFailureReason =
-  | "certificate revoked"
-  | "certificate expired";
+  | "CERTIFICATE_EXPIRED"
+  | "CERTIFICATE_REVOKED";
 
-export const enum CieCardReadingFailureReason {
+export enum CieCardReadingFailureReason {
   KO = "KO",
-  unknownCard = "unknown card",
-  apduNotSupported = "ADPU not supported",
-  startNFCError = "start NFC error",
-  stopNFCError = "stop NFC error",
-  noInternetConnection = "no internet connection",
-  authenticationError = "authentication error"
+  ON_TAG_DISCOVERED_NOT_CIE = "ON_TAG_DISCOVERED_NOT_CIE",
+  GENERIC_ERROR = "GENERIC_ERROR",
+  APDU_ERROR = "APDU_ERROR",
+  START_NFC_ERROR = "START_NFC_ERROR",
+  STOP_NFC_ERROR = "STOP_NFC_ERROR",
+  NO_INTERNET_CONNECTION = "NO_INTERNET_CONNECTION",
+  AUTHENTICATION_ERROR = "AUTHENTICATION_ERROR"
 }
 
 export type ItwCredentialMixpanelStatus =
@@ -270,6 +271,17 @@ type ItwCredentialInfoDetails = {
   credential: MixPanelCredential;
   credential_screen_type: "detail" | "preview";
 };
+
+/**
+ * Actions that can trigger the eID reissuing flow.
+ * This type represents the user action that was performed immediately before
+ * the eID reissuing process is initiated.
+ * Add new values here when implementing additional flows that should start
+ * the reissuing procedure.
+ */
+export enum ItwEidReissuingTrigger {
+  ADD_CREDENTIAL = "add_credential"
+}
 
 /**
  * Actions that trigger the requirement for L3 upgrade.
@@ -1145,6 +1157,15 @@ export const trackItwAddCredentialNotTrustedIssuer = (
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_ADD_CREDENTIAL_NOT_TRUSTED_ISSUER,
     buildEventProperties("KO", "screen_view", properties)
+  );
+};
+
+export const trackItwEidReissuingMandatory = (
+  action: ItwEidReissuingTrigger
+) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_REISSUING_EID_MANDATORY,
+    buildEventProperties("KO", "screen_view", { action })
   );
 };
 

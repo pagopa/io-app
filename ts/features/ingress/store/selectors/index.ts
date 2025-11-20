@@ -5,3 +5,6 @@ export const isBlockingScreenSelector = (state: GlobalState) =>
 
 export const offlineAccessReasonSelector = (state: GlobalState) =>
   state.features.ingress.offlineAccessReason;
+
+export const checkSessionErrorSelector = (state: GlobalState): boolean =>
+  state.features.ingress.checkSession.hasError;

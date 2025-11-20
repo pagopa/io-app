@@ -1,6 +1,7 @@
 import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
+import { SendUserType } from "../../../pushNotifications/analytics";
 import { SendAARFailurePhase } from "../utils/stateUtils";
 
 export const trackSendQRCodeScanRedirect = () => {
@@ -21,24 +22,6 @@ export const trackSendQRCodeScanRedirectDismissed = () => {
   mixpanelTrack(eventName, properties);
 };
 
-export const trackSendActivationModalDialog = () => {
-  const eventName = "SEND_ACTIVATION_MODAL_DIALOG";
-  const properties = buildEventProperties("UX", "screen_view");
-  mixpanelTrack(eventName, properties);
-};
-
-export const trackSendActivationModalDialogActivationStart = () => {
-  const eventName = "SEND_ACTIVATION_MODAL_DIALOG_ACTIVATION_START";
-  const properties = buildEventProperties("UX", "action");
-  mixpanelTrack(eventName, properties);
-};
-
-export const trackSendActivationModalDialogActivationDismissed = () => {
-  const eventName = "SEND_ACTIVATION_MODAL_DIALOG_DISMISSED";
-  const properties = buildEventProperties("UX", "action");
-  mixpanelTrack(eventName, properties);
-};
-
 export const trackSendAARFailure = (
   phase: SendAARFailurePhase,
   reason: string
@@ -48,6 +31,43 @@ export const trackSendAARFailure = (
     phase,
     reason
   });
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackSendAARToS = () => {
+  const eventName = "SEND_TEMPORARY_NOTIFICATION_OPENING_DISCLAIMER";
+  const props = buildEventProperties("UX", "screen_view");
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackSendAARToSAccepted = () => {
+  const eventName = "SEND_TEMPORARY_NOTIFICATION_OPENING_DISCLAIMER_ACCEPTED";
+  const props = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackSendAARToSDismissed = () => {
+  const eventName = "SEND_TEMPORARY_NOTIFICATION_OPENING_DISCLAIMER_DISMISSED";
+  const props = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackSendAARAccessDeniedScreenView = () => {
+  const eventName = "SEND_TEMPORARY_NOTIFICATION_OPENING_NOT_ALLOWED";
+  const props = buildEventProperties("UX", "screen_view");
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackSendAARAccessDeniedDelegateInfo = () => {
+  const eventName =
+    "SEND_TEMPORARY_NOTIFICATION_OPENING_NOT_ALLOWED_MANDATE_INFO";
+  const props = buildEventProperties("UX", "exit");
+  void mixpanelTrack(eventName, props);
+};
+
+export const trackSendAARAccessDeniedDismissed = () => {
+  const eventName = "SEND_TEMPORARY_NOTIFICATION_OPENING_NOT_ALLOWED_DISMISSED";
+  const props = buildEventProperties("UX", "action");
   void mixpanelTrack(eventName, props);
 };
 
@@ -69,4 +89,62 @@ export const aarProblemJsonAnalyticsReport = (
           .join(",")
       : "";
   return `${responseCode} ${input.status}${titleReport} ${input.detail}${traceIdReport}${errorReport}`;
+};
+
+export const trackSendAarNotificationClosure = (userType: SendUserType) => {
+  const eventName = "SEND_TEMPORARY_NOTIFICATION_CLOSURE";
+  const eventProps = buildEventProperties("UX", "screen_view", {
+    send_user: userType
+  });
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarNotificationClosureBack = (userType: SendUserType) => {
+  const eventName = "SEND_TEMPORARY_NOTIFICATION_CLOSURE_BACK";
+  const eventProps = buildEventProperties("UX", "action", {
+    send_user: userType
+  });
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarNotificationClosureConfirm = (
+  userType: SendUserType
+) => {
+  const eventName = "SEND_TEMPORARY_NOTIFICATION_CLOSURE_CONFIRM";
+  const eventProps = buildEventProperties("UX", "action", {
+    send_user: userType
+  });
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarNotificationClosureExit = (userType: SendUserType) => {
+  const eventName = "SEND_TEMPORARY_NOTIFICATION_CLOSURE_EXIT";
+  const eventProps = buildEventProperties("UX", "exit", {
+    send_user: userType
+  });
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarErrorScreenClosure = () => {
+  const eventName = "SEND_AAR_ERROR_CLOSURE";
+  const eventProps = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarErrorScreenDetails = () => {
+  const eventName = "SEND_AAR_ERROR_DETAIL";
+  const eventProps = buildEventProperties("UX", "screen_view");
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarErrorScreenDetailsHelp = () => {
+  const eventName = "SEND_AAR_ERROR_DETAIL_HELP";
+  const eventProps = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarErrorScreenDetailsCode = () => {
+  const eventName = "SEND_AAR_ERROR_DETAIL_CODE";
+  const eventProps = buildEventProperties("UX", "action");
+  void mixpanelTrack(eventName, eventProps);
 };

@@ -11,6 +11,8 @@ export type NotificationModalFlow =
   | "authentication"
   | "send_notification_opening"
   | "access";
+export type SendOpeningSource = "aar" | "message" | "not_set";
+export type SendUserType = "recipient" | "mandatory" | "not_set";
 
 export const trackNotificationInstallationTokenNotChanged = () =>
   void mixpanelTrack(
@@ -82,21 +84,31 @@ export const trackPushNotificationTokenUploadFailure = (reason: string) =>
   );
 
 export const trackSystemNotificationPermissionScreenShown = (
-  flow: NotificationModalFlow
+  flow: NotificationModalFlow,
+  sendOpeningSource: SendOpeningSource = "not_set",
+  sendUser: SendUserType = "not_set"
 ) => {
   const eventName = "PUSH_NOTIF_APP_MODAL";
-  const props = buildEventProperties("UX", "screen_view", { flow });
+  const props = buildEventProperties("UX", "screen_view", {
+    flow,
+    opening_source: sendOpeningSource,
+    send_user: sendUser
+  });
   void mixpanelTrack(eventName, props);
 };
 
 export const trackSystemNotificationPermissionScreenOutcome = (
   outcome: "activate" | "dismiss",
-  flow: NotificationModalFlow
+  flow: NotificationModalFlow,
+  sendOpeningSource: SendOpeningSource = "not_set",
+  sendUser: SendUserType = "not_set"
 ) => {
   const eventName = "PUSH_NOTIF_APP_MODAL_INTERACTION";
   const props = buildEventProperties("UX", "action", {
     flow,
-    outcome
+    outcome,
+    opening_source: sendOpeningSource,
+    send_user: sendUser
   });
   void mixpanelTrack(eventName, props);
 };

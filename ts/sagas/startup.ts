@@ -73,7 +73,6 @@ import { watchEmailNotificationPreferencesSaga } from "../features/mailCheck/sag
 import { checkEmailSaga } from "../features/mailCheck/sagas/checkEmailSaga";
 import { watchEmailValidationSaga } from "../features/mailCheck/sagas/emailValidationPollingSaga";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
-import { watchMessagesSaga } from "../features/messages/saga";
 import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
 import { checkAcknowledgedFingerprintSaga } from "../features/onboarding/saga/biometric/checkAcknowledgedFingerprintSaga";
 import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnboardingSaga";
@@ -139,6 +138,11 @@ import {
   waitForNavigatorServiceInitialization
 } from "../navigation/saga/navigation";
 import { checkShouldDisplaySendEngagementScreen } from "../features/pn/loginEngagement/sagas/checkShouldDisplaySendEngagementScreen";
+import { navigateToActiveSessionLogin } from "../features/authentication/activeSessionLogin/saga/navigateToActiveSessionLogin";
+import { showSessionExpirationBlockingScreenSelector } from "../features/authentication/activeSessionLogin/store/selectors";
+import { watchCdcSaga } from "../features/bonus/cdc/common/saga";
+import { setRefreshMessagesSection } from "../features/authentication/activeSessionLogin/store/actions";
+import { watchMessagesSaga } from "../features/messages/saga";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
@@ -180,6 +184,12 @@ export function* initializeApplicationSaga(
 
   const isActiveLoginSuccessProp =
     startupAction?.payload?.isActiveLoginSuccess ?? false;
+
+  yield* put(
+    setRefreshMessagesSection(
+      !(isActiveLoginSuccessProp || handleSessionExpiration)
+    )
+  );
 
   // Remove explicitly previous session data. This is done as completion of two
   // use cases:
@@ -361,7 +371,7 @@ export function* initializeApplicationSaga(
   yield* fork(watchServicesSaga, backendClient, sessionToken);
 
   // Start watching for Messages actions
-  yield* fork(watchMessagesSaga, backendClient, sessionToken, keyInfo);
+  yield* fork(watchMessagesSaga);
 
   // start watching for FIMS actions
   yield* fork(watchFimsSaga, sessionToken);
@@ -651,6 +661,9 @@ export function* initializeApplicationSaga(
   // Start watching for Wallet V3 actions
   yield* fork(watchPaymentsSaga, walletToken);
 
+  // Start watching for CDC actions
+  yield* fork(watchCdcSaga, sessionToken);
+
   // Check that profile is up to date (e.g. inbox enabled)
   yield* call(checkProfileEnabledSaga, userProfile);
 
@@ -721,10 +734,18 @@ export function* initializeApplicationSaga(
     true
   );
 
-  if (!isHandlingBackgroundActions) {
+  const showSessionExpirationBlockingScreen = yield* select(
+    showSessionExpirationBlockingScreenSelector
+  );
+
+  if (!isHandlingBackgroundActions && showSessionExpirationBlockingScreen) {
+    yield* call(navigateToActiveSessionLogin);
+  } else if (!isHandlingBackgroundActions) {
     // Check if should navigate to the send activation screen
     yield* fork(checkShouldDisplaySendEngagementScreen, isFirstOnboarding);
   }
+
+  yield* put(setRefreshMessagesSection(true));
 
   yield* put(
     applicationInitialized({

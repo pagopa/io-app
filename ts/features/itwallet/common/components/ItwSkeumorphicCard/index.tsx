@@ -1,6 +1,7 @@
 import { Tag, useScaleAnimation } from "@pagopa/io-app-design-system";
 import { memo, ReactNode, useMemo } from "react";
 
+import I18n from "i18next";
 import {
   AccessibilityProps,
   Pressable,
@@ -10,12 +11,11 @@ import {
   ViewStyle
 } from "react-native";
 import Animated from "react-native-reanimated";
-import I18n from "i18next";
 import { accessibilityLabelByStatus } from "../../utils/itwAccessibilityUtils";
 import {
-  useBorderColorByStatus,
   getCredentialNameFromType,
   tagPropsByStatus,
+  useBorderColorByStatus,
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
 import {
@@ -133,12 +133,13 @@ const CardSideBase = ({ status, children }: CardSideBaseProps) => {
 
   const statusTagProps = tagPropsByStatus[status];
   const borderColor = borderColorMap[status];
+  // Include "jwtExpired" as a valid status because the credential skeumorphic card with this state
+  // should not appear faded. Only the "expired" status should be displayed with reduced opacity.
+  const isValid = [...validCredentialStatuses, "jwtExpired"].includes(status);
 
   const dynamicStyle: StyleProp<ViewStyle> = {
     borderColor,
-    backgroundColor: validCredentialStatuses.includes(status)
-      ? undefined
-      : "rgba(255,255,255,0.7)"
+    backgroundColor: isValid ? undefined : "rgba(255,255,255,0.7)"
   };
 
   return (

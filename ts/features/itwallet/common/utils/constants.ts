@@ -25,12 +25,14 @@ export const itwGradientColors = [
   "#1943E8",
   "#0B3EE3"
 ];
+
 /**
  * IT-Wallet ID brand colors
  */
 export const IT_WALLET_ID_BG_LIGHT = "#DBE0FF";
 export const IT_WALLET_ID_BG = "#A8B4FF";
 export const IT_WALLET_ID_GRADIENT = ["#D5D5FF", "#CEE2FA"];
+
 /**
  * IT-Wallet ID logo
  */
@@ -39,7 +41,6 @@ export const IT_WALLET_ID_LOGO: IOIcons = "sparkles";
 /**
  * Qualtrics survey URLs
  */
-
 export const IT_WALLET_SURVEY_EID_REISSUANCE_SUCCESS =
   "https://pagopa.qualtrics.com/jfe/form/SV_3JmGHi0IjGYESYC";
 export const IT_WALLET_SURVEY_EID_REISSUANCE_FAILURE =
