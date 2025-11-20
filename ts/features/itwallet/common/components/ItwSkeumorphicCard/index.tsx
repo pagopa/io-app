@@ -144,8 +144,8 @@ const gradientVariantByStatus: Record<
   expired: "error",
   jwtExpiring: "warning",
   jwtExpired: "error",
-  invalid: "default",
-  unknown: "default"
+  invalid: "error",
+  unknown: "error"
 };
 
 type CardSideBaseProps = {
