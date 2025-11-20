@@ -62,6 +62,7 @@ const startAuthFlow = async ({
     await Credential.Issuance.startUserAuthorization(
       issuerConf,
       [credentialId],
+      { proofType: "none" },
       {
         walletInstanceAttestation: walletAttestation,
         redirectUri: env.ISSUANCE_REDIRECT_URI,
@@ -218,6 +219,12 @@ function getCredentialIdentifierFromAccessToken(
   accessToken: CredentialAccessToken,
   authorizationDetail: AuthorizationDetail
 ) {
+  if (authorizationDetail.type !== "openid_credential") {
+    throw new Error(
+      `Unsupported authorization detail type: ${authorizationDetail.type}`
+    );
+  }
+
   const accessTokenAuthDetail = accessToken.authorization_details.find(
     authDetails =>
       authDetails.credential_configuration_id ===
