@@ -45,6 +45,7 @@ export type RequestEidActorParams = {
 export type StartAuthFlowActorParams = {
   walletInstanceAttestation: string | undefined;
   identification: IdentificationContext | undefined;
+  withMRTDPoP: boolean;
 };
 
 export type GetWalletAttestationActorParams = {
@@ -148,7 +149,8 @@ export const createEidIssuanceActorsImplementation = (
       const authenticationContext = await issuanceUtils.startAuthFlow({
         env,
         walletAttestation: input.walletInstanceAttestation,
-        identification: input.identification
+        identification: input.identification,
+        withMRTDPoP: input.withMRTDPoP
       });
 
       return {

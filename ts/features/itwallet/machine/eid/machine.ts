@@ -145,7 +145,9 @@ export const itwEidIssuanceMachine = setup({
     isUpgrade: ({ context }) => context.mode === "upgrade",
     isL2Fallback: ({ context }) => context.level === "l2-fallback",
     isL3FeaturesEnabled: ({ context }) => context.level === "l3",
-    isEligibleForItwSimplifiedActivation: notImplemented
+    isEligibleForItwSimplifiedActivation: notImplemented,
+    withMrtdPoP: ({ context }) =>
+      context.level === "l3" && context.identification?.mode !== "ciePin"
   }
 }).createMachine({
   id: "itwEidIssuanceMachine",
@@ -489,7 +491,8 @@ export const itwEidIssuanceMachine = setup({
                 input: ({ context }) => ({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
-                  identification: context.identification
+                  identification: context.identification,
+                  withMRTDPoP: context.level === "l3"
                 }),
                 onDone: {
                   actions: assign(({ event }) => ({
@@ -565,7 +568,8 @@ export const itwEidIssuanceMachine = setup({
                 input: ({ context }) => ({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
-                  identification: context.identification
+                  identification: context.identification,
+                  withMRTDPoP: context.level === "l3"
                 }),
                 onDone: {
                   actions: assign(({ event }) => ({
@@ -696,11 +700,11 @@ export const itwEidIssuanceMachine = setup({
               tags: [ItwTags.Loading],
               invoke: {
                 src: "startAuthFlow",
-                // eslint-disable-next-line sonarjs/no-identical-functions
                 input: ({ context }) => ({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
-                  identification: context.identification
+                  identification: context.identification,
+                  withMRTDPoP: false
                 }),
                 onDone: {
                   actions: assign(({ event }) => ({

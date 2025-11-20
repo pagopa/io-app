@@ -25,6 +25,7 @@ type StartAuthFlowParams = {
   env: Env;
   walletAttestation: string;
   identification: IdentificationContext;
+  withMRTDPoP: boolean;
 };
 
 /**
@@ -35,12 +36,14 @@ type StartAuthFlowParams = {
  * @param env - The environment to use for the wallet provider base URL
  * @param walletAttestation - The wallet attestation.
  * @param identification - The identification context.
+ * @param withMRTDPoP - Whether to use MRTD PoP proof or not.
  * @returns Authentication params to use when completing the flow.
  */
 const startAuthFlow = async ({
   env,
   walletAttestation,
-  identification
+  identification,
+  withMRTDPoP
 }: StartAuthFlowParams) => {
   const startFlow: Credential.Issuance.StartFlow = () => ({
     issuerUrl: env.WALLET_PID_PROVIDER_BASE_URL,
@@ -62,7 +65,9 @@ const startAuthFlow = async ({
     await Credential.Issuance.startUserAuthorization(
       issuerConf,
       [credentialId],
-      { proofType: "none" },
+      withMRTDPoP
+        ? { proofType: "mrtd-pop", idpHinting: idpHint }
+        : { proofType: "none" },
       {
         walletInstanceAttestation: walletAttestation,
         redirectUri: env.ISSUANCE_REDIRECT_URI,
@@ -282,11 +287,6 @@ const SPID_IDP_HINTS: { [key: string]: string } = {
  * @param isL3 flag that indicates that we need to issue an L3 PID
  */
 export const getIdpHint = (idCtx: IdentificationContext, env: Env) => {
-  if (idCtx.level === "L3") {
-    // When issuing an L3 PID, we should not provide an IDP hint
-    return undefined;
-  }
-
   const isSpidMode = idCtx.mode === "spid";
 
   if (env.type === "pre") {
