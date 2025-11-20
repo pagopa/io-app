@@ -631,7 +631,16 @@
       },
       "loginEnvironment": {
         "activeSession": {
-          "switchTitle": "Active session login"
+          "localFeatureFlag": {
+            "switchTitle": "Login a sessione attiva",
+            "switchDescription": "La modifica richiede il riavvio dell'app",
+            "alertTitle": "Attenzione",
+            "alertMessage": "Per testare questa funzionalità dovrai chiudere e riaprire l'applicazione",
+            "alertConfirmButton": "Prosegui"
+          },
+          "playground": {
+            "title": "Active session login playground"
+          }
         }
       },
       "experimentalEnvironment": "Experimental interface",
@@ -2969,7 +2978,13 @@
         }
       },
       "institutions": {
-        "title": "National"
+        "title": "National",
+        "error": {
+          "banner": {
+            "label": "We couldn't load the list of national institutions",
+            "cta": "Try again"
+          }
+        }
       },
       "searchLink": "Search all available local services"
     },
@@ -6298,6 +6313,13 @@
         "content": "On {{date}} you will need to log in again with SPID or CIE",
         "action": {
           "label": "Read more"
+        }
+      },
+      "expirationBannerNew": {
+        "title": "Il {{date}} dovrai accedere di nuovo all’app",
+        "content": "Rinnova ora l’accesso con SPID o CIE per continuare a usare IO senza interruzioni",
+        "action": {
+          "label": "Accedi subito"
         }
       }
     }

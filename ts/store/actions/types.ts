@@ -18,7 +18,6 @@ import {
   CieLoginConfigActions
 } from "../../features/authentication/login/cie/store/actions";
 import { SpidConfigActions } from "../../features/authentication/login/idp/store/actions";
-import { LoginPreferencesActions } from "../../features/authentication/loginPreferences/store/actions";
 import { BonusActions } from "../../features/bonus/common/store/actions";
 import { ConnectivityActions } from "../../features/connectivity/store/actions";
 import { FciActions } from "../../features/fci/store/actions";
@@ -123,7 +122,6 @@ export type Action =
   | AppFeedbackActions
   | UtmLinkActions
   | ConnectivityActions
-  | LoginPreferencesActions
   | AARFlowStateActions
   | BackgroundLinkingActions
   | SENDLoginEngagementActions

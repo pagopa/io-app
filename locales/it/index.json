@@ -631,7 +631,16 @@
       },
       "loginEnvironment": {
         "activeSession": {
-          "switchTitle": "Login a sessione attiva"
+          "localFeatureFlag": {
+            "switchTitle": "Login a sessione attiva",
+            "switchDescription": "La modifica richiede il riavvio dell'app",
+            "alertTitle": "Attenzione",
+            "alertMessage": "Per testare questa funzionalità dovrai chiudere e riaprire l'applicazione",
+            "alertConfirmButton": "Prosegui"
+          },
+          "playground": {
+            "title": "Login a sessione attiva playground"
+          }
         }
       },
       "trial": {
@@ -849,8 +858,8 @@
         "linkButtonLabel": "Non ricordi come accedere?"
       },
       "active_session_login": {
-        "title": "Accedi subito",
-        "body": "Autenticati ora per usare l’app senza interruzioni. Così sarà sempre pronta quando ti serve."
+        "title": " Sta per scadere l’accesso",
+        "body": "Autenticati ora per non perderti comunicazioni importanti e per avere l’app sempre pronta quando ti serve."
       },
       "cie_bottom_sheet": {
         "title": "Come vuoi entrare?",
@@ -2969,7 +2978,13 @@
         }
       },
       "institutions": {
-        "title": "Nazionali"
+        "title": "Nazionali",
+        "error": {
+          "banner": {
+            "label": "Non siamo riusciti a caricare la lista degli enti nazionali",
+            "cta": "Prova di nuovo"
+          }
+        }
       },
       "searchLink": "Cerca tra tutti i servizi locali disponibili"
     },
@@ -6568,6 +6583,13 @@
         "content": "Il {{date}} dovrai accedere di nuovo con SPID o CIE",
         "action": {
           "label": "Leggi come fare"
+        }
+      },
+      "expirationBannerNew": {
+        "title": "Il {{date}} dovrai accedere di nuovo all’app",
+        "content": "Rinnova ora l’accesso con SPID o CIE per continuare a usare IO senza interruzioni",
+        "action": {
+          "label": "Accedi subito"
         }
       }
     }

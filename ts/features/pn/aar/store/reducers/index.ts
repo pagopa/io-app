@@ -23,7 +23,10 @@ export const aarFlowReducer = (
       };
 
     case getType(terminateAarFlow):
-      return INITIAL_AAR_FLOW_STATE;
+      const payloadState = action.payload.currentFlowState ?? state.type;
+      if (payloadState === state.type) {
+        return INITIAL_AAR_FLOW_STATE;
+      }
   }
   return state;
 };
