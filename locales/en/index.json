@@ -2978,7 +2978,13 @@
         }
       },
       "institutions": {
-        "title": "National"
+        "title": "National",
+        "error": {
+          "banner": {
+            "label": "We couldn't load the list of national institutions",
+            "cta": "Try again"
+          }
+        }
       },
       "searchLink": "Search all available local services"
     },
