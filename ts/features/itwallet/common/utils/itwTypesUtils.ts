@@ -117,13 +117,6 @@ export type StoredCredential = {
     expiration: string;
     issuedAt?: string;
   };
-  /**
-   * Error message in case of failure retriving the credential
-   */
-  failure?: {
-    type: string;
-    reason: unknown;
-  };
 };
 
 // Digital credential status

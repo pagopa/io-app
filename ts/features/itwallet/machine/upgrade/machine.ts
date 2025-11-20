@@ -1,11 +1,10 @@
 import { assign, fromPromise, setup } from "xstate";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { UpgradeCredentialOutput, UpgradeCredentialParams } from "./actors";
 import { Context, getInitialContext } from "./context";
-import { Input } from "./input";
-import { Output } from "./output";
 import { CredentialUpgradeEvents } from "./events";
 import { mapUpgradeEventToFailure } from "./failure";
+import { Input } from "./input";
+import { Output } from "./output";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -29,7 +28,7 @@ export const itwCredentialUpgradeMachine = setup({
 
         const failedEvent = mapUpgradeEventToFailure(event);
 
-        const failedCredential: StoredCredential = {
+        const failedCredential = {
           ...current,
           failure: {
             type: failedEvent.type,
