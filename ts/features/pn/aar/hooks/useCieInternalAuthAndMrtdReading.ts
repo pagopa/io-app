@@ -29,7 +29,7 @@ export const useCieInternalAuthAndMrtdReading = () => {
       ...params: Parameters<typeof CieManager.startInternalAuthAndMRTDReading>
     ) => {
       setNfcEvent(undefined);
-      setReadStatus(ReadStatus.READING);
+      setReadStatus(ReadStatus.IDLE);
       await CieManager.startInternalAuthAndMRTDReading(...params);
     },
     []
@@ -46,7 +46,8 @@ export const useCieInternalAuthAndMrtdReading = () => {
         // Trigger a light haptic feedback on the start of the reading
         // when the tag is discovered
         if (event.name === "ON_TAG_DISCOVERED") {
-          HapticFeedback.trigger(HapticFeedbackTypes.impactLight);
+          setReadStatus(ReadStatus.READING);
+          HapticFeedback.trigger(HapticFeedbackTypes.impactHeavy);
         }
         setNfcEvent(event);
       }),

@@ -77,13 +77,13 @@ export const SendAARCieCardReadingScreen = () => {
     () => ({
       [ReadStatus.IDLE]: {
         title: i18n.t("features.pn.aar.flow.cieScanning.idle.title"),
-        pictogram: "nfcScaniOS",
+        pictogram: "nfcScanAndroid",
         secondaryAction: cancelAction
       },
       [ReadStatus.READING]: {
         title: i18n.t("features.pn.aar.flow.cieScanning.reading.title"),
         subtitle: i18n.t("features.pn.aar.flow.cieScanning.reading.subtitle"),
-        pictogram: "nfcScaniOS",
+        pictogram: "nfcScanAndroid",
         secondaryAction: cancelAction
       },
       [ReadStatus.SUCCESS]: {
