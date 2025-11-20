@@ -18,7 +18,8 @@ import {
 import {
   isActiveSessionFastLoginEnabledSelector,
   idpSelectedActiveSessionLoginSelector,
-  newTokenActiveSessionLoginSelector
+  newTokenActiveSessionLoginSelector,
+  cieIDSelectedSecurityLevelActiveSessionLoginSelector
 } from "../store/selectors";
 import { startApplicationInitialization } from "../../../../store/actions/application";
 import { watchCieAuthenticationSaga } from "../../login/cie/sagas/cie";
@@ -62,6 +63,9 @@ export function* handleActiveSessionLoginSaga(): Generator<
     const fastLoginOptIn = yield* select(
       isActiveSessionFastLoginEnabledSelector
     );
+    const cieIDSelectedSecurityLevel = yield* select(
+      cieIDSelectedSecurityLevelActiveSessionLoginSelector
+    );
 
     if (idp && idp.id) {
       switch (idp.id) {
@@ -90,7 +94,8 @@ export function* handleActiveSessionLoginSaga(): Generator<
         consolidateActiveSessionLoginData({
           idp,
           token,
-          fastLoginOptIn: !!fastLoginOptIn
+          fastLoginOptIn: !!fastLoginOptIn,
+          cieIDSelectedSecurityLevel
         })
       );
 

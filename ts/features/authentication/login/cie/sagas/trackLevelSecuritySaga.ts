@@ -9,7 +9,8 @@ import { trackCieIdSecurityLevelMismatch } from "../analytics";
 import { PublicSession } from "../../../../../../definitions/session_manager/PublicSession";
 
 export function* shouldTrackLevelSecurityMismatchSaga(
-  maybeSessionInformation: O.Option<PublicSession>
+  maybeSessionInformation: O.Option<PublicSession>,
+  isActiveLoginSuccess: boolean = false
 ) {
   const selectedSecurityLevel = yield* select(
     cieIDSelectedSecurityLevelSelector
@@ -27,6 +28,6 @@ export function* shouldTrackLevelSecurityMismatchSaga(
   );
 
   if (selectedLevelMismatches) {
-    trackCieIdSecurityLevelMismatch();
+    trackCieIdSecurityLevelMismatch(isActiveLoginSuccess);
   }
 }

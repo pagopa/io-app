@@ -19,11 +19,13 @@ export const trackCieIdNoWhitelistUrl = (
   );
 };
 
-export const trackCieIdSecurityLevelMismatch = () => {
+export const trackCieIdSecurityLevelMismatch = (isReauth: boolean = false) => {
   //  miss on ASL (check it)
   void mixpanelTrack(
     "SECURITY_LEVEL_MISMATCH",
-    buildEventProperties("TECH", undefined)
+    buildEventProperties("TECH", undefined, {
+      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+    })
   );
 };
 

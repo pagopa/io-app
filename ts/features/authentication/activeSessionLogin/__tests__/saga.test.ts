@@ -11,7 +11,8 @@ import {
 import {
   isActiveSessionFastLoginEnabledSelector,
   idpSelectedActiveSessionLoginSelector,
-  newTokenActiveSessionLoginSelector
+  newTokenActiveSessionLoginSelector,
+  cieIDSelectedSecurityLevelActiveSessionLoginSelector
 } from "../store/selectors";
 import { startApplicationInitialization } from "../../../../store/actions/application";
 import {
@@ -43,13 +44,15 @@ describe("handleActiveSessionLoginSaga", () => {
         ],
         [select(newTokenActiveSessionLoginSelector), mockToken],
         [select(idpSelectedActiveSessionLoginSelector), mockIdp],
-        [select(isActiveSessionFastLoginEnabledSelector), mockOptIn]
+        [select(isActiveSessionFastLoginEnabledSelector), mockOptIn],
+        [select(cieIDSelectedSecurityLevelActiveSessionLoginSelector), "SpidL2"]
       ])
       .put(
         consolidateActiveSessionLoginData({
           token: mockToken,
           idp: mockIdp,
-          fastLoginOptIn: mockOptIn
+          fastLoginOptIn: mockOptIn,
+          cieIDSelectedSecurityLevel: "SpidL2"
         })
       )
       .put(
@@ -71,6 +74,13 @@ describe("handleActiveSessionLoginSaga", () => {
             failure: take(activeSessionLoginFailure)
           }),
           { failure: activeSessionLoginFailure() }
+        ],
+        [select(newTokenActiveSessionLoginSelector), undefined],
+        [select(idpSelectedActiveSessionLoginSelector), undefined],
+        [select(isActiveSessionFastLoginEnabledSelector), undefined],
+        [
+          select(cieIDSelectedSecurityLevelActiveSessionLoginSelector),
+          undefined
         ]
       ])
       .run()
