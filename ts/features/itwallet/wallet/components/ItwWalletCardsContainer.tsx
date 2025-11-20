@@ -1,6 +1,5 @@
 import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
-import { useCallback, useMemo } from "react";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
