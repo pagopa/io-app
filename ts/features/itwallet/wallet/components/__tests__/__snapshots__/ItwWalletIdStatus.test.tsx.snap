@@ -539,7 +539,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
                         "__typename__": "Point",
                         "dispose": [Function],
                         "ref": Float32Array [
-                          -0,
+                          0,
                           0,
                         ],
                       }
@@ -1080,7 +1080,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpiring
                         "__typename__": "Point",
                         "dispose": [Function],
                         "ref": Float32Array [
-                          -0,
+                          0,
                           0,
                         ],
                       }
@@ -1512,13 +1512,13 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "valid" 1`] 
                   <skLinearGradient
                     colors={
                       [
-                        "rgba(255, 179, 87, 1)",
-                        "rgba(255, 234, 189, 1)",
-                        "rgba(25, 104, 240, 1)",
-                        "rgba(205, 210, 252, 1)",
-                        "rgba(255, 179, 87, 1)",
-                        "rgba(25, 104, 240, 1)",
                         "rgba(220, 227, 252, 1)",
+                        "rgba(25, 104, 240, 1)",
+                        "rgba(255, 179, 87, 1)",
+                        "rgba(205, 210, 252, 1)",
+                        "rgba(25, 104, 240, 1)",
+                        "rgba(255, 234, 189, 1)",
+                        "rgba(255, 179, 87, 1)",
                       ]
                     }
                     end={
@@ -1577,7 +1577,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "valid" 1`] 
                         "__typename__": "Point",
                         "dispose": [Function],
                         "ref": Float32Array [
-                          -0,
+                          0,
                           0,
                         ],
                       }
