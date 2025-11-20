@@ -1,20 +1,25 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
+import { isLeft } from "fp-ts/lib/Either";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { ThirdPartyMessage } from "../../../../../definitions/pn/ThirdPartyMessage";
 import { PNMessage } from "./types";
 
-export const toPNMessage = (
+export const toSENDMessage = (
   messageFromApi: ThirdPartyMessageWithContent
-): O.Option<PNMessage> =>
-  pipe(
-    messageFromApi.third_party_message,
-    ThirdPartyMessage.decode,
-    O.fromEither,
-    O.chainNullableK(message => message.details),
-    O.map(details => ({
-      ...details,
-      created_at: messageFromApi.created_at,
-      attachments: messageFromApi.third_party_message.attachments
-    }))
-  );
+): PNMessage | undefined => {
+  const thirdPartyMessage = messageFromApi.third_party_message;
+  const sendThirdPartyMessageEither =
+    ThirdPartyMessage.decode(thirdPartyMessage);
+  if (isLeft(sendThirdPartyMessageEither)) {
+    return undefined;
+  }
+  const sendThirdPartyMessageDetails =
+    sendThirdPartyMessageEither.right.details;
+  if (sendThirdPartyMessageDetails == null) {
+    return undefined;
+  }
+  return {
+    ...sendThirdPartyMessageDetails,
+    created_at: messageFromApi.created_at,
+    attachments: messageFromApi.third_party_message.attachments
+  };
+};

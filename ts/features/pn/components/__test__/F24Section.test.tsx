@@ -7,109 +7,128 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import * as thirdPartyById from "../../../messages/store/reducers/thirdPartyById";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { ATTACHMENT_CATEGORY } from "../../../messages/types/attachmentCategory";
-import { mockAccessibilityInfo } from "../../../../utils/testAccessibility";
+import PN_ROUTES from "../../navigation/routes";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../../pushNotifications/analytics";
 
-const generateOneAttachmentArray = () => [
-  {
-    id: "1",
-    url: "https://no.url/doc.pdf"
-  } as ThirdPartyAttachment
+jest.mock(
+  "../../../messages/components/MessageDetail/MessageDetailsAttachmentItem"
+);
+jest.mock("../F24ListBottomSheetLink");
+
+const thirdPartyAttachmentLists: ReadonlyArray<
+  ReadonlyArray<ThirdPartyAttachment>
+> = [
+  [],
+  [
+    {
+      id: "1",
+      url: "https://no.url/doc.pdf"
+    } as ThirdPartyAttachment
+  ],
+  [
+    {
+      id: "1",
+      url: "https://no.url/docF24.pdf",
+      category: ATTACHMENT_CATEGORY.F24
+    } as ThirdPartyAttachment
+  ],
+  [
+    {
+      id: "1",
+      url: "https://no.url/doc.pdf"
+    } as ThirdPartyAttachment,
+    {
+      id: "2",
+      url: "https://no.url/docF24.pdf",
+      category: ATTACHMENT_CATEGORY.F24
+    } as ThirdPartyAttachment
+  ],
+  [
+    {
+      id: "1",
+      url: "https://no.url/docF24_1.pdf",
+      category: ATTACHMENT_CATEGORY.F24
+    } as ThirdPartyAttachment,
+    {
+      id: "2",
+      url: "https://no.url/docF24_2.pdf",
+      category: ATTACHMENT_CATEGORY.F24
+    } as ThirdPartyAttachment
+  ],
+  [
+    {
+      id: "1",
+      url: "https://no.url/docF24_1.pdf",
+      category: ATTACHMENT_CATEGORY.F24
+    } as ThirdPartyAttachment,
+    {
+      id: "2",
+      url: "https://no.url/doc.pdf"
+    } as ThirdPartyAttachment,
+    {
+      id: "3",
+      url: "https://no.url/docF24_3.pdf",
+      category: ATTACHMENT_CATEGORY.F24
+    } as ThirdPartyAttachment
+  ]
 ];
-const generateThreeAttachmentArray = () => [
-  {
-    id: "1",
-    url: "https://no.url/doc.pdf"
-  } as ThirdPartyAttachment,
-  {
-    id: "2",
-    url: "https://no.url/docF24.pdf",
-    category: ATTACHMENT_CATEGORY.F24
-  } as ThirdPartyAttachment,
-  {
-    id: "3",
-    url: "https://no.url/cod.pdf"
-  } as ThirdPartyAttachment
+
+const sendOpeningSources: ReadonlyArray<SendOpeningSource> = [
+  "aar",
+  "message",
+  "not_set"
 ];
-const generateFourAttachmentArray = () => [
-  {
-    id: "1",
-    url: "https://no.url/doc.pdf"
-  } as ThirdPartyAttachment,
-  {
-    id: "2",
-    url: "https://no.url/docF24.pdf",
-    category: ATTACHMENT_CATEGORY.F24
-  } as ThirdPartyAttachment,
-  {
-    id: "3",
-    url: "https://no.url/cod.pdf"
-  } as ThirdPartyAttachment,
-  {
-    id: "4",
-    url: "https://no.url/f24Doc.pdf",
-    category: ATTACHMENT_CATEGORY.F24
-  } as ThirdPartyAttachment
+const sendUserTypes: ReadonlyArray<SendUserType> = [
+  "mandatory",
+  "not_set",
+  "recipient"
 ];
+
+// Vuoto, un documento, un f24, un f24+doc, due f24, duef24+doc
 
 describe("F24Section", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.restoreAllMocks();
-    mockAccessibilityInfo(false);
   });
-  it("should match snapshot when there are no F24", () => {
-    jest
-      .spyOn(thirdPartyById, "thirdPartyMessageAttachments")
-      .mockImplementation((_state, _messageId) => generateOneAttachmentArray());
-    const component = renderComponent();
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot when there are no F24 and the message is cancelled", () => {
-    jest
-      .spyOn(thirdPartyById, "thirdPartyMessageAttachments")
-      .mockImplementation((_state, _messageId) => generateOneAttachmentArray());
-    const component = renderComponent(true);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot when there is a single F24", () => {
-    jest
-      .spyOn(thirdPartyById, "thirdPartyMessageAttachments")
-      .mockImplementation((_state, _messageId) =>
-        generateThreeAttachmentArray()
-      );
-    const component = renderComponent();
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot when there is a single F24 and the message is cancelled", () => {
-    jest
-      .spyOn(thirdPartyById, "thirdPartyMessageAttachments")
-      .mockImplementation((_state, _messageId) =>
-        generateThreeAttachmentArray()
-      );
-    const component = renderComponent(true);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot when there are more than one F24", () => {
-    jest
-      .spyOn(thirdPartyById, "thirdPartyMessageAttachments")
-      .mockImplementation((_state, _messageId) =>
-        generateFourAttachmentArray()
-      );
-    const component = renderComponent();
-    expect(component.toJSON()).toMatchSnapshot();
-  });
-  it("should match snapshot when there are more than one F24 and the message is cancelled", () => {
-    jest
-      .spyOn(thirdPartyById, "thirdPartyMessageAttachments")
-      .mockImplementation((_state, _messageId) =>
-        generateFourAttachmentArray()
-      );
-    const component = renderComponent(true);
-    expect(component.toJSON()).toMatchSnapshot();
-  });
+  thirdPartyAttachmentLists.forEach(thirdPartyAttachmentList =>
+    [undefined, false, true].forEach(isCancelled =>
+      sendOpeningSources.forEach(sendOpeningSource =>
+        sendUserTypes.forEach(sendUserType => {
+          it(`should match snapshot (list: [${thirdPartyAttachmentList
+            .map(
+              thirdPartyAttachment =>
+                thirdPartyAttachment.category ?? "undefined"
+            )
+            .join(
+              " "
+            )}], cancelled ${isCancelled}, opening source ${sendOpeningSource}, user type ${sendUserType})`, () => {
+            jest
+              .spyOn(thirdPartyById, "thirdPartyMessageAttachments")
+              .mockImplementation(
+                (_state, _messageId) => thirdPartyAttachmentList
+              );
+            const component = renderComponent(
+              isCancelled,
+              sendOpeningSource,
+              sendUserType
+            );
+            expect(component.toJSON()).toMatchSnapshot();
+          });
+        })
+      )
+    )
+  );
 });
 
-const renderComponent = (isCancelled: boolean = false) => {
+const renderComponent = (
+  isCancelled: boolean | undefined,
+  openingSource: SendOpeningSource,
+  userType: SendUserType
+) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, initialState as any);
 
@@ -119,9 +138,11 @@ const renderComponent = (isCancelled: boolean = false) => {
         messageId={"01HS1ANR1SDPN3BP51X3G74T64"}
         serviceId={"01HS1ANWT4N83QGATCXYMXDP8M" as ServiceId}
         isCancelled={isCancelled}
+        sendOpeningSource={openingSource}
+        sendUserType={userType}
       />
     ),
-    "DUMMY",
+    PN_ROUTES.MESSAGE_DETAILS,
     {},
     store
   );

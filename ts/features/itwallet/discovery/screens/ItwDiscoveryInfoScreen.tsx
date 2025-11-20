@@ -1,16 +1,17 @@
-import { useCallback } from "react";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../store/hooks.ts";
-import { trackItWalletActivationStart } from "../../analytics/index.ts";
 import { itwHasNfcFeatureSelector } from "../../identification/common/store/selectors/index.ts";
-import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider.tsx";
+import { EidIssuanceLevel } from "../../machine/eid/context.ts";
+import { isL3IssuanceFeaturesEnabled } from "../../machine/eid/utils.ts";
 import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
-import { ItwLegacyDiscoveryInfoComponent } from "../components/ItwLegacyDiscoveryInfoComponent.tsx";
+import { ItwDiscoveryInfoComponent } from "../components/ItwDiscoveryInfoComponent.tsx";
+import { ItwDiscoveryInfoFallbackComponent } from "../components/ItwDiscoveryInfoFallbackComponent.tsx";
+import { ItwDiscoveryInfoLegacyComponent } from "../components/ItwDiscoveryInfoLegacyComponent.tsx";
 import { ItwNfcNotSupportedComponent } from "../components/ItwNfcNotSupportedComponent.tsx";
-import { ItwPaywallComponent } from "../components/ItwPaywallComponent";
 
 export type ItwDiscoveryInfoScreenNavigationParams = {
-  isL3?: boolean;
+  level?: EidIssuanceLevel;
+  animationEnabled?: boolean;
 };
 
 export type ItwDiscoveryInfoScreenProps = IOStackNavigationRouteProps<
@@ -24,25 +25,24 @@ export type ItwDiscoveryInfoScreenProps = IOStackNavigationRouteProps<
 export const ItwDiscoveryInfoScreen = ({
   route
 }: ItwDiscoveryInfoScreenProps) => {
-  const { isL3 = false } = route.params ?? {};
-
-  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const { level = "l2" } = route.params ?? {};
   const hasNfcFeature = useIOSelector(itwHasNfcFeatureSelector);
 
-  const handleContinuePress = useCallback(() => {
-    trackItWalletActivationStart(isL3 ? "L3" : "L2");
-    machineRef.send({ type: "accept-tos" });
-  }, [machineRef, isL3]);
+  if (isL3IssuanceFeaturesEnabled(level)) {
+    if (!hasNfcFeature) {
+      // L3 requires NFC, show not supported screen
+      return <ItwNfcNotSupportedComponent />;
+    }
 
-  if (!isL3) {
-    return (
-      <ItwLegacyDiscoveryInfoComponent onContinuePress={handleContinuePress} />
-    );
+    // Discovery screen for It-Wallet
+    return <ItwDiscoveryInfoComponent />;
   }
 
-  if (!hasNfcFeature) {
-    return <ItwNfcNotSupportedComponent />;
+  if (level === "l2-fallback") {
+    // Discovery screen for Documenti su IO coming from IT-Wallet
+    return <ItwDiscoveryInfoFallbackComponent />;
   }
 
-  return <ItwPaywallComponent onContinuePress={handleContinuePress} />;
+  // Discovery screen for Documenti su IO (L2)
+  return <ItwDiscoveryInfoLegacyComponent />;
 };

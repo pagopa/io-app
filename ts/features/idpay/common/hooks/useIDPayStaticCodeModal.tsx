@@ -32,15 +32,22 @@ import {
   trackIDPayStaticCodeGenerationSuccess
 } from "../analytics";
 
+type Props = {
+  initiativeId: string;
+  initiativeName: string;
+  onDismiss: () => void;
+};
+
 type IDPayFailureSupportModal = {
   bottomSheet: JSX.Element;
   present: () => void;
 };
 
 export const useIDPayStaticCodeModal = (
-  initiativeId: string,
-  initiativeName: string
+  props: Props
 ): IDPayFailureSupportModal => {
+  const { initiativeId, initiativeName, onDismiss } = props;
+
   const barcodePot = useIOSelector(idPayStaticCodeByInitiativeIdSelector)(
     initiativeId
   );
@@ -149,10 +156,20 @@ export const useIDPayStaticCodeModal = (
                 failure => failure.code
               )
             );
+
+            const technicalMessage = pipe(
+              decodeFailure(barcodePot.error),
+              O.fold(
+                () => undefined,
+                failure => failure.message
+              )
+            );
+
             trackIDPayStaticCodeGenerationError({
               initiativeId,
               initiativeName,
-              reason
+              reason,
+              technicalMessage
             });
           }
           bottomSheet.dismiss();
@@ -200,7 +217,8 @@ export const useIDPayStaticCodeModal = (
   const bottomSheet = useIOBottomSheetModal({
     title: null,
     component: <StaticCodeBottomSheetContent />,
-    footer: <FooterComponent />
+    footer: <FooterComponent />,
+    onDismiss
   });
 
   return bottomSheet;

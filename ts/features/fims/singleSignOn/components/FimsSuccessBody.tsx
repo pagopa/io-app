@@ -4,7 +4,6 @@ import {
   ContentWrapper,
   ForceScrollDownView,
   H2,
-  H6,
   hexToRgba,
   HStack,
   Icon,
@@ -12,7 +11,6 @@ import {
   IOColors,
   IOVisualCostants,
   ListItemHeader,
-  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -44,7 +42,6 @@ export const FimsFlowSuccessBody = ({
   consents,
   onAbort
 }: FimsSuccessBodyProps) => {
-  const theme = useIOTheme();
   const dispatch = useIODispatch();
   const store = useIOStore();
   const serviceId = consents.service_id as ServiceId;
@@ -130,11 +127,7 @@ export const FimsFlowSuccessBody = ({
           {/* TODO: We need to add a variant of `Avatar` that
           lets you set a custom icon with a custom colour. */}
           <View style={styles.outlineContainer}>
-            <Icon
-              name="productIOApp"
-              size={"100%"}
-              color={theme["interactiveElem-default"]}
-            />
+            <Icon name="productIOApp" size={"100%"} color={"blueIO-500"} />
           </View>
           <Icon name="transactions" color="grey-450" />
           <Avatar logoUri={serviceLogo} size={"small"} />
@@ -178,12 +171,14 @@ const generateBottomSheetProps = (
       <VSpacer size={8} />
       <Body>
         {I18n.t("FIMS.consentsScreen.bottomSheet.body2")}
-        <H6
+        <Body
+          avoidPressable
+          weight="Semibold"
+          asLink
           onPress={() => privacyUrl && openWebUrl(privacyUrl)}
-          color="blueIO-500"
         >
           {I18n.t("FIMS.consentsScreen.bottomSheet.bodyPrivacy")}
-        </H6>
+        </Body>
       </Body>
     </>
   ),
@@ -199,6 +194,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderColor: hexToRgba(IOColors.black, 0.1),
     borderCurve: "continuous",
+    backgroundColor: IOColors.white,
     width: IOVisualCostants.avatarSizeSmall,
     height: IOVisualCostants.avatarSizeSmall
   }

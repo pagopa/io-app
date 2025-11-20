@@ -204,6 +204,8 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
             <MessageDetailsAttachments
               messageId={messageId}
               serviceId={serviceId}
+              sendOpeningSource={"not_set"}
+              sendUserType={"not_set"}
             />
             {hasRemoteContent && <RemoteContentBanner />}
           </ContentWrapper>
