@@ -48,6 +48,7 @@ import { DSIOScrollViewCentredContent } from "../core/DSIOScrollViewCentredConte
 import { DSIOScrollViewScreenWithLargeHeader } from "../core/DSIOScrollViewWithLargeHeader";
 import { DSIOScrollViewWithListItems } from "../core/DSIOScrollViewWithListItems";
 import { DSIOScrollViewWithoutActions } from "../core/DSIOScrollViewWithoutActions";
+import { DSItwBrandExploration } from "../core/DSItwBrandExploration";
 import { DSIcons } from "../core/DSIcons";
 import { DSIridescentTrustmark } from "../core/DSIridescentTrustmark";
 import { DSLayout } from "../core/DSLayout";
@@ -389,6 +390,18 @@ export const DesignSystemNavigator = () => {
           options={{
             headerTitle:
               DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.IRIDESCENT_TRUSTMARK.title
+          }}
+        />
+
+        <Stack.Screen
+          name={
+            DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ITW_BRAND_EXPLORATION.route
+          }
+          component={DSItwBrandExploration}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ITW_BRAND_EXPLORATION.title,
+            headerShown: false
           }}
         />
 

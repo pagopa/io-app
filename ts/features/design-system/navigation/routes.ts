@@ -162,6 +162,10 @@ const DESIGN_SYSTEM_ROUTES = {
     ANIMATED_PICTOGRAMS: {
       route: "DS_ANIMATED_PICTOGRAMS",
       title: "Animated pictograms"
+    },
+    ITW_BRAND_EXPLORATION: {
+      route: "DS_ITW_BRAND_EXPLORATION",
+      title: "ITWallet brand exploration"
     }
   },
   LEGACY: {
