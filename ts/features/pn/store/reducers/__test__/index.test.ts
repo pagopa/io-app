@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
+  curriedSendMessageFromIdSelector,
   pnReducer,
-  sendMessageFromIdSelector,
   sendUserSelectedPaymentRptIdSelector
 } from "..";
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -16,8 +16,15 @@ describe("pnReducer", () => {
   });
 });
 
-describe("sendMessageFromIdSelector", () => {
+describe("curriedSendMessageFromIdSelector", () => {
   const sendMessageId = "01K9S27NM5BFCJWYFB71F2HT8Y";
+  it("should be a curried function returning a selector, for memoization reasons", () => {
+    const selector = curriedSendMessageFromIdSelector(sendMessageId);
+    const resultFunction = selector.resultFunc;
+    expect(resultFunction).not.toBeNull(); // make sure the selector is defined with `createSelector`
+    const argumentCount = resultFunction.length;
+    expect(argumentCount).toBe(1); // the returned selector should only have the state as argument
+  });
   it("should return undefined when there is nothing in the store", () => {
     const state = {
       entities: {
@@ -26,7 +33,7 @@ describe("sendMessageFromIdSelector", () => {
         }
       }
     } as GlobalState;
-    const output = sendMessageFromIdSelector(state, sendMessageId);
+    const output = curriedSendMessageFromIdSelector(sendMessageId)(state);
     expect(output).toBeUndefined();
   });
   const sendMessage = {
@@ -86,7 +93,7 @@ describe("sendMessageFromIdSelector", () => {
           }
         }
       } as unknown as GlobalState;
-      const output = sendMessageFromIdSelector(state, sendMessageId);
+      const output = curriedSendMessageFromIdSelector(sendMessageId)(state);
       if (shouldReturnSendMessage) {
         expect(output).toEqual({
           attachments: sendMessage.attachments,
@@ -117,7 +124,7 @@ describe("sendMessageFromIdSelector", () => {
         }
       }
     } as unknown as GlobalState;
-    const output = sendMessageFromIdSelector(state, sendMessageId);
+    const output = curriedSendMessageFromIdSelector(sendMessageId)(state);
     expect(output).toBeUndefined();
   });
   it("should return undefined if the third party message format is valid but there is no details property", () => {
@@ -135,7 +142,7 @@ describe("sendMessageFromIdSelector", () => {
         }
       }
     } as unknown as GlobalState;
-    const output = sendMessageFromIdSelector(state, sendMessageId);
+    const output = curriedSendMessageFromIdSelector(sendMessageId)(state);
     expect(output).toBeUndefined();
   });
 });
