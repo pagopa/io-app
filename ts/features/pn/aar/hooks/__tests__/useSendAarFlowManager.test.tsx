@@ -1,4 +1,6 @@
 import { act, renderHook } from "@testing-library/react-native";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import * as ANALYTICS from "../../analytics";
 import { terminateAarFlow } from "../../store/actions";
 import {
   AARFlowState,
@@ -6,10 +8,7 @@ import {
   isValidAARStateTransition,
   sendAARFlowStates
 } from "../../utils/stateUtils";
-import { testable, useSendAarFlowManager } from "../useSendAarFlowManager";
-import { sendAarMockStates } from "../../utils/testUtils";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
-import * as ANALYTICS from "../../analytics";
+import { useSendAarFlowManager } from "../useSendAarFlowManager";
 
 const mockPopToTop = jest.fn();
 const mockReset = jest.fn();
@@ -107,25 +106,5 @@ describe("useSendAarFlowManager", () => {
     const { result } = renderHook(useSendAarFlowManager);
 
     expect(result.current.currentFlowData).toEqual(value);
-  });
-});
-describe("getIun", () => {
-  const getIun = testable.getIun!;
-  it("should handle all the possible states", () => {
-    sendAarMockStates.forEach(state => {
-      switch (state.type) {
-        case sendAARFlowStates.notAddresseeFinal:
-        case sendAARFlowStates.fetchingNotificationData:
-        case sendAARFlowStates.displayingNotificationData:
-          expect(getIun(state)).toBe(state.iun);
-          break;
-        case sendAARFlowStates.ko:
-          expect(getIun(state)).toBe(getIun(state.previousState));
-          break;
-        default:
-          expect(getIun(state)).toBeUndefined();
-          break;
-      }
-    });
   });
 });

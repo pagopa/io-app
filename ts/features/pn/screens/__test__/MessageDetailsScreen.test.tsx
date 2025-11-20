@@ -1,8 +1,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { fireEvent } from "@testing-library/react-native";
+import { act, fireEvent } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
 import { Action, Store } from "redux";
 import configureMockStore from "redux-mock-store";
+import { getType } from "typesafe-actions";
 import * as HARDWARE_BACK_BUTTON from "../../../../hooks/useHardwareBackButton";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
@@ -29,6 +30,8 @@ import { loadServiceDetail } from "../../../services/details/store/actions/detai
 import * as commonSelectors from "../../../settings/common/store/selectors";
 import { thirdPartyMessage } from "../../__mocks__/pnMessage";
 import * as AAR_ANALYTICS from "../../aar/analytics";
+import { terminateAarFlow } from "../../aar/store/actions";
+import { sendAARFlowStates } from "../../aar/utils/stateUtils";
 import { sendAarMockStateFactory } from "../../aar/utils/testUtils";
 import * as SEND_ANALYTICS from "../../analytics";
 import PN_ROUTES from "../../navigation/routes";
@@ -416,6 +419,34 @@ describe("MessageDetailsScreen", () => {
         }
       });
     });
+  });
+
+  it("should attach the correct flow state to terminateAarFlow on page unmount", () => {
+    const baseState = appReducer(undefined, applicationChangeState("active"));
+    const mockStore = configureMockStore<GlobalState>();
+    const store: Store<GlobalState> = mockStore(baseState);
+
+    const { component } = renderComponent(store, false, "aar", "mandatory");
+
+    expect(mockDispatch).not.toHaveBeenCalledWith(
+      terminateAarFlow({
+        messageId: message_1.id,
+        currentFlowState: sendAARFlowStates.displayingNotificationData
+      })
+    );
+
+    act(component.unmount);
+
+    const allTerminateAarFlowCalls = mockDispatch.mock.calls.filter(
+      call => call[0]?.type === getType(terminateAarFlow)
+    );
+    expect(allTerminateAarFlowCalls.length).toBe(1);
+    expect(mockDispatch).toHaveBeenCalledWith(
+      terminateAarFlow({
+        messageId: message_1.id,
+        currentFlowState: sendAARFlowStates.displayingNotificationData
+      })
+    );
   });
 });
 
