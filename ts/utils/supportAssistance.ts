@@ -170,6 +170,15 @@ export const defaultZendeskIDPayCategory: ZendeskCategory = {
   }
 };
 
+export const defaultZendeskBonusesategory: ZendeskCategory = {
+  value: "bonus_e_iniziative",
+  description: {
+    "it-IT": "Bonus e iniziative",
+    "en-EN": "Bonuses and initiatives",
+    "de-DE": "Bonus und Initiativen"
+  }
+};
+
 export const zendeskSendCategory: ZendeskCategory = {
   value: "io_send",
   description: {
