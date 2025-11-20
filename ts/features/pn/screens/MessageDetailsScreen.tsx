@@ -29,6 +29,7 @@ import {
 } from "../aar/analytics";
 import { SendAARMessageDetailBottomSheetComponent } from "../aar/components/SendAARMessageDetailBottomSheetComponent";
 import { terminateAarFlow } from "../aar/store/actions";
+import { sendAARFlowStates } from "../aar/utils/stateUtils";
 import { trackPNUxSuccess } from "../analytics";
 import { MessageDetails } from "../components/MessageDetails";
 import { PnParamsList } from "../navigation/params";
@@ -168,13 +169,18 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
       dispatch(cancelQueuedPaymentUpdates({ messageId }));
       dispatch(cancelPNPaymentStatusTracking({ messageId }));
       if (isAarMessage) {
-        dispatch(terminateAarFlow({ messageId }));
+        dispatch(
+          terminateAarFlow({
+            messageId,
+            currentFlowState: sendAARFlowStates.displayingNotificationData
+          })
+        );
       }
     };
   }, [dispatch, isAarMessage, messageId, sendOpeningSource, sendUserType]);
 
   // useEffect for analytics tracking
-  useEffect(() => {
+  useOnFirstRender(() => {
     if (sendMessageOrUndefined != null) {
       const isCancelled = isSENDMessageCancelled(sendMessageOrUndefined);
       const containsF24 = doesSENDMessageIncludeF24(sendMessageOrUndefined);
@@ -193,14 +199,7 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
         "Screen rendering with undefined SEND message"
       );
     }
-  }, [
-    firstTimeOpening,
-    isAarMessage,
-    paymentsCount,
-    sendMessageOrUndefined,
-    sendOpeningSource,
-    sendUserType
-  ]);
+  });
 
   // useFocusEffect to track and update an user-selected payment
   const store = useIOStore();

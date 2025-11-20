@@ -14,7 +14,7 @@ import { ItwSkeumorphicCard } from "../../../common/components/ItwSkeumorphicCar
 import { FlipGestureDetector } from "../../../common/components/ItwSkeumorphicCard/FlipGestureDetector.tsx";
 import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
 import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
-import { getThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
+import { useThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
@@ -59,7 +59,7 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
     });
   };
 
-  const { backgroundColor } = getThemeColorByCredentialType(
+  const { backgroundColor } = useThemeColorByCredentialType(
     credential.credentialType,
     itwFeaturesEnabled
   );

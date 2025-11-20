@@ -1,21 +1,21 @@
 import { call, delay, race, select, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
-import {
-  cancelPNPaymentStatusTracking,
-  startPNPaymentStatusTracking
-} from "../actions";
-import { maxVisiblePaymentCount, paymentsFromSendMessage } from "../../utils";
-import { profileFiscalCodeSelector } from "../../../settings/common/store/selectors";
-import { sendMessageFromIdSelector } from "../reducers";
-import { trackPNPaymentStatus } from "../../analytics";
-import { getRptIdStringFromPayment } from "../../utils/rptId";
-import { paymentStatisticsForMessageUncachedSelector } from "../../../messages/store/reducers/payments";
+import { Action } from "../../../../store/actions/types";
 import { isTestEnv } from "../../../../utils/environment";
+import { paymentStatisticsForMessageUncachedSelector } from "../../../messages/store/reducers/payments";
 import {
   SendOpeningSource,
   SendUserType
 } from "../../../pushNotifications/analytics";
-import { Action } from "../../../../store/actions/types";
+import { profileFiscalCodeSelector } from "../../../settings/common/store/selectors";
+import { trackPNPaymentStatus } from "../../analytics";
+import { maxVisiblePaymentCount, paymentsFromSendMessage } from "../../utils";
+import { getRptIdStringFromPayment } from "../../utils/rptId";
+import {
+  cancelPNPaymentStatusTracking,
+  startPNPaymentStatusTracking
+} from "../actions";
+import { sendMessageFromIdSelector } from "../reducers";
 
 /**
  * This saga is used to track a mixpanel event which is a report of
@@ -28,14 +28,14 @@ export function* watchPaymentStatusForMixpanelTracking(
 ) {
   const { openingSource, userType, messageId } = action.payload;
   const currentFiscalCode = yield* select(profileFiscalCodeSelector);
-  const message = yield* select(sendMessageFromIdSelector, messageId);
+  const sendMessage = yield* select(sendMessageFromIdSelector, messageId);
 
   const fiscalCodeOrUndefined =
     openingSource === "message" ? currentFiscalCode : undefined;
   const payments = yield* call(
     paymentsFromSendMessage,
     fiscalCodeOrUndefined,
-    message
+    sendMessage
   );
   const visibleRPTIds =
     payments

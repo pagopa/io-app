@@ -15,11 +15,11 @@ import {
   cancelPNPaymentStatusTracking,
   startPNPaymentStatusTracking
 } from "../../actions";
-import { sendMessageFromIdSelector } from "../../reducers";
 import {
   testable,
   watchPaymentStatusForMixpanelTracking
 } from "../watchPaymentStatusSaga";
+import { sendMessageFromIdSelector } from "../../reducers";
 
 describe("watchPaymentStatusSaga", () => {
   afterEach(() => {
@@ -35,7 +35,7 @@ describe("watchPaymentStatusSaga", () => {
   const paymentId6 = "0123456789012345678901234567895";
   const taxId = "01234567890";
 
-  const pnMessage = {
+  const sendMessage = {
     subject: "",
     iun: "",
     notificationStatusHistory: [],
@@ -124,13 +124,13 @@ describe("watchPaymentStatusSaga", () => {
             .select(profileFiscalCodeSelector)
             .next(taxId)
             .select(sendMessageFromIdSelector, messageId)
-            .next(pnMessage)
+            .next(sendMessage)
             .call(
               paymentsFromSendMessage,
               sendOpeningSource === "message" ? taxId : undefined,
-              pnMessage
+              sendMessage
             )
-            .next(pnMessage.recipients.map(rec => rec.payment))
+            .next(sendMessage.recipients.map(recipient => recipient.payment))
             .inspect(
               (effect: {
                 type: string;
@@ -164,11 +164,11 @@ describe("watchPaymentStatusSaga", () => {
                   sendUserType,
                   messageId,
                   6,
-                  pnMessage.recipients
+                  sendMessage.recipients
                     .slice(0, 5)
-                    .map(rec =>
+                    .map(recipient =>
                       getRptIdStringFromPayment(
-                        rec.payment as NotificationPaymentInfo
+                        recipient.payment as NotificationPaymentInfo
                       )
                     )
                 ]);

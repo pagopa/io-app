@@ -1,0 +1,247 @@
+import {
+  Body,
+  IOToast,
+  ListItemHeader,
+  ListItemSwitch,
+  useIOTheme,
+  VSpacer,
+  VStack
+} from "@pagopa/io-app-design-system";
+import { Canvas } from "@shopify/react-native-skia";
+import I18n from "i18next";
+import { useState } from "react";
+import { useWindowDimensions, View } from "react-native";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { DSComponentViewerBox } from "../../../design-system/components/DSComponentViewerBox";
+import { ItwBrandedBox } from "../../common/components/ItwBrandedBox";
+import { ItwBrandedSkiaGradient } from "../../common/components/ItwBrandedSkiaGradient";
+import { ItwHighlightBanner } from "../../common/components/ItwHighlightBanner";
+import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
+import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
+import { getCredentialStatusObject } from "../../common/utils/itwCredentialStatusUtils";
+import { ItwStoredCredentialsMocks } from "../../common/utils/itwMocksUtils";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { ItwRequestedClaimsList } from "../../issuance/components/ItwRequestedClaimsList";
+import { ITW_ROUTES } from "../../navigation/routes";
+import { ItwPresentationCredentialCardFlipButton } from "../../presentation/details/components/ItwPresentationCredentialCardFlipButton";
+
+const ItwWalletBrandSection = () => {
+  const { width } = useWindowDimensions();
+  const marginHorizontal = 24;
+  return (
+    <View
+      style={{
+        marginHorizontal: -marginHorizontal,
+        paddingHorizontal: marginHorizontal,
+        paddingBottom: 24
+      }}
+    >
+      <ListItemHeader label="IT-Wallet Gradient" />
+      <VStack space={8}>
+        {["default", "warning", "error"].map(variant => (
+          <DSComponentViewerBox
+            key={`itwallet-gradient-${variant}`}
+            name={variant}
+          >
+            <Canvas
+              key={variant}
+              style={{ width: width - marginHorizontal * 2, height: 50 }}
+            >
+              <ItwBrandedSkiaGradient
+                width={width - marginHorizontal * 2}
+                height={50}
+                variant={variant as any}
+              />
+            </Canvas>
+          </DSComponentViewerBox>
+        ))}
+      </VStack>
+      <ListItemHeader label="IT-Wallet Box" />
+      <VStack space={8}>
+        {["default", "warning", "error"].map(variant => (
+          <DSComponentViewerBox key={`itwallet-box-${variant}`} name={variant}>
+            <ItwBrandedBox variant={variant as any}>
+              <Body>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua
+              </Body>
+            </ItwBrandedBox>
+          </DSComponentViewerBox>
+        ))}
+      </VStack>
+    </View>
+  );
+};
+
+const ItwSkeumorphicCredentialSection = () => {
+  const [valuesHidden, setValuesHidden] = useState(false);
+
+  const credentialsWithCard: ReadonlyArray<string> = [
+    "mDL",
+    "EuropeanDisabilityCard"
+  ];
+
+  const L2Credentials = Object.entries(ItwStoredCredentialsMocks)
+    .filter(([key]) => key !== "L3")
+    .map(([_, value]) => value as StoredCredential)
+    .filter(({ credentialType }) =>
+      credentialsWithCard.includes(credentialType)
+    );
+  return (
+    <View>
+      <ListItemHeader label="Skeumorphic credential card" />
+      <ListItemSwitch
+        label="Hide claim values"
+        value={valuesHidden}
+        onSwitchValueChange={() => {
+          setValuesHidden(!valuesHidden);
+        }}
+      />
+      <VStack space={16}>
+        {L2Credentials.map(l2Credential => (
+          <ItwSkeumorphicCredentialItem
+            key={l2Credential.credentialType}
+            credential={l2Credential}
+            valuesHidden={valuesHidden}
+          />
+        ))}
+      </VStack>
+    </View>
+  );
+};
+
+const ItwSkeumorphicCredentialItem = ({
+  credential,
+  valuesHidden
+}: {
+  credential: StoredCredential;
+  valuesHidden: boolean;
+}) => {
+  const navigation = useIONavigation();
+  const [isFlipped, setFlipped] = useState(false);
+  const { status = "valid" } = getCredentialStatusObject(credential);
+
+  const handleOnPress = () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_MODAL,
+      params: {
+        credential,
+        status
+      }
+    });
+  };
+
+  return (
+    <VStack key={credential.credentialType} space={16}>
+      <FlipGestureDetector isFlipped={isFlipped} setIsFlipped={setFlipped}>
+        <ItwSkeumorphicCard
+          credential={credential}
+          status={status}
+          isFlipped={isFlipped}
+          onPress={handleOnPress}
+          valuesHidden={valuesHidden}
+        />
+      </FlipGestureDetector>
+      <ItwPresentationCredentialCardFlipButton
+        isFlipped={isFlipped}
+        handleOnPress={() => setFlipped(_ => !_)}
+      />
+    </VStack>
+  );
+};
+
+export const ItwBannerSection = () => {
+  const [remountKey, setRemountKey] = useState(0);
+
+  const handleRemount = () => {
+    setRemountKey(prevKey => prevKey + 1);
+  };
+
+  return (
+    <View
+      style={{
+        marginHorizontal: -24,
+        paddingHorizontal: 24,
+        paddingBottom: 24
+      }}
+    >
+      <ListItemHeader
+        label="Highlight Banner"
+        endElement={{
+          type: "buttonLink",
+          componentProps: {
+            label: "Remount",
+            onPress: handleRemount
+          }
+        }}
+      />
+      <ItwHighlightBanner
+        key={`large-${remountKey}`}
+        title="IT-Wallet per i tuoi documenti"
+        description="L'unico Wallet di Stato: **pubblico, sicuro e gratuito.** Garantito dallo Stato, accessibile solo a te."
+        action="Ottieni IT-Wallet"
+        onPress={() => IOToast.info("Pressed")}
+      />
+      <VSpacer size={16} />
+      <ItwHighlightBanner
+        key={`small-${remountKey}`}
+        title="IT-Wallet per i tuoi documenti"
+        description="L'unico Wallet di Stato: **pubblico, sicuro e gratuito.** Garantito dallo Stato, accessibile solo a te."
+        action="Ottieni IT-Wallet"
+        onPress={() => IOToast.info("Pressed")}
+        size="small"
+      />
+    </View>
+  );
+};
+
+export const ItwClaimsListSection = () => {
+  const theme = useIOTheme();
+
+  const mock = [
+    {
+      claim: { id: "firstName", label: "First Name", value: "Mario" },
+      source: "CIE"
+    },
+    {
+      claim: { id: "lastName", label: "Last Name", value: "Rossi" },
+      source: "CIE"
+    },
+    {
+      claim: { id: "dateOfBirth", label: "Date of Birth", value: "1990-01-01" },
+      source: "CIE"
+    },
+    {
+      claim: { id: "email", label: "Email", value: "mario.rossi@email.com" },
+      source: "SPID"
+    }
+  ];
+
+  return (
+    <View
+      style={{
+        marginHorizontal: -24,
+        paddingHorizontal: 24,
+        paddingBottom: 24
+      }}
+    >
+      <ListItemHeader
+        label={I18n.t(
+          "features.itWallet.issuance.credentialAuth.requiredClaims"
+        )}
+        iconName="security"
+        iconColor={theme["icon-default"]}
+      />
+      <ItwRequestedClaimsList items={mock} />
+    </View>
+  );
+};
+
+export const ItwComponentsSection = () => (
+  <>
+    <ItwWalletBrandSection />
+    <ItwSkeumorphicCredentialSection />
+    <ItwBannerSection />
+    <ItwClaimsListSection />
+  </>
+);
