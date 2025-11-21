@@ -46,6 +46,8 @@ export const SendAARCieCardReadingScreen = ({
 
   useEffect(() => {
     if (readStatus === ReadStatus.SUCCESS && isDefined(data)) {
+      const { signedChallenge, ...nisData } = data.nis_data;
+
       dispatch(
         setAarFlowState({
           type: sendAARFlowStates.validatingMandate,
@@ -53,8 +55,8 @@ export const SendAARCieCardReadingScreen = ({
           recipientInfo,
           mandateId,
           mrtdData: data.mrtd_data,
-          nisData: data.nis_data,
-          signedVerificationCode: data.nis_data.signedChallenge
+          nisData,
+          signedVerificationCode: signedChallenge
         })
       );
     }
