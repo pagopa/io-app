@@ -106,17 +106,23 @@ export function trackLoginSpidError(
     }
   }
 }
+// miss on ASL (check it)
+export async function updateLoginMethodProfileProperty(
+  state: GlobalState,
+  value: string
+) {
+  await updateMixpanelProfileProperties(state, {
+    property: "LOGIN_METHOD",
+    value
+  });
+}
 export async function trackLoginSpidIdpSelected(
   idp: string,
   state: GlobalState,
   flow: LoginType = "auth"
 ) {
   if (flow === "auth") {
-    // miss on ASL (check it)
-    await updateMixpanelProfileProperties(state, {
-      property: "LOGIN_METHOD",
-      value: idp
-    });
+    await updateLoginMethodProfileProperty(state, idp);
   }
   mixpanelTrack(
     "LOGIN_SPID_IDP_SELECTED",
