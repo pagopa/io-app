@@ -18,14 +18,35 @@ export function trackLoginFlowStarting() {
     buildEventProperties("UX", "screen_view")
   );
 }
-
+export function trackLoginCiePinSelected(isReauth: boolean = false) {
+  void mixpanelTrack(
+    "LOGIN_CIE_PIN_SELECTED",
+    buildEventProperties("UX", "action", {
+      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+    })
+  );
+}
+export function trackLoginCieIdSelected(
+  spidLevel: SpidLevel,
+  isReauth: boolean = false
+) {
+  void mixpanelTrack(
+    "LOGIN_CIEID_SELECTED",
+    buildEventProperties("UX", "action", {
+      security_level: SECURITY_LEVEL_MAP[spidLevel],
+      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+    })
+  );
+}
 // This event must be send when user taps on cie login button
 export async function trackCieLoginSelected() {
   mixpanelTrack("LOGIN_CIE_SELECTED", buildEventProperties("UX", "action"));
 }
-export async function trackCiePinLoginSelected(state: GlobalState) {
-  // miss on ASL (check-it)
-  mixpanelTrack("LOGIN_CIE_PIN_SELECTED", buildEventProperties("UX", "action"));
+export async function trackCiePinLoginSelected(
+  state: GlobalState,
+  isReauth: boolean = false
+) {
+  trackLoginCiePinSelected(isReauth);
   await updateMixpanelProfileProperties(state, {
     property: "LOGIN_METHOD",
     value: IdpCIE.id
@@ -33,14 +54,10 @@ export async function trackCiePinLoginSelected(state: GlobalState) {
 }
 export async function trackCieIDLoginSelected(
   state: GlobalState,
-  spidLevel: SpidLevel
+  spidLevel: SpidLevel,
+  isReauth: boolean = false
 ) {
-  mixpanelTrack(
-    "LOGIN_CIEID_SELECTED",
-    buildEventProperties("UX", "action", {
-      security_level: SECURITY_LEVEL_MAP[spidLevel]
-    })
-  );
+  trackLoginCieIdSelected(spidLevel, isReauth);
   await updateMixpanelProfileProperties(state, {
     property: "LOGIN_METHOD",
     value: IdpCIE_ID.id

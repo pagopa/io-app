@@ -18,7 +18,6 @@ import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
 } from "../../../../../hooks/useHeaderSecondLevel";
-// import { mixpanelTrack } from "../../../../../mixpanel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
@@ -59,6 +58,7 @@ import {
 import { ErrorType as SpidLoginErrorType } from "../../../login/idp/store/types";
 import useActiveSessionLoginNavigation from "../../utils/useActiveSessionLoginNavigation";
 import { ACS_PATH } from "../../shared/utils";
+import { trackSpidLoginIntent } from "../analytics";
 
 // TODO: consider changing the loader to unify it and use the same one for both CIE and SPID
 
@@ -250,9 +250,7 @@ const ActiveSessionIdpLoginScreen = () => {
       // if an intent is coming from the IDP login form, extract the fallbackUrl and use it in Linking.openURL
       const idpIntent = getIntentFallbackUrl(url);
       if (O.isSome(idpIntent)) {
-        // void mixpanelTrack("SPID_LOGIN_INTENT", {
-        //   idp: selectedIdp
-        // });
+        void trackSpidLoginIntent(selectedIdp, true);
         void Linking.openURL(idpIntent.value);
         return false;
       }
@@ -274,8 +272,8 @@ const ActiveSessionIdpLoginScreen = () => {
       shouldBlockUrlNavigationWhileCheckingLollipop,
       handleLoginFailure,
       handleLoginSuccess,
-      idp
-      // selectedIdp
+      idp,
+      selectedIdp
     ]
   );
 

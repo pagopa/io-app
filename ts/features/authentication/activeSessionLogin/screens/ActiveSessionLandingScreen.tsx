@@ -30,7 +30,9 @@ import { setActiveSessionLoginBlockingScreenHasBeenVisualized } from "../store/a
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   loginCieWizardSelected,
-  trackCieBottomSheetScreenView
+  trackCieBottomSheetScreenView,
+  trackLoginCieIdSelected,
+  trackLoginCiePinSelected
 } from "../../common/analytics";
 import {
   trackLoginReauthEngagement,
@@ -55,8 +57,13 @@ export const ActiveSessionLandingScreen = () => {
     isCieSupported
   } = useNavigateToLoginMethod();
 
+  const handleNavigateToCiePinScreen = useCallback(() => {
+    void trackLoginCiePinSelected(true);
+    navigateToCiePinInsertion();
+  }, [navigateToCiePinInsertion]);
+
   const handleNavigateToCieIdLoginScreen = useCallback(() => {
-    // void trackCieIDLoginSelected(store.getState(), SPID_LEVEL); // miss on ASL
+    void trackLoginCieIdSelected(SPID_LEVEL, true);
     navigateToCieIdLoginScreen(SPID_LEVEL);
   }, [navigateToCieIdLoginScreen]);
 
@@ -82,7 +89,7 @@ export const ActiveSessionLandingScreen = () => {
           )}
           icon="fiscalCodeIndividual"
           testID="bottom-sheet-login-with-cie-pin"
-          onPress={navigateToCiePinInsertion}
+          onPress={handleNavigateToCiePinScreen}
         />
         <VSpacer size={8} />
         <ModuleNavigation

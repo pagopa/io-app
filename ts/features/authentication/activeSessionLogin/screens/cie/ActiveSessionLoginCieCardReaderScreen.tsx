@@ -43,7 +43,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import {
   isScreenReaderEnabled,
@@ -59,7 +59,10 @@ import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import CieCardReadingAnimation, {
   ReadingState
 } from "../../../login/cie/components/CieCardReadingAnimation";
-import { CieAuthenticationErrorReason } from "../../../login/cie/store/actions";
+import {
+  cieAuthenticationError,
+  CieAuthenticationErrorReason
+} from "../../../login/cie/store/actions";
 import { isCieLoginUatEnabledSelector } from "../../../login/cie/store/selectors";
 import { getCieUatEndpoint } from "../../../login/cie/utils/endpoints";
 import {
@@ -76,6 +79,7 @@ import {
   trackLoginCieCardReadingSuccess
 } from "../../../common/analytics/cieAnalytics";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
+import { LoginTypeEnum } from "../analytics";
 
 type setErrorParameter = {
   eventReason: CieAuthenticationErrorReason;
@@ -118,6 +122,7 @@ const ActiveSessionLoginCieCardReaderScreen = () => {
       >
     >();
   const theme = useIOTheme();
+  const dispatch = useIODispatch();
 
   const { ciePin, authorizationUri } = route.params;
   const blueColorName = IOColors[theme["interactiveElem-default"]];
@@ -188,13 +193,6 @@ const ActiveSessionLoginCieCardReaderScreen = () => {
     announceUpdate();
   }, [readingState, errorMessage, isScreenReaderEnabledState, announceUpdate]);
 
-  // const dispatchAnalyticEvent = useCallback(
-  //   (error: CieAuthenticationErrorPayload) => {
-  //     dispatch(cieAuthenticationError(error));
-  //   },
-  //   [dispatch]
-  // );
-
   const setError = useCallback(
     ({
       eventReason,
@@ -208,18 +206,20 @@ const ActiveSessionLoginCieCardReaderScreen = () => {
           O.fromNullable,
           O.getOrElse(() => "")
         );
-
-      // dispatchAnalyticEvent({
-      //   reason: eventReason,
-      //   cieDescription
-      // });
+      dispatch(
+        cieAuthenticationError({
+          reason: eventReason,
+          cieDescription,
+          flow: LoginTypeEnum.REAUTH
+        })
+      );
 
       setErrorMessage(cieDescription);
       setReadingState(ReadingState.error);
       Vibration.vibrate(VIBRATION);
       navAction?.();
     },
-    []
+    [dispatch]
   );
 
   const handleCieSuccess = useCallback(
