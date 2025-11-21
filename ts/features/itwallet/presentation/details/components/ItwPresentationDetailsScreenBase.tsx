@@ -13,7 +13,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
-import { getHeaderPropsByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
+import { useHeaderPropsByCredentialType } from "../../../common/utils/itwStyleUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 
 export type CredentialCtaProps = Omit<ButtonSolidProps, "fullWidth">;
@@ -39,7 +39,7 @@ const ItwPresentationDetailsScreenBase = ({
   const { footerActionsMeasurements, handleFooterActionsMeasurements } =
     useFooterActionsMeasurements();
 
-  const headerProps = getHeaderPropsByCredentialType(
+  const headerProps = useHeaderPropsByCredentialType(
     credential.credentialType,
     itwFeaturesEnabled
   );

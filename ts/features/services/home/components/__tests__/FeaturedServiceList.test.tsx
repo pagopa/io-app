@@ -47,7 +47,7 @@ describe("FeaturedServiceList", () => {
     ).toBeNull();
   });
 
-  it.each([pot.noneLoading])(
+  it.each([pot.noneLoading, pot.someLoading({ services: [] })])(
     "should render skeleton when featuredServices is %s",
     featuredServicesPot => {
       const { queryByTestId } = renderComponent(featuredServicesPot);

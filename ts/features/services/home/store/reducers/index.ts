@@ -88,17 +88,9 @@ const reducer = (
 
     // Featured Institutions actions
     case getType(featuredInstitutionsGet.request):
-      if (pot.isNone(state.featuredInstitutions)) {
-        return {
-          ...state,
-          featuredInstitutions: pot.noneLoading
-        };
-      }
       return {
         ...state,
-        featuredInstitutions: pot.toUpdating(state.featuredInstitutions, {
-          institutions: []
-        })
+        featuredInstitutions: pot.toLoading(state.featuredInstitutions)
       };
     case getType(featuredInstitutionsGet.success):
       return {
@@ -108,10 +100,7 @@ const reducer = (
     case getType(featuredInstitutionsGet.failure):
       return {
         ...state,
-        featuredInstitutions: pot.toError(
-          state.featuredInstitutions,
-          action.payload
-        )
+        featuredInstitutions: pot.toError(pot.none, action.payload)
       };
 
     // Featured Services actions

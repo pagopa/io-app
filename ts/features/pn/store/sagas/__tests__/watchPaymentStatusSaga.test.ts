@@ -1,24 +1,25 @@
-import { call, take } from "redux-saga/effects";
 import { testSaga } from "redux-saga-test-plan";
-import {
-  testable,
-  watchPaymentStatusForMixpanelTracking
-} from "../watchPaymentStatusSaga";
-import {
-  cancelPNPaymentStatusTracking,
-  startPNPaymentStatusTracking
-} from "../../actions";
-import { profileFiscalCodeSelector } from "../../../../settings/common/store/selectors";
-import { paymentsFromPNMessagePot } from "../../../utils";
-import { pnMessageFromIdSelector } from "../../reducers";
-import { getRptIdStringFromPayment } from "../../../utils/rptId";
 import { NotificationPaymentInfo } from "../../../../../../definitions/pn/NotificationPaymentInfo";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { Action } from "../../../../../store/actions/types";
 import { paymentStatisticsForMessageUncachedSelector } from "../../../../messages/store/reducers/payments";
-import { trackPNPaymentStatus } from "../../../analytics";
 import {
   SendOpeningSource,
   SendUserType
 } from "../../../../pushNotifications/analytics";
+import { profileFiscalCodeSelector } from "../../../../settings/common/store/selectors";
+import { trackPNPaymentStatus } from "../../../analytics";
+import { paymentsFromSendMessage } from "../../../utils";
+import { getRptIdStringFromPayment } from "../../../utils/rptId";
+import {
+  cancelPNPaymentStatusTracking,
+  startPNPaymentStatusTracking
+} from "../../actions";
+import {
+  testable,
+  watchPaymentStatusForMixpanelTracking
+} from "../watchPaymentStatusSaga";
+import * as REDUCERS from "../../reducers";
 
 describe("watchPaymentStatusSaga", () => {
   afterEach(() => {
@@ -111,6 +112,13 @@ describe("watchPaymentStatusSaga", () => {
     sendOpeningSources.forEach(sendOpeningSource => {
       sendUserTypes.forEach(sendUserType => {
         it(`should follow proper flow (opening source: ${sendOpeningSource}, user type ${sendUserType})`, () => {
+          const selectorMock = jest.fn() as unknown as ReturnType<
+            typeof REDUCERS.curriedSendMessageFromIdSelector
+          >;
+          jest
+            .spyOn(REDUCERS, "curriedSendMessageFromIdSelector")
+            .mockImplementation(_ => selectorMock);
+
           testSaga(
             watchPaymentStatusForMixpanelTracking,
             startPNPaymentStatusTracking({
@@ -122,32 +130,74 @@ describe("watchPaymentStatusSaga", () => {
             .next()
             .select(profileFiscalCodeSelector)
             .next(taxId)
-            .select(pnMessageFromIdSelector, messageId)
+            .select(selectorMock)
             .next(pnMessage)
             .call(
-              paymentsFromPNMessagePot,
+              paymentsFromSendMessage,
               sendOpeningSource === "message" ? taxId : undefined,
               pnMessage
             )
             .next(pnMessage.recipients.map(rec => rec.payment))
-            .race({
-              polling: call(
-                testable!.generateSENDMessagePaymentStatistics,
-                sendOpeningSource,
-                sendUserType,
-                messageId,
-                6,
-                pnMessage.recipients
-                  .slice(0, 5)
-                  .map(rec =>
-                    getRptIdStringFromPayment(
-                      rec.payment as NotificationPaymentInfo
+            .inspect(
+              (effect: {
+                type: string;
+                payload: {
+                  polling: {
+                    type: string;
+                    payload: {
+                      fn: GeneratorFunction;
+                      args: Array<any>;
+                    };
+                  };
+                  cancelAction: {
+                    type: string;
+                    payload: {
+                      pattern: (actionParam: Action) => boolean;
+                    };
+                  };
+                };
+              }) => {
+                expect(effect.type).toBe("RACE");
+                const { polling, cancelAction } = effect.payload;
+                const cancelEffectPattern = cancelAction.payload.pattern;
+                expect(polling.type).toBe("CALL");
+                expect(cancelAction.type).toBe("TAKE");
+
+                expect(polling.payload.fn).toBe(
+                  testable!.generateSENDMessagePaymentStatistics
+                );
+                expect(polling.payload.args).toEqual([
+                  sendOpeningSource,
+                  sendUserType,
+                  messageId,
+                  6,
+                  pnMessage.recipients
+                    .slice(0, 5)
+                    .map(rec =>
+                      getRptIdStringFromPayment(
+                        rec.payment as NotificationPaymentInfo
+                      )
                     )
-                  )
-              ),
-              cancelAction: take(cancelPNPaymentStatusTracking)
-            })
-            .next(cancelPNPaymentStatusTracking)
+                ]);
+                const sameMsgIdResult = cancelEffectPattern(
+                  cancelPNPaymentStatusTracking({
+                    messageId
+                  })
+                );
+                const differentMsgIdResult = cancelEffectPattern(
+                  cancelPNPaymentStatusTracking({
+                    messageId: "differentMessageId"
+                  })
+                );
+                const wrongActionResult = cancelEffectPattern(
+                  applicationChangeState("active")
+                );
+                expect(wrongActionResult).toBe(false);
+                expect(sameMsgIdResult).toBe(true);
+                expect(differentMsgIdResult).toBe(false);
+              }
+            )
+            .next()
             .isDone();
         });
       });

@@ -1,19 +1,19 @@
 import { IOToast } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback } from "react";
 import I18n from "i18next";
+import { useCallback } from "react";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
-import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
-import { useIOSelector } from "../../../../store/hooks";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { ITW_ROUTES } from "../../navigation/routes";
+import { useIOSelector } from "../../../../store/hooks";
 import { openWebUrl } from "../../../../utils/url";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { trackItwNfcNotSupported } from "../../analytics";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 const NFC_NOT_SUPPORTED_FAQ_URL =
   "https://assistenza.ioapp.it/hc/it/articles/35541811236113-Cosa-serve-per-usare-IT-Wallet";
@@ -39,7 +39,7 @@ export const ItwNfcNotSupportedComponent = () => {
     () =>
       navigation.replace(ITW_ROUTES.MAIN, {
         screen: ITW_ROUTES.DISCOVERY.INFO,
-        params: { isL3: false }
+        params: {}
       }),
     [navigation]
   );
@@ -70,6 +70,7 @@ export const ItwNfcNotSupportedComponent = () => {
 
   return (
     <OperationResultScreenContent
+      testID="itwNfcNotSupportedComponentTestID"
       title={I18n.t("features.itWallet.discovery.nfcNotSupported.title")}
       subtitle={I18n.t("features.itWallet.discovery.nfcNotSupported.subtitle")}
       pictogram="attention"
