@@ -109,7 +109,7 @@ const ItwPresentationDetailsScreenBase = ({
 const PoweredByItWallet = () => (
   <HStack space={8} style={styles.poweredBy}>
     <BodySmall>
-      {I18n.t("features.itWallet.presentation.credentialDetails.poweredBy")}
+      {I18n.t("features.itWallet.presentation.credentialDetails.partOf")}
     </BodySmall>
     <ITWalletLogoImage width={75} height={15} accessibilityLabel="IT Wallet" />
   </HStack>
