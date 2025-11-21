@@ -52,9 +52,6 @@ export const setLoggedOutUserWithDifferentCF = createStandardAction(
 export const closeSessionExpirationBanner = createStandardAction(
   "CLOSE_SESSION_EXPIRATION_BANNER"
 )();
-export const setRefreshMessagesSection = createStandardAction(
-  "SET_REFRESH_MESSAGES_SECTION"
-)<boolean>();
 
 export type LoginInfoActions =
   | ActionType<typeof setActiveSessionLoginLocalFlag>
@@ -68,5 +65,4 @@ export type LoginInfoActions =
   | ActionType<typeof setFastLoginOptSessionLogin>
   | ActionType<typeof setFinishedActiveSessionLoginFlow>
   | ActionType<typeof setLoggedOutUserWithDifferentCF>
-  | ActionType<typeof closeSessionExpirationBanner>
-  | ActionType<typeof setRefreshMessagesSection>;
+  | ActionType<typeof closeSessionExpirationBanner>;

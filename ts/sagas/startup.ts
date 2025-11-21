@@ -141,7 +141,6 @@ import { checkShouldDisplaySendEngagementScreen } from "../features/pn/loginEnga
 import { navigateToActiveSessionLogin } from "../features/authentication/activeSessionLogin/saga/navigateToActiveSessionLogin";
 import { showSessionExpirationBlockingScreenSelector } from "../features/authentication/activeSessionLogin/store/selectors";
 import { watchCdcSaga } from "../features/bonus/cdc/common/saga";
-import { setRefreshMessagesSection } from "../features/authentication/activeSessionLogin/store/actions";
 import { watchMessagesSaga } from "../features/messages/saga";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -184,12 +183,6 @@ export function* initializeApplicationSaga(
 
   const isActiveLoginSuccessProp =
     startupAction?.payload?.isActiveLoginSuccess ?? false;
-
-  yield* put(
-    setRefreshMessagesSection(
-      !(isActiveLoginSuccessProp || handleSessionExpiration)
-    )
-  );
 
   // Remove explicitly previous session data. This is done as completion of two
   // use cases:
@@ -744,8 +737,6 @@ export function* initializeApplicationSaga(
     // Check if should navigate to the send activation screen
     yield* fork(checkShouldDisplaySendEngagementScreen, isFirstOnboarding);
   }
-
-  yield* put(setRefreshMessagesSection(true));
 
   yield* put(
     applicationInitialized({
