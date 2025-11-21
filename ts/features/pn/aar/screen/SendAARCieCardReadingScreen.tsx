@@ -9,28 +9,43 @@ import {
   CieCardReadContentProps
 } from "../../../common/components/cie/CieCardReadContent";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { aarCieScanningStateSelector } from "../store/selectors";
-import { sendAARFlowStates } from "../utils/stateUtils";
+import { currentAARFlowStateType } from "../store/selectors";
+import { RecipientInfo, sendAARFlowStates } from "../utils/stateUtils";
 import { SendAARLoadingComponent } from "../components/SendAARLoadingComponent";
 import { setAarFlowState } from "../store/actions";
 import { isDefined } from "../../../../utils/guards";
 import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
+import type { PnParamsList } from "../../navigation/params";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import PN_ROUTES from "../../navigation/routes";
 
-export const SendAARCieCardReadingScreen = () => {
+export type SendAARCieCardReadingScreenRouteParams = Readonly<{
+  iun: string;
+  mandateId: string;
+  recipientInfo: RecipientInfo;
+  can: string;
+  verificationCode: string;
+}>;
+
+type SendAARCieCardReadingScreenProps = IOStackNavigationRouteProps<
+  PnParamsList,
+  typeof PN_ROUTES.SEND_AAR_CIE_CARD_READING
+>;
+
+export const SendAARCieCardReadingScreen = ({
+  route
+}: SendAARCieCardReadingScreenProps) => {
+  const { can, verificationCode, iun, recipientInfo, mandateId } = route.params;
   const dispatch = useIODispatch();
   const { terminateFlow } = useSendAarFlowManager();
-  const maybeCieScanningState = useIOSelector(aarCieScanningStateSelector);
+  const currentFlow = useIOSelector(currentAARFlowStateType);
   const { startReading, stopReading, readStatus, progress, data } =
     useCieInternalAuthAndMrtdReading();
 
-  useEffect(() => {
-    if (
-      readStatus === ReadStatus.SUCCESS &&
-      isDefined(maybeCieScanningState) &&
-      isDefined(data)
-    ) {
-      const { iun, recipientInfo, mandateId } = maybeCieScanningState;
+  const isCieScanningFlow = currentFlow === sendAARFlowStates.cieScanning;
 
+  useEffect(() => {
+    if (readStatus === ReadStatus.SUCCESS && isDefined(data)) {
       dispatch(
         setAarFlowState({
           type: sendAARFlowStates.validatingMandate,
@@ -43,21 +58,11 @@ export const SendAARCieCardReadingScreen = () => {
         })
       );
     }
-  }, [readStatus, data, maybeCieScanningState, dispatch]);
+  }, [readStatus, data, iun, recipientInfo, mandateId, dispatch]);
 
   useEffect(() => {
-    if (maybeCieScanningState?.can && maybeCieScanningState.verificationCode) {
-      void startReading(
-        maybeCieScanningState.can,
-        maybeCieScanningState.verificationCode,
-        "hex"
-      );
-    }
-  }, [
-    maybeCieScanningState?.can,
-    maybeCieScanningState?.verificationCode,
-    startReading
-  ]);
+    void startReading(can, verificationCode, "hex");
+  }, [can, verificationCode, startReading]);
 
   const cancelAction = useMemo(
     () => ({
@@ -106,7 +111,7 @@ export const SendAARCieCardReadingScreen = () => {
     [cancelAction, terminateFlow]
   );
 
-  if (!isDefined(maybeCieScanningState)) {
+  if (!isCieScanningFlow) {
     return (
       <SendAARLoadingComponent
         contentTitle={i18n.t(

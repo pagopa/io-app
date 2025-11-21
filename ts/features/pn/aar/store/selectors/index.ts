@@ -98,16 +98,3 @@ export const currentAARFlowStateErrorDebugInfoSelector = createSelector(
     return emptyInstance;
   }
 );
-
-export const aarCieScanningStateSelector = (
-  state: GlobalState
-): Optional<
-  Extract<AARFlowState, { type: typeof sendAARFlowStates.cieScanning }>
-> => {
-  const currentState = currentAARFlowData(state);
-
-  if (currentState.type === sendAARFlowStates.cieScanning) {
-    return currentState;
-  }
-  return undefined;
-};
