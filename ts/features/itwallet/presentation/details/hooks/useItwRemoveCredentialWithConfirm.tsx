@@ -15,6 +15,7 @@ import {
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { itwCredentialsRemoveByType } from "../../../credentials/store/actions";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import { normalizeAlertButtons } from "../../../common/utils/itwAlertUtils";
 
 /**
  * Hook that shows a confirmation dialog and, if confirmed, removes a credential from the wallet
@@ -44,6 +45,20 @@ export const useItwRemoveCredentialWithConfirm = (
 
   const confirmAndRemoveCredential = () => {
     trackItwCredentialDelete(mixpanelCredential);
+
+    const buttons = [
+      {
+        text: I18n.t(
+          "features.itWallet.presentation.credentialDetails.dialogs.remove.confirm"
+        ),
+        style: "destructive" as const,
+        onPress: handleRemoveCredential
+      },
+      {
+        text: I18n.t("global.buttons.cancel"),
+        style: "cancel" as const
+      }
+    ];
     return Alert.alert(
       I18n.t(
         "features.itWallet.presentation.credentialDetails.dialogs.remove.title"
@@ -51,19 +66,7 @@ export const useItwRemoveCredentialWithConfirm = (
       I18n.t(
         "features.itWallet.presentation.credentialDetails.dialogs.remove.content"
       ),
-      [
-        {
-          text: I18n.t(
-            "features.itWallet.presentation.credentialDetails.dialogs.remove.confirm"
-          ),
-          style: "destructive",
-          onPress: handleRemoveCredential
-        },
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
-        }
-      ]
+      normalizeAlertButtons(buttons)
     );
   };
 

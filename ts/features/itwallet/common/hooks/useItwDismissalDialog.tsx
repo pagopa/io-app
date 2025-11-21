@@ -1,5 +1,5 @@
 import I18n from "i18next";
-import { Alert } from "react-native";
+import { Alert, Platform } from "react-native";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import {
@@ -7,6 +7,7 @@ import {
   trackItwDismissalAction,
   trackItwDismissalContext
 } from "../../analytics";
+import { normalizeAlertButtons } from "../utils/itwAlertUtils";
 
 type ItwDismissalDialogProps = {
   handleDismiss?: () => void;
@@ -59,10 +60,10 @@ export const useItwDismissalDialog = ({
       trackItwDismissalContext(dismissalContext);
     }
 
-    Alert.alert(title, body, [
+    const buttons = [
       {
         text: confirmLabel,
-        style: "destructive",
+        style: "destructive" as const,
         onPress: () => {
           trackUserAction(confirmLabel);
           (handleDismiss || navigation.goBack)();
@@ -70,12 +71,14 @@ export const useItwDismissalDialog = ({
       },
       {
         text: cancelLabel,
-        style: "cancel",
+        style: "cancel" as const,
         onPress: () => {
           trackUserAction(cancelLabel);
         }
       }
-    ]);
+    ];
+
+    Alert.alert(title, body, normalizeAlertButtons(buttons));
   };
 
   useHardwareBackButton(() => {
