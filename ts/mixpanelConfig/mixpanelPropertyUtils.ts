@@ -8,7 +8,7 @@ import {
   selectWalletCardsByType,
   selectWalletPlaceholderCards
 } from "../features/wallet/store/selectors";
-import { WalletCardBonus } from "../features/wallet/types";
+import { WalletCardBonus, WalletCardCdc } from "../features/wallet/types";
 import { paymentsWalletUserMethodsSelector } from "../features/payments/wallet/store/selectors";
 import {
   NotificationPreferenceConfiguration,
@@ -107,4 +107,12 @@ export const welfareStatusHandler = (
     "idPay"
   ) as Array<WalletCardBonus>;
   return idPayCards.map(card => card.name);
+};
+
+export const cdcStatusHandler = (state: GlobalState): number => {
+  const cdcCards = selectWalletCardsByType(
+    state,
+    "cdc"
+  ) as Array<WalletCardCdc>;
+  return cdcCards.reduce((sum, card) => sum + card.numberOfCards, 0);
 };
