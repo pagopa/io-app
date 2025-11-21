@@ -3805,6 +3805,7 @@
         "notAvailable": "Il servizio non è disponibile in questo momento. Riprova più tardi."
       },
       "request": "Richiedi Carta della Cultura",
+      "goToService" : "Vai al servizio",
       "usage": "Usa Carta della Cultura"
     }
   },
