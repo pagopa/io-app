@@ -1,0 +1,700 @@
+diff --git a/NEW_ARCHITECTURE.md b/NEW_ARCHITECTURE.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..3c985d0e4aae3c04e43a2a02d9c5200a7bdbab69
+--- /dev/null
++++ b/NEW_ARCHITECTURE.md
+@@ -0,0 +1,82 @@
++# React Native Screenshot Prevent - New Architecture Ready
++
++This package has been updated to support React Native's New Architecture (TurboModules and Fabric).
++
++## New Architecture Changes
++
++### Files Added/Modified
++
++1. **`src/NativeScreenshotPrevent.ts`** - TurboModule specification
++2. **`android/src/newarch/`** - New Architecture implementations
++3. **`android/src/oldarch/`** - Old Architecture implementations (backward compatibility)
++4. **`android/build.gradle`** - Updated with New Architecture support
++
++### Integration
++
++#### For New Architecture (RN 0.68+)
++
++1. Make sure your app has New Architecture enabled in `android/gradle.properties`:
++   ```properties
++   newArchEnabled=true
++   ```
++
++2. The package will automatically use the TurboModule implementation.
++
++#### For Old Architecture
++
++The package maintains full backward compatibility. No changes needed for existing integrations.
++
++### Package Registration
++
++#### New Architecture
++The package uses `ScreenshotPreventTurboPackage` which extends `TurboReactPackage`.
++
++#### Old Architecture  
++The package continues to use `RNScreenshotPreventPackage` which implements `ReactPackage`.
++
++### Developer Notes
++
++- The core functionality is shared between both architectures through static methods in `RNScreenshotPreventModule`
++- TurboModule provides better performance and type safety
++- The package automatically detects and uses the appropriate implementation at runtime
++
++## API
++
++The API remains unchanged. All existing methods work the same way:
++
++```javascript
++import ScreenshotPrevent from 'react-native-screenshot-prevent';
++
++// Enable/disable screenshot prevention
++ScreenshotPrevent.enabled(true);
++
++// Enable secure view with custom image
++ScreenshotPrevent.enableSecureView('https://example.com/image.png');
++
++// Disable secure view
++ScreenshotPrevent.disableSecureView();
++
++// Listen for screenshot events (iOS)
++const listener = ScreenshotPrevent.addListener((event) => {
++  console.log('Screenshot taken!', event);
++});
++```
++
++## Codegen
++
++The package includes proper codegen configuration in `package.json`:
++
++```json
++{
++  "codegenConfig": {
++    "name": "RNScreenshotPreventSpec",
++    "type": "modules",
++    "jsSrcsDir": "src",
++    "android": {
++      "javaPackageName": "com.killserver.screenshotprev"
++    }
++  }
++}
++```
++
++This enables automatic native code generation for the TurboModule interface.
+\ No newline at end of file
+diff --git a/android/build.gradle b/android/build.gradle
+index 6ee6db648848012a47a1d95356c38d716ad29a15..7bfd052a98878b7cc5fba77df130aadb767cd1af 100644
+--- a/android/build.gradle
++++ b/android/build.gradle
+@@ -1,24 +1,17 @@
+ apply plugin: 'com.android.library'
+ 
+-buildscript {
+-    repositories {
+-        jcenter()
+-    }
+-
+-    dependencies {
+-        classpath 'com.android.tools.build:gradle:1.3.1'
+-    }
++def isNewArchitectureEnabled() {
++    return rootProject.hasProperty("newArchEnabled") && rootProject.getProperty("newArchEnabled") == "true"
+ }
+ 
+ def safeExtGet(prop, fallback) {
+     rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+ }
+ 
+-def DEFAULT_COMPILE_SDK_VERSION = 23
+-def DEFAULT_BUILD_TOOLS_VERSION = "23.0.1"
+-def DEFAULT_MIN_SDK_VERSION = 16
+-def DEFAULT_TARGET_SDK_VERSION = 22
+-
++def DEFAULT_COMPILE_SDK_VERSION = 33
++def DEFAULT_BUILD_TOOLS_VERSION = "33.0.0"
++def DEFAULT_MIN_SDK_VERSION = 21
++def DEFAULT_TARGET_SDK_VERSION = 33
+ 
+ android {
+     compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
+@@ -29,17 +22,45 @@ android {
+         targetSdkVersion safeExtGet('targetSdkVersion', DEFAULT_TARGET_SDK_VERSION)
+         versionCode 1
+         versionName "1.0"
++        buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
++    }
++
++    buildTypes {
++        release {
++            minifyEnabled false
++        }
+     }
++
+     lintOptions {
+-        abortOnError false
++        disable 'GradleCompatible'
++    }
++
++    compileOptions {
++        sourceCompatibility JavaVersion.VERSION_1_8
++        targetCompatibility JavaVersion.VERSION_1_8
++    }
++
++    sourceSets {
++        main {
++            if (isNewArchitectureEnabled()) {
++                java.srcDirs += ['src/newarch/java']
++            } else {
++                java.srcDirs += ['src/oldarch/java']
++            }
++        }
+     }
+ }
+ 
+ repositories {
+     mavenCentral()
++    google()
+ }
+ 
+ dependencies {
+-    implementation 'com.facebook.react:react-native:+'
++    // For < 0.71, this will be from the local maven repo
++    // For > 0.71, this will be replaced by `com.facebook.react:react-android:$version` by react gradle plugin
++    //noinspection GradleDynamicVersion
++    implementation "com.facebook.react:react-native:+"
++    implementation "com.facebook.react:turbomodule-core:+"
+ }
+   
+\ No newline at end of file
+diff --git a/android/src/main/java/com/killserver/screenshotprev/RNScreenshotPreventModule.java b/android/src/main/java/com/killserver/screenshotprev/RNScreenshotPreventModule.java
+index d381e388ec81d0a456ea496891fc635fe48a863e..95c0be266cdb11c121ae8d52056e2a40bdd21bd5 100644
+--- a/android/src/main/java/com/killserver/screenshotprev/RNScreenshotPreventModule.java
++++ b/android/src/main/java/com/killserver/screenshotprev/RNScreenshotPreventModule.java
+@@ -21,8 +21,8 @@ import java.net.URL;
+ public class RNScreenshotPreventModule extends ReactContextBaseJavaModule implements LifecycleEventListener {
+ 
+   private final ReactApplicationContext reactContext;
+-  private RelativeLayout overlayLayout;
+-  private boolean secureFlagWasSet;
++  private static RelativeLayout overlayLayout;
++  private static boolean secureFlagWasSet;
+ 
+   public RNScreenshotPreventModule(ReactApplicationContext reactContext) {
+     super(reactContext);
+@@ -37,8 +37,12 @@ public class RNScreenshotPreventModule extends ReactContextBaseJavaModule implem
+ 
+   @ReactMethod
+   public void enabled(boolean _enable) {
+-    if (this.reactContext.hasCurrentActivity()) {
+-      final Activity activity = this.reactContext.getCurrentActivity();
++    enabled(_enable, this.reactContext);
++  }
++
++  public static void enabled(boolean _enable, ReactApplicationContext reactContext) {
++    if (reactContext.hasCurrentActivity()) {
++      final Activity activity = reactContext.getCurrentActivity();
+       if (activity != null) {
+         if (_enable) {
+           activity.runOnUiThread(new Runnable() {
+@@ -61,8 +65,12 @@ public class RNScreenshotPreventModule extends ReactContextBaseJavaModule implem
+   
+   @ReactMethod
+   public void enableSecureView(String imagePath) {
+-    if (this.reactContext.hasCurrentActivity()) {
+-      final Activity activity = this.reactContext.getCurrentActivity();
++    enableSecureView(imagePath, this.reactContext);
++  }
++
++  public static void enableSecureView(String imagePath, ReactApplicationContext reactContext) {
++    if (reactContext.hasCurrentActivity()) {
++      final Activity activity = reactContext.getCurrentActivity();
+       if (activity != null) {
+         if (overlayLayout == null) {
+           createOverlay(activity, imagePath);
+@@ -79,8 +87,12 @@ public class RNScreenshotPreventModule extends ReactContextBaseJavaModule implem
+   
+   @ReactMethod
+   public void disableSecureView() {
+-    if (this.reactContext.hasCurrentActivity()) {
+-      final Activity activity = this.reactContext.getCurrentActivity();
++    disableSecureView(this.reactContext);
++  }
++
++  public static void disableSecureView(ReactApplicationContext reactContext) {
++    if (reactContext.hasCurrentActivity()) {
++      final Activity activity = reactContext.getCurrentActivity();
+       if (activity != null) {
+         activity.runOnUiThread(new Runnable() {
+           @Override
+@@ -97,7 +109,7 @@ public class RNScreenshotPreventModule extends ReactContextBaseJavaModule implem
+     }
+   }
+ 
+-  private void createOverlay(Activity activity, String imagePath) {
++  private static void createOverlay(Activity activity, String imagePath) {
+     overlayLayout = new RelativeLayout(activity);
+     overlayLayout.setBackgroundColor(Color.parseColor("#FFFFFF"));
+ 
+@@ -170,7 +182,7 @@ public class RNScreenshotPreventModule extends ReactContextBaseJavaModule implem
+     // Cleanup if needed
+   }
+ 
+-  private Bitmap decodeImageUrl(String imagePath) {
++  private static Bitmap decodeImageUrl(String imagePath) {
+     try {
+       URL imageUrl = new URL(imagePath);
+       Bitmap bitmap = BitmapFactory.decodeStream(imageUrl.openConnection().getInputStream());
+diff --git a/android/src/newarch/java/com/killserver/screenshotprev/NativeScreenshotPreventSpec.java b/android/src/newarch/java/com/killserver/screenshotprev/NativeScreenshotPreventSpec.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..534f54e5937b41ea761732478452c07ac14354b7
+--- /dev/null
++++ b/android/src/newarch/java/com/killserver/screenshotprev/NativeScreenshotPreventSpec.java
+@@ -0,0 +1,30 @@
++package com.killserver.screenshotprev;
++
++import com.facebook.react.bridge.ReactApplicationContext;
++import com.facebook.react.bridge.ReactContextBaseJavaModule;
++import com.facebook.react.bridge.ReactMethod;
++import com.facebook.react.turbomodule.core.interfaces.TurboModule;
++
++import javax.annotation.Nonnull;
++
++public abstract class NativeScreenshotPreventSpec extends ReactContextBaseJavaModule implements TurboModule {
++
++    public NativeScreenshotPreventSpec(ReactApplicationContext reactContext) {
++        super(reactContext);
++    }
++
++    @ReactMethod
++    public abstract void enabled(boolean enable);
++
++    @ReactMethod
++    public abstract void enableSecureView(String imagePath);
++
++    @ReactMethod
++    public abstract void disableSecureView();
++
++    @ReactMethod
++    public abstract void addListener(String eventName);
++
++    @ReactMethod
++    public abstract void removeListeners(double count);
++}
+\ No newline at end of file
+diff --git a/android/src/newarch/java/com/killserver/screenshotprev/ScreenshotPreventModule.java b/android/src/newarch/java/com/killserver/screenshotprev/ScreenshotPreventModule.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..a59cf151e9ee509f88f172fbed333999c3c80ec9
+--- /dev/null
++++ b/android/src/newarch/java/com/killserver/screenshotprev/ScreenshotPreventModule.java
+@@ -0,0 +1,46 @@
++package com.killserver.screenshotprev;
++
++import androidx.annotation.NonNull;
++import com.facebook.react.bridge.ReactApplicationContext;
++import com.facebook.react.module.annotations.ReactModule;
++
++@ReactModule(name = ScreenshotPreventModule.NAME)
++public class ScreenshotPreventModule extends NativeScreenshotPreventSpec {
++
++    public static final String NAME = "RNScreenshotPrevent";
++
++    public ScreenshotPreventModule(ReactApplicationContext reactContext) {
++        super(reactContext);
++    }
++
++    @Override
++    @NonNull
++    public String getName() {
++        return NAME;
++    }
++
++    @Override
++    public void enabled(boolean enable) {
++        RNScreenshotPreventModule.enabled(enable, getReactApplicationContext());
++    }
++
++    @Override
++    public void enableSecureView(String imagePath) {
++        RNScreenshotPreventModule.enableSecureView(imagePath, getReactApplicationContext());
++    }
++
++    @Override
++    public void disableSecureView() {
++        RNScreenshotPreventModule.disableSecureView(getReactApplicationContext());
++    }
++
++    @Override
++    public void addListener(String eventName) {
++        // Set up any upstream listeners or background tasks
++    }
++
++    @Override
++    public void removeListeners(double count) {
++        // Remove any upstream listeners or background tasks
++    }
++}
+\ No newline at end of file
+diff --git a/android/src/newarch/java/com/killserver/screenshotprev/ScreenshotPreventTurboPackage.java b/android/src/newarch/java/com/killserver/screenshotprev/ScreenshotPreventTurboPackage.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..885e9c9d9f07c5ad496fef104d2b213d4c69d25a
+--- /dev/null
++++ b/android/src/newarch/java/com/killserver/screenshotprev/ScreenshotPreventTurboPackage.java
+@@ -0,0 +1,49 @@
++package com.killserver.screenshotprev;
++
++import com.facebook.react.TurboReactPackage;
++import com.facebook.react.bridge.NativeModule;
++import com.facebook.react.bridge.ReactApplicationContext;
++import com.facebook.react.module.model.ReactModuleInfo;
++import com.facebook.react.module.model.ReactModuleInfoProvider;
++import com.facebook.react.turbomodule.core.interfaces.TurboModule;
++
++import java.util.Collections;
++import java.util.List;
++import java.util.HashMap;
++import java.util.Map;
++
++import javax.annotation.Nonnull;
++import javax.annotation.Nullable;
++
++public class ScreenshotPreventTurboPackage extends TurboReactPackage {
++
++    @Nullable
++    @Override
++    public NativeModule getModule(String name, @Nonnull ReactApplicationContext reactContext) {
++        if (name.equals(ScreenshotPreventModule.NAME)) {
++            return new ScreenshotPreventModule(reactContext);
++        } else {
++            return null;
++        }
++    }
++
++    @Override
++    public ReactModuleInfoProvider getReactModuleInfoProvider() {
++        return () -> {
++            final Map<String, ReactModuleInfo> moduleInfos = new HashMap<>();
++            boolean isTurboModule = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED;
++            moduleInfos.put(
++                    ScreenshotPreventModule.NAME,
++                    new ReactModuleInfo(
++                            ScreenshotPreventModule.NAME,
++                            ScreenshotPreventModule.class.getName(),
++                            false, // canOverrideExistingModule
++                            false, // needsEagerInit
++                            true, // hasConstants
++                            false, // isCxxModule
++                            isTurboModule // isTurboModule
++                    ));
++            return moduleInfos;
++        };
++    }
++}
+\ No newline at end of file
+diff --git a/android/src/oldarch/java/com/killserver/screenshotprev/RNScreenshotPreventModule.java b/android/src/oldarch/java/com/killserver/screenshotprev/RNScreenshotPreventModule.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..95c0be266cdb11c121ae8d52056e2a40bdd21bd5
+--- /dev/null
++++ b/android/src/oldarch/java/com/killserver/screenshotprev/RNScreenshotPreventModule.java
+@@ -0,0 +1,195 @@
++
++package com.killserver.screenshotprev;
++
++import android.app.Activity;
++import android.graphics.Bitmap;
++import android.graphics.BitmapFactory;
++import android.graphics.Color;
++import android.view.ViewGroup;
++import android.view.WindowManager;
++import android.widget.RelativeLayout;
++import android.widget.ImageView;
++
++import com.facebook.react.bridge.ReactApplicationContext;
++import com.facebook.react.bridge.LifecycleEventListener;
++import com.facebook.react.bridge.ReactContextBaseJavaModule;
++import com.facebook.react.bridge.ReactMethod;
++
++import java.io.IOException;
++import java.net.URL;
++
++public class RNScreenshotPreventModule extends ReactContextBaseJavaModule implements LifecycleEventListener {
++
++  private final ReactApplicationContext reactContext;
++  private static RelativeLayout overlayLayout;
++  private static boolean secureFlagWasSet;
++
++  public RNScreenshotPreventModule(ReactApplicationContext reactContext) {
++    super(reactContext);
++    this.reactContext = reactContext;
++    this.reactContext.addLifecycleEventListener(this);
++  }
++
++  @Override
++  public String getName() {
++    return "RNScreenshotPrevent";
++  }
++
++  @ReactMethod
++  public void enabled(boolean _enable) {
++    enabled(_enable, this.reactContext);
++  }
++
++  public static void enabled(boolean _enable, ReactApplicationContext reactContext) {
++    if (reactContext.hasCurrentActivity()) {
++      final Activity activity = reactContext.getCurrentActivity();
++      if (activity != null) {
++        if (_enable) {
++          activity.runOnUiThread(new Runnable() {
++            @Override
++            public void run() {
++              activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
++            }
++          });
++        } else {
++          activity.runOnUiThread(new Runnable() {
++            @Override
++            public void run() {
++              activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
++            }
++          });
++        }
++      }
++    }
++  }
++  
++  @ReactMethod
++  public void enableSecureView(String imagePath) {
++    enableSecureView(imagePath, this.reactContext);
++  }
++
++  public static void enableSecureView(String imagePath, ReactApplicationContext reactContext) {
++    if (reactContext.hasCurrentActivity()) {
++      final Activity activity = reactContext.getCurrentActivity();
++      if (activity != null) {
++        if (overlayLayout == null) {
++          createOverlay(activity, imagePath);
++        }
++        activity.runOnUiThread(new Runnable() {
++          @Override
++          public void run() {
++            activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
++          }
++        });
++      }
++    }
++  }
++  
++  @ReactMethod
++  public void disableSecureView() {
++    disableSecureView(this.reactContext);
++  }
++
++  public static void disableSecureView(ReactApplicationContext reactContext) {
++    if (reactContext.hasCurrentActivity()) {
++      final Activity activity = reactContext.getCurrentActivity();
++      if (activity != null) {
++        activity.runOnUiThread(new Runnable() {
++          @Override
++          public void run() {
++            if (overlayLayout != null) {
++              ViewGroup rootView = (ViewGroup) activity.getWindow().getDecorView().getRootView();
++              rootView.removeView(overlayLayout);
++              overlayLayout = null;
++            }
++            activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
++          }
++        });
++      }
++    }
++  }
++
++  private static void createOverlay(Activity activity, String imagePath) {
++    overlayLayout = new RelativeLayout(activity);
++    overlayLayout.setBackgroundColor(Color.parseColor("#FFFFFF"));
++
++    // Create an ImageView
++    ImageView imageView = new ImageView(activity);
++    RelativeLayout.LayoutParams imageParams = new RelativeLayout.LayoutParams(
++      RelativeLayout.LayoutParams.MATCH_PARENT,
++      RelativeLayout.LayoutParams.WRAP_CONTENT);
++    imageParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
++
++    imageView.setLayoutParams(imageParams);
++
++    // Set image resource
++    Bitmap bitmap = decodeImageUrl(imagePath);
++
++    if (bitmap != null) {
++      int imageHeight = (int)(bitmap.getHeight() * ((float) activity.getResources().getDisplayMetrics().widthPixels / bitmap.getWidth()));
++      Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, activity.getResources().getDisplayMetrics().widthPixels, imageHeight, true);
++      imageView.setImageBitmap(scaledBitmap);
++    }
++
++    overlayLayout.addView(imageView);
++  }
++
++  @Override
++  public void onHostResume() {
++    Activity currentActivity = this.reactContext.getCurrentActivity();
++    if (currentActivity != null && overlayLayout != null) {
++      currentActivity.runOnUiThread(new Runnable() {
++        @Override
++        public void run() {
++          ViewGroup rootView = (ViewGroup) currentActivity.getWindow().getDecorView().getRootView();
++          rootView.removeView(overlayLayout);
++          if (secureFlagWasSet) {
++            currentActivity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
++            secureFlagWasSet = false;
++          }
++        }
++      });
++    }
++  }
++
++  @Override
++  public void onHostPause() {
++    Activity currentActivity = this.reactContext.getCurrentActivity();
++    if (currentActivity != null && overlayLayout != null) {
++      currentActivity.runOnUiThread(new Runnable() {
++        @Override
++        public void run() {
++          ViewGroup rootView = (ViewGroup) currentActivity.getWindow().getDecorView().getRootView();
++          RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
++            ViewGroup.LayoutParams.MATCH_PARENT,
++            ViewGroup.LayoutParams.MATCH_PARENT);
++          rootView.addView(overlayLayout, layoutParams);
++
++          int flags = currentActivity.getWindow().getAttributes().flags;
++          if ((flags & WindowManager.LayoutParams.FLAG_SECURE) != 0) {
++            currentActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
++            secureFlagWasSet = true;
++          } else {
++            secureFlagWasSet = false;
++          }
++        }
++      });
++    }
++  }
++
++  @Override
++  public void onHostDestroy() {
++    // Cleanup if needed
++  }
++
++  private static Bitmap decodeImageUrl(String imagePath) {
++    try {
++      URL imageUrl = new URL(imagePath);
++      Bitmap bitmap = BitmapFactory.decodeStream(imageUrl.openConnection().getInputStream());
++      return bitmap;
++    } catch (IOException e) {
++      e.printStackTrace();
++      return null;
++    }
++  }
++}
+\ No newline at end of file
+diff --git a/android/src/oldarch/java/com/killserver/screenshotprev/RNScreenshotPreventPackage.java b/android/src/oldarch/java/com/killserver/screenshotprev/RNScreenshotPreventPackage.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..f853d05249d33d7ca405a2dcb4b528199be40f71
+--- /dev/null
++++ b/android/src/oldarch/java/com/killserver/screenshotprev/RNScreenshotPreventPackage.java
+@@ -0,0 +1,29 @@
++
++package com.killserver.screenshotprev;
++
++import java.util.Arrays;
++import java.util.Collections;
++import java.util.List;
++
++import com.facebook.react.ReactPackage;
++import com.facebook.react.bridge.NativeModule;
++import com.facebook.react.bridge.ReactApplicationContext;
++import com.facebook.react.uimanager.ViewManager;
++import com.facebook.react.bridge.JavaScriptModule;
++
++public class RNScreenshotPreventPackage implements ReactPackage {
++    @Override
++    public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
++      return Arrays.<NativeModule>asList(new RNScreenshotPreventModule(reactContext));
++    }
++
++    // Deprecated from RN 0.47
++    public List<Class<? extends JavaScriptModule>> createJSModules() {
++      return Collections.emptyList();
++    }
++
++    @Override
++    public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
++      return Collections.emptyList();
++    }
++}
+\ No newline at end of file
+diff --git a/package.json b/package.json
+index 42c26ead07c8d2c70443aa312fe0502c4dffd4be..72047f31345ee05533e67a9c2f49e80c8695d537 100644
+--- a/package.json
++++ b/package.json
+@@ -127,6 +127,9 @@
+   "codegenConfig": {
+     "name": "RNScreenshotPreventSpec",
+     "type": "modules",
+-    "jsSrcsDir": "src"
++    "jsSrcsDir": "src",
++    "android": {
++      "javaPackageName": "com.killserver.screenshotprev"
++    }
+   }
+ }
+diff --git a/src/NativeScreenshotPrevent.ts b/src/NativeScreenshotPrevent.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..1a023c5fba4c3cd51914a2caa016697943b3c4e2
+--- /dev/null
++++ b/src/NativeScreenshotPrevent.ts
+@@ -0,0 +1,14 @@
++import type { TurboModule } from 'react-native';
++import { TurboModuleRegistry } from 'react-native';
++
++export interface Spec extends TurboModule {
++  enabled(enable: boolean): void;
++  enableSecureView(imagePath: string): void;
++  disableSecureView(): void;
++  
++  // Add listener support for screenshot detection
++  addListener(eventName: string): void;
++  removeListeners(count: number): void;
++}
++
++export default TurboModuleRegistry.getEnforcing<Spec>('RNScreenshotPrevent');
+\ No newline at end of file
+diff --git a/src/index.ts b/src/index.ts
+index aa8f952601bb8d0c8c0d8b0f08ab4710f7e05fce..cd807cfce1d905d8d68848ca259709ff016babf5 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -1,5 +1,6 @@
+ import { NativeModules, NativeEventEmitter, Platform } from 'react-native';
+ import { useEffect } from 'react';
++import NativeScreenshotPrevent from './NativeScreenshotPrevent';
+ 
+ type FN = (resp: any) => void
+ type Return = {
+@@ -7,14 +8,15 @@ type Return = {
+ }
+ let addListen: any, RNScreenshotPrevent: any;
+ if (Platform.OS !== "web") {
+-    const { RNScreenshotPrevent: RNScreenshotPreventNative } = NativeModules;
++    // Try to use TurboModule first, fallback to legacy bridge
++    const RNScreenshotPreventNative = NativeScreenshotPrevent ?? NativeModules.RNScreenshotPrevent;
+     RNScreenshotPrevent = {
+         ...RNScreenshotPreventNative,
+         enableSecureView: function enableSecureView(imagePath: string = "") {
+             RNScreenshotPreventNative.enableSecureView(imagePath)
+         }
+     }
+-    const eventEmitter = new NativeEventEmitter(RNScreenshotPrevent);
++    const eventEmitter = new NativeEventEmitter(RNScreenshotPreventNative);
+ 
+     /**
+      * subscribes to userDidTakeScreenshot event
