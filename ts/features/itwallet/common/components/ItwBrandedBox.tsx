@@ -180,6 +180,7 @@ export const ItwBrandedBox = ({
           variant={variant}
           thickness={borderThickness}
           cornerRadius={cornerRadius}
+          themeType={themeType}
         />
       </Canvas>
     </View>
