@@ -9,6 +9,9 @@ import { constNull } from "fp-ts/lib/function";
 import HapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
+import { Platform } from "react-native";
+import i18n from "i18next";
+import { getProgressEmojis } from "../../../common/utils/cie";
 
 export const enum ReadStatus {
   IDLE = "IDLE",
@@ -29,6 +32,7 @@ export const useCieInternalAuthAndMrtdReading = () => {
       ...params: Parameters<typeof CieManager.startInternalAuthAndMRTDReading>
     ) => {
       setNfcEvent(undefined);
+      setNfcError(undefined);
       setReadStatus(ReadStatus.IDLE);
       await CieManager.startInternalAuthAndMRTDReading(...params);
     },
@@ -74,7 +78,35 @@ export const useCieInternalAuthAndMrtdReading = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (Platform.OS === "ios") {
+      CieManager.setAlertMessage(
+        "readingInstructions",
+        `${getProgressEmojis(0)}\n${i18n.t(
+          "features.pn.aar.flow.cieScanning.idle.status"
+        )}`
+      );
+      CieManager.setAlertMessage(
+        "readingSuccess",
+        `${getProgressEmojis(1)}\n${i18n.t(
+          "features.pn.aar.flow.cieScanning.success.status"
+        )}`
+      );
+    }
+  }, []);
+
   const { progress = 0 } = nfcEvent ?? {};
+  const progressDots = getProgressEmojis(progress);
+
+  useEffect(() => {
+    if (Platform.OS === "ios" && readStatus === ReadStatus.READING) {
+      CieManager.setCurrentAlertMessage(
+        `${progressDots}\n${i18n.t(
+          "features.pn.aar.flow.cieScanning.reading.status"
+        )}`
+      );
+    }
+  }, [progressDots, readStatus]);
 
   return {
     progress,

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo } from "react";
 import i18n from "i18next";
+import { SafeAreaView } from "react-native-safe-area-context";
 import {
   ReadStatus,
   useCieInternalAuthAndMrtdReading
@@ -150,5 +151,13 @@ export const SendAARCieCardReadingScreen = ({
     );
   }
 
-  return <CieCardReadContent progress={progress} {...contentMap[readStatus]} />;
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <CieCardReadContent
+        progress={progress}
+        hiddenProgressBar={readStatus === ReadStatus.ERROR}
+        {...contentMap[readStatus]}
+      />
+    </SafeAreaView>
+  );
 };

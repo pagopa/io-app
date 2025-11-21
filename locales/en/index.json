@@ -3946,14 +3946,17 @@
           },
           "cieScanning": {
             "idle": {
-              "title": "Poggia il retro del telefono sulla CIE"
+              "title": "Poggia il retro del telefono sulla CIE",
+              "status": "Posiziona il telefono sulla CIE per iniziare la lettura." 
             },
             "reading": {
               "title": "La lettura è in corso...",
-              "subtitle": "Non muovere il telefono."
+              "subtitle": "Non muovere il telefono.",
+              "status": "Non muovere il telefono."
             },
             "success": {
-              "title": "Lettura completata!"
+              "title": "Lettura completata!",
+              "status": "Fatto!"
             },
             "error": {
               "TAG_LOST": {

@@ -35,6 +35,10 @@ export type CieCardReadContentProps = {
   pictogram: IOPictograms;
   primaryAction?: Omit<IOButtonBlockSpecificProps, "variant">;
   secondaryAction?: Omit<IOButtonLinkSpecificProps, "variant">;
+  /**
+   * @platform iOS
+   */
+  hiddenProgressBar?: boolean;
 };
 
 /**
@@ -180,7 +184,9 @@ const ContentIos = (props: CieCardReadContentProps) => (
   <ContentWrapper style={{ flex: 1 }}>
     <VSpacer size={32} />
     <VStack space={16} style={{ flex: 1 }}>
-      <LinearProgressBar progress={props.progress} />
+      {!props.hiddenProgressBar && (
+        <LinearProgressBar progress={props.progress} />
+      )}
       <HStack space={32}>
         <View style={{ flex: 1, paddingVertical: 8, gap: 4 }}>
           <Title title={props.title} />
