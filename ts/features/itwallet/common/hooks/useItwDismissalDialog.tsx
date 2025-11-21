@@ -1,5 +1,5 @@
 import I18n from "i18next";
-import { Alert, Platform } from "react-native";
+import { Alert } from "react-native";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import {
