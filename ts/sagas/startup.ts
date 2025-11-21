@@ -80,7 +80,6 @@ import { watchAbortOnboardingSaga } from "../features/onboarding/saga/watchAbort
 import { watchPaymentsSaga } from "../features/payments/common/saga";
 import { watchAarFlowSaga } from "../features/pn/aar/saga/watchAARFlowSaga";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
-import { maybeHandlePendingBackgroundActions } from "../features/pushNotifications/sagas/common";
 import { notificationPermissionsListener } from "../features/pushNotifications/sagas/notificationPermissionsListener";
 import { profileAndSystemNotificationsPermissions } from "../features/pushNotifications/sagas/profileAndSystemNotificationsPermissions";
 import { pushNotificationTokenUpload } from "../features/pushNotifications/sagas/pushNotificationTokenUpload";
@@ -142,6 +141,7 @@ import { showSessionExpirationBlockingScreenSelector } from "../features/authent
 import { watchCdcSaga } from "../features/bonus/cdc/common/saga";
 import { setRefreshMessagesSection } from "../features/authentication/activeSessionLogin/store/actions";
 import { watchMessagesSaga } from "../features/messages/saga";
+import { maybeHandlePendingBackgroundActions } from "./backgroundActions";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
