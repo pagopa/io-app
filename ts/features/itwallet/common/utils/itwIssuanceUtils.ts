@@ -50,7 +50,6 @@ const startAuthFlow = async ({
     credentialId: "dc_sd_jwt_PersonIdentificationData"
   });
 
-  // When issuing an L3 PID, we should not provide an IDP hint
   const idpHint = getIdpHint(identification, env);
 
   const { issuerUrl, credentialId } = startFlow();
