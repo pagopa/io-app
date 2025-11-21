@@ -22,34 +22,43 @@ export function trackLoginSessionOptInInfo(flow: LoginType = "auth") {
     })
   );
 }
-// miss on ASL
-export async function trackLoginSessionOptIn365(state: GlobalState) {
-  await updateMixpanelProfileProperties(state, {
-    property: "LOGIN_SESSION",
-    value: "365"
-  });
-  await updateMixpanelSuperProperties(state, {
-    property: "LOGIN_SESSION",
-    value: "365"
-  });
+export async function trackLoginSessionOptIn365(
+  state: GlobalState,
+  flow: LoginType = "auth"
+) {
+  if (flow === "auth") {
+    await updateMixpanelProfileProperties(state, {
+      property: "LOGIN_SESSION",
+      value: "365"
+    });
+    await updateMixpanelSuperProperties(state, {
+      property: "LOGIN_SESSION",
+      value: "365"
+    });
+  }
   mixpanelTrack(
     "LOGIN_SESSION_OPTIN_365_SELECTED",
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", { flow })
   );
 }
-// miss on ASL
-export async function trackLoginSessionOptIn30(state: GlobalState) {
-  await updateMixpanelProfileProperties(state, {
-    property: "LOGIN_SESSION",
-    value: "30"
-  });
-  await updateMixpanelSuperProperties(state, {
-    property: "LOGIN_SESSION",
-    value: "30"
-  });
+export async function trackLoginSessionOptIn30(
+  state: GlobalState,
+  flow: LoginType = "auth"
+) {
+  if (flow === "auth") {
+    // miss on ASL (check it)
+    await updateMixpanelProfileProperties(state, {
+      property: "LOGIN_SESSION",
+      value: "30"
+    });
+    await updateMixpanelSuperProperties(state, {
+      property: "LOGIN_SESSION",
+      value: "30"
+    });
+  }
   mixpanelTrack(
     "LOGIN_SESSION_OPTIN_30_SELECTED",
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", { flow })
   );
 }
 

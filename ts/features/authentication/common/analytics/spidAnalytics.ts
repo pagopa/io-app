@@ -2,11 +2,13 @@ import { mixpanelTrack } from "../../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import { GlobalState } from "../../../../store/reducers/types";
 import { buildEventProperties } from "../../../../utils/analytics";
+import { LoginType } from "../../activeSessionLogin/screens/analytics";
 import { AUTH_ERRORS } from "../components/AuthErrorComponent";
 
-type EventProperties = {
+export type EventProperties = {
   idp: string;
   "error message"?: string;
+  flow: LoginType;
 };
 
 function trackLoginSpidGenericError(properties?: EventProperties) {
@@ -63,61 +65,64 @@ function trackMissingSAMLResponseError(properties?: EventProperties) {
     buildEventProperties("KO", undefined, properties)
   );
 }
-// miss on ASL (check it)
 export function trackLoginSpidError(
   errorCode?: string,
-  properties?: EventProperties
+  properties: EventProperties = { idp: "unknown", flow: "auth" }
 ) {
   switch (errorCode) {
     case AUTH_ERRORS.ERROR_19: {
-      trackLoginSpidAttemptsError(properties); // ok
+      trackLoginSpidAttemptsError(properties);
       return;
     }
     case AUTH_ERRORS.ERROR_20: {
-      trackLoginSpid2StepError(properties); // ok
+      trackLoginSpid2StepError(properties);
       return;
     }
     case AUTH_ERRORS.ERROR_21: {
-      trackLoginSpidTimeoutError(properties); // ok
+      trackLoginSpidTimeoutError(properties);
       return;
     }
     case AUTH_ERRORS.ERROR_22: {
-      trackLoginSpidDataSharingError(properties); // ok
+      trackLoginSpidDataSharingError(properties);
       return;
     }
     case AUTH_ERRORS.ERROR_23: {
-      trackLoginSpidIdentityError(properties); // ok
+      trackLoginSpidIdentityError(properties);
       return;
     }
     case AUTH_ERRORS.ERROR_25:
     case AUTH_ERRORS.CIEID_IOS_OPERATION_CANCELED_MESSAGE:
     case AUTH_ERRORS.CIEID_OPERATION_CANCEL: {
-      trackLoginSpidCancelError(properties); // ok
+      trackLoginSpidCancelError(properties);
       return;
     }
     case AUTH_ERRORS.MISSING_SAML_RESPONSE: {
-      trackMissingSAMLResponseError(properties); // ok
+      trackMissingSAMLResponseError(properties);
       return;
     }
     default: {
-      trackLoginSpidGenericError(properties); // ok
+      trackLoginSpidGenericError(properties);
       return;
     }
   }
 }
-// miss on ASL
 export async function trackLoginSpidIdpSelected(
   idp: string,
-  state: GlobalState
+  state: GlobalState,
+  flow: LoginType = "auth"
 ) {
-  await updateMixpanelProfileProperties(state, {
-    property: "LOGIN_METHOD",
-    value: idp
-  });
+  if (flow === "auth") {
+    // miss on ASL (check it)
+    await updateMixpanelProfileProperties(state, {
+      property: "LOGIN_METHOD",
+      value: idp
+    });
+  }
   mixpanelTrack(
     "LOGIN_SPID_IDP_SELECTED",
     buildEventProperties("UX", "action", {
-      idp
+      idp,
+      flow
     })
   );
 }

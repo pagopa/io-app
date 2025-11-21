@@ -49,6 +49,8 @@ import {
 } from "../../../login/cie/shared/utils";
 import useActiveSessionLoginNavigation from "../../utils/useActiveSessionLoginNavigation";
 import { ACS_PATH } from "../../shared/utils";
+import { trackLoginSpidError } from "../../../common/analytics/spidAnalytics";
+import { IdpCIE_ID } from "../../../login/hooks/useNavigateToLoginMethod";
 
 const ActiveSessionCieIdLoginWebView = ({
   spidLevel,
@@ -125,10 +127,11 @@ const ActiveSessionCieIdLoginWebView = ({
       // Classic login events are kept in case the same ones are reused, with only a
       // profile/super property added for active session login.
       // miss on ASL (check it)
-      // trackLoginSpidError(code || message, {
-      //   idp: IdpCIE_ID.id,
-      //   ...(message ? { "error message": message } : {})
-      // });
+      trackLoginSpidError(code || message, {
+        idp: IdpCIE_ID.id,
+        ...(message ? { "error message": message } : {}),
+        flow: "reauth"
+      });
       // TODO: evaluate loginFailure event with CXM
       // dispatch(
       //   loginFailure({

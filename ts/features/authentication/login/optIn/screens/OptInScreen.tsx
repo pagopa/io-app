@@ -109,10 +109,11 @@ const OptInScreen = () => {
     };
 
   const navigateToIdpPage = (isLV: boolean) => {
+    const flow = isActiveSessionLogin ? "reauth" : "auth";
     if (isLV) {
-      void trackLoginSessionOptIn365(store.getState());
+      void trackLoginSessionOptIn365(store.getState(), flow);
     } else {
-      void trackLoginSessionOptIn30(store.getState());
+      void trackLoginSessionOptIn30(store.getState(), flow);
     }
     navigation.navigate(AUTHENTICATION_ROUTES.MAIN, getNavigationParams());
     if (isActiveSessionLogin) {

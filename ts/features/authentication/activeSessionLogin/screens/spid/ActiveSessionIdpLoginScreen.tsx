@@ -76,10 +76,6 @@ const styles = StyleSheet.create({
   webViewWrapper: { flex: 1 }
 });
 
-// The MP events related to this page have been commented on,
-// pending their correct integration into the flow.
-// Task: https://pagopa.atlassian.net/browse/IOPID-3343
-
 /**
  * A screen that allows the user to login with an IDP.
  * The IDP page is opened in a WebView

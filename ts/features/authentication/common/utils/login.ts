@@ -77,7 +77,8 @@ export const extractLoginResult = (
     if (idp !== "cie" && idp !== "cieid") {
       trackLoginSpidError(errorCode, {
         idp: idp || "not_set",
-        ...(errorMessage ? { "error message": errorMessage } : {})
+        ...(errorMessage ? { "error message": errorMessage } : {}),
+        flow: "auth"
       });
     }
     return {
