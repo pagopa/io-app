@@ -16,10 +16,12 @@ import { checkNotificationPermissions } from "../../utils";
 import { navigateToMessageRouterAction } from "../../utils/navigation";
 import {
   checkAndUpdateNotificationPermissionsIfNeeded,
-  maybeHandlePendingBackgroundActions,
-  testable,
   updateNotificationPermissionsIfNeeded
 } from "../common";
+import {
+  maybeHandlePendingBackgroundActions,
+  testable
+} from "../../../../sagas/backgroundActions";
 
 describe("maybeHandlePendingBackgroundActions", () => {
   const pushHandler = testable?.handlePushNotificationIfNeeded;
