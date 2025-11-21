@@ -15,6 +15,8 @@ import { useIODispatch } from "../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import {
+  defaultZendeskBonusesategory,
+  defaultZendeskBonusesCategory,
   defaultZendeskIDPayCategory,
   zendeskCategoryId,
   zendeskIdPayCategoryId
@@ -48,7 +50,10 @@ const useIDPayFailureSupportModal = (
       defaultZendeskIDPayCategory.value
     );
 
-    addTicketCustomField(zendeskCategoryId, defaultZendeskIDPayCategory.value);
+    addTicketCustomField(
+      zendeskCategoryId,
+      defaultZendeskBonusesCategory.value
+    );
 
     appendLog(
       JSON.stringify({
