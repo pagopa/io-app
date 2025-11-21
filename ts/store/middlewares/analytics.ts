@@ -124,6 +124,12 @@ const trackAction =
         );
       case getType(analyticsAuthenticationStarted):
       case getType(analyticsAuthenticationCompleted):
+        return mixpanelTrack(
+          action.type,
+          buildEventProperties("TECH", undefined, {
+            flow: action.payload
+          })
+        );
       case getType(sessionInformationLoadSuccess):
       case getType(sessionExpired):
       case getType(sessionInvalid):

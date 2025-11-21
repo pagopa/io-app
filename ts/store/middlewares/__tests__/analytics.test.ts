@@ -279,7 +279,7 @@ describe("analytics", () => {
     });
 
     it("should call 'mixpanelTrack' for 'analyticsAuthenticationStarted' with proper parameters", () => {
-      const action = analyticsAuthenticationStarted();
+      const action = analyticsAuthenticationStarted("auth");
 
       testable!.trackAction(action);
 
@@ -289,7 +289,7 @@ describe("analytics", () => {
     });
 
     it("should call 'mixpanelTrack' for 'analyticsAuthenticationCompleted' with proper parameters", () => {
-      const action = analyticsAuthenticationCompleted();
+      const action = analyticsAuthenticationCompleted("auth");
 
       testable!.trackAction(action);
 

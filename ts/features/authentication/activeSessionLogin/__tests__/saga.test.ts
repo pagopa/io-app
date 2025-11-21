@@ -15,6 +15,7 @@ import {
   cieIDSelectedSecurityLevelActiveSessionLoginSelector
 } from "../store/selectors";
 import { startApplicationInitialization } from "../../../../store/actions/application";
+import { analyticsAuthenticationStarted } from "../../../../store/actions/analytics";
 import {
   handleActiveSessionLoginSaga,
   watchActiveSessionLoginSaga
@@ -64,7 +65,7 @@ describe("handleActiveSessionLoginSaga", () => {
       )
       .run());
 
-  it("should handle login failure and not dispatch anything", () =>
+  it("should handle login failure and dispatch only analytics action", () =>
     expectSaga(handleActiveSessionLoginSaga)
       .provide([
         [fork(watchCieAuthenticationSaga), null],
@@ -83,10 +84,8 @@ describe("handleActiveSessionLoginSaga", () => {
           undefined
         ]
       ])
-      .run()
-      .then(result => {
-        expect(result.effects.put).toBeUndefined();
-      }));
+      .put(analyticsAuthenticationStarted("reauth"))
+      .run());
 });
 
 describe("watchActiveSessionLoginSaga", () => {

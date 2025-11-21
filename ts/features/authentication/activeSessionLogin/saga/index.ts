@@ -1,4 +1,5 @@
 import {
+  call,
   fork,
   put,
   race,
@@ -29,6 +30,13 @@ import {
   trackCieIDLoginSuccess,
   trackSpidLoginSuccess
 } from "../../common/analytics";
+import { GlobalState } from "../../../../store/reducers/types";
+import { updateLoginSessionProfileAndSuperProperties } from "../../fastLogin/analytics/optinAnalytics";
+import { updateLoginMethodProfileProperty } from "../../common/analytics/spidAnalytics";
+import {
+  analyticsAuthenticationCompleted,
+  analyticsAuthenticationStarted
+} from "../../../../store/actions/analytics";
 
 export function* watchActiveSessionLoginSaga() {
   yield* takeLatest(
@@ -43,6 +51,8 @@ export function* handleActiveSessionLoginSaga(): Generator<
   void,
   any
 > {
+  yield* put(analyticsAuthenticationStarted("reauth"));
+
   yield* fork(watchCieAuthenticationSaga);
 
   const { success, failure } = yield* race({
@@ -94,6 +104,14 @@ export function* handleActiveSessionLoginSaga(): Generator<
     const isDataComplete = token && idp;
 
     if (isDataComplete) {
+      const state = (yield* select()) as GlobalState;
+      yield* call(
+        updateLoginSessionProfileAndSuperProperties,
+        state,
+        fastLoginOptIn ? "365" : "30"
+      );
+      yield* call(updateLoginMethodProfileProperty, state, idp.id);
+
       yield* put(
         consolidateActiveSessionLoginData({
           idp,
@@ -102,6 +120,8 @@ export function* handleActiveSessionLoginSaga(): Generator<
           cieIDSelectedSecurityLevel
         })
       );
+
+      yield* put(analyticsAuthenticationCompleted("reauth"));
 
       yield* put(
         startApplicationInitialization({
