@@ -1,13 +1,13 @@
 import { useIOThemeContext } from "@pagopa/io-app-design-system";
 
 export const ITW_BRAND_GRADIENT = [
-  "rgba(255, 179, 87, 1)",
-  "rgba(255, 234, 189, 1)",
+  "rgba(220, 227, 252, 1)",
   "rgba(25, 104, 240, 1)",
+  "rgba(255, 179, 87, 1)",
   "rgba(205, 210, 252, 1)",
-  "rgba(255, 179, 87, 1)",
   "rgba(25, 104, 240, 1)",
-  "rgba(220, 227, 252, 1)"
+  "rgba(255, 234, 189, 1)",
+  "rgba(255, 179, 87, 1)"
 ];
 
 export const ITW_BRAND_GRADIENT_WARNING = [

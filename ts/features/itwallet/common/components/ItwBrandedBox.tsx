@@ -24,11 +24,11 @@ import {
   useSharedValue
 } from "react-native-reanimated";
 import { useItWalletTheme } from "../utils/theme";
-import { ItwBranderSkiaBorder } from "./ItwBrandedSkiaBorder";
+import { ItwBrandedSkiaBorder } from "./ItwBrandedSkiaBorder";
 import { ItwSkiaBrandedGradientVariant } from "./ItwBrandedSkiaGradient";
 
 type ItwIridescentBorderProps = {
-  variant?: ItwIridescentBorderVariant;
+  variant?: ItwSkiaBrandedGradientVariant;
   borderThickness?: number;
   cornerRadius?: number;
 };
@@ -173,12 +173,13 @@ export const ItwBrandedBox = ({
         <SkiaLight />
 
         {/* Animated gradient border */}
-        <ItwBranderSkiaBorder
+        <ItwBrandedSkiaBorder
           width={size.width}
           height={size.height}
           variant={variant}
           thickness={borderThickness}
           cornerRadius={cornerRadius}
+          themeType={themeType}
         />
       </Canvas>
     </View>

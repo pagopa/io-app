@@ -1,4 +1,3 @@
-import { useIOThemeContext } from "@pagopa/io-app-design-system";
 import {
   Canvas,
   ColorMatrix,
@@ -8,7 +7,7 @@ import {
   RoundedRect,
   Group as SkiaGroup
 } from "@shopify/react-native-skia";
-import { LayoutRectangle } from "react-native";
+import { ColorSchemeName, LayoutRectangle } from "react-native";
 import { ItwBrandedSkiaGradient } from "./ItwBrandedSkiaGradient";
 
 export type ItwIridescentBorderVariant = "default" | "warning" | "error";
@@ -19,6 +18,7 @@ type ItwIridescentBorderProps = {
   variant?: ItwIridescentBorderVariant;
   thickness?: number;
   cornerRadius?: number;
+  themeType?: ColorSchemeName;
 };
 
 /**
@@ -26,14 +26,14 @@ type ItwIridescentBorderProps = {
  *
  * Renders an animated IT-Wallet branded gradient using Skia and device rotation sensor data.
  */
-export const ItwBranderSkiaBorder = ({
+export const ItwBrandedSkiaBorder = ({
   width,
   height,
   thickness = 3,
   cornerRadius = 16,
-  variant = "default"
+  variant = "default",
+  themeType = "light"
 }: ItwIridescentBorderProps) => {
-  const { themeType } = useIOThemeContext();
   const isLightMode = themeType === "light";
 
   /* Styles */

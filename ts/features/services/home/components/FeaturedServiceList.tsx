@@ -70,7 +70,7 @@ export const FeaturedServiceList = () => {
   }
 
   const Content = () => {
-    if (isLoading) {
+    if (isLoading && services.length === 0) {
       return (
         <FeaturedServicesCarouselSkeleton testID="featured-service-list-skeleton" />
       );

@@ -1,6 +1,7 @@
 import {
   ContentWrapper,
   IOSpacingScale,
+  VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
 
@@ -77,12 +78,8 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
           />
         </FlipGestureDetector>
       </CardContainer>
-      <ContentWrapper
-        style={
-          itwFeaturesEnabled ? styles.horizontalLayout : styles.centeredLayout
-        }
-      >
-        {itwFeaturesEnabled && <ItwBadge />}
+      <VSpacer size={8} />
+      <ContentWrapper style={styles.centeredLayout}>
         <ItwPresentationCredentialCardFlipButton
           isFlipped={isFlipped}
           handleOnPress={handleFlipButtonPress}
@@ -121,11 +118,6 @@ const styles = StyleSheet.create({
     right: 0,
     left: 0,
     zIndex: -1
-  },
-  horizontalLayout: {
-    marginTop: 10,
-    flexDirection: "row",
-    justifyContent: "space-between"
   },
   centeredLayout: {
     alignSelf: "center"
