@@ -74,7 +74,6 @@ import {
   accessibityTimeout,
   getTextForState
 } from "../../../activeSessionLogin/shared/utils";
-import { LoginTypeEnum } from "../../../activeSessionLogin/screens/analytics";
 
 export type CieCardReaderScreenNavigationParams = {
   ciePin: string;
@@ -191,7 +190,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
     this.dispatchAnalyticEvent({
       reason: eventReason,
       cieDescription,
-      flow: LoginTypeEnum.AUTH
+      flow: "auth"
     });
 
     this.setState(

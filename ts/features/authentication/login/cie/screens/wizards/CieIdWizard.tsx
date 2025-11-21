@@ -12,7 +12,8 @@ import { openWebUrl } from "../../../../../../utils/url";
 import useNavigateToLoginMethod from "../../../hooks/useNavigateToLoginMethod";
 import {
   trackCieIdWizardScreen,
-  trackWizardCieIdSelected
+  trackWizardCieIdSelected,
+  trackLoginCieWizardCieIdSelected
 } from "../../analytics";
 import { SpidLevel } from "../../utils";
 import { useIOSelector, useIOStore } from "../../../../../../store/hooks";
@@ -33,7 +34,7 @@ const CieIdWizard = () => {
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
 
   useOnFirstRender(() => {
-    void trackCieIdWizardScreen(isActiveSessionLogin);
+    void trackCieIdWizardScreen(isActiveSessionLogin ? "reauth" : "auth");
   });
 
   const screenActions = (): IOScrollViewActions => ({
@@ -44,7 +45,11 @@ const CieIdWizard = () => {
         "authentication.wizards.cie_id_wizard.actions.primary.label"
       ),
       onPress: () => {
-        void trackWizardCieIdSelected(store.getState(), SPID_LEVEL);
+        if (isActiveSessionLogin) {
+          trackLoginCieWizardCieIdSelected(SPID_LEVEL, "reauth");
+        } else {
+          void trackWizardCieIdSelected(store.getState(), SPID_LEVEL);
+        }
         navigateToCieIdLoginScreen(SPID_LEVEL);
       }
     },

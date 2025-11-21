@@ -75,11 +75,11 @@ import {
   TextForState
 } from "../../shared/utils";
 import {
+  trackLoginCieCardReaderScreen,
   trackLoginCieCardReadingError,
   trackLoginCieCardReadingSuccess
 } from "../../../common/analytics/cieAnalytics";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-import { LoginTypeEnum } from "../analytics";
 
 type setErrorParameter = {
   eventReason: CieAuthenticationErrorReason;
@@ -175,7 +175,7 @@ const ActiveSessionLoginCieCardReaderScreen = () => {
         });
         break;
       case ReadingState.error:
-        trackLoginCieCardReadingError(true);
+        trackLoginCieCardReadingError("reauth");
         setTextState(getTextForState(ReadingState.error, errorMessage));
         break;
       case ReadingState.completed:
@@ -210,7 +210,7 @@ const ActiveSessionLoginCieCardReaderScreen = () => {
         cieAuthenticationError({
           reason: eventReason,
           cieDescription,
-          flow: LoginTypeEnum.REAUTH
+          flow: "reauth"
         })
       );
 
@@ -232,7 +232,7 @@ const ActiveSessionLoginCieCardReaderScreen = () => {
 
       setTimeout(
         () => {
-          void trackLoginCieCardReadingSuccess(true);
+          void trackLoginCieCardReadingSuccess("reauth");
           navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
             screen:
               AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE_ACTIVE_SESSION_LOGIN,
@@ -333,7 +333,7 @@ const ActiveSessionLoginCieCardReaderScreen = () => {
 
   const handleCieError = useCallback(
     (error: Error) => {
-      trackLoginCieCardReadingError(true);
+      trackLoginCieCardReadingError("reauth");
       handleSendAssistanceLog(choosenTool, error.message);
       setError({ eventReason: "GENERIC", errorDescription: error.message });
     },
@@ -388,7 +388,7 @@ const ActiveSessionLoginCieCardReaderScreen = () => {
   );
 
   useOnFirstRender(() => {
-    void trackLoginCieCardReadingSuccess(true);
+    void trackLoginCieCardReaderScreen("reauth");
   });
 
   useEffect(() => {

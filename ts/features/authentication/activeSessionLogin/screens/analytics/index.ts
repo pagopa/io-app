@@ -2,16 +2,13 @@ import { mixpanelTrack } from "../../../../../mixpanel";
 import { buildEventProperties } from "../../../../../utils/analytics";
 import { SpidIdp } from "../../../../../utils/idps";
 
-export enum LoginTypeEnum {
-  AUTH = "auth",
-  REAUTH = "reauth"
-}
+export type LoginType = "auth" | "reauth";
 
 export function trackLoginWithNewCF() {
   void mixpanelTrack(
     "LOGIN_NEW_CF",
     buildEventProperties("UX", "screen_view", {
-      flow: LoginTypeEnum.REAUTH
+      flow: "reauth"
     })
   );
 }
@@ -20,7 +17,7 @@ export function trackLoginWithNewCFConfirm() {
   void mixpanelTrack(
     "LOGIN_NEW_CF_CONFIRM",
     buildEventProperties("UX", "action", {
-      flow: LoginTypeEnum.REAUTH
+      flow: "reauth"
     })
   );
 }
@@ -55,13 +52,13 @@ export function trackLoginReauthEngagementSpidSelected() {
 
 export function trackSpidLoginIntent(
   idpName: SpidIdp | undefined,
-  isReauth: boolean = false
+  flow: LoginType = "auth"
 ) {
   void mixpanelTrack(
     "SPID_LOGIN_INTENT",
     buildEventProperties("TECH", undefined, {
       idp: idpName,
-      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+      flow
     })
   );
 }

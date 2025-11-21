@@ -145,7 +145,7 @@ const IdpSelectionScreen = (): ReactElement => {
   };
 
   useOnFirstRender(() => {
-    trackSpidLoginIdpSelection(isActiveSessionLogin);
+    trackSpidLoginIdpSelection(isActiveSessionLogin ? "reauth" : "auth");
   });
 
   useEffect(() => {

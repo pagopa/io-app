@@ -28,6 +28,6 @@ export function* shouldTrackLevelSecurityMismatchSaga(
   );
 
   if (selectedLevelMismatches) {
-    trackCieIdSecurityLevelMismatch(isActiveLoginSuccess);
+    trackCieIdSecurityLevelMismatch(isActiveLoginSuccess ? "reauth" : "auth");
   }
 }

@@ -148,7 +148,8 @@ describe("analytics", () => {
 
     it("should call 'mixpanelTrack' for 'cieAuthenticationError' with proper parameters", () => {
       const action = cieAuthenticationError({
-        reason: "GENERIC"
+        reason: "GENERIC",
+        flow: "auth"
       });
 
       testable!.trackAction(action);
@@ -157,7 +158,8 @@ describe("analytics", () => {
       expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
       expect(mockMixpanelTrack.mock.calls[0][0]).toBe(action.type);
       expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
-        reason: "GENERIC"
+        reason: "GENERIC",
+        flow: "auth"
       });
     });
 

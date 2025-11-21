@@ -27,7 +27,9 @@ const IDActivationWizard = () => {
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
 
   useOnFirstRender(() => {
-    void trackIdpActivationWizardScreen(isActiveSessionLogin);
+    void trackIdpActivationWizardScreen(
+      isActiveSessionLogin ? "reauth" : "auth"
+    );
   });
 
   const handleOpenLink = (url: string) => () => {

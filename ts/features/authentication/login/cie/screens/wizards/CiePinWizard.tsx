@@ -18,6 +18,7 @@ import { openWebUrl } from "../../../../../../utils/url";
 import { setAccessibilityFocus } from "../../../../../../utils/accessibility";
 import {
   trackCiePinWizardScreen,
+  trackLoginCieWizardCiePinSelected,
   trackWizardCiePinInfoSelected,
   trackWizardCiePinSelected
 } from "../../analytics";
@@ -69,7 +70,7 @@ const CiePinWizard = () => {
   });
 
   useOnFirstRender(() => {
-    void trackCiePinWizardScreen(isActiveSessionLogin);
+    void trackCiePinWizardScreen(isActiveSessionLogin ? "reauth" : "auth");
   });
 
   // eslint-disable-next-line arrow-body-style
@@ -87,7 +88,11 @@ const CiePinWizard = () => {
         "authentication.wizards.cie_pin_wizard.actions.primary.label"
       ),
       onPress: () => {
-        void trackWizardCiePinSelected(store.getState());
+        if (isActiveSessionLogin) {
+          trackLoginCieWizardCiePinSelected("reauth");
+        } else {
+          void trackWizardCiePinSelected(store.getState());
+        }
         navigateToCiePinInsertion();
       }
     },
@@ -105,7 +110,9 @@ const CiePinWizard = () => {
   });
 
   const handlePresent = () => {
-    void trackWizardCiePinInfoSelected(isActiveSessionLogin);
+    void trackWizardCiePinInfoSelected(
+      isActiveSessionLogin ? "reauth" : "auth"
+    );
     present();
   };
 

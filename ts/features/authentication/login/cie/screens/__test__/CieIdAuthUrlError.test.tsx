@@ -39,7 +39,7 @@ describe("CieIdAuthUrlError", () => {
     render(<CieIdAuthUrlError />);
     expect(analytics.trackCieIdNoWhitelistUrl).toHaveBeenCalledWith(
       mockUrl,
-      undefined
+      "auth"
     );
   });
 

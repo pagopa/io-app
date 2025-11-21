@@ -250,7 +250,7 @@ const ActiveSessionIdpLoginScreen = () => {
       // if an intent is coming from the IDP login form, extract the fallbackUrl and use it in Linking.openURL
       const idpIntent = getIntentFallbackUrl(url);
       if (O.isSome(idpIntent)) {
-        void trackSpidLoginIntent(selectedIdp, true);
+        void trackSpidLoginIntent(selectedIdp, "reauth");
         void Linking.openURL(idpIntent.value);
         return false;
       }

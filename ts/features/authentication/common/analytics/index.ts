@@ -5,7 +5,7 @@ import { FlowType, buildEventProperties } from "../../../../utils/analytics";
 import { IdpCIE, IdpCIE_ID } from "../../login/hooks/useNavigateToLoginMethod";
 import { LoginSessionDuration } from "../../fastLogin/analytics/optinAnalytics";
 import { SpidLevel } from "../../../authentication/login/cie/utils";
-import { LoginTypeEnum } from "../../activeSessionLogin/screens/analytics";
+import { LoginType } from "../../activeSessionLogin/screens/analytics";
 
 const SECURITY_LEVEL_MAP: Record<SpidLevel, "L2" | "L3"> = {
   SpidL2: "L2",
@@ -18,23 +18,23 @@ export function trackLoginFlowStarting() {
     buildEventProperties("UX", "screen_view")
   );
 }
-export function trackLoginCiePinSelected(isReauth: boolean = false) {
+export function trackLoginCiePinSelected(flow: LoginType = "auth") {
   void mixpanelTrack(
     "LOGIN_CIE_PIN_SELECTED",
     buildEventProperties("UX", "action", {
-      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+      flow
     })
   );
 }
 export function trackLoginCieIdSelected(
   spidLevel: SpidLevel,
-  isReauth: boolean = false
+  flow: LoginType = "auth"
 ) {
   void mixpanelTrack(
     "LOGIN_CIEID_SELECTED",
     buildEventProperties("UX", "action", {
       security_level: SECURITY_LEVEL_MAP[spidLevel],
-      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+      flow
     })
   );
 }
@@ -44,9 +44,9 @@ export async function trackCieLoginSelected() {
 }
 export async function trackCiePinLoginSelected(
   state: GlobalState,
-  isReauth: boolean = false
+  flow: LoginType = "auth"
 ) {
-  trackLoginCiePinSelected(isReauth);
+  trackLoginCiePinSelected(flow);
   await updateMixpanelProfileProperties(state, {
     property: "LOGIN_METHOD",
     value: IdpCIE.id
@@ -55,27 +55,27 @@ export async function trackCiePinLoginSelected(
 export async function trackCieIDLoginSelected(
   state: GlobalState,
   spidLevel: SpidLevel,
-  isReauth: boolean = false
+  flow: LoginType = "auth"
 ) {
-  trackLoginCieIdSelected(spidLevel, isReauth);
+  trackLoginCieIdSelected(spidLevel, flow);
   await updateMixpanelProfileProperties(state, {
     property: "LOGIN_METHOD",
     value: IdpCIE_ID.id
   });
 }
-export async function trackCieBottomSheetScreenView(isReauth: boolean = false) {
+export async function trackCieBottomSheetScreenView(flow: LoginType = "auth") {
   mixpanelTrack(
     "LOGIN_CIE_IDENTIFICATION_MODE",
     buildEventProperties("UX", "screen_view", {
-      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+      flow
     })
   );
 }
-export async function loginCieWizardSelected(isReauth: boolean = false) {
+export async function loginCieWizardSelected(flow: LoginType = "auth") {
   mixpanelTrack(
     "LOGIN_CIE_WIZARD_SELECTED",
     buildEventProperties("UX", "action", {
-      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+      flow
     })
   );
 }
@@ -86,11 +86,11 @@ export function trackSpidLoginSelected() {
   );
 }
 
-export function trackSpidLoginIdpSelection(isReauth: boolean = false) {
+export function trackSpidLoginIdpSelection(flow: LoginType = "auth") {
   void mixpanelTrack(
     "LOGIN_SPID_IDP_SELECTION",
     buildEventProperties("UX", "screen_view", {
-      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+      flow
     })
   );
 }
@@ -101,13 +101,13 @@ export function trackMethodInfo() {
 
 export function trackCieLoginSuccess(
   login_session: LoginSessionDuration,
-  isReauth: boolean = false
+  flow: LoginType = "auth"
 ) {
   void mixpanelTrack(
     "LOGIN_CIE_UX_SUCCESS",
     buildEventProperties("UX", "confirm", {
       login_session,
-      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+      flow
     })
   );
 }
@@ -117,13 +117,13 @@ export function trackCieLoginSuccess(
 // TODO: Add the `security_level` property with the correct value.
 export function trackCieIDLoginSuccess(
   login_session: LoginSessionDuration,
-  isReauth: boolean = false
+  flow: LoginType = "auth"
 ) {
   void mixpanelTrack(
     "LOGIN_CIEID_UX_SUCCESS",
     buildEventProperties("UX", "confirm", {
       login_session,
-      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+      flow
     })
   );
 }
@@ -131,14 +131,14 @@ export function trackCieIDLoginSuccess(
 export function trackSpidLoginSuccess(
   login_session: LoginSessionDuration,
   idp: string,
-  isReauth: boolean = false
+  flow: LoginType = "auth"
 ) {
   void mixpanelTrack(
     "LOGIN_SPID_UX_SUCCESS",
     buildEventProperties("UX", "confirm", {
       login_session,
       idp,
-      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+      flow
     })
   );
 }

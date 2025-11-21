@@ -4,27 +4,26 @@ import { updateMixpanelProfileProperties } from "../../../../../mixpanelConfig/p
 import { GlobalState } from "../../../../../store/reducers/types";
 import { buildEventProperties } from "../../../../../utils/analytics";
 import { SpidLevel } from "../utils";
-import { LoginTypeEnum } from "../../../activeSessionLogin/screens/analytics";
+import { LoginType } from "../../../activeSessionLogin/screens/analytics";
 
 export const trackCieIdNoWhitelistUrl = (
   url: string,
-  isReauth: boolean = false
+  flow: LoginType = "auth"
 ) => {
   void mixpanelTrack(
     "LOGIN_CIEID_NO_WHITELIST_URL",
     buildEventProperties("KO", undefined, {
       url,
-      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+      flow
     })
   );
 };
 
-export const trackCieIdSecurityLevelMismatch = (isReauth: boolean = false) => {
-  //  miss on ASL (check it)
+export const trackCieIdSecurityLevelMismatch = (flow: LoginType = "auth") => {
   void mixpanelTrack(
     "SECURITY_LEVEL_MISMATCH",
     buildEventProperties("TECH", undefined, {
-      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+      flow
     })
   );
 };
@@ -35,149 +34,163 @@ const SECURITY_LEVEL_MAP: Record<SpidLevel, "L2" | "L3"> = {
 };
 
 // Wizards screen view events
-export const trackCieIdWizardScreen = async (isReauth: boolean = false) => {
+export const trackCieIdWizardScreen = async (flow: LoginType = "auth") => {
   void mixpanelTrack(
     "LOGIN_CIE_WIZARD_CIEID",
     buildEventProperties("UX", "screen_view", {
-      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+      flow
     })
   );
 };
-export const trackCiePinWizardScreen = async (isReauth: boolean = false) => {
+export const trackCiePinWizardScreen = async (flow: LoginType = "auth") => {
   void mixpanelTrack(
     "LOGIN_CIE_WIZARD_PIN",
     buildEventProperties("UX", "screen_view", {
-      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+      flow
     })
   );
 };
-export const trackSpidWizardScreen = async (isReauth: boolean = false) => {
+export const trackSpidWizardScreen = async (flow: LoginType = "auth") => {
   void mixpanelTrack(
     "LOGIN_CIE_WIZARD_SPID",
     buildEventProperties("UX", "screen_view", {
-      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+      flow
     })
   );
 };
 export const trackIdpActivationWizardScreen = async (
-  isReauth: boolean = false
+  flow: LoginType = "auth"
 ) => {
   void mixpanelTrack(
     "LOGIN_CIE_WIZARD_IDP_ACTIVATION",
     buildEventProperties("UX", "screen_view", {
-      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+      flow
     })
   );
 };
 
-// Wizards action events
-export const trackWizardCieIdSelected = async (
-  state: GlobalState,
-  spidLevel: SpidLevel
-) => {
+export function trackLoginCieWizardCieIdSelected(
+  spidLevel: SpidLevel,
+  flow: LoginType = "auth"
+) {
   void mixpanelTrack(
     "LOGIN_CIE_WIZARD_CIEID_SELECTED",
     buildEventProperties("UX", "action", {
-      security_level: SECURITY_LEVEL_MAP[spidLevel]
+      security_level: SECURITY_LEVEL_MAP[spidLevel],
+      flow
     })
   );
+}
+// Wizards action events
+export const trackWizardCieIdSelected = async (
+  state: GlobalState,
+  spidLevel: SpidLevel,
+  flow: LoginType = "auth"
+) => {
+  trackLoginCieWizardCieIdSelected(spidLevel, flow);
   await updateMixpanelProfileProperties(state, {
     property: "LOGIN_METHOD",
     value: IdpCIE_ID.id
   });
 };
-export const trackWizardCiePinSelected = async (state: GlobalState) => {
+export function trackLoginCieWizardCiePinSelected(flow: LoginType = "auth") {
   void mixpanelTrack(
     "LOGIN_CIE_WIZARD_PIN_SELECTED",
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", {
+      flow
+    })
   );
+}
+export const trackWizardCiePinSelected = async (
+  state: GlobalState,
+  flow: LoginType = "auth"
+) => {
+  trackLoginCieWizardCiePinSelected(flow);
   await updateMixpanelProfileProperties(state, {
     property: "LOGIN_METHOD",
     value: IdpCIE.id
   });
 };
 export const trackWizardCiePinInfoSelected = async (
-  isReauth: boolean = false
+  flow: LoginType = "auth"
 ) => {
   void mixpanelTrack(
     "LOGIN_CIE_WIZARD_PIN_INFO",
     buildEventProperties("UX", "action", {
-      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+      flow
     })
   );
 };
-export const trackWizardSpidSelected = async (isReauth: boolean = false) => {
+export const trackWizardSpidSelected = async (flow: LoginType = "auth") => {
   void mixpanelTrack(
     "LOGIN_CIE_WIZARD_SPID_SELECTED",
     buildEventProperties("UX", "action", {
-      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+      flow
     })
   );
 };
 
 // Cie id not installed screen view events
 export const trackCieIdNotInstalledScreen = async (
-  isReauth: boolean = false
+  flow: LoginType = "auth"
 ) => {
   void mixpanelTrack(
     "LOGIN_CIEID_APP_NOT_FOUND",
     buildEventProperties("KO", "error", {
-      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+      flow
     })
   );
 };
 // Cie id not installed action events
 export const trackCieIdNotInstalledDownloadAction = async (
-  isReauth: boolean = false
+  flow: LoginType = "auth"
 ) => {
   void mixpanelTrack(
     "LOGIN_CIEID_APP_NOT_FOUND_DOWNLOAD",
     buildEventProperties("UX", "action", {
-      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+      flow
     })
   );
 };
 
 // Cie Id error screen view events
 export const trackCieIdErrorCiePinFallbackScreen = async (
-  isReauth: boolean = false
+  flow: LoginType = "auth"
 ) => {
   void mixpanelTrack(
     "LOGIN_CIEID_FALLBACK_CIE_PIN",
     buildEventProperties("KO", undefined, {
-      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+      flow
     })
   );
 };
 export const trackCieIdErrorSpidFallbackScreen = async (
-  isReauth: boolean = false
+  flow: LoginType = "auth"
 ) => {
   void mixpanelTrack(
     "LOGIN_CIEID_FALLBACK_SPID",
     buildEventProperties("KO", undefined, {
-      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+      flow
     })
   );
 };
 
 // Cie Id error screen action events
 export const trackCieIdErrorCiePinSelected = async (
-  isReauth: boolean = false
+  flow: LoginType = "auth"
 ) => {
   void mixpanelTrack(
     "LOGIN_CIEID_FALLBACK_CIE_PIN_SELECTED",
     buildEventProperties("UX", "action", {
-      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+      flow
     })
   );
 };
-export const trackCieIdErrorSpidSelected = async (
-  isReauth: boolean = false
-) => {
+export const trackCieIdErrorSpidSelected = async (flow: LoginType = "auth") => {
   void mixpanelTrack(
     "LOGIN_CIEID_FALLBACK_CIE_SPID_SELECTED",
     buildEventProperties("UX", "action", {
-      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+      flow
     })
   );
 };

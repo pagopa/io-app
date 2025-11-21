@@ -91,7 +91,7 @@ const OptInScreen = () => {
   const { isDeviceScreenSmall } = useDetectSmallScreen();
 
   useOnFirstRender(() => {
-    trackLoginSessionOptIn(isActiveSessionLogin);
+    trackLoginSessionOptIn(isActiveSessionLogin ? "reauth" : "auth");
   });
 
   useFocusEffect(() => setAccessibilityFocus(accessibilityFirstFocuseViewRef));
@@ -185,7 +185,9 @@ const OptInScreen = () => {
             accessibilityRole: "button",
             label: I18n.t("authentication.opt_in.security_suggests"),
             onPress: () => {
-              trackLoginSessionOptInInfo(isActiveSessionLogin);
+              trackLoginSessionOptInInfo(
+                isActiveSessionLogin ? "reauth" : "auth"
+              );
               return presentSecuritySuggestionBottomSheet();
             }
           }}

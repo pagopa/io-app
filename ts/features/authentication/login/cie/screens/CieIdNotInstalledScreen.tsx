@@ -19,7 +19,7 @@ const CieIdNotInstalledScreen = () => {
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
 
   useOnFirstRender(() => {
-    void trackCieIdNotInstalledScreen(isActiveSessionLogin);
+    void trackCieIdNotInstalledScreen(isActiveSessionLogin ? "reauth" : "auth");
   });
 
   return <CieIdNotInstalled {...params} />;

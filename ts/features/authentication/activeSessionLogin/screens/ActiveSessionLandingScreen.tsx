@@ -58,12 +58,12 @@ export const ActiveSessionLandingScreen = () => {
   } = useNavigateToLoginMethod();
 
   const handleNavigateToCiePinScreen = useCallback(() => {
-    void trackLoginCiePinSelected(true);
+    void trackLoginCiePinSelected("reauth");
     navigateToCiePinInsertion();
   }, [navigateToCiePinInsertion]);
 
   const handleNavigateToCieIdLoginScreen = useCallback(() => {
-    void trackLoginCieIdSelected(SPID_LEVEL, true);
+    void trackLoginCieIdSelected(SPID_LEVEL, "reauth");
     navigateToCieIdLoginScreen(SPID_LEVEL);
   }, [navigateToCieIdLoginScreen]);
 
@@ -112,7 +112,7 @@ export const ActiveSessionLandingScreen = () => {
         <VSpacer size={24} />
         <Banner
           onPress={() => {
-            void loginCieWizardSelected(true);
+            void loginCieWizardSelected("reauth");
             navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
               screen: AUTHENTICATION_ROUTES.CIE_ID_WIZARD
             });
@@ -148,7 +148,7 @@ export const ActiveSessionLandingScreen = () => {
   const navigateToCiePinScreen = useCallback(() => {
     void trackLoginReauthEngagementCieSelected();
     if (isCieSupported) {
-      void trackCieBottomSheetScreenView(true);
+      void trackCieBottomSheetScreenView("reauth");
       present();
     } else {
       handleNavigateToCieIdLoginScreen();

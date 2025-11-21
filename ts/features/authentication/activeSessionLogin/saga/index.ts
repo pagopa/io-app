@@ -70,15 +70,19 @@ export function* handleActiveSessionLoginSaga(): Generator<
     if (idp && idp.id) {
       switch (idp.id) {
         case IdpCIE.id:
-          trackCieLoginSuccess(fastLoginOptIn ? "365" : "30", true);
+          trackCieLoginSuccess(fastLoginOptIn ? "365" : "30", "reauth");
           break;
         case IdpCIE_ID.id:
           // We currently request only a Level 2 login; however, once in the CieID app, if the only configured method is a Level 3 login, it will be possible to proceed with that higher level of security.
           // Unfortunately, at the time this event is logged, we do not have information about the actual level used for the recently completed login.
-          trackCieIDLoginSuccess(fastLoginOptIn ? "365" : "30", true);
+          trackCieIDLoginSuccess(fastLoginOptIn ? "365" : "30", "reauth");
           break;
         default:
-          trackSpidLoginSuccess(fastLoginOptIn ? "365" : "30", idp.id, true);
+          trackSpidLoginSuccess(
+            fastLoginOptIn ? "365" : "30",
+            idp.id,
+            "reauth"
+          );
       }
     }
 

@@ -35,7 +35,9 @@ const CieIdNotInstalled = ({ isUat }: CieIdNotInstalledProps) => {
           "authentication.cie_id.cie_not_installed.primary_action_label"
         ),
         onPress: () => {
-          void trackCieIdNotInstalledDownloadAction(isActiveSessionLogin);
+          void trackCieIdNotInstalledDownloadAction(
+            isActiveSessionLogin ? "reauth" : "auth"
+          );
           openWebUrl(
             Platform.select({
               ios: CIE_ID_IOS_LINK,

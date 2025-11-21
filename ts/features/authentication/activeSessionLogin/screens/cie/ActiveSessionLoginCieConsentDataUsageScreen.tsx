@@ -63,7 +63,7 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
   // );
 
   useOnFirstRender(() => {
-    void trackLoginCieConsentDataUsageScreen(true);
+    void trackLoginCieConsentDataUsageScreen("reauth");
   });
 
   const navigateToErrorScreen = useCallback(
@@ -108,7 +108,7 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
         dispatch(activeSessionLoginFailure());
       }
       if (code === "22") {
-        trackLoginCieDataSharingError(true);
+        trackLoginCieDataSharingError("reauth");
       }
       setHasError(true);
       navigateToErrorScreen(code || message);

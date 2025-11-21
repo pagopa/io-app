@@ -3,22 +3,22 @@ import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/prof
 import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 import { GlobalState } from "../../../../store/reducers/types";
 import { buildEventProperties } from "../../../../utils/analytics";
-import { LoginTypeEnum } from "../../activeSessionLogin/screens/analytics";
+import { LoginType } from "../../activeSessionLogin/screens/analytics";
 
-export function trackLoginSessionOptIn(isReauth: boolean = false) {
+export function trackLoginSessionOptIn(flow: LoginType = "auth") {
   void mixpanelTrack(
     "LOGIN_SESSION_OPTIN_2",
     buildEventProperties("UX", "screen_view", {
-      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+      flow
     })
   );
 }
 
-export function trackLoginSessionOptInInfo(isReauth: boolean = false) {
+export function trackLoginSessionOptInInfo(flow: LoginType = "auth") {
   void mixpanelTrack(
     "LOGIN_SESSION_OPTIN_INFO",
     buildEventProperties("UX", "action", {
-      flow: isReauth ? LoginTypeEnum.REAUTH : LoginTypeEnum.AUTH
+      flow
     })
   );
 }

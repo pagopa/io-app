@@ -22,7 +22,7 @@ const CieIdAuthUrlError = () => {
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
 
   useOnFirstRender(() => {
-    trackCieIdNoWhitelistUrl(url, isActiveSessionLogin);
+    trackCieIdNoWhitelistUrl(url, isActiveSessionLogin ? "reauth" : "auth");
   });
 
   const handleClose = useCallback(() => {
