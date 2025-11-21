@@ -48,7 +48,7 @@ export const SendAARCieCardReadingScreen = ({
   const isCieScanningFlow = currentFlow === sendAARFlowStates.cieScanning;
 
   const handleStartReading = useCallback(() => {
-    void startReading(can, verificationCode, "hex");
+    void startReading(can, verificationCode, "base64url");
   }, [can, startReading, verificationCode]);
 
   useEffect(() => {
