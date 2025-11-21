@@ -3963,6 +3963,12 @@
             },
             "success": {
               "title": "Lettura completata!"
+            },
+            "error": {
+              "TAG_LOST": {
+                "title": "Hai rimosso il telefono troppo presto!",
+                "subtitle": "Riprova e tieni fermo il telefono per la lettura."
+              }
             }
           },
           "validatingMandate": {

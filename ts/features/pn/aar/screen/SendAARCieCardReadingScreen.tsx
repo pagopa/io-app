@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import i18n from "i18next";
 import {
   ReadStatus,
@@ -18,6 +18,8 @@ import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
 import type { PnParamsList } from "../../navigation/params";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import PN_ROUTES from "../../navigation/routes";
+
+type ScreenContentProps = Omit<CieCardReadContentProps, "progress">;
 
 export type SendAARCieCardReadingScreenRouteParams = Readonly<{
   iun: string;
@@ -39,10 +41,14 @@ export const SendAARCieCardReadingScreen = ({
   const dispatch = useIODispatch();
   const { terminateFlow } = useSendAarFlowManager();
   const currentFlow = useIOSelector(currentAARFlowStateType);
-  const { startReading, stopReading, readStatus, progress, data } =
+  const { startReading, stopReading, readStatus, progress, data, error } =
     useCieInternalAuthAndMrtdReading();
 
   const isCieScanningFlow = currentFlow === sendAARFlowStates.cieScanning;
+
+  const handleStartReading = useCallback(() => {
+    void startReading(can, verificationCode, "hex");
+  }, [can, startReading, verificationCode]);
 
   useEffect(() => {
     if (readStatus === ReadStatus.SUCCESS && isDefined(data)) {
@@ -63,8 +69,8 @@ export const SendAARCieCardReadingScreen = ({
   }, [readStatus, data, iun, recipientInfo, mandateId, dispatch]);
 
   useEffect(() => {
-    void startReading(can, verificationCode, "hex");
-  }, [can, verificationCode, startReading]);
+    handleStartReading();
+  }, [handleStartReading]);
 
   const cancelAction = useMemo(
     () => ({
@@ -78,8 +84,40 @@ export const SendAARCieCardReadingScreen = ({
     [stopReading]
   );
 
+  const generateErrorContent = useCallback((): ScreenContentProps => {
+    switch (error?.name) {
+      case "TAG_LOST":
+        return {
+          pictogram: "empty",
+          title: i18n.t(
+            "features.pn.aar.flow.cieScanning.error.TAG_LOST.title"
+          ),
+          subtitle: i18n.t(
+            "features.pn.aar.flow.cieScanning.error.TAG_LOST.subtitle"
+          ),
+          primaryAction: {
+            label: i18n.t("global.buttons.retry"),
+            onPress: handleStartReading
+          },
+          secondaryAction: cancelAction
+        };
+      default:
+        // TODO: [IOCOM-2752] Handle errors
+        return {
+          pictogram: "attention",
+          title: "Qualcosa è andato storto.",
+          secondaryAction: {
+            label: i18n.t("global.buttons.close"),
+            onPress: () => {
+              terminateFlow();
+            }
+          }
+        };
+    }
+  }, [error?.name, cancelAction, handleStartReading, terminateFlow]);
+
   const contentMap: {
-    [K in ReadStatus]: Omit<CieCardReadContentProps, "progress">;
+    [K in ReadStatus]: ScreenContentProps;
   } = useMemo(
     () => ({
       [ReadStatus.IDLE]: {
@@ -97,20 +135,9 @@ export const SendAARCieCardReadingScreen = ({
         title: i18n.t("features.pn.aar.flow.cieScanning.success.title"),
         pictogram: "success"
       },
-      // TODO: [IOCOM-2752] Handle errors
-      [ReadStatus.ERROR]: {
-        pictogram: "attention",
-        title: "Qualcosa è andato storto.",
-        secondaryAction: {
-          variant: "link",
-          label: i18n.t("global.buttons.close"),
-          onPress: () => {
-            terminateFlow();
-          }
-        }
-      }
+      [ReadStatus.ERROR]: generateErrorContent()
     }),
-    [cancelAction, terminateFlow]
+    [cancelAction, generateErrorContent]
   );
 
   if (!isCieScanningFlow) {
