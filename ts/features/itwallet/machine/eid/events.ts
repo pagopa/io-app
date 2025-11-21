@@ -62,6 +62,11 @@ export type UserIdentificationCompleted = {
   authRedirectUrl: string;
 };
 
+export type CieCanEntered = {
+  type: "cie-can-entered";
+  can: string;
+};
+
 export type MrtdVerificationCompleted = {
   type: "mrtd-verification-completed";
   redirectUrl: string;
@@ -118,6 +123,7 @@ export type EidIssuanceEvents =
   | SelectSpidIdp
   | CiePinEntered
   | UserIdentificationCompleted
+  | CieCanEntered
   | MrtdVerificationCompleted
   | AddToWallet
   | GoToWallet

@@ -1,5 +1,5 @@
-import { Trust } from "@pagopa/io-react-native-wallet";
 import { CieUtils } from "@pagopa/io-react-native-cie";
+import { Trust } from "@pagopa/io-react-native-wallet";
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
 import { useIOStore } from "../../../../store/hooks";
@@ -20,6 +20,7 @@ import {
   StoredCredential,
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
+import * as mrtdUtils from "../../common/utils/mrtd";
 import {
   itwIntegrityKeyTagSelector,
   itwIntegrityServiceStatusSelector
@@ -32,7 +33,8 @@ import type {
   AuthenticationContext,
   CieContext,
   EidIssuanceLevel,
-  IdentificationContext
+  IdentificationContext,
+  MrtdPoPContext
 } from "./context";
 
 export type RequestEidActorParams = {
@@ -46,6 +48,11 @@ export type StartAuthFlowActorParams = {
   walletInstanceAttestation: string | undefined;
   identification: IdentificationContext | undefined;
   withMRTDPoP: boolean;
+};
+
+export type InitMrtdPoPChallengeActorParams = {
+  authenticationContext: AuthenticationContext | undefined;
+  walletInstanceAttestation: string | undefined;
 };
 
 export type GetWalletAttestationActorParams = {
@@ -62,6 +69,17 @@ export const createEidIssuanceActorsImplementation = (
   env: Env,
   store: ReturnType<typeof useIOStore>
 ) => ({
+  getCieStatus: fromPromise<CieContext>(async () => {
+    const [isNFCEnabled, isCIEAuthenticationSupported] = await Promise.all([
+      cieUtils.isNfcEnabled(),
+      CieUtils.isCieAuthenticationSupported()
+    ]);
+    return {
+      isNFCEnabled,
+      isCIEAuthenticationSupported
+    };
+  }),
+
   verifyTrustFederation: fromPromise(async () => {
     // Evaluate the issuer trust
     const trustAnchorEntityConfig =
@@ -127,15 +145,17 @@ export const createEidIssuanceActorsImplementation = (
     return getAttestation(env, input.integrityKeyTag, sessionToken);
   }),
 
-  getCieStatus: fromPromise<CieContext>(async () => {
-    const [isNFCEnabled, isCIEAuthenticationSupported] = await Promise.all([
-      cieUtils.isNfcEnabled(),
-      CieUtils.isCieAuthenticationSupported()
-    ]);
-    return {
-      isNFCEnabled,
-      isCIEAuthenticationSupported
-    };
+  revokeWalletInstance: fromPromise(async () => {
+    const state = store.getState();
+    const sessionToken = sessionTokenSelector(state);
+    const integrityKeyTag = itwIntegrityKeyTagSelector(state);
+
+    if (O.isNone(integrityKeyTag)) {
+      return;
+    }
+    assert(sessionToken, "sessionToken is undefined");
+
+    await revokeCurrentWalletInstance(env, sessionToken, integrityKeyTag.value);
   }),
 
   startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
@@ -159,6 +179,23 @@ export const createEidIssuanceActorsImplementation = (
       };
     }
   ),
+
+  initMrtdPoPChallenge: fromPromise<
+    MrtdPoPContext,
+    InitMrtdPoPChallengeActorParams
+  >(async ({ input }) => {
+    assert(input.authenticationContext, "authenticationContext is undefined");
+    assert(
+      input.walletInstanceAttestation,
+      "walletInstanceAttestation is undefined"
+    );
+
+    return mrtdUtils.initMrtdPoPChallenge({
+      issuerConf: input.authenticationContext.issuerConf,
+      walletInstanceAttestation: input.walletInstanceAttestation,
+      authRedirectUrl: input.authenticationContext.callbackUrl
+    });
+  }),
 
   requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
     async ({ input }) => {
@@ -190,19 +227,6 @@ export const createEidIssuanceActorsImplementation = (
       });
     }
   ),
-
-  revokeWalletInstance: fromPromise(async () => {
-    const state = store.getState();
-    const sessionToken = sessionTokenSelector(state);
-    const integrityKeyTag = itwIntegrityKeyTagSelector(state);
-
-    if (O.isNone(integrityKeyTag)) {
-      return;
-    }
-    assert(sessionToken, "sessionToken is undefined");
-
-    await revokeCurrentWalletInstance(env, sessionToken, integrityKeyTag.value);
-  }),
 
   credentialUpgradeMachine: itwCredentialUpgradeMachine.provide({
     actors: createCredentialUpgradeActorsImplementation(env),

@@ -5,13 +5,13 @@ import {
 import { WIA_KEYTAG } from "./itwCryptoContextUtils";
 import { IssuerConfiguration } from "./itwTypesUtils";
 
-type InitMrtdPoPChallengeParams = {
+export type InitMrtdPoPChallengeParams = {
   issuerConf: IssuerConfiguration;
   walletInstanceAttestation: string;
   authRedirectUrl: string;
 };
 
-type ValidateMrtdPoPChallengeParams = {
+export type ValidateMrtdPoPChallengeParams = {
   issuerConf: IssuerConfiguration;
   walletInstanceAttestation: string;
   validationUrl: string;

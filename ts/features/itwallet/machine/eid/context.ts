@@ -27,6 +27,13 @@ export type AuthenticationContext = {
   redirectUri: string;
 };
 
+export type MrtdPoPContext = {
+  challenge: string;
+  mrtd_auth_session: string;
+  mrtd_pop_nonce: string;
+  validationUrl: string;
+};
+
 export type CieContext = {
   isNFCEnabled: boolean;
   isCIEAuthenticationSupported: boolean;
@@ -85,6 +92,10 @@ export type Context = {
    */
   authenticationContext: AuthenticationContext | undefined;
   /**
+   * The MRTD PoP context used during the issuance process.
+   */
+  mrtdContext: MrtdPoPContext | undefined;
+  /**
    * The obtained PID credential
    */
   eid: StoredCredential | undefined;
@@ -110,6 +121,7 @@ export const InitialContext: Context = {
   cieContext: undefined,
   identification: undefined,
   authenticationContext: undefined,
+  mrtdContext: undefined,
   eid: undefined,
   failure: undefined,
   legacyCredentials: [],

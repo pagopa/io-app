@@ -19,6 +19,7 @@ import { ItwTags } from "../tags";
 import { itwCredentialUpgradeMachine } from "../upgrade/machine.ts";
 import {
   GetWalletAttestationActorParams,
+  InitMrtdPoPChallengeActorParams,
   type RequestEidActorParams,
   StartAuthFlowActorParams
 } from "./actors";
@@ -26,7 +27,8 @@ import {
   AuthenticationContext,
   CieContext,
   Context,
-  InitialContext
+  InitialContext,
+  MrtdPoPContext
 } from "./context";
 import { EidIssuanceEvents } from "./events";
 import { IssuanceFailureType, mapEventToFailure } from "./failure";
@@ -65,6 +67,9 @@ export const itwEidIssuanceMachine = setup({
     navigateToNfcInstructionsScreen: notImplemented,
     navigateToWalletRevocationScreen: notImplemented,
     navigateToCieWarningScreen: notImplemented,
+    navigateToCieCanPreparationScreen: notImplemented,
+    navigateToCieCanScreen: notImplemented,
+    navigateToCieMrtdReadScreen: notImplemented,
     closeIssuance: notImplemented,
 
     /**
@@ -117,20 +122,49 @@ export const itwEidIssuanceMachine = setup({
     }
   },
   actors: {
-    verifyTrustFederation: fromPromise<void>(notImplemented),
     getCieStatus: fromPromise<CieContext>(notImplemented),
+    verifyTrustFederation: fromPromise<void>(notImplemented),
+
+    /**
+     * WI actors
+     */
+
     createWalletInstance: fromPromise<string>(notImplemented),
     revokeWalletInstance: fromPromise<void>(notImplemented),
     getWalletAttestation: fromPromise<
       WalletInstanceAttestations,
       GetWalletAttestationActorParams
     >(notImplemented),
-    requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
-      notImplemented
-    ),
+
+    /**
+     * Primary authentication actors
+     */
+
     startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
       notImplemented
     ),
+
+    /**
+     * MRTD PoP Challenge actors
+     */
+
+    initMrtdPoPChallenge: fromPromise<
+      MrtdPoPContext,
+      InitMrtdPoPChallengeActorParams
+    >(notImplemented),
+
+    /**
+     * PID issuance actors
+     */
+
+    requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
+      notImplemented
+    ),
+
+    /**
+     * Credential upgrade actors
+     */
+
     credentialUpgradeMachine: itwCredentialUpgradeMachine
   },
   guards: {
@@ -790,7 +824,91 @@ export const itwEidIssuanceMachine = setup({
         }
       ]
     },
-    MrtdVerication: {},
+    MrtdPoP: {
+      description: "State handling the MRTD verification process",
+      states: {
+        InitializingChallenge: {
+          description:
+            "Initializes the MRTD PoP challenge with the callbackUrl obtained from the primary authentication (SPID/CieID)",
+          tags: [ItwTags.Loading],
+          invoke: {
+            src: "initMrtdPoPChallenge",
+            input: ({ context }) => ({
+              authenticationContext: context.authenticationContext,
+              walletInstanceAttestation: context.walletInstanceAttestation?.jwt
+            }),
+            onDone: {
+              target: "DisplayingInstructions"
+            },
+            onError: {
+              actions: "setFailure",
+              target: "#itwEidIssuanceMachine.Failure"
+            }
+          }
+        },
+        DisplayingCanPreparationInstructions: {
+          description:
+            "Once the challenge is initialized, we show NFC instructions with a dedicated screen.",
+          entry: "navigateToCieCanPreparationScreen",
+          on: {
+            next: {
+              target: "WaitingForCan"
+            }
+          }
+        },
+        WaitingForCan: {
+          description:
+            "Waits for the user to input the CAN read from the MRTD document",
+          entry: "navigateToCieCanScreen",
+          on: {
+            "cie-can-entered": {
+              target: "SigningChallenge",
+              actions: assign(({ event }) => ({}))
+            }
+          }
+        },
+        DisplayingCiePreparationInstructions: {
+          description: "",
+          entry: "navigateToCieCanPreparationScreen",
+          on: {
+            next: {
+              target: "DisplayingCieReadInstructions"
+            }
+          }
+        },
+        DisplayingCieReadInstructions: {
+          description: "",
+          entry: "navigateToCieCanPreparationScreen",
+          on: {
+            next: {
+              target: "PreparationCie"
+            }
+          }
+        },
+        PreparationCie: {
+          description: "",
+          entry: "navigateToCieReadCardScreen",
+          on: {
+            next: {
+              target: "WaitingForCan"
+            }
+          }
+        },
+        SigningChallenge: {
+          description:
+            "Once the CAN is entered, we proceed to sign the MRTD PoP challenge using the MRTD document",
+          entry: "navigateToCieMrtdReadScreen",
+          on: {
+            "mrtd-verification-completed": {
+              target: "#itwEidIssuanceMachine.MrtdPoP.Completed"
+            }
+          }
+        },
+        Completed: {
+          type: "final"
+        }
+      }
+    },
     Issuance: {
       entry: "navigateToEidPreviewScreen",
       initial: "RequestingEid",
