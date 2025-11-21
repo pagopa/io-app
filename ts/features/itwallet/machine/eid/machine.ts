@@ -146,7 +146,7 @@ export const itwEidIssuanceMachine = setup({
     isL2Fallback: ({ context }) => context.level === "l2-fallback",
     isL3FeaturesEnabled: ({ context }) => context.level === "l3",
     isEligibleForItwSimplifiedActivation: notImplemented,
-    withMrtdPoP: ({ context }) =>
+    requiresMrtdVerification: ({ context }) =>
       context.level === "l3" && context.identification?.mode !== "ciePin"
   }
 }).createMachine({
@@ -780,10 +780,17 @@ export const itwEidIssuanceMachine = setup({
           type: "final"
         }
       },
-      onDone: {
-        target: "Issuance"
-      }
+      onDone: [
+        {
+          guard: "requiresMrtdVerification",
+          target: "MrtdVerication"
+        },
+        {
+          target: "Issuance"
+        }
+      ]
     },
+    MrtdVerication: {},
     Issuance: {
       entry: "navigateToEidPreviewScreen",
       initial: "RequestingEid",

@@ -62,6 +62,11 @@ export type UserIdentificationCompleted = {
   authRedirectUrl: string;
 };
 
+export type MrtdVerificationCompleted = {
+  type: "mrtd-verification-completed";
+  redirectUrl: string;
+};
+
 export type Retry = {
   type: "retry";
 };
@@ -113,6 +118,7 @@ export type EidIssuanceEvents =
   | SelectSpidIdp
   | CiePinEntered
   | UserIdentificationCompleted
+  | MrtdVerificationCompleted
   | AddToWallet
   | GoToWallet
   | AddNewCredential
