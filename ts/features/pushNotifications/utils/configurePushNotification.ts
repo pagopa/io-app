@@ -28,15 +28,27 @@ import { isTestEnv } from "../../../utils/environment";
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
 import { Store } from "../../../store/actions/types";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
+import { openWebUrl } from "../../../utils/url.ts";
 
 /**
- * Helper type used to validate the notification payload.
+ * Helper type used to validate the notification payload for IO-COM.
  * The message_id can be in different places depending on the platform.
  */
-const NotificationPayload = t.partial({
+const ComNotificationPayload = t.partial({
   message_id: NonEmptyString,
   data: t.partial({
     message_id: NonEmptyString
+  })
+});
+
+/**
+ * Helper type used to validate the notification payload for IT Wallet.
+ * The deepLink can be in different places depending on the platform.
+ */
+export const ItwNotificationPayload = t.partial({
+  deepLink: NonEmptyString,
+  data: t.partial({
+    deepLink: NonEmptyString
   })
 });
 
@@ -97,6 +109,7 @@ const onPushNotificationReceived = (
       notification,
       userOptedInForAnalytics
     );
+    const deepLink = deepLinkFromPushNotification(notification);
     if (messageId != null) {
       handleMessagePushNotification(
         notification.foreground,
@@ -104,6 +117,9 @@ const onPushNotificationReceived = (
         store,
         userOptedInForAnalytics
       );
+    }
+    if (deepLink != null) {
+      openWebUrl(deepLink);
     }
   }
 
@@ -118,7 +134,7 @@ const messageIdFromPushNotification = (
   userAnalyticsOptIn: boolean
 ) => {
   // Try to decode the notification's payload
-  const payloadDecodeEither = NotificationPayload.decode(notification);
+  const payloadDecodeEither = ComNotificationPayload.decode(notification);
   if (E.isLeft(payloadDecodeEither)) {
     // The notification payload is not valid, we need to track the error
     handleTrackingOfDecodingFailure(
@@ -151,6 +167,19 @@ const messageIdFromPushNotification = (
     return undefined;
   }
   return messageIdOnAndroid;
+};
+
+export const deepLinkFromPushNotification = (
+  notification: Omit<ReceivedNotification, "userInfo"> | null
+) => {
+  // TODO: add Mixpanel tracking (SIW-3243)
+  // Try to decode the notification's payload
+  const payloadDecodeEither = ItwNotificationPayload.decode(notification);
+  if (E.isLeft(payloadDecodeEither)) {
+    return undefined;
+  }
+  const payload = payloadDecodeEither.right;
+  return payload.deepLink || payload.data?.deepLink;
 };
 
 const handleMessagePushNotification = (
@@ -254,7 +283,8 @@ const hasUserOptedInForAnalytics = (state: GlobalState) =>
 
 export const testable = isTestEnv
   ? {
-      NotificationPayload,
+      ComNotificationPayload,
+      ItwNotificationPayload,
       getArchiveAndInboxNextAndPreviousPageIndexes,
       handleForegroundMessageReload,
       handleMessagePushNotification,
@@ -262,6 +292,7 @@ export const testable = isTestEnv
       handleTrackingOfTokenGeneration,
       hasUserOptedInForAnalytics,
       messageIdFromPushNotification,
+      deepLinkFromPushNotification,
       onPushNotificationReceived,
       onPushNotificationTokenAvailable
     }
