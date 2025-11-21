@@ -15,7 +15,6 @@ import { useIODispatch } from "../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import {
-  defaultZendeskBonusesategory,
   defaultZendeskBonusesCategory,
   defaultZendeskIDPayCategory,
   zendeskCategoryId,
