@@ -8,7 +8,6 @@ import { useNotAvailableToastGuard } from "../../../common/hooks/useNotAvailable
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { useItwStartCredentialSupportRequest } from "../hooks/useItwStartCredentialSupportRequest";
-import { normalizeAlertButtons } from "../../../common/utils/itwAlertUtils";
 
 type Props = {
   credential: StoredCredential;
@@ -25,27 +24,24 @@ const ItwPresentationPidDetailFooter = ({ credential }: Props) => {
 
   const handleRevokePress = () => {
     trackWalletStartDeactivation("ITW_PID");
-
-    const buttons = [
-      {
-        text: I18n.t(
-          "features.itWallet.presentation.itWalletId.dialog.revoke.confirm"
-        ),
-        style: "destructive" as const,
-        onPress: () => machineRef.send({ type: "revoke-wallet-instance" })
-      },
-      {
-        text: I18n.t(
-          "features.itWallet.presentation.itWalletId.dialog.revoke.cancel"
-        ),
-        style: "cancel" as const
-      }
-    ];
-
     Alert.alert(
       I18n.t("features.itWallet.presentation.itWalletId.dialog.revoke.title"),
       I18n.t("features.itWallet.presentation.itWalletId.dialog.revoke.message"),
-      normalizeAlertButtons(buttons)
+      [
+        {
+          text: I18n.t(
+            "features.itWallet.presentation.itWalletId.dialog.revoke.cancel"
+          ),
+          style: "cancel"
+        },
+        {
+          text: I18n.t(
+            "features.itWallet.presentation.itWalletId.dialog.revoke.confirm"
+          ),
+          style: "destructive",
+          onPress: () => machineRef.send({ type: "revoke-wallet-instance" })
+        }
+      ]
     );
   };
 

@@ -7,7 +7,6 @@ import {
   trackItwDismissalAction,
   trackItwDismissalContext
 } from "../../analytics";
-import { normalizeAlertButtons } from "../utils/itwAlertUtils";
 
 type ItwDismissalDialogProps = {
   handleDismiss?: () => void;
@@ -60,25 +59,23 @@ export const useItwDismissalDialog = ({
       trackItwDismissalContext(dismissalContext);
     }
 
-    const buttons = [
+    Alert.alert(title, body, [
+      {
+        text: cancelLabel,
+        style: "cancel",
+        onPress: () => {
+          trackUserAction(cancelLabel);
+        }
+      },
       {
         text: confirmLabel,
-        style: "destructive" as const,
+        style: "destructive",
         onPress: () => {
           trackUserAction(confirmLabel);
           (handleDismiss || navigation.goBack)();
         }
-      },
-      {
-        text: cancelLabel,
-        style: "cancel" as const,
-        onPress: () => {
-          trackUserAction(cancelLabel);
-        }
       }
-    ];
-
-    Alert.alert(title, body, normalizeAlertButtons(buttons));
+    ]);
   };
 
   useHardwareBackButton(() => {
