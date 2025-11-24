@@ -1,7 +1,6 @@
 import { call } from "typed-redux-saga/macro";
 import { handleStoredLinkingUrlIfNeeded } from "../features/linking/sagas";
 import { handlePushNotificationIfNeeded } from "../features/pushNotifications/sagas/common";
-import { isTestEnv } from "../utils/environment";
 
 /**
  * this method is used to handle all actions that
@@ -27,9 +26,3 @@ export function* maybeHandlePendingBackgroundActions(
 
   return false;
 }
-
-export const testable = isTestEnv
-  ? {
-      handlePushNotificationIfNeeded
-    }
-  : undefined;
