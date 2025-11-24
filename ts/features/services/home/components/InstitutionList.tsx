@@ -1,4 +1,5 @@
 import {
+  BannerErrorState,
   Divider,
   IOButton,
   IOToast,
@@ -19,7 +20,6 @@ import { Institution } from "../../../../../definitions/services/Institution";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { ServiceListSkeleton } from "../../common/components/ServiceListSkeleton";
-import { useFirstRender } from "../../common/hooks/useFirstRender";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
 import { featuredInstitutionsGet, featuredServicesGet } from "../store/actions";
@@ -40,8 +40,6 @@ export const InstitutionList = ({
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
-  const isFirstRender = useFirstRender();
-
   const {
     data,
     fetchNextPage,
@@ -50,26 +48,38 @@ export const InstitutionList = ({
     isLoading,
     isRefreshing,
     isUpdating,
-    refresh
+    refresh,
+    retry
   } = useInstitutionsFetcher();
 
   useEffect(() => {
-    if (!isFirstRender && isError) {
+    // Show an error toast for subsequent page loads
+    if (isError && data?.institutions) {
       IOToast.error(I18n.t("global.genericError"));
     }
-  }, [isFirstRender, isError]);
+  }, [data?.institutions, isError]);
 
   const ListEmptyComponent = useCallback(() => {
-    if (isFirstRender || isLoading) {
+    if (isLoading) {
       return (
         <>
-          <ServiceListSkeleton size={5} />
+          <ServiceListSkeleton />
           <VSpacer size={16} />
         </>
       );
     }
+
+    if (isError) {
+      return (
+        <BannerErrorState
+          label={I18n.t("services.home.institutions.error.banner.label")}
+          actionText={I18n.t("services.home.institutions.error.banner.cta")}
+          onPress={retry}
+        />
+      );
+    }
     return null;
-  }, [isFirstRender, isLoading]);
+  }, [isError, isLoading, retry]);
 
   const navigateToSearch = useCallback(
     () => navigation.navigate(SERVICES_ROUTES.SEARCH),
