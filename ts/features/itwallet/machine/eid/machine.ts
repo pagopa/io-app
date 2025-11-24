@@ -60,14 +60,15 @@ export const itwEidIssuanceMachine = setup({
     navigateToFailureScreen: notImplemented,
     navigateToWallet: notImplemented,
     navigateToCredentialCatalog: notImplemented,
-    navigateToCiePreparationScreen: notImplemented,
+    navigateToCieNfcPreparationScreen: notImplemented,
     navigateToCiePinPreparationScreen: notImplemented,
+    navigateToCieCardPreparationScreen: notImplemented,
+    navigateToCieCanPreparationScreen: notImplemented,
     navigateToCiePinScreen: notImplemented,
     navigateToCieReadCardScreen: notImplemented,
     navigateToNfcInstructionsScreen: notImplemented,
     navigateToWalletRevocationScreen: notImplemented,
     navigateToCieWarningScreen: notImplemented,
-    navigateToCieCanPreparationScreen: notImplemented,
     navigateToCieCanScreen: notImplemented,
     navigateToCieMrtdReadScreen: notImplemented,
     closeIssuance: notImplemented,
@@ -711,7 +712,7 @@ export const itwEidIssuanceMachine = setup({
             PreparationCie: {
               description:
                 "This state handles the CIE preparation screen, where the user is informed about the CIE card",
-              entry: "navigateToCiePreparationScreen",
+              entry: "navigateToCieNfcPreparationScreen",
               on: {
                 next: {
                   actions: "navigateToCieReadCardScreen",
@@ -817,7 +818,7 @@ export const itwEidIssuanceMachine = setup({
       onDone: [
         {
           guard: "requiresMrtdVerification",
-          target: "MrtdVerication"
+          target: "MrtdPoP"
         },
         {
           target: "Issuance"
@@ -826,6 +827,7 @@ export const itwEidIssuanceMachine = setup({
     },
     MrtdPoP: {
       description: "State handling the MRTD verification process",
+      initial: "InitializingChallenge",
       states: {
         InitializingChallenge: {
           description:
@@ -838,7 +840,7 @@ export const itwEidIssuanceMachine = setup({
               walletInstanceAttestation: context.walletInstanceAttestation?.jwt
             }),
             onDone: {
-              target: "DisplayingInstructions"
+              target: "DisplayingCanPreparationInstructions"
             },
             onError: {
               actions: "setFailure",
@@ -861,36 +863,37 @@ export const itwEidIssuanceMachine = setup({
             "Waits for the user to input the CAN read from the MRTD document",
           entry: "navigateToCieCanScreen",
           on: {
+            back: {
+              target: "DisplayingCanPreparationInstructions"
+            },
             "cie-can-entered": {
-              target: "SigningChallenge",
+              target: "DisplayingCieCardPreparationInstructions",
               actions: assign(({ event }) => ({}))
             }
           }
         },
-        DisplayingCiePreparationInstructions: {
-          description: "",
-          entry: "navigateToCieCanPreparationScreen",
+        DisplayingCieCardPreparationInstructions: {
+          description: "Displays informations to prepare the CIE for reading",
+          entry: "navigateToCieCardPreparationScreen",
           on: {
-            next: {
-              target: "DisplayingCieReadInstructions"
-            }
-          }
-        },
-        DisplayingCieReadInstructions: {
-          description: "",
-          entry: "navigateToCieCanPreparationScreen",
-          on: {
-            next: {
-              target: "PreparationCie"
-            }
-          }
-        },
-        PreparationCie: {
-          description: "",
-          entry: "navigateToCieReadCardScreen",
-          on: {
-            next: {
+            back: {
               target: "WaitingForCan"
+            },
+            next: {
+              target: "DisplayingCieNfcPreparationInstructions"
+            }
+          }
+        },
+        DisplayingCieNfcPreparationInstructions: {
+          description:
+            "Displays instructions to read the CIE card using the device NFC.",
+          entry: "navigateToCieNfcPreparationScreen",
+          on: {
+            back: {
+              target: "DisplayingCieCardPreparationInstructions"
+            },
+            next: {
+              target: "SigningChallenge"
             }
           }
         },

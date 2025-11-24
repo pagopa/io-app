@@ -147,7 +147,7 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToCiePreparationScreen: () => {
+  navigateToCieNfcPreparationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.NFC_SCREEN
     });
@@ -162,6 +162,24 @@ export const createEidIssuanceActionsImplementation = (
   navigateToCiePinScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN
+    });
+  },
+
+  navigateToCieCardPreparationScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CARD_SCREEN
+    });
+  },
+
+  navigateToCieCanPreparationScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CAN_SCREEN
+    });
+  },
+
+  navigateToCieCanScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.CAN_SCREEN
     });
   },
 
