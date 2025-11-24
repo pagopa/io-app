@@ -8,7 +8,6 @@ import {
   selectWalletCardsByType,
   selectWalletPlaceholderCards
 } from "../features/wallet/store/selectors";
-import { WalletCardBonus, WalletCardCdc } from "../features/wallet/types";
 import { paymentsWalletUserMethodsSelector } from "../features/payments/wallet/store/selectors";
 import {
   NotificationPreferenceConfiguration,
