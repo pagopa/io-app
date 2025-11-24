@@ -1,3 +1,4 @@
+import { InternalAuthAndMrtdResponse } from "@pagopa/io-react-native-cie";
 import { ErrorActorEvent } from "xstate";
 import { SpidIdp } from "../../../../utils/idps";
 import { CieWarningType } from "../../identification/cie/utils/types";
@@ -67,8 +68,13 @@ export type CieCanEntered = {
   can: string;
 };
 
-export type MrtdVerificationCompleted = {
-  type: "mrtd-verification-completed";
+export type MrtdChallengedSigned = {
+  type: "mrtd-challenged-signed";
+  data: InternalAuthAndMrtdResponse;
+};
+
+export type MrtdPoPVerificationCompleted = {
+  type: "mrtd-pop-verification-completed";
   authRedirectUrl: string;
 };
 
@@ -124,7 +130,8 @@ export type EidIssuanceEvents =
   | CiePinEntered
   | UserIdentificationCompleted
   | CieCanEntered
-  | MrtdVerificationCompleted
+  | MrtdChallengedSigned
+  | MrtdPoPVerificationCompleted
   | AddToWallet
   | GoToWallet
   | AddNewCredential

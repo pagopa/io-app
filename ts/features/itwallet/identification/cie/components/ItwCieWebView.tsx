@@ -1,20 +1,20 @@
+import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { ComponentProps, createRef } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import WebView, {
   WebViewMessageEvent,
   WebViewNavigation
 } from "react-native-webview";
-import { pipe } from "fp-ts/lib/function";
 import {
   WebViewErrorEvent,
   WebViewHttpErrorEvent,
   WebViewNavigationEvent
 } from "react-native-webview/lib/WebViewTypes";
-import I18n from "i18next";
-import { selectItwEnv } from "../../../common/store/selectors/environment";
-import { useIOSelector } from "../../../../../store/hooks";
-import { getEnv } from "../../../common/utils/environment";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
+import { useIOSelector } from "../../../../../store/hooks";
+import { selectItwEnv } from "../../../common/store/selectors/environment";
+import { getEnv } from "../../../common/utils/environment";
 import { ItwCieMachineContext } from "../machine/provider";
 import {
   selectAuthenticationUrl,
@@ -152,11 +152,13 @@ export const ItwCieAuthenticationWebview = () => {
 
   return (
     <>
-      <ItwCieWebView
-        source={{ uri: authenticationUrl }}
-        onMessage={handleMessage}
-        onShouldStartLoadWithRequest={handleShouldStartLoadWithRequest}
-      />
+      {authenticationUrl && (
+        <ItwCieWebView
+          source={{ uri: authenticationUrl }}
+          onMessage={handleMessage}
+          onShouldStartLoadWithRequest={handleShouldStartLoadWithRequest}
+        />
+      )}
       <View style={StyleSheet.absoluteFillObject}>
         <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
       </View>
@@ -189,9 +191,11 @@ export const ItwCieAuthorizationWebview = () => {
   };
 
   return (
-    <ItwCieWebView
-      source={{ uri: authorizationUrl || "" }}
-      onShouldStartLoadWithRequest={handleShouldStartLoadWithRequest}
-    />
+    authorizationUrl && (
+      <ItwCieWebView
+        source={{ uri: authorizationUrl }}
+        onShouldStartLoadWithRequest={handleShouldStartLoadWithRequest}
+      />
+    )
   );
 };

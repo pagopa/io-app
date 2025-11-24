@@ -915,6 +915,25 @@ export const itwEidIssuanceMachine = setup({
             "Once the CAN is entered, we proceed to sign the MRTD PoP challenge using the MRTD document",
           entry: "navigateToCieMrtdSignScreen",
           on: {
+            "mrtd-challenged-signed": {
+              target: "#itwEidIssuanceMachine.MrtdPoP.Completed",
+              actions: assign(({ event, context }) => {
+                assert(context.mrtdContext, "mrtdContext must be defined");
+
+                return {
+                  mrtdContext: {
+                    ...context.mrtdContext,
+                    signedData: event.data
+                  }
+                };
+              })
+            }
+          }
+        },
+        ValidatingChallenge: {
+          description: "",
+          entry: "navigateToCieMrtdSignScreen",
+          on: {
             "mrtd-verification-completed": {
               target: "#itwEidIssuanceMachine.MrtdPoP.Completed"
             }

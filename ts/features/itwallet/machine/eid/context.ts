@@ -1,8 +1,9 @@
+import { InternalAuthAndMrtdResponse } from "@pagopa/io-react-native-cie";
 import type { AuthorizationDetail } from "@pagopa/io-react-native-wallet";
 import type {
-  WalletInstanceAttestations,
+  IssuerConfiguration,
   StoredCredential,
-  IssuerConfiguration
+  WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import { IssuanceFailure } from "./failure";
 
@@ -45,7 +46,8 @@ export type MrtdPoPContext = {
   mrtd_auth_session: string;
   mrtd_pop_nonce: string;
   validationUrl: string;
-  can: string | undefined;
+  can?: string | undefined;
+  signedData?: InternalAuthAndMrtdResponse | undefined;
 };
 
 /**
