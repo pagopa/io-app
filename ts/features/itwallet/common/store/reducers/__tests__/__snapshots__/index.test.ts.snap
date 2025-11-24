@@ -5,6 +5,11 @@ exports[`itWalletReducer should match snapshot [if this test fails, remember to 
   "credentials": {
     "credentials": {},
   },
+  "credentialsCatalogue": {
+    "catalogue": {
+      "kind": "PotNone",
+    },
+  },
   "environment": {
     "env": "prod",
   },
