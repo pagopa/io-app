@@ -1,98 +1,10 @@
-diff --git a/NEW_ARCHITECTURE.md b/NEW_ARCHITECTURE.md
-new file mode 100644
-index 0000000000000000000000000000000000000000..3c985d0e4aae3c04e43a2a02d9c5200a7bdbab69
---- /dev/null
-+++ b/NEW_ARCHITECTURE.md
-@@ -0,0 +1,82 @@
-+# React Native Screenshot Prevent - New Architecture Ready
-+
-+This package has been updated to support React Native's New Architecture (TurboModules and Fabric).
-+
-+## New Architecture Changes
-+
-+### Files Added/Modified
-+
-+1. **`src/NativeScreenshotPrevent.ts`** - TurboModule specification
-+2. **`android/src/newarch/`** - New Architecture implementations
-+3. **`android/src/oldarch/`** - Old Architecture implementations (backward compatibility)
-+4. **`android/build.gradle`** - Updated with New Architecture support
-+
-+### Integration
-+
-+#### For New Architecture (RN 0.68+)
-+
-+1. Make sure your app has New Architecture enabled in `android/gradle.properties`:
-+   ```properties
-+   newArchEnabled=true
-+   ```
-+
-+2. The package will automatically use the TurboModule implementation.
-+
-+#### For Old Architecture
-+
-+The package maintains full backward compatibility. No changes needed for existing integrations.
-+
-+### Package Registration
-+
-+#### New Architecture
-+The package uses `ScreenshotPreventTurboPackage` which extends `TurboReactPackage`.
-+
-+#### Old Architecture  
-+The package continues to use `RNScreenshotPreventPackage` which implements `ReactPackage`.
-+
-+### Developer Notes
-+
-+- The core functionality is shared between both architectures through static methods in `RNScreenshotPreventModule`
-+- TurboModule provides better performance and type safety
-+- The package automatically detects and uses the appropriate implementation at runtime
-+
-+## API
-+
-+The API remains unchanged. All existing methods work the same way:
-+
-+```javascript
-+import ScreenshotPrevent from 'react-native-screenshot-prevent';
-+
-+// Enable/disable screenshot prevention
-+ScreenshotPrevent.enabled(true);
-+
-+// Enable secure view with custom image
-+ScreenshotPrevent.enableSecureView('https://example.com/image.png');
-+
-+// Disable secure view
-+ScreenshotPrevent.disableSecureView();
-+
-+// Listen for screenshot events (iOS)
-+const listener = ScreenshotPrevent.addListener((event) => {
-+  console.log('Screenshot taken!', event);
-+});
-+```
-+
-+## Codegen
-+
-+The package includes proper codegen configuration in `package.json`:
-+
-+```json
-+{
-+  "codegenConfig": {
-+    "name": "RNScreenshotPreventSpec",
-+    "type": "modules",
-+    "jsSrcsDir": "src",
-+    "android": {
-+      "javaPackageName": "com.killserver.screenshotprev"
-+    }
-+  }
-+}
-+```
-+
-+This enables automatic native code generation for the TurboModule interface.
-\ No newline at end of file
 diff --git a/android/build.gradle b/android/build.gradle
-index 6ee6db648848012a47a1d95356c38d716ad29a15..7bfd052a98878b7cc5fba77df130aadb767cd1af 100644
+index 6ee6db648848012a47a1d95356c38d716ad29a15..507756cfb96d460338c96953a1a9d8e47d39a1cc 100644
 --- a/android/build.gradle
 +++ b/android/build.gradle
-@@ -1,24 +1,17 @@
+@@ -1,24 +1,22 @@
  apply plugin: 'com.android.library'
++apply plugin: 'com.facebook.react'
  
 -buildscript {
 -    repositories {
@@ -114,15 +26,18 @@ index 6ee6db648848012a47a1d95356c38d716ad29a15..7bfd052a98878b7cc5fba77df130aadb
 -def DEFAULT_BUILD_TOOLS_VERSION = "23.0.1"
 -def DEFAULT_MIN_SDK_VERSION = 16
 -def DEFAULT_TARGET_SDK_VERSION = 22
--
 +def DEFAULT_COMPILE_SDK_VERSION = 33
 +def DEFAULT_BUILD_TOOLS_VERSION = "33.0.0"
 +def DEFAULT_MIN_SDK_VERSION = 21
 +def DEFAULT_TARGET_SDK_VERSION = 33
  
++react {
++    libraryName = "RNScreenshotPrevent" 
++}
+ 
  android {
      compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
-@@ -29,17 +22,45 @@ android {
+@@ -29,14 +27,37 @@ android {
          targetSdkVersion safeExtGet('targetSdkVersion', DEFAULT_TARGET_SDK_VERSION)
          versionCode 1
          versionName "1.0"
@@ -134,7 +49,6 @@ index 6ee6db648848012a47a1d95356c38d716ad29a15..7bfd052a98878b7cc5fba77df130aadb
 +            minifyEnabled false
 +        }
      }
-+
      lintOptions {
 -        abortOnError false
 +        disable 'GradleCompatible'
@@ -148,9 +62,9 @@ index 6ee6db648848012a47a1d95356c38d716ad29a15..7bfd052a98878b7cc5fba77df130aadb
 +    sourceSets {
 +        main {
 +            if (isNewArchitectureEnabled()) {
-+                java.srcDirs += ['src/newarch/java']
++                java.srcDirs += ['src/newArch/java']
 +            } else {
-+                java.srcDirs += ['src/oldarch/java']
++                java.srcDirs += ['src/oldArch/java']
 +            }
 +        }
      }
@@ -162,15 +76,6 @@ index 6ee6db648848012a47a1d95356c38d716ad29a15..7bfd052a98878b7cc5fba77df130aadb
  }
  
  dependencies {
--    implementation 'com.facebook.react:react-native:+'
-+    // For < 0.71, this will be from the local maven repo
-+    // For > 0.71, this will be replaced by `com.facebook.react:react-android:$version` by react gradle plugin
-+    //noinspection GradleDynamicVersion
-+    implementation "com.facebook.react:react-native:+"
-+    implementation "com.facebook.react:turbomodule-core:+"
- }
-   
-\ No newline at end of file
 diff --git a/android/src/main/java/com/killserver/screenshotprev/RNScreenshotPreventModule.java b/android/src/main/java/com/killserver/screenshotprev/RNScreenshotPreventModule.java
 index d381e388ec81d0a456ea496891fc635fe48a863e..95c0be266cdb11c121ae8d52056e2a40bdd21bd5 100644
 --- a/android/src/main/java/com/killserver/screenshotprev/RNScreenshotPreventModule.java
@@ -249,48 +154,11 @@ index d381e388ec81d0a456ea496891fc635fe48a863e..95c0be266cdb11c121ae8d52056e2a40
      try {
        URL imageUrl = new URL(imagePath);
        Bitmap bitmap = BitmapFactory.decodeStream(imageUrl.openConnection().getInputStream());
-diff --git a/android/src/newarch/java/com/killserver/screenshotprev/NativeScreenshotPreventSpec.java b/android/src/newarch/java/com/killserver/screenshotprev/NativeScreenshotPreventSpec.java
+diff --git a/android/src/newArch/java/com/killserver/screenshotprev/ScreenshotPreventModule.java b/android/src/newArch/java/com/killserver/screenshotprev/ScreenshotPreventModule.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..534f54e5937b41ea761732478452c07ac14354b7
+index 0000000000000000000000000000000000000000..86b414c8478e4dc0ec9aea45a7dd297f48d6ce95
 --- /dev/null
-+++ b/android/src/newarch/java/com/killserver/screenshotprev/NativeScreenshotPreventSpec.java
-@@ -0,0 +1,30 @@
-+package com.killserver.screenshotprev;
-+
-+import com.facebook.react.bridge.ReactApplicationContext;
-+import com.facebook.react.bridge.ReactContextBaseJavaModule;
-+import com.facebook.react.bridge.ReactMethod;
-+import com.facebook.react.turbomodule.core.interfaces.TurboModule;
-+
-+import javax.annotation.Nonnull;
-+
-+public abstract class NativeScreenshotPreventSpec extends ReactContextBaseJavaModule implements TurboModule {
-+
-+    public NativeScreenshotPreventSpec(ReactApplicationContext reactContext) {
-+        super(reactContext);
-+    }
-+
-+    @ReactMethod
-+    public abstract void enabled(boolean enable);
-+
-+    @ReactMethod
-+    public abstract void enableSecureView(String imagePath);
-+
-+    @ReactMethod
-+    public abstract void disableSecureView();
-+
-+    @ReactMethod
-+    public abstract void addListener(String eventName);
-+
-+    @ReactMethod
-+    public abstract void removeListeners(double count);
-+}
-\ No newline at end of file
-diff --git a/android/src/newarch/java/com/killserver/screenshotprev/ScreenshotPreventModule.java b/android/src/newarch/java/com/killserver/screenshotprev/ScreenshotPreventModule.java
-new file mode 100644
-index 0000000000000000000000000000000000000000..a59cf151e9ee509f88f172fbed333999c3c80ec9
---- /dev/null
-+++ b/android/src/newarch/java/com/killserver/screenshotprev/ScreenshotPreventModule.java
++++ b/android/src/newArch/java/com/killserver/screenshotprev/ScreenshotPreventModule.java
 @@ -0,0 +1,46 @@
 +package com.killserver.screenshotprev;
 +
@@ -339,11 +207,11 @@ index 0000000000000000000000000000000000000000..a59cf151e9ee509f88f172fbed333999
 +    }
 +}
 \ No newline at end of file
-diff --git a/android/src/newarch/java/com/killserver/screenshotprev/ScreenshotPreventTurboPackage.java b/android/src/newarch/java/com/killserver/screenshotprev/ScreenshotPreventTurboPackage.java
+diff --git a/android/src/newArch/java/com/killserver/screenshotprev/ScreenshotPreventTurboPackage.java b/android/src/newArch/java/com/killserver/screenshotprev/ScreenshotPreventTurboPackage.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..885e9c9d9f07c5ad496fef104d2b213d4c69d25a
+index 0000000000000000000000000000000000000000..d3e442329c75d16d06833a98117dc9bbfff1f874
 --- /dev/null
-+++ b/android/src/newarch/java/com/killserver/screenshotprev/ScreenshotPreventTurboPackage.java
++++ b/android/src/newArch/java/com/killserver/screenshotprev/ScreenshotPreventTurboPackage.java
 @@ -0,0 +1,49 @@
 +package com.killserver.screenshotprev;
 +
@@ -395,13 +263,12 @@ index 0000000000000000000000000000000000000000..885e9c9d9f07c5ad496fef104d2b213d
 +    }
 +}
 \ No newline at end of file
-diff --git a/android/src/oldarch/java/com/killserver/screenshotprev/RNScreenshotPreventModule.java b/android/src/oldarch/java/com/killserver/screenshotprev/RNScreenshotPreventModule.java
+diff --git a/android/src/oldArch/java/com/killserver/screenshotprev/RNScreenshotPreventModule.java b/android/src/oldArch/java/com/killserver/screenshotprev/RNScreenshotPreventModule.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..95c0be266cdb11c121ae8d52056e2a40bdd21bd5
+index 0000000000000000000000000000000000000000..cd02eadcec027c8d417ed68f23a150b9ccf54c66
 --- /dev/null
-+++ b/android/src/oldarch/java/com/killserver/screenshotprev/RNScreenshotPreventModule.java
-@@ -0,0 +1,195 @@
-+
++++ b/android/src/oldArch/java/com/killserver/screenshotprev/RNScreenshotPreventModule.java
+@@ -0,0 +1,194 @@
 +package com.killserver.screenshotprev;
 +
 +import android.app.Activity;
@@ -597,13 +464,12 @@ index 0000000000000000000000000000000000000000..95c0be266cdb11c121ae8d52056e2a40
 +  }
 +}
 \ No newline at end of file
-diff --git a/android/src/oldarch/java/com/killserver/screenshotprev/RNScreenshotPreventPackage.java b/android/src/oldarch/java/com/killserver/screenshotprev/RNScreenshotPreventPackage.java
+diff --git a/android/src/oldArch/java/com/killserver/screenshotprev/RNScreenshotPreventPackage.java b/android/src/oldArch/java/com/killserver/screenshotprev/RNScreenshotPreventPackage.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..f853d05249d33d7ca405a2dcb4b528199be40f71
+index 0000000000000000000000000000000000000000..7f62ad494ba5b82a396a5dae6a8961ab1dec66b0
 --- /dev/null
-+++ b/android/src/oldarch/java/com/killserver/screenshotprev/RNScreenshotPreventPackage.java
-@@ -0,0 +1,29 @@
-+
++++ b/android/src/oldArch/java/com/killserver/screenshotprev/RNScreenshotPreventPackage.java
+@@ -0,0 +1,28 @@
 +package com.killserver.screenshotprev;
 +
 +import java.util.Arrays;
@@ -670,7 +536,7 @@ index 0000000000000000000000000000000000000000..1a023c5fba4c3cd51914a2caa0166979
 +export default TurboModuleRegistry.getEnforcing<Spec>('RNScreenshotPrevent');
 \ No newline at end of file
 diff --git a/src/index.ts b/src/index.ts
-index aa8f952601bb8d0c8c0d8b0f08ab4710f7e05fce..cd807cfce1d905d8d68848ca259709ff016babf5 100644
+index aa8f952601bb8d0c8c0d8b0f08ab4710f7e05fce..83fee84498bd607e97dd1a965d73ae01f8ca83b2 100644
 --- a/src/index.ts
 +++ b/src/index.ts
 @@ -1,5 +1,6 @@
@@ -698,3 +564,16 @@ index aa8f952601bb8d0c8c0d8b0f08ab4710f7e05fce..cd807cfce1d905d8d68848ca259709ff
  
      /**
       * subscribes to userDidTakeScreenshot event
+@@ -36,10 +38,10 @@ if (Platform.OS !== "web") {
+ } else {
+     RNScreenshotPrevent = {
+         enabled: (enabled: boolean): void => {
+-            console.warn("RNScreenshotPrevent: enabled not work in web. value: " + enabled);
++            console.warn("RNScreenshotPrevent: enabled not work in web. value: "  enabled);
+         },
+         enableSecureView: (imagePath: string = ""): void => {
+-            console.warn("RNScreenshotPrevent: enableSecureView not work in web."+(!!imagePath ? " send: "+imagePath : ""));
++            console.warn("RNScreenshotPrevent: enableSecureView not work in web."(!!imagePath ? " send: "imagePath : ""));
+         },
+         disableSecureView: (): void => {
+             console.warn("RNScreenshotPrevent: disableSecureView not work in web");
