@@ -116,9 +116,14 @@ const IdpSelectionScreen = (): ReactElement => {
     isNativeLoginFeatureFlagEnabled;
 
   const onIdpSelected = (idp: SpidIdp) => {
+    handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
+    void trackLoginSpidIdpSelected(
+      idp.id,
+      store.getState(),
+      isActiveSessionLogin ? "reauth" : "auth"
+    );
     if (isActiveSessionLogin) {
       dispatch(setIdpSelectedActiveSessionLogin(idp));
-      handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
       if (isNativeLoginEnabled()) {
         navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
           screen: AUTHENTICATION_ROUTES.AUTH_SESSION
@@ -130,12 +135,6 @@ const IdpSelectionScreen = (): ReactElement => {
       }
     } else {
       setSelectedIdp(idp);
-      handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
-      void trackLoginSpidIdpSelected(
-        idp.id,
-        store.getState(),
-        isActiveSessionLogin ? "reauth" : "auth"
-      );
       if (isNativeLoginEnabled()) {
         navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
           screen: AUTHENTICATION_ROUTES.AUTH_SESSION
