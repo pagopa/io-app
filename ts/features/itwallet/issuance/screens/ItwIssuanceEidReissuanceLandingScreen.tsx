@@ -87,7 +87,7 @@ export const ItwIssuanceEidReissuanceLandingScreen = () => {
             })
         }}
         secondaryAction={{
-          label: I18n.t("global.buttons.notNow"),
+          label: I18n.t("global.buttons.cancel"),
           onPress: () => navigation.goBack()
         }}
       />
