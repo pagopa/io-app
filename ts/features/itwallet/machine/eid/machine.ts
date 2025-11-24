@@ -70,7 +70,7 @@ export const itwEidIssuanceMachine = setup({
     navigateToWalletRevocationScreen: notImplemented,
     navigateToCieWarningScreen: notImplemented,
     navigateToCieCanScreen: notImplemented,
-    navigateToCieMrtdReadScreen: notImplemented,
+    navigateToCieMrtdSignScreen: notImplemented,
     closeIssuance: notImplemented,
 
     /**
@@ -840,11 +840,27 @@ export const itwEidIssuanceMachine = setup({
               walletInstanceAttestation: context.walletInstanceAttestation?.jwt
             }),
             onDone: {
-              target: "DisplayingCanPreparationInstructions"
+              target: "DisplayingCanPreparationInstructions",
+              actions: assign(({ event }) => ({
+                mrtdContext: event.output
+              }))
             },
             onError: {
               actions: "setFailure",
               target: "#itwEidIssuanceMachine.Failure"
+            }
+          }
+        },
+        DisplayingCieCardPreparationInstructions: {
+          description:
+            "Displays informations to prepare the CIE for reading (currently not used for CAN flow).",
+          entry: "navigateToCieCardPreparationScreen",
+          on: {
+            back: {
+              target: "WaitingForCan"
+            },
+            next: {
+              target: "DisplayingCieNfcPreparationInstructions"
             }
           }
         },
@@ -867,20 +883,17 @@ export const itwEidIssuanceMachine = setup({
               target: "DisplayingCanPreparationInstructions"
             },
             "cie-can-entered": {
-              target: "DisplayingCieCardPreparationInstructions",
-              actions: assign(({ event }) => ({}))
-            }
-          }
-        },
-        DisplayingCieCardPreparationInstructions: {
-          description: "Displays informations to prepare the CIE for reading",
-          entry: "navigateToCieCardPreparationScreen",
-          on: {
-            back: {
-              target: "WaitingForCan"
-            },
-            next: {
-              target: "DisplayingCieNfcPreparationInstructions"
+              target: "DisplayingCieNfcPreparationInstructions",
+              actions: assign(({ event, context }) => {
+                assert(context.mrtdContext, "mrtdContext must be defined");
+
+                return {
+                  mrtdContext: {
+                    ...context.mrtdContext,
+                    can: event.can
+                  }
+                };
+              })
             }
           }
         },
@@ -900,7 +913,7 @@ export const itwEidIssuanceMachine = setup({
         SigningChallenge: {
           description:
             "Once the CAN is entered, we proceed to sign the MRTD PoP challenge using the MRTD document",
-          entry: "navigateToCieMrtdReadScreen",
+          entry: "navigateToCieMrtdSignScreen",
           on: {
             "mrtd-verification-completed": {
               target: "#itwEidIssuanceMachine.MrtdPoP.Completed"

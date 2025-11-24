@@ -69,7 +69,7 @@ export type CieCanEntered = {
 
 export type MrtdVerificationCompleted = {
   type: "mrtd-verification-completed";
-  redirectUrl: string;
+  authRedirectUrl: string;
 };
 
 export type Retry = {

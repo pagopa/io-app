@@ -27,16 +27,25 @@ export type AuthenticationContext = {
   redirectUri: string;
 };
 
+/**
+ * The CieContext contains information about the CIE capabilities
+ * and NFC status on the device.
+ */
+export type CieContext = {
+  isNFCEnabled: boolean;
+  isCIEAuthenticationSupported: boolean;
+};
+
+/**
+ * The MrtdPoPContext contains the parameters needed to perform
+ * the Proof of Possession (PoP) flow for MRTD-based eID issuance.
+ */
 export type MrtdPoPContext = {
   challenge: string;
   mrtd_auth_session: string;
   mrtd_pop_nonce: string;
   validationUrl: string;
-};
-
-export type CieContext = {
-  isNFCEnabled: boolean;
-  isCIEAuthenticationSupported: boolean;
+  can: string | undefined;
 };
 
 /**

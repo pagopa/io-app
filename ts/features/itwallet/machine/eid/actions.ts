@@ -189,6 +189,12 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
+  navigateToCieMrtdSignScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.MRTD_SIGN_SCREEN
+    });
+  },
+
   navigateToWalletRevocationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.WALLET_REVOCATION_SCREEN

@@ -11,6 +11,7 @@ import ItwIpzsPrivacyScreen from "../discovery/screens/ItwIpzsPrivacyScreen";
 import { ItwActivateNfcScreen } from "../identification/cie/screens/ItwActivateNfcScreen.tsx";
 import { ItwCieCanScreen } from "../identification/cie/screens/ItwCieCanScreen.tsx";
 import { ItwCieCardReaderScreen as ItwCieCardReaderL3Screen } from "../identification/cie/screens/ItwCieCardReaderScreen";
+import { ItwCieMrtdSignScreen } from "../identification/cie/screens/ItwCieMrtdSignScreen.tsx";
 import { ItwCiePinScreen } from "../identification/cie/screens/ItwCiePinScreen.tsx";
 import { ItwCiePreparationCanScreen } from "../identification/cie/screens/ItwCiePreparationCanScreen.tsx";
 import { ItwCiePreparationCardScreen } from "../identification/cie/screens/ItwCiePreparationCardScreen.tsx";
@@ -182,6 +183,11 @@ const InnerNavigator = memo(() => {
       <Stack.Screen
         name={ITW_ROUTES.IDENTIFICATION.CIE.CARD_READER_SCREEN}
         component={ItwCieCardReaderL3Screen}
+        options={hiddenHeader}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.IDENTIFICATION.CIE.MRTD_SIGN_SCREEN}
+        component={ItwCieMrtdSignScreen}
         options={hiddenHeader}
       />
       <Stack.Screen
