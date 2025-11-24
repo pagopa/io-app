@@ -1,4 +1,5 @@
 import { ItwCredentialsActions } from "../../../credentials/store/actions";
+import { ItwCredentialsCatalogueActions } from "../../../credentialsCatalogue/store/actions";
 import { ItwIdentificationActions } from "../../../identification/common/store/actions";
 import { ItwIssuanceActions } from "../../../issuance/store/actions";
 import { ItwLifecycleActions } from "../../../lifecycle/store/actions";
@@ -15,4 +16,5 @@ export type ItwActions =
   | ItwCredentialsActions
   | ItwWalletInstanceActions
   | ItwPreferencesActions
-  | ItwSecurePreferencesActions;
+  | ItwSecurePreferencesActions
+  | ItwCredentialsCatalogueActions;
