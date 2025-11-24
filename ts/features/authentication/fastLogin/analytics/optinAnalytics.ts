@@ -22,7 +22,6 @@ export function trackLoginSessionOptInInfo(flow: LoginType = "auth") {
     })
   );
 }
-// miss on ASL (check it)
 export async function updateLoginSessionProfileAndSuperProperties(
   state: GlobalState,
   value: LoginSessionDuration

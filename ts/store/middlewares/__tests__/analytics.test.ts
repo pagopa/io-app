@@ -158,6 +158,8 @@ describe("analytics", () => {
       expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
       expect(mockMixpanelTrack.mock.calls[0][0]).toBe(action.type);
       expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "KO",
+        event_type: undefined,
         reason: "GENERIC",
         flow: "auth"
       });

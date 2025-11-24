@@ -87,29 +87,36 @@ export const trackWizardCieIdSelected = async (
   spidLevel: SpidLevel,
   flow: LoginType = "auth"
 ) => {
-  trackLoginCieWizardCieIdSelected(spidLevel, flow);
-  await updateMixpanelProfileProperties(state, {
-    property: "LOGIN_METHOD",
-    value: IdpCIE_ID.id
-  });
+  void mixpanelTrack(
+    "LOGIN_CIE_WIZARD_CIEID_SELECTED",
+    buildEventProperties("UX", "action", {
+      security_level: SECURITY_LEVEL_MAP[spidLevel],
+      flow
+    })
+  );
+  if (flow === "auth") {
+    await updateMixpanelProfileProperties(state, {
+      property: "LOGIN_METHOD",
+      value: IdpCIE_ID.id
+    });
+  }
 };
-export function trackLoginCieWizardCiePinSelected(flow: LoginType = "auth") {
+export const trackWizardCiePinSelected = async (
+  state: GlobalState,
+  flow: LoginType = "auth"
+) => {
   void mixpanelTrack(
     "LOGIN_CIE_WIZARD_PIN_SELECTED",
     buildEventProperties("UX", "action", {
       flow
     })
   );
-}
-export const trackWizardCiePinSelected = async (
-  state: GlobalState,
-  flow: LoginType = "auth"
-) => {
-  trackLoginCieWizardCiePinSelected(flow);
-  await updateMixpanelProfileProperties(state, {
-    property: "LOGIN_METHOD",
-    value: IdpCIE.id
-  });
+  if (flow === "auth") {
+    await updateMixpanelProfileProperties(state, {
+      property: "LOGIN_METHOD",
+      value: IdpCIE.id
+    });
+  }
 };
 export const trackWizardCiePinInfoSelected = async (
   flow: LoginType = "auth"

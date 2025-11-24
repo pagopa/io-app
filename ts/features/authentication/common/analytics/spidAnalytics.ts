@@ -62,7 +62,7 @@ function trackLoginSpidCancelError(properties?: EventProperties) {
 function trackMissingSAMLResponseError(properties?: EventProperties) {
   void mixpanelTrack(
     "LOGIN_ERROR_MESSAGE",
-    buildEventProperties("KO", undefined, properties)
+    buildEventProperties("KO", "error", properties)
   );
 }
 export function trackLoginSpidError(
@@ -106,7 +106,6 @@ export function trackLoginSpidError(
     }
   }
 }
-// miss on ASL (check it)
 export async function updateLoginMethodProfileProperty(
   state: GlobalState,
   value: string

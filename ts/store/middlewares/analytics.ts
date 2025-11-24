@@ -88,7 +88,10 @@ const trackAction =
         });
       // Failures with reason as Error and optional description
       case getType(cieAuthenticationError):
-        return mixpanelTrack(action.type, action.payload);
+        return mixpanelTrack(
+          action.type,
+          buildEventProperties("KO", undefined, action.payload)
+        );
       // Failures with reason as Error
       case getType(sessionInformationLoadFailure):
       case getType(profileLoadFailure):

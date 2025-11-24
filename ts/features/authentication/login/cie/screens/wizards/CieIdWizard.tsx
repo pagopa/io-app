@@ -12,8 +12,7 @@ import { openWebUrl } from "../../../../../../utils/url";
 import useNavigateToLoginMethod from "../../../hooks/useNavigateToLoginMethod";
 import {
   trackCieIdWizardScreen,
-  trackWizardCieIdSelected,
-  trackLoginCieWizardCieIdSelected
+  trackWizardCieIdSelected
 } from "../../analytics";
 import { SpidLevel } from "../../utils";
 import { useIOSelector, useIOStore } from "../../../../../../store/hooks";
@@ -45,11 +44,8 @@ const CieIdWizard = () => {
         "authentication.wizards.cie_id_wizard.actions.primary.label"
       ),
       onPress: () => {
-        if (isActiveSessionLogin) {
-          trackLoginCieWizardCieIdSelected(SPID_LEVEL, "reauth");
-        } else {
-          void trackWizardCieIdSelected(store.getState(), SPID_LEVEL);
-        }
+        const flow = isActiveSessionLogin ? "reauth" : "auth";
+        void trackWizardCieIdSelected(store.getState(), SPID_LEVEL, flow);
         navigateToCieIdLoginScreen(SPID_LEVEL);
       }
     },

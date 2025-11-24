@@ -120,25 +120,16 @@ const ActiveSessionCieIdLoginWebView = ({
       if (code !== AUTH_ERRORS.ERROR_1004) {
         dispatch(activeSessionLoginFailure());
       }
-
-      // The related MP events have been commented on, pending their
-      // correct integration into the flow.
-      // Task: https://pagopa.atlassian.net/browse/IOPID-3343
-
-      // Classic login events are kept in case the same ones are reused, with only a
-      // profile/super property added for active session login.
-      // miss on ASL (check it)
-      trackLoginSpidError(code || message, {
-        idp: IdpCIE_ID.id,
-        ...(message ? { "error message": message } : {}),
-        flow: "reauth"
-      });
-
       trackLoginFailure({
         reason: new Error(
           `login failure with code ${code || message || "n/a"}`
         ),
         idp: "cieid",
+        flow: "reauth"
+      });
+      trackLoginSpidError(code || message, {
+        idp: IdpCIE_ID.id,
+        ...(message ? { "error message": message } : {}),
         flow: "reauth"
       });
       // Since we are replacing the screen it's not necessary to trigger the lollipop key regeneration,

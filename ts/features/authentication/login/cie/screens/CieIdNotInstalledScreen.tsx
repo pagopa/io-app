@@ -8,7 +8,6 @@ import { useIOSelector } from "../../../../../store/hooks";
 import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
 
 const CieIdNotInstalledScreen = () => {
-  // miss on ASL (check it)
   const { params } =
     useRoute<
       RouteProp<
