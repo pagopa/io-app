@@ -260,6 +260,21 @@ export const isValidAARStateTransition = (
   return allowedNextStates?.has(nextType) ?? false;
 };
 
+export const maybeIunFromAarFlowState = (
+  data: AARFlowState
+): string | undefined => {
+  switch (data.type) {
+    case sendAARFlowStates.notAddresseeFinal:
+    case sendAARFlowStates.fetchingNotificationData:
+    case sendAARFlowStates.displayingNotificationData:
+      return data.iun;
+    case sendAARFlowStates.ko:
+      return maybeIunFromAarFlowState(data.previousState);
+    default:
+      return undefined;
+  }
+};
+
 type AARFlowDefaultState =
   | NotInitialized
   | DisplayingTos
