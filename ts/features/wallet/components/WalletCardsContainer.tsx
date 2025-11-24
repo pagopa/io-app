@@ -9,8 +9,6 @@ import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnviron
 import { ItwUpgradeBanner } from "../../itwallet/common/components/ItwUpgradeBanner";
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
-import { itwShouldRenderNewItWalletSelector } from "../../itwallet/common/store/selectors";
-import { WALLET_L3_BG_COLOR } from "../../itwallet/common/utils/constants";
 import { ItwWalletCardsContainer } from "../../itwallet/wallet/components/ItwWalletCardsContainer";
 import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
 import {
