@@ -9,6 +9,8 @@ import {
   navigateToSendAarFlowIfEnabled
 } from "../features/pn/aar/utils/deepLinking";
 import { processUtmLink } from "../features/utmLink";
+import { walletUpdate } from "../features/wallet/store/actions";
+import { shouldTriggerWalletUpdate } from "../utils/deepLinkUtils";
 import { GlobalState } from "../store/reducers/types";
 
 export const linkingSubscription =
@@ -30,6 +32,12 @@ export const linkingSubscription =
         // only when logged in we can navigate to the AAR screen.
         if (isSendAARLink(state, url)) {
           navigateToSendAarFlowIfEnabled(state, url);
+        }
+
+        // Trigger wallet update for external Universal Links and specific internal paths
+        // when the user is authenticated and the app is already running
+        if (shouldTriggerWalletUpdate(url)) {
+          dispatch(walletUpdate());
         }
       } else {
         // If we are not logged in, we store the URL to be processed later
