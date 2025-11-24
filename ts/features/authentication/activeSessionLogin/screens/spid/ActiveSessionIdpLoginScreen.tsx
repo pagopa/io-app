@@ -34,10 +34,7 @@ import { useLollipopLoginSource } from "../../../../lollipop/hooks/useLollipopLo
 import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
 import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import {
-  // loginFailure,
-  idpLoginUrlChanged
-} from "../../../common/store/actions";
+import { idpLoginUrlChanged } from "../../../common/store/actions";
 import {
   getIdpLoginUri,
   getIntentFallbackUrl,
@@ -59,6 +56,7 @@ import { ErrorType as SpidLoginErrorType } from "../../../login/idp/store/types"
 import useActiveSessionLoginNavigation from "../../utils/useActiveSessionLoginNavigation";
 import { ACS_PATH } from "../../shared/utils";
 import { trackSpidLoginIntent } from "../analytics";
+import { trackLoginFailure } from "../../../common/analytics";
 
 // TODO: consider changing the loader to unify it and use the same one for both CIE and SPID
 
@@ -169,16 +167,13 @@ const ActiveSessionIdpLoginScreen = () => {
       if (code !== AUTH_ERRORS.ERROR_1004) {
         dispatch(activeSessionLoginFailure());
       }
-      // else {
-      //   dispatch(
-      //     loginFailure({
-      //       error: new Error(
-      //         `login failure with code ${code || message || "n/a"}`
-      //       ),
-      //       idp
-      //     })
-      //   );
-      // }
+      trackLoginFailure({
+        reason: new Error(
+          `login failure with code ${code || message || "n/a"}`
+        ),
+        idp,
+        flow: "reauth"
+      });
 
       const logText = pipe(
         O.fromNullable(code || message),
@@ -199,7 +194,7 @@ const ActiveSessionIdpLoginScreen = () => {
       setRequestState(pot.noneError(SpidLoginErrorType.LOGIN_ERROR));
       setErrorCodeOrMessage(code || message);
     },
-    [dispatch, choosenTool, setRequestState]
+    [choosenTool, dispatch, idp]
   );
 
   const handleLoginSuccess = useCallback(

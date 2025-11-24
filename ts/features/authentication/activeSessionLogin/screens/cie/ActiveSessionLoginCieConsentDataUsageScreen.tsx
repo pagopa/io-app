@@ -35,6 +35,7 @@ import {
   trackLoginCieConsentDataUsageScreen,
   trackLoginCieDataSharingError
 } from "../../../common/analytics/cieAnalytics";
+import { trackLoginFailure } from "../../../common/analytics";
 
 const ActiveSessionLoginCieConsentDataUsageScreen = () => {
   const route =
@@ -56,11 +57,6 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
   //     (token: SessionToken) => dispatch(loginSuccess({ token, idp: "cie" })),
   //     [dispatch]
   //   );
-
-  // const loginFailureDispatch = useCallback(
-  //   (error: Error) => dispatch(loginFailure({ error, idp: "cie" })),
-  //   [dispatch]
-  // );
 
   useOnFirstRender(() => {
     void trackLoginCieConsentDataUsageScreen("reauth");
@@ -112,9 +108,13 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
       }
       setHasError(true);
       navigateToErrorScreen(code || message);
-      //   loginFailureDispatch(
-      //     new Error(`login CIE failure with code ${code || message || "n/a"}`)
-      //   );
+      trackLoginFailure({
+        reason: new Error(
+          `login CIE failure with code ${code || message || "n/a"}`
+        ),
+        idp: "cie",
+        flow: "reauth"
+      });
     },
     [dispatch, navigateToErrorScreen]
   );

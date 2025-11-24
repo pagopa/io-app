@@ -6,6 +6,7 @@ import { IdpCIE, IdpCIE_ID } from "../../login/hooks/useNavigateToLoginMethod";
 import { LoginSessionDuration } from "../../fastLogin/analytics/optinAnalytics";
 import { SpidLevel } from "../../../authentication/login/cie/utils";
 import { LoginType } from "../../activeSessionLogin/screens/analytics";
+import { IdpData } from "../../../../../definitions/content/IdpData";
 
 const SECURITY_LEVEL_MAP: Record<SpidLevel, "L2" | "L3"> = {
   SpidL2: "L2",
@@ -187,5 +188,19 @@ export function trackLoginInfoResourceTap(
   void mixpanelTrack(
     "LOGIN_START_FLOW_RESOURCES_TAP",
     buildEventProperties("UX", "action", { resource_selected })
+  );
+}
+export function trackLoginFailure(props: {
+  reason: Error;
+  idp: keyof IdpData | undefined;
+  flow: LoginType;
+}) {
+  const propsWithDefaultFlow = {
+    ...props,
+    flow: props.flow || "auth"
+  };
+  void mixpanelTrack(
+    "LOGIN_FAILURE",
+    buildEventProperties("TECH", "error", propsWithDefaultFlow)
   );
 }

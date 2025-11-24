@@ -51,6 +51,7 @@ import useActiveSessionLoginNavigation from "../../utils/useActiveSessionLoginNa
 import { ACS_PATH } from "../../shared/utils";
 import { trackLoginSpidError } from "../../../common/analytics/spidAnalytics";
 import { IdpCIE_ID } from "../../../login/hooks/useNavigateToLoginMethod";
+import { trackLoginFailure } from "../../../common/analytics";
 
 const ActiveSessionCieIdLoginWebView = ({
   spidLevel,
@@ -132,15 +133,14 @@ const ActiveSessionCieIdLoginWebView = ({
         ...(message ? { "error message": message } : {}),
         flow: "reauth"
       });
-      // TODO: evaluate loginFailure event with CXM
-      // dispatch(
-      //   loginFailure({
-      //     error: new Error(
-      //       `login failure with code ${code || message || "n/a"}`
-      //     ),
-      //     idp: "cieid"
-      //   })
-      // );
+
+      trackLoginFailure({
+        reason: new Error(
+          `login failure with code ${code || message || "n/a"}`
+        ),
+        idp: "cieid",
+        flow: "reauth"
+      });
       // Since we are replacing the screen it's not necessary to trigger the lollipop key regeneration,
       // because on `navigation.replace` this screen will be unmounted and a further navigation to this screen
       // will mount it again and the `useLollipopLoginSource` hook will be re-executed.
