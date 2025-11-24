@@ -102,17 +102,11 @@ export const cgnStatusHandler = (state: GlobalState): TrackCgnStatus => {
 export const welfareStatusHandler = (
   state: GlobalState
 ): ReadonlyArray<string> => {
-  const idPayCards = selectWalletCardsByType(
-    state,
-    "idPay"
-  ) as Array<WalletCardBonus>;
+  const idPayCards = selectWalletCardsByType(state, "idPay");
   return idPayCards.map(card => card.name);
 };
 
 export const cdcStatusHandler = (state: GlobalState): number => {
-  const cdcCards = selectWalletCardsByType(
-    state,
-    "cdc"
-  ) as Array<WalletCardCdc>;
+  const cdcCards = selectWalletCardsByType(state, "cdc");
   return cdcCards.reduce((sum, card) => sum + card.numberOfCards, 0);
 };
