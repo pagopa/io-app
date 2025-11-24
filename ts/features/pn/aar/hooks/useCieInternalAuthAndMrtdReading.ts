@@ -44,7 +44,7 @@ export const useCieInternalAuthAndMrtdReading = () => {
   }, []);
 
   useEffect(() => {
-    const cleanup = [
+    const registeredListeners = [
       // Start listening for NFC events
       CieManager.addListener("onEvent", event => {
         // Trigger a light haptic feedback on the start of the reading
@@ -72,7 +72,7 @@ export const useCieInternalAuthAndMrtdReading = () => {
 
     return () => {
       // Remove the event listener on unmount
-      cleanup.forEach(remove => remove());
+      registeredListeners.forEach(remove => remove());
       // Ensure the reading is stopped when the screen is unmounted
       void CieManager.stopReading();
     };
