@@ -1,13 +1,7 @@
-import { call, put, select } from "typed-redux-saga/macro";
-import NavigationService from "../navigation/NavigationService";
-import { navigateToMainNavigatorAction } from "../store/actions/navigation";
-import { isTestEnv } from "../utils/environment";
+import { call } from "typed-redux-saga/macro";
 import { handleStoredLinkingUrlIfNeeded } from "../features/linking/sagas";
-import { resetMessageArchivingAction } from "../features/messages/store/actions/archiving";
-import { isArchivingDisabledSelector } from "../features/messages/store/reducers/archiving";
-import { clearNotificationPendingMessage } from "../features/pushNotifications/store/actions/pendingMessage";
-import { pendingMessageStateSelector } from "../features/pushNotifications/store/reducers/pendingMessage";
-import { navigateToMessageRouterAction } from "../features/pushNotifications/utils/navigation";
+import { handlePushNotificationIfNeeded } from "../features/pushNotifications/sagas/common";
+import { isTestEnv } from "../utils/environment";
 
 /**
  * this method is used to handle all actions that
@@ -31,45 +25,6 @@ export function* maybeHandlePendingBackgroundActions(
     return true;
   }
 
-  return false;
-}
-
-function* handlePushNotificationIfNeeded(
-  shouldResetToMainNavigator: boolean = false
-) {
-  const pendingMessageState = yield* select(pendingMessageStateSelector);
-  if (pendingMessageState) {
-    // We have a pending notification message to handle
-    const messageId = pendingMessageState.id;
-
-    // Remove the pending message from the notification state
-    yield* put(clearNotificationPendingMessage());
-
-    if (shouldResetToMainNavigator) {
-      yield* call(navigateToMainNavigatorAction);
-    }
-
-    // It the archiving/restoring of messages is not disabled, make
-    // sure to cancel it, whatever status it may be in (since it
-    // hides the bottom tab bar and we cannot trigger a navigation
-    // flow that may later deliver the user back to a main tab bar
-    // screen where such tab bar is hidden)
-    const isArchivingDisabled = yield* select(isArchivingDisabledSelector);
-    if (!isArchivingDisabled) {
-      // Auto-reset does not provide feedback to the user
-      yield* put(resetMessageArchivingAction(undefined));
-    }
-
-    // Navigate to message router screen
-    yield* call(
-      NavigationService.dispatchNavigationAction,
-      navigateToMessageRouterAction({
-        messageId,
-        fromNotification: true
-      })
-    );
-    return true;
-  }
   return false;
 }
 
