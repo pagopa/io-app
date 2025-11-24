@@ -1,15 +1,12 @@
-import {
-  IOColors,
-  ListItemHeader,
-  useIOTheme,
-  VStack
-} from "@pagopa/io-app-design-system";
-import { memo, useMemo } from "react";
-import { StyleSheet, View } from "react-native";
-import Animated, { LinearTransition } from "react-native-reanimated";
+import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+import { memo, useMemo } from "react";
+import { View } from "react-native";
+import Animated, { LinearTransition } from "react-native-reanimated";
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../store/hooks";
+import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
+import { ItwUpgradeBanner } from "../../itwallet/common/components/ItwUpgradeBanner";
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
 import { ItwWalletCardsContainer } from "../../itwallet/wallet/components/ItwWalletCardsContainer";
@@ -23,10 +20,6 @@ import {
   shouldRenderWalletEmptyStateSelector
 } from "../store/selectors";
 import { withWalletCategoryFilter } from "../utils";
-import { ItwUpgradeBanner } from "../../itwallet/common/components/ItwUpgradeBanner";
-import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
-import { WALLET_L3_BG_COLOR } from "../../itwallet/common/utils/constants";
-import { itwShouldRenderNewItWalletSelector } from "../../itwallet/common/store/selectors";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
@@ -115,8 +108,6 @@ const WalletCardsContainerSkeleton = () => (
 const OtherWalletCardsContainer = withWalletCategoryFilter("other", () => {
   const cards = useIOSelector(selectWalletOtherCards);
   const categories = useIOSelector(selectWalletCategories);
-  const theme = useIOTheme();
-  const hasItwNewInterface = useIOSelector(itwShouldRenderNewItWalletSelector);
 
   useDebugInfo({
     other: {
@@ -137,75 +128,19 @@ const OtherWalletCardsContainer = withWalletCategoryFilter("other", () => {
     );
   }, [categories.size]);
 
-  const content = useMemo(() => {
-    // If there are no cards, don't render the container
-    if (cards.length === 0) {
-      return <WalletCardsCategoryRetryErrorBanner />;
-    }
-
-    return (
-      <WalletCardsCategoryContainer
-        key="cards_category_other"
-        testID="otherWalletCardsContainerTestID"
-        cards={cards}
-        header={sectionHeader}
-        bottomElement={<WalletCardsCategoryRetryErrorBanner />}
-      />
-    );
-  }, [cards, sectionHeader]);
-
-  if (hasItwNewInterface) {
-    // With the ITW UI, we need to add a "cover" on the blue background
-    return (
-      <View
-        style={[
-          styles.removeHorizontalMargin,
-          styles.extendedBottom,
-          {
-            backgroundColor: IOColors[theme["appBackground-primary"]]
-          }
-        ]}
-      >
-        <View
-          style={[
-            styles.removeHorizontalMargin,
-            styles.clipContainer,
-            {
-              backgroundColor: IOColors[theme["appBackground-primary"]]
-            }
-          ]}
-        >
-          <View style={[styles.removeHorizontalMargin, styles.clip]} />
-        </View>
-        {content}
-      </View>
-    );
+  if (cards.length === 0) {
+    return <WalletCardsCategoryRetryErrorBanner />;
   }
 
-  return content;
-});
-
-const styles = StyleSheet.create({
-  removeHorizontalMargin: {
-    marginHorizontal: -24,
-    paddingHorizontal: 24
-  },
-  extendedBottom: {
-    paddingBottom: 300,
-    marginBottom: -300
-  },
-  clipContainer: {
-    marginTop: -14, // Takes 14 pixel from the above component
-    height: 18,
-    marginBottom: 2
-  },
-  clip: {
-    height: 16,
-    backgroundColor: WALLET_L3_BG_COLOR,
-    borderBottomStartRadius: 16,
-    borderBottomEndRadius: 16,
-    borderCurve: "continuous"
-  }
+  return (
+    <WalletCardsCategoryContainer
+      key="cards_category_other"
+      testID="otherWalletCardsContainerTestID"
+      cards={cards}
+      header={sectionHeader}
+      bottomElement={<WalletCardsCategoryRetryErrorBanner />}
+    />
+  );
 });
 
 export {

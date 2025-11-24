@@ -145,6 +145,11 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "credentials": {
       "credentials": {},
     },
+    "credentialsCatalogue": {
+      "catalogue": {
+        "kind": "PotNone",
+      },
+    },
     "environment": {
       "env": "prod",
     },
