@@ -120,10 +120,8 @@ const trackSuccess = (
       E.isRight(sendThirdPartyMessageEither) &&
       sendThirdPartyMessageEither.right.details != null
     ) {
-      const attachments = sendThirdPartyMessageEither.right.attachments;
+      const { attachments, details } = sendThirdPartyMessageEither.right;
       const hasAttachments = attachments != null && attachments.length > 0;
-
-      const details = sendThirdPartyMessageEither.right.details;
       const timeline = details.notificationStatusHistory;
 
       const status =

@@ -39,9 +39,8 @@ export const sendMessageFromIdSelector = (
   id: string
 ): ThirdPartyMessage | undefined => {
   const thirdPartyMessageContainerPot = thirdPartyFromIdSelector(state, id);
-  const thirdPartyMessageContainer = pot.getOrElse(
-    thirdPartyMessageContainerPot,
-    undefined
+  const thirdPartyMessageContainer = pot.toUndefined(
+    thirdPartyMessageContainerPot
   );
   const thirdPartyMessage = thirdPartyMessageContainer?.third_party_message;
   const sendThirdPartyMessageEither =
@@ -61,9 +60,8 @@ export const sendMessageCreationDateSelector = (
   id: string
 ): Date | undefined => {
   const thirdPartyMessageContainerPot = thirdPartyFromIdSelector(state, id);
-  const thirdPartyMessageContainer = pot.getOrElse(
-    thirdPartyMessageContainerPot,
-    undefined
+  const thirdPartyMessageContainer = pot.toUndefined(
+    thirdPartyMessageContainerPot
   );
   return thirdPartyMessageContainer?.created_at;
 };
