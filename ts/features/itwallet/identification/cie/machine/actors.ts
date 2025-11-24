@@ -1,16 +1,16 @@
 import { CieManager } from "@pagopa/io-react-native-cie";
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import HapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
 import { fromCallback, fromPromise } from "xstate";
 import { assert } from "../../../../../utils/assert";
 import { EnvType } from "../../../common/utils/environment";
+import {
+  WAIT_TIMEOUT_NAVIGATION,
+  WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
+} from "../utils/constants";
 import { cieUatEndpoint } from "../utils/endpoints";
 import { CieEvents } from "./events";
-
-const WAIT_TIMEOUT_NAVIGATION = 1700 as Millisecond;
-const WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY = 5000 as Millisecond;
 
 export type StartCieManagerInput = {
   pin: string;
