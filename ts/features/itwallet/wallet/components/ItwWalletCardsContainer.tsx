@@ -137,7 +137,6 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
             )}
           </>
         }
-        bottomElement={<ItwFeedbackBanner />}
       />
       {eidInfoBottomSheet.bottomSheet}
     </>
