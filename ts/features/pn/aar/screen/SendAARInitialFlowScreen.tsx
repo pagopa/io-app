@@ -8,9 +8,9 @@ import { SendAARLoadingComponent } from "../components/SendAARLoadingComponent";
 import { SendAARTosComponent } from "../components/SendAARTosComponent";
 import { setAarFlowState } from "../store/actions";
 import { currentAARFlowData } from "../store/selectors";
-import { sendAARFlowStates } from "../utils/stateUtils";
 import { trackSendAARToS } from "../analytics";
 import { SendUserType } from "../../../pushNotifications/analytics";
+import { sendAARFlowStates } from "../utils/stateUtils";
 
 type SendAarInitialFlowScreenT = {
   qrCode: string;
@@ -48,6 +48,15 @@ export const SendAARInitialFlowScreen = ({
           screen: PN_ROUTES.MAIN,
           params: {
             screen: PN_ROUTES.SEND_AAR_ERROR
+          }
+        });
+        break;
+      case sendAARFlowStates.notAddressee:
+        navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+          screen: PN_ROUTES.MAIN,
+          params: {
+            screen: PN_ROUTES.SEND_AAR_DELEGATION_PROPOSAL,
+            params: flowData
           }
         });
         break;

@@ -8,6 +8,7 @@ import { setAarFlowState } from "../store/actions";
 import { currentAARFlowData } from "../store/selectors";
 import {
   AARFlowState,
+  AAR_DELEGATION_FEATURE_ENABLED,
   SendAARFailurePhase,
   sendAARFlowStates
 } from "../utils/stateUtils";
@@ -93,13 +94,16 @@ export function* fetchAARQrCodeSaga(
         return;
 
       case 403:
-        const notAddresseeFinalState: AARFlowState = {
-          type: sendAARFlowStates.notAddresseeFinal,
+        const stateToPut = AAR_DELEGATION_FEATURE_ENABLED
+          ? sendAARFlowStates.notAddressee
+          : sendAARFlowStates.notAddresseeFinal;
+        const notAddresseeState: AARFlowState = {
+          type: stateToPut,
           iun: value.iun,
           recipientInfo: { ...value.recipientInfo },
           qrCode
         };
-        yield* put(setAarFlowState(notAddresseeFinalState));
+        yield* put(setAarFlowState(notAddresseeState));
         return;
 
       default:
