@@ -65,12 +65,12 @@ export const itwEidIssuanceMachine = setup({
     navigateToCieCardPreparationScreen: notImplemented,
     navigateToCieCanPreparationScreen: notImplemented,
     navigateToCiePinScreen: notImplemented,
-    navigateToCieReadCardScreen: notImplemented,
+    navigateToCieAuthenticationScreen: notImplemented,
     navigateToNfcInstructionsScreen: notImplemented,
     navigateToWalletRevocationScreen: notImplemented,
     navigateToCieWarningScreen: notImplemented,
     navigateToCieCanScreen: notImplemented,
-    navigateToCieMrtdSignScreen: notImplemented,
+    navigateToCieInternalAuthAndMrtdScreen: notImplemented,
     closeIssuance: notImplemented,
 
     /**
@@ -715,7 +715,7 @@ export const itwEidIssuanceMachine = setup({
               entry: "navigateToCieNfcPreparationScreen",
               on: {
                 next: {
-                  actions: "navigateToCieReadCardScreen",
+                  actions: "navigateToCieAuthenticationScreen",
                   target: "StartingCieAuthFlow"
                 },
                 "go-to-cie-warning": {
@@ -913,7 +913,7 @@ export const itwEidIssuanceMachine = setup({
         SigningChallenge: {
           description:
             "Once the CAN is entered, we proceed to sign the MRTD PoP challenge using the MRTD document",
-          entry: "navigateToCieMrtdSignScreen",
+          entry: "navigateToCieInternalAuthAndMrtdScreen",
           on: {
             "mrtd-challenged-signed": {
               target: "#itwEidIssuanceMachine.MrtdPoP.Completed",
@@ -932,7 +932,6 @@ export const itwEidIssuanceMachine = setup({
         },
         ValidatingChallenge: {
           description: "",
-          entry: "navigateToCieMrtdSignScreen",
           on: {
             "mrtd-verification-completed": {
               target: "#itwEidIssuanceMachine.MrtdPoP.Completed"
