@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
-import { ReactNode } from "react";
+import { ReactNode, useCallback } from "react";
 import { View } from "react-native";
 import {
   InitiativeDTO,
@@ -38,6 +38,10 @@ import { useIDPayStaticCodeModal } from "../../common/hooks/useIDPayStaticCodeMo
 import { useIdPaySupportModal } from "../../common/hooks/useIdPaySupportModal";
 import { formatNumberCurrencyCentsOrDefault } from "../../common/utils/strings";
 import { IDPayDetailsRoutes } from "../navigation";
+import {
+  idPayBeneficiaryDetailsGet,
+  idPayOnboardingStatusGet
+} from "../store/actions";
 import {
   IdPayInitiativeRulesInfoBox,
   IdPayInitiativeRulesInfoBoxSkeleton
@@ -69,10 +73,28 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
 
   const { initiativeDetails, beneficiaryDetails, isLoading } = props;
   const dispatch = useIODispatch();
-  const { bottomSheet, present } = useIDPayStaticCodeModal(
-    initiativeDetails?.initiativeId ?? "",
-    initiativeDetails?.initiativeName ?? ""
-  );
+
+  const handleDismiss = useCallback(() => {
+    if (!initiativeDetails?.initiativeId) {
+      return;
+    }
+    dispatch(
+      idPayBeneficiaryDetailsGet.request({
+        initiativeId: initiativeDetails.initiativeId
+      })
+    );
+    dispatch(
+      idPayOnboardingStatusGet.request({
+        initiativeId: initiativeDetails.initiativeId
+      })
+    );
+  }, [dispatch, initiativeDetails]);
+
+  const { bottomSheet, present } = useIDPayStaticCodeModal({
+    initiativeId: initiativeDetails?.initiativeId ?? "",
+    initiativeName: initiativeDetails?.initiativeName ?? "",
+    onDismiss: handleDismiss
+  });
 
   if (isLoading) {
     return <BeneficiaryDetailsContentSkeleton />;
@@ -291,16 +313,17 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
             />
             {renderTableRow(enrollmentData)}
             <VSpacer size={16} />
-            {initiativeDetails.voucherStatus !== VoucherStatusEnum.USED && (
-              <ListItemAction
-                icon="docAttach"
-                variant="primary"
-                label={I18n.t(
-                  "idpay.initiative.beneficiaryDetails.buttons.staticCode"
-                )}
-                onPress={handleGenerateStaticCode}
-              />
-            )}
+            {initiativeDetails.voucherStatus !== VoucherStatusEnum.USED &&
+              initiativeDetails.voucherStatus !== VoucherStatusEnum.EXPIRED && (
+                <ListItemAction
+                  icon="docAttach"
+                  variant="primary"
+                  label={I18n.t(
+                    "idpay.initiative.beneficiaryDetails.buttons.staticCode"
+                  )}
+                  onPress={handleGenerateStaticCode}
+                />
+              )}
             <ListItemAction
               icon="security"
               variant="primary"

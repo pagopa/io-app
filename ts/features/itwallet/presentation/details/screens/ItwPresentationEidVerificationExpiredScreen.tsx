@@ -1,10 +1,15 @@
 import { BodyProps } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { useItwEidFeedbackBottomSheet } from "../../../common/hooks/useItwEidFeedbackBottomSheet.tsx";
+import {
+  ItwEidReissuingTrigger,
+  trackItwEidReissuingMandatory
+} from "../../../analytics";
 
 export const ItwPresentationEidVerificationExpiredScreen = () => {
   const navigation = useIONavigation();
@@ -28,6 +33,12 @@ export const ItwPresentationEidVerificationExpiredScreen = () => {
       }
     });
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      trackItwEidReissuingMandatory(ItwEidReissuingTrigger.ADD_CREDENTIAL);
+    }, [])
+  );
 
   const bodyPropsArray: Array<BodyProps> = [
     {

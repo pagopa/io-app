@@ -6,11 +6,11 @@ import {
 import { memo, useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar.tsx";
+import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
-import { getThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
+import { useThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
-import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
 import { ItwPresentationCredentialCard } from "./ItwPresentationCredentialCard.tsx";
 
 type ItwPresentationDetailsHeaderProps = {
@@ -36,7 +36,7 @@ const ItwPresentationDetailsHeader = ({
   const itwFeaturesEnabled = useItwFeaturesEnabled(credential);
 
   const { backgroundColor, textColor, statusBarStyle } =
-    getThemeColorByCredentialType(
+    useThemeColorByCredentialType(
       credential.credentialType as CredentialType,
       itwFeaturesEnabled
     );

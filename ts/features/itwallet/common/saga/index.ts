@@ -12,6 +12,7 @@ import {
   checkWalletInstanceStateSaga
 } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
 import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga.ts";
+import { watchItwCredentialsCatalogueSaga } from "../../credentialsCatalogue/saga/index.ts";
 import { watchItwEnvironment } from "./environment";
 import { watchItwOfflineAccess } from "./offlineAccess.ts";
 
@@ -20,6 +21,8 @@ export function* watchItwSaga(): SagaIterator {
   yield* fork(watchItwLifecycleSaga);
   // Check if the fiscal code is enabled, to enable the L3
   yield* fork(checkFiscalCodeEnabledSaga);
+  // Fetch and process the Digital Credentials Catalogue
+  yield* fork(watchItwCredentialsCatalogueSaga);
 
   const isWalletInstanceConsistent = yield* call(
     checkWalletInstanceInconsistencySaga

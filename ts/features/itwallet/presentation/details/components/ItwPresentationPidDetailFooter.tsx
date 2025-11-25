@@ -30,16 +30,16 @@ const ItwPresentationPidDetailFooter = ({ credential }: Props) => {
       [
         {
           text: I18n.t(
+            "features.itWallet.presentation.itWalletId.dialog.revoke.cancel"
+          ),
+          style: "cancel"
+        },
+        {
+          text: I18n.t(
             "features.itWallet.presentation.itWalletId.dialog.revoke.confirm"
           ),
           style: "destructive",
           onPress: () => machineRef.send({ type: "revoke-wallet-instance" })
-        },
-        {
-          text: I18n.t(
-            "features.itWallet.presentation.itWalletId.dialog.revoke.cancel"
-          ),
-          style: "cancel"
         }
       ]
     );
@@ -49,8 +49,10 @@ const ItwPresentationPidDetailFooter = ({ credential }: Props) => {
     <View>
       <ListItemAction
         variant="primary"
-        icon="productITWallet"
-        label={I18n.t("features.itWallet.presentation.itWalletId.cta.info")}
+        icon="website"
+        label={I18n.t(
+          "features.itWallet.presentation.credentialDetails.discoverItWallet"
+        )}
         onPress={useNotAvailableToastGuard(constVoid)}
       />
       <ListItemAction

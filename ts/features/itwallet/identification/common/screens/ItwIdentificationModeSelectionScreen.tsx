@@ -1,15 +1,14 @@
 import {
+  Badge,
   ContentWrapper,
   IOButton,
   ModuleNavigationAlt,
   VStack
 } from "@pagopa/io-app-design-system";
-import { useFocusEffect, useRoute } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { View } from "react-native";
-import CiePin from "../../../../../../img/features/itWallet/identification/cie_pin.svg";
-import SpidLogo from "../../../../../../img/features/itWallet/identification/spid_logo.svg";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import {
@@ -20,20 +19,19 @@ import ROUTES from "../../../../../navigation/routes";
 import { useIOSelector } from "../../../../../store/hooks";
 import {
   trackItWalletIDMethod,
-  trackItWalletIDMethodSelected,
   trackItwUserWithoutL3Bottomsheet,
   trackItwUserWithoutL3Requirements
 } from "../../../analytics";
+import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { itwDisabledIdentificationMethodsSelector } from "../../../common/store/selectors/remoteConfig";
-import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
-  isCIEAuthenticationSupportedSelector,
   isL3FeaturesEnabledSelector,
-  selectIsLoading
+  selectIsLoading,
+  selectIssuanceLevel,
+  selectIssuanceMode
 } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
-import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 
 export type ItwIdentificationNavigationParams = {
   eidReissuing?: boolean;
@@ -46,40 +44,68 @@ export type ItwIdentificationModeSelectionScreenProps =
     "ITW_IDENTIFICATION_MODE_SELECTION"
   >;
 
-export const ItwIdentificationModeSelectionScreen = (
-  props: ItwIdentificationModeSelectionScreenProps
-) => {
-  const { eidReissuing } = props.route.params;
+const i18nNs = "features.itWallet.identification.modeSelection" as const;
+
+export const ItwIdentificationModeSelectionScreen = ({
+  route
+}: ItwIdentificationModeSelectionScreenProps) => {
+  const { name: routeName, params } = route;
+  const { eidReissuing } = params;
+
   const navigation = useIONavigation();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
-  const isWalletAlreadyActivated = useIOSelector(itwLifecycleIsValidSelector);
-  const { name: routeName } = useRoute();
+  const mode = ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
+  const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
 
-  const ns = useMemo(() => {
-    if (isL3 && eidReissuing) {
-      return "features.itWallet.identification.mode.l3.reissuing" as const;
-    }
-    if (isL3) {
-      return "features.itWallet.identification.mode.l3" as const;
-    }
-    if (eidReissuing) {
-      return "features.itWallet.identification.mode.l2.reissuing" as const;
-    }
-    return "features.itWallet.identification.mode.l2" as const;
-  }, [eidReissuing, isL3]);
-
-  const { title, description, section } = useMemo(
-    () => ({
-      title: I18n.t(`${ns}.title`),
-      description: I18n.t(`${ns}.description`),
-      section: I18n.t(`${ns}.section`)
-    }),
-    [ns]
+  const disabledIdentificationMethods = useIOSelector(
+    itwDisabledIdentificationMethodsSelector
   );
+
+  const isCiePinDisabled = useMemo(
+    () =>
+      disabledIdentificationMethods.includes("CiePin") ||
+      level === "l2-fallback",
+    [disabledIdentificationMethods, level]
+  );
+  const isSpidDisabled = useMemo(
+    () => disabledIdentificationMethods.includes("SPID") || level === "l3",
+    [disabledIdentificationMethods, level]
+  );
+  const isCieIdDisabled = useMemo(
+    () => disabledIdentificationMethods.includes("CieID"),
+    [disabledIdentificationMethods]
+  );
+
+  const featureName = useMemo(
+    () => (isL3 ? "IT-Wallet" : "Documenti su IO"),
+    [isL3]
+  );
+
+  const { section, title, description } = useMemo(() => {
+    if (mode === "reissuance") {
+      return {
+        section: I18n.t(`${i18nNs}.section.reissuance`),
+        title: I18n.t(`${i18nNs}.title.reissuance`),
+        description: I18n.t(`${i18nNs}.description.reissuance`, {
+          feature: featureName
+        })
+      };
+    }
+
+    return {
+      section: I18n.t(`${i18nNs}.section.issuance`, {
+        feature: featureName
+      }),
+      title: I18n.t(`${i18nNs}.title.issuance`),
+      description: I18n.t(`${i18nNs}.description.issuance`, {
+        feature: featureName
+      })
+    };
+  }, [mode, featureName]);
 
   useFocusEffect(
     useCallback(() => {
@@ -95,32 +121,8 @@ export const ItwIdentificationModeSelectionScreen = (
     }, [isL3])
   );
 
-  const handleSpidPress = useCallback(() => {
-    machineRef.send({ type: "select-identification-mode", mode: "spid" });
-    trackItWalletIDMethodSelected({
-      ITW_ID_method: "spid",
-      itw_flow: isL3 ? "L3" : "L2"
-    });
-  }, [isL3, machineRef]);
-
-  const handleCiePinPress = useCallback(() => {
-    machineRef.send({ type: "select-identification-mode", mode: "ciePin" });
-    trackItWalletIDMethodSelected({
-      ITW_ID_method: "ciePin",
-      itw_flow: isL3 ? "L3" : "L2"
-    });
-  }, [isL3, machineRef]);
-
-  const handleCieIdPress = useCallback(() => {
-    machineRef.send({ type: "select-identification-mode", mode: "cieId" });
-    trackItWalletIDMethodSelected({
-      ITW_ID_method: "cieId",
-      itw_flow: isL3 ? "L3" : "L2"
-    });
-  }, [isL3, machineRef]);
-
   const handleNoCiePress = useCallback(() => {
-    if (isWalletAlreadyActivated) {
+    if (mode === "upgrade") {
       trackItwUserWithoutL3Requirements({
         screen_name: routeName,
         reason: "user_without_cie",
@@ -136,51 +138,26 @@ export const ItwIdentificationModeSelectionScreen = (
         level: "l2-fallback"
       });
     }
-  }, [isWalletAlreadyActivated, machineRef, routeName]);
-
-  const disabledIdentificationMethods = useIOSelector(
-    itwDisabledIdentificationMethodsSelector
-  );
-  const isCieAuthenticationSupported = ItwEidIssuanceMachineContext.useSelector(
-    isCIEAuthenticationSupportedSelector
-  );
-  const isL3FeaturesEnabled = ItwEidIssuanceMachineContext.useSelector(
-    isL3FeaturesEnabledSelector
-  );
-
-  const isSpidDisabled = useMemo(
-    () => disabledIdentificationMethods.includes("SPID") || isL3FeaturesEnabled,
-    [disabledIdentificationMethods, isL3FeaturesEnabled]
-  );
-  const isCieIdDisabled = useMemo(
-    () => disabledIdentificationMethods.includes("CieID"),
-    [disabledIdentificationMethods]
-  );
-  const isCiePinDisabled = useMemo(
-    () => disabledIdentificationMethods.includes("CiePin"),
-    [disabledIdentificationMethods]
-  );
-
-  const onConfirmPress = () => {
-    navigation.reset({
-      index: 1,
-      routes: [
-        {
-          name: ROUTES.MAIN,
-          params: {
-            screen: ROUTES.WALLET_HOME,
-            params: { requiredEidFeedback: true }
-          }
-        }
-      ]
-    });
-  };
+  }, [mode, machineRef, routeName]);
 
   const dismissalDialog = useItwDismissalDialog({
     customLabels: {
       body: ""
     },
-    handleDismiss: onConfirmPress
+    handleDismiss: () => {
+      navigation.reset({
+        index: 1,
+        routes: [
+          {
+            name: ROUTES.MAIN,
+            params: {
+              screen: ROUTES.WALLET_HOME,
+              params: { requiredEidFeedback: true }
+            }
+          }
+        ]
+      });
+    }
   });
 
   if (isLoading) {
@@ -200,65 +177,138 @@ export const ItwIdentificationModeSelectionScreen = (
       goBack={eidReissuing ? dismissalDialog.show : undefined}
     >
       <ContentWrapper>
-        <VStack space={24}>
-          <VStack space={8}>
-            {!(!isCieAuthenticationSupported || isCiePinDisabled) && (
-              <ModuleNavigationAlt
-                title={I18n.t(`${ns}.method.ciePin.title`, {
-                  defaultValue: ""
-                })}
-                subtitle={I18n.t(`${ns}.method.ciePin.subtitle`)}
-                testID="CiePin"
-                image={<CiePin width={28} height={32} />}
-                onPress={handleCiePinPress}
-                badge={
-                  isL3 || eidReissuing
-                    ? {
-                        text: I18n.t(`${ns}.method.ciePin.badge`, {
-                          defaultValue: ""
-                        }),
-                        variant: "highlight",
-                        outline: false
-                      }
-                    : undefined
-                }
-              />
-            )}
-            {!isSpidDisabled && (
-              <ModuleNavigationAlt
-                title={I18n.t(
-                  "features.itWallet.identification.mode.l2.method.spid.title"
-                )}
-                subtitle={I18n.t(`${ns}.method.spid.subtitle`)}
-                testID="Spid"
-                image={<SpidLogo width={50} height={24} />}
-                onPress={handleSpidPress}
-              />
-            )}
-
-            {!isCieIdDisabled && (
-              <ModuleNavigationAlt
-                title={I18n.t(`${ns}.method.cieId.title`)}
-                subtitle={I18n.t(`${ns}.method.cieId.subtitle`)}
-                icon={"cie"}
-                testID="CieID"
-                onPress={handleCieIdPress}
-              />
-            )}
-          </VStack>
+        <VStack space={16}>
+          {!isCiePinDisabled && <CiePinMethodModule />}
+          {!isSpidDisabled && <SpidMethodModule />}
+          {!isCieIdDisabled && <CieIdMethodModule />}
           {isL3 && !eidReissuing && (
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <IOButton
                 variant="link"
                 textAlign="center"
-                label={I18n.t("features.itWallet.identification.mode.l3.noCie")}
+                label={I18n.t(`${i18nNs}.noCieCta`)}
                 onPress={handleNoCiePress}
-                testID={"noCieButton"}
+                testID={"noCieButtonTestID"}
               />
             </View>
           )}
         </VStack>
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>
+  );
+};
+
+const CiePinMethodModule = () => {
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
+  const mode = ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
+
+  const handleOnPress = useCallback(() => {
+    machineRef.send({ type: "select-identification-mode", mode: "ciePin" });
+  }, [machineRef]);
+
+  const { title, subtitle } = useMemo(() => {
+    if (level === "l3-next") {
+      return {
+        title: I18n.t(`${i18nNs}.mode.ciePin.title`),
+        subtitle: I18n.t(`${i18nNs}.mode.ciePin.subtitle.l3-next`)
+      };
+    }
+
+    return {
+      title: I18n.t(`${i18nNs}.mode.ciePin.title`),
+      subtitle: I18n.t(`${i18nNs}.mode.ciePin.subtitle.default`)
+    };
+  }, [level]);
+
+  const badgeProps: Badge | undefined = useMemo(() => {
+    if (level === "l2" && mode === "issuance") {
+      // Should not display the recommended badge for L2 issuance
+      return undefined;
+    }
+
+    return {
+      text: I18n.t(`${i18nNs}.mode.ciePin.badge`),
+      variant: "highlight",
+      outline: false,
+      testID: "CiePinRecommendedBadgeTestID"
+    };
+  }, [level, mode]);
+
+  return (
+    <ModuleNavigationAlt
+      title={title}
+      subtitle={subtitle}
+      testID="CiePinMethodModuleTestID"
+      icon="cieCard"
+      onPress={handleOnPress}
+      badge={badgeProps}
+    />
+  );
+};
+
+const SpidMethodModule = () => {
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
+
+  const handleOnPress = useCallback(() => {
+    machineRef.send({ type: "select-identification-mode", mode: "spid" });
+  }, [machineRef]);
+
+  const { title, subtitle } = useMemo(() => {
+    if (level === "l3-next") {
+      return {
+        title: I18n.t(`${i18nNs}.mode.spid.title.l3-next`),
+        subtitle: I18n.t(`${i18nNs}.mode.spid.subtitle.l3-next`)
+      };
+    }
+
+    return {
+      title: I18n.t(`${i18nNs}.mode.spid.title.default`),
+      subtitle: I18n.t(`${i18nNs}.mode.spid.subtitle.default`)
+    };
+  }, [level]);
+
+  return (
+    <ModuleNavigationAlt
+      title={title}
+      subtitle={subtitle}
+      testID="SpidMethodModuleTestID"
+      icon="spid"
+      onPress={handleOnPress}
+    />
+  );
+};
+
+const CieIdMethodModule = () => {
+  const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
+
+  const handleOnPress = useCallback(() => {
+    machineRef.send({ type: "select-identification-mode", mode: "cieId" });
+  }, [machineRef]);
+
+  const { title, subtitle } = useMemo(() => {
+    if (level === "l3-next") {
+      return {
+        title: I18n.t(`${i18nNs}.mode.cieId.title`),
+        subtitle: I18n.t(`${i18nNs}.mode.cieId.subtitle.l3-next`)
+      };
+    }
+
+    return {
+      title: I18n.t(`${i18nNs}.mode.cieId.title`),
+      subtitle: I18n.t(`${i18nNs}.mode.cieId.subtitle.default`)
+    };
+  }, [level]);
+
+  return (
+    <ModuleNavigationAlt
+      title={title}
+      subtitle={subtitle}
+      icon={"cie"}
+      testID="CieIDMethodModuleTestID"
+      onPress={handleOnPress}
+    />
   );
 };
