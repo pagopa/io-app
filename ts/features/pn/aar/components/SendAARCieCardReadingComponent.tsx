@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo } from "react";
 import i18n from "i18next";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
 import {
   isErrorState,
   isReadingState,
@@ -35,6 +37,7 @@ export const SendAARCieCardReadingComponent = ({
   mandateId
 }: SendAARCieCardReadingComponentProps) => {
   const dispatch = useIODispatch();
+  const theme = useIOTheme();
   const { terminateFlow } = useSendAarFlowManager();
   const { startReading, stopReading, readState } =
     useCieInternalAuthAndMrtdReading();
@@ -138,10 +141,17 @@ export const SendAARCieCardReadingComponent = ({
   }, [cancelAction, errorName, terminateFlow, handleStartReading]);
 
   return (
-    <CieCardReadContent
-      progress={progress}
-      hiddenProgressBar={isError}
-      {...contentMap[readState.status]}
-    />
+    <SafeAreaView
+      style={[
+        { flex: 1 },
+        { backgroundColor: IOColors[theme["appBackground-primary"]] }
+      ]}
+    >
+      <CieCardReadContent
+        progress={progress}
+        hiddenProgressBar={isError}
+        {...contentMap[readState.status]}
+      />
+    </SafeAreaView>
   );
 };

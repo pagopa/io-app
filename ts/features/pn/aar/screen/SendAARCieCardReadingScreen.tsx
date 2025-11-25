@@ -1,5 +1,4 @@
 import i18n from "i18next";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useIOSelector } from "../../../../store/hooks";
 import { currentAARFlowStateType } from "../store/selectors";
 import { sendAARFlowStates } from "../utils/stateUtils";
@@ -25,19 +24,18 @@ export const SendAARCieCardReadingScreen = ({
 }: SendAARCieCardReadingScreenProps) => {
   const currentFlow = useIOSelector(currentAARFlowStateType);
 
-  const isCieScanningFlow = currentFlow === sendAARFlowStates.cieScanning;
-
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      {isCieScanningFlow ? (
-        <SendAARCieCardReadingComponent {...route.params} />
-      ) : (
+  switch (currentFlow) {
+    case sendAARFlowStates.cieScanning:
+      return <SendAARCieCardReadingComponent {...route.params} />;
+    case sendAARFlowStates.validatingMandate:
+      return (
         <SendAARLoadingComponent
           contentTitle={i18n.t(
             "features.pn.aar.flow.validatingMandate.loadingText"
           )}
         />
-      )}
-    </SafeAreaView>
-  );
+      );
+    default:
+      return null;
+  }
 };
