@@ -62,10 +62,10 @@ import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { setNativeLoginRequestInfo } from "../store/actions";
 import { nativeLoginRequestInfoSelector } from "../store/selectors";
 import { getSpidErrorCodeDescription } from "../utils/spidErrorCode";
-import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
 import {
   isActiveSessionFastLoginEnabledSelector,
-  isActiveSessionLoginSelector
+  isActiveSessionLoginSelector,
+  remoteApiLoginUrlPrefixSelector
 } from "../../../activeSessionLogin/store/selectors";
 
 const styles = StyleSheet.create({

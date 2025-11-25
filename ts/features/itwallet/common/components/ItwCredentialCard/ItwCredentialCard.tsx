@@ -1,20 +1,20 @@
 import { HStack, Icon, IOText, Tag } from "@pagopa/io-app-design-system";
 import Color from "color";
+import I18n from "i18next";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
-import I18n from "i18next";
 import { useIOSelector } from "../../../../../store/hooks";
 import { fontPreferenceSelector } from "../../../../../store/reducers/persistedPreferences";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import { useItwDisplayCredentialStatus } from "../../../presentation/details/hooks/useItwDisplayCredentialStatus";
 import {
   getCredentialNameFromType,
   tagPropsByStatus,
   useBorderColorByStatus,
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
-import { getThemeColorByCredentialType } from "../../utils/itwStyleUtils";
+import { useThemeColorByCredentialType } from "../../utils/itwStyleUtils";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
-import { useItwDisplayCredentialStatus } from "../../../presentation/details/hooks/useItwDisplayCredentialStatus";
 import { CardBackground } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
 import { CardColorScheme } from "./types";
@@ -60,7 +60,7 @@ export const ItwCredentialCard = ({
   const isItwPid = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const needsItwUpgrade = isItwPid && !isItwCredential;
   const status = useItwDisplayCredentialStatus(credentialStatus);
-
+  const theme = useThemeColorByCredentialType(credentialType);
   const borderColorMap = useBorderColorByStatus();
 
   const statusTagProps = useMemo<Tag | undefined>(() => {
@@ -78,7 +78,6 @@ export const ItwCredentialCard = ({
     // Include "jwtExpired" as a valid status because credentials with this state
     // should not appear faded. Only the "expired" status should be displayed with reduced opacity.
     const isValid = [...validCredentialStatuses, "jwtExpired"].includes(status);
-    const theme = getThemeColorByCredentialType(credentialType);
 
     if (needsItwUpgrade) {
       return {
@@ -109,7 +108,7 @@ export const ItwCredentialCard = ({
       titleOpacity: 0.5,
       colorScheme: "faded"
     };
-  }, [credentialType, status, needsItwUpgrade]);
+  }, [theme, status, needsItwUpgrade]);
 
   return (
     <View style={styles.cardContainer}>

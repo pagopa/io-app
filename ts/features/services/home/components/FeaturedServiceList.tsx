@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from "react";
-import { ListItemHeader } from "@pagopa/io-app-design-system";
+import { BannerErrorState, ListItemHeader } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { View } from "react-native";
 import { FeaturedService } from "../../../../../definitions/services/FeaturedService";
@@ -12,7 +12,8 @@ import { featuredServicesGet } from "../store/actions";
 import {
   featuredServicesSelector,
   isErrorFeaturedServicesSelector,
-  isLoadingFeaturedServicesSelector
+  isLoadingFeaturedServicesSelector,
+  shouldRenderFeaturedServiceListSelector
 } from "../store/selectors";
 import {
   FeaturedServicesCarousel,
@@ -23,11 +24,17 @@ export const FeaturedServiceList = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
-  const featuredServices = useIOSelector(featuredServicesSelector);
+  const services = useIOSelector(featuredServicesSelector);
   const isError = useIOSelector(isErrorFeaturedServicesSelector);
   const isLoading = useIOSelector(isLoadingFeaturedServicesSelector);
+  const shouldRender = useIOSelector(shouldRenderFeaturedServiceListSelector);
 
-  useOnFirstRender(() => dispatch(featuredServicesGet.request()));
+  const fetchFeaturedServices = useCallback(
+    () => dispatch(featuredServicesGet.request()),
+    [dispatch]
+  );
+
+  useOnFirstRender(fetchFeaturedServices);
 
   const handlePress = useCallback(
     ({ id, name, organization_name }: FeaturedService) => {
@@ -48,24 +55,47 @@ export const FeaturedServiceList = () => {
     [navigation]
   );
 
-  const mappedFeaturedServices = useMemo(
+  const mappedServices = useMemo(
     () =>
-      featuredServices.map(({ organization_name, ...rest }) => ({
+      services.map(({ organization_name, ...rest }) => ({
         ...rest,
         organizationName: organization_name,
         onPress: () => handlePress({ organization_name, ...rest })
       })),
-    [featuredServices, handlePress]
+    [services, handlePress]
   );
 
-  const isVisible = useMemo(
-    () => isLoading || mappedFeaturedServices.length > 0,
-    [isLoading, mappedFeaturedServices]
-  );
-
-  if (isError || !isVisible) {
+  if (!shouldRender) {
     return null;
   }
+
+  const Content = () => {
+    if (isLoading && services.length === 0) {
+      return (
+        <FeaturedServicesCarouselSkeleton testID="featured-service-list-skeleton" />
+      );
+    }
+
+    if (isError) {
+      return (
+        <BannerErrorState
+          label={I18n.t("services.home.featured.services.error.banner.label")}
+          actionText={I18n.t(
+            "services.home.featured.services.error.banner.cta"
+          )}
+          onPress={fetchFeaturedServices}
+          testID="featured-service-list-error"
+        />
+      );
+    }
+
+    return (
+      <FeaturedServicesCarousel
+        services={mappedServices}
+        testID="featured-service-list"
+      />
+    );
+  };
 
   return (
     <View>
@@ -75,11 +105,7 @@ export const FeaturedServiceList = () => {
         )}
         label={I18n.t("services.home.featured.services.title")}
       />
-      {isLoading ? (
-        <FeaturedServicesCarouselSkeleton />
-      ) : (
-        <FeaturedServicesCarousel services={mappedFeaturedServices} />
-      )}
+      <Content />
     </View>
   );
 };

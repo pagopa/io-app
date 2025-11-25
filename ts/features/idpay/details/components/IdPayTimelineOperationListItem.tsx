@@ -57,7 +57,7 @@ const emptyAmountTransaction = {
   amountAccessibilityLabel: ""
 };
 
-export type TimelineOperationListItemProps = WithTestID<
+type TimelineOperationListItemProps = WithTestID<
   | {
       isLoading?: false;
       operation: OperationListDTO;

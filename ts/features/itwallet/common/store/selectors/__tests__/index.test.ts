@@ -1,7 +1,6 @@
 import {
   isItwDiscoveryBannerRenderableSelector,
   itwOfflineAccessAvailableSelector,
-  itwShouldRenderFeedbackBannerSelector,
   itwShouldRenderL3UpgradeBannerSelector,
   itwShouldRenderWalletUpgradeMDLDetailsBannerSelector
 } from "..";
@@ -43,52 +42,6 @@ describe("isItwDiscoveryBannerRenderableSelector", () => {
 
       expect(
         isItwDiscoveryBannerRenderableSelector({} as unknown as GlobalState)
-      ).toBe(expected);
-    }
-  );
-});
-
-describe("itwShouldRenderFeedbackBannerSelector", () => {
-  beforeEach(() => {
-    jest.resetAllMocks();
-    jest.clearAllMocks();
-  });
-  it.each`
-    remotelyEnabled | hasValidWallet | walletIsEmpty | bannerIsHidden | offlineAccessReason                       | expected
-    ${true}         | ${true}        | ${false}      | ${false}       | ${undefined}                              | ${true}
-    ${true}         | ${true}        | ${false}      | ${false}       | ${OfflineAccessReasonEnum.DEVICE_OFFLINE} | ${false}
-    ${true}         | ${true}        | ${false}      | ${true}        | ${undefined}                              | ${false}
-    ${true}         | ${true}        | ${true}       | ${false}       | ${undefined}                              | ${false}
-    ${true}         | ${false}       | ${false}      | ${false}       | ${undefined}                              | ${false}
-    ${false}        | ${true}        | ${false}      | ${false}       | ${undefined}                              | ${false}
-  `(
-    "should return $expected when remotelyEnabled is $remotelyEnabled, hasValidWallet is $hasValidWallet, walletIsEmpty is $walletIsEmpty, bannerIsHidden is $bannerIsHidden, and offlineAccessReason is $offlineAccessReason",
-    ({
-      hasValidWallet,
-      walletIsEmpty,
-      bannerIsHidden,
-      expected,
-      remotelyEnabled,
-      offlineAccessReason
-    }) => {
-      jest
-        .spyOn(remoteConfigSelectors, "isItwFeedbackBannerEnabledSelector")
-        .mockReturnValue(remotelyEnabled);
-      jest
-        .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
-        .mockReturnValue(hasValidWallet);
-      jest
-        .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
-        .mockReturnValue(walletIsEmpty);
-      jest
-        .spyOn(preferencesSelectors, "itwIsFeedbackBannerHiddenSelector")
-        .mockReturnValue(bannerIsHidden);
-      jest
-        .spyOn(ingressSelectors, "offlineAccessReasonSelector")
-        .mockReturnValue(offlineAccessReason);
-
-      expect(
-        itwShouldRenderFeedbackBannerSelector({} as unknown as GlobalState)
       ).toBe(expected);
     }
   );

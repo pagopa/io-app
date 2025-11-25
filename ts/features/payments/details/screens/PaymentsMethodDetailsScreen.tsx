@@ -22,7 +22,7 @@ export type PaymentsMethodDetailsScreenNavigationParams = Readonly<{
   walletId: string;
 }>;
 
-export type PaymentsMethodDetailsScreenRouteProps = RouteProp<
+type PaymentsMethodDetailsScreenRouteProps = RouteProp<
   PaymentsMethodDetailsParamsList,
   "PAYMENT_METHOD_DETAILS_SCREEN"
 >;

@@ -16,11 +16,6 @@ import {
 } from "../store/actions";
 import { selectPagoPaPlatformSessionToken } from "../store/selectors";
 
-export type PaymentsFetchPagoPaSessionTokenResponse = {
-  refreshed: boolean;
-  token?: string;
-};
-
 /**
  * Retrieves the PagoPA session token from the Redux store.
  * If the token is not present, this function dispatches a request action

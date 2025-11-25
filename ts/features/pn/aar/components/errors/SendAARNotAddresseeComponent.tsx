@@ -4,13 +4,22 @@ import { useIOSelector } from "../../../../../store/hooks";
 import { sendAARDelegateUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { openWebUrl } from "../../../../../utils/url";
 import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
+import {
+  trackSendAARAccessDeniedDelegateInfo,
+  trackSendAARAccessDeniedDismissed
+} from "../../analytics";
 
 export const SendAARNotAddresseeComponent = () => {
   const { terminateFlow } = useSendAarFlowManager();
   const delegateUrl = useIOSelector(sendAARDelegateUrlSelector);
 
   const handlePrimaryButton = () => {
+    trackSendAARAccessDeniedDelegateInfo();
     openWebUrl(delegateUrl);
+  };
+  const handleSecondaryAction = () => {
+    trackSendAARAccessDeniedDismissed();
+    terminateFlow();
   };
 
   return (
@@ -32,7 +41,7 @@ export const SendAARNotAddresseeComponent = () => {
         label: I18n.t(
           "features.pn.aar.flow.ko.notAddresseeFinal.secondaryAction"
         ),
-        onPress: terminateFlow,
+        onPress: handleSecondaryAction,
         testID: "secondary_button"
       }}
     />

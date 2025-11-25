@@ -58,15 +58,18 @@ export const EmailNotificationBanner = () => {
     );
   };
 
-  useOnFirstRender(() => {
-    mixpanelTrack(
-      "BANNER",
-      buildEventProperties("UX", "screen_view", {
-        banner_id: "IDPAY_EMAIL_ACTIVATION",
-        banner_page: SERVICES_ROUTES.SERVICES_HOME
-      })
-    );
-  });
+  useOnFirstRender(
+    () => {
+      mixpanelTrack(
+        "BANNER",
+        buildEventProperties("UX", "screen_view", {
+          banner_id: "IDPAY_EMAIL_ACTIVATION",
+          banner_page: SERVICES_ROUTES.SERVICES_HOME
+        })
+      );
+    },
+    () => canShowBanner
+  );
 
   useEffect(() => {
     if (prevProfile && pot.isUpdating(prevProfile)) {

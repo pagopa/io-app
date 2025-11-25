@@ -21,7 +21,7 @@ type WalletOnboardingWebViewProps = {
   ) => void;
 };
 
-export type WalletOnboardingWebView = {
+type WalletOnboardingWebView = {
   isLoading: boolean;
   isError: boolean;
   isPendingOnboarding: boolean;

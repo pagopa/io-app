@@ -14,7 +14,7 @@ import { isLoadingDiscountInitiativeInstrumentsSelector } from "../../configurat
 import { idPayCodeCieBannerClose } from "../store/actions";
 import { isIdPayCiePaymentCodeEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
-export type IdPayCodeCIEBannerParams = {
+type IdPayCodeCIEBannerParams = {
   initiativeId: string;
 };
 

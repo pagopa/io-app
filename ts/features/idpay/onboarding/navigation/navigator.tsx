@@ -29,7 +29,7 @@ export const IdPayOnboardingNavigator = () => (
   </IdPayOnboardingMachineProvider>
 );
 
-export const InnerNavigator = () => {
+const InnerNavigator = () => {
   const idPayOnboardingMachineRef = IdPayOnboardingMachineContext.useActorRef();
 
   return (

@@ -2,7 +2,7 @@ import { Alert, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 
-type MessageCancelledContentProps = {
+export type MessageCancelledContentProps = {
   isCancelled?: boolean;
   paidNoticeCodes?: ReadonlyArray<string>;
   payments?: ReadonlyArray<NotificationPaymentInfo>;

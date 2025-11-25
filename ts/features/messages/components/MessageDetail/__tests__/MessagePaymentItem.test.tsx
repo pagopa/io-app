@@ -5,13 +5,11 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { MessagePaymentItem } from "../MessagePaymentItem";
 import { NotificationPaymentInfo } from "../../../../../../definitions/pn/NotificationPaymentInfo";
 import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
-import {
-  toSpecificError,
-  updatePaymentForMessage
-} from "../../../store/actions";
+import { updatePaymentForMessage } from "../../../store/actions";
 import { PaymentInfoResponse } from "../../../../../../definitions/backend/PaymentInfoResponse";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { toSpecificMessagePaymentError } from "../../../types/paymentErrors";
 
 describe("MessagePaymentItem component", () => {
   it("Should match the snapshot for a loading item", () => {
@@ -111,7 +109,9 @@ const appStateByPaymentStatus = {
       updatePaymentForMessage.failure({
         messageId,
         paymentId: rptId,
-        reason: toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO),
+        reason: toSpecificMessagePaymentError(
+          Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
+        ),
         serviceId: "01J5X5NP84QE3T3P604MWP9TKC" as ServiceId
       })
     )
@@ -146,6 +146,8 @@ const renderComponent = (
         rptId={rptId}
         noticeNumber={payment.noticeCode}
         serviceId={"01J5X34VA7H1726CQNTG14GNDH" as ServiceId}
+        sendOpeningSource={"not_set"}
+        sendUserType={"not_set"}
       />
     ),
     "DUMMY",

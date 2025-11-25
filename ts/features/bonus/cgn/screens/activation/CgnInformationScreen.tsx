@@ -14,7 +14,7 @@ import {
   cgnRequestActivation
 } from "../../store/actions/activation";
 
-export type Props = ReturnType<typeof mapDispatchToProps> &
+type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 /**

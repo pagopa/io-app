@@ -5,8 +5,8 @@ import {
 import { Platform } from "react-native";
 import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import { BarcodeScanScreen } from "../features/barcode/screens/BarcodeScanScreen";
-import { CdcNavigator } from "../features/bonus/cdc/navigation/navigator.tsx";
-import { CDC_ROUTES } from "../features/bonus/cdc/navigation/routes.ts";
+import { CdcNavigator } from "../features/bonus/cdc/common/navigation/navigator.tsx";
+import { CDC_ROUTES } from "../features/bonus/cdc/common/navigation/routes.ts";
 import {
   CgnActivationNavigator,
   CgnDetailsNavigator,

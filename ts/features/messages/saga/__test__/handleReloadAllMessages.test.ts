@@ -11,9 +11,26 @@ import {
 } from "../../__mocks__/messages";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { handleReloadAllMessages } from "../handleReloadAllMessages";
-import { BackendClient } from "../../../../api/__mocks__/backend";
+import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
+import { backendClientManager } from "../../../../api/BackendClientManager";
+
+jest.mock("../../../../api/BackendClientManager");
+
+const mockGetMessages = jest.fn();
+const mockBackendClientManager = backendClientManager as jest.Mocked<
+  typeof backendClientManager
+>;
+
+beforeEach(() => {
+  jest.clearAllMocks();
+  mockBackendClientManager.getBackendClient.mockReturnValue({
+    getMessages: mockGetMessages
+  } as any);
+});
 
 describe("handleReloadAllMessages", () => {
+  const sessionToken = "mockedSessionToken";
+
   const getMessagesPayload = {
     enrich_result_data: true,
     page_size: defaultRequestPayload.pageSize,
@@ -24,15 +41,13 @@ describe("handleReloadAllMessages", () => {
     it(`should put ${getType(
       action.success
     )} with the parsed messages and pagination data`, () => {
-      testSaga(
-        handleReloadAllMessages,
-        BackendClient.getMessages,
-        action.request(defaultRequestPayload)
-      )
+      testSaga(handleReloadAllMessages, action.request(defaultRequestPayload))
         .next()
+        .select(sessionTokenSelector)
+        .next(sessionToken)
         .call(
           withRefreshApiCall,
-          BackendClient.getMessages(getMessagesPayload),
+          mockGetMessages(getMessagesPayload),
           action.request(defaultRequestPayload)
         )
         .next(E.right({ status: 200, value: apiPayload }))
@@ -44,15 +59,13 @@ describe("handleReloadAllMessages", () => {
 
   describe("when the response is an Error", () => {
     it(`should put ${getType(action.failure)} with the error message`, () => {
-      testSaga(
-        handleReloadAllMessages,
-        BackendClient.getMessages,
-        action.request(defaultRequestPayload)
-      )
+      testSaga(handleReloadAllMessages, action.request(defaultRequestPayload))
         .next()
+        .select(sessionTokenSelector)
+        .next(sessionToken)
         .call(
           withRefreshApiCall,
-          BackendClient.getMessages(getMessagesPayload),
+          mockGetMessages(getMessagesPayload),
           action.request(defaultRequestPayload)
         )
         .next(
@@ -69,12 +82,10 @@ describe("handleReloadAllMessages", () => {
 
   describe("when the handler throws", () => {
     it(`should catch it and put ${getType(action.failure)}`, () => {
-      testSaga(
-        handleReloadAllMessages,
-        BackendClient.getMessages,
-        action.request(defaultRequestPayload)
-      )
+      testSaga(handleReloadAllMessages, action.request(defaultRequestPayload))
         .next()
+        .select(sessionTokenSelector)
+        .next(sessionToken)
         .throw(new Error(defaultRequestError.error.message))
         .put(
           action.failure({

@@ -107,8 +107,8 @@ export const trackSystemNotificationPermissionScreenOutcome = (
   const props = buildEventProperties("UX", "action", {
     flow,
     outcome,
-    send_user: sendUser,
-    opening_source: sendOpeningSource
+    opening_source: sendOpeningSource,
+    send_user: sendUser
   });
   void mixpanelTrack(eventName, props);
 };

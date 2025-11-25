@@ -40,6 +40,7 @@ const ROUTES = {
   MAIN: "MAIN",
 
   // Barcode scan
+  BARCODE_SCAN_TAB_EMPTY: "BARCODE_SCAN_TAB_EMPTY",
   BARCODE_SCAN: "BARCODE_SCAN",
 
   // Used when the App is in background

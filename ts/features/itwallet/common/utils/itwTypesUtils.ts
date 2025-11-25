@@ -1,9 +1,9 @@
-import { type Credential as LegacyCredential } from "@pagopa/io-react-native-wallet-legacy";
 import {
   Credential,
   Trust,
   WalletInstance
 } from "@pagopa/io-react-native-wallet";
+import { type Credential as LegacyCredential } from "@pagopa/io-react-native-wallet-legacy";
 import { CredentialType } from "./itwMocksUtils.ts";
 
 /**

@@ -5,7 +5,7 @@ import { NoticeDetailResponse } from "../../../../../../definitions/pagopa/biz-e
 import { ReceiptsCategoryFilter } from "../../types";
 import { HideReceiptTrigger } from "../../analytics";
 
-export type PaymentsReceiptPayload = {
+type PaymentsReceiptPayload = {
   firstLoad?: boolean;
   noticeCategory?: ReceiptsCategoryFilter;
   size?: number;
@@ -13,7 +13,7 @@ export type PaymentsReceiptPayload = {
   onSuccess?: (continuationToken?: string) => void;
 };
 
-export type PaymentsReceiptSuccessPayload = {
+type PaymentsReceiptSuccessPayload = {
   data: NoticeListWrapResponse["notices"];
   appendElements?: boolean;
 };
@@ -32,7 +32,7 @@ export const getPaymentsLatestReceiptAction = createAsyncAction(
   "PAYMENTS_LATEST_RECEIPT_LIST_CANCEL"
 )<void, NoticeListWrapResponse["notices"], NetworkError, void>();
 
-export type PaymentsTransactionDetailsPayload = {
+type PaymentsTransactionDetailsPayload = {
   transactionId: string;
   isPayer?: boolean;
 };
@@ -49,7 +49,7 @@ export const getPaymentsReceiptDetailsAction = createAsyncAction(
   void
 >();
 
-export type PaymentsTransactionReceiptPayload = {
+type PaymentsTransactionReceiptPayload = {
   transactionId: string;
   onSuccess?: () => void;
   onError?: () => void;

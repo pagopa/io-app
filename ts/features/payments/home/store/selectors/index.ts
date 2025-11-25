@@ -23,7 +23,7 @@ export const isPaymentsSectionLoadingSelector = createSelector(
     pot.isLoading(methodsPot) || pot.isLoading(latestTransactionsPot)
 );
 
-export const isPaymentsMethodsEmptySelector = createSelector(
+const isPaymentsMethodsEmptySelector = createSelector(
   paymentsWalletUserMethodsSelector,
   userWallets =>
     pot.getOrElse(

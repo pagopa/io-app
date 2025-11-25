@@ -1,18 +1,18 @@
 import { fireEvent } from "@testing-library/react-native";
-import { createStore } from "redux";
-import { Alert } from "react-native";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
+import { Alert } from "react-native";
+import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
-import { ITW_ROUTES } from "../../../navigation/routes";
 import * as analytics from "../../../analytics";
-import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
-import { ItwSettingsScreen } from "../ItwSettingsScreen";
-import * as credentials from "../../../credentials/store/selectors";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
+import * as credentials from "../../../credentials/store/selectors";
+import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { ITW_ROUTES } from "../../../navigation/routes";
+import { ItwSettingsScreen } from "../ItwSettingsScreen";
 
 const mockNavigate = jest.fn();
 jest.mock("../../../../../navigation/params/AppParamsList", () => ({
@@ -64,7 +64,7 @@ describe("ItwSettingsScreen", () => {
     fireEvent.press(getByTestId("itwObtainButtonTestID"));
     expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
-      params: { isL3: true }
+      params: { level: "l3" }
     });
   });
 

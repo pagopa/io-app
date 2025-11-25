@@ -23,6 +23,7 @@ import { watchIDPayTimelineSaga } from "../../timeline/saga";
 import { watchIDPayInitiativeConfigurationSaga } from "../../configuration/saga";
 import { watchIDPayBarcodeSaga } from "../../barcode/saga";
 import { watchIdPayUnsubscriptionSaga } from "../../unsubscription/saga";
+import { isIdPayCiePaymentCodeEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
 export function* watchIDPaySaga(bpdToken: string): SagaIterator {
   const isPagoPATestEnabled = yield* select(isPagoPATestEnabledSelector);
@@ -30,6 +31,9 @@ export function* watchIDPaySaga(bpdToken: string): SagaIterator {
   const baseUrl = isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl;
   const apiVersion = isPagoPATestEnabled ? idPayApiUatVersion : idPayApiVersion;
   const bearerToken = idPayTestToken ?? bpdToken;
+  const isIdPayCiePaymentCodeEnabled = yield* select(
+    isIdPayCiePaymentCodeEnabledSelector
+  );
 
   const language = yield* select(preferredLanguageSelector);
 
@@ -41,7 +45,14 @@ export function* watchIDPaySaga(bpdToken: string): SagaIterator {
 
   const idPayClient = createIDPayClient(baseUrl, apiVersion);
 
-  yield* fork(watchIdPayCodeSaga, idPayClient, bearerToken, preferredLanguage);
+  if (isIdPayCiePaymentCodeEnabled) {
+    yield* fork(
+      watchIdPayCodeSaga,
+      idPayClient,
+      bearerToken,
+      preferredLanguage
+    );
+  }
 
   yield* fork(
     watchIDPayWalletSaga,

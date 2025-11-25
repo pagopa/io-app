@@ -36,6 +36,7 @@ import { isPnServiceEnabled } from "../features/pn/reminderBanner/reducer/banner
 import { itwLifecycleIsITWalletValidSelector } from "../features/itwallet/lifecycle/store/selectors";
 import { CredentialType } from "../features/itwallet/common/utils/itwMocksUtils";
 import {
+  cdcStatusHandler,
   cgnStatusHandler,
   loginSessionConfigHandler,
   mixpanelOptInHandler,
@@ -51,6 +52,7 @@ import {
 type ProfileProperties = {
   BIOMETRIC_TECHNOLOGY: BiometricsType;
   CGN_STATUS: TrackCgnStatus;
+  CDC_STATUS: number;
   FONT_PREFERENCE: string;
   THEME_PREFERENCE: string;
   ITW_STATUS_V2: ItwStatus;
@@ -90,6 +92,7 @@ export const updateMixpanelProfileProperties = async (
 
     const BIOMETRIC_TECHNOLOGY = await getBiometricsType();
     const CGN_STATUS = cgnStatusHandler(state);
+    const CDC_STATUS = cdcStatusHandler(state);
     const FONT_PREFERENCE = fontPreferenceSelector(state);
     const THEME_PREFERENCE = themePreferenceSelector(state);
     const ITW_STATUS_V2 = walletStatusHandler(state);
@@ -127,6 +130,7 @@ export const updateMixpanelProfileProperties = async (
     const profilePropertiesObject: ProfileProperties = {
       BIOMETRIC_TECHNOLOGY,
       CGN_STATUS,
+      CDC_STATUS,
       FONT_PREFERENCE,
       THEME_PREFERENCE,
       ITW_STATUS_V2,

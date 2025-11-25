@@ -795,6 +795,8 @@ const renderComponent = (
         messageId={"01HVPB9XYZMWNEPTDKZJ8ZJV28"}
         paidNoticeCodes={paidNoticeCodes}
         payments={payments}
+        sendOpeningSource={"not_set"}
+        sendUserType={"not_set"}
       />
     ),
     PN_ROUTES.MESSAGE_DETAILS,

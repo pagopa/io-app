@@ -46,7 +46,7 @@ const reducer = (
 
 export default reducer;
 
-export const cgnCategoriesSelector = (state: GlobalState) =>
+const cgnCategoriesSelector = (state: GlobalState) =>
   state.bonus.cgn.categories;
 
 export const cgnCategoriesListSelector = createSelector(

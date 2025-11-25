@@ -12,7 +12,7 @@ import {
   CodeEnum
 } from "../../../../../definitions/idpay/TransactionErrorDTO";
 
-export const genericError: TransactionErrorDTO = {
+const genericError: TransactionErrorDTO = {
   code: CodeEnum.PAYMENT_GENERIC_ERROR,
   message: "error"
 };

@@ -1,14 +1,20 @@
-import { takeLatest } from "typed-redux-saga/macro";
+import { call, race, take, takeLatest } from "typed-redux-saga/macro";
 import { apiUrlPrefix } from "../../../../config";
 import { SessionToken } from "../../../../types/SessionToken";
+import { isTestEnv } from "../../../../utils/environment";
 import { KeyInfo } from "../../../lollipop/utils/crypto";
 import { SendAARClient, createSendAARClientWithLollipop } from "../api/client";
-import { setAarFlowState } from "../store/actions";
+import {
+  setAarFlowState,
+  terminateAarFlow,
+  initiateAarFlow
+} from "../store/actions";
 import { sendAARFlowStates } from "../utils/stateUtils";
+import { initiateAarFlowSaga } from "./initiateAarFlowSaga";
 import { fetchAarDataSaga } from "./fetchNotificationDataSaga";
 import { fetchAARQrCodeSaga } from "./fetchQrCodeSaga";
 
-export function* aarFlowMasterSaga(
+function* aarFlowMasterSaga(
   sendAARClient: SendAARClient,
   sessionToken: SessionToken,
   action: ReturnType<typeof setAarFlowState>
@@ -17,14 +23,16 @@ export function* aarFlowMasterSaga(
 
   switch (nextState.type) {
     case sendAARFlowStates.fetchingQRData:
-      yield* fetchAARQrCodeSaga(
+      yield* call(
+        fetchAARQrCodeSaga,
         sendAARClient.aarQRCodeCheck,
         sessionToken,
         action
       );
       break;
     case sendAARFlowStates.fetchingNotificationData:
-      yield* fetchAarDataSaga(
+      yield* call(
+        fetchAarDataSaga,
         sendAARClient.getAARNotification,
         sessionToken,
         action
@@ -33,16 +41,38 @@ export function* aarFlowMasterSaga(
   }
 }
 
+function* raceWithTerminateFlow(
+  sendAARClient: SendAARClient,
+  sessionToken: SessionToken,
+  action: ReturnType<typeof setAarFlowState>
+) {
+  yield* race({
+    task: call(aarFlowMasterSaga, sendAARClient, sessionToken, action),
+    cancel: take(terminateAarFlow)
+  });
+}
+
 export function* watchAarFlowSaga(
   sessionToken: SessionToken,
   keyInfo: KeyInfo
 ) {
-  const sendAARClient = createSendAARClientWithLollipop(apiUrlPrefix, keyInfo);
+  const sendAARClient = yield* call(
+    createSendAARClientWithLollipop,
+    apiUrlPrefix,
+    keyInfo
+  );
 
   yield* takeLatest(
     setAarFlowState,
-    aarFlowMasterSaga,
+    raceWithTerminateFlow,
     sendAARClient,
     sessionToken
   );
+  yield* takeLatest(initiateAarFlow, initiateAarFlowSaga);
 }
+export const testable = isTestEnv
+  ? {
+      raceWithTerminateFlow,
+      aarFlowMasterSaga
+    }
+  : null;

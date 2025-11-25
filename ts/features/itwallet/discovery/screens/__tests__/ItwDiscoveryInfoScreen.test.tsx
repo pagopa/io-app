@@ -2,9 +2,9 @@ import configureMockStore from "redux-mock-store";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import * as itwLifecycleSelectors from "../../../lifecycle/store/selectors";
-import * as itwIdentificationSelectors from "../../../identification/common/store/selectors";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import * as identificationSelectors from "../../../identification/common/store/selectors";
+import { EidIssuanceLevel } from "../../../machine/eid/context";
 import { itwEidIssuanceMachine } from "../../../machine/eid/machine";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
@@ -18,46 +18,43 @@ describe("ItwDiscoveryInfoScreen", () => {
     jest.clearAllMocks();
   });
 
-  it("should match the snapshot when isL3 is false", () => {
-    const component = renderComponent(false);
-    expect(component).toMatchSnapshot();
+  test.each(["l3", "l3-next"] as const)(
+    "should render ItwDiscoveryInfoComponent for level %s",
+    level => {
+      jest
+        .spyOn(identificationSelectors, "itwHasNfcFeatureSelector")
+        .mockReturnValue(true);
+      const { getByTestId } = renderComponent(level);
+      expect(getByTestId("itwDiscoveryInfoComponentTestID")).toBeTruthy();
+    }
+  );
+
+  test.each(["l3", "l3-next"] as const)(
+    "should render ItwNfcNotSupportedComponent for level %s when NFC is not supported",
+    level => {
+      jest
+        .spyOn(identificationSelectors, "itwHasNfcFeatureSelector")
+        .mockReturnValue(false);
+      const { getByTestId } = renderComponent(level);
+      expect(getByTestId("itwNfcNotSupportedComponentTestID")).toBeTruthy();
+    }
+  );
+
+  it("should render ItwDiscoveryInfoFallbackComponent for level l2-fallback", () => {
+    const { getByTestId } = renderComponent("l2-fallback");
+    expect(getByTestId("itwDiscoveryInfoFallbackComponentTestID")).toBeTruthy();
   });
 
-  it("should match the snapshot when isL3 is true and hasNfcFeature is true", () => {
-    jest
-      .spyOn(itwIdentificationSelectors, "itwHasNfcFeatureSelector")
-      .mockReturnValue(true);
-
-    const component = renderComponent(true);
-    expect(component).toMatchSnapshot();
-  });
-
-  it("should match the snapshot when isL3 is true, hasNfcFeature is false and itwLifecycleIsValidSelector is true", () => {
-    jest
-      .spyOn(itwIdentificationSelectors, "itwHasNfcFeatureSelector")
-      .mockReturnValue(false);
-    jest
-      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockReturnValue(true);
-
-    const component = renderComponent(true);
-    expect(component).toMatchSnapshot();
-  });
-
-  it("should match the snapshot when isL3 is true, hasNfcFeature is false and itwLifecycleIsValidSelector is false", () => {
-    jest
-      .spyOn(itwIdentificationSelectors, "itwHasNfcFeatureSelector")
-      .mockReturnValue(false);
-    jest
-      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockReturnValue(false);
-
-    const component = renderComponent(true);
-    expect(component).toMatchSnapshot();
-  });
+  test.each([undefined, "l2"] as const)(
+    "should render ItwDiscoveryInfoLegacyComponent for level %s",
+    level => {
+      const { getByTestId } = renderComponent(level);
+      expect(getByTestId("itwDiscoveryInfoLegacyComponentTestID")).toBeTruthy();
+    }
+  );
 });
 
-const renderComponent = (isL3: boolean) => {
+const renderComponent = (level: EidIssuanceLevel | undefined) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();
@@ -81,7 +78,7 @@ const renderComponent = (isL3: boolean) => {
   return renderScreenWithNavigationStoreContext<GlobalState>(
     WrappedComponent,
     ITW_ROUTES.DISCOVERY.INFO,
-    { isL3 },
+    { level },
     store
   );
 };

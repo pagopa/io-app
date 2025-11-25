@@ -242,7 +242,7 @@ export const trackIDPayOnboardingAppUpdateConfirm = (
   props: DefaultOnboardingEventProperties
 ) => {
   mixpanelTrack(
-    "APP_UPDATE_REQUESTED",
+    "APP_UPDATE_ACCEPTED",
     buildEventProperties("UX", "action", { ...props, flow: "idpay" })
   );
 };

@@ -49,8 +49,10 @@ describe("SystemNotificationPermissionsScreen", () => {
     renderScreen();
 
     expect(analyticsMock.mock.calls.length).toBe(1);
-    expect(analyticsMock.mock.calls[0].length).toBe(1);
+    expect(analyticsMock.mock.calls[0].length).toBe(3);
     expect(analyticsMock.mock.calls[0][0]).toBe("authentication");
+    expect(analyticsMock.mock.calls[0][1]).toBe("not_set");
+    expect(analyticsMock.mock.calls[0][2]).toBe("not_set");
 
     expect(mockDispatch.mock.calls.length).toBe(1);
     expect(mockDispatch.mock.calls[0].length).toBe(1);
@@ -88,9 +90,11 @@ describe("SystemNotificationPermissionsScreen", () => {
     onPressFunction();
 
     expect(analyticsMock.mock.calls.length).toBe(1);
-    expect(analyticsMock.mock.calls[0].length).toBe(2);
+    expect(analyticsMock.mock.calls[0].length).toBe(4);
     expect(analyticsMock.mock.calls[0][0]).toBe("dismiss");
     expect(analyticsMock.mock.calls[0][1]).toBe("authentication");
+    expect(analyticsMock.mock.calls[0][2]).toBe("not_set");
+    expect(analyticsMock.mock.calls[0][3]).toBe("not_set");
 
     expect(settingsSpy.mock.calls.length).toBe(0);
     expect(mockGoBack.mock.calls.length).toBe(1);
@@ -111,9 +115,11 @@ describe("SystemNotificationPermissionsScreen", () => {
     fireEvent.press(xCloseButton);
 
     expect(analyticsMock.mock.calls.length).toBe(1);
-    expect(analyticsMock.mock.calls[0].length).toBe(2);
+    expect(analyticsMock.mock.calls[0].length).toBe(4);
     expect(analyticsMock.mock.calls[0][0]).toBe("activate");
     expect(analyticsMock.mock.calls[0][1]).toBe("authentication");
+    expect(analyticsMock.mock.calls[0][2]).toBe("not_set");
+    expect(analyticsMock.mock.calls[0][3]).toBe("not_set");
 
     expect(settingsSpy.mock.calls.length).toBe(1);
     expect(settingsSpy.mock.calls[0].length).toBe(0);
@@ -135,9 +141,11 @@ describe("SystemNotificationPermissionsScreen", () => {
     fireEvent.press(xCloseButton);
 
     expect(analyticsMock.mock.calls.length).toBe(1);
-    expect(analyticsMock.mock.calls[0].length).toBe(2);
+    expect(analyticsMock.mock.calls[0].length).toBe(4);
     expect(analyticsMock.mock.calls[0][0]).toBe("dismiss");
     expect(analyticsMock.mock.calls[0][1]).toBe("authentication");
+    expect(analyticsMock.mock.calls[0][2]).toBe("not_set");
+    expect(analyticsMock.mock.calls[0][3]).toBe("not_set");
 
     expect(settingsSpy.mock.calls.length).toBe(0);
     expect(mockGoBack.mock.calls.length).toBe(1);

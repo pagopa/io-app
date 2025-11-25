@@ -8,9 +8,8 @@ import { IdPayBarcodeState, IdPayStaticCodeState } from "../types";
 const idPayBarcodeSelector = (state: GlobalState): IdPayBarcodeState =>
   state.features.idPay.barcode;
 
-export const idPayStaticCodeSelector = (
-  state: GlobalState
-): IdPayStaticCodeState => state.features.idPay.staticCode;
+const idPayStaticCodeSelector = (state: GlobalState): IdPayStaticCodeState =>
+  state.features.idPay.staticCode;
 
 export const idPayBarcodeByInitiativeIdSelector = createSelector(
   idPayBarcodeSelector,

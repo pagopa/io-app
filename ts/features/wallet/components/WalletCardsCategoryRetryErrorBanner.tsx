@@ -10,6 +10,8 @@ import { idPayWalletInitiativeListSelector } from "../../idpay/wallet/store/redu
 import { usePaymentsBackoffRetry } from "../../payments/common/hooks/usePaymentsBackoffRetry";
 import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
 import { paymentsWalletUserMethodsSelector } from "../../payments/wallet/store/selectors";
+import { cdcStatusSelector } from "../../bonus/cdc/wallet/store/selectors";
+import { getCdcStatusWallet } from "../../bonus/cdc/wallet/store/actions";
 
 const WALLET_OTHER_CARDS_CATEGORY_BACKOFF =
   "WALLET_OTHER_CARDS_CATEGORY_BACKOFF";
@@ -28,6 +30,8 @@ export const WalletCardsCategoryRetryErrorBanner = () => {
   );
   const isCgnError = pot.isError(useIOSelector(cgnDetailSelector));
 
+  const isCdcError = pot.isError(useIOSelector(cdcStatusSelector));
+
   const { canRetryRequest } = usePaymentsBackoffRetry(
     WALLET_OTHER_CARDS_CATEGORY_BACKOFF
   );
@@ -43,11 +47,14 @@ export const WalletCardsCategoryRetryErrorBanner = () => {
       if (isCgnError) {
         dispatch(cgnDetails.request());
       }
+      if (isCdcError) {
+        dispatch(getCdcStatusWallet.request());
+      }
     }
   };
 
   return (
-    (isPaymentMethodsError || isCgnError || isIdPayError) && (
+    (isPaymentMethodsError || isCgnError || isIdPayError || isCdcError) && (
       <View
         style={{ marginTop: 16 }}
         testID="walletCardsCategoryRetryErrorBannerTestID"

@@ -34,7 +34,7 @@ export type ReceiptDetailsScreenParams = {
   isCart?: boolean;
 };
 
-export type ReceiptDetailsScreenProps = RouteProp<
+type ReceiptDetailsScreenProps = RouteProp<
   PaymentsReceiptParamsList,
   "PAYMENT_RECEIPT_DETAILS"
 >;

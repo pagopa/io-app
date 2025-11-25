@@ -67,8 +67,10 @@ import {
   isNfcEnabledSelector
 } from "../store/selectors";
 import { cieFlowForDevServerEnabled } from "../utils";
-import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
-import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
+import {
+  isActiveSessionLoginSelector,
+  remoteApiLoginUrlPrefixSelector
+} from "../../../activeSessionLogin/store/selectors";
 import useActiveSessionLoginNavigation from "../../../activeSessionLogin/utils/useActiveSessionLoginNavigation";
 
 // The MP events related to this page have been commented on

@@ -18,7 +18,6 @@ import {
   CieLoginConfigActions
 } from "../../features/authentication/login/cie/store/actions";
 import { SpidConfigActions } from "../../features/authentication/login/idp/store/actions";
-import { LoginPreferencesActions } from "../../features/authentication/loginPreferences/store/actions";
 import { BonusActions } from "../../features/bonus/common/store/actions";
 import { ConnectivityActions } from "../../features/connectivity/store/actions";
 import { FciActions } from "../../features/fci/store/actions";
@@ -53,6 +52,7 @@ import { WhatsNewActions } from "../../features/whatsnew/store/actions";
 import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
 import { GlobalState } from "../reducers/types";
 import { SENDLoginEngagementActions } from "../../features/pn/loginEngagement/store/actions";
+import { CdcActions } from "../../features/bonus/cdc/common/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { BackendStatusActions } from "./backendStatus";
@@ -122,10 +122,10 @@ export type Action =
   | AppFeedbackActions
   | UtmLinkActions
   | ConnectivityActions
-  | LoginPreferencesActions
   | AARFlowStateActions
   | BackgroundLinkingActions
-  | SENDLoginEngagementActions;
+  | SENDLoginEngagementActions
+  | CdcActions;
 
 export type Dispatch = DispatchAPI<Action>;
 

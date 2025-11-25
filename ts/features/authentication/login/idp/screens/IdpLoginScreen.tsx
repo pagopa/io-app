@@ -56,7 +56,7 @@ import { ErrorType as SpidLoginErrorType } from "../store/types";
 import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
 import { usePosteIDApp2AppEducational } from "../hooks/usePosteIDApp2AppEducational";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
+import { remoteApiLoginUrlPrefixSelector } from "../../../activeSessionLogin/store/selectors";
 
 const styles = StyleSheet.create({
   refreshIndicatorContainer: {

@@ -135,7 +135,7 @@ export const IOScrollViewWithReveal = ({
   const { bottomMargin, needSafeAreaMargin } = useFooterActionsMargin();
 
   /* GENERATE EASING GRADIENT */
-  const APP_BG_COLOR: ColorValue = IOColors[theme["appBackground-accent"]];
+  const APP_BG_COLOR: ColorValue = IOColors[theme["appBackground-primary"]];
 
   const { colors, locations } = easeGradient({
     colorStops: {
@@ -304,17 +304,12 @@ export const IOScrollViewWithReveal = ({
               }}
               style={[{ alignSelf: "center" }, anchorLinkAnimatedStyle]}
             >
-              <IOButton variant="link" color="contrast" {...actions.anchor} />
+              <IOButton variant="link" {...actions.anchor} />
               <VSpacer size={spaceBetweenActionAndLink} />
             </Animated.View>
 
             <View style={{ marginBottom: extraBottomMargin }}>
-              <IOButton
-                variant="solid"
-                color="contrast"
-                fullWidth
-                {...actions.primary}
-              />
+              <IOButton variant="solid" fullWidth {...actions.primary} />
             </View>
           </View>
         </View>

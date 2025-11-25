@@ -73,17 +73,14 @@ import {
   AppearanceSettingsState
 } from "../../../appearanceSettings/store/reducers";
 import {
-  loginPreferencesPersistor,
-  LoginPreferencesState
-} from "../../../authentication/loginPreferences/store/reducers";
-import {
-  activeSessionLoginReducer,
+  activeSessionLoginPersistor,
   ActiveSessionLoginState
 } from "../../../authentication/activeSessionLogin/store/reducer";
 import {
   BackgroundLinkingState,
   backgroundLinkingReducer
 } from "../../../linking/reducers";
+import cdcReducer, { CdcState } from "../../../bonus/cdc/common/store/reducers";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
@@ -92,8 +89,7 @@ type LoginFeaturesState = {
   cieLogin: CieLoginState & PersistPartial;
   loginInfo: LoginInfoState;
   spidLogin: SpidLoginState;
-  loginPreferences: LoginPreferencesState & PersistPartial;
-  activeSessionLogin: ActiveSessionLoginState;
+  activeSessionLogin: ActiveSessionLoginState & PersistPartial;
 };
 
 export type FeaturesState = {
@@ -116,6 +112,7 @@ export type FeaturesState = {
   utmLink: UtmLinkState;
   connectivityStatus: ConnectivityState;
   backgroundLinking: BackgroundLinkingState;
+  cdc: CdcState;
 };
 
 export type PersistedFeaturesState = FeaturesState & PersistPartial;
@@ -134,8 +131,7 @@ const rootReducer = combineReducers<FeaturesState, Action>({
     cieLogin: cieLoginPersistor,
     loginInfo: loginInfoReducer,
     spidLogin: spidLoginReducer,
-    loginPreferences: loginPreferencesPersistor,
-    activeSessionLogin: activeSessionLoginReducer
+    activeSessionLogin: activeSessionLoginPersistor
   }),
   wallet: walletReducer,
   fims: fimsReducer,
@@ -148,7 +144,8 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   appFeedback: appFeedbackPersistor,
   utmLink: utmLinkReducer,
   connectivityStatus: connectivityStateReducer,
-  backgroundLinking: backgroundLinkingReducer
+  backgroundLinking: backgroundLinkingReducer,
+  cdc: cdcReducer
 });
 
 const CURRENT_REDUX_FEATURES_STORE_VERSION = 1;

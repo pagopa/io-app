@@ -21,13 +21,13 @@ const getStatusBadgeVariant = (
     case StatusEnum.NOT_REFUNDABLE_ONLY_IBAN:
     case StatusEnum.NOT_REFUNDABLE_ONLY_INSTRUMENT:
     case VoucherStatusEnum.ACTIVE:
-    case VoucherStatusEnum.USED:
       return "success";
     case StatusEnum.UNSUBSCRIBED:
     case VoucherStatusEnum.EXPIRED:
       return "error";
     case VoucherStatusEnum.EXPIRING:
       return "warning";
+    case VoucherStatusEnum.USED:
     default:
       return "default";
   }

@@ -6,7 +6,7 @@ import {
 import { View } from "react-native";
 import { ReceiptFadeInOutAnimationView } from "./ReceiptFadeInOutAnimationView";
 
-export type ReceiptLoadingListProps = {
+type ReceiptLoadingListProps = {
   showSectionTitleSkeleton?: boolean;
 };
 

@@ -3,7 +3,7 @@ import { TransactionBarCodeResponse } from "../../../../../../definitions/idpay/
 import { TransactionErrorDTO } from "../../../../../../definitions/idpay/TransactionErrorDTO";
 import { NetworkError } from "../../../../../utils/errors";
 
-export type IdPayGenerateBarcodePayload = {
+type IdPayGenerateBarcodePayload = {
   initiativeId: string;
 };
 

@@ -23,6 +23,9 @@ import issuanceReducer, {
 import wiaReducer, {
   ItwWalletInstanceState
 } from "../../../walletInstance/store/reducers";
+import itwCredentialsCatalogueReducer, {
+  ItwCredentialsCatalogueState
+} from "../../../credentialsCatalogue/store/reducers";
 import environmentReducer, { ItwEnvironmentState } from "./environment";
 import preferencesReducer, { ItwPreferencesState } from "./preferences";
 import securePreferencesReducer, {
@@ -37,6 +40,7 @@ export type ItWalletState = {
   walletInstance: ItwWalletInstanceState & PersistPartial;
   preferences: ItwPreferencesState;
   securePreferences: ItwSecurePreferencesState & PersistPartial;
+  credentialsCatalogue: ItwCredentialsCatalogueState;
 };
 
 export type PersistedItWalletState = ReturnType<typeof persistedReducer>;
@@ -48,10 +52,11 @@ const itwReducer = combineReducers({
   credentials: itwCredentialsReducer,
   walletInstance: wiaReducer,
   preferences: preferencesReducer,
-  securePreferences: securePreferencesReducer
+  securePreferences: securePreferencesReducer,
+  credentialsCatalogue: itwCredentialsCatalogueReducer
 });
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 7;
+const CURRENT_REDUX_ITW_STORE_VERSION = 8;
 
 export const migrations: MigrationManifest = {
   // Added preferences store
@@ -100,15 +105,21 @@ export const migrations: MigrationManifest = {
 
   // Removed reissuanceFeedbackBannerHidden from preferences
   "7": (state: PersistedState): PersistedState =>
-    _.omit(state, "preferences.reissuanceFeedbackBannerHidden")
+    _.omit(state, "preferences.reissuanceFeedbackBannerHidden"),
+
+  // Removed hideFeedbackBannerUntilDate from preferences
+  "8": (state: PersistedState): PersistedState =>
+    _.omit(state, "preferences.hideFeedbackBannerUntilDate")
 };
 
 const itwPersistConfig: PersistConfig = {
   key: "itWallet",
   storage: AsyncStorage,
-  whitelist: ["preferences", "environment"] satisfies Array<
-    keyof ItWalletState
-  >,
+  whitelist: [
+    "preferences",
+    "environment",
+    "credentialsCatalogue"
+  ] satisfies Array<keyof ItWalletState>,
   version: CURRENT_REDUX_ITW_STORE_VERSION,
   migrate: createMigrate(migrations, { debug: isDevEnv })
 };

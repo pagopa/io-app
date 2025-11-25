@@ -1,5 +1,5 @@
-import { Alert } from "react-native";
 import I18n from "i18next";
+import { Alert } from "react-native";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import {
@@ -27,22 +27,23 @@ type ItwDismissalDialogProps = {
  * @param customLabels - Optional object to override the default title, message, confirm button label, and cancel button label.
  * @returns a function that can be used to show the dialog
  */
-export const useItwDismissalDialog = (props?: ItwDismissalDialogProps) => {
+export const useItwDismissalDialog = ({
+  handleDismiss,
+  dismissalContext,
+  customLabels = {}
+}: ItwDismissalDialogProps = {}) => {
   const navigation = useIONavigation();
 
-  const { handleDismiss, dismissalContext, customLabels = {} } = props ?? {};
-
-  const labels = {
-    title:
-      customLabels.title ?? I18n.t("features.itWallet.generic.alert.title"),
-    body: customLabels.body ?? I18n.t("features.itWallet.generic.alert.body"),
-    confirm:
-      customLabels.confirmLabel ??
-      I18n.t("features.itWallet.generic.alert.confirm"),
-    cancel:
-      customLabels.cancelLabel ??
-      I18n.t("features.itWallet.generic.alert.cancel")
-  };
+  const title =
+    customLabels.title ?? I18n.t("features.itWallet.generic.alert.title");
+  const body =
+    customLabels.body ?? I18n.t("features.itWallet.generic.alert.body");
+  const confirmLabel =
+    customLabels.confirmLabel ??
+    I18n.t("features.itWallet.generic.alert.confirm");
+  const cancelLabel =
+    customLabels.cancelLabel ??
+    I18n.t("features.itWallet.generic.alert.cancel");
 
   const trackUserAction = (label: string) => {
     if (dismissalContext) {
@@ -58,20 +59,20 @@ export const useItwDismissalDialog = (props?: ItwDismissalDialogProps) => {
       trackItwDismissalContext(dismissalContext);
     }
 
-    Alert.alert(labels.title, labels.body, [
+    Alert.alert(title, body, [
       {
-        text: labels.confirm,
-        style: "destructive",
+        text: cancelLabel,
+        style: "cancel",
         onPress: () => {
-          trackUserAction(labels.confirm);
-          (handleDismiss || navigation.goBack)();
+          trackUserAction(cancelLabel);
         }
       },
       {
-        text: labels.cancel,
-        style: "cancel",
+        text: confirmLabel,
+        style: "destructive",
         onPress: () => {
-          trackUserAction(labels.cancel);
+          trackUserAction(confirmLabel);
+          (handleDismiss || navigation.goBack)();
         }
       }
     ]);

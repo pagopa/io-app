@@ -13,14 +13,10 @@ import {
 import { itwIsWalletInstanceStatusFailureSelector } from "../../../walletInstance/store/selectors";
 import {
   itwIsDiscoveryBannerHiddenSelector,
-  itwIsFeedbackBannerHiddenSelector,
   itwIsL3EnabledSelector,
   itwIsWalletUpgradeMDLDetailsBannerHiddenSelector
 } from "./preferences";
-import {
-  isItwEnabledSelector,
-  isItwFeedbackBannerEnabledSelector
-} from "./remoteConfig";
+import { isItwEnabledSelector } from "./remoteConfig";
 
 /**
  * Returns if the discovery banner should be rendered. The banner is rendered if:
@@ -46,23 +42,6 @@ export const isItwPersistedDiscoveryBannerRenderableSelector = (
 ) =>
   !itwIsDiscoveryBannerHiddenSelector(state) &&
   isItwDiscoveryBannerRenderableSelector(state);
-
-/**
- * Returns if the feedback banner should be visible. The banner is visible if:
- * - The user has online access (not available in the mini-app)
- * - The banner is enabled remotely
- * - The Wallet has valid Wallet Instance and a valid eID
- * - The Wallet has at least one credential
- * - The user did not close the banner
- * @param state the application global state
- * @returns true if the banner should be visible, false otherwise
- */
-export const itwShouldRenderFeedbackBannerSelector = (state: GlobalState) =>
-  !offlineAccessReasonSelector(state) &&
-  isItwFeedbackBannerEnabledSelector(state) &&
-  itwLifecycleIsValidSelector(state) &&
-  !itwIsWalletEmptySelector(state) &&
-  !itwIsFeedbackBannerHiddenSelector(state);
 
 /**
  * Returns if the wallet ready banner should be visible. The banner is visible if:

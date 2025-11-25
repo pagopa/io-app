@@ -35,7 +35,7 @@ const persistConfig: PersistConfig = {
   whitelist: ["shouldShowAddMethodsBanner"]
 };
 
-export const persistedReducer = persistReducer<PaymentsHomeState, Action>(
+const persistedReducer = persistReducer<PaymentsHomeState, Action>(
   persistConfig,
   reducer
 );

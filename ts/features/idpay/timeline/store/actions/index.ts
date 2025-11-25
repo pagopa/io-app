@@ -4,7 +4,7 @@ import { OperationDTO } from "../../../../../../definitions/idpay/OperationDTO";
 import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
 import { NetworkError } from "../../../../../utils/errors";
 
-export type IdPayTimelineDetailsGetPayloadType = {
+type IdPayTimelineDetailsGetPayloadType = {
   initiativeId: InitiativeDTO["initiativeId"];
   operationId: OperationListDTO["operationId"];
 };

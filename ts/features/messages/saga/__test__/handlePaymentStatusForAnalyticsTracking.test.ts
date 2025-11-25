@@ -6,9 +6,6 @@ import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import {
   cancelPaymentStatusTracking,
   startPaymentStatusTracking,
-  toGenericError,
-  toSpecificError,
-  toTimeoutError,
   updatePaymentForMessage,
   UpdatePaymentForMessageSuccess
 } from "../../store/actions";
@@ -17,9 +14,13 @@ import {
   paymentStatusFromPaymentUpdateResult,
   testable
 } from "../handlePaymentStatusForAnalyticsTracking";
-
 import { serviceDetailsByIdSelector } from "../../../services/details/store/selectors";
 import { trackPaymentStatus } from "../../analytics";
+import {
+  toGenericMessagePaymentError,
+  toSpecificMessagePaymentError,
+  toTimeoutMessagePaymentError
+} from "../../types/paymentErrors";
 
 const messageId = "01JWX68NS39VA6YVWX0R10E3VM";
 const paymentId = "01234567890123456789012345678901234567890";
@@ -61,7 +62,7 @@ describe("handlePaymentStatusForAnalyticsTracking", () => {
           updatePaymentForMessage.failure({
             messageId,
             paymentId,
-            reason: toTimeoutError(),
+            reason: toTimeoutMessagePaymentError(),
             serviceId
           })
         )
@@ -95,7 +96,7 @@ describe("handlePaymentStatusForAnalyticsTracking", () => {
         updatePaymentForMessage.failure({
           messageId,
           paymentId,
-          reason: toGenericError("Generic"),
+          reason: toGenericMessagePaymentError("Generic"),
           serviceId
         })
       );
@@ -106,7 +107,7 @@ describe("handlePaymentStatusForAnalyticsTracking", () => {
         updatePaymentForMessage.failure({
           messageId,
           paymentId,
-          reason: toTimeoutError(),
+          reason: toTimeoutMessagePaymentError(),
           serviceId
         })
       );
@@ -117,7 +118,9 @@ describe("handlePaymentStatusForAnalyticsTracking", () => {
         updatePaymentForMessage.failure({
           messageId,
           paymentId,
-          reason: toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_SCADUTO),
+          reason: toSpecificMessagePaymentError(
+            Detail_v2Enum.PAA_PAGAMENTO_SCADUTO
+          ),
           serviceId
         })
       );
@@ -128,7 +131,9 @@ describe("handlePaymentStatusForAnalyticsTracking", () => {
         updatePaymentForMessage.failure({
           messageId,
           paymentId,
-          reason: toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO),
+          reason: toSpecificMessagePaymentError(
+            Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
+          ),
           serviceId
         })
       );
@@ -139,7 +144,9 @@ describe("handlePaymentStatusForAnalyticsTracking", () => {
         updatePaymentForMessage.failure({
           messageId,
           paymentId,
-          reason: toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO),
+          reason: toSpecificMessagePaymentError(
+            Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO
+          ),
           serviceId
         })
       );
@@ -150,7 +157,9 @@ describe("handlePaymentStatusForAnalyticsTracking", () => {
         updatePaymentForMessage.failure({
           messageId,
           paymentId,
-          reason: toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO),
+          reason: toSpecificMessagePaymentError(
+            Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+          ),
           serviceId
         })
       );
@@ -161,7 +170,9 @@ describe("handlePaymentStatusForAnalyticsTracking", () => {
         updatePaymentForMessage.failure({
           messageId,
           paymentId,
-          reason: toSpecificError(Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO),
+          reason: toSpecificMessagePaymentError(
+            Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO
+          ),
           serviceId
         })
       );
@@ -172,7 +183,9 @@ describe("handlePaymentStatusForAnalyticsTracking", () => {
         updatePaymentForMessage.failure({
           messageId,
           paymentId,
-          reason: toSpecificError(Detail_v2Enum.PPT_PAGAMENTO_IN_CORSO),
+          reason: toSpecificMessagePaymentError(
+            Detail_v2Enum.PPT_PAGAMENTO_IN_CORSO
+          ),
           serviceId
         })
       );
@@ -183,7 +196,7 @@ describe("handlePaymentStatusForAnalyticsTracking", () => {
         updatePaymentForMessage.failure({
           messageId,
           paymentId,
-          reason: toSpecificError(Detail_v2Enum.GENERIC_ERROR),
+          reason: toSpecificMessagePaymentError(Detail_v2Enum.GENERIC_ERROR),
           serviceId
         })
       );

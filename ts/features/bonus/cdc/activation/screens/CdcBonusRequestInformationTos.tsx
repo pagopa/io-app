@@ -12,7 +12,7 @@ import BonusInformationComponent, {
 import { availableBonusTypesSelectorFromId } from "../../../common/store/selectors";
 import { ID_CDC_TYPE } from "../../../common/utils";
 import * as analytics from "../../analytics";
-import { cdcCtaConfigSelector } from "../../store/selectors/remoteConfig";
+import { cdcCtaConfigSelector } from "../../common/store/selectors/remoteConfig";
 import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 
 const CdcBonusRequestInformationTos = () => {

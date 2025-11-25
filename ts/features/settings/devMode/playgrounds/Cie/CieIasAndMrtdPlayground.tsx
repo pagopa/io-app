@@ -78,12 +78,35 @@ export function CieIasAndMrtdPlayground() {
       <VStack space={8}>
         <IOButton
           variant="solid"
-          label="Start Internal CIE authentication"
+          label="Internal Auth"
           icon="selfCert"
           disabled={!isCieAuthenticationSupported}
           onPress={() =>
             navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
               screen: SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_INTERNAL_AUTH
+            })
+          }
+        />
+        <IOButton
+          variant="solid"
+          label="MRTD Reading"
+          icon="fiscalCodeIndividual"
+          disabled={!isCieAuthenticationSupported}
+          onPress={() =>
+            navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+              screen: SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_MRTD
+            })
+          }
+        />
+        <IOButton
+          variant="solid"
+          label="Internal Auth + MRTD"
+          icon="navWalletFocused"
+          disabled={!isCieAuthenticationSupported}
+          onPress={() =>
+            navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+              screen:
+                SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_INTERNAL_AUTH_AND_MRTD
             })
           }
         />

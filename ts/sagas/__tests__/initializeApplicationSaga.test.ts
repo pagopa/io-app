@@ -49,6 +49,7 @@ import {
   watchForceLogoutOnDifferentCF,
   watchForceLogoutSaga
 } from "../../features/authentication/common/saga/watchForceLogoutSaga";
+import { setRefreshMessagesSection } from "../../features/authentication/activeSessionLogin/store/actions";
 
 const aSessionToken = "a_session_token" as SessionToken;
 const aSessionInfo = O.some({
@@ -83,6 +84,8 @@ jest.mock("../../api/backend", () => ({
 describe("initializeApplicationSaga", () => {
   it("should call handleTransientError if check session response is 200 but session is none", () => {
     testSaga(initializeApplicationSaga)
+      .next()
+      .put(setRefreshMessagesSection(true))
       .next()
       .call(checkAppHistoryVersionSaga)
       .next()
@@ -137,6 +140,8 @@ describe("initializeApplicationSaga", () => {
   it("should dispatch sessionExpired if check session response is 401 & FastLogin disabled", () => {
     testSaga(initializeApplicationSaga)
       .next()
+      .put(setRefreshMessagesSection(true))
+      .next()
       .call(checkAppHistoryVersionSaga)
       .next()
       .call(initMixpanel)
@@ -183,6 +188,8 @@ describe("initializeApplicationSaga", () => {
 
   it("should dispatch refreshTokenRequest if check session response is 401 & FastLogin enabled", () => {
     testSaga(initializeApplicationSaga)
+      .next()
+      .put(setRefreshMessagesSection(true))
       .next()
       .call(checkAppHistoryVersionSaga)
       .next()
@@ -235,6 +242,8 @@ describe("initializeApplicationSaga", () => {
 
   it("should dispatch loadprofile if installation id response is 200 and session is still valid", () => {
     testSaga(initializeApplicationSaga)
+      .next()
+      .put(setRefreshMessagesSection(true))
       .next()
       .call(checkAppHistoryVersionSaga)
       .next()
@@ -301,6 +310,8 @@ describe("initializeApplicationSaga", () => {
   it("should dispatch handleApplicationStartupTransientError if session information is none", () => {
     testSaga(initializeApplicationSaga)
       .next()
+      .put(setRefreshMessagesSection(true))
+      .next()
       .call(checkAppHistoryVersionSaga)
       .next()
       .call(initMixpanel)
@@ -352,6 +363,8 @@ describe("initializeApplicationSaga", () => {
 
   it("should dispatch handleApplicationStartupTransientError if session information is some but walletToken and bpdToken are missing", () => {
     testSaga(initializeApplicationSaga)
+      .next()
+      .put(setRefreshMessagesSection(true))
       .next()
       .call(checkAppHistoryVersionSaga)
       .next()

@@ -1,11 +1,9 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { BackendClient } from "../../../api/backend";
 import { loadThirdPartyMessage } from "../store/actions";
-import { toPNMessage } from "../../pn/store/types/transformers";
+import { toSENDMessage } from "../../pn/store/types/transformers";
 import {
   trackPNNotificationLoadError,
   trackPNNotificationLoadSuccess
@@ -14,7 +12,9 @@ import {
   trackRemoteContentLoadFailure,
   trackRemoteContentLoadRequest,
   trackRemoteContentLoadSuccess,
-  trackThirdPartyMessageAttachmentCount
+  trackThirdPartyMessageAttachmentCount,
+  trackUndefinedBearerToken,
+  UndefinedBearerTokenPhase
 } from "../analytics";
 import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../types/utils";
@@ -24,12 +24,33 @@ import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
 import { serviceDetailsByIdSelector } from "../../services/details/store/selectors";
 import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
 import { thirdPartyKind } from "../types/thirdPartyById";
+import { backendClientManager } from "../../../api/BackendClientManager";
+import { apiUrlPrefix } from "../../../config";
+import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { isTestEnv } from "../../../utils/environment";
+import { getKeyInfo } from "../../lollipop/saga";
 
 export function* handleThirdPartyMessage(
-  getThirdPartyMessage: BackendClient["getThirdPartyMessage"],
   action: ActionType<typeof loadThirdPartyMessage.request>
 ) {
   const { id, serviceId, tag } = action.payload;
+
+  const sessionToken = yield* select(sessionTokenSelector);
+
+  if (!sessionToken) {
+    trackUndefinedBearerToken(
+      UndefinedBearerTokenPhase.thirdPartyMessageLoading
+    );
+    return;
+  }
+
+  const keyInfo = yield* call(getKeyInfo);
+
+  const { getThirdPartyMessage } = backendClientManager.getBackendClient(
+    apiUrlPrefix,
+    sessionToken,
+    keyInfo
+  );
 
   // This method is called by `handleLoadMessageData` saga, which makes
   // sure that the service details are properly retrieved and loaded
@@ -92,13 +113,25 @@ const trackSuccess = (
     tag
   );
   if (tag === TagEnum.PN) {
-    const pnMessageOption = toPNMessage(messageFromApi);
+    const sendMessageOrUndefined = toSENDMessage(messageFromApi);
 
-    if (O.isSome(pnMessageOption)) {
-      const pnMessage = pnMessageOption.value;
-      trackPNNotificationLoadSuccess(pnMessage);
+    if (sendMessageOrUndefined != null) {
+      const hasAttachments =
+        sendMessageOrUndefined.attachments != null &&
+        sendMessageOrUndefined.attachments.length > 0;
+      const timeline = sendMessageOrUndefined.notificationStatusHistory;
+      const status =
+        timeline.length > 0 ? timeline[timeline.length - 1].status : undefined;
+      trackPNNotificationLoadSuccess(
+        hasAttachments,
+        status,
+        "message",
+        "not_set"
+      );
     } else {
-      trackPNNotificationLoadError();
+      trackPNNotificationLoadError(
+        "Unable convert the third party message to SEND message structure"
+      );
     }
   } else {
     const attachments = messageFromApi.third_party_message.attachments;
@@ -125,3 +158,5 @@ const trackFailure = (
     trackPNNotificationLoadError(reason);
   }
 };
+
+export const testable = isTestEnv ? { trackSuccess, trackFailure } : undefined;

@@ -1,16 +1,15 @@
-import { pipe } from "fp-ts/lib/function";
-import * as A from "fp-ts/lib/Array";
-import * as O from "fp-ts/lib/Option";
 import { mixpanelTrack } from "../../../mixpanel";
-import { PNMessage } from "../../pn/store/types/types";
-import { NotificationStatusHistoryElement } from "../../../../definitions/pn/NotificationStatusHistoryElement";
 import {
   booleanToYesNo,
   buildEventProperties,
   numberToYesNoOnThreshold
 } from "../../../utils/analytics";
-import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { PaymentStatistics } from "../../messages/store/reducers/payments";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../pushNotifications/analytics";
+import { NotificationStatus } from "../../../../definitions/pn/NotificationStatus";
 
 export type PNServiceStatus = "active" | "not_active" | "unknown";
 
@@ -116,13 +115,18 @@ export function trackPNAttachmentSaveShare(category?: string) {
   );
 }
 
-export function trackPNAttachmentOpening(category?: string) {
-  void mixpanelTrack(
-    "PN_ATTACHMENT_OPENING",
-    buildEventProperties("UX", "action", {
-      category
-    })
-  );
+export function trackPNAttachmentOpening(
+  openingSource: SendOpeningSource,
+  userType: SendUserType,
+  category?: string
+) {
+  const eventName = "PN_ATTACHMENT_OPENING";
+  const props = buildEventProperties("UX", "action", {
+    category,
+    opening_source: openingSource,
+    send_user: userType
+  });
+  void mixpanelTrack(eventName, props);
 }
 
 export function trackPNAttachmentOpeningSuccess(
@@ -142,72 +146,88 @@ export function trackPNNotificationLoadError(errorCode?: string) {
   void mixpanelTrack(
     "PN_NOTIFICATION_LOAD_ERROR",
     buildEventProperties("KO", undefined, {
-      ERROR_CODE: errorCode,
-      JSON_DECODE_FAILED: errorCode ? false : true
+      ERROR_CODE: errorCode
     })
   );
 }
 
-export function trackPNNotificationLoadSuccess(pnMessage: PNMessage) {
-  pipe(
-    pnMessage.notificationStatusHistory as Array<NotificationStatusHistoryElement>,
-    A.last,
-    O.map(lastNotification => lastNotification.status),
-    O.fold(
-      () => undefined,
-      (status: string) =>
-        void mixpanelTrack(
-          "PN_NOTIFICATION_LOAD_SUCCESS",
-          buildEventProperties("TECH", undefined, {
-            NOTIFICATION_LAST_STATUS: status,
-            HAS_ATTACHMENTS: pipe(
-              pnMessage.attachments as Array<ThirdPartyAttachment>,
-              O.fromNullable,
-              O.map(A.isNonEmpty),
-              O.getOrElse(() => false)
-            )
-          })
-        )
-    )
-  );
+export function trackPNNotificationLoadSuccess(
+  hasAttachmens: boolean,
+  status: NotificationStatus | undefined,
+  openingSource: SendOpeningSource,
+  userType: SendUserType
+) {
+  const eventName = "PN_NOTIFICATION_LOAD_SUCCESS";
+  const eventProperties = buildEventProperties("TECH", undefined, {
+    NOTIFICATION_LAST_STATUS: status ?? "not_set",
+    HAS_ATTACHMENTS: hasAttachmens,
+    opening_source: openingSource,
+    send_user: userType
+  });
+  void mixpanelTrack(eventName, eventProperties);
 }
 
 export function trackPNPushOpened() {
   void mixpanelTrack("PN_PUSH_OPENED", buildEventProperties("UX", "action"));
 }
 
-export function trackPNTimelineExternal() {
-  void mixpanelTrack(
-    "PN_TIMELINE_EXTERNAL",
-    buildEventProperties("UX", "exit")
-  );
+export function trackPNTimelineExternal(
+  openingSource: SendOpeningSource,
+  userType: SendUserType
+) {
+  const eventName = "PN_TIMELINE_EXTERNAL";
+  const eventProps = buildEventProperties("UX", "exit", {
+    opening_source: openingSource,
+    send_user: userType
+  });
+  void mixpanelTrack(eventName, eventProps);
 }
 
-export function trackPNShowTimeline() {
-  void mixpanelTrack("PN_SHOW_TIMELINE", buildEventProperties("UX", "action"));
+export function trackPNShowTimeline(
+  openingSource: SendOpeningSource,
+  userType: SendUserType
+) {
+  const eventName = "PN_SHOW_TIMELINE";
+  const eventProps = buildEventProperties("UX", "action", {
+    opening_source: openingSource,
+    send_user: userType
+  });
+  void mixpanelTrack(eventName, eventProps);
 }
 
 export function trackPNUxSuccess(
   paymentCount: number,
-  firstTimeOpening: boolean,
+  firstTimeOpening: boolean | undefined,
   isCancelled: boolean,
-  containsF24: boolean
+  containsF24: boolean,
+  openingSource: SendOpeningSource,
+  userType: SendUserType
 ) {
-  void mixpanelTrack(
-    "PN_UX_SUCCESS",
-    buildEventProperties("UX", "screen_view", {
-      contains_payment: numberToYesNoOnThreshold(paymentCount),
-      first_time_opening: booleanToYesNo(firstTimeOpening),
-      notification_status: isCancelled ? "cancelled" : "active",
-      contains_multipayment: numberToYesNoOnThreshold(paymentCount, 1),
-      count_payment: paymentCount,
-      contains_f24: containsF24
-    })
-  );
+  const eventName = "PN_UX_SUCCESS";
+  const props = buildEventProperties("UX", "screen_view", {
+    contains_payment: numberToYesNoOnThreshold(paymentCount),
+    first_time_opening:
+      firstTimeOpening != null ? booleanToYesNo(firstTimeOpening) : "not_set",
+    notification_status: isCancelled ? "cancelled" : "active",
+    contains_multipayment: numberToYesNoOnThreshold(paymentCount, 1),
+    count_payment: paymentCount,
+    contains_f24: containsF24,
+    opening_source: openingSource,
+    send_user: userType
+  });
+  void mixpanelTrack(eventName, props);
 }
 
-export function trackPNPaymentStart() {
-  void mixpanelTrack("PN_PAYMENT_START", buildEventProperties("UX", "action"));
+export function trackPNPaymentStart(
+  openingSource: SendOpeningSource,
+  userType: SendUserType
+) {
+  const eventName = "PN_PAYMENT_START";
+  const eventProps = buildEventProperties("UX", "action", {
+    opening_source: openingSource,
+    send_user: userType
+  });
+  void mixpanelTrack(eventName, eventProps);
 }
 
 export function trackPNShowAllPayments() {
@@ -217,29 +237,42 @@ export function trackPNShowAllPayments() {
   );
 }
 
-export function trackPNPaymentStatus({
-  paymentCount,
-  unpaidCount,
-  paidCount,
-  errorCount,
-  expiredCount,
-  revokedCount,
-  ongoingCount
-}: PaymentStatistics) {
-  void mixpanelTrack(
-    "PN_PAYMENT_STATUS",
-    buildEventProperties("TECH", undefined, {
-      count_payment: paymentCount,
-      count_unpaid: unpaidCount,
-      count_paid: paidCount,
-      count_error: errorCount,
-      count_expired: expiredCount,
-      count_revoked: revokedCount,
-      count_inprogress: ongoingCount
-    })
-  );
+export function trackPNPaymentStatus(
+  {
+    paymentCount,
+    unpaidCount,
+    paidCount,
+    errorCount,
+    expiredCount,
+    revokedCount,
+    ongoingCount
+  }: PaymentStatistics,
+  openingSource: SendOpeningSource,
+  userType: SendUserType
+) {
+  const eventName = "PN_PAYMENT_STATUS";
+  const props = buildEventProperties("TECH", undefined, {
+    count_payment: paymentCount,
+    count_unpaid: unpaidCount,
+    count_paid: paidCount,
+    count_error: errorCount,
+    count_expired: expiredCount,
+    count_revoked: revokedCount,
+    count_inprogress: ongoingCount,
+    opening_source: openingSource,
+    send_user: userType
+  });
+  void mixpanelTrack(eventName, props);
 }
 
-export function trackPNShowF24() {
-  void mixpanelTrack("PN_SHOW_F24", buildEventProperties("UX", "action"));
+export function trackPNShowF24(
+  openingSource: SendOpeningSource,
+  userType: SendUserType
+) {
+  const eventName = "PN_SHOW_F24";
+  const eventProps = buildEventProperties("UX", "action", {
+    opening_source: openingSource,
+    send_user: userType
+  });
+  void mixpanelTrack(eventName, eventProps);
 }

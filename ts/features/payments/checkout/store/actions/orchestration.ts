@@ -18,7 +18,7 @@ export type PaymentInitStateParams = {
   serviceName?: string;
 };
 
-export type PaymentCompletedSuccessPayload = {
+type PaymentCompletedSuccessPayload = {
   rptId: RptId;
   kind: "COMPLETED" | "DUPLICATED";
 };

@@ -3,7 +3,6 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import {
   itwCloseDiscoveryBanner,
-  itwCloseFeedbackBanner,
   itwFlagCredentialAsRequested,
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
@@ -19,8 +18,6 @@ import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
 
 export type ItwPreferencesState = {
-  // Date until which the feedback banner should be hidden
-  hideFeedbackBannerUntilDate?: string;
   // Date until which the discovery banner should be hidden
   hideDiscoveryBannerUntilDate?: string;
   // Stores the list of requested credentials which supports delayed issuance
@@ -54,13 +51,6 @@ const reducer = (
   action: Action
 ): ItwPreferencesState => {
   switch (action.type) {
-    case getType(itwCloseFeedbackBanner): {
-      return {
-        ...state,
-        hideFeedbackBannerUntilDate: addMonths(new Date(), 1).toISOString()
-      };
-    }
-
     case getType(itwCloseDiscoveryBanner): {
       return {
         ...state,

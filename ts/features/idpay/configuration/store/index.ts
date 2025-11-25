@@ -113,12 +113,12 @@ const reducer = (
 const idpayInitativeConfigurationSelector = (state: GlobalState) =>
   state.features.idPay.configuration;
 
-export const idpayInitiativePaymentMethodsSelector = createSelector(
+const idpayInitiativePaymentMethodsSelector = createSelector(
   idpayInitativeConfigurationSelector,
   inititative => inititative.instruments
 );
 
-export const idPayInitiativeInstrumentsStatusSelector = createSelector(
+const idPayInitiativeInstrumentsStatusSelector = createSelector(
   idpayInitativeConfigurationSelector,
   inititative => inititative.instrumentStatus
 );

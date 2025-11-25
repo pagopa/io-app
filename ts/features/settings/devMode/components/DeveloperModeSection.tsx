@@ -49,11 +49,13 @@ import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { getDeviceId } from "../../../../utils/device";
 import { isDevEnv, isLocalEnv } from "../../../../utils/environment";
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
-import { isActiveSessionLoginLocallyEnabledSelector } from "../../../authentication/loginPreferences/store/selectors/index.ts";
-import { setActiveSessionLoginLocalFlag } from "../../../authentication/loginPreferences/store/actions/index.ts";
 import { ITW_ROUTES } from "../../../itwallet/navigation/routes.ts";
-import { setStartActiveSessionLogin } from "../../../authentication/activeSessionLogin/store/actions/index.ts";
+import {
+  setActiveSessionLoginLocalFlag,
+  setStartActiveSessionLogin
+} from "../../../authentication/activeSessionLogin/store/actions/index.ts";
 import { AUTHENTICATION_ROUTES } from "../../../authentication/common/navigation/routes.ts";
+import { isActiveSessionLoginLocallyEnabledSelector } from "../../../authentication/activeSessionLogin/store/selectors/index.ts";
 import ExperimentalDesignEnableSwitch from "./ExperimentalDesignEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -401,7 +403,9 @@ const PlaygroundsSection = () => {
         })
     },
     {
-      value: "Active session login playground",
+      value: I18n.t(
+        "profile.main.loginEnvironment.activeSession.playground.title"
+      ),
       onPress: () => {
         dispatch(setStartActiveSessionLogin());
         navigation.navigate(SETTINGS_ROUTES.AUTHENTICATION, {
@@ -511,7 +515,31 @@ const DeveloperTestEnvironmentSection = ({
   };
 
   const onActiveSessionLoginToggle = (enabled: boolean) => {
-    dispatch(setActiveSessionLoginLocalFlag(enabled));
+    if (enabled) {
+      Alert.alert(
+        I18n.t(
+          "profile.main.loginEnvironment.activeSession.localFeatureFlag.alertTitle"
+        ),
+        I18n.t(
+          "profile.main.loginEnvironment.activeSession.localFeatureFlag.alertMessage"
+        ),
+        [
+          {
+            text: I18n.t("global.buttons.cancel"),
+            style: "cancel"
+          },
+          {
+            text: I18n.t(
+              "profile.main.loginEnvironment.activeSession.localFeatureFlag.alertConfirmButton"
+            ),
+            onPress: () => dispatch(setActiveSessionLoginLocalFlag(enabled))
+          }
+        ],
+        { cancelable: true }
+      );
+    } else {
+      dispatch(setActiveSessionLoginLocalFlag(enabled));
+    }
   };
 
   const testEnvironmentsListItems: ReadonlyArray<TestEnvironmentsListItem> = [
@@ -536,7 +564,12 @@ const DeveloperTestEnvironmentSection = ({
       onSwitchValueChange: onIdPayTestToggle
     },
     {
-      label: I18n.t("profile.main.loginEnvironment.activeSession.switchTitle"),
+      label: I18n.t(
+        "profile.main.loginEnvironment.activeSession.localFeatureFlag.switchTitle"
+      ),
+      description: I18n.t(
+        "profile.main.loginEnvironment.activeSession.localFeatureFlag.switchDescription"
+      ),
       value: isActiveSessionLoginLocallyEnabled,
       onSwitchValueChange: onActiveSessionLoginToggle
     }

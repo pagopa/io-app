@@ -77,6 +77,10 @@ export const useInstitutionsFetcher = () => {
     fetchPage(0);
   }, [fetchPage]);
 
+  const retry = useCallback(() => {
+    fetchPage(0);
+  }, [fetchPage]);
+
   return {
     currentPage,
     data: paginatedInstitutions,
@@ -86,6 +90,7 @@ export const useInstitutionsFetcher = () => {
     isLoading,
     isUpdating,
     isRefreshing,
-    refresh
+    refresh,
+    retry
   };
 };

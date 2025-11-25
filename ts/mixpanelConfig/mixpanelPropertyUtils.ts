@@ -8,7 +8,6 @@ import {
   selectWalletCardsByType,
   selectWalletPlaceholderCards
 } from "../features/wallet/store/selectors";
-import { WalletCardBonus } from "../features/wallet/types";
 import { paymentsWalletUserMethodsSelector } from "../features/payments/wallet/store/selectors";
 import {
   NotificationPreferenceConfiguration,
@@ -102,9 +101,11 @@ export const cgnStatusHandler = (state: GlobalState): TrackCgnStatus => {
 export const welfareStatusHandler = (
   state: GlobalState
 ): ReadonlyArray<string> => {
-  const idPayCards = selectWalletCardsByType(
-    state,
-    "idPay"
-  ) as Array<WalletCardBonus>;
+  const idPayCards = selectWalletCardsByType(state, "idPay");
   return idPayCards.map(card => card.name);
+};
+
+export const cdcStatusHandler = (state: GlobalState): number => {
+  const cdcCards = selectWalletCardsByType(state, "cdc");
+  return cdcCards.reduce((sum, card) => sum + card.numberOfCards, 0);
 };

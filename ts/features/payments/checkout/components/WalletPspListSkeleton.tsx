@@ -20,7 +20,7 @@ type PspSkeletonProps = {
   showFeatured?: boolean;
 };
 
-export const PspSkeleton = ({ showFeatured }: PspSkeletonProps) => (
+const PspSkeleton = ({ showFeatured }: PspSkeletonProps) => (
   <View
     style={{
       flex: 1,

@@ -159,8 +159,7 @@ const reducer = (
 
 export default reducer;
 
-export const cgnMerchantsSelector = (state: GlobalState) =>
-  state.bonus.cgn.merchants;
+const cgnMerchantsSelector = (state: GlobalState) => state.bonus.cgn.merchants;
 
 export const cgnMerchantsCountSelector = createSelector(
   cgnMerchantsSelector,

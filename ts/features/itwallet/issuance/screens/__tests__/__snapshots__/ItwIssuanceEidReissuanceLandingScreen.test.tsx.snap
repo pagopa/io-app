@@ -1185,7 +1185,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Non ora"
+                                  accessibilityLabel="Annulla"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -1306,7 +1306,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                           ]
                                         }
                                       >
-                                        Non ora
+                                        Annulla
                                       </Text>
                                     </View>
                                   </View>
@@ -2136,7 +2136,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                               />
                               <View>
                                 <View
-                                  accessibilityLabel="Non ora"
+                                  accessibilityLabel="Annulla"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -2257,7 +2257,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                           ]
                                         }
                                       >
-                                        Non ora
+                                        Annulla
                                       </Text>
                                     </View>
                                   </View>

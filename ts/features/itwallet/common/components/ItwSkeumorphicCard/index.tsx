@@ -1,8 +1,11 @@
-import { Tag, useScaleAnimation } from "@pagopa/io-app-design-system";
-import { memo, ReactNode, useMemo } from "react";
+import { IOColors, Tag, useScaleAnimation } from "@pagopa/io-app-design-system";
+import { ReactNode, useMemo, useState } from "react";
 
+import { Canvas } from "@shopify/react-native-skia";
+import I18n from "i18next";
 import {
   AccessibilityProps,
+  LayoutChangeEvent,
   Pressable,
   StyleProp,
   StyleSheet,
@@ -10,18 +13,22 @@ import {
   ViewStyle
 } from "react-native";
 import Animated from "react-native-reanimated";
-import I18n from "i18next";
 import { accessibilityLabelByStatus } from "../../utils/itwAccessibilityUtils";
 import {
-  useBorderColorByStatus,
   getCredentialNameFromType,
+  isItwCredential,
   tagPropsByStatus,
+  useBorderColorByStatus,
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
 import {
   ItwCredentialStatus,
   StoredCredential
 } from "../../utils/itwTypesUtils";
+import {
+  ItwBrandedSkiaBorder,
+  ItwIridescentBorderVariant
+} from "../ItwBrandedSkiaBorder";
 import { CardBackground } from "./CardBackground";
 import { CardData } from "./CardData";
 import { FlippableCard } from "./FlippableCard";
@@ -34,16 +41,18 @@ export type ItwSkeumorphicCardProps = {
   onPress?: () => void;
 };
 
-const ItwSkeumorphicCard = ({
+export const ItwSkeumorphicCard = ({
   credential,
   status,
   isFlipped = false,
   onPress,
   valuesHidden
 }: ItwSkeumorphicCardProps) => {
+  const isItw = useMemo(() => isItwCredential(credential), [credential]);
+
   const FrontSide = useMemo(
     () => (
-      <CardSideBase status={status}>
+      <CardSideBase status={status} isItw={isItw}>
         <CardBackground
           credentialType={credential.credentialType}
           side="front"
@@ -55,12 +64,12 @@ const ItwSkeumorphicCard = ({
         />
       </CardSideBase>
     ),
-    [credential, status, valuesHidden]
+    [credential, status, valuesHidden, isItw]
   );
 
   const BackSide = useMemo(
     () => (
-      <CardSideBase status={status}>
+      <CardSideBase status={status} isItw={isItw}>
         <CardBackground
           credentialType={credential.credentialType}
           side="back"
@@ -72,7 +81,7 @@ const ItwSkeumorphicCard = ({
         />
       </CardSideBase>
     ),
-    [credential, status, valuesHidden]
+    [credential, status, valuesHidden, isItw]
   );
 
   const accessibilityProps = useMemo(
@@ -123,13 +132,35 @@ const ItwSkeumorphicCard = ({
   );
 };
 
+/**
+ * Maps credential status to the corresponding gradient variant.
+ */
+const gradientVariantByStatus: Record<
+  ItwCredentialStatus,
+  ItwIridescentBorderVariant
+> = {
+  valid: "default",
+  expiring: "warning",
+  expired: "error",
+  jwtExpiring: "warning",
+  jwtExpired: "error",
+  invalid: "error",
+  unknown: "error"
+};
+
 type CardSideBaseProps = {
   status: ItwCredentialStatus;
   children: ReactNode;
+  isItw: boolean;
 };
 
-const CardSideBase = ({ status, children }: CardSideBaseProps) => {
+const CardSideBase = ({ status, children, isItw }: CardSideBaseProps) => {
   const borderColorMap = useBorderColorByStatus();
+
+  const [size, setSize] = useState<{ width: number; height: number }>({
+    width: 0,
+    height: 0
+  });
 
   const statusTagProps = tagPropsByStatus[status];
   const borderColor = borderColorMap[status];
@@ -142,15 +173,46 @@ const CardSideBase = ({ status, children }: CardSideBaseProps) => {
     backgroundColor: isValid ? undefined : "rgba(255,255,255,0.7)"
   };
 
+  const handleOnLayout = (event: LayoutChangeEvent) => {
+    const { width, height } = event.nativeEvent.layout;
+    setSize({ width, height });
+  };
+
   return (
-    <View>
+    <View onLayout={handleOnLayout} style={styles.container}>
+      {/* Status badge  */}
       {statusTagProps && (
         <View style={styles.tag}>
           <Tag {...statusTagProps} />
         </View>
       )}
-      <View style={[styles.faded, dynamicStyle]} />
+
+      {/* Card background and claims */}
       {children}
+
+      {/* Displays a faded overlay if required by the credential status */}
+      <View style={[styles.faded, dynamicStyle]} />
+
+      {/* Skia Canvas for border and light effect, only displayed if IT-Wallet enabled */}
+      {isItw && (
+        <Canvas
+          style={{
+            position: "absolute",
+            width: size.width,
+            height: size.height
+          }}
+          testID="itWalletBrandBorderTestID"
+        >
+          {/* Animated gradient border */}
+          <ItwBrandedSkiaBorder
+            width={size.width}
+            height={size.height}
+            variant={gradientVariantByStatus[status]}
+            thickness={4}
+            cornerRadius={8}
+          />
+        </Canvas>
+      )}
     </View>
   );
 };
@@ -160,8 +222,22 @@ const CardSideBase = ({ status, children }: CardSideBaseProps) => {
 export const SKEUMORPHIC_CARD_ASPECT_RATIO = 16 / 10.09;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    borderRadius: 8,
+    overflow: "hidden"
+  },
   card: {
-    aspectRatio: SKEUMORPHIC_CARD_ASPECT_RATIO
+    aspectRatio: SKEUMORPHIC_CARD_ASPECT_RATIO,
+    shadowColor: IOColors.black,
+    shadowOffset: {
+      width: 0,
+      height: 4 // To avoid the shadow to be clipped by the header
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    // Android
+    elevation: 8
   },
   tag: {
     position: "absolute",
@@ -171,12 +247,7 @@ const styles = StyleSheet.create({
   },
   faded: {
     ...StyleSheet.absoluteFillObject,
-    borderWidth: 2,
-    borderRadius: 8,
-    zIndex: 10
+    borderWidth: 4,
+    borderRadius: 8
   }
 });
-
-const MemoizedItwSkeumorphicCard = memo(ItwSkeumorphicCard);
-
-export { MemoizedItwSkeumorphicCard as ItwSkeumorphicCard };

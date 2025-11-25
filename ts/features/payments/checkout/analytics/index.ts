@@ -33,10 +33,10 @@ export type PaymentAnalyticsProps = {
   browser_type: PaymentAnalyticsBrowserType;
 };
 
-export const MYBANK_PSP_BANNER_ID = "mybank_psp_selection";
+const MYBANK_PSP_BANNER_ID = "mybank_psp_selection";
 
 // eslint-disable-next-line complexity
-export const getPaymentAnalyticsEventFromFailureOutcome = (
+const getPaymentAnalyticsEventFromFailureOutcome = (
   outcome: WalletPaymentOutcomeEnum
 ) => {
   switch (outcome) {
@@ -99,7 +99,7 @@ export const getPaymentAnalyticsEventFromFailureOutcome = (
   }
 };
 
-export const getPaymentAnalyticsEventFromRequestFailure = (
+const getPaymentAnalyticsEventFromRequestFailure = (
   failure: WalletPaymentFailure
 ) => {
   switch (failure.faultCodeCategory) {

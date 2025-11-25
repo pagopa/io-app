@@ -22,6 +22,7 @@ import {
   useSVG,
   vec
 } from "@shopify/react-native-skia";
+import I18n from "i18next";
 import { useState } from "react";
 import {
   ColorValue,
@@ -43,7 +44,6 @@ import Animated, {
   useReducedMotion,
   useSharedValue
 } from "react-native-reanimated";
-import I18n from "i18next";
 import { useIOSelector } from "../../../../store/hooks";
 import { validCredentialStatuses } from "../../common/utils/itwCredentialUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";

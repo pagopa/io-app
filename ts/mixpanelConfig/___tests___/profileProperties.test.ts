@@ -26,6 +26,7 @@ const pnServiceId = "01G40DWQGKY5GRWSNM4303VNRP" as ServiceId;
 const generateBaseProfileProperties = () => ({
   BIOMETRIC_TECHNOLOGY: "FACE_ID",
   CGN_STATUS: "not_active",
+  CDC_STATUS: 0,
   FONT_PREFERENCE: "comfortable",
   THEME_PREFERENCE: "light",
   ITW_CED_V2: "not_available",

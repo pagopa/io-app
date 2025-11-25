@@ -15,7 +15,7 @@ export type ReceiptCartItemDetailsScreenParams = {
   cartItem: CartItem;
 };
 
-export type ReceiptCartItemDetailsScreenProps = RouteProp<
+type ReceiptCartItemDetailsScreenProps = RouteProp<
   PaymentsReceiptParamsList,
   "PAYMENT_RECEIPT_CART_ITEM_DETAILS"
 >;

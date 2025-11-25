@@ -5,7 +5,6 @@ import {
   ListItemHeader
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { RouteProp } from "@react-navigation/native";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { LayoutChangeEvent, SectionList, SectionListData } from "react-native";
 import Animated, {
@@ -29,17 +28,11 @@ import { ReceiptFadeInOutAnimationView } from "../components/ReceiptFadeInOutAni
 import { ReceiptListItemTransaction } from "../components/ReceiptListItemTransaction";
 import { ReceiptLoadingList } from "../components/ReceiptLoadingList";
 import { ReceiptSectionListHeader } from "../components/ReceiptSectionListHeader";
-import { PaymentsReceiptParamsList } from "../navigation/params";
 import { PaymentsReceiptRoutes } from "../navigation/routes";
 import { getPaymentsReceiptAction } from "../store/actions";
 import { walletReceiptListPotSelector } from "../store/selectors";
 import { ReceiptsCategoryFilter } from "../types";
 import { groupTransactionsByMonth } from "../utils";
-
-export type ReceiptListScreenProps = RouteProp<
-  PaymentsReceiptParamsList,
-  "PAYMENT_RECEIPT_DETAILS"
->;
 
 const AnimatedSectionList = Animated.createAnimatedComponent(
   SectionList as new () => SectionList<NoticeListItem>
