@@ -3749,13 +3749,6 @@
           "subtitle": "Der Dienst konnte nicht deaktiviert werden. Bitte versuche es erneut."
         }
       },
-      "feedback": {
-        "banner": {
-          "title": "Sag uns, was du denkst",
-          "content": "Erzähle uns von deinen Erfahrungen mit der Funktion Dokumente in IO.",
-          "action": "Start"
-        }
-      },
       "walletInstanceRevoked": {
         "alert": {
           "cta": "Mehr erfahren",
