@@ -22,10 +22,7 @@ const CardBackground = ({ credentialType, side }: CardBackgroundProps) => {
 
   return (
     <View style={styles.wrapper}>
-      <AnimatedImage
-        source={cardAssets[side]}
-        style={[styles.background, styles.shadow]}
-      />
+      <AnimatedImage source={cardAssets[side]} style={styles.background} />
     </View>
   );
 };
@@ -55,17 +52,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     borderRadius: 8
-  },
-  shadow: {
-    shadowColor: IOColors.black,
-    shadowOffset: {
-      width: 0,
-      height: 4 // To avoid the shadow to be clipped by the header
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    // Android
-    elevation: 8
   }
 });
 
