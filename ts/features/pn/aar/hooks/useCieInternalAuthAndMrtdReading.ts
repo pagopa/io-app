@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import {
   CieManager,
+  ResultEncoding,
   type InternalAuthAndMrtdResponse,
   type NfcError
 } from "@pagopa/io-react-native-cie";
@@ -40,12 +41,14 @@ type ErrorState = {
 
 type ReadState = IdleState | ReadingState | SuccessState | ErrorState;
 
-export const isErrorState = (state: ReadState): state is ErrorState =>
-  state.status === ReadStatus.ERROR;
+export const isIdleState = (state: ReadState): state is IdleState =>
+  state.status === ReadStatus.IDLE;
 export const isReadingState = (state: ReadState): state is ReadingState =>
   state.status === ReadStatus.READING;
 export const isSuccessState = (state: ReadState): state is SuccessState =>
   state.status === ReadStatus.SUCCESS;
+export const isErrorState = (state: ReadState): state is ErrorState =>
+  state.status === ReadStatus.ERROR;
 
 export const useCieInternalAuthAndMrtdReading = () => {
   const [readState, setReadState] = useState<ReadState>({
@@ -53,11 +56,19 @@ export const useCieInternalAuthAndMrtdReading = () => {
   });
 
   const startReading = useCallback(
-    async (
-      ...params: Parameters<typeof CieManager.startInternalAuthAndMRTDReading>
-    ) => {
-      setReadState({ status: ReadStatus.IDLE });
-      await CieManager.startInternalAuthAndMRTDReading(...params);
+    async (can: string, challenge: string, encoding: ResultEncoding) => {
+      setReadState(prevState =>
+        // Since the state is initialized with `status: ReadStatus.IDLE`,
+        // to avoid an unnecessary re-render on the first run,
+        // the previous unchanged state is returned.
+        isIdleState(prevState) ? prevState : { status: ReadStatus.IDLE }
+      );
+
+      await CieManager.startInternalAuthAndMRTDReading(
+        can,
+        challenge,
+        encoding
+      );
     },
     []
   );
