@@ -56,7 +56,7 @@ const itwReducer = combineReducers({
   credentialsCatalogue: itwCredentialsCatalogueReducer
 });
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 7;
+const CURRENT_REDUX_ITW_STORE_VERSION = 8;
 
 export const migrations: MigrationManifest = {
   // Added preferences store
@@ -105,7 +105,11 @@ export const migrations: MigrationManifest = {
 
   // Removed reissuanceFeedbackBannerHidden from preferences
   "7": (state: PersistedState): PersistedState =>
-    _.omit(state, "preferences.reissuanceFeedbackBannerHidden")
+    _.omit(state, "preferences.reissuanceFeedbackBannerHidden"),
+
+  // Removed hideFeedbackBannerUntilDate from preferences
+  "8": (state: PersistedState): PersistedState =>
+    _.omit(state, "preferences.hideFeedbackBannerUntilDate")
 };
 
 const itwPersistConfig: PersistConfig = {
