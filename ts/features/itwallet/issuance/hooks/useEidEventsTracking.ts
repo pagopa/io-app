@@ -1,5 +1,8 @@
 import { useEffect } from "react";
-import { IdentificationContext } from "../../machine/eid/context";
+import {
+  EidIssuanceLevel,
+  IdentificationContext
+} from "../../machine/eid/context";
 import {
   IssuanceFailure,
   IssuanceFailureType
@@ -20,13 +23,18 @@ import {
 type Params = {
   failure: IssuanceFailure;
   identification?: IdentificationContext;
+  issuanceLevel?: EidIssuanceLevel;
 };
 
 /**
  * Track errors occurred during the eID issuance process for analytics.
  */
-export const useEidEventsTracking = ({ failure, identification }: Params) => {
-  const itwFlow: ItwFlow = identification?.level ?? "not_available";
+export const useEidEventsTracking = ({
+  failure,
+  identification,
+  issuanceLevel
+}: Params) => {
+  const itwFlow: ItwFlow = mapIssuanceLevelToFlow(issuanceLevel);
 
   useEffect(() => {
     if (
@@ -84,4 +92,17 @@ export const useEidEventsTracking = ({ failure, identification }: Params) => {
       );
     }
   }, [failure, identification, itwFlow]);
+};
+
+const mapIssuanceLevelToFlow = (issuanceLevel?: EidIssuanceLevel): ItwFlow => {
+  switch (issuanceLevel) {
+    case "l3":
+    case "l3-next":
+      return "L3";
+    case "l2":
+    case "l2-fallback":
+      return "L2";
+    default:
+      return "not_available";
+  }
 };
