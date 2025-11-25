@@ -8,3 +8,6 @@ const WALLET_UPDATE_PATHS = ["ioit://cgn-details/detail", "ioit://main/wallet"];
  */
 export const shouldTriggerWalletUpdate = (url: string): boolean =>
   WALLET_UPDATE_PATHS.some(path => url.startsWith(path));
+
+export const isCGNLinking = (url: string): boolean =>
+  url.startsWith("ioit://cgn-details/detail");
