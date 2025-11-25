@@ -1,0 +1,68 @@
+import { StackActions } from "@react-navigation/native";
+import { testSaga } from "redux-saga-test-plan";
+import NavigationService from "../../../../../navigation/NavigationService";
+import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
+import PN_ROUTES from "../../../navigation/routes";
+import { initiateAarFlowSaga } from "../initiateAarFlowSaga";
+import { terminateAarFlow, initiateAarFlow } from "../../store/actions";
+import { sendAARFlowStates } from "../../utils/stateUtils";
+import {
+  currentAARFlowStateType,
+  currentAarFlowIunSelector
+} from "../../store/selectors";
+
+jest.mock("../../../../../navigation/NavigationService");
+
+describe("initiateAarFlowIfEnabled saga", () => {
+  const aarUrl = "https://example.com/aar";
+  const action = initiateAarFlow({ aarUrl });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("should terminate current flow and replace navigation if flow state is not none", () => {
+    const mockNavigate =
+      NavigationService.dispatchNavigationAction as jest.Mock;
+    const mockCurrentState = sendAARFlowStates.fetchingQRData;
+
+    testSaga(initiateAarFlowSaga, action)
+      .next()
+      .select(currentAARFlowStateType)
+      .next(mockCurrentState)
+      .select(currentAarFlowIunSelector)
+      .next("iun-123")
+      .put(terminateAarFlow({ messageId: "iun-123" }))
+      .next()
+      .call(
+        mockNavigate,
+        StackActions.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+          screen: PN_ROUTES.MAIN,
+          params: {
+            screen: PN_ROUTES.QR_SCAN_FLOW,
+            params: { aarUrl }
+          }
+        })
+      )
+      .next()
+      .isDone();
+  });
+
+  it("should navigate to QR_SCAN_FLOW if flow state is none", () => {
+    const mockNavigate = NavigationService.navigate as jest.Mock;
+
+    testSaga(initiateAarFlowSaga, action)
+      .next()
+      .select(currentAARFlowStateType)
+      .next(sendAARFlowStates.none)
+      .call(mockNavigate, MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+        screen: PN_ROUTES.MAIN,
+        params: {
+          screen: PN_ROUTES.QR_SCAN_FLOW,
+          params: { aarUrl }
+        }
+      })
+      .next()
+      .isDone();
+  });
+});

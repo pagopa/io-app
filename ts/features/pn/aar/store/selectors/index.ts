@@ -3,7 +3,11 @@ import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { thirdPartyFromIdSelector } from "../../../../messages/store/reducers/thirdPartyById";
 import { toSENDMessage } from "../../../store/types/transformers";
-import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
+import {
+  AARFlowState,
+  maybeIunFromAarFlowState,
+  sendAARFlowStates
+} from "../../utils/stateUtils";
 
 export const thirdPartySenderDenominationSelector = (
   state: GlobalState,
@@ -36,6 +40,12 @@ export const aarAdresseeDenominationSelector = (
       }
       return undefined;
   }
+};
+export const currentAarFlowIunSelector = (
+  state: GlobalState
+): string | undefined => {
+  const currentState = currentAARFlowData(state);
+  return maybeIunFromAarFlowState(currentState);
 };
 
 export const currentAARFlowData = (state: GlobalState) =>

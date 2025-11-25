@@ -1,9 +1,10 @@
 import { assign, fromPromise, setup } from "xstate";
 import { UpgradeCredentialOutput, UpgradeCredentialParams } from "./actors";
 import { Context, getInitialContext } from "./context";
+import { CredentialUpgradeEvents } from "./events";
+import { mapUpgradeEventToFailure } from "./failure";
 import { Input } from "./input";
 import { Output } from "./output";
-import { CredentialUpgradeEvents } from "./events";
 
 const notImplemented = () => {
   throw new Error("Not implemented");
@@ -22,10 +23,21 @@ export const itwCredentialUpgradeMachine = setup({
       credentialIndex: ({ context }) => context.credentialIndex + 1
     }),
     setFailedCredential: assign({
-      failedCredentials: ({ context }) => [
-        ...context.failedCredentials,
-        context.credentials[context.credentialIndex]
-      ]
+      failedCredentials: ({ context, event }) => {
+        const current = context.credentials[context.credentialIndex];
+
+        const failedEvent = mapUpgradeEventToFailure(event);
+
+        const failedCredential = {
+          ...current,
+          failure: {
+            type: failedEvent.type,
+            reason: failedEvent.reason
+          }
+        };
+
+        return [...context.failedCredentials, failedCredential];
+      }
     })
   },
   actors: {

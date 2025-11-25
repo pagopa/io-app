@@ -2978,7 +2978,13 @@
         }
       },
       "institutions": {
-        "title": "Nazionali"
+        "title": "Nazionali",
+        "error": {
+          "banner": {
+            "label": "Non siamo riusciti a caricare la lista degli enti nazionali",
+            "cta": "Prova di nuovo"
+          }
+        }
       },
       "searchLink": "Cerca tra tutti i servizi locali disponibili"
     },
@@ -3805,6 +3811,7 @@
         "notAvailable": "Il servizio non è disponibile in questo momento. Riprova più tardi."
       },
       "request": "Richiedi Carta della Cultura",
+      "goToService": "Vai al servizio",
       "usage": "Usa Carta della Cultura"
     }
   },
@@ -5195,6 +5202,7 @@
               "residency": "Il tuo attestato di residenza digitale ha piena validità ufficiale."
             }
           },
+          "discoverItWallet": "Scopri IT-Wallet",
           "partOf": "Parte di"
         },
         "ctas": {
