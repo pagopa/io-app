@@ -123,6 +123,7 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
             [ROUTES.PAYMENTS_HOME]: "payments"
           }
         },
+        [ROUTES.BARCODE_SCAN]: "main/scan",
         [SETTINGS_ROUTES.PROFILE_NAVIGATOR]: {
           path: "profile",
           screens: {
