@@ -67,7 +67,7 @@ function trackMissingSAMLResponseError(properties?: EventProperties) {
 }
 export function trackLoginSpidError(
   errorCode?: string,
-  properties: EventProperties = { idp: "unknown", flow: "auth" }
+  properties?: EventProperties
 ) {
   switch (errorCode) {
     case AUTH_ERRORS.ERROR_19: {

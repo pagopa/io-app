@@ -5,20 +5,13 @@ import { SpidIdp } from "../../../../../utils/idps";
 export type LoginType = "auth" | "reauth";
 
 export function trackLoginWithNewCF() {
-  void mixpanelTrack(
-    "LOGIN_NEW_CF",
-    buildEventProperties("UX", "screen_view", {
-      flow: "reauth"
-    })
-  );
+  void mixpanelTrack("LOGIN_NEW_CF", buildEventProperties("UX", "screen_view"));
 }
 
 export function trackLoginWithNewCFConfirm() {
   void mixpanelTrack(
     "LOGIN_NEW_CF_CONFIRM",
-    buildEventProperties("UX", "action", {
-      flow: "reauth"
-    })
+    buildEventProperties("UX", "action")
   );
 }
 
