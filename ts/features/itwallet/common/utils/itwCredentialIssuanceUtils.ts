@@ -28,6 +28,12 @@ export type RequestCredentialParams = {
 };
 
 /**
+ * List of credentials that cannot be issued in parallel, only sequentially.
+ * Currently only the mDL must be requested sequentially because of locking issues.
+ */
+const SEQUENTIAL_ISSUANCE_CREDENTIALS = ["mDL"];
+
+/**
  * Requests a credential from the issuer.
  * @param env - The environment to use for the wallet provider base URL
  * @param credentialType - The type of credential to request
@@ -148,24 +154,36 @@ export const obtainCredential = async ({
     }
   );
 
+  const params: Omit<RequestAndParseCredentialParams, "authDetails"> = {
+    accessToken,
+    clientId,
+    credentialType,
+    env,
+    dPopCryptoContext,
+    issuerConf,
+    operationType
+  };
+
+  if (SEQUENTIAL_ISSUANCE_CREDENTIALS.includes(credentialType)) {
+    const credentials: Array<StoredCredential> = [];
+    for (const authDetails of accessToken.authorization_details) {
+      const credential = await requestAndParseCredential({
+        ...params,
+        authDetails
+      });
+      // eslint-disable-next-line functional/immutable-data
+      credentials.push(credential);
+    }
+    return { credentials };
+  }
+
   const credentials = await Promise.all(
     accessToken.authorization_details.map(authDetails =>
-      requestAndParseCredential({
-        accessToken,
-        clientId,
-        credentialType,
-        authDetails,
-        env,
-        dPopCryptoContext,
-        issuerConf,
-        operationType
-      })
+      requestAndParseCredential({ ...params, authDetails })
     )
   );
 
-  return {
-    credentials
-  };
+  return { credentials };
 };
 
 const getCredentialConfigurationIds = (
