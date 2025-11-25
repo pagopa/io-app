@@ -53,14 +53,11 @@ export const createEidIssuanceActionsImplementation = (
       const walletInstanceAttestation =
         itwWalletInstanceAttestationSelector(state);
       const credentials = itwCredentialsSelector(state);
-      const isPidReissuingSurveyHidden =
-        itwIsPidReissuingSurveyHiddenSelector(state);
 
       return {
         integrityKeyTag: O.toUndefined(storedIntegrityKeyTag),
         walletInstanceAttestation,
-        legacyCredentials: Object.values(credentials),
-        isPidReissuingSurveyHidden
+        legacyCredentials: Object.values(credentials)
       };
     }
   ),
