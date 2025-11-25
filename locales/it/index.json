@@ -5533,11 +5533,6 @@
             "content": "Raccontaci la tua esperienza con la verifica e aiutaci a migliorare.",
             "action": "Inizia"
           }
-        },
-        "banner": {
-          "title": "Dicci cosa ne pensi",
-          "content": "Raccontaci la tua esperienza con la funzionalità Documenti su IO.",
-          "action": "Inizia"
         }
       },
       "walletInstanceRevoked": {

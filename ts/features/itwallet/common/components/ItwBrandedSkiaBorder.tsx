@@ -38,7 +38,7 @@ export const ItwBrandedSkiaBorder = ({
 
   /* Styles */
   const gradientTickOpacity = isLightMode ? 1 : 0.8;
-  const gradientBorderOpacity = isLightMode ? 1.0 : 0.5;
+  const gradientBorderOpacity = isLightMode ? 1.0 : 0.8;
 
   return (
     <Mask

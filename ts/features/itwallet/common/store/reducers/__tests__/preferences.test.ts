@@ -3,7 +3,6 @@ import MockDate from "mockdate";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import {
   itwCloseDiscoveryBanner,
-  itwCloseFeedbackBanner,
   itwSetAuthLevel,
   itwSetClaimValuesHidden
 } from "../../actions/preferences";
@@ -20,21 +19,6 @@ describe("IT Wallet preferences reducer", () => {
     expect(reducer(undefined, applicationChangeState("active"))).toEqual(
       INITIAL_STATE
     );
-  });
-
-  it("should handle itwCloseFeedbackBanner action", () => {
-    const mockDate = "2024-11-14T20:43:21.361Z";
-    MockDate.set(mockDate);
-
-    const expectedDate = addMonths(mockDate, 1);
-    const action = itwCloseFeedbackBanner();
-    const newState = reducer(INITIAL_STATE, action);
-
-    expect(newState).toEqual({
-      ...newState,
-      hideFeedbackBannerUntilDate: expectedDate.toISOString()
-    });
-    MockDate.reset();
   });
 
   it("should handle itwCloseDiscoveryBanner action", () => {
@@ -54,7 +38,6 @@ describe("IT Wallet preferences reducer", () => {
 
   it("should handle itwLifecycleStoresReset action and ensure some values are not reset", () => {
     const initialState: ItwPreferencesState = {
-      hideFeedbackBannerUntilDate: "2024-11-14T20:43:21.361Z",
       hideDiscoveryBannerUntilDate: "2024-11-14T20:43:21.361Z",
       isPendingReview: true,
       authLevel: "L2",
@@ -101,7 +84,6 @@ describe("IT Wallet preferences reducer", () => {
     const action = itwLifecycleStoresReset();
     const newState = reducer(
       {
-        hideFeedbackBannerUntilDate: "abcd",
         hideDiscoveryBannerUntilDate: "abcd",
         isPendingReview: true,
         authLevel: "L2",
