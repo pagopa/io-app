@@ -33,7 +33,10 @@ import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../../../../config"
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { sessionExpired } from "../../../common/store/actions";
+import {
+  sessionCorrupted,
+  sessionExpired
+} from "../../../common/store/actions";
 import {
   useIODispatch,
   useIOSelector,
@@ -360,13 +363,13 @@ export const LandingScreen = () => {
               color: "primary",
               icon: "instruction",
               onPress: () => {
-                if (isSessionExpired) {
-                  trackHelpCenterCtaTapped(
-                    sessionExpired.toString(),
-                    helpCenterHowToDoWhenSessionIsExpiredUrl,
-                    routeName
-                  );
-                }
+                trackHelpCenterCtaTapped(
+                  isSessionExpired
+                    ? sessionExpired.toString()
+                    : sessionCorrupted.toString(),
+                  helpCenterHowToDoWhenSessionIsExpiredUrl,
+                  routeName
+                );
                 openWebUrl(helpCenterHowToDoWhenSessionIsExpiredUrl, () => {
                   error(I18n.t("global.jserror.title"));
                 });
