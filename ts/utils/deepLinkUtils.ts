@@ -1,5 +1,9 @@
 // Internal deep link paths that require wallet update
-const WALLET_UPDATE_PATHS = ["ioit://cgn-details/detail", "ioit://main/wallet"];
+const WALLET_UPDATE_PATHS = [
+  "ioit://cgn-details/detail",
+  "ioit://main/wallet",
+  "ioit://idpay/initiative"
+];
 
 /**
  * Check if the URL requires wallet update based on specific criteria
