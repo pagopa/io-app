@@ -232,7 +232,8 @@ const ActiveSessionCieIdLoginWebView = ({
     isLoginUrlWithTokenRef.current = onLoginUriChanged(
       handleLoginFailure,
       handleLoginSuccess,
-      "cieid"
+      "cieid",
+      "reauth"
     )(event);
     // URL can be loaded if it's not the login URL containing the session token - this avoids
     // making a (useless) GET request with the session in the URL

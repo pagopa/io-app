@@ -10,6 +10,7 @@ import { IdpData } from "../../../../../definitions/content/IdpData";
 import { isStringNullyOrEmpty } from "../../../../utils/strings";
 import { getAppVersion } from "../../../../utils/appVersion";
 import { isLocalEnv } from "../../../../utils/environment";
+import { LoginType } from "../../activeSessionLogin/screens/analytics";
 /**
  * Helper functions for handling the SPID login flow through a webview.
  */
@@ -57,7 +58,8 @@ const LOGIN_FAILURE_PAGE = "error.html";
 
 export const extractLoginResult = (
   url: string,
-  idp?: keyof IdpData
+  idp?: keyof IdpData,
+  flow: LoginType = "auth"
 ): LoginResult | undefined => {
   const urlParse = new URLParse(url, true);
 
@@ -78,7 +80,7 @@ export const extractLoginResult = (
       trackLoginSpidError(errorCode, {
         idp: idp || "not_set",
         ...(errorMessage ? { "error message": errorMessage } : {}),
-        flow: "auth"
+        flow
       });
     }
     return {
@@ -109,12 +111,13 @@ export const onLoginUriChanged =
   (
     onFailure: (errorCode?: string, errorMessage?: string) => void,
     onSuccess: (_: SessionToken) => void,
-    idp?: keyof IdpData
+    idp?: keyof IdpData,
+    flow: LoginType = "auth"
   ) =>
   (navState: WebViewNavigation): boolean => {
     if (navState.url) {
       // If the url is not related to login this will be `null`
-      const loginResult = extractLoginResult(navState.url, idp);
+      const loginResult = extractLoginResult(navState.url, idp, flow);
       if (loginResult) {
         if (loginResult.success) {
           // In case of successful login
