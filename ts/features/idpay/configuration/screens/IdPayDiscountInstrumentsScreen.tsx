@@ -13,7 +13,7 @@ import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay"
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { emptyContextualHelp } from "../../../../utils/help";
 import { useIdPayInfoCieBottomSheet } from "../../code/components/IdPayInfoCieBottomSheet";
 import { IdPayCodeParamsList } from "../../code/navigation/params";
 import { IdPayCodeRoutes } from "../../code/navigation/routes";

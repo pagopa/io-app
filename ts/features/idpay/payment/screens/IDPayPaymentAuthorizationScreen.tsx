@@ -17,7 +17,7 @@ import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPay
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { identificationRequest } from "../../../identification/store/actions";
 import { useIODispatch } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { emptyContextualHelp } from "../../../../utils/help";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import {
   formatDateOrDefault,

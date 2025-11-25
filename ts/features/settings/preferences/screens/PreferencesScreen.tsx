@@ -13,13 +13,13 @@ import { useFocusEffect } from "@react-navigation/native";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { requestWriteCalendarPermission } from "../../../../utils/permission";
 import { checkAndRequestPermission } from "../../../../utils/calendar";
 import { openAppSettings } from "../../../../utils/appSettings";
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
+import { ContextualHelpPropsMarkdown } from "../../../../utils/help";
 
 type PreferencesNavListItem = {
   value: string;

@@ -8,7 +8,7 @@ import I18n from "i18next";
 import { useState } from "react";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { emptyContextualHelp } from "../../../../utils/help";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import {
   trackIDPayDetailManualEntryConfirm,

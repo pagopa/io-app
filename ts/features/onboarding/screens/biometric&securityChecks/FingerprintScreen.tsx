@@ -1,24 +1,24 @@
 import { Banner, Body, H2, VSpacer } from "@pagopa/io-app-design-system";
-import { ComponentProps, useMemo } from "react";
 import I18n from "i18next";
-import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
+import { ComponentProps, useMemo } from "react";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { isProfileFirstOnBoardingSelector } from "../../../settings/common/store/selectors";
 import { getFlowType } from "../../../../utils/analytics";
 import {
   BiometriActivationUserType,
   mayUserActivateBiometric
 } from "../../../../utils/biometrics";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { FAQsCategoriesType } from "../../../../utils/faq";
-import { IOScrollView } from "../../../../components/ui/IOScrollView";
-import { useOnboardingAbortAlert } from "../../hooks/useOnboardingAbortAlert";
+import { ContextualHelpPropsMarkdown } from "../../../../utils/help";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { isProfileFirstOnBoardingSelector } from "../../../settings/common/store/selectors";
 import {
   trackBiometricActivationAccepted,
   trackBiometricActivationDeclined
 } from "../../../settings/security/shared/analytics";
+import { useOnboardingAbortAlert } from "../../hooks/useOnboardingAbortAlert";
 import { trackBiometricActivationEducationalScreen } from "./analytics";
 
 type IOScrollViewActions = ComponentProps<typeof IOScrollView>["actions"];

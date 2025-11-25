@@ -8,15 +8,13 @@ import {
 import { ReactElement, useCallback, useEffect, useState } from "react";
 
 import I18n from "i18next";
-import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { shufflePinPadOnPayment } from "../../../../config";
-import { IdPayCodeRoutes } from "../../../idpay/code/navigation/routes";
-import { isIdPayCodeOnboardedSelector } from "../../../idpay/code/store/selectors";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { identificationRequest } from "../../../identification/store/actions";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { isIdPayCiePaymentCodeEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isFingerprintEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { getFlowType } from "../../../../utils/analytics";
 import {
@@ -25,16 +23,18 @@ import {
   isBiometricsValidType,
   mayUserActivateBiometric
 } from "../../../../utils/biometrics";
+import { FAQsCategoriesType } from "../../../../utils/faq";
+import { ContextualHelpPropsMarkdown } from "../../../../utils/help";
+import { FIMS_ROUTES } from "../../../fims/common/navigation";
+import { fimsIsHistoryEnabledSelector } from "../../../fims/history/store/selectors";
+import { identificationRequest } from "../../../identification/store/actions";
+import { IdPayCodeRoutes } from "../../../idpay/code/navigation/routes";
+import { isIdPayCodeOnboardedSelector } from "../../../idpay/code/store/selectors";
+import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 import {
   trackBiometricActivationAccepted,
   trackBiometricActivationDeclined
 } from "../shared/analytics";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { FAQsCategoriesType } from "../../../../utils/faq";
-import { fimsIsHistoryEnabledSelector } from "../../../fims/history/store/selectors";
-import { FIMS_ROUTES } from "../../../fims/common/navigation";
-import { SETTINGS_ROUTES } from "../../common/navigation/routes";
-import { isIdPayCiePaymentCodeEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.contextualHelpTitle",

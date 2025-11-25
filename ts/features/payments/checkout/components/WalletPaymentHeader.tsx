@@ -11,7 +11,7 @@ import I18n from "i18next";
 import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { emptyContextualHelp } from "../../../../utils/help";
 import { useWalletPaymentGoBackHandler } from "../hooks/useWalletPaymentGoBackHandler";
 import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";

@@ -12,28 +12,28 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import I18n from "i18next";
 import { useCallback, useEffect, useState } from "react";
 import { Alert } from "react-native";
-import I18n from "i18next";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
-import TosWebviewComponent from "../../settings/privacy/shared/components/TosWebviewComponent";
-import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
-import { tosConfigSelector } from "../../tos/store/selectors";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import { abortOnboarding, tosAccepted } from "../store/actions";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
+import { getFlowType } from "../../../utils/analytics";
+import { ContextualHelpPropsMarkdown } from "../../../utils/help";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { trackTosUserExit } from "../../authentication/common/analytics";
 import {
   isProfileFirstOnBoardingSelector,
   profileSelector
 } from "../../settings/common/store/selectors";
 import { isProfileFirstOnBoarding } from "../../settings/common/store/utils/guards";
-import { getFlowType } from "../../../utils/analytics";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { trackTosUserExit } from "../../authentication/common/analytics";
 import {
   trackTosAccepted,
   trackTosScreen
 } from "../../settings/privacy/shared/analytics";
+import TosWebviewComponent from "../../settings/privacy/shared/components/TosWebviewComponent";
+import { tosConfigSelector } from "../../tos/store/selectors";
+import { abortOnboarding, tosAccepted } from "../store/actions";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.privacy.privacyPolicy.contextualHelpTitlePolicy",

@@ -7,12 +7,12 @@ import { Zendesk } from "../../../../../definitions/content/Zendesk";
 import { ZendeskCategory } from "../../../../../definitions/content/ZendeskCategory";
 import { ZendeskSubCategory } from "../../../../../definitions/content/ZendeskSubCategory";
 import { ZendeskSubcategoriesErrors } from "../../../../../definitions/content/ZendeskSubcategoriesErrors";
+import { NetworkError } from "../../../../utils/errors";
+import { FAQsCategoriesType } from "../../../../utils/faq";
 import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
-} from "../../../../components/screens/BaseScreenComponent";
-import { NetworkError } from "../../../../utils/errors";
-import { FAQsCategoriesType } from "../../../../utils/faq";
+} from "../../../../utils/help";
 
 export type ZendeskAssistanceType = Partial<{
   payment: boolean;

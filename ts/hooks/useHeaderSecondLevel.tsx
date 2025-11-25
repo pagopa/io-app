@@ -4,16 +4,16 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 
-import { ComponentProps, useCallback, useLayoutEffect, useMemo } from "react";
 import I18n from "i18next";
+import { ComponentProps, useCallback, useLayoutEffect, useMemo } from "react";
+import { useIOAlertVisible } from "../components/StatusMessages/IOAlertVisibleContext";
 import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
-} from "../components/screens/BaseScreenComponent";
+} from "../components/ui/utils/help.ts";
 import { FAQsCategoriesType } from "../utils/faq";
-import { useIOAlertVisible } from "../components/StatusMessages/IOAlertVisibleContext";
-import { useStartSupportRequest } from "./useStartSupportRequest";
 import { useOfflineToastGuard } from "./useOfflineToastGuard.ts";
+import { useStartSupportRequest } from "./useStartSupportRequest";
 
 type SpecificHookProps = {
   canGoBack?: boolean;

@@ -2,18 +2,18 @@
  * A screen to show the app Terms of Service.
  * This screen is used as Privacy screen From Profile section.
  */
-import { useState } from "react";
 import { ContentWrapper, H2 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+import { useState } from "react";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
-import TosWebviewComponent from "../shared/components/TosWebviewComponent";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { getFlowType } from "../../../../utils/analytics";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../store/hooks";
+import { getFlowType } from "../../../../utils/analytics";
+import { ContextualHelpPropsMarkdown } from "../../../../utils/help";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { tosConfigSelector } from "../../../tos/store/selectors";
 import { trackTosScreen } from "../shared/analytics";
+import TosWebviewComponent from "../shared/components/TosWebviewComponent";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.privacy.privacyPolicy.contextualHelpTitlePolicy",

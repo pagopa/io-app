@@ -27,7 +27,6 @@ import { FlatList, ListRenderItemInfo } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import IOMarkdown from "../../../components/IOMarkdown";
-import { ContextualHelpProps } from "../../../components/screens/BaseScreenComponent";
 import {
   getContextualHelpConfig,
   getContextualHelpData,
@@ -50,6 +49,7 @@ import {
 } from "../../../store/reducers/backendStatus/remoteConfig";
 import { getContextualHelpDataFromRouteSelector } from "../../../store/reducers/content";
 import { FAQType, getFAQsFromCategories } from "../../../utils/faq";
+import { ContextualHelpProps } from "../../../utils/help";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../../utils/hooks/usePrevious";
 import {

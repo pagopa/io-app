@@ -5,40 +5,40 @@ import {
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
+import _ from "lodash";
 import {
-  useContext,
   createRef,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useRef,
   useState
 } from "react";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import { Alert, View } from "react-native";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import _ from "lodash";
-import I18n from "i18next";
-import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
-import { availableTranslations } from "../../../../i18n";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
 import { Locales } from "../../../../../locales/locales";
-import { profileUpsert } from "../../common/store/actions";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+import { AlertModal } from "../../../../components/ui/AlertModal";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { LightModalContext } from "../../../../components/ui/LightModal";
+import { availableTranslations } from "../../../../i18n";
+import { preferredLanguageSaveSuccess } from "../../../../store/actions/persistedPreferences";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { sectionStatusByKeySelector } from "../../../../store/reducers/backendStatus/sectionStatus";
+import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
+import { ContextualHelpPropsMarkdown } from "../../../../utils/help";
+import { usePrevious } from "../../../../utils/hooks/usePrevious";
 import {
   fromLocaleToPreferredLanguage,
   getFullLocale
 } from "../../../../utils/locale";
-import { profileSelector } from "../../common/store/selectors";
-import { usePrevious } from "../../../../utils/hooks/usePrevious";
-import { preferredLanguageSaveSuccess } from "../../../../store/actions/persistedPreferences";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { openWebUrl } from "../../../../utils/url";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { sectionStatusByKeySelector } from "../../../../store/reducers/backendStatus/sectionStatus";
-import { LightModalContext } from "../../../../components/ui/LightModal";
-import { AlertModal } from "../../../../components/ui/AlertModal";
+import { profileUpsert } from "../../common/store/actions";
+import { profileSelector } from "../../common/store/selectors";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.language.contextualHelpTitle",

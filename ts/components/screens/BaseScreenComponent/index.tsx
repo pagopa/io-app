@@ -2,29 +2,22 @@ import { ComponentProps, PropsWithChildren, ReactNode } from "react";
 
 import { ColorValue, View } from "react-native";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
-import { TranslationKeys } from "../../../../locales/locales";
 import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { currentRouteSelector } from "../../../store/reducers/navigation";
+import { isTestEnv } from "../../../utils/environment";
 import { FAQsCategoriesType } from "../../../utils/faq";
+import {
+  ContextualHelpProps,
+  ContextualHelpPropsMarkdown
+} from "../../../utils/help";
 import {
   assistanceToolRemoteConfig,
   resetCustomFields
 } from "../../../utils/supportAssistance";
 import { AccessibilityEvents, BaseHeader } from "../BaseHeader";
-import { isTestEnv } from "../../../utils/environment";
-
-export type ContextualHelpProps = {
-  title: string;
-  body: string;
-};
-
-export type ContextualHelpPropsMarkdown = {
-  title: TranslationKeys;
-  body: TranslationKeys;
-};
 
 interface OwnProps {
   onAccessibilityNavigationHeaderFocus?: () => void;

@@ -1,28 +1,28 @@
 import {
-  H3,
   BodySmall,
+  H3,
   IOColors,
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useFocusEffect } from "@react-navigation/native";
+import I18n from "i18next";
 import { useCallback, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
-import I18n from "i18next";
 import { withLightModalContext } from "../../../../components/helpers/withLightModalContext";
-import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIOSelector } from "../../../../store/hooks";
-import {
-  profileFiscalCodeSelector,
-  profileNameSurnameSelector
-} from "../../common/store/selectors";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { useMaxBrightness } from "../../../../utils/brightness";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { FAQsCategoriesType } from "../../../../utils/faq";
+import { ContextualHelpPropsMarkdown } from "../../../../utils/help";
+import {
+  profileFiscalCodeSelector,
+  profileNameSurnameSelector
+} from "../../common/store/selectors";
 
 const FAQ_CATEGORIES: ReadonlyArray<FAQsCategoriesType> = ["profile"];
 

@@ -4,7 +4,7 @@ import I18n from "i18next";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { emptyContextualHelp } from "../../../../../utils/help";
 import BonusInformationComponent from "../../../common/components/BonusInformationComponent";
 import { availableBonusTypesSelectorFromId } from "../../../common/store/selectors";
 import { ID_CGN_TYPE } from "../../../common/utils";

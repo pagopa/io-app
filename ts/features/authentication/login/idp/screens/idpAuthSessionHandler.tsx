@@ -38,7 +38,7 @@ import { idpContextualHelpDataFromIdSelector } from "../../../../../store/reduce
 import { isMixpanelEnabled } from "../../../../../store/reducers/persistedPreferences";
 import themeVariables from "../../../../../theme/variables";
 import { SessionToken } from "../../../../../types/SessionToken";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { emptyContextualHelp } from "../../../../../utils/help";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog

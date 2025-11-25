@@ -7,7 +7,6 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { ComponentProps, useCallback, useMemo } from "react";
 import I18n from "i18next";
-import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import {
@@ -19,6 +18,7 @@ import {
 import { useIOSelector } from "../../../../store/hooks";
 import { FAQsCategoriesType } from "../../../../utils/faq";
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
+import { ContextualHelpPropsMarkdown } from "../../../../utils/help";
 
 type EndElementProps = ComponentProps<typeof ListItemInfo>["endElement"];
 

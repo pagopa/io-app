@@ -33,7 +33,7 @@ import { IOScrollViewWithReveal } from "../../../../components/ui/IOScrollViewWi
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { setAccessibilityFocus } from "../../../../utils/accessibility.ts";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp.tsx";
+import { emptyContextualHelp } from "../../../../utils/help.ts";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 import { tosConfigSelector } from "../../../tos/store/selectors/index.ts";
 import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum.ts";
