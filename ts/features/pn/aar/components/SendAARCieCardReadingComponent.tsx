@@ -39,8 +39,9 @@ export const SendAARCieCardReadingComponent = ({
   const { startReading, stopReading, readState } =
     useCieInternalAuthAndMrtdReading();
 
+  const isError = isErrorState(readState);
   const data = isSuccessState(readState) ? readState.data : undefined;
-  const error = isErrorState(readState) ? readState.error : undefined;
+  const errorName = isError ? readState.error.name : undefined;
   const progress = isReadingState(readState) ? readState.progress : 0;
 
   const handleStartReading = useCallback(() => {
@@ -81,42 +82,42 @@ export const SendAARCieCardReadingComponent = ({
     [stopReading]
   );
 
-  const generateErrorContent = useCallback((): ScreenContentProps => {
-    switch (error?.name) {
-      case "TAG_LOST":
-        return {
-          pictogram: "empty",
-          title: i18n.t(
-            "features.pn.aar.flow.cieScanning.error.TAG_LOST.title"
-          ),
-          subtitle: i18n.t(
-            "features.pn.aar.flow.cieScanning.error.TAG_LOST.subtitle"
-          ),
-          primaryAction: {
-            label: i18n.t("global.buttons.retry"),
-            onPress: handleStartReading
-          },
-          secondaryAction: cancelAction
-        };
-      default:
-        // TODO: [IOCOM-2752] Handle errors
-        return {
-          pictogram: "attention",
-          title: "Qualcosa è andato storto.",
-          secondaryAction: {
-            label: i18n.t("global.buttons.close"),
-            onPress: () => {
-              terminateFlow();
-            }
-          }
-        };
-    }
-  }, [error?.name, cancelAction, handleStartReading, terminateFlow]);
-
   const contentMap: {
     [K in ReadStatus]: ScreenContentProps;
-  } = useMemo(
-    () => ({
+  } = useMemo(() => {
+    const generateErrorContent = (): ScreenContentProps => {
+      switch (errorName) {
+        case "TAG_LOST":
+          return {
+            pictogram: "empty",
+            title: i18n.t(
+              "features.pn.aar.flow.cieScanning.error.TAG_LOST.title"
+            ),
+            subtitle: i18n.t(
+              "features.pn.aar.flow.cieScanning.error.TAG_LOST.subtitle"
+            ),
+            primaryAction: {
+              label: i18n.t("global.buttons.retry"),
+              onPress: handleStartReading
+            },
+            secondaryAction: cancelAction
+          };
+        default:
+          // TODO: [IOCOM-2752] Handle errors
+          return {
+            pictogram: "attention",
+            title: "Qualcosa è andato storto.",
+            secondaryAction: {
+              label: i18n.t("global.buttons.close"),
+              onPress: () => {
+                terminateFlow();
+              }
+            }
+          };
+      }
+    };
+
+    return {
       [ReadStatus.IDLE]: {
         title: i18n.t("features.pn.aar.flow.cieScanning.idle.title"),
         pictogram: "nfcScanAndroid",
@@ -133,14 +134,13 @@ export const SendAARCieCardReadingComponent = ({
         pictogram: "success"
       },
       [ReadStatus.ERROR]: generateErrorContent()
-    }),
-    [cancelAction, generateErrorContent]
-  );
+    };
+  }, [cancelAction, errorName, terminateFlow, handleStartReading]);
 
   return (
     <CieCardReadContent
       progress={progress}
-      hiddenProgressBar={isErrorState(readState)}
+      hiddenProgressBar={isError}
       {...contentMap[readState.status]}
     />
   );
