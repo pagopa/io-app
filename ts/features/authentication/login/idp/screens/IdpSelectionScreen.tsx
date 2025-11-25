@@ -1,40 +1,40 @@
-import { ReactElement, createRef, useCallback, useEffect, useRef } from "react";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { Platform, View } from "react-native";
 import { Banner, useIOToast, VSpacer } from "@pagopa/io-app-design-system";
-import _ from "lodash";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
-import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
-import { idpSelected } from "../../../common/store/actions";
-import { idpsRemoteValueSelector } from "../../../../../store/reducers/content";
-import { idps as idpsFallback, SpidIdp } from "../../../../../utils/idps";
-import { loadIdps } from "../../../../../store/actions/content";
-import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import {
-  assistanceToolRemoteConfig,
-  handleSendAssistanceLog
-} from "../../../../../utils/supportAssistance";
-import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
-import { nativeLoginSelector } from "../../../nativeLogin/store/reducers";
-import { isNativeLoginEnabledSelector } from "../../../nativeLogin/store/selectors";
-import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-import IdpsGrid from "../components/IdpsGrid";
+import _ from "lodash";
+import { createRef, ReactElement, useCallback, useEffect, useRef } from "react";
+import { Platform, View } from "react-native";
+import { isReady } from "../../../../../common/model/RemoteValue";
+import { helpCenterHowToLoginWithSpidUrl } from "../../../../../config";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
+import { loadIdps } from "../../../../../store/actions/content";
 import {
   useIODispatch,
   useIOSelector,
   useIOStore
 } from "../../../../../store/hooks";
-import { isReady } from "../../../../../common/model/RemoteValue";
+import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { idpsRemoteValueSelector } from "../../../../../store/reducers/content";
+import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
+import { ContextualHelpPropsMarkdown } from "../../../../../utils/help";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
+import { idps as idpsFallback, SpidIdp } from "../../../../../utils/idps";
+import {
+  assistanceToolRemoteConfig,
+  handleSendAssistanceLog
+} from "../../../../../utils/supportAssistance";
+import { openWebUrl } from "../../../../../utils/url";
+import { setIdpSelectedActiveSessionLogin } from "../../../activeSessionLogin/store/actions";
+import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
 import { trackSpidLoginIdpSelection } from "../../../common/analytics";
 import { trackLoginSpidIdpSelected } from "../../../common/analytics/spidAnalytics";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { openWebUrl } from "../../../../../utils/url";
-import { helpCenterHowToLoginWithSpidUrl } from "../../../../../config";
-import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
-import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
-import { setIdpSelectedActiveSessionLogin } from "../../../activeSessionLogin/store/actions";
+import { idpSelected } from "../../../common/store/actions";
+import { nativeLoginSelector } from "../../../nativeLogin/store/reducers";
+import { isNativeLoginEnabledSelector } from "../../../nativeLogin/store/selectors";
+import IdpsGrid from "../components/IdpsGrid";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.idp_selection.contextualHelpTitle",

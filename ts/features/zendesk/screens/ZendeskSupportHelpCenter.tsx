@@ -28,11 +28,6 @@ import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import IOMarkdown from "../../../components/IOMarkdown";
 import {
-  getContextualHelpConfig,
-  getContextualHelpData,
-  reloadContextualHelpDataThreshold
-} from "../../../components/screens/BaseScreenComponent/utils";
-import {
   IOScrollView,
   IOScrollViewActions
 } from "../../../components/ui/IOScrollView";
@@ -49,7 +44,12 @@ import {
 } from "../../../store/reducers/backendStatus/remoteConfig";
 import { getContextualHelpDataFromRouteSelector } from "../../../store/reducers/content";
 import { FAQType, getFAQsFromCategories } from "../../../utils/faq";
-import { ContextualHelpProps } from "../../../utils/help";
+import {
+  ContextualHelpProps,
+  getContextualHelpConfig,
+  getContextualHelpData,
+  reloadContextualHelpDataThreshold
+} from "../../../utils/help";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../../utils/hooks/usePrevious";
 import {

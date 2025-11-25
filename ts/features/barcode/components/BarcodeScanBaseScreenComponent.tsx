@@ -12,6 +12,8 @@ import {
   useRoute
 } from "@react-navigation/native";
 
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import I18n from "i18next";
 import {
   ComponentProps,
   useCallback,
@@ -26,14 +28,8 @@ import {
   SafeAreaView,
   useSafeAreaInsets
 } from "react-native-safe-area-context";
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import I18n from "i18next";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { BaseHeader } from "../../../components/screens/BaseHeader";
-import {
-  ContextualHelpProps,
-  ContextualHelpPropsMarkdown
-} from "../../../components/screens/BaseScreenComponent";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import {
   AppParamsList,
@@ -43,7 +39,13 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { currentRouteSelector } from "../../../store/reducers/navigation";
+import { setAccessibilityFocus } from "../../../utils/accessibility";
+import { isTestEnv } from "../../../utils/environment";
 import { FAQsCategoriesType } from "../../../utils/faq";
+import {
+  ContextualHelpProps,
+  ContextualHelpPropsMarkdown
+} from "../../../utils/help";
 import { isAndroid } from "../../../utils/platform";
 import {
   assistanceToolRemoteConfig,
@@ -69,8 +71,6 @@ import {
   IOBarcodeType
 } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
-import { setAccessibilityFocus } from "../../../utils/accessibility";
-import { isTestEnv } from "../../../utils/environment";
 import { CameraPermissionView } from "./CameraPermissionView";
 
 type HelpProps = {
