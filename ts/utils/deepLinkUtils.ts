@@ -1,5 +1,4 @@
-// Universal Links prefix for external web traffic
-const IO_UNIVERSAL_LINK_PREFIX = "https://continua.io.pagopa.it";
+import { IO_UNIVERSAL_LINK_PREFIX } from "./navigation";
 
 // Internal deep link paths that require wallet update
 const WALLET_UPDATE_PATHS = ["ioit://cgn-details/detail", "ioit://main/wallet"];
