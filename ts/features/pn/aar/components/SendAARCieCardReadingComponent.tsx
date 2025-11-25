@@ -1,6 +1,9 @@
 import { useCallback, useEffect, useMemo } from "react";
 import i18n from "i18next";
 import {
+  isErrorState,
+  isReadingState,
+  isSuccessState,
   ReadStatus,
   useCieInternalAuthAndMrtdReading
 } from "../hooks/useCieInternalAuthAndMrtdReading";
@@ -33,15 +36,19 @@ export const SendAARCieCardReadingComponent = ({
 }: SendAARCieCardReadingComponentProps) => {
   const dispatch = useIODispatch();
   const { terminateFlow } = useSendAarFlowManager();
-  const { startReading, stopReading, readStatus, progress, data, error } =
+  const { startReading, stopReading, readState } =
     useCieInternalAuthAndMrtdReading();
+
+  const data = isSuccessState(readState) ? readState.data : undefined;
+  const error = isErrorState(readState) ? readState.error : undefined;
+  const progress = isReadingState(readState) ? readState.progress : 0;
 
   const handleStartReading = useCallback(() => {
     void startReading(can, verificationCode, "base64url");
   }, [can, startReading, verificationCode]);
 
   useEffect(() => {
-    if (readStatus === ReadStatus.SUCCESS && isDefined(data)) {
+    if (isDefined(data)) {
       const { signedChallenge, ...nisData } = data.nis_data;
 
       dispatch(
@@ -56,7 +63,7 @@ export const SendAARCieCardReadingComponent = ({
         })
       );
     }
-  }, [readStatus, data, iun, recipientInfo, mandateId, dispatch]);
+  }, [data, iun, recipientInfo, mandateId, dispatch]);
 
   useEffect(() => {
     handleStartReading();
@@ -133,8 +140,8 @@ export const SendAARCieCardReadingComponent = ({
   return (
     <CieCardReadContent
       progress={progress}
-      hiddenProgressBar={readStatus === ReadStatus.ERROR}
-      {...contentMap[readStatus]}
+      hiddenProgressBar={isErrorState(readState)}
+      {...contentMap[readState.status]}
     />
   );
 };

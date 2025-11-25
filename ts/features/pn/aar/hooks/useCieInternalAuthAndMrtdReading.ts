@@ -2,8 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import {
   CieManager,
   type InternalAuthAndMrtdResponse,
-  type NfcError,
-  type NfcEvent
+  type NfcError
 } from "@pagopa/io-react-native-cie";
 import { constNull } from "fp-ts/lib/function";
 import HapticFeedback, {
@@ -20,20 +19,44 @@ export const enum ReadStatus {
   ERROR = "ERROR"
 }
 
+type IdleState = {
+  status: ReadStatus.IDLE;
+};
+
+type ReadingState = {
+  status: ReadStatus.READING;
+  progress: number;
+};
+
+type SuccessState = {
+  status: ReadStatus.SUCCESS;
+  data: InternalAuthAndMrtdResponse;
+};
+
+type ErrorState = {
+  status: ReadStatus.ERROR;
+  error: NfcError;
+};
+
+type ReadState = IdleState | ReadingState | SuccessState | ErrorState;
+
+export const isErrorState = (state: ReadState): state is ErrorState =>
+  state.status === ReadStatus.ERROR;
+export const isReadingState = (state: ReadState): state is ReadingState =>
+  state.status === ReadStatus.READING;
+export const isSuccessState = (state: ReadState): state is SuccessState =>
+  state.status === ReadStatus.SUCCESS;
+
 export const useCieInternalAuthAndMrtdReading = () => {
-  const [readStatus, setReadStatus] = useState<ReadStatus>(ReadStatus.IDLE);
-  const [nfcError, setNfcError] = useState<NfcError>();
-  const [nfcEvent, setNfcEvent] = useState<NfcEvent>();
-  const [successResult, setSuccessResult] =
-    useState<InternalAuthAndMrtdResponse>();
+  const [readState, setReadState] = useState<ReadState>({
+    status: ReadStatus.IDLE
+  });
 
   const startReading = useCallback(
     async (
       ...params: Parameters<typeof CieManager.startInternalAuthAndMRTDReading>
     ) => {
-      setNfcEvent(undefined);
-      setNfcError(undefined);
-      setReadStatus(ReadStatus.IDLE);
+      setReadState({ status: ReadStatus.IDLE });
       await CieManager.startInternalAuthAndMRTDReading(...params);
     },
     []
@@ -50,23 +73,19 @@ export const useCieInternalAuthAndMrtdReading = () => {
         // Trigger a light haptic feedback on the start of the reading
         // when the tag is discovered
         if (event.name === "ON_TAG_DISCOVERED") {
-          setReadStatus(ReadStatus.READING);
           HapticFeedback.trigger(HapticFeedbackTypes.impactHeavy);
         }
-        setNfcEvent(event);
+        setReadState({ status: ReadStatus.READING, progress: event.progress });
       }),
       // Start listening for errors
       CieManager.addListener("onError", error => {
-        setNfcEvent(undefined);
-        setReadStatus(ReadStatus.ERROR);
-        setNfcError(error);
+        setReadState({ status: ReadStatus.ERROR, error });
 
         void CieManager.stopReading().catch(constNull);
       }),
       // Start listening for attributes success
       CieManager.addListener("onInternalAuthAndMRTDWithPaceSuccess", result => {
-        setReadStatus(ReadStatus.SUCCESS);
-        setSuccessResult(result);
+        setReadState({ status: ReadStatus.SUCCESS, data: result });
       })
     ];
 
@@ -95,24 +114,23 @@ export const useCieInternalAuthAndMrtdReading = () => {
     }
   }, []);
 
-  const { progress = 0 } = nfcEvent ?? {};
-  const progressDots = getProgressEmojis(progress);
+  const statusIsReading = isReadingState(readState);
+  const progressDots = getProgressEmojis(
+    statusIsReading ? readState.progress : 0
+  );
 
   useEffect(() => {
-    if (Platform.OS === "ios" && readStatus === ReadStatus.READING) {
+    if (Platform.OS === "ios" && statusIsReading) {
       CieManager.setCurrentAlertMessage(
         `${progressDots}\n${i18n.t(
           "features.pn.aar.flow.cieScanning.reading.status"
         )}`
       );
     }
-  }, [progressDots, readStatus]);
+  }, [progressDots, statusIsReading]);
 
   return {
-    progress,
-    readStatus,
-    error: nfcError,
-    data: successResult,
+    readState,
     startReading,
     stopReading
   };
