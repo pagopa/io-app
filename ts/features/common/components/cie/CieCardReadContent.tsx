@@ -25,6 +25,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { CircularProgress } from "../../../../components/ui/CircularProgress";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
+import { isDevEnv } from "../../../../utils/environment";
 
 const accessibityTimeout = 100 as Millisecond;
 
@@ -236,3 +237,10 @@ export const CieCardReadContent = Platform.select({
   ios: ContentIos,
   default: ContentAndroid
 });
+
+export const testable = isDevEnv
+  ? {
+      ContentIos,
+      ContentAndroid
+    }
+  : undefined;
