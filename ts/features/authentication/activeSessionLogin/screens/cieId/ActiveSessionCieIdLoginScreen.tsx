@@ -14,7 +14,6 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import { useLollipopLoginSource } from "../../../../lollipop/hooks/useLollipopLoginSource";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { SessionToken } from "../../../../../types/SessionToken";
-import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
 import { onLoginUriChanged } from "../../../common/utils/login";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 
@@ -30,7 +29,7 @@ import {
   IO_LOGIN_CIE_SOURCE_APP
 } from "../../../login/cie/utils/cie";
 import {
-  activeSessionUserLoggedSelector,
+  // activeSessionUserLoggedSelector,
   remoteApiLoginUrlPrefixSelector
 } from "../../store/selectors";
 import {
@@ -62,9 +61,6 @@ const ActiveSessionCieIdLoginWebView = ({
   const dispatch = useIODispatch();
   const [authenticatedUrl, setAuthenticatedUrl] = useState<string | null>(null);
   const isLoginUrlWithTokenRef = useRef<boolean>(false);
-  const activeSessionUserLogged = useIOSelector(
-    activeSessionUserLoggedSelector
-  );
   const apiLoginUrlPrefix = useIOSelector(remoteApiLoginUrlPrefixSelector);
   const acsUrl = `${apiLoginUrlPrefix}${ACS_PATH}`;
   const loginUri = getCieIDLoginUri(spidLevel, isUat, apiLoginUrlPrefix);
@@ -271,9 +267,10 @@ const ActiveSessionCieIdLoginWebView = ({
     }
   });
 
-  if (activeSessionUserLogged) {
-    return <IdpSuccessfulAuthentication />;
-  }
+  // TODO: evaluate if use this screen in this task https://pagopa.atlassian.net/browse/IOPID-3574
+  // if (activeSessionUserLogged) {
+  //   return <IdpSuccessfulAuthentication />;
+  // }
 
   return (
     <SafeAreaView style={styles.container} edges={["bottom"]}>

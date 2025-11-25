@@ -32,7 +32,6 @@ import {
 import { getUrlBasepath } from "../../../../../utils/url";
 import { useLollipopLoginSource } from "../../../../lollipop/hooks/useLollipopLoginSource";
 import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
-import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { idpLoginUrlChanged } from "../../../common/store/actions";
 import {
@@ -363,9 +362,10 @@ const ActiveSessionIdpLoginScreen = () => {
     ]
   );
 
-  if (activeSessionUserLogged) {
-    return <IdpSuccessfulAuthentication />;
-  }
+  // TODO: evaluate if use this screen in this task https://pagopa.atlassian.net/browse/IOPID-3574
+  // if (activeSessionUserLogged) {
+  //   return <IdpSuccessfulAuthentication />;
+  // }
 
   // This condition will be true if the navigation occurs
   // before the redux state is updated successfully OR if

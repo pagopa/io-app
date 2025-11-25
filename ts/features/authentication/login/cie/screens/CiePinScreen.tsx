@@ -286,13 +286,11 @@ const CiePinScreen = () => {
                 accessibilityRole="link"
                 action={I18n.t("login.help_banner_action")}
                 onPress={() => {
-                  if (!isActiveSessionLogin) {
-                    trackHelpCenterCtaTapped(
-                      "LOGIN_CIE_PIN",
-                      helpCenterHowToLoginWithEicUrl,
-                      routeName
-                    );
-                  }
+                  trackHelpCenterCtaTapped(
+                    "LOGIN_CIE_PIN",
+                    helpCenterHowToLoginWithEicUrl,
+                    routeName
+                  );
                   openWebUrl(helpCenterHowToLoginWithEicUrl, () => {
                     error(I18n.t("global.jserror.title"));
                   });
