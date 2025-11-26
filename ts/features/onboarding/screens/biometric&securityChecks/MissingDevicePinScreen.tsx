@@ -1,18 +1,18 @@
 import { ListItemInfo } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { useMemo } from "react";
 import { Platform } from "react-native";
-import I18n from "i18next";
-import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
+import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
+import { IOScrollViewWithListItems } from "../../../../components/ui/IOScrollViewWithListItems";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { isProfileFirstOnBoardingSelector } from "../../../settings/common/store/selectors";
 import { getFlowType } from "../../../../utils/analytics";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { useOnboardingAbortAlert } from "../../hooks/useOnboardingAbortAlert";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { FAQsCategoriesType } from "../../../../utils/faq";
-import { IOScrollViewWithListItems } from "../../../../components/ui/IOScrollViewWithListItems";
-import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
+import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { isProfileFirstOnBoardingSelector } from "../../../settings/common/store/selectors";
+import { useOnboardingAbortAlert } from "../../hooks/useOnboardingAbortAlert";
 import { trackPinEducationalScreen } from "./analytics";
 
 const FAQ_CATEGORIES: ReadonlyArray<FAQsCategoriesType> = [
