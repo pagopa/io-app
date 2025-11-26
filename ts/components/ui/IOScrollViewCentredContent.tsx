@@ -10,9 +10,14 @@ import {
 } from "@pagopa/io-app-design-system";
 import { ComponentProps } from "react";
 import { View } from "react-native";
-import { IOScrollView, IOScrollViewProps } from "./IOScrollView";
+import {
+  IOScrollView,
+  IOScrollViewActions,
+  IOScrollViewProps
+} from "./IOScrollView";
 
 export type IOScrollViewCentredContentProps = {
+  actions: IOScrollViewActions;
   pictogram: IOPictograms;
   title: string;
   description?: string | Array<BodyProps>;
