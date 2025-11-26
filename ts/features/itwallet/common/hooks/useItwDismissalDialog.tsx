@@ -61,18 +61,18 @@ export const useItwDismissalDialog = ({
 
     Alert.alert(title, body, [
       {
+        text: cancelLabel,
+        style: "cancel",
+        onPress: () => {
+          trackUserAction(cancelLabel);
+        }
+      },
+      {
         text: confirmLabel,
         style: "destructive",
         onPress: () => {
           trackUserAction(confirmLabel);
           (handleDismiss || navigation.goBack)();
-        }
-      },
-      {
-        text: cancelLabel,
-        style: "cancel",
-        onPress: () => {
-          trackUserAction(cancelLabel);
         }
       }
     ]);
