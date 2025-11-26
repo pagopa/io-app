@@ -6,10 +6,7 @@ import { IOStackNavigationRouteProps } from "../../../../../navigation/params/Ap
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { trackItWalletCieCardReading } from "../../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
-import {
-  selectIsLoading,
-  selectMrtdCallbackUrl
-} from "../../../machine/eid/selectors";
+import { selectMrtdCallbackUrl } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { ItwCieCardReadFailureContent } from "../components/ItwCieCardReadFailureContent";
 import { ItwCieCardReadProgressContent } from "../components/ItwCieCardReadProgressContent";
@@ -36,7 +33,6 @@ type Props = IOStackNavigationRouteProps<
 export const ItwCieInternalAuthAndMrtdScreen = ({ route }: Props) => {
   const { can, challenge } = route.params;
   const issuanceActor = ItwEidIssuanceMachineContext.useActorRef();
-  const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const callbackUrl = ItwEidIssuanceMachineContext.useSelector(
     selectMrtdCallbackUrl
   );
