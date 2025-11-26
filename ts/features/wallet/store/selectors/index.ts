@@ -79,11 +79,13 @@ export const selectWalletCardsByCategory = createSelector(
  * Selects the cards by their type
  * @param type - The type of the cards to select
  */
-export const selectWalletCardsByType = createSelector(
-  selectSortedWalletCards,
-  (_: GlobalState, type: WalletCardType) => type,
-  (cards, type) => cards.filter(({ type: cardType }) => cardType === type)
-);
+export const selectWalletCardsByType = <T extends WalletCardType>(
+  state: GlobalState,
+  type: T
+): Array<Extract<WalletCard, { type: T }>> =>
+  selectSortedWalletCards(state).filter(
+    (card): card is Extract<WalletCard, { type: T }> => card.type === type
+  );
 
 /**
  * Currently, if a card is not part of the IT Wallet, it is considered as "other"
