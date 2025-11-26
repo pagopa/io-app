@@ -2,11 +2,13 @@ import { mixpanelTrack } from "../../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import { GlobalState } from "../../../../store/reducers/types";
 import { buildEventProperties } from "../../../../utils/analytics";
+import { LoginType } from "../../activeSessionLogin/screens/analytics";
 import { AUTH_ERRORS } from "../components/AuthErrorComponent";
 
-type EventProperties = {
+export type EventProperties = {
   idp: string;
   "error message"?: string;
+  flow: LoginType;
 };
 
 function trackLoginSpidGenericError(properties?: EventProperties) {
@@ -60,10 +62,9 @@ function trackLoginSpidCancelError(properties?: EventProperties) {
 function trackMissingSAMLResponseError(properties?: EventProperties) {
   void mixpanelTrack(
     "LOGIN_ERROR_MESSAGE",
-    buildEventProperties("KO", undefined, properties)
+    buildEventProperties("KO", "error", properties)
   );
 }
-
 export function trackLoginSpidError(
   errorCode?: string,
   properties?: EventProperties
@@ -105,19 +106,28 @@ export function trackLoginSpidError(
     }
   }
 }
-
-export async function trackLoginSpidIdpSelected(
-  idp: string,
-  state: GlobalState
+export async function updateLoginMethodProfileProperty(
+  state: GlobalState,
+  value: string
 ) {
   await updateMixpanelProfileProperties(state, {
     property: "LOGIN_METHOD",
-    value: idp
+    value
   });
+}
+export async function trackLoginSpidIdpSelected(
+  idp: string,
+  state: GlobalState,
+  flow: LoginType = "auth"
+) {
+  if (flow === "auth") {
+    await updateLoginMethodProfileProperty(state, idp);
+  }
   mixpanelTrack(
     "LOGIN_SPID_IDP_SELECTED",
     buildEventProperties("UX", "action", {
-      idp
+      idp,
+      flow
     })
   );
 }
