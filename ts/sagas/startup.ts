@@ -17,9 +17,13 @@ import {
 import { ActionType, getType } from "typesafe-actions";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
+import { backendClientManager } from "../api/BackendClientManager";
 import { BackendClient } from "../api/backend";
 import { apiUrlPrefix, zendeskEnabled } from "../config";
 import { watchActiveSessionLoginSaga } from "../features/authentication/activeSessionLogin/saga";
+import { navigateToActiveSessionLogin } from "../features/authentication/activeSessionLogin/saga/navigateToActiveSessionLogin";
+import { setRefreshMessagesSection } from "../features/authentication/activeSessionLogin/store/actions";
+import { showSessionExpirationBlockingScreenSelector } from "../features/authentication/activeSessionLogin/store/selectors";
 import { authenticationSaga } from "../features/authentication/common/saga/authenticationSaga";
 import { loadSessionInformationSaga } from "../features/authentication/common/saga/loadSessionInformationSaga";
 import {
@@ -42,6 +46,7 @@ import {
 } from "../features/authentication/fastLogin/store/selectors";
 import { shouldTrackLevelSecurityMismatchSaga } from "../features/authentication/login/cie/sagas/trackLevelSecuritySaga";
 import { userFromSuccessLoginSelector } from "../features/authentication/loginInfo/store/selectors";
+import { watchCdcSaga } from "../features/bonus/cdc/common/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { watchFciSaga } from "../features/fci/saga";
 import { watchFimsSaga } from "../features/fims/common/saga";
@@ -73,12 +78,14 @@ import { watchEmailNotificationPreferencesSaga } from "../features/mailCheck/sag
 import { checkEmailSaga } from "../features/mailCheck/sagas/checkEmailSaga";
 import { watchEmailValidationSaga } from "../features/mailCheck/sagas/emailValidationPollingSaga";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
+import { watchMessagesSaga } from "../features/messages/saga";
 import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
 import { checkAcknowledgedFingerprintSaga } from "../features/onboarding/saga/biometric/checkAcknowledgedFingerprintSaga";
 import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnboardingSaga";
 import { watchAbortOnboardingSaga } from "../features/onboarding/saga/watchAbortOnboardingSaga";
 import { watchPaymentsSaga } from "../features/payments/common/saga";
 import { watchAarFlowSaga } from "../features/pn/aar/saga/watchAARFlowSaga";
+import { checkShouldDisplaySendEngagementScreen } from "../features/pn/loginEngagement/sagas/checkShouldDisplaySendEngagementScreen";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { notificationPermissionsListener } from "../features/pushNotifications/sagas/notificationPermissionsListener";
 import { profileAndSystemNotificationsPermissions } from "../features/pushNotifications/sagas/profileAndSystemNotificationsPermissions";
@@ -105,6 +112,10 @@ import { formatRequestedTokenString } from "../features/zendesk/utils";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
 import {
+  waitForMainNavigator,
+  waitForNavigatorServiceInitialization
+} from "../navigation/saga/navigation";
+import {
   applicationInitialized,
   startApplicationInitialization
 } from "../store/actions/application";
@@ -116,6 +127,7 @@ import {
   startupLoadSuccess,
   startupTransientError
 } from "../store/actions/startup";
+import { startupCompleted } from "../store/actions/startupCompleted";
 import {
   isAarRemoteEnabled,
   isIdPayEnabledSelector,
@@ -130,17 +142,6 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainFailures } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { getPin } from "../utils/keychain";
-import { backendClientManager } from "../api/BackendClientManager";
-import {
-  waitForMainNavigator,
-  waitForNavigatorServiceInitialization
-} from "../navigation/saga/navigation";
-import { checkShouldDisplaySendEngagementScreen } from "../features/pn/loginEngagement/sagas/checkShouldDisplaySendEngagementScreen";
-import { navigateToActiveSessionLogin } from "../features/authentication/activeSessionLogin/saga/navigateToActiveSessionLogin";
-import { showSessionExpirationBlockingScreenSelector } from "../features/authentication/activeSessionLogin/store/selectors";
-import { watchCdcSaga } from "../features/bonus/cdc/common/saga";
-import { setRefreshMessagesSection } from "../features/authentication/activeSessionLogin/store/actions";
-import { watchMessagesSaga } from "../features/messages/saga";
 import { maybeHandlePendingBackgroundActions } from "./backgroundActions";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -748,6 +749,7 @@ export function* initializeApplicationSaga(
       actionsToWaitFor: []
     })
   );
+  yield* put(startupCompleted());
 }
 
 export function* startupSaga(): IterableIterator<ReduxSagaEffect> {
