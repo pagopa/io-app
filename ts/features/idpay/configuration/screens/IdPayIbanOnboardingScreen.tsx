@@ -10,7 +10,7 @@ import { useState } from "react";
 import I18n from "i18next";
 import { Iban } from "../../../../../definitions/backend/Iban";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { emptyContextualHelp } from "../../../../utils/help";
+import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
 

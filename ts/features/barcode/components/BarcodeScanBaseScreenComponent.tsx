@@ -33,12 +33,12 @@ import {
 import { useIOSelector } from "../../../store/hooks";
 import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
-import { isTestEnv } from "../../../utils/environment";
-import { FAQsCategoriesType } from "../../../utils/faq";
 import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
-} from "../../../utils/help";
+} from "../../../utils/contextualHelp";
+import { isTestEnv } from "../../../utils/environment";
+import { FAQsCategoriesType } from "../../../utils/faq";
 import { isAndroid } from "../../../utils/platform";
 import {
   BarcodeAnalyticsFlow,

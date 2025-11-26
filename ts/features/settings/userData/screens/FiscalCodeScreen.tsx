@@ -18,7 +18,7 @@ import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { useMaxBrightness } from "../../../../utils/brightness";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { FAQsCategoriesType } from "../../../../utils/faq";
-import { ContextualHelpPropsMarkdown } from "../../../../utils/help";
+import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
 import {
   profileFiscalCodeSelector,
   profileNameSurnameSelector

@@ -15,7 +15,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { customEmailChannelSetEnabled } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { ContextualHelpPropsMarkdown } from "../../../../utils/help";
+import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
 import { usePrevious } from "../../../../utils/hooks/usePrevious";
 import { profileUpsert } from "../../common/store/actions";
 import {

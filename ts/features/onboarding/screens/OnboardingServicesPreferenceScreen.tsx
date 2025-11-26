@@ -25,7 +25,7 @@ import {
 } from "../../settings/common/store/selectors";
 import { isServicesPreferenceModeSet } from "../../settings/common/store/utils/guards";
 import { getFlowType } from "../../../utils/analytics";
-import { emptyContextualHelp } from "../../../utils/help";
+import { emptyContextualHelp } from "../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../../utils/hooks/usePrevious";
 import {

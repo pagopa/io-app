@@ -15,7 +15,7 @@ import {
 } from "../../../../../definitions/idpay/SelfCriteriaMultiTypeDTO";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { emptyContextualHelp } from "../../../../utils/help";
+import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   trackIDPayOnboardingAlert,

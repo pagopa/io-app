@@ -9,7 +9,7 @@ import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay"
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../store/hooks";
 import { getFlowType } from "../../../../utils/analytics";
-import { ContextualHelpPropsMarkdown } from "../../../../utils/help";
+import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { tosConfigSelector } from "../../../tos/store/selectors";
 import { trackTosScreen } from "../shared/analytics";

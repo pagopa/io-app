@@ -25,7 +25,7 @@ import { assistanceToolConfigSelector } from "../../../../../store/reducers/back
 import { idpContextualHelpDataFromIdSelector } from "../../../../../store/reducers/content";
 import { SessionToken } from "../../../../../types/SessionToken";
 // import { trackSpidLoginError } from "../../../../../utils/analytics";
-import { emptyContextualHelp } from "../../../../../utils/help";
+import { emptyContextualHelp } from "../../../../../utils/contextualHelp";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog

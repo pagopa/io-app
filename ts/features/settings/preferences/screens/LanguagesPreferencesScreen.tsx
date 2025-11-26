@@ -30,7 +30,7 @@ import { preferredLanguageSaveSuccess } from "../../../../store/actions/persiste
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { sectionStatusByKeySelector } from "../../../../store/reducers/backendStatus/sectionStatus";
 import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
-import { ContextualHelpPropsMarkdown } from "../../../../utils/help";
+import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
 import { usePrevious } from "../../../../utils/hooks/usePrevious";
 import {
   fromLocaleToPreferredLanguage,

@@ -10,7 +10,7 @@ import { useIOAlertVisible } from "../components/StatusMessages/IOAlertVisibleCo
 import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
-} from "../utils/help";
+} from "../utils/contextualHelp.ts";
 import { FAQsCategoriesType } from "../utils/faq";
 import { useOfflineToastGuard } from "./useOfflineToastGuard.ts";
 import { useStartSupportRequest } from "./useStartSupportRequest";

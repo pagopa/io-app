@@ -58,7 +58,7 @@ import { sessionExpired } from "../../../common/store/actions";
 
 import { startupLoadSuccess } from "../../../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../../../store/reducers/startup";
-import { ContextualHelpPropsMarkdown } from "../../../../../utils/help";
+import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
 import { identificationRequest } from "../../../../identification/store/actions";
 import { setOfflineAccessReason } from "../../../../ingress/store/actions";
 import { OfflineAccessReasonEnum } from "../../../../ingress/store/reducer";
