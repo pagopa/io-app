@@ -1,5 +1,8 @@
 import {
+  HStack,
+  HeaderActionProps,
   IOColors,
+  IOVisualCostants,
   IconButton,
   LoadingSpinner,
   TabItem,
@@ -8,37 +11,27 @@ import {
 import {
   useFocusEffect,
   useIsFocused,
-  useNavigation,
-  useRoute
+  useNavigation
 } from "@react-navigation/native";
 
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import I18n from "i18next";
-import {
-  ComponentProps,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AppState, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import {
   SafeAreaView,
   useSafeAreaInsets
 } from "react-native-safe-area-context";
-import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
-import { BaseHeader } from "../../../components/screens/BaseHeader";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
+import { useOfflineToastGuard } from "../../../hooks/useOfflineToastGuard";
+import { useStartSupportRequest } from "../../../hooks/useStartSupportRequest";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { useIOSelector } from "../../../store/hooks";
 import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
-import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus/remoteConfig";
-import { currentRouteSelector } from "../../../store/reducers/navigation";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { isTestEnv } from "../../../utils/environment";
 import { FAQsCategoriesType } from "../../../utils/faq";
@@ -48,19 +41,13 @@ import {
 } from "../../../utils/help";
 import { isAndroid } from "../../../utils/platform";
 import {
-  assistanceToolRemoteConfig,
-  resetCustomFields
-} from "../../../utils/supportAssistance";
-import { zendeskSupportStart } from "../../zendesk/store/actions";
-import {
   BarcodeAnalyticsFlow,
   trackBarcodeCameraAuthorizationDenied,
   trackBarcodeCameraAuthorizationNotDetermined,
   trackBarcodeCameraAuthorized,
   trackBarcodeCameraAuthorizedFromSettings,
   trackBarcodeScanScreenView,
-  trackBarcodeScanTorch,
-  trackZendeskSupport
+  trackBarcodeScanTorch
 } from "../analytics";
 import { useCameraPermissionStatus } from "../hooks/useCameraPermissionStatus";
 import { useIOBarcodeCameraScanner } from "../hooks/useIOBarcodeCameraScanner";
@@ -143,19 +130,22 @@ const BarcodeScanBaseScreenComponent = ({
   const isFocused = useIsFocused();
   const insets = useSafeAreaInsets();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const route = useRoute();
   const scanItemRef = useRef<View>(null);
-
-  const currentScreenName = useIOSelector(currentRouteSelector);
 
   const [isAppInBackground, setIsAppInBackground] = useState(
     AppState.currentState !== "active"
   );
 
-  const dispatch = useIODispatch();
-  const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const canShowHelp = useIOSelector(canShowHelpSelector);
-  const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
+
+  /* Taken from `useHeaderSecondLevel` */
+  const startSupportRequest = useOfflineToastGuard(
+    useStartSupportRequest({
+      faqCategories,
+      contextualHelpMarkdown,
+      contextualHelp
+    })
+  );
 
   /**
    * Updates the app state when it changes.
@@ -186,33 +176,6 @@ const BarcodeScanBaseScreenComponent = ({
     }, [barcodeAnalyticsFlow])
   );
 
-  const onShowHelp = (): (() => void) | undefined => {
-    switch (choosenTool) {
-      case ToolEnum.zendesk:
-        // The navigation param assistanceForPayment is fixed to false because in this entry point we don't know the category yet.
-        return () => {
-          trackZendeskSupport(route.name, barcodeAnalyticsFlow);
-          resetCustomFields();
-          dispatch(
-            zendeskSupportStart({
-              faqCategories,
-              contextualHelp,
-              contextualHelpMarkdown,
-              startingRoute: currentScreenName,
-              assistanceType: {
-                payment: false,
-                card: false,
-                fci: false,
-                itWallet: false
-              }
-            })
-          );
-        };
-      default:
-        return undefined;
-    }
-  };
-
   const canShowHelpButton = () => {
     if (hideHelpButton || !canShowHelp) {
       return false;
@@ -236,15 +199,6 @@ const BarcodeScanBaseScreenComponent = ({
       isDisabled: isAppInBackground || !isFocused || isDisabled,
       isLoading
     });
-
-  const customGoBack = (
-    <IconButton
-      icon="closeLarge"
-      onPress={navigation.goBack}
-      accessibilityLabel={I18n.t("global.buttons.close")}
-      color="contrast"
-    />
-  );
 
   const cameraView = useMemo(() => {
     if (cameraPermissionStatus === "granted") {
@@ -309,14 +263,56 @@ const BarcodeScanBaseScreenComponent = ({
   const shouldDisplayTorchButton =
     cameraPermissionStatus === "granted" && hasTorch;
 
-  const torchIconButton: ComponentProps<typeof BaseHeader>["customRightIcon"] =
-    {
-      iconName: isTorchOn ? "lightFilled" : "light",
-      accessibilityLabel: isTorchOn
-        ? I18n.t("accessibility.buttons.torch.turnOff")
-        : I18n.t("accessibility.buttons.torch.turnOn"),
-      onPress: handleTorchToggle
-    };
+  const closeButton: HeaderActionProps = {
+    icon: "closeLarge",
+    onPress: navigation.goBack,
+    accessibilityLabel: I18n.t("global.buttons.close")
+  };
+
+  const helpAction: HeaderActionProps = {
+    icon: "help",
+    onPress: startSupportRequest,
+    accessibilityLabel: I18n.t(
+      "global.accessibility.contextualHelp.open.label"
+    ),
+    accessibilityHint: I18n.t("global.accessibility.contextualHelp.open.hint"),
+    testID: "helpButton"
+  };
+
+  const torchAction: HeaderActionProps = {
+    icon: isTorchOn ? "lightFilled" : "light",
+    accessibilityLabel: isTorchOn
+      ? I18n.t("accessibility.buttons.torch.turnOff")
+      : I18n.t("accessibility.buttons.torch.turnOn"),
+    onPress: handleTorchToggle
+  };
+
+  const HeaderTransparent = () => (
+    <View
+      style={{
+        paddingHorizontal: IOVisualCostants.appMarginDefault,
+        height: IOVisualCostants.headerHeight,
+        flexGrow: 1,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between"
+      }}
+    >
+      <IconButton {...closeButton} color="contrast" />
+
+      <HStack allowScaleSpacing space={16} style={{ flexShrink: 0 }}>
+        {shouldDisplayTorchButton ? (
+          <IconButton {...torchAction} color="contrast" />
+        ) : null}
+
+        {canShowHelpButton() ? (
+          <IconButton {...helpAction} color="contrast" />
+        ) : null}
+
+        {/* {canShowHelpButton() ? onShowHelp() : undefined} */}
+      </HStack>
+    </View>
+  );
 
   return (
     <View style={[styles.screen, { paddingBottom: insets.bottom }]}>
@@ -354,24 +350,7 @@ const BarcodeScanBaseScreenComponent = ({
             backgroundColor={isAndroid ? IOColors["blueIO-850"] : "transparent"}
             translucent={false}
           />
-          {/* FIXME: replace with new header */}
-          {!isTestEnv && (
-            <BaseHeader
-              accessibilityEvents={{
-                avoidNavigationEventsUsage: true,
-                disableAccessibilityFocus: true
-              }}
-              hideSafeArea={true}
-              dark={true}
-              backgroundColor={"transparent"}
-              goBack={true}
-              customGoBack={customGoBack}
-              onShowHelp={canShowHelpButton() ? onShowHelp() : undefined}
-              customRightIcon={
-                shouldDisplayTorchButton ? torchIconButton : undefined
-              }
-            />
-          )}
+          {!isTestEnv && <HeaderTransparent />}
         </SafeAreaView>
       </LinearGradient>
     </View>
