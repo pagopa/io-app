@@ -70,7 +70,7 @@ const CiePinWizard = () => {
   });
 
   useOnFirstRender(() => {
-    void trackCiePinWizardScreen(isActiveSessionLogin ? "reauth" : "auth");
+    void trackCiePinWizardScreen(flow);
   });
 
   // eslint-disable-next-line arrow-body-style
