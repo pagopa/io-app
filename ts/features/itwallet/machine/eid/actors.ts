@@ -55,6 +55,12 @@ export type InitMrtdPoPChallengeActorParams = {
   walletInstanceAttestation: string | undefined;
 };
 
+export type ValidateMrtdPoPChallengeActorParams = {
+  authenticationContext: AuthenticationContext | undefined;
+  walletInstanceAttestation: string | undefined;
+  mrtdContext: MrtdPoPContext | undefined;
+};
+
 export type GetWalletAttestationActorParams = {
   integrityKeyTag: string | undefined;
 };
@@ -195,6 +201,32 @@ export const createEidIssuanceActorsImplementation = (
       walletInstanceAttestation: input.walletInstanceAttestation,
       authRedirectUrl: input.authenticationContext.callbackUrl
     });
+  }),
+
+  validateMrtdPoPChallenge: fromPromise<
+    string,
+    ValidateMrtdPoPChallengeActorParams
+  >(async ({ input }) => {
+    assert(input.authenticationContext, "authenticationContext is undefined");
+    assert(
+      input.walletInstanceAttestation,
+      "walletInstanceAttestation is undefined"
+    );
+    assert(input.mrtdContext, "mrtdContext is undefined");
+    assert(input.mrtdContext.ias, "IAS is undefined");
+    assert(input.mrtdContext.mrtd, "MRTD is undefined");
+
+    const { callbackUrl } = await mrtdUtils.validateMrtdPoPChallenge({
+      issuerConf: input.authenticationContext.issuerConf,
+      walletInstanceAttestation: input.walletInstanceAttestation,
+      mrtd_auth_session: input.mrtdContext.mrtd_auth_session,
+      mrtd_pop_nonce: input.mrtdContext.mrtd_pop_nonce,
+      validationUrl: input.mrtdContext.validationUrl,
+      ias: input.mrtdContext.ias,
+      mrtd: input.mrtdContext.mrtd
+    });
+
+    return callbackUrl;
   }),
 
   requestEid: fromPromise<StoredCredential, RequestEidActorParams>(

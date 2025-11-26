@@ -1,4 +1,6 @@
 import { ItwDiscoveryInfoScreenNavigationParams } from "../discovery/screens/ItwDiscoveryInfoScreen";
+import { ItwCieAuthenticationScreenParams } from "../identification/cie/screens/ItwCieAuthenticationScreen.tsx";
+import { ItwCieInternalAuthAndMrtdScreenParams } from "../identification/cie/screens/ItwCieInternalAuthAndMrtdScreen.tsx";
 import { ItwIdentificationCieWarningScreenNavigationParams } from "../identification/cie/screens/ItwIdentificationCieWarningScreen.tsx";
 import { ItwIdentificationNavigationParams } from "../identification/common/screens/ItwIdentificationModeSelectionScreen.tsx";
 import { ItwIssuanceCredentialAsyncContinuationNavigationParams } from "../issuance/screens/ItwIssuanceCredentialAsyncContinuationScreen";
@@ -35,8 +37,9 @@ export type ItwParamsList = {
   [ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.NFC_SCREEN]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC]: undefined;
-  [ITW_ROUTES.IDENTIFICATION.CIE.AUTH_SCREEN]: undefined;
-  [ITW_ROUTES.IDENTIFICATION.CIE.INTERNAL_AUTH_MRTD_SCREEN]: undefined;
+  [ITW_ROUTES.IDENTIFICATION.CIE.AUTH_SCREEN]: ItwCieAuthenticationScreenParams;
+  [ITW_ROUTES.IDENTIFICATION.CIE
+    .INTERNAL_AUTH_MRTD_SCREEN]: ItwCieInternalAuthAndMrtdScreenParams;
   // IDENTIFICATION L2+
   [ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CAN_SCREEN]: undefined;
   [ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CARD_SCREEN]: undefined;

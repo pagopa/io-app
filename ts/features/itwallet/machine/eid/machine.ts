@@ -21,7 +21,8 @@ import {
   GetWalletAttestationActorParams,
   InitMrtdPoPChallengeActorParams,
   type RequestEidActorParams,
-  StartAuthFlowActorParams
+  StartAuthFlowActorParams,
+  ValidateMrtdPoPChallengeActorParams
 } from "./actors";
 import {
   AuthenticationContext,
@@ -118,6 +119,19 @@ export const itwEidIssuanceMachine = setup({
         }
       };
     }),
+    completeMrtdPoP: assign(({ context, event }) => {
+      assertEvent(event, "mrtd-pop-verification-completed");
+      assert(
+        context.authenticationContext,
+        "authenticationContext must be defined when completing auth flow"
+      );
+      return {
+        authenticationContext: {
+          ...context.authenticationContext,
+          callbackUrl: event.authRedirectUrl
+        }
+      };
+    }),
     trackIntroScreen: ({ context }) => {
       trackItWalletIntroScreen(context.level === "l3" ? "L3" : "L2");
     }
@@ -152,6 +166,10 @@ export const itwEidIssuanceMachine = setup({
     initMrtdPoPChallenge: fromPromise<
       MrtdPoPContext,
       InitMrtdPoPChallengeActorParams
+    >(notImplemented),
+    validateMrtdPoPChallenge: fromPromise<
+      string,
+      ValidateMrtdPoPChallengeActorParams
     >(notImplemented),
 
     /**
@@ -906,7 +924,7 @@ export const itwEidIssuanceMachine = setup({
               target: "DisplayingCieCardPreparationInstructions"
             },
             next: {
-              target: "SigningChallenge"
+              target: "#itwEidIssuanceMachine.MrtdPoP.SigningChallenge"
             }
           }
         },
@@ -916,31 +934,65 @@ export const itwEidIssuanceMachine = setup({
           entry: "navigateToCieInternalAuthAndMrtdScreen",
           on: {
             "mrtd-challenged-signed": {
-              target: "#itwEidIssuanceMachine.MrtdPoP.Completed",
+              target: "#itwEidIssuanceMachine.MrtdPoP.ChallengeValidation",
               actions: assign(({ event, context }) => {
                 assert(context.mrtdContext, "mrtdContext must be defined");
 
                 return {
                   mrtdContext: {
                     ...context.mrtdContext,
-                    signedData: event.data
+                    ias: {
+                      challenge_signed: event.data.nis_data.signedChallenge,
+                      ias_pk: event.data.nis_data.publicKey,
+                      sod_ias: event.data.nis_data.sod
+                    },
+                    mrtd: {
+                      dg1: event.data.mrtd_data.dg1,
+                      dg11: event.data.mrtd_data.dg11,
+                      sod_mrtd: event.data.mrtd_data.sod
+                    }
                   }
                 };
               })
             }
           }
         },
-        ValidatingChallenge: {
+        ChallengeValidation: {
+          description:
+            "Validates the signed MRTD PoP challenge with the signed data from the MRTD document",
+          tags: [ItwTags.Loading],
+          invoke: {
+            id: "validateMrtdPoPChallenge",
+            src: "validateMrtdPoPChallenge",
+            input: ({ context }) => ({
+              authenticationContext: context.authenticationContext,
+              mrtdContext: context.mrtdContext,
+              walletInstanceAttestation: context.walletInstanceAttestation?.jwt
+            }),
+            onDone: {
+              target: "#itwEidIssuanceMachine.MrtdPoP.Completed"
+            },
+            onError: {
+              actions: "setFailure",
+              target: "#itwEidIssuanceMachine.Failure"
+            }
+          }
+        },
+        Authorization: {
           description: "",
           on: {
-            "mrtd-verification-completed": {
-              target: "#itwEidIssuanceMachine.MrtdPoP.Completed"
+            "mrtd-pop-verification-completed": {
+              target: "#itwEidIssuanceMachine.MrtdPoP.Completed",
+              actions: ["completeMrtdPoP", "storeAuthLevel"]
             }
           }
         },
         Completed: {
           type: "final"
         }
+      },
+      onDone: {
+        target: "Issuance"
       }
     },
     Issuance: {

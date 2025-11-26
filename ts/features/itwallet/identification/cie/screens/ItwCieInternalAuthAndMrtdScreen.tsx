@@ -1,125 +1,138 @@
-import { CieError, CieManager, NfcError } from "@pagopa/io-react-native-cie";
+import { InternalAuthAndMrtdResponse } from "@pagopa/io-react-native-cie";
 import { useFocusEffect } from "@react-navigation/native";
-import I18n from "i18next";
-import { useCallback, useEffect, useState } from "react";
-import { SafeAreaView } from "react-native";
-import HapticFeedback, {
-  HapticFeedbackTypes
-} from "react-native-haptic-feedback";
-import { WebViewError } from "react-native-webview/lib/WebViewTypes";
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
-import { useScreenReaderEnabled } from "../../../../../utils/accessibility";
+import { useCallback } from "react";
+import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { trackItWalletCieCardReading } from "../../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
-import { selectMrtdContext } from "../../../machine/eid/selectors";
-import {
-  WAIT_TIMEOUT_NAVIGATION,
-  WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
-} from "../utils/constants";
+import { selectMrtdAuthorizationUrl } from "../../../machine/eid/selectors";
+import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import { ItwCieCardReadFailureContent } from "../components/ItwCieCardReadFailureContent";
+import { ItwCieCardReadProgressContent } from "../components/ItwCieCardReadProgressContent";
+import { ItwCieAuthorizationWebview } from "../components/ItwCieWebView";
+import { useCieManager } from "../hooks/useCieManager";
+import { WebViewError } from "../utils/error";
 
-export const ItwCieInternalAuthAndMrtdScreen = () => {
-  const mrtdContext =
-    ItwEidIssuanceMachineContext.useSelector(selectMrtdContext);
-  const eidMachine = ItwEidIssuanceMachineContext.useActorRef();
-  const isScreenReaderEnabled = useScreenReaderEnabled();
-  const machineState = ItwEidIssuanceMachineContext.useSelector(
-    snap => snap.value
-  );
+export type ItwCieInternalAuthAndMrtdScreenParams = {
+  /**
+   * The CIE card CAN code (6 digits)
+   */
+  can: string;
+  /**
+   * The challenge to be signed with PACE.
+   */
+  challenge: string;
+};
 
-  const [progress, setProgress] = useState(0);
-  const [failure, setFailure] = useState<
-    CieError | NfcError | WebViewError | undefined
-  >();
+type Props = IOStackNavigationRouteProps<
+  ItwParamsList,
+  "ITW_IDENTIFICATION_CIE_INTERNAL_AUTH_MRTD_SCREEN"
+>;
 
-  const startCieReading = useCallback(
-    async (can: string, challenge: string) => {
-      try {
-        await CieManager.startInternalAuthAndMRTDReading(
-          can,
-          challenge,
-          "base64"
-        );
-      } catch (error) {
-        setFailure(error as CieError);
-      }
-    },
-    []
+export const ItwCieInternalAuthAndMrtdScreen = ({ route }: Props) => {
+  const { can, challenge } = route.params;
+  const issuanceActor = ItwEidIssuanceMachineContext.useActorRef();
+  const authorizationUrl = ItwEidIssuanceMachineContext.useSelector(
+    selectMrtdAuthorizationUrl
   );
 
   useFocusEffect(useCallback(() => trackItWalletCieCardReading("L3"), []));
 
-  useEffect(() => {
-    const cleanup = [
-      // Start listening for NFC events
-      CieManager.addListener("onEvent", event => {
-        setProgress(event.progress);
+  /**
+   * Handles the challenge signed event sending to the
+   * machine the obtained data.
+   */
+  const handleChallengeSigned = useCallback(
+    (data: InternalAuthAndMrtdResponse) => {
+      issuanceActor.send({
+        type: "mrtd-challenged-signed",
+        data
+      });
+    },
+    [issuanceActor]
+  );
 
-        // Trigger a light haptic feedback on the start of the reading
-        // when the tag is discovered
-        if (event.name === "ON_TAG_DISCOVERED") {
-          HapticFeedback.trigger(HapticFeedbackTypes.impactLight);
-        }
-      }),
-      // Start listening for errors
-      CieManager.addListener("onError", error => {
-        setFailure(error);
+  /**
+   * Handles the completion of the authorization process sending to the
+   * machine the obtained authorization URL.
+   */
+  const handleAuthorizationComplete = useCallback(
+    (authRedirectUrl: string) => {
+      issuanceActor.send({
+        type: "mrtd-pop-verification-completed",
+        authRedirectUrl
+      });
+    },
+    [issuanceActor]
+  );
 
-        // Trigger a warning haptic feedback on TAG_LOST error
-        // or an error haptic feedback for all the other errors
-        HapticFeedback.trigger(
-          error.name === "TAG_LOST"
-            ? HapticFeedbackTypes.notificationWarning
-            : HapticFeedbackTypes.notificationError
-        );
-      }),
-      // Start listening for success
-      CieManager.addListener("onInternalAuthAndMRTDWithPaceSuccess", uri => {
-        // On Android we do not receive a final event with progress = 1
-        // This mocks allows to have a consistent behavior across platforms
-        setProgress(1);
+  /**
+   * If we encounter an error in the webview we need to send the error event to the machine
+   * and to stop the issuance flow
+   */
+  const handleWebViewError = useCallback(
+    (error: WebViewError) => {
+      issuanceActor.send({ type: "error", scope: "cie-mrtd-pop", error });
+    },
+    [issuanceActor]
+  );
 
-        // Trigger a success haptic feedback
-        HapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
+  /**
+   * Step 1: Start CIE MRTD with PACE reading process to sign the challenge and return to the
+   * machine the data needed to build the validation URL, from which we will obtain the authorization URL.
+   */
+  if (authorizationUrl === undefined) {
+    return (
+      <CieManagerComponent
+        can={can}
+        challenge={challenge}
+        onChallengeSigned={handleChallengeSigned}
+      />
+    );
+  }
 
-        // Before proceeding to the next step, give some time to read the success message
-        setTimeout(
-          () =>
-            eidMachine.send({
-              type: "internal-auth-and-mrtd-completed",
-              data: uri
-            }),
-          isScreenReaderEnabled
-            ? WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY // If screen reader is enabled, give more time to read the success message
-            : WAIT_TIMEOUT_NAVIGATION
-        );
-      })
-    ];
+  /**
+   * Step 2: Once we have the authorization url, we display the authorization webview
+   * where the user will be able to complete the CIE authentication process.
+   */
+  return (
+    <ItwCieAuthorizationWebview
+      authorizationUrl={authorizationUrl}
+      onAuthorizationComplete={handleAuthorizationComplete}
+      onWebViewError={handleWebViewError}
+    />
+  );
+};
 
-    return () => {
-      // Remove the event listener on exit
-      cleanup.forEach(remove => remove());
-      // Ensure the reading is stopped when state is exited
-      void CieManager.stopReading();
-    };
+type CieManagerComponentProps = {
+  can: string;
+  challenge: string;
+  onChallengeSigned: (data: InternalAuthAndMrtdResponse) => void;
+};
+
+const CieManagerComponent = ({
+  can,
+  challenge,
+  onChallengeSigned
+}: CieManagerComponentProps) => {
+  const { startInternalAuthAndMRTDReading, state } = useCieManager({
+    onInternalAuthAndMRTDWithPaceSuccess: onChallengeSigned
   });
 
-  useEffect(() => {
-    if (mrtdContext && mrtdContext.can) {
-      try {
-        void CieManager.startInternalAuthAndMRTDReading(
-          mrtdContext.can,
-          mrtdContext.challenge,
-          "base64"
-        );
-      } catch (error) {
-        setFailure(error as CieError);
-      }
-    }
-  }, [startCieReading, mrtdContext]);
+  const handleRetry = useCallback(() => {
+    void startInternalAuthAndMRTDReading(can, challenge);
+  }, [can, challenge, startInternalAuthAndMRTDReading]);
 
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
-    </SafeAreaView>
-  );
+  /**
+   * Starts the reading process as soon the component is mounted
+   */
+  useOnFirstRender(() => {
+    void startInternalAuthAndMRTDReading(can, challenge);
+  });
+
+  if (state.state === "failure") {
+    return <ItwCieCardReadFailureContent {...state} onRetry={handleRetry} />;
+  }
+
+  return <ItwCieCardReadProgressContent {...state} />;
 };

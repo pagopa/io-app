@@ -39,7 +39,7 @@ export const selectCiePin = (snapshot: MachineSnapshot) =>
     O.fromNullable,
     O.filter(x => x.mode === "ciePin"),
     O.map(x => (x as Extract<IdentificationContext, { mode: "ciePin" }>).pin),
-    O.getOrElse(() => "")
+    O.toUndefined
   );
 
 export const selectAuthUrlOption = (snapshot: MachineSnapshot) =>
@@ -49,8 +49,8 @@ export const selectAuthUrlOption = (snapshot: MachineSnapshot) =>
     O.map(x => x.authUrl)
   );
 
-export const selectMrtdContext = (snapshot: MachineSnapshot) =>
-  snapshot.context.mrtdContext;
+export const selectMrtdAuthorizationUrl = (snapshot: MachineSnapshot) =>
+  snapshot.context.mrtdContext?.authorizationUrl;
 
 export const selectIsLoading = (snapshot: MachineSnapshot) =>
   snapshot.hasTag(ItwTags.Loading);

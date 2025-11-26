@@ -49,10 +49,12 @@ const navigateToSuccessScreen = jest.fn();
 const navigateToFailureScreen = jest.fn();
 const navigateToWallet = jest.fn();
 const navigateToCredentialCatalog = jest.fn();
-const navigateToCiePreparationScreen = jest.fn();
+const navigateToCieNfcPreparationScreen = jest.fn();
+const navigateToCieCardPreparationScreen = jest.fn();
 const navigateToCiePinPreparationScreen = jest.fn();
+const navigateToCieCanPreparationScreen = jest.fn();
 const navigateToCiePinScreen = jest.fn();
-const navigateToCieReadCardScreen = jest.fn();
+const navigateToCieAuthenticationScreen = jest.fn();
 const navigateToNfcInstructionsScreen = jest.fn();
 const navigateToCieIdLoginScreen = jest.fn();
 const navigateToCieWarningScreen = jest.fn();
@@ -106,10 +108,12 @@ describe("itwEidIssuanceMachine", () => {
       navigateToFailureScreen,
       navigateToWallet,
       navigateToCredentialCatalog,
-      navigateToCiePreparationScreen,
+      navigateToCieNfcPreparationScreen,
       navigateToCiePinPreparationScreen,
+      navigateToCieCardPreparationScreen,
+      navigateToCieCanPreparationScreen,
       navigateToCiePinScreen,
-      navigateToCieReadCardScreen,
+      navigateToCieAuthenticationScreen,
       navigateToNfcInstructionsScreen,
       navigateToCieIdLoginScreen,
       navigateToCieWarningScreen,

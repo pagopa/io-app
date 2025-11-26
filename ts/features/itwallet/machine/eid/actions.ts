@@ -183,15 +183,37 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToCieAuthenticationScreen: () => {
+  navigateToCieAuthenticationScreen: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assert(context.authenticationContext, "authenticationContext is undefined");
+    assert(context.identification, "identification is undefined");
+    assert(
+      context.identification.mode === "ciePin",
+      "identification mode is not CIE PIN"
+    );
+
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.AUTH_SCREEN
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.AUTH_SCREEN,
+      params: {
+        pin: context.identification.pin,
+        authUrl: context.authenticationContext.authUrl
+      }
     });
   },
 
-  navigateToCieInternalAuthAndMrtdScreen: () => {
+  navigateToCieInternalAuthAndMrtdScreen: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assert(context.mrtdContext, "mrtdContext is undefined");
+    assert(context.mrtdContext.can, "CAN is undefined");
+
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.INTERNAL_AUTH_MRTD_SCREEN
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.INTERNAL_AUTH_MRTD_SCREEN,
+      params: {
+        can: context.mrtdContext.can,
+        challenge: context.mrtdContext.challenge
+      }
     });
   },
 
