@@ -8,6 +8,7 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+import { LoginType } from "../../../../activeSessionLogin/screens/analytics";
 
 export const hasApiLevelSupport = createAsyncAction(
   "CIE_HAS_API_LEVEL_REQUEST",
@@ -44,6 +45,7 @@ export type CieAuthenticationErrorReason = CEvent["event"] | "GENERIC";
 export type CieAuthenticationErrorPayload = {
   reason: CieAuthenticationErrorReason;
   cieDescription?: string;
+  flow: LoginType;
 };
 
 export const cieAuthenticationError = createStandardAction(

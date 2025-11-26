@@ -426,8 +426,12 @@ export function* initializeApplicationSaga(
 
   const userFromSuccessLogin = yield* select(userFromSuccessLoginSelector);
 
-  if (userFromSuccessLogin) {
-    yield* call(shouldTrackLevelSecurityMismatchSaga, maybeSessionInformation);
+  if (userFromSuccessLogin || isActiveLoginSuccessProp) {
+    yield* call(
+      shouldTrackLevelSecurityMismatchSaga,
+      maybeSessionInformation,
+      isActiveLoginSuccessProp
+    );
   }
 
   const publicKey = yield* select(lollipopPublicKeySelector);
