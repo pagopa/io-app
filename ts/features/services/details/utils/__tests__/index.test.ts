@@ -1,3 +1,4 @@
+import { GestureResponderEvent } from "react-native";
 import { getServiceActionsProps } from "..";
 import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
 import { CTA, CTAS } from "../../../../../types/LocalizedCTAs";
@@ -12,8 +13,13 @@ const mockBothCTAs: CTAS = { cta_1: mockCta1, cta_2: mockCta2 };
 const mockOnlyCTA1: CTAS = { cta_1: mockCta1 };
 
 const mockPressCta = jest.fn();
+const mockEvent = {} as GestureResponderEvent;
 
 describe("getServiceActionsProps", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("returns ThreeButtons when Special Action, CTA 1 and CTA 2 are present", () => {
     const actions = getServiceActionsProps(
       mockSpecialAction,
@@ -25,6 +31,11 @@ describe("getServiceActionsProps", () => {
     expect(actions?.primary).toEqual(mockSpecialAction);
     expect(actions?.secondary?.label).toBe(mockCta1.text);
     expect(actions?.tertiary?.label).toBe(mockCta2.text);
+
+    actions?.secondary?.onPress(mockEvent);
+    expect(mockPressCta).toHaveBeenCalledWith(mockCta1, "custom_1");
+    actions?.tertiary?.onPress(mockEvent);
+    expect(mockPressCta).toHaveBeenCalledWith(mockCta2, "custom_2");
   });
 
   it("returns TwoButtons when Special Action and CTA 1 are present", () => {
@@ -36,6 +47,9 @@ describe("getServiceActionsProps", () => {
     expect(actions?.type).toBe("TwoButtons");
     expect(actions?.primary).toEqual(mockSpecialAction);
     expect(actions?.secondary?.label).toBe(mockCta1.text);
+
+    actions?.secondary?.onPress(mockEvent);
+    expect(mockPressCta).toHaveBeenCalledWith(mockCta1, "custom_1");
   });
 
   it("returns TwoButtons when CTA 1 and CTA 2 are present", () => {
@@ -47,6 +61,11 @@ describe("getServiceActionsProps", () => {
     expect(actions?.type).toBe("TwoButtons");
     expect(actions?.primary?.label).toBe(mockCta1.text);
     expect(actions?.secondary?.label).toBe(mockCta2.text);
+
+    actions?.primary?.onPress(mockEvent);
+    expect(mockPressCta).toHaveBeenCalledWith(mockCta1, "custom_1");
+    actions?.secondary?.onPress(mockEvent);
+    expect(mockPressCta).toHaveBeenCalledWith(mockCta2, "custom_2");
   });
 
   it("returns SingleButton when only Special Action is present", () => {
@@ -67,6 +86,9 @@ describe("getServiceActionsProps", () => {
     );
     expect(actions?.type).toBe("SingleButton");
     expect(actions?.primary?.label).toBe(mockCta1.text);
+
+    actions?.primary?.onPress(mockEvent);
+    expect(mockPressCta).toHaveBeenCalledWith(mockCta1, "custom_1");
   });
 
   it("returns undefined when no actions are present", () => {
