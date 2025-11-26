@@ -90,7 +90,7 @@ export const MainTabNavigator = () => {
         />
 
         <Tab.Screen
-          name={ROUTES.BARCODE_SCAN}
+          name={ROUTES.BARCODE_SCAN_TAB_EMPTY}
           component={EmptyComponent}
           listeners={{
             tabPress: ({ preventDefault }) => {
