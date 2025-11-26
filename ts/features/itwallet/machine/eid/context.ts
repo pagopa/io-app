@@ -44,14 +44,27 @@ export type CieContext = {
  * the Proof of Possession (PoP) flow for MRTD-based eID issuance.
  */
 export type MrtdPoPContext = {
+  /**
+   * MRTD Challenge info payload
+   */
   challenge: string;
   mrtd_auth_session: string;
   mrtd_pop_nonce: string;
   validationUrl: string;
+  /**
+   * The CIE card CAN code (6 digits)
+   */
   can?: string | undefined;
+  /**
+   * IAS and MRTD payloads from the CIE MRTD PACE reading process.
+   */
   ias?: Credential.Issuance.MRTDPoP.IasPayload | undefined;
   mrtd?: Credential.Issuance.MRTDPoP.MrtdPayload | undefined;
-  authorizationUrl?: string;
+  /**
+   * The callback URL to be used after the MRTD PoP flow from which
+   * we fetch the final authorization URL.
+   */
+  callbackUrl?: string;
 };
 
 /**

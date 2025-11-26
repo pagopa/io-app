@@ -1,13 +1,19 @@
 import { useFocusEffect } from "@react-navigation/native";
+import * as O from "fp-ts/Option";
+import I18n from "i18next";
 import { useCallback, useState } from "react";
-import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
+import { SafeAreaView } from "react-native-safe-area-context";
+import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { useIOSelector } from "../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { trackItWalletCieCardReading } from "../../../analytics";
 import { selectItwEnv } from "../../../common/store/selectors/environment";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
-import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
-import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import {
+  isL3FeaturesEnabledSelector,
+  selectAuthUrlOption,
+  selectCiePin
+} from "../../../machine/eid/selectors";
 import { ItwCieCardReadFailureContent } from "../components/ItwCieCardReadFailureContent";
 import { ItwCieCardReadProgressContent } from "../components/ItwCieCardReadProgressContent";
 import {
@@ -17,26 +23,11 @@ import {
 import { useCieManager } from "../hooks/useCieManager";
 import { WebViewError } from "../utils/error";
 
-export type ItwCieAuthenticationScreenParams = {
-  /**
-   * The CIE card PIN code (8 digits)
-   */
-  pin: string;
-  /**
-   * The url to fetch on a browser-like context (webview)
-   * to get the serviceProviderUri for the CIE authentication flow.
-   */
-  authUrl: string;
-};
-
-type Props = IOStackNavigationRouteProps<
-  ItwParamsList,
-  "ITW_IDENTIFICATION_CIE_AUTH_SCREEN"
->;
-
-export const ItwCieAuthenticationScreen = ({ route }: Props) => {
-  const { pin, authUrl } = route.params;
+export const ItwCieAuthenticationScreen = () => {
   const issuanceActor = ItwEidIssuanceMachineContext.useActorRef();
+  const authUrlOption =
+    ItwEidIssuanceMachineContext.useSelector(selectAuthUrlOption);
+  const pin = ItwEidIssuanceMachineContext.useSelector(selectCiePin);
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
@@ -75,6 +66,12 @@ export const ItwCieAuthenticationScreen = ({ route }: Props) => {
     [issuanceActor]
   );
 
+  if (pin === undefined || O.isNone(authUrlOption)) {
+    return (
+      <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
+    );
+  }
+
   /**
    * Step 1: Display the authentication webview to fetch it the service provider url
    * to start the CIE authentication process
@@ -82,7 +79,7 @@ export const ItwCieAuthenticationScreen = ({ route }: Props) => {
   if (serviceProviderUrl === undefined) {
     return (
       <ItwCieAuthenticationWebview
-        authenticationUrl={authUrl}
+        authenticationUrl={authUrlOption.value}
         onServiceProviderUrlReceived={setServiceProviderUrl}
         onWebViewError={handleWebViewError}
       />
@@ -146,9 +143,13 @@ const CieManagerComponent = ({
     void startReading(pin, serviceProviderUrl);
   });
 
-  if (state.state === "failure") {
-    return <ItwCieCardReadFailureContent {...state} onRetry={handleRetry} />;
-  }
-
-  return <ItwCieCardReadProgressContent {...state} />;
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      {state.state === "failure" ? (
+        <ItwCieCardReadFailureContent {...state} onRetry={handleRetry} />
+      ) : (
+        <ItwCieCardReadProgressContent {...state} />
+      )}
+    </SafeAreaView>
+  );
 };

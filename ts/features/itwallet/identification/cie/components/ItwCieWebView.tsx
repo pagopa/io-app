@@ -2,6 +2,7 @@ import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { ComponentProps, createRef } from "react";
 import { Platform, StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import WebView, {
   WebViewMessageEvent,
   WebViewNavigation
@@ -199,10 +200,18 @@ export const ItwCieAuthorizationWebview = ({
   };
 
   return (
-    <ItwCieWebView
-      source={{ uri: authorizationUrl }}
-      onShouldStartLoadWithRequest={handleShouldStartLoadWithRequest}
-      onWebViewError={onWebViewError}
-    />
+    <SafeAreaView style={{ flex: 1 }}>
+      <ItwCieWebView
+        source={{ uri: authorizationUrl }}
+        onShouldStartLoadWithRequest={handleShouldStartLoadWithRequest}
+        onWebViewError={onWebViewError}
+        originWhitelist={[
+          "https://*",
+          "intent://*",
+          "http://*",
+          ISSUANCE_REDIRECT_URI
+        ]}
+      />
+    </SafeAreaView>
   );
 };

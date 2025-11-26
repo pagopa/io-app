@@ -200,6 +200,8 @@ export const itwEidIssuanceMachine = setup({
     isL3FeaturesEnabled: ({ context }) => context.level === "l3",
     isEligibleForItwSimplifiedActivation: notImplemented,
     requiresMrtdVerification: ({ context }) =>
+      // MRTD PoP verification is a step required for SPID and CieID identification modes
+      // when issuing an L3 PID
       context.level === "l3" && context.identification?.mode !== "ciePin"
   }
 }).createMachine({
@@ -733,7 +735,6 @@ export const itwEidIssuanceMachine = setup({
               entry: "navigateToCieNfcPreparationScreen",
               on: {
                 next: {
-                  actions: "navigateToCieAuthenticationScreen",
                   target: "StartingCieAuthFlow"
                 },
                 "go-to-cie-warning": {
@@ -751,6 +752,8 @@ export const itwEidIssuanceMachine = setup({
               description:
                 "Start the preliminary phase of the CIE identification flow.",
               tags: [ItwTags.Loading],
+              entry: "navigateToCieAuthenticationScreen",
+              actions: "navigateToCieAuthenticationScreen",
               invoke: {
                 src: "startAuthFlow",
                 input: ({ context }) => ({
@@ -970,7 +973,16 @@ export const itwEidIssuanceMachine = setup({
               walletInstanceAttestation: context.walletInstanceAttestation?.jwt
             }),
             onDone: {
-              target: "#itwEidIssuanceMachine.MrtdPoP.Completed"
+              target: "#itwEidIssuanceMachine.MrtdPoP.Authorization",
+              actions: assign(({ event, context }) => {
+                assert(context.mrtdContext, "mrtdContext must be defined");
+                return {
+                  mrtdContext: {
+                    ...context.mrtdContext,
+                    callbackUrl: event.output
+                  }
+                };
+              })
             },
             onError: {
               actions: "setFailure",
@@ -979,7 +991,8 @@ export const itwEidIssuanceMachine = setup({
           }
         },
         Authorization: {
-          description: "",
+          description:
+            "Wait for the user to complete the MRTD PoP authorization",
           on: {
             "mrtd-pop-verification-completed": {
               target: "#itwEidIssuanceMachine.MrtdPoP.Completed",

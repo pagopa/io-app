@@ -1,11 +1,15 @@
 import { InternalAuthAndMrtdResponse } from "@pagopa/io-react-native-cie";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { trackItWalletCieCardReading } from "../../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
-import { selectMrtdAuthorizationUrl } from "../../../machine/eid/selectors";
+import {
+  selectIsLoading,
+  selectMrtdCallbackUrl
+} from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { ItwCieCardReadFailureContent } from "../components/ItwCieCardReadFailureContent";
 import { ItwCieCardReadProgressContent } from "../components/ItwCieCardReadProgressContent";
@@ -32,8 +36,9 @@ type Props = IOStackNavigationRouteProps<
 export const ItwCieInternalAuthAndMrtdScreen = ({ route }: Props) => {
   const { can, challenge } = route.params;
   const issuanceActor = ItwEidIssuanceMachineContext.useActorRef();
-  const authorizationUrl = ItwEidIssuanceMachineContext.useSelector(
-    selectMrtdAuthorizationUrl
+  const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
+  const callbackUrl = ItwEidIssuanceMachineContext.useSelector(
+    selectMrtdCallbackUrl
   );
 
   useFocusEffect(useCallback(() => trackItWalletCieCardReading("L3"), []));
@@ -79,9 +84,9 @@ export const ItwCieInternalAuthAndMrtdScreen = ({ route }: Props) => {
 
   /**
    * Step 1: Start CIE MRTD with PACE reading process to sign the challenge and return to the
-   * machine the data needed to build the validation URL, from which we will obtain the authorization URL.
+   * machine the data needed to build the validation URL, from which we will obtain the callback URL.
    */
-  if (authorizationUrl === undefined) {
+  if (callbackUrl === undefined) {
     return (
       <CieManagerComponent
         can={can}
@@ -92,12 +97,12 @@ export const ItwCieInternalAuthAndMrtdScreen = ({ route }: Props) => {
   }
 
   /**
-   * Step 2: Once we have the authorization url, we display the authorization webview
-   * where the user will be able to complete the CIE authentication process.
+   * Step 2: Once the validation completes and we have the callback url, we use the webview to fetch it and complete
+   * the CIE authentication process.
    */
   return (
     <ItwCieAuthorizationWebview
-      authorizationUrl={authorizationUrl}
+      authorizationUrl={callbackUrl}
       onAuthorizationComplete={handleAuthorizationComplete}
       onWebViewError={handleWebViewError}
     />
@@ -130,9 +135,13 @@ const CieManagerComponent = ({
     void startInternalAuthAndMRTDReading(can, challenge);
   });
 
-  if (state.state === "failure") {
-    return <ItwCieCardReadFailureContent {...state} onRetry={handleRetry} />;
-  }
-
-  return <ItwCieCardReadProgressContent {...state} />;
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      {state.state === "failure" ? (
+        <ItwCieCardReadFailureContent {...state} onRetry={handleRetry} />
+      ) : (
+        <ItwCieCardReadProgressContent {...state} />
+      )}
+    </SafeAreaView>
+  );
 };

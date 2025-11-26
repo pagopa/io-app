@@ -49,8 +49,8 @@ export const selectAuthUrlOption = (snapshot: MachineSnapshot) =>
     O.map(x => x.authUrl)
   );
 
-export const selectMrtdAuthorizationUrl = (snapshot: MachineSnapshot) =>
-  snapshot.context.mrtdContext?.authorizationUrl;
+export const selectMrtdCallbackUrl = (snapshot: MachineSnapshot) =>
+  snapshot.context.mrtdContext?.callbackUrl;
 
 export const selectIsLoading = (snapshot: MachineSnapshot) =>
   snapshot.hasTag(ItwTags.Loading);

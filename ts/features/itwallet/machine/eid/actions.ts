@@ -183,22 +183,9 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToCieAuthenticationScreen: ({
-    context
-  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
-    assert(context.authenticationContext, "authenticationContext is undefined");
-    assert(context.identification, "identification is undefined");
-    assert(
-      context.identification.mode === "ciePin",
-      "identification mode is not CIE PIN"
-    );
-
+  navigateToCieAuthenticationScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.IDENTIFICATION.CIE.AUTH_SCREEN,
-      params: {
-        pin: context.identification.pin,
-        authUrl: context.authenticationContext.authUrl
-      }
+      screen: ITW_ROUTES.IDENTIFICATION.CIE.AUTH_SCREEN
     });
   },
 
@@ -303,7 +290,8 @@ export const createEidIssuanceActionsImplementation = (
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     // Save the auth level in the preferences
-    store.dispatch(itwSetAuthLevel(context.identification?.level));
+    const authLevel = context.level === "l3" ? "L3" : "L2";
+    store.dispatch(itwSetAuthLevel(authLevel));
   },
 
   freezeSimplifiedActivationRequirements: () => {
