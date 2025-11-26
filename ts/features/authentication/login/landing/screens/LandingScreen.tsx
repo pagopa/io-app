@@ -13,6 +13,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
 import JailMonkey from "jail-monkey";
 import {
   ComponentProps,
@@ -24,16 +25,13 @@ import {
 } from "react";
 import { Alert, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import I18n from "i18next";
 import { LandingCardComponent } from "../../../../../components/LandingCardComponent";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import SectionStatusComponent from "../../../../../components/SectionStatus";
-import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
 import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../../../../config";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { sessionExpired } from "../../../common/store/actions";
 import {
   useIODispatch,
   useIOSelector,
@@ -56,7 +54,15 @@ import {
 } from "../../../common/analytics";
 import { Carousel } from "../../../common/components/Carousel";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { sessionExpired } from "../../../common/store/actions";
 
+import { startupLoadSuccess } from "../../../../../store/actions/startup";
+import { StartupStatusEnum } from "../../../../../store/reducers/startup";
+import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
+import { identificationRequest } from "../../../../identification/store/actions";
+import { setOfflineAccessReason } from "../../../../ingress/store/actions";
+import { OfflineAccessReasonEnum } from "../../../../ingress/store/reducer";
+import { itwOfflineAccessAvailableSelector } from "../../../../itwallet/common/store/selectors";
 import {
   isSessionCorruptedSelector,
   isSessionExpiredSelector
@@ -70,12 +76,6 @@ import { SpidLevel } from "../../cie/utils";
 import useNavigateToLoginMethod from "../../hooks/useNavigateToLoginMethod";
 import { LandingSessionExpiredComponent } from "../components/LandingSessionExpiredComponent";
 import { useInfoBottomsheetComponent } from "../hooks/useInfoBottomsheetComponent";
-import { setOfflineAccessReason } from "../../../../ingress/store/actions";
-import { OfflineAccessReasonEnum } from "../../../../ingress/store/reducer";
-import { identificationRequest } from "../../../../identification/store/actions";
-import { startupLoadSuccess } from "../../../../../store/actions/startup";
-import { StartupStatusEnum } from "../../../../../store/reducers/startup";
-import { itwOfflineAccessAvailableSelector } from "../../../../itwallet/common/store/selectors";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.landing.contextualHelpTitle",

@@ -3801,6 +3801,7 @@
       "serviceEntryPoint": {
         "notAvailable": "The service is not available at this time. Try later."
       },
+      "goToService": "Go to the service",
       "request": "Request Carta della Cultura",
       "usage": "Use Carta della Cultura"
     }
