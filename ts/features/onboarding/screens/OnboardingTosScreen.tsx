@@ -19,7 +19,7 @@ import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import { getFlowType } from "../../../utils/analytics";
-import { ContextualHelpPropsMarkdown } from "../../../utils/help";
+import { ContextualHelpPropsMarkdown } from "../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { trackTosUserExit } from "../../authentication/common/analytics";
 import {

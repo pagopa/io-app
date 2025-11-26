@@ -17,7 +17,7 @@ import {
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { idpsRemoteValueSelector } from "../../../../../store/reducers/content";
 import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
-import { ContextualHelpPropsMarkdown } from "../../../../../utils/help";
+import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { idps as idpsFallback, SpidIdp } from "../../../../../utils/idps";
 import {

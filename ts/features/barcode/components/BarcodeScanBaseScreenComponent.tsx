@@ -45,7 +45,7 @@ import { FAQsCategoriesType } from "../../../utils/faq";
 import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
-} from "../../../utils/help";
+} from "../../../utils/contextualHelp";
 import { isAndroid } from "../../../utils/platform";
 import {
   assistanceToolRemoteConfig,

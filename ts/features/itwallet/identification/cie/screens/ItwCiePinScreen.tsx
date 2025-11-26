@@ -21,7 +21,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
-import { ContextualHelpPropsMarkdown } from "../../../../../utils/help";
+import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
 import { isCieLoginUatEnabledSelector } from "../../../../authentication/login/cie/store/selectors";

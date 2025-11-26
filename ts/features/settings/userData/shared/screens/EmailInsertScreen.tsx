@@ -40,7 +40,7 @@ import themeVariables from "../../../../../theme/variables";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { getFlowType } from "../../../../../utils/analytics";
 import { isDisplayZoomed } from "../../../../../utils/device";
-import { ContextualHelpPropsMarkdown } from "../../../../../utils/help";
+import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../../../../utils/hooks/usePrevious";
 import { areStringsEqual } from "../../../../../utils/options";

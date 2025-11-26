@@ -16,7 +16,7 @@ import {
 } from "../analytics";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import { ContextualHelpPropsMarkdown } from "../../../utils/help";
+import { ContextualHelpPropsMarkdown } from "../../../utils/contextualHelp";
 
 export type OnboardingServicesPreferenceScreenNavigationParams = {
   isFirstOnboarding: boolean;

@@ -18,7 +18,7 @@ import { TypeEnum as ClauseType } from "../../../../../definitions/fci/Clause";
 import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/help";
+import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { trackFciDocOpeningSuccess, trackFciSigningDoc } from "../../analytics";
 import DocumentsNavigationBar from "../../components/DocumentsNavigationBar";
 import LoadingComponent from "../../components/LoadingComponent";

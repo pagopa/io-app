@@ -10,7 +10,7 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { identificationRequest } from "../../../identification/store/actions";
 import { useIODispatch } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/help";
+import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useIdPayInfoCieBottomSheet } from "../components/IdPayInfoCieBottomSheet";
 import { IdPayCodeRoutes } from "../navigation/routes";
 import { idPayGenerateCode } from "../store/actions";

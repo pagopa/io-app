@@ -10,7 +10,7 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/help";
+import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useIdPayInfoCieBottomSheet } from "../components/IdPayInfoCieBottomSheet";
 import { IdPayCodeParamsList } from "../navigation/params";
 import { IdPayCodeRoutes } from "../navigation/routes";

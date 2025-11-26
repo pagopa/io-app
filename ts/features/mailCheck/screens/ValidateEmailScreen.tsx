@@ -16,7 +16,7 @@ import { getFlowType } from "../../../utils/analytics";
 import { isProfileFirstOnBoardingSelector } from "../../settings/common/store/selectors";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import { ContextualHelpPropsMarkdown } from "../../../utils/help";
+import { ContextualHelpPropsMarkdown } from "../../../utils/contextualHelp";
 
 export type EmailNotVerifiedScreenParamList = {
   email: string;

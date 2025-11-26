@@ -49,7 +49,7 @@ import {
   getContextualHelpConfig,
   getContextualHelpData,
   reloadContextualHelpDataThreshold
-} from "../../../utils/help";
+} from "../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../../utils/hooks/usePrevious";
 import {

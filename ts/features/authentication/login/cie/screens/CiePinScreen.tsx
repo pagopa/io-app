@@ -43,7 +43,7 @@ import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { SessionToken } from "../../../../../types/SessionToken";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
-import { ContextualHelpPropsMarkdown } from "../../../../../utils/help";
+import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";

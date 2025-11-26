@@ -13,7 +13,7 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { barcodesScannerConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { ContextualHelpPropsMarkdown } from "../../../../utils/help";
+import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
 import {
   BarcodeFailure,
   BarcodeScanBaseScreenComponent,

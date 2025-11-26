@@ -18,7 +18,7 @@ import {
 import { useIOSelector } from "../../../../store/hooks";
 import { FAQsCategoriesType } from "../../../../utils/faq";
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
-import { ContextualHelpPropsMarkdown } from "../../../../utils/help";
+import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
 
 type EndElementProps = ComponentProps<typeof ListItemInfo>["endElement"];
 

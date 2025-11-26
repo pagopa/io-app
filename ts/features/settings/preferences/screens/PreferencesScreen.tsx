@@ -19,7 +19,7 @@ import { checkAndRequestPermission } from "../../../../utils/calendar";
 import { openAppSettings } from "../../../../utils/appSettings";
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
-import { ContextualHelpPropsMarkdown } from "../../../../utils/help";
+import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
 
 type PreferencesNavListItem = {
   value: string;

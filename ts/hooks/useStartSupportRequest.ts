@@ -9,7 +9,7 @@ import { FAQsCategoriesType } from "../utils/faq";
 import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
-} from "../utils/help";
+} from "../utils/contextualHelp";
 import {
   assistanceToolRemoteConfig,
   resetCustomFields

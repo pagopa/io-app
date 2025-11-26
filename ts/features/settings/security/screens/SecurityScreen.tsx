@@ -24,7 +24,7 @@ import {
   mayUserActivateBiometric
 } from "../../../../utils/biometrics";
 import { FAQsCategoriesType } from "../../../../utils/faq";
-import { ContextualHelpPropsMarkdown } from "../../../../utils/help";
+import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
 import { FIMS_ROUTES } from "../../../fims/common/navigation";
 import { fimsIsHistoryEnabledSelector } from "../../../fims/history/store/selectors";
 import { identificationRequest } from "../../../identification/store/actions";

@@ -11,7 +11,7 @@ import {
   mayUserActivateBiometric
 } from "../../../../utils/biometrics";
 import { FAQsCategoriesType } from "../../../../utils/faq";
-import { ContextualHelpPropsMarkdown } from "../../../../utils/help";
+import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { isProfileFirstOnBoardingSelector } from "../../../settings/common/store/selectors";
 import {

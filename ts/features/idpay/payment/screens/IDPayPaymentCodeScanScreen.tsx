@@ -10,7 +10,7 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { emptyContextualHelp } from "../../../../utils/help";
+import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import {
   BarcodeFailure,
   BarcodeScanBaseScreenComponent,
