@@ -18,6 +18,7 @@ import {
 } from "@react-navigation/native";
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 
+import I18n from "i18next";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -26,10 +27,8 @@ import {
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import I18n from "i18next";
 import { IdpData } from "../../../../../../definitions/content/IdpData";
 import IOMarkdown from "../../../../../components/IOMarkdown";
-import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
 import {
   BottomTopAnimation,
   LightModalContext
@@ -43,18 +42,24 @@ import { IOStackNavigationProp } from "../../../../../navigation/params/AppParam
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { SessionToken } from "../../../../../types/SessionToken";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
+import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
+import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
 import { openWebUrl } from "../../../../../utils/url";
 import {
+  isActiveSessionLoginSelector,
+  remoteApiLoginUrlPrefixSelector
+} from "../../../activeSessionLogin/store/selectors";
+import useActiveSessionLoginNavigation from "../../../activeSessionLogin/utils/useActiveSessionLoginNavigation";
+import {
   trackLoginCiePinInfo,
   trackLoginCiePinScreen
 } from "../../../common/analytics/cieAnalytics";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
 import { loginSuccess } from "../../../common/store/actions";
 import { getIdpLoginUri } from "../../../common/utils/login";
 import {
@@ -67,11 +72,6 @@ import {
   isNfcEnabledSelector
 } from "../store/selectors";
 import { cieFlowForDevServerEnabled } from "../utils";
-import {
-  isActiveSessionLoginSelector,
-  remoteApiLoginUrlPrefixSelector
-} from "../../../activeSessionLogin/store/selectors";
-import useActiveSessionLoginNavigation from "../../../activeSessionLogin/utils/useActiveSessionLoginNavigation";
 
 // The MP events related to this page have been commented on
 // (or disabled for active session login),
