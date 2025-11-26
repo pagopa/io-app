@@ -58,7 +58,6 @@ import {
 } from "../../../common/analytics";
 import { Carousel } from "../../../common/components/Carousel";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { sessionExpired } from "../../../common/store/actions";
 
 import { startupLoadSuccess } from "../../../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../../../store/reducers/startup";
