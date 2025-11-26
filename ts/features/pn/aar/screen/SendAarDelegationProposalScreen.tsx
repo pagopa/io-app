@@ -6,12 +6,12 @@ import {
   IOStackNavigationRouteProps,
   useIONavigation
 } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useIODispatch } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { hasNFCFeatureSelector } from "../../../authentication/login/cie/store/selectors";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
+import { useIsNfcFeatureAvailable } from "../hooks/useIsNfcFeatureAvailable";
 import { useSendAarDelegationProposalScreenBottomSheet } from "../hooks/useSendAarDelegationProposalScreenBottomSheet";
 import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
 import { setAarFlowState } from "../store/actions";
@@ -36,7 +36,7 @@ export const SendAarDelegationProposalScreen = ({
   route
 }: SendAarDelegationProposalScreenProps) => {
   const navigation = useIONavigation();
-  const hasNfcFeature = useIOSelector(hasNFCFeatureSelector);
+  const isNfcAvailable = useIsNfcFeatureAvailable();
   const dispatch = useIODispatch();
 
   const { terminateFlow, currentFlowData } = useSendAarFlowManager();
@@ -53,7 +53,7 @@ export const SendAarDelegationProposalScreen = ({
   });
 
   const handleContinuePress = useCallback(() => {
-    if (hasNfcFeature) {
+    if (isNfcAvailable) {
       present();
     } else {
       dispatch(
@@ -63,7 +63,7 @@ export const SendAarDelegationProposalScreen = ({
         })
       );
     }
-  }, [hasNfcFeature, present, dispatch, params]);
+  }, [isNfcAvailable, present, dispatch, params]);
 
   useEffect(() => {
     if (type === sendAARFlowStates.nfcNotSupportedFinal) {
