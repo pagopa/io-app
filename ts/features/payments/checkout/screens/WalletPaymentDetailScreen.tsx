@@ -341,6 +341,7 @@ const WalletPaymentDetailContent = ({
         icon={"notes"}
         label={I18n.t("wallet.firstTransactionSummary.object")}
         value={description}
+        numberOfLines={0}
       />
       <Divider />
       <ListItemInfo
