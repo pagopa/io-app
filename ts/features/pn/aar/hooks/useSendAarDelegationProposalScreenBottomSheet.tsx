@@ -1,9 +1,4 @@
-import {
-  ContentWrapper,
-  FeatureInfo,
-  IOButton,
-  VStack
-} from "@pagopa/io-app-design-system";
+import { FeatureInfo, IOButton, VStack } from "@pagopa/io-app-design-system";
 import { constUndefined } from "fp-ts/lib/function";
 import i18n from "i18next";
 import { useIODispatch } from "../../../../store/hooks";
@@ -30,14 +25,12 @@ const BsFooterButton = () => {
   };
 
   return (
-    <ContentWrapper>
-      <IOButton
-        fullWidth
-        variant="solid"
-        label={i18n.t("global.buttons.continue")}
-        onPress={handlePress}
-      />
-    </ContentWrapper>
+    <IOButton
+      fullWidth
+      variant="solid"
+      label={i18n.t("global.buttons.continue")}
+      onPress={handlePress}
+    />
   );
 };
 type NameProp = {
@@ -62,6 +55,7 @@ const BsBody = ({ name }: NameProp) => {
         }}
         body={featureInfoText[1]}
       />
+      <BsFooterButton />
     </VStack>
   );
 };
@@ -73,6 +67,5 @@ export const useSendAarDelegationProposalScreenBottomSheet = (
     title: i18n.t(
       "features.pn.aar.flow.delegated.notAdressee.bottomSheet.title"
     ),
-    footer: <BsFooterButton />,
     component: <BsBody name={citizenFullName} />
   });
