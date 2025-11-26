@@ -31,9 +31,10 @@ const CieIdWizard = () => {
   const label = I18n.t("authentication.wizards.cie_id_wizard.title");
   const { navigateToCieIdLoginScreen } = useNavigateToLoginMethod();
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
+  const flow = isActiveSessionLogin ? "reauth" : "auth";
 
   useOnFirstRender(() => {
-    void trackCieIdWizardScreen(isActiveSessionLogin ? "reauth" : "auth");
+    void trackCieIdWizardScreen(flow);
   });
 
   const screenActions = (): IOScrollViewActions => ({
@@ -44,7 +45,6 @@ const CieIdWizard = () => {
         "authentication.wizards.cie_id_wizard.actions.primary.label"
       ),
       onPress: () => {
-        const flow = isActiveSessionLogin ? "reauth" : "auth";
         void trackWizardCieIdSelected(store.getState(), SPID_LEVEL, flow);
         navigateToCieIdLoginScreen(SPID_LEVEL);
       }

@@ -93,9 +93,10 @@ const CiePinScreen = () => {
   const dispatch = useIODispatch();
 
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
+  const flow = isActiveSessionLogin ? "reauth" : "auth";
 
   useOnFirstRender(() => {
-    trackLoginCiePinScreen(isActiveSessionLogin ? "reauth" : "auth");
+    trackLoginCiePinScreen(flow);
   });
 
   const requestNfcEnabledCheck = useCallback(
@@ -250,7 +251,7 @@ const CiePinScreen = () => {
               asLink
               accessibilityRole="button"
               onPress={() => {
-                trackLoginCiePinInfo(isActiveSessionLogin ? "reauth" : "auth");
+                trackLoginCiePinInfo(flow);
                 present();
               }}
             >

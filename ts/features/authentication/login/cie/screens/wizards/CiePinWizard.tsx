@@ -37,6 +37,7 @@ const CiePinWizard = () => {
   const { navigateToCiePinInsertion } = useNavigateToLoginMethod();
   const label = I18n.t("authentication.wizards.cie_pin_wizard.title");
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
+  const flow = isActiveSessionLogin ? "reauth" : "auth";
 
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
     title: I18n.t("authentication.wizards.cie_pin_wizard.bottom_sheet.title"),
@@ -87,7 +88,6 @@ const CiePinWizard = () => {
         "authentication.wizards.cie_pin_wizard.actions.primary.label"
       ),
       onPress: () => {
-        const flow = isActiveSessionLogin ? "reauth" : "auth";
         void trackWizardCiePinSelected(store.getState(), flow);
         navigateToCiePinInsertion();
       }
@@ -106,9 +106,7 @@ const CiePinWizard = () => {
   });
 
   const handlePresent = () => {
-    void trackWizardCiePinInfoSelected(
-      isActiveSessionLogin ? "reauth" : "auth"
-    );
+    void trackWizardCiePinInfoSelected(flow);
     present();
   };
 

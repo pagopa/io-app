@@ -16,9 +16,10 @@ const SpidWizard = () => {
   const { navigateToIdpSelection } = useNavigateToLoginMethod();
   const label = I18n.t("authentication.wizards.spid_wizard.title");
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
+  const flow = isActiveSessionLogin ? "reauth" : "auth";
 
   useOnFirstRender(() => {
-    void trackSpidWizardScreen(isActiveSessionLogin ? "reauth" : "auth");
+    void trackSpidWizardScreen(flow);
   });
 
   return (
@@ -36,9 +37,7 @@ const SpidWizard = () => {
             "authentication.wizards.spid_wizard.actions.primary.label"
           ),
           onPress: () => {
-            void trackWizardSpidSelected(
-              isActiveSessionLogin ? "reauth" : "auth"
-            );
+            void trackWizardSpidSelected(flow);
             navigateToIdpSelection();
           }
         },

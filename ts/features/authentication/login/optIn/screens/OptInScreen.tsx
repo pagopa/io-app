@@ -70,6 +70,7 @@ const OptInScreen = () => {
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   const dispatch = useIODispatch();
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
+  const flow = isActiveSessionLogin ? "reauth" : "auth";
   const {
     securitySuggestionBottomSheet,
     presentSecuritySuggestionBottomSheet
@@ -91,7 +92,7 @@ const OptInScreen = () => {
   const { isDeviceScreenSmall } = useDetectSmallScreen();
 
   useOnFirstRender(() => {
-    trackLoginSessionOptIn(isActiveSessionLogin ? "reauth" : "auth");
+    trackLoginSessionOptIn(flow);
   });
 
   useFocusEffect(() => setAccessibilityFocus(accessibilityFirstFocuseViewRef));
@@ -109,7 +110,6 @@ const OptInScreen = () => {
     };
 
   const navigateToIdpPage = (isLV: boolean) => {
-    const flow = isActiveSessionLogin ? "reauth" : "auth";
     if (isLV) {
       void trackLoginSessionOptIn365(store.getState(), flow);
     } else {
@@ -186,9 +186,7 @@ const OptInScreen = () => {
             accessibilityRole: "button",
             label: I18n.t("authentication.opt_in.security_suggests"),
             onPress: () => {
-              trackLoginSessionOptInInfo(
-                isActiveSessionLogin ? "reauth" : "auth"
-              );
+              trackLoginSessionOptInInfo(flow);
               return presentSecuritySuggestionBottomSheet();
             }
           }}
