@@ -3811,6 +3811,7 @@
         "notAvailable": "Il servizio non è disponibile in questo momento. Riprova più tardi."
       },
       "request": "Richiedi Carta della Cultura",
+      "goToService": "Vai al servizio",
       "usage": "Usa Carta della Cultura"
     }
   },
@@ -5528,11 +5529,6 @@
             "content": "Raccontaci la tua esperienza con la verifica e aiutaci a migliorare.",
             "action": "Inizia"
           }
-        },
-        "banner": {
-          "title": "Dicci cosa ne pensi",
-          "content": "Raccontaci la tua esperienza con la funzionalità Documenti su IO.",
-          "action": "Inizia"
         }
       },
       "walletInstanceRevoked": {
