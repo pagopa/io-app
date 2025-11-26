@@ -34,7 +34,7 @@ const headerHelpByRoute: Record<TabRoutes, SupportRequestParams> = {
       body: "wallet.contextualHelpContent"
     }
   },
-  [ROUTES.BARCODE_SCAN]: {},
+  [ROUTES.BARCODE_SCAN_TAB_EMPTY]: {},
   [ROUTES.PAYMENTS_HOME]: {
     faqCategories: ["wallet", "wallet_methods"],
     contextualHelpMarkdown: {
