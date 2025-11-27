@@ -101,8 +101,10 @@ export const createCredentialIssuanceActionsImplementation = (
     });
   },
 
-  goBack: () => {
-    navigation.goBack();
+  navigateToCardOnboardingScreen: () => {
+    navigation.replace(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ONBOARDING
+    });
   },
 
   closeIssuance: () => {

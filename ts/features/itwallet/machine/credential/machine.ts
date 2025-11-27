@@ -43,7 +43,7 @@ export const itwCredentialIssuanceMachine = setup({
     navigateToWallet: notImplemented,
     navigateToEidVerificationExpiredScreen: notImplemented,
     closeIssuance: notImplemented,
-    goBack: notImplemented,
+    navigateToCardOnboardingScreen: notImplemented,
 
     /**
      * Store actions
@@ -87,7 +87,7 @@ export const itwCredentialIssuanceMachine = setup({
     hasValidWalletInstanceAttestation: notImplemented,
     isStatusError: notImplemented,
     isEidExpired: notImplemented,
-    hasIntroductionText: notImplemented
+    hasCredentialIntroContent: notImplemented
   }
 }).createMachine({
   id: "itwCredentialIssuanceMachine",
@@ -120,7 +120,7 @@ export const itwCredentialIssuanceMachine = setup({
         {
           guard: and([
             ({ context }) => context.mode === "issuance",
-            "hasIntroductionText"
+            "hasCredentialIntroContent"
           ]),
           target: "CredentialIntroduction"
         },
@@ -150,8 +150,8 @@ export const itwCredentialIssuanceMachine = setup({
           target: "TrustFederationVerification"
         },
         back: {
-          target: "Completed",
-          actions: "goBack"
+          target: "Idle",
+          actions: "navigateToCardOnboardingScreen"
         }
       }
     },

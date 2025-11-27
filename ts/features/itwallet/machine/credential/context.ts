@@ -60,6 +60,9 @@ export type Context = {
    * The failure that occurred during the credential issuance process, if any.
    */
   failure: CredentialIssuanceFailure | undefined;
+  /**
+   * The credentials catalogue as a dictionary, with an entry for each credential type.
+   */
   credentialsCatalogue: Record<string, DigitalCredentialMetadata> | undefined;
 };
 

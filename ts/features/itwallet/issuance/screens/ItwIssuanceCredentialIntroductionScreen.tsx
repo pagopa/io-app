@@ -10,7 +10,7 @@ import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import {
   selectCredentialTypeOption,
-  selectIntroductionTextOption,
+  selectCredentialIntroContentOption,
   selectIsLoading
 } from "../../machine/credential/selectors";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
@@ -20,9 +20,9 @@ export const ItwIssuanceCredentialIntroductionScreen = () => {
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
     selectCredentialTypeOption
   );
-  const introductionTextOption =
+  const introductionContentOption =
     ItwCredentialIssuanceMachineContext.useSelector(
-      selectIntroductionTextOption
+      selectCredentialIntroContentOption
     );
 
   useHeaderSecondLevel({
@@ -33,7 +33,7 @@ export const ItwIssuanceCredentialIntroductionScreen = () => {
   return pipe(
     sequenceS(O.Monad)({
       credentialType: credentialTypeOption,
-      markdownContent: introductionTextOption
+      markdownContent: introductionContentOption
     }),
     O.fold(
       () => <ItwGenericErrorContent />, // This should never happen
@@ -68,7 +68,9 @@ export const ContentView = ({
     >
       <VStack>
         <H2>{getCredentialNameFromType(credentialType)}</H2>
-        <Body>Leggi con attenzione cosa troverai</Body>
+        <Body>
+          {I18n.t("features.itWallet.issuance.credentialIntro.subtitle")}
+        </Body>
       </VStack>
       <VSpacer size={16} />
       <IOMarkdown content={markdownContent} />

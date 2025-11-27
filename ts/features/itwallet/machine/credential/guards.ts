@@ -33,7 +33,7 @@ export const createCredentialIssuanceGuardsImplementation = (
     return eidStatus === "jwtExpired";
   },
 
-  hasIntroductionText: ({ context }: { context: Context }) =>
+  hasCredentialIntroContent: ({ context }: { context: Context }) =>
     pipe(
       O.fromNullable(context.credentialType),
       O.chainNullableK(type => context.credentialsCatalogue?.[type]),
