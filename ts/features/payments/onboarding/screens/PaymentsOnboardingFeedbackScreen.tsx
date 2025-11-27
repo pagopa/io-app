@@ -136,7 +136,11 @@ const PaymentsOnboardingFeedbackScreen = () => {
   }, [navigation, outcome]);
 
   const handleContinueButton = () => {
-    navigation.popToTop();
+    if (rptIdToResume) {
+      navigation.pop();
+    } else {
+      navigation.popToTop();
+    }
     if (outcome === WalletOnboardingOutcomeEnum.SUCCESS && walletId) {
       dispatch(getPaymentsWalletUserMethods.request());
       if (rptIdToResume) {
