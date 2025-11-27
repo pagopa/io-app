@@ -75,7 +75,7 @@ describe("Test FciQtspClauses screen", () => {
     expect(component).toBeTruthy();
     expect(component.queryByTestId("FciLoadingScreenTestID")).toBeTruthy();
   });
-  it("should render the GenericErrorComponent when network error problem occurs or polling is stopped if time limit reached", () => {
+  it("should render the SignatureStatusComponent when network error problem occurs or polling is stopped if time limit reached", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store: Store<GlobalState> = createStore(
       appReducer,
