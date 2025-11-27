@@ -73,7 +73,7 @@ export const SendAARCieCardReadingComponent = ({
     handleStartReading();
   }, [handleStartReading]);
 
-  const cancelAction = useMemo(
+  const cancelAction = useMemo<ScreenContentProps["secondaryAction"]>(
     () => ({
       variant: "link",
       label: i18n.t("global.buttons.close"),
