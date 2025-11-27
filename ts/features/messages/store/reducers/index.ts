@@ -12,6 +12,10 @@ import {
   preconditionReducer
 } from "./messagePrecondition";
 import { Archiving, archivingReducer } from "./archiving";
+import {
+  messageSectionStatusReducer,
+  MessageSectionStatusType
+} from "./messageSectionStatus";
 
 export type MessagesState = Readonly<{
   allPaginated: AllPaginated;
@@ -23,6 +27,7 @@ export type MessagesState = Readonly<{
   payments: MultiplePaymentState;
   precondition: MessagePreconditionStatus;
   thirdPartyById: ThirdPartyById;
+  sectionStatus: MessageSectionStatusType;
 }>;
 
 const reducer = combineReducers<MessagesState, Action>({
@@ -34,7 +39,8 @@ const reducer = combineReducers<MessagesState, Action>({
   paginatedById: paginatedByIdReducer,
   payments: paymentsReducer,
   precondition: preconditionReducer,
-  thirdPartyById: thirdPartyByIdReducer
+  thirdPartyById: thirdPartyByIdReducer,
+  sectionStatus: messageSectionStatusReducer
 });
 
 export default reducer;
