@@ -11,7 +11,7 @@ import SignatureStatusComponent, { Props } from "../SignatureStatusComponent";
 
 const fakeTestID = "fakeTestID";
 
-describe("Test ErrorComponent", () => {
+describe("Test SignatureStatusComponent", () => {
   beforeEach(() => {
     jest.useFakeTimers();
   });

@@ -90,11 +90,12 @@ const SignatureStatusComponent = ({
     label: I18n.t("features.fci.errors.buttons.assistance")
   };
 
-  type OperationResultButtons = Required<
-    Pick<OperationResultScreenContentProps, "action" | "secondaryAction">
+  type OperationResultButtons = Pick<
+    OperationResultScreenContentProps,
+    "action" | "secondaryAction"
   >;
 
-  const operationResultActions = (): OperationResultButtons | undefined => {
+  const operationResultActions = (): OperationResultButtons => {
     if (retry && assistance) {
       return {
         action: retryButtonProps,
@@ -116,7 +117,9 @@ const SignatureStatusComponent = ({
         secondaryAction: assistanceButtonProps
       };
     }
-    return undefined;
+    return {
+      action: closeButtonProps
+    };
   };
 
   /* This is a result of a quick refactor. If there's an additional email address,
@@ -156,7 +159,7 @@ const SignatureStatusComponent = ({
       subtitle={operationResultComposedBody}
       pictogram={pictogram}
       testID={testID}
-      {...operationResultActions}
+      {...operationResultActions()}
     />
   );
 };
