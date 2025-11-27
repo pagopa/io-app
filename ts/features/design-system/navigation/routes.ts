@@ -172,10 +172,6 @@ const DESIGN_SYSTEM_ROUTES = {
     BUTTONS: {
       route: "DESIGN_SYSTEM_LEGACY_BUTTONS",
       title: "Buttons"
-    },
-    ADVICE: {
-      route: "DESIGN_SYSTEM_LEGACY_ADVICE",
-      title: "Advice & Banners"
     }
   } as const
 } as const;

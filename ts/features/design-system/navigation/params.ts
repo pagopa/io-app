@@ -64,5 +64,4 @@ export type DesignSystemParamsList = {
   [DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ITW_BRAND_EXPLORATION
     .route]: undefined;
   [DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.route]: undefined;
-  [DESIGN_SYSTEM_ROUTES.LEGACY.ADVICE.route]: undefined;
 };
