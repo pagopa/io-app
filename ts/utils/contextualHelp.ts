@@ -1,30 +1,29 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
-import { ScreenCHData } from "../../../../definitions/content/ScreenCHData";
-import { ContextualHelpData } from "../../../features/zendesk/screens/ZendeskSupportHelpCenter";
-import { handleItemOnPress } from "../../../utils/url";
-import {
-  deriveCustomHandledLink,
-  isIoInternalLink
-} from "../../ui/Markdown/handlers/link";
-import { ContextualHelpProps, ContextualHelpPropsMarkdown } from "./index";
+import { ScreenCHData } from "../../definitions/content/ScreenCHData";
+import { TranslationKeys } from "../../locales/locales";
+import { ContextualHelpData } from "../features/zendesk/screens/ZendeskSupportHelpCenter";
 
-export const handleOnLinkClicked = (hideHelp: () => void) => (url: string) => {
-  // manage links with IO_INTERNAL_LINK_PREFIX as prefix
-  if (isIoInternalLink(url)) {
-    hideHelp();
-    return;
-  }
+export type ContextualHelpProps = {
+  title: string;
+  body: string;
+};
 
-  // manage links with IO_CUSTOM_HANDLED_PRESS_PREFIX as prefix
-  const customHandledLink = deriveCustomHandledLink(url);
-  pipe(
-    customHandledLink,
-    E.map(link => handleItemOnPress(link.url)())
-  );
+export type ContextualHelpPropsMarkdown = {
+  title: TranslationKeys;
+  body: TranslationKeys;
+};
+
+/**
+ * Create the object needed to ensure that the Contextual Help question mark is visible
+ * when the Contextual Help is filled remotely.
+ *
+ */
+export const emptyContextualHelp: ContextualHelpProps = {
+  title: "",
+  body: ""
 };
 
 /**
