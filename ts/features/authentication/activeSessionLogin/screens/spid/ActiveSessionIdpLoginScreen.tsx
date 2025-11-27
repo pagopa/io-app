@@ -18,7 +18,6 @@ import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
 } from "../../../../../hooks/useHeaderSecondLevel";
-// import { mixpanelTrack } from "../../../../../mixpanel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
@@ -33,12 +32,8 @@ import {
 import { getUrlBasepath } from "../../../../../utils/url";
 import { useLollipopLoginSource } from "../../../../lollipop/hooks/useLollipopLoginSource";
 import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
-import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import {
-  // loginFailure,
-  idpLoginUrlChanged
-} from "../../../common/store/actions";
+import { idpLoginUrlChanged } from "../../../common/store/actions";
 import {
   getIdpLoginUri,
   getIntentFallbackUrl,
@@ -59,6 +54,8 @@ import {
 import { ErrorType as SpidLoginErrorType } from "../../../login/idp/store/types";
 import useActiveSessionLoginNavigation from "../../utils/useActiveSessionLoginNavigation";
 import { ACS_PATH } from "../../shared/utils";
+import { trackSpidLoginIntent } from "../analytics";
+import { trackLoginFailure } from "../../../common/analytics";
 
 // TODO: consider changing the loader to unify it and use the same one for both CIE and SPID
 
@@ -75,10 +72,6 @@ const styles = StyleSheet.create({
   },
   webViewWrapper: { flex: 1 }
 });
-
-// The MP events related to this page have been commented on,
-// pending their correct integration into the flow.
-// Task: https://pagopa.atlassian.net/browse/IOPID-3343
 
 /**
  * A screen that allows the user to login with an IDP.
@@ -173,16 +166,13 @@ const ActiveSessionIdpLoginScreen = () => {
       if (code !== AUTH_ERRORS.ERROR_1004) {
         dispatch(activeSessionLoginFailure());
       }
-      // else {
-      //   dispatch(
-      //     loginFailure({
-      //       error: new Error(
-      //         `login failure with code ${code || message || "n/a"}`
-      //       ),
-      //       idp
-      //     })
-      //   );
-      // }
+      trackLoginFailure({
+        reason: new Error(
+          `login failure with code ${code || message || "n/a"}`
+        ),
+        idp,
+        flow: "reauth"
+      });
 
       const logText = pipe(
         O.fromNullable(code || message),
@@ -203,7 +193,7 @@ const ActiveSessionIdpLoginScreen = () => {
       setRequestState(pot.noneError(SpidLoginErrorType.LOGIN_ERROR));
       setErrorCodeOrMessage(code || message);
     },
-    [dispatch, choosenTool, setRequestState]
+    [choosenTool, dispatch, idp]
   );
 
   const handleLoginSuccess = useCallback(
@@ -250,9 +240,7 @@ const ActiveSessionIdpLoginScreen = () => {
       // if an intent is coming from the IDP login form, extract the fallbackUrl and use it in Linking.openURL
       const idpIntent = getIntentFallbackUrl(url);
       if (O.isSome(idpIntent)) {
-        // void mixpanelTrack("SPID_LOGIN_INTENT", {
-        //   idp: selectedIdp
-        // });
+        void trackSpidLoginIntent(selectedIdp, "reauth");
         void Linking.openURL(idpIntent.value);
         return false;
       }
@@ -264,7 +252,8 @@ const ActiveSessionIdpLoginScreen = () => {
       const isLoginUrlWithToken = onLoginUriChanged(
         handleLoginFailure,
         handleLoginSuccess,
-        idp
+        idp,
+        "reauth"
       )(event);
       // URL can be loaded if it's not the login URL containing the session token - this avoids
       // making a (useless) GET request with the session in the URL
@@ -274,8 +263,8 @@ const ActiveSessionIdpLoginScreen = () => {
       shouldBlockUrlNavigationWhileCheckingLollipop,
       handleLoginFailure,
       handleLoginSuccess,
-      idp
-      // selectedIdp
+      idp,
+      selectedIdp
     ]
   );
 
@@ -373,9 +362,10 @@ const ActiveSessionIdpLoginScreen = () => {
     ]
   );
 
-  if (activeSessionUserLogged) {
-    return <IdpSuccessfulAuthentication />;
-  }
+  // TODO: evaluate if use this screen in this task https://pagopa.atlassian.net/browse/IOPID-3574
+  // if (activeSessionUserLogged) {
+  //   return <IdpSuccessfulAuthentication />;
+  // }
 
   // This condition will be true if the navigation occurs
   // before the redux state is updated successfully OR if

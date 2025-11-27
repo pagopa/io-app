@@ -14,11 +14,12 @@ import {
   setLoggedOutUserWithDifferentCF,
   setStartActiveSessionLogin,
   setActiveSessionLoginBlockingScreenHasBeenVisualized,
-  setRefreshMessagesSection
+  setCieIDSelectedSecurityLevelActiveSessionLogin
 } from "../actions";
 import { SpidIdp } from "../../../../../utils/idps";
 import { SessionToken } from "../../../../../types/SessionToken";
 import { StandardLoginRequestInfo } from "../../../login/idp/store/types";
+import { SpidLevel } from "../../../login/cie/utils";
 import { isTestEnv } from "../../../../../utils/environment";
 import {
   sessionCorrupted,
@@ -35,12 +36,12 @@ export type ActiveSessionLoginState = {
     token?: SessionToken;
     fastLoginOptIn?: boolean;
     spidLoginInfo?: StandardLoginRequestInfo;
+    cieIDSelectedSecurityLevel?: SpidLevel;
   };
   engagement: {
     hasBlockingScreenBeenVisualized: boolean;
     showSessionExpirationBanner: boolean;
   };
-  refreshMessagesSection: boolean;
 };
 
 export const activeSessionLoginInitialState: ActiveSessionLoginState = {
@@ -50,8 +51,7 @@ export const activeSessionLoginInitialState: ActiveSessionLoginState = {
   engagement: {
     hasBlockingScreenBeenVisualized: false,
     showSessionExpirationBanner: true
-  },
-  refreshMessagesSection: true
+  }
 };
 
 const activeSessionLoginReducer = (
@@ -103,6 +103,14 @@ const activeSessionLoginReducer = (
           fastLoginOptIn: action.payload
         }
       };
+    case getType(setCieIDSelectedSecurityLevelActiveSessionLogin):
+      return {
+        ...state,
+        loginInfo: {
+          ...state.loginInfo,
+          cieIDSelectedSecurityLevel: action.payload
+        }
+      };
     case getType(activeSessionLoginSuccess):
       return {
         ...state,
@@ -118,19 +126,12 @@ const activeSessionLoginReducer = (
         isUserLoggedIn: false
       };
 
-    case getType(setRefreshMessagesSection):
-      return {
-        ...state,
-        refreshMessagesSection: action.payload
-      };
-
     case getType(setFinishedActiveSessionLoginFlow):
       return {
         isActiveSessionLogin: false,
         isUserLoggedIn: false,
         activeSessionLoginLocalFlag: state.activeSessionLoginLocalFlag,
-        engagement: { ...state.engagement },
-        refreshMessagesSection: state.refreshMessagesSection
+        engagement: { ...state.engagement }
       };
     case getType(consolidateActiveSessionLoginData):
     case getType(setLoggedOutUserWithDifferentCF):
