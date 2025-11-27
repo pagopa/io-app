@@ -18,6 +18,7 @@ import {
   loadThirdPartyMessage,
   reloadAllMessages,
   removeCachedAttachment,
+  setMessageSagasRegisteredAction,
   startPaymentStatusTracking,
   upsertMessageStatusAttributes
 } from "../store/actions";
@@ -104,6 +105,9 @@ export function* watchMessagesSaga(): SagaIterator {
 
   // handle message details data loading composition
   yield* takeLatest(getMessageDataAction.request, handleLoadMessageData);
+
+  // Signal that message's sagas are ready
+  yield* put(setMessageSagasRegisteredAction());
 
   const retryDataOrUndefined = yield* select(
     retryDataAfterFastLoginSessionExpirationSelector
