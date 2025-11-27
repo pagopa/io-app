@@ -37,8 +37,8 @@ import {
   trackFciStartSignature
 } from "../../analytics";
 import DocumentWithSignature from "../../components/DocumentWithSignature";
-import GenericErrorComponent from "../../components/GenericErrorComponent";
 import SignatureFieldItem from "../../components/SignatureFieldItem";
+import SignatureStatusComponent from "../../components/SignatureStatusComponent";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import { useFciSignatureFieldInfo } from "../../hooks/useFciSignatureFieldInfo";
 import { FCI_ROUTES } from "../../navigation/routes";
@@ -275,9 +275,10 @@ const FciSignatureFieldsScreen = () => {
 
   if (isError) {
     return (
-      <GenericErrorComponent
+      <SignatureStatusComponent
         title={I18n.t("features.fci.errors.generic.default.title")}
         subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
+        pictogram={"umbrella"}
         onPress={() => dispatch(fciEndRequest())}
         testID={"FciGenericErrorTestID"}
       />

@@ -1,14 +1,13 @@
+import { constNull } from "fp-ts/lib/function";
 import "react-native";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-import { constNull } from "fp-ts/lib/function";
-import ErrorComponent from "../ErrorComponent";
-import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { FCI_ROUTES } from "../../navigation/routes";
-import { Props } from "../../../fci/components/ErrorComponent";
+import SignatureStatusComponent, { Props } from "../SignatureStatusComponent";
 
 const fakeTestID = "fakeTestID";
 
@@ -16,7 +15,7 @@ describe("Test ErrorComponent", () => {
   beforeEach(() => {
     jest.useFakeTimers();
   });
-  it("with all props should render an ErrorComponent correctly", () => {
+  it("with all props should render an SignatureStatusComponent correctly", () => {
     const props: Props = {
       title: "title",
       subTitle: "subTitle",
@@ -26,7 +25,7 @@ describe("Test ErrorComponent", () => {
     const component = renderComponent({ ...props });
     expect(component.queryByTestId(fakeTestID)).toBeTruthy();
   });
-  it("with all props should render a ErrorComponent with right title and subtitle label", () => {
+  it("with all props should render a SignatureStatusComponent with right title and subtitle label", () => {
     const props: Props = {
       title: "title",
       subTitle: "subTitle",
@@ -99,7 +98,11 @@ const renderComponent = (props: Props) => {
 
   const Component = (
     <Provider store={store}>
-      <ErrorComponent {...props} testID={fakeTestID} onPress={constNull} />
+      <SignatureStatusComponent
+        {...props}
+        testID={fakeTestID}
+        onPress={constNull}
+      />
     </Provider>
   );
 

@@ -1,13 +1,13 @@
 import { FooterActions, Pictogram } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { View } from "react-native";
 import I18n from "i18next";
+import { View } from "react-native";
 import { TypeEnum as ClauseTypeEnum } from "../../../../../definitions/fci/Clause";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { trackFciUxSuccess } from "../../analytics";
-import GenericErrorComponent from "../../components/GenericErrorComponent";
 import { InfoScreenComponent } from "../../components/InfoScreenComponent";
 import LoadingComponent from "../../components/LoadingComponent";
+import SignatureStatusComponent from "../../components/SignatureStatusComponent";
 import { fciEndRequest, fciStartRequest } from "../../store/actions";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
@@ -25,10 +25,11 @@ const FciThankyouScreen = () => {
   );
 
   const ErrorComponent = () => (
-    <GenericErrorComponent
+    <SignatureStatusComponent
       title={I18n.t("features.fci.errors.generic.signing.title")}
       subTitle={I18n.t("features.fci.errors.generic.signing.subTitle")}
       onPress={() => dispatch(fciStartRequest())}
+      pictogram={"umbrella"}
       retry={true}
       assistance={true}
       testID="FciTypErrorScreenTestID"
