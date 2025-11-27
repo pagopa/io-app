@@ -6,8 +6,7 @@ import { SignatureRequestStatusEnum } from "../../../../definitions/fci/Signatur
 import { trackFciDocOpening } from "../analytics";
 import { fciSignatureDetailDocumentsSelector } from "../store/reducers/fciSignatureRequest";
 import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
-import ErrorComponent from "./ErrorComponent";
-import GenericErrorComponent from "./GenericErrorComponent";
+import SignatureStatusComponent from "./SignatureStatusComponent";
 
 /**
  * A component to render the cases of success for a signature request
@@ -31,7 +30,7 @@ const SuccessComponent = (props: {
     expires_at < now
   ) {
     return (
-      <ErrorComponent
+      <SignatureStatusComponent
         title={I18n.t("features.fci.errors.expired.title")}
         subTitle={I18n.t("features.fci.errors.expired.subTitle")}
         onPress={() => dispatch(fciEndRequest())}
@@ -50,7 +49,7 @@ const SuccessComponent = (props: {
       return null;
     case SignatureRequestStatusEnum.WAIT_FOR_QTSP:
       return (
-        <ErrorComponent
+        <SignatureStatusComponent
           title={I18n.t("features.fci.errors.waitForQtsp.title")}
           subTitle={I18n.t("features.fci.errors.waitForQtsp.subTitle")}
           onPress={() => dispatch(fciEndRequest())}
@@ -60,7 +59,7 @@ const SuccessComponent = (props: {
       );
     case SignatureRequestStatusEnum.SIGNED:
       return (
-        <ErrorComponent
+        <SignatureStatusComponent
           title={I18n.t("features.fci.errors.signed.title")}
           subTitle={I18n.t("features.fci.errors.signed.subTitle")}
           onPress={() => dispatch(fciEndRequest())}
@@ -70,17 +69,18 @@ const SuccessComponent = (props: {
       );
     case SignatureRequestStatusEnum.REJECTED:
       return (
-        <GenericErrorComponent
+        <SignatureStatusComponent
           title={I18n.t("features.fci.errors.generic.rejected.title")}
           subTitle={I18n.t("features.fci.errors.generic.rejected.subTitle")}
           email={issuer_email}
           onPress={() => dispatch(fciEndRequest())}
+          pictogram={"umbrella"}
           testID="RejectedSignatureRequestTestID"
         />
       );
     case SignatureRequestStatusEnum.CANCELLED:
       return (
-        <ErrorComponent
+        <SignatureStatusComponent
           title={I18n.t("features.fci.errors.generic.cancelled.title")}
           subTitle={I18n.t("features.fci.errors.generic.cancelled.subTitle")}
           email={issuer_email}
@@ -91,9 +91,10 @@ const SuccessComponent = (props: {
       );
     default:
       return (
-        <GenericErrorComponent
+        <SignatureStatusComponent
           title={I18n.t("features.fci.errors.generic.default.title")}
           subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
+          pictogram={"umbrella"}
           onPress={() => dispatch(fciEndRequest())}
         />
       );

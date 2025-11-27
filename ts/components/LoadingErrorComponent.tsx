@@ -1,16 +1,14 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 
 import { createRef, FunctionComponent, useEffect } from "react";
-import { ActivityIndicator, SafeAreaView, View } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { WithTestID } from "../types/WithTestID";
 import { setAccessibilityFocus } from "../utils/accessibility";
-import { InfoScreenComponent } from "./infoScreen/InfoScreenComponent";
 import GenericErrorComponent from "./screens/GenericErrorComponent";
+import { LoadingIndicator } from "./ui/LoadingIndicator";
 
 export type LoadingErrorProps = WithTestID<{
   isLoading: boolean;
-  loadingCaption: string;
-  loadingSubtitle?: string;
   errorText?: string;
   errorSubText?: string;
   onRetry: () => void;
@@ -31,25 +29,14 @@ const renderError = (props: LoadingErrorProps) => (
   />
 );
 
-const renderLoading = (loadingCaption: string, loadingSubtitle?: string) => (
+const renderLoading = () => (
   <View
     accessible={true}
     ref={loadingRef}
-    style={{ flex: 1 }}
+    style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
     testID={"LoadingErrorComponentLoading"}
   >
-    <InfoScreenComponent
-      image={
-        <ActivityIndicator
-          color={"black"}
-          accessible={false}
-          importantForAccessibility={"no-hide-descendants"}
-          accessibilityElementsHidden={true}
-        />
-      }
-      title={loadingCaption}
-      body={loadingSubtitle}
-    />
+    <LoadingIndicator />
   </View>
 );
 
@@ -75,7 +62,7 @@ export const LoadingErrorComponent: FunctionComponent<
 
   return props.isLoading ? (
     <SafeAreaView style={{ flex: 1 }} testID={props.testID}>
-      {renderLoading(props.loadingCaption, props.loadingSubtitle)}
+      {renderLoading()}
     </SafeAreaView>
   ) : (
     <View style={{ flex: 1 }} testID={props.testID}>
