@@ -1,6 +1,7 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 import { SpidIdp } from "../../../../../utils/idps";
 import { SessionToken } from "../../../../../types/SessionToken";
+import { SpidLevel } from "../../../login/cie/utils";
 
 export const setActiveSessionLoginLocalFlag = createStandardAction(
   "SET_ACTIVE_SESSION_LOGIN_LOCAL_FLAG"
@@ -39,6 +40,7 @@ export const consolidateActiveSessionLoginData = createStandardAction(
   token: SessionToken;
   idp: SpidIdp;
   fastLoginOptIn: boolean;
+  cieIDSelectedSecurityLevel?: SpidLevel;
 }>();
 
 export const setFinishedActiveSessionLoginFlow = createStandardAction(
@@ -48,6 +50,11 @@ export const setFinishedActiveSessionLoginFlow = createStandardAction(
 export const setLoggedOutUserWithDifferentCF = createStandardAction(
   "SET_LOGGED_OUT_USER_WITH_DIFFERENT_CF"
 )();
+
+export const setCieIDSelectedSecurityLevelActiveSessionLogin =
+  createStandardAction(
+    "SET_CIE_ID_SELECTED_SECURITY_LEVEL_ACTIVE_SESSION_LOGIN"
+  )<SpidLevel>();
 
 export const closeSessionExpirationBanner = createStandardAction(
   "CLOSE_SESSION_EXPIRATION_BANNER"
@@ -65,4 +72,5 @@ export type LoginInfoActions =
   | ActionType<typeof setFastLoginOptSessionLogin>
   | ActionType<typeof setFinishedActiveSessionLoginFlow>
   | ActionType<typeof setLoggedOutUserWithDifferentCF>
+  | ActionType<typeof setCieIDSelectedSecurityLevelActiveSessionLogin>
   | ActionType<typeof closeSessionExpirationBanner>;

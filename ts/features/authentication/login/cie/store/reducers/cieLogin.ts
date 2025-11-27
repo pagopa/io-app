@@ -17,6 +17,7 @@ import {
 import { Action } from "../../../../../../store/actions/types";
 import { isDevEnv } from "../../../../../../utils/environment";
 import { SpidLevel } from "../../utils";
+import { consolidateActiveSessionLoginData } from "../../../../activeSessionLogin/store/actions";
 
 export type CieLoginState = {
   useUat: boolean;
@@ -53,6 +54,11 @@ const cieLoginReducer = (
       return {
         ...state,
         cieIDSelectedSecurityLevel: action.payload
+      };
+    case getType(consolidateActiveSessionLoginData):
+      return {
+        ...state,
+        cieIDSelectedSecurityLevel: action.payload.cieIDSelectedSecurityLevel
       };
     default:
       return state;

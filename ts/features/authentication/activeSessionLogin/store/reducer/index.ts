@@ -13,11 +13,13 @@ import {
   setIdpSelectedActiveSessionLogin,
   setLoggedOutUserWithDifferentCF,
   setStartActiveSessionLogin,
-  setActiveSessionLoginBlockingScreenHasBeenVisualized
+  setActiveSessionLoginBlockingScreenHasBeenVisualized,
+  setCieIDSelectedSecurityLevelActiveSessionLogin
 } from "../actions";
 import { SpidIdp } from "../../../../../utils/idps";
 import { SessionToken } from "../../../../../types/SessionToken";
 import { StandardLoginRequestInfo } from "../../../login/idp/store/types";
+import { SpidLevel } from "../../../login/cie/utils";
 import { isTestEnv } from "../../../../../utils/environment";
 import {
   sessionCorrupted,
@@ -34,6 +36,7 @@ export type ActiveSessionLoginState = {
     token?: SessionToken;
     fastLoginOptIn?: boolean;
     spidLoginInfo?: StandardLoginRequestInfo;
+    cieIDSelectedSecurityLevel?: SpidLevel;
   };
   engagement: {
     hasBlockingScreenBeenVisualized: boolean;
@@ -98,6 +101,14 @@ const activeSessionLoginReducer = (
         loginInfo: {
           ...state.loginInfo,
           fastLoginOptIn: action.payload
+        }
+      };
+    case getType(setCieIDSelectedSecurityLevelActiveSessionLogin):
+      return {
+        ...state,
+        loginInfo: {
+          ...state.loginInfo,
+          cieIDSelectedSecurityLevel: action.payload
         }
       };
     case getType(activeSessionLoginSuccess):

@@ -11,9 +11,11 @@ import {
 import {
   isActiveSessionFastLoginEnabledSelector,
   idpSelectedActiveSessionLoginSelector,
-  newTokenActiveSessionLoginSelector
+  newTokenActiveSessionLoginSelector,
+  cieIDSelectedSecurityLevelActiveSessionLoginSelector
 } from "../store/selectors";
 import { startApplicationInitialization } from "../../../../store/actions/application";
+import { analyticsAuthenticationStarted } from "../../../../store/actions/analytics";
 import {
   handleActiveSessionLoginSaga,
   watchActiveSessionLoginSaga
@@ -43,13 +45,15 @@ describe("handleActiveSessionLoginSaga", () => {
         ],
         [select(newTokenActiveSessionLoginSelector), mockToken],
         [select(idpSelectedActiveSessionLoginSelector), mockIdp],
-        [select(isActiveSessionFastLoginEnabledSelector), mockOptIn]
+        [select(isActiveSessionFastLoginEnabledSelector), mockOptIn],
+        [select(cieIDSelectedSecurityLevelActiveSessionLoginSelector), "SpidL2"]
       ])
       .put(
         consolidateActiveSessionLoginData({
           token: mockToken,
           idp: mockIdp,
-          fastLoginOptIn: mockOptIn
+          fastLoginOptIn: mockOptIn,
+          cieIDSelectedSecurityLevel: "SpidL2"
         })
       )
       .put(
@@ -61,7 +65,7 @@ describe("handleActiveSessionLoginSaga", () => {
       )
       .run());
 
-  it("should handle login failure and not dispatch anything", () =>
+  it("should handle login failure and dispatch only analytics action", () =>
     expectSaga(handleActiveSessionLoginSaga)
       .provide([
         [fork(watchCieAuthenticationSaga), null],
@@ -71,12 +75,17 @@ describe("handleActiveSessionLoginSaga", () => {
             failure: take(activeSessionLoginFailure)
           }),
           { failure: activeSessionLoginFailure() }
+        ],
+        [select(newTokenActiveSessionLoginSelector), undefined],
+        [select(idpSelectedActiveSessionLoginSelector), undefined],
+        [select(isActiveSessionFastLoginEnabledSelector), undefined],
+        [
+          select(cieIDSelectedSecurityLevelActiveSessionLoginSelector),
+          undefined
         ]
       ])
-      .run()
-      .then(result => {
-        expect(result.effects.put).toBeUndefined();
-      }));
+      .put(analyticsAuthenticationStarted("reauth"))
+      .run());
 });
 
 describe("watchActiveSessionLoginSaga", () => {

@@ -69,6 +69,7 @@ const IdpSelectionScreen = (): ReactElement => {
     isNativeLoginEnabledSelector
   );
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
+  const flow = isActiveSessionLogin ? "reauth" : "auth";
   const { error } = useIOToast();
   const { name: routeName } = useRoute();
 
@@ -116,9 +117,10 @@ const IdpSelectionScreen = (): ReactElement => {
     isNativeLoginFeatureFlagEnabled;
 
   const onIdpSelected = (idp: SpidIdp) => {
+    handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
+    void trackLoginSpidIdpSelected(idp.id, store.getState(), flow);
     if (isActiveSessionLogin) {
       dispatch(setIdpSelectedActiveSessionLogin(idp));
-      handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
       if (isNativeLoginEnabled()) {
         navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
           screen: AUTHENTICATION_ROUTES.AUTH_SESSION
@@ -130,8 +132,6 @@ const IdpSelectionScreen = (): ReactElement => {
       }
     } else {
       setSelectedIdp(idp);
-      handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
-      void trackLoginSpidIdpSelected(idp.id, store.getState());
       if (isNativeLoginEnabled()) {
         navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
           screen: AUTHENTICATION_ROUTES.AUTH_SESSION
@@ -145,7 +145,7 @@ const IdpSelectionScreen = (): ReactElement => {
   };
 
   useOnFirstRender(() => {
-    trackSpidLoginIdpSelection();
+    trackSpidLoginIdpSelection(flow);
   });
 
   useEffect(() => {
