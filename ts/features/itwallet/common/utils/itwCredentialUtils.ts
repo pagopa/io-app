@@ -23,7 +23,7 @@ export const newCredentials = [
   CredentialType.EDUCATION_ENROLLMENT,
   CredentialType.RESIDENCY,
   CredentialType.EDUCATION_DIPLOMA,
-  CredentialType.SCHOOL_ENROLLMENT
+  CredentialType.EDUCATION_ATTENDANCE
 ] as const;
 
 export type NewCredential = (typeof newCredentials)[number];
@@ -64,8 +64,8 @@ export const itwGetCredentialNameByCredentialType = (
   [CredentialType.EDUCATION_DIPLOMA]: I18n.t(
     "features.itWallet.credentialName.edip"
   ),
-  [CredentialType.SCHOOL_ENROLLMENT]: I18n.t(
-    "features.itWallet.credentialName.se"
+  [CredentialType.EDUCATION_ATTENDANCE]: I18n.t(
+    "features.itWallet.credentialName.edat"
   )
 });
 

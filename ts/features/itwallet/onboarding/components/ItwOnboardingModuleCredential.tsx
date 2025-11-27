@@ -24,7 +24,7 @@ const credentialIconByType: Record<string, IOIcons> = {
   [CredentialType.EDUCATION_ENROLLMENT]: "messageLegal",
   [CredentialType.RESIDENCY]: "messageLegal",
   [CredentialType.EDUCATION_DIPLOMA]: "messageLegal",
-  [CredentialType.SCHOOL_ENROLLMENT]: "messageLegal"
+  [CredentialType.EDUCATION_ATTENDANCE]: "messageLegal"
 };
 
 const activeBadge: Badge = {

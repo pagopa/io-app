@@ -69,7 +69,7 @@ type SuperProperties = {
   ITW_TS_V3: ItwCredentialMixpanelStatus;
   ITW_CED_V3: ItwCredentialMixpanelStatus;
   ITW_EDIP?: ItwCredentialMixpanelStatus;
-  ITW_SE?: ItwCredentialMixpanelStatus;
+  ITW_EDAT?: ItwCredentialMixpanelStatus;
   SAVED_PAYMENT_METHOD?: number;
   CGN_STATUS: TrackCgnStatus;
   CDC_STATUS: number;
@@ -151,8 +151,8 @@ export const updateMixpanelSuperProperties = async (
           CredentialType.EDUCATION_DIPLOMA,
           state
         ),
-        ITW_SE: getMixpanelCredentialStatus(
-          CredentialType.SCHOOL_ENROLLMENT,
+        ITW_EDAT: getMixpanelCredentialStatus(
+          CredentialType.EDUCATION_ATTENDANCE,
           state
         )
       }),

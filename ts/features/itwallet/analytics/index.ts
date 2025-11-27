@@ -72,7 +72,7 @@ export const mixPanelCredentials = [
   "ITW_EE",
   "ITW_RES",
   "ITW_EDIP",
-  "ITW_SE",
+  "ITW_EDAT",
   "UNKNOWN"
 ] as const;
 
@@ -122,7 +122,7 @@ export const CREDENTIALS_MAP: Record<
   education_enrollment: "ITW_EE",
   residency: "ITW_RES",
   education_diploma: "ITW_EDIP",
-  school_enrollment: "ITW_SE"
+  education_attendance: "ITW_EDAT"
 };
 
 type BackToWallet = {
