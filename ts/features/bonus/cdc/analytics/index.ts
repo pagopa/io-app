@@ -12,3 +12,6 @@ export const trackCdcRequestIntroContinue = () =>
 
 export const trackCdcGoToService = () =>
   mixpanelTrack("CDC_GO_TO_SERVICE", buildEventProperties("UX", "action"));
+
+export const trackCdcCardError = () =>
+  mixpanelTrack("CDC_CARD_ERROR", buildEventProperties("KO", "error"));
