@@ -167,13 +167,7 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "DS_ITW_BRAND_EXPLORATION",
       title: "ITWallet brand exploration"
     }
-  },
-  LEGACY: {
-    BUTTONS: {
-      route: "DESIGN_SYSTEM_LEGACY_BUTTONS",
-      title: "Buttons"
-    }
-  } as const
+  }
 } as const;
 
 export default DESIGN_SYSTEM_ROUTES;

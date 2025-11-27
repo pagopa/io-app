@@ -63,5 +63,4 @@ export type DesignSystemParamsList = {
   [DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.IRIDESCENT_TRUSTMARK.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.EXPERIMENTAL_LAB.ITW_BRAND_EXPLORATION
     .route]: undefined;
-  [DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.route]: undefined;
 };
