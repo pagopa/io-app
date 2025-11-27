@@ -53,15 +53,15 @@ export const useItwRemoveCredentialWithConfirm = (
       ),
       [
         {
+          text: I18n.t("global.buttons.cancel"),
+          style: "cancel"
+        },
+        {
           text: I18n.t(
             "features.itWallet.presentation.credentialDetails.dialogs.remove.confirm"
           ),
           style: "destructive",
           onPress: handleRemoveCredential
-        },
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
         }
       ]
     );

@@ -4,7 +4,7 @@ import I18n from "i18next";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { DocumentViewer } from "../../components/DocumentViewer";
 import GenericErrorComponent from "../../components/GenericErrorComponent";
 import { FciParamsList } from "../../navigation/params";

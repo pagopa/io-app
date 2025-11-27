@@ -21,6 +21,7 @@ import {
   loginSuccess,
   logoutFailure,
   logoutSuccess,
+  sessionCorrupted,
   sessionExpired,
   sessionInformationLoadFailure,
   sessionInformationLoadSuccess,
@@ -47,6 +48,8 @@ import { trackServicesAction } from "../../features/services/common/analytics";
 import { trackMessagesActionsPostDispatch } from "../../features/messages/analytics";
 import { trackIdentificationAction } from "../../features/identification/analytics";
 import { trackOfflineAccessReason } from "../../features/itwallet/analytics";
+import { trackLoginFailure } from "../../features/authentication/common/analytics";
+import { trackSessionCorrupted } from "../../features/authentication/activeSessionLogin/analytics";
 import { trackContentAction } from "./contentAnalytics";
 
 const trackAction =
@@ -85,7 +88,10 @@ const trackAction =
         });
       // Failures with reason as Error and optional description
       case getType(cieAuthenticationError):
-        return mixpanelTrack(action.type, action.payload);
+        return mixpanelTrack(
+          action.type,
+          buildEventProperties("KO", undefined, action.payload)
+        );
       // Failures with reason as Error
       case getType(sessionInformationLoadFailure):
       case getType(profileLoadFailure):
@@ -109,10 +115,12 @@ const trackAction =
       //
       // authentication
       case getType(loginFailure):
-        return mixpanelTrack(action.type, {
+        return trackLoginFailure({
           idp: action.payload.idp,
-          reason: action.payload.error.message
+          reason: action.payload.error,
+          flow: "auth"
         });
+
       case getType(loginSuccess):
         return mixpanelTrack(action.type, {
           idp: action.payload.idp
@@ -124,6 +132,14 @@ const trackAction =
         );
       case getType(analyticsAuthenticationStarted):
       case getType(analyticsAuthenticationCompleted):
+        return mixpanelTrack(
+          action.type,
+          buildEventProperties("TECH", undefined, {
+            flow: action.payload
+          })
+        );
+      case getType(sessionCorrupted):
+        return trackSessionCorrupted();
       case getType(sessionInformationLoadSuccess):
       case getType(sessionExpired):
       case getType(sessionInvalid):
