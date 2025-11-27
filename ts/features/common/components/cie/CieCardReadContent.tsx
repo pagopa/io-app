@@ -26,6 +26,7 @@ import Animated, {
 import { CircularProgress } from "../../../../components/ui/CircularProgress";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { isDevEnv } from "../../../../utils/environment";
+import { platformSelect } from "../../utils";
 
 const accessibityTimeout = 100 as Millisecond;
 
@@ -58,7 +59,7 @@ const Title = ({ title }: Pick<CieCardReadContentProps, "title">) => {
 
   return (
     <View accessible ref={titleRef}>
-      {Platform.select({
+      {platformSelect({
         ios: <H4>{title}</H4>,
         default: <H3 style={{ textAlign: "center" }}>{title}</H3>
       })}
@@ -73,7 +74,7 @@ const Subtitle = ({ subtitle }: Pick<CieCardReadContentProps, "subtitle">) => {
   if (subtitle === undefined) {
     return null;
   }
-  return Platform.select({
+  return platformSelect({
     ios: <Body color="grey-650">{subtitle}</Body>,
     default: (
       <Body color="grey-650" style={{ textAlign: "center" }}>
@@ -89,7 +90,7 @@ const Subtitle = ({ subtitle }: Pick<CieCardReadContentProps, "subtitle">) => {
 const Actions = (
   props: Pick<CieCardReadContentProps, "primaryAction" | "secondaryAction">
 ) =>
-  Platform.select({
+  platformSelect({
     ios: (
       <VStack space={16}>
         {props.primaryAction ? (
@@ -233,7 +234,7 @@ const ContentAndroid = (props: CieCardReadContentProps) => (
 /**
  * Renders the read progress screen content based on the platform
  */
-export const CieCardReadContent = Platform.select({
+export const CieCardReadContent = platformSelect({
   ios: ContentIos,
   default: ContentAndroid
 });
