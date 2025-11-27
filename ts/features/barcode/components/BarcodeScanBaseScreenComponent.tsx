@@ -176,14 +176,6 @@ const BarcodeScanBaseScreenComponent = ({
     }, [barcodeAnalyticsFlow])
   );
 
-  const canShowHelpButton = () => {
-    if (hideHelpButton || !canShowHelp) {
-      return false;
-    } else {
-      return contextualHelp || contextualHelpMarkdown;
-    }
-  };
-
   const {
     cameraPermissionStatus,
     requestCameraPermission,
@@ -261,6 +253,7 @@ const BarcodeScanBaseScreenComponent = ({
   };
 
   const shouldDisplayTorch = cameraPermissionStatus === "granted" && hasTorch;
+  const shouldDisplayHelp = !hideHelpButton && canShowHelp;
 
   const closeButton: HeaderActionProps = {
     icon: "closeLarge",
@@ -301,7 +294,7 @@ const BarcodeScanBaseScreenComponent = ({
 
       <HStack allowScaleSpacing space={16} style={{ flexShrink: 0 }}>
         {shouldDisplayTorch && <IconButton {...torchAction} color="contrast" />}
-        {canShowHelpButton() && <IconButton {...helpAction} color="contrast" />}
+        {shouldDisplayHelp && <IconButton {...helpAction} color="contrast" />}
       </HStack>
     </View>
   );
