@@ -11,32 +11,33 @@ import {
   select,
   take
 } from "typed-redux-saga/macro";
-import { ActionType } from "typesafe-actions";
+import { ActionType, isActionOf } from "typesafe-actions";
+import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
+import { backendClientManager } from "../../../api/BackendClientManager";
+import { apiUrlPrefix } from "../../../config";
+import { Action } from "../../../store/actions/types";
+import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPreferences";
+import { SagaCallReturnType } from "../../../types/utils";
+import { isTestEnv } from "../../../utils/environment";
+import { readablePrivacyReport } from "../../../utils/reporters";
+import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
+import {
+  UndefinedBearerTokenPhase,
+  trackMessagePaymentFailure,
+  trackUndefinedBearerToken
+} from "../analytics";
 import {
   cancelQueuedPaymentUpdates,
   updatePaymentForMessage
 } from "../store/actions";
-import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPreferences";
-import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
-import { SagaCallReturnType } from "../../../types/utils";
-import { readablePrivacyReport } from "../../../utils/reporters";
-import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
-import { isTestEnv } from "../../../utils/environment";
 import {
+  MessagePaymentError,
   isMessagePaymentGenericError,
   toGenericMessagePaymentError,
   toSpecificMessagePaymentError,
-  toTimeoutMessagePaymentError,
-  MessagePaymentError
+  toTimeoutMessagePaymentError
 } from "../types/paymentErrors";
-import {
-  trackMessagePaymentFailure,
-  trackUndefinedBearerToken,
-  UndefinedBearerTokenPhase
-} from "../analytics";
-import { sessionTokenSelector } from "../../authentication/common/store/selectors";
-import { apiUrlPrefix } from "../../../config";
-import { backendClientManager } from "../../../api/BackendClientManager";
 
 const PaymentUpdateWorkerCount = 5;
 
@@ -81,7 +82,12 @@ function* paymentUpdateRequestWorker(
           paymentStatusRequest,
           isPagoPATestEnabled
         ),
-        wasCancelled: take(cancelQueuedPaymentUpdates)
+        wasCancelled: take(
+          // only cancel the worker if the request is for its messageId
+          (actionParam: Action) =>
+            isActionOf(cancelQueuedPaymentUpdates, actionParam) &&
+            actionParam.payload.messageId === messageId
+        )
       });
     } catch (e) {
       const reason = yield* call(unknownErrorToPaymentError, e);

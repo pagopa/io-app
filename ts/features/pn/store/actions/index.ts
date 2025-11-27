@@ -20,6 +20,9 @@ type PNPaymentStatusTracking = {
   userType: SendUserType;
   messageId: string;
 };
+type CancelPnPaymentStatusTracking = {
+  messageId: string;
+};
 
 export const pnActivationUpsert = createAsyncAction(
   "PN_ACTIVATION_UPSERT_REQUEST",
@@ -30,9 +33,9 @@ export const pnActivationUpsert = createAsyncAction(
 export const startPNPaymentStatusTracking = createStandardAction(
   "PN_START_TRACKING_PAYMENT_STATUS"
 )<PNPaymentStatusTracking>();
-export const cancelPNPaymentStatusTracking = createAction(
+export const cancelPNPaymentStatusTracking = createStandardAction(
   "PN_CANCEL_PAYMENT_STATUS_TRACKING"
-);
+)<CancelPnPaymentStatusTracking>();
 export const dismissPnActivationReminderBanner = createAction(
   "DISMISS_PN_ACTIVATION_REMINDER_BANNER"
 );
