@@ -73,11 +73,6 @@ import {
 } from "../store/selectors";
 import { cieFlowForDevServerEnabled } from "../utils";
 
-// The MP events related to this page have been commented on
-// (or disabled for active session login),
-// pending their correct integration into the flow.
-// Task: https://pagopa.atlassian.net/browse/IOPID-3343
-
 const CIE_PIN_LENGTH = 8;
 
 const getContextualHelp = (): ContextualHelpPropsMarkdown => ({
@@ -98,11 +93,10 @@ const CiePinScreen = () => {
   const dispatch = useIODispatch();
 
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
+  const flow = isActiveSessionLogin ? "reauth" : "auth";
 
   useOnFirstRender(() => {
-    if (!isActiveSessionLogin) {
-      trackLoginCiePinScreen();
-    }
+    trackLoginCiePinScreen(flow);
   });
 
   const requestNfcEnabledCheck = useCallback(
@@ -257,9 +251,7 @@ const CiePinScreen = () => {
               asLink
               accessibilityRole="button"
               onPress={() => {
-                if (!isActiveSessionLogin) {
-                  trackLoginCiePinInfo();
-                }
+                trackLoginCiePinInfo(flow);
                 present();
               }}
             >
@@ -295,13 +287,11 @@ const CiePinScreen = () => {
                 accessibilityRole="link"
                 action={I18n.t("login.help_banner_action")}
                 onPress={() => {
-                  if (!isActiveSessionLogin) {
-                    trackHelpCenterCtaTapped(
-                      "LOGIN_CIE_PIN",
-                      helpCenterHowToLoginWithEicUrl,
-                      routeName
-                    );
-                  }
+                  trackHelpCenterCtaTapped(
+                    "LOGIN_CIE_PIN",
+                    helpCenterHowToLoginWithEicUrl,
+                    routeName
+                  );
                   openWebUrl(helpCenterHowToLoginWithEicUrl, () => {
                     error(I18n.t("global.jserror.title"));
                   });

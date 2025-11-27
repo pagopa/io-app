@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.21.0-rc.1](https://github.com/pagopa/io-app/compare/3.21.0-rc.0...3.21.0-rc.1) (2025-11-26)
+
+
+### Bug Fixes
+
+* [[IOBP-2271](https://pagopa.atlassian.net/browse/IOBP-2271)] Adjust `PAYMENT_NOTICE_SUMMARY` text visualization  ([#7641](https://github.com/pagopa/io-app/issues/7641)) ([d113964](https://github.com/pagopa/io-app/commit/d113964f5edabcb4cee87271ab3a86f54e5ba5d6))
+
+
+### Chores
+
+* [[IOPID-3343](https://pagopa.atlassian.net/browse/IOPID-3343)] add MP tracking on Active Session Login Flow ([#7638](https://github.com/pagopa/io-app/issues/7638)) ([a9a2afa](https://github.com/pagopa/io-app/commit/a9a2afa15b4e9cf6b34482bfb8f5f4cfd5882446)), closes [/github.com/pagopa/io-app/pull/5750/files#diff-89c251a9a9539e3470c6001c13917f0881272bfa692f61bdc4a6f191b0435fa3](https://github.com/pagopa//github.com/pagopa/io-app/pull/5750/files/issues/diff-89c251a9a9539e3470c6001c13917f0881272bfa692f61bdc4a6f191b0435fa3)
+* [[IOPLT-1439](https://pagopa.atlassian.net/browse/IOPLT-1439)] Remove `BaseScreenComponent` and move contextual help elsewhere ([#7642](https://github.com/pagopa/io-app/issues/7642)) ([e65b533](https://github.com/pagopa/io-app/commit/e65b533d541010e3129ad9fff840ad7b6c8f5f6e))
+
 ## [3.21.0-rc.0](https://github.com/pagopa/io-app/compare/3.20.0-rc.6...3.21.0-rc.0) (2025-11-25)
 
 

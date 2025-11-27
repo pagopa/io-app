@@ -33,6 +33,10 @@ import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel"
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import {
+  sessionCorrupted,
+  sessionExpired
+} from "../../../common/store/actions";
+import {
   useIODispatch,
   useIOSelector,
   useIOStore
@@ -54,7 +58,6 @@ import {
 } from "../../../common/analytics";
 import { Carousel } from "../../../common/components/Carousel";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { sessionExpired } from "../../../common/store/actions";
 
 import { startupLoadSuccess } from "../../../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../../../store/reducers/startup";
@@ -360,19 +363,13 @@ export const LandingScreen = () => {
               color: "primary",
               icon: "instruction",
               onPress: () => {
-                // TODO: this logic will need to be uncommented
-                // (and moved outside the if block, since it will become common logic)
-                // once the tracking strategy for active session login is implemented.
-                // For now, we only track the sessionExpired case because the tracking strategy
-                // is defined for it, while it's still missing for active session login.
-                // Related task: https://pagopa.atlassian.net/browse/IOPID-3343
-                if (isSessionExpired) {
-                  trackHelpCenterCtaTapped(
-                    sessionExpired.toString(),
-                    helpCenterHowToDoWhenSessionIsExpiredUrl,
-                    routeName
-                  );
-                }
+                trackHelpCenterCtaTapped(
+                  isSessionExpired
+                    ? sessionExpired.toString()
+                    : sessionCorrupted.toString(),
+                  helpCenterHowToDoWhenSessionIsExpiredUrl,
+                  routeName
+                );
                 openWebUrl(helpCenterHowToDoWhenSessionIsExpiredUrl, () => {
                   error(I18n.t("global.jserror.title"));
                 });
