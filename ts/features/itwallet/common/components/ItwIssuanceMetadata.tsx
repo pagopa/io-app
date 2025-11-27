@@ -15,6 +15,7 @@ import { getAuthSource, getItwAuthSource } from "../utils/itwMetadataUtils.ts";
 import { isItwCredential } from "../utils/itwCredentialUtils.ts";
 import { CredentialType } from "../utils/itwMocksUtils";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { itwCredentialByTypeSelector } from "../../credentialsCatalogue/store/selectors/index.ts";
 
 type ItwIssuanceMetadataProps = {
   credential: StoredCredential;
@@ -101,8 +102,16 @@ export const ItwIssuanceMetadata = ({
     credential.credentialType,
     isItwL3
   );
+
+  const credentialFromCatalogue = useIOSelector(state =>
+    itwCredentialByTypeSelector(
+      state,
+      credential.credentialType as CredentialType
+    )
+  );
+
   const authSource = itwCredential
-    ? getItwAuthSource(credential)
+    ? getItwAuthSource(credentialFromCatalogue)
     : getAuthSource(credential);
   const releasedByKey =
     itwCredential && credential.credentialType === CredentialType.PID
