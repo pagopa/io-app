@@ -11,6 +11,7 @@ import {
   loadThirdPartyMessage,
   reloadAllMessages,
   removeCachedAttachment,
+  setMessageSagasRegisteredAction,
   startPaymentStatusTracking,
   upsertMessageStatusAttributes
 } from "../../store/actions";
@@ -89,6 +90,8 @@ describe("watchMessagesSaga", () => {
       .next()
       .takeLatest(getMessageDataAction.request, handleLoadMessageData)
       .next()
+      .put(setMessageSagasRegisteredAction())
+      .next()
       .select(retryDataAfterFastLoginSessionExpirationSelector)
       .next(undefined) // Simulate no retry data
       .isDone();
@@ -148,6 +151,8 @@ describe("watchMessagesSaga", () => {
       )
       .next()
       .takeLatest(getMessageDataAction.request, handleLoadMessageData)
+      .next()
+      .put(setMessageSagasRegisteredAction())
       .next()
       .select(retryDataAfterFastLoginSessionExpirationSelector)
       .next(retryData) // Simulate retry data is present

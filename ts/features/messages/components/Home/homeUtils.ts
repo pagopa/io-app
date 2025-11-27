@@ -31,7 +31,7 @@ import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import NavigationService from "../../../../navigation/NavigationService";
 import { trackMessageListEndReached, trackMessagesPage } from "../../analytics";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
-import { shouldRefreshMessagesSectionSelector } from "../../../authentication/activeSessionLogin/store/selectors";
+import { areMessageSagasRegisteredSelector } from "../../store/reducers/messageSectionStatus";
 import {
   ListItemMessageEnhancedHeight,
   ListItemMessageStandardHeight
@@ -196,7 +196,7 @@ export const getReloadAllMessagesActionForRefreshIfAllowed = (
 
 const shouldBlockPreviousPageMessagesLoading = (state: GlobalState) =>
   isDoingAnAsyncOperationOnMessages(state) ||
-  !shouldRefreshMessagesSectionSelector(state);
+  !areMessageSagasRegisteredSelector(state);
 
 export const getLoadPreviousPageMessagesActionIfAllowed = (
   state: GlobalState
