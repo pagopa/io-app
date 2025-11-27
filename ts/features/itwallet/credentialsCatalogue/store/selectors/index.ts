@@ -27,6 +27,9 @@ export const itwIsCredentialsCatalogueStale = (state: GlobalState) =>
     O.getOrElse(constTrue)
   );
 
+/**
+ * Return a dictionary that maps each credential type to its metadata in the catalogue.
+ */
 export const itwCredentialsCatalogueByTypesSelector = createSelector(
   itwCredentialsCatalogueSelector,
   maybeCatalogue =>
