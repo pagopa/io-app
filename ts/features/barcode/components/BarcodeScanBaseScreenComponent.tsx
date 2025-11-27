@@ -308,8 +308,6 @@ const BarcodeScanBaseScreenComponent = ({
         {canShowHelpButton() ? (
           <IconButton {...helpAction} color="contrast" />
         ) : null}
-
-        {/* {canShowHelpButton() ? onShowHelp() : undefined} */}
       </HStack>
     </View>
   );
