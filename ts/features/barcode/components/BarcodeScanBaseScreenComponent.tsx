@@ -260,8 +260,7 @@ const BarcodeScanBaseScreenComponent = ({
     toggleTorch();
   };
 
-  const shouldDisplayTorchButton =
-    cameraPermissionStatus === "granted" && hasTorch;
+  const shouldDisplayTorch = cameraPermissionStatus === "granted" && hasTorch;
 
   const closeButton: HeaderActionProps = {
     icon: "closeLarge",
@@ -301,13 +300,8 @@ const BarcodeScanBaseScreenComponent = ({
       <IconButton {...closeButton} color="contrast" />
 
       <HStack allowScaleSpacing space={16} style={{ flexShrink: 0 }}>
-        {shouldDisplayTorchButton ? (
-          <IconButton {...torchAction} color="contrast" />
-        ) : null}
-
-        {canShowHelpButton() ? (
-          <IconButton {...helpAction} color="contrast" />
-        ) : null}
+        {shouldDisplayTorch && <IconButton {...torchAction} color="contrast" />}
+        {canShowHelpButton() && <IconButton {...helpAction} color="contrast" />}
       </HStack>
     </View>
   );
