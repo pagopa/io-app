@@ -45,7 +45,7 @@ const fciEnvironmentReducer = (
 export const fciEnvironmentSelector = (state: GlobalState) =>
   pipe(
     state.features.fci.environment,
-    O.getOrElse(() => UNKNOWN_VALUE)
+    O.getOrElseW(() => UNKNOWN_VALUE)
   );
 
 export default fciEnvironmentReducer;

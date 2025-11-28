@@ -14,3 +14,9 @@ gem "fastlane", "~> 2.223.1"
 # fixes an issue on linux env for android release
 # see https://github.com/ffi/ffi/issues/1103#issuecomment-2186974923
 gem "ffi", "< 1.17.0"
+
+# Ruby 3.4.0 has removed some libraries from the standard library.
+gem 'bigdecimal'
+gem 'logger'
+gem 'benchmark'
+gem 'mutex_m'

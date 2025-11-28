@@ -42,9 +42,10 @@ export function* handleGetReceiptPdf(
     }
 
     if (getTransactionReceiptResult.right.status === 200) {
-      const base64File = byteArrayToBase64(
+      const uint8Array = new Uint8Array(
         getTransactionReceiptResult.right.value
       );
+      const base64File = byteArrayToBase64(uint8Array);
       // Extract the filename from the content-disposition header if present
       const filename = pipe(
         getTransactionReceiptResult.right.headers,

@@ -81,7 +81,7 @@ export const assistanceToolRemoteConfig = (aTC: ToolEnum | undefined) =>
   pipe(
     aTC,
     O.fromNullable,
-    O.getOrElse(() => ToolEnum.none)
+    O.getOrElseW(() => ToolEnum.none)
   );
 
 // If is not possible to get the zendeskConfig remotely assume panicMode is not active.

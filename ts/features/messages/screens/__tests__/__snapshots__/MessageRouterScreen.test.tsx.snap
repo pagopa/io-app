@@ -41,6 +41,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
         <RNSScreen
           activityState={2}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -63,18 +64,14 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -144,13 +141,9 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -852,22 +845,14 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -916,6 +901,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
         <RNSScreen
           activityState={2}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -938,18 +924,14 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -1019,13 +1001,9 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -1727,22 +1705,14 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -1791,6 +1761,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
         <RNSScreen
           activityState={2}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1813,18 +1784,14 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -1894,13 +1861,9 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -2822,22 +2785,14 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -2886,6 +2841,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
         <RNSScreen
           activityState={2}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2908,18 +2864,14 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -2989,13 +2941,9 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -3697,22 +3645,14 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -3761,6 +3701,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
         <RNSScreen
           activityState={2}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3783,18 +3724,14 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -3864,13 +3801,9 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -4572,22 +4505,14 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
