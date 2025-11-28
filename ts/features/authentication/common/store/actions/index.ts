@@ -53,6 +53,7 @@ export const logoutRequest = createStandardAction("LOGOUT_REQUEST")<{
 }>();
 
 export const logoutSuccess = createStandardAction("LOGOUT_SUCCESS")();
+export const newLogoutSuccess = createStandardAction("NEW_LOGOUT_SUCCESS")();
 
 export const logoutFailure = createAction(
   "LOGOUT_FAILURE",
@@ -99,6 +100,7 @@ export type AuthenticationActions =
   | ActionType<typeof testLoginRequest>
   | ActionType<typeof testLoginCleanUp>
   | ActionType<typeof loginSuccess>
+  | ActionType<typeof newLogoutSuccess>
   | ActionType<typeof loginFailure>
   | ActionType<typeof logoutRequest>
   | ActionType<typeof logoutSuccess>

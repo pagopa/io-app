@@ -27,7 +27,7 @@ import {
   watchCheckSessionSaga
 } from "../features/authentication/common/saga/watchCheckSessionSaga";
 import {
-  watchForceLogoutOnDifferentCF,
+  watchForceLogoutActiveSessionLogin,
   watchForceLogoutSaga
 } from "../features/authentication/common/saga/watchForceLogoutSaga";
 import { sessionExpired } from "../features/authentication/common/store/actions";
@@ -305,7 +305,7 @@ export function* initializeApplicationSaga(
 
   // Watches for session expiration or corruption and resets the application state accordingly
   yield* fork(watchForceLogoutSaga);
-  yield* fork(watchForceLogoutOnDifferentCF);
+  yield* fork(watchForceLogoutActiveSessionLogin);
   yield* fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel);
 
   // Instantiate a backend client from the session token

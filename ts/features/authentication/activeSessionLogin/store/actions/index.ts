@@ -51,6 +51,14 @@ export const setLoggedOutUserWithDifferentCF = createStandardAction(
   "SET_LOGGED_OUT_USER_WITH_DIFFERENT_CF"
 )();
 
+export const requestSessionCorrupted = createStandardAction(
+  "REQUEST_SESSION_CORRUPTED"
+)();
+
+export const setFinalizeLoggedOutUserWithDifferentCF = createStandardAction(
+  "SET_FINALIZE_LOGGED_OUT_USER_WITH_DIFFERENT_CF"
+)();
+
 export const setCieIDSelectedSecurityLevelActiveSessionLogin =
   createStandardAction(
     "SET_CIE_ID_SELECTED_SECURITY_LEVEL_ACTIVE_SESSION_LOGIN"
@@ -72,5 +80,7 @@ export type LoginInfoActions =
   | ActionType<typeof setFastLoginOptSessionLogin>
   | ActionType<typeof setFinishedActiveSessionLoginFlow>
   | ActionType<typeof setLoggedOutUserWithDifferentCF>
+  | ActionType<typeof requestSessionCorrupted>
+  | ActionType<typeof setFinalizeLoggedOutUserWithDifferentCF>
   | ActionType<typeof setCieIDSelectedSecurityLevelActiveSessionLogin>
   | ActionType<typeof closeSessionExpirationBanner>;

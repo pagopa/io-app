@@ -1,27 +1,27 @@
 import { takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
-import { sessionCorrupted, sessionExpired } from "../store/actions";
+import { sessionExpired } from "../store/actions";
 import { ReduxSagaEffect } from "../../../../types/utils";
+import { prova, restartCleanApplication } from "../../../../sagas/commons";
 import {
-  resetAssistanceDataAndClearCache,
-  restartCleanApplication
-} from "../../../../sagas/commons";
-import { setLoggedOutUserWithDifferentCF } from "../../activeSessionLogin/store/actions";
+  requestSessionCorrupted,
+  setLoggedOutUserWithDifferentCF
+} from "../../activeSessionLogin/store/actions";
 
 /**
  * Watches for logout-related events during runtime
  * and triggers a clean restart of the application state.
  */
 export function* watchForceLogoutSaga(): IterableIterator<ReduxSagaEffect> {
-  yield* takeLatest(
-    [getType(sessionExpired), getType(sessionCorrupted)],
-    restartCleanApplication
-  );
+  yield* takeLatest(getType(sessionExpired), restartCleanApplication);
 }
 
-export function* watchForceLogoutOnDifferentCF(): IterableIterator<ReduxSagaEffect> {
+export function* watchForceLogoutActiveSessionLogin(): IterableIterator<ReduxSagaEffect> {
   yield* takeLatest(
-    getType(setLoggedOutUserWithDifferentCF),
-    resetAssistanceDataAndClearCache
+    [
+      getType(setLoggedOutUserWithDifferentCF),
+      getType(requestSessionCorrupted)
+    ],
+    prova
   );
 }
