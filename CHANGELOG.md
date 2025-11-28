@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.21.0-rc.2](https://github.com/pagopa/io-app/compare/3.21.0-rc.1...3.21.0-rc.2) (2025-11-27)
+
+
+### Chores
+
+* [[IOAPPX-509](https://pagopa.atlassian.net/browse/IOAPPX-509)] Rename ItaliaApp to IO in native projects ([#7582](https://github.com/pagopa/io-app/issues/7582)) ([dfee4c6](https://github.com/pagopa/io-app/commit/dfee4c6ff6829a1ce545515f17e3300e14cab69f))
+* [[IOBP-2291](https://pagopa.atlassian.net/browse/IOBP-2291)] add CDC_CARD_ERROR mixpanel event ([#7650](https://github.com/pagopa/io-app/issues/7650)) ([edd14f3](https://github.com/pagopa/io-app/commit/edd14f37f0626c407e5a0d4e1e23a216348267f5))
+* [[IOPLT-1444](https://pagopa.atlassian.net/browse/IOPLT-1444)] Remove `BaseHeader` after `BarcodeScanBaseScreenComponent` refactor ([#7648](https://github.com/pagopa/io-app/issues/7648)) ([fc67f6d](https://github.com/pagopa/io-app/commit/fc67f6d03038c81c0036007614dc785afb2bf58f))
+* [[IOPLT-1445](https://pagopa.atlassian.net/browse/IOPLT-1445)] Remove `InfoScreenComponent` ([#7651](https://github.com/pagopa/io-app/issues/7651)) ([0dbcd0b](https://github.com/pagopa/io-app/commit/0dbcd0b6a83591086f87d295a2107038540d8c30))
+* [[IOPLT-1449](https://pagopa.atlassian.net/browse/IOPLT-1449)] Remove legacy `Button…` components from the DS ([#7653](https://github.com/pagopa/io-app/issues/7653)) ([d79ee47](https://github.com/pagopa/io-app/commit/d79ee47d70c0591082dd219f31de933ee1e526aa))
+* [[IOPLT-1450](https://pagopa.atlassian.net/browse/IOPLT-1450)] Remove legacy components that are no longer referenced ([#7656](https://github.com/pagopa/io-app/issues/7656)) ([547d675](https://github.com/pagopa/io-app/commit/547d6750d69b31e5de695f0932f9ce0d08864844))
+
 ## [3.21.0-rc.1](https://github.com/pagopa/io-app/compare/3.21.0-rc.0...3.21.0-rc.1) (2025-11-26)
 
 
