@@ -32,7 +32,7 @@ class MainActivity : ReactActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-}
+        }
         SplashScreen.show(this, R.style.SplashScreenTheme);
         // This is needed for react-native-screens to solve the issue described here:
         // https://github.com/software-mansion/react-native-screens/issues/17#issuecomment-424704633
