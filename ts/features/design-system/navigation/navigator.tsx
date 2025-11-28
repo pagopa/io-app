@@ -48,12 +48,10 @@ import { DSIOScrollViewCentredContent } from "../core/DSIOScrollViewCentredConte
 import { DSIOScrollViewScreenWithLargeHeader } from "../core/DSIOScrollViewWithLargeHeader";
 import { DSIOScrollViewWithListItems } from "../core/DSIOScrollViewWithListItems";
 import { DSIOScrollViewWithoutActions } from "../core/DSIOScrollViewWithoutActions";
-import { DSItwBrandExploration } from "../core/DSItwBrandExploration";
 import { DSIcons } from "../core/DSIcons";
 import { DSIridescentTrustmark } from "../core/DSIridescentTrustmark";
+import { DSItwBrandExploration } from "../core/DSItwBrandExploration";
 import { DSLayout } from "../core/DSLayout";
-import { DSLegacyAdvice } from "../core/DSLegacyAdvice";
-import { DSLegacyButtons } from "../core/DSLegacyButtons";
 import { DSListItems } from "../core/DSListItems";
 import { DSLoaders } from "../core/DSLoaders";
 import { DSLoadingScreen } from "../core/DSLoadingScreen";
@@ -618,24 +616,6 @@ export const DesignSystemNavigator = () => {
             options={customModalHeaderConf}
           />
         </Stack.Group>
-
-        {/* LEGACY */}
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.route}
-          component={DSLegacyButtons}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.title
-          }}
-        />
-
-        <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.LEGACY.ADVICE.route}
-          component={DSLegacyAdvice}
-          options={{
-            headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.ADVICE.title
-          }}
-        />
       </Stack.Navigator>
     </ThemeProvider>
   );
