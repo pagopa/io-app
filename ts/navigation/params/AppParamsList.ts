@@ -85,6 +85,7 @@ export type AppParamsList = {
   [SERVICES_ROUTES.SEARCH]: undefined;
   [SETTINGS_ROUTES.PROFILE_NAVIGATOR]: NavigatorScreenParams<SettingsParamsList>;
 
+  [ROUTES.BARCODE_SCAN_TAB_EMPTY]: undefined;
   [ROUTES.BARCODE_SCAN]: undefined;
 
   [CGN_ROUTES.ACTIVATION.MAIN]: NavigatorScreenParams<CgnActivationParamsList>;

@@ -34,7 +34,7 @@ export function* authenticationSaga(): Generator<
   any
 > {
   yield* put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED));
-  yield* put(analyticsAuthenticationStarted());
+  yield* put(analyticsAuthenticationStarted("auth"));
 
   trackLoginFlowStarting();
 
@@ -79,7 +79,7 @@ export function* authenticationSaga(): Generator<
   // User logged in successfully dispatch an AUTHENTICATION_COMPLETED action.
   // FIXME: what's the difference between AUTHENTICATION_COMPLETED and
   //        LOGIN_SUCCESS?
-  yield* put(analyticsAuthenticationCompleted());
+  yield* put(analyticsAuthenticationCompleted("auth"));
 
   return action.payload.token;
 }

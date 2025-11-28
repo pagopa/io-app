@@ -14,7 +14,6 @@ import {
   ItwEidInfoBottomSheetTitle
 } from "../../common/components/ItwEidInfoBottomSheetContent";
 import { ItwEidLifecycleAlert } from "../../common/components/ItwEidLifecycleAlert";
-import { ItwFeedbackBanner } from "../../common/components/ItwFeedbackBanner";
 import { ItwWalletReadyBanner } from "../../common/components/ItwWalletReadyBanner";
 import { useItwPendingReviewRequest } from "../../common/hooks/useItwPendingReviewRequest";
 import { useItwStatusIconColor } from "../../common/hooks/useItwStatusIconColor.ts";
@@ -138,7 +137,6 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
             )}
           </>
         }
-        bottomElement={<ItwFeedbackBanner />}
       />
       {eidInfoBottomSheet.bottomSheet}
     </>

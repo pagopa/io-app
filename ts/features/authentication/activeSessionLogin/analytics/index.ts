@@ -29,3 +29,10 @@ export function trackLoginExpirationBannerClosure() {
     })
   );
 }
+
+export function trackSessionCorrupted() {
+  void mixpanelTrack(
+    "SESSION_CORRUPTED",
+    buildEventProperties("TECH", "error")
+  );
+}
