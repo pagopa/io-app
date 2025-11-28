@@ -25,7 +25,6 @@ type NisData = {
   sod: string;
   nis: string;
   publicKey: string;
-  signedChallenge: string;
 };
 
 type NotInitialized = {
