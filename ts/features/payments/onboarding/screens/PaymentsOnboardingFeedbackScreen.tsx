@@ -147,7 +147,11 @@ const PaymentsOnboardingFeedbackScreen = () => {
         // Resume payment flow
         // This implementation will be removed as soon as the backend will migrate totally to the NPG allowing the contextual onboarding. (https://pagopa.atlassian.net/browse/IOBP-632)
         startPaymentFlow(rptIdToResume, {
-          startOrigin: paymentAnalyticsData?.startOrigin
+          startOrigin: paymentAnalyticsData?.startOrigin,
+          onSuccess:
+            paymentAnalyticsData?.startOrigin === "message"
+              ? "showAARMessage"
+              : "showTransaction"
         });
         return;
       }

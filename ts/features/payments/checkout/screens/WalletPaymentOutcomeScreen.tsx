@@ -152,7 +152,7 @@ const WalletPaymentOutcomeScreen = () => {
       });
       return;
     }
-
+    // for any other case ( including showAARMessage ) pop in enough
     navigation.pop();
   };
 
