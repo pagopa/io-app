@@ -67,7 +67,7 @@
     "@pagopa/io-react-native-integrity": "^0.3.2",
     "@pagopa/io-react-native-iso18013": "^0.6.0",
     "@pagopa/io-react-native-jwt": "^2.1.0",
-    "@pagopa/io-react-native-login-utils": "1.2.0-beta.0",
+    "@pagopa/io-react-native-login-utils": "1.2.0",
     "@pagopa/io-react-native-secure-storage": "^0.2.1",
     "@pagopa/io-react-native-wallet": "^2.2.0",
     "@pagopa/io-react-native-wallet-legacy": "npm:@pagopa/io-react-native-wallet@0.30.0",

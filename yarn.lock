@@ -3284,13 +3284,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-login-utils@npm:1.2.0-beta.0":
-  version: 1.2.0-beta.0
-  resolution: "@pagopa/io-react-native-login-utils@npm:1.2.0-beta.0"
+"@pagopa/io-react-native-login-utils@npm:1.2.0":
+  version: 1.2.0
+  resolution: "@pagopa/io-react-native-login-utils@npm:1.2.0"
   peerDependencies:
     react: ">=19.1.0"
     react-native: ">=0.81"
-  checksum: 08d3650395b285fe1ea54bff80209e49e9357ca7c12430f7a83782fe87e143a55964c2dda0b1b50c58900037284e57780c592cc3075a82b476152fcc53a7f62b
+  checksum: 09d65d4ccfbe2de0302e780226000411a50537a2459e7c88371470427f37d3b8f65bfc2d19261a62b12f624ea4a69fc9c41e155b9ce762975627597017bd7837
   languageName: node
   linkType: hard
 
@@ -11920,7 +11920,7 @@ __metadata:
     "@pagopa/io-react-native-integrity": ^0.3.2
     "@pagopa/io-react-native-iso18013": ^0.6.0
     "@pagopa/io-react-native-jwt": ^2.1.0
-    "@pagopa/io-react-native-login-utils": 1.2.0-beta.0
+    "@pagopa/io-react-native-login-utils": 1.2.0
     "@pagopa/io-react-native-secure-storage": ^0.2.1
     "@pagopa/io-react-native-wallet": ^2.2.0
     "@pagopa/io-react-native-wallet-legacy": "npm:@pagopa/io-react-native-wallet@0.30.0"
