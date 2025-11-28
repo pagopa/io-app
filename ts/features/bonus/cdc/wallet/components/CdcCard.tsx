@@ -15,6 +15,7 @@ import DarkModeWalletCardShape from "../../../../../../img/features/cdc/cdc_wall
 
 export type CdcCardProps = {
   expireDate: Date;
+  numberOfCards: number;
 };
 
 // TODO: Edit this logo when the organization logo is available

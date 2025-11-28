@@ -446,7 +446,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                   ]
                                 }
                               >
-                                Accedi subito
+                                 Sta per scadere l’accesso
                               </Text>
                               <View
                                 style={
@@ -477,7 +477,7 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                   ]
                                 }
                               >
-                                Autenticati ora per usare l’app senza interruzioni. Così sarà sempre pronta quando ti serve.
+                                Autenticati ora per non perderti comunicazioni importanti e per avere l’app sempre pronta quando ti serve.
                               </Text>
                             </View>
                           </View>
@@ -1021,6 +1021,63 @@ exports[`ActiveSessionLandingScreen Should match the snapshot 1`] = `
                                           </Text>
                                         </View>
                                       </View>
+                                      <RNSVGSvgView
+                                        accessibilityElementsHidden={true}
+                                        accessibilityLabel=""
+                                        accessible={false}
+                                        align="xMidYMid"
+                                        bbHeight={24}
+                                        bbWidth={24}
+                                        color="#0B3EE3"
+                                        focusable={false}
+                                        height={24}
+                                        importantForAccessibility="no-hide-descendants"
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
+                                          [
+                                            {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            {
+                                              "flex": 0,
+                                              "height": 24,
+                                              "width": 24,
+                                            },
+                                          ]
+                                        }
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={24}
+                                      >
+                                        <RNSVGGroup
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                        >
+                                          <RNSVGPath
+                                            clipRule={0}
+                                            d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
+                                            fill={
+                                              {
+                                                "type": 2,
+                                              }
+                                            }
+                                            fillRule={0}
+                                            propList={
+                                              [
+                                                "fill",
+                                                "fillRule",
+                                              ]
+                                            }
+                                          />
+                                        </RNSVGGroup>
+                                      </RNSVGSvgView>
                                     </View>
                                   </View>
                                 </View>

@@ -60,6 +60,8 @@ export function* checkSession(
       return response.right.status;
     }
   } catch (e) {
+    // investigate here if we want to handle differently errors during session check
+    // the timeout error is here
     yield* put(checkCurrentSession.failure(convertUnknownToError(e)));
     return undefined;
   }
