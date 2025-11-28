@@ -42,7 +42,8 @@ export const SendAarNfcNotSupportedComponent = () => {
           onPress: terminateFlow,
           accessibilityLabel: i18n.t(
             "global.accessibility.contextualHelp.close"
-          )
+          ),
+          testID: "close-x"
         }
       }}
       contentContainerStyle={{

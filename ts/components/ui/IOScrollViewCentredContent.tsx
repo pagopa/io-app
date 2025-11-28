@@ -17,7 +17,6 @@ import {
 } from "./IOScrollView";
 
 export type IOScrollViewCentredContentProps = {
-  actions: IOScrollViewActions;
   pictogram: IOPictograms;
   title: string;
   description?: string | Array<BodyProps>;
@@ -25,7 +24,8 @@ export type IOScrollViewCentredContentProps = {
     ComponentProps<typeof IOButton>,
     "label" | "accessibilityLabel" | "onPress" | "testID"
   >;
-} & Omit<IOScrollViewProps, "centerContent">;
+  actions: IOScrollViewActions;
+} & Omit<IOScrollViewProps, "centerContent" | "actions">;
 
 /**
  * Istance of `IOScrollView` where the main content is centred,

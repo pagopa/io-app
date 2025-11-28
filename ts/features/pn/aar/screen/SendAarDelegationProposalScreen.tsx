@@ -88,11 +88,13 @@ export const SendAarDelegationProposalScreen = ({
           label: i18n.t(
             "features.pn.aar.flow.delegated.notAdressee.primaryAction"
           ),
-          onPress: handleContinuePress
+          onPress: handleContinuePress,
+          testID: "continue-button"
         }}
         secondaryAction={{
           label: i18n.t("global.buttons.close"),
-          onPress: terminateFlow
+          onPress: terminateFlow,
+          testID: "close-button"
         }}
       />
       {bottomSheet}

@@ -26,6 +26,7 @@ const BsFooterButton = () => {
 
   return (
     <IOButton
+      testID="requestIdentification"
       fullWidth
       variant="solid"
       label={i18n.t("global.buttons.continue")}
