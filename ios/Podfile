@@ -39,7 +39,7 @@ production = ENV["PRODUCTION"] == "1"
 # we are in a CI environment or not.
 IS_CI = ENV['CI']
 
-target 'ItaliaApp' do
+target 'IO' do
   config = use_native_modules!
 
   pod 'RNCPushNotificationIOS', :path => '../node_modules/@react-native-community/push-notification-ios'

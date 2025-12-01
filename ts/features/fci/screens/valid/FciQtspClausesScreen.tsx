@@ -12,15 +12,15 @@ import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { loadServicePreference } from "../../../services/details/store/actions/preference";
 import { servicePreferencePotByIdSelector } from "../../../services/details/store/selectors";
 import { isServicePreferenceResponseSuccess } from "../../../services/details/types/ServicePreferenceResponse";
 import { trackFciUxConversion } from "../../analytics";
-import GenericErrorComponent from "../../components/GenericErrorComponent";
 import LinkedText from "../../components/LinkedText";
 import LoadingComponent from "../../components/LoadingComponent";
 import QtspClauseListItem from "../../components/QtspClauseListItem";
+import SignatureStatusComponent from "../../components/SignatureStatusComponent";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import { useFciCheckService } from "../../hooks/useFciCheckService";
 import { FCI_ROUTES } from "../../navigation/routes";
@@ -86,10 +86,11 @@ const FciQtspClausesScreen = () => {
 
   if (fciPollFilledDocumentError && !isPollFilledDocumentReady) {
     return (
-      <GenericErrorComponent
+      <SignatureStatusComponent
         title={I18n.t("features.fci.errors.generic.default.title")}
         subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
         onPress={() => dispatch(fciEndRequest())}
+        pictogram={"umbrella"}
         assistance={true}
         testID="PollingErrorComponentTestID"
       />

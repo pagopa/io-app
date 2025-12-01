@@ -1,5 +1,3 @@
-import { useRef } from "react";
-import { View } from "react-native";
 import {
   ContentWrapper,
   FeatureInfo,
@@ -14,30 +12,32 @@ import {
   useRoute
 } from "@react-navigation/native";
 import I18n from "i18next";
-import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
+import { useRef } from "react";
+import { View } from "react-native";
+import { IOScrollView } from "../../../../../components/ui/IOScrollView";
+import { useDetectSmallScreen } from "../../../../../hooks/useDetectSmallScreen";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import { useSecuritySuggestionsBottomSheet } from "../../../../../hooks/useSecuritySuggestionBottomSheet";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { setFastLoginOptIn } from "../../../fastLogin/store/actions/optInActions";
 import {
   useIODispatch,
   useIOSelector,
   useIOStore
 } from "../../../../../store/hooks";
+import { setAccessibilityFocus } from "../../../../../utils/accessibility";
+import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
+import { setFastLoginOptSessionLogin } from "../../../activeSessionLogin/store/actions";
+import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
+import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import {
   trackLoginSessionOptIn,
   trackLoginSessionOptIn30,
   trackLoginSessionOptIn365,
   trackLoginSessionOptInInfo
 } from "../../../fastLogin/analytics/optinAnalytics";
-import { useSecuritySuggestionsBottomSheet } from "../../../../../hooks/useSecuritySuggestionBottomSheet";
-import { setAccessibilityFocus } from "../../../../../utils/accessibility";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { useDetectSmallScreen } from "../../../../../hooks/useDetectSmallScreen";
-import { IOScrollView } from "../../../../../components/ui/IOScrollView";
-import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
-import { setFastLoginOptSessionLogin } from "../../../activeSessionLogin/store/actions";
+import { setFastLoginOptIn } from "../../../fastLogin/store/actions/optInActions";
 import { CieIdLoginProps } from "../../cie/shared/utils";
 
 export enum Identifier {
@@ -70,6 +70,7 @@ const OptInScreen = () => {
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   const dispatch = useIODispatch();
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
+  const flow = isActiveSessionLogin ? "reauth" : "auth";
   const {
     securitySuggestionBottomSheet,
     presentSecuritySuggestionBottomSheet
@@ -91,7 +92,7 @@ const OptInScreen = () => {
   const { isDeviceScreenSmall } = useDetectSmallScreen();
 
   useOnFirstRender(() => {
-    trackLoginSessionOptIn();
+    trackLoginSessionOptIn(flow);
   });
 
   useFocusEffect(() => setAccessibilityFocus(accessibilityFirstFocuseViewRef));
@@ -110,9 +111,9 @@ const OptInScreen = () => {
 
   const navigateToIdpPage = (isLV: boolean) => {
     if (isLV) {
-      void trackLoginSessionOptIn365(store.getState());
+      void trackLoginSessionOptIn365(store.getState(), flow);
     } else {
-      void trackLoginSessionOptIn30(store.getState());
+      void trackLoginSessionOptIn30(store.getState(), flow);
     }
     navigation.navigate(AUTHENTICATION_ROUTES.MAIN, getNavigationParams());
     if (isActiveSessionLogin) {
@@ -185,7 +186,7 @@ const OptInScreen = () => {
             accessibilityRole: "button",
             label: I18n.t("authentication.opt_in.security_suggests"),
             onPress: () => {
-              trackLoginSessionOptInInfo();
+              trackLoginSessionOptInInfo(flow);
               return presentSecuritySuggestionBottomSheet();
             }
           }}

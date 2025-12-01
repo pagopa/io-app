@@ -162,18 +162,12 @@ const DESIGN_SYSTEM_ROUTES = {
     ANIMATED_PICTOGRAMS: {
       route: "DS_ANIMATED_PICTOGRAMS",
       title: "Animated pictograms"
-    }
-  },
-  LEGACY: {
-    BUTTONS: {
-      route: "DESIGN_SYSTEM_LEGACY_BUTTONS",
-      title: "Buttons"
     },
-    ADVICE: {
-      route: "DESIGN_SYSTEM_LEGACY_ADVICE",
-      title: "Advice & Banners"
+    ITW_BRAND_EXPLORATION: {
+      route: "DS_ITW_BRAND_EXPLORATION",
+      title: "ITWallet brand exploration"
     }
-  } as const
+  }
 } as const;
 
 export default DESIGN_SYSTEM_ROUTES;

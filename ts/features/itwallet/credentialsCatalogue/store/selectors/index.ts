@@ -1,0 +1,49 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import { constTrue, pipe } from "fp-ts/lib/function";
+import { isAfter } from "date-fns";
+import { createSelector } from "reselect";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { DigitalCredentialMetadata } from "../../../common/utils/itwCredentialsCatalogueUtils";
+
+/**
+ * Select the last fetched credentials catalogue.
+ * **Note:** the catalogue may be stale.
+ */
+export const itwCredentialsCatalogueSelector = (state: GlobalState) =>
+  pot.toUndefined(state.features.itWallet.credentialsCatalogue.catalogue);
+
+/**
+ * Select whether the credentials catalogue is stale, i.e. the JWT is expired.
+ *
+ * Normally, the catalogue is fetched every 24 hours according to the `expires` HTTP header.
+ * If the fetch fails, it is still possible to select the persisted catalogue, but it may be stale.
+ */
+export const itwIsCredentialsCatalogueStale = (state: GlobalState) =>
+  pipe(
+    itwCredentialsCatalogueSelector(state),
+    O.fromNullable,
+    O.map(catalogue => isAfter(new Date(), new Date(catalogue.exp * 1000))),
+    O.getOrElse(constTrue)
+  );
+
+/**
+ * Return a dictionary that maps each credential type to its metadata in the catalogue.
+ */
+export const itwCredentialsCatalogueByTypesSelector = createSelector(
+  itwCredentialsCatalogueSelector,
+  maybeCatalogue =>
+    pipe(
+      O.fromNullable(maybeCatalogue),
+      O.map(catalogue =>
+        catalogue.credentials.reduce(
+          (acc, credential) => ({
+            ...acc,
+            [credential.credential_type]: credential
+          }),
+          {} as Record<string, DigitalCredentialMetadata>
+        )
+      ),
+      O.toUndefined
+    )
+);
