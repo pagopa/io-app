@@ -45,10 +45,8 @@ import {
   shouldExitForOfflineAccess,
   watchSessionRefreshInOfflineSaga
 } from "../../features/ingress/saga";
-import {
-  watchForceLogoutActiveSessionLogin,
-  watchForceLogoutSaga
-} from "../../features/authentication/common/saga/watchForceLogoutSaga";
+import { watchForceLogoutSaga } from "../../features/authentication/common/saga/watchForceLogoutSaga";
+import { watchForceLogoutActiveSessionLogin } from "../../features/authentication/activeSessionLogin/saga/forceLogoutActiveSessionLoginSaga";
 
 const aSessionToken = "a_session_token" as SessionToken;
 const aSessionInfo = O.some({

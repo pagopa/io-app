@@ -26,10 +26,7 @@ import {
   checkSession,
   watchCheckSessionSaga
 } from "../features/authentication/common/saga/watchCheckSessionSaga";
-import {
-  watchForceLogoutActiveSessionLogin,
-  watchForceLogoutSaga
-} from "../features/authentication/common/saga/watchForceLogoutSaga";
+import { watchForceLogoutSaga } from "../features/authentication/common/saga/watchForceLogoutSaga";
 import { sessionExpired } from "../features/authentication/common/store/actions";
 import {
   sessionInfoSelector,
@@ -142,6 +139,7 @@ import { navigateToActiveSessionLogin } from "../features/authentication/activeS
 import { showSessionExpirationBlockingScreenSelector } from "../features/authentication/activeSessionLogin/store/selectors";
 import { watchCdcSaga } from "../features/bonus/cdc/common/saga";
 import { watchMessagesSaga } from "../features/messages/saga";
+import { watchForceLogoutActiveSessionLogin } from "../features/authentication/activeSessionLogin/saga/forceLogoutActiveSessionLoginSaga";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
   askMixpanelOptIn,
