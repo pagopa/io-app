@@ -35,7 +35,7 @@ export function* restartCleanApplication() {
   yield* put(startApplicationInitialization());
 }
 
-export function* prova(
+export function* logoutUserAfterActiveSessionLogin(
   action:
     | ActionType<typeof setLoggedOutUserWithDifferentCF>
     | ActionType<typeof requestSessionCorrupted>

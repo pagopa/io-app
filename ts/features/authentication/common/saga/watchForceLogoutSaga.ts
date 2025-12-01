@@ -2,7 +2,10 @@ import { takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 import { sessionExpired } from "../store/actions";
 import { ReduxSagaEffect } from "../../../../types/utils";
-import { prova, restartCleanApplication } from "../../../../sagas/commons";
+import {
+  logoutUserAfterActiveSessionLogin,
+  restartCleanApplication
+} from "../../../../sagas/commons";
 import {
   requestSessionCorrupted,
   setLoggedOutUserWithDifferentCF
@@ -22,6 +25,6 @@ export function* watchForceLogoutActiveSessionLogin(): IterableIterator<ReduxSag
       getType(setLoggedOutUserWithDifferentCF),
       getType(requestSessionCorrupted)
     ],
-    prova
+    logoutUserAfterActiveSessionLogin
   );
 }
