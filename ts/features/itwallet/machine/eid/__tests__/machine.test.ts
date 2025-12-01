@@ -28,6 +28,7 @@ import {
 } from "../context";
 import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
 import { itwCredentialUpgradeMachine } from "../../upgrade/machine";
+import { itwCredentialIssuanceMachine } from "../../credential/machine";
 import { CieWarningType } from "../../../identification/cie/utils/types";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
@@ -91,6 +92,7 @@ const isOperationAborted = jest.fn();
 const hasValidWalletInstanceAttestation = jest.fn();
 const isEligibleForItwSimplifiedActivation = jest.fn();
 const revokeWalletInstance = jest.fn();
+const hasCredentialType = jest.fn();
 
 describe("itwEidIssuanceMachine", () => {
   const mockedMachine = itwEidIssuanceMachine.provide({
@@ -145,14 +147,16 @@ describe("itwEidIssuanceMachine", () => {
         AuthenticationContext,
         StartAuthFlowActorParams
       >(startAuthFlow),
-      credentialUpgradeMachine: itwCredentialUpgradeMachine
+      credentialUpgradeMachine: itwCredentialUpgradeMachine,
+      credentialIssuanceMachine: itwCredentialIssuanceMachine
     },
     guards: {
       issuedEidMatchesAuthenticatedUser,
       isSessionExpired,
       isOperationAborted,
       isEligibleForItwSimplifiedActivation,
-      hasValidWalletInstanceAttestation
+      hasValidWalletInstanceAttestation,
+      hasCredentialType
     }
   });
 
@@ -1856,5 +1860,37 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "accept-ipzs-privacy" });
     expect(clearSimplifiedActivationRequirements).toHaveBeenCalledTimes(1);
     expect(loadPidIntoContext).toHaveBeenCalledTimes(1);
+  });
+
+  it("Should initialize the credential issuance machine when credentialType is present", async () => {
+    hasCredentialType.mockImplementation(() => true);
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { Issuance: "DisplayingPreview" },
+      context: {
+        mode: "credentialTriggered",
+        eid: ItwStoredCredentialsMocks.eid,
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA },
+        level: "l3",
+        credentialType: "mDL"
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+
+    actor.send({ type: "add-to-wallet" });
+
+    await waitFor(() => {
+      expect(actor.getSnapshot().matches("CredentialIssuance")).toBe(true);
+    });
+
+    expect(navigateToSuccessScreen).toHaveBeenCalledTimes(1);
+
+    const child = actor.getSnapshot().children.credentialIssuanceMachine;
+    expect(child).toBeDefined();
   });
 });
