@@ -1,8 +1,10 @@
 import { FiscalCode, NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import {
+  EphemeralAarMessageDataActionPayload,
   populateStoresWithEphemeralAarMessageData,
   setAarFlowState,
-  terminateAarFlow
+  terminateAarFlow,
+  initiateAarFlow
 } from "..";
 import { ThirdPartyMessage } from "../../../../../../../definitions/pn/ThirdPartyMessage";
 import { AARFlowState, sendAARFlowStates } from "../../../utils/stateUtils";
@@ -31,6 +33,12 @@ describe("AARFlowStateActions", () => {
     expect(action.type).toBe("TERMINATE_AAR_FLOW");
   });
 
+  it('tryInitiateAarFlow action should have correct type="TRY_INITIATE_AAR_FLOW"', () => {
+    const aarUrl = "https://example.com/aar";
+    const action = initiateAarFlow({ aarUrl });
+    expect(action).toMatchSnapshot();
+  });
+
   it("should match snapshot for populateStoresWithEphemeralAarMessageData", () => {
     const params = {
       iun: "some-iun" as NonEmptyString,
@@ -40,7 +48,7 @@ describe("AARFlowStateActions", () => {
       markdown: {} as MessageBodyMarkdown,
       subject: "" as MessageSubject,
       mandateId: ""
-    };
+    } as unknown as EphemeralAarMessageDataActionPayload;
     const action = populateStoresWithEphemeralAarMessageData(params);
     expect(action).toMatchSnapshot();
   });

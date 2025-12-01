@@ -1,7 +1,3 @@
-/**
- * A screen where the user can choose to login with SPID or get more informations.
- * It includes a carousel with highlights on the app functionalities
- */
 import {
   Banner,
   ContentWrapper,
@@ -27,7 +23,6 @@ import { Alert, View } from "react-native";
 import { LandingCardComponent } from "../../../../../components/LandingCardComponent";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import SectionStatusComponent from "../../../../../components/SectionStatus";
-import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
 import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../../../../config";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { mixpanelTrack } from "../../../../../mixpanel";
@@ -54,11 +49,15 @@ import {
 } from "../../../common/analytics";
 import { Carousel } from "../../../common/components/Carousel";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { sessionExpired } from "../../../common/store/actions";
+import {
+  sessionCorrupted,
+  sessionExpired
+} from "../../../common/store/actions";
 
 import { useFooterActionsMargin } from "../../../../../hooks/useFooterActionsMargin";
 import { startupLoadSuccess } from "../../../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../../../store/reducers/startup";
+import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
 import { identificationRequest } from "../../../../identification/store/actions";
 import { setOfflineAccessReason } from "../../../../ingress/store/actions";
 import { OfflineAccessReasonEnum } from "../../../../ingress/store/reducer";
@@ -86,6 +85,10 @@ const SPACE_BETWEEN_BUTTONS = 8;
 const SPACE_AROUND_BUTTON_LINK = 16;
 const SPID_LEVEL: SpidLevel = "SpidL2";
 
+/**
+ * A screen where the user can choose to login with SPID or get more informations.
+ * It includes a carousel with highlights on the app functionalities
+ */
 export const LandingScreen = () => {
   const { error } = useIOToast();
   const store = useIOStore();
@@ -361,19 +364,13 @@ export const LandingScreen = () => {
               color: "primary",
               icon: "instruction",
               onPress: () => {
-                // TODO: this logic will need to be uncommented
-                // (and moved outside the if block, since it will become common logic)
-                // once the tracking strategy for active session login is implemented.
-                // For now, we only track the sessionExpired case because the tracking strategy
-                // is defined for it, while it's still missing for active session login.
-                // Related task: https://pagopa.atlassian.net/browse/IOPID-3343
-                if (isSessionExpired) {
-                  trackHelpCenterCtaTapped(
-                    sessionExpired.toString(),
-                    helpCenterHowToDoWhenSessionIsExpiredUrl,
-                    routeName
-                  );
-                }
+                trackHelpCenterCtaTapped(
+                  isSessionExpired
+                    ? sessionExpired.toString()
+                    : sessionCorrupted.toString(),
+                  helpCenterHowToDoWhenSessionIsExpiredUrl,
+                  routeName
+                );
                 openWebUrl(helpCenterHowToDoWhenSessionIsExpiredUrl, () => {
                   error(I18n.t("global.jserror.title"));
                 });

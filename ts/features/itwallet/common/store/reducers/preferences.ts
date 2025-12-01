@@ -3,7 +3,6 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import {
   itwCloseDiscoveryBanner,
-  itwCloseFeedbackBanner,
   itwFlagCredentialAsRequested,
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
@@ -13,15 +12,12 @@ import {
   itwUnflagCredentialAsRequested,
   itwSetWalletUpgradeMDLDetailsBannerHidden,
   itwFreezeSimplifiedActivationRequirements,
-  itwClearSimplifiedActivationRequirements,
-  itwCloseReissuanceFeedbackBanner
+  itwClearSimplifiedActivationRequirements
 } from "../actions/preferences";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
 
 export type ItwPreferencesState = {
-  // Date until which the feedback banner should be hidden
-  hideFeedbackBannerUntilDate?: string;
   // Date until which the discovery banner should be hidden
   hideDiscoveryBannerUntilDate?: string;
   // Stores the list of requested credentials which supports delayed issuance
@@ -39,8 +35,6 @@ export type ItwPreferencesState = {
   isWalletInstanceRemotelyActive?: boolean;
   // Indicates whether the fiscal code is whitelisted for L3 features
   isFiscalCodeWhitelisted?: boolean;
-  // Indicates whether the reissuance feedback banner should be hidden
-  reissuanceFeedbackBannerHidden?: boolean;
   // Indicates whether the IT-wallet upgrade banner in MDL details should be hidden
   walletUpgradeMDLDetailsBannerHidden?: boolean;
   // Indicates whether the user should activate IT-Wallet with the simplified flow,
@@ -57,13 +51,6 @@ const reducer = (
   action: Action
 ): ItwPreferencesState => {
   switch (action.type) {
-    case getType(itwCloseFeedbackBanner): {
-      return {
-        ...state,
-        hideFeedbackBannerUntilDate: addMonths(new Date(), 1).toISOString()
-      };
-    }
-
     case getType(itwCloseDiscoveryBanner): {
       return {
         ...state,
@@ -143,13 +130,6 @@ const reducer = (
       return {
         ...state,
         isFiscalCodeWhitelisted: action.payload
-      };
-    }
-
-    case getType(itwCloseReissuanceFeedbackBanner): {
-      return {
-        ...state,
-        reissuanceFeedbackBannerHidden: true
       };
     }
 

@@ -10,6 +10,13 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "showAppearanceBanner": true,
   },
   "backgroundLinking": {},
+  "cdc": {
+    "wallet": {
+      "cdcStatus": {
+        "kind": "PotNoneLoading",
+      },
+    },
+  },
   "connectivityStatus": {
     "isConnected": undefined,
   },
@@ -105,6 +112,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
         "kind": "PotNone",
       },
     },
+    "staticCode": {},
     "timeline": {
       "details": {
         "kind": "PotNone",
@@ -128,11 +136,19 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
   },
   "ingress": {
+    "checkSession": {
+      "hasError": false,
+    },
     "isBlockingScreen": false,
   },
   "itWallet": {
     "credentials": {
       "credentials": {},
+    },
+    "credentialsCatalogue": {
+      "catalogue": {
+        "kind": "PotNone",
+      },
     },
     "environment": {
       "env": "prod",
@@ -168,6 +184,11 @@ exports[`featuresPersistor should match snapshot 1`] = `
   },
   "loginFeatures": {
     "activeSessionLogin": {
+      "activeSessionLoginLocalFlag": false,
+      "engagement": {
+        "hasBlockingScreenBeenVisualized": false,
+        "showSessionExpirationBanner": true,
+      },
       "isActiveSessionLogin": false,
       "isUserLoggedIn": false,
     },
@@ -196,10 +217,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
     "loginInfo": {
       "userFromSuccessLogin": false,
-    },
-    "loginPreferences": {
-      "activeSessionLoginLocalFlag": false,
-      "showSessionExpirationBanner": true,
     },
     "nativeLogin": {
       "enabled": true,

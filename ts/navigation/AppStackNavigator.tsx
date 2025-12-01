@@ -123,6 +123,7 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
             [ROUTES.PAYMENTS_HOME]: "payments"
           }
         },
+        [ROUTES.BARCODE_SCAN]: "main/scan",
         [SETTINGS_ROUTES.PROFILE_NAVIGATOR]: {
           path: "profile",
           screens: {
@@ -149,7 +150,15 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
         [ROUTES.PAGE_NOT_FOUND]: "*"
       }
     },
-    subscribe: linkingSubscription(dispatch, store)
+    subscribe: linkingSubscription(dispatch, store),
+    getInitialURL: async () => {
+      const initialUrl = await Linking.getInitialURL();
+      // check if the url contains main/wallet to remap the url
+      if (initialUrl && /\/main\/wallet(?:[/?#]|$)/.test(initialUrl)) {
+        return initialUrl.replace(/\/main\/wallet(?=\/|[?#]|$)/, "");
+      }
+      return initialUrl;
+    }
   };
 
   /**

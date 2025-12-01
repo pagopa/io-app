@@ -4,11 +4,11 @@ import {
   IOToast,
   VStack
 } from "@pagopa/io-app-design-system";
+import { useRoute } from "@react-navigation/native";
 import { TxtLinkNode } from "@textlint/ast-node-types";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { Alert, View } from "react-native";
-import { useRoute } from "@react-navigation/native";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { linkNodeToReactNative } from "../../../../components/IOMarkdown/renderRules";
 import { Renderer } from "../../../../components/IOMarkdown/types";
@@ -57,7 +57,7 @@ const ItwSettingsScreen = () => {
     trackItwTapUpgradeBanner(routeName);
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
-      params: { isL3: true }
+      params: { level: "l3" }
     });
   }, [navigation, routeName]);
 

@@ -38,7 +38,7 @@ import { idpContextualHelpDataFromIdSelector } from "../../../../../store/reduce
 import { isMixpanelEnabled } from "../../../../../store/reducers/persistedPreferences";
 import themeVariables from "../../../../../theme/variables";
 import { SessionToken } from "../../../../../types/SessionToken";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { emptyContextualHelp } from "../../../../../utils/contextualHelp";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
@@ -62,10 +62,10 @@ import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { setNativeLoginRequestInfo } from "../store/actions";
 import { nativeLoginRequestInfoSelector } from "../store/selectors";
 import { getSpidErrorCodeDescription } from "../utils/spidErrorCode";
-import { remoteApiLoginUrlPrefixSelector } from "../../../loginPreferences/store/selectors";
 import {
   isActiveSessionFastLoginEnabledSelector,
-  isActiveSessionLoginSelector
+  isActiveSessionLoginSelector,
+  remoteApiLoginUrlPrefixSelector
 } from "../../../activeSessionLogin/store/selectors";
 
 const styles = StyleSheet.create({

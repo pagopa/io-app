@@ -15,17 +15,6 @@ export const itwPreferencesSelector = (state: GlobalState) =>
   state.features.itWallet.preferences;
 
 /**
- * Returns if the feedback banner should be displayed or not based on the user's preferences.
- * The banner should be visible only if the user closed it more than one month ago
- * and has not given feedback.
- */
-export const itwIsFeedbackBannerHiddenSelector = createSelector(
-  itwPreferencesSelector,
-  ({ hideFeedbackBannerUntilDate }: ItwPreferencesState) =>
-    isPastDate(hideFeedbackBannerUntilDate)
-);
-
-/**
  * Returns if the discovery banner should be displayed or not based on the user's preferences.
  * The banner should be visible only if the user closed it more than six months ago.
  */
@@ -97,11 +86,3 @@ export const itwIsWalletUpgradeMDLDetailsBannerHiddenSelector = (
 export const itwIsSimplifiedActivationRequired = (state: GlobalState) =>
   state.features.itWallet.preferences.isItwSimplifiedActivationRequired ??
   false;
-
-/**
- * Returns whether the reissuance feedback banner is hidden. Defaults to false.
- */
-export const itwIsReissuanceFeedbackBannerHiddenSelector = (
-  state: GlobalState
-) =>
-  state.features.itWallet.preferences.reissuanceFeedbackBannerHidden ?? false;

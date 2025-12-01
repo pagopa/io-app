@@ -156,6 +156,13 @@ type CredentialUnexpectedFailure = {
   type: string;
 };
 
+type ItwCredentialReissuingFailedProperties = {
+  reason: unknown;
+  credential_failed: MixPanelCredential;
+  itw_flow: ItwFlow;
+  type: string;
+};
+
 type CredentialStatusAssertionFailure = {
   credential: MixPanelCredential;
   credential_status: string;
@@ -197,17 +204,18 @@ type TrackItWalletCieCardReadingUnexpectedFailure = {
 };
 
 export type CieCardVerifyFailureReason =
-  | "certificate revoked"
-  | "certificate expired";
+  | "CERTIFICATE_EXPIRED"
+  | "CERTIFICATE_REVOKED";
 
-export const enum CieCardReadingFailureReason {
+export enum CieCardReadingFailureReason {
   KO = "KO",
-  unknownCard = "unknown card",
-  apduNotSupported = "ADPU not supported",
-  startNFCError = "start NFC error",
-  stopNFCError = "stop NFC error",
-  noInternetConnection = "no internet connection",
-  authenticationError = "authentication error"
+  ON_TAG_DISCOVERED_NOT_CIE = "ON_TAG_DISCOVERED_NOT_CIE",
+  GENERIC_ERROR = "GENERIC_ERROR",
+  APDU_ERROR = "APDU_ERROR",
+  START_NFC_ERROR = "START_NFC_ERROR",
+  STOP_NFC_ERROR = "STOP_NFC_ERROR",
+  NO_INTERNET_CONNECTION = "NO_INTERNET_CONNECTION",
+  AUTHENTICATION_ERROR = "AUTHENTICATION_ERROR"
 }
 
 export type ItwCredentialMixpanelStatus =
@@ -272,6 +280,17 @@ type ItwCredentialInfoDetails = {
 };
 
 /**
+ * Actions that can trigger the eID reissuing flow.
+ * This type represents the user action that was performed immediately before
+ * the eID reissuing process is initiated.
+ * Add new values here when implementing additional flows that should start
+ * the reissuing procedure.
+ */
+export enum ItwEidReissuingTrigger {
+  ADD_CREDENTIAL = "add_credential"
+}
+
+/**
  * Actions that trigger the requirement for L3 upgrade.
  * This type represents the user action that was performed immediately before
  * the L3 mandatory upgrade screen was displayed.
@@ -282,7 +301,8 @@ export enum ItwL3UpgradeTrigger {
   ADD_CREDENTIAL = "add_credential"
 }
 
-export type ItwFlow = "L2" | "L3" | "not_available";
+// TODO: Add reissuing_PID when the L3 PID reissuance flow is ready
+export type ItwFlow = "L2" | "L3" | "reissuing_eID" | "not_available";
 
 export type ItwScreenFlowContext = {
   screen_name: string;
@@ -1148,6 +1168,24 @@ export const trackItwAddCredentialNotTrustedIssuer = (
   );
 };
 
+export const trackItwCredentialReissuingFailed = (
+  properties: ItwCredentialReissuingFailedProperties
+) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_CREDENTIAL_REISSUING_FAILED,
+    buildEventProperties("KO", "screen_view", properties)
+  );
+};
+
+export const trackItwEidReissuingMandatory = (
+  action: ItwEidReissuingTrigger
+) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_REISSUING_EID_MANDATORY,
+    buildEventProperties("KO", "screen_view", { action })
+  );
+};
+
 // #endregion ERRORS
 
 // #region PROFILE PROPERTIES
@@ -1462,12 +1500,5 @@ export const trackStartCredentialUpgrade = (credential: MixPanelCredential) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_START_REISSUING,
     buildEventProperties("UX", "action", { credential })
-  );
-};
-
-export const trackCredentialUpgradeFailed = () => {
-  void mixpanelTrack(
-    ITW_ERRORS_EVENTS.ITW_CREDENTIAL_REISSUING_FAILED,
-    buildEventProperties("KO", "screen_view")
   );
 };

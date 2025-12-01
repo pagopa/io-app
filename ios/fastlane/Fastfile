@@ -33,13 +33,25 @@ platform :ios do
 
     # Install pods
     cocoapods
+    
+        # Temporary disables automatic code signing to avoid issues during build
+    update_code_signing_settings(
+      use_automatic_signing: false,
+      path: "IO.xcodeproj",
+      team_id: "M2X5YQ4BJ7",
+      profile_name: "match AppStore it.pagopa.app.io",
+      targets: ["IO"],
+      build_configurations: ["Release"],
+      code_sign_identity: "iPhone Distribution",
+      sdk: "iphoneos*",
+    )
 
     # build the app
     gym(
-      scheme: "ItaliaApp",
+      scheme: "IO",
       clean: true,
       export_method: "app-store",
-      workspace: "ItaliaApp.xcworkspace",
+      workspace: "IO.xcworkspace",
       include_symbols: false
     )
   end
@@ -68,12 +80,24 @@ platform :ios do
     # Install pods
     cocoapods
 
+    # Temporary disables automatic code signing to avoid issues during build
+    update_code_signing_settings(
+      use_automatic_signing: false,
+      path: "IO.xcodeproj",
+      team_id: "M2X5YQ4BJ7",
+      targets: ["IO"],
+      build_configurations: ["Release"],
+      profile_name: "match AppStore it.pagopa.app.io",
+      code_sign_identity: "iPhone Distribution",
+      sdk: "iphoneos*",
+    )
+
     # build the app
     gym(
-      scheme: "ItaliaApp",
+      scheme: "IO",
       clean: true,
       export_method: "app-store",
-      workspace: "ItaliaApp.xcworkspace",
+      workspace: "IO.xcworkspace",
       include_symbols: false
     )
 
@@ -119,13 +143,25 @@ platform :ios do
     # Install pods
     cocoapods
 
+    # Temporary disables automatic code signing to avoid issues during build
+    update_code_signing_settings(
+      use_automatic_signing: false,
+      path: "IO.xcodeproj",
+      team_id: "M2X5YQ4BJ7",
+      targets: ["IO"],
+      build_configurations: ["Canary"],
+      profile_name: "match AppStore it.pagopa.app.io.canary",
+      code_sign_identity: "iPhone Distribution",
+      sdk: "iphoneos*",
+    )
+
     # build the app
     gym(
-      scheme: "ItaliaApp",
+      scheme: "IO",
       clean: true,
       export_method: "app-store",
       configuration: "Canary",
-      workspace: "ItaliaApp.xcworkspace",
+      workspace: "IO.xcworkspace",
       include_symbols: false
     )
 

@@ -7,8 +7,8 @@ import { selectReadProgress } from "../machine/selectors";
 import { trackItWalletCardReadingClose } from "../../../analytics";
 import {
   CieCardReadContentProps,
-  ItwCieCardReadContent
-} from "./ItwCieCardReadContent";
+  CieCardReadContent
+} from "../../../../common/components/cie/CieCardReadContent";
 
 type ReadState = "idle" | "reading" | "completed";
 
@@ -17,7 +17,7 @@ type ReadState = "idle" | "reading" | "completed";
  */
 export const ItwCieCardReadProgressContent = () => {
   const props = useProgressContentProps();
-  return <ItwCieCardReadContent {...props} />;
+  return <CieCardReadContent {...props} />;
 };
 
 const useProgressContentProps = (): CieCardReadContentProps => {

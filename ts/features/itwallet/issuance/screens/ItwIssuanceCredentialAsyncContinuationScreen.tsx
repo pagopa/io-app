@@ -32,7 +32,7 @@ export type ItwIssuanceCredentialAsyncContinuationNavigationParams = {
 
 type ScreenProps = IOStackNavigationRouteProps<
   ItwParamsList,
-  "ITW_ISSUANCE_CREDENTIAL_ASYNC_FLOW_CONTINUATION"
+  "ITW_LANDING_SCREEN_CREDENTIAL_ASYNC_FLOW_CONTINUATION"
 >;
 
 const routeParams = t.type({
@@ -131,7 +131,7 @@ const InnerComponent = () => {
             navigation.replace(ITW_ROUTES.MAIN, {
               screen: ITW_ROUTES.DISCOVERY.INFO,
               params: {
-                isL3
+                level: isL3 ? "l3" : "l2"
               }
             })
         }}

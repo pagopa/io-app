@@ -1,15 +1,13 @@
-import { Alert, View } from "react-native";
 import { ListItemAction } from "@pagopa/io-app-design-system";
-import { memo } from "react";
-import I18n from "i18next";
 import { constVoid } from "fp-ts/function";
-import { useItwStartCredentialSupportRequest } from "../hooks/useItwStartCredentialSupportRequest";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
-import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import I18n from "i18next";
+import { memo } from "react";
+import { Alert, View } from "react-native";
 import { trackWalletStartDeactivation } from "../../../analytics";
 import { useNotAvailableToastGuard } from "../../../common/hooks/useNotAvailableToastGuard.ts";
-
-const POWERED_BY_IT_WALLET = "Powered by IT-Wallet";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { useItwStartCredentialSupportRequest } from "../hooks/useItwStartCredentialSupportRequest";
 
 type Props = {
   credential: StoredCredential;
@@ -32,16 +30,16 @@ const ItwPresentationPidDetailFooter = ({ credential }: Props) => {
       [
         {
           text: I18n.t(
+            "features.itWallet.presentation.itWalletId.dialog.revoke.cancel"
+          ),
+          style: "cancel"
+        },
+        {
+          text: I18n.t(
             "features.itWallet.presentation.itWalletId.dialog.revoke.confirm"
           ),
           style: "destructive",
           onPress: () => machineRef.send({ type: "revoke-wallet-instance" })
-        },
-        {
-          text: I18n.t(
-            "features.itWallet.presentation.itWalletId.dialog.revoke.cancel"
-          ),
-          style: "cancel"
         }
       ]
     );
@@ -51,25 +49,22 @@ const ItwPresentationPidDetailFooter = ({ credential }: Props) => {
     <View>
       <ListItemAction
         variant="primary"
-        icon="message"
-        label={requestAssistanceLabel}
-        accessibilityLabel={requestAssistanceLabel}
-        onPress={useNotAvailableToastGuard(startAndTrackSupportRequest)}
+        icon="website"
+        label={I18n.t(
+          "features.itWallet.presentation.credentialDetails.discoverItWallet"
+        )}
+        onPress={useNotAvailableToastGuard(constVoid)}
       />
       <ListItemAction
         variant="primary"
-        icon="website"
-        label={POWERED_BY_IT_WALLET}
-        accessibilityLabel={POWERED_BY_IT_WALLET}
-        onPress={useNotAvailableToastGuard(constVoid)}
+        icon="message"
+        label={requestAssistanceLabel}
+        onPress={useNotAvailableToastGuard(startAndTrackSupportRequest)}
       />
       <ListItemAction
         variant="danger"
         icon="trashcan"
         label={I18n.t("features.itWallet.presentation.itWalletId.cta.revoke")}
-        accessibilityLabel={I18n.t(
-          "features.itWallet.presentation.itWalletId.cta.revoke"
-        )}
         onPress={handleRevokePress}
       />
     </View>

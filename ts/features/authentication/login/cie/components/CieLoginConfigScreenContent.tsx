@@ -1,4 +1,4 @@
-import { Divider, ListItemCheckbox } from "@pagopa/io-app-design-system";
+import { ListItemCheckbox } from "@pagopa/io-app-design-system";
 import { CieEntityIds } from "../components/CieRequestAuthenticationOverlay";
 import { cieLoginDisableUat, cieLoginEnableUat } from "../store/actions";
 import { isCieLoginUatEnabledSelector } from "../store/selectors";
@@ -8,25 +8,22 @@ const CieLoginConfigScreenContent = () => {
   const dispatch = useIODispatch();
   const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
   return (
-    <>
-      <ListItemCheckbox
-        icon="warningFilled"
-        selected={useCieUat}
-        onValueChange={newValue => {
-          if (newValue) {
-            dispatch(cieLoginEnableUat());
-          } else {
-            dispatch(cieLoginDisableUat());
-          }
-        }}
-        value={`Abilita endpoint di collaudo (${CieEntityIds.DEV})`}
-        description={
-          "Questa opzione serve agli sviluppatori, per testare la login con CIE."
+    <ListItemCheckbox
+      icon="warningFilled"
+      selected={useCieUat}
+      onValueChange={newValue => {
+        if (newValue) {
+          dispatch(cieLoginEnableUat());
+        } else {
+          dispatch(cieLoginDisableUat());
         }
-        accessibilityLabel={""}
-      />
-      <Divider />
-    </>
+      }}
+      value={`Abilita endpoint di collaudo (${CieEntityIds.DEV})`}
+      description={
+        "Questa opzione serve agli sviluppatori, per testare la login con CIE."
+      }
+      accessibilityLabel={""}
+    />
   );
 };
 
