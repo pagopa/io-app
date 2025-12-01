@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import i18n from "i18next";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -80,6 +81,12 @@ export const SendAARInitialFlowScreen = ({
     case sendAARFlowStates.displayingAARToS:
       return <SendAARTosComponent />;
     default:
-      return <SendAARLoadingComponent />;
+      return (
+        <SendAARLoadingComponent
+          contentTitle={i18n.t(
+            "features.pn.aar.flow.fetchingQrData.loadingText"
+          )}
+        />
+      );
   }
 };
