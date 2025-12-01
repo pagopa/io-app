@@ -117,6 +117,7 @@ describe("superProperties", () => {
             isScreenLockSet: true,
             isScreenReaderEnabled: true,
             CGN_STATUS: "not_active",
+            CDC_STATUS: 0,
             ITW_CED_V2: "not_available",
             ITW_ID_V2: "not_available",
             ITW_PID: "not_available",

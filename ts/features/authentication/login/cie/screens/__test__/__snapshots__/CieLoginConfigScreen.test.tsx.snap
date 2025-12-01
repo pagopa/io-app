@@ -30,147 +30,6 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
         ]
       }
     >
-      <View
-        collapsable={false}
-        pointerEvents="box-none"
-        style={
-          {
-            "zIndex": 1,
-          }
-        }
-      >
-        <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
-          onLayout={[Function]}
-          pointerEvents="box-none"
-          style={null}
-        >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "height": 44,
-                "maxHeight": undefined,
-                "minHeight": undefined,
-                "opacity": undefined,
-                "transform": undefined,
-              }
-            }
-          >
-            <View
-              pointerEvents="none"
-              style={
-                {
-                  "height": 0,
-                }
-              }
-            />
-            <View
-              pointerEvents="box-none"
-              style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
-              }
-            >
-              <View
-                collapsable={false}
-                pointerEvents="box-none"
-                style={
-                  {
-                    "alignItems": "flex-start",
-                    "flexBasis": 0,
-                    "flexGrow": 1,
-                    "justifyContent": "center",
-                    "marginStart": 0,
-                    "opacity": 1,
-                  }
-                }
-              />
-              <View
-                collapsable={false}
-                pointerEvents="box-none"
-                style={
-                  {
-                    "justifyContent": "center",
-                    "marginHorizontal": 16,
-                    "maxWidth": 718,
-                    "opacity": 1,
-                  }
-                }
-              >
-                <Text
-                  accessibilityRole="header"
-                  aria-level="1"
-                  collapsable={false}
-                  numberOfLines={1}
-                  onLayout={[Function]}
-                  style={
-                    {
-                      "color": "rgb(28, 28, 30)",
-                      "fontSize": 17,
-                      "fontWeight": "600",
-                    }
-                  }
-                >
-                  DUMMY
-                </Text>
-              </View>
-              <View
-                collapsable={false}
-                pointerEvents="box-none"
-                style={
-                  {
-                    "alignItems": "flex-end",
-                    "flexBasis": 0,
-                    "flexGrow": 1,
-                    "justifyContent": "center",
-                    "marginEnd": 0,
-                    "opacity": 1,
-                  }
-                }
-              />
-            </View>
-          </View>
-        </View>
-      </View>
       <RNSScreenContainer
         onLayout={[Function]}
         style={
@@ -290,7 +149,7 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={-1}
+                handlerTag={2}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -341,29 +200,78 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
                         }
                       }
                     >
-                      <View
-                        style={
-                          {
-                            "flexGrow": 1,
-                          }
+                      <RCTScrollView
+                        collapsable={false}
+                        contentContainerStyle={
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
                         }
+                        decelerationRate="normal"
+                        onScroll={[Function]}
+                        scrollEventThrottle={8}
+                        snapToEnd={false}
+                        snapToOffsets={
+                          [
+                            0,
+                            0,
+                          ]
+                        }
+                        testID="CieLoginConfigScreen"
                       >
-                        <RNCSafeAreaView
-                          edges={
-                            {
-                              "bottom": "additive",
-                              "left": "additive",
-                              "right": "additive",
-                              "top": "additive",
+                        <View>
+                          <View
+                            onLayout={[Function]}
+                            style={
+                              {
+                                "paddingHorizontal": 24,
+                              }
                             }
-                          }
-                          style={
-                            {
-                              "flex": 1,
+                          >
+                            <View
+                              style={
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 8,
+                                }
+                              }
+                            >
+                              <Text
+                                accessibilityLabel="CIE Login Settings"
+                                accessibilityRole="header"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="title1"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#0E0F13",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 26,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 34,
+                                    },
+                                  ]
+                                }
+                              >
+                                CIE Login Settings
+                              </Text>
+                            </View>
+                          </View>
+                          <View
+                            style={
+                              {
+                                "height": 16,
+                              }
                             }
-                          }
-                          testID="CieLoginConfigScreen"
-                        >
+                          />
                           <View
                             style={
                               {
@@ -568,7 +476,231 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
                               />
                             </View>
                           </View>
-                        </RNCSafeAreaView>
+                        </View>
+                      </RCTScrollView>
+                    </View>
+                    <View
+                      collapsable={false}
+                      pointerEvents="box-none"
+                    >
+                      <View
+                        accessibilityElementsHidden={false}
+                        importantForAccessibility="auto"
+                        onLayout={[Function]}
+                        pointerEvents="box-none"
+                        style={null}
+                      >
+                        <View
+                          accessibilityRole="header"
+                          style={
+                            [
+                              {
+                                "borderBottomWidth": 1,
+                                "borderColor": "rgba(210,214,227,0)",
+                              },
+                              {},
+                              {
+                                "backgroundColor": undefined,
+                                "borderColor": undefined,
+                              },
+                            ]
+                          }
+                        >
+                          <View
+                            style={
+                              [
+                                {
+                                  "marginTop": 0,
+                                },
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "flexGrow": 1,
+                                  "height": 56,
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 24,
+                                },
+                              ]
+                            }
+                          >
+                            <View
+                              accessibilityLabel="Indietro"
+                              accessibilityRole="button"
+                              accessibilityState={
+                                {
+                                  "busy": undefined,
+                                  "checked": undefined,
+                                  "disabled": false,
+                                  "expanded": undefined,
+                                  "selected": undefined,
+                                }
+                              }
+                              accessibilityValue={
+                                {
+                                  "max": undefined,
+                                  "min": undefined,
+                                  "now": undefined,
+                                  "text": undefined,
+                                }
+                              }
+                              accessible={true}
+                              collapsable={false}
+                              focusable={true}
+                              hitSlop={8}
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onResponderGrant={[Function]}
+                              onResponderMove={[Function]}
+                              onResponderRelease={[Function]}
+                              onResponderTerminate={[Function]}
+                              onResponderTerminationRequest={[Function]}
+                              onStartShouldSetResponder={[Function]}
+                            >
+                              <View
+                                style={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "height": 24,
+                                      "width": 24,
+                                    },
+                                    false,
+                                  ]
+                                }
+                              >
+                                <RNSVGSvgView
+                                  accessibilityElementsHidden={true}
+                                  accessibilityLabel=""
+                                  accessible={false}
+                                  align="xMidYMid"
+                                  animatedProps={
+                                    {
+                                      "color": undefined,
+                                    }
+                                  }
+                                  bbHeight={36}
+                                  bbWidth={36}
+                                  color="#0E0F13"
+                                  focusable={false}
+                                  height={36}
+                                  importantForAccessibility="no-hide-descendants"
+                                  meetOrSlice={0}
+                                  minX={0}
+                                  minY={0}
+                                  style={
+                                    [
+                                      {
+                                        "backgroundColor": "transparent",
+                                        "borderWidth": 0,
+                                      },
+                                      {
+                                        "flex": 0,
+                                        "height": 36,
+                                        "width": 36,
+                                      },
+                                    ]
+                                  }
+                                  vbHeight={24}
+                                  vbWidth={24}
+                                  width={36}
+                                >
+                                  <RNSVGGroup
+                                    fill={
+                                      {
+                                        "payload": 4278190080,
+                                        "type": 0,
+                                      }
+                                    }
+                                  >
+                                    <RNSVGPath
+                                      clipRule={0}
+                                      d="M12.7071.2929c-.3905-.39053-1.0237-.39053-1.4142 0l-11 11c-.39053.3905-.39053 1.0237 0 1.4142l11 11c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L2.41421 12 12.7071 1.70711c.3905-.39053.3905-1.0237 0-1.41422Z"
+                                      fill={
+                                        {
+                                          "type": 2,
+                                        }
+                                      }
+                                      fillRule={0}
+                                      propList={
+                                        [
+                                          "fill",
+                                          "fillRule",
+                                        ]
+                                      }
+                                    />
+                                  </RNSVGGroup>
+                                </RNSVGSvgView>
+                              </View>
+                            </View>
+                            <View
+                              accessibilityElementsHidden={false}
+                              accessibilityLabel="CIE Login Settings"
+                              accessibilityRole="header"
+                              accessible={true}
+                              importantForAccessibility="yes"
+                              style={
+                                {
+                                  "flexGrow": 1,
+                                  "flexShrink": 1,
+                                  "marginHorizontal": 16,
+                                }
+                              }
+                            >
+                              <Text
+                                accessible={false}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
+                                numberOfLines={1}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#0E0F13",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 14,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": undefined,
+                                    },
+                                    [
+                                      {
+                                        "color": "#0E0F13",
+                                        "textAlign": "center",
+                                      },
+                                      {
+                                        "opacity": undefined,
+                                      },
+                                    ],
+                                  ]
+                                }
+                              >
+                                CIE Login Settings
+                              </Text>
+                            </View>
+                            <View
+                              style={
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "flexShrink": 0,
+                                  "gap": 24,
+                                }
+                              }
+                            >
+                              <View
+                                style={
+                                  {
+                                    "width": 24,
+                                  }
+                                }
+                              />
+                            </View>
+                          </View>
+                        </View>
                       </View>
                     </View>
                   </View>
@@ -578,6 +710,20 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
           </View>
         </RNSScreen>
       </RNSScreenContainer>
+      <View
+        collapsable={false}
+        pointerEvents="box-none"
+        style={
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
+        }
+      />
     </View>
   </RNCSafeAreaProvider>
 </View>

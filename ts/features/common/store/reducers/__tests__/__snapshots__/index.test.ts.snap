@@ -136,11 +136,19 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
   },
   "ingress": {
+    "checkSession": {
+      "hasError": false,
+    },
     "isBlockingScreen": false,
   },
   "itWallet": {
     "credentials": {
       "credentials": {},
+    },
+    "credentialsCatalogue": {
+      "catalogue": {
+        "kind": "PotNone",
+      },
     },
     "environment": {
       "env": "prod",
@@ -176,9 +184,13 @@ exports[`featuresPersistor should match snapshot 1`] = `
   },
   "loginFeatures": {
     "activeSessionLogin": {
+      "activeSessionLoginLocalFlag": false,
+      "engagement": {
+        "hasBlockingScreenBeenVisualized": false,
+        "showSessionExpirationBanner": true,
+      },
       "isActiveSessionLogin": false,
       "isUserLoggedIn": false,
-      "refreshMessagesSection": true,
     },
     "cieLogin": {
       "isCieIDTourGuideEnabled": true,
@@ -205,10 +217,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
     "loginInfo": {
       "userFromSuccessLogin": false,
-    },
-    "loginPreferences": {
-      "activeSessionLoginLocalFlag": false,
-      "showSessionExpirationBanner": true,
     },
     "nativeLogin": {
       "enabled": true,

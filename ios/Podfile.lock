@@ -227,7 +227,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - pagopa-io-react-native-login-utils (1.2.0-beta.0):
+  - pagopa-io-react-native-login-utils (1.2.0):
     - boost
     - DoubleConversion
     - fast_float
@@ -3591,7 +3591,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-http-client: 7346af065c7754e2fff7d69076bd31f31a42e62f
   pagopa-io-react-native-integrity: 2cc6ceedf936c53b25eabc42c96a6edcdff6299f
   pagopa-io-react-native-jwt: 55149438e0bc8a553136a94fdcb5989fe8438958
-  pagopa-io-react-native-login-utils: 7a8df2c5c8adc05e263b3aa5a98eae610e082ddd
+  pagopa-io-react-native-login-utils: ffdf360acc388e12b862c7aaed2efd7f54ade489
   pagopa-io-react-native-secure-storage: e5fcc6284984fb3f73d525b3f120c200744eae20
   pagopa-react-native-zendesk: 76d9f146bfdfa15371d8ef20a2f4ba7f994fd0a8
   RCT-Folly: 846fda9475e61ec7bcbf8a3fe81edfcaeb090669
@@ -3713,6 +3713,6 @@ SPEC CHECKSUMS:
   ZendeskSupportSDK: b512cfc74b6bf8490e589f02cf52e27ed4f2bebe
   ZXingObjC: 8898711ab495761b2dbbdec76d90164a6d7e14c5
 
-PODFILE CHECKSUM: ac868f614d869af88fdd6db3a5ce90892f7b3d66
+PODFILE CHECKSUM: f1a53c1a8fae642773a7e9eb012bc039e05451c2
 
 COCOAPODS: 1.15.2

@@ -1,8 +1,6 @@
-import { ContentWrapper, OTPInput } from "@pagopa/io-app-design-system";
+import { OTPInput } from "@pagopa/io-app-design-system";
 import { useEffect, useState } from "react";
-import { ScrollView } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import CieLoginConfigScreenContent from "../components/CieLoginConfigScreenContent";
 
 const PIN_LENGTH = 6;
@@ -12,14 +10,12 @@ type PinViewProps = {
   setPin: (pin: string) => void;
 };
 const PinView = (props: PinViewProps) => (
-  <>
-    <OTPInput
-      secret
-      value={props.pin}
-      length={PIN_LENGTH}
-      onValueChange={props.setPin}
-    />
-  </>
+  <OTPInput
+    secret
+    value={props.pin}
+    length={PIN_LENGTH}
+    onValueChange={props.setPin}
+  />
 );
 
 /**
@@ -40,19 +36,17 @@ const CieLoginConfigScreen = () => {
   }, [pin]);
 
   return (
-    <BaseScreenComponent goBack={true} headerTitle={"CIE Login Settings"}>
-      <SafeAreaView style={{ flex: 1 }} testID="CieLoginConfigScreen">
-        <ContentWrapper>
-          {locked ? (
-            <PinView pin={pin} setPin={setPin} />
-          ) : (
-            <ScrollView>
-              <CieLoginConfigScreenContent />
-            </ScrollView>
-          )}
-        </ContentWrapper>
-      </SafeAreaView>
-    </BaseScreenComponent>
+    <IOScrollViewWithLargeHeader
+      title={{ label: "CIE Login Settings" }}
+      testID="CieLoginConfigScreen"
+      includeContentMargins
+    >
+      {locked ? (
+        <PinView pin={pin} setPin={setPin} />
+      ) : (
+        <CieLoginConfigScreenContent />
+      )}
+    </IOScrollViewWithLargeHeader>
   );
 };
 

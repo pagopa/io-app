@@ -2088,6 +2088,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                   "value": false,
                                 },
                                 {
+                                  "description": "La modifica richiede il riavvio dell'app",
                                   "label": "Login a sessione attiva",
                                   "onSwitchValueChange": [Function],
                                   "value": false,
@@ -2761,6 +2762,33 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                       />
                                     </View>
                                   </View>
+                                  <View
+                                    style={
+                                      {
+                                        "height": 4,
+                                      }
+                                    }
+                                  />
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    La modifica richiede il riavvio dell'app
+                                  </Text>
                                 </View>
                               </View>
                             </View>
