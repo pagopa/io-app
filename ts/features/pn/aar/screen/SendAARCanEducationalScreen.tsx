@@ -1,13 +1,18 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { constNull } from "fp-ts/lib/function";
 import { IOVisualCostants, VSpacer } from "@pagopa/io-app-design-system";
 import { Alert, Dimensions, Image } from "react-native";
 import i18n from "i18next";
+import { useEffect } from "react";
 import cieCanEducationalSource from "../../../../../img/features/pn/cieCanEducational.png";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
-import { useIOSelector } from "../../../../store/hooks";
-import { aarAdresseeDenominationSelector } from "../store/selectors";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import {
+  aarAdresseeDenominationSelector,
+  currentAARFlowData
+} from "../store/selectors";
+import { setAarFlowState } from "../store/actions";
+import { sendAARFlowStates } from "../utils/stateUtils";
 
 const screenWidth = Dimensions.get("screen").width;
 const { width, height, uri } = Image.resolveAssetSource(
@@ -18,8 +23,16 @@ const maxScreenWidth = screenWidth - IOVisualCostants.appMarginDefault * 2;
 const maxHeight = maxScreenWidth / aspectRatio;
 
 export const SendAARCanEducationalScreen = () => {
+  const dispatch = useIODispatch();
+  const currentAARState = useIOSelector(currentAARFlowData);
   const { terminateFlow } = useSendAarFlowManager();
   const denomination = useIOSelector(aarAdresseeDenominationSelector);
+
+  useEffect(() => {
+    if (currentAARState.type === sendAARFlowStates.cieCanInsertion) {
+      // TODO: [IOCOM-2748] navigate into CIE CAN insertion screen
+    }
+  }, [currentAARState.type]);
 
   const handleGoBack = () => {
     Alert.alert(
@@ -45,7 +58,16 @@ export const SendAARCanEducationalScreen = () => {
           type: "SingleButton",
           primary: {
             label: i18n.t("global.buttons.continue"),
-            onPress: constNull
+            onPress: () => {
+              if (currentAARState.type === sendAARFlowStates.cieCanAdvisory) {
+                dispatch(
+                  setAarFlowState({
+                    ...currentAARState,
+                    type: sendAARFlowStates.cieCanInsertion
+                  })
+                );
+              }
+            }
           }
         }}
         title={{
