@@ -16,6 +16,7 @@ import {
   removeCachedAttachment,
   requestAutomaticMessagesRefresh,
   resetGetMessageDataAction,
+  setMessageSagasRegisteredAction,
   setShownMessageCategoryAction,
   startPaymentStatusTracking,
   updatePaymentForMessage,
@@ -708,6 +709,13 @@ describe("index", () => {
         expect(action.type).toBe("REQUEST_AUTOMATIC_MESSAGE_REFRESH");
         expect(action.payload).toBe(category);
       });
+    });
+  });
+
+  describe("setMessageSagasRegisteredAction", () => {
+    it(`should match expected type and payload`, () => {
+      const action = setMessageSagasRegisteredAction();
+      expect(action.type).toBe("SET_MESSAGE_SAGAS_REGISTERED");
     });
   });
 });

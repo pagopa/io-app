@@ -1,9 +1,6 @@
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
 
-export const trackCdcRequestStart = () =>
-  mixpanelTrack("CDC_REQUEST_START", buildEventProperties("UX", "action"));
-
 export const trackCdcRequestIntro = () =>
   mixpanelTrack("CDC_REQUEST_INTRO", buildEventProperties("UX", "screen_view"));
 
@@ -15,3 +12,6 @@ export const trackCdcRequestIntroContinue = () =>
 
 export const trackCdcGoToService = () =>
   mixpanelTrack("CDC_GO_TO_SERVICE", buildEventProperties("UX", "action"));
+
+export const trackCdcCardError = () =>
+  mixpanelTrack("CDC_CARD_ERROR", buildEventProperties("KO", "error"));
