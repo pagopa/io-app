@@ -23,8 +23,10 @@ import Animated, {
   useSharedValue,
   withSpring
 } from "react-native-reanimated";
-import { CircularProgress } from "../../../../../components/ui/CircularProgress";
-import { setAccessibilityFocus } from "../../../../../utils/accessibility";
+import { CircularProgress } from "../../../../components/ui/CircularProgress";
+import { setAccessibilityFocus } from "../../../../utils/accessibility";
+import { isDevEnv } from "../../../../utils/environment";
+import { platformSelect } from "../../utils";
 
 const accessibityTimeout = 100 as Millisecond;
 
@@ -35,6 +37,10 @@ export type CieCardReadContentProps = {
   pictogram: IOPictograms;
   primaryAction?: Omit<IOButtonBlockSpecificProps, "variant">;
   secondaryAction?: Omit<IOButtonLinkSpecificProps, "variant">;
+  /**
+   * @platform iOS
+   */
+  hiddenProgressBar?: boolean;
 };
 
 /**
@@ -53,7 +59,7 @@ const Title = ({ title }: Pick<CieCardReadContentProps, "title">) => {
 
   return (
     <View accessible ref={titleRef}>
-      {Platform.select({
+      {platformSelect({
         ios: <H4>{title}</H4>,
         default: <H3 style={{ textAlign: "center" }}>{title}</H3>
       })}
@@ -68,7 +74,7 @@ const Subtitle = ({ subtitle }: Pick<CieCardReadContentProps, "subtitle">) => {
   if (subtitle === undefined) {
     return null;
   }
-  return Platform.select({
+  return platformSelect({
     ios: <Body color="grey-650">{subtitle}</Body>,
     default: (
       <Body color="grey-650" style={{ textAlign: "center" }}>
@@ -84,7 +90,7 @@ const Subtitle = ({ subtitle }: Pick<CieCardReadContentProps, "subtitle">) => {
 const Actions = (
   props: Pick<CieCardReadContentProps, "primaryAction" | "secondaryAction">
 ) =>
-  Platform.select({
+  platformSelect({
     ios: (
       <VStack space={16}>
         {props.primaryAction ? (
@@ -180,7 +186,9 @@ const ContentIos = (props: CieCardReadContentProps) => (
   <ContentWrapper style={{ flex: 1 }}>
     <VSpacer size={32} />
     <VStack space={16} style={{ flex: 1 }}>
-      <LinearProgressBar progress={props.progress} />
+      {!props.hiddenProgressBar && (
+        <LinearProgressBar progress={props.progress} />
+      )}
       <HStack space={32}>
         <View style={{ flex: 1, paddingVertical: 8, gap: 4 }}>
           <Title title={props.title} />
@@ -226,7 +234,14 @@ const ContentAndroid = (props: CieCardReadContentProps) => (
 /**
  * Renders the read progress screen content based on the platform
  */
-export const ItwCieCardReadContent = Platform.select({
+export const CieCardReadContent = platformSelect({
   ios: ContentIos,
   default: ContentAndroid
 });
+
+export const testable = isDevEnv
+  ? {
+      ContentIos,
+      ContentAndroid
+    }
+  : undefined;

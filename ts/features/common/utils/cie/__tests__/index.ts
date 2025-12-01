@@ -1,4 +1,4 @@
-import { getProgressEmojis } from "../actions";
+import { getProgressEmojis } from "..";
 
 describe("getProgressEmojis", () => {
   test.each([

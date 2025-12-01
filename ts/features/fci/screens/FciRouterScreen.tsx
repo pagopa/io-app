@@ -3,8 +3,8 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as J from "fp-ts/lib/Json";
 import * as O from "fp-ts/lib/Option";
-import { ReactElement, useEffect } from "react";
 import I18n from "i18next";
+import { ReactElement, useEffect } from "react";
 import { ProblemJson } from "../../../../definitions/fci/ProblemJson";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
@@ -16,9 +16,11 @@ import {
   getErrorFromNetworkError,
   getGenericError
 } from "../../../utils/errors";
-import ErrorComponent from "../components/ErrorComponent";
-import GenericErrorComponent from "../components/GenericErrorComponent";
 import LoadingComponent from "../components/LoadingComponent";
+import {
+  default as ErrorComponent,
+  default as SignatureStatusComponent
+} from "../components/SignatureStatusComponent";
 import SuccessComponent from "../components/SuccessComponent";
 import { FciParamsList } from "../navigation/params";
 import { fciEndRequest, fciSignatureRequestFromId } from "../store/actions";
@@ -47,10 +49,11 @@ const FciSignatureScreen = (
 
   if (!fciEnabled) {
     return (
-      <GenericErrorComponent
+      <SignatureStatusComponent
         title={I18n.t("features.fci.errors.generic.update.title")}
         subTitle={I18n.t("features.fci.errors.generic.update.subTitle")}
         onPress={() => dispatch(fciEndRequest())}
+        pictogram={"umbrella"}
         testID="GenericErrorComponentTestID"
       />
     );
@@ -75,16 +78,17 @@ const FciSignatureScreen = (
     }
 
     return (
-      <GenericErrorComponent
+      <SignatureStatusComponent
         title={I18n.t("features.fci.errors.generic.default.title")}
         subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
         onPress={() => dispatch(fciEndRequest())}
+        pictogram={"umbrella"}
         testID="GenericErrorComponentTestID"
       />
     );
   };
 
-  // given an error should parse it and return a GenericErrorComponent
+  // given an error should parse it and return a SignatureStatusComponent
   const renderErrorComponent = (error?: NetworkError) =>
     pipe(
       error,

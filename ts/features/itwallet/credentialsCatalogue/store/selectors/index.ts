@@ -2,12 +2,9 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { constTrue, pipe } from "fp-ts/lib/function";
 import { isAfter } from "date-fns";
+import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
-import {
-  DigitalCredentialsCatalogue,
-  mapCredentialsByType
-} from "../../../common/utils/itwCredentialsCatalogueUtils";
-import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import { DigitalCredentialMetadata } from "../../../common/utils/itwCredentialsCatalogueUtils";
 
 /**
  * Select the last fetched credentials catalogue.
@@ -15,24 +12,6 @@ import { CredentialType } from "../../../common/utils/itwMocksUtils";
  */
 export const itwCredentialsCatalogueSelector = (state: GlobalState) =>
   pot.toUndefined(state.features.itWallet.credentialsCatalogue.catalogue);
-
-/**
- * Select the credential by type from the credentials catalogue.
- *  @param credentialType - The type of the credential to fetch.
- */
-export const itwCredentialByTypeSelector = (
-  state: GlobalState,
-  credentialType: CredentialType
-) => {
-  const catalogue = pot.toUndefined(
-    state.features.itWallet.credentialsCatalogue.catalogue
-  );
-  const mappedCredentials = mapCredentialsByType(
-    catalogue as DigitalCredentialsCatalogue
-  );
-
-  return mappedCredentials[credentialType];
-};
 
 /**
  * Select whether the credentials catalogue is stale, i.e. the JWT is expired.
@@ -47,3 +26,24 @@ export const itwIsCredentialsCatalogueStale = (state: GlobalState) =>
     O.map(catalogue => isAfter(new Date(), new Date(catalogue.exp * 1000))),
     O.getOrElse(constTrue)
   );
+
+/**
+ * Return a dictionary that maps each credential type to its metadata in the catalogue.
+ */
+export const itwCredentialsCatalogueByTypesSelector = createSelector(
+  itwCredentialsCatalogueSelector,
+  maybeCatalogue =>
+    pipe(
+      O.fromNullable(maybeCatalogue),
+      O.map(catalogue =>
+        catalogue.credentials.reduce(
+          (acc, credential) => ({
+            ...acc,
+            [credential.credential_type]: credential
+          }),
+          {} as Record<string, DigitalCredentialMetadata>
+        )
+      ),
+      O.toUndefined
+    )
+);
