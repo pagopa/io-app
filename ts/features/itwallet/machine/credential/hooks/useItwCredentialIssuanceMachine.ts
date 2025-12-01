@@ -14,8 +14,8 @@ type CredentialIssuanceActorRef = ActorRefFrom<ItwCredentialIssuanceMachine>;
  * - as a standalone machine outside the eID flow.
  *
  * @returns An object containing:
- * - `actorRef`: the reference to the active Credential Issuance Machine
- * - `snapshot`: the current state snapshot of that machine
+ * - `credentialIssuanceMachineRef`: the reference to the active Credential Issuance Machine
+ * - `credentialIssuanceMachineSnapshot`: the current state snapshot of that machine
  */
 export const useItwCredentialIssuanceMachine = () => {
   // Snapshot of the eID issuance machine

@@ -150,10 +150,10 @@ export const itwEidIssuanceMachine = setup({
     isReissuance: ({ context }) => context.mode === "reissuance",
     isUpgrade: ({ context }) => context.mode === "upgrade",
     isL2Fallback: ({ context }) => context.level === "l2-fallback",
-    hasCredentialType: ({ context }) => !!context.credentialType,
     isL3FeaturesEnabled: ({ context }) =>
       isL3IssuanceFeaturesEnabled(context.level),
-    isEligibleForItwSimplifiedActivation: notImplemented
+    isEligibleForItwSimplifiedActivation: notImplemented,
+    hasCredentialType: ({ context }) => !!context.credentialType
   }
 }).createMachine({
   id: "itwEidIssuanceMachine",
@@ -872,11 +872,11 @@ export const itwEidIssuanceMachine = setup({
       ]
     },
     CredentialIssuance: {
-      tags: [ItwTags.Loading],
       description:
         "This state represents the Credential Issuance Machine and initializes the process of adding a new credential to the wallet.",
       entry: [
         "navigateToSuccessScreen",
+        // Send the select-credential event to the credential issuance machine
         sendTo("credentialIssuanceMachine", ({ context }) => ({
           type: "select-credential",
           credentialType: context.credentialType,

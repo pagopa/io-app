@@ -3,6 +3,7 @@ import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
+import { ActorRefFrom, StateFrom } from "xstate";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -38,7 +39,6 @@ import { useCredentialEventsTracking } from "../hooks/useCredentialEventsTrackin
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { useItwCredentialIssuanceMachine } from "../../machine/credential/hooks/useItwCredentialIssuanceMachine";
-import { ActorRefFrom, StateFrom } from "xstate";
 import { ItwCredentialIssuanceMachine } from "../../machine/credential/machine";
 
 // Errors that allow a user to send a support request to Zendesk
