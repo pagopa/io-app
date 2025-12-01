@@ -66,7 +66,7 @@ export const PnStackNavigator = () => (
       options={hiddenHeader}
     />
     <Stack.Screen
-      name={PN_ROUTES.SEND_CIE_CAN_EDUCATIONAL}
+      name={PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL}
       component={SendAARCanEducationalScreen}
     />
   </Stack.Navigator>
