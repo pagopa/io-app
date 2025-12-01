@@ -18,6 +18,10 @@ import {
   requestSessionCorrupted,
   setFinalizeLoggedOutUserWithDifferentCF
 } from "../store/actions";
+import {
+  trackUndefinedBearerToken,
+  UndefinedBearerTokenPhase
+} from "../../../messages/analytics";
 
 export function* logoutUserAfterActiveSessionLoginSaga(
   action:
@@ -28,6 +32,9 @@ export function* logoutUserAfterActiveSessionLoginSaga(
   const keyInfo = yield* call(getKeyInfo);
 
   if (!sessionToken) {
+    trackUndefinedBearerToken(
+      UndefinedBearerTokenPhase.activeSessionLoginLogout
+    );
     return;
   }
 
