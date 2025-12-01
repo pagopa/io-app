@@ -8,6 +8,7 @@ import com.facebook.react.bridge.*
 import java.io.File
 import java.io.FileOutputStream
 import java.util.UUID
+import androidx.core.net.toUri
 
 class PdfHighResGeneratorModule(reactContext: ReactApplicationContext) :
   ReactContextBaseJavaModule(reactContext) {
@@ -20,10 +21,10 @@ class PdfHighResGeneratorModule(reactContext: ReactApplicationContext) :
   fun generate(filePath: String, scale: Double, promise: Promise) {
     var fileDescriptor: ParcelFileDescriptor? = null
     var tempPdfFile: File? = null
-
+    var bitmap: Bitmap? = null
     try {
       val context = reactApplicationContext
-      val uri = Uri.parse(filePath)
+      val uri = filePath.toUri()
       // Needed to resolve permission issues and "content://" vs "file://"
       tempPdfFile = File(context.cacheDir, "temp_source_${UUID.randomUUID()}.pdf")
       val inputStream = context.contentResolver.openInputStream(uri)
@@ -52,7 +53,7 @@ class PdfHighResGeneratorModule(reactContext: ReactApplicationContext) :
         val width = (page.width * scale).toInt()
         val height = (page.height * scale).toInt()
 
-        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
 
         // Set white background for better visibility
         bitmap.eraseColor(android.graphics.Color.WHITE)
@@ -75,10 +76,13 @@ class PdfHighResGeneratorModule(reactContext: ReactApplicationContext) :
       renderer.close()
       promise.resolve(outputPaths)
 
+    } catch (e: OutOfMemoryError) {
+      promise.reject("PDF_RENDER_OOM", "Out of memory while rendering PDF", e)
     } catch (e: Exception) {
       promise.reject("PDF_RENDER_ERROR", e.message, e)
     } finally {
       // Cleanup
+      bitmap?.recycle()
       try {
         fileDescriptor?.close()
         // Optional deletion of temp file if created to free up space
