@@ -19,6 +19,7 @@ import {
   trackWalletAdd
 } from "../../itwallet/analytics";
 import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet.tsx";
+import { itwSetPidReissuingSurveyHidden } from "../../itwallet/common/store/actions/preferences.ts";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
@@ -48,7 +49,11 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     route.params?.requiredEidFeedback || false
   );
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
-  const itwFeedbackBottomSheet = useItwEidFeedbackBottomSheet();
+  const itwFeedbackBottomSheet = useItwEidFeedbackBottomSheet({
+    onPrimaryAction: () => {
+      dispatch(itwSetPidReissuingSurveyHidden(true));
+    }
+  });
 
   // We need to use a local state to separate the UI state from the redux state
   // This prevents to display the refresh indicator when the refresh is triggered by other components
