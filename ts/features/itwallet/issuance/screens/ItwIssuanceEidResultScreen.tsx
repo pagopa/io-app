@@ -63,7 +63,7 @@ export const ItwIssuanceEidResultScreen = () => {
   const handleBackToWallet = () => machineRef.send({ type: "go-to-wallet" });
 
   if (issuanceMode === "credentialTriggered") {
-    return <ItwIssuanceEidPostCredentialTriggerContent />;
+    return <ItwIssuanceEidCredentialTriggerContent />;
   }
 
   if (issuanceMode === "upgrade") {
@@ -207,14 +207,11 @@ const ItwIssuanceEidReissuanceResultContent = () => {
   );
 };
 
-const ItwIssuanceEidPostCredentialTriggerContent = () => {
-  const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
-
-  if (isLoading) {
-    return (
-      <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
-    );
-  }
-
-  return null;
-};
+/**
+ * Transitional screen shown right after the eID issuance is completed.
+ * Its only purpose is to display a loading indicator while navigation
+ * proceeds toward the credential issuance flow.
+ */
+const ItwIssuanceEidCredentialTriggerContent = () => (
+  <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
+);

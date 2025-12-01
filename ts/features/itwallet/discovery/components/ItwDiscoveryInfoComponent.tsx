@@ -54,15 +54,15 @@ const scrollOffset: number = 12;
 // Percentage of the visible block after which the anchor link is hidden
 const intersectionRatio: number = 0.3;
 
+type Props = {
+  credentialType?: string;
+};
+
 /**
  * This is the component that shows the information about the activation of
  * IT-Wallet. Must be used only for L3 activations.
  */
-export const ItwDiscoveryInfoComponent = ({
-  credentialType
-}: {
-  credentialType?: string;
-}) => {
+export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const itwActivationDisabled = useIOSelector(itwIsActivationDisabledSelector);

@@ -109,7 +109,7 @@ export type Context = {
    */
   failedCredentials: ReadonlyArray<StoredCredential> | undefined;
   /**
-   * The type of the credential being issued.
+   * The credential type that triggered the eID issuance flow.
    */
   credentialType: string | undefined;
 };
