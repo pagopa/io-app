@@ -1,22 +1,21 @@
 import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
-import { useMemo } from "react";
 import I18n from "i18next";
-import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
-import { StoredCredential } from "../utils/itwTypesUtils";
+import { useMemo } from "react";
+import { useIOSelector } from "../../../../store/hooks";
+import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
 import {
   getMixPanelCredential,
   trackWalletCredentialShowAuthSource,
   trackWalletCredentialShowIssuer
 } from "../../analytics";
-import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
-import { useIOSelector } from "../../../../store/hooks";
-import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { getAuthSource, getItwAuthSource } from "../utils/itwMetadataUtils.ts";
-import { isItwCredential } from "../utils/itwCredentialUtils.ts";
-import { CredentialType } from "../utils/itwMocksUtils";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors/index.ts";
-import { DigitalCredentialMetadata } from "../utils/itwCredentialsCatalogueUtils.ts";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
+import { isItwCredential } from "../utils/itwCredentialUtils.ts";
+import { getAuthSource, getItwAuthSource } from "../utils/itwMetadataUtils.ts";
+import { CredentialType } from "../utils/itwMocksUtils";
+import { StoredCredential } from "../utils/itwTypesUtils";
 
 type ItwIssuanceMetadataProps = {
   credential: StoredCredential;
