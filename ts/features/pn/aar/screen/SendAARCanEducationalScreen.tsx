@@ -13,6 +13,7 @@ import {
 } from "../store/selectors";
 import { setAarFlowState } from "../store/actions";
 import { sendAARFlowStates } from "../utils/stateUtils";
+import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 
 const screenWidth = Dimensions.get("screen").width;
 const { width, height, uri } = Image.resolveAssetSource(
@@ -50,6 +51,11 @@ export const SendAARCanEducationalScreen = () => {
       ]
     );
   };
+
+  useHardwareBackButton(() => {
+    handleGoBack();
+    return true;
+  });
 
   return (
     <SafeAreaView style={{ flex: 1 }} edges={["bottom"]}>
