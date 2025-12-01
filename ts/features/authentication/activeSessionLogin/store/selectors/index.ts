@@ -47,6 +47,12 @@ export const isActiveSessionFastLoginEnabledSelector = (state: GlobalState) =>
   state.features.loginFeatures.activeSessionLogin?.loginInfo?.fastLoginOptIn ??
   false;
 
+export const cieIDSelectedSecurityLevelActiveSessionLoginSelector = (
+  state: GlobalState
+) =>
+  state.features.loginFeatures.activeSessionLogin?.loginInfo
+    ?.cieIDSelectedSecurityLevel;
+
 export const activeSessionLoginInfoSelector = (state: GlobalState) =>
   state.features.loginFeatures.activeSessionLogin?.loginInfo;
 
@@ -214,6 +220,3 @@ export const remoteApiLoginUrlPrefixSelector = createSelector(
       O.getOrElse(() => apiLoginUrlPrefix)
     )
 );
-export const shouldRefreshMessagesSectionSelector = (state: GlobalState) =>
-  state?.features?.loginFeatures?.activeSessionLogin?.refreshMessagesSection ??
-  true;

@@ -3,48 +3,60 @@ import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/prof
 import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 import { GlobalState } from "../../../../store/reducers/types";
 import { buildEventProperties } from "../../../../utils/analytics";
+import { LoginType } from "../../activeSessionLogin/screens/analytics";
 
-export function trackLoginSessionOptIn() {
+export function trackLoginSessionOptIn(flow: LoginType = "auth") {
   void mixpanelTrack(
     "LOGIN_SESSION_OPTIN_2",
-    buildEventProperties("UX", "screen_view")
+    buildEventProperties("UX", "screen_view", {
+      flow
+    })
   );
 }
 
-export function trackLoginSessionOptInInfo() {
+export function trackLoginSessionOptInInfo(flow: LoginType = "auth") {
   void mixpanelTrack(
     "LOGIN_SESSION_OPTIN_INFO",
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", {
+      flow
+    })
   );
 }
-
-export async function trackLoginSessionOptIn365(state: GlobalState) {
+export async function updateLoginSessionProfileAndSuperProperties(
+  state: GlobalState,
+  value: LoginSessionDuration
+) {
   await updateMixpanelProfileProperties(state, {
     property: "LOGIN_SESSION",
-    value: "365"
+    value
   });
   await updateMixpanelSuperProperties(state, {
     property: "LOGIN_SESSION",
-    value: "365"
+    value
   });
+}
+export async function trackLoginSessionOptIn365(
+  state: GlobalState,
+  flow: LoginType = "auth"
+) {
+  if (flow === "auth") {
+    await updateLoginSessionProfileAndSuperProperties(state, "365");
+  }
   mixpanelTrack(
     "LOGIN_SESSION_OPTIN_365_SELECTED",
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", { flow })
   );
 }
-
-export async function trackLoginSessionOptIn30(state: GlobalState) {
-  await updateMixpanelProfileProperties(state, {
-    property: "LOGIN_SESSION",
-    value: "30"
-  });
-  await updateMixpanelSuperProperties(state, {
-    property: "LOGIN_SESSION",
-    value: "30"
-  });
+export async function trackLoginSessionOptIn30(
+  state: GlobalState,
+  flow: LoginType = "auth"
+) {
+  if (flow === "auth") {
+    await updateLoginSessionProfileAndSuperProperties(state, "30");
+  }
   mixpanelTrack(
     "LOGIN_SESSION_OPTIN_30_SELECTED",
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", { flow })
   );
 }
 

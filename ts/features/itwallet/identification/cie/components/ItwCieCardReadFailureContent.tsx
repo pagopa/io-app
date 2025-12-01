@@ -15,15 +15,15 @@ import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import {
   CieCardReadContentProps,
-  ItwCieCardReadContent
-} from "./ItwCieCardReadContent";
+  CieCardReadContent
+} from "../../../../common/components/cie/CieCardReadContent";
 
 /**
  * Renders the failure screen content based on the platforms and received failure
  */
 export const ItwCieCardReadFailureContent = () => {
   const props = useFailureContentProps();
-  return <ItwCieCardReadContent {...props} />;
+  return <CieCardReadContent {...props} />;
 };
 
 const useFailureContentProps = (): CieCardReadContentProps => {
