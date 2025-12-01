@@ -59,6 +59,10 @@ class PdfHighResGenerator: NSObject {
         var outputPaths: [String] = []
         let pageCount = pdfDoc.numberOfPages // CGPDF pages are 1-based
         
+        // Maximum dimensions to prevent memory issues
+        let maxWidth = 4096.0
+        let maxHeight = 4096.0
+        
         for i in 1...pageCount {
             autoreleasepool {
                 guard let page = pdfDoc.page(at: i) else { return }
@@ -66,30 +70,44 @@ class PdfHighResGenerator: NSObject {
                 // Get Box Rect (MediaBox is the physical page size)
                 let pageRect = page.getBoxRect(.mediaBox)
                 
-                // Calculate Target Size
-                let targetWidth = Int(pageRect.width * CGFloat(scale))
-                let targetHeight = Int(pageRect.height * CGFloat(scale))
+                // Calculate Target Size with initial scale
+                var targetWidth = pageRect.width * CGFloat(scale)
+                var targetHeight = pageRect.height * CGFloat(scale)
+                
+                // Apply limits: scale down if exceeds max dimensions
+                var finalScale = CGFloat(scale)
+                if targetWidth > maxWidth || targetHeight > maxHeight {
+                    let widthScale = maxWidth / targetWidth
+                    let heightScale = maxHeight / targetHeight
+                    let limitScale = min(widthScale, heightScale)
+                    finalScale *= limitScale
+                    targetWidth *= limitScale
+                    targetHeight *= limitScale
+                }
+                
+                let finalWidth = Int(targetWidth)
+                let finalHeight = Int(targetHeight)
                 
                 // Create Bitmap Context, 8 bits per component, 4 components (ARGB), standard RGB color space
                 let colorSpace = CGColorSpaceCreateDeviceRGB()
                 let bitmapInfo = CGImageAlphaInfo.premultipliedFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue
                 
                 guard let context = CGContext(data: nil,
-                                              width: targetWidth,
-                                              height: targetHeight,
+                                              width: finalWidth,
+                                              height: finalHeight,
                                               bitsPerComponent: 8,
                                               bytesPerRow: 0,
                                               space: colorSpace,
                                               bitmapInfo: bitmapInfo) else { return }
                 // Fill white background
                 context.setFillColor(UIColor.white.cgColor)
-                context.fill(CGRect(x: 0, y: 0, width: CGFloat(targetWidth), height: CGFloat(targetHeight)))
+                context.fill(CGRect(x: 0, y: 0, width: CGFloat(finalWidth), height: CGFloat(finalHeight)))
                 
                 context.interpolationQuality = .high
                 context.saveGState()
                 
                 // Scale context to match the target resolution
-                context.scaleBy(x: CGFloat(scale), y: CGFloat(scale))
+                context.scaleBy(x: finalScale, y: finalScale)
                 
                 // We need to translate so the mediaBox origin (which might be non-zero) aligns with 0,0
                 context.translateBy(x: -pageRect.origin.x, y: -pageRect.origin.y)

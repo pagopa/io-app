@@ -47,11 +47,25 @@ class PdfHighResGeneratorModule(reactContext: ReactApplicationContext) :
       val outputPaths = WritableNativeArray()
       val cacheDir = context.cacheDir
 
+      // Maximum dimensions to prevent memory issues
+      val maxWidth = 4096
+      val maxHeight = 4096
+
       for (i in 0 until renderer.pageCount) {
         val page = renderer.openPage(i)
 
-        val width = (page.width * scale).toInt()
-        val height = (page.height * scale).toInt()
+        // Calculate target size with initial scale
+        var width = (page.width * scale).toInt()
+        var height = (page.height * scale).toInt()
+
+        // Apply limits: scale down if exceeds max dimensions
+        if (width > maxWidth || height > maxHeight) {
+          val widthScale = maxWidth.toDouble() / width
+          val heightScale = maxHeight.toDouble() / height
+          val limitScale = minOf(widthScale, heightScale)
+          width = (width * limitScale).toInt()
+          height = (height * limitScale).toInt()
+        }
 
         bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
 
