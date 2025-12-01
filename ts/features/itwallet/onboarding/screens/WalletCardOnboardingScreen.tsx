@@ -35,7 +35,10 @@ import {
   isItwEnabledSelector,
   itwDisabledCredentialsSelector
 } from "../../common/store/selectors/remoteConfig";
-import { itwCredentialsTypesSelector } from "../../credentials/store/selectors";
+import {
+  itwCredentialsEidSelector,
+  itwCredentialsTypesSelector
+} from "../../credentials/store/selectors";
 import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector
@@ -65,14 +68,15 @@ const activeBadge: Badge = {
 const WalletCardOnboardingScreen = () => {
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
+  const isFiscalCodeWhitelisted = useIOSelector(itwIsL3EnabledSelector);
   useFocusEffect(trackShowCredentialsList);
 
   const isItwSectionVisible = useMemo(
     // IT Wallet credential catalog should be visible if
     () =>
-      isItwValid && // An eID has ben obtained and wallet is valid
-      isItwEnabled, // Remote FF is enabled
-    [isItwValid, isItwEnabled]
+      (isItwValid && isItwEnabled) || // An eID has been obtained, wallet is valid, and remote FF is enabled
+      isFiscalCodeWhitelisted, // OR the user is whitelisted for L3 credentials
+    [isItwValid, isItwEnabled, isFiscalCodeWhitelisted]
   );
 
   return (
@@ -110,6 +114,8 @@ const ItwCredentialOnboardingSection = () => {
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
   const selectedCredentialOption =
     ItwCredentialIssuanceMachineContext.useSelector(selectCredentialTypeOption);
+  const eidOption = useIOSelector(itwCredentialsEidSelector);
+  const lacksPid = O.isNone(eidOption);
 
   // Show upcoming credentials only if L3 is enabled and env is "pre"
   const shouldShowUpcoming = isL3Enabled && env === "pre";
@@ -140,6 +146,11 @@ const ItwCredentialOnboardingSection = () => {
         } else if (!isITWalletValid && isNewCredential(type)) {
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.ISSUANCE.IT_WALLET_INACTIVE
+          });
+        } else if (lacksPid) {
+          navigation.navigate(ITW_ROUTES.MAIN, {
+            screen: ITW_ROUTES.DISCOVERY.INFO,
+            params: { level: "l3", credentialType: type }
           });
         } else {
           machineRef.send({

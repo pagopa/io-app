@@ -35,6 +35,12 @@ import type {
   IdentificationContext
 } from "./context";
 import { isL3IssuanceFeaturesEnabled } from "./utils";
+import { itwCredentialIssuanceMachine } from "../credential/machine";
+import { createCredentialIssuanceActorsImplementation } from "../credential/actors";
+import { createCredentialIssuanceActionsImplementation } from "../credential/actions";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { IOToast } from "@pagopa/io-app-design-system";
+import { createCredentialIssuanceGuardsImplementation } from "../credential/guards";
 
 export type RequestEidActorParams = {
   identification: IdentificationContext | undefined;
@@ -56,11 +62,15 @@ export type GetWalletAttestationActorParams = {
  * Creates the actors for the eid issuance machine
  * @param env - The environment to use for the IT Wallet API calls
  * @param store the IOStore
+ * @param navigation the IONavigation
+ * @param toast the IOToast
  * @returns the actors
  */
 export const createEidIssuanceActorsImplementation = (
   env: Env,
-  store: ReturnType<typeof useIOStore>
+  store: ReturnType<typeof useIOStore>,
+  navigation: ReturnType<typeof useIONavigation>,
+  toast: IOToast
 ) => ({
   verifyTrustFederation: fromPromise(async () => {
     // Evaluate the issuer trust
@@ -206,5 +216,15 @@ export const createEidIssuanceActorsImplementation = (
   credentialUpgradeMachine: itwCredentialUpgradeMachine.provide({
     actors: createCredentialUpgradeActorsImplementation(env),
     actions: createCredentialUpgradeActionsImplementation(store)
+  }),
+
+  credentialIssuanceMachine: itwCredentialIssuanceMachine.provide({
+    guards: createCredentialIssuanceGuardsImplementation(store),
+    actors: createCredentialIssuanceActorsImplementation(env, store),
+    actions: createCredentialIssuanceActionsImplementation(
+      navigation,
+      store,
+      toast
+    )
   })
 });

@@ -7,7 +7,8 @@ import {
   not,
   or,
   raise,
-  setup
+  setup,
+  sendTo
 } from "xstate";
 import { assert } from "../../../../utils/assert.ts";
 import { trackItWalletIntroScreen } from "../../analytics";
@@ -17,6 +18,7 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import { itwCredentialUpgradeMachine } from "../upgrade/machine.ts";
+import { itwCredentialIssuanceMachine } from "../credential/machine";
 import {
   GetWalletAttestationActorParams,
   type RequestEidActorParams,
@@ -134,7 +136,8 @@ export const itwEidIssuanceMachine = setup({
     startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
       notImplemented
     ),
-    credentialUpgradeMachine: itwCredentialUpgradeMachine
+    credentialUpgradeMachine: itwCredentialUpgradeMachine,
+    credentialIssuanceMachine: itwCredentialIssuanceMachine
   },
   guards: {
     issuedEidMatchesAuthenticatedUser: notImplemented,
@@ -147,6 +150,7 @@ export const itwEidIssuanceMachine = setup({
     isReissuance: ({ context }) => context.mode === "reissuance",
     isUpgrade: ({ context }) => context.mode === "upgrade",
     isL2Fallback: ({ context }) => context.level === "l2-fallback",
+    hasCredentialType: ({ context }) => !!context.credentialType,
     isL3FeaturesEnabled: ({ context }) =>
       isL3IssuanceFeaturesEnabled(context.level),
     isEligibleForItwSimplifiedActivation: notImplemented
@@ -191,7 +195,8 @@ export const itwEidIssuanceMachine = setup({
         start: {
           actions: assign(({ event }) => ({
             mode: event.mode,
-            level: event.level
+            level: event.level,
+            credentialType: event.credentialType
           })),
           target: "EvaluatingIssuanceMode"
         },
@@ -851,6 +856,10 @@ export const itwEidIssuanceMachine = setup({
       },
       onDone: [
         {
+          guard: "hasCredentialType",
+          target: "#itwEidIssuanceMachine.CredentialIssuance"
+        },
+        {
           guard: and([
             "hasLegacyCredentials",
             or(["isReissuance", "isUpgrade"])
@@ -860,6 +869,21 @@ export const itwEidIssuanceMachine = setup({
         {
           target: "#itwEidIssuanceMachine.Success"
         }
+      ]
+    },
+    CredentialIssuance: {
+      tags: [ItwTags.Loading],
+      invoke: {
+        id: "credentialIssuanceMachine",
+        src: "credentialIssuanceMachine"
+      },
+      entry: [
+        "navigateToSuccessScreen",
+        sendTo("credentialIssuanceMachine", ({ context }) => ({
+          type: "select-credential",
+          credentialType: context.credentialType,
+          mode: "issuance"
+        }))
       ]
     },
     CredentialsUpgrade: {

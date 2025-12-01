@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import {
   ContentWrapper,
   FeatureInfo,
@@ -54,6 +54,9 @@ import {
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwRequestedClaimsList } from "../components/ItwRequestedClaimsList";
+import { useItwCredentialIssuanceMachine } from "../../machine/credential/hooks/useItwCredentialIssuanceMachine";
+import { ItwCredentialIssuanceMachine } from "../../machine/credential/machine";
+import { ActorRefFrom, StateFrom } from "xstate";
 
 export type ItwIssuanceCredentialTrustIssuerNavigationParams = {
   credentialType?: string;
@@ -73,18 +76,12 @@ type ScreenProps =
 const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
   const { credentialType, asyncContinuation, isUpgrade } =
     ("route" in props ? props.route.params : props) ?? {};
-
   const eidOption = useIOSelector(itwCredentialsEidSelector);
-  const isLoading =
-    ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
-  const requestedCredentialOption =
-    ItwCredentialIssuanceMachineContext.useSelector(
-      selectRequestedCredentialOption
-    );
-  const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
-    selectCredentialTypeOption
-  );
-  const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
+
+  const { credentialIssuanceMachineRef, credentialIssuanceMachineSnapshot } = useItwCredentialIssuanceMachine();
+  const isLoading = selectIsLoading(credentialIssuanceMachineSnapshot);
+  const requestedCredentialOption = selectRequestedCredentialOption(credentialIssuanceMachineSnapshot);
+  const credentialTypeOption = selectCredentialTypeOption(credentialIssuanceMachineSnapshot);
 
   usePreventScreenCapture();
   useItwDisableGestureNavigation();
@@ -95,14 +92,14 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
   useFocusEffect(
     useCallback(() => {
       if (credentialType) {
-        machineRef.send({
+        credentialIssuanceMachineRef.send({
           type: "select-credential",
           credentialType,
           mode: isUpgrade ? "upgrade" : "issuance",
           isAsyncContinuation: asyncContinuation // TODO to be removed in [SIW-2839]
         });
       }
-    }, [credentialType, asyncContinuation, machineRef, isUpgrade])
+    }, [credentialType, asyncContinuation, credentialIssuanceMachineRef, isUpgrade])
   );
 
   if (isLoading) {
@@ -119,7 +116,9 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
     }),
     O.fold(
       () => <ItwGenericErrorContent />,
-      innerProps => <ContentView {...innerProps} />
+      innerProps => (
+        <ContentView {...innerProps} machineRef={credentialIssuanceMachineRef} machineSnapshot={credentialIssuanceMachineSnapshot} />
+      )
     )
   );
 };
@@ -128,22 +127,26 @@ type ContentViewProps = {
   credentialType: string;
   requestedCredential: RequestObject;
   eid: StoredCredential;
+  machineRef: ActorRefFrom<ItwCredentialIssuanceMachine>;
+  machineSnapshot: StateFrom<ItwCredentialIssuanceMachine>;
 };
 
 /**
  * Renders the content of the screen
  */
-const ContentView = ({ credentialType, eid }: ContentViewProps) => {
+const ContentView = ({
+  credentialType,
+  eid,
+  machineRef,
+  machineSnapshot
+}: ContentViewProps) => {
   const route = useRoute();
   const hasScrolledToBottom = useRef(false);
   const privacyUrl = useIOSelector(state =>
     generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
-
-  const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
-  const isIssuing =
-    ItwCredentialIssuanceMachineContext.useSelector(selectIsIssuing);
+  const isIssuing = selectIsIssuing(machineSnapshot);
   const theme = useIOTheme();
 
   const handleContinuePress = () => {

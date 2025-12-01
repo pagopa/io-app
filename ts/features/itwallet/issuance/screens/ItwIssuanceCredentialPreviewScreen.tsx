@@ -36,17 +36,17 @@ import {
   selectCredentialTypeOption
 } from "../../machine/credential/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
-import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
+import { useItwCredentialIssuanceMachine } from "../../machine/credential/hooks/useItwCredentialIssuanceMachine";
+import { ActorRefFrom } from "xstate";
+import { ItwCredentialIssuanceMachine } from "../../machine/credential/machine";
 
 export const ItwIssuanceCredentialPreviewScreen = () => {
-  const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
-    selectCredentialTypeOption
-  );
-  const credentialOption = ItwCredentialIssuanceMachineContext.useSelector(
-    selectCredentialOption
-  );
+  const { credentialIssuanceMachineRef, credentialIssuanceMachineSnapshot } = useItwCredentialIssuanceMachine();
+
+  const credentialOption = selectCredentialOption(credentialIssuanceMachineSnapshot);
+  const credentialTypeOption = selectCredentialTypeOption(credentialIssuanceMachineSnapshot);
 
   usePreventScreenCapture();
   useItwDisableGestureNavigation();
@@ -68,7 +68,7 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
           )}
         />
       ),
-      props => <ContentView {...props} />
+      props => <ContentView {...props} machineRef={credentialIssuanceMachineRef} />
     )
   );
 };
@@ -76,13 +76,17 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
 type ContentViewProps = {
   credentialType: string;
   credential: StoredCredential;
+  machineRef: ActorRefFrom<ItwCredentialIssuanceMachine>;
 };
 
 /**
  * Renders the content of the screen
  */
-const ContentView = ({ credentialType, credential }: ContentViewProps) => {
-  const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
+const ContentView = ({
+  credentialType,
+  credential,
+  machineRef
+}: ContentViewProps) => {
   const dispatch = useIODispatch();
   const route = useRoute();
   const isMultilevel = isMultiLevelCredential(credential);

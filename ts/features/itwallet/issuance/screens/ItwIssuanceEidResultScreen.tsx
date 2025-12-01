@@ -62,6 +62,10 @@ export const ItwIssuanceEidResultScreen = () => {
 
   const handleBackToWallet = () => machineRef.send({ type: "go-to-wallet" });
 
+  if (issuanceMode === "credentialTriggered") {
+    return <ItwIssuanceEidPostCredentialTriggerContent />;
+  }
+
   if (issuanceMode === "upgrade") {
     return (
       <ItwIssuanceEidUpgradeResultContent
@@ -201,4 +205,16 @@ const ItwIssuanceEidReissuanceResultContent = () => {
       <ItwReissuanceFeedbackBanner />
     </OperationResultScreenContent>
   );
+};
+
+const ItwIssuanceEidPostCredentialTriggerContent = () => {
+  const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
+
+  if (isLoading) {
+    return (
+      <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
+    );
+  }
+
+  return null;
 };

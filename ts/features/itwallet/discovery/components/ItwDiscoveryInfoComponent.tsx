@@ -58,7 +58,11 @@ const intersectionRatio: number = 0.3;
  * This is the component that shows the information about the activation of
  * IT-Wallet. Must be used only for L3 activations.
  */
-export const ItwDiscoveryInfoComponent = () => {
+export const ItwDiscoveryInfoComponent = ({
+  credentialType
+}: {
+  credentialType?: string;
+}) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const itwActivationDisabled = useIOSelector(itwIsActivationDisabledSelector);
@@ -69,8 +73,9 @@ export const ItwDiscoveryInfoComponent = () => {
     useCallback(() => {
       machineRef.send({
         type: "start",
-        mode: "issuance",
-        level: "l3"
+        mode: credentialType ? "credentialTriggered" : "issuance",
+        level: "l3",
+        credentialType: credentialType
       });
     }, [machineRef])
   );
