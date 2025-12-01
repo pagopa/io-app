@@ -6,6 +6,8 @@ import i18n from "i18next";
 import cieCanEducationalSource from "../../../../../img/features/pn/cieCanEducational.png";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
+import { useIOSelector } from "../../../../store/hooks";
+import { aarAdresseeDenominationSelector } from "../store/selectors";
 
 const screenWidth = Dimensions.get("screen").width;
 const { width, height, uri } = Image.resolveAssetSource(
@@ -17,6 +19,7 @@ const maxHeight = maxScreenWidth / aspectRatio;
 
 export const SendAARCanEducationalScreen = () => {
   const { terminateFlow } = useSendAarFlowManager();
+  const denomination = useIOSelector(aarAdresseeDenominationSelector);
 
   const handleGoBack = () => {
     Alert.alert(
@@ -47,7 +50,7 @@ export const SendAARCanEducationalScreen = () => {
         }}
         title={{
           label: i18n.t("features.pn.aar.flow.cieCanAdvisory.title", {
-            denomination: "Mario Rossi"
+            denomination
           })
         }}
         description={i18n.t("features.pn.aar.flow.cieCanAdvisory.description")}
