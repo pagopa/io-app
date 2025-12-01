@@ -23,6 +23,7 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 
@@ -42,9 +43,16 @@ export const createCredentialIssuanceActionsImplementation = (
 
     return {
       isItWalletValid: itwLifecycleIsITWalletValidSelector(state),
-      walletInstanceAttestation: itwWalletInstanceAttestationSelector(state)
+      walletInstanceAttestation: itwWalletInstanceAttestationSelector(state),
+      credentialsCatalogue: itwCredentialsCatalogueByTypesSelector(state)
     };
   }),
+
+  navigateToCredentialIntroductionScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_INTRODUCTION
+    });
+  },
 
   navigateToTrustIssuerScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
@@ -82,6 +90,12 @@ export const createCredentialIssuanceActionsImplementation = (
   navigateToEidVerificationExpiredScreen: () => {
     navigation.replace(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED
+    });
+  },
+
+  navigateToCardOnboardingScreen: () => {
+    navigation.replace(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ONBOARDING
     });
   },
 

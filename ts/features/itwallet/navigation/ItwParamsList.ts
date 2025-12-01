@@ -43,6 +43,7 @@ export type ItwParamsList = {
   [ITW_ROUTES.ISSUANCE.EID_PREVIEW]: undefined;
   [ITW_ROUTES.ISSUANCE.EID_RESULT]: undefined;
   [ITW_ROUTES.ISSUANCE.EID_FAILURE]: undefined;
+  [ITW_ROUTES.ISSUANCE.CREDENTIAL_INTRODUCTION]: undefined;
   [ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER]:
     | ItwIssuanceCredentialTrustIssuerNavigationParams
     | undefined;

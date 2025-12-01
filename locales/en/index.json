@@ -3944,6 +3944,30 @@
             "link": "Vai sul sito di SEND",
             "primaryAction": "Torna alla notifica",
             "secondaryAction": "Chiudi la notifica"
+          },
+          "cieScanning": {
+            "idle": {
+              "title": "Poggia il retro del telefono sulla CIE",
+              "status": "Posiziona il telefono sulla CIE per iniziare la lettura."
+            },
+            "reading": {
+              "title": "La lettura è in corso...",
+              "subtitle": "Non muovere il telefono.",
+              "status": "Non muovere il telefono."
+            },
+            "success": {
+              "title": "Lettura completata!",
+              "status": "Fatto!"
+            },
+            "error": {
+              "TAG_LOST": {
+                "title": "Hai rimosso il telefono troppo presto!",
+                "subtitle": "Riprova e tieni fermo il telefono per la lettura."
+              }
+            }
+          },
+          "validatingMandate": {
+            "loadingText": "Verifica della Carta di Identità Elettronica in corso"
           }
         }
       },

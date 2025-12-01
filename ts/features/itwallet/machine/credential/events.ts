@@ -27,6 +27,10 @@ export type Close = {
   type: "close";
 };
 
+export type Continue = {
+  type: "continue";
+};
+
 export type CredentialIssuanceEvents =
   | SelectCredential
   | ConfirmTrustData
@@ -34,4 +38,5 @@ export type CredentialIssuanceEvents =
   | Retry
   | Back
   | Close
+  | Continue
   | ErrorActorEvent;

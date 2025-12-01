@@ -1,4 +1,4 @@
-import { assign, fromPromise, not, setup } from "xstate";
+import { and, assign, fromPromise, not, setup } from "xstate";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import {
@@ -36,12 +36,14 @@ export const itwCredentialIssuanceMachine = setup({
      * Navigation actions
      */
 
+    navigateToCredentialIntroductionScreen: notImplemented,
     navigateToTrustIssuerScreen: notImplemented,
     navigateToCredentialPreviewScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToWallet: notImplemented,
     navigateToEidVerificationExpiredScreen: notImplemented,
     closeIssuance: notImplemented,
+    navigateToCardOnboardingScreen: notImplemented,
 
     /**
      * Store actions
@@ -81,7 +83,8 @@ export const itwCredentialIssuanceMachine = setup({
     isSessionExpired: notImplemented,
     hasValidWalletInstanceAttestation: notImplemented,
     isStatusError: notImplemented,
-    isEidExpired: notImplemented
+    isEidExpired: notImplemented,
+    hasCredentialIntroContent: notImplemented
   }
 }).createMachine({
   id: "itwCredentialIssuanceMachine",
@@ -111,6 +114,13 @@ export const itwCredentialIssuanceMachine = setup({
           target: "Idle"
         },
         {
+          guard: and([
+            ({ context }) => context.mode === "issuance",
+            "hasCredentialIntroContent"
+          ]),
+          target: "CredentialIntroduction"
+        },
+        {
           guard: ({ context }) => context.mode === "issuance",
           target: "TrustFederationVerification",
           actions: ["trackStartAddCredential"]
@@ -128,6 +138,18 @@ export const itwCredentialIssuanceMachine = setup({
           actions: ["trackStartAddCredential", "navigateToTrustIssuerScreen"]
         }
       ]
+    },
+    CredentialIntroduction: {
+      entry: "navigateToCredentialIntroductionScreen",
+      on: {
+        continue: {
+          target: "TrustFederationVerification"
+        },
+        back: {
+          target: "Idle",
+          actions: "navigateToCardOnboardingScreen"
+        }
+      }
     },
     TrustFederationVerification: {
       description:
