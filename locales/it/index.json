@@ -4946,6 +4946,9 @@
             "secondary": "Annulla"
           }
         },
+        "credentialIntro": {
+          "subtitle": "Leggi con attenzione cosa troverai."
+        },
         "credentialPreview": {
           "loading": "Attendi ancora qualche secondo, senza uscire dall’app",
           "title": "{{credential}}: ecco l'anteprima dei tuoi dati",
