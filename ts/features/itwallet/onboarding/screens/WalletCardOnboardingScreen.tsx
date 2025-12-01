@@ -160,7 +160,7 @@ const ItwCredentialOnboardingSection = () => {
           });
         }
       },
-      [isITWalletValid, machineRef, navigation]
+      [isITWalletValid, machineRef, navigation, lacksPid]
     )
   );
 

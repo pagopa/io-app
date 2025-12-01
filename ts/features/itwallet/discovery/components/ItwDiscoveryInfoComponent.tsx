@@ -75,9 +75,9 @@ export const ItwDiscoveryInfoComponent = ({
         type: "start",
         mode: credentialType ? "credentialTriggered" : "issuance",
         level: "l3",
-        credentialType: credentialType
+        credentialType
       });
-    }, [machineRef])
+    }, [machineRef, credentialType])
   );
 
   const dismissalDialog = useItwDismissalDialog({

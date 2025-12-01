@@ -873,10 +873,8 @@ export const itwEidIssuanceMachine = setup({
     },
     CredentialIssuance: {
       tags: [ItwTags.Loading],
-      invoke: {
-        id: "credentialIssuanceMachine",
-        src: "credentialIssuanceMachine"
-      },
+      description:
+        "This state represents the Credential Issuance Machine and initializes the process of adding a new credential to the wallet.",
       entry: [
         "navigateToSuccessScreen",
         sendTo("credentialIssuanceMachine", ({ context }) => ({
@@ -884,7 +882,11 @@ export const itwEidIssuanceMachine = setup({
           credentialType: context.credentialType,
           mode: "issuance"
         }))
-      ]
+      ],
+      invoke: {
+        id: "credentialIssuanceMachine",
+        src: "credentialIssuanceMachine"
+      }
     },
     CredentialsUpgrade: {
       tags: [ItwTags.Loading],

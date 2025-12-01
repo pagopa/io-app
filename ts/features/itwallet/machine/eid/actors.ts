@@ -1,5 +1,6 @@
 import { Trust } from "@pagopa/io-react-native-wallet";
 import { CieUtils } from "@pagopa/io-react-native-cie";
+import { IOToast } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
 import { useIOStore } from "../../../../store/hooks";
@@ -28,6 +29,11 @@ import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
 import { createCredentialUpgradeActionsImplementation } from "../upgrade/actions";
 import { createCredentialUpgradeActorsImplementation } from "../upgrade/actors";
 import { itwCredentialUpgradeMachine } from "../upgrade/machine";
+import { itwCredentialIssuanceMachine } from "../credential/machine";
+import { createCredentialIssuanceActorsImplementation } from "../credential/actors";
+import { createCredentialIssuanceActionsImplementation } from "../credential/actions";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { createCredentialIssuanceGuardsImplementation } from "../credential/guards";
 import type {
   AuthenticationContext,
   CieContext,
@@ -35,12 +41,6 @@ import type {
   IdentificationContext
 } from "./context";
 import { isL3IssuanceFeaturesEnabled } from "./utils";
-import { itwCredentialIssuanceMachine } from "../credential/machine";
-import { createCredentialIssuanceActorsImplementation } from "../credential/actors";
-import { createCredentialIssuanceActionsImplementation } from "../credential/actions";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { IOToast } from "@pagopa/io-app-design-system";
-import { createCredentialIssuanceGuardsImplementation } from "../credential/guards";
 
 export type RequestEidActorParams = {
   identification: IdentificationContext | undefined;

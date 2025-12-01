@@ -12,7 +12,7 @@ type CredentialIssuanceActorRef = ActorRefFrom<ItwCredentialIssuanceMachine>;
  * automatically detecting whether the machine is running:
  * - as a child spawned by the eID Issuance Machine
  * - as a standalone machine outside the eID flow.
- * 
+ *
  * @returns An object containing:
  * - `actorRef`: the reference to the active Credential Issuance Machine
  * - `snapshot`: the current state snapshot of that machine
@@ -43,4 +43,3 @@ export const useItwCredentialIssuanceMachine = () => {
     credentialIssuanceMachineSnapshot
   };
 };
-

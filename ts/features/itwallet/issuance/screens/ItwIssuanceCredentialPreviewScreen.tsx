@@ -10,6 +10,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useCallback, useMemo } from "react";
 import I18n from "i18next";
+import { ActorRefFrom } from "xstate";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -39,14 +40,18 @@ import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selec
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 import { useItwCredentialIssuanceMachine } from "../../machine/credential/hooks/useItwCredentialIssuanceMachine";
-import { ActorRefFrom } from "xstate";
 import { ItwCredentialIssuanceMachine } from "../../machine/credential/machine";
 
 export const ItwIssuanceCredentialPreviewScreen = () => {
-  const { credentialIssuanceMachineRef, credentialIssuanceMachineSnapshot } = useItwCredentialIssuanceMachine();
+  const { credentialIssuanceMachineRef, credentialIssuanceMachineSnapshot } =
+    useItwCredentialIssuanceMachine();
 
-  const credentialOption = selectCredentialOption(credentialIssuanceMachineSnapshot);
-  const credentialTypeOption = selectCredentialTypeOption(credentialIssuanceMachineSnapshot);
+  const credentialOption = selectCredentialOption(
+    credentialIssuanceMachineSnapshot
+  );
+  const credentialTypeOption = selectCredentialTypeOption(
+    credentialIssuanceMachineSnapshot
+  );
 
   usePreventScreenCapture();
   useItwDisableGestureNavigation();
@@ -68,7 +73,9 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
           )}
         />
       ),
-      props => <ContentView {...props} machineRef={credentialIssuanceMachineRef} />
+      props => (
+        <ContentView {...props} machineRef={credentialIssuanceMachineRef} />
+      )
     )
   );
 };
