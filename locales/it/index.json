@@ -3975,6 +3975,16 @@
               }
             }
           },
+          "cieCanAdvisory": {
+            "title": "Prepara la Carta di Identità Elettronica (CIE) di {{denomination}}",
+            "description": "Dovrai usarla e inserire il suo codice a 6 cifre (CAN) che trovi stampato sul fronte in basso a destra.",
+            "alert": {
+              "title": "Vuoi interrompere l’apertura della notifica?",
+              "message": "Puoi aprire la notifica SEND in qualsiasi altro momento, dovrai però ripartire dal codice QR.",
+              "confirm": "Sì, interrompi",
+              "cancel": "No, continua"
+            }
+          },
           "validatingMandate": {
             "loadingText": "Verifica della Carta di Identità Elettronica in corso"
           }

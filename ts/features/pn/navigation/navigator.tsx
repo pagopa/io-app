@@ -9,6 +9,7 @@ import { PaidPaymentScreen } from "../screens/PaidPaymentScreen";
 import { SendEngagementOnFirstAppOpenScreen } from "../loginEngagement/screens/SendEngagementOnFirstAppOpenScreen";
 import { SendActivationErrorScreen } from "../loginEngagement/screens/SendActivationErrorScreen";
 import { SendAARCieCardReadingScreen } from "../aar/screen/SendAARCieCardReadingScreen";
+import { SendAARCanEducationalScreen } from "../aar/screen/SendAARCanEducationalScreen";
 import { PnParamsList } from "./params";
 import PN_ROUTES from "./routes";
 
@@ -63,6 +64,10 @@ export const PnStackNavigator = () => (
       name={PN_ROUTES.SEND_AAR_CIE_CARD_READING}
       component={SendAARCieCardReadingScreen}
       options={hiddenHeader}
+    />
+    <Stack.Screen
+      name={PN_ROUTES.SEND_CIE_CAN_EDUCATIONAL}
+      component={SendAARCanEducationalScreen}
     />
   </Stack.Navigator>
 );
