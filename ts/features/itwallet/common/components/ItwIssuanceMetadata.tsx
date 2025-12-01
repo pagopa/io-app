@@ -15,7 +15,8 @@ import { getAuthSource, getItwAuthSource } from "../utils/itwMetadataUtils.ts";
 import { isItwCredential } from "../utils/itwCredentialUtils.ts";
 import { CredentialType } from "../utils/itwMocksUtils";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
-import { itwCredentialByTypeSelector } from "../../credentialsCatalogue/store/selectors/index.ts";
+import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors/index.ts";
+import { DigitalCredentialMetadata } from "../utils/itwCredentialsCatalogueUtils.ts";
 
 type ItwIssuanceMetadataProps = {
   credential: StoredCredential;
@@ -103,16 +104,15 @@ export const ItwIssuanceMetadata = ({
     isItwL3
   );
 
-  const credentialFromCatalogue = useIOSelector(state =>
-    itwCredentialByTypeSelector(
-      state,
-      credential.credentialType as CredentialType
-    )
+  const credentialsFromCatalogue = useIOSelector(
+    itwCredentialsCatalogueByTypesSelector
   );
 
-  const authSource = itwCredential
-    ? getItwAuthSource(credentialFromCatalogue)
-    : getAuthSource(credential);
+  const authSource =
+    itwCredential && credentialsFromCatalogue
+      ? getItwAuthSource(credentialsFromCatalogue[credential.credentialType])
+      : getAuthSource(credential);
+
   const releasedByKey =
     itwCredential && credential.credentialType === CredentialType.PID
       ? "releasedByPid"

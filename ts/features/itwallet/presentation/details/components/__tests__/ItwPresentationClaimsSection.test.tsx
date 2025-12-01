@@ -4,13 +4,9 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types.ts";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper.tsx";
-import {
-  ItwCredentialFromCatalogueMocks,
-  ItwStoredCredentialsMocks
-} from "../../../../common/utils/itwMocksUtils.ts";
+import { ItwStoredCredentialsMocks } from "../../../../common/utils/itwMocksUtils.ts";
 import { ITW_ROUTES } from "../../../../navigation/routes.ts";
 import { ItwPresentationClaimsSection } from "../ItwPresentationClaimsSection.tsx";
-import * as credentialCatalogueSelectors from "../../../../credentialsCatalogue/store/selectors";
 
 describe("ItwPresentationClaimsSection", () => {
   it("should match the snapshot when claims are visible", () => {
@@ -33,10 +29,6 @@ describe("ItwPresentationClaimsSection", () => {
 
 function renderComponent() {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-
-  jest
-    .spyOn(credentialCatalogueSelectors, "itwCredentialByTypeSelector")
-    .mockReturnValue(ItwCredentialFromCatalogueMocks);
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (

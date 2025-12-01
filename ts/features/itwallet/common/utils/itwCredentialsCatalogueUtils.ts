@@ -16,15 +16,3 @@ export type DigitalCredentialMetadata =
  */
 export const fetchCredentialsCatalogue = (env: Env) =>
   CredentialsCatalogue.fetchAndParseCatalogue(env.WALLET_TA_BASE_URL);
-
-/**
- * Maps credentials by type.
- *
- * @param catalogue The credentials catalogue
- * @returns A map of credentials by type
- */
-export const mapCredentialsByType = (catalogue: DigitalCredentialsCatalogue) =>
-  catalogue?.credentials?.reduce(
-    (map, credential) => ({ ...map, [credential.credential_type]: credential }),
-    {} as Record<string, DigitalCredentialMetadata>
-  );
