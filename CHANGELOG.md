@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.21.0-rc.3](https://github.com/pagopa/io-app/compare/3.21.0-rc.2...3.21.0-rc.3) (2025-11-28)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-3190](https://pagopa.atlassian.net/browse/SIW-3190)] Display credential introduction screen with catalogue information ([#7655](https://github.com/pagopa/io-app/issues/7655)) ([f60c666](https://github.com/pagopa/io-app/commit/f60c66637db2380c2289cab9be9a21c4cc2e3f05))
+* [[IOCOM-2751](https://pagopa.atlassian.net/browse/IOCOM-2751)] - AAR phase 3 - Add CIE reading screen ([#7630](https://github.com/pagopa/io-app/issues/7630)) ([502d599](https://github.com/pagopa/io-app/commit/502d599df94246d0f12b6e1109c3460ad04bd295))
+
+
+### Bug Fixes
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Fix android crash on portrait attribute ([#7660](https://github.com/pagopa/io-app/issues/7660)) ([d1270c1](https://github.com/pagopa/io-app/commit/d1270c1feaed6ced1ea1bf421cca6276606bfa7f))
+
 ## [3.21.0-rc.2](https://github.com/pagopa/io-app/compare/3.21.0-rc.1...3.21.0-rc.2) (2025-11-27)
 
 
