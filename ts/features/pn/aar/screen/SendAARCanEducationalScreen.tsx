@@ -63,6 +63,7 @@ export const SendAARCanEducationalScreen = () => {
         actions={{
           type: "SingleButton",
           primary: {
+            testID: "primaryActionID",
             label: i18n.t("global.buttons.continue"),
             onPress: () => {
               if (currentAARState.type === sendAARFlowStates.cieCanAdvisory) {
