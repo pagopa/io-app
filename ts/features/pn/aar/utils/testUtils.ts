@@ -53,6 +53,12 @@ export const sendAarMockStateFactory: {
     qrCode,
     iun
   }),
+  nfcNotSupportedFinal: () => ({
+    type: "nfcNotSupportedFinal",
+    recipientInfo,
+    qrCode,
+    iun
+  }),
   creatingMandate: () => ({
     type: "creatingMandate",
     recipientInfo,
