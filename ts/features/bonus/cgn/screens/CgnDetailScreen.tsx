@@ -3,14 +3,15 @@ import {
   ContentWrapper,
   H4,
   IOToast,
-  VSpacer
+  VSpacer,
+  VStack
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 
+import I18n from "i18next";
 import { ReactElement } from "react";
 import { connect } from "react-redux";
-import I18n from "i18next";
 import { Card } from "../../../../../definitions/cgn/Card";
 import {
   CardActivated,
@@ -33,12 +34,13 @@ import {
   cgnMerchantVersionSelector,
   isCGNEnabledSelector
 } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { profileSelector } from "../../../settings/common/store/selectors";
 import { GlobalState } from "../../../../store/reducers/types";
 import { formatDateAsShortFormat } from "../../../../utils/dates";
 import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
 import { capitalizeTextName } from "../../../../utils/strings";
 import { openWebUrl } from "../../../../utils/url";
+import { profileSelector } from "../../../settings/common/store/selectors";
+import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
 import { availableBonusTypesSelectorFromId } from "../../common/store/selectors";
 import { ID_CGN_TYPE } from "../../common/utils";
 import { CgnAnimatedBackground } from "../components/CgnAnimatedBackground";
@@ -50,6 +52,7 @@ import EycaDetailComponent from "../components/detail/eyca/EycaDetailComponent";
 import { useCgnUnsubscribe } from "../hooks/useCgnUnsubscribe";
 import { CgnDetailsParamsList } from "../navigation/params";
 import CGN_ROUTES from "../navigation/routes";
+import { cgnActivationStart } from "../store/actions/activation";
 import { cgnDetails } from "../store/actions/details";
 import { cgnEycaStatus } from "../store/actions/eyca/details";
 import { cgnUnsubscribe } from "../store/actions/unsubscribe";
@@ -65,8 +68,6 @@ import {
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
 import { EYCA_WEBSITE_DISCOUNTS_PAGE_URL } from "../utils/constants";
 import { canEycaCardBeShown } from "../utils/eyca";
-import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
-import { cgnActivationStart } from "../store/actions/activation";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -239,36 +240,34 @@ const CgnDetailScreen = (props: Props): ReactElement => {
         </H4>
       }
     >
+      <VSpacer size={16} />
       <ContentWrapper style={{ flex: 1 }}>
-        {CardRevoked.is(props.cgnDetails) && (
-          <Alert
-            variant="error"
-            content={I18n.t("bonus.cgn.detail.information.revoked", {
-              reason: props.cgnDetails.revocation_reason
-            })}
-          />
-        )}
-        {CardExpired.is(props.cgnDetails) && (
-          <Alert
-            variant="error"
-            content={I18n.t("bonus.cgn.detail.information.expired", {
-              date: formatDateAsShortFormat(props.cgnDetails.expiration_date)
-            })}
-          />
-        )}
-        <VSpacer size={16} />
-        <CgnOwnershipInformation
-        // Ownership block rendering owner's fiscal code
-        />
-        <VSpacer size={16} />
-        {props.cgnDetails && (
-          // Renders status information including activation and expiring date and a badge that represents the CGN status
-          // ACTIVATED - EXPIRED - REVOKED
-          <CgnStatusDetail cgnDetail={props.cgnDetails} />
-        )}
-        {canDisplayEycaDetails && <EycaDetailComponent />}
-        <VSpacer size={24} />
-        {CardActivated.is(props.cgnDetails) && <CgnUnsubscribe />}
+        <VStack space={16}>
+          {CardRevoked.is(props.cgnDetails) && (
+            <Alert
+              variant="error"
+              content={I18n.t("bonus.cgn.detail.information.revoked", {
+                reason: props.cgnDetails.revocation_reason
+              })}
+            />
+          )}
+          {CardExpired.is(props.cgnDetails) && (
+            <Alert
+              variant="error"
+              content={I18n.t("bonus.cgn.detail.information.expired", {
+                date: formatDateAsShortFormat(props.cgnDetails.expiration_date)
+              })}
+            />
+          )}
+          {/* Ownership block rendering owner's fiscal code */}
+          <CgnOwnershipInformation />
+          {/* Renders status information including activation
+          and expiring date and a badge that represents the CGN status
+          ACTIVATED - EXPIRED - REVOKED */}
+          {props.cgnDetails && <CgnStatusDetail cgnDetail={props.cgnDetails} />}
+          {canDisplayEycaDetails && <EycaDetailComponent />}
+          {CardActivated.is(props.cgnDetails) && <CgnUnsubscribe />}
+        </VStack>
       </ContentWrapper>
       <SectionStatusComponent sectionKey={"cgn"} />
     </BonusCardScreenComponent>
