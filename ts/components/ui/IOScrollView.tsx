@@ -79,7 +79,7 @@ type IOSCrollViewHeaderScrollValues = ComponentProps<
   typeof HeaderSecondLevel
 >["scrollValues"];
 
-type IOScrollView = WithTestID<
+export type IOScrollViewProps = WithTestID<
   PropsWithChildren<{
     headerConfig?: ComponentProps<typeof HeaderSecondLevel>;
     actions?: WithTestID<IOScrollViewActions>;
@@ -97,6 +97,7 @@ type IOScrollView = WithTestID<
     refreshControlProps?: RefreshControlProps;
     contentContainerStyle?: ViewStyle;
     topElement?: React.ReactNode;
+    alwaysBounceVertical?: boolean;
   }>
 >;
 
@@ -167,8 +168,9 @@ export const IOScrollView = ({
   centerContent,
   refreshControlProps,
   contentContainerStyle,
+  alwaysBounceVertical,
   testID
-}: IOScrollView) => {
+}: IOScrollViewProps) => {
   const { isAlertVisible } = useIOAlertVisible();
   const theme = useIOTheme();
 
@@ -303,6 +305,7 @@ export const IOScrollView = ({
         decelerationRate="normal"
         refreshControl={RefreshControlComponent}
         centerContent={centerContent}
+        alwaysBounceVertical={alwaysBounceVertical}
         contentContainerStyle={[
           {
             paddingBottom: excludeEndContentMargin

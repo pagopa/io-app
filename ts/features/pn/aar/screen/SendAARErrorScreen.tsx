@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { useIOSelector } from "../../../../store/hooks";
+import { trackSendAARAccessDeniedScreenView } from "../analytics";
 import { SendAARErrorComponent } from "../components/errors/SendAARErrorComponent";
-import { SendAARNotAddresseeComponent } from "../components/errors/SendAARNotAddresseeComponent";
+import { SendAarNfcNotSupportedComponent } from "../components/errors/SendAarNfcNotSupportedComponent";
+import { SendAarNotAddresseeKoComponent } from "../components/errors/SendAarNotAddresseeKoComponent";
 import { currentAARFlowStateType } from "../store/selectors";
 import { sendAARFlowStates } from "../utils/stateUtils";
-import { trackSendAARAccessDeniedScreenView } from "../analytics";
 
 export const SendAARErrorScreen = () => {
   const flowType = useIOSelector(currentAARFlowStateType);
@@ -15,9 +16,15 @@ export const SendAARErrorScreen = () => {
     }
   }, [flowType]);
 
-  if (flowType === sendAARFlowStates.notAddresseeFinal) {
-    return <SendAARNotAddresseeComponent />;
-  } else {
-    return <SendAARErrorComponent />;
+  switch (flowType) {
+    case sendAARFlowStates.notAddresseeFinal: {
+      return <SendAarNotAddresseeKoComponent />;
+    }
+    case sendAARFlowStates.nfcNotSupportedFinal: {
+      return <SendAarNfcNotSupportedComponent />;
+    }
+    default: {
+      return <SendAARErrorComponent />;
+    }
   }
 };
