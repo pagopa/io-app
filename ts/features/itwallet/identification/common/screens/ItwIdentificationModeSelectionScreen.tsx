@@ -11,11 +11,7 @@ import { useCallback, useMemo } from "react";
 import { View } from "react-native";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
-import {
-  IOStackNavigationRouteProps,
-  useIONavigation
-} from "../../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../../navigation/routes";
+import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
 import {
   trackItWalletIDMethod,
@@ -52,7 +48,6 @@ export const ItwIdentificationModeSelectionScreen = ({
   const { name: routeName, params } = route;
   const { eidReissuing } = params;
 
-  const navigation = useIONavigation();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
@@ -145,18 +140,7 @@ export const ItwIdentificationModeSelectionScreen = ({
       body: ""
     },
     handleDismiss: () => {
-      navigation.reset({
-        index: 1,
-        routes: [
-          {
-            name: ROUTES.MAIN,
-            params: {
-              screen: ROUTES.WALLET_HOME,
-              params: { requiredEidFeedback: true }
-            }
-          }
-        ]
-      });
+      machineRef.send({ type: "close" });
     }
   });
 

@@ -1,8 +1,16 @@
+import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { call, put, select } from "typed-redux-saga/macro";
-import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
+import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../types/SessionToken";
+import { SagaCallReturnType } from "../../../../types/utils";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import { unknownToReason } from "../../../messages/utils";
+import {
+  aarProblemJsonAnalyticsReport,
+  trackSendAARFailure
+} from "../analytics";
 import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
 import { currentAARFlowData } from "../store/selectors";
@@ -11,13 +19,6 @@ import {
   SendAARFailurePhase,
   sendAARFlowStates
 } from "../utils/stateUtils";
-import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
-import { SagaCallReturnType } from "../../../../types/utils";
-import {
-  aarProblemJsonAnalyticsReport,
-  trackSendAARFailure
-} from "../analytics";
-import { unknownToReason } from "../../../messages/utils";
 
 const sendAARFailurePhase: SendAARFailurePhase = "Fetch QRCode";
 
@@ -93,13 +94,19 @@ export function* fetchAARQrCodeSaga(
         return;
 
       case 403:
-        const notAddresseeFinalState: AARFlowState = {
-          type: sendAARFlowStates.notAddresseeFinal,
+        const isDelegationEnabled = yield* select(
+          isAarInAppDelegationRemoteEnabledSelector
+        );
+        const stateToPut = isDelegationEnabled
+          ? sendAARFlowStates.notAddressee
+          : sendAARFlowStates.notAddresseeFinal;
+        const notAddresseeState: AARFlowState = {
+          type: stateToPut,
           iun: value.iun,
           recipientInfo: { ...value.recipientInfo },
           qrCode
         };
-        yield* put(setAarFlowState(notAddresseeFinalState));
+        yield* put(setAarFlowState(notAddresseeState));
         return;
 
       default:
