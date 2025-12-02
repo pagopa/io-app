@@ -17,7 +17,7 @@ describe("SendAARLoadingComponent", () => {
 const renderComponent = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    () => <SendAARLoadingComponent />,
+    () => <SendAARLoadingComponent contentTitle="Loading..." />,
     PN_ROUTES.QR_SCAN_FLOW,
     {},
     createStore(appReducer, globalState as any)

@@ -12,7 +12,7 @@ PODS:
   - hermes-engine (0.78.2):
     - hermes-engine/Pre-built (= 0.78.2)
   - hermes-engine/Pre-built (0.78.2)
-  - IoReactNativeCie (1.2.1):
+  - IoReactNativeCie (1.2.2):
     - CieSDK (~> 0.1.13)
     - DoubleConversion
     - glog
@@ -2624,7 +2624,7 @@ SPEC CHECKSUMS:
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
   glog: eb93e2f488219332457c3c4eafd2738ddc7e80b8
   hermes-engine: 2771b98fb813fdc6f92edd7c9c0035ecabf9fee7
-  IoReactNativeCie: ee4c4e9f21fc65f5fb594996e2f2893c8f9ea3a4
+  IoReactNativeCie: 74a3157aeb0664c6929a33f12562a236db1884e3
   IoReactNativeIso18013: 4803432ad6e1b535a17fa4d581e97d9699d20882
   IOWalletCBOR: 92742ef1cbd1b627ba153d0c7c11b81ad22f45cc
   IOWalletProximity: 1836d6b5df0a64a97e09f355d15d5155f086f830
@@ -2755,6 +2755,6 @@ SPEC CHECKSUMS:
   ZendeskSupportSDK: b512cfc74b6bf8490e589f02cf52e27ed4f2bebe
   ZXingObjC: 8898711ab495761b2dbbdec76d90164a6d7e14c5
 
-PODFILE CHECKSUM: 8438bb137fd0525eaa0580e05f2eba688e5788b8
+PODFILE CHECKSUM: 464d4a1bd9fb35d4834981537341732b63b76f00
 
 COCOAPODS: 1.15.2
