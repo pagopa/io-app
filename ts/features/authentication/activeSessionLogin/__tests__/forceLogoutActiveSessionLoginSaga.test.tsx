@@ -45,6 +45,10 @@ jest.mock("../../../lollipop/saga", () => ({
   // eslint-disable-next-line object-shorthand, require-yield
   getKeyInfo: function* () {
     return defaultKeyInfo;
+  },
+  // eslint-disable-next-line object-shorthand, require-yield
+  deleteCurrentLollipopKeyAndGenerateNewKeyTag: function* () {
+    return;
   }
 }));
 

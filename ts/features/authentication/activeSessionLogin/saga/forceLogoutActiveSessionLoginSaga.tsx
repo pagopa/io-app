@@ -9,7 +9,10 @@ import { startApplicationInitialization } from "../../../../store/actions/applic
 import { SagaCallReturnType, ReduxSagaEffect } from "../../../../types/utils";
 import { convertUnknownToError } from "../../../../utils/errors";
 import { resetAssistanceData } from "../../../../utils/supportAssistance";
-import { getKeyInfo } from "../../../lollipop/saga";
+import {
+  getKeyInfo,
+  deleteCurrentLollipopKeyAndGenerateNewKeyTag
+} from "../../../lollipop/saga";
 import { trackLogoutSuccess, trackLogoutFailure } from "../../common/analytics";
 import { sessionCorrupted } from "../../common/store/actions";
 import { sessionTokenSelector } from "../../common/store/selectors";
@@ -54,7 +57,7 @@ export function* logoutUserAfterActiveSessionLoginSaga(
       if (response.right.status === 200) {
         trackLogoutSuccess("reauth");
       } else {
-        // We got a error, send a LOGOUT_FAILURE action so we can log it using Mixpanel
+        // We got an error, send a LOGOUT_FAILURE action so we can log it using Mixpanel
         const error = Error(
           response.right.status === 500 && response.right.value.title
             ? response.right.value.title
@@ -69,7 +72,7 @@ export function* logoutUserAfterActiveSessionLoginSaga(
     trackLogoutFailure(convertUnknownToError(e), "reauth");
   } finally {
     // clean up crypto keys
-    // yield* deleteCurrentLollipopKeyAndGenerateNewKeyTag();
+    yield* deleteCurrentLollipopKeyAndGenerateNewKeyTag();
     // reset mixpanel
     yield* call(resetMixpanelSaga);
     // clean up any assistance data
