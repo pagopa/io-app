@@ -7,9 +7,9 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/
 import * as URL_UTILS from "../../../../../../utils/url";
 import PN_ROUTES from "../../../../navigation/routes";
 import * as FLOW_MANAGER from "../../../hooks/useSendAarFlowManager";
-import { SendAARNotAddresseeComponent } from "../SendAARNotAddresseeComponent";
 import * as SELECTORS from "../../../../../../store/reducers/backendStatus/remoteConfig";
 import * as ANALYTICS from "../../../analytics";
+import { SendAarNotAddresseeKoComponent } from "../SendAarNotAddresseeKoComponent";
 
 const managerSpy = jest.spyOn(FLOW_MANAGER, "useSendAarFlowManager");
 const mockOpenWebUrl = jest.spyOn(URL_UTILS, "openWebUrl").mockImplementation();
@@ -83,7 +83,7 @@ describe("SendAARTosComponent", () => {
 const renderComponent = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    () => <SendAARNotAddresseeComponent />,
+    () => <SendAarNotAddresseeKoComponent />,
     PN_ROUTES.QR_SCAN_FLOW,
     {},
     createStore(appReducer, globalState as any)
