@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.21.0-rc.4](https://github.com/pagopa/io-app/compare/3.21.0-rc.3...3.21.0-rc.4) (2025-12-01)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-3331](https://pagopa.atlassian.net/browse/SIW-3331)] Logical review of the Qualtrics survey bottom sheet for eID non-renewal ([#7604](https://github.com/pagopa/io-app/issues/7604)) ([632916e](https://github.com/pagopa/io-app/commit/632916e40ce4b90409b8b258f2019ae499186e8e))
+
+
+### Bug Fixes
+
+* [[IOCOM-2835](https://pagopa.atlassian.net/browse/IOCOM-2835)] Proper value for `x-pagopa-pn-io-src` header ([#7664](https://github.com/pagopa/io-app/issues/7664)) ([568390d](https://github.com/pagopa/io-app/commit/568390d66628d403a9edb332148f078aa33023c2))
+
 ## [3.21.0-rc.3](https://github.com/pagopa/io-app/compare/3.21.0-rc.2...3.21.0-rc.3) (2025-11-28)
 
 
