@@ -2,6 +2,8 @@ import { View } from "react-native";
 import { MessageDetailsProps } from "../MessageDetails";
 
 export const MessageDetails = ({
+  attachments,
+  createdAt,
   message,
   messageId,
   serviceId,
@@ -12,8 +14,8 @@ export const MessageDetails = ({
   <View>
     <View>Mock MessageDetails</View>
     {message.abstract && <View>{message.abstract}</View>}
-    {message.attachments &&
-      message.attachments.map((attachment, index) => (
+    {attachments &&
+      attachments.map((attachment, index) => (
         <View key={`a_${index}`}>
           {attachment.category && <View>{attachment.category}</View>}
           {attachment.content_type && <View>{attachment.content_type}</View>}
@@ -26,7 +28,7 @@ export const MessageDetails = ({
       message.completedPayments.map((completedPayment, index) => (
         <View key={`cp_${index}`}>{completedPayment}</View>
       ))}
-    <View>{`${message.created_at}`}</View>
+    <View>{`Created at: ${createdAt}`}</View>
     {message.isCancelled && <View>{`${message.isCancelled}`}</View>}
     <View>{message.iun}</View>
     {message.notificationStatusHistory.map(

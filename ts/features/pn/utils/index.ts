@@ -1,7 +1,6 @@
 import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import { PNMessage } from "../store/types/types";
 import { NotificationStatus } from "../../../../definitions/pn/NotificationStatus";
 import { CTAS } from "../../../types/LocalizedCTAs";
 import { isServiceDetailNavigationLink } from "../../../utils/internalLink";
@@ -11,6 +10,7 @@ import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { TimelineStatus } from "../components/Timeline";
 import { SendOpeningSource } from "../../pushNotifications/analytics";
+import { ThirdPartyMessage } from "../../../../definitions/pn/ThirdPartyMessage";
 
 export const maxVisiblePaymentCount = 5;
 
@@ -84,13 +84,13 @@ export const extractPNOptInMessageInfoIfAvailable = (
 
 export const paymentsFromSendMessage = (
   userFiscalCode: string | undefined,
-  sendMessage: PNMessage | undefined
+  sendMessage: ThirdPartyMessage | undefined
 ): ReadonlyArray<NotificationPaymentInfo> | undefined => {
-  if (sendMessage == null) {
+  const recipients = sendMessage?.details?.recipients;
+  if (recipients == null) {
     return undefined;
   }
 
-  const recipients = sendMessage.recipients;
   const filteredPayments = recipients.reduce<
     ReadonlyArray<NotificationPaymentInfo>
   >((accumulator, recipient) => {
@@ -108,10 +108,13 @@ export const paymentsFromSendMessage = (
   return filteredPayments.length > 0 ? filteredPayments : undefined;
 };
 
-export const isSENDMessageCancelled = (sendMessage: PNMessage | undefined) =>
-  sendMessage?.isCancelled ?? false;
+export const isSENDMessageCancelled = (
+  sendMessage: ThirdPartyMessage | undefined
+) => sendMessage?.details?.isCancelled ?? false;
 
-export const doesSENDMessageIncludeF24 = (sendMessage: PNMessage | undefined) =>
+export const doesSENDMessageIncludeF24 = (
+  sendMessage: ThirdPartyMessage | undefined
+) =>
   sendMessage?.attachments?.some(
     attachment => attachment.category === ATTACHMENT_CATEGORY.F24
   ) ?? false;

@@ -1,11 +1,10 @@
+import { isLeft } from "fp-ts/lib/Either";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { combineReducers } from "redux";
 import { PersistPartial } from "redux-persist";
-import { createSelector } from "reselect";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { isUserSelectedPaymentSelector } from "../../../messages/store/reducers/payments";
-import { thirdPartyFromIdSelector } from "../../../messages/store/reducers/thirdPartyById";
 import { aarFlowReducer } from "../../aar/store/reducers";
 import { AARFlowState } from "../../aar/utils/stateUtils";
 import {
@@ -13,12 +12,12 @@ import {
   PnBannerDismissState
 } from "../../reminderBanner/reducer/bannerDismiss";
 import { getRptIdStringFromPayment } from "../../utils/rptId";
-import { toSENDMessage } from "../types/transformers";
-import { PNMessage } from "../types/types";
 import {
   persistedSendLoginEngagementReducer,
   type SENDLoginEngagementState
 } from "../../loginEngagement/store/reducers";
+import { thirdPartyFromIdSelector } from "../../../messages/store/reducers/thirdPartyById";
+import { ThirdPartyMessage } from "../../../../../definitions/pn/ThirdPartyMessage";
 import { pnActivationReducer, PnActivationState } from "./activation";
 
 export type PnState = {
@@ -35,33 +34,43 @@ export const pnReducer = combineReducers<PnState, Action>({
   loginEngagement: persistedSendLoginEngagementReducer
 });
 
-/*
- * This selector has to be curried since the caching size of createSelector is one.
- * if we do not do so, when the screen that is calling the selector gets mounted on top of another instance of the same screen,
- * the input function (first one) is run with a parameter that is computed dynamically, leading to a different output that triggers the running of the combiner function.
- *
- * Currying the entire createSelector produces a createSelector-function where the input function has a specific value for the input parameter and this results in a specific caching of its output,
- * which is not shared between the two screen instances
- */
-export const curriedSendMessageFromIdSelector = (messageId: string) =>
-  createSelector(
-    (state: GlobalState) => thirdPartyFromIdSelector(state, messageId),
-    data => {
-      const thirdPartyMessage = pot.getOrElse(data, undefined);
-      if (thirdPartyMessage == null) {
-        return undefined;
-      }
-      // Be aware that this call generates a new instance so
-      // we have to cache the function using createSelector
-      return toSENDMessage(thirdPartyMessage);
-    }
+export const sendMessageFromIdSelector = (
+  state: GlobalState,
+  id: string
+): ThirdPartyMessage | undefined => {
+  const thirdPartyMessageContainerPot = thirdPartyFromIdSelector(state, id);
+  const thirdPartyMessageContainer = pot.toUndefined(
+    thirdPartyMessageContainerPot
   );
+  const thirdPartyMessage = thirdPartyMessageContainer?.third_party_message;
+  const sendThirdPartyMessageEither =
+    ThirdPartyMessage.decode(thirdPartyMessage);
+  if (isLeft(sendThirdPartyMessageEither)) {
+    return undefined;
+  }
+  const sendThirdPartyMessage = sendThirdPartyMessageEither.right;
+  if (sendThirdPartyMessage.details == null) {
+    return undefined;
+  }
+  return thirdPartyMessage as ThirdPartyMessage;
+};
+
+export const sendMessageCreationDateSelector = (
+  state: GlobalState,
+  id: string
+): Date | undefined => {
+  const thirdPartyMessageContainerPot = thirdPartyFromIdSelector(state, id);
+  const thirdPartyMessageContainer = pot.toUndefined(
+    thirdPartyMessageContainerPot
+  );
+  return thirdPartyMessageContainer?.created_at;
+};
 
 export const sendUserSelectedPaymentRptIdSelector = (
   state: GlobalState,
-  sendMessage: PNMessage | undefined
+  sendMessage: ThirdPartyMessage | undefined
 ) => {
-  const recipients = sendMessage?.recipients;
+  const recipients = sendMessage?.details?.recipients;
   if (recipients == null) {
     return undefined;
   }

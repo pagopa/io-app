@@ -15,9 +15,9 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { CTAS } from "../../../../types/LocalizedCTAs";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
-import { PNMessage } from "../../store/types/types";
 import { SendOpeningSource } from "../../../pushNotifications/analytics";
 import { ATTACHMENT_CATEGORY } from "../../../messages/types/attachmentCategory";
+import { ThirdPartyMessage } from "../../../../../definitions/pn/ThirdPartyMessage";
 
 const navigateToServiceLink = () =>
   "ioit://services/service-detail?serviceId=optInServiceId&activate=true";
@@ -359,36 +359,40 @@ describe("paymentsFromSendMessage", () => {
     expect(output).toBe(undefined);
   });
   const noPaymentRecipients = {
-    recipients: [{}, {}, {}]
-  } as unknown as PNMessage;
+    details: {
+      recipients: [{}, {}, {}]
+    }
+  } as unknown as ThirdPartyMessage;
   it(`should return undefined when message has empty recipients`, () => {
     const output = paymentsFromSendMessage(userFiscalCode, noPaymentRecipients);
     expect(output).toBe(undefined);
   });
   const recipientsWithTaxId = {
-    recipients: [
-      {
-        payment: {
-          creditorTaxId: "c1",
-          noticeCode: "n1"
+    details: {
+      recipients: [
+        {
+          payment: {
+            creditorTaxId: "c1",
+            noticeCode: "n1"
+          },
+          taxId: userFiscalCode
         },
-        taxId: userFiscalCode
-      },
-      {
-        payment: {
-          creditorTaxId: "c2",
-          noticeCode: "n2"
+        {
+          payment: {
+            creditorTaxId: "c2",
+            noticeCode: "n2"
+          },
+          taxId: "NotMatchingTaxId"
         },
-        taxId: "NotMatchingTaxId"
-      },
-      {
-        taxId: userFiscalCode
-      },
-      {
-        taxId: "NotMatchingTaxId"
-      }
-    ]
-  } as unknown as PNMessage;
+        {
+          taxId: userFiscalCode
+        },
+        {
+          taxId: "NotMatchingTaxId"
+        }
+      ]
+    }
+  } as unknown as ThirdPartyMessage;
   it(`should return one matching payments when the message is defined and the input fiscal code is defined`, () => {
     const output = paymentsFromSendMessage(userFiscalCode, recipientsWithTaxId);
     expect(output).toEqual([
@@ -421,8 +425,10 @@ describe("isSENDMessageCancelled", () => {
   [undefined, false, true].forEach(isCancelled => {
     it(`should return ${!!isCancelled} when 'isCancelled' is ${isCancelled}`, () => {
       const sendMessage = {
-        isCancelled
-      } as PNMessage;
+        details: {
+          isCancelled
+        }
+      } as ThirdPartyMessage;
       const output = isSENDMessageCancelled(sendMessage);
       expect(output).toBe(!!isCancelled);
     });
@@ -463,7 +469,7 @@ describe("doesSENDMessageIncludeF24", () => {
     }F24`, () => {
       const sendMessage = {
         attachments
-      } as PNMessage;
+      } as ThirdPartyMessage;
       const output = doesSENDMessageIncludeF24(sendMessage);
       expect(output).toBe(expectedOutput);
     });

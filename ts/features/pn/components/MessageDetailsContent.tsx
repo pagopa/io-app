@@ -1,14 +1,14 @@
 import { BodySmall } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { useIOSelector } from "../../../store/hooks";
-import { PNMessage } from "../store/types/types";
 import { aarAdresseeDenominationSelector } from "../aar/store/selectors";
 import { sendShowAbstractSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { isTestEnv } from "../../../utils/environment";
 import { SendUserType } from "../../pushNotifications/analytics";
+import { IOReceivedNotification } from "../../../../definitions/pn/IOReceivedNotification";
 
 export type MessageDetailsContentProps = {
-  message: PNMessage;
+  message: IOReceivedNotification;
   sendUserType: SendUserType;
 };
 export const MessageDetailsContent = ({

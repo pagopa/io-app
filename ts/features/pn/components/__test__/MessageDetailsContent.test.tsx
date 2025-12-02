@@ -4,16 +4,16 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import * as USEIO_HOOKS from "../../../../store/hooks";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { thirdPartyMessage } from "../../__mocks__/pnMessage";
 import { aarAdresseeDenominationSelector } from "../../aar/store/selectors";
 import PN_ROUTES from "../../navigation/routes";
-import { toSENDMessage } from "../../store/types/transformers";
 import {
   MessageDetailsContent,
   MessageDetailsContentProps,
   testable
 } from "../MessageDetailsContent";
 import { SendUserType } from "../../../pushNotifications/analytics";
+import { thirdPartyMessage } from "../../__mocks__/pnMessage";
+import { IOReceivedNotification } from "../../../../../definitions/pn/IOReceivedNotification";
 
 jest.mock("../../aar/store/selectors", () => ({
   ...jest.requireActual("../../aar/store/selectors"),
@@ -23,7 +23,9 @@ jest.mock("../../aar/store/selectors", () => ({
   isAarMessageDelegatedSelector: jest.fn().mockReturnValue(true)
 }));
 
-const mockMessage = toSENDMessage(thirdPartyMessage)!;
+const mockMessage = thirdPartyMessage.third_party_message
+  .details! as IOReceivedNotification;
+
 const mockMessageWithoutDenomination = _.omit(
   mockMessage,
   "senderDenomination"

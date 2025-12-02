@@ -15,7 +15,7 @@ import {
   cancelPNPaymentStatusTracking,
   startPNPaymentStatusTracking
 } from "../actions";
-import { curriedSendMessageFromIdSelector } from "../reducers";
+import { sendMessageFromIdSelector } from "../reducers";
 
 /**
  * This saga is used to track a mixpanel event which is a report of
@@ -28,14 +28,14 @@ export function* watchPaymentStatusForMixpanelTracking(
 ) {
   const { openingSource, userType, messageId } = action.payload;
   const currentFiscalCode = yield* select(profileFiscalCodeSelector);
-  const message = yield* select(curriedSendMessageFromIdSelector(messageId));
+  const sendMessage = yield* select(sendMessageFromIdSelector, messageId);
 
   const fiscalCodeOrUndefined =
     openingSource === "message" ? currentFiscalCode : undefined;
   const payments = yield* call(
     paymentsFromSendMessage,
     fiscalCodeOrUndefined,
-    message
+    sendMessage
   );
   const visibleRPTIds =
     payments

@@ -5,9 +5,6 @@ import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import * as MSG_DETAILS_HEADER from "../../../messages/components/MessageDetail/MessageDetailsHeader";
-import { thirdPartyMessage } from "../../__mocks__/pnMessage";
-import { toSENDMessage } from "../../store/types/transformers";
-import { PNMessage } from "../../store/types/types";
 import { MessageDetails } from "../MessageDetails";
 import PN_ROUTES from "../../navigation/routes";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
@@ -16,6 +13,9 @@ import {
   SendOpeningSource,
   SendUserType
 } from "../../../pushNotifications/analytics";
+import { IOReceivedNotification } from "../../../../../definitions/pn/IOReceivedNotification";
+import { thirdPartyMessage } from "../../__mocks__/pnMessage";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 
 jest.mock("../MessageCancelledContent");
 jest.mock("../MessageDetailsContent");
@@ -52,21 +52,26 @@ describe("MessageDetails component", () => {
     beforeEach(() => {
       jest.clearAllMocks();
     });
+    const attachments = thirdPartyMessage.third_party_message.attachments;
+    const createdAt = thirdPartyMessage.created_at;
+    const message = thirdPartyMessage.third_party_message
+      .details as IOReceivedNotification;
     sendOpeningSources.forEach(sendOpeningSource =>
       sendUserTypes.forEach(sendUserType => {
         it(`should ${
           sendOpeningSource === "aar" ? "" : "NOT"
         } display the message date, opening source ${sendOpeningSource}, user type ${sendUserType}`, () => {
-          const sendMessage = toSENDMessage(thirdPartyMessage)!;
           const headerSpy = jest.spyOn(
             MSG_DETAILS_HEADER,
             "MessageDetailsHeader"
           );
           const messageId =
-            sendOpeningSource === "aar" ? sendMessage.iun : mockMessageId;
+            sendOpeningSource === "aar" ? message.iun : mockMessageId;
           const props = generateComponentProperties(
+            attachments,
+            createdAt,
+            message,
             messageId,
-            sendMessage,
             mockServiceId,
             sendOpeningSource,
             sendUserType
@@ -79,14 +84,14 @@ describe("MessageDetails component", () => {
           if (sendOpeningSource === "aar") {
             expect(passedDate).toBeUndefined();
           } else {
-            expect(passedDate).toEqual(sendMessage.created_at);
+            expect(passedDate).toEqual(createdAt);
           }
         });
 
         it(`should ${
           sendOpeningSource === "aar" ? "NOT " : ""
         }allow navigation to service details, opening source ${sendOpeningSource}, user type ${sendUserType}`, () => {
-          const sendMessage = toSENDMessage(thirdPartyMessage)!;
+          const sendMessage = { iun: "" }; // TODO
           const headerSpy = jest.spyOn(
             MSG_DETAILS_HEADER,
             "MessageDetailsHeader"
@@ -94,8 +99,10 @@ describe("MessageDetails component", () => {
           const messageId =
             sendOpeningSource === "aar" ? sendMessage.iun : mockMessageId;
           const props = generateComponentProperties(
+            attachments,
+            createdAt,
+            message,
             messageId,
-            sendMessage,
             mockServiceId,
             sendOpeningSource,
             sendUserType
@@ -117,15 +124,19 @@ describe("MessageDetails component", () => {
 });
 
 const generateComponentProperties = (
+  attachments: ReadonlyArray<ThirdPartyAttachment> | undefined,
+  createdAt: Date | undefined,
+  message: IOReceivedNotification,
   messageId: string,
-  message: PNMessage,
   serviceId: ServiceId,
   sendOpeningSource: SendOpeningSource,
   sendUserType: SendUserType,
   payments?: ReadonlyArray<NotificationPaymentInfo>
 ): ComponentProps<typeof MessageDetails> => ({
-  messageId,
+  attachments,
+  createdAt,
   message,
+  messageId,
   payments,
   serviceId,
   sendOpeningSource,

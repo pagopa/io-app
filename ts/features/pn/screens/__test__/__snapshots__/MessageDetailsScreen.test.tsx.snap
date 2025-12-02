@@ -249,7 +249,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                           </View>
                         </View>
                         <View>
-                          Wed Jan 01 2020 00:00:00 GMT+0000 (Coordinated Universal Time)
+                          Created at: Wed Jan 01 2020 00:00:00 GMT+0000 (Coordinated Universal Time)
                         </View>
                         <View>
                           731143-7-0317-8200-0
@@ -818,7 +818,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                           </View>
                         </View>
                         <View>
-                          Wed Jan 01 2020 00:00:00 GMT+0000 (Coordinated Universal Time)
+                          Created at: Wed Jan 01 2020 00:00:00 GMT+0000 (Coordinated Universal Time)
                         </View>
                         <View>
                           731143-7-0317-8200-0
@@ -1387,7 +1387,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                           </View>
                         </View>
                         <View>
-                          Wed Jan 01 2020 00:00:00 GMT+0000 (Coordinated Universal Time)
+                          Created at: Wed Jan 01 2020 00:00:00 GMT+0000 (Coordinated Universal Time)
                         </View>
                         <View>
                           731143-7-0317-8200-0
@@ -1956,7 +1956,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                           </View>
                         </View>
                         <View>
-                          Wed Jan 01 2020 00:00:00 GMT+0000 (Coordinated Universal Time)
+                          Created at: Wed Jan 01 2020 00:00:00 GMT+0000 (Coordinated Universal Time)
                         </View>
                         <View>
                           731143-7-0317-8200-0
@@ -2612,7 +2612,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                           </View>
                         </View>
                         <View>
-                          Wed Jan 01 2020 00:00:00 GMT+0000 (Coordinated Universal Time)
+                          Created at: Wed Jan 01 2020 00:00:00 GMT+0000 (Coordinated Universal Time)
                         </View>
                         <View>
                           731143-7-0317-8200-0
@@ -3268,7 +3268,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                           </View>
                         </View>
                         <View>
-                          Wed Jan 01 2020 00:00:00 GMT+0000 (Coordinated Universal Time)
+                          Created at: Wed Jan 01 2020 00:00:00 GMT+0000 (Coordinated Universal Time)
                         </View>
                         <View>
                           731143-7-0317-8200-0
@@ -3924,7 +3924,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                           </View>
                         </View>
                         <View>
-                          Wed Jan 01 2020 00:00:00 GMT+0000 (Coordinated Universal Time)
+                          Created at: Wed Jan 01 2020 00:00:00 GMT+0000 (Coordinated Universal Time)
                         </View>
                         <View>
                           731143-7-0317-8200-0
@@ -4580,7 +4580,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                           </View>
                         </View>
                         <View>
-                          Wed Jan 01 2020 00:00:00 GMT+0000 (Coordinated Universal Time)
+                          Created at: Wed Jan 01 2020 00:00:00 GMT+0000 (Coordinated Universal Time)
                         </View>
                         <View>
                           731143-7-0317-8200-0
@@ -5236,7 +5236,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                           </View>
                         </View>
                         <View>
-                          Wed Jan 01 2020 00:00:00 GMT+0000 (Coordinated Universal Time)
+                          Created at: Wed Jan 01 2020 00:00:00 GMT+0000 (Coordinated Universal Time)
                         </View>
                         <View>
                           731143-7-0317-8200-0

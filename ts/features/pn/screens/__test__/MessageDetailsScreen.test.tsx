@@ -37,7 +37,7 @@ import * as SEND_ANALYTICS from "../../analytics";
 import PN_ROUTES from "../../navigation/routes";
 import { startPNPaymentStatusTracking } from "../../store/actions";
 import * as REDUCERS from "../../store/reducers";
-import { PNMessage } from "../../store/types/types";
+import { ThirdPartyMessage } from "../../../../../definitions/pn/ThirdPartyMessage";
 import { MessageDetailsScreen } from "../MessageDetailsScreen";
 
 const mockDispatch = jest.fn();
@@ -59,16 +59,6 @@ const sendUserTypes: ReadonlyArray<SendUserType> = [
   "not_set",
   "recipient"
 ];
-
-const getMockCurriedSelector = (response: PNMessage | undefined) =>
-  jest
-    .fn()
-    .mockImplementation(
-      (_id: string) =>
-        ((_state: GlobalState) => response) as unknown as ReturnType<
-          typeof REDUCERS.curriedSendMessageFromIdSelector
-        >
-    );
 
 describe("MessageDetailsScreen", () => {
   beforeEach(() => {
@@ -171,12 +161,14 @@ describe("MessageDetailsScreen", () => {
             [false, true].forEach(containsF24 => {
               const fakeProfileFiscalCode = "XXXYYY99Z00A123B";
               const sendMessage = {
-                notificationStatusHistory: [],
-                isCancelled,
-                recipients:
-                  paymentCount > 0
-                    ? [{ taxId: fakeProfileFiscalCode, payment: {} }]
-                    : [],
+                details: {
+                  notificationStatusHistory: [],
+                  isCancelled,
+                  recipients:
+                    paymentCount > 0
+                      ? [{ taxId: fakeProfileFiscalCode, payment: {} }]
+                      : []
+                },
                 attachments: containsF24
                   ? [
                       {
@@ -184,7 +176,7 @@ describe("MessageDetailsScreen", () => {
                       }
                     ]
                   : []
-              } as unknown as PNMessage;
+              } as unknown as ThirdPartyMessage;
               [undefined, sendMessage].forEach(sendMessageOrUndefined =>
                 [false, true].forEach(isDelegate => {
                   it(`should ${
@@ -196,9 +188,9 @@ describe("MessageDetailsScreen", () => {
                       .spyOn(commonSelectors, "profileFiscalCodeSelector")
                       .mockImplementation(_state => fakeProfileFiscalCode);
                     jest
-                      .spyOn(REDUCERS, "curriedSendMessageFromIdSelector")
+                      .spyOn(REDUCERS, "sendMessageFromIdSelector")
                       .mockImplementation(
-                        getMockCurriedSelector(sendMessageOrUndefined)
+                        (_state, _id) => sendMessageOrUndefined
                       );
                     const spiedOnMockedTrackPNExSuccess = jest
                       .spyOn(SEND_ANALYTICS, "trackPNUxSuccess")
@@ -309,19 +301,20 @@ describe("MessageDetailsScreen", () => {
 
         const sendMessage = {
           attachments: [],
-          created_at: new Date(),
-          iun: "A IUN",
-          notificationStatusHistory: [],
-          recipients: [],
-          subject: "A subject"
-        } as unknown as PNMessage;
+          details: {
+            iun: "A IUN",
+            notificationStatusHistory: [],
+            recipients: [],
+            subject: "A subject"
+          }
+        } as ThirdPartyMessage;
 
         jest
           .spyOn(commonSelectors, "profileFiscalCodeSelector")
           .mockImplementation(_state => "XXXYYY99Z88W777I");
         jest
-          .spyOn(REDUCERS, "curriedSendMessageFromIdSelector")
-          .mockImplementation(getMockCurriedSelector(sendMessage));
+          .spyOn(REDUCERS, "sendMessageFromIdSelector")
+          .mockImplementation((_state, _id) => sendMessage);
         const spiedOnMockedTrackSendAARNotificationClosure = jest
           .spyOn(AAR_ANALYTICS, "trackSendAarNotificationClosure")
           .mockImplementation();
@@ -373,19 +366,21 @@ describe("MessageDetailsScreen", () => {
 
         const sendMessage = {
           attachments: [],
-          created_at: new Date(),
-          iun: "A IUN",
-          notificationStatusHistory: [],
-          recipients: [],
-          subject: "A subject"
-        } as unknown as PNMessage;
+          details: {
+            created_at: new Date(),
+            iun: "A IUN",
+            notificationStatusHistory: [],
+            recipients: [],
+            subject: "A subject"
+          }
+        } as ThirdPartyMessage;
 
         jest
           .spyOn(commonSelectors, "profileFiscalCodeSelector")
           .mockImplementation(_state => "XXXYYY99Z88W777I");
         jest
-          .spyOn(REDUCERS, "curriedSendMessageFromIdSelector")
-          .mockImplementation(getMockCurriedSelector(sendMessage));
+          .spyOn(REDUCERS, "sendMessageFromIdSelector")
+          .mockImplementation((_state, _id) => sendMessage);
         const spiedOnMockedTrackSendAARNotificationClosure = jest
           .spyOn(AAR_ANALYTICS, "trackSendAarNotificationClosure")
           .mockImplementation();
