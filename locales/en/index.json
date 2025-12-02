@@ -5541,7 +5541,7 @@
       "resultScreen": {
         "success": {
           "header": "Ecco il codice sconto!",
-          "body": "Chiedi al venditore di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:",
+          "body": "Il codice ha durata limitata. Una volta scaduto, potrai generare un nuovo codice.",
           "validUpTo": "Vale fino a ",
           "expiresIn": "Il codice è valido per ",
           "copyCodeCta": "Copy code",
