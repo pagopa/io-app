@@ -1,12 +1,17 @@
 import { useEffect } from "react";
-import { IdentificationContext } from "../../machine/eid/context";
+import {
+  EidIssuanceLevel,
+  IdentificationContext
+} from "../../machine/eid/context";
 import {
   IssuanceFailure,
   IssuanceFailureType
 } from "../../machine/eid/failure";
 import {
+  ItwFlow,
   trackIdNotMatch,
   trackItwCieIdCieNotRegistered,
+  trackItwIdRequestFederationFailed,
   trackItwIdRequestFailure,
   trackItwIdRequestUnexpectedFailure,
   trackItwUnsupportedDevice
@@ -16,21 +21,32 @@ import {
   shouldSerializeReason
 } from "../../common/utils/itwStoreUtils";
 
+type EidTrackedCredential = "ITW_ID" | "ITW_PID";
+
 type Params = {
   failure: IssuanceFailure;
   identification?: IdentificationContext;
+  issuanceLevel?: EidIssuanceLevel;
+  credential: EidTrackedCredential;
 };
 
 /**
  * Track errors occurred during the eID issuance process for analytics.
  */
-export const useEidEventsTracking = ({ failure, identification }: Params) => {
+export const useEidEventsTracking = ({
+  failure,
+  identification,
+  issuanceLevel,
+  credential
+}: Params) => {
+  const itwFlow: ItwFlow = mapIssuanceLevelToFlow(issuanceLevel);
+
   useEffect(() => {
     if (
       failure.type === IssuanceFailureType.NOT_MATCHING_IDENTITY &&
       identification
     ) {
-      return trackIdNotMatch(identification.mode);
+      return trackIdNotMatch(identification.mode, itwFlow);
     }
 
     if (failure.type === IssuanceFailureType.UNSUPPORTED_DEVICE) {
@@ -42,7 +58,8 @@ export const useEidEventsTracking = ({ failure, identification }: Params) => {
         ITW_ID_method: identification.mode,
         reason: failure.reason,
         type: failure.type,
-        caused_by: "CredentialIssuer"
+        caused_by: "CredentialIssuer",
+        itw_flow: itwFlow
       });
     }
 
@@ -54,7 +71,16 @@ export const useEidEventsTracking = ({ failure, identification }: Params) => {
         ITW_ID_method: identification.mode,
         reason: failure.reason,
         type: failure.type,
-        caused_by: "WalletProvider"
+        caused_by: "WalletProvider",
+        itw_flow: itwFlow
+      });
+    }
+
+    if (failure.type === IssuanceFailureType.UNTRUSTED_ISS) {
+      return trackItwIdRequestFederationFailed({
+        credential,
+        reason: failure.reason,
+        type: failure.type
       });
     }
 
@@ -62,7 +88,7 @@ export const useEidEventsTracking = ({ failure, identification }: Params) => {
       failure.type === IssuanceFailureType.CIE_NOT_REGISTERED &&
       identification
     ) {
-      return trackItwCieIdCieNotRegistered(identification.level);
+      return trackItwCieIdCieNotRegistered(itwFlow);
     }
 
     if (failure.type === IssuanceFailureType.UNEXPECTED) {
@@ -74,9 +100,22 @@ export const useEidEventsTracking = ({ failure, identification }: Params) => {
        */
       return trackItwIdRequestUnexpectedFailure(
         shouldSerializeReason(failure)
-          ? serializeFailureReason(failure)
-          : failure
+          ? { ...serializeFailureReason(failure), itw_flow: itwFlow }
+          : { ...failure, itw_flow: itwFlow }
       );
     }
-  }, [failure, identification]);
+  }, [failure, identification, itwFlow, credential]);
+};
+
+const mapIssuanceLevelToFlow = (issuanceLevel?: EidIssuanceLevel): ItwFlow => {
+  switch (issuanceLevel) {
+    case "l3":
+    case "l3-next":
+      return "L3";
+    case "l2":
+    case "l2-fallback":
+      return "L2";
+    default:
+      return "not_available";
+  }
 };

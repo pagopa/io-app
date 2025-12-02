@@ -143,11 +143,19 @@ type IdRequestFailure = {
   reason: unknown;
   type: string;
   caused_by: ItwFailureCause;
+  itw_flow: ItwFlow;
+};
+
+type IdRequestFederationFailure = {
+  credential: "ITW_ID" | "ITW_PID";
+  reason: unknown;
+  type: string;
 };
 
 type IdUnexpectedFailure = {
   reason: unknown;
   type: string;
+  itw_flow: ItwFlow;
 };
 
 type CredentialUnexpectedFailure = {
@@ -965,19 +973,25 @@ export function trackItWalletCieCardReadingUnexpectedFailure(
   );
 }
 
-export const trackIdNotMatch = (ITW_ID_method: ItwIdMethod) => {
+export const trackIdNotMatch = (
+  ITW_ID_method: ItwIdMethod,
+  itw_flow: ItwFlow
+) => {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_ID_NOT_MATCH,
-    buildEventProperties("KO", "error", { ITW_ID_method })
+    buildEventProperties("KO", "error", { ITW_ID_method, itw_flow })
   );
 };
 
 // TODO: Track IPZS timeout on eID flow
-export const trackItwIdRequestTimeout = (ITW_ID_method?: ItwIdMethod) => {
+export const trackItwIdRequestTimeout = (
+  ITW_ID_method?: ItwIdMethod,
+  itw_flow: ItwFlow = "not_available"
+) => {
   if (ITW_ID_method) {
     void mixpanelTrack(
       ITW_ERRORS_EVENTS.ITW_ID_REQUEST_TIMEOUT,
-      buildEventProperties("KO", "error", { ITW_ID_method })
+      buildEventProperties("KO", "error", { ITW_ID_method, itw_flow })
     );
   }
 };
@@ -989,6 +1003,15 @@ export const trackItwIdRequestFailure = (properties: IdRequestFailure) => {
       buildEventProperties("KO", "error", properties)
     );
   }
+};
+
+export const trackItwIdRequestFederationFailed = (
+  properties: IdRequestFederationFailure
+) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_ID_REQUEST_FEDERATION_FAILED,
+    buildEventProperties("KO", "error", properties)
+  );
 };
 
 export const trackItwUnsupportedDevice = (properties: IssuanceFailure) => {
@@ -1060,18 +1083,19 @@ export const trackCredentialInvalidStatusFailure = ({
 
 export const trackItwIdRequestUnexpectedFailure = ({
   reason,
-  type
+  type,
+  itw_flow
 }: IdUnexpectedFailure) => {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_ID_REQUEST_UNEXPECTED_FAILURE,
-    buildEventProperties("KO", "error", { reason, type })
+    buildEventProperties("KO", "error", { reason, type, itw_flow })
   );
 };
 
-export const trackItwAlreadyActivated = () => {
+export const trackItwAlreadyActivated = (itw_flow: ItwFlow) => {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_ALREADY_ACTIVATED,
-    buildEventProperties("KO", "error")
+    buildEventProperties("KO", "error", { itw_flow })
   );
 };
 

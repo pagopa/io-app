@@ -13,8 +13,10 @@ import {
   IssuanceFailureType
 } from "../../machine/eid/failure";
 import {
+  isL3FeaturesEnabledSelector,
   selectFailureOption,
-  selectIdentification
+  selectIdentification,
+  selectIssuanceLevel
 } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
@@ -57,6 +59,13 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const identification =
     ItwEidIssuanceMachineContext.useSelector(selectIdentification);
+  const issuanceLevel =
+    ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
+  const isL3Issuance = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
+  const credential = isL3Issuance ? "ITW_PID" : "ITW_ID";
+
   const toast = useIOToast();
 
   const FAQ_URL = useIOSelector(state =>
@@ -252,7 +261,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
       }
     };
 
-  useEidEventsTracking({ failure, identification });
+  useEidEventsTracking({ failure, identification, issuanceLevel, credential });
 
   const resultScreenProps = getOperationResultScreenContentProps();
 
