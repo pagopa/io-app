@@ -149,7 +149,8 @@ export const itwEidIssuanceMachine = setup({
     isL2Fallback: ({ context }) => context.level === "l2-fallback",
     isL3FeaturesEnabled: ({ context }) =>
       isL3IssuanceFeaturesEnabled(context.level),
-    isEligibleForItwSimplifiedActivation: notImplemented
+    isEligibleForItwSimplifiedActivation: notImplemented,
+    isWalletValid: notImplemented
   }
 }).createMachine({
   id: "itwEidIssuanceMachine",
@@ -189,10 +190,15 @@ export const itwEidIssuanceMachine = setup({
       description: "The machine is in idle, ready to start the issuance flow",
       on: {
         start: {
-          actions: assign(({ event }) => ({
-            mode: event.mode,
-            level: event.level
-          })),
+          actions: [
+            ({ context }) => {
+              console.log("Context before assign in start:", context);
+            },
+            assign(({ event }) => ({
+              mode: event.mode,
+              level: event.level
+            }))
+          ],
           target: "EvaluatingIssuanceMode"
         },
         close: {
@@ -375,6 +381,11 @@ export const itwEidIssuanceMachine = setup({
             guard: "isSessionExpired",
             actions: "handleSessionExpired",
             target: "#itwEidIssuanceMachine.TosAcceptance"
+          },
+          {
+            guard: "isWalletValid",
+            actions: "setFailure",
+            target: "#itwEidIssuanceMachine.Failure"
           },
           {
             actions: ["setFailure", "cleanupIntegrityKeyTag"],
