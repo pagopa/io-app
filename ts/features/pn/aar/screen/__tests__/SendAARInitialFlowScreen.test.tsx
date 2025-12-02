@@ -146,6 +146,28 @@ describe("SendAARInitialFlowScreen", () => {
       });
     }
   );
+  it(`should replace to the delegation proposal screen screen when flowState is '${sendAARFlowStates.notAddressee}'`, async () => {
+    flowStateSelectorSpy.mockReturnValue({
+      type: sendAARFlowStates.notAddressee
+    } as AARFlowState);
+    dispatchSpy.mockReturnValue(mockDispatch);
+    renderComponent();
+
+    await waitFor(() => {
+      expect(mockReplace).toHaveBeenCalledWith(
+        MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
+        {
+          screen: PN_ROUTES.MAIN,
+          params: {
+            screen: PN_ROUTES.SEND_AAR_DELEGATION_PROPOSAL,
+            params: {
+              type: sendAARFlowStates.notAddressee
+            } as AARFlowState
+          }
+        }
+      );
+    });
+  });
   [undefined, "572d8247-92bb-4c01-8e15-d0966a9b7506"].forEach(mandateId => {
     it(`should replace to the notification display screen when flowState is '${sendAARFlowStates.displayingNotificationData}'`, async () => {
       flowStateSelectorSpy.mockReturnValue({
