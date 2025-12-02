@@ -163,8 +163,8 @@ export const ItwIdentificationModeSelectionScreen = ({
       <ContentWrapper>
         <VStack space={16}>
           {!isCiePinDisabled && <CiePinMethodModule />}
-          {!isSpidDisabled && <SpidMethodModule />}
           {!isCieIdDisabled && <CieIdMethodModule />}
+          {!isSpidDisabled && <SpidMethodModule />}
           {isL3 && !eidReissuing && (
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <IOButton
@@ -205,26 +205,21 @@ const CiePinMethodModule = () => {
     };
   }, [level]);
 
-  const badgeProps: Badge | undefined = useMemo(() => {
-    if (level === "l2" && mode === "issuance") {
-      // Should not display the recommended badge for L2 issuance
-      return undefined;
-    }
-
-    return {
-      text: I18n.t(`${i18nNs}.mode.ciePin.badge`),
-      variant: "highlight",
-      outline: false,
-      testID: "CiePinRecommendedBadgeTestID"
-    };
-  }, [level, mode]);
+  const badgeProps: Badge | undefined = {
+    text: I18n.t(`${i18nNs}.mode.ciePin.badge`),
+    variant: "highlight",
+    outline: false,
+    testID: "CiePinRecommendedBadgeTestID"
+  };
 
   return (
     <ModuleNavigationAlt
       title={title}
       subtitle={subtitle}
       testID="CiePinMethodModuleTestID"
+      // TODO: change icon
       icon="cieCard"
+      // icon="card"
       onPress={handleOnPress}
       badge={badgeProps}
     />
