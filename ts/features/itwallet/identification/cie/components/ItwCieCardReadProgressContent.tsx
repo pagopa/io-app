@@ -9,7 +9,7 @@ import {
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import { CieManagerState } from "../hooks/useCieManager";
-import { ItwCieCardReadContent } from "./ItwCieCardReadContent";
+import { CieCardReadContent } from "../../../../common/components/cie/CieCardReadContent";
 
 type ItwCieCardReadProgressContentProps = Exclude<
   CieManagerState,
@@ -60,7 +60,7 @@ export const ItwCieCardReadProgressContent = (
   switch (props.state) {
     case "idle": {
       return (
-        <ItwCieCardReadContent
+        <CieCardReadContent
           progress={0}
           title={I18n.t(
             `features.itWallet.identification.cie.readingCard.${platform}.idle.title`
@@ -72,7 +72,7 @@ export const ItwCieCardReadProgressContent = (
     }
     case "reading": {
       return (
-        <ItwCieCardReadContent
+        <CieCardReadContent
           progress={props.progress}
           title={I18n.t(
             `features.itWallet.identification.cie.readingCard.${platform}.reading.title`
@@ -87,7 +87,7 @@ export const ItwCieCardReadProgressContent = (
     }
     case "success":
       return (
-        <ItwCieCardReadContent
+        <CieCardReadContent
           progress={1}
           title={I18n.t(
             `features.itWallet.identification.cie.readingCard.${platform}.completed.title`

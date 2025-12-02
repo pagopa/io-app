@@ -23,9 +23,9 @@ import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import { CieManagerFailure, CieManagerState } from "../hooks/useCieManager";
 import { isNfcError } from "../utils/error";
 import {
-  CieCardReadContentProps,
-  ItwCieCardReadContent
-} from "./ItwCieCardReadContent";
+  CieCardReadContent,
+  CieCardReadContentProps
+} from "../../../../common/components/cie/CieCardReadContent.tsx";
 
 type ItwCieCardReadFailureContentProps = Extract<
   CieManagerState,
@@ -93,7 +93,7 @@ export const ItwCieCardReadFailureContent = ({
     switch (failure.name) {
       case "NOT_A_CIE":
         return (
-          <ItwCieCardReadContent
+          <CieCardReadContent
             title={I18n.t(
               `features.itWallet.identification.cie.failure.wrongCard.title`
             )}
@@ -107,7 +107,7 @@ export const ItwCieCardReadFailureContent = ({
         );
       case "TAG_LOST":
         return (
-          <ItwCieCardReadContent
+          <CieCardReadContent
             title={I18n.t(
               `features.itWallet.identification.cie.failure.tagLost.title`
             )}
@@ -122,7 +122,7 @@ export const ItwCieCardReadFailureContent = ({
       case "WRONG_PIN":
         if (failure.attemptsLeft > 1) {
           return (
-            <ItwCieCardReadContent
+            <CieCardReadContent
               title={I18n.t(
                 `features.itWallet.identification.cie.failure.wrongPin1.title`
               )}
@@ -141,7 +141,7 @@ export const ItwCieCardReadFailureContent = ({
           );
         } else {
           return (
-            <ItwCieCardReadContent
+            <CieCardReadContent
               title={I18n.t(
                 `features.itWallet.identification.cie.failure.wrongPin2.title`
               )}
@@ -161,7 +161,7 @@ export const ItwCieCardReadFailureContent = ({
         }
       case "CARD_BLOCKED":
         return (
-          <ItwCieCardReadContent
+          <CieCardReadContent
             title={I18n.t(
               `features.itWallet.identification.cie.failure.locked.title`
             )}
@@ -181,7 +181,7 @@ export const ItwCieCardReadFailureContent = ({
       case "CERTIFICATE_EXPIRED":
       case "CERTIFICATE_REVOKED":
         return (
-          <ItwCieCardReadContent
+          <CieCardReadContent
             title={I18n.t(
               `features.itWallet.identification.cie.failure.expired.title`
             )}
@@ -196,7 +196,7 @@ export const ItwCieCardReadFailureContent = ({
   }
 
   return (
-    <ItwCieCardReadContent
+    <CieCardReadContent
       title={I18n.t(
         `features.itWallet.identification.cie.failure.generic.title`
       )}
