@@ -9,7 +9,7 @@ import {
   trackSendAARAccessDeniedDismissed
 } from "../../analytics";
 
-export const SendAARNotAddresseeComponent = () => {
+export const SendAarNotAddresseeKoComponent = () => {
   const { terminateFlow } = useSendAarFlowManager();
   const delegateUrl = useIOSelector(sendAARDelegateUrlSelector);
 

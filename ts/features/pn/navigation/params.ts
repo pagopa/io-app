@@ -1,4 +1,5 @@
 import { SendAARCieCardReadingScreenRouteParams } from "../aar/screen/SendAARCieCardReadingScreen";
+import { SendAarDelegationProposalNavigationParams } from "../aar/screen/SendAarDelegationProposalScreen";
 import { SendEngagementScreenNavigationParams } from "../aar/screen/SendEngagementScreen";
 import { SendQRScanFlowScreenProps } from "../aar/screen/SendQRScanFlowScreen";
 import { MessageAttachmentScreenRouteParams } from "../screens/MessageAttachmentScreen";
@@ -19,6 +20,7 @@ export type PnParamsList = {
   [PN_ROUTES.SEND_ENGAGEMENT_ON_FIRST_APP_OPENING]: undefined;
   [PN_ROUTES.SEND_ENGAGEMENT_ACTIVATION_ERROR]: undefined;
   [PN_ROUTES.SEND_AAR_ERROR]: undefined;
-  [PN_ROUTES.SEND_AAR_CIE_CARD_READING]: SendAARCieCardReadingScreenRouteParams;
+  [PN_ROUTES.SEND_AAR_DELEGATION_PROPOSAL]: SendAarDelegationProposalNavigationParams;
   [PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL]: undefined;
+  [PN_ROUTES.SEND_AAR_CIE_CARD_READING]: SendAARCieCardReadingScreenRouteParams;
 };
