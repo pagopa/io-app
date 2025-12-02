@@ -61,6 +61,19 @@ export const ItwPidIssuanceSection = () => {
         description="Start L3 PID (IT Wallet) issuance with L2+ flow"
         onPress={startIssuance("l3-next")}
       />
+      <ListItemHeader label="PID issuance from add credential" />
+      <ListItemNav
+        value="Start credential-triggered issuance"
+        description="Simulate PID issuance triggered by selecting mDL (skips catalog)"
+        onPress={() =>
+          machineRef.send({
+            type: "start",
+            mode: "credentialTriggered",
+            level: "l3",
+            credentialType: "mDL"
+          })
+        }
+      />
       <ListItemHeader label="PID upgrade" />
       <ListItemNav
         value="Start L3 upgrade"
