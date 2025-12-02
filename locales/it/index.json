@@ -4010,6 +4010,10 @@
                 "È richiesto un sistema operativo Android 6.0 o iOS 13 o superiori."
               ],
               "cta": "Cosa posso fare?"
+            },
+            "cieContextualHelp": {
+              "title": "Come accedere a una notifica SEND destinata a un’altra persona",
+              "body": "Per visualizzare una notifica SEND destinata a un’altra persona hai bisogno della sua Carta di Identità Elettronica e di uno smartphone che ne supporti la lettura."
             }
           }
         }

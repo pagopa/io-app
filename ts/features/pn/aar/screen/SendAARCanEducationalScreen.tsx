@@ -83,6 +83,13 @@ export const SendAARCanEducationalScreen = () => {
           })
         }}
         description={i18n.t("features.pn.aar.flow.cieCanAdvisory.description")}
+        headerActionsProp={{ showHelp: true }}
+        contextualHelp={{
+          title: i18n.t(
+            "features.pn.aar.flow.delegated.cieContextualHelp.title"
+          ),
+          body: i18n.t("features.pn.aar.flow.delegated.cieContextualHelp.body")
+        }}
         goBack={handleGoBack}
       >
         <VSpacer size={8} />
