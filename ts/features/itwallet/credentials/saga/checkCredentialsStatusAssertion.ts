@@ -61,7 +61,8 @@ export function* updateCredentialStatusAssertionSaga(
 
       trackItwStatusCredentialAssertionFailure({
         credential: mixpanelCredential,
-        credential_status: errorCode || "invalid"
+        credential_status: errorCode || "invalid",
+        reason: e.reason
       });
 
       return {
