@@ -1,0 +1,60 @@
+import { fireEvent } from "@testing-library/react-native";
+import { createStore } from "redux";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../store/reducers";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import PN_ROUTES from "../../../../navigation/routes";
+import { SendAarNfcNotSupportedComponent } from "../SendAarNfcNotSupportedComponent";
+import * as FLOW_MANAGER from "../../../hooks/useSendAarFlowManager";
+import * as IO_NAV from "../../../../../../navigation/params/AppParamsList";
+
+const terminateFlowMock = jest.fn();
+const setOptionsMock = jest.fn();
+
+describe("SendAarNfcNotSupportedComponent", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("should match the snapshot", () => {
+    const { toJSON } = renderComponent();
+    expect(toJSON()).toMatchSnapshot();
+  });
+
+  it("calls setOptions to show header on mount", () => {
+    jest.spyOn(IO_NAV, "useIONavigation").mockImplementation(
+      () =>
+        ({
+          setOptions: setOptionsMock
+        } as unknown as ReturnType<typeof IO_NAV.useIONavigation>)
+    );
+    renderComponent();
+    expect(setOptionsMock).toHaveBeenCalledWith({ headerShown: true });
+  });
+
+  it("calls terminateFlow when close icon is pressed", () => {
+    jest.spyOn(FLOW_MANAGER, "useSendAarFlowManager").mockImplementation(
+      () =>
+        ({
+          terminateFlow: terminateFlowMock
+        } as unknown as ReturnType<typeof FLOW_MANAGER.useSendAarFlowManager>)
+    );
+    const { getByTestId } = renderComponent();
+    const closeButton = getByTestId("close-x");
+    expect(terminateFlowMock).toHaveBeenCalledTimes(0);
+    fireEvent.press(closeButton);
+    expect(terminateFlowMock).toHaveBeenCalledTimes(1);
+  });
+});
+
+const renderComponent = () => {
+  const initialState = appReducer(undefined, applicationChangeState("active"));
+  const store = createStore(appReducer, initialState as any);
+
+  return renderScreenWithNavigationStoreContext(
+    () => <SendAarNfcNotSupportedComponent />,
+    PN_ROUTES.QR_SCAN_FLOW,
+    {},
+    store
+  );
+};
