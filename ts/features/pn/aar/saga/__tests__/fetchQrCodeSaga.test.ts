@@ -11,6 +11,7 @@ import { currentAARFlowData } from "../../store/selectors";
 import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
 import { sendAarMockStateFactory } from "../../utils/testUtils";
 import { fetchAARQrCodeSaga } from "../fetchQrCodeSaga";
+import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 
 const sendUATEnvironment = [false, true];
 
@@ -151,57 +152,64 @@ describe("fetchQrCodeSaga", () => {
         isTest: isSendUATEnvironment
       });
     });
-    it(`should correctly update state on a 403 response with isTest='${isSendUATEnvironment}'`, () => {
-      const notAddresseeState: AARFlowState = {
-        type: sendAARFlowStates.notAddresseeFinal,
-        iun: "123123",
-        recipientInfo: {
-          denomination: "Mario Rossi",
-          taxId: "RSSMRA74D22A001Q"
-        },
-        qrCode: aQRCode
-      };
-      const notAddresseeResponse = E.right({
-        headers: {},
-        status: 403,
-        value: {
+    [true, false].forEach(isSendDelegationEnabled => {
+      it(`should correctly update state on a 403 response with isTest='${isSendUATEnvironment}', and Send delegation enabled = ${isSendDelegationEnabled}`, () => {
+        const notAddresseeState: AARFlowState = {
+          type: isSendDelegationEnabled
+            ? sendAARFlowStates.notAddressee
+            : sendAARFlowStates.notAddresseeFinal,
           iun: "123123",
           recipientInfo: {
             denomination: "Mario Rossi",
             taxId: "RSSMRA74D22A001Q"
+          },
+          qrCode: aQRCode
+        };
+        const notAddresseeResponse = E.right({
+          headers: {},
+          status: 403,
+          value: {
+            iun: "123123",
+            recipientInfo: {
+              denomination: "Mario Rossi",
+              taxId: "RSSMRA74D22A001Q"
+            }
           }
-        }
-      });
+        });
 
-      const mockApiCall = jest
-        .fn()
-        .mockReturnValue(mockResolvedCall(notAddresseeResponse));
+        const mockApiCall = jest
+          .fn()
+          .mockReturnValue(mockResolvedCall(notAddresseeResponse));
 
-      testSaga(
-        fetchAARQrCodeSaga,
-        mockApiCall,
-        sessionToken,
-        fetchingQrRequestAction
-      )
-        .next()
-        .select(currentAARFlowData)
-        .next(mockFetchingQrState)
-        .select(isPnTestEnabledSelector)
-        .next(isSendUATEnvironment)
-        .call(withRefreshApiCall, mockApiCall(), fetchingQrRequestAction)
-        .next(notAddresseeResponse)
-        .put(setAarFlowState(notAddresseeState))
-        .next()
-        .isDone();
+        testSaga(
+          fetchAARQrCodeSaga,
+          mockApiCall,
+          sessionToken,
+          fetchingQrRequestAction
+        )
+          .next()
+          .select(currentAARFlowData)
+          .next(mockFetchingQrState)
+          .select(isPnTestEnabledSelector)
+          .next(isSendUATEnvironment)
+          .call(withRefreshApiCall, mockApiCall(), fetchingQrRequestAction)
+          .next(notAddresseeResponse)
+          .select(isAarInAppDelegationRemoteEnabledSelector)
+          .next(isSendDelegationEnabled)
+          .put(setAarFlowState(notAddresseeState))
+          .next()
+          .isDone();
 
-      expect(mockApiCall).toHaveBeenCalledWith({
-        Bearer: sessionTokenWithBearer,
-        body: {
-          aarQrCodeValue: aQRCode
-        },
-        isTest: isSendUATEnvironment
+        expect(mockApiCall).toHaveBeenCalledWith({
+          Bearer: sessionTokenWithBearer,
+          body: {
+            aarQrCodeValue: aQRCode
+          },
+          isTest: isSendUATEnvironment
+        });
       });
     });
+
     [
       (E.left(undefined),
       E.right({
