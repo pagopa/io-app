@@ -139,7 +139,10 @@ const ItwCredentialOnboardingSection = () => {
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL
           });
-        } else if (!isWalletValid || (!isITWalletValid && isNewCredential(type))) {
+        } else if (
+          !isWalletValid ||
+          (!isITWalletValid && isNewCredential(type))
+        ) {
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.DISCOVERY.INFO,
             params: { level: "l3", credentialType: type }
