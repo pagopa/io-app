@@ -7,12 +7,14 @@ import { SendAARClient, createSendAARClientWithLollipop } from "../api/client";
 import {
   setAarFlowState,
   terminateAarFlow,
-  initiateAarFlow
+  initiateAarFlow,
+  testSendNisMrtdRequestAction
 } from "../store/actions";
 import { sendAARFlowStates } from "../utils/stateUtils";
 import { initiateAarFlowSaga } from "./initiateAarFlowSaga";
 import { fetchAarDataSaga } from "./fetchNotificationDataSaga";
 import { fetchAARQrCodeSaga } from "./fetchQrCodeSaga";
+import { testSendNisMrtdSaga } from "./testSendNisMrtdSaga";
 
 function* aarFlowMasterSaga(
   sendAARClient: SendAARClient,
@@ -69,6 +71,12 @@ export function* watchAarFlowSaga(
     sessionToken
   );
   yield* takeLatest(initiateAarFlow, initiateAarFlowSaga);
+  yield* takeLatest(
+    testSendNisMrtdRequestAction.request,
+    testSendNisMrtdSaga,
+    sendAARClient,
+    sessionToken
+  );
 }
 export const testable = isTestEnv
   ? {

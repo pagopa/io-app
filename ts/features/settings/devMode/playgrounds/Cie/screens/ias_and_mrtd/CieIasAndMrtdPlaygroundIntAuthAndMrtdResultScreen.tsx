@@ -65,6 +65,10 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdResultScreen() {
     }
   };
 
+  const handleSEND = async () => {
+    Alert.alert("Not ready yet");
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -78,6 +82,7 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdResultScreen() {
       <View style={styles.buttonRow}>
         <IOButton variant="outline" label="Copy" onPress={handleCopy} />
         <IOButton variant="outline" label="Share" onPress={handleShare} />
+        <IOButton variant="outline" label="SEND" onPress={handleSEND} />
       </View>
     </SafeAreaView>
   );
