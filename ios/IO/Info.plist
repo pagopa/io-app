@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>en</string>
+    <key>CFBundleDisplayName</key>
+    <string>IO</string>
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
+    <key>CFBundleIdentifier</key>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>$(PRODUCT_NAME)</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>3.21.0</string>
+    <key>CFBundleSignature</key>
+    <string>????</string>
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+        <key>CFBundleURLName</key>
+        <string>ioit</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>ioit</string>
+          <string>iowalletcie</string>
+          <string>iologincie</string>
+        </array>
+      </dict>
+    </array>
+    <key>CFBundleVersion</key>
+    <string>4</string>
+    <key>ITSAppUsesNonExemptEncryption</key>
+    <false/>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>http</string>
+      <string>https</string>
+      <string>CIEID</string>
+    </array>
+    <key>LSRequiresIPhoneOS</key>
+    <true/>
+    <key>LSSupportsOpeningDocumentsInPlace</key>
+    <true/>
+    <key>NFCReaderUsageDescription</key>
+    <string>NFC tag to read EIC cards</string>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+      <key>NSAllowsArbitraryLoads</key>
+      <false/>
+      <key>NSAllowsLocalNetworking</key>
+      <true/>
+      <key>NSExceptionDomains</key>
+      <dict>
+        <key>localhost</key>
+        <dict>
+          <key>NSExceptionAllowsInsecureHTTPLoads</key>
+          <true/>
+        </dict>
+      </dict>
+    </dict>
+    <key>NSAppleMusicUsageDescription</key>
+    <string>The app needs NSAppleMusicUsageDescription permission</string>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>IO richiede l'accesso al Bluetooth per completare la verifica dei documenti</string>
+    <key>NSBluetoothPeripheralUsageDescription</key>
+    <string>IO richiede l'accesso al Bluetooth per completare la verifica dei documenti</string>
+    <key>NSCalendarsUsageDescription</key>
+    <string>So that you’ll be able to add deadlines to your calendar and set a reminder.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>You’ll be able to read QR codes and pay pagoPA notices.</string>
+    <key>NSContactsUsageDescription</key>
+    <string>IO needs access to your contacts to let you add them in calendar events</string>
+    <key>NSFaceIDUsageDescription</key>
+    <string>You'll be able to access the app more easily without having to enter the unlock code.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>The app needs NSLocationAlwaysUsageDescription permission</string>
+    <key>NSLocationUsageDescription</key>
+    <string>The app needs NSLocationUsageDescription permission</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>The app needs NSLocationWhenInUseUsageDescription permission</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>IO needs access to the microphone in case you want to leave a voice note</string>
+    <key>NSMotionUsageDescription</key>
+    <string>The app needs NSMotionUsageDescription permission</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>You will be able to save pictures from the app to your device.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>You’ll be able to save bonuses, certificates and upload screenshots or payment notices.</string>
+    <key>NSSpeechRecognitionUsageDescription</key>
+    <string>The app needs NSSpeechRecognitionUsageDescription permission</string>
+    <key>UIAppFonts</key>
+    <array>
+      <string>TitilliumSansPro-Black.otf</string>
+      <string>TitilliumSansPro-Bold.otf</string>
+      <string>TitilliumSansPro-Light.otf</string>
+      <string>TitilliumSansPro-Regular.otf</string>
+      <string>TitilliumSansPro-Semibold.otf</string>
+      <string>TitilliumSansPro-Thin.otf</string>
+      <string>TitilliumSansPro-BlackItalic.otf</string>
+      <string>TitilliumSansPro-BoldItalic.otf</string>
+      <string>TitilliumSansPro-Italic.otf</string>
+      <string>TitilliumSansPro-LightItalic.otf</string>
+      <string>TitilliumSansPro-SemiboldItalic.otf</string>
+      <string>TitilliumSansPro-ThinItalic.otf</string>
+      <string>Titillio-Black.otf</string>
+      <string>Titillio-BlackItalic.otf</string>
+      <string>Titillio-Bold.otf</string>
+      <string>Titillio-BoldItalic.otf</string>
+      <string>Titillio-Extrablack.otf</string>
+      <string>Titillio-ExtrablackItalic.otf</string>
+      <string>Titillio-Extrabold.otf</string>
+      <string>Titillio-ExtraboldItalic.otf</string>
+      <string>Titillio-Light.otf</string>
+      <string>Titillio-LightItalic.otf</string>
+      <string>Titillio-Regular.otf</string>
+      <string>Titillio-RegularItalic.otf</string>
+      <string>Titillio-Semibold.otf</string>
+      <string>Titillio-SemiboldItalic.otf</string>
+      <string>Titillio-Thin.otf</string>
+      <string>Titillio-ThinItalic.otf</string>
+      <string>FiraCode-Medium.ttf</string>
+    </array>
+    <key>UIBackgroundModes</key>
+    <array>
+      <string>remote-notification</string>
+    </array>
+    <key>UIFileSharingEnabled</key>
+    <true/>
+    <key>UILaunchStoryboardName</key>
+    <string>LaunchScreen</string>
+    <key>UIRequiredDeviceCapabilities</key>
+    <array>
+      <string>arm64</string>
+    </array>
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+      <string>UIInterfaceOrientationPortrait</string>
+    </array>
+    <key>UIViewControllerBasedStatusBarAppearance</key>
+    <false/>
+    <key>CADisableMinimumFrameDurationOnPhone</key>
+    <true/>
+    <key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
+    <array>
+      <string>A0000002471001</string>
+      <string>A0000000308000000009816001</string>
+      <string>A00000000039</string>
+      <string>A0000002472001</string>
+      <string>00000000000000</string>
+    </array>
+    <key>method</key>
+    <string>app-store</string>
+    <key>UIStatusBarStyle</key>
+    <string>UIStatusBarStyleLightContent</string>
+  </dict>
+</plist>

@@ -13,7 +13,7 @@ import { View } from "react-native";
 import I18n from "i18next";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
 import { IdPayConfigurationParamsList } from "../navigation/params";

@@ -1,4 +1,5 @@
 import {
+  call,
   fork,
   put,
   race,
@@ -18,10 +19,24 @@ import {
 import {
   isActiveSessionFastLoginEnabledSelector,
   idpSelectedActiveSessionLoginSelector,
-  newTokenActiveSessionLoginSelector
+  newTokenActiveSessionLoginSelector,
+  cieIDSelectedSecurityLevelActiveSessionLoginSelector
 } from "../store/selectors";
 import { startApplicationInitialization } from "../../../../store/actions/application";
 import { watchCieAuthenticationSaga } from "../../login/cie/sagas/cie";
+import { IdpCIE, IdpCIE_ID } from "../../login/hooks/useNavigateToLoginMethod";
+import {
+  trackCieLoginSuccess,
+  trackCieIDLoginSuccess,
+  trackSpidLoginSuccess
+} from "../../common/analytics";
+import { GlobalState } from "../../../../store/reducers/types";
+import { updateLoginSessionProfileAndSuperProperties } from "../../fastLogin/analytics/optinAnalytics";
+import { updateLoginMethodProfileProperty } from "../../common/analytics/spidAnalytics";
+import {
+  analyticsAuthenticationCompleted,
+  analyticsAuthenticationStarted
+} from "../../../../store/actions/analytics";
 
 export function* watchActiveSessionLoginSaga() {
   yield* takeLatest(
@@ -30,11 +45,14 @@ export function* watchActiveSessionLoginSaga() {
   );
 }
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 export function* handleActiveSessionLoginSaga(): Generator<
   ReduxSagaEffect,
   void,
   any
 > {
+  yield* put(analyticsAuthenticationStarted("reauth"));
+
   yield* fork(watchCieAuthenticationSaga);
 
   const { success, failure } = yield* race({
@@ -55,6 +73,28 @@ export function* handleActiveSessionLoginSaga(): Generator<
     const fastLoginOptIn = yield* select(
       isActiveSessionFastLoginEnabledSelector
     );
+    const cieIDSelectedSecurityLevel = yield* select(
+      cieIDSelectedSecurityLevelActiveSessionLoginSelector
+    );
+
+    if (idp && idp.id) {
+      switch (idp.id) {
+        case IdpCIE.id:
+          trackCieLoginSuccess(fastLoginOptIn ? "365" : "30", "reauth");
+          break;
+        case IdpCIE_ID.id:
+          // We currently request only a Level 2 login; however, once in the CieID app, if the only configured method is a Level 3 login, it will be possible to proceed with that higher level of security.
+          // Unfortunately, at the time this event is logged, we do not have information about the actual level used for the recently completed login.
+          trackCieIDLoginSuccess(fastLoginOptIn ? "365" : "30", "reauth");
+          break;
+        default:
+          trackSpidLoginSuccess(
+            fastLoginOptIn ? "365" : "30",
+            idp.id,
+            "reauth"
+          );
+      }
+    }
 
     // Even though we are sure that all three values are present at this point,
     // we still need to perform this runtime check due to the lack of strict typing in the reducer state.
@@ -64,13 +104,24 @@ export function* handleActiveSessionLoginSaga(): Generator<
     const isDataComplete = token && idp;
 
     if (isDataComplete) {
+      const state = (yield* select()) as GlobalState;
+      yield* call(
+        updateLoginSessionProfileAndSuperProperties,
+        state,
+        fastLoginOptIn ? "365" : "30"
+      );
+      yield* call(updateLoginMethodProfileProperty, state, idp.id);
+
       yield* put(
         consolidateActiveSessionLoginData({
           idp,
           token,
-          fastLoginOptIn: !!fastLoginOptIn
+          fastLoginOptIn: !!fastLoginOptIn,
+          cieIDSelectedSecurityLevel
         })
       );
+
+      yield* put(analyticsAuthenticationCompleted("reauth"));
 
       yield* put(
         startApplicationInitialization({
