@@ -5837,11 +5837,11 @@
           "header": "Ecco il codice sconto!",
           "body": "Chiedi al venditore di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:",
           "validUpTo": "Vale fino a ",
-          "expiresIn": "Il codice scade tra ",
+          "expiresIn": "Il codice è valido per ",
           "copyCodeCta": "Copia codice",
           "expired": {
-            "header": "Il codice è scaduto",
-            "CTA": "Usa un nuovo codice"
+            "header": "Questo codice non è più valido",
+            "CTA": "Genera un nuovo codice"
           }
         },
         "error": {
