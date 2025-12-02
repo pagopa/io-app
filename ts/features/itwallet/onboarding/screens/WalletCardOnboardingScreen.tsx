@@ -35,10 +35,7 @@ import {
   isItwEnabledSelector,
   itwDisabledCredentialsSelector
 } from "../../common/store/selectors/remoteConfig";
-import {
-  itwCredentialsEidSelector,
-  itwCredentialsTypesSelector
-} from "../../credentials/store/selectors";
+import { itwCredentialsTypesSelector } from "../../credentials/store/selectors";
 import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector
@@ -109,13 +106,12 @@ const ItwCredentialOnboardingSection = () => {
   const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
   const itwCredentialsTypes = useIOSelector(itwCredentialsTypesSelector);
   const isITWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
 
   const isCredentialIssuancePending =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
   const selectedCredentialOption =
     ItwCredentialIssuanceMachineContext.useSelector(selectCredentialTypeOption);
-  const eidOption = useIOSelector(itwCredentialsEidSelector);
-  const lacksPid = O.isNone(eidOption);
 
   // Show upcoming credentials only if L3 is enabled and env is "pre"
   const shouldShowUpcoming = isL3Enabled && env === "pre";
@@ -143,11 +139,7 @@ const ItwCredentialOnboardingSection = () => {
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL
           });
-        } else if (!isITWalletValid && isNewCredential(type)) {
-          navigation.navigate(ITW_ROUTES.MAIN, {
-            screen: ITW_ROUTES.ISSUANCE.IT_WALLET_INACTIVE
-          });
-        } else if (lacksPid) {
+        } else if (!isWalletValid || (!isITWalletValid && isNewCredential(type))) {
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.DISCOVERY.INFO,
             params: { level: "l3", credentialType: type }
@@ -160,7 +152,7 @@ const ItwCredentialOnboardingSection = () => {
           });
         }
       },
-      [isITWalletValid, machineRef, navigation, lacksPid]
+      [isITWalletValid, machineRef, navigation, isWalletValid]
     )
   );
 
