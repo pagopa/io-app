@@ -36,6 +36,7 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { itwIsPidReissuingSurveyHiddenSelector } from "../../common/store/selectors/preferences";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -234,7 +235,9 @@ export const createEidIssuanceActionsImplementation = (
           params: {
             screen: ROUTES.WALLET_HOME,
             params: {
-              requiredEidFeedback: context.mode === "reissuance"
+              requiredEidFeedback:
+                context.mode === "reissuance" &&
+                !itwIsPidReissuingSurveyHiddenSelector(store.getState())
             }
           }
         }

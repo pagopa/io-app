@@ -2,6 +2,61 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.21.0-rc.4](https://github.com/pagopa/io-app/compare/3.21.0-rc.3...3.21.0-rc.4) (2025-12-01)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-3331](https://pagopa.atlassian.net/browse/SIW-3331)] Logical review of the Qualtrics survey bottom sheet for eID non-renewal ([#7604](https://github.com/pagopa/io-app/issues/7604)) ([632916e](https://github.com/pagopa/io-app/commit/632916e40ce4b90409b8b258f2019ae499186e8e))
+
+
+### Bug Fixes
+
+* [[IOCOM-2835](https://pagopa.atlassian.net/browse/IOCOM-2835)] Proper value for `x-pagopa-pn-io-src` header ([#7664](https://github.com/pagopa/io-app/issues/7664)) ([568390d](https://github.com/pagopa/io-app/commit/568390d66628d403a9edb332148f078aa33023c2))
+
+## [3.21.0-rc.3](https://github.com/pagopa/io-app/compare/3.21.0-rc.2...3.21.0-rc.3) (2025-11-28)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-3190](https://pagopa.atlassian.net/browse/SIW-3190)] Display credential introduction screen with catalogue information ([#7655](https://github.com/pagopa/io-app/issues/7655)) ([f60c666](https://github.com/pagopa/io-app/commit/f60c66637db2380c2289cab9be9a21c4cc2e3f05))
+* [[IOCOM-2751](https://pagopa.atlassian.net/browse/IOCOM-2751)] - AAR phase 3 - Add CIE reading screen ([#7630](https://github.com/pagopa/io-app/issues/7630)) ([502d599](https://github.com/pagopa/io-app/commit/502d599df94246d0f12b6e1109c3460ad04bd295))
+
+
+### Bug Fixes
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Fix android crash on portrait attribute ([#7660](https://github.com/pagopa/io-app/issues/7660)) ([d1270c1](https://github.com/pagopa/io-app/commit/d1270c1feaed6ced1ea1bf421cca6276606bfa7f))
+
+## [3.21.0-rc.2](https://github.com/pagopa/io-app/compare/3.21.0-rc.1...3.21.0-rc.2) (2025-11-27)
+
+
+### Chores
+
+* [[IOAPPX-509](https://pagopa.atlassian.net/browse/IOAPPX-509)] Rename ItaliaApp to IO in native projects ([#7582](https://github.com/pagopa/io-app/issues/7582)) ([dfee4c6](https://github.com/pagopa/io-app/commit/dfee4c6ff6829a1ce545515f17e3300e14cab69f))
+* [[IOBP-2291](https://pagopa.atlassian.net/browse/IOBP-2291)] add CDC_CARD_ERROR mixpanel event ([#7650](https://github.com/pagopa/io-app/issues/7650)) ([edd14f3](https://github.com/pagopa/io-app/commit/edd14f37f0626c407e5a0d4e1e23a216348267f5))
+* [[IOPLT-1444](https://pagopa.atlassian.net/browse/IOPLT-1444)] Remove `BaseHeader` after `BarcodeScanBaseScreenComponent` refactor ([#7648](https://github.com/pagopa/io-app/issues/7648)) ([fc67f6d](https://github.com/pagopa/io-app/commit/fc67f6d03038c81c0036007614dc785afb2bf58f))
+* [[IOPLT-1445](https://pagopa.atlassian.net/browse/IOPLT-1445)] Remove `InfoScreenComponent` ([#7651](https://github.com/pagopa/io-app/issues/7651)) ([0dbcd0b](https://github.com/pagopa/io-app/commit/0dbcd0b6a83591086f87d295a2107038540d8c30))
+* [[IOPLT-1449](https://pagopa.atlassian.net/browse/IOPLT-1449)] Remove legacy `Button…` components from the DS ([#7653](https://github.com/pagopa/io-app/issues/7653)) ([d79ee47](https://github.com/pagopa/io-app/commit/d79ee47d70c0591082dd219f31de933ee1e526aa))
+* [[IOPLT-1450](https://pagopa.atlassian.net/browse/IOPLT-1450)] Remove legacy components that are no longer referenced ([#7656](https://github.com/pagopa/io-app/issues/7656)) ([547d675](https://github.com/pagopa/io-app/commit/547d6750d69b31e5de695f0932f9ce0d08864844))
+
+### [3.20.1-rc.0](https://github.com/pagopa/io-app/compare/3.20.0-rc.6...3.20.1-rc.0) (2025-11-27)
+
+
+### Chores
+
+* **release:** 3.21.0-rc.1 ([89572fb](https://github.com/pagopa/io-app/commit/89572fbc0c0e2e8fe7e552d7b3f21e1e5c68dc71))
+
+
+### Bug Fixes
+
+* [[IOBP-2271](https://pagopa.atlassian.net/browse/IOBP-2271)] Adjust `PAYMENT_NOTICE_SUMMARY` text visualization  ([#7641](https://github.com/pagopa/io-app/issues/7641)) ([d113964](https://github.com/pagopa/io-app/commit/d113964f5edabcb4cee87271ab3a86f54e5ba5d6))
+
+
+### Chores
+
+* [[IOPID-3343](https://pagopa.atlassian.net/browse/IOPID-3343)] add MP tracking on Active Session Login Flow ([#7638](https://github.com/pagopa/io-app/issues/7638)) ([a9a2afa](https://github.com/pagopa/io-app/commit/a9a2afa15b4e9cf6b34482bfb8f5f4cfd5882446)), closes [/github.com/pagopa/io-app/pull/5750/files#diff-89c251a9a9539e3470c6001c13917f0881272bfa692f61bdc4a6f191b0435fa3](https://github.com/pagopa//github.com/pagopa/io-app/pull/5750/files/issues/diff-89c251a9a9539e3470c6001c13917f0881272bfa692f61bdc4a6f191b0435fa3)
+* [[IOPLT-1439](https://pagopa.atlassian.net/browse/IOPLT-1439)] Remove `BaseScreenComponent` and move contextual help elsewhere ([#7642](https://github.com/pagopa/io-app/issues/7642)) ([e65b533](https://github.com/pagopa/io-app/commit/e65b533d541010e3129ad9fff840ad7b6c8f5f6e))
+
 ## [3.21.0-rc.0](https://github.com/pagopa/io-app/compare/3.20.0-rc.6...3.21.0-rc.0) (2025-11-25)
 
 

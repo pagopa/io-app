@@ -528,7 +528,11 @@ export const itwEidIssuanceMachine = setup({
               {
                 target: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
               }
-            ]
+            ],
+            close: {
+              target: "#itwEidIssuanceMachine.Idle",
+              actions: "closeIssuance"
+            }
           }
         },
         CieID: {

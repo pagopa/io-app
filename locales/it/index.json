@@ -3953,6 +3953,54 @@
             "link": "Vai sul sito di SEND",
             "primaryAction": "Torna alla notifica",
             "secondaryAction": "Chiudi la notifica"
+          },
+          "cieScanning": {
+            "idle": {
+              "title": "Poggia il retro del telefono sulla CIE",
+              "status": "Posiziona il telefono sulla CIE per iniziare la lettura."
+            },
+            "reading": {
+              "title": "La lettura è in corso...",
+              "subtitle": "Non muovere il telefono.",
+              "status": "Non muovere il telefono."
+            },
+            "success": {
+              "title": "Lettura completata!",
+              "status": "Fatto!"
+            },
+            "error": {
+              "TAG_LOST": {
+                "title": "Hai rimosso il telefono troppo presto!",
+                "subtitle": "Riprova e tieni fermo il telefono per la lettura."
+              }
+            }
+          },
+          "validatingMandate": {
+            "loadingText": "Verifica della Carta di Identità Elettronica in corso"
+          },
+          "delegated": {
+            "notAdressee": {
+              "warningAlert": "Questa comunicazione non è destinata a te.",
+              "title": "Vuoi aprire la notifica SEND di {{name}}?",
+              "subtitle": "Se la persona che ha ricevuto la comunicazione ti ha chiesto di farlo, puoi aprire questa notifica SEND per suo conto.",
+              "primaryAction": "Apri notifica SEND",
+              "bottomSheet": {
+                "title": "Cosa ti serve?",
+                "featureInfos": [
+                  "La Carta di Identità Elettronica di {{name}}",
+                  "Il codice a 6 cifre (CAN) che trovi stampato sul fronte della carta, in basso a destra."
+                ]
+              }
+            },
+            "nfcNotSupported": {
+              "title": "Il tuo dispositivo non supporta la lettura della CIE",
+              "body": "Controlla che il sistema operativo sia aggiornato oppure scopri cosa fare.",
+              "featureInfoText": [
+                "Per leggere la CIE è necessario un dispositivo con chip NFC.",
+                "È richiesto un sistema operativo Android 6.0 o iOS 13 o superiori."
+              ],
+              "cta": "Cosa posso fare?"
+            }
           }
         }
       },
@@ -4894,6 +4942,9 @@
             "primary": "Continua",
             "secondary": "Annulla"
           }
+        },
+        "credentialIntro": {
+          "subtitle": "Leggi con attenzione cosa troverai."
         },
         "credentialPreview": {
           "loading": "Attendi ancora qualche secondo, senza uscire dall’app",

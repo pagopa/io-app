@@ -39,9 +39,6 @@ const DATA_ROUTES_DEBUG: RoutesProps = Object.values(
 const DATA_ROUTES_SCREENS: RoutesProps = Object.values(
   DESIGN_SYSTEM_ROUTES.SCREENS
 );
-const DATA_ROUTES_LEGACY: RoutesProps = Object.values(
-  DESIGN_SYSTEM_ROUTES.LEGACY
-);
 
 type SectionDataProps = {
   title: string;
@@ -73,12 +70,6 @@ const DESIGN_SYSTEM_SECTION_DATA: Array<SectionDataProps> = [
   {
     title: "Debug",
     data: DATA_ROUTES_DEBUG
-  },
-  {
-    title: "Legacy",
-    description:
-      "You should not use the following components for present and future deployments. They're here just for reference.",
-    data: DATA_ROUTES_LEGACY
   }
 ];
 
