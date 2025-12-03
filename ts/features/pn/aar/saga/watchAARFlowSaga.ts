@@ -1,4 +1,4 @@
-import { call, race, take, takeLatest } from "typed-redux-saga/macro";
+import { call, race, select, take, takeLatest } from "typed-redux-saga/macro";
 import { apiUrlPrefix } from "../../../../config";
 import { SessionToken } from "../../../../types/SessionToken";
 import { isTestEnv } from "../../../../utils/environment";
@@ -11,6 +11,7 @@ import {
   testAarCreateMandate,
   testAarAcceptMandate
 } from "../store/actions";
+import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { sendAARFlowStates } from "../utils/stateUtils";
 import { initiateAarFlowSaga } from "./initiateAarFlowSaga";
 import { fetchAarDataSaga } from "./fetchNotificationDataSaga";
@@ -75,18 +76,23 @@ export function* watchAarFlowSaga(
     sessionToken
   );
   yield* takeLatest(initiateAarFlow, initiateAarFlowSaga);
-  yield* takeLatest(
-    testAarCreateMandate.request,
-    testAarCreateMandateSaga,
-    sendAARClient,
-    sessionToken
+  const isAarMandateEnabled = yield* select(
+    isAarInAppDelegationRemoteEnabledSelector
   );
-  yield* takeLatest(
-    testAarAcceptMandate.request,
-    testAarAcceptMandateSaga,
-    sendAARClient,
-    sessionToken
-  );
+  if (isAarMandateEnabled) {
+    yield* takeLatest(
+      testAarCreateMandate.request,
+      testAarCreateMandateSaga,
+      sendAARClient,
+      sessionToken
+    );
+    yield* takeLatest(
+      testAarAcceptMandate.request,
+      testAarAcceptMandateSaga,
+      sendAARClient,
+      sessionToken
+    );
+  }
 }
 export const testable = isTestEnv
   ? {

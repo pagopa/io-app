@@ -24,6 +24,7 @@ import {
   testAarAcceptMandateSaga,
   testAarCreateMandateSaga
 } from "../testSendNisMrtdSaga";
+import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 const { aarFlowMasterSaga, raceWithTerminateFlow } = testable as NonNullable<
   typeof testable
 >;
@@ -58,20 +59,8 @@ describe("watchAarFlowSaga", () => {
       .next()
       .takeLatest(initiateAarFlow, initiateAarFlowSaga)
       .next()
-      .takeLatest(
-        testAarCreateMandate.request,
-        testAarCreateMandateSaga,
-        mockSendAARClient,
-        mockSessionToken
-      )
-      .next()
-      .takeLatest(
-        testAarAcceptMandate.request,
-        testAarAcceptMandateSaga,
-        mockSendAARClient,
-        mockSessionToken
-      )
-      .next()
+      .select(isAarInAppDelegationRemoteEnabledSelector)
+      .next(false)
       .isDone();
   });
 
