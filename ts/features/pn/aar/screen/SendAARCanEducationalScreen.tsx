@@ -52,6 +52,17 @@ export const SendAARCanEducationalScreen = () => {
     );
   };
 
+  const handleGoNext = () => {
+    if (currentAARState.type === sendAARFlowStates.cieCanAdvisory) {
+      dispatch(
+        setAarFlowState({
+          ...currentAARState,
+          type: sendAARFlowStates.cieCanInsertion
+        })
+      );
+    }
+  };
+
   useHardwareBackButton(() => {
     handleGoBack();
     return true;
@@ -65,16 +76,7 @@ export const SendAARCanEducationalScreen = () => {
           primary: {
             testID: "primaryActionID",
             label: i18n.t("global.buttons.continue"),
-            onPress: () => {
-              if (currentAARState.type === sendAARFlowStates.cieCanAdvisory) {
-                dispatch(
-                  setAarFlowState({
-                    ...currentAARState,
-                    type: sendAARFlowStates.cieCanInsertion
-                  })
-                );
-              }
-            }
+            onPress: handleGoNext
           }
         }}
         title={{
