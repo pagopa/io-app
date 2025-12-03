@@ -1,6 +1,6 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { IOVisualCostants, VSpacer } from "@pagopa/io-app-design-system";
-import { Alert, Dimensions, Image } from "react-native";
+import { VSpacer } from "@pagopa/io-app-design-system";
+import { Alert, Image } from "react-native";
 import i18n from "i18next";
 import { useEffect } from "react";
 import cieCanEducationalSource from "../../../../../img/features/pn/cieCanEducational.png";
@@ -15,13 +15,10 @@ import { setAarFlowState } from "../store/actions";
 import { sendAARFlowStates } from "../utils/stateUtils";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 
-const screenWidth = Dimensions.get("screen").width;
 const { width, height, uri } = Image.resolveAssetSource(
   cieCanEducationalSource
 );
 const aspectRatio = width / height;
-const maxScreenWidth = screenWidth - IOVisualCostants.appMarginDefault * 2;
-const maxHeight = maxScreenWidth / aspectRatio;
 
 export const SendAARCanEducationalScreen = () => {
   const dispatch = useIODispatch();
@@ -93,14 +90,15 @@ export const SendAARCanEducationalScreen = () => {
           body: i18n.t("features.pn.aar.flow.delegated.cieContextualHelp.body")
         }}
         goBack={handleGoBack}
+        includeContentMargins
       >
         <VSpacer size={8} />
         <Image
-          source={{ uri }}
+          source={{
+            uri
+          }}
           style={{
-            height: maxHeight,
-            width: maxScreenWidth,
-            alignSelf: "center"
+            aspectRatio
           }}
           accessibilityIgnoresInvertColors
         />
