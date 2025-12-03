@@ -9,6 +9,7 @@ import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProp
 import { GlobalState } from "../../../store/reducers/types";
 import { ConnectivityClient, createConnectivityClient } from "../api/client";
 import { apiUrlPrefix } from "../../../config";
+import { appStateSelector } from "../../../store/reducers/appState";
 
 const CONNECTIVITY_STATUS_LOAD_INTERVAL = (30 * 1000) as Millisecond;
 const CONNECTIVITY_STATUS_FAILURE_INTERVAL = (10 * 1000) as Millisecond;
@@ -36,6 +37,13 @@ export function* connectionStatusSaga(
 > {
   while (true) {
     try {
+      const appState = yield* select(appStateSelector);
+
+      if (appState.appState !== "active") {
+        // if the app is not active we wait for the next check
+        yield* call(startTimer, CONNECTIVITY_STATUS_LOAD_INTERVAL);
+        continue;
+      }
       const libraryResponse = yield* call(fetchNetInfoState());
 
       if (E.isRight(libraryResponse)) {
