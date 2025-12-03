@@ -45,6 +45,7 @@ export function* handleGetCdcStatusWallet(
         ])
       );
       yield* put(getCdcStatusWallet.success(cdcInfo));
+      analytics.trackCdcStatus();
     } else if (cdcStatusResponse.right.status === 404) {
       yield* put(getCdcStatusWallet.cancel());
     } else {
