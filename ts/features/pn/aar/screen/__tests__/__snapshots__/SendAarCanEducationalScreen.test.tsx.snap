@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SendAARCanEducationalScreen should match the snapshot 1`] = `
+exports[`SendAarCanEducationalScreen should match the snapshot 1`] = `
 <View
   style={
     {
@@ -223,6 +223,7 @@ exports[`SendAARCanEducationalScreen should match the snapshot 1`] = `
                         }
                       >
                         <RCTScrollView
+                          alwaysBounceVertical={false}
                           collapsable={false}
                           contentContainerStyle={
                             [
@@ -331,25 +332,31 @@ exports[`SendAARCanEducationalScreen should match the snapshot 1`] = `
                             <View
                               style={
                                 {
-                                  "height": 8,
+                                  "paddingHorizontal": 24,
                                 }
                               }
-                            />
-                            <Image
-                              accessibilityIgnoresInvertColors={true}
-                              source={
-                                {
-                                  "uri": undefined,
+                            >
+                              <View
+                                style={
+                                  {
+                                    "height": 8,
+                                  }
                                 }
-                              }
-                              style={
-                                {
-                                  "alignSelf": "center",
-                                  "height": NaN,
-                                  "width": 702,
+                              />
+                              <Image
+                                accessibilityIgnoresInvertColors={true}
+                                source={
+                                  {
+                                    "uri": undefined,
+                                  }
                                 }
-                              }
-                            />
+                                style={
+                                  {
+                                    "aspectRatio": NaN,
+                                  }
+                                }
+                              />
+                            </View>
                           </View>
                         </RCTScrollView>
                         <View

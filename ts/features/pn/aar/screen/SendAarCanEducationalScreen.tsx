@@ -20,7 +20,7 @@ const { width, height, uri } = Image.resolveAssetSource(
 );
 const aspectRatio = width / height;
 
-export const SendAARCanEducationalScreen = () => {
+export const SendAarCanEducationalScreen = () => {
   const dispatch = useIODispatch();
   const currentAARState = useIOSelector(currentAARFlowData);
   const { terminateFlow } = useSendAarFlowManager();

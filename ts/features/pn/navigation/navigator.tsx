@@ -10,7 +10,7 @@ import { PNActivationBannerFlowScreen } from "../reminderBanner/screens/PnRemind
 import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
 import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
 import { PaidPaymentScreen } from "../screens/PaidPaymentScreen";
-import { SendAARCanEducationalScreen } from "../aar/screen/SendAARCanEducationalScreen";
+import { SendAarCanEducationalScreen } from "../aar/screen/SendAarCanEducationalScreen";
 import { PnParamsList } from "./params";
 import PN_ROUTES from "./routes";
 
@@ -68,7 +68,7 @@ export const PnStackNavigator = () => (
     />
     <Stack.Screen
       name={PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL}
-      component={SendAARCanEducationalScreen}
+      component={SendAarCanEducationalScreen}
     />
     <Stack.Screen
       name={PN_ROUTES.SEND_AAR_CIE_CARD_READING}

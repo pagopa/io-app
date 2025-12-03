@@ -6,7 +6,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import PN_ROUTES from "../../../navigation/routes";
-import { SendAARCanEducationalScreen } from "../SendAARCanEducationalScreen";
+import { SendAarCanEducationalScreen } from "../SendAarCanEducationalScreen";
 import { setAarFlowState } from "../../store/actions";
 import * as AAR_SELECTORS from "../../store/selectors";
 import { sendAARFlowStates } from "../../utils/stateUtils";
@@ -34,7 +34,7 @@ jest.mock("i18next", () => ({
   t: (path: string) => path
 }));
 
-describe("SendAARCanEducationalScreen", () => {
+describe("SendAarCanEducationalScreen", () => {
   beforeEach(jest.clearAllMocks);
 
   it("should match the snapshot", () => {
@@ -175,7 +175,7 @@ function renderComponent() {
   const store = createStore(appReducer, baseState as any);
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    SendAARCanEducationalScreen,
+    SendAarCanEducationalScreen,
     PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL,
     {},
     store
