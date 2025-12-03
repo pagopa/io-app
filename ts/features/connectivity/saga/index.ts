@@ -67,9 +67,10 @@ export function* connectionStatusSaga(
           continue;
         }
       }
-    } finally {
-      yield* call(startTimer, CONNECTIVITY_STATUS_FAILURE_INTERVAL);
+    } catch (e) {
+      // we ignore errors and treat them as a connection failure
     }
+    yield* call(startTimer, CONNECTIVITY_STATUS_FAILURE_INTERVAL);
   }
 }
 
