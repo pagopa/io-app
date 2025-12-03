@@ -14,11 +14,15 @@ import {
 } from "../types/OnboardingOutcomeEnum";
 import { ONBOARDING_CALLBACK_URL_SCHEMA } from "../utils";
 
+type WalletOnboardingOutcomeParams = {
+  outcome: WalletOnboardingOutcome;
+  walletId?: string;
+  orderId?: string;
+  transactionId?: string;
+};
+
 type WalletOnboardingWebViewProps = {
-  onOnboardingOutcome: (
-    outcome: WalletOnboardingOutcome,
-    walletId?: string
-  ) => void;
+  onOnboardingOutcome: (params: WalletOnboardingOutcomeParams) => void;
 };
 
 type WalletOnboardingWebView = {
@@ -26,6 +30,7 @@ type WalletOnboardingWebView = {
   isError: boolean;
   isPendingOnboarding: boolean;
   startOnboarding: (paymentMethodId: string) => void;
+  startContextualOnboarding: (url: string) => void;
 };
 
 /**
@@ -54,9 +59,31 @@ export const useWalletOnboardingWebView = ({
         E.getOrElse(() => WalletOnboardingOutcomeEnum.GENERIC_ERROR)
       );
 
-      onOnboardingOutcome(outcome, url.query.walletId);
+      onOnboardingOutcome({
+        outcome,
+        walletId: url.query.walletId,
+        orderId: url.query.orderId,
+        transactionId: url.query.transactionId
+      });
     },
     [onOnboardingOutcome]
+  );
+
+  const openBrowserSessionOnboarding = useCallback(
+    async (url: string) => {
+      try {
+        const result = await openAuthenticationSession(
+          url,
+          ONBOARDING_CALLBACK_URL_SCHEMA
+        );
+        handleOnboardingResult(result);
+      } catch (error) {
+        onOnboardingOutcome({
+          outcome: WalletOnboardingOutcomeEnum.CANCELED_BY_USER
+        });
+      }
+    },
+    [onOnboardingOutcome, handleOnboardingResult]
   );
 
   useEffect(() => {
@@ -68,31 +95,11 @@ export const useWalletOnboardingWebView = ({
       onboardingUrlPot,
       pot.toOption,
       TE.fromOption(() => undefined),
-      TE.chain(({ redirectUrl }) =>
-        TE.tryCatch(
-          () => {
-            setIsPendingOnboarding(true);
-            return openAuthenticationSession(
-              redirectUrl,
-              ONBOARDING_CALLBACK_URL_SCHEMA
-            );
-          },
-          () => {
-            onOnboardingOutcome(WalletOnboardingOutcomeEnum.CANCELED_BY_USER);
-          }
-        )
-      ),
-      TE.map(handleOnboardingResult)
+      TE.map(({ redirectUrl }) => {
+        void openBrowserSessionOnboarding(redirectUrl);
+      })
     )();
-  }, [
-    isError,
-    isLoading,
-    isPendingOnboarding,
-    onboardingUrlPot,
-    handleOnboardingResult,
-    onOnboardingOutcome,
-    dispatch
-  ]);
+  }, [isPendingOnboarding, onboardingUrlPot, openBrowserSessionOnboarding]);
 
   useEffect(
     () => () => {
@@ -107,8 +114,14 @@ export const useWalletOnboardingWebView = ({
     dispatch(paymentsStartOnboardingAction.request({ paymentMethodId }));
   };
 
+  const startContextualOnboarding = async (url: string) => {
+    setIsPendingOnboarding(false);
+    await openBrowserSessionOnboarding(url);
+  };
+
   return {
     startOnboarding,
+    startContextualOnboarding,
     isLoading,
     isError,
     isPendingOnboarding
