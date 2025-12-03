@@ -11,13 +11,15 @@ import {
 import {
   setAarFlowState,
   terminateAarFlow,
-  initiateAarFlow
+  initiateAarFlow,
+  testAarCreateMandate
 } from "../../store/actions";
 import { sendAARFlowStates } from "../../utils/stateUtils";
 import { initiateAarFlowSaga } from "../initiateAarFlowSaga";
 import { fetchAarDataSaga } from "../fetchNotificationDataSaga";
 import { fetchAARQrCodeSaga } from "../fetchQrCodeSaga";
 import { testable, watchAarFlowSaga } from "../watchAARFlowSaga";
+import { testAarCreateMandateSaga } from "../testSendNisMrtdSaga";
 const { aarFlowMasterSaga, raceWithTerminateFlow } = testable as NonNullable<
   typeof testable
 >;
@@ -28,7 +30,9 @@ const mockKeyInfo = {} as KeyInfo;
 const mockSendAARClient: SendAARClient = {
   aarQRCodeCheck: jest.fn(),
   getAARNotification: jest.fn(),
-  getNotificationAttachment: jest.fn()
+  getNotificationAttachment: jest.fn(),
+  acceptIOMandate: jest.fn(),
+  createAARMandate: jest.fn()
 };
 
 describe("watchAarFlowSaga", () => {
@@ -49,6 +53,13 @@ describe("watchAarFlowSaga", () => {
       )
       .next()
       .takeLatest(initiateAarFlow, initiateAarFlowSaga)
+      .next()
+      .takeLatest(
+        testAarCreateMandate.request,
+        testAarCreateMandateSaga,
+        mockSendAARClient,
+        mockSessionToken
+      )
       .next()
       .isDone();
   });

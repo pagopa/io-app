@@ -1,4 +1,5 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import { InternalAuthAndMrtdResponse } from "@pagopa/io-react-native-cie";
 import {
   ActionType,
   createAsyncAction,
@@ -8,7 +9,7 @@ import { MessageBodyMarkdown } from "../../../../../../definitions/backend/Messa
 import { MessageSubject } from "../../../../../../definitions/backend/MessageSubject";
 import { ThirdPartyMessage } from "../../../../../../definitions/pn/aar/ThirdPartyMessage";
 import { AARFlowState, AARFlowStateName } from "../../utils/stateUtils";
-import { CieIasAndMrtdResultNavParams } from "../../../../settings/devMode/playgrounds/Cie/screens/ias_and_mrtd/CieIasAndMrtdPlaygroundIntAuthAndMrtdResultScreen";
+import { MandateCreationResponse } from "../../../../../../definitions/pn/aar/MandateCreationResponse";
 
 export type EphemeralAarMessageDataActionPayload = {
   iun: NonEmptyString;
@@ -40,16 +41,23 @@ export const populateStoresWithEphemeralAarMessageData = createStandardAction(
   "POPULATE_STORES_WITH_EPHEMERAL_AAR_MESSAGE_DATA"
 )<EphemeralAarMessageDataActionPayload>();
 
-export const testSendNisMrtdRequestAction = createAsyncAction(
-  "TEST_SEND_NIS_MRTD_REQUEST",
-  "TEST_SEND_NIS_MRTD_SUCCESS",
-  "TEST_SEND_NIS_MRTD_FAILURE"
-)<CieIasAndMrtdResultNavParams, void, void>();
+export const testAarCreateMandate = createAsyncAction(
+  "TEST_AAR_CREATE_MANDATE_REQUEST",
+  "TEST_AAR_CREATE_MANDATE_SUCCESS",
+  "TEST_AAR_CREATE_MANDATE_FAILURE",
+  "TEST_AAR_CREATE_MANDATE_CANCEL"
+)<void, MandateCreationResponse, string, void>();
+export const testAarAcceptMandate = createAsyncAction(
+  "TEST_AAR_ACCEPT_MANDATE_REQUEST",
+  "TEST_AAR_ACCEPT_MANDATE_SUCCESS",
+  "TEST_AAR_ACCEPT_MANDATE_FAILURE"
+)<InternalAuthAndMrtdResponse, void, string>();
 
 export type AARFlowStateActions = ActionType<
   | typeof setAarFlowState
   | typeof terminateAarFlow
   | typeof populateStoresWithEphemeralAarMessageData
   | typeof initiateAarFlow
-  | typeof testSendNisMrtdRequestAction
+  | typeof testAarCreateMandate
+  | typeof testAarAcceptMandate
 >;

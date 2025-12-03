@@ -1,88 +1,65 @@
 import * as E from "fp-ts/lib/Either";
-import { call } from "typed-redux-saga/macro";
+import { call, put } from "typed-redux-saga/macro";
 import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
-import { InternalAuthAndMrtdResponse } from "@pagopa/io-react-native-cie";
 import { SessionToken } from "../../../../types/SessionToken";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { SendAARClient } from "../api/client";
-import { testSendNisMrtdRequestAction } from "../store/actions";
-import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
-import { aarProblemJsonAnalyticsReport } from "../analytics";
+import { SagaCallReturnType } from "../../../../types/utils";
+import {
+  aarProblemJsonAnalyticsReport,
+  trackSendAARFailure
+} from "../analytics";
 import { unknownToReason } from "../../../messages/utils";
+import { testAarCreateMandate } from "../store/actions";
 
-export function* testSendNisMrtdSaga(
+export function* testAarCreateMandateSaga(
   sendAARClient: SendAARClient,
-  sessionToken: SessionToken,
-  action: ReturnType<typeof testSendNisMrtdRequestAction.request>
+  sessionToken: SessionToken
 ) {
-  const { encodedChallenge, result } = action.payload;
-  const mandateId = yield* call(bla, sendAARClient, sessionToken, action);
-  console.log(mandateId);
-  yield* call(
-    blo,
-    sendAARClient,
-    sessionToken,
-    mandateId,
-    result,
-    encodedChallenge,
-    action
-  );
-}
-
-function* bla(
-  sendAARClient: SendAARClient,
-  sessionToken: SessionToken,
-  action: ReturnType<typeof testSendNisMrtdRequestAction.request>
-): Generator<ReduxSagaEffect, string> {
   try {
     const createAARMandateRequest = sendAARClient.createAARMandate({
       Bearer: `Bearer ${sessionToken}`,
       body: {
         aarQrCodeValue:
-          "https://cittadini.notifichedigitali.it/io?aar=U0VORC1TRU5ELVNFTkQtMDAwMDA0LUEtMF9QRi0zZjNmODEyOC1iMWMzLTQyMDQtYWRhYy0zZjgzMjdjMTkyNWFfOGIxM2NhZGMtZjQ4YS00MjliLWEzMmMtOGQ3OTkzYmFlNzQz"
+          "https://cittadini.notifichedigitali.it/io?aar=U0VORC1TRU5ELVNFTkQtMDAwMDA0LUEtMF9QRi0yMTg0ZGE3OC03YzU2LTQ2OGItYTAxNy0wOGVkODczZjA5NDZfOTBiNDllMmItZjVlNS00ZTdkLWI0Y2YtOWVlN2Y0NDFkNTE0"
+        // "https://cittadini.uat.notifichedigitali.it/io/?aar=UldKRy1XSkFNLVdaTEgtMjAyNTEyLVYtMV9QRi0wZmNlMzc0Yy0wM2ViLTQwNmUtODM0NS01OGI4ZGYzMjk5MTdfNmFlNTZjZjAtMjhmYS00M2U1LTgyMWEtMjEwMjUxOTkzNTdh"
       }
       // TODO isTest
     });
     const result = (yield* call(
       withRefreshApiCall,
-      createAARMandateRequest,
-      action
+      createAARMandateRequest
     )) as unknown as SagaCallReturnType<typeof sendAARClient.createAARMandate>;
 
     if (E.isLeft(result)) {
       const reason = `Decoding failure (${readableReportSimplified(
         result.left
       )})`;
-      // yield* call(trackSendAARFailure, "", reason);
-      // yield* put();
-      return;
+      throw Error(reason);
     }
 
     const { status, value } = result.right;
-    console.log(result.right);
     switch (status) {
       case 201:
-        console.log(value);
-        return value.mandate.mandateId;
-      case 400:
+        yield* put(testAarCreateMandate.success(value));
         return;
       case 401:
-        return;
+        throw Error("401 Fast login expired");
       default:
         const reason = `HTTP request failed (${aarProblemJsonAnalyticsReport(
           status,
           value
         )})`;
-        // yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
-        return;
+        throw Error(reason);
     }
   } catch (e) {
-    const reason = `An error was thrown (${unknownToReason(e)})`;
-    // yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
+    const reason = unknownToReason(e);
+    yield* call(trackSendAARFailure, "Playground", reason);
+    yield* put(testAarCreateMandate.failure(reason));
   }
-  throw Error("Unexpected");
 }
 
+/*
 function* blo(
   sendAARClient: SendAARClient,
   sessionToken: SessionToken,
@@ -149,3 +126,4 @@ function* blo(
     // yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
   }
 }
+*/

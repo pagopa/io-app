@@ -1,4 +1,5 @@
 import {
+  Body,
   IOButton,
   ListItemSwitch,
   TextInput,
@@ -27,6 +28,13 @@ import { useScreenEndMargin } from "../../../../../../../hooks/useScreenEndMargi
 import { ReadStatusComponent } from "../../components/ReadStatusComponent";
 import { encodeChallenge } from "../../utils/encoding";
 import { ReadStatus } from "../../types/ReadStatus";
+import { useIODispatch, useIOSelector } from "../../../../../../../store/hooks";
+import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../../../../store/reducers/backendStatus/remoteConfig";
+import { testAarCreateMandate } from "../../../../../../pn/aar/store/actions";
+import {
+  isRequestingSendMandateSelector,
+  sendVerificationCodeSelector
+} from "../../../../../../pn/aar/store/reducers/tempAarMandate";
 
 export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
   const navigation = useIONavigation();
@@ -39,6 +47,7 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
   const [can, setCan] = useState<string>("");
 
   const [isBase64Encoding, setIsBase64Encoding] = useState(false);
+  const [useSENDChallenge, setUseSENDChallenge] = useState(false);
   const toggleEncodingSwitch = () =>
     setIsBase64Encoding(previousState => !previousState);
 
@@ -48,6 +57,18 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
 
   const headerHeight = useHeaderHeight();
   const { screenEndMargin } = useScreenEndMargin();
+  const aarTempMandateEnabled = useIOSelector(
+    isAarInAppDelegationRemoteEnabledSelector
+  );
+  const isRequestingSENDMandate = useIOSelector(
+    isRequestingSendMandateSelector
+  );
+  const sendVerificationCode = useIOSelector(sendVerificationCodeSelector);
+  const dispatch = useIODispatch();
+
+  const selectedChallenge = useSENDChallenge
+    ? sendVerificationCode ?? ""
+    : challenge;
 
   useEffect(() => {
     const cleanup = [
@@ -83,16 +104,16 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
           SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_INTERNAL_AUTH_AND_MRTD_RESULTS,
         params: {
           result: successResult,
-          challenge,
+          challenge: selectedChallenge,
           encodedChallenge: encodeChallenge(
-            challenge,
+            selectedChallenge,
             isBase64Encoding ? "base64" : "hex"
           ),
           encoding: isBase64Encoding ? "base64" : "hex"
         }
       });
     }
-  }, [status, navigation, challenge, isBase64Encoding, successResult]);
+  }, [status, navigation, isBase64Encoding, selectedChallenge, successResult]);
 
   const handleStartReading = async () => {
     setEvent(undefined);
@@ -101,7 +122,7 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
     try {
       await CieManager.startInternalAuthAndMRTDReading(
         can,
-        challenge,
+        selectedChallenge,
         isBase64Encoding ? "base64" : "hex"
       );
     } catch (e) {
@@ -146,6 +167,13 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
             onSwitchValueChange={toggleEncodingSwitch}
             value={isBase64Encoding}
           />
+          <ListItemSwitch
+            label="Use SEND challenge"
+            onSwitchValueChange={() =>
+              setUseSENDChallenge(prevValue => !prevValue)
+            }
+            value={useSENDChallenge}
+          />
           <TextInput
             accessibilityLabel="CAN text input field"
             value={can}
@@ -159,15 +187,34 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
             placeholder={"Challenge"}
             onChangeText={setChallenge}
           />
+          <VSpacer size={8} />
+          <Body>{`SEND Challenge: ${sendVerificationCode}`}</Body>
         </View>
         <IOButton
           variant="solid"
           label={status === "reading" ? "Stop" : "Start sign and reading"}
-          disabled={challenge.length === 0 || can.length < 6}
+          disabled={selectedChallenge.length === 0 || can.length < 6}
           onPress={() =>
             status === "reading" ? handleStopReading() : handleStartReading()
           }
         />
+        {aarTempMandateEnabled && (
+          <>
+            <VSpacer size={8} />
+            <IOButton
+              loading={isRequestingSENDMandate}
+              label="Challenge from SEND"
+              onPress={() => dispatch(testAarCreateMandate.request())}
+            />
+            <VSpacer size={8} />
+            <IOButton
+              loading={isRequestingSENDMandate}
+              disabled={!sendVerificationCode}
+              label="Clear SEND Challenge"
+              onPress={() => dispatch(testAarCreateMandate.cancel())}
+            />
+          </>
+        )}
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
