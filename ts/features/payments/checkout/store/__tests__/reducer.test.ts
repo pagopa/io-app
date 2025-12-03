@@ -100,7 +100,12 @@ describe("payments checkout reducer index.ts", () => {
       transaction: pot.none,
       authorizationUrl: pot.none,
       pspBannerClosed: new Set(),
-      webViewPayload: undefined
+      webViewPayload: undefined,
+      contextualPayment: {
+        onboardingUrl: pot.none,
+        onboardedWalletId: undefined,
+        orderId: undefined
+      }
     };
     expect(globalState.features.payments.checkout).toStrictEqual(
       expectedInitialState

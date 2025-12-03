@@ -39,6 +39,7 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { getPaymentsLatestReceiptAction } from "../../receipts/store/actions";
 import { usePaymentReversedInfoBottomSheet } from "../hooks/usePaymentReversedInfoBottomSheet";
 import { useAppFeedbackContext } from "../../../appReviews/components/AppFeedbackProvider";
+import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -129,6 +130,7 @@ const WalletPaymentOutcomeScreen = () => {
       onSuccessAction === "showHome" ||
       onSuccessAction === "showTransaction"
     ) {
+      dispatch(getPaymentsWalletUserMethods.request());
       // Currently we do support only navigation to the wallet
       // TODO navigate to the transaction details if payment outcome is success
       navigation.popToTop();
