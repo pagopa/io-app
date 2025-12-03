@@ -341,6 +341,7 @@ const reducer = (
         ...state,
         authorizationUrl: pot.none
       };
+    // Contextual onboarding
     case getType(paymentsGetContextualOnboardingUrlAction.request):
       return {
         ...state,

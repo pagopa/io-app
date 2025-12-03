@@ -56,7 +56,10 @@ export const useWalletOnboardingWebView = ({
       const outcome = pipe(
         url.query.outcome,
         WalletOnboardingOutcome.decode,
-        E.getOrElse(() => WalletOnboardingOutcomeEnum.GENERIC_ERROR)
+        E.fold(
+          () => WalletOnboardingOutcomeEnum.GENERIC_ERROR,
+          decodedOutcome => decodedOutcome
+        )
       );
 
       onOnboardingOutcome({

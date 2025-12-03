@@ -21,8 +21,6 @@ export enum WalletPaymentOutcomeEnum {
   WAITING_CONFIRMATION_EMAIL = "17", // waiting for confirmation email
   PAYMENT_REVERSED = "18", // "Storno"
   PAYPAL_REMOVED_ERROR = "19", // error while executing the payment with PayPal
-  PAYMENT_METHODS_NOT_AVAILABLE = "20", // payment methods not available
-  PAYMENT_METHODS_EXPIRED = "21", // all payment methods expired
   IN_APP_BROWSER_CLOSED_BY_USER = "24", // in-app browser closed by user (24 because from 19 to 23 are already used by backend)
   PSP_ERROR = "25", // PSP error
   BE_NODE_KO = "99", // Backend error when the node service is down

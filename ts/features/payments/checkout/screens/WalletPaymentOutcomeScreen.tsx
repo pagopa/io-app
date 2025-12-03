@@ -26,7 +26,6 @@ import {
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
 import ROUTES from "../../../../navigation/routes";
-import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
 import * as analytics from "../analytics";
 import {
   paymentAnalyticsDataSelector,
@@ -34,16 +33,11 @@ import {
 } from "../../history/store/selectors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { getPaymentPhaseFromStep } from "../utils";
-import {
-  paymentCompletedSuccess,
-  walletPaymentSetCurrentStep
-} from "../store/actions/orchestration";
+import { paymentCompletedSuccess } from "../store/actions/orchestration";
 import { walletPaymentSelectedPspSelector } from "../store/selectors/psps";
-import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { getPaymentsLatestReceiptAction } from "../../receipts/store/actions";
 import { usePaymentReversedInfoBottomSheet } from "../hooks/usePaymentReversedInfoBottomSheet";
-import { WalletPaymentStepEnum } from "../types";
 import { useAppFeedbackContext } from "../../../appReviews/components/AppFeedbackProvider";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
@@ -79,29 +73,20 @@ const WalletPaymentOutcomeScreen = () => {
 
   const reversedPaymentModal = usePaymentReversedInfoBottomSheet();
 
-  const shouldShowHeader = [
-    WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE,
-    WalletPaymentOutcomeEnum.PAYMENT_METHODS_EXPIRED
-  ].includes(outcome);
-
   // TODO: This is a workaround to disable swipe back gesture on this screen
   // .. it should be removed as soon as the migration to react-navigation v6 is completed (https://pagopa.atlassian.net/browse/IOBP-522)
   useEffect(() => {
-    // Disable swipe if not in the payment methods not available outcome
-    if (shouldShowHeader) {
-      return;
-    }
     navigation.setOptions({ gestureEnabled: false });
     navigation.getParent()?.setOptions({ gestureEnabled: false });
     // Re-enable swipe after going back
     return () => {
       navigation.getParent()?.setOptions({ gestureEnabled: true });
     };
-  }, [navigation, shouldShowHeader]);
+  }, [navigation]);
 
   useHeaderSecondLevel({
     title: "",
-    canGoBack: shouldShowHeader
+    canGoBack: true
   });
 
   const taxFeeAmount = pipe(
@@ -182,72 +167,6 @@ const WalletPaymentOutcomeScreen = () => {
     accessibilityLabel: I18n.t("wallet.payment.support.button"),
     onPress: handleContactSupport
   };
-
-  const resetWalletPaymentStep = () => {
-    dispatch(
-      walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PAYMENT_METHOD)
-    );
-  };
-
-  const getOnboardPaymentMethodCloseAction: () => OperationResultScreenContentProps["action"] =
-    () => {
-      const trackingData = {
-        organization_name: paymentAnalyticsData?.verifiedData?.paName,
-        organization_fiscal_code:
-          paymentAnalyticsData?.verifiedData?.paFiscalCode,
-        service_name: paymentAnalyticsData?.serviceName,
-        first_time_opening: !paymentAnalyticsData?.attempt ? "yes" : "no",
-        expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
-      };
-
-      return {
-        label: I18n.t(
-          "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.secondaryAction"
-        ),
-        accessibilityLabel: I18n.t(
-          "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.secondaryAction"
-        ),
-        onPress: () => {
-          analytics.trackOnboardPaymentMethodCloseAction(outcome, trackingData);
-          resetWalletPaymentStep();
-          navigation.navigate(
-            PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR,
-            {
-              screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_MAKE
-            }
-          );
-        }
-      };
-    };
-
-  const getOnboardPaymentMethodAction: () => OperationResultScreenContentProps["action"] =
-    () => {
-      const trackingData = {
-        organization_name: paymentAnalyticsData?.verifiedData?.paName,
-        organization_fiscal_code:
-          paymentAnalyticsData?.verifiedData?.paFiscalCode,
-        service_name: paymentAnalyticsData?.serviceName,
-        first_time_opening: !paymentOngoingHistory?.attempt ? "yes" : "no",
-        expiration_date: paymentAnalyticsData?.verifiedData?.dueDate
-      };
-      return {
-        label: I18n.t(
-          "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.primaryAction"
-        ),
-        accessibilityLabel: I18n.t(
-          "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.primaryAction"
-        ),
-        onPress: () => {
-          analytics.trackOnboardPaymentMethodAction(outcome, trackingData);
-          navigation.navigate(
-            PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR,
-            {
-              screen: PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_SELECT_METHOD
-            }
-          );
-        }
-      };
-    };
 
   const paymentReversedAction: OperationResultScreenContentProps["action"] = {
     label: I18n.t("wallet.payment.outcome.PAYMENT_REVERSED.primaryAction"),
@@ -426,28 +345,6 @@ const WalletPaymentOutcomeScreen = () => {
             "wallet.payment.outcome.METHOD_NOT_ENABLED.subtitle"
           ),
           action: closeFailureAction
-        };
-      case WalletPaymentOutcomeEnum.PAYMENT_METHODS_NOT_AVAILABLE:
-        return {
-          pictogram: "cardAdd",
-          title: I18n.t(
-            "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.title"
-          ),
-          subtitle: I18n.t(
-            "wallet.payment.outcome.PAYMENT_METHODS_NOT_AVAILABLE.subtitle"
-          ),
-          action: getOnboardPaymentMethodAction(),
-          secondaryAction: getOnboardPaymentMethodCloseAction()
-        };
-      case WalletPaymentOutcomeEnum.PAYMENT_METHODS_EXPIRED:
-        return {
-          pictogram: "cardAdd",
-          title: I18n.t("wallet.payment.outcome.PAYMENT_METHODS_EXPIRED.title"),
-          subtitle: I18n.t(
-            "wallet.payment.outcome.PAYMENT_METHODS_EXPIRED.subtitle"
-          ),
-          action: getOnboardPaymentMethodAction(),
-          secondaryAction: getOnboardPaymentMethodCloseAction()
         };
       case WalletPaymentOutcomeEnum.PAYMENT_REVERSED:
         return {

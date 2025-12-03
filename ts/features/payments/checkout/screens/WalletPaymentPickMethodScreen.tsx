@@ -194,12 +194,6 @@ const WalletPaymentPickMethodScreen = () => {
     selectedWalletIdOption
   ]);
 
-  // When a new transaction is created it comes with ACTIVATION_REQUESTED status, we can continue the payment flow
-  // only when the transaction status becomes ACTIVATED.
-  // useOnTransactionActivationEffect(() =>
-  //   calculateFeesForSelectedPaymentMethod()
-  // );
-
   const isLoading =
     pot.isLoading(paymentMethodsPot) || pot.isLoading(userWalletsPots);
 
