@@ -16,9 +16,9 @@ import { PnParamsList } from "../../navigation/params";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import PN_ROUTES from "../../navigation/routes";
 
-const CIE_CAN_LENGTH = 6;
+export const CIE_CAN_LENGTH = 6;
 
-type SendAARCieCanInsertionScreenProps = IOStackNavigationRouteProps<
+export type SendAARCieCanInsertionScreenProps = IOStackNavigationRouteProps<
   PnParamsList,
   typeof PN_ROUTES.SEND_AAR_CIE_CAN_INSERTION
 >;
@@ -97,6 +97,7 @@ export const SendAARCieCanInsertionScreen = ({
           description={i18n.t(
             "features.pn.aar.flow.cieCanInsertion.description"
           )}
+          headerActionsProp={{ showHelp: true }}
           goBack={handleGoBack}
           includeContentMargins
         >
