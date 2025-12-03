@@ -91,6 +91,7 @@ const isOperationAborted = jest.fn();
 const hasValidWalletInstanceAttestation = jest.fn();
 const isEligibleForItwSimplifiedActivation = jest.fn();
 const revokeWalletInstance = jest.fn();
+const isWalletValid = jest.fn();
 
 describe("itwEidIssuanceMachine", () => {
   const mockedMachine = itwEidIssuanceMachine.provide({
@@ -152,7 +153,8 @@ describe("itwEidIssuanceMachine", () => {
       isSessionExpired,
       isOperationAborted,
       isEligibleForItwSimplifiedActivation,
-      hasValidWalletInstanceAttestation
+      hasValidWalletInstanceAttestation,
+      isWalletValid
     }
   });
 
@@ -1439,6 +1441,7 @@ describe("itwEidIssuanceMachine", () => {
       () => new Promise((__, reject) => setTimeout(() => reject({}), 10))
     );
     isSessionExpired.mockImplementation(() => false); // Session not expired
+    isWalletValid.mockImplementation(() => false);
 
     actor.send({ type: "accept-tos" });
 
@@ -1462,6 +1465,59 @@ describe("itwEidIssuanceMachine", () => {
     // Check that the machine transitions to Failure state
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+  });
+
+  it("should NOT cleanup integrity key tag when wallet is valid and attestation fails", async () => {
+    const initialContext = {
+      ...InitialContext,
+      integrityKeyTag: T_INTEGRITY_KEY,
+      walletInstanceAttestation: { jwt: T_WIA },
+      eid: ItwStoredCredentialsMocks.eid,
+      legacyCredentials: [
+        ItwStoredCredentialsMocks.mdl
+      ] as ReadonlyArray<StoredCredential>
+    };
+
+    const baseSnapshot = createActor(itwEidIssuanceMachine).getSnapshot();
+
+    const snapshot: MachineSnapshot = {
+      ...baseSnapshot,
+      context: initialContext
+    };
+
+    const actor = createActor(mockedMachine, {
+      snapshot
+    });
+
+    actor.start();
+
+    hasValidWalletInstanceAttestation.mockImplementation(() => false);
+    verifyTrustFederation.mockImplementation(() => Promise.resolve());
+    getWalletAttestation.mockImplementation(
+      () => new Promise((__, reject) => setTimeout(() => reject({}), 10))
+    );
+    isSessionExpired.mockImplementation(() => false); // Session not expired
+    isWalletValid.mockImplementation(() => true);
+
+    expect(actor.getSnapshot().value).toStrictEqual("Idle");
+    expect(actor.getSnapshot().context).toStrictEqual(initialContext);
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+
+    actor.send({ type: "start", mode: "reissuance", level: "l2" });
+
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "TrustFederationVerification"
+    );
+
+    await waitFor(() => expect(verifyTrustFederation).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
+
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual("Failure")
+    );
+
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
+    expect(cleanupIntegrityKeyTag).not.toHaveBeenCalled();
   });
 
   it("Should go to Wallet Instance Creation and then IpzsPrivacyAcceptance if there is no integrity key tag but a valid WIA exists", async () => {

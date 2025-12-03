@@ -68,5 +68,5 @@ export const createEidIssuanceGuardsImplementation = (
     );
   },
 
-  isWalletValid: () => itwLifecycleIsValidSelector(store.getState()),
+  isWalletValid: () => itwLifecycleIsValidSelector(store.getState())
 });
