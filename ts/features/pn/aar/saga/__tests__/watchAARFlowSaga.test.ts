@@ -11,19 +11,13 @@ import {
 import {
   setAarFlowState,
   terminateAarFlow,
-  initiateAarFlow,
-  testAarCreateMandate,
-  testAarAcceptMandate
+  initiateAarFlow
 } from "../../store/actions";
 import { sendAARFlowStates } from "../../utils/stateUtils";
 import { initiateAarFlowSaga } from "../initiateAarFlowSaga";
 import { fetchAarDataSaga } from "../fetchNotificationDataSaga";
 import { fetchAARQrCodeSaga } from "../fetchQrCodeSaga";
 import { testable, watchAarFlowSaga } from "../watchAARFlowSaga";
-import {
-  testAarAcceptMandateSaga,
-  testAarCreateMandateSaga
-} from "../testSendNisMrtdSaga";
 import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 const { aarFlowMasterSaga, raceWithTerminateFlow } = testable as NonNullable<
   typeof testable
