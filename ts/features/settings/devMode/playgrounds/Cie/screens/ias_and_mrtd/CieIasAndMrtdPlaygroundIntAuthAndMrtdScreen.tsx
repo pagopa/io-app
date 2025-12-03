@@ -32,8 +32,10 @@ import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../../../../
 import { testAarCreateMandate } from "../../../../../../pn/aar/store/actions";
 import {
   isRequestingSendMandateSelector,
+  sendMandateErrorSelector,
   sendVerificationCodeSelector
 } from "../../../../../../pn/aar/store/reducers/tempAarMandate";
+import { useDebugInfo } from "../../../../../../../hooks/useDebugInfo";
 
 export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
   const navigation = useIONavigation();
@@ -66,6 +68,12 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
   const dispatch = useIODispatch();
 
   const selectedChallenge = useSENDChallenge ? sendVerificationCode : challenge;
+
+  const sendMandateError = useIOSelector(sendMandateErrorSelector);
+  const debugInfo = sendMandateError
+    ? { mandateRequest: sendMandateError }
+    : {};
+  useDebugInfo(debugInfo);
 
   useEffect(() => {
     const cleanup = [

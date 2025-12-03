@@ -40,7 +40,7 @@ declare -a apis=(
   "./definitions/cgn/merchants https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_cgn_operator_search.yaml"
   # PN APIs
   "./definitions/pn https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_pn.yaml"
-  "./definitions/pn/aar https://raw.githubusercontent.com/pagopa/io-messages/send-func@1.4.2/apps/send-func/openapi/aar-notification.yaml"
+  "./definitions/pn/aar https://raw.githubusercontent.com/pagopa/io-messages/refs/heads/main/apps/send-func/openapi/aar-notification.yaml"
   # FCI APIs
   "./definitions/fci https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_io_sign.yaml"
   # ITW APIs

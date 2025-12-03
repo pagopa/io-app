@@ -12,14 +12,18 @@ import {
   setAarFlowState,
   terminateAarFlow,
   initiateAarFlow,
-  testAarCreateMandate
+  testAarCreateMandate,
+  testAarAcceptMandate
 } from "../../store/actions";
 import { sendAARFlowStates } from "../../utils/stateUtils";
 import { initiateAarFlowSaga } from "../initiateAarFlowSaga";
 import { fetchAarDataSaga } from "../fetchNotificationDataSaga";
 import { fetchAARQrCodeSaga } from "../fetchQrCodeSaga";
 import { testable, watchAarFlowSaga } from "../watchAARFlowSaga";
-import { testAarCreateMandateSaga } from "../testSendNisMrtdSaga";
+import {
+  testAarAcceptMandateSaga,
+  testAarCreateMandateSaga
+} from "../testSendNisMrtdSaga";
 const { aarFlowMasterSaga, raceWithTerminateFlow } = testable as NonNullable<
   typeof testable
 >;
@@ -57,6 +61,13 @@ describe("watchAarFlowSaga", () => {
       .takeLatest(
         testAarCreateMandate.request,
         testAarCreateMandateSaga,
+        mockSendAARClient,
+        mockSessionToken
+      )
+      .next()
+      .takeLatest(
+        testAarAcceptMandate.request,
+        testAarAcceptMandateSaga,
         mockSendAARClient,
         mockSessionToken
       )

@@ -1,5 +1,5 @@
 import * as E from "fp-ts/lib/Either";
-import { call, put } from "typed-redux-saga/macro";
+import { call, put, select } from "typed-redux-saga/macro";
 import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import { SessionToken } from "../../../../types/SessionToken";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
@@ -10,7 +10,8 @@ import {
   trackSendAARFailure
 } from "../analytics";
 import { unknownToReason } from "../../../messages/utils";
-import { testAarCreateMandate } from "../store/actions";
+import { testAarAcceptMandate, testAarCreateMandate } from "../store/actions";
+import { sendMandateIdSelector } from "../store/reducers/tempAarMandate";
 
 export function* testAarCreateMandateSaga(
   sendAARClient: SendAARClient,
@@ -21,10 +22,10 @@ export function* testAarCreateMandateSaga(
       Bearer: `Bearer ${sessionToken}`,
       body: {
         aarQrCodeValue:
-          "https://cittadini.notifichedigitali.it/io?aar=U0VORC1TRU5ELVNFTkQtMDAwMDA0LUEtMF9QRi0yMTg0ZGE3OC03YzU2LTQ2OGItYTAxNy0wOGVkODczZjA5NDZfOTBiNDllMmItZjVlNS00ZTdkLWI0Y2YtOWVlN2Y0NDFkNTE0"
+          "https://cittadini.notifichedigitali.it/io?aar=U0VORC1TRU5ELVNFTkQtMDAwMDA0LUEtMF9QRi1jMjk2NmIxNi1lZjRmLTQwNDAtYjg4OS1kZGI0NDFmMTFjNGFfODc2YWQ5OWMtMWYyNC00N2VhLWIxNGMtMmE0MTYwODc5YTdj"
         // "https://cittadini.uat.notifichedigitali.it/io/?aar=UldKRy1XSkFNLVdaTEgtMjAyNTEyLVYtMV9QRi0wZmNlMzc0Yy0wM2ViLTQwNmUtODM0NS01OGI4ZGYzMjk5MTdfNmFlNTZjZjAtMjhmYS00M2U1LTgyMWEtMjEwMjUxOTkzNTdh"
-      }
-      // TODO isTest
+      },
+      isTest: true
     });
     const result = (yield* call(
       withRefreshApiCall,
@@ -32,7 +33,7 @@ export function* testAarCreateMandateSaga(
     )) as unknown as SagaCallReturnType<typeof sendAARClient.createAARMandate>;
 
     if (E.isLeft(result)) {
-      const reason = `Decoding failure (${readableReportSimplified(
+      const reason = `Create mandate decoding failure (${readableReportSimplified(
         result.left
       )})`;
       throw Error(reason);
@@ -44,9 +45,9 @@ export function* testAarCreateMandateSaga(
         yield* put(testAarCreateMandate.success(value));
         return;
       case 401:
-        throw Error("401 Fast login expired");
+        throw Error("Create mandate 401 Fast login expired");
       default:
-        const reason = `HTTP request failed (${aarProblemJsonAnalyticsReport(
+        const reason = `Create mandate HTTP request failed (${aarProblemJsonAnalyticsReport(
           status,
           value
         )})`;
@@ -59,71 +60,63 @@ export function* testAarCreateMandateSaga(
   }
 }
 
-/*
-function* blo(
+export function* testAarAcceptMandateSaga(
   sendAARClient: SendAARClient,
   sessionToken: SessionToken,
-  mandateId: string,
-  data: InternalAuthAndMrtdResponse,
-  signedNonce: string,
-  action: ReturnType<typeof testSendNisMrtdRequestAction.request>
+  action: ReturnType<typeof testAarAcceptMandate.request>
 ) {
-  console.log(mandateId);
+  const mandateId = yield* select(sendMandateIdSelector);
   try {
-    const acceptIOMandateRequest = sendAARClient.acceptIOMandate({
+    if (mandateId == null) {
+      throw Error(`Accept mandate: nullish mandateid (${mandateId})`);
+    }
+    const acceptAarMandateRequest = sendAARClient.acceptIOMandate({
       Bearer: `Bearer ${sessionToken}`,
       mandateId,
       body: {
-        signedNonce,
         mrtdData: {
-          dg1: "dg1",
-          dg11: "dg11",
-          sod: "sod"
+          dg1: action.payload.mrtd_data.dg1,
+          dg11: action.payload.mrtd_data.dg11,
+          sod: action.payload.mrtd_data.sod
         },
         nisData: {
-          nis: "nis",
-          pub_key: "pub_key",
-          sod: "sod"
-        }
-      }
+          nis: action.payload.nis_data.nis,
+          pub_key: action.payload.nis_data.publicKey,
+          sod: action.payload.nis_data.sod
+        },
+        signedNonce: action.payload.nis_data.signedChallenge
+      },
+      isTest: true
     });
     const result = (yield* call(
       withRefreshApiCall,
-      acceptIOMandateRequest,
-      action
+      acceptAarMandateRequest
     )) as unknown as SagaCallReturnType<typeof sendAARClient.acceptIOMandate>;
 
     if (E.isLeft(result)) {
-      const reason = `Decoding failure (${readableReportSimplified(
+      const reason = `Accept mandate decoding failure (${readableReportSimplified(
         result.left
       )})`;
-      // yield* call(trackSendAARFailure, "", reason);
-      // yield* put();
-      return;
+      throw Error(reason);
     }
 
     const { status, value } = result.right;
     switch (status) {
       case 204:
-        console.log(`Success!!!`);
-        return;
-      case 400:
+        yield* put(testAarAcceptMandate.success());
         return;
       case 401:
-        return;
-      case 422:
-        return;
+        throw Error("Accept mandate 401 Fast login expired");
       default:
-        const reason = `HTTP request failed (${aarProblemJsonAnalyticsReport(
+        const reason = `Accept mandate HTTP request failed (${aarProblemJsonAnalyticsReport(
           status,
           value
         )})`;
-        // yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
-        return;
+        throw Error(reason);
     }
   } catch (e) {
-    const reason = `An error was thrown (${unknownToReason(e)})`;
-    // yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
+    const reason = unknownToReason(e);
+    yield* call(trackSendAARFailure, "Playground", reason);
+    yield* put(testAarAcceptMandate.failure(reason));
   }
 }
-*/

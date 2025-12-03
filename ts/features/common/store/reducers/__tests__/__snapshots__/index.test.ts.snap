@@ -351,6 +351,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "mandate": {
         "kind": "undefined",
       },
+      "validation": {
+        "kind": "undefined",
+      },
     },
   },
   "profileSettings": {},

@@ -51,6 +51,9 @@ export const testAarAcceptMandate = createAsyncAction(
   "TEST_AAR_ACCEPT_MANDATE_SUCCESS",
   "TEST_AAR_ACCEPT_MANDATE_FAILURE"
 )<InternalAuthAndMrtdResponse, void, string>();
+export const testAarClearData = createStandardAction(
+  "TEST_AAR_CLEAR_DATA"
+)<void>();
 
 export type AARFlowStateActions = ActionType<
   | typeof setAarFlowState
@@ -59,4 +62,5 @@ export type AARFlowStateActions = ActionType<
   | typeof initiateAarFlow
   | typeof testAarCreateMandate
   | typeof testAarAcceptMandate
+  | typeof testAarClearData
 >;

@@ -18,6 +18,9 @@ exports[`pnReducer should match snapshot 1`] = `
     "mandate": {
       "kind": "undefined",
     },
+    "validation": {
+      "kind": "undefined",
+    },
   },
 }
 `;
