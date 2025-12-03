@@ -91,6 +91,7 @@ export const SendAARCanEducationalScreen = () => {
         }}
         goBack={handleGoBack}
         includeContentMargins
+        alwaysBounceVertical={false}
       >
         <VSpacer size={8} />
         <Image
