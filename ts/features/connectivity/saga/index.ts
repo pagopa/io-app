@@ -66,14 +66,9 @@ export function* connectionStatusSaga(
           yield* call(startTimer, CONNECTIVITY_STATUS_LOAD_INTERVAL);
           continue;
         }
-        yield* call(startTimer, CONNECTIVITY_STATUS_FAILURE_INTERVAL);
-        continue;
       }
+    } finally {
       yield* call(startTimer, CONNECTIVITY_STATUS_FAILURE_INTERVAL);
-      continue;
-    } catch (e) {
-      yield* call(startTimer, CONNECTIVITY_STATUS_FAILURE_INTERVAL);
-      continue;
     }
   }
 }
