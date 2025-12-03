@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.21.0-rc.5](https://github.com/pagopa/io-app/compare/3.21.0-rc.4...3.21.0-rc.5) (2025-12-02)
+
+
+### Features
+
+* [[IOCOM-2745](https://pagopa.atlassian.net/browse/IOCOM-2745)] SEND AAR delegation flow entry point ([#7643](https://github.com/pagopa/io-app/issues/7643)) ([98fa310](https://github.com/pagopa/io-app/commit/98fa310047357710ca0b4d4bda006a2fbe3579d9))
+
+
+### Bug Fixes
+
+* [[IOBP-2276](https://pagopa.atlassian.net/browse/IOBP-2276)] Handle AAR success redirect with empty wallet ([#7657](https://github.com/pagopa/io-app/issues/7657)) ([b200203](https://github.com/pagopa/io-app/commit/b200203a2e6def3d9bba2cd2e9045a77149da054))
+* [[IOBP-2277](https://pagopa.atlassian.net/browse/IOBP-2277)] PDF QR code recognition failure for AAR scan ([#7661](https://github.com/pagopa/io-app/issues/7661)) ([ebf86b2](https://github.com/pagopa/io-app/commit/ebf86b273cdd44dc8d6dca1d894a07c750a0dab3))
+
+
+### Chores
+
+* [[IOPLT-1362](https://pagopa.atlassian.net/browse/IOPLT-1362)] Upgrade patch on react-native-webview on newArch compatibility ([#7483](https://github.com/pagopa/io-app/issues/7483)) ([65fb9a0](https://github.com/pagopa/io-app/commit/65fb9a0be4f6491d23bfd68f91e3761c0e74cdfd))
+
+## [3.21.0-rc.4](https://github.com/pagopa/io-app/compare/3.21.0-rc.3...3.21.0-rc.4) (2025-12-01)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-3331](https://pagopa.atlassian.net/browse/SIW-3331)] Logical review of the Qualtrics survey bottom sheet for eID non-renewal ([#7604](https://github.com/pagopa/io-app/issues/7604)) ([632916e](https://github.com/pagopa/io-app/commit/632916e40ce4b90409b8b258f2019ae499186e8e))
+
+
+### Bug Fixes
+
+* [[IOCOM-2835](https://pagopa.atlassian.net/browse/IOCOM-2835)] Proper value for `x-pagopa-pn-io-src` header ([#7664](https://github.com/pagopa/io-app/issues/7664)) ([568390d](https://github.com/pagopa/io-app/commit/568390d66628d403a9edb332148f078aa33023c2))
+
 ## [3.21.0-rc.3](https://github.com/pagopa/io-app/compare/3.21.0-rc.2...3.21.0-rc.3) (2025-11-28)
 
 
