@@ -22,8 +22,7 @@ export function* testAarCreateMandateSaga(
       Bearer: `Bearer ${sessionToken}`,
       body: {
         aarQrCodeValue:
-          "https://cittadini.notifichedigitali.it/io?aar=U0VORC1TRU5ELVNFTkQtMDAwMDA0LUEtMF9QRi1jMjk2NmIxNi1lZjRmLTQwNDAtYjg4OS1kZGI0NDFmMTFjNGFfODc2YWQ5OWMtMWYyNC00N2VhLWIxNGMtMmE0MTYwODc5YTdj"
-        // "https://cittadini.uat.notifichedigitali.it/io/?aar=UldKRy1XSkFNLVdaTEgtMjAyNTEyLVYtMV9QRi0wZmNlMzc0Yy0wM2ViLTQwNmUtODM0NS01OGI4ZGYzMjk5MTdfNmFlNTZjZjAtMjhmYS00M2U1LTgyMWEtMjEwMjUxOTkzNTdh"
+          "https://cittadini.uat.notifichedigitali.it/io/?aar=UldKRy1XSkFNLVdaTEgtMjAyNTEyLVYtMV9QRi0wZmNlMzc0Yy0wM2ViLTQwNmUtODM0NS01OGI4ZGYzMjk5MTdfNmFlNTZjZjAtMjhmYS00M2U1LTgyMWEtMjEwMjUxOTkzNTdh"
       },
       isTest: true
     });
