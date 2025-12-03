@@ -1,5 +1,4 @@
 import {
-  Body,
   IOButton,
   ListItemSwitch,
   TextInput,
@@ -66,9 +65,7 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
   const sendVerificationCode = useIOSelector(sendVerificationCodeSelector);
   const dispatch = useIODispatch();
 
-  const selectedChallenge = useSENDChallenge
-    ? sendVerificationCode ?? ""
-    : challenge;
+  const selectedChallenge = useSENDChallenge ? sendVerificationCode : challenge;
 
   useEffect(() => {
     const cleanup = [
@@ -167,13 +164,15 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
             onSwitchValueChange={toggleEncodingSwitch}
             value={isBase64Encoding}
           />
-          <ListItemSwitch
-            label="Use SEND challenge"
-            onSwitchValueChange={() =>
-              setUseSENDChallenge(prevValue => !prevValue)
-            }
-            value={useSENDChallenge}
-          />
+          {aarTempMandateEnabled && (
+            <ListItemSwitch
+              label="Use SEND challenge"
+              onSwitchValueChange={() =>
+                setUseSENDChallenge(prevValue => !prevValue)
+              }
+              value={useSENDChallenge}
+            />
+          )}
           <TextInput
             accessibilityLabel="CAN text input field"
             value={can}
@@ -183,35 +182,31 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
           <VSpacer size={8} />
           <TextInput
             accessibilityLabel="Challenge text input field"
-            value={challenge}
+            disabled={useSENDChallenge}
+            value={useSENDChallenge ? sendVerificationCode : challenge}
             placeholder={"Challenge"}
             onChangeText={setChallenge}
           />
-          <VSpacer size={8} />
-          <Body>{`SEND Challenge: ${sendVerificationCode}`}</Body>
         </View>
         <IOButton
           variant="solid"
           label={status === "reading" ? "Stop" : "Start sign and reading"}
-          disabled={selectedChallenge.length === 0 || can.length < 6}
+          disabled={
+            !selectedChallenge ||
+            selectedChallenge.length === 0 ||
+            can.length < 6
+          }
           onPress={() =>
             status === "reading" ? handleStopReading() : handleStartReading()
           }
         />
-        {aarTempMandateEnabled && (
+        {useSENDChallenge && (
           <>
             <VSpacer size={8} />
             <IOButton
               loading={isRequestingSENDMandate}
-              label="Challenge from SEND"
+              label="Request SEND Challenge"
               onPress={() => dispatch(testAarCreateMandate.request())}
-            />
-            <VSpacer size={8} />
-            <IOButton
-              loading={isRequestingSENDMandate}
-              disabled={!sendVerificationCode}
-              label="Clear SEND Challenge"
-              onPress={() => dispatch(testAarCreateMandate.cancel())}
             />
           </>
         )}

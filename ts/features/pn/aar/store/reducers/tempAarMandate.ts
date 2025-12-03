@@ -38,10 +38,6 @@ export const tempAarMandateReducer = (
       return {
         mandate: remoteError(action.payload)
       };
-    case getType(testAarCreateMandate.cancel):
-      return {
-        mandate: remoteUndefined
-      };
   }
   return state;
 };
