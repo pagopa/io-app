@@ -92,9 +92,11 @@ export const sendValidationErrorSelector = (state: GlobalState) => {
 
 export const isRequestingSendMandateSelector = (state: GlobalState) =>
   isLoading(state.features.pn.tempAarMandate.mandate);
-export const sendVerificationCodeSelector = (state: GlobalState) =>
+export const sendVerificationCodeSelector = (
+  state: GlobalState
+): string | undefined =>
   getValue(state.features.pn.tempAarMandate.mandate)?.mandate.verificationCode;
-export const sendMandateIdSelector = (state: GlobalState) =>
+export const sendMandateIdSelector = (state: GlobalState): string | undefined =>
   getValue(state.features.pn.tempAarMandate.mandate)?.mandate.mandateId;
 export const hasSendMandateSelector = (state: GlobalState) => {
   const mandate = getValue(state.features.pn.tempAarMandate.mandate)?.mandate;

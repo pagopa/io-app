@@ -64,7 +64,8 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
   const isRequestingSENDMandate = useIOSelector(
     isRequestingSendMandateSelector
   );
-  const sendVerificationCode = useIOSelector(sendVerificationCodeSelector);
+  const sendVerificationCode =
+    useIOSelector(sendVerificationCodeSelector) ?? "";
   const dispatch = useIODispatch();
 
   const selectedChallenge = useSENDChallenge ? sendVerificationCode : challenge;
@@ -104,6 +105,7 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
 
   useEffect(() => {
     if (status === "success" && successResult) {
+      setStatus("idle");
       navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
         screen:
           SETTINGS_ROUTES.CIE_IAS_AND_MRTD_PLAYGROUND_INTERNAL_AUTH_AND_MRTD_RESULTS,
