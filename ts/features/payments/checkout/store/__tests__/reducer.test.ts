@@ -332,7 +332,7 @@ describe("payments checkout reducer index.ts", () => {
           })
         );
         expect(store.getState().features.payments.checkout.transaction).toEqual(
-          pot.noneLoading
+          pot.none
         );
       });
 
