@@ -25,7 +25,24 @@ type Params = {
   identification?: IdentificationContext;
   issuanceLevel?: EidIssuanceLevel;
 };
+/**
+ * Maps the eID issuance level to the corresponding ItwFlow value.
+ * @param issuanceLevel - The eID issuance level.
+ * @returns The corresponding ItwFlow value.
+ */
 
+const mapIssuanceLevelToFlow = (issuanceLevel?: EidIssuanceLevel): ItwFlow => {
+  switch (issuanceLevel) {
+    case "l3":
+    case "l3-next":
+      return "L3";
+    case "l2":
+    case "l2-fallback":
+      return "L2";
+    default:
+      return "not_available";
+  }
+};
 /**
  * Track errors occurred during the eID issuance process for analytics.
  */
@@ -92,17 +109,4 @@ export const useEidEventsTracking = ({
       );
     }
   }, [failure, identification, itwFlow]);
-};
-
-const mapIssuanceLevelToFlow = (issuanceLevel?: EidIssuanceLevel): ItwFlow => {
-  switch (issuanceLevel) {
-    case "l3":
-    case "l3-next":
-      return "L3";
-    case "l2":
-    case "l2-fallback":
-      return "L2";
-    default:
-      return "not_available";
-  }
 };
