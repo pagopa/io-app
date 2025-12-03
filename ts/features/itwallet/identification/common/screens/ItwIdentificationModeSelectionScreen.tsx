@@ -185,7 +185,6 @@ export const ItwIdentificationModeSelectionScreen = ({
 const CiePinMethodModule = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
-  const mode = ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
 
   const handleOnPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "ciePin" });
@@ -217,9 +216,7 @@ const CiePinMethodModule = () => {
       title={title}
       subtitle={subtitle}
       testID="CiePinMethodModuleTestID"
-      // TODO: change icon
-      icon="cieCard"
-      // icon="card"
+      icon="fiscalCodeIndividual"
       onPress={handleOnPress}
       badge={badgeProps}
     />
