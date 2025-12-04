@@ -5113,8 +5113,8 @@
       },
       "reissuanceLandingScreen": {
         "notNecessary": {
-          "title": "Questo passaggio non è più necessario",
-          "subtitle": "È tutto pronto. Puoi gestire i tuoi documenti digitali nel Portafoglio.",
+          "title": "Hai già confermato la tua identità",
+          "subtitle": "Puoi gestire i tuoi documenti digitali nel Portafoglio.",
           "primaryAction": "Vai al Portafoglio"
         },
         "itWalletActivation": {
