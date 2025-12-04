@@ -202,7 +202,8 @@ export const itwEidIssuanceMachine = setup({
     requiresMrtdVerification: ({ context }) =>
       // MRTD PoP verification is a step required for SPID and CieID identification modes
       // when issuing an L3 PID
-      context.level === "l3" && context.identification?.mode !== "ciePin"
+      context.level === "l3" && context.identification?.mode !== "ciePin",
+    isWalletValid: notImplemented
   }
 }).createMachine({
   id: "itwEidIssuanceMachine",
@@ -428,6 +429,11 @@ export const itwEidIssuanceMachine = setup({
             guard: "isSessionExpired",
             actions: "handleSessionExpired",
             target: "#itwEidIssuanceMachine.TosAcceptance"
+          },
+          {
+            guard: "isWalletValid",
+            actions: "setFailure",
+            target: "#itwEidIssuanceMachine.Failure"
           },
           {
             actions: ["setFailure", "cleanupIntegrityKeyTag"],
