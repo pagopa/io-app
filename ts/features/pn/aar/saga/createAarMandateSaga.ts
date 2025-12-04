@@ -15,6 +15,7 @@ import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
 import { currentAARFlowData } from "../store/selectors";
 import { SendAARFailurePhase, sendAARFlowStates } from "../utils/stateUtils";
+import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 
 const sendAarFailurePhase: SendAARFailurePhase = "Create Mandate";
 export function* createAarMandateSaga(
@@ -31,13 +32,14 @@ export function* createAarMandateSaga(
     );
     return;
   }
+  const isSendUATEnvironment = yield* select(isPnTestEnabledSelector);
   try {
     const createMandateRequest = createAarMandate({
       Bearer: `Bearer ${sessionToken}`,
       body: {
         aarQrCodeValue: currentState.qrCode
       },
-      "x-pagopa-pn-io-src": "QR_CODE"
+      isTest: isSendUATEnvironment
     });
     const result = (yield* call(
       withRefreshApiCall,

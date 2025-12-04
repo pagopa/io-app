@@ -39,7 +39,12 @@ export const SendAarDelegationProposalScreen = () => {
       }
       case sendAARFlowStates.cieCanAdvisory: {
         hideAll();
-        // TODO:: Navigate to the CIE/CAN advisory screen once implemented
+        navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+          screen: PN_ROUTES.MAIN,
+          params: {
+            screen: PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL
+          }
+        });
         break;
       }
     }
