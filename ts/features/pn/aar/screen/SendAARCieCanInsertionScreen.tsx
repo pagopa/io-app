@@ -98,8 +98,17 @@ export const SendAARCieCanInsertionScreen = ({
             "features.pn.aar.flow.cieCanInsertion.description"
           )}
           headerActionsProp={{ showHelp: true }}
+          contextualHelp={{
+            title: i18n.t(
+              "features.pn.aar.flow.delegated.cieContextualHelp.title"
+            ),
+            body: i18n.t(
+              "features.pn.aar.flow.delegated.cieContextualHelp.body"
+            )
+          }}
           goBack={handleGoBack}
           includeContentMargins
+          alwaysBounceVertical={false}
         >
           <VSpacer size={8} />
           <OTPInput
