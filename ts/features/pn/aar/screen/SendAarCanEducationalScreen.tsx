@@ -22,15 +22,15 @@ const aspectRatio = width / height;
 
 export const SendAarCanEducationalScreen = () => {
   const dispatch = useIODispatch();
-  const currentAARState = useIOSelector(currentAARFlowData);
+  const currentAarState = useIOSelector(currentAARFlowData);
   const { terminateFlow } = useSendAarFlowManager();
   const denomination = useIOSelector(aarAdresseeDenominationSelector);
 
   useEffect(() => {
-    if (currentAARState.type === sendAARFlowStates.cieCanInsertion) {
+    if (currentAarState.type === sendAARFlowStates.cieCanInsertion) {
       // TODO: [IOCOM-2748] navigate into CIE CAN insertion screen
     }
-  }, [currentAARState.type]);
+  }, [currentAarState.type]);
 
   const handleGoBack = () => {
     Alert.alert(
@@ -50,10 +50,10 @@ export const SendAarCanEducationalScreen = () => {
   };
 
   const handleGoNext = () => {
-    if (currentAARState.type === sendAARFlowStates.cieCanAdvisory) {
+    if (currentAarState.type === sendAARFlowStates.cieCanAdvisory) {
       dispatch(
         setAarFlowState({
-          ...currentAARState,
+          ...currentAarState,
           type: sendAARFlowStates.cieCanInsertion
         })
       );
