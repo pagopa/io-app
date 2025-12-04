@@ -147,7 +147,10 @@ export const isItwCredential = ({
   return pipe(
     O.tryCatch(getVerificationByFormat[format as CredentialFormat]),
     O.chain(O.fromNullable),
-    O.chainNullableK(({ assurance_level, trust_framework }) => assurance_level === "high" || trust_framework === "it_l2+document_proof"),
+    O.chainNullableK(
+      ({ assurance_level, trust_framework }) =>
+        assurance_level === "high" || trust_framework === "it_l2+document_proof"
+    ),
     O.getOrElse(() => false)
   );
 };
