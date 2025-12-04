@@ -4749,27 +4749,24 @@
           "mode": {
             "ciePin": {
               "title": "Continua con CIE + PIN",
-              "subtitle": {
-                "default": "Dovrai usare la Carta di Identità Elettronica (CIE) e inserire il suo PIN di 8 cifre.",
-                "l3-next": "Ha una durata di 12 mesi"
-              },
+              "subtitle": "Ha una durata di 12 mesi",
               "badge": "scelta consigliata"
             },
             "cieId": {
               "title": "Continua con l’app CieID",
               "subtitle": {
                 "default": "Dovrai usare credenziali e app CieID",
-                "l3-next": "Ha una durata di 12 mesi"
+                "l3": "Ha una durata di 12 mesi"
               }
             },
             "spid": {
               "title": {
                 "default": "Continua con SPID",
-                "l3-next": "Continua con SPID + CIE"
+                "l3": "Continua con SPID + CIE"
               },
               "subtitle": {
                 "default": "Dovrai usare credenziali e app (o SMS)",
-                "l3-next": "Ha una durata di 90 giorni"
+                "l3": "Ha una durata di 90 giorni"
               }
             }
           }
