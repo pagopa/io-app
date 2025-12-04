@@ -16,7 +16,7 @@ import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 export type SendAARCieCardReadingScreenRouteParams =
   Readonly<SendAARCieCardReadingComponentProps>;
 
-type SendAARCieCardReadingScreenProps = IOStackNavigationRouteProps<
+export type SendAARCieCardReadingScreenProps = IOStackNavigationRouteProps<
   PnParamsList,
   typeof PN_ROUTES.SEND_AAR_CIE_CARD_READING
 >;
