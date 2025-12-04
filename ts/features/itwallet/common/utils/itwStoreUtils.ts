@@ -70,7 +70,7 @@ export const serializeFailureReason = (
     | CredentialIssuanceFailure
     | RemoteFailure
     | ProximityFailure,
-  origin: string
+  origin?: string
 ) => {
   const reason = !failure.reason
     ? "Reason not provided"
@@ -88,7 +88,7 @@ export const serializeFailureReason = (
  * This logic was agreed upon with the Mixpanel team to allow them to filter these specific error cases.
  * Instead of sending a plain string, we return a structured object with a code and errorDescription
  */
-const createReasonObject = (message: string, origin: string) => ({
+const createReasonObject = (message: string, origin?: string) => ({
   code: "UNEXPECTED",
   errorDescription: message,
   origin
