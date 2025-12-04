@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.21.0-rc.6](https://github.com/pagopa/io-app/compare/3.21.0-rc.5...3.21.0-rc.6) (2025-12-03)
+
+
+### Features
+
+* [[IOPAE-2308](https://pagopa.atlassian.net/browse/IOPAE-2308)] Add remote config for favourite services feature ([#7668](https://github.com/pagopa/io-app/issues/7668)) ([3087c25](https://github.com/pagopa/io-app/commit/3087c2578192a2943122568b21f1541046eb0bc7))
+
+
+### Chores
+
+* [[IOBP-2317](https://pagopa.atlassian.net/browse/IOBP-2317)] IDPay barcode copy update ([#7669](https://github.com/pagopa/io-app/issues/7669)) ([6c7afd4](https://github.com/pagopa/io-app/commit/6c7afd4b47c0f8691829affdf4f0bd35932138ea))
+
 ## [3.21.0-rc.5](https://github.com/pagopa/io-app/compare/3.21.0-rc.4...3.21.0-rc.5) (2025-12-02)
 
 
