@@ -108,7 +108,8 @@ export const ItwIssuanceMetadata = ({
   );
 
   const authSource =
-    itwCredential && credentialsFromCatalogue
+    credentialsFromCatalogue &&
+    credentialsFromCatalogue[credential.credentialType]
       ? getItwAuthSource(credentialsFromCatalogue[credential.credentialType])
       : getAuthSource(credential);
 
