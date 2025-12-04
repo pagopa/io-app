@@ -4000,6 +4000,9 @@
                 "È richiesto un sistema operativo Android 6.0 o iOS 13 o superiori."
               ],
               "cta": "Cosa posso fare?"
+            },
+            "createMandate": {
+              "loadingText": "Attendi qualche secondo"
             }
           }
         }

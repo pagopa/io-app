@@ -7,6 +7,8 @@ IO_SERVICES_METADATA_VERSION=1.0.91
 IO_SESSION_MANAGER_VERSION=1.8.0
 # IO Wallet Backend version
 IO_WALLET_BACKEND_VERSION=v16.14.0
+# SEND func versin
+IO_SEND_FUNC_VERSION=1.4.2
 
 declare -a apis=(
   # Backend APIs
@@ -40,7 +42,7 @@ declare -a apis=(
   "./definitions/cgn/merchants https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_cgn_operator_search.yaml"
   # PN APIs
   "./definitions/pn https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_pn.yaml"
-  "./definitions/pn/aar https://raw.githubusercontent.com/pagopa/io-messages/send-func@1.3.6/apps/send-func/openapi/aar-notification.yaml"
+  "./definitions/pn/aar https://raw.githubusercontent.com/pagopa/io-messages/send-func@$IO_SEND_FUNC_VERSION/apps/send-func/openapi/aar-notification.yaml"
   # FCI APIs
   "./definitions/fci https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_io_sign.yaml"
   # ITW APIs
