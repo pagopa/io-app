@@ -8,7 +8,8 @@ export type SendAARFailurePhase =
   | "Entry Point"
   | "Fetch Notification"
   | "Fetch QRCode"
-  | "Show Notification";
+  | "Show Notification"
+  | "Validate Mandate"; // TODO: Ensure it's the right value
 
 export type RecipientInfo = {
   denomination: string;
