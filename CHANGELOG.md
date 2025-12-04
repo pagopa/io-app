@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.21.0-rc.6](https://github.com/pagopa/io-app/compare/3.21.0-rc.5...3.21.0-rc.6) (2025-12-03)
+
+
+### Features
+
+* [[IOPAE-2308](https://pagopa.atlassian.net/browse/IOPAE-2308)] Add remote config for favourite services feature ([#7668](https://github.com/pagopa/io-app/issues/7668)) ([3087c25](https://github.com/pagopa/io-app/commit/3087c2578192a2943122568b21f1541046eb0bc7))
+
+
+### Chores
+
+* [[IOBP-2317](https://pagopa.atlassian.net/browse/IOBP-2317)] IDPay barcode copy update ([#7669](https://github.com/pagopa/io-app/issues/7669)) ([6c7afd4](https://github.com/pagopa/io-app/commit/6c7afd4b47c0f8691829affdf4f0bd35932138ea))
+
+## [3.21.0-rc.5](https://github.com/pagopa/io-app/compare/3.21.0-rc.4...3.21.0-rc.5) (2025-12-02)
+
+
+### Features
+
+* [[IOCOM-2745](https://pagopa.atlassian.net/browse/IOCOM-2745)] SEND AAR delegation flow entry point ([#7643](https://github.com/pagopa/io-app/issues/7643)) ([98fa310](https://github.com/pagopa/io-app/commit/98fa310047357710ca0b4d4bda006a2fbe3579d9))
+
+
+### Bug Fixes
+
+* [[IOBP-2276](https://pagopa.atlassian.net/browse/IOBP-2276)] Handle AAR success redirect with empty wallet ([#7657](https://github.com/pagopa/io-app/issues/7657)) ([b200203](https://github.com/pagopa/io-app/commit/b200203a2e6def3d9bba2cd2e9045a77149da054))
+* [[IOBP-2277](https://pagopa.atlassian.net/browse/IOBP-2277)] PDF QR code recognition failure for AAR scan ([#7661](https://github.com/pagopa/io-app/issues/7661)) ([ebf86b2](https://github.com/pagopa/io-app/commit/ebf86b273cdd44dc8d6dca1d894a07c750a0dab3))
+
+
+### Chores
+
+* [[IOPLT-1362](https://pagopa.atlassian.net/browse/IOPLT-1362)] Upgrade patch on react-native-webview on newArch compatibility ([#7483](https://github.com/pagopa/io-app/issues/7483)) ([65fb9a0](https://github.com/pagopa/io-app/commit/65fb9a0be4f6491d23bfd68f91e3761c0e74cdfd))
+
 ## [3.21.0-rc.4](https://github.com/pagopa/io-app/compare/3.21.0-rc.3...3.21.0-rc.4) (2025-12-01)
 
 
