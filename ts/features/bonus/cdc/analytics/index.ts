@@ -20,10 +20,10 @@ export const trackCdcGoToService = () =>
 export const trackCdcCardError = () =>
   mixpanelTrack("CDC_CARD_ERROR", buildEventProperties("KO", "error"));
 
-export async function* trackCdcStatus() {
+export const trackCdcStatus = function* () {
   const state: GlobalState = yield* select();
-  await updateMixpanelProfileProperties(state, {
+  void updateMixpanelProfileProperties(state, {
     property: "CDC_STATUS",
     value: cdcStatusHandler(state)
   });
-}
+};
