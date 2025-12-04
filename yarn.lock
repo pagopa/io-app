@@ -3205,15 +3205,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-cie@npm:1.3.0-beta.1":
-  version: 1.3.0-beta.1
-  resolution: "@pagopa/io-react-native-cie@npm:1.3.0-beta.1"
+"@pagopa/io-react-native-cie@npm:1.3.0":
+  version: 1.3.0
+  resolution: "@pagopa/io-react-native-cie@npm:1.3.0"
   dependencies:
     zod: ^3.24.4
   peerDependencies:
     react: ">=19.1"
     react-native: ">=0.81"
-  checksum: 9f5e5a55ca57e683e9ec07d2bcf9e9590684da412651480d176f11edea981a24c7440f5c80f0f1bbb92fa180d060dba7fde5e35729690b822e10c85036d30ba1
+  checksum: 82fc01aa8c16fe12e79b8934412fde0b3e7be0333a13284e36f2a51c217b4378bc2f82cde2c3aefb0614b8fea65c99715b3ce5b9c8089bb404d483850a306e15
   languageName: node
   linkType: hard
 
@@ -11304,7 +11304,7 @@ __metadata:
     "@jambit/eslint-plugin-typed-redux-saga": ^0.4.0
     "@pagopa/io-app-design-system": 5.11.12
     "@pagopa/io-pagopa-commons": ^3.1.0
-    "@pagopa/io-react-native-cie": 1.3.0-beta.1
+    "@pagopa/io-react-native-cie": 1.3.0
     "@pagopa/io-react-native-cieid": 0.4.0-beta.0
     "@pagopa/io-react-native-crypto": ^1.2.3
     "@pagopa/io-react-native-http-client": 1.0.5
