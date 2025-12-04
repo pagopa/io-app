@@ -18,6 +18,7 @@ import { initiateAarFlowSaga } from "../initiateAarFlowSaga";
 import { fetchAarDataSaga } from "../fetchNotificationDataSaga";
 import { fetchAARQrCodeSaga } from "../fetchQrCodeSaga";
 import { testable, watchAarFlowSaga } from "../watchAARFlowSaga";
+import { validateMandateSaga } from "../validateMandateSaga";
 const { aarFlowMasterSaga, raceWithTerminateFlow } = testable as NonNullable<
   typeof testable
 >;
@@ -28,7 +29,9 @@ const mockKeyInfo = {} as KeyInfo;
 const mockSendAARClient: SendAARClient = {
   aarQRCodeCheck: jest.fn(),
   getAARNotification: jest.fn(),
-  getNotificationAttachment: jest.fn()
+  getNotificationAttachment: jest.fn(),
+  createAARMandate: jest.fn(),
+  acceptIOMandate: jest.fn()
 };
 
 describe("watchAarFlowSaga", () => {
@@ -88,6 +91,40 @@ describe("watchAarFlowSaga", () => {
         .call(
           fetchAarDataSaga,
           mockSendAARClient.getAARNotification,
+          mockSessionToken,
+          action
+        )
+        .next()
+        .isDone();
+    });
+
+    it('should call the validateMandateSaga when an updateState action has "validatingMandate" as type', () => {
+      const action = setAarFlowState({
+        type: sendAARFlowStates.validatingMandate,
+        recipientInfo: {
+          denomination: "Mario Rossi",
+          taxId: "RSSMRA74D22A001Q"
+        },
+        iun: "123",
+        mandateId: "mandate_id",
+        signedVerificationCode: "signed_nonce",
+        mrtdData: {
+          dg1: "",
+          dg11: "",
+          sod: ""
+        },
+        nisData: {
+          nis: "",
+          publicKey: "",
+          sod: ""
+        }
+      });
+
+      testSaga(aarFlowMasterSaga, mockSendAARClient, mockSessionToken, action)
+        .next()
+        .call(
+          validateMandateSaga,
+          mockSendAARClient.acceptIOMandate,
           mockSessionToken,
           action
         )
