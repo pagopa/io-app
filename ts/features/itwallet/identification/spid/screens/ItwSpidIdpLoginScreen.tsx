@@ -18,7 +18,8 @@ import { getEnv } from "../../../common/utils/environment";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   selectAuthUrlOption,
-  selectIsLoading
+  selectIsLoading,
+  selectIssuanceLevel
 } from "../../../machine/eid/selectors";
 
 const styles = StyleSheet.create({
@@ -40,6 +41,8 @@ const ItwSpidIdpLoginScreen = () => {
     ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const spidAuthUrl =
     ItwEidIssuanceMachineContext.useSelector(selectAuthUrlOption);
+  const issuanceLevel =
+    ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const [isWebViewLoading, setWebViewLoading] = useState(true);
 
@@ -97,7 +100,9 @@ const ItwSpidIdpLoginScreen = () => {
   // Setup header properties
   const headerProps: HeaderSecondLevelHookProps = {
     title: I18n.t(
-      "features.itWallet.identification.modeSelection.mode.spid.title.default"
+      `features.itWallet.identification.modeSelection.mode.spid.title.${
+        issuanceLevel === "l3" ? "l3" : "default"
+      }`
     ),
     supportRequest: false,
     goBack: dismissalDialog.show

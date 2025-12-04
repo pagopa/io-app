@@ -17,14 +17,17 @@ import {
 import { ItwTags } from "../../tags";
 import {
   GetWalletAttestationActorParams,
+  InitMrtdPoPChallengeActorParams,
   RequestEidActorParams,
-  StartAuthFlowActorParams
+  StartAuthFlowActorParams,
+  ValidateMrtdPoPChallengeActorParams
 } from "../actors";
 import {
   AuthenticationContext,
   CieContext,
   Context,
-  InitialContext
+  InitialContext,
+  MrtdPoPContext
 } from "../context";
 import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
 import { itwCredentialUpgradeMachine } from "../../upgrade/machine";
@@ -49,10 +52,12 @@ const navigateToSuccessScreen = jest.fn();
 const navigateToFailureScreen = jest.fn();
 const navigateToWallet = jest.fn();
 const navigateToCredentialCatalog = jest.fn();
-const navigateToCiePreparationScreen = jest.fn();
+const navigateToCieNfcPreparationScreen = jest.fn();
+const navigateToCieCardPreparationScreen = jest.fn();
 const navigateToCiePinPreparationScreen = jest.fn();
+const navigateToCieCanPreparationScreen = jest.fn();
 const navigateToCiePinScreen = jest.fn();
-const navigateToCieReadCardScreen = jest.fn();
+const navigateToCieAuthenticationScreen = jest.fn();
 const navigateToNfcInstructionsScreen = jest.fn();
 const navigateToCieIdLoginScreen = jest.fn();
 const navigateToCieWarningScreen = jest.fn();
@@ -71,6 +76,8 @@ const storeAuthLevel = jest.fn();
 const freezeSimplifiedActivationRequirements = jest.fn();
 const clearSimplifiedActivationRequirements = jest.fn();
 const loadPidIntoContext = jest.fn();
+const navigateToCieCanScreen = jest.fn();
+const navigateToCieInternalAuthAndMrtdScreen = jest.fn();
 
 /**
  * Actors
@@ -81,6 +88,8 @@ const getCieStatus = jest.fn();
 const getWalletAttestation = jest.fn();
 const requestEid = jest.fn();
 const startAuthFlow = jest.fn();
+const initMrtdPoPChallenge = jest.fn();
+const validateMrtdPoPChallenge = jest.fn();
 
 /**
  * Guards
@@ -106,14 +115,18 @@ describe("itwEidIssuanceMachine", () => {
       navigateToFailureScreen,
       navigateToWallet,
       navigateToCredentialCatalog,
-      navigateToCiePreparationScreen,
+      navigateToCieNfcPreparationScreen,
       navigateToCiePinPreparationScreen,
+      navigateToCieCardPreparationScreen,
+      navigateToCieCanPreparationScreen,
       navigateToCiePinScreen,
-      navigateToCieReadCardScreen,
+      navigateToCieAuthenticationScreen,
       navigateToNfcInstructionsScreen,
       navigateToCieIdLoginScreen,
       navigateToCieWarningScreen,
       navigateToIdentificationScreen,
+      navigateToCieCanScreen,
+      navigateToCieInternalAuthAndMrtdScreen,
       storeIntegrityKeyTag,
       cleanupIntegrityKeyTag,
       storeWalletInstanceAttestation,
@@ -145,6 +158,14 @@ describe("itwEidIssuanceMachine", () => {
         AuthenticationContext,
         StartAuthFlowActorParams
       >(startAuthFlow),
+      initMrtdPoPChallenge: fromPromise<
+        MrtdPoPContext,
+        InitMrtdPoPChallengeActorParams
+      >(initMrtdPoPChallenge),
+      validateMrtdPoPChallenge: fromPromise<
+        string,
+        ValidateMrtdPoPChallengeActorParams
+      >(validateMrtdPoPChallenge),
       credentialUpgradeMachine: itwCredentialUpgradeMachine
     },
     guards: {
@@ -1856,5 +1877,234 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "accept-ipzs-privacy" });
     expect(clearSimplifiedActivationRequirements).toHaveBeenCalledTimes(1);
     expect(loadPidIntoContext).toHaveBeenCalledTimes(1);
+  });
+
+  it("Should start the MRTD PoP flow", async () => {
+    /** Initial part - setup with L3 and existing WIA */
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { UserIdentification: "Identification" },
+      context: {
+        level: "l3",
+        mode: "issuance",
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA }
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, {
+      snapshot
+    });
+    actor.start();
+
+    /**
+     * Choose SPID as identification mode (L3 requires MRTD PoP for SPID/CieID)
+     */
+    actor.send({ type: "select-identification-mode", mode: "spid" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        Spid: "IdpSelection"
+      }
+    });
+
+    /**
+     * Choose first IDP in list for SPID identification
+     */
+    startAuthFlow.mockImplementation(() => Promise.resolve({}));
+
+    actor.send({ type: "select-spid-idp", idp: idps[0] });
+
+    await waitFor(() => expect(startAuthFlow).toHaveBeenCalledTimes(1));
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        Spid: "CompletingSpidAuthFlow"
+      }
+    });
+
+    /**
+     * Complete user identification - this should trigger MRTD PoP flow
+     */
+    const mockMrtdContext: MrtdPoPContext = {
+      challenge: "mock-challenge",
+      mrtd_auth_session: "mock-session",
+      mrtd_pop_nonce: "mock-nonce",
+      validationUrl: "http://validation.test.it"
+    };
+
+    initMrtdPoPChallenge.mockImplementation(() =>
+      Promise.resolve(mockMrtdContext)
+    );
+
+    actor.send({
+      type: "user-identification-completed",
+      authRedirectUrl: "http://spid.test.it"
+    });
+
+    expect(actor.getSnapshot().context).toMatchObject({
+      authenticationContext: {
+        callbackUrl: "http://spid.test.it"
+      }
+    });
+
+    /**
+     * Should enter MRTD PoP flow instead of going directly to issuance
+     */
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual({
+        MrtdPoP: "InitializingChallenge"
+      })
+    );
+
+    await waitFor(() => expect(initMrtdPoPChallenge).toHaveBeenCalledTimes(1));
+
+    /**
+     * Challenge initialized, should display CAN preparation instructions
+     */
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual({
+        MrtdPoP: "DisplayingCanPreparationInstructions"
+      })
+    );
+
+    expect(navigateToCieCanPreparationScreen).toHaveBeenCalledTimes(1);
+    expect(actor.getSnapshot().context.mrtdContext).toStrictEqual(
+      mockMrtdContext
+    );
+
+    /**
+     * User proceeds to CAN input
+     */
+    actor.send({ type: "next" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      MrtdPoP: "WaitingForCan"
+    });
+    expect(navigateToCieCanScreen).toHaveBeenCalledTimes(1);
+
+    /**
+     * User enters CAN
+     */
+    const testCan = "123456";
+    actor.send({ type: "cie-can-entered", can: testCan });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      MrtdPoP: "DisplayingCieNfcPreparationInstructions"
+    });
+    expect(actor.getSnapshot().context.mrtdContext).toMatchObject({
+      ...mockMrtdContext,
+      can: testCan
+    });
+    expect(navigateToCieNfcPreparationScreen).toHaveBeenCalledTimes(1);
+
+    /**
+     * User proceeds to sign the challenge
+     */
+    actor.send({ type: "next" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      MrtdPoP: "SigningChallenge"
+    });
+    expect(navigateToCieInternalAuthAndMrtdScreen).toHaveBeenCalledTimes(1);
+
+    /**
+     * MRTD challenge signed successfully
+     */
+    const mockSignedData = {
+      nis_data: {
+        nis: "nis-data",
+        signedChallenge: "signed-challenge-data",
+        publicKey: "public-key-data",
+        sod: "sod-ias-data"
+      },
+      mrtd_data: {
+        dg1: "dg1-data",
+        dg11: "dg11-data",
+        sod: "sod-mrtd-data"
+      }
+    };
+
+    validateMrtdPoPChallenge.mockImplementation(() =>
+      Promise.resolve("http://callback.test.it")
+    );
+
+    actor.send({
+      type: "mrtd-challenged-signed",
+      data: mockSignedData
+    });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      MrtdPoP: "ChallengeValidation"
+    });
+
+    expect(actor.getSnapshot().context.mrtdContext).toMatchObject({
+      ...mockMrtdContext,
+      can: testCan,
+      ias: {
+        challenge_signed: mockSignedData.nis_data.signedChallenge,
+        ias_pk: mockSignedData.nis_data.publicKey,
+        sod_ias: mockSignedData.nis_data.sod
+      },
+      mrtd: {
+        dg1: mockSignedData.mrtd_data.dg1,
+        dg11: mockSignedData.mrtd_data.dg11,
+        sod_mrtd: mockSignedData.mrtd_data.sod
+      }
+    });
+
+    /**
+     * Challenge validation in progress
+     */
+    await waitFor(() =>
+      expect(validateMrtdPoPChallenge).toHaveBeenCalledTimes(1)
+    );
+
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual({
+        MrtdPoP: "Authorization"
+      })
+    );
+
+    expect(actor.getSnapshot().context.mrtdContext?.callbackUrl).toBe(
+      "http://callback.test.it"
+    );
+
+    /**
+     * Complete MRTD PoP verification
+     */
+    actor.send({
+      type: "mrtd-pop-verification-completed",
+      authRedirectUrl: "http://final-auth.test.it"
+    });
+
+    expect(storeAuthLevel).toHaveBeenCalled();
+
+    /**
+     * Should transition to Issuance state
+     */
+    requestEid.mockImplementation(() =>
+      Promise.resolve(ItwStoredCredentialsMocks.eid)
+    );
+    issuedEidMatchesAuthenticatedUser.mockImplementation(() => true);
+
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual({
+        Issuance: "RequestingEid"
+      })
+    );
+
+    expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(requestEid).toHaveBeenCalledTimes(1));
+
+    // EID obtained
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual({
+        Issuance: "DisplayingPreview"
+      })
+    );
   });
 });
