@@ -258,10 +258,7 @@ export const validAARStatusTransitions = new Map<
   ],
   [
     sendAARFlowStates.validatingMandate,
-    new Set([
-      sendAARFlowStates.ko,
-      sendAARFlowStates.displayingNotificationData
-    ])
+    new Set([sendAARFlowStates.ko, sendAARFlowStates.fetchingNotificationData])
   ]
 ]);
 
