@@ -66,6 +66,7 @@ export const useEidEventsTracking = ({ failure, identification }: Params) => {
     }
 
     if (failure.type === IssuanceFailureType.UNEXPECTED) {
+      const origin = identification?.mode ?? "EID_ISSUANCE_UNKNOWN_MODE";
       /*
        * We handle two cases here:
        * 1. If failure.reason is undefined/null, we serialize the failure to provide a default message with "Reason not provided".
@@ -74,7 +75,7 @@ export const useEidEventsTracking = ({ failure, identification }: Params) => {
        */
       return trackItwIdRequestUnexpectedFailure(
         shouldSerializeReason(failure)
-          ? serializeFailureReason(failure)
+          ? serializeFailureReason(failure, origin)
           : failure
       );
     }

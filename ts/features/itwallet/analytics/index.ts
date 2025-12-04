@@ -199,7 +199,7 @@ type TrackItWalletCieCardReadingFailure = {
 };
 
 type TrackItWalletCieCardReadingUnexpectedFailure = {
-  reason: string | undefined;
+  reason: string | unknown | undefined;
   cie_reading_progress: number;
 };
 

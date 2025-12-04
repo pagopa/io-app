@@ -56,7 +56,8 @@ export const cieMachineActions = {
   },
 
   trackError: ({
-    context: { failure, isL3, readProgress }
+    context: { failure, isL3, readProgress },
+    event
   }: ActionArgs<CieContext, CieEvents, CieEvents>) => {
     const itw_flow: ItwFlow = isL3 ? "L3" : "L2";
     // readProgress is a number between 0 and 1, mixpanel needs a number between 0 and 100
@@ -118,7 +119,10 @@ export const cieMachineActions = {
     }
 
     trackItWalletCieCardReadingUnexpectedFailure({
-      reason: failure?.name ?? "UNEXPECTED_ERROR",
+      reason: {
+        name: failure?.name ?? "UNEXPECTED_ERROR",
+        origin: event?.type ?? "CIE_MACHINE_ERROR"
+      },
       cie_reading_progress: progress
     });
   }

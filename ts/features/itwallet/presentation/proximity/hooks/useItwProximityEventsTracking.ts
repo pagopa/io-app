@@ -20,12 +20,14 @@ type Params = {
 /**
  * Track errors occurred during the proximity presentation flow for analytics.
  */
+const origin = "ITW_PROXIMITY_EVENTS_TRACKING";
+
 export const useItwProximityEventsTracking = ({ failure }: Params) => {
   const hasGivenConsent = ItwProximityMachineContext.useSelector(
     hasGivenConsentSelector
   );
   useEffect(() => {
-    const serializedFailure = serializeFailureReason(failure);
+    const serializedFailure = serializeFailureReason(failure, origin);
     switch (failure.type) {
       case ProximityFailureType.RELYING_PARTY_GENERIC:
         return trackItwProximityRPGenericFailure({
