@@ -49,6 +49,7 @@ type Props = WithTestID<
       typeof HeaderSecondLevel
     >["ignoreAccessibilityCheck"];
     topElement?: ReactNode;
+    alwaysBounceVertical?: boolean;
   } & SupportRequestParams
 >;
 
@@ -75,7 +76,8 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
       excludeEndContentMargin,
       testID,
       ignoreAccessibilityCheck = false,
-      topElement = undefined
+      topElement = undefined,
+      alwaysBounceVertical
     },
     ref
   ) => {
@@ -120,6 +122,7 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
         excludeEndContentMargin={excludeEndContentMargin}
         testID={testID}
         topElement={topElement}
+        alwaysBounceVertical={alwaysBounceVertical}
       >
         <ContentWrapper onLayout={getTitleHeight}>
           <VStack space={8}>
