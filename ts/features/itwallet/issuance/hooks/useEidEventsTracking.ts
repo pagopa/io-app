@@ -21,6 +21,8 @@ type Params = {
   identification?: IdentificationContext;
 };
 
+// Origin generic string for mixpanel tracking
+const origin = "ITW_EID_EVENTS_TRACKING";
 /**
  * Track errors occurred during the eID issuance process for analytics.
  */
@@ -74,7 +76,7 @@ export const useEidEventsTracking = ({ failure, identification }: Params) => {
        */
       return trackItwIdRequestUnexpectedFailure(
         shouldSerializeReason(failure)
-          ? serializeFailureReason(failure)
+          ? serializeFailureReason(failure, origin)
           : failure
       );
     }
