@@ -12,11 +12,9 @@ import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
 import WalletCardShape from "../../../../../../img/features/cdc/cdc_wallet_card.svg";
 import DarkModeWalletCardShape from "../../../../../../img/features/cdc/cdc_wallet_card_dark.svg";
+import { CitizenStatus } from "../../../../../../definitions/cdc/CitizenStatus.ts";
 
-export type CdcCardProps = {
-  expireDate: Date;
-  numberOfCards: number;
-};
+export type CdcCardProps = CitizenStatus;
 
 // TODO: Edit this logo when the organization logo is available
 const CDC_ORGANIZATION_LOGO = `https://assets.cdn.io.pagopa.it/logos/services/01jv4m365chazn5c0fdr62dcvd.png`;
@@ -66,7 +64,7 @@ export const CdcCard = (props: CdcCardProps) => {
         </View>
         <Body weight="Regular" color={textColor}>
           {I18n.t("bonus.cdc.wallet.card.validThrough", {
-            endDate: format(props.expireDate, "DD/MM/YY")
+            endDate: format(props.expiration_date, "DD/MM/YY")
           })}
         </Body>
       </View>
