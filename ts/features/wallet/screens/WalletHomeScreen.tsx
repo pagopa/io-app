@@ -15,6 +15,7 @@ import ROUTES from "../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
+  trackItwSurveyRequest,
   trackOpenWalletScreen,
   trackWalletAdd
 } from "../../itwallet/analytics";
@@ -122,11 +123,20 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
         isNewElementAdded.current = false;
       }
       if (isRequiredEidFeedback.current) {
+        trackItwSurveyRequest({
+          survey_id: "confirm_eid_flow_exit",
+          survey_page: route.name
+        });
         itwFeedbackBottomSheet.present();
         // eslint-disable-next-line functional/immutable-data
         isRequiredEidFeedback.current = false;
       }
-    }, [isNewElementAdded, isRequiredEidFeedback, itwFeedbackBottomSheet])
+    }, [
+      isNewElementAdded,
+      isRequiredEidFeedback,
+      itwFeedbackBottomSheet,
+      route.name
+    ])
   );
 
   const handleRefreshWallet = useCallback(() => {
