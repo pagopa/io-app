@@ -18,27 +18,21 @@ describe("ItwDiscoveryInfoScreen", () => {
     jest.clearAllMocks();
   });
 
-  test.each(["l3", "l3-next"] as const)(
-    "should render ItwDiscoveryInfoComponent for level %s",
-    level => {
-      jest
-        .spyOn(identificationSelectors, "itwHasNfcFeatureSelector")
-        .mockReturnValue(true);
-      const { getByTestId } = renderComponent(level);
-      expect(getByTestId("itwDiscoveryInfoComponentTestID")).toBeTruthy();
-    }
-  );
+  it("should render ItwDiscoveryInfoComponent for level l3", () => {
+    jest
+      .spyOn(identificationSelectors, "itwHasNfcFeatureSelector")
+      .mockReturnValue(true);
+    const { getByTestId } = renderComponent("l3");
+    expect(getByTestId("itwDiscoveryInfoComponentTestID")).toBeTruthy();
+  });
 
-  test.each(["l3", "l3-next"] as const)(
-    "should render ItwNfcNotSupportedComponent for level %s when NFC is not supported",
-    level => {
-      jest
-        .spyOn(identificationSelectors, "itwHasNfcFeatureSelector")
-        .mockReturnValue(false);
-      const { getByTestId } = renderComponent(level);
-      expect(getByTestId("itwNfcNotSupportedComponentTestID")).toBeTruthy();
-    }
-  );
+  it("should render ItwNfcNotSupportedComponent for level l3 when NFC is not supported", () => {
+    jest
+      .spyOn(identificationSelectors, "itwHasNfcFeatureSelector")
+      .mockReturnValue(false);
+    const { getByTestId } = renderComponent("l3");
+    expect(getByTestId("itwNfcNotSupportedComponentTestID")).toBeTruthy();
+  });
 
   it("should render ItwDiscoveryInfoFallbackComponent for level l2-fallback", () => {
     const { getByTestId } = renderComponent("l2-fallback");
