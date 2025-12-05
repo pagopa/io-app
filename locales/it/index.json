@@ -4732,6 +4732,12 @@
           }
         }
       },
+      "credentialsCatalogue": {
+        "failure": {
+          "content": "Non siamo riusciti a caricare la lista dei documenti disponibili",
+          "action": "Prova di nuovo"
+        }
+      },
       "identification": {
         "nfc": {
           "title": "Attiva l'NFC per continuare",
