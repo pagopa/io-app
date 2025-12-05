@@ -38,6 +38,7 @@ import successDark from "../../../assets/animated-pictograms/SuccessDark.json";
 import umbrella from "../../../assets/animated-pictograms/Umbrella.json";
 import umbrellaDark from "../../../assets/animated-pictograms/UmbrellaDark.json";
 import waiting from "../../../assets/animated-pictograms/Waiting.json";
+import waitingDark from "../../../assets/animated-pictograms/WaitingDark.json";
 import warning from "../../../assets/animated-pictograms/Warning.json";
 import warningDark from "../../../assets/animated-pictograms/WarningDark.json";
 import welcome from "../../../assets/animated-pictograms/Welcome.json";
@@ -62,7 +63,7 @@ export const IOAnimatedPictogramsAssetsDark: Record<
   IOAnimatedPictograms,
   unknown
 > = {
-  waiting,
+  waiting: waitingDark,
   empty: emptyDark,
   error: errorDark,
   fatalError: fatalErrorDark,

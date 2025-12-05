@@ -46,6 +46,7 @@ import {
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog.tsx";
 import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig.ts";
 import { generateItwIOMarkdownRules } from "../../common/utils/markdown.tsx";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors/index.ts";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider.tsx";
 import { selectIsLoading } from "../../machine/eid/selectors.ts";
 
@@ -67,17 +68,25 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const itwActivationDisabled = useIOSelector(itwIsActivationDisabledSelector);
   const { tos_url } = useIOSelector(tosConfigSelector);
+  const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
   const toast = useIOToast();
+
+
+  const mode = credentialType
+    ? "credentialTriggered"
+    : isWalletValid
+      ? "upgrade"
+      : "issuance";
 
   useOnFirstRender(
     useCallback(() => {
       machineRef.send({
         type: "start",
-        mode: credentialType ? "credentialTriggered" : "issuance",
+        mode,
         level: "l3",
         credentialType
       });
-    }, [machineRef, credentialType])
+    }, [machineRef, mode, credentialType])
   );
 
   const dismissalDialog = useItwDismissalDialog({

@@ -1,8 +1,11 @@
-import type { AuthorizationDetail } from "@pagopa/io-react-native-wallet";
 import type {
-  WalletInstanceAttestations,
+  AuthorizationDetail,
+  Credential
+} from "@pagopa/io-react-native-wallet";
+import type {
+  IssuerConfiguration,
   StoredCredential,
-  IssuerConfiguration
+  WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import { IssuanceFailure } from "./failure";
 
@@ -27,9 +30,41 @@ export type AuthenticationContext = {
   redirectUri: string;
 };
 
+/**
+ * The CieContext contains information about the CIE capabilities
+ * and NFC status on the device.
+ */
 export type CieContext = {
   isNFCEnabled: boolean;
   isCIEAuthenticationSupported: boolean;
+};
+
+/**
+ * The MrtdPoPContext contains the parameters needed to perform
+ * the Proof of Possession (PoP) flow for MRTD-based eID issuance.
+ */
+export type MrtdPoPContext = {
+  /**
+   * MRTD Challenge info payload
+   */
+  challenge: string;
+  mrtd_auth_session: string;
+  mrtd_pop_nonce: string;
+  validationUrl: string;
+  /**
+   * The CIE card CAN code (6 digits)
+   */
+  can?: string | undefined;
+  /**
+   * IAS and MRTD payloads from the CIE MRTD PACE reading process.
+   */
+  ias?: Credential.Issuance.MRTDPoP.IasPayload | undefined;
+  mrtd?: Credential.Issuance.MRTDPoP.MrtdPayload | undefined;
+  /**
+   * The callback URL to be used after the MRTD PoP flow from which
+   * we fetch the final authorization URL.
+   */
+  callbackUrl?: string;
 };
 
 /**
@@ -51,12 +86,9 @@ export type EidIssuanceMode =
  * determines which authentication methods are allowed:
  * - "l2": Documenti su IO issuance using CIE+PIN, CIEID, or SPID
  * - "l2-fallback": Documenti su IO issuance using CIEID or SPID (fallback mode)
- * - "l3": IT Wallet issuance using CIE+PIN or CIEID
- * - "l3-next": IT Wallet issuance using CIE+PIN, CIEID, or SPID plus an additional CIE card authentication
- *
- * Note: "l3" and "l3-next" will be merged once the new L2+/L3 flow will be available.
+ * - "l3": IT Wallet issuance using CIE+PIN, CIEID, or SPID plus an additional CIE card authentication
  */
-export type EidIssuanceLevel = "l2" | "l2-fallback" | "l3" | "l3-next";
+export type EidIssuanceLevel = "l2" | "l2-fallback" | "l3";
 
 export type Context = {
   /**
@@ -93,6 +125,10 @@ export type Context = {
    */
   authenticationContext: AuthenticationContext | undefined;
   /**
+   * The MRTD PoP context used during the issuance process.
+   */
+  mrtdContext: MrtdPoPContext | undefined;
+  /**
    * The obtained PID credential
    */
   eid: StoredCredential | undefined;
@@ -122,6 +158,7 @@ export const InitialContext: Context = {
   cieContext: undefined,
   identification: undefined,
   authenticationContext: undefined,
+  mrtdContext: undefined,
   eid: undefined,
   failure: undefined,
   legacyCredentials: [],

@@ -2,7 +2,6 @@ import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppPa
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { itwHasNfcFeatureSelector } from "../../identification/common/store/selectors/index.ts";
 import { EidIssuanceLevel } from "../../machine/eid/context.ts";
-import { isL3IssuanceFeaturesEnabled } from "../../machine/eid/utils.ts";
 import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
 import { ItwDiscoveryInfoComponent } from "../components/ItwDiscoveryInfoComponent.tsx";
 import { ItwDiscoveryInfoFallbackComponent } from "../components/ItwDiscoveryInfoFallbackComponent.tsx";
@@ -29,7 +28,7 @@ export const ItwDiscoveryInfoScreen = ({
   const { level = "l2", credentialType } = route.params ?? {};
   const hasNfcFeature = useIOSelector(itwHasNfcFeatureSelector);
 
-  if (isL3IssuanceFeaturesEnabled(level)) {
+  if (level === "l3") {
     if (!hasNfcFeature) {
       // L3 requires NFC, show not supported screen
       return <ItwNfcNotSupportedComponent />;
