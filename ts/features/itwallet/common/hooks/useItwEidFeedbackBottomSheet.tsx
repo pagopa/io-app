@@ -13,7 +13,6 @@ import {
 } from "../../analytics";
 
 type ItwEidFeedbackBottomSheetProps = {
-  surveyPage?: string;
   onPrimaryAction?: () => void;
   onSecondaryAction?: () => void;
 };
