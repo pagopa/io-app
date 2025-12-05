@@ -1,13 +1,16 @@
 import { createStackNavigator } from "@react-navigation/stack";
+import { SendAARCieCardReadingScreen } from "../aar/screen/SendAARCieCardReadingScreen";
 import { SendAARErrorScreen } from "../aar/screen/SendAARErrorScreen";
+import { SendAarDelegationProposalScreen } from "../aar/screen/SendAarDelegationProposalScreen";
 import { SendEngagementScreen } from "../aar/screen/SendEngagementScreen";
 import { SendQRScanFlowScreen } from "../aar/screen/SendQRScanFlowScreen";
+import { SendActivationErrorScreen } from "../loginEngagement/screens/SendActivationErrorScreen";
+import { SendEngagementOnFirstAppOpenScreen } from "../loginEngagement/screens/SendEngagementOnFirstAppOpenScreen";
 import { PNActivationBannerFlowScreen } from "../reminderBanner/screens/PnReminderBannerFlow";
 import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
 import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
 import { PaidPaymentScreen } from "../screens/PaidPaymentScreen";
-import { SendEngagementOnFirstAppOpenScreen } from "../loginEngagement/screens/SendEngagementOnFirstAppOpenScreen";
-import { SendActivationErrorScreen } from "../loginEngagement/screens/SendActivationErrorScreen";
+import { SendAarCanEducationalScreen } from "../aar/screen/SendAarCanEducationalScreen";
 import { PnParamsList } from "./params";
 import PN_ROUTES from "./routes";
 
@@ -56,6 +59,20 @@ export const PnStackNavigator = () => (
     <Stack.Screen
       name={PN_ROUTES.SEND_AAR_ERROR}
       component={SendAARErrorScreen}
+      options={hiddenHeader}
+    />
+    <Stack.Screen
+      name={PN_ROUTES.SEND_AAR_DELEGATION_PROPOSAL}
+      component={SendAarDelegationProposalScreen}
+      options={hiddenHeader}
+    />
+    <Stack.Screen
+      name={PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL}
+      component={SendAarCanEducationalScreen}
+    />
+    <Stack.Screen
+      name={PN_ROUTES.SEND_AAR_CIE_CARD_READING}
+      component={SendAARCieCardReadingScreen}
       options={hiddenHeader}
     />
   </Stack.Navigator>
