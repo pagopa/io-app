@@ -10,7 +10,8 @@ import {
   itwSetWalletInstanceRemotelyActive,
   itwSetWalletUpgradeMDLDetailsBannerHidden,
   itwFreezeSimplifiedActivationRequirements,
-  itwClearSimplifiedActivationRequirements
+  itwClearSimplifiedActivationRequirements,
+  itwSetPidReissuingSurveyHidden
 } from "../actions/preferences";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
@@ -34,6 +35,9 @@ export type ItwPreferencesState = {
   // Indicates whether the user should activate IT-Wallet with the simplified flow,
   // even if he/she already has a valid L3 PID (obtained outside the whitelist)
   isItwSimplifiedActivationRequired?: boolean;
+  // Indicates whether the bottom sheet survey is visible when the user quits
+  // the reissuing flow only for the first time
+  isPidReissuingSurveyHidden?: boolean;
 };
 
 export const itwPreferencesInitialState: ItwPreferencesState = {};
@@ -119,6 +123,13 @@ const reducer = (
     case getType(itwClearSimplifiedActivationRequirements): {
       const { isItwSimplifiedActivationRequired: _, ...rest } = state;
       return rest;
+    }
+
+    case getType(itwSetPidReissuingSurveyHidden): {
+      return {
+        ...state,
+        isPidReissuingSurveyHidden: action.payload
+      };
     }
 
     default:

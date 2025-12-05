@@ -22,10 +22,7 @@ export const thirdPartySenderDenominationSelector = (
   return sendMessage?.senderDenomination;
 };
 
-export const aarAdresseeDenominationSelector = (
-  state: GlobalState,
-  iun: string
-) => {
+export const aarAdresseeDenominationSelector = (state: GlobalState) => {
   const currentState = currentAARFlowData(state);
 
   switch (currentState.type) {
@@ -35,10 +32,7 @@ export const aarAdresseeDenominationSelector = (
     case sendAARFlowStates.fetchingQRData:
       return undefined;
     default:
-      if (iun === currentState.iun) {
-        return currentState.recipientInfo.denomination;
-      }
-      return undefined;
+      return currentState.recipientInfo.denomination;
   }
 };
 export const currentAarFlowIunSelector = (

@@ -5,7 +5,8 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import {
   itwAuthLevelSelector,
-  itwIsDiscoveryBannerHiddenSelector
+  itwIsDiscoveryBannerHiddenSelector,
+  itwIsPidReissuingSurveyHiddenSelector
 } from "../preferences";
 import { ItwAuthLevel } from "../../../utils/itwTypesUtils.ts";
 
@@ -71,5 +72,22 @@ describe("itwAuthLevelSelector", () => {
     };
 
     expect(itwAuthLevelSelector(updatedState)).toBeUndefined();
+  });
+});
+
+describe("itwIsPidReissuingSurveyHiddenSelector", () => {
+  afterEach(() => {
+    // Always reset the date after each test to avoid side effects
+    MockDate.reset();
+  });
+
+  it("should set the hidden state of the bottom sheet", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+
+    const updatedState = _.set(globalState, "features.itWallet.preferences", {
+      isPidReissuingSurveyHidden: true
+    });
+
+    expect(itwIsPidReissuingSurveyHiddenSelector(updatedState)).toBe(true);
   });
 });
