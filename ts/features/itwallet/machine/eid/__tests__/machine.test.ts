@@ -2167,6 +2167,7 @@ describe("itwEidIssuanceMachine", () => {
       })
     );
   });
+
   it("Should initialize the credential issuance machine when credentialType is present", async () => {
     hasCredentialType.mockImplementation(() => true);
     const initialSnapshot: MachineSnapshot = createActor(
