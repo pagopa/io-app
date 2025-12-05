@@ -165,8 +165,8 @@ export const ItwIdentificationModeSelectionScreen = ({
         <VSpacer size={8} />
         <VStack space={16}>
           {!isCiePinDisabled && <CiePinMethodModule />}
-          {!isSpidDisabled && <SpidMethodModule />}
           {!isCieIdDisabled && <CieIdMethodModule />}
+          {!isSpidDisabled && <SpidMethodModule />}
           {isL3 && !eidReissuing && (
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <IOButton
@@ -186,33 +186,24 @@ export const ItwIdentificationModeSelectionScreen = ({
 
 const CiePinMethodModule = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
-  const mode = ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
 
   const handleOnPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "ciePin" });
   }, [machineRef]);
 
-  const badgeProps: Badge | undefined = useMemo(() => {
-    if (level === "l2" && mode === "issuance") {
-      // Should not display the recommended badge for L2 issuance
-      return undefined;
-    }
-
-    return {
-      text: I18n.t(`${i18nNs}.mode.ciePin.badge`),
-      variant: "highlight",
-      outline: false,
-      testID: "CiePinRecommendedBadgeTestID"
-    };
-  }, [level, mode]);
+  const badgeProps: Badge | undefined = {
+    text: I18n.t(`${i18nNs}.mode.ciePin.badge`),
+    variant: "highlight",
+    outline: false,
+    testID: "CiePinRecommendedBadgeTestID"
+  };
 
   return (
     <ModuleNavigationAlt
       title={I18n.t(`${i18nNs}.mode.ciePin.title`)}
       subtitle={I18n.t(`${i18nNs}.mode.ciePin.subtitle`)}
       testID="CiePinMethodModuleTestID"
-      icon="cieCard"
+      icon="fiscalCodeIndividual"
       onPress={handleOnPress}
       badge={badgeProps}
     />
