@@ -47,7 +47,7 @@ export function* validateMandateSaga(
   const isSendUATEnvironment = yield* select(isPnTestEnabledSelector);
 
   try {
-    const fetchQrRequest = acceptIOMandate({
+    const acceptMandateRequest = acceptIOMandate({
       Bearer: `Bearer ${sessionToken}`,
       body: {
         nisData: {
@@ -63,7 +63,7 @@ export function* validateMandateSaga(
     });
     const result = (yield* call(
       withRefreshApiCall,
-      fetchQrRequest,
+      acceptMandateRequest,
       action
     )) as unknown as SagaCallReturnType<typeof acceptIOMandate>;
 
@@ -104,7 +104,7 @@ export function* validateMandateSaga(
           "Fast login expiration"
         );
         return;
-      // TODO: Map 400 and 422 errors
+      // TODO: [IOCOM-2844] Map 400 and 422 errors
       default:
         const reason = `HTTP request failed (${aarProblemJsonAnalyticsReport(
           status,
