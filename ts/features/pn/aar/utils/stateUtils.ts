@@ -8,7 +8,8 @@ export type SendAARFailurePhase =
   | "Entry Point"
   | "Fetch Notification"
   | "Fetch QRCode"
-  | "Show Notification";
+  | "Show Notification"
+  | "Validate Mandate"; // TODO: Ensure it's the right value
 
 export type RecipientInfo = {
   denomination: string;
@@ -258,10 +259,7 @@ export const validAARStatusTransitions = new Map<
   ],
   [
     sendAARFlowStates.validatingMandate,
-    new Set([
-      sendAARFlowStates.ko,
-      sendAARFlowStates.displayingNotificationData
-    ])
+    new Set([sendAARFlowStates.ko, sendAARFlowStates.fetchingNotificationData])
   ]
 ]);
 
