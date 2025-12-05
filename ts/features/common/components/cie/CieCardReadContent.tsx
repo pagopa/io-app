@@ -232,7 +232,9 @@ const ContentAndroid = (props: CieCardReadContentProps) => (
 );
 
 /**
- * Renders the read progress screen content based on the platform
+ * Renders the read progress screen content based on the platform.
+ * It is fully customizable via props and it is used as base component to display the
+ * reading, failure and success states for the CIE manager flow.
  */
 export const CieCardReadContent = platformSelect({
   ios: ContentIos,

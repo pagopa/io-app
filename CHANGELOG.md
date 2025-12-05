@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.21.0-rc.7](https://github.com/pagopa/io-app/compare/3.21.0-rc.6...3.21.0-rc.7) (2025-12-04)
+
+
+### Features
+
+* [[IOCOM-2747](https://pagopa.atlassian.net/browse/IOCOM-2747)] AAR phase 3 - CAN Educational Screen ([#7665](https://github.com/pagopa/io-app/issues/7665)) ([b480a66](https://github.com/pagopa/io-app/commit/b480a6615094cc7b6ceaf436891cead44ab05cdd))
+* **IT Wallet:** [[SIW-3471](https://pagopa.atlassian.net/browse/SIW-3471)] Modify TYP copy in cases where the EID has already been renewed ([#7670](https://github.com/pagopa/io-app/issues/7670)) ([adfaf35](https://github.com/pagopa/io-app/commit/adfaf35daba28bb3df5b0a28628659ccec0cca10))
+* **IT-Wallet:** [[SIW-3045](https://pagopa.atlassian.net/browse/SIW-3045)] Add L2+ PID issuance flow with MRTD PoP ([#7647](https://github.com/pagopa/io-app/issues/7647)) ([a981cac](https://github.com/pagopa/io-app/commit/a981cac68bd44c2ac0d5ed48adfefee5f38da397)), closes [/#diff-2cd6d88d7a0a5ffab205730094379c0e1c542e964874a0edf5a5d60416e295c3R28](https://github.com/pagopa///issues/diff-2cd6d88d7a0a5ffab205730094379c0e1c542e964874a0edf5a5d60416e295c3R28) [/#diff-2cd6d88d7a0a5ffab205730094379c0e1c542e964874a0edf5a5d60416e295c3R39-L50](https://github.com/pagopa///issues/diff-2cd6d88d7a0a5ffab205730094379c0e1c542e964874a0edf5a5d60416e295c3R39-L50) [/#diff-2cd6d88d7a0a5ffab205730094379c0e1c542e964874a0edf5a5d60416e295c3R67-R69](https://github.com/pagopa///issues/diff-2cd6d88d7a0a5ffab205730094379c0e1c542e964874a0edf5a5d60416e295c3R67-R69) [/#diff-aac82824191e7fddf4b8b79ddee9b8b13896340cea331ff4f4f2e6ea90335170L31-R30](https://github.com/pagopa///issues/diff-aac82824191e7fddf4b8b79ddee9b8b13896340cea331ff4f4f2e6ea90335170L31-R30) [/#diff-ad0b45dc86f8c2a0249744d4413aef7b7d8667579124c2c7d156067e8c474304L21-R35](https://github.com/pagopa///issues/diff-ad0b45dc86f8c2a0249744d4413aef7b7d8667579124c2c7d156067e8c474304L21-R35) [/#diff-9c4c2ef6526484c9cf6023ef5875cd7d05a72c0a0bc331bb30305c47f1fafee8L2-R65](https://github.com/pagopa///issues/diff-9c4c2ef6526484c9cf6023ef5875cd7d05a72c0a0bc331bb30305c47f1fafee8L2-R65) [/#diff-4f759b936530a9db89be53e8df2c20c5e69713067abb07ce762fce6d0dcc64ddL227-R229](https://github.com/pagopa///issues/diff-4f759b936530a9db89be53e8df2c20c5e69713067abb07ce762fce6d0dcc64ddL227-R229)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-3453](https://pagopa.atlassian.net/browse/SIW-3453)] Prevent wallet reset on wallet attestation failure ([#7674](https://github.com/pagopa/io-app/issues/7674)) ([e517b0c](https://github.com/pagopa/io-app/commit/e517b0cf61011baf251d3ed3b16d448e2d6556f9))
+* [[IOBP-2337](https://pagopa.atlassian.net/browse/IOBP-2337)] Track CDC_STATUS on wallet load ([#7676](https://github.com/pagopa/io-app/issues/7676)) ([052410d](https://github.com/pagopa/io-app/commit/052410d02aa28769062aa4c1acfc5664475717a8))
+
+
+### Chores
+
+* [[IOPLT-1457](https://pagopa.atlassian.net/browse/IOPLT-1457)] Adds Sentry Tracing for Native/JS Exceptions captured on index.js handlers ([#7673](https://github.com/pagopa/io-app/issues/7673)) ([3510864](https://github.com/pagopa/io-app/commit/35108641c781780e0cb944bd253b2f07eb5eca23))
+
+## [3.21.0-rc.6](https://github.com/pagopa/io-app/compare/3.21.0-rc.5...3.21.0-rc.6) (2025-12-03)
+
+
+### Features
+
+* [[IOPAE-2308](https://pagopa.atlassian.net/browse/IOPAE-2308)] Add remote config for favourite services feature ([#7668](https://github.com/pagopa/io-app/issues/7668)) ([3087c25](https://github.com/pagopa/io-app/commit/3087c2578192a2943122568b21f1541046eb0bc7))
+
+
+### Chores
+
+* [[IOBP-2317](https://pagopa.atlassian.net/browse/IOBP-2317)] IDPay barcode copy update ([#7669](https://github.com/pagopa/io-app/issues/7669)) ([6c7afd4](https://github.com/pagopa/io-app/commit/6c7afd4b47c0f8691829affdf4f0bd35932138ea))
+
 ## [3.21.0-rc.5](https://github.com/pagopa/io-app/compare/3.21.0-rc.4...3.21.0-rc.5) (2025-12-02)
 
 
