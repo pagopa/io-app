@@ -3056,6 +3056,15 @@
         "tosLink": "Termini e condizioni d'uso",
         "privacyLink": "Informativa sulla privacy"
       }
+    },
+    "favouriteServices": {
+      "add": "Aggiungi ai preferiti",
+      "remove": "Rimuovi dai preferiti",
+      "toasts": {
+        "added": "Aggiunto ai preferiti!",
+        "removed": "Rimosso dai preferiti!",
+        "limitReached": "Non è possibile aggiungere il servizio ai preferiti perché hai raggiunto il limite massimo."
+      }
     }
   },
   "identification": {
