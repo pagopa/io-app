@@ -1,5 +1,5 @@
 import { ServiceDetailsScreenRouteParams } from "../../details/screens/ServiceDetailsScreen";
-import { ServiceFavouritesScreenRouteParams } from "../../favourites/screens/ServiceFavouritesScreen";
+import { ServiceFavouritesScreenRouteParams } from "../../serviceFavourites/screens/ServiceFavouritesScreen";
 import { InstitutionServicesScreenRouteParams } from "../../institution/screens/InstitutionServicesScreen";
 import { SERVICES_ROUTES } from "./routes";
 
