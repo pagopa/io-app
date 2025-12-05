@@ -65,14 +65,15 @@ const activeBadge: Badge = {
 const WalletCardOnboardingScreen = () => {
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
+  const isFiscalCodeWhitelisted = useIOSelector(itwIsL3EnabledSelector);
   useFocusEffect(trackShowCredentialsList);
 
   const isItwSectionVisible = useMemo(
     // IT Wallet credential catalog should be visible if
     () =>
-      isItwValid && // An eID has ben obtained and wallet is valid
-      isItwEnabled, // Remote FF is enabled
-    [isItwValid, isItwEnabled]
+      (isItwValid && isItwEnabled) || // An eID has been obtained, wallet is valid, and remote FF is enabled
+      isFiscalCodeWhitelisted, // OR the user is whitelisted for L3 credentials
+    [isItwValid, isItwEnabled, isFiscalCodeWhitelisted]
   );
 
   return (
@@ -105,6 +106,7 @@ const ItwCredentialOnboardingSection = () => {
   const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
   const itwCredentialsTypes = useIOSelector(itwCredentialsTypesSelector);
   const isITWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
 
   const isCredentialIssuancePending =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
@@ -137,9 +139,13 @@ const ItwCredentialOnboardingSection = () => {
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL
           });
-        } else if (!isITWalletValid && isNewCredential(type)) {
+        } else if (
+          !isWalletValid ||
+          (!isITWalletValid && isNewCredential(type))
+        ) {
           navigation.navigate(ITW_ROUTES.MAIN, {
-            screen: ITW_ROUTES.ISSUANCE.IT_WALLET_INACTIVE
+            screen: ITW_ROUTES.DISCOVERY.INFO,
+            params: { level: "l3", credentialType: type }
           });
         } else {
           machineRef.send({
@@ -149,7 +155,7 @@ const ItwCredentialOnboardingSection = () => {
           });
         }
       },
-      [isITWalletValid, machineRef, navigation]
+      [isITWalletValid, machineRef, navigation, isWalletValid]
     )
   );
 

@@ -7,7 +7,8 @@ import {
   not,
   or,
   raise,
-  setup
+  setup,
+  sendTo
 } from "xstate";
 import { assert } from "../../../../utils/assert.ts";
 import { trackItWalletIntroScreen } from "../../analytics";
@@ -17,6 +18,7 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import { itwCredentialUpgradeMachine } from "../upgrade/machine.ts";
+import { itwCredentialIssuanceMachine } from "../credential/machine";
 import {
   GetWalletAttestationActorParams,
   InitMrtdPoPChallengeActorParams,
@@ -158,7 +160,6 @@ export const itwEidIssuanceMachine = setup({
     startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
       notImplemented
     ),
-
     /**
      * MRTD PoP Challenge actors
      */
@@ -184,7 +185,8 @@ export const itwEidIssuanceMachine = setup({
      * Credential upgrade actors
      */
 
-    credentialUpgradeMachine: itwCredentialUpgradeMachine
+    credentialUpgradeMachine: itwCredentialUpgradeMachine,
+    credentialIssuanceMachine: itwCredentialIssuanceMachine
   },
   guards: {
     issuedEidMatchesAuthenticatedUser: notImplemented,
@@ -203,7 +205,8 @@ export const itwEidIssuanceMachine = setup({
       // MRTD PoP verification is a step required for SPID and CieID identification modes
       // when issuing an L3 PID
       context.level === "l3" && context.identification?.mode !== "ciePin",
-    isWalletValid: notImplemented
+    isWalletValid: notImplemented,
+    hasCredentialType: ({ context }) => !!context.credentialType
   }
 }).createMachine({
   id: "itwEidIssuanceMachine",
@@ -245,7 +248,8 @@ export const itwEidIssuanceMachine = setup({
         start: {
           actions: assign(({ event }) => ({
             mode: event.mode,
-            level: event.level
+            level: event.level,
+            credentialType: event.credentialType
           })),
           target: "EvaluatingIssuanceMode"
         },
@@ -1085,6 +1089,10 @@ export const itwEidIssuanceMachine = setup({
       },
       onDone: [
         {
+          guard: "hasCredentialType",
+          target: "#itwEidIssuanceMachine.CredentialIssuance"
+        },
+        {
           guard: and([
             "hasLegacyCredentials",
             or(["isReissuance", "isUpgrade"])
@@ -1095,6 +1103,23 @@ export const itwEidIssuanceMachine = setup({
           target: "#itwEidIssuanceMachine.Success"
         }
       ]
+    },
+    CredentialIssuance: {
+      description:
+        "This state represents the Credential Issuance Machine and initializes the process of adding a new credential to the wallet.",
+      entry: [
+        "navigateToSuccessScreen",
+        // Send the select-credential event to the credential issuance machine
+        sendTo("credentialIssuanceMachine", ({ context }) => ({
+          type: "select-credential",
+          credentialType: context.credentialType,
+          mode: "issuance"
+        }))
+      ],
+      invoke: {
+        id: "credentialIssuanceMachine",
+        src: "credentialIssuanceMachine"
+      }
     },
     CredentialsUpgrade: {
       tags: [ItwTags.Loading],

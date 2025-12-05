@@ -11,6 +11,7 @@ import { ItwNfcNotSupportedComponent } from "../components/ItwNfcNotSupportedCom
 export type ItwDiscoveryInfoScreenNavigationParams = {
   level?: EidIssuanceLevel;
   animationEnabled?: boolean;
+  credentialType?: string;
 };
 
 export type ItwDiscoveryInfoScreenProps = IOStackNavigationRouteProps<
@@ -24,7 +25,7 @@ export type ItwDiscoveryInfoScreenProps = IOStackNavigationRouteProps<
 export const ItwDiscoveryInfoScreen = ({
   route
 }: ItwDiscoveryInfoScreenProps) => {
-  const { level = "l2" } = route.params ?? {};
+  const { level = "l2", credentialType } = route.params ?? {};
   const hasNfcFeature = useIOSelector(itwHasNfcFeatureSelector);
 
   if (level === "l3") {
@@ -34,7 +35,7 @@ export const ItwDiscoveryInfoScreen = ({
     }
 
     // Discovery screen for It-Wallet
-    return <ItwDiscoveryInfoComponent />;
+    return <ItwDiscoveryInfoComponent credentialType={credentialType} />;
   }
 
   if (level === "l2-fallback") {

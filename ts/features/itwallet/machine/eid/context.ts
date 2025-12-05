@@ -72,9 +72,14 @@ export type MrtdPoPContext = {
  * - "issuance": The user is issuing a new PID credential.
  * - "reissuance": The user is reissuing an existing PID credential.
  * - "upgrade": The user is upgrading from Documenti su IO to IT Wallet.
+ * - "credentialTriggered": The issuance is triggered by a credential issuance process.
  * This is used to determine the flow and actions available in the eID issuance process.
  */
-export type EidIssuanceMode = "issuance" | "reissuance" | "upgrade";
+export type EidIssuanceMode =
+  | "issuance"
+  | "reissuance"
+  | "upgrade"
+  | "credentialTriggered";
 
 /**
  * The EidIssuanceLevel represents the different levels of eID issuance and
@@ -139,6 +144,10 @@ export type Context = {
    * Credentials that failed the upgrade process.
    */
   failedCredentials: ReadonlyArray<StoredCredential> | undefined;
+  /**
+   * The credential type that triggered the eID issuance flow.
+   */
+  credentialType: string | undefined;
 };
 
 export const InitialContext: Context = {
@@ -153,5 +162,6 @@ export const InitialContext: Context = {
   eid: undefined,
   failure: undefined,
   legacyCredentials: [],
-  failedCredentials: undefined
+  failedCredentials: undefined,
+  credentialType: undefined
 };

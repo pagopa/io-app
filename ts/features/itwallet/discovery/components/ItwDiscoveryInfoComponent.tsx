@@ -55,11 +55,15 @@ const scrollOffset: number = 12;
 // Percentage of the visible block after which the anchor link is hidden
 const intersectionRatio: number = 0.3;
 
+type Props = {
+  credentialType?: string;
+};
+
 /**
  * This is the component that shows the information about the activation of
  * IT-Wallet. Must be used only for L3 activations.
  */
-export const ItwDiscoveryInfoComponent = () => {
+export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const itwActivationDisabled = useIOSelector(itwIsActivationDisabledSelector);
@@ -67,14 +71,21 @@ export const ItwDiscoveryInfoComponent = () => {
   const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
   const toast = useIOToast();
 
+  const mode = credentialType
+    ? "credentialTriggered"
+    : isWalletValid
+    ? "upgrade"
+    : "issuance";
+
   useOnFirstRender(
     useCallback(() => {
       machineRef.send({
         type: "start",
-        mode: isWalletValid ? "upgrade" : "issuance",
-        level: "l3"
+        mode,
+        level: "l3",
+        credentialType
       });
-    }, [machineRef, isWalletValid])
+    }, [machineRef, mode, credentialType])
   );
 
   const dismissalDialog = useItwDismissalDialog({

@@ -16,6 +16,7 @@ export type Start = {
   type: "start" | "restart";
   mode: EidIssuanceMode;
   level: EidIssuanceLevel;
+  credentialType?: string;
 };
 
 export type AcceptTos = {
