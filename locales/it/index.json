@@ -2986,7 +2986,8 @@
           }
         }
       },
-      "searchLink": "Cerca tra tutti i servizi locali disponibili"
+      "searchLink": "Cerca tra tutti i servizi locali disponibili",
+      "favourites": "Servizi preferiti"
     },
     "institution": {
       "failure": {
@@ -3056,6 +3057,9 @@
         "tosLink": "Termini e condizioni d'uso",
         "privacyLink": "Informativa sulla privacy"
       }
+    },
+    "favourites": {
+      "title": "I miei preferiti"
     }
   },
   "identification": {

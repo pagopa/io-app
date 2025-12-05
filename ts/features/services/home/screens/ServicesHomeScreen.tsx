@@ -13,6 +13,8 @@ import { SERVICES_ROUTES } from "../../common/navigation/routes";
 import { useServicesHomeBottomSheet } from "../hooks/useServicesHomeBottomSheet";
 import { InstitutionList } from "../components/InstitutionList";
 import * as analytics from "../../common/analytics";
+import { isFavouriteServicesEnabledSelector } from "../../common/store/selectors/remoteConfig";
+import { useIOSelector } from "../../../../store/hooks";
 
 export const ServicesHomeScreen = () => {
   const navigation = useIONavigation();
@@ -55,12 +57,32 @@ export const ServicesHomeScreen = () => {
     [handleSearch]
   );
 
+  const actionFavourites: HeaderActionProps = useMemo(
+    () => ({
+      icon: "starEmpty",
+      accessibilityLabel: I18n.t("services.home.favourites"),
+      onPress: () => {
+        navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
+          screen: SERVICES_ROUTES.SERVICE_FAVOURITES,
+          params: undefined // TODO is this the right way to pass no params? is this the right level of navigation?
+        });
+      }
+    }),
+    [navigation]
+  );
+
+  const isFavouriteServiceEnabled = useIOSelector(
+    isFavouriteServicesEnabledSelector
+  );
+
   useHeaderFirstLevel({
     currentRoute: SERVICES_ROUTES.SERVICES_HOME,
     headerProps: {
       title: I18n.t("services.title"),
       animatedFlatListRef: scrollViewContentRef,
-      actions: [actionSearch, actionSettings]
+      actions: isFavouriteServiceEnabled
+        ? [actionFavourites, actionSearch, actionSettings] // TODO: help icon disappears if favourites present, is that ok?
+        : [actionSearch, actionSettings]
     }
   });
 
