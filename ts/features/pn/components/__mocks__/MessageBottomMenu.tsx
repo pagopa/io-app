@@ -27,7 +27,7 @@ export const MessageBottomMenu = ({
         <View>{`${pieceOfHistory.status}`}</View>
       </View>
     ))}
-    {isCancelled && <View>{isCancelled}</View>}
+    {isCancelled && <View>{`${isCancelled}`}</View>}
     <View>{iun}</View>
     <View>{messageId}</View>
     {paidNoticeCodes &&

@@ -24,7 +24,9 @@ import {
 import { Timeline, TimelineItemProps } from "./Timeline";
 
 const topBottomSheetMargin = 122;
-const timelineBottomMargin = 292;
+const baseFooterHeightWithAlert = 181;
+const timelineBottomMarginWithAlert = 288;
+const timelineBottomMarginWithoutAlert = 128;
 const timelineItemHeight = 70;
 
 export type TimelineListItemProps = {
@@ -52,7 +54,14 @@ export const TimelineListItem = ({
   sendOpeningSource,
   sendUserType
 }: TimelineListItemProps) => {
-  const [footerHeight, setFooterHeight] = useState<number>(181);
+  const hideFooter = sendOpeningSource === "aar";
+  const baseFooterHeight = hideFooter ? 0 : baseFooterHeightWithAlert;
+  const [footerHeight, setFooterHeight] = useState<number>(baseFooterHeight);
+
+  const timelineBottomMargin = hideFooter
+    ? timelineBottomMarginWithoutAlert
+    : timelineBottomMarginWithAlert;
+
   const windowHeight = Dimensions.get("window").height;
   const snapPoint = Math.min(
     windowHeight - topBottomSheetMargin,
@@ -63,7 +72,7 @@ export const TimelineListItem = ({
   const { bottomSheet, present } = useIOBottomSheetModal({
     component: <Timeline data={timelineData} footerHeight={footerHeight} />,
     title: I18n.t("features.pn.details.timeline.menuTitle"),
-    footer: (
+    footer: !hideFooter ? (
       <View
         onLayout={layoutChangeEvent =>
           setFooterHeight(layoutChangeEvent.nativeEvent.layout.height)
@@ -87,6 +96,8 @@ export const TimelineListItem = ({
           testID="timeline_listitem_bottom_menu_alert"
         />
       </View>
+    ) : (
+      <View />
     ),
     snapPoint: [snapPoint]
   });
