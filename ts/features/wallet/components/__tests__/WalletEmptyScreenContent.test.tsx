@@ -4,13 +4,20 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import * as itwPreferencesSelectors from "../../../itwallet/common/store/selectors/preferences";
 import { WalletEmptyScreenContent } from "../WalletEmptyScreenContent";
 
 describe("WalletEmptyScreenContent", () => {
-  it("should match the snapshot", () => {
-    const component = renderComponent();
-    expect(component.toJSON()).toMatchSnapshot();
-  });
+  it.each([true, false])(
+    "should render correctly when ITW whitelist status is %s",
+    itwEnabled => {
+      jest
+        .spyOn(itwPreferencesSelectors, "itwIsL3EnabledSelector")
+        .mockReturnValue(itwEnabled);
+      const component = renderComponent();
+      expect(component.toJSON()).toMatchSnapshot();
+    }
+  );
 });
 
 const renderComponent = () => {

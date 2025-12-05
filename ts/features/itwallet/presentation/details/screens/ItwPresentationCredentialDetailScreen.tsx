@@ -25,6 +25,7 @@ import {
   trackWalletCredentialShowTrustmark
 } from "../../../analytics";
 import ItwCredentialNotFound from "../../../common/components/ItwCredentialNotFound.tsx";
+import { PoweredByItWalletText } from "../../../common/components/PoweredByItWalletText.tsx";
 import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
 import { itwSetReviewPending } from "../../../common/store/actions/preferences.ts";
 import {
@@ -309,6 +310,7 @@ export const ItwPresentationCredentialDetail = ({
             />
           )}
           <ItwPresentationDetailsFooter credential={credential} />
+          {isL3Credential && <PoweredByItWalletText />}
         </VStack>
       </ContentWrapper>
     </ItwPresentationDetailsScreenBase>
