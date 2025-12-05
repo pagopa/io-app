@@ -6,13 +6,17 @@ import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBa
 import ROUTES from "../../../../navigation/routes";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
-import { trackItwAlreadyActivated } from "../../analytics";
+import { useIOSelector } from "../../../../store/hooks";
+import { itwAuthLevelSelector } from "../../common/store/selectors/preferences";
+import { ItwFlow, trackItwAlreadyActivated } from "../../analytics";
 
 export const ItwAlreadyActiveScreen = () => {
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
   const navigation = useIONavigation();
+  const itwAuthLevel = useIOSelector(itwAuthLevelSelector);
+  const itwFlow: ItwFlow = itwAuthLevel ?? "not_available";
 
   const navigateToWallet = () => {
     navigation.reset({
@@ -34,8 +38,8 @@ export const ItwAlreadyActiveScreen = () => {
 
   useFocusEffect(
     useCallback(() => {
-      trackItwAlreadyActivated();
-    }, [])
+      trackItwAlreadyActivated(itwFlow);
+    }, [itwFlow])
   );
 
   return (
