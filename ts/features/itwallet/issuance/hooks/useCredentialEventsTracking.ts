@@ -24,9 +24,13 @@ type Params = {
   invalidErrorCode?: string;
 };
 
+// Origin generic string for mixpanel tracking
+const origin = "ITW_CREDENTIAL_EVENTS_TRACKING";
+
 /**
  * Track errors occurred during the credential issuance process for analytics.
  */
+
 export const useCredentialEventsTracking = ({
   failure,
   isItwL3,
@@ -94,7 +98,6 @@ export const useCredentialEventsTracking = ({
     }
 
     if (failure.type === CredentialIssuanceFailureType.UNEXPECTED) {
-      const origin = credentialType ?? "CREDENTIAL_ISSUANCE_UNKNOWN_TYPE";
       const reasonToTrack = shouldSerializeReason(failure)
         ? serializeFailureReason(failure, origin)
         : failure;

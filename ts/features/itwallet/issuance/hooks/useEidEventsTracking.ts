@@ -21,6 +21,8 @@ type Params = {
   identification?: IdentificationContext;
 };
 
+// Origin generic string for mixpanel tracking
+const origin = "ITW_EID_EVENTS_TRACKING";
 /**
  * Track errors occurred during the eID issuance process for analytics.
  */
@@ -66,7 +68,6 @@ export const useEidEventsTracking = ({ failure, identification }: Params) => {
     }
 
     if (failure.type === IssuanceFailureType.UNEXPECTED) {
-      const origin = identification?.mode ?? "EID_ISSUANCE_UNKNOWN_MODE";
       /*
        * We handle two cases here:
        * 1. If failure.reason is undefined/null, we serialize the failure to provide a default message with "Reason not provided".
