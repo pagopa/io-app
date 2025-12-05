@@ -1,29 +1,34 @@
-import { select, call, all, put } from "typed-redux-saga/macro";
+import { Errors } from "@pagopa/io-react-native-wallet";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Errors } from "@pagopa/io-react-native-wallet";
-import { itwCredentialsSelector } from "../store/selectors";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { all, call, put, select } from "typed-redux-saga/macro";
+import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
+import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
+import { GlobalState } from "../../../../store/reducers/types";
+import { ReduxSagaEffect } from "../../../../types/utils";
 import {
-  shouldRequestStatusAssertion,
+  getMixPanelCredential,
+  trackItwStatusCredentialAssertionFailure
+} from "../../analytics";
+import {
+  itwAvailableCredentialsCounterReset,
+  itwAvailableCredentialsCounterUp
+} from "../../common/store/actions/securePreferences";
+import { selectItwEnv } from "../../common/store/selectors/environment";
+import { itwAvailableCredentialsCounterLimitReached } from "../../common/store/selectors/securePreferences";
+import { getEnv } from "../../common/utils/environment";
+import {
   getCredentialStatusAssertion,
+  shouldRequestStatusAssertion,
   StatusAssertionError
 } from "../../common/utils/itwCredentialStatusAssertionUtils";
-import { ReduxSagaEffect } from "../../../../types/utils";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector
 } from "../../lifecycle/store/selectors";
 import { itwCredentialsStore } from "../store/actions";
-import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
-import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
-import { GlobalState } from "../../../../store/reducers/types";
-import {
-  getMixPanelCredential,
-  trackItwStatusCredentialAssertionFailure
-} from "../../analytics";
-import { selectItwEnv } from "../../common/store/selectors/environment";
-import { getEnv } from "../../common/utils/environment";
+import { itwCredentialsSelector } from "../store/selectors";
 
 const { isIssuerResponseError, IssuerResponseErrorCodes: Codes } = Errors;
 
@@ -109,7 +114,22 @@ export function* checkCredentialsStatusAssertion() {
     )
   );
 
-  yield* put(itwCredentialsStore(updatedCredentials));
+  const isStatusAssertionFailed = updatedCredentials.some(credential =>
+    ["invalid", "unknown"].includes(
+      credential.storedStatusAssertion?.credentialStatus ?? ""
+    )
+  );
+
+  const isLimitReached = yield* select(
+    itwAvailableCredentialsCounterLimitReached
+  );
+
+  if (isStatusAssertionFailed && !isLimitReached) {
+    yield* put(itwAvailableCredentialsCounterUp());
+  } else {
+    yield* put(itwAvailableCredentialsCounterReset());
+    yield* put(itwCredentialsStore(updatedCredentials));
+  }
 
   const state: GlobalState = yield* select();
   void updateMixpanelProfileProperties(state);

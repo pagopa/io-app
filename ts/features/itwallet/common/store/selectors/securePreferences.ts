@@ -5,6 +5,7 @@ import { progressSelector } from "../../../../identification/store/selectors";
 
 // 5 means that the fifth time the user accesses the app offline, they will be required to return online.
 export const ITW_MAX_OFFLINE_ACCESS_COUNTER = 5;
+export const ITW_MAX_AVAILABLE_CREDENTIALS_COUNTER = 4;
 
 const selectSecurePreferencesSlice = (
   state: GlobalState
@@ -36,4 +37,19 @@ export const itwShouldDisplayOfflineAccessLimitWarning = createSelector(
   progressSelector,
   offlineAccessCounter =>
     offlineAccessCounter === ITW_MAX_OFFLINE_ACCESS_COUNTER - 1
+);
+
+export const itwAvailableCredentialsCounterSelector = createSelector(
+  selectSecurePreferencesSlice,
+  securePreferences => securePreferences.availableCredentialsCounter
+);
+
+/**
+ * Returns `true` if the user has reached the maximum number of accesses
+ * during IPZS or AS down periods
+ */
+export const itwAvailableCredentialsCounterLimitReached = createSelector(
+  itwAvailableCredentialsCounterSelector,
+  availableCredentialsCounter =>
+    availableCredentialsCounter >= ITW_MAX_AVAILABLE_CREDENTIALS_COUNTER
 );
