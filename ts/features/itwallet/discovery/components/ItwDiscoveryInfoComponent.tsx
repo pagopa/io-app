@@ -71,12 +71,11 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
   const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
   const toast = useIOToast();
 
-
   const mode = credentialType
     ? "credentialTriggered"
     : isWalletValid
-      ? "upgrade"
-      : "issuance";
+    ? "upgrade"
+    : "issuance";
 
   useOnFirstRender(
     useCallback(() => {
