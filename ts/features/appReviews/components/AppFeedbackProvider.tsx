@@ -1,5 +1,11 @@
-import { Body, FooterActions, useIOToast } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  FooterActions,
+  useIOToast,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
+import I18n from "i18next";
 import {
   createContext,
   PropsWithChildren,
@@ -8,20 +14,20 @@ import {
   useState
 } from "react";
 import { Alert } from "react-native";
-import I18n from "i18next";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import {
+  appFeedbackEnabledSelector,
+  appFeedbackUriConfigSelector
+} from "../../../store/reducers/backendStatus/remoteConfig";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
+import { isAndroid } from "../../../utils/platform";
 import {
   appReviewNegativeFeedback,
   appReviewPositiveFeedback,
   TopicKeys
 } from "../store/actions";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { requestAppReview } from "../utils/storeReview";
-import {
-  appFeedbackEnabledSelector,
-  appFeedbackUriConfigSelector
-} from "../../../store/reducers/backendStatus/remoteConfig";
 import { canAskFeedbackSelector } from "../store/selectors";
+import { requestAppReview } from "../utils/storeReview";
 
 type AppFeedbackContextType = {
   requestFeedback: (topic: TopicKeys) => void;
@@ -41,7 +47,12 @@ export const AppFeedbackProvider = ({ children }: PropsWithChildren) => {
 
   const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
     title: I18n.t("appFeedback.bottomSheet.title"),
-    component: <Body>{I18n.t("appFeedback.bottomSheet.description")}</Body>,
+    component: (
+      <>
+        <Body>{I18n.t("appFeedback.bottomSheet.description")}</Body>
+        {isAndroid && <VSpacer size={32} />}
+      </>
+    ),
     footer: (
       <FooterActions
         actions={{

@@ -17,6 +17,10 @@ import { trackPNShowTimeline, trackPNTimelineExternal } from "../analytics";
 import { handleItemOnPress } from "../../../utils/url";
 import { useIOSelector } from "../../../store/hooks";
 import { pnFrontendUrlSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../pushNotifications/analytics";
 import { Timeline, TimelineItemProps } from "./Timeline";
 
 const topBottomSheetMargin = 122;
@@ -26,8 +30,9 @@ const timelineBottomMarginWithoutAlert = 128;
 const timelineItemHeight = 70;
 
 export type TimelineListItemProps = {
-  hideFooter: boolean;
   history: NotificationStatusHistory;
+  sendOpeningSource: SendOpeningSource;
+  sendUserType: SendUserType;
 };
 
 const generateTimelineData = (
@@ -45,15 +50,18 @@ const generateTimelineData = (
   }));
 
 export const TimelineListItem = ({
-  hideFooter,
-  history
+  history,
+  sendOpeningSource,
+  sendUserType
 }: TimelineListItemProps) => {
+  const hideFooter = sendOpeningSource === "aar";
   const baseFooterHeight = hideFooter ? 0 : baseFooterHeightWithAlert;
   const [footerHeight, setFooterHeight] = useState<number>(baseFooterHeight);
 
   const timelineBottomMargin = hideFooter
     ? timelineBottomMarginWithoutAlert
     : timelineBottomMarginWithAlert;
+
   const windowHeight = Dimensions.get("window").height;
   const snapPoint = Math.min(
     windowHeight - topBottomSheetMargin,
@@ -81,10 +89,11 @@ export const TimelineListItem = ({
           }
           onPress={() => {
             if (sendExternalUrl) {
-              trackPNTimelineExternal();
+              trackPNTimelineExternal(sendOpeningSource, sendUserType);
               handleItemOnPress(sendExternalUrl)();
             }
           }}
+          testID="timeline_listitem_bottom_menu_alert"
         />
       </View>
     ) : (
@@ -100,10 +109,11 @@ export const TimelineListItem = ({
         icon="history"
         label={I18n.t("features.pn.details.timeline.menuTitle")}
         onPress={() => {
-          trackPNShowTimeline();
+          trackPNShowTimeline(sendOpeningSource, sendUserType);
           present();
         }}
         variant="primary"
+        testID="timeline_listitem_bottom_menu"
       />
       {bottomSheet}
     </>

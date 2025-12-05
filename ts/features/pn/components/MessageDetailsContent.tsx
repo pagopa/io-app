@@ -2,19 +2,21 @@ import { BodySmall } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { useIOSelector } from "../../../store/hooks";
 import { PNMessage } from "../store/types/types";
-import {
-  aarAdresseeDenominationSelector,
-  isAarMessageDelegatedSelector
-} from "../aar/store/selectors";
+import { aarAdresseeDenominationSelector } from "../aar/store/selectors";
 import { sendShowAbstractSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { isTestEnv } from "../../../utils/environment";
+import { SendUserType } from "../../pushNotifications/analytics";
 
-type MessageDetailsContentProps = { message: PNMessage };
+export type MessageDetailsContentProps = {
+  message: PNMessage;
+  sendUserType: SendUserType;
+};
 export const MessageDetailsContent = ({
-  message
+  message,
+  sendUserType
 }: MessageDetailsContentProps) => (
   <BodySmall>
-    <MaybeDelegationText iun={message.iun} />
+    <MaybeDelegationText sendUserType={sendUserType} />
     <MaybeDenomination senderDenomination={message.senderDenomination} />
     {I18n.t(
       "features.pn.aar.flow.displayingNotificationData.abstract.title.checkDocuments"
@@ -42,15 +44,13 @@ const MaybeDenomination = ({ senderDenomination }: MaybeDenominationProps) =>
     </BodySmall>
   );
 
-type MaybeDelegationTextProps = { iun: string };
-const MaybeDelegationText = ({ iun }: MaybeDelegationTextProps) => {
-  const aarAdresseeDenomination = useIOSelector(state =>
-    aarAdresseeDenominationSelector(state, iun)
+type MaybeDelegationTextProps = { sendUserType: SendUserType };
+const MaybeDelegationText = ({ sendUserType }: MaybeDelegationTextProps) => {
+  const aarAdresseeDenomination = useIOSelector(
+    aarAdresseeDenominationSelector
   );
-  const isDelegatedAarMessage = useIOSelector(state =>
-    isAarMessageDelegatedSelector(state, iun)
-  );
-  if (!isDelegatedAarMessage) {
+
+  if (sendUserType !== "mandatory") {
     return (
       <>
         {I18n.t(

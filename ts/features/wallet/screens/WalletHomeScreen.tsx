@@ -1,9 +1,8 @@
-import { IOColors, IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
+import I18n from "i18next";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
-import { Dimensions, StyleSheet, View } from "react-native";
-import I18n from "i18next";
 import { IOScrollView } from "../../../components/ui/IOScrollView";
 import { useHeaderFirstLevel } from "../../../hooks/useHeaderFirstLevel";
 import { useTabItemPressWhenScreenActive } from "../../../hooks/useTabItemPressWhenScreenActive";
@@ -19,16 +18,14 @@ import {
   trackOpenWalletScreen,
   trackWalletAdd
 } from "../../itwallet/analytics";
+import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet.tsx";
+import { itwSetPidReissuingSurveyHidden } from "../../itwallet/common/store/actions/preferences.ts";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
+import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import { walletUpdate } from "../store/actions";
 import { walletToggleLoadingState } from "../store/actions/placeholders";
 import { isWalletScreenRefreshingSelector } from "../store/selectors";
-import { itwShouldRenderNewItWalletSelector } from "../../itwallet/common/store/selectors";
-import { WALLET_L3_BG_COLOR } from "../../itwallet/common/utils/constants";
-import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
-import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
-import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet.tsx";
 
 export type WalletHomeNavigationParams = Readonly<{
   // Triggers the "New element added" toast display once the user returns to this screen
@@ -42,20 +39,21 @@ type ScreenProps = IOStackNavigationRouteProps<
   "WALLET_HOME"
 >;
 
-const screenHeight = Dimensions.get("screen").height;
-
 const WalletHomeScreen = ({ route }: ScreenProps) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const isRefreshingContent = useIOSelector(isWalletScreenRefreshingSelector);
-  const hasNewItwInterface = useIOSelector(itwShouldRenderNewItWalletSelector);
 
   const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
   const isRequiredEidFeedback = useRef(
     route.params?.requiredEidFeedback || false
   );
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
-  const itwFeedbackBottomSheet = useItwEidFeedbackBottomSheet();
+  const itwFeedbackBottomSheet = useItwEidFeedbackBottomSheet({
+    onPrimaryAction: () => {
+      dispatch(itwSetPidReissuingSurveyHidden(true));
+    }
+  });
 
   // We need to use a local state to separate the UI state from the redux state
   // This prevents to display the refresh indicator when the refresh is triggered by other components
@@ -89,7 +87,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
           onPress: handleAddToWalletButtonPress
         }
       ],
-      variant: hasNewItwInterface ? "contrast" : "primary"
+      variant: "primary"
     }
   });
 
@@ -138,43 +136,22 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
 
   return (
     <>
-      {hasNewItwInterface && (
-        <>
-          <FocusAwareStatusBar
-            backgroundColor={WALLET_L3_BG_COLOR}
-            barStyle="light-content"
-          />
-          {
-            // This View is displayed when a refresh control is triggered // and
-            // is responsible for coloring the underlying content with // the same
-            // blue used in the new Wallet L3.
-          }
-          <View style={[StyleSheet.absoluteFillObject, styles.itwBlueBg]} />
-        </>
-      )}
       <IOScrollView
         animatedRef={scrollViewContentRef}
         centerContent={true}
         excludeSafeAreaMargins={true}
         refreshControlProps={{
-          tintColor: hasNewItwInterface ? IOColors.white : undefined,
+          tintColor: undefined,
           refreshing: isRefreshing,
           onRefresh: handleRefreshWallet
         }}
       >
-        {!hasNewItwInterface && <WalletCategoryFilterTabs />}
+        <WalletCategoryFilterTabs />
         <WalletCardsContainer />
       </IOScrollView>
       {itwFeedbackBottomSheet.bottomSheet}
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  itwBlueBg: {
-    height: screenHeight,
-    backgroundColor: WALLET_L3_BG_COLOR
-  }
-});
 
 export { WalletHomeScreen };

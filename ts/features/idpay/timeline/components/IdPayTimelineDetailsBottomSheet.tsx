@@ -164,4 +164,3 @@ const ErrorComponent = () => (
 );
 
 export { useIdPayTimelineDetailsBottomSheet };
-export type { IdPayTimelineDetailsBottomSheetModal };

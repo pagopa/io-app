@@ -2,8 +2,9 @@ import { View } from "react-native";
 import { TimelineListItemProps } from "../TimelineListItem";
 
 export const TimelineListItem = ({
-  hideFooter,
-  history
+  history,
+  sendOpeningSource,
+  sendUserType
 }: TimelineListItemProps) => (
   <>
     {history.map((pieceOfHistory, index) => (
@@ -20,6 +21,7 @@ export const TimelineListItem = ({
         <View>{pieceOfHistory.status}</View>
       </View>
     ))}
-    <View>{`${hideFooter}`}</View>
+    <View>{`Opening Source: ${sendOpeningSource}`}</View>
+    <View>{`User Type: ${sendUserType}`}</View>
   </>
 );

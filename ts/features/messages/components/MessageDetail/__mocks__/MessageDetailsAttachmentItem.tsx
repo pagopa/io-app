@@ -5,7 +5,8 @@ export const MessageDetailsAttachmentItem = ({
   attachment,
   bottomSpacer,
   disabled,
-  isPN,
+  sendOpeningSource,
+  sendUserType,
   messageId,
   onPreNavigate,
   serviceId
@@ -21,7 +22,8 @@ export const MessageDetailsAttachmentItem = ({
     </View>
     <View>{`Has${bottomSpacer ? "" : " no"} bottom spacer`}</View>
     <View>{`Is ${disabled ? "" : "not "}disabled`}</View>
-    <View>{`Is ${isPN ? "" : "not "}SEND`}</View>
+    <View>{`Send Opening Source ${sendOpeningSource}`}</View>
+    <View>{`Send User Type ${sendUserType}`}</View>
     <View>{`Message Id: ${messageId}`}</View>
     <View>{`Service Id: ${serviceId}`}</View>
     <Pressable accessibilityLabel="" onPress={onPreNavigate}>

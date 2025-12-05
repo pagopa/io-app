@@ -13,6 +13,10 @@ import {
   ShowMoreSection
 } from "../../messages/components/MessageDetail/ShowMoreListItem";
 import { formatPaymentNoticeNumber } from "../../payments/common/utils";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../pushNotifications/analytics";
 import { TimelineListItem } from "./TimelineListItem";
 import { NeedHelp } from "./NeedHelp";
 
@@ -27,12 +31,13 @@ const styles = StyleSheet.create({
 
 export type MessageBottomMenuProps = {
   history: NotificationStatusHistory;
-  isAARMessage: boolean;
   isCancelled?: boolean;
   iun: string;
   messageId: string;
   paidNoticeCodes?: ReadonlyArray<string>;
   payments?: ReadonlyArray<NotificationPaymentInfo>;
+  sendOpeningSource: SendOpeningSource;
+  sendUserType: SendUserType;
 };
 
 const generateMessageSectionData = (
@@ -130,11 +135,12 @@ const generateMessageSectionData = (
 export const MessageBottomMenu = ({
   history,
   isCancelled,
-  isAARMessage,
   iun,
   messageId,
   paidNoticeCodes,
-  payments
+  payments,
+  sendOpeningSource,
+  sendUserType
 }: MessageBottomMenuProps) => {
   const theme = useIOTheme();
 
@@ -156,7 +162,11 @@ export const MessageBottomMenu = ({
         { backgroundColor: IOColors[theme["appBackground-secondary"]] }
       ]}
     >
-      <TimelineListItem hideFooter={isAARMessage} history={history} />
+      <TimelineListItem
+        history={history}
+        sendOpeningSource={sendOpeningSource}
+        sendUserType={sendUserType}
+      />
       <NeedHelp />
       <ShowMoreListItem sections={showMoreSectionData} />
     </View>

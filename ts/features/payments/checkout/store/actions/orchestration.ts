@@ -10,7 +10,10 @@ export const walletPaymentSetCurrentStep = createStandardAction(
   "WALLET_PAYMENT_SET_CURRENT_STEP"
 )<WalletPaymentStepEnum>();
 
-export type OnPaymentSuccessAction = "showHome" | "showTransaction";
+export type OnPaymentSuccessAction =
+  | "showHome"
+  | "showTransaction"
+  | "showAARMessage";
 
 export type PaymentInitStateParams = {
   startOrigin?: PaymentStartOrigin;
@@ -18,7 +21,7 @@ export type PaymentInitStateParams = {
   serviceName?: string;
 };
 
-export type PaymentCompletedSuccessPayload = {
+type PaymentCompletedSuccessPayload = {
   rptId: RptId;
   kind: "COMPLETED" | "DUPLICATED";
 };

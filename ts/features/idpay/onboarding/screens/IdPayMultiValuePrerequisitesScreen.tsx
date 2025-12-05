@@ -15,7 +15,7 @@ import {
 } from "../../../../../definitions/idpay/SelfCriteriaMultiTypeDTO";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   trackIDPayOnboardingAlert,
@@ -125,7 +125,7 @@ const MultiValuePrerequisiteItemScreenContent = ({
       });
       return;
     }
-    const value = selfDeclaration.value?.[selectedValueIndex].description;
+    const value = selfDeclaration.value?.[selectedValueIndex].value;
     if (!selfDeclaration.code || !value) {
       IOToast.error(I18n.t("global.genericError"));
       return;

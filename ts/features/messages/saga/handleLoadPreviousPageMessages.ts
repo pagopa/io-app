@@ -1,6 +1,5 @@
-import { call, put } from "typed-redux-saga/macro";
+import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { BackendClient } from "../../../api/backend";
 import { loadPreviousPageMessages as loadPreviousPageMessagesAction } from "../store/actions";
 import { SagaCallReturnType } from "../../../types/utils";
 import { toUIMessage } from "../store/reducers/transformers";
@@ -8,14 +7,34 @@ import { PaginatedPublicMessagesCollection } from "../../../../definitions/backe
 import { convertUnknownToError, getError } from "../../../utils/errors";
 import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { errorToReason, unknownToReason } from "../utils";
-import { trackLoadPreviousPageMessagesFailure } from "../analytics";
+import {
+  trackLoadPreviousPageMessagesFailure,
+  trackUndefinedBearerToken,
+  UndefinedBearerTokenPhase
+} from "../analytics";
 import { handleResponse } from "../utils/responseHandling";
+import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { backendClientManager } from "../../../api/BackendClientManager";
+import { apiUrlPrefix } from "../../../config";
 
 export function* handleLoadPreviousPageMessages(
-  getMessages: BackendClient["getMessages"],
   action: ActionType<typeof loadPreviousPageMessagesAction.request>
 ) {
   const { filter, cursor, pageSize, fromUserAction } = action.payload;
+
+  const sessionToken = yield* select(sessionTokenSelector);
+
+  if (!sessionToken) {
+    trackUndefinedBearerToken(
+      UndefinedBearerTokenPhase.previousPageMessagesLoading
+    );
+    return;
+  }
+
+  const { getMessages } = backendClientManager.getBackendClient(
+    apiUrlPrefix,
+    sessionToken
+  );
 
   try {
     const response = (yield* call(

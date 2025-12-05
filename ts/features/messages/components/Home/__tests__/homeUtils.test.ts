@@ -36,6 +36,7 @@ import {
   ArchivingStatus,
   INITIAL_STATE
 } from "../../../store/reducers/archiving";
+import { activeSessionLoginInitialState } from "../../../../authentication/activeSessionLogin/store/reducer";
 
 const createGlobalState = (
   archiveData: allPaginated.MessagePagePot,
@@ -58,6 +59,16 @@ const createGlobalState = (
         archiving: {
           ...INITIAL_STATE,
           status: archivingStatus
+        },
+        sectionStatus: {
+          messageSagasRegistered: true
+        }
+      }
+    },
+    features: {
+      loginFeatures: {
+        activeSessionLogin: {
+          ...activeSessionLoginInitialState
         }
       }
     }
@@ -527,7 +538,10 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
                               : O.none
                         }
                       },
-                      archiving: INITIAL_STATE
+                      archiving: INITIAL_STATE,
+                      sectionStatus: {
+                        messageSagasRegistered: true
+                      }
                     }
                   }
                 } as GlobalState;
@@ -613,7 +627,10 @@ describe("getReloadAllMessagesActionForRefreshIfAllowed", () => {
                     data: inboxPot
                   }
                 },
-                archiving: INITIAL_STATE
+                archiving: INITIAL_STATE,
+                sectionStatus: {
+                  messageSagasRegistered: true
+                }
               }
             }
           } as GlobalState;
@@ -734,6 +751,16 @@ describe("getLoadNextPreviousPageMessagesActionIfAllowed", () => {
                         },
                         archiving: {
                           status: archivingStatus
+                        },
+                        sectionStatus: {
+                          messageSagasRegistered: true
+                        }
+                      }
+                    },
+                    features: {
+                      loginFeatures: {
+                        activeSessionLogin: {
+                          ...activeSessionLoginInitialState
                         }
                       }
                     }

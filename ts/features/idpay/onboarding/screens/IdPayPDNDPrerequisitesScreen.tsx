@@ -5,7 +5,7 @@ import I18n from "i18next";
 import { Fragment, useState } from "react";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { trackIDPayOnboardingPDNDAcceptance } from "../analytics";
@@ -18,7 +18,7 @@ import {
 } from "../machine/selectors";
 import { getPDNDCriteriaDescription } from "../utils/strings";
 
-export const IdPayPDNDPrerequisitesScreen = () => {
+const IdPayPDNDPrerequisitesScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
 

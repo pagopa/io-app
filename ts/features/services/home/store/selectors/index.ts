@@ -2,6 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { potFoldWithDefault } from "../../../../../utils/pot";
 
 export const paginatedInstitutionsPotSelector = (state: GlobalState) =>
   state.features.services.home.paginatedInstitutions;
@@ -48,6 +49,12 @@ export const paginatedInstitutionsLastPageSelector = createSelector(
 export const featuredServicesPotSelector = (state: GlobalState) =>
   state.features.services.home.featuredServices;
 
+export const isLoadingFeaturedServicesSelector = (state: GlobalState) =>
+  pipe(state, featuredServicesPotSelector, pot.isLoading);
+
+export const isErrorFeaturedServicesSelector = (state: GlobalState) =>
+  pipe(state, featuredServicesPotSelector, pot.isError);
+
 export const featuredServicesSelector = createSelector(
   featuredServicesPotSelector,
   featuredServicesPot =>
@@ -60,11 +67,14 @@ export const featuredServicesSelector = createSelector(
     )
 );
 
-export const isLoadingFeaturedServicesSelector = (state: GlobalState) =>
-  pipe(state, featuredServicesPotSelector, pot.isLoading);
-
-export const isErrorFeaturedServicesSelector = (state: GlobalState) =>
-  pipe(state, featuredServicesPotSelector, pot.isError);
+export const shouldRenderFeaturedServiceListSelector = (state: GlobalState) =>
+  pipe(state, featuredServicesPotSelector, featuredServicesPot =>
+    potFoldWithDefault(featuredServicesPot, {
+      default: () => true,
+      none: () => false,
+      some: ({ services }) => services.length > 0
+    })
+  );
 
 export const featuredInstitutionsPotSelector = (state: GlobalState) =>
   state.features.services.home.featuredInstitutions;
@@ -86,3 +96,14 @@ export const isLoadingFeaturedInstitutionsSelector = (state: GlobalState) =>
 
 export const isErrorFeaturedInstitutionsSelector = (state: GlobalState) =>
   pipe(state, featuredInstitutionsPotSelector, pot.isError);
+
+export const shouldRenderFeaturedInstitutionListSelector = (
+  state: GlobalState
+) =>
+  pipe(state, featuredInstitutionsPotSelector, featuredInstitutionsPot =>
+    potFoldWithDefault(featuredInstitutionsPot, {
+      default: () => true,
+      none: () => false,
+      some: ({ institutions }) => institutions.length > 0
+    })
+  );

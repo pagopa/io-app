@@ -1,11 +1,7 @@
 import * as O from "fp-ts/Option";
 import { pipe } from "fp-ts/lib/function";
-import { GlobalState } from "../../../../store/reducers/types";
 import { pnAARQRCodeRegexSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import PN_ROUTES from "../../navigation/routes";
-import NavigationService from "../../../../navigation/NavigationService";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-import { isAAREnabled } from "../store/selectors";
+import { GlobalState } from "../../../../store/reducers/types";
 export const isSendAARLink = (state: GlobalState, url: string) =>
   pipe(
     state,
@@ -17,18 +13,3 @@ export const isSendAARLink = (state: GlobalState, url: string) =>
       regExp => regExp.test(url)
     )
   );
-
-export const navigateToSendAarFlowIfEnabled = (
-  state: GlobalState,
-  aarUrl: string
-) => {
-  if (isAAREnabled(state)) {
-    NavigationService.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-      screen: PN_ROUTES.MAIN,
-      params: {
-        screen: PN_ROUTES.QR_SCAN_FLOW,
-        params: { aarUrl }
-      }
-    });
-  }
-};

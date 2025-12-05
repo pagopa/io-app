@@ -3,12 +3,13 @@ import { MessageBottomMenuProps } from "../MessageBottomMenu";
 
 export const MessageBottomMenu = ({
   history,
-  isAARMessage,
   isCancelled,
   iun,
   messageId,
   paidNoticeCodes,
-  payments
+  payments,
+  sendOpeningSource,
+  sendUserType
 }: MessageBottomMenuProps) => (
   <>
     <View>Mock MessageBottomMenu</View>
@@ -26,7 +27,6 @@ export const MessageBottomMenu = ({
         <View>{`${pieceOfHistory.status}`}</View>
       </View>
     ))}
-    {isAARMessage && <View>{`${isAARMessage}`}</View>}
     {isCancelled && <View>{`${isCancelled}`}</View>}
     <View>{iun}</View>
     <View>{messageId}</View>
@@ -41,5 +41,7 @@ export const MessageBottomMenu = ({
           <View>{payment.noticeCode}</View>
         </View>
       ))}
+    <View>{`Opening Source: ${sendOpeningSource}`}</View>
+    <View>{`User Type: ${sendUserType}`}</View>
   </>
 );

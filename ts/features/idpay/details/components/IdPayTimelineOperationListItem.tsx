@@ -57,7 +57,7 @@ const emptyAmountTransaction = {
   amountAccessibilityLabel: ""
 };
 
-export type TimelineOperationListItemProps = WithTestID<
+type TimelineOperationListItemProps = WithTestID<
   | {
       isLoading?: false;
       operation: OperationListDTO;
@@ -374,7 +374,7 @@ const getUnsubscribedOperationProps = (
   operation: UnsubscribeOperationDTO
 ): ListItemTransaction => ({
   paymentLogoIcon: (
-    <Icon name={"logout"} color="grey-300" testID="creditCardLogoTestID" />
+    <Icon name={"closeSmall"} color="grey-300" testID="creditCardLogoTestID" />
   ),
   title: I18n.t(
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.UNSUBSCRIBED`

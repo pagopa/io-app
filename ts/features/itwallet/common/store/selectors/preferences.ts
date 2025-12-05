@@ -15,17 +15,6 @@ export const itwPreferencesSelector = (state: GlobalState) =>
   state.features.itWallet.preferences;
 
 /**
- * Returns if the feedback banner should be displayed or not based on the user's preferences.
- * The banner should be visible only if the user closed it more than one month ago
- * and has not given feedback.
- */
-export const itwIsFeedbackBannerHiddenSelector = createSelector(
-  itwPreferencesSelector,
-  ({ hideFeedbackBannerUntilDate }: ItwPreferencesState) =>
-    isPastDate(hideFeedbackBannerUntilDate)
-);
-
-/**
  * Returns if the discovery banner should be displayed or not based on the user's preferences.
  * The banner should be visible only if the user closed it more than six months ago.
  */
@@ -97,3 +86,11 @@ export const itwIsWalletUpgradeMDLDetailsBannerHiddenSelector = (
 export const itwIsSimplifiedActivationRequired = (state: GlobalState) =>
   state.features.itWallet.preferences.isItwSimplifiedActivationRequired ??
   false;
+
+/**
+ * Selects the state that indicates whether the bottom sheet of survey is visible.
+ * Returns `true` if the bottom sheet is visible, `false` if the user has already
+ * checked the survey, with the state being persisted through Redux.
+ */
+export const itwIsPidReissuingSurveyHiddenSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.isPidReissuingSurveyHidden;

@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { fork, put, select, takeLatest } from "typed-redux-saga/macro";
+import { fork, select, takeLatest } from "typed-redux-saga/macro";
 import { isPagoPATestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { walletApiBaseUrl, walletApiUatBaseUrl } from "../../../../config";
 import { watchPaymentsOnboardingSaga } from "../../onboarding/saga";
@@ -14,7 +14,6 @@ import {
   createTransactionClient,
   createWalletClient
 } from "../api/client";
-import { walletUpdate } from "../../../wallet/store/actions";
 import { handlePaymentsSessionToken } from "./handlePaymentsSessionToken";
 import { handleResumePaymentsPendingActions } from "./handleResumePaymentsPendingActions";
 import { cleanExpiredPaymentsOngoingFailed } from "./cleanExpiredPaymentsOngoingFailed";
@@ -48,6 +47,4 @@ export function* watchPaymentsSaga(walletToken: string): SagaIterator {
   yield* fork(watchPaymentsMethodDetailsSaga, walletClient);
   yield* fork(watchPaymentsReceiptSaga, transactionClient);
   yield* fork(watchPaymentsCheckoutSaga, paymentClient);
-
-  yield* put(walletUpdate());
 }

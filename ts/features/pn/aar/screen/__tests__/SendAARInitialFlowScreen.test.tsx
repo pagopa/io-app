@@ -12,6 +12,8 @@ import { setAarFlowState } from "../../store/actions";
 import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
 import { SendAARInitialFlowScreen } from "../SendAARInitialFlowScreen";
 import * as SELECTORS from "../../store/selectors";
+import { sendAarMockStates } from "../../utils/testUtils";
+import * as ANALYTICS from "../../analytics";
 
 const mockReplace = jest.fn();
 const mockSetOptions = jest.fn();
@@ -55,6 +57,26 @@ describe("SendAARInitialFlowScreen", () => {
       } else {
         const data = await waitFor(() => findByTestId("LoadingScreenContent"));
         expect(data).toBeDefined();
+      }
+    });
+  });
+
+  sendAarMockStates.forEach(state => {
+    it(`should ${
+      state.type === sendAARFlowStates.displayingAARToS ? "" : "not "
+    }call 'trackSendAARToS' when state is ${state.type}`, () => {
+      const spiedOnMockedTrackSendAARToS = jest
+        .spyOn(ANALYTICS, "trackSendAARToS")
+        .mockImplementation();
+      flowStateSelectorSpy.mockReturnValue(state);
+
+      renderComponent();
+
+      if (state.type === sendAARFlowStates.displayingAARToS) {
+        expect(spiedOnMockedTrackSendAARToS.mock.calls.length).toBe(1);
+        expect(spiedOnMockedTrackSendAARToS.mock.calls[0].length).toBe(0);
+      } else {
+        expect(spiedOnMockedTrackSendAARToS.mock.calls.length).toBe(0);
       }
     });
   });
@@ -124,11 +146,9 @@ describe("SendAARInitialFlowScreen", () => {
       });
     }
   );
-  it(`should replace to the notification display screen when flowState is '${sendAARFlowStates.displayingNotificationData}'`, async () => {
+  it(`should replace to the delegation proposal screen screen when flowState is '${sendAARFlowStates.notAddressee}'`, async () => {
     flowStateSelectorSpy.mockReturnValue({
-      type: sendAARFlowStates.displayingNotificationData,
-      iun: "TEST_IUN",
-      pnServiceId: "SERVICE_ID"
+      type: sendAARFlowStates.notAddressee
     } as AARFlowState);
     dispatchSpy.mockReturnValue(mockDispatch);
     renderComponent();
@@ -139,16 +159,44 @@ describe("SendAARInitialFlowScreen", () => {
         {
           screen: PN_ROUTES.MAIN,
           params: {
-            screen: PN_ROUTES.MESSAGE_DETAILS,
+            screen: PN_ROUTES.SEND_AAR_DELEGATION_PROPOSAL,
             params: {
-              messageId: "TEST_IUN",
-              firstTimeOpening: true,
-              serviceId: "SERVICE_ID",
-              isAarMessage: true
-            }
+              type: sendAARFlowStates.notAddressee
+            } as AARFlowState
           }
         }
       );
+    });
+  });
+  [undefined, "572d8247-92bb-4c01-8e15-d0966a9b7506"].forEach(mandateId => {
+    it(`should replace to the notification display screen when flowState is '${sendAARFlowStates.displayingNotificationData}'`, async () => {
+      flowStateSelectorSpy.mockReturnValue({
+        type: sendAARFlowStates.displayingNotificationData,
+        iun: "TEST_IUN",
+        pnServiceId: "SERVICE_ID",
+        mandateId
+      } as AARFlowState);
+      dispatchSpy.mockReturnValue(mockDispatch);
+      renderComponent();
+
+      await waitFor(() => {
+        expect(mockReplace).toHaveBeenCalledWith(
+          MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
+          {
+            screen: PN_ROUTES.MAIN,
+            params: {
+              screen: PN_ROUTES.MESSAGE_DETAILS,
+              params: {
+                messageId: "TEST_IUN",
+                firstTimeOpening: undefined,
+                serviceId: "SERVICE_ID",
+                sendOpeningSource: "aar",
+                sendUserType: mandateId != null ? "mandatory" : "recipient"
+              }
+            }
+          }
+        );
+      });
     });
   });
 });

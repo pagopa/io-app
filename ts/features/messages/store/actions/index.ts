@@ -5,13 +5,13 @@ import {
   createStandardAction
 } from "typesafe-actions";
 import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
-import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { UIMessage, UIMessageDetails } from "../../types";
 import { MessageListCategory } from "../../types/messageListCategory";
 import { ThirdPartyMessageUnion } from "../../types/thirdPartyById";
 import { MessageGetStatusFailurePhaseType } from "../reducers/messageGetStatus";
+import { MessagePaymentError } from "../../types/paymentErrors";
 import {
   interruptMessageArchivingProcessingAction,
   removeScheduledMessageArchivingAction,
@@ -258,32 +258,10 @@ export type UpdatePaymentForMessageSuccess = {
   serviceId: ServiceId;
 };
 
-export type PaymentError = GenericError | SpecificError | TimeoutError;
-export type GenericError = { type: "generic"; message: string };
-export type SpecificError = { type: "specific"; details: Detail_v2Enum };
-export type TimeoutError = { type: "timeout" };
-
-export const isGenericError = (error: PaymentError): error is GenericError =>
-  error.type === "generic";
-export const isSpecificError = (error: PaymentError): error is SpecificError =>
-  error.type === "specific";
-export const isTimeoutError = (error: PaymentError): error is TimeoutError =>
-  error.type === "timeout";
-
-export const toGenericError = (message: string): PaymentError => ({
-  type: "generic",
-  message
-});
-export const toSpecificError = (details: Detail_v2Enum): PaymentError => ({
-  type: "specific",
-  details
-});
-export const toTimeoutError = (): PaymentError => ({ type: "timeout" });
-
 export type UpdatePaymentForMessageFailure = {
   messageId: string;
   paymentId: string;
-  reason: PaymentError;
+  reason: MessagePaymentError;
   serviceId: ServiceId;
 };
 
@@ -320,6 +298,10 @@ export const requestAutomaticMessagesRefresh = createStandardAction(
   "REQUEST_AUTOMATIC_MESSAGE_REFRESH"
 )<MessageListCategory>();
 
+export const setMessageSagasRegisteredAction = createStandardAction(
+  "SET_MESSAGE_SAGAS_REGISTERED"
+)();
+
 export type MessagesActions = ActionType<
   | typeof reloadAllMessages
   | typeof loadNextPageMessages
@@ -354,4 +336,5 @@ export type MessagesActions = ActionType<
   | typeof requestAutomaticMessagesRefresh
   | typeof startPaymentStatusTracking
   | typeof cancelPaymentStatusTracking
+  | typeof setMessageSagasRegisteredAction
 >;

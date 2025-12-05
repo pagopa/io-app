@@ -41,7 +41,7 @@ export const PaymentsReceiptNavigator = () => (
   </Stack.Navigator>
 );
 
-export type ReceiptStackNavigationProp<
+type ReceiptStackNavigationProp<
   ParamList extends ParamListBase,
   RouteName extends keyof ParamList = string
 > = StackNavigationProp<PaymentsReceiptParamsList & ParamList, RouteName>;
