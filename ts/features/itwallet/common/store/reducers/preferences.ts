@@ -3,13 +3,11 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import {
   itwCloseDiscoveryBanner,
-  itwFlagCredentialAsRequested,
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
   itwSetFiscalCodeWhitelisted,
   itwSetReviewPending,
   itwSetWalletInstanceRemotelyActive,
-  itwUnflagCredentialAsRequested,
   itwSetWalletUpgradeMDLDetailsBannerHidden,
   itwFreezeSimplifiedActivationRequirements,
   itwClearSimplifiedActivationRequirements,
@@ -21,10 +19,6 @@ import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
 export type ItwPreferencesState = {
   // Date until which the discovery banner should be hidden
   hideDiscoveryBannerUntilDate?: string;
-  // Stores the list of requested credentials which supports delayed issuance
-  // Each credential type is associated with a date (ISO string) which represents
-  // the date of the last issuance request.
-  requestedCredentials: { [credentialType: string]: string };
   // Indicates whether the user should see the modal to review the app.
   isPendingReview?: boolean;
   // Indicates the SPID/CIE authentication level used to obtain the eid
@@ -46,9 +40,7 @@ export type ItwPreferencesState = {
   isPidReissuingSurveyHidden?: boolean;
 };
 
-export const itwPreferencesInitialState: ItwPreferencesState = {
-  requestedCredentials: {}
-};
+export const itwPreferencesInitialState: ItwPreferencesState = {};
 
 const reducer = (
   state: ItwPreferencesState = itwPreferencesInitialState,
@@ -60,29 +52,6 @@ const reducer = (
         ...state,
         hideDiscoveryBannerUntilDate: addMonths(new Date(), 6).toISOString()
       };
-    }
-
-    case getType(itwFlagCredentialAsRequested): {
-      return {
-        ...state,
-        requestedCredentials: {
-          ...state.requestedCredentials,
-          [action.payload]: new Date().toISOString()
-        }
-      };
-    }
-
-    case getType(itwUnflagCredentialAsRequested): {
-      if (action.payload in state.requestedCredentials) {
-        const { [action.payload]: _, ...requestedCredentials } =
-          state.requestedCredentials;
-
-        return {
-          ...state,
-          requestedCredentials
-        };
-      }
-      return state;
     }
 
     case getType(itwSetReviewPending): {

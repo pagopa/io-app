@@ -14,9 +14,6 @@ export const createCredentialIssuanceGuardsImplementation = (
   isSessionExpired: ({ event }: { event: CredentialIssuanceEvents }) =>
     "error" in event && event.error instanceof ItwSessionExpiredError,
 
-  isDeferredIssuance: ({ context }: { context: Context }) =>
-    context.failure?.type === CredentialIssuanceFailureType.ASYNC_ISSUANCE,
-
   hasValidWalletInstanceAttestation: ({ context }: { context: Context }) =>
     pipe(
       O.fromNullable(context.walletInstanceAttestation?.jwt),
