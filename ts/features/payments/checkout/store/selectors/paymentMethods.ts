@@ -127,3 +127,8 @@ export const isPaymentsPspBannerClosedSelector = (paymentMethodName: string) =>
     selectPaymentsCheckoutState,
     state => state.pspBannerClosed?.has(paymentMethodName) ?? false
   );
+
+export const walletPaymentContextualOnboardingUrlSelector = createSelector(
+  selectPaymentsCheckoutState,
+  state => state.contextualPayment.onboardingUrl
+);

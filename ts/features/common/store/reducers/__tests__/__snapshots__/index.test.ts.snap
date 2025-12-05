@@ -251,6 +251,13 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "authorizationUrl": {
         "kind": "PotNone",
       },
+      "contextualPayment": {
+        "onboardedWalletId": undefined,
+        "onboardingUrl": {
+          "kind": "PotNone",
+        },
+        "orderId": undefined,
+      },
       "currentStep": 0,
       "paymentDetails": {
         "kind": "PotNone",
@@ -301,7 +308,6 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "result": {
         "kind": "PotNone",
       },
-      "rptIdToResume": undefined,
       "selectedPaymentMethodId": undefined,
     },
     "pagoPaPlatform": {
