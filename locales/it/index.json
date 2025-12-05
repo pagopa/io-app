@@ -5151,13 +5151,6 @@
             "action": "Inizia"
           }
         },
-        "authSource": {
-          "anis": "ANIS - Anagrafe Nazionale dell'istruzione superiore",
-          "mdi": "Ministero dell'Interno",
-          "mef": "MEF - Ragioneria Generale dello Stato",
-          "inps": "Istituto Nazionale di Previdenza Sociale",
-          "mit": "MIT - Direzione Generale per la Motorizzazione"
-        },
         "bottomSheets": {
           "eidInfo": {
             "title": "Documenti su IO:\nidentità verificata",
