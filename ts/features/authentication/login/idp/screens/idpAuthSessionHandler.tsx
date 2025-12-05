@@ -11,7 +11,8 @@ import * as O from "fp-ts/lib/Option";
 import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
 import { useCallback, useEffect, useMemo } from "react";
-import { AppState, SafeAreaView, StyleSheet, View } from "react-native";
+import { AppState, StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import I18n from "i18next";
 import { mixpanelTrack } from "../../../../../mixpanel";
 

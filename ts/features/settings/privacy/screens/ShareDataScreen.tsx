@@ -1,18 +1,18 @@
 import { ContentWrapper, useIOToast } from "@pagopa/io-app-design-system";
-import { useCallback, useEffect, useMemo, useRef } from "react";
-import { AccessibilityInfo, SafeAreaView, View } from "react-native";
 import I18n from "i18next";
+import { useCallback, useEffect, useMemo, useRef } from "react";
+import { AccessibilityInfo, View } from "react-native";
+import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { setMixpanelEnabled } from "../../../../store/actions/mixpanel";
-import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { getFlowType } from "../../../../utils/analytics";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   useIODispatch,
   useIOSelector,
   useIOStore
 } from "../../../../store/hooks";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
+import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../../store/reducers/persistedPreferences";
+import { getFlowType } from "../../../../utils/analytics";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { trackMixpanelScreen } from "../../common/analytics";
 import {
   TrackingInfo,
@@ -21,8 +21,8 @@ import {
   trackMixpanelNotNowSelected,
   trackMixpanelSetEnabled
 } from "../../common/analytics/mixpanel/mixpanelAnalytics";
-import { useConfirmOptOutBottomSheet } from "../shared/hooks/useConfirmOptOutBottomSheet";
 import { ShareDataComponent } from "../shared/components/ShareDataComponent";
+import { useConfirmOptOutBottomSheet } from "../shared/hooks/useConfirmOptOutBottomSheet";
 
 const ShareDataScreen = () => {
   const timeoutRef = useRef<number>(undefined);
@@ -134,13 +134,10 @@ const ShareDataScreen = () => {
       description={I18n.t("profile.main.privacy.shareData.screen.description")}
       actions={buttonProps}
     >
-      <SafeAreaView style={{ flex: 1 }}>
-        <ContentWrapper style={{ flexGrow: 1 }}>
-          <ShareDataComponent trackAction={handleTrackingAction} />
-        </ContentWrapper>
-
-        {bottomSheet}
-      </SafeAreaView>
+      <ContentWrapper style={{ flexGrow: 1 }}>
+        <ShareDataComponent trackAction={handleTrackingAction} />
+      </ContentWrapper>
+      {bottomSheet}
     </IOScrollViewWithLargeHeader>
   );
 };

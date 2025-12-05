@@ -1,4 +1,3 @@
-import { SafeAreaView, StyleSheet } from "react-native";
 import {
   Body,
   H3,
@@ -6,15 +5,8 @@ import {
   VSpacer,
   WithTestID
 } from "@pagopa/io-app-design-system";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { LoadingIndicator } from "../../../components/ui/LoadingIndicator";
-
-const styles = StyleSheet.create({
-  main: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
-  }
-});
 
 type Props = WithTestID<
   Readonly<{
@@ -26,13 +18,17 @@ type Props = WithTestID<
 /**
  * A Component to display an animated spinner.
  * It can be used to display a loading spinner with optionally a caption title and subtitle.
+ * @deprecated Use `LoadingScreenContent` component instead
  */
 const LoadingComponent = (props: Props) => {
   const theme = useIOTheme();
   const { captionTitle, captionSubtitle } = props;
 
   return (
-    <SafeAreaView style={styles.main} testID={props.testID}>
+    <SafeAreaView
+      style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+      testID={props.testID}
+    >
       <LoadingIndicator />
       <VSpacer size={48} />
       <H3

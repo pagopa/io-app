@@ -308,927 +308,14 @@ exports[`OnboardingNavigator renders all routes (snapshot) 1`] = `
                               }
                             }
                           />
-                          <RCTSafeAreaView
+                          <View
                             style={
                               {
-                                "flex": 1,
+                                "flexGrow": 1,
+                                "paddingHorizontal": 24,
                               }
                             }
                           >
-                            <View
-                              style={
-                                {
-                                  "flexGrow": 1,
-                                  "paddingHorizontal": 24,
-                                }
-                              }
-                            >
-                              <View
-                                style={
-                                  {
-                                    "height": 16,
-                                  }
-                                }
-                              />
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "display": "flex",
-                                    "flexDirection": "row",
-                                    "gap": 24,
-                                  }
-                                }
-                              >
-                                <RNSVGSvgView
-                                  accessibilityElementsHidden={true}
-                                  accessibilityLabel=""
-                                  accessible={false}
-                                  align="xMidYMid"
-                                  bbHeight={36}
-                                  bbWidth={36}
-                                  color="#BBC2D6"
-                                  focusable={false}
-                                  height={36}
-                                  importantForAccessibility="no-hide-descendants"
-                                  meetOrSlice={0}
-                                  minX={0}
-                                  minY={0}
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "transparent",
-                                        "borderWidth": 0,
-                                      },
-                                      {
-                                        "flex": 0,
-                                        "height": 36,
-                                        "width": 36,
-                                      },
-                                    ]
-                                  }
-                                  vbHeight={24}
-                                  vbWidth={24}
-                                  width={36}
-                                >
-                                  <RNSVGGroup
-                                    fill={
-                                      {
-                                        "payload": 4278190080,
-                                        "type": 0,
-                                      }
-                                    }
-                                  >
-                                    <RNSVGPath
-                                      clipRule={0}
-                                      d="M5 22h18a1 1 0 0 1 0 2H5a5.006 5.006 0 0 1-5-5V1a1 1 0 0 1 2 0v18a3 3 0 0 0 3 3zm1.707-2.293A1 1 0 0 1 5 19v-7a1 1 0 1 1 2 0v7a1 1 0 0 1-.293.707zM10 10v9a1 1 0 0 0 2 0v-9a1 1 0 1 0-2 0zm5 9v-6a1 1 0 0 1 2 0v6a1 1 0 1 1-2 0zm5-10v10a1 1 0 0 0 2 0V9a1 1 0 1 0-2 0zM6.707 8.707a1 1 0 1 1-1.414-1.414l3.586-3.586a3 3 0 0 1 4.242 0l2.172 2.17a1 1 0 0 0 1.414 0L22.293.294a1 1 0 0 1 1.414 1.414L18.12 7.293a3 3 0 0 1-4.242 0L11.707 5.12a1.025 1.025 0 0 0-1.414 0L6.707 8.707z"
-                                      fill={
-                                        {
-                                          "type": 2,
-                                        }
-                                      }
-                                      fillRule={0}
-                                      propList={
-                                        [
-                                          "fill",
-                                          "fillRule",
-                                        ]
-                                      }
-                                    />
-                                  </RNSVGGroup>
-                                </RNSVGSvgView>
-                                <View
-                                  style={
-                                    {
-                                      "display": "flex",
-                                      "flexDirection": "column",
-                                      "flexShrink": 1,
-                                      "gap": 6,
-                                    }
-                                  }
-                                >
-                                  <Text
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {},
-                                        {
-                                          "color": "#555C70",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "400",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    Usiamo 
-                                    <Text
-                                      allowFontScaling={true}
-                                      dynamicTypeRamp="body"
-                                      maxFontSizeMultiplier={1.5}
-                                      style={
-                                        [
-                                          {},
-                                          {
-                                            "color": "#555C70",
-                                            "fontFamily": "Titillio",
-                                            "fontSize": 16,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": 24,
-                                          },
-                                        ]
-                                      }
-                                    >
-                                      solo i dati necessari 
-                                    </Text>
-                                    a monitorare il funzionamento dell’app e a migliorare i servizi offerti.
-                                  </Text>
-                                  <View
-                                    accessibilityRole="link"
-                                    accessibilityState={
-                                      {
-                                        "busy": undefined,
-                                        "checked": undefined,
-                                        "disabled": undefined,
-                                        "expanded": undefined,
-                                        "selected": undefined,
-                                      }
-                                    }
-                                    accessibilityValue={
-                                      {
-                                        "max": undefined,
-                                        "min": undefined,
-                                        "now": undefined,
-                                        "text": undefined,
-                                      }
-                                    }
-                                    accessible={true}
-                                    collapsable={false}
-                                    focusable={true}
-                                    onBlur={[Function]}
-                                    onClick={[Function]}
-                                    onFocus={[Function]}
-                                    onResponderGrant={[Function]}
-                                    onResponderMove={[Function]}
-                                    onResponderRelease={[Function]}
-                                    onResponderTerminate={[Function]}
-                                    onResponderTerminationRequest={[Function]}
-                                    onStartShouldSetResponder={[Function]}
-                                  >
-                                    <Text
-                                      accessibilityElementsHidden={false}
-                                      accessibilityRole="link"
-                                      accessible={true}
-                                      allowFontScaling={true}
-                                      dynamicTypeRamp="body"
-                                      importantForAccessibility="yes"
-                                      maxFontSizeMultiplier={1.5}
-                                      style={
-                                        [
-                                          {
-                                            "textDecorationLine": "underline",
-                                          },
-                                          {
-                                            "color": "#0B3EE3",
-                                            "fontFamily": "Titillio",
-                                            "fontSize": 16,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": 24,
-                                          },
-                                        ]
-                                      }
-                                    >
-                                      Perché raccogliamo i dati
-                                    </Text>
-                                  </View>
-                                </View>
-                              </View>
-                              <Modal
-                                accessible={false}
-                                backdropComponent={[Function]}
-                                backgroundStyle={
-                                  {
-                                    "backgroundColor": "#FFFFFF",
-                                  }
-                                }
-                                enableDismissOnClose={true}
-                                enableDynamicSizing={true}
-                                footerComponent={[Function]}
-                                handleComponent={[Function]}
-                                importantForAccessibility="yes"
-                                maxDynamicContentSize={1334}
-                                onDismiss={[Function]}
-                                style={
-                                  {
-                                    "borderCurve": "continuous",
-                                    "borderTopLeftRadius": 24,
-                                    "borderTopRightRadius": 24,
-                                    "overflow": "hidden",
-                                  }
-                                }
-                              >
-                                <RCTScrollView
-                                  overScrollMode="never"
-                                  style={
-                                    {
-                                      "paddingHorizontal": 24,
-                                    }
-                                  }
-                                >
-                                  <View>
-                                    <View
-                                      accessibilityLabel="Non raccogliamo dati per finalità di marketing.  
-
-Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’app, per fornirti un servizio migliore e assisterti in caso di necessità."
-                                      accessible={true}
-                                    >
-                                      <View
-                                        style={
-                                          {
-                                            "height": 16,
-                                          }
-                                        }
-                                      />
-                                      <View
-                                        accessibilityElementsHidden={true}
-                                        accessible={false}
-                                        importantForAccessibility="no-hide-descendants"
-                                      >
-                                        <View>
-                                          <Text
-                                            allowFontScaling={true}
-                                            dynamicTypeRamp="body"
-                                            maxFontSizeMultiplier={1.5}
-                                            style={
-                                              [
-                                                {},
-                                                {
-                                                  "color": "#555C70",
-                                                  "fontFamily": "Titillio",
-                                                  "fontSize": 16,
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "400",
-                                                  "lineHeight": 24,
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            Non raccogliamo dati per finalità di marketing.
-                                          </Text>
-                                          <View
-                                            style={
-                                              {
-                                                "height": 8,
-                                              }
-                                            }
-                                          />
-                                          <Text
-                                            allowFontScaling={true}
-                                            dynamicTypeRamp="body"
-                                            maxFontSizeMultiplier={1.5}
-                                            style={
-                                              [
-                                                {},
-                                                {
-                                                  "color": "#555C70",
-                                                  "fontFamily": "Titillio",
-                                                  "fontSize": 16,
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "400",
-                                                  "lineHeight": 24,
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’app, per 
-                                            <Text
-                                              style={
-                                                {
-                                                  "fontWeight": "600",
-                                                }
-                                              }
-                                            >
-                                              fornirti un servizio migliore
-                                            </Text>
-                                             e 
-                                            <Text
-                                              style={
-                                                {
-                                                  "fontWeight": "600",
-                                                }
-                                              }
-                                            >
-                                              assisterti in caso di necessità.
-                                            </Text>
-                                          </Text>
-                                        </View>
-                                      </View>
-                                      <View
-                                        style={
-                                          {
-                                            "height": 8,
-                                          }
-                                        }
-                                      />
-                                      <View
-                                        style={
-                                          {
-                                            "height": 16,
-                                          }
-                                        }
-                                      />
-                                    </View>
-                                    <View
-                                      style={
-                                        {
-                                          "height": 0,
-                                        }
-                                      }
-                                    />
-                                  </View>
-                                </RCTScrollView>
-                              </Modal>
-                              <View
-                                style={
-                                  {
-                                    "height": 24,
-                                  }
-                                }
-                              />
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "display": "flex",
-                                    "flexDirection": "row",
-                                    "gap": 24,
-                                  }
-                                }
-                              >
-                                <RNSVGSvgView
-                                  accessibilityElementsHidden={true}
-                                  accessibilityLabel=""
-                                  accessible={false}
-                                  align="xMidYMid"
-                                  bbHeight={36}
-                                  bbWidth={36}
-                                  color="#BBC2D6"
-                                  focusable={false}
-                                  height={36}
-                                  importantForAccessibility="no-hide-descendants"
-                                  meetOrSlice={0}
-                                  minX={0}
-                                  minY={0}
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "transparent",
-                                        "borderWidth": 0,
-                                      },
-                                      {
-                                        "flex": 0,
-                                        "height": 36,
-                                        "width": 36,
-                                      },
-                                    ]
-                                  }
-                                  vbHeight={24}
-                                  vbWidth={24}
-                                  width={36}
-                                >
-                                  <RNSVGGroup
-                                    fill={
-                                      {
-                                        "payload": 4278190080,
-                                        "type": 0,
-                                      }
-                                    }
-                                  >
-                                    <RNSVGPath
-                                      clipRule={0}
-                                      d="M6 6a6 6 0 1 1 12 0v2.416c1.766.772 3 2.534 3 4.584v6a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5v-6a5.001 5.001 0 0 1 3-4.584V6Zm10 0v2H8V6a4 4 0 1 1 8 0Zm-8 4a3 3 0 0 0-3 3v6a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-6a3 3 0 0 0-3-3H8Zm4 4a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1Z"
-                                      fill={
-                                        {
-                                          "type": 2,
-                                        }
-                                      }
-                                      fillRule={0}
-                                      propList={
-                                        [
-                                          "fill",
-                                          "fillRule",
-                                        ]
-                                      }
-                                    />
-                                  </RNSVGGroup>
-                                </RNSVGSvgView>
-                                <View
-                                  style={
-                                    {
-                                      "display": "flex",
-                                      "flexDirection": "column",
-                                      "flexShrink": 1,
-                                      "gap": 6,
-                                    }
-                                  }
-                                >
-                                  <Text
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {},
-                                        {
-                                          "color": "#555C70",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "400",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    Adottiamo misure di sicurezza per 
-                                    <Text
-                                      allowFontScaling={true}
-                                      dynamicTypeRamp="body"
-                                      maxFontSizeMultiplier={1.5}
-                                      style={
-                                        [
-                                          {},
-                                          {
-                                            "color": "#555C70",
-                                            "fontFamily": "Titillio",
-                                            "fontSize": 16,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": 24,
-                                          },
-                                        ]
-                                      }
-                                    >
-                                      proteggere 
-                                    </Text>
-                                    i tuoi dati.
-                                  </Text>
-                                  <View
-                                    accessibilityRole="link"
-                                    accessibilityState={
-                                      {
-                                        "busy": undefined,
-                                        "checked": undefined,
-                                        "disabled": undefined,
-                                        "expanded": undefined,
-                                        "selected": undefined,
-                                      }
-                                    }
-                                    accessibilityValue={
-                                      {
-                                        "max": undefined,
-                                        "min": undefined,
-                                        "now": undefined,
-                                        "text": undefined,
-                                      }
-                                    }
-                                    accessible={true}
-                                    collapsable={false}
-                                    focusable={true}
-                                    onBlur={[Function]}
-                                    onClick={[Function]}
-                                    onFocus={[Function]}
-                                    onResponderGrant={[Function]}
-                                    onResponderMove={[Function]}
-                                    onResponderRelease={[Function]}
-                                    onResponderTerminate={[Function]}
-                                    onResponderTerminationRequest={[Function]}
-                                    onStartShouldSetResponder={[Function]}
-                                  >
-                                    <Text
-                                      accessibilityElementsHidden={false}
-                                      accessibilityRole="link"
-                                      accessible={true}
-                                      allowFontScaling={true}
-                                      dynamicTypeRamp="body"
-                                      importantForAccessibility="yes"
-                                      maxFontSizeMultiplier={1.5}
-                                      style={
-                                        [
-                                          {
-                                            "textDecorationLine": "underline",
-                                          },
-                                          {
-                                            "color": "#0B3EE3",
-                                            "fontFamily": "Titillio",
-                                            "fontSize": 16,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": 24,
-                                          },
-                                        ]
-                                      }
-                                    >
-                                      Come proteggiamo i dati
-                                    </Text>
-                                  </View>
-                                </View>
-                              </View>
-                              <View
-                                style={
-                                  {
-                                    "height": 24,
-                                  }
-                                }
-                              />
-                              <View
-                                style={
-                                  {
-                                    "alignItems": "center",
-                                    "display": "flex",
-                                    "flexDirection": "row",
-                                    "gap": 24,
-                                  }
-                                }
-                              >
-                                <RNSVGSvgView
-                                  accessibilityElementsHidden={true}
-                                  accessibilityLabel=""
-                                  accessible={false}
-                                  align="xMidYMid"
-                                  bbHeight={36}
-                                  bbWidth={36}
-                                  color="#BBC2D6"
-                                  focusable={false}
-                                  height={36}
-                                  importantForAccessibility="no-hide-descendants"
-                                  meetOrSlice={0}
-                                  minX={0}
-                                  minY={0}
-                                  style={
-                                    [
-                                      {
-                                        "backgroundColor": "transparent",
-                                        "borderWidth": 0,
-                                      },
-                                      {
-                                        "flex": 0,
-                                        "height": 36,
-                                        "width": 36,
-                                      },
-                                    ]
-                                  }
-                                  vbHeight={24}
-                                  vbWidth={24}
-                                  width={36}
-                                >
-                                  <RNSVGGroup
-                                    fill={
-                                      {
-                                        "payload": 4278190080,
-                                        "type": 0,
-                                      }
-                                    }
-                                  >
-                                    <RNSVGPath
-                                      clipRule={0}
-                                      d="m12.316.05173 6.265 2.089a4.99323 4.99323 0 0 1 2.4764 1.81871A4.9932 4.9932 0 0 1 22 6.88373v5.11697c0 7.563-9.2 11.74-9.594 11.914a.99966.99966 0 0 1-.406.0862.99966.99966 0 0 1-.406-.0862C11.2 23.7407 2 19.5637 2 12.0007V6.88373a4.99297 4.99297 0 0 1 3.419-4.743l6.265-2.089a1 1 0 0 1 .632 0ZM12 21.8897c1.681-.856 8-4.434 8-9.889V6.88373a3.00028 3.00028 0 0 0-.5666-1.75426 2.99978 2.99978 0 0 0-1.4854-1.09174L12 2.05473l-5.948 1.983A3.00003 3.00003 0 0 0 4 6.88373v5.11697c0 5.469 6.317 9.036 8 9.889Zm4.7071-11.1826c.3905-.3905.3905-1.02368 0-1.41421-.3905-.39052-1.0237-.39052-1.4142 0L11 13.5858l-2.29289-2.2929c-.39053-.3905-1.02369-.3905-1.41422 0-.39052.3905-.39052 1.0237 0 1.4142L9.58579 15c.78101.7811 2.04741.781 2.82841 0l4.2929-4.2929Z"
-                                      fill={
-                                        {
-                                          "type": 2,
-                                        }
-                                      }
-                                      fillRule={0}
-                                      propList={
-                                        [
-                                          "fill",
-                                          "fillRule",
-                                        ]
-                                      }
-                                    />
-                                  </RNSVGGroup>
-                                </RNSVGSvgView>
-                                <View
-                                  style={
-                                    {
-                                      "display": "flex",
-                                      "flexDirection": "column",
-                                      "flexShrink": 1,
-                                      "gap": 6,
-                                    }
-                                  }
-                                >
-                                  <Text
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {},
-                                        {
-                                          "color": "#555C70",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "400",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    Collaboriamo solo con fornitori che trattano i dati in modo 
-                                    <Text
-                                      allowFontScaling={true}
-                                      dynamicTypeRamp="body"
-                                      maxFontSizeMultiplier={1.5}
-                                      style={
-                                        [
-                                          {},
-                                          {
-                                            "color": "#555C70",
-                                            "fontFamily": "Titillio",
-                                            "fontSize": 16,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": 24,
-                                          },
-                                        ]
-                                      }
-                                    >
-                                      trasparente e sicuro.
-                                    </Text>
-                                  </Text>
-                                  <View
-                                    accessibilityRole="link"
-                                    accessibilityState={
-                                      {
-                                        "busy": undefined,
-                                        "checked": undefined,
-                                        "disabled": undefined,
-                                        "expanded": undefined,
-                                        "selected": undefined,
-                                      }
-                                    }
-                                    accessibilityValue={
-                                      {
-                                        "max": undefined,
-                                        "min": undefined,
-                                        "now": undefined,
-                                        "text": undefined,
-                                      }
-                                    }
-                                    accessible={true}
-                                    collapsable={false}
-                                    focusable={true}
-                                    onBlur={[Function]}
-                                    onClick={[Function]}
-                                    onFocus={[Function]}
-                                    onResponderGrant={[Function]}
-                                    onResponderMove={[Function]}
-                                    onResponderRelease={[Function]}
-                                    onResponderTerminate={[Function]}
-                                    onResponderTerminationRequest={[Function]}
-                                    onStartShouldSetResponder={[Function]}
-                                  >
-                                    <Text
-                                      accessibilityElementsHidden={false}
-                                      accessibilityRole="link"
-                                      accessible={true}
-                                      allowFontScaling={true}
-                                      dynamicTypeRamp="body"
-                                      importantForAccessibility="yes"
-                                      maxFontSizeMultiplier={1.5}
-                                      style={
-                                        [
-                                          {
-                                            "textDecorationLine": "underline",
-                                          },
-                                          {
-                                            "color": "#0B3EE3",
-                                            "fontFamily": "Titillio",
-                                            "fontSize": 16,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": 24,
-                                          },
-                                        ]
-                                      }
-                                    >
-                                      Chi sono i fornitori
-                                    </Text>
-                                  </View>
-                                </View>
-                              </View>
-                              <View
-                                style={
-                                  {
-                                    "height": 32,
-                                  }
-                                }
-                              />
-                              <Text
-                                accessibilityLabel="Per maggiori informazioni, leggi l'Informativa Privacy e i Termini e Condizioni d’uso"
-                                allowFontScaling={true}
-                                dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 24,
-                                    },
-                                  ]
-                                }
-                              >
-                                Per maggiori informazioni, leggi l'
-                                <Text
-                                  accessibilityRole="link"
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  onPress={[Function]}
-                                  style={
-                                    [
-                                      {
-                                        "textDecorationLine": "underline",
-                                      },
-                                      {
-                                        "color": "#0B3EE3",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                  testID="additionalInformation"
-                                >
-                                  Informativa Privacy e i Termini e Condizioni d’uso
-                                </Text>
-                              </Text>
-                              <View
-                                style={
-                                  {
-                                    "height": 32,
-                                  }
-                                }
-                              />
-                              <View
-                                accessible={false}
-                                style={
-                                  [
-                                    {
-                                      "alignContent": "center",
-                                      "alignItems": "flex-start",
-                                      "borderCurve": "continuous",
-                                      "borderRadius": 8,
-                                      "flexDirection": "row",
-                                      "padding": 16,
-                                    },
-                                    {
-                                      "backgroundColor": "#F4F5F8",
-                                    },
-                                  ]
-                                }
-                              >
-                                <View
-                                  accessibilityLabel="Puoi modificare la tua scelta in ogni momento da Impostazioni > Privacy e Condizioni d’uso"
-                                  accessibilityRole="text"
-                                  accessible={true}
-                                  style={
-                                    {
-                                      "alignSelf": "center",
-                                      "flex": 1,
-                                      "gap": 4,
-                                    }
-                                  }
-                                >
-                                  <Text
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="footnote"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {},
-                                        {
-                                          "color": "#555C70",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 14,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "400",
-                                          "lineHeight": 21,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
-                                  </Text>
-                                </View>
-                                <View
-                                  style={
-                                    [
-                                      {
-                                        "marginRight": -16,
-                                      },
-                                      {
-                                        "alignSelf": "center",
-                                      },
-                                    ]
-                                  }
-                                >
-                                  <RNSVGSvgView
-                                    align="xMidYMid"
-                                    bbHeight={80}
-                                    bbWidth={80}
-                                    focusable={false}
-                                    height={80}
-                                    meetOrSlice={0}
-                                    minX={0}
-                                    minY={0}
-                                    style={
-                                      [
-                                        {
-                                          "backgroundColor": "transparent",
-                                          "borderWidth": 0,
-                                        },
-                                        {
-                                          "flex": 0,
-                                          "height": 80,
-                                          "width": 80,
-                                        },
-                                      ]
-                                    }
-                                    vbHeight={240}
-                                    vbWidth={240}
-                                    width={80}
-                                  >
-                                    <RNSVGGroup
-                                      fill={
-                                        {
-                                          "payload": 4278190080,
-                                          "type": 0,
-                                        }
-                                      }
-                                    >
-                                      <RNSVGPath
-                                        d="M195.491 126.862a2.322 2.322 0 0 0 1.05 2.853c1.937 1.057 47.11 25.409 69.065 17.362.273-.1.546-.2.811-.322l-1.789-4.288c-7.973 3.305-21.801 1.502-40.007-5.234-10.895-4.028-20.372-8.749-24.13-10.683 2.897-9.392 1.388-19.01.164-24.085-.909-3.783-4.412-6.404-8.332-6.253-3.089.12-5.812 1.908-7.111 4.67-2.043 4.308-4.723 11.531-6.005 15.079-4.101-1.587-14.171-6.671-32.443-17.153a17.256 17.256 0 0 0-9.991-2.245 9.503 9.503 0 0 0-8.65 7.891c-.468 2.767.279 5.57 2.076 7.693 4.78 5.687 15.519 13.331 19.958 16.376-1.58 2.705-2.639 6.491-2.471 11.793a33.282 33.282 0 0 0 1.053 7.203s-.013.029-.009.04l.021-.008c2.325 8.875 8.39 17.144 18.139 24.657 34.542 26.591 71.474 28.652 73.036 28.722l.227-4.631c-.364-.015-37.069-2.097-70.417-27.767-8.446-6.494-13.841-13.514-16.143-20.914 1.301-3.702 4.622-10.493 9.554-11.46 4.098-.81 9.208 2.508 14.784 9.585a4.255 4.255 0 0 1 .621 4.11c-.476 1.262-1.481 2.1-2.753 2.344-3.83.699-7.866-.813-11.986-4.505l-3.099 3.459c6.536 5.847 12.268 6.28 15.933 5.604a8.138 8.138 0 0 0 1.36-.375c2.237-.819 4.019-2.573 4.898-4.897.988-2.599.663-5.532-.797-7.852 2.883-6.198 2.049-12.504-2.393-17.203-5.878-6.213-15.803-7.506-24.137-3.13-.8.417-1.625.967-2.429 1.644-4.041-2.77-14.898-10.432-19.392-15.78a4.887 4.887 0 0 1-1.054-3.94 4.881 4.881 0 0 1 4.431-4.046 12.632 12.632 0 0 1 7.302 1.637c13.931 8.007 31.469 17.67 35.889 18.274a2.318 2.318 0 0 0 2.51-1.525c.034-.111 3.961-11.178 6.57-16.707.568-1.184 1.747-1.95 3.088-2.009 1.708-.07 3.239 1.062 3.631 2.698 1.178 4.92 2.671 14.494-.67 23.319l.037-.001Zm-37.721.54c7.237-3.79 14.83-1.765 18.595 2.206 2.595 2.744 3.388 6.211 2.374 9.882-5.784-6.259-11.322-8.926-16.481-7.9-4.489.891-7.725 4.413-9.899 7.929-.071-6.116 1.747-10.194 5.411-12.117Z"
-                                        fill={
-                                          {
-                                            "payload": 4278927075,
-                                            "type": 0,
-                                          }
-                                        }
-                                        propList={
-                                          [
-                                            "fill",
-                                          ]
-                                        }
-                                      />
-                                      <RNSVGPath
-                                        d="M53.78 92.97c-.497 0-1.153.12-1.8.36-3.598 1.288-7.206 2.577-10.804 3.866-1.243.45-2.406.15-3.29-.84a48.829 48.829 0 0 1-6.949-10 46.713 46.713 0 0 1-3.15-7.534c-.368-1.16-.11-2.209.804-3.008 1.82-1.598 3.678-3.147 5.527-4.716 1.213-1.039 2.455-2.048 3.638-3.117 2.416-2.178 2.446-6.125.03-8.323-1.412-1.279-2.892-2.488-4.344-3.717-1.62-1.379-3.26-2.738-4.85-4.146-.915-.81-1.173-1.859-.796-3.028a47.678 47.678 0 0 1 3.4-7.973 48.14 48.14 0 0 1 6.75-9.592c.854-.95 1.928-1.229 3.12-.81 2.903 1.02 5.795 2.069 8.698 3.098.835.3 1.66.62 2.505.88 3.33 1.038 6.72-1.02 7.366-4.457.556-2.977 1.083-5.955 1.63-8.932.149-.84.298-1.669.457-2.498.248-1.27 1.123-2.108 2.386-2.368 2.584-.52 5.178-.86 7.813-.98 2.634-.12 5.258-.05 7.862.29 1.431.19 2.853.43 4.274.69 1.462.27 2.247 1.109 2.515 2.568.636 3.537 1.283 7.064 1.939 10.59.119.64.238 1.29.497 1.88.964 2.157 2.654 3.316 5.01 3.476.785.05 1.54-.09 2.276-.36 3.598-1.288 7.186-2.577 10.785-3.856 1.242-.44 2.395-.14 3.28.849a48.743 48.743 0 0 1 7.445 11 46.648 46.648 0 0 1 2.644 6.515c.368 1.16.12 2.208-.795 3.008-1.829 1.598-3.688 3.157-5.537 4.726-1.212 1.039-2.455 2.048-3.638 3.117-2.405 2.178-2.425 6.125-.029 8.313 1.411 1.279 2.892 2.488 4.343 3.717 1.621 1.388 3.271 2.747 4.871 4.156.905.8 1.173 1.839.795 2.988-1.719 5.305-4.264 10.181-7.664 14.587a64.715 64.715 0 0 1-2.485 2.998c-.845.959-1.918 1.239-3.111.829-2.515-.87-5.01-1.788-7.515-2.678-1.252-.45-2.485-.919-3.747-1.319-2.903-.939-6.153.71-7.078 3.637-.288.92-.427 1.889-.596 2.838-.586 3.157-1.153 6.315-1.73 9.472-.218 1.189-1.103 2.068-2.325 2.318-2.555.52-5.13.859-7.744.989-2.823.13-5.636.04-8.43-.34a84.91 84.91 0 0 1-3.965-.649c-1.243-.23-2.107-1.099-2.336-2.348-.567-3.047-1.113-6.095-1.67-9.142-.15-.84-.288-1.689-.467-2.528-.577-2.638-2.903-4.496-5.785-4.496h-.03Zm6.173-29.186c0 7.834 6.312 14.238 14.065 14.248a14.187 14.187 0 0 0 14.234-14.218c.01-7.823-6.332-14.218-14.115-14.218-7.833 0-14.184 6.345-14.184 14.198v-.01Z"
-                                        fill={
-                                          {
-                                            "payload": 4289392367,
-                                            "type": 0,
-                                          }
-                                        }
-                                        propList={
-                                          [
-                                            "fill",
-                                          ]
-                                        }
-                                      />
-                                      <RNSVGPath
-                                        d="M82.514 19.484c-.305-.17-7.724-4.049-16.741-.772a3.032 3.032 0 0 0-1.904 2.175l-2.703 11.485-.326 1.293a5.388 5.388 0 0 1-2.486 3.347 5.28 5.28 0 0 1-4.094.571l-13.9-3.738-.651.441c-.296.2-7.163 5-8.563 14.632a3.074 3.074 0 0 0 .986 2.736l8.76 7.897a6.632 6.632 0 0 1 2.339 5.351 6.58 6.58 0 0 1-2.753 5.141l-6.462 4.64a6.67 6.67 0 0 0-2.357 7.687c1.48 4.039 4.054 9.48 7.882 12.407.316.24.68.35 1.036.35.523 0 1.036-.24 1.381-.7a1.774 1.774 0 0 0-.335-2.456c-2.467-1.894-4.854-5.743-6.729-10.834-.483-1.302-.02-2.786 1.115-3.607l6.462-4.64a10.097 10.097 0 0 0 4.203-7.868c.128-3.166-1.184-6.153-3.542-8.147l-8.553-7.707c1.016-6.383 4.962-10.262 6.462-11.535l12.321 3.307a8.677 8.677 0 0 0 6.719-.931c2.042-1.213 3.492-3.167 4.084-5.502l2.989-12.618c7.419-2.585 13.634.602 13.742.662.839.45 1.885.12 2.329-.732a1.76 1.76 0 0 0-.72-2.365l.01.03ZM146.686 11.236c.753-.585.9-1.666.323-2.43a1.687 1.687 0 0 0-2.396-.327l-20.988 16.248a1.745 1.745 0 0 0-.323 2.43c.333.447.841.685 1.359.685.362 0 .724-.119 1.037-.357l20.988-16.249ZM153.148 31.619c-.167-.963-1.063-1.6-1.998-1.428l-24.46 4.578c-.935.172-1.555 1.093-1.387 2.056.147.85.876 1.458 1.693 1.458.098 0 .206 0 .305-.03l24.459-4.578c.935-.172 1.555-1.094 1.388-2.056Z"
-                                        fill={
-                                          {
-                                            "payload": 4278240714,
-                                            "type": 0,
-                                          }
-                                        }
-                                        propList={
-                                          [
-                                            "fill",
-                                          ]
-                                        }
-                                      />
-                                    </RNSVGGroup>
-                                  </RNSVGSvgView>
-                                </View>
-                              </View>
-                            </View>
                             <View
                               style={
                                 {
@@ -1236,6 +323,185 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                 }
                               }
                             />
+                            <View
+                              style={
+                                {
+                                  "alignItems": "center",
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "gap": 24,
+                                }
+                              }
+                            >
+                              <RNSVGSvgView
+                                accessibilityElementsHidden={true}
+                                accessibilityLabel=""
+                                accessible={false}
+                                align="xMidYMid"
+                                bbHeight={36}
+                                bbWidth={36}
+                                color="#BBC2D6"
+                                focusable={false}
+                                height={36}
+                                importantForAccessibility="no-hide-descendants"
+                                meetOrSlice={0}
+                                minX={0}
+                                minY={0}
+                                style={
+                                  [
+                                    {
+                                      "backgroundColor": "transparent",
+                                      "borderWidth": 0,
+                                    },
+                                    {
+                                      "flex": 0,
+                                      "height": 36,
+                                      "width": 36,
+                                    },
+                                  ]
+                                }
+                                vbHeight={24}
+                                vbWidth={24}
+                                width={36}
+                              >
+                                <RNSVGGroup
+                                  fill={
+                                    {
+                                      "payload": 4278190080,
+                                      "type": 0,
+                                    }
+                                  }
+                                >
+                                  <RNSVGPath
+                                    clipRule={0}
+                                    d="M5 22h18a1 1 0 0 1 0 2H5a5.006 5.006 0 0 1-5-5V1a1 1 0 0 1 2 0v18a3 3 0 0 0 3 3zm1.707-2.293A1 1 0 0 1 5 19v-7a1 1 0 1 1 2 0v7a1 1 0 0 1-.293.707zM10 10v9a1 1 0 0 0 2 0v-9a1 1 0 1 0-2 0zm5 9v-6a1 1 0 0 1 2 0v6a1 1 0 1 1-2 0zm5-10v10a1 1 0 0 0 2 0V9a1 1 0 1 0-2 0zM6.707 8.707a1 1 0 1 1-1.414-1.414l3.586-3.586a3 3 0 0 1 4.242 0l2.172 2.17a1 1 0 0 0 1.414 0L22.293.294a1 1 0 0 1 1.414 1.414L18.12 7.293a3 3 0 0 1-4.242 0L11.707 5.12a1.025 1.025 0 0 0-1.414 0L6.707 8.707z"
+                                    fill={
+                                      {
+                                        "type": 2,
+                                      }
+                                    }
+                                    fillRule={0}
+                                    propList={
+                                      [
+                                        "fill",
+                                        "fillRule",
+                                      ]
+                                    }
+                                  />
+                                </RNSVGGroup>
+                              </RNSVGSvgView>
+                              <View
+                                style={
+                                  {
+                                    "display": "flex",
+                                    "flexDirection": "column",
+                                    "flexShrink": 1,
+                                    "gap": 6,
+                                  }
+                                }
+                              >
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Usiamo 
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    solo i dati necessari 
+                                  </Text>
+                                  a monitorare il funzionamento dell’app e a migliorare i servizi offerti.
+                                </Text>
+                                <View
+                                  accessibilityRole="link"
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
+                                  }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
+                                >
+                                  <Text
+                                    accessibilityElementsHidden={false}
+                                    accessibilityRole="link"
+                                    accessible={true}
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    importantForAccessibility="yes"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Perché raccogliamo i dati
+                                  </Text>
+                                </View>
+                              </View>
+                            </View>
                             <Modal
                               accessible={false}
                               backdropComponent={[Function]}
@@ -1245,17 +511,12 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                 }
                               }
                               enableDismissOnClose={true}
-                              enableDynamicSizing={false}
+                              enableDynamicSizing={true}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
                               importantForAccessibility="yes"
                               maxDynamicContentSize={1334}
                               onDismiss={[Function]}
-                              snapPoints={
-                                [
-                                  350,
-                                ]
-                              }
                               style={
                                 {
                                   "borderCurve": "continuous",
@@ -1274,54 +535,785 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                 }
                               >
                                 <View>
-                                  <View>
+                                  <View
+                                    accessibilityLabel="Non raccogliamo dati per finalità di marketing.  
+
+Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’app, per fornirti un servizio migliore e assisterti in caso di necessità."
+                                    accessible={true}
+                                  >
                                     <View
                                       style={
                                         {
-                                          "flex": 1,
+                                          "height": 16,
                                         }
                                       }
+                                    />
+                                    <View
+                                      accessibilityElementsHidden={true}
+                                      accessible={false}
+                                      importantForAccessibility="no-hide-descendants"
                                     >
-                                      <Text
-                                        allowFontScaling={true}
-                                        dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.5}
-                                        style={
-                                          [
-                                            {},
+                                      <View>
+                                        <Text
+                                          allowFontScaling={true}
+                                          dynamicTypeRamp="body"
+                                          maxFontSizeMultiplier={1.5}
+                                          style={
+                                            [
+                                              {},
+                                              {
+                                                "color": "#555C70",
+                                                "fontFamily": "Titillio",
+                                                "fontSize": 16,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "400",
+                                                "lineHeight": 24,
+                                              },
+                                            ]
+                                          }
+                                        >
+                                          Non raccogliamo dati per finalità di marketing.
+                                        </Text>
+                                        <View
+                                          style={
                                             {
-                                              "color": "#555C70",
-                                              "fontFamily": "Titillio",
-                                              "fontSize": 16,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "400",
-                                              "lineHeight": 24,
-                                            },
-                                          ]
-                                        }
-                                      >
-                                        Se confermi,  non saremo in grado di fornirti assistenza mirata perché potrebbero mancarci i dati necessari per risolvere il problema.
-                                      </Text>
+                                              "height": 8,
+                                            }
+                                          }
+                                        />
+                                        <Text
+                                          allowFontScaling={true}
+                                          dynamicTypeRamp="body"
+                                          maxFontSizeMultiplier={1.5}
+                                          style={
+                                            [
+                                              {},
+                                              {
+                                                "color": "#555C70",
+                                                "fontFamily": "Titillio",
+                                                "fontSize": 16,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "400",
+                                                "lineHeight": 24,
+                                              },
+                                            ]
+                                          }
+                                        >
+                                          Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’app, per 
+                                          <Text
+                                            style={
+                                              {
+                                                "fontWeight": "600",
+                                              }
+                                            }
+                                          >
+                                            fornirti un servizio migliore
+                                          </Text>
+                                           e 
+                                          <Text
+                                            style={
+                                              {
+                                                "fontWeight": "600",
+                                              }
+                                            }
+                                          >
+                                            assisterti in caso di necessità.
+                                          </Text>
+                                        </Text>
+                                      </View>
                                     </View>
+                                    <View
+                                      style={
+                                        {
+                                          "height": 8,
+                                        }
+                                      }
+                                    />
+                                    <View
+                                      style={
+                                        {
+                                          "height": 16,
+                                        }
+                                      }
+                                    />
                                   </View>
                                   <View
                                     style={
                                       {
-                                        "height": 48,
-                                      }
-                                    }
-                                  />
-                                  <View
-                                    style={
-                                      {
-                                        "height": 48,
+                                        "height": 0,
                                       }
                                     }
                                   />
                                 </View>
                               </RCTScrollView>
                             </Modal>
-                          </RCTSafeAreaView>
+                            <View
+                              style={
+                                {
+                                  "height": 24,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "alignItems": "center",
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "gap": 24,
+                                }
+                              }
+                            >
+                              <RNSVGSvgView
+                                accessibilityElementsHidden={true}
+                                accessibilityLabel=""
+                                accessible={false}
+                                align="xMidYMid"
+                                bbHeight={36}
+                                bbWidth={36}
+                                color="#BBC2D6"
+                                focusable={false}
+                                height={36}
+                                importantForAccessibility="no-hide-descendants"
+                                meetOrSlice={0}
+                                minX={0}
+                                minY={0}
+                                style={
+                                  [
+                                    {
+                                      "backgroundColor": "transparent",
+                                      "borderWidth": 0,
+                                    },
+                                    {
+                                      "flex": 0,
+                                      "height": 36,
+                                      "width": 36,
+                                    },
+                                  ]
+                                }
+                                vbHeight={24}
+                                vbWidth={24}
+                                width={36}
+                              >
+                                <RNSVGGroup
+                                  fill={
+                                    {
+                                      "payload": 4278190080,
+                                      "type": 0,
+                                    }
+                                  }
+                                >
+                                  <RNSVGPath
+                                    clipRule={0}
+                                    d="M6 6a6 6 0 1 1 12 0v2.416c1.766.772 3 2.534 3 4.584v6a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5v-6a5.001 5.001 0 0 1 3-4.584V6Zm10 0v2H8V6a4 4 0 1 1 8 0Zm-8 4a3 3 0 0 0-3 3v6a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-6a3 3 0 0 0-3-3H8Zm4 4a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0v-2a1 1 0 0 0-1-1Z"
+                                    fill={
+                                      {
+                                        "type": 2,
+                                      }
+                                    }
+                                    fillRule={0}
+                                    propList={
+                                      [
+                                        "fill",
+                                        "fillRule",
+                                      ]
+                                    }
+                                  />
+                                </RNSVGGroup>
+                              </RNSVGSvgView>
+                              <View
+                                style={
+                                  {
+                                    "display": "flex",
+                                    "flexDirection": "column",
+                                    "flexShrink": 1,
+                                    "gap": 6,
+                                  }
+                                }
+                              >
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Adottiamo misure di sicurezza per 
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    proteggere 
+                                  </Text>
+                                  i tuoi dati.
+                                </Text>
+                                <View
+                                  accessibilityRole="link"
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
+                                  }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
+                                >
+                                  <Text
+                                    accessibilityElementsHidden={false}
+                                    accessibilityRole="link"
+                                    accessible={true}
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    importantForAccessibility="yes"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Come proteggiamo i dati
+                                  </Text>
+                                </View>
+                              </View>
+                            </View>
+                            <View
+                              style={
+                                {
+                                  "height": 24,
+                                }
+                              }
+                            />
+                            <View
+                              style={
+                                {
+                                  "alignItems": "center",
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "gap": 24,
+                                }
+                              }
+                            >
+                              <RNSVGSvgView
+                                accessibilityElementsHidden={true}
+                                accessibilityLabel=""
+                                accessible={false}
+                                align="xMidYMid"
+                                bbHeight={36}
+                                bbWidth={36}
+                                color="#BBC2D6"
+                                focusable={false}
+                                height={36}
+                                importantForAccessibility="no-hide-descendants"
+                                meetOrSlice={0}
+                                minX={0}
+                                minY={0}
+                                style={
+                                  [
+                                    {
+                                      "backgroundColor": "transparent",
+                                      "borderWidth": 0,
+                                    },
+                                    {
+                                      "flex": 0,
+                                      "height": 36,
+                                      "width": 36,
+                                    },
+                                  ]
+                                }
+                                vbHeight={24}
+                                vbWidth={24}
+                                width={36}
+                              >
+                                <RNSVGGroup
+                                  fill={
+                                    {
+                                      "payload": 4278190080,
+                                      "type": 0,
+                                    }
+                                  }
+                                >
+                                  <RNSVGPath
+                                    clipRule={0}
+                                    d="m12.316.05173 6.265 2.089a4.99323 4.99323 0 0 1 2.4764 1.81871A4.9932 4.9932 0 0 1 22 6.88373v5.11697c0 7.563-9.2 11.74-9.594 11.914a.99966.99966 0 0 1-.406.0862.99966.99966 0 0 1-.406-.0862C11.2 23.7407 2 19.5637 2 12.0007V6.88373a4.99297 4.99297 0 0 1 3.419-4.743l6.265-2.089a1 1 0 0 1 .632 0ZM12 21.8897c1.681-.856 8-4.434 8-9.889V6.88373a3.00028 3.00028 0 0 0-.5666-1.75426 2.99978 2.99978 0 0 0-1.4854-1.09174L12 2.05473l-5.948 1.983A3.00003 3.00003 0 0 0 4 6.88373v5.11697c0 5.469 6.317 9.036 8 9.889Zm4.7071-11.1826c.3905-.3905.3905-1.02368 0-1.41421-.3905-.39052-1.0237-.39052-1.4142 0L11 13.5858l-2.29289-2.2929c-.39053-.3905-1.02369-.3905-1.41422 0-.39052.3905-.39052 1.0237 0 1.4142L9.58579 15c.78101.7811 2.04741.781 2.82841 0l4.2929-4.2929Z"
+                                    fill={
+                                      {
+                                        "type": 2,
+                                      }
+                                    }
+                                    fillRule={0}
+                                    propList={
+                                      [
+                                        "fill",
+                                        "fillRule",
+                                      ]
+                                    }
+                                  />
+                                </RNSVGGroup>
+                              </RNSVGSvgView>
+                              <View
+                                style={
+                                  {
+                                    "display": "flex",
+                                    "flexDirection": "column",
+                                    "flexShrink": 1,
+                                    "gap": 6,
+                                  }
+                                }
+                              >
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Collaboriamo solo con fornitori che trattano i dati in modo 
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    trasparente e sicuro.
+                                  </Text>
+                                </Text>
+                                <View
+                                  accessibilityRole="link"
+                                  accessibilityState={
+                                    {
+                                      "busy": undefined,
+                                      "checked": undefined,
+                                      "disabled": undefined,
+                                      "expanded": undefined,
+                                      "selected": undefined,
+                                    }
+                                  }
+                                  accessibilityValue={
+                                    {
+                                      "max": undefined,
+                                      "min": undefined,
+                                      "now": undefined,
+                                      "text": undefined,
+                                    }
+                                  }
+                                  accessible={true}
+                                  collapsable={false}
+                                  focusable={true}
+                                  onBlur={[Function]}
+                                  onClick={[Function]}
+                                  onFocus={[Function]}
+                                  onResponderGrant={[Function]}
+                                  onResponderMove={[Function]}
+                                  onResponderRelease={[Function]}
+                                  onResponderTerminate={[Function]}
+                                  onResponderTerminationRequest={[Function]}
+                                  onStartShouldSetResponder={[Function]}
+                                >
+                                  <Text
+                                    accessibilityElementsHidden={false}
+                                    accessibilityRole="link"
+                                    accessible={true}
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="body"
+                                    importantForAccessibility="yes"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {
+                                          "textDecorationLine": "underline",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 16,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 24,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Chi sono i fornitori
+                                  </Text>
+                                </View>
+                              </View>
+                            </View>
+                            <View
+                              style={
+                                {
+                                  "height": 32,
+                                }
+                              }
+                            />
+                            <Text
+                              accessibilityLabel="Per maggiori informazioni, leggi l'Informativa Privacy e i Termini e Condizioni d’uso"
+                              allowFontScaling={true}
+                              dynamicTypeRamp="body"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              Per maggiori informazioni, leggi l'
+                              <Text
+                                accessibilityRole="link"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
+                                onPress={[Function]}
+                                style={
+                                  [
+                                    {
+                                      "textDecorationLine": "underline",
+                                    },
+                                    {
+                                      "color": "#0B3EE3",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 24,
+                                    },
+                                  ]
+                                }
+                                testID="additionalInformation"
+                              >
+                                Informativa Privacy e i Termini e Condizioni d’uso
+                              </Text>
+                            </Text>
+                            <View
+                              style={
+                                {
+                                  "height": 32,
+                                }
+                              }
+                            />
+                            <View
+                              accessible={false}
+                              style={
+                                [
+                                  {
+                                    "alignContent": "center",
+                                    "alignItems": "flex-start",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
+                                    "flexDirection": "row",
+                                    "padding": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#F4F5F8",
+                                  },
+                                ]
+                              }
+                            >
+                              <View
+                                accessibilityLabel="Puoi modificare la tua scelta in ogni momento da Impostazioni > Privacy e Condizioni d’uso"
+                                accessibilityRole="text"
+                                accessible={true}
+                                style={
+                                  {
+                                    "alignSelf": "center",
+                                    "flex": 1,
+                                    "gap": 4,
+                                  }
+                                }
+                              >
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 14,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 21,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Puoi modificare la tua scelta in ogni momento da Impostazioni &gt; Privacy e Condizioni d’uso
+                                </Text>
+                              </View>
+                              <View
+                                style={
+                                  [
+                                    {
+                                      "marginRight": -16,
+                                    },
+                                    {
+                                      "alignSelf": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                <RNSVGSvgView
+                                  align="xMidYMid"
+                                  bbHeight={80}
+                                  bbWidth={80}
+                                  focusable={false}
+                                  height={80}
+                                  meetOrSlice={0}
+                                  minX={0}
+                                  minY={0}
+                                  style={
+                                    [
+                                      {
+                                        "backgroundColor": "transparent",
+                                        "borderWidth": 0,
+                                      },
+                                      {
+                                        "flex": 0,
+                                        "height": 80,
+                                        "width": 80,
+                                      },
+                                    ]
+                                  }
+                                  vbHeight={240}
+                                  vbWidth={240}
+                                  width={80}
+                                >
+                                  <RNSVGGroup
+                                    fill={
+                                      {
+                                        "payload": 4278190080,
+                                        "type": 0,
+                                      }
+                                    }
+                                  >
+                                    <RNSVGPath
+                                      d="M195.491 126.862a2.322 2.322 0 0 0 1.05 2.853c1.937 1.057 47.11 25.409 69.065 17.362.273-.1.546-.2.811-.322l-1.789-4.288c-7.973 3.305-21.801 1.502-40.007-5.234-10.895-4.028-20.372-8.749-24.13-10.683 2.897-9.392 1.388-19.01.164-24.085-.909-3.783-4.412-6.404-8.332-6.253-3.089.12-5.812 1.908-7.111 4.67-2.043 4.308-4.723 11.531-6.005 15.079-4.101-1.587-14.171-6.671-32.443-17.153a17.256 17.256 0 0 0-9.991-2.245 9.503 9.503 0 0 0-8.65 7.891c-.468 2.767.279 5.57 2.076 7.693 4.78 5.687 15.519 13.331 19.958 16.376-1.58 2.705-2.639 6.491-2.471 11.793a33.282 33.282 0 0 0 1.053 7.203s-.013.029-.009.04l.021-.008c2.325 8.875 8.39 17.144 18.139 24.657 34.542 26.591 71.474 28.652 73.036 28.722l.227-4.631c-.364-.015-37.069-2.097-70.417-27.767-8.446-6.494-13.841-13.514-16.143-20.914 1.301-3.702 4.622-10.493 9.554-11.46 4.098-.81 9.208 2.508 14.784 9.585a4.255 4.255 0 0 1 .621 4.11c-.476 1.262-1.481 2.1-2.753 2.344-3.83.699-7.866-.813-11.986-4.505l-3.099 3.459c6.536 5.847 12.268 6.28 15.933 5.604a8.138 8.138 0 0 0 1.36-.375c2.237-.819 4.019-2.573 4.898-4.897.988-2.599.663-5.532-.797-7.852 2.883-6.198 2.049-12.504-2.393-17.203-5.878-6.213-15.803-7.506-24.137-3.13-.8.417-1.625.967-2.429 1.644-4.041-2.77-14.898-10.432-19.392-15.78a4.887 4.887 0 0 1-1.054-3.94 4.881 4.881 0 0 1 4.431-4.046 12.632 12.632 0 0 1 7.302 1.637c13.931 8.007 31.469 17.67 35.889 18.274a2.318 2.318 0 0 0 2.51-1.525c.034-.111 3.961-11.178 6.57-16.707.568-1.184 1.747-1.95 3.088-2.009 1.708-.07 3.239 1.062 3.631 2.698 1.178 4.92 2.671 14.494-.67 23.319l.037-.001Zm-37.721.54c7.237-3.79 14.83-1.765 18.595 2.206 2.595 2.744 3.388 6.211 2.374 9.882-5.784-6.259-11.322-8.926-16.481-7.9-4.489.891-7.725 4.413-9.899 7.929-.071-6.116 1.747-10.194 5.411-12.117Z"
+                                      fill={
+                                        {
+                                          "payload": 4278927075,
+                                          "type": 0,
+                                        }
+                                      }
+                                      propList={
+                                        [
+                                          "fill",
+                                        ]
+                                      }
+                                    />
+                                    <RNSVGPath
+                                      d="M53.78 92.97c-.497 0-1.153.12-1.8.36-3.598 1.288-7.206 2.577-10.804 3.866-1.243.45-2.406.15-3.29-.84a48.829 48.829 0 0 1-6.949-10 46.713 46.713 0 0 1-3.15-7.534c-.368-1.16-.11-2.209.804-3.008 1.82-1.598 3.678-3.147 5.527-4.716 1.213-1.039 2.455-2.048 3.638-3.117 2.416-2.178 2.446-6.125.03-8.323-1.412-1.279-2.892-2.488-4.344-3.717-1.62-1.379-3.26-2.738-4.85-4.146-.915-.81-1.173-1.859-.796-3.028a47.678 47.678 0 0 1 3.4-7.973 48.14 48.14 0 0 1 6.75-9.592c.854-.95 1.928-1.229 3.12-.81 2.903 1.02 5.795 2.069 8.698 3.098.835.3 1.66.62 2.505.88 3.33 1.038 6.72-1.02 7.366-4.457.556-2.977 1.083-5.955 1.63-8.932.149-.84.298-1.669.457-2.498.248-1.27 1.123-2.108 2.386-2.368 2.584-.52 5.178-.86 7.813-.98 2.634-.12 5.258-.05 7.862.29 1.431.19 2.853.43 4.274.69 1.462.27 2.247 1.109 2.515 2.568.636 3.537 1.283 7.064 1.939 10.59.119.64.238 1.29.497 1.88.964 2.157 2.654 3.316 5.01 3.476.785.05 1.54-.09 2.276-.36 3.598-1.288 7.186-2.577 10.785-3.856 1.242-.44 2.395-.14 3.28.849a48.743 48.743 0 0 1 7.445 11 46.648 46.648 0 0 1 2.644 6.515c.368 1.16.12 2.208-.795 3.008-1.829 1.598-3.688 3.157-5.537 4.726-1.212 1.039-2.455 2.048-3.638 3.117-2.405 2.178-2.425 6.125-.029 8.313 1.411 1.279 2.892 2.488 4.343 3.717 1.621 1.388 3.271 2.747 4.871 4.156.905.8 1.173 1.839.795 2.988-1.719 5.305-4.264 10.181-7.664 14.587a64.715 64.715 0 0 1-2.485 2.998c-.845.959-1.918 1.239-3.111.829-2.515-.87-5.01-1.788-7.515-2.678-1.252-.45-2.485-.919-3.747-1.319-2.903-.939-6.153.71-7.078 3.637-.288.92-.427 1.889-.596 2.838-.586 3.157-1.153 6.315-1.73 9.472-.218 1.189-1.103 2.068-2.325 2.318-2.555.52-5.13.859-7.744.989-2.823.13-5.636.04-8.43-.34a84.91 84.91 0 0 1-3.965-.649c-1.243-.23-2.107-1.099-2.336-2.348-.567-3.047-1.113-6.095-1.67-9.142-.15-.84-.288-1.689-.467-2.528-.577-2.638-2.903-4.496-5.785-4.496h-.03Zm6.173-29.186c0 7.834 6.312 14.238 14.065 14.248a14.187 14.187 0 0 0 14.234-14.218c.01-7.823-6.332-14.218-14.115-14.218-7.833 0-14.184 6.345-14.184 14.198v-.01Z"
+                                      fill={
+                                        {
+                                          "payload": 4289392367,
+                                          "type": 0,
+                                        }
+                                      }
+                                      propList={
+                                        [
+                                          "fill",
+                                        ]
+                                      }
+                                    />
+                                    <RNSVGPath
+                                      d="M82.514 19.484c-.305-.17-7.724-4.049-16.741-.772a3.032 3.032 0 0 0-1.904 2.175l-2.703 11.485-.326 1.293a5.388 5.388 0 0 1-2.486 3.347 5.28 5.28 0 0 1-4.094.571l-13.9-3.738-.651.441c-.296.2-7.163 5-8.563 14.632a3.074 3.074 0 0 0 .986 2.736l8.76 7.897a6.632 6.632 0 0 1 2.339 5.351 6.58 6.58 0 0 1-2.753 5.141l-6.462 4.64a6.67 6.67 0 0 0-2.357 7.687c1.48 4.039 4.054 9.48 7.882 12.407.316.24.68.35 1.036.35.523 0 1.036-.24 1.381-.7a1.774 1.774 0 0 0-.335-2.456c-2.467-1.894-4.854-5.743-6.729-10.834-.483-1.302-.02-2.786 1.115-3.607l6.462-4.64a10.097 10.097 0 0 0 4.203-7.868c.128-3.166-1.184-6.153-3.542-8.147l-8.553-7.707c1.016-6.383 4.962-10.262 6.462-11.535l12.321 3.307a8.677 8.677 0 0 0 6.719-.931c2.042-1.213 3.492-3.167 4.084-5.502l2.989-12.618c7.419-2.585 13.634.602 13.742.662.839.45 1.885.12 2.329-.732a1.76 1.76 0 0 0-.72-2.365l.01.03ZM146.686 11.236c.753-.585.9-1.666.323-2.43a1.687 1.687 0 0 0-2.396-.327l-20.988 16.248a1.745 1.745 0 0 0-.323 2.43c.333.447.841.685 1.359.685.362 0 .724-.119 1.037-.357l20.988-16.249ZM153.148 31.619c-.167-.963-1.063-1.6-1.998-1.428l-24.46 4.578c-.935.172-1.555 1.093-1.387 2.056.147.85.876 1.458 1.693 1.458.098 0 .206 0 .305-.03l24.459-4.578c.935-.172 1.555-1.094 1.388-2.056Z"
+                                      fill={
+                                        {
+                                          "payload": 4278240714,
+                                          "type": 0,
+                                        }
+                                      }
+                                      propList={
+                                        [
+                                          "fill",
+                                        ]
+                                      }
+                                    />
+                                  </RNSVGGroup>
+                                </RNSVGSvgView>
+                              </View>
+                            </View>
+                          </View>
+                          <View
+                            style={
+                              {
+                                "height": 16,
+                              }
+                            }
+                          />
+                          <Modal
+                            accessible={false}
+                            backdropComponent={[Function]}
+                            backgroundStyle={
+                              {
+                                "backgroundColor": "#FFFFFF",
+                              }
+                            }
+                            enableDismissOnClose={true}
+                            enableDynamicSizing={false}
+                            footerComponent={[Function]}
+                            handleComponent={[Function]}
+                            importantForAccessibility="yes"
+                            maxDynamicContentSize={1334}
+                            onDismiss={[Function]}
+                            snapPoints={
+                              [
+                                350,
+                              ]
+                            }
+                            style={
+                              {
+                                "borderCurve": "continuous",
+                                "borderTopLeftRadius": 24,
+                                "borderTopRightRadius": 24,
+                                "overflow": "hidden",
+                              }
+                            }
+                          >
+                            <RCTScrollView
+                              overScrollMode="never"
+                              style={
+                                {
+                                  "paddingHorizontal": 24,
+                                }
+                              }
+                            >
+                              <View>
+                                <View>
+                                  <View
+                                    style={
+                                      {
+                                        "flex": 1,
+                                      }
+                                    }
+                                  >
+                                    <Text
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="body"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#555C70",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "400",
+                                            "lineHeight": 24,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Se confermi,  non saremo in grado di fornirti assistenza mirata perché potrebbero mancarci i dati necessari per risolvere il problema.
+                                    </Text>
+                                  </View>
+                                </View>
+                                <View
+                                  style={
+                                    {
+                                      "height": 48,
+                                    }
+                                  }
+                                />
+                                <View
+                                  style={
+                                    {
+                                      "height": 48,
+                                    }
+                                  }
+                                />
+                              </View>
+                            </RCTScrollView>
+                          </Modal>
                         </View>
                       </RCTScrollView>
                       <View
