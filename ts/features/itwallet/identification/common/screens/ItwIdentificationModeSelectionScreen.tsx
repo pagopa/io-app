@@ -3,6 +3,7 @@ import {
   ContentWrapper,
   IOButton,
   ModuleNavigationAlt,
+  VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
@@ -67,8 +68,8 @@ export const ItwIdentificationModeSelectionScreen = ({
     [disabledIdentificationMethods, level]
   );
   const isSpidDisabled = useMemo(
-    () => disabledIdentificationMethods.includes("SPID") || level === "l3",
-    [disabledIdentificationMethods, level]
+    () => disabledIdentificationMethods.includes("SPID"),
+    [disabledIdentificationMethods]
   );
   const isCieIdDisabled = useMemo(
     () => disabledIdentificationMethods.includes("CieID"),
@@ -161,6 +162,7 @@ export const ItwIdentificationModeSelectionScreen = ({
       goBack={eidReissuing ? dismissalDialog.show : undefined}
     >
       <ContentWrapper>
+        <VSpacer size={8} />
         <VStack space={16}>
           {!isCiePinDisabled && <CiePinMethodModule />}
           {!isSpidDisabled && <SpidMethodModule />}
@@ -191,20 +193,6 @@ const CiePinMethodModule = () => {
     machineRef.send({ type: "select-identification-mode", mode: "ciePin" });
   }, [machineRef]);
 
-  const { title, subtitle } = useMemo(() => {
-    if (level === "l3-next") {
-      return {
-        title: I18n.t(`${i18nNs}.mode.ciePin.title`),
-        subtitle: I18n.t(`${i18nNs}.mode.ciePin.subtitle.l3-next`)
-      };
-    }
-
-    return {
-      title: I18n.t(`${i18nNs}.mode.ciePin.title`),
-      subtitle: I18n.t(`${i18nNs}.mode.ciePin.subtitle.default`)
-    };
-  }, [level]);
-
   const badgeProps: Badge | undefined = useMemo(() => {
     if (level === "l2" && mode === "issuance") {
       // Should not display the recommended badge for L2 issuance
@@ -221,8 +209,8 @@ const CiePinMethodModule = () => {
 
   return (
     <ModuleNavigationAlt
-      title={title}
-      subtitle={subtitle}
+      title={I18n.t(`${i18nNs}.mode.ciePin.title`)}
+      subtitle={I18n.t(`${i18nNs}.mode.ciePin.subtitle`)}
       testID="CiePinMethodModuleTestID"
       icon="cieCard"
       onPress={handleOnPress}
@@ -240,10 +228,10 @@ const SpidMethodModule = () => {
   }, [machineRef]);
 
   const { title, subtitle } = useMemo(() => {
-    if (level === "l3-next") {
+    if (level === "l3") {
       return {
-        title: I18n.t(`${i18nNs}.mode.spid.title.l3-next`),
-        subtitle: I18n.t(`${i18nNs}.mode.spid.subtitle.l3-next`)
+        title: I18n.t(`${i18nNs}.mode.spid.title.l3`),
+        subtitle: I18n.t(`${i18nNs}.mode.spid.subtitle.l3`)
       };
     }
 
@@ -273,10 +261,10 @@ const CieIdMethodModule = () => {
   }, [machineRef]);
 
   const { title, subtitle } = useMemo(() => {
-    if (level === "l3-next") {
+    if (level === "l3") {
       return {
         title: I18n.t(`${i18nNs}.mode.cieId.title`),
-        subtitle: I18n.t(`${i18nNs}.mode.cieId.subtitle.l3-next`)
+        subtitle: I18n.t(`${i18nNs}.mode.cieId.subtitle.l3`)
       };
     }
 
