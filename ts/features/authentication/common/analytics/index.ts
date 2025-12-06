@@ -204,3 +204,20 @@ export function trackLoginFailure(props: {
     buildEventProperties("TECH", "error", propsWithDefaultFlow)
   );
 }
+
+export function trackLogoutSuccess(flow: LoginType = "auth") {
+  void mixpanelTrack(
+    "LOGOUT_SUCCESS",
+    buildEventProperties("TECH", "confirm", { flow })
+  );
+}
+
+export function trackLogoutFailure(
+  reason?: string | Error,
+  flow: LoginType = "auth"
+) {
+  void mixpanelTrack(
+    "LOGOUT_FAILURE",
+    buildEventProperties("TECH", "error", { reason, flow })
+  );
+}

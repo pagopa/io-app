@@ -4,6 +4,8 @@ import { useIODispatch } from "../../../../store/hooks";
 import { setLoggedOutUserWithDifferentCF } from "../store/actions";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { startApplicationInitialization } from "../../../../store/actions/application";
+import { startupLoadSuccess } from "../../../../store/actions/startup";
+import { StartupStatusEnum } from "../../../../store/reducers/startup";
 import { trackLoginWithNewCF, trackLoginWithNewCFConfirm } from "./analytics";
 
 export const DifferentCFErrorScreen = () => {
@@ -15,6 +17,7 @@ export const DifferentCFErrorScreen = () => {
   });
 
   const handleNavigateToLandingScreen = () => {
+    dispatch(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED));
     dispatch(startApplicationInitialization());
     void trackLoginWithNewCFConfirm();
   };

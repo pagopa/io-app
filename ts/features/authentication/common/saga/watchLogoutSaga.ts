@@ -18,6 +18,10 @@ import { resetMixpanelSaga } from "../../../../sagas/mixpanel";
 import { backendClientManager } from "../../../../api/BackendClientManager";
 import { apiUrlPrefix } from "../../../../config";
 import { bareSessionTokenSelector } from "../store/selectors";
+import {
+  trackUndefinedBearerToken,
+  UndefinedBearerTokenPhase
+} from "../../../messages/analytics";
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export function* logoutSaga({ payload }: ActionType<typeof logoutRequest>) {
@@ -25,6 +29,7 @@ export function* logoutSaga({ payload }: ActionType<typeof logoutRequest>) {
   const keyInfo = yield* call(getKeyInfo);
 
   if (!sessionToken) {
+    trackUndefinedBearerToken(UndefinedBearerTokenPhase.logoutStandard);
     return;
   }
 
