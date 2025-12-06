@@ -39,7 +39,6 @@ import {
 } from "../../../utils/contextualHelp";
 import { isTestEnv } from "../../../utils/environment";
 import { FAQsCategoriesType } from "../../../utils/faq";
-import { isAndroid } from "../../../utils/platform";
 import {
   BarcodeAnalyticsFlow,
   trackBarcodeCameraAuthorizationDenied,
@@ -329,11 +328,7 @@ const BarcodeScanBaseScreenComponent = ({
         style={styles.headerContainer}
       >
         <SafeAreaView>
-          <FocusAwareStatusBar
-            barStyle={"light-content"}
-            backgroundColor={isAndroid ? IOColors["blueIO-850"] : "transparent"}
-            translucent={false}
-          />
+          <FocusAwareStatusBar barStyle={"light-content"} translucent={true} />
           {!isTestEnv && <HeaderTransparent />}
         </SafeAreaView>
       </LinearGradient>
