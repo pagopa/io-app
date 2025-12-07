@@ -1,8 +1,7 @@
 import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import _ from "lodash";
-import { RefObject, useCallback, useEffect, useMemo, useRef } from "react";
+import { RefObject, useCallback, useEffect, useRef } from "react";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
@@ -39,7 +38,8 @@ import {
   startPNPaymentStatusTracking
 } from "../store/actions";
 import {
-  curriedSendMessageFromIdSelector,
+  sendMessageCreationDateSelector,
+  sendMessageFromIdSelector,
   sendUserSelectedPaymentRptIdSelector
 } from "../store/reducers";
 import {
@@ -129,11 +129,12 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
   const aarBottomSheetRef = useRef<() => void>(undefined);
 
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
-  const sendMessageFromIdSelector = useMemo(
-    () => curriedSendMessageFromIdSelector(messageId),
-    [messageId]
+  const sendMessageOrUndefined = useIOSelector(state =>
+    sendMessageFromIdSelector(state, messageId)
   );
-  const sendMessageOrUndefined = useIOSelector(sendMessageFromIdSelector);
+  const sendMessageCreationDate = useIOSelector(state =>
+    sendMessageCreationDateSelector(state, messageId)
+  );
 
   const isAarMessage = openingSourceIsAarMessage(sendOpeningSource);
   const fiscalCodeOrUndefined = isAarMessage ? undefined : currentFiscalCode;
@@ -221,7 +222,8 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
     }, [dispatch, messageId, sendMessageOrUndefined, serviceId, store])
   );
 
-  if (sendMessageOrUndefined == null) {
+  const sendMessageDetails = sendMessageOrUndefined?.details;
+  if (sendMessageDetails == null) {
     return (
       <OperationResultScreenContent
         pictogram="umbrella"
@@ -235,7 +237,9 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
   return (
     <>
       <MessageDetails
-        message={sendMessageOrUndefined}
+        attachments={sendMessageOrUndefined?.attachments}
+        createdAt={sendMessageCreationDate}
+        message={sendMessageDetails}
         messageId={messageId}
         serviceId={serviceId}
         payments={payments}

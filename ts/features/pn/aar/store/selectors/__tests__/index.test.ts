@@ -10,7 +10,6 @@ import {
 } from "..";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { thirdPartyFromIdSelector } from "../../../../../messages/store/reducers/thirdPartyById";
-import { toSENDMessage } from "../../../../store/types/transformers";
 import {
   AARFlowState,
   maybeIunFromAarFlowState,
@@ -30,9 +29,6 @@ const mockIoMessageId = "test-id";
 jest.mock("../../../../../messages/store/reducers/thirdPartyById", () => ({
   thirdPartyFromIdSelector: jest.fn()
 }));
-jest.mock("../../../../store/types/transformers", () => ({
-  toSENDMessage: jest.fn()
-}));
 
 describe("thirdPartySenderDenominationSelector", () => {
   beforeEach(() => {
@@ -40,10 +36,20 @@ describe("thirdPartySenderDenominationSelector", () => {
   });
 
   it("should return senderDenomination when all data is present", () => {
-    (thirdPartyFromIdSelector as jest.Mock).mockReturnValue(pot.some({}));
-    (toSENDMessage as jest.Mock).mockReturnValue({
-      senderDenomination: "Denomination"
+    const thirdPartyMessagePot = pot.some({
+      third_party_message: {
+        details: {
+          iun: "",
+          notificationStatusHistory: [],
+          recipients: [],
+          senderDenomination: "Denomination",
+          subject: ""
+        }
+      }
     });
+    (thirdPartyFromIdSelector as jest.Mock).mockReturnValue(
+      thirdPartyMessagePot
+    );
 
     const result = thirdPartySenderDenominationSelector(
       mockState,
@@ -62,9 +68,36 @@ describe("thirdPartySenderDenominationSelector", () => {
     expect(result).toBeUndefined();
   });
 
-  it("should return undefined if toPNMessage returns undefined", () => {
-    (thirdPartyFromIdSelector as jest.Mock).mockReturnValue(pot.some({}));
-    (toSENDMessage as jest.Mock).mockReturnValue(undefined);
+  it("should return undefined if data structure is not a ThirdPartyMessage", () => {
+    const thirdPartyMessagePot = pot.some({
+      third_party_message: {
+        details: {
+          notificationStatusHistory: [],
+          recipients: [],
+          subject: ""
+        }
+      }
+    });
+    (thirdPartyFromIdSelector as jest.Mock).mockReturnValue(
+      pot.some(thirdPartyMessagePot)
+    );
+
+    const result = thirdPartySenderDenominationSelector(
+      mockState,
+      mockIoMessageId
+    );
+    expect(result).toBeUndefined();
+  });
+
+  it("should return undefined if there are no details", () => {
+    const thirdPartyMessagePot = pot.some({
+      third_party_message: {
+        attachments: []
+      }
+    });
+    (thirdPartyFromIdSelector as jest.Mock).mockReturnValue(
+      pot.some(thirdPartyMessagePot)
+    );
 
     const result = thirdPartySenderDenominationSelector(
       mockState,
@@ -74,8 +107,19 @@ describe("thirdPartySenderDenominationSelector", () => {
   });
 
   it("should return undefined if senderDenomination is missing", () => {
-    (thirdPartyFromIdSelector as jest.Mock).mockReturnValue(pot.some({}));
-    (toSENDMessage as jest.Mock).mockReturnValue({});
+    const thirdPartyMessagePot = pot.some({
+      third_party_message: {
+        details: {
+          iun: "",
+          notificationStatusHistory: [],
+          recipients: [],
+          subject: ""
+        }
+      }
+    });
+    (thirdPartyFromIdSelector as jest.Mock).mockReturnValue(
+      thirdPartyMessagePot
+    );
 
     const result = thirdPartySenderDenominationSelector(
       mockState,

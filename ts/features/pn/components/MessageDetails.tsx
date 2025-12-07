@@ -6,10 +6,6 @@ import {
   useFooterActionsMeasurements,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import * as O from "fp-ts/lib/Option";
-import * as RA from "fp-ts/lib/ReadonlyArray";
-import * as SEP from "fp-ts/lib/Separated";
-import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useRef } from "react";
 import { ScrollView } from "react-native";
@@ -19,7 +15,6 @@ import { NotificationPaymentInfo } from "../../../../definitions/pn/Notification
 import { MessageDetailsAttachments } from "../../messages/components/MessageDetail/MessageDetailsAttachments";
 import { MessageDetailsHeader } from "../../messages/components/MessageDetail/MessageDetailsHeader";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
-import { PNMessage } from "../store/types/types";
 import {
   maxVisiblePaymentCount,
   openingSourceIsAarMessage,
@@ -29,6 +24,7 @@ import {
   SendOpeningSource,
   SendUserType
 } from "../../pushNotifications/analytics";
+import { IOReceivedNotification } from "../../../../definitions/pn/IOReceivedNotification";
 import { BannerAttachments } from "./BannerAttachments";
 import { F24Section } from "./F24Section";
 import { MessageBottomMenu } from "./MessageBottomMenu";
@@ -39,7 +35,9 @@ import { MessagePaymentBottomSheet } from "./MessagePaymentBottomSheet";
 import { MessagePayments } from "./MessagePayments";
 
 export type MessageDetailsProps = {
-  message: PNMessage;
+  attachments: ReadonlyArray<ThirdPartyAttachment> | undefined;
+  createdAt: Date | undefined;
+  message: IOReceivedNotification;
   messageId: string;
   serviceId: ServiceId;
   payments?: ReadonlyArray<NotificationPaymentInfo>;
@@ -48,6 +46,8 @@ export type MessageDetailsProps = {
 };
 
 export const MessageDetails = ({
+  attachments,
+  createdAt,
   message,
   messageId,
   payments,
@@ -56,27 +56,22 @@ export const MessageDetails = ({
   sendUserType
 }: MessageDetailsProps) => {
   const presentPaymentsBottomSheetRef = useRef<() => void>(undefined);
-  const partitionedAttachments = pipe(
-    message.attachments,
-    O.fromNullable,
-    O.getOrElse<ReadonlyArray<ThirdPartyAttachment>>(() => []),
-    RA.partition(attachment => attachment.category === ATTACHMENT_CATEGORY.F24)
-  );
-
   const theme = useIOTheme();
-
   const { footerActionsMeasurements, handleFooterActionsMeasurements } =
     useFooterActionsMeasurements();
 
-  const attachmentList = SEP.left(partitionedAttachments);
-
+  const hasStandardAttachments = attachments?.some(
+    attachment =>
+      attachment.category != null &&
+      attachment.category !== ATTACHMENT_CATEGORY.F24
+  );
   const isCancelled = message.isCancelled ?? false;
   const completedPaymentNoticeCodes = isCancelled
     ? message.completedPayments
     : undefined;
 
   const isAarMessage = openingSourceIsAarMessage(sendOpeningSource);
-  const maybeMessageDate = isAarMessage ? undefined : message.created_at;
+  const maybeMessageDate = isAarMessage ? undefined : createdAt;
   return (
     <>
       <ScrollView
@@ -97,7 +92,7 @@ export const MessageDetails = ({
               text={I18n.t("features.pn.details.badge.legalValue")}
               variant="legalMessage"
             />
-            {attachmentList.length > 0 && (
+            {hasStandardAttachments && (
               <Icon
                 color={theme["icon-default"]}
                 name="attachment"
