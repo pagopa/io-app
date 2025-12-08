@@ -8,6 +8,7 @@ import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/ut
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { walletAddCards } from "../../../../wallet/store/actions/cards";
 import { getNetworkError } from "../../../../../utils/errors";
+import * as analytics from "../../analytics";
 
 export function* handleGetCdcStatusWallet(
   getCdcStatus: CdcClient["getStatus"],
@@ -38,14 +39,16 @@ export function* handleGetCdcStatusWallet(
             type: "cdc",
             category: "bonus",
             key: "cdc_card",
-            expireDate: cdcInfo.expiration_date
+            ...cdcInfo
           }
         ])
       );
       yield* put(getCdcStatusWallet.success(cdcInfo));
+      yield* call(analytics.trackCdcStatus);
     } else if (cdcStatusResponse.right.status === 404) {
       yield* put(getCdcStatusWallet.cancel());
     } else {
+      analytics.trackCdcCardError();
       yield* put(
         getCdcStatusWallet.failure({
           kind: "generic",
@@ -54,6 +57,7 @@ export function* handleGetCdcStatusWallet(
       );
     }
   } catch (e) {
+    analytics.trackCdcCardError();
     yield* put(getCdcStatusWallet.failure(getNetworkError(e)));
   }
 }

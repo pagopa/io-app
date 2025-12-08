@@ -35,6 +35,7 @@ import { isConnectedSelector } from "../features/connectivity/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../features/itwallet/lifecycle/store/selectors";
 import { CredentialType } from "../features/itwallet/common/utils/itwMocksUtils";
 import {
+  cdcStatusHandler,
   cgnStatusHandler,
   loginSessionConfigHandler,
   notificationConfigurationHandler,
@@ -69,6 +70,7 @@ type SuperProperties = {
   ITW_CED_V3: ItwCredentialMixpanelStatus;
   SAVED_PAYMENT_METHOD?: number;
   CGN_STATUS: TrackCgnStatus;
+  CDC_STATUS: number;
   WELFARE_STATUS: ReadonlyArray<string>;
   OFFLINE_ACCESS_REASON: string;
   CONNECTION_STATUS: ConnectivityStatus;
@@ -94,6 +96,7 @@ export const updateMixpanelSuperProperties = async (
     const ITW_PID = getPIDMixpanelStatus(state, true);
     const SAVED_PAYMENT_METHOD = paymentMethodsHandler(state);
     const CGN_STATUS = cgnStatusHandler(state);
+    const CDC_STATUS = cdcStatusHandler(state);
     const WELFARE_STATUS = welfareStatusHandler(state);
     const OFFLINE_ACCESS_REASON = offlineReasonHandler(state);
     const CONNECTION_STATUS = offlineStatusHandler(state);
@@ -149,6 +152,7 @@ export const updateMixpanelSuperProperties = async (
       ITW_CED_V3,
       SAVED_PAYMENT_METHOD,
       CGN_STATUS,
+      CDC_STATUS,
       WELFARE_STATUS,
       OFFLINE_ACCESS_REASON,
       CONNECTION_STATUS

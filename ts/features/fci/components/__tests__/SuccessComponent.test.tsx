@@ -83,7 +83,7 @@ describe("Test SuccessComponent", () => {
       component.getByTestId("WaitQtspSignatureRequestTestID")
     ).toBeTruthy();
   });
-  it("with a signature request status SIGNED should render a GenericErrorComponent", () => {
+  it("with a signature request status SIGNED should render a SignatureStatusComponent", () => {
     const mockStore = configureMockStore<GlobalState>();
     const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
@@ -97,7 +97,7 @@ describe("Test SuccessComponent", () => {
     const component = renderComponent(props, store);
     expect(component.getByTestId("SignedSignatureRequestTestID")).toBeTruthy();
   });
-  it("with a signature request status REJECTED should render a GenericErrorComponent", () => {
+  it("with a signature request status REJECTED should render a SignatureStatusComponent", () => {
     const mockStore = configureMockStore<GlobalState>();
     const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
@@ -113,7 +113,7 @@ describe("Test SuccessComponent", () => {
       component.getByTestId("RejectedSignatureRequestTestID")
     ).toBeTruthy();
   });
-  it("with a signature request status CANCELLED should render a GenericErrorComponent", () => {
+  it("with a signature request status CANCELLED should render a SignatureStatusComponent", () => {
     const mockStore = configureMockStore<GlobalState>();
     const store: ReturnType<typeof mockStore> = mockStore(globalState);
 

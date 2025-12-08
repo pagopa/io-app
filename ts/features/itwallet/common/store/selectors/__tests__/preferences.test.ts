@@ -6,31 +6,10 @@ import { appReducer } from "../../../../../../store/reducers";
 import {
   itwAuthLevelSelector,
   itwIsDiscoveryBannerHiddenSelector,
-  itwIsFeedbackBannerHiddenSelector,
-  itwRequestedCredentialsSelector
+  itwRequestedCredentialsSelector,
+  itwIsPidReissuingSurveyHiddenSelector
 } from "../preferences";
 import { ItwAuthLevel } from "../../../utils/itwTypesUtils.ts";
-
-describe("itwIsFeedbackBannerHiddenSelector", () => {
-  it.each([
-    [false, undefined],
-    [false, "definitely not a date"],
-    [false, new Date().toISOString()],
-    [false, addDays(new Date(), -2).toISOString()],
-    [true, addMonths(new Date(), 1).toISOString()],
-    [true, addMonths(new Date(), 2).toISOString()]
-  ])("should return %p if banner is hidden until %p", (expected, value) => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-
-    expect(
-      itwIsFeedbackBannerHiddenSelector(
-        _.set(globalState, "features.itWallet.preferences", {
-          hideFeedbackBannerUntilDate: value
-        })
-      )
-    ).toBe(expected);
-  });
-});
 
 describe("itwIsDiscoveryBannerHiddenSelector", () => {
   it.each([
@@ -115,5 +94,22 @@ describe("itwAuthLevelSelector", () => {
     };
 
     expect(itwAuthLevelSelector(updatedState)).toBeUndefined();
+  });
+});
+
+describe("itwIsPidReissuingSurveyHiddenSelector", () => {
+  afterEach(() => {
+    // Always reset the date after each test to avoid side effects
+    MockDate.reset();
+  });
+
+  it("should set the hidden state of the bottom sheet", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+
+    const updatedState = _.set(globalState, "features.itWallet.preferences", {
+      isPidReissuingSurveyHidden: true
+    });
+
+    expect(itwIsPidReissuingSurveyHiddenSelector(updatedState)).toBe(true);
   });
 });

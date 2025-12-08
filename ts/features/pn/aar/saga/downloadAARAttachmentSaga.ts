@@ -136,7 +136,7 @@ function* getAttachmentMetadata(
   const request = getAttachmentMetadataFactory({
     Bearer: `Bearer ${bearerToken}`,
     urlEncodedBase64AttachmentUrl,
-    "x-pagopa-pn-io-src": "QRCODE",
+    "x-pagopa-pn-io-src": "QR_CODE",
     mandateId,
     isTest: useUATEnvironment
   });

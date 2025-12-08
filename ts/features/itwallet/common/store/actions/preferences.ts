@@ -1,10 +1,6 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
 
-export const itwCloseFeedbackBanner = createStandardAction(
-  "ITW_CLOSE_FEEDBACK_BANNER"
-)();
-
 export const itwCloseDiscoveryBanner = createStandardAction(
   "ITW_CLOSE_DISCOVERY_BANNER"
 )();
@@ -49,8 +45,11 @@ export const itwClearSimplifiedActivationRequirements = createStandardAction(
   "ITW_CLEAR_SIMPLIFIED_ACTIVATION_REQUIREMENTS"
 )<void>();
 
+export const itwSetPidReissuingSurveyHidden = createStandardAction(
+  "ITW_SET_PID_REISSUING_SURVEY_HIDDEN"
+)<boolean>();
+
 export type ItwPreferencesActions =
-  | ActionType<typeof itwCloseFeedbackBanner>
   | ActionType<typeof itwCloseDiscoveryBanner>
   | ActionType<typeof itwFlagCredentialAsRequested>
   | ActionType<typeof itwUnflagCredentialAsRequested>
@@ -61,4 +60,5 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwSetFiscalCodeWhitelisted>
   | ActionType<typeof itwSetWalletUpgradeMDLDetailsBannerHidden>
   | ActionType<typeof itwFreezeSimplifiedActivationRequirements>
-  | ActionType<typeof itwClearSimplifiedActivationRequirements>;
+  | ActionType<typeof itwClearSimplifiedActivationRequirements>
+  | ActionType<typeof itwSetPidReissuingSurveyHidden>;

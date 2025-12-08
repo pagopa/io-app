@@ -243,15 +243,6 @@ describe("ItwWalletCardsContainer", () => {
     expect(queryByTestId(`walletCardTestID_itw_itw_5`)).not.toBeNull();
   });
 
-  it("should render the feedback banner", () => {
-    jest
-      .spyOn(itwSelectors, "itwShouldRenderFeedbackBannerSelector")
-      .mockImplementation(() => true);
-
-    const { queryByTestId } = renderComponent(ItwWalletCardsContainer);
-    expect(queryByTestId("itwFeedbackBannerTestID")).not.toBeNull();
-  });
-
   it.each([
     ["valid", 0],
     ["jwtExpiring", 1],
