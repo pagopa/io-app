@@ -31,7 +31,7 @@ const mockFavouriteService = {
     name: "name"
   },
   name: "serviceName",
-  addedAt: new Date().toISOString()
+  addedAt: Date.now()
 } as FavouriteServiceType;
 
 describe("FavouriteServiceButton", () => {
