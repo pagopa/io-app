@@ -8,8 +8,10 @@ export type SendAARFailurePhase =
   | "Entry Point"
   | "Fetch Notification"
   | "Fetch QRCode"
-  | "Show Notification"
-  | "Validate Mandate";
+  | "Validate Mandate"
+  | "Playground"
+  | "Show Notification";
+
 export type RecipientInfo = {
   denomination: string;
   taxId: string;

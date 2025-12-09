@@ -19,6 +19,7 @@ import { fetchAarDataSaga } from "../fetchNotificationDataSaga";
 import { fetchAARQrCodeSaga } from "../fetchQrCodeSaga";
 import { testable, watchAarFlowSaga } from "../watchAARFlowSaga";
 import { validateMandateSaga } from "../validateMandateSaga";
+import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 const { aarFlowMasterSaga, raceWithTerminateFlow } = testable as NonNullable<
   typeof testable
 >;
@@ -30,8 +31,8 @@ const mockSendAARClient: SendAARClient = {
   aarQRCodeCheck: jest.fn(),
   getAARNotification: jest.fn(),
   getNotificationAttachment: jest.fn(),
-  createAARMandate: jest.fn(),
-  acceptIOMandate: jest.fn()
+  acceptIOMandate: jest.fn(),
+  createAARMandate: jest.fn()
 };
 
 describe("watchAarFlowSaga", () => {
@@ -53,6 +54,8 @@ describe("watchAarFlowSaga", () => {
       .next()
       .takeLatest(initiateAarFlow, initiateAarFlowSaga)
       .next()
+      .select(isAarInAppDelegationRemoteEnabledSelector)
+      .next(false)
       .isDone();
   });
 
