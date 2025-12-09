@@ -87,6 +87,7 @@ describe("TimelineListItem", () => {
     jest.clearAllMocks();
     jest.restoreAllMocks();
   });
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   [false, true].forEach(sendTemporaryMandateEnabled =>
     [[], fullHistory].forEach(history =>
       [false, true].forEach(linkDefined =>
