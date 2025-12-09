@@ -34,12 +34,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -67,26 +64,18 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -94,15 +83,13 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -156,16 +143,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   ITW_REMOTE_FAILURE
@@ -200,6 +182,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
         <RNSScreen
           activityState={2}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -222,18 +205,14 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -303,13 +282,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -914,7 +889,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                         enableDynamicSizing={false}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -931,7 +905,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -1070,7 +1043,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -1082,7 +1054,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -1434,12 +1405,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -1467,26 +1435,18 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -1494,15 +1454,13 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -1556,16 +1514,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   ITW_REMOTE_FAILURE
@@ -1600,6 +1553,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
         <RNSScreen
           activityState={2}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1622,18 +1576,14 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -1703,13 +1653,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -2170,7 +2116,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                         enableDynamicSizing={false}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -2187,7 +2132,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -2326,7 +2270,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -2338,7 +2281,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -2690,12 +2632,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -2723,26 +2662,18 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -2750,15 +2681,13 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -2812,16 +2741,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   ITW_REMOTE_FAILURE
@@ -2856,6 +2780,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
         <RNSScreen
           activityState={2}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2878,18 +2803,14 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -2959,13 +2880,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -3426,7 +3343,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                         enableDynamicSizing={false}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -3443,7 +3359,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -3582,7 +3497,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -3594,7 +3508,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -3946,12 +3859,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -3979,26 +3889,18 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -4006,15 +3908,13 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -4068,16 +3968,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   ITW_REMOTE_FAILURE
@@ -4112,6 +4007,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
         <RNSScreen
           activityState={2}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4134,18 +4030,14 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -4215,13 +4107,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -4702,7 +4590,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                         enableDynamicSizing={false}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -4719,7 +4606,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -4858,7 +4744,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -4870,7 +4755,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -4977,12 +4861,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -5010,26 +4891,18 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -5037,15 +4910,13 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -5099,16 +4970,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   ITW_REMOTE_FAILURE
@@ -5143,6 +5009,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
         <RNSScreen
           activityState={2}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5165,18 +5032,14 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -5246,13 +5109,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -5843,7 +5702,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                         enableDynamicSizing={false}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -5860,7 +5718,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -5999,7 +5856,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -6011,7 +5867,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -6363,12 +6218,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -6396,26 +6248,18 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -6423,15 +6267,13 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -6485,16 +6327,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   ITW_REMOTE_FAILURE
@@ -6529,6 +6366,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
         <RNSScreen
           activityState={2}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6551,18 +6389,14 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -6632,13 +6466,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -7229,7 +7059,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                         enableDynamicSizing={false}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -7246,7 +7075,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -7385,7 +7213,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -7397,7 +7224,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -7749,12 +7575,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_G
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -7782,26 +7605,18 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_G
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -7809,15 +7624,13 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_G
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -7871,16 +7684,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_G
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   ITW_REMOTE_FAILURE
@@ -7915,6 +7723,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_G
         <RNSScreen
           activityState={2}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7937,18 +7746,14 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_G
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -8018,13 +7823,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_G
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -8651,7 +8452,6 @@ Genera un nuovo QR Code e riprova.
                         enableDynamicSizing={false}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -8668,7 +8468,6 @@ Genera un nuovo QR Code e riprova.
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -8807,7 +8606,6 @@ Genera un nuovo QR Code e riprova.
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -8819,7 +8617,6 @@ Genera un nuovo QR Code e riprova.
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -8926,12 +8723,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -8959,26 +8753,18 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -8986,15 +8772,13 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -9048,16 +8832,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   ITW_REMOTE_FAILURE
@@ -9092,6 +8871,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
         <RNSScreen
           activityState={2}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9114,18 +8894,14 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -9195,13 +8971,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -9834,7 +9606,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                         enableDynamicSizing={false}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -9851,7 +9622,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -9990,7 +9760,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -10002,7 +9771,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -10327,12 +10095,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -10360,26 +10125,18 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -10387,15 +10144,13 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -10449,16 +10204,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   ITW_REMOTE_FAILURE
@@ -10493,6 +10243,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
         <RNSScreen
           activityState={2}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -10515,18 +10266,14 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -10596,13 +10343,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -11235,7 +10978,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                         enableDynamicSizing={false}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -11252,7 +10994,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -11391,7 +11132,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -11403,7 +11143,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -11510,12 +11249,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -11543,26 +11279,18 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -11570,15 +11298,13 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -11632,16 +11358,11 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   ITW_REMOTE_FAILURE
@@ -11676,6 +11397,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
         <RNSScreen
           activityState={2}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -11698,18 +11420,14 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -11779,13 +11497,9 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -12428,7 +12142,6 @@ continuare
                         enableDynamicSizing={false}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -12445,7 +12158,6 @@ continuare
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"
@@ -12584,7 +12296,6 @@ continuare
                         enableDynamicSizing={true}
                         footerComponent={[Function]}
                         handleComponent={[Function]}
-                        hardwareAccelerated={false}
                         importantForAccessibility="yes"
                         maxDynamicContentSize={1334}
                         onDismiss={[Function]}
@@ -12596,7 +12307,6 @@ continuare
                             "overflow": "hidden",
                           }
                         }
-                        visible={true}
                       >
                         <RCTScrollView
                           overScrollMode="never"

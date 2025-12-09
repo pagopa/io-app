@@ -4,7 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
 import { useCallback, useState } from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { ScrollView } from "react-native";
 import { ProblemJson } from "../../../../definitions/lollipop/ProblemJson";
 import { SignMessageResponse } from "../../../../definitions/lollipop/SignMessageResponse";
 import { apiUrlPrefix } from "../../../config";
@@ -127,27 +127,23 @@ const LollipopPlayground = () => {
   );
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView>
-        <ContentWrapper>
-          <LollipopPlaygroundContent
-            onSignButtonPress={body =>
-              onSignButtonPress(body, state.doSignBody)
-            }
-            onCheckBoxPress={v => {
-              setState({
-                ...state,
-                doSignBody: v
-              });
-            }}
-            onClearButtonPress={() => {
-              setState(INITIAL_STATE);
-            }}
-            playgroundState={state}
-          />
-        </ContentWrapper>
-      </ScrollView>
-    </SafeAreaView>
+    <ScrollView>
+      <ContentWrapper>
+        <LollipopPlaygroundContent
+          onSignButtonPress={body => onSignButtonPress(body, state.doSignBody)}
+          onCheckBoxPress={v => {
+            setState({
+              ...state,
+              doSignBody: v
+            });
+          }}
+          onClearButtonPress={() => {
+            setState(INITIAL_STATE);
+          }}
+          playgroundState={state}
+        />
+      </ContentWrapper>
+    </ScrollView>
   );
 };
 

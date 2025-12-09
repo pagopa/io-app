@@ -1,5 +1,5 @@
 import { fireEvent, render } from "@testing-library/react-native";
-import { Alert } from "react-native";
+import { Alert, Platform } from "react-native";
 import {
   InitiativeDTO,
   StatusEnum,
@@ -44,12 +44,10 @@ const mockedInitiative = {
 } as InitiativeDTO;
 
 describe("IdPayRemoveFromWalletButton", () => {
-  beforeAll(() => {
+  beforeEach(() => {
     jest.spyOn(Alert, "alert");
-    jest.mock("react-native/Libraries/Utilities/Platform", () => ({
-      OS: "ios",
-      select: () => null
-    }));
+    // eslint-disable-next-line functional/immutable-data
+    Platform.OS = "ios";
   });
   it("should render correctly", () => {
     const { getByTestId } = render(
