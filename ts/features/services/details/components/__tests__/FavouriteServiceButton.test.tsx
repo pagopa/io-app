@@ -92,9 +92,6 @@ describe("FavouriteServiceButton", () => {
 
 const renderComponent = (state: GlobalState) => {
   const store = createStore(appReducer, state as any);
-
-  // Aggiornare anche lo store
-
   return renderScreenWithNavigationStoreContext(
     () => <FavouriteServiceButton service={mockService} />,
     "DUMMY",
