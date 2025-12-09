@@ -1,5 +1,5 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import { select, put, takeLatest, call } from "typed-redux-saga";
+import { select, put, takeLatest, call } from "typed-redux-saga/macro";
 import * as E from "fp-ts/lib/Either";
 import { ActionType, getType } from "typesafe-actions";
 import { backendClientManager } from "../../../../api/BackendClientManager";
