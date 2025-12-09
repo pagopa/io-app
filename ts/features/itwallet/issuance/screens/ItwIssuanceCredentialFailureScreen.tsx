@@ -34,10 +34,10 @@ import {
   selectFailureOption,
   selectIssuerConfigurationOption
 } from "../../machine/credential/selectors";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { useCredentialEventsTracking } from "../hooks/useCredentialEventsTracking";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
-import { useItwCredentialIssuanceMachine } from "../../machine/credential/hooks/useItwCredentialIssuanceMachine";
 
 // Errors that allow a user to send a support request to Zendesk
 const zendeskAssistanceErrors = [
@@ -46,10 +46,8 @@ const zendeskAssistanceErrors = [
 ];
 
 export const ItwIssuanceCredentialFailureScreen = () => {
-  const { credentialIssuanceMachineSnapshot } =
-    useItwCredentialIssuanceMachine();
-
-  const failureOption = selectFailureOption(credentialIssuanceMachineSnapshot);
+  const failureOption =
+    ItwCredentialIssuanceMachineContext.useSelector(selectFailureOption);
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
@@ -75,13 +73,13 @@ type ContentViewProps = {
  * Renders the content of the screen
  */
 const ContentView = ({ failure }: ContentViewProps) => {
-  const {
-    credentialIssuanceMachineRef: machineRef,
-    credentialIssuanceMachineSnapshot: snapshot
-  } = useItwCredentialIssuanceMachine();
-
-  const credentialType = selectCredentialTypeOption(snapshot);
-  const issuerConf = selectIssuerConfigurationOption(snapshot);
+  const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
+  const credentialType = ItwCredentialIssuanceMachineContext.useSelector(
+    selectCredentialTypeOption
+  );
+  const issuerConf = ItwCredentialIssuanceMachineContext.useSelector(
+    selectIssuerConfigurationOption
+  );
   const locale = getFullLocale();
   const localeFallback = fallbackForLocalizedMessageKeys(locale);
   const deferredIssuanceScreenContent = useIOSelector(

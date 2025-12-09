@@ -19,6 +19,7 @@ import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils
 import { StoredCredential } from "../../common/utils/itwTypesUtils.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors/index.ts";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
   selectCredentialTypeOption,
   selectIsLoading,
@@ -29,6 +30,8 @@ import {
 export const ItwIssuanceEidResultScreen = () => {
   const route = useRoute();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const credentialMachineRef =
+    ItwCredentialIssuanceMachineContext.useActorRef();
   const issuanceMode =
     ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
   const failedCredentials = ItwEidIssuanceMachineContext.useSelector(
@@ -68,6 +71,12 @@ export const ItwIssuanceEidResultScreen = () => {
   const handleBackToWallet = () => machineRef.send({ type: "go-to-wallet" });
 
   if (O.isSome(credentialType)) {
+    credentialMachineRef.send({
+      type: "select-credential",
+      mode: "issuance",
+      credentialType: credentialType.value
+    });
+
     return <ItwIssuanceEidCredentialTriggerContent />;
   }
 

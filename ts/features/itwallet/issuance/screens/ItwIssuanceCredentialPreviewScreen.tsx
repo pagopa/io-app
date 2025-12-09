@@ -10,7 +10,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useCallback, useMemo } from "react";
 import I18n from "i18next";
-import { ActorRefFrom } from "xstate";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -39,18 +38,15 @@ import {
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
-import { useItwCredentialIssuanceMachine } from "../../machine/credential/hooks/useItwCredentialIssuanceMachine";
 import { ItwCredentialIssuanceMachine } from "../../machine/credential/machine";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 
 export const ItwIssuanceCredentialPreviewScreen = () => {
-  const { credentialIssuanceMachineRef, credentialIssuanceMachineSnapshot } =
-    useItwCredentialIssuanceMachine();
-
-  const credentialOption = selectCredentialOption(
-    credentialIssuanceMachineSnapshot
+  const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
+    selectCredentialTypeOption
   );
-  const credentialTypeOption = selectCredentialTypeOption(
-    credentialIssuanceMachineSnapshot
+  const credentialOption = ItwCredentialIssuanceMachineContext.useSelector(
+    selectCredentialOption
   );
 
   usePreventScreenCapture();
@@ -73,9 +69,7 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
           )}
         />
       ),
-      props => (
-        <ContentView {...props} machineRef={credentialIssuanceMachineRef} />
-      )
+      props => <ContentView {...props} />
     )
   );
 };
@@ -83,17 +77,13 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
 type ContentViewProps = {
   credentialType: string;
   credential: StoredCredential;
-  machineRef: ActorRefFrom<ItwCredentialIssuanceMachine>;
 };
 
 /**
  * Renders the content of the screen
  */
-const ContentView = ({
-  credentialType,
-  credential,
-  machineRef
-}: ContentViewProps) => {
+const ContentView = ({ credentialType, credential }: ContentViewProps) => {
+  const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const dispatch = useIODispatch();
   const route = useRoute();
   const isMultilevel = isMultiLevelCredential(credential);

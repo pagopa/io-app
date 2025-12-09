@@ -1090,7 +1090,7 @@ export const itwEidIssuanceMachine = setup({
       onDone: [
         {
           guard: "hasCredentialType",
-          target: "#itwEidIssuanceMachine.CredentialIssuance"
+          target: "#itwEidIssuanceMachine.Success"
         },
         {
           guard: and([
@@ -1103,23 +1103,6 @@ export const itwEidIssuanceMachine = setup({
           target: "#itwEidIssuanceMachine.Success"
         }
       ]
-    },
-    CredentialIssuance: {
-      description:
-        "This state represents the Credential Issuance Machine and initializes the process of adding a new credential to the wallet.",
-      entry: [
-        "navigateToSuccessScreen",
-        // Send the select-credential event to the credential issuance machine
-        sendTo("credentialIssuanceMachine", ({ context }) => ({
-          type: "select-credential",
-          credentialType: context.credentialType,
-          mode: "issuance"
-        }))
-      ],
-      invoke: {
-        id: "credentialIssuanceMachine",
-        src: "credentialIssuanceMachine"
-      }
     },
     CredentialsUpgrade: {
       tags: [ItwTags.Loading],
