@@ -16,7 +16,7 @@ import ItWalletLogo from "../../../../../img/features/itWallet/brand/logo.svg";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { getTxtNodeKey } from "../../../../components/IOMarkdown/renderRules";
 import { Renderer } from "../../../../components/IOMarkdown/types";
-import { IT_WALLET_BG_COLOR_LIGHT, ITW_BRAND_COLORS } from "../utils/constants";
+import { useItWalletTheme } from "../utils/theme";
 
 export type ItwEngagementBannerVariant =
   | "activation"
@@ -31,6 +31,7 @@ type Props = {
 };
 
 export const ItwEngagementBanner = (props: WithTestID<Props>) => {
+  const theme = useItWalletTheme();
   const { testID, onPress, onClosePress } = props;
 
   const handleOnClosePress = useCallback(() => {
@@ -58,7 +59,10 @@ export const ItwEngagementBanner = (props: WithTestID<Props>) => {
   return (
     <View
       testID={testID}
-      style={styles.container}
+      style={[
+        styles.container,
+        { backgroundColor: theme["banner-background"] }
+      ]}
       // A11y related props
       accessible={true}
       accessibilityRole="button"
@@ -134,13 +138,11 @@ const BannerContent = (props: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: IT_WALLET_BG_COLOR_LIGHT,
     display: "flex",
     padding: 16,
     borderRadius: 16,
     overflow: "hidden",
-    borderWidth: 1,
-    borderColor: ITW_BRAND_COLORS.blue
+    borderWidth: 1
   },
   deck: {
     position: "absolute",

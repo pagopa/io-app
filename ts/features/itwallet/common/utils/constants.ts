@@ -1,14 +1,7 @@
-import { IOColors, IOIcons } from "@pagopa/io-app-design-system";
-
 /**
  * Defines the number of asterisks used to mask the value of claims in the credential details
  */
 export const HIDDEN_CLAIM_TEXT = "******";
-
-/**
- * The new Wallet L3 background color
- */
-export const WALLET_L3_BG_COLOR = IOColors["blueIO-500"];
 
 /**
  * Defines the colors used in the gradient of the ITW components
@@ -28,50 +21,8 @@ export const itwGradientColors = [
 ];
 
 /**
- * IT-Wallet background color
- */
-export const IT_WALLET_BG_COLOR_LIGHT = "#F2F9FF";
-
-/**
- * IT-Wallet brand colors
- */
-export const ITW_BRAND_COLORS = {
-  orange: "#FFB357",
-  purple: "#CDD2FC",
-  lightBlue: "#7AC1FA",
-  blue: "#0066CC"
-};
-
-/**
- * IT-Wallet ID brand colors
- */
-export const IT_WALLET_ID_BG_LIGHT = "#DBE0FF";
-export const IT_WALLET_ID_BG = "#A8B4FF";
-export const IT_WALLET_ID_GRADIENT = ["#D5D5FF", "#CEE2FA"];
-/**
- * IT-Wallet ID logo
- */
-export const IT_WALLET_ID_LOGO: IOIcons = "sparkles";
-
-/**
- * Styling
- */
-export const IT_WALLET_BG = "#F2F9FF";
-
-export const IT_WALLET_GRADIENT = [
-  "#FFB357",
-  "#FFEABD",
-  "#1968F0",
-  "#CDD2FC",
-  "#FFB357",
-  "#1968F0",
-  "#DCE3FC"
-];
-
-/**
  * Qualtrics survey URLs
  */
-
 export const IT_WALLET_SURVEY_EID_REISSUANCE_SUCCESS =
   "https://pagopa.qualtrics.com/jfe/form/SV_3JmGHi0IjGYESYC";
 export const IT_WALLET_SURVEY_EID_REISSUANCE_FAILURE =

@@ -3,7 +3,6 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import {
   itwCloseDiscoveryBanner,
-  itwCloseFeedbackBanner,
   itwFlagCredentialAsRequested,
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
@@ -13,14 +12,13 @@ import {
   itwUnflagCredentialAsRequested,
   itwSetWalletUpgradeMDLDetailsBannerHidden,
   itwFreezeSimplifiedActivationRequirements,
-  itwClearSimplifiedActivationRequirements
+  itwClearSimplifiedActivationRequirements,
+  itwSetPidReissuingSurveyHidden
 } from "../actions/preferences";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
 
 export type ItwPreferencesState = {
-  // Date until which the feedback banner should be hidden
-  hideFeedbackBannerUntilDate?: string;
   // Date until which the discovery banner should be hidden
   hideDiscoveryBannerUntilDate?: string;
   // Stores the list of requested credentials which supports delayed issuance
@@ -43,6 +41,9 @@ export type ItwPreferencesState = {
   // Indicates whether the user should activate IT-Wallet with the simplified flow,
   // even if he/she already has a valid L3 PID (obtained outside the whitelist)
   isItwSimplifiedActivationRequired?: boolean;
+  // Indicates whether the bottom sheet survey is visible when the user quits
+  // the reissuing flow only for the first time
+  isPidReissuingSurveyHidden?: boolean;
 };
 
 export const itwPreferencesInitialState: ItwPreferencesState = {
@@ -54,13 +55,6 @@ const reducer = (
   action: Action
 ): ItwPreferencesState => {
   switch (action.type) {
-    case getType(itwCloseFeedbackBanner): {
-      return {
-        ...state,
-        hideFeedbackBannerUntilDate: addMonths(new Date(), 1).toISOString()
-      };
-    }
-
     case getType(itwCloseDiscoveryBanner): {
       return {
         ...state,
@@ -160,6 +154,13 @@ const reducer = (
     case getType(itwClearSimplifiedActivationRequirements): {
       const { isItwSimplifiedActivationRequired: _, ...rest } = state;
       return rest;
+    }
+
+    case getType(itwSetPidReissuingSurveyHidden): {
+      return {
+        ...state,
+        isPidReissuingSurveyHidden: action.payload
+      };
     }
 
     default:

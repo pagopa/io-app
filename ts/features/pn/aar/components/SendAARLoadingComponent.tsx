@@ -1,9 +1,12 @@
-import i18n from "i18next";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 
-export const SendAARLoadingComponent = () => (
+type Props = {
+  contentTitle: string;
+};
+
+export const SendAARLoadingComponent = ({ contentTitle }: Props) => (
   <LoadingScreenContent
-    contentTitle={i18n.t("features.pn.aar.flow.fetchingQrData.loadingText")}
+    contentTitle={contentTitle}
     testID="LoadingScreenContent"
   />
 );

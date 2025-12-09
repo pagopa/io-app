@@ -30,10 +30,12 @@ import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import ROUTES from "../../../../../navigation/routes";
 import useActiveSessionLoginNavigation from "../../utils/useActiveSessionLoginNavigation";
 import { ACS_PATH } from "../../shared/utils";
-
-// The MP events related to this page have been commented on,
-// pending their correct integration into the flow.
-// Task: https://pagopa.atlassian.net/browse/IOPID-3343
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
+import {
+  trackLoginCieConsentDataUsageScreen,
+  trackLoginCieDataSharingError
+} from "../../../common/analytics/cieAnalytics";
+import { trackLoginFailure } from "../../../common/analytics";
 
 const ActiveSessionLoginCieConsentDataUsageScreen = () => {
   const route =
@@ -56,10 +58,9 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
   //     [dispatch]
   //   );
 
-  // const loginFailureDispatch = useCallback(
-  //   (error: Error) => dispatch(loginFailure({ error, idp: "cie" })),
-  //   [dispatch]
-  // );
+  useOnFirstRender(() => {
+    void trackLoginCieConsentDataUsageScreen("reauth");
+  });
 
   const navigateToErrorScreen = useCallback(
     (errorCodeOrMessageProp?: string) => {
@@ -102,11 +103,18 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
       if (code !== AUTH_ERRORS.ERROR_1004) {
         dispatch(activeSessionLoginFailure());
       }
+      if (code === "22") {
+        trackLoginCieDataSharingError("reauth");
+      }
       setHasError(true);
       navigateToErrorScreen(code || message);
-      //   loginFailureDispatch(
-      //     new Error(`login CIE failure with code ${code || message || "n/a"}`)
-      //   );
+      trackLoginFailure({
+        reason: new Error(
+          `login CIE failure with code ${code || message || "n/a"}`
+        ),
+        idp: "cie",
+        flow: "reauth"
+      });
     },
     [dispatch, navigateToErrorScreen]
   );
@@ -134,7 +142,8 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
       const isLoginUrlWithToken = onLoginUriChanged(
         handleLoginFailure,
         handleLoginSuccess,
-        "cie"
+        "cie",
+        "reauth"
       )(event);
       // URL can be loaded if it's not the login URL containing the session token - this avoids
       // making a (useless) GET request with the session in the URL
@@ -142,12 +151,6 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
     },
     [handleLoginFailure, handleLoginSuccess]
   );
-
-  //   useEffect(() => {
-  //     if (hasError && errorCodeOrMessage === "22") {
-  //       trackLoginCieDataSharingError();
-  //     }
-  //   }, [errorCodeOrMessage, hasError]);
 
   if (isLoginSuccess) {
     return <LoaderComponent />;

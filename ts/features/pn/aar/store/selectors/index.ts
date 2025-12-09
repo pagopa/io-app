@@ -1,41 +1,45 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { thirdPartyFromIdSelector } from "../../../../messages/store/reducers/thirdPartyById";
-import { toPNMessage } from "../../../store/types/transformers";
-import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
+import { toSENDMessage } from "../../../store/types/transformers";
+import {
+  AARFlowState,
+  maybeIunFromAarFlowState,
+  sendAARFlowStates
+} from "../../utils/stateUtils";
 
 export const thirdPartySenderDenominationSelector = (
   state: GlobalState,
   ioMessageId: string
-) =>
-  pipe(
-    thirdPartyFromIdSelector(state, ioMessageId),
-    pot.toOption,
-    O.flatMap(toPNMessage),
-    O.map(data => data.senderDenomination),
-    O.toUndefined
-  );
-
-export const aarAdresseeDenominationSelector = (
-  state: GlobalState,
-  iun: string
 ) => {
+  const thirdPartyMessagePot = thirdPartyFromIdSelector(state, ioMessageId);
+  const thirdPartyMessage = pot.getOrElse(thirdPartyMessagePot, undefined);
+  if (thirdPartyMessage == null) {
+    return undefined;
+  }
+  const sendMessage = toSENDMessage(thirdPartyMessage);
+  return sendMessage?.senderDenomination;
+};
+
+export const aarAdresseeDenominationSelector = (state: GlobalState) => {
   const currentState = currentAARFlowData(state);
 
   switch (currentState.type) {
-    case sendAARFlowStates.fetchingNotificationData:
-    case sendAARFlowStates.displayingNotificationData:
-    case sendAARFlowStates.notAddresseeFinal:
-      if (iun === currentState.iun) {
-        return currentState.recipientInfo.denomination;
-      }
+    case sendAARFlowStates.none:
+    case sendAARFlowStates.ko:
+    case sendAARFlowStates.displayingAARToS:
+    case sendAARFlowStates.fetchingQRData:
       return undefined;
     default:
-      return undefined;
+      return currentState.recipientInfo.denomination;
   }
+};
+export const currentAarFlowIunSelector = (
+  state: GlobalState
+): string | undefined => {
+  const currentState = currentAARFlowData(state);
+  return maybeIunFromAarFlowState(currentState);
 };
 
 export const currentAARFlowData = (state: GlobalState) =>

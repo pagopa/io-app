@@ -17,7 +17,10 @@ import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { idpSelected } from "../../../common/store/actions";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
-import { setFinishedActiveSessionLoginFlow } from "../../../activeSessionLogin/store/actions";
+import {
+  setFinishedActiveSessionLoginFlow,
+  setIdpSelectedActiveSessionLogin
+} from "../../../activeSessionLogin/store/actions";
 
 const CIE_PIN_DESC: TranslationKeys =
   "authentication.cie_id.error_screen.cie_pin_supported.description";
@@ -38,11 +41,15 @@ const CieIdErrorScreen = () => {
 
   useEffect(() => {
     if (isCieSupported) {
-      void trackCieIdErrorCiePinFallbackScreen();
+      void trackCieIdErrorCiePinFallbackScreen(
+        isActiveSessionLogin ? "reauth" : "auth"
+      );
     } else {
-      void trackCieIdErrorSpidFallbackScreen();
+      void trackCieIdErrorSpidFallbackScreen(
+        isActiveSessionLogin ? "reauth" : "auth"
+      );
     }
-  }, [isCieSupported]);
+  }, [isActiveSessionLogin, isCieSupported]);
 
   const subtitle = I18n.t(isCieSupported ? CIE_PIN_DESC : SPID_DESC);
   const primaryActionLabel = I18n.t(
@@ -74,15 +81,23 @@ const CieIdErrorScreen = () => {
         accessibilityLabel: primaryActionLabel,
         onPress: () => {
           if (isCieSupported) {
-            void trackCieIdErrorCiePinSelected();
+            void trackCieIdErrorCiePinSelected(
+              isActiveSessionLogin ? "reauth" : "auth"
+            );
+            if (isActiveSessionLogin) {
+              dispatch(setIdpSelectedActiveSessionLogin(IdpCIE));
+            } else {
+              dispatch(idpSelected(IdpCIE));
+            }
             // Since this screen will only be accessible after the user has already
             // made their choice on the Opt-In screen, we can navigate directly to it
-            dispatch(idpSelected(IdpCIE));
             navigate(AUTHENTICATION_ROUTES.MAIN, {
               screen: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
             });
           } else {
-            void trackCieIdErrorSpidSelected();
+            void trackCieIdErrorSpidSelected(
+              isActiveSessionLogin ? "reauth" : "auth"
+            );
             // Since this screen will only be accessible after the user has already
             // made their choice on the Opt-In screen, we can navigate directly to it
             navigate(AUTHENTICATION_ROUTES.MAIN, {

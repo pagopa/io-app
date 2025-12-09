@@ -1,9 +1,8 @@
 import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import { RefObject, useCallback, useEffect, useRef } from "react";
+import _ from "lodash";
+import { RefObject, useCallback, useEffect, useMemo, useRef } from "react";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
@@ -15,15 +14,23 @@ import {
 } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { isStrictSome } from "../../../utils/pot";
 import {
   cancelPreviousAttachmentDownload,
   cancelQueuedPaymentUpdates,
   updatePaymentForMessage
 } from "../../messages/store/actions";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../pushNotifications/analytics";
 import { profileFiscalCodeSelector } from "../../settings/common/store/selectors";
+import {
+  trackSendAARFailure,
+  trackSendAarNotificationClosure
+} from "../aar/analytics";
 import { SendAARMessageDetailBottomSheetComponent } from "../aar/components/SendAARMessageDetailBottomSheetComponent";
 import { terminateAarFlow } from "../aar/store/actions";
+import { sendAARFlowStates } from "../aar/utils/stateUtils";
 import { trackPNUxSuccess } from "../analytics";
 import { MessageDetails } from "../components/MessageDetails";
 import { PnParamsList } from "../navigation/params";
@@ -32,23 +39,15 @@ import {
   startPNPaymentStatusTracking
 } from "../store/actions";
 import {
-  pnMessageFromIdSelector,
-  pnUserSelectedPaymentRptIdSelector
+  curriedSendMessageFromIdSelector,
+  sendUserSelectedPaymentRptIdSelector
 } from "../store/reducers";
 import {
-  containsF24FromPNMessagePot,
-  isCancelledFromPNMessagePot,
+  doesSENDMessageIncludeF24,
+  isSENDMessageCancelled,
   openingSourceIsAarMessage,
-  paymentsFromPNMessagePot
+  paymentsFromSendMessage
 } from "../utils";
-import {
-  trackSendAARFailure,
-  trackSendAarNotificationClosure
-} from "../aar/analytics";
-import {
-  SendOpeningSource,
-  SendUserType
-} from "../../pushNotifications/analytics";
 
 export type MessageDetailsScreenRouteParams = {
   messageId: string;
@@ -130,19 +129,17 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
   const aarBottomSheetRef = useRef<() => void>(undefined);
 
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
-  const sendMessagePot = useIOSelector(state =>
-    pnMessageFromIdSelector(state, messageId)
+  const sendMessageFromIdSelector = useMemo(
+    () => curriedSendMessageFromIdSelector(messageId),
+    [messageId]
   );
-
-  const sendMessageOrUndefined = O.getOrElseW(() => undefined)(
-    pot.getOrElse(sendMessagePot, O.none)
-  );
+  const sendMessageOrUndefined = useIOSelector(sendMessageFromIdSelector);
 
   const isAarMessage = openingSourceIsAarMessage(sendOpeningSource);
   const fiscalCodeOrUndefined = isAarMessage ? undefined : currentFiscalCode;
-  const payments = paymentsFromPNMessagePot(
+  const payments = paymentsFromSendMessage(
     fiscalCodeOrUndefined,
-    sendMessagePot
+    sendMessageOrUndefined
   );
   const paymentsCount = payments?.length ?? 0;
   const androidBackButtonCallback = useCallback(() => {
@@ -157,6 +154,7 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
   useHardwareBackButton(androidBackButtonCallback);
   useCorrectHeader(isAarMessage, aarBottomSheetRef, sendUserType);
 
+  // useEffect for payment tracking and resource dealloaction
   useEffect(() => {
     dispatch(
       startPNPaymentStatusTracking({
@@ -165,10 +163,26 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
         messageId
       })
     );
+    return () => {
+      dispatch(cancelPreviousAttachmentDownload());
+      dispatch(cancelQueuedPaymentUpdates({ messageId }));
+      dispatch(cancelPNPaymentStatusTracking({ messageId }));
+      if (isAarMessage) {
+        dispatch(
+          terminateAarFlow({
+            messageId,
+            currentFlowState: sendAARFlowStates.displayingNotificationData
+          })
+        );
+      }
+    };
+  }, [dispatch, isAarMessage, messageId, sendOpeningSource, sendUserType]);
 
-    if (isStrictSome(sendMessagePot)) {
-      const isCancelled = isCancelledFromPNMessagePot(sendMessagePot);
-      const containsF24 = containsF24FromPNMessagePot(sendMessagePot);
+  // useEffect for analytics tracking
+  useOnFirstRender(() => {
+    if (sendMessageOrUndefined != null) {
+      const isCancelled = isSENDMessageCancelled(sendMessageOrUndefined);
+      const containsF24 = doesSENDMessageIncludeF24(sendMessageOrUndefined);
 
       trackPNUxSuccess(
         paymentsCount,
@@ -178,41 +192,22 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
         sendOpeningSource,
         sendUserType
       );
-
-      if (sendMessageOrUndefined == null && isAarMessage) {
-        trackSendAARFailure(
-          "Show Notification",
-          "Screen rendering with undefined SEND message"
-        );
-      }
+    } else if (isAarMessage) {
+      trackSendAARFailure(
+        "Show Notification",
+        "Screen rendering with undefined SEND message"
+      );
     }
-    return () => {
-      dispatch(cancelPreviousAttachmentDownload());
-      dispatch(cancelQueuedPaymentUpdates({ messageId }));
-      dispatch(cancelPNPaymentStatusTracking());
-      if (isAarMessage) {
-        dispatch(terminateAarFlow({ messageId }));
-      }
-    };
-  }, [
-    dispatch,
-    firstTimeOpening,
-    isAarMessage,
-    messageId,
-    paymentsCount,
-    sendMessageOrUndefined,
-    sendMessagePot,
-    sendOpeningSource,
-    sendUserType
-  ]);
+  });
 
+  // useFocusEffect to track and update an user-selected payment
   const store = useIOStore();
   useFocusEffect(
     useCallback(() => {
       const globalState = store.getState();
-      const paymentToCheckRptId = pnUserSelectedPaymentRptIdSelector(
+      const paymentToCheckRptId = sendUserSelectedPaymentRptIdSelector(
         globalState,
-        sendMessagePot
+        sendMessageOrUndefined
       );
       if (paymentToCheckRptId) {
         dispatch(
@@ -223,7 +218,7 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
           })
         );
       }
-    }, [dispatch, messageId, sendMessagePot, serviceId, store])
+    }, [dispatch, messageId, sendMessageOrUndefined, serviceId, store])
   );
 
   if (sendMessageOrUndefined == null) {

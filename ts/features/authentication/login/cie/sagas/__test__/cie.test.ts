@@ -1,16 +1,9 @@
 import { expectSaga } from "redux-saga-test-plan";
 import cieManager from "@pagopa/react-native-cie";
 import * as matchers from "redux-saga-test-plan/matchers";
-import {
-  cieIsSupported,
-  hasApiLevelSupport,
-  hasNFCFeature,
-  nfcIsEnabled
-} from "../../store/actions";
+import { cieIsSupported, nfcIsEnabled } from "../../store/actions";
 import {
   checkCieAvailabilitySaga,
-  checkHasApiLevelSupportSaga,
-  checkHasNfcFeatureSaga,
   checkNfcEnablementSaga,
   stopCieManager,
   watchCieAuthenticationSaga
@@ -55,50 +48,6 @@ describe("CIE saga", () => {
 
       return expectSaga(checkCieAvailabilitySaga, mockCheck)
         .put(cieIsSupported.failure(convertUnknownToError(error)))
-        .run();
-    });
-  });
-
-  describe("checkHasApiLevelSupportSaga", () => {
-    it("should dispatch success", () => {
-      (cieManager.hasApiLevelSupport as jest.Mock).mockResolvedValueOnce(true);
-
-      return expectSaga(
-        checkHasApiLevelSupportSaga,
-        cieManager.hasApiLevelSupport
-      )
-        .put(hasApiLevelSupport.success(true))
-        .run();
-    });
-
-    it("should dispatch failure", () => {
-      const error = new Error("api level fail");
-      (cieManager.hasApiLevelSupport as jest.Mock).mockRejectedValueOnce(error);
-
-      return expectSaga(
-        checkHasApiLevelSupportSaga,
-        cieManager.hasApiLevelSupport
-      )
-        .put(hasApiLevelSupport.failure(convertUnknownToError(error)))
-        .run();
-    });
-  });
-
-  describe("checkHasNfcFeatureSaga", () => {
-    it("should dispatch success", () => {
-      (cieManager.hasNFCFeature as jest.Mock).mockResolvedValueOnce(true);
-
-      return expectSaga(checkHasNfcFeatureSaga, cieManager.hasNFCFeature)
-        .put(hasNFCFeature.success(true))
-        .run();
-    });
-
-    it("should dispatch failure", () => {
-      const error = new Error("nfc fail");
-      (cieManager.hasNFCFeature as jest.Mock).mockRejectedValueOnce(error);
-
-      return expectSaga(checkHasNfcFeatureSaga, cieManager.hasNFCFeature)
-        .put(hasNFCFeature.failure(convertUnknownToError(error)))
         .run();
     });
   });
@@ -155,8 +104,6 @@ describe("CIE saga", () => {
           [matchers.call.fn(cieManager.hasNFCFeature), true]
         ])
         .put(cieIsSupported.success(true))
-        .put(hasApiLevelSupport.success(true))
-        .put(hasNFCFeature.success(true))
         .run());
   });
 

@@ -3,7 +3,7 @@ import I18n from "i18next";
 import { useRef } from "react";
 import { useIOSelector } from "../../../../../store/hooks";
 import { getDeviceId } from "../../../../../utils/device";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { emptyContextualHelp } from "../../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
 import BonusInformationComponent, {
@@ -12,7 +12,7 @@ import BonusInformationComponent, {
 import { availableBonusTypesSelectorFromId } from "../../../common/store/selectors";
 import { ID_CDC_TYPE } from "../../../common/utils";
 import * as analytics from "../../analytics";
-import { cdcCtaConfigSelector } from "../../store/selectors/remoteConfig";
+import { cdcCtaConfigSelector } from "../../common/store/selectors/remoteConfig";
 import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 
 const CdcBonusRequestInformationTos = () => {
