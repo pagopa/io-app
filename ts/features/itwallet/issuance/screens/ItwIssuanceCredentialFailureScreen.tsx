@@ -3,7 +3,6 @@ import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
-import { ActorRefFrom, StateFrom } from "xstate";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -39,7 +38,6 @@ import { useCredentialEventsTracking } from "../hooks/useCredentialEventsTrackin
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { useItwCredentialIssuanceMachine } from "../../machine/credential/hooks/useItwCredentialIssuanceMachine";
-import { ItwCredentialIssuanceMachine } from "../../machine/credential/machine";
 
 // Errors that allow a user to send a support request to Zendesk
 const zendeskAssistanceErrors = [
@@ -48,7 +46,7 @@ const zendeskAssistanceErrors = [
 ];
 
 export const ItwIssuanceCredentialFailureScreen = () => {
-  const { credentialIssuanceMachineRef, credentialIssuanceMachineSnapshot } =
+  const { credentialIssuanceMachineSnapshot } =
     useItwCredentialIssuanceMachine();
 
   const failureOption = selectFailureOption(credentialIssuanceMachineSnapshot);
@@ -58,13 +56,7 @@ export const ItwIssuanceCredentialFailureScreen = () => {
 
   return pipe(
     failureOption,
-    O.fold(constNull, failure => (
-      <ContentView
-        machineRef={credentialIssuanceMachineRef}
-        machineSnapshot={credentialIssuanceMachineSnapshot}
-        failure={failure}
-      />
-    ))
+    O.fold(constNull, failure => <ContentView failure={failure} />)
   );
 };
 
@@ -76,21 +68,20 @@ const defaultInvalidStatusMessage = {
 };
 
 type ContentViewProps = {
-  machineRef: ActorRefFrom<ItwCredentialIssuanceMachine>;
-  machineSnapshot: StateFrom<ItwCredentialIssuanceMachine>;
   failure: CredentialIssuanceFailure;
 };
 
 /**
  * Renders the content of the screen
  */
-const ContentView = ({
-  machineRef,
-  machineSnapshot,
-  failure
-}: ContentViewProps) => {
-  const credentialType = selectCredentialTypeOption(machineSnapshot);
-  const issuerConf = selectIssuerConfigurationOption(machineSnapshot);
+const ContentView = ({ failure }: ContentViewProps) => {
+  const {
+    credentialIssuanceMachineRef: machineRef,
+    credentialIssuanceMachineSnapshot: snapshot
+  } = useItwCredentialIssuanceMachine();
+
+  const credentialType = selectCredentialTypeOption(snapshot);
+  const issuerConf = selectIssuerConfigurationOption(snapshot);
   const locale = getFullLocale();
   const localeFallback = fallbackForLocalizedMessageKeys(locale);
   const deferredIssuanceScreenContent = useIOSelector(
