@@ -7,8 +7,7 @@ import {
   not,
   or,
   raise,
-  setup,
-  sendTo
+  setup
 } from "xstate";
 import { assert } from "../../../../utils/assert.ts";
 import { trackItWalletIntroScreen } from "../../analytics";
@@ -205,8 +204,7 @@ export const itwEidIssuanceMachine = setup({
       // MRTD PoP verification is a step required for SPID and CieID identification modes
       // when issuing an L3 PID
       context.level === "l3" && context.identification?.mode !== "ciePin",
-    isWalletValid: notImplemented,
-    hasCredentialType: ({ context }) => !!context.credentialType
+    isWalletValid: notImplemented
   }
 }).createMachine({
   id: "itwEidIssuanceMachine",
@@ -1088,10 +1086,6 @@ export const itwEidIssuanceMachine = setup({
         }
       },
       onDone: [
-        {
-          guard: "hasCredentialType",
-          target: "#itwEidIssuanceMachine.Success"
-        },
         {
           guard: and([
             "hasLegacyCredentials",

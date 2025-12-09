@@ -101,7 +101,6 @@ const isOperationAborted = jest.fn();
 const hasValidWalletInstanceAttestation = jest.fn();
 const isEligibleForItwSimplifiedActivation = jest.fn();
 const revokeWalletInstance = jest.fn();
-const hasCredentialType = jest.fn();
 const isWalletValid = jest.fn();
 
 describe("itwEidIssuanceMachine", () => {
@@ -178,7 +177,6 @@ describe("itwEidIssuanceMachine", () => {
       isOperationAborted,
       isEligibleForItwSimplifiedActivation,
       hasValidWalletInstanceAttestation,
-      hasCredentialType,
       isWalletValid
     }
   });
@@ -2168,7 +2166,7 @@ describe("itwEidIssuanceMachine", () => {
     );
   });
 
-  it("Should initialize the credential issuance machine when credentialType is present", async () => {
+/*   it("Should initialize the credential issuance machine when credentialType is present", async () => {
     hasCredentialType.mockImplementation(() => true);
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
@@ -2197,5 +2195,5 @@ describe("itwEidIssuanceMachine", () => {
 
     const child = actor.getSnapshot().children.credentialIssuanceMachine;
     expect(child).toBeDefined();
-  });
+  }); */
 });
