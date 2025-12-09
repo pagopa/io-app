@@ -18,6 +18,7 @@ import { initiateAarFlowSaga } from "../initiateAarFlowSaga";
 import { fetchAarDataSaga } from "../fetchNotificationDataSaga";
 import { fetchAARQrCodeSaga } from "../fetchQrCodeSaga";
 import { testable, watchAarFlowSaga } from "../watchAARFlowSaga";
+import { createAarMandateSaga } from "../createAarMandateSaga";
 const { aarFlowMasterSaga, raceWithTerminateFlow } = testable as NonNullable<
   typeof testable
 >;
@@ -28,7 +29,9 @@ const mockKeyInfo = {} as KeyInfo;
 const mockSendAARClient: SendAARClient = {
   aarQRCodeCheck: jest.fn(),
   getAARNotification: jest.fn(),
-  getNotificationAttachment: jest.fn()
+  getNotificationAttachment: jest.fn(),
+  acceptIOMandate: jest.fn(),
+  createAARMandate: jest.fn()
 };
 
 describe("watchAarFlowSaga", () => {
@@ -101,6 +104,27 @@ describe("watchAarFlowSaga", () => {
       });
 
       testSaga(aarFlowMasterSaga, mockSendAARClient, mockSessionToken, action)
+        .next()
+        .isDone();
+    });
+    it("should call createAarMandateSaga when an updateState action has creatingMandate as payload", () => {
+      const action = setAarFlowState({
+        type: sendAARFlowStates.creatingMandate,
+        recipientInfo: {
+          denomination: "Mario Rossi",
+          taxId: "RSSMRA74D22A001Q"
+        },
+        iun: "123",
+        qrCode: "TESTETST"
+      });
+      testSaga(aarFlowMasterSaga, mockSendAARClient, mockSessionToken, action)
+        .next()
+        .call(
+          createAarMandateSaga,
+          mockSendAARClient.createAARMandate,
+          mockSessionToken,
+          action
+        )
         .next()
         .isDone();
     });
