@@ -47,10 +47,6 @@ export function* logoutUserAfterActiveSessionLoginSaga(
     keyInfo
   );
 
-  // Issue a logout request to the backend, asking to delete the session
-  // FIXME: if there's no connectivity to the backend, this request will
-  //        block for a while.
-
   try {
     const response: SagaCallReturnType<typeof logout> = yield* call(logout, {});
     if (E.isRight(response)) {
