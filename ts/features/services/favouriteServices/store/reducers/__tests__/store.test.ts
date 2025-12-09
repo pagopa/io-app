@@ -15,7 +15,7 @@ const SERVICE_ID_2 = "serviceId2";
 const FAVOURITE_SERVICE_1 = createMockFavouriteService({ id: SERVICE_ID_1 });
 const FAVOURITE_SERVICE_2 = createMockFavouriteService({ id: SERVICE_ID_2 });
 
-const MOCKED_DATE = new Date();
+const MOCKED_DATE = Date.now();
 MockDate.set(MOCKED_DATE);
 
 describe("Favourite services reducer", () => {
@@ -41,7 +41,7 @@ describe("Favourite services reducer", () => {
     ).toStrictEqual({
       [SERVICE_ID_1]: {
         ...FAVOURITE_SERVICE_1,
-        addedAt: MOCKED_DATE.toISOString()
+        addedAt: MOCKED_DATE
       }
     });
   });
@@ -55,11 +55,11 @@ describe("Favourite services reducer", () => {
             dataById: {
               [SERVICE_ID_1]: {
                 ...FAVOURITE_SERVICE_1,
-                addedAt: MOCKED_DATE.toISOString()
+                addedAt: MOCKED_DATE
               },
               [SERVICE_ID_2]: {
                 ...FAVOURITE_SERVICE_2,
-                addedAt: MOCKED_DATE.toISOString()
+                addedAt: MOCKED_DATE
               }
             }
           }

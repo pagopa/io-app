@@ -28,7 +28,7 @@ const reducer = (
           ...state.dataById,
           [action.payload.id]: {
             ...action.payload,
-            addedAt: new Date().toISOString()
+            addedAt: Date.now()
           }
         }
       };
