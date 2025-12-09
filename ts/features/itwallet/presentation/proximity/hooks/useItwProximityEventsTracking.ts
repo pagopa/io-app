@@ -16,11 +16,12 @@ import { hasGivenConsentSelector } from "../machine/selectors";
 type Params = {
   failure: ProximityFailure;
 };
+// Define a constant origin for mixpanel tracking purposes
+const origin = "ITW_PROXIMITY_EVENTS_TRACKING";
 
 /**
  * Track errors occurred during the proximity presentation flow for analytics.
  */
-const origin = "ITW_PROXIMITY_EVENTS_TRACKING";
 
 export const useItwProximityEventsTracking = ({ failure }: Params) => {
   const hasGivenConsent = ItwProximityMachineContext.useSelector(
