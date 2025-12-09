@@ -280,7 +280,7 @@
   "packageManager": "pnpm@9.15.9",
   "pnpm": {
     "patchedDependencies": {
-      "@gorhom-bottom-sheet@5.1.2": "patches/@gorhom-bottom-sheet@5.1.2.patch",
+      "@gorhom/bottom-sheet@5.1.2": "patches/@gorhom__bottom-sheet@5.1.2.patch",
       "react-native-barcode-builder@2.0.0": "patches/react-native-barcode-builder@2.0.0.patch",
       "react-native-calendar-events@2.2.0": "patches/react-native-calendar-events@2.2.0.patch",
       "react-native-device-info@14.0.4": "patches/react-native-device-info@14.0.4.patch",
