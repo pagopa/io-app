@@ -318,7 +318,7 @@ describe("fetchQrCodeSaga", () => {
       isTest: true
     });
   });
-  it("should dispatch KO state on a decoding failute", () => {
+  it("should dispatch KO state on a decoding failure", () => {
     const failureDecodingResponse = E.left([]);
     const mockApiCall = jest
       .fn()
