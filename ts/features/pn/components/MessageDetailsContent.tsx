@@ -16,7 +16,7 @@ export const MessageDetailsContent = ({
   sendUserType
 }: MessageDetailsContentProps) => (
   <BodySmall>
-    <MaybeDelegationText iun={message.iun} sendUserType={sendUserType} />
+    <MaybeDelegationText sendUserType={sendUserType} />
     <MaybeDenomination senderDenomination={message.senderDenomination} />
     {I18n.t(
       "features.pn.aar.flow.displayingNotificationData.abstract.title.checkDocuments"
@@ -44,14 +44,12 @@ const MaybeDenomination = ({ senderDenomination }: MaybeDenominationProps) =>
     </BodySmall>
   );
 
-type MaybeDelegationTextProps = { iun: string; sendUserType: SendUserType };
-const MaybeDelegationText = ({
-  iun,
-  sendUserType
-}: MaybeDelegationTextProps) => {
-  const aarAdresseeDenomination = useIOSelector(state =>
-    aarAdresseeDenominationSelector(state, iun)
+type MaybeDelegationTextProps = { sendUserType: SendUserType };
+const MaybeDelegationText = ({ sendUserType }: MaybeDelegationTextProps) => {
+  const aarAdresseeDenomination = useIOSelector(
+    aarAdresseeDenominationSelector
   );
+
   if (sendUserType !== "mandatory") {
     return (
       <>
