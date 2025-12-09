@@ -14,13 +14,24 @@ import {
 import { setAarFlowState } from "../store/actions";
 import { sendAARFlowStates } from "../utils/stateUtils";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { PnParamsList } from "../../navigation/params";
+import PN_ROUTES from "../../navigation/routes";
+import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 
 const { width, height, uri } = Image.resolveAssetSource(
   cieCanEducationalSource
 );
 const aspectRatio = width / height;
 
-export const SendAarCanEducationalScreen = () => {
+export type SendAarCanEducationalScreenProps = IOStackNavigationRouteProps<
+  PnParamsList,
+  typeof PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL
+>;
+
+export const SendAarCanEducationalScreen = ({
+  navigation
+}: SendAarCanEducationalScreenProps) => {
   const dispatch = useIODispatch();
   const currentAarState = useIOSelector(currentAARFlowData);
   const { terminateFlow } = useSendAarFlowManager();
@@ -28,9 +39,14 @@ export const SendAarCanEducationalScreen = () => {
 
   useEffect(() => {
     if (currentAarState.type === sendAARFlowStates.cieCanInsertion) {
-      // TODO: [IOCOM-2748] navigate into CIE CAN insertion screen
+      navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+        screen: PN_ROUTES.MAIN,
+        params: {
+          screen: PN_ROUTES.SEND_AAR_CIE_CAN_INSERTION
+        }
+      });
     }
-  }, [currentAarState.type]);
+  }, [currentAarState.type, navigation]);
 
   const handleGoBack = () => {
     Alert.alert(
