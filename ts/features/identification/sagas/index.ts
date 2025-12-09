@@ -11,7 +11,7 @@ import {
   sessionInvalid
 } from "../../authentication/common/store/actions";
 import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors/index";
-import { maybeHandlePendingBackgroundActions } from "../../pushNotifications/sagas/common";
+import { maybeHandlePendingBackgroundActions } from "../../../sagas/backgroundActions";
 import {
   identificationCancel,
   identificationForceLogout,

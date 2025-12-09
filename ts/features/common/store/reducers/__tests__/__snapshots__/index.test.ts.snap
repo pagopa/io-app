@@ -352,6 +352,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "dataById": {},
       "preferencesById": {},
     },
+    "favouriteServices": {
+      "dataById": {},
+    },
     "home": {
       "featuredInstitutions": {
         "kind": "PotNone",

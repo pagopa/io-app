@@ -6,11 +6,17 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import PN_ROUTES from "../../../navigation/routes";
-import { SendAarCanEducationalScreen } from "../SendAarCanEducationalScreen";
+import {
+  SendAarCanEducationalScreen,
+  SendAarCanEducationalScreenProps
+} from "../SendAarCanEducationalScreen";
 import { setAarFlowState } from "../../store/actions";
 import * as AAR_SELECTORS from "../../store/selectors";
 import { sendAARFlowStates } from "../../utils/stateUtils";
 import { sendAarMockStateFactory } from "../../utils/testUtils";
+import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
+
+const mockNavigate = jest.fn();
 
 // `mockPressBack` is available only in the test environment,
 // provided by the project's Jest setup (`jestSetup.js`).
@@ -140,6 +146,8 @@ describe("SendAarCanEducationalScreen", () => {
   Object.values(sendAarMockStateFactory).forEach(getAarState => {
     const aarState = getAarState();
     const isCieCanAdvisory = aarState.type === sendAARFlowStates.cieCanAdvisory;
+    const isCieCanInsertion =
+      aarState.type === sendAARFlowStates.cieCanInsertion;
 
     it(`${
       isCieCanAdvisory ? "should" : "should not"
@@ -147,7 +155,6 @@ describe("SendAarCanEducationalScreen", () => {
       aarState.type
     }"`, () => {
       jest.spyOn(AAR_SELECTORS, "currentAARFlowData").mockReturnValue(aarState);
-
       const { getByTestId } = renderComponent();
 
       const continueCTA = getByTestId("primaryActionID");
@@ -167,6 +174,28 @@ describe("SendAarCanEducationalScreen", () => {
       }
       expect(mockTerminateFlow).not.toHaveBeenCalled();
     });
+
+    it(`${
+      isCieCanInsertion ? "should" : "should not"
+    } navigate into the "SendAARCieCanInsertionScreen"`, () => {
+      jest.spyOn(AAR_SELECTORS, "currentAARFlowData").mockReturnValue(aarState);
+      renderComponent();
+
+      if (isCieCanInsertion) {
+        expect(mockNavigate).toHaveBeenCalledTimes(1);
+        expect(mockNavigate).toHaveBeenCalledWith(
+          MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
+          {
+            screen: PN_ROUTES.MAIN,
+            params: {
+              screen: PN_ROUTES.SEND_AAR_CIE_CAN_INSERTION
+            }
+          }
+        );
+      } else {
+        expect(mockNavigate).not.toHaveBeenCalled();
+      }
+    });
   });
 });
 
@@ -175,7 +204,12 @@ function renderComponent() {
   const store = createStore(appReducer, baseState as any);
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    SendAarCanEducationalScreen,
+    ({ navigation, route }: SendAarCanEducationalScreenProps) => (
+      <SendAarCanEducationalScreen
+        route={route}
+        navigation={{ ...navigation, navigate: mockNavigate }}
+      />
+    ),
     PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL,
     {},
     store
