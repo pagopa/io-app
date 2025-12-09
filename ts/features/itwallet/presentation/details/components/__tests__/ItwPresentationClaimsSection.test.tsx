@@ -29,6 +29,7 @@ describe("ItwPresentationClaimsSection", () => {
 
 function renderComponent() {
   const globalState = appReducer(undefined, applicationChangeState("active"));
+
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
       <ItwPresentationClaimsSection
