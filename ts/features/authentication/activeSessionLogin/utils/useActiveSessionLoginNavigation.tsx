@@ -4,7 +4,7 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
 import { isActiveSessionLoginSelector } from "../store/selectors";
 import {
-  requestSessionCorrupted,
+  logoutBeforeSessionCorrupted,
   setFinishedActiveSessionLoginFlow
 } from "../store/actions";
 import { CieCardReaderScreenNavigationParams } from "../../login/cie/screens/CieCardReaderScreen";
@@ -64,7 +64,7 @@ const useActiveSessionLoginNavigation = () => {
   };
 
   const forceLogoutAndNavigateToLanding = () => {
-    dispatch(requestSessionCorrupted());
+    dispatch(logoutBeforeSessionCorrupted());
     navigation.replace(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.LANDING
     });

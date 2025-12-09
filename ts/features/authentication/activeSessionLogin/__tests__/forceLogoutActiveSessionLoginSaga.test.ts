@@ -8,7 +8,7 @@ import {
 } from "../saga/forceLogoutActiveSessionLoginSaga";
 import {
   setLoggedOutUserWithDifferentCF,
-  requestSessionCorrupted,
+  logoutBeforeSessionCorrupted,
   setFinalizeLoggedOutUserWithDifferentCF
 } from "../store/actions";
 import { sessionCorrupted } from "../../common/store/actions";
@@ -20,6 +20,7 @@ import { SessionToken } from "../../../../types/SessionToken";
 import { KeyInfo } from "../../../lollipop/utils/crypto";
 import * as error from "../../../../utils/errors";
 import * as analytics from "../../common/analytics";
+import * as messagesAnalytics from "../../../messages/analytics";
 
 const sessionToken: SessionToken = "FAKE_SESSION_TOKEN" as SessionToken;
 
@@ -35,7 +36,7 @@ const defaultKeyInfo: KeyInfo = {
 };
 
 const setLoggedOutUserWithDifferentCFAction = setLoggedOutUserWithDifferentCF();
-const requestSessionCorruptedAction = requestSessionCorrupted();
+const logoutBeforeSessionCorruptedAction = logoutBeforeSessionCorrupted();
 
 jest.mock("../../../../utils/supportAssistance", () => ({
   resetAssistanceData: jest.fn()
@@ -68,6 +69,13 @@ jest.mock("../../common/analytics", () => ({
   trackLogoutFailure: jest.fn()
 }));
 
+jest.mock("../../../messages/analytics", () => ({
+  trackUndefinedBearerToken: jest.fn(),
+  UndefinedBearerTokenPhase: {
+    activeSessionLoginLogout: "activeSessionLoginLogout"
+  }
+}));
+
 describe("logoutUserAfterActiveSessionLoginSaga", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -78,13 +86,18 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
     it("should return early without doing anything", () => {
       testSaga(
         logoutUserAfterActiveSessionLoginSaga,
-        requestSessionCorruptedAction
+        logoutBeforeSessionCorruptedAction
       )
         .next()
         .select(sessionTokenSelector)
         .next(undefined) // No session token
         .next() // The saga returns here
         .isDone();
+
+      // Verify that trackUndefinedBearerToken was called
+      expect(messagesAnalytics.trackUndefinedBearerToken).toHaveBeenCalledWith(
+        messagesAnalytics.UndefinedBearerTokenPhase.activeSessionLoginLogout
+      );
     });
   });
 
@@ -94,17 +107,18 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
 
       testSaga(
         logoutUserAfterActiveSessionLoginSaga,
-        requestSessionCorruptedAction
+        logoutBeforeSessionCorruptedAction
       )
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
         .call(getKeyInfo)
         .next(defaultKeyInfo)
+        .call(mockLogout, {})
         .next(successResponse) // Mock logout API success
-        .call(resetMixpanelSaga)
-        .next()
         .put(sessionCorrupted())
+        .next()
+        .call(resetMixpanelSaga)
         .next()
         .put(startApplicationInitialization())
         .next()
@@ -127,9 +141,9 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next(defaultKeyInfo)
         .call(mockLogout, {})
         .next(successResponse) // Mock logout API success
-        .call(resetMixpanelSaga)
-        .next()
         .put(setFinalizeLoggedOutUserWithDifferentCF())
+        .next()
+        .call(resetMixpanelSaga)
         .next()
         .isDone();
 
@@ -146,7 +160,7 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
 
       testSaga(
         logoutUserAfterActiveSessionLoginSaga,
-        requestSessionCorruptedAction
+        logoutBeforeSessionCorruptedAction
       )
         .next()
         .select(sessionTokenSelector)
@@ -155,9 +169,9 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next(defaultKeyInfo)
         .call(mockLogout, {})
         .next(errorResponse) // Mock logout API error
-        .call(resetMixpanelSaga)
-        .next()
         .put(sessionCorrupted())
+        .next()
+        .call(resetMixpanelSaga)
         .next()
         .put(startApplicationInitialization())
         .next()
@@ -186,9 +200,9 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next(defaultKeyInfo)
         .call(mockLogout, {})
         .next(errorResponse) // Mock logout API error
-        .call(resetMixpanelSaga)
-        .next()
         .put(setFinalizeLoggedOutUserWithDifferentCF())
+        .next()
+        .call(resetMixpanelSaga)
         .next()
         .isDone();
 
@@ -211,7 +225,7 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
 
       testSaga(
         logoutUserAfterActiveSessionLoginSaga,
-        requestSessionCorruptedAction
+        logoutBeforeSessionCorruptedAction
       )
         .next()
         .select(sessionTokenSelector)
@@ -220,9 +234,9 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next(defaultKeyInfo)
         .call(mockLogout, {})
         .next(leftResponse) // Mock validation error
-        .call(resetMixpanelSaga)
-        .next()
         .put(sessionCorrupted())
+        .next()
+        .call(resetMixpanelSaga)
         .next()
         .put(startApplicationInitialization())
         .next()
@@ -246,7 +260,7 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
 
       testSaga(
         logoutUserAfterActiveSessionLoginSaga,
-        requestSessionCorruptedAction
+        logoutBeforeSessionCorruptedAction
       )
         .next()
         .select(sessionTokenSelector)
@@ -255,9 +269,9 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next(defaultKeyInfo)
         .call(mockLogout, {})
         .throw(thrownError) // Mock exception during API call
-        .call(resetMixpanelSaga)
-        .next()
         .put(sessionCorrupted())
+        .next()
+        .call(resetMixpanelSaga)
         .next()
         .put(startApplicationInitialization())
         .next()
@@ -272,13 +286,13 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
 });
 
 describe("watchForceLogoutActiveSessionLogin", () => {
-  it("should watch for setLoggedOutUserWithDifferentCF and requestSessionCorrupted actions", () => {
+  it("should watch for setLoggedOutUserWithDifferentCF and logoutBeforeSessionCorrupted actions", () => {
     testSaga(watchForceLogoutActiveSessionLogin)
       .next()
       .takeLatest(
         [
           getType(setLoggedOutUserWithDifferentCF),
-          getType(requestSessionCorrupted)
+          getType(logoutBeforeSessionCorrupted)
         ],
         logoutUserAfterActiveSessionLoginSaga
       )

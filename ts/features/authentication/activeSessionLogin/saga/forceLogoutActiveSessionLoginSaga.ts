@@ -18,7 +18,7 @@ import { sessionCorrupted } from "../../common/store/actions";
 import { sessionTokenSelector } from "../../common/store/selectors";
 import {
   setLoggedOutUserWithDifferentCF,
-  requestSessionCorrupted,
+  logoutBeforeSessionCorrupted,
   setFinalizeLoggedOutUserWithDifferentCF
 } from "../store/actions";
 import {
@@ -29,7 +29,7 @@ import {
 export function* logoutUserAfterActiveSessionLoginSaga(
   action:
     | ActionType<typeof setLoggedOutUserWithDifferentCF>
-    | ActionType<typeof requestSessionCorrupted>
+    | ActionType<typeof logoutBeforeSessionCorrupted>
 ) {
   const sessionToken = yield* select(sessionTokenSelector);
   const keyInfo = yield* call(getKeyInfo);
@@ -69,15 +69,15 @@ export function* logoutUserAfterActiveSessionLoginSaga(
   } finally {
     // clean up crypto keys
     yield* deleteCurrentLollipopKeyAndGenerateNewKeyTag();
-    // reset mixpanel
-    yield* call(resetMixpanelSaga);
     // clean up any assistance data
     resetAssistanceData();
     // Always finalize the session, regardless of logout API result
     if (action.type === getType(setLoggedOutUserWithDifferentCF)) {
       yield* put(setFinalizeLoggedOutUserWithDifferentCF());
+      yield* call(resetMixpanelSaga);
     } else {
       yield* put(sessionCorrupted());
+      yield* call(resetMixpanelSaga);
       yield* put(startApplicationInitialization());
     }
   }
@@ -87,7 +87,7 @@ export function* watchForceLogoutActiveSessionLogin(): IterableIterator<ReduxSag
   yield* takeLatest(
     [
       getType(setLoggedOutUserWithDifferentCF),
-      getType(requestSessionCorrupted)
+      getType(logoutBeforeSessionCorrupted)
     ],
     logoutUserAfterActiveSessionLoginSaga
   );

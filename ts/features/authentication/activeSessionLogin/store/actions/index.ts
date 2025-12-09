@@ -51,8 +51,24 @@ export const setLoggedOutUserWithDifferentCF = createStandardAction(
   "SET_LOGGED_OUT_USER_WITH_DIFFERENT_CF"
 )();
 
-export const requestSessionCorrupted = createStandardAction(
-  "REQUEST_SESSION_CORRUPTED"
+/**
+ * Action to trigger logout before session corruption.
+ *
+ * This action is dispatched when the session needs to be corrupted but we still
+ * have a valid token to perform the logout API call. It initiates a logout request
+ * to the backend and then proceeds to corrupt the session.
+ *
+ * Flow:
+ * 1. Dispatch this action with valid token
+ * 2. Perform logout API call to backend
+ * 3. Clean up crypto keys and reset mixpanel
+ * 4. Finally dispatch sessionCorrupted() to complete the flow
+ *
+ * This approach preserves the existing sessionCorrupted logic while ensuring
+ * proper backend logout when we still have access to the session token.
+ */
+export const logoutBeforeSessionCorrupted = createStandardAction(
+  "LOGOUT_BEFORE_SESSION_CORRUPTED"
 )();
 
 export const setFinalizeLoggedOutUserWithDifferentCF = createStandardAction(
@@ -80,7 +96,7 @@ export type LoginInfoActions =
   | ActionType<typeof setFastLoginOptSessionLogin>
   | ActionType<typeof setFinishedActiveSessionLoginFlow>
   | ActionType<typeof setLoggedOutUserWithDifferentCF>
-  | ActionType<typeof requestSessionCorrupted>
+  | ActionType<typeof logoutBeforeSessionCorrupted>
   | ActionType<typeof setFinalizeLoggedOutUserWithDifferentCF>
   | ActionType<typeof setCieIDSelectedSecurityLevelActiveSessionLogin>
   | ActionType<typeof closeSessionExpirationBanner>;

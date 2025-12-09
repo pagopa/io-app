@@ -137,7 +137,6 @@ import { navigateToActiveSessionLogin } from "../features/authentication/activeS
 import { showSessionExpirationBlockingScreenSelector } from "../features/authentication/activeSessionLogin/store/selectors";
 import { watchCdcSaga } from "../features/bonus/cdc/common/saga";
 import { watchMessagesSaga } from "../features/messages/saga";
-import { watchForceLogoutActiveSessionLogin } from "../features/authentication/activeSessionLogin/saga/forceLogoutActiveSessionLoginSaga";
 import { maybeHandlePendingBackgroundActions } from "./backgroundActions";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -302,7 +301,6 @@ export function* initializeApplicationSaga(
 
   // Watches for session expiration or corruption and resets the application state accordingly
   yield* fork(watchForceLogoutSaga);
-  yield* fork(watchForceLogoutActiveSessionLogin);
   yield* fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel);
 
   // Instantiate a backend client from the session token
