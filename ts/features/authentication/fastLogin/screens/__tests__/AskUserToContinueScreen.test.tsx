@@ -61,7 +61,7 @@ describe("AskUserInteractionScreen component", () => {
 
   it("does not render primary button if primaryAction is not provided", () => {
     const { queryByText } = renderComponent(
-      _.omit(defaultProps, "primaryAction"),
+      _.omit(defaultProps, "action"),
       store
     );
     expect(queryByText(primaryActionButtonTitle)).toBeNull();
