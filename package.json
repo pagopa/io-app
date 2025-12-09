@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "react-native start",
-    "sync": "pnpm setup && bundle && (cd ios && bundle exec pod install) && pnpm generate",
+    "sync": "pnpm install && bundle && (cd ios && bundle exec pod install) && pnpm generate",
     "run-ios": "react-native run-ios",
     "run-android": "react-native run-android",
     "dev:run-android": "pnpm run-android --mode=productionDebug",

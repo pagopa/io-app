@@ -1,8 +1,8 @@
 PODS:
   - Alamofire (5.9.1)
   - boost (1.84.0)
-  - BVLinearGradient (2.8.3):
-    - React-Core
+  - BVLinearGradient (2.5.6):
+    - React
   - CieSDK (0.1.13)
   - DoubleConversion (1.1.6)
   - fast_float (6.1.4)
@@ -1560,7 +1560,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - react-native-safe-area-context (5.5.1):
+  - react-native-safe-area-context (5.4.0):
     - React-Core
   - react-native-screen-brightness (2.0.0-alpha):
     - React
@@ -2189,7 +2189,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNSVG (15.12.0):
+  - RNSVG (15.11.2):
     - React-Core
   - Sentry/HybridSDK (8.49.0)
   - SocketRocket (0.7.1)
@@ -2616,7 +2616,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
-  BVLinearGradient: cb006ba232a1f3e4f341bb62c42d1098c284da70
+  BVLinearGradient: 44fd36b87f318e7933c4c91a6991442a5e3f5bcf
   CieSDK: 80884e397d0eef6e07fb8d5580fc4c7604b971e0
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
   fast_float: 06eeec4fe712a76acc9376682e4808b05ce978b6
@@ -2684,7 +2684,7 @@ SPEC CHECKSUMS:
   react-native-pager-view: 68e8a65a607a6f91a1e25865002192c3c4f53fcf
   react-native-pdf: 6a51a22ccefb23eb93298771e4bf090913e86d70
   react-native-pdf-thumbnail: 2d69e506eb4ea4940f284a228b975f5ab74ab61b
-  react-native-safe-area-context: 827032edf27079702cbd006f11dc79451a2d744b
+  react-native-safe-area-context: 9d72abf6d8473da73033b597090a80b709c0b2f1
   react-native-screen-brightness: 16a7b26d12d89654fc6a2e9ff1e55c1a4a10afcb
   react-native-skia: 0d442c824f4a6f6ec905d5d07aa932f255f0baed
   react-native-splash-screen: a43276f9cf4b2e65d7ce30efe372ffc528064293
@@ -2736,7 +2736,7 @@ SPEC CHECKSUMS:
   RNScreenshotPrevent: 5f8473abaa2db2476561ef8f3704b66491ce7b01
   RNSentry: a04b4de945a7057d87e0de215dba268802e9226b
   RNShare: b1660f26d8bc57cbf9acf11872a8eb2f3ecf4825
-  RNSVG: ae1766b2492f8915a1ee25095871f00a4f132093
+  RNSVG: 4c63b12b7b5761063bca4f20dd228f6a8370f614
   Sentry: 5eda2559a20fa0c377b695ed9d7c178a47122891
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   SwiftCBOR: aa87349b4ccddd19f861aa544f7c27d43dee5772
