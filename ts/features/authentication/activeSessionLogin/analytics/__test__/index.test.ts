@@ -30,7 +30,7 @@ describe("Login Expiration Banner analytics", () => {
       mockProps
     );
 
-    trackLoginExpirationBannerPrompt();
+    trackLoginExpirationBannerPrompt(helpCenterHowToDoWhenSessionIsExpiredUrl);
 
     expect(analyticsUtils.buildEventProperties).toHaveBeenCalledWith(
       "UX",
@@ -46,7 +46,7 @@ describe("Login Expiration Banner analytics", () => {
       mockProps
     );
 
-    trackLoginExpirationBannerClosure();
+    trackLoginExpirationBannerClosure(helpCenterHowToDoWhenSessionIsExpiredUrl);
 
     expect(analyticsUtils.buildEventProperties).toHaveBeenCalledWith(
       "UX",

@@ -15,7 +15,8 @@ import { trackHelpCenterCtaTapped } from "../../../../utils/analytics";
 import {
   BANNER_ID,
   trackLoginExpirationBannerClosure,
-  trackLoginExpirationBannerPrompt
+  trackLoginExpirationBannerPrompt,
+  trackLoginExpirationBannerTap
 } from "../analytics";
 import { isActiveSessionLoginEnabledSelector } from "../../activeSessionLogin/store/selectors";
 import {
@@ -44,8 +45,12 @@ export const LoginExpirationBanner = ({ handleOnClose }: Props) => {
   const navigation = useIONavigation();
 
   useEffect(() => {
-    trackLoginExpirationBannerPrompt();
-  }, []);
+    trackLoginExpirationBannerPrompt(
+      isActiveSessionLoginEnabled
+        ? AUTHENTICATION_ROUTES.LANDING_ACTIVE_SESSION_LOGIN
+        : helpCenterHowToDoWhenSessionIsExpiredUrl
+    );
+  }, [isActiveSessionLoginEnabled]);
 
   const handleOnPress = useCallback(() => {
     if (isActiveSessionLoginEnabled) {
@@ -56,6 +61,11 @@ export const LoginExpirationBanner = ({ handleOnClose }: Props) => {
           screen: AUTHENTICATION_ROUTES.LANDING_ACTIVE_SESSION_LOGIN
         }
       });
+      trackLoginExpirationBannerTap(
+        isActiveSessionLoginEnabled
+          ? AUTHENTICATION_ROUTES.LANDING_ACTIVE_SESSION_LOGIN
+          : helpCenterHowToDoWhenSessionIsExpiredUrl
+      );
     } else {
       trackHelpCenterCtaTapped(
         BANNER_ID,
@@ -69,10 +79,14 @@ export const LoginExpirationBanner = ({ handleOnClose }: Props) => {
   }, [dispatch, error, isActiveSessionLoginEnabled, navigation, routeName]);
 
   const closeHandler = useCallback(() => {
-    trackLoginExpirationBannerClosure();
+    trackLoginExpirationBannerClosure(
+      isActiveSessionLoginEnabled
+        ? AUTHENTICATION_ROUTES.LANDING_ACTIVE_SESSION_LOGIN
+        : helpCenterHowToDoWhenSessionIsExpiredUrl
+    );
     dispatch(closeSessionExpirationBanner());
     handleOnClose();
-  }, [dispatch, handleOnClose]);
+  }, [dispatch, handleOnClose, isActiveSessionLoginEnabled]);
 
   const title = isActiveSessionLoginEnabled
     ? I18n.t("loginFeatures.loginPreferences.expirationBannerNew.title", {
