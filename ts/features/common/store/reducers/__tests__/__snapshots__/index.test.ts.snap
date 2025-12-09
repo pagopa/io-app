@@ -347,6 +347,14 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "loginEngagement": {
       "hasSendEngagementScreenBeenDismissed": false,
     },
+    "tempAarMandate": {
+      "mandate": {
+        "kind": "undefined",
+      },
+      "validation": {
+        "kind": "undefined",
+      },
+    },
   },
   "profileSettings": {},
   "services": {

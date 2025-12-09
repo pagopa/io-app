@@ -18,6 +18,7 @@ import { initiateAarFlowSaga } from "../initiateAarFlowSaga";
 import { fetchAarDataSaga } from "../fetchNotificationDataSaga";
 import { fetchAARQrCodeSaga } from "../fetchQrCodeSaga";
 import { testable, watchAarFlowSaga } from "../watchAARFlowSaga";
+import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { createAarMandateSaga } from "../createAarMandateSaga";
 const { aarFlowMasterSaga, raceWithTerminateFlow } = testable as NonNullable<
   typeof testable
@@ -53,6 +54,8 @@ describe("watchAarFlowSaga", () => {
       .next()
       .takeLatest(initiateAarFlow, initiateAarFlowSaga)
       .next()
+      .select(isAarInAppDelegationRemoteEnabledSelector)
+      .next(false)
       .isDone();
   });
 
