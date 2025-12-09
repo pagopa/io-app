@@ -167,6 +167,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "requestedCredentials": {},
     },
     "securePreferences": {
+      "availableCredentialsCounter": 0,
       "offlineAccessCounter": 0,
     },
     "walletInstance": {
