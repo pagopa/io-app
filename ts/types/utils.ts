@@ -1,5 +1,6 @@
-/* eslint-disable */
-
+/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/array-type */
+/* eslint-disable @jambit/typed-redux-saga/use-typed-effects */
 import { Pot } from "@pagopa/ts-commons/lib/pot";
 import { Effect } from "redux-saga/effects";
 import { PayloadAC, PayloadMetaAC } from "typesafe-actions/dist/type-helpers";

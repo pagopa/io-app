@@ -1,4 +1,5 @@
-/* eslint-disable */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable functional/immutable-data */
 import { remark } from "remark";
 import remarkDirective from "remark-directive";
 import remarkRehype from "remark-rehype";
@@ -20,7 +21,9 @@ function customPlugin() {
         const data = node.data || (node.data = {});
         const hast = h(node.name, node.attributes);
 
+        // @ts-ignore
         data.hName = hast.tagName;
+        // @ts-ignore
         data.hProperties = hast.properties;
       }
     });
