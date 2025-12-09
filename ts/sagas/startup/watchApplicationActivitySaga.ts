@@ -10,7 +10,7 @@ import {
   StartupStatusEnum,
   isStartupLoaded
 } from "../../store/reducers/startup";
-import { maybeHandlePendingBackgroundActions } from "../../features/pushNotifications/sagas/common";
+import { maybeHandlePendingBackgroundActions } from "../backgroundActions";
 import { areTwoMinElapsedFromLastActivity } from "../../features/authentication/fastLogin/store/actions/sessionRefreshActions";
 import { isFastLoginEnabledSelector } from "../../features/authentication/fastLogin/store/selectors";
 import { IdentificationBackActionType } from "../../features/identification/store/reducers";
