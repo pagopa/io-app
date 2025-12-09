@@ -72,14 +72,9 @@ export type MrtdPoPContext = {
  * - "issuance": The user is issuing a new PID credential.
  * - "reissuance": The user is reissuing an existing PID credential.
  * - "upgrade": The user is upgrading from Documenti su IO to IT Wallet.
- * - "credentialTriggered": The issuance is triggered by a credential issuance process.
  * This is used to determine the flow and actions available in the eID issuance process.
  */
-export type EidIssuanceMode =
-  | "issuance"
-  | "reissuance"
-  | "upgrade"
-  | "credentialTriggered";
+export type EidIssuanceMode = "issuance" | "reissuance" | "upgrade";
 
 /**
  * The EidIssuanceLevel represents the different levels of eID issuance and

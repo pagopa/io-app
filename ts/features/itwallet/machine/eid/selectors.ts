@@ -71,3 +71,6 @@ export const selectUpgradeFailedCredentials = (snapshot: MachineSnapshot) =>
         >
     )
   );
+
+export const selectCredentialTypeOption = (snapshot: MachineSnapshot) =>
+  O.fromNullable(snapshot.context.credentialType);

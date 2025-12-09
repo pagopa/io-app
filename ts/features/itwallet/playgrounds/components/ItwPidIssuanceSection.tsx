@@ -63,7 +63,7 @@ export const ItwPidIssuanceSection = () => {
         onPress={() =>
           machineRef.send({
             type: "start",
-            mode: "credentialTriggered",
+            mode: "issuance",
             level: "l3",
             credentialType: "mDL"
           })

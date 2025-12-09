@@ -2,6 +2,7 @@ import { Body } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useEffect } from "react";
+import * as O from "fp-ts/lib/Option";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIOSelector } from "../../../../store/hooks.ts";
@@ -19,6 +20,7 @@ import { StoredCredential } from "../../common/utils/itwTypesUtils.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors/index.ts";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
+  selectCredentialTypeOption,
   selectIsLoading,
   selectIssuanceMode,
   selectUpgradeFailedCredentials
@@ -31,6 +33,9 @@ export const ItwIssuanceEidResultScreen = () => {
     ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
   const failedCredentials = ItwEidIssuanceMachineContext.useSelector(
     selectUpgradeFailedCredentials
+  );
+  const credentialType = ItwEidIssuanceMachineContext.useSelector(
+    selectCredentialTypeOption
   );
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
@@ -62,7 +67,7 @@ export const ItwIssuanceEidResultScreen = () => {
 
   const handleBackToWallet = () => machineRef.send({ type: "go-to-wallet" });
 
-  if (issuanceMode === "credentialTriggered") {
+  if (O.isSome(credentialType)) {
     return <ItwIssuanceEidCredentialTriggerContent />;
   }
 

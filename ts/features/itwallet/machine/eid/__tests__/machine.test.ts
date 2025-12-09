@@ -2176,7 +2176,6 @@ describe("itwEidIssuanceMachine", () => {
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: { Issuance: "DisplayingPreview" },
       context: {
-        mode: "credentialTriggered",
         eid: ItwStoredCredentialsMocks.eid,
         integrityKeyTag: T_INTEGRITY_KEY,
         walletInstanceAttestation: { jwt: T_WIA },

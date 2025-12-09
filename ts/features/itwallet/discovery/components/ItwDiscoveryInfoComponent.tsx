@@ -71,21 +71,15 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
   const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
   const toast = useIOToast();
 
-  const mode = credentialType
-    ? "credentialTriggered"
-    : isWalletValid
-    ? "upgrade"
-    : "issuance";
-
   useOnFirstRender(
     useCallback(() => {
       machineRef.send({
         type: "start",
-        mode,
+        mode: isWalletValid ? "upgrade" : "issuance",
         level: "l3",
         credentialType
       });
-    }, [machineRef, mode, credentialType])
+    }, [machineRef, isWalletValid, credentialType])
   );
 
   const dismissalDialog = useItwDismissalDialog({
