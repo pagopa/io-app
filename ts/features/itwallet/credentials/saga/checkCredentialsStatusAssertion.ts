@@ -24,6 +24,11 @@ import {
 } from "../../analytics";
 import { selectItwEnv } from "../../common/store/selectors/environment";
 import { getEnv } from "../../common/utils/environment";
+import { itwAvailableCredentialsCounterLimitReached } from "../../common/store/selectors/securePreferences";
+import {
+  itwAvailableCredentialsCounterReset,
+  itwAvailableCredentialsCounterUp
+} from "../../common/store/actions/securePreferences";
 
 const { isIssuerResponseError, IssuerResponseErrorCodes: Codes } = Errors;
 
@@ -110,6 +115,23 @@ export function* checkCredentialsStatusAssertion() {
   );
 
   yield* put(itwCredentialsStore(updatedCredentials));
+
+  const isStatusAssertionFailed = updatedCredentials.some(credential =>
+    ["invalid", "unknown"].includes(
+      credential.storedStatusAssertion?.credentialStatus ?? ""
+    )
+  );
+
+  const isLimitReached = yield* select(
+    itwAvailableCredentialsCounterLimitReached
+  );
+
+  if (isStatusAssertionFailed && !isLimitReached) {
+    yield* put(itwAvailableCredentialsCounterUp());
+  } else {
+    yield* put(itwAvailableCredentialsCounterReset());
+    yield* put(itwCredentialsStore(updatedCredentials));
+  }
 
   const state: GlobalState = yield* select();
   void updateMixpanelProfileProperties(state);
