@@ -14,7 +14,7 @@ describe("IT Wallet secure preferences reducer", () => {
   it("should return the initial state", () => {
     const INITIAL_STATE: ItwSecurePreferencesState = {
       offlineAccessCounter: 0,
-      availableCredentialsCounter: 0
+      unverifiedCredentialsAccessCounter: 0
     };
 
     const targetSate = appReducer(undefined, applicationChangeState("active"));
@@ -40,7 +40,8 @@ describe("IT Wallet secure preferences reducer", () => {
     ]);
 
     expect(
-      targetSate.features.itWallet.securePreferences.availableCredentialsCounter
+      targetSate.features.itWallet.securePreferences
+        .unverifiedCredentialsAccessCounter
     ).toEqual(1);
   });
   it("should not increment the offline access counter beyond the maximum limit", () => {
@@ -67,7 +68,8 @@ describe("IT Wallet secure preferences reducer", () => {
       itwAvailableCredentialsCounterUp()
     ]);
     expect(
-      targetSate.features.itWallet.securePreferences.availableCredentialsCounter
+      targetSate.features.itWallet.securePreferences
+        .unverifiedCredentialsAccessCounter
     ).toEqual(5);
   });
   it("should reset the offline access counter", () => {
@@ -91,7 +93,8 @@ describe("IT Wallet secure preferences reducer", () => {
     ]);
 
     expect(
-      targetSate.features.itWallet.securePreferences.availableCredentialsCounter
+      targetSate.features.itWallet.securePreferences
+        .unverifiedCredentialsAccessCounter
     ).toEqual(0);
   });
 });

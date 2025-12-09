@@ -19,12 +19,12 @@ export type ItwSecurePreferencesState = {
    * Number of accesses that user can perform during IPZS or AS
    * down periods
    */
-  availableCredentialsCounter: number;
+  unverifiedCredentialsAccessCounter: number;
 };
 
 export const itwSecurePreferencesInitialState: ItwSecurePreferencesState = {
   offlineAccessCounter: 0,
-  availableCredentialsCounter: 0
+  unverifiedCredentialsAccessCounter: 0
 };
 
 const reducer = (
@@ -48,13 +48,14 @@ const reducer = (
     case getType(itwAvailableCredentialsCounterUp): {
       return {
         ...state,
-        availableCredentialsCounter: state.availableCredentialsCounter + 1
+        unverifiedCredentialsAccessCounter:
+          state.unverifiedCredentialsAccessCounter + 1
       };
     }
     case getType(itwAvailableCredentialsCounterReset): {
       return {
         ...state,
-        availableCredentialsCounter: 0
+        unverifiedCredentialsAccessCounter: 0
       };
     }
 

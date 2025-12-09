@@ -114,8 +114,6 @@ export function* checkCredentialsStatusAssertion() {
     )
   );
 
-  yield* put(itwCredentialsStore(updatedCredentials));
-
   const isStatusAssertionFailed = updatedCredentials.some(credential =>
     ["invalid", "unknown"].includes(
       credential.storedStatusAssertion?.credentialStatus ?? ""
