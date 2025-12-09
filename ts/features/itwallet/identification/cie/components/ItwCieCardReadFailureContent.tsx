@@ -43,7 +43,8 @@ type ItwCieCardReadFailureContentProps = Extract<
 export const ItwCieCardReadFailureContent = ({
   failure,
   progress,
-  onRetry
+  onRetry,
+  origin
 }: ItwCieCardReadFailureContentProps) => {
   const issuanceActor = ItwEidIssuanceMachineContext.useActorRef();
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
@@ -54,7 +55,7 @@ export const ItwCieCardReadFailureContent = ({
   useDebugInfo({ failure });
 
   // Track error on mount
-  useEffect(() => trackError(failure, isL3, progress));
+  useEffect(() => trackError(failure, isL3, progress, origin));
 
   const dismissalDialog = useItwDismissalDialog({
     handleDismiss: () => issuanceActor.send({ type: "close" })
@@ -213,7 +214,8 @@ export const ItwCieCardReadFailureContent = ({
 const trackError = (
   failure: CieManagerFailure,
   isL3: boolean,
-  readProgress?: number
+  readProgress?: number,
+  origin?: string
 ) => {
   const itw_flow: ItwFlow = isL3 ? "L3" : "L2";
   // readProgress is a number between 0 and 1, mixpanel needs a number between 0 and 100
@@ -273,7 +275,10 @@ const trackError = (
   }
 
   trackItWalletCieCardReadingUnexpectedFailure({
-    reason: failure?.name ?? "UNEXPECTED_ERROR",
+    reason: {
+      origin: origin ?? "ITW_CIE_CARD_READING",
+      name: failure.name ?? "UNEXPECTED_ERROR"
+    },
     cie_reading_progress: progress
   });
 };
