@@ -50,7 +50,7 @@ Google Play Android Developer-04750d2c0cf8.json
 node_modules/
 npm-debug.log
 
-# Ignore package-lock since we use yarn
+# Ignore package-lock since we use pnpm
 package-lock.json
 
 # Test js
