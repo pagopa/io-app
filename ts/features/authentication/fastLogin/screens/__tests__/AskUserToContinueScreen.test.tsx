@@ -1,12 +1,13 @@
-import { render, fireEvent } from "@testing-library/react-native";
+import type { IOPictograms } from "@pagopa/io-app-design-system";
+import { fireEvent, render } from "@testing-library/react-native";
+import * as _ from "lodash";
 import { Provider } from "react-redux";
 import { Store, createStore } from "redux";
-import * as _ from "lodash";
-import type { IOPictograms } from "@pagopa/io-app-design-system";
-import AskUserInteractionScreen, { Props } from "../AskUserInteractionScreen";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { appReducer } from "../../../../../store/reducers";
+import { OperationResultScreenContentProps } from "../../../../../components/screens/OperationResultScreenContent";
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
+import AskUserInteractionScreen from "../AskUserInteractionScreen";
 
 jest.useFakeTimers();
 
@@ -19,8 +20,8 @@ const secondaryActionButtonTitle = "Cancel";
 const defaultProps = {
   title: "Test title",
   subtitle: "Test subtitle",
-  pictogramName: "timing" as IOPictograms,
-  primaryAction: {
+  pictogram: "timing" as IOPictograms,
+  action: {
     label: primaryActionButtonTitle,
     accessibilityLabel: primaryActionButtonTitle,
     onPress: jest.fn()
@@ -48,7 +49,7 @@ describe("AskUserInteractionScreen component", () => {
     const { getByText } = renderComponent(defaultProps, store);
     const button = getByText(primaryActionButtonTitle);
     fireEvent.press(button);
-    expect(defaultProps.primaryAction.onPress).toHaveBeenCalled();
+    expect(defaultProps.action.onPress).toHaveBeenCalled();
   });
 
   it("should call secondaryAction onPress when the secondary button is pressed", () => {
@@ -75,7 +76,10 @@ describe("AskUserInteractionScreen component", () => {
   });
 });
 
-const renderComponent = (props: Props, store: Store<GlobalState>) =>
+const renderComponent = (
+  props: OperationResultScreenContentProps,
+  store: Store<GlobalState>
+) =>
   render(
     <Provider store={store}>
       <AskUserInteractionScreen {...props} />
