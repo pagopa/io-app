@@ -3060,6 +3060,13 @@
     },
     "favourites": {
       "title": "My favourites"
+    },
+    "favouriteServices": {
+      "toasts": {
+        "added": "Added to favourites!",
+        "removed": "Removed from favourites!",
+        "limitReached": "Cannot add service to favourites because you have reached the maximum limit."
+      }
     }
   },
   "identification": {
