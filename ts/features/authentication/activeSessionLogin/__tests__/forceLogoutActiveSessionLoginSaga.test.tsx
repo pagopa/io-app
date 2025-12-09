@@ -41,6 +41,17 @@ jest.mock("../../../../utils/supportAssistance", () => ({
   resetAssistanceData: jest.fn()
 }));
 
+// Mock logout function that will be extracted from backend client
+const mockLogout = jest.fn();
+
+jest.mock("../../../../api/BackendClientManager", () => ({
+  backendClientManager: {
+    getBackendClient: jest.fn(() => ({
+      logout: mockLogout
+    }))
+  }
+}));
+
 jest.mock("../../../lollipop/saga", () => ({
   // eslint-disable-next-line object-shorthand, require-yield
   getKeyInfo: function* () {
@@ -60,6 +71,7 @@ jest.mock("../../common/analytics", () => ({
 describe("logoutUserAfterActiveSessionLoginSaga", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    mockLogout.mockClear();
   });
 
   describe("when sessionToken is missing", () => {
@@ -113,6 +125,7 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next(sessionToken)
         .call(getKeyInfo)
         .next(defaultKeyInfo)
+        .call(mockLogout, {})
         .next(successResponse) // Mock logout API success
         .call(resetMixpanelSaga)
         .next()
@@ -140,6 +153,7 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next(sessionToken)
         .call(getKeyInfo)
         .next(defaultKeyInfo)
+        .call(mockLogout, {})
         .next(errorResponse) // Mock logout API error
         .call(resetMixpanelSaga)
         .next()
@@ -170,6 +184,7 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next(sessionToken)
         .call(getKeyInfo)
         .next(defaultKeyInfo)
+        .call(mockLogout, {})
         .next(errorResponse) // Mock logout API error
         .call(resetMixpanelSaga)
         .next()
@@ -203,6 +218,7 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next(sessionToken)
         .call(getKeyInfo)
         .next(defaultKeyInfo)
+        .call(mockLogout, {})
         .next(leftResponse) // Mock validation error
         .call(resetMixpanelSaga)
         .next()
@@ -237,6 +253,7 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next(sessionToken)
         .call(getKeyInfo)
         .next(defaultKeyInfo)
+        .call(mockLogout, {})
         .throw(thrownError) // Mock exception during API call
         .call(resetMixpanelSaga)
         .next()
