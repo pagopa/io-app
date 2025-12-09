@@ -12,7 +12,6 @@ import {
 } from "../analytics";
 import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
-import { currentAARFlowData } from "../store/selectors";
 import {
   AARFlowState,
   SendAARFailurePhase,
@@ -26,12 +25,11 @@ export function* validateMandateSaga(
   sessionToken: SessionToken,
   action: ReturnType<typeof setAarFlowState>
 ) {
-  const currentState = yield* select(currentAARFlowData);
-  if (currentState.type !== sendAARFlowStates.validatingMandate) {
+  if (action.payload.type !== sendAARFlowStates.validatingMandate) {
     yield* call(
       trackSendAARFailure,
       sendAARFailurePhase,
-      `Called in wrong state (${currentState.type})`
+      `Called in wrong state (${action.payload.type})`
     );
     return;
   }
@@ -43,7 +41,7 @@ export function* validateMandateSaga(
     mandateId,
     iun,
     recipientInfo
-  } = currentState;
+  } = action.payload;
   const isSendUATEnvironment = yield* select(isPnTestEnabledSelector);
 
   try {
@@ -75,7 +73,7 @@ export function* validateMandateSaga(
       yield* put(
         setAarFlowState({
           type: sendAARFlowStates.ko,
-          previousState: { ...currentState },
+          previousState: { ...action.payload },
           debugData: {
             phase: sendAARFailurePhase,
             reason
@@ -113,7 +111,7 @@ export function* validateMandateSaga(
         yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
         const errorState: AARFlowState = {
           type: sendAARFlowStates.ko,
-          previousState: { ...currentState },
+          previousState: { ...action.payload },
           ...(value !== undefined && { error: value }),
           debugData: {
             phase: sendAARFailurePhase,
@@ -129,7 +127,7 @@ export function* validateMandateSaga(
     yield* put(
       setAarFlowState({
         type: sendAARFlowStates.ko,
-        previousState: { ...currentState },
+        previousState: { ...action.payload },
         debugData: {
           phase: sendAARFailurePhase,
           reason
