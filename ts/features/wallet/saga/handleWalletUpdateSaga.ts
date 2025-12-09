@@ -1,8 +1,8 @@
 import { put } from "typed-redux-saga/macro";
+import { getCdcStatusWallet } from "../../bonus/cdc/wallet/store/actions";
 import { cgnDetails } from "../../bonus/cgn/store/actions/details";
 import { idPayWalletGet } from "../../idpay/wallet/store/actions";
 import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
-import { getCdcStatusWallet } from "../../bonus/cdc/wallet/store/actions";
 
 /**
  * This saga handles the update of the wallet screen
