@@ -16,7 +16,10 @@ import {
 import { trackPNShowTimeline, trackPNTimelineExternal } from "../analytics";
 import { handleItemOnPress } from "../../../utils/url";
 import { useIOSelector } from "../../../store/hooks";
-import { pnFrontendUrlSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import {
+  isAarInAppDelegationRemoteEnabledSelector,
+  pnFrontendUrlSelector
+} from "../../../store/reducers/backendStatus/remoteConfig";
 import {
   SendOpeningSource,
   SendUserType
@@ -54,7 +57,10 @@ export const TimelineListItem = ({
   sendOpeningSource,
   sendUserType
 }: TimelineListItemProps) => {
-  const hideFooter = sendOpeningSource === "aar";
+  const temporaryMandateEnabled = useIOSelector(
+    isAarInAppDelegationRemoteEnabledSelector
+  );
+  const hideFooter = temporaryMandateEnabled && sendOpeningSource === "aar";
   const baseFooterHeight = hideFooter ? 0 : baseFooterHeightWithAlert;
   const [footerHeight, setFooterHeight] = useState<number>(baseFooterHeight);
 

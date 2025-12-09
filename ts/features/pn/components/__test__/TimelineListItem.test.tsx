@@ -16,6 +16,7 @@ import {
 import * as ANALYTICS from "../../analytics";
 import * as BOTTOM_SHEET from "../../../../utils/hooks/bottomSheet";
 import * as URL_UTILS from "../../../../utils/url";
+import * as SELECTORS from "../../../../store/reducers/backendStatus/remoteConfig";
 
 jest.mock("../Timeline");
 
@@ -74,11 +75,7 @@ const fullHistory: NotificationStatusHistory = [
 
 const mockFrontendUrl = "https://www.domain.com/sendUrl";
 
-const sendOpeningSources: ReadonlyArray<SendOpeningSource> = [
-  "aar",
-  "message",
-  "not_set"
-];
+const sendOpeningSources: ReadonlyArray<SendOpeningSource> = ["aar", "message"];
 const sendUserTypes: ReadonlyArray<SendUserType> = [
   "mandatory",
   "not_set",
@@ -90,15 +87,20 @@ describe("TimelineListItem", () => {
     jest.clearAllMocks();
     jest.restoreAllMocks();
   });
-  [[], fullHistory].forEach(history =>
-    [false, true].forEach(linkDefined =>
-      sendOpeningSources.forEach(openingSource =>
-        sendUserTypes.forEach(userType => {
-          it(`Should match snapshot (${
-            history.length > 0 ? "with" : "no"
-          } history, link ${
+  [false, true].forEach(sendTemporaryMandateEnabled =>
+    [[], fullHistory].forEach(history =>
+      [false, true].forEach(linkDefined =>
+        sendOpeningSources.forEach(openingSource => {
+          const userType: SendUserType =
+            openingSource === "message" ? "not_set" : "mandatory";
+          it(`Should match snapshot (temporary mandate ${
+            sendTemporaryMandateEnabled ? "enabled" : "disabled"
+          }, ${history.length > 0 ? "with" : "no"} history, link ${
             linkDefined ? "defined" : "undefined"
           }, source ${openingSource}, type ${userType})`, () => {
+            jest
+              .spyOn(SELECTORS, "isAarInAppDelegationRemoteEnabledSelector")
+              .mockImplementation(_ => sendTemporaryMandateEnabled);
             const component = renderComponent(
               history,
               linkDefined,
@@ -114,6 +116,9 @@ describe("TimelineListItem", () => {
   sendOpeningSources.forEach(openingSource =>
     sendUserTypes.forEach(userType => {
       it(`Should call 'trackPNShowTimeline' upon press (source ${openingSource} user ${userType})`, () => {
+        jest
+          .spyOn(SELECTORS, "isAarInAppDelegationRemoteEnabledSelector")
+          .mockImplementation(_ => true);
         const refUseIOBottomSheetModal = BOTTOM_SHEET.useIOBottomSheetModal;
         jest
           .spyOn(BOTTOM_SHEET, "useIOBottomSheetModal")
@@ -155,6 +160,9 @@ describe("TimelineListItem", () => {
       it(`Should ${
         hasCTA ? "" : "not "
       }call 'trackPNTimelineExternal' when tapping the internal bottom sheet CTA (source ${openingSource} user ${userType})`, () => {
+        jest
+          .spyOn(SELECTORS, "isAarInAppDelegationRemoteEnabledSelector")
+          .mockImplementation(_ => true);
         const refUseIOBottomSheetModal = BOTTOM_SHEET.useIOBottomSheetModal;
         const spiedOnMockedUseIOBottomSheetModal = jest
           .spyOn(BOTTOM_SHEET, "useIOBottomSheetModal")
