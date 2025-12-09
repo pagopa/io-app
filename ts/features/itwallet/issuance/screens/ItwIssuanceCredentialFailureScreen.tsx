@@ -65,9 +65,7 @@ const defaultInvalidStatusMessage = {
   )
 };
 
-type ContentViewProps = {
-  failure: CredentialIssuanceFailure;
-};
+type ContentViewProps = { failure: CredentialIssuanceFailure };
 
 /**
  * Renders the content of the screen

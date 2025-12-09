@@ -36,10 +36,9 @@ import {
   selectCredentialTypeOption
 } from "../../machine/credential/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
-import { ItwCredentialIssuanceMachine } from "../../machine/credential/machine";
-import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 
 export const ItwIssuanceCredentialPreviewScreen = () => {
   const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
