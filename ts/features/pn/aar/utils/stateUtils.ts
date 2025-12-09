@@ -9,8 +9,7 @@ export type SendAARFailurePhase =
   | "Fetch Notification"
   | "Fetch QRCode"
   | "Show Notification"
-  | "Validate Mandate"; // TODO: Ensure it's the right value
-
+  | "Validate Mandate";
 export type RecipientInfo = {
   denomination: string;
   taxId: string;
