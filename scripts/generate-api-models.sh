@@ -52,7 +52,7 @@ declare -a apis=(
 
 for elem in "${apis[@]}"; do
     read -a strarr <<< "$elem"  # uses default whitespace IFS
-    echo ${strarr[0]}; rm -rf ${strarr[0]}; mkdir -p ${strarr[0]}; yarn run gen-api-models --api-spec ${strarr[1]} --out-dir ${strarr[0]} --no-strict --response-decoders --request-types --client &
+    echo ${strarr[0]}; rm -rf ${strarr[0]}; mkdir -p ${strarr[0]}; pnpm exec gen-api-models --api-spec ${strarr[1]} --out-dir ${strarr[0]} --no-strict --response-decoders --request-types --client &
 done
 wait
 
@@ -64,10 +64,10 @@ declare -a apisNoClient=(
 
 for elem in "${apisNoClient[@]}"; do
     read -a strarr <<< "$elem"  # uses default whitespace IFS
-    yarn run gen-api-models --api-spec ${strarr[1]} --out-dir ${strarr[0]} &
+    pnpm exec gen-api-models --api-spec ${strarr[1]} --out-dir ${strarr[0]} &
 done
 wait
 
 cp google-services-dev.json ./android/app/google-services.json
 
-yarn generate:locales
+pnpm generate:locales
