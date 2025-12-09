@@ -3954,6 +3954,10 @@
             "primaryAction": "Torna alla notifica",
             "secondaryAction": "Chiudi la notifica"
           },
+          "cieCanInsertion": {
+            "title": "Inserisci il codice a 6 cifre che trovi in basso a destra della CIE",
+            "description": "È il codice a 6 cifre (CAN) che trovi stampato sul fronte della Carta di Identità Elettronica, in basso a destra."
+          },
           "cieScanning": {
             "idle": {
               "title": "Poggia il retro del telefono sulla CIE",
@@ -3973,6 +3977,16 @@
                 "title": "Hai rimosso il telefono troppo presto!",
                 "subtitle": "Riprova e tieni fermo il telefono per la lettura."
               }
+            }
+          },
+          "cieCanAdvisory": {
+            "title": "Prepara la Carta di Identità Elettronica (CIE) di {{denomination}}",
+            "description": "Dovrai usarla e inserire il suo codice a 6 cifre (CAN) che trovi stampato sul fronte in basso a destra.",
+            "alert": {
+              "title": "Vuoi interrompere l’apertura della notifica?",
+              "message": "Puoi aprire la notifica SEND in qualsiasi altro momento, dovrai però ripartire dal codice QR.",
+              "confirm": "Sì, interrompi",
+              "cancel": "No, continua"
             }
           },
           "validatingMandate": {
@@ -4000,6 +4014,10 @@
                 "È richiesto un sistema operativo Android 6.0 o iOS 13 o superiori."
               ],
               "cta": "Cosa posso fare?"
+            },
+            "cieContextualHelp": {
+              "title": "Come accedere a una notifica SEND destinata a un’altra persona",
+              "body": "Per visualizzare una notifica SEND destinata a un’altra persona hai bisogno della sua Carta di Identità Elettronica e di uno smartphone che ne supporti la lettura."
             }
           }
         }
@@ -4749,27 +4767,24 @@
           "mode": {
             "ciePin": {
               "title": "Continua con CIE + PIN",
-              "subtitle": {
-                "default": "Dovrai usare la Carta di Identità Elettronica (CIE) e inserire il suo PIN di 8 cifre.",
-                "l3-next": "Ha una durata di 12 mesi"
-              },
+              "subtitle": "Ha una durata di 12 mesi",
               "badge": "scelta consigliata"
             },
             "cieId": {
               "title": "Continua con l’app CieID",
               "subtitle": {
                 "default": "Dovrai usare credenziali e app CieID",
-                "l3-next": "Ha una durata di 12 mesi"
+                "l3": "Ha una durata di 12 mesi"
               }
             },
             "spid": {
               "title": {
                 "default": "Continua con SPID",
-                "l3-next": "Continua con SPID + CIE"
+                "l3": "Continua con SPID + CIE"
               },
               "subtitle": {
                 "default": "Dovrai usare credenziali e app (o SMS)",
-                "l3-next": "Ha una durata di 90 giorni"
+                "l3": "Ha una durata di 90 giorni"
               }
             }
           }
@@ -5099,8 +5114,8 @@
       },
       "reissuanceLandingScreen": {
         "notNecessary": {
-          "title": "Questo passaggio non è più necessario",
-          "subtitle": "È tutto pronto. Puoi gestire i tuoi documenti digitali nel Portafoglio.",
+          "title": "Hai già confermato la tua identità",
+          "subtitle": "Puoi gestire i tuoi documenti digitali nel Portafoglio.",
           "primaryAction": "Vai al Portafoglio"
         },
         "itWalletActivation": {
@@ -5139,13 +5154,6 @@
             },
             "action": "Inizia"
           }
-        },
-        "authSource": {
-          "anis": "ANIS - Anagrafe Nazionale dell'istruzione superiore",
-          "mdi": "Ministero dell'Interno",
-          "mef": "MEF - Ragioneria Generale dello Stato",
-          "inps": "Istituto Nazionale di Previdenza Sociale",
-          "mit": "MIT - Direzione Generale per la Motorizzazione"
         },
         "bottomSheets": {
           "eidInfo": {

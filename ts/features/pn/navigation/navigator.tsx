@@ -10,6 +10,8 @@ import { PNActivationBannerFlowScreen } from "../reminderBanner/screens/PnRemind
 import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
 import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
 import { PaidPaymentScreen } from "../screens/PaidPaymentScreen";
+import { SendAarCieCanInsertionScreen } from "../aar/screen/SendAarCieCanInsertionScreen";
+import { SendAarCanEducationalScreen } from "../aar/screen/SendAarCanEducationalScreen";
 import { PnParamsList } from "./params";
 import PN_ROUTES from "./routes";
 
@@ -61,13 +63,21 @@ export const PnStackNavigator = () => (
       options={hiddenHeader}
     />
     <Stack.Screen
-      name={PN_ROUTES.SEND_AAR_CIE_CARD_READING}
-      component={SendAARCieCardReadingScreen}
+      name={PN_ROUTES.SEND_AAR_DELEGATION_PROPOSAL}
+      component={SendAarDelegationProposalScreen}
       options={hiddenHeader}
     />
     <Stack.Screen
-      name={PN_ROUTES.SEND_AAR_DELEGATION_PROPOSAL}
-      component={SendAarDelegationProposalScreen}
+      name={PN_ROUTES.SEND_AAR_CIE_CAN_INSERTION}
+      component={SendAarCieCanInsertionScreen}
+    />
+    <Stack.Screen
+      name={PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL}
+      component={SendAarCanEducationalScreen}
+    />
+    <Stack.Screen
+      name={PN_ROUTES.SEND_AAR_CIE_CARD_READING}
+      component={SendAARCieCardReadingScreen}
       options={hiddenHeader}
     />
   </Stack.Navigator>
