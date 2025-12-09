@@ -34,12 +34,14 @@ export const FimsSSOFullScreenError = () => {
     switch (errorTag) {
       case "AUTHENTICATION":
         return {
+          enableAnimatedPictogram: true,
+          pictogram: "umbrella",
           title: I18n.t("FIMS.consentsScreen.errorStates.authentication.title"),
           subtitle: I18n.t(
             "FIMS.consentsScreen.errorStates.authentication.body"
           ),
           isHeaderVisible: true,
-          pictogram: "umbrella",
+
           action: {
             label: I18n.t("global.buttons.close"),
             onPress: handleClose
@@ -62,10 +64,12 @@ export const FimsSSOFullScreenError = () => {
         };
       default:
         return {
+          enableAnimatedPictogram: true,
+          pictogram: "umbrella",
           title: I18n.t("FIMS.consentsScreen.errorStates.general.title"),
           subtitle: I18n.t("FIMS.consentsScreen.errorStates.general.body"),
           isHeaderVisible: true,
-          pictogram: "umbrella",
+
           action: {
             label: I18n.t("global.buttons.close"),
             onPress: handleClose

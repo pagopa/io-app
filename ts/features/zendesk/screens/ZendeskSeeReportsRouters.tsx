@@ -99,6 +99,7 @@ const ZendeskSeeReportsRouters = (props: Props) => {
   if (pot.isError(ticketNumber)) {
     return (
       <OperationResultScreenContent
+        enableAnimatedPictogram
         pictogram={"umbrella"}
         title={I18n.t("global.genericError")}
         action={{

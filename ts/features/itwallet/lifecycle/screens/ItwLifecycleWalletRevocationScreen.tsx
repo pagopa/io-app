@@ -45,6 +45,7 @@ export const ItwLifecycleWalletRevocationScreen = () => {
 
   return (
     <OperationResultScreenContent
+      enableAnimatedPictogram
       pictogram="attention"
       title={I18n.t("features.itWallet.walletRevocation.confirmScreen.title")}
       subtitle={I18n.t(

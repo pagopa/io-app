@@ -37,13 +37,14 @@ export const ItwIssuanceEidReissuanceLandingScreen = () => {
   if (hasValidEid) {
     return (
       <OperationResultScreenContent
+        enableAnimatedPictogram
+        pictogram="success"
         title={I18n.t(
           "features.itWallet.reissuanceLandingScreen.notNecessary.title"
         )}
         subtitle={I18n.t(
           "features.itWallet.reissuanceLandingScreen.notNecessary.subtitle"
         )}
-        pictogram="success"
         action={{
           label: I18n.t(
             "features.itWallet.reissuanceLandingScreen.notNecessary.primaryAction"

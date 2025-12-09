@@ -154,6 +154,7 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
   if (message === undefined || messageDetails === undefined) {
     return (
       <OperationResultScreenContent
+        enableAnimatedPictogram
         pictogram={"umbrella"}
         title={I18n.t("global.genericError")}
         subtitle={I18n.t("messageDetails.submitBugText")}

@@ -35,12 +35,12 @@ export const DSAnimatedPictograms = () => {
     { name: "scanCardiOS", label: "Scan Card (iOS)", loop: true },
     { name: "scanCardAndroid", label: "Scan Card (Android)", loop: true },
     { name: "umbrella", label: "Umbrella", loop: true },
-    { name: "error", label: "Error", loop: true },
+    { name: "accessDenied", label: "Access Denied", loop: true },
     { name: "fatalError", label: "Fatal Error", loop: false },
     { name: "lock", label: "Lock", loop: true },
-    { name: "search", label: "Search", loop: true },
+    { name: "searchLens", label: "Search", loop: true },
     { name: "success", label: "Success", loop: true },
-    { name: "warning", label: "Warning", loop: true },
+    { name: "attention", label: "Attention", loop: true },
     { name: "waiting", label: "Waiting", loop: true }
   ];
 

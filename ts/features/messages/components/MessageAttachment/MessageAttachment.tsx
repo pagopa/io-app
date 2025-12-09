@@ -186,6 +186,7 @@ export const MessageAttachment = ({
   if (!attachmentOpt || !downloadPathOpt) {
     return (
       <OperationResultScreenContent
+        enableAnimatedPictogram
         pictogram={"umbrella"}
         title={I18n.t("global.genericError")}
         subtitle={I18n.t("messageDetails.submitBugText")}
@@ -200,6 +201,7 @@ export const MessageAttachment = ({
     <>
       {isPDFRenderingError ? (
         <OperationResultScreenContent
+          enableAnimatedPictogram
           pictogram={"umbrella"}
           title={I18n.t("messagePDFPreview.errors.previewing.title")}
           subtitle={I18n.t("messagePDFPreview.errors.previewing.body")}

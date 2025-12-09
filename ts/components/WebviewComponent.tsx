@@ -65,6 +65,7 @@ const WebviewComponent = ({ source, playgroundEnabled }: Props) => {
     <>
       {hasError && !playgroundEnabled ? (
         <OperationResultScreenContent
+          enableAnimatedPictogram
           testID="webview-error"
           pictogram="umbrella"
           title={I18n.t("wallet.errors.GENERIC_ERROR")}

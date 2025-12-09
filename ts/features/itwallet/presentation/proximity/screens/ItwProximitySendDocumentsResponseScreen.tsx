@@ -31,6 +31,7 @@ export const ItwProximitySendDocumentsResponseScreen = () => {
 
   return (
     <OperationResultScreenContent
+      enableAnimatedPictogram
       pictogram="success"
       title={I18n.t("features.itWallet.presentation.proximity.success.title")}
       subtitle={I18n.t(

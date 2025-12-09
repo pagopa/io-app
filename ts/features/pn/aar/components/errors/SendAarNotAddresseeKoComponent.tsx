@@ -24,6 +24,7 @@ export const SendAarNotAddresseeKoComponent = () => {
 
   return (
     <OperationResultScreenContent
+      enableAnimatedPictogram
       testID="SEND_AAR_NOT_ADDRESSEE"
       isHeaderVisible
       pictogram="accessDenied"

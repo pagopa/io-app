@@ -14,8 +14,9 @@ const ZendeskPanicMode = () => {
 
   return (
     <OperationResultScreenContent
+      enableAnimatedPictogram
+      pictogram="fatalError"
       testID={"zendeskPanicMode"}
-      pictogram={"fatalError"}
       title={I18n.t("support.panicMode.title")}
       subtitle={I18n.t("support.panicMode.body")}
       action={{

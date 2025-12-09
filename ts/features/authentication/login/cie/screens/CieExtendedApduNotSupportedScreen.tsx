@@ -15,6 +15,7 @@ const CieExtendedApduNotSupportedScreen = () => {
 
   return (
     <OperationResultScreenContent
+      enableAnimatedPictogram
       pictogram="attention"
       title={I18n.t("authentication.cie.card.error.genericErrorTitle")}
       subtitle={I18n.t("authentication.cie.nfc.apduNotSupported")}

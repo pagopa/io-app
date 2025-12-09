@@ -335,6 +335,7 @@ const ErrorComponent = (
       }}
     >
       <OperationResultScreenContent
+        enableAnimatedPictogram
         pictogram="umbrella"
         title={I18n.t("authentication.errors.network.title")}
         action={{

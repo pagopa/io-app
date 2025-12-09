@@ -131,6 +131,7 @@ export const SendEngagementScreen = ({ route }: SendEngagementScreenProps) => {
   if (screenStatus === "Failed") {
     return (
       <OperationResultScreenContent
+        enableAnimatedPictogram
         pictogram="umbrella"
         title={I18n.t("features.pn.aar.serviceActivation.failure")}
         action={{

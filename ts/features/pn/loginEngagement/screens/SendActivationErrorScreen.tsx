@@ -16,6 +16,7 @@ export const SendActivationErrorScreen = () => {
 
   return (
     <OperationResultScreenContent
+      enableAnimatedPictogram
       pictogram="umbrella"
       title={i18n.t("features.pn.loginEngagement.send.activationErrorMessage")}
       action={{

@@ -15,6 +15,7 @@ type Props = ReturnType<typeof mapStateToProps> &
  */
 const ServicePreferenceCompleteScreen = (props: Props): ReactElement => (
   <OperationResultScreenContent
+    enableAnimatedPictogram
     pictogram="success"
     title={I18n.t("services.optIn.preferences.completed.title")}
     subtitle={I18n.t("services.optIn.preferences.completed.body")}

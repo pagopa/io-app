@@ -13,6 +13,7 @@ export const InstitutionServicesFailure = ({
 
   return (
     <OperationResultScreenContent
+      enableAnimatedPictogram
       testID="service-institution-failure"
       pictogram="umbrella"
       title={I18n.t("services.institution.failure.title")}

@@ -224,6 +224,7 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
   if (sendMessageOrUndefined == null) {
     return (
       <OperationResultScreenContent
+        enableAnimatedPictogram
         pictogram="umbrella"
         title={I18n.t("features.pn.details.loadError.title")}
         subtitle={I18n.t("features.pn.details.loadError.body")}

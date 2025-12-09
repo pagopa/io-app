@@ -71,6 +71,8 @@ const SuccessScreen = ({ flowState }: SuccessFlowStateProps) => {
 
   return (
     <OperationResultScreenContent
+      enableAnimatedPictogram
+      pictogram="success"
       testID={`success-${flowState}`}
       title={I18n.t(
         `features.pn.reminderBanner.activationFlow.${flowState}.title`
@@ -83,7 +85,6 @@ const SuccessScreen = ({ flowState }: SuccessFlowStateProps) => {
         label: I18n.t("global.buttons.close"),
         onPress: () => navigation.navigate(...navigateHomeParams)
       }}
-      pictogram="success"
     />
   );
 };
@@ -95,6 +96,8 @@ const ErrorScreen = ({ flowState }: ErrorFlowStateProps) => {
   });
   return (
     <OperationResultScreenContent
+      enableAnimatedPictogram
+      pictogram="umbrella"
       testID={`error-${flowState}`}
       title={I18n.t(
         `features.pn.reminderBanner.activationFlow.${flowState}.title`
@@ -107,7 +110,6 @@ const ErrorScreen = ({ flowState }: ErrorFlowStateProps) => {
         label: I18n.t("global.buttons.close"),
         onPress: () => navigation.navigate(...navigateHomeParams)
       }}
-      pictogram="umbrella"
     />
   );
 };

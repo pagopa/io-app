@@ -100,6 +100,7 @@ export const MessageCalendarScreen = () => {
       <>
         <MessageCalendarHeaderComponent />
         <OperationResultScreenContent
+          enableAnimatedPictogram
           pictogram={"umbrella"}
           title={I18n.t("messages.cta.errors.fetchCalendars")}
           action={{

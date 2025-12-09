@@ -30,6 +30,7 @@ const CieUnexpectedErrorScreen = () => {
 
   return (
     <OperationResultScreenContent
+      enableAnimatedPictogram
       pictogram="umbrella"
       title={I18n.t("authentication.cie.card.error.genericErrorTitle")}
       subtitle={I18n.t("authentication.cie.card.error.genericErrorSubtitle")}

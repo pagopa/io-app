@@ -21,8 +21,8 @@ import {
 /* Animated Pictograms */
 import empty from "../../../assets/animated-pictograms/Empty.json";
 import emptyDark from "../../../assets/animated-pictograms/EmptyDark.json";
-import error from "../../../assets/animated-pictograms/Error.json";
-import errorDark from "../../../assets/animated-pictograms/ErrorDark.json";
+import accessDenied from "../../../assets/animated-pictograms/AccessDenied.json";
+import accessDeniedDark from "../../../assets/animated-pictograms/AccessDeniedDark.json";
 import fatalError from "../../../assets/animated-pictograms/FatalError.json";
 import fatalErrorDark from "../../../assets/animated-pictograms/FatalErrorDark.json";
 import lock from "../../../assets/animated-pictograms/Lock.json";
@@ -31,31 +31,31 @@ import scanCardAndroid from "../../../assets/animated-pictograms/ScanCardAndroid
 import scanCardAndroidDark from "../../../assets/animated-pictograms/ScanCardAndroidDark.json";
 import scanCardiOS from "../../../assets/animated-pictograms/ScanCardiOS.json";
 import scanCardiOSDark from "../../../assets/animated-pictograms/ScanCardiOSDark.json";
-import search from "../../../assets/animated-pictograms/Search.json";
-import searchDark from "../../../assets/animated-pictograms/SearchDark.json";
+import searchLens from "../../../assets/animated-pictograms/SearchLens.json";
+import searchLensDark from "../../../assets/animated-pictograms/SearchLensDark.json";
 import success from "../../../assets/animated-pictograms/Success.json";
 import successDark from "../../../assets/animated-pictograms/SuccessDark.json";
 import umbrella from "../../../assets/animated-pictograms/Umbrella.json";
 import umbrellaDark from "../../../assets/animated-pictograms/UmbrellaDark.json";
 import waiting from "../../../assets/animated-pictograms/Waiting.json";
 import waitingDark from "../../../assets/animated-pictograms/WaitingDark.json";
-import warning from "../../../assets/animated-pictograms/Warning.json";
-import warningDark from "../../../assets/animated-pictograms/WarningDark.json";
+import attention from "../../../assets/animated-pictograms/Attention.json";
+import attentionDark from "../../../assets/animated-pictograms/AttentionDark.json";
 import welcome from "../../../assets/animated-pictograms/Welcome.json";
 import welcomeDark from "../../../assets/animated-pictograms/WelcomeDark.json";
 
 export const IOAnimatedPictogramsAssets = {
   waiting,
   empty,
-  error,
+  accessDenied,
   fatalError,
   lock,
   scanCardAndroid,
   scanCardiOS,
-  search,
+  searchLens,
   success,
   umbrella,
-  warning,
+  attention,
   welcome
 } as const;
 
@@ -65,14 +65,14 @@ export const IOAnimatedPictogramsAssetsDark: Record<
 > = {
   waiting: waitingDark,
   empty: emptyDark,
-  error: errorDark,
+  accessDenied: accessDeniedDark,
   fatalError: fatalErrorDark,
   lock: lockDark,
   scanCardAndroid: scanCardAndroidDark,
   scanCardiOS: scanCardiOSDark,
-  search: searchDark,
+  searchLens: searchLensDark,
   success: successDark,
-  warning: warningDark,
+  attention: attentionDark,
   umbrella: umbrellaDark,
   welcome: welcomeDark
 } as const;
@@ -91,12 +91,12 @@ const staticPictogramsMap: Record<IOAnimatedPictograms, IOPictograms> = {
   scanCardiOS: "nfcScaniOS",
   scanCardAndroid: "nfcScanAndroid",
   umbrella: "umbrella",
-  error: "accessDenied",
+  accessDenied: "accessDenied",
   fatalError: "fatalError",
   lock: "passcode",
-  search: "searchLens",
+  searchLens: "searchLens",
   success: "success",
-  warning: "attention",
+  attention: "attention",
   waiting: "ended"
 };
 

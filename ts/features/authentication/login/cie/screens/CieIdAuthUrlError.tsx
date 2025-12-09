@@ -39,6 +39,7 @@ const CieIdAuthUrlError = () => {
 
   return (
     <OperationResultScreenContent
+      enableAnimatedPictogram
       pictogram="attention"
       title={i18n.t("authentication.cieidUrlErrorScreen.title")}
       subtitle={i18n.t("authentication.cieidUrlErrorScreen.description")}

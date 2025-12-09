@@ -9,6 +9,7 @@ export const FimsHistoryKoScreen = () => {
   const dispatch = useIODispatch();
   return (
     <OperationResultScreenContent
+      enableAnimatedPictogram
       pictogram="umbrella"
       title={I18n.t("FIMS.history.errorStates.ko.title")}
       subtitle={I18n.t("FIMS.history.errorStates.ko.body")}

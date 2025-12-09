@@ -85,6 +85,7 @@ const CieWrongCiePinScreen = () => {
   const messages: Messages = useMemo(
     () => ({
       2: {
+        enableAnimatedPictogram: true,
         pictogram: "attention",
         title: I18n.t("authentication.cie.pin.incorrectCiePinTitle1"),
         subtitle: I18n.t("authentication.cie.pin.incorrectCiePinContent1"),
@@ -98,6 +99,7 @@ const CieWrongCiePinScreen = () => {
         })
       },
       1: {
+        enableAnimatedPictogram: true,
         pictogram: "attention",
         title: I18n.t("authentication.cie.pin.incorrectCiePinTitle2"),
         subtitle: I18n.t("authentication.cie.pin.incorrectCiePinContent2"),
@@ -113,6 +115,7 @@ const CieWrongCiePinScreen = () => {
         })
       },
       0: {
+        enableAnimatedPictogram: true,
         pictogram: "fatalError",
         title: I18n.t("authentication.cie.pin.lockedCiePinTitle"),
         subtitle: I18n.t("authentication.cie.pin.lockedCiePinContent"),
@@ -140,6 +143,7 @@ const CieWrongCiePinScreen = () => {
   // in case of unexpected values of `remainingCount`.
   const defaultMessageThatShouldNeverHappen: Message = useMemo(
     () => ({
+      enableAnimatedPictogram: true,
       pictogram: "attention",
       title: I18n.t("global.genericError"),
       subtitle: `${remainingCount}`,

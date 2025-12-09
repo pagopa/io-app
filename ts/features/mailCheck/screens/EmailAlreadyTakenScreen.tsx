@@ -94,6 +94,7 @@ const EmailAlreadyTakenScreen = () => {
 
   return (
     <OperationResultScreenContent
+      enableAnimatedPictogram
       pictogram="accessDenied"
       title={I18n.t("email.cduScreens.emailAlreadyTaken.title")}
       subtitle={bodyPropsArray}

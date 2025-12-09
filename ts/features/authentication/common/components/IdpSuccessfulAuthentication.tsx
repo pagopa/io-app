@@ -32,6 +32,7 @@ export const IdpSuccessfulAuthentication = () => {
 
   return (
     <OperationResultScreenContent
+      enableAnimatedPictogram
       testID="idp-successful-authentication"
       pictogram="success"
       title={contentTitle}

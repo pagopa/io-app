@@ -40,8 +40,9 @@ const LimitWarningScreenContent = ({
 
   return (
     <OperationResultScreenContent
-      testID="itwOfflineAccessGateWarningTestID"
+      enableAnimatedPictogram
       pictogram="attention"
+      testID="itwOfflineAccessGateWarningTestID"
       title={I18n.t("features.itWallet.offline.gate.limitWarning.title")}
       subtitle={I18n.t("features.itWallet.offline.gate.limitWarning.subtitle")}
       action={{
@@ -65,6 +66,7 @@ const LimitReachedScreenContent = () => {
 
   return (
     <OperationResultScreenContent
+      enableAnimatedPictogram
       testID="itwOfflineAccessGateLimitReachedTestID"
       pictogram="accessDenied"
       title={I18n.t("features.itWallet.offline.gate.limitReached.title")}

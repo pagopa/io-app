@@ -80,6 +80,7 @@ export const IdPayConfigurationSuccessScreen = () => {
 
   return (
     <OperationResultScreenContent
+      enableAnimatedPictogram
       pictogram="success"
       title={I18n.t("idpay.configuration.associationSuccess.title")}
       isHeaderVisible
@@ -96,7 +97,6 @@ export const IdPayConfigurationSuccessScreen = () => {
         }
       ]}
       {...renderActionsProps()}
-      enableAnimatedPictogram
       loop={false}
     />
   );

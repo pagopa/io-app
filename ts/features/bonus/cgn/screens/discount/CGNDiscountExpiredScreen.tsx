@@ -7,6 +7,7 @@ const CGNDiscountExpiredScreen = () => {
   const onPress = () => navigate.pop();
   return (
     <OperationResultScreenContent
+      enableAnimatedPictogram
       pictogram="umbrella"
       title={I18n.t("bonus.cgn.merchantDetail.discount.error")}
       isHeaderVisible={false}
@@ -15,7 +16,6 @@ const CGNDiscountExpiredScreen = () => {
         onPress,
         testID: "close-button"
       }}
-      enableAnimatedPictogram
       loop
     />
   );

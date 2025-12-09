@@ -23,6 +23,7 @@ export const PageNotFound = () => {
 
   return (
     <OperationResultScreenContent
+      enableAnimatedPictogram
       pictogram="empty"
       title={I18n.t("pageNotFound.title")}
       subtitle={I18n.t("pageNotFound.subtitle")}
