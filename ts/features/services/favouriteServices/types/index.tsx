@@ -13,8 +13,8 @@ export type ServiceType = {
 
 export type FavouriteServiceType = ServiceType & {
   /**
-   * The timestamp (ISO 8601 string) representing when the service
+   * The timestamp, in milliseconds, representing when the service
    * was added to the favourites.
    */
-  addedAt: string;
+  addedAt: number;
 };
