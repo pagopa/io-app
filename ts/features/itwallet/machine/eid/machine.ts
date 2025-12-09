@@ -17,7 +17,6 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import { itwCredentialUpgradeMachine } from "../upgrade/machine.ts";
-import { itwCredentialIssuanceMachine } from "../credential/machine";
 import {
   GetWalletAttestationActorParams,
   InitMrtdPoPChallengeActorParams,
@@ -159,6 +158,7 @@ export const itwEidIssuanceMachine = setup({
     startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
       notImplemented
     ),
+
     /**
      * MRTD PoP Challenge actors
      */
@@ -184,8 +184,7 @@ export const itwEidIssuanceMachine = setup({
      * Credential upgrade actors
      */
 
-    credentialUpgradeMachine: itwCredentialUpgradeMachine,
-    credentialIssuanceMachine: itwCredentialIssuanceMachine
+    credentialUpgradeMachine: itwCredentialUpgradeMachine
   },
   guards: {
     issuedEidMatchesAuthenticatedUser: notImplemented,

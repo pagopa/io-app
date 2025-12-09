@@ -27,7 +27,7 @@ export const ItwEidIssuanceMachineProvider = (props: PropsWithChildren) => {
       bypassIdentityMatch: env.BYPASS_IDENTITY_MATCH
     }),
     actions: createEidIssuanceActionsImplementation(navigation, store, toast),
-    actors: createEidIssuanceActorsImplementation(env, store, navigation, toast)
+    actors: createEidIssuanceActorsImplementation(env, store)
   });
 
   return (

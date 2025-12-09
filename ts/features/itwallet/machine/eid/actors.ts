@@ -1,5 +1,4 @@
 import { CieUtils } from "@pagopa/io-react-native-cie";
-import { IOToast } from "@pagopa/io-app-design-system";
 import { Trust } from "@pagopa/io-react-native-wallet";
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
@@ -30,11 +29,6 @@ import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
 import { createCredentialUpgradeActionsImplementation } from "../upgrade/actions";
 import { createCredentialUpgradeActorsImplementation } from "../upgrade/actors";
 import { itwCredentialUpgradeMachine } from "../upgrade/machine";
-import { itwCredentialIssuanceMachine } from "../credential/machine";
-import { createCredentialIssuanceActorsImplementation } from "../credential/actors";
-import { createCredentialIssuanceActionsImplementation } from "../credential/actions";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { createCredentialIssuanceGuardsImplementation } from "../credential/guards";
 import type {
   AuthenticationContext,
   CieContext,
@@ -75,15 +69,11 @@ export type GetWalletAttestationActorParams = {
  * Creates the actors for the eid issuance machine
  * @param env - The environment to use for the IT Wallet API calls
  * @param store the IOStore
- * @param navigation the IONavigation
- * @param toast the IOToast
  * @returns the actors
  */
 export const createEidIssuanceActorsImplementation = (
   env: Env,
-  store: ReturnType<typeof useIOStore>,
-  navigation: ReturnType<typeof useIONavigation>,
-  toast: IOToast
+  store: ReturnType<typeof useIOStore>
 ) => ({
   getCieStatus: fromPromise<CieContext>(async () => {
     const [isNFCEnabled, isCIEAuthenticationSupported] = await Promise.all([
@@ -273,15 +263,5 @@ export const createEidIssuanceActorsImplementation = (
   credentialUpgradeMachine: itwCredentialUpgradeMachine.provide({
     actors: createCredentialUpgradeActorsImplementation(env),
     actions: createCredentialUpgradeActionsImplementation(store)
-  }),
-
-  credentialIssuanceMachine: itwCredentialIssuanceMachine.provide({
-    guards: createCredentialIssuanceGuardsImplementation(store),
-    actors: createCredentialIssuanceActorsImplementation(env, store),
-    actions: createCredentialIssuanceActionsImplementation(
-      navigation,
-      store,
-      toast
-    )
   })
 });
