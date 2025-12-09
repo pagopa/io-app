@@ -130,7 +130,7 @@ export function CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen() {
       await CieManager.startInternalAuthAndMRTDReading(
         can,
         selectedChallenge,
-        isBase64Encoding ? "base64" : "hex"
+        isBase64Encoding ? (useSENDChallenge ? "base64url" : "base64") : "hex"
       );
     } catch (e) {
       setStatus("error");
