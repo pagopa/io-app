@@ -45,7 +45,10 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{ts,tsx}": ["prettier --write", "eslint -c .eslintrc.js --fix"]
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "eslint -c .eslintrc.js --fix"
+    ]
   },
   "dependencies": {
     "@babel/plugin-transform-class-properties": "^7.25.9",
