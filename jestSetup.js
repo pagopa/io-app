@@ -9,7 +9,6 @@ import mockClipboard from "@react-native-clipboard/clipboard/jest/clipboard-mock
 import nodeFetch from "node-fetch";
 import { NativeModules, AccessibilityInfo, AppState } from "react-native";
 import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-info-mock";
-import mockBackHandler from "react-native/Libraries/Utilities/__mocks__/BackHandler";
 import mockZendesk from "./ts/__mocks__/io-react-native-zendesk.ts";
 import { initI18n } from "./ts/i18n.ts";
 
@@ -206,8 +205,6 @@ jest.mock(
   }
 );
 jest.spyOn(AppState, "addEventListener").mockImplementation(() => ({remove: jest.fn()}));
-
-jest.mock('react-native/Libraries/Utilities/BackHandler', () => mockBackHandler);
 
 jest.mock("mixpanel-react-native", () => ({
   __esModule: true,

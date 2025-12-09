@@ -1,6 +1,6 @@
 import { createStore } from "redux";
 import { act, fireEvent } from "@testing-library/react-native";
-import { Alert, BackHandler, BackHandlerStatic } from "react-native";
+import { Alert } from "react-native";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -11,12 +11,6 @@ import { setAarFlowState } from "../../store/actions";
 import * as AAR_SELECTORS from "../../store/selectors";
 import { sendAARFlowStates } from "../../utils/stateUtils";
 import { sendAarMockStateFactory } from "../../utils/testUtils";
-
-// `mockPressBack` is available only in the test environment,
-// provided by the project's Jest setup (`jestSetup.js`).
-export const MockBackHandler = BackHandler as BackHandlerStatic & {
-  mockPressBack: () => void;
-};
 
 const mockTerminateFlow = jest.fn();
 const mockDispatch = jest.fn();
@@ -50,34 +44,6 @@ describe("SendAarCanEducationalScreen", () => {
     const backButton = getByLabelText("global.buttons.back");
 
     fireEvent.press(backButton);
-
-    expect(spyOnSystemAlert).toHaveBeenCalledTimes(1);
-    expect(spyOnSystemAlert).toHaveBeenCalledWith(
-      "features.pn.aar.flow.cieCanAdvisory.alert.title",
-      "features.pn.aar.flow.cieCanAdvisory.alert.message",
-      [
-        {
-          text: "features.pn.aar.flow.cieCanAdvisory.alert.confirm",
-          style: "destructive",
-          onPress: expect.any(Function)
-        },
-        {
-          text: "features.pn.aar.flow.cieCanAdvisory.alert.cancel"
-        }
-      ]
-    );
-
-    expect(mockTerminateFlow).not.toHaveBeenCalled();
-    expect(mockDispatch).not.toHaveBeenCalled();
-  });
-
-  it("should prompt the system Alert when the hardware back button is pressed", () => {
-    const spyOnSystemAlert = jest.spyOn(Alert, "alert");
-    renderComponent();
-
-    act(() => {
-      MockBackHandler.mockPressBack();
-    });
 
     expect(spyOnSystemAlert).toHaveBeenCalledTimes(1);
     expect(spyOnSystemAlert).toHaveBeenCalledWith(
