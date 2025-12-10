@@ -1,6 +1,7 @@
 import { VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useRef, useCallback } from "react";
+import I18n from "i18next";
 import { isReady } from "../../../../../common/model/RemoteValue";
 import IdpsGrid from "../../../../authentication/login/idp/components/IdpsGrid";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -14,6 +15,7 @@ import {
   trackItWalletSpidIDPSelected,
   trackItWalletSpidIDPSelection
 } from "../../../analytics";
+import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 
 export const ItwIdentificationIdpSelectionScreen = () => {
   const dispatch = useIODispatch();
@@ -22,6 +24,14 @@ export const ItwIdentificationIdpSelectionScreen = () => {
   const idps = useIOSelector(idpsRemoteValueSelector);
   const idpValue = isReady(idps) ? idps.value : idpsFallback;
   const randomIdps = useRef<ReadonlyArray<SpidIdp>>(randomOrderIdps(idpValue));
+
+  useItwDismissalDialog({
+    customLabels: {
+      body: I18n.t(
+        "features.itWallet.discovery.screen.itw.dismissalDialog.body"
+      )
+    }
+  });
 
   useFocusEffect(
     useCallback(() => {
