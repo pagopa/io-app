@@ -63,7 +63,7 @@ export const ServicesHomeScreen = () => {
       accessibilityLabel: I18n.t("services.home.favourites"),
       onPress: () => {
         navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
-          screen: SERVICES_ROUTES.SERVICE_FAVOURITES,
+          screen: SERVICES_ROUTES.FAVOURITE_SERVICES,
           params: undefined // TODO is this the right way to pass no params? is this the right level of navigation?
         });
       }

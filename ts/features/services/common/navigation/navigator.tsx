@@ -26,7 +26,7 @@ const ServicesNavigator = () => (
       component={ServiceDetailsScreen}
     />
     <Stack.Screen
-      name={SERVICES_ROUTES.SERVICE_FAVOURITES}
+      name={SERVICES_ROUTES.FAVOURITE_SERVICES}
       component={ServiceFavouritesScreen}
     />
   </Stack.Navigator>

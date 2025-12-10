@@ -6,5 +6,5 @@ import { SERVICES_ROUTES } from "./routes";
 export type ServicesParamsList = {
   [SERVICES_ROUTES.SERVICE_DETAIL]: ServiceDetailsScreenRouteParams;
   [SERVICES_ROUTES.INSTITUTION_SERVICES]: InstitutionServicesScreenRouteParams;
-  [SERVICES_ROUTES.SERVICE_FAVOURITES]: ServiceFavouritesScreenRouteParams;
+  [SERVICES_ROUTES.FAVOURITE_SERVICES]: ServiceFavouritesScreenRouteParams;
 };
