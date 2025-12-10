@@ -9,7 +9,7 @@ type Props = {
 };
 
 export const ItwRemoteLoadingScreen = ({ testID, title, message }: Props) => (
-  <LoadingScreenContent testID={testID ?? "loader"} contentTitle={title}>
+  <LoadingScreenContent testID={testID ?? "loader"} title={title}>
     <ContentWrapper style={{ alignItems: "center" }}>
       <Body>
         {message ??

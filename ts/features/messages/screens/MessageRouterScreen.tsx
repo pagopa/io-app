@@ -148,7 +148,7 @@ export const MessageRouterScreen = (props: NavigationProps): ReactElement => {
   if (isLoading) {
     return (
       <LoadingScreenContent
-        contentTitle={I18n.t("messageDetails.loadingText")}
+        title={I18n.t("messageDetails.loadingText")}
         headerVisible
       >
         <View style={{ alignItems: "center" }}>

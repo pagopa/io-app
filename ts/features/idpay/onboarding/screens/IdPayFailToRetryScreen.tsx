@@ -115,7 +115,7 @@ export const IdPayFailToRetryScreen = () => {
       />
       <LoadingScreenContent
         testID="ingress-screen-loader-id"
-        contentTitle={contentTitle}
+        title={contentTitle}
         animatedPictogramSource="waiting"
       >
         {showSubtitle && (

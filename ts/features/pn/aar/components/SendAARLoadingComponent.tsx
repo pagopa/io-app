@@ -5,8 +5,5 @@ type Props = {
 };
 
 export const SendAARLoadingComponent = ({ contentTitle }: Props) => (
-  <LoadingScreenContent
-    contentTitle={contentTitle}
-    testID="LoadingScreenContent"
-  />
+  <LoadingScreenContent title={contentTitle} testID="LoadingScreenContent" />
 );

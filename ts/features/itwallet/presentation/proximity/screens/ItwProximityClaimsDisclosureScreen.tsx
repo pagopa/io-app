@@ -51,7 +51,7 @@ export const ItwProximityClaimsDisclosureScreen = () => {
       // to the Failure state.
       () => (
         <LoadingScreenContent
-          contentTitle={I18n.t(
+          title={I18n.t(
             "features.itWallet.presentation.proximity.loadingScreen.title"
           )}
         >

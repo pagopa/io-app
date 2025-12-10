@@ -13,7 +13,7 @@ const RefreshTokenLoadingScreen = () => {
 
   return (
     <Modal backdropColor={IOColors[theme["appBackground-primary"]]}>
-      <LoadingScreenContent contentTitle={contentTitle} />
+      <LoadingScreenContent title={contentTitle} />
     </Modal>
   );
 };

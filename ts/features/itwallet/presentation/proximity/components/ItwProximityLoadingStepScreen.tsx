@@ -42,7 +42,7 @@ export const ItwProximityLoadingStepScreen = () => {
   const { subtitle, title } = getLoadingStepScreenContentProps();
 
   return (
-    <LoadingScreenContent testID="loader" contentTitle={title}>
+    <LoadingScreenContent testID="loader" title={title}>
       <ContentWrapper style={{ alignItems: "center" }}>
         <Body style={{ textAlign: "center" }}>{subtitle}</Body>
       </ContentWrapper>

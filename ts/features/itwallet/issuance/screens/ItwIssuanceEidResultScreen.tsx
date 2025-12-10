@@ -114,9 +114,7 @@ const ItwIssuanceEidUpgradeResultContent = ({
   if (isLoading) {
     return (
       <LoadingScreenContent
-        contentTitle={I18n.t(
-          "features.itWallet.issuance.upgrade.loading.title"
-        )}
+        title={I18n.t("features.itWallet.issuance.upgrade.loading.title")}
       >
         <Body style={{ textAlign: "center" }}>
           {I18n.t("features.itWallet.issuance.upgrade.loading.subtitle")}
@@ -171,9 +169,7 @@ const ItwIssuanceEidReissuanceResultContent = () => {
   const route = useRoute();
 
   if (isLoading) {
-    return (
-      <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
-    );
+    return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
   }
 
   return (

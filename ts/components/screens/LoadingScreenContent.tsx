@@ -3,10 +3,14 @@
  */
 import {
   Banner,
+  Body,
   ContentWrapper,
   H3,
+  IOButton,
+  IOButtonProps,
   IOColors,
   useIOTheme,
+  VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
 
@@ -27,28 +31,34 @@ const styles = StyleSheet.create({
   }
 });
 
+type ButtonProps = Pick<
+  IOButtonProps,
+  "label" | "accessibilityLabel" | "onPress" | "testID" | "icon"
+>;
+
 const SPACE_BETWEEN_SPINNER_AND_TEXT = 24;
 
 type LoadingScreenContentProps = WithTestID<{
-  contentTitle: string;
+  title: string;
+  subtitle?: string;
+  action?: ButtonProps;
   children?: ReactNode;
   headerVisible?: boolean;
   animatedPictogramSource?: IOAnimatedPictograms;
-  banner?:
-    | { showBanner: true; props: ComponentProps<typeof Banner> }
-    | { showBanner?: false };
+  banner?: ComponentProps<typeof Banner>;
 }>;
 
-export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
+export const LoadingScreenContent = ({
+  title,
+  subtitle,
+  action,
+  children,
+  headerVisible,
+  testID,
+  animatedPictogramSource,
+  banner
+}: LoadingScreenContentProps) => {
   const theme = useIOTheme();
-  const {
-    contentTitle,
-    children,
-    headerVisible,
-    testID,
-    animatedPictogramSource,
-    banner = { showBanner: false }
-  } = props;
 
   useEffect(() => {
     // Since the screen is shown for a very short time,
@@ -58,9 +68,9 @@ export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
       // We use it only on Android, because on iOS the screen reader
       // stops reading the content when the ingress screen is unmounted
       // and the focus is moved to another element.
-      AccessibilityInfo.announceForAccessibility(contentTitle);
+      AccessibilityInfo.announceForAccessibility(title);
     }
-  }, [contentTitle]);
+  }, [title]);
 
   return (
     <SafeAreaView
@@ -91,21 +101,32 @@ export const LoadingScreenContent = (props: LoadingScreenContentProps) => {
               <LoadingIndicator />
             )}
           </View>
-          <VStack space={8}>
+          <VStack space={8} style={{ justifyContent: "center" }}>
             <H3
               style={{ textAlign: "center" }}
               color={theme["textHeading-secondary"]}
-              accessibilityLabel={contentTitle}
+              accessibilityLabel={title}
             >
-              {contentTitle}
+              {title}
             </H3>
+            {subtitle && (
+              <Body style={{ textAlign: "center" }}>{subtitle}</Body>
+            )}
+            {action && (
+              <View>
+                <VSpacer size={16} />
+                <IOButton variant="link" {...action} />
+              </View>
+            )}
             {children}
           </VStack>
         </VStack>
       </ContentWrapper>
-      <ContentWrapper style={{ marginBottom: 16 }}>
-        {banner.showBanner && <Banner {...banner.props} />}
-      </ContentWrapper>
+      {banner && (
+        <ContentWrapper style={{ marginBottom: 16 }}>
+          <Banner {...banner} />
+        </ContentWrapper>
+      )}
     </SafeAreaView>
   );
 };

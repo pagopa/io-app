@@ -17,10 +17,9 @@ const RevocationLoadingScreen = () => {
 
   return (
     <LoadingScreenContent
-      contentTitle={I18n.t(
-        "features.itWallet.walletRevocation.loadingScreen.title",
-        { name: isItwL3 ? "IT-Wallet" : "Documenti su IO" }
-      )}
+      title={I18n.t("features.itWallet.walletRevocation.loadingScreen.title", {
+        name: isItwL3 ? "IT-Wallet" : "Documenti su IO"
+      })}
     >
       <ContentWrapper style={{ alignItems: "center" }}>
         <Body>
