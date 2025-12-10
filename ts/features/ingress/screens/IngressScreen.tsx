@@ -193,7 +193,7 @@ export const IngressScreen = () => {
       <LoadingScreenContent
         testID="ingress-screen-loader-id"
         title={content.title}
-        subtitle={content.subtitle ?? undefined}
+        subtitle={content.subtitle}
         animatedPictogramSource="waiting"
         banner={
           isOfflineAccessAvailable && showBanner
