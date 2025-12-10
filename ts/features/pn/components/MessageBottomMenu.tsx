@@ -42,12 +42,13 @@ export type MessageBottomMenuProps = {
 
 const generateMessageSectionData = (
   iun: string,
-  messageId: string,
+  messageId: string | undefined,
   isCancelled?: boolean,
   paidNoticeCodes?: ReadonlyArray<string>,
   payments?: ReadonlyArray<NotificationPaymentInfo>
-): ShowMoreSection => {
-  const messageSectionData: ShowMoreSection = [
+): ReadonlyArray<ShowMoreSection> => {
+  // IUN
+  const sectionData: Array<ShowMoreSection> = [
     {
       title: I18n.t("features.pn.details.infoSection.iunSectionTitle"),
       items: [
@@ -60,8 +61,11 @@ const generateMessageSectionData = (
           value: iun
         }
       ]
-    },
-    {
+    }
+  ];
+  // MessageId (not defined is the notification is an AAR)
+  if (messageId != null) {
+    const messageIdSectionData: ShowMoreSection = {
       title: I18n.t("messageDetails.headerTitle"),
       items: [
         {
@@ -73,11 +77,14 @@ const generateMessageSectionData = (
           value: messageId
         }
       ]
-    }
-  ];
+    };
+    // eslint-disable-next-line functional/immutable-data
+    sectionData.push(messageIdSectionData);
+  }
+  // Paid payments, when notification is cancelled but has previously paid payments
   if (isCancelled) {
-    const paymentsSectionData: ShowMoreSection =
-      paidNoticeCodes?.map((paidNoticeCode, index) => ({
+    paidNoticeCodes?.forEach((paidNoticeCode, index) => {
+      const paidPaymentData: ShowMoreSection = {
         title: `${I18n.t(
           "messageDetails.showMoreDataBottomSheet.pagoPAHeader"
         )} ${index + 1}`,
@@ -92,44 +99,47 @@ const generateMessageSectionData = (
             valueToCopy: paidNoticeCode
           }
         ]
-      })) ?? [];
-    return messageSectionData.concat(paymentsSectionData);
-  } else {
-    const hasMoreThanOnePayment = (payments?.length ?? 0) > 1;
-    const paymentsSectionData: ShowMoreSection =
-      payments?.map((payment, index) => {
-        const titleSuffix = hasMoreThanOnePayment ? ` ${index + 1}` : ``;
-        return {
-          title: `${I18n.t(
-            "messageDetails.showMoreDataBottomSheet.pagoPAHeader"
-          )}${titleSuffix}`,
-          items: [
-            {
-              accessibilityLabel: I18n.t(
-                "messageDetails.showMoreDataBottomSheet.noticeCodeAccessibility"
-              ),
-              icon: "docPaymentCode",
-              label: I18n.t(
-                "messageDetails.showMoreDataBottomSheet.noticeCode"
-              ),
-              value: formatPaymentNoticeNumber(payment.noticeCode),
-              valueToCopy: payment.noticeCode
-            },
-            {
-              accessibilityLabel: I18n.t(
-                "messageDetails.showMoreDataBottomSheet.entityFiscalCodeAccessibility"
-              ),
-              icon: "entityCode",
-              label: I18n.t(
-                "messageDetails.showMoreDataBottomSheet.entityFiscalCode"
-              ),
-              value: payment.creditorTaxId
-            }
-          ]
-        };
-      }) ?? [];
-    return messageSectionData.concat(paymentsSectionData);
+      };
+      // eslint-disable-next-line functional/immutable-data
+      sectionData.push(paidPaymentData);
+    });
   }
+  // Payments, when notification is not cancelled (and has payments)
+  if (!isCancelled) {
+    const hasMoreThanOnePayment = (payments?.length ?? 0) > 1;
+    payments?.forEach((payment, index) => {
+      const titleSuffix = hasMoreThanOnePayment ? ` ${index + 1}` : ``;
+      const paymentData: ShowMoreSection = {
+        title: `${I18n.t(
+          "messageDetails.showMoreDataBottomSheet.pagoPAHeader"
+        )}${titleSuffix}`,
+        items: [
+          {
+            accessibilityLabel: I18n.t(
+              "messageDetails.showMoreDataBottomSheet.noticeCodeAccessibility"
+            ),
+            icon: "docPaymentCode",
+            label: I18n.t("messageDetails.showMoreDataBottomSheet.noticeCode"),
+            value: formatPaymentNoticeNumber(payment.noticeCode),
+            valueToCopy: payment.noticeCode
+          },
+          {
+            accessibilityLabel: I18n.t(
+              "messageDetails.showMoreDataBottomSheet.entityFiscalCodeAccessibility"
+            ),
+            icon: "entityCode",
+            label: I18n.t(
+              "messageDetails.showMoreDataBottomSheet.entityFiscalCode"
+            ),
+            value: payment.creditorTaxId
+          }
+        ]
+      };
+      // eslint-disable-next-line functional/immutable-data
+      sectionData.push(paymentData);
+    });
+  }
+  return sectionData;
 };
 
 export const MessageBottomMenu = ({
@@ -148,12 +158,12 @@ export const MessageBottomMenu = ({
     () =>
       generateMessageSectionData(
         iun,
-        messageId,
+        sendOpeningSource !== "aar" ? messageId : undefined,
         isCancelled,
         paidNoticeCodes,
         payments
       ),
-    [isCancelled, iun, messageId, paidNoticeCodes, payments]
+    [isCancelled, iun, messageId, paidNoticeCodes, payments, sendOpeningSource]
   );
   return (
     <View

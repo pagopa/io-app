@@ -11,21 +11,21 @@ import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 
 export type ShowMoreListItemProps = {
-  sections: ShowMoreSection;
+  sections: ReadonlyArray<ShowMoreSection>;
 };
 
-export type ShowMoreSection = ReadonlyArray<{
-  items: ShowMoreItems;
+export type ShowMoreSection = {
+  items: ReadonlyArray<ShowMoreItems>;
   title: string;
-}>;
+};
 
-export type ShowMoreItems = ReadonlyArray<{
+export type ShowMoreItems = {
   accessibilityLabel: string;
   icon?: IOIcons;
   label: string;
   value: string;
   valueToCopy?: string;
-}>;
+};
 
 export const ShowMoreListItem = ({ sections }: ShowMoreListItemProps) => {
   const { bottomSheet, present } = useIOBottomSheetModal({

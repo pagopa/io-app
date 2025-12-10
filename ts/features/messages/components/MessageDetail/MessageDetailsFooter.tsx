@@ -29,7 +29,7 @@ const generateMessageSectionData = (
   noticeNumber?: string,
   payeeFiscalCode?: string
 ) => {
-  const messageSectionDataArray: ShowMoreSection = [
+  const messageSectionDataArray: ReadonlyArray<ShowMoreSection> = [
     {
       title: I18n.t("messageDetails.headerTitle"),
       items: [
@@ -44,7 +44,7 @@ const generateMessageSectionData = (
       ]
     }
   ];
-  const noticeNumberItemArray: ShowMoreItems = noticeNumber
+  const noticeNumberItemArray: ReadonlyArray<ShowMoreItems> = noticeNumber
     ? [
         {
           accessibilityLabel: I18n.t(
@@ -57,7 +57,7 @@ const generateMessageSectionData = (
         }
       ]
     : [];
-  const payeeFiscalCodeItemArray: ShowMoreItems = payeeFiscalCode
+  const payeeFiscalCodeItemArray: ReadonlyArray<ShowMoreItems> = payeeFiscalCode
     ? [
         {
           accessibilityLabel: I18n.t(
@@ -74,7 +74,7 @@ const generateMessageSectionData = (
   const paymentItemData = noticeNumberItemArray.concat(
     payeeFiscalCodeItemArray
   );
-  const paymentSectionDataArray: ShowMoreSection =
+  const paymentSectionDataArray: ReadonlyArray<ShowMoreSection> =
     paymentItemData.length > 0
       ? [
           {
