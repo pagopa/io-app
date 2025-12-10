@@ -967,6 +967,12 @@ export const itwEidIssuanceMachine = setup({
                   }
                 };
               })
+            },
+            close: {
+              target: "#itwEidIssuanceMachine.UserIdentification"
+            },
+            back: {
+              target: "DisplayingCieNfcPreparationInstructions"
             }
           }
         },
