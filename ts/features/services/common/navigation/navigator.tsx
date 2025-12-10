@@ -2,7 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { isGestureEnabled } from "../../../../utils/navigation";
 import { ServiceDetailsScreen } from "../../details/screens/ServiceDetailsScreen";
 import { InstitutionServicesScreen } from "../../institution/screens/InstitutionServicesScreen";
-import { ServiceFavouritesScreen } from "../../serviceFavourites/screens/ServiceFavouritesScreen";
+import { FavouriteServicesScreen } from "../../serviceFavourites/screens/ServiceFavouritesScreen";
 import { ServicesParamsList } from "./params";
 import { SERVICES_ROUTES } from "./routes";
 
@@ -27,7 +27,7 @@ const ServicesNavigator = () => (
     />
     <Stack.Screen
       name={SERVICES_ROUTES.FAVOURITE_SERVICES}
-      component={ServiceFavouritesScreen}
+      component={FavouriteServicesScreen}
     />
   </Stack.Navigator>
 );
