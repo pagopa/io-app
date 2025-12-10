@@ -152,7 +152,6 @@ const WalletPaymentOutcomeScreen = () => {
       });
       return;
     }
-
     navigation.pop();
   };
 

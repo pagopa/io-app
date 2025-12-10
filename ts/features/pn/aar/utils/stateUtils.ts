@@ -8,6 +8,7 @@ export type SendAARFailurePhase =
   | "Entry Point"
   | "Fetch Notification"
   | "Fetch QRCode"
+  | "Playground"
   | "Show Notification";
 
 export type RecipientInfo = {
@@ -25,7 +26,6 @@ type NisData = {
   sod: string;
   nis: string;
   publicKey: string;
-  signedChallenge: string;
 };
 
 type NotInitialized = {
@@ -67,6 +67,12 @@ type FinalNotAddressee = {
 
 type NotAddressee = {
   type: SendAARFlowStatesType["notAddressee"];
+  recipientInfo: RecipientInfo;
+  qrCode: string;
+  iun: string;
+};
+type NfcNotSupportedFinal = {
+  type: SendAARFlowStatesType["nfcNotSupportedFinal"];
   recipientInfo: RecipientInfo;
   qrCode: string;
   iun: string;
@@ -150,9 +156,7 @@ const sendAARFlowDefaultStates = {
   displayingAARToS: "displayingAARToS",
   fetchingQRData: "fetchingQRData",
   fetchingNotificationData: "fetchingNotificationData",
-  displayingNotificationData: "displayingNotificationData",
-  notAddresseeFinal: "notAddresseeFinal",
-  ko: "ko"
+  displayingNotificationData: "displayingNotificationData"
 } as const;
 
 const sendAARFlowDelegatedStates = {
@@ -166,9 +170,16 @@ const sendAARFlowDelegatedStates = {
   cieScanning: "cieScanning"
 } as const;
 
+const sendAARFailureStates = {
+  notAddresseeFinal: "notAddresseeFinal",
+  nfcNotSupportedFinal: "nfcNotSupportedFinal",
+  ko: "ko"
+} as const;
+
 export const sendAARFlowStates = {
   ...sendAARFlowDefaultStates,
-  ...sendAARFlowDelegatedStates
+  ...sendAARFlowDelegatedStates,
+  ...sendAARFailureStates
 } as const;
 
 export const validAARStatusTransitions = new Map<
@@ -207,7 +218,10 @@ export const validAARStatusTransitions = new Map<
   ],
   [
     sendAARFlowStates.notAddressee,
-    new Set([sendAARFlowStates.creatingMandate])
+    new Set([
+      sendAARFlowStates.creatingMandate,
+      sendAARFlowStates.nfcNotSupportedFinal
+    ])
   ],
   [
     sendAARFlowStates.creatingMandate,
@@ -280,10 +294,7 @@ type AARFlowDefaultState =
   | DisplayingTos
   | FetchQR
   | FetchNotification
-  | DisplayingNotification
-  | FinalNotAddressee
-  | ErrorState;
-
+  | DisplayingNotification;
 type AARFlowDelegatedState =
   | NotAddressee
   | CreateMandate
@@ -293,5 +304,9 @@ type AARFlowDelegatedState =
   | AndroidNFCActivation
   | CieScanning
   | ValidateMandate;
+type AarErrorStates = FinalNotAddressee | NfcNotSupportedFinal | ErrorState;
 
-export type AARFlowState = AARFlowDefaultState | AARFlowDelegatedState;
+export type AARFlowState =
+  | AARFlowDefaultState
+  | AARFlowDelegatedState
+  | AarErrorStates;

@@ -59,6 +59,7 @@ export const requestCredential = async ({
     await Credential.Issuance.startUserAuthorization(
       issuerConf,
       credentialIds,
+      { proofType: "none" },
       {
         walletInstanceAttestation,
         redirectUri: env.ISSUANCE_REDIRECT_URI,

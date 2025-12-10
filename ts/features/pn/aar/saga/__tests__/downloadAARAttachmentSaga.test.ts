@@ -311,7 +311,7 @@ describe("getAttachmentMetadata", () => {
         expect(mockedGetNotificationAttachmentInput.mock.calls[0][0]).toEqual({
           Bearer: `Bearer ${bearerToken}`,
           urlEncodedBase64AttachmentUrl: encodedUrl,
-          "x-pagopa-pn-io-src": "QRCODE",
+          "x-pagopa-pn-io-src": "QR_CODE",
           mandateId: mandateIdVariant,
           isTest: useUATEnvironment
         });
@@ -349,7 +349,7 @@ describe("getAttachmentMetadata", () => {
         expect(mockedGetNotificationAttachmentInput.mock.calls[0][0]).toEqual({
           Bearer: `Bearer ${bearerToken}`,
           urlEncodedBase64AttachmentUrl: encodedUrl,
-          "x-pagopa-pn-io-src": "QRCODE",
+          "x-pagopa-pn-io-src": "QR_CODE",
           mandateId: mandateIdVariant,
           isTest: useUATEnvironment
         });
@@ -399,7 +399,7 @@ describe("getAttachmentMetadata", () => {
         expect(mockedGetNotificationAttachmentInput.mock.calls[0][0]).toEqual({
           Bearer: `Bearer ${bearerToken}`,
           urlEncodedBase64AttachmentUrl: encodedUrl,
-          "x-pagopa-pn-io-src": "QRCODE",
+          "x-pagopa-pn-io-src": "QR_CODE",
           mandateId: mandateIdVariant,
           isTest: useUATEnvironment
         });
@@ -452,7 +452,7 @@ describe("getAttachmentMetadata", () => {
         expect(mockedGetNotificationAttachmentInput.mock.calls[0][0]).toEqual({
           Bearer: `Bearer ${bearerToken}`,
           urlEncodedBase64AttachmentUrl: encodedUrl,
-          "x-pagopa-pn-io-src": "QRCODE",
+          "x-pagopa-pn-io-src": "QR_CODE",
           mandateId: mandateIdVariant,
           isTest: useUATEnvironment
         });
@@ -498,7 +498,7 @@ describe("getAttachmentMetadata", () => {
         expect(mockedGetNotificationAttachmentInput.mock.calls[0][0]).toEqual({
           Bearer: `Bearer ${bearerToken}`,
           urlEncodedBase64AttachmentUrl: encodedUrl,
-          "x-pagopa-pn-io-src": "QRCODE",
+          "x-pagopa-pn-io-src": "QR_CODE",
           mandateId: mandateIdVariant,
           isTest: useUATEnvironment
         });
@@ -552,7 +552,7 @@ describe("getAttachmentMetadata", () => {
         expect(mockedGetNotificationAttachmentInput.mock.calls[0][0]).toEqual({
           Bearer: `Bearer ${bearerToken}`,
           urlEncodedBase64AttachmentUrl: encodedUrl,
-          "x-pagopa-pn-io-src": "QRCODE",
+          "x-pagopa-pn-io-src": "QR_CODE",
           mandateId: mandateIdVariant,
           isTest: useUATEnvironment
         });

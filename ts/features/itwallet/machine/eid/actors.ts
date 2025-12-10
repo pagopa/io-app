@@ -1,5 +1,5 @@
-import { Trust } from "@pagopa/io-react-native-wallet";
 import { CieUtils } from "@pagopa/io-react-native-cie";
+import { Trust } from "@pagopa/io-react-native-wallet";
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
 import { useIOStore } from "../../../../store/hooks";
@@ -20,6 +20,7 @@ import {
   StoredCredential,
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
+import * as mrtdUtils from "../../common/utils/mrtd";
 import {
   itwIntegrityKeyTagSelector,
   itwIntegrityServiceStatusSelector
@@ -32,9 +33,9 @@ import type {
   AuthenticationContext,
   CieContext,
   EidIssuanceLevel,
-  IdentificationContext
+  IdentificationContext,
+  MrtdPoPContext
 } from "./context";
-import { isL3IssuanceFeaturesEnabled } from "./utils";
 
 export type RequestEidActorParams = {
   identification: IdentificationContext | undefined;
@@ -46,6 +47,18 @@ export type RequestEidActorParams = {
 export type StartAuthFlowActorParams = {
   walletInstanceAttestation: string | undefined;
   identification: IdentificationContext | undefined;
+  withMRTDPoP: boolean;
+};
+
+export type InitMrtdPoPChallengeActorParams = {
+  authenticationContext: AuthenticationContext | undefined;
+  walletInstanceAttestation: string | undefined;
+};
+
+export type ValidateMrtdPoPChallengeActorParams = {
+  authenticationContext: AuthenticationContext | undefined;
+  walletInstanceAttestation: string | undefined;
+  mrtdContext: MrtdPoPContext | undefined;
 };
 
 export type GetWalletAttestationActorParams = {
@@ -62,6 +75,17 @@ export const createEidIssuanceActorsImplementation = (
   env: Env,
   store: ReturnType<typeof useIOStore>
 ) => ({
+  getCieStatus: fromPromise<CieContext>(async () => {
+    const [isNFCEnabled, isCIEAuthenticationSupported] = await Promise.all([
+      cieUtils.isNfcEnabled(),
+      CieUtils.isCieAuthenticationSupported()
+    ]);
+    return {
+      isNFCEnabled,
+      isCIEAuthenticationSupported
+    };
+  }),
+
   verifyTrustFederation: fromPromise(async () => {
     // Evaluate the issuer trust
     const trustAnchorEntityConfig =
@@ -127,15 +151,17 @@ export const createEidIssuanceActorsImplementation = (
     return getAttestation(env, input.integrityKeyTag, sessionToken);
   }),
 
-  getCieStatus: fromPromise<CieContext>(async () => {
-    const [isNFCEnabled, isCIEAuthenticationSupported] = await Promise.all([
-      cieUtils.isNfcEnabled(),
-      CieUtils.isCieAuthenticationSupported()
-    ]);
-    return {
-      isNFCEnabled,
-      isCIEAuthenticationSupported
-    };
+  revokeWalletInstance: fromPromise(async () => {
+    const state = store.getState();
+    const sessionToken = sessionTokenSelector(state);
+    const integrityKeyTag = itwIntegrityKeyTagSelector(state);
+
+    if (O.isNone(integrityKeyTag)) {
+      return;
+    }
+    assert(sessionToken, "sessionToken is undefined");
+
+    await revokeCurrentWalletInstance(env, sessionToken, integrityKeyTag.value);
   }),
 
   startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
@@ -149,7 +175,8 @@ export const createEidIssuanceActorsImplementation = (
       const authenticationContext = await issuanceUtils.startAuthFlow({
         env,
         walletAttestation: input.walletInstanceAttestation,
-        identification: input.identification
+        identification: input.identification,
+        withMRTDPoP: input.withMRTDPoP
       });
 
       return {
@@ -158,6 +185,49 @@ export const createEidIssuanceActorsImplementation = (
       };
     }
   ),
+
+  initMrtdPoPChallenge: fromPromise<
+    MrtdPoPContext,
+    InitMrtdPoPChallengeActorParams
+  >(async ({ input }) => {
+    assert(input.authenticationContext, "authenticationContext is undefined");
+    assert(
+      input.walletInstanceAttestation,
+      "walletInstanceAttestation is undefined"
+    );
+
+    return mrtdUtils.initMrtdPoPChallenge({
+      issuerConf: input.authenticationContext.issuerConf,
+      walletInstanceAttestation: input.walletInstanceAttestation,
+      authRedirectUrl: input.authenticationContext.callbackUrl
+    });
+  }),
+
+  validateMrtdPoPChallenge: fromPromise<
+    string,
+    ValidateMrtdPoPChallengeActorParams
+  >(async ({ input }) => {
+    assert(input.authenticationContext, "authenticationContext is undefined");
+    assert(
+      input.walletInstanceAttestation,
+      "walletInstanceAttestation is undefined"
+    );
+    assert(input.mrtdContext, "mrtdContext is undefined");
+    assert(input.mrtdContext.ias, "IAS is undefined");
+    assert(input.mrtdContext.mrtd, "MRTD is undefined");
+
+    const { callbackUrl } = await mrtdUtils.validateMrtdPoPChallenge({
+      issuerConf: input.authenticationContext.issuerConf,
+      walletInstanceAttestation: input.walletInstanceAttestation,
+      mrtd_auth_session: input.mrtdContext.mrtd_auth_session,
+      mrtd_pop_nonce: input.mrtdContext.mrtd_pop_nonce,
+      validationUrl: input.mrtdContext.validationUrl,
+      ias: input.mrtdContext.ias,
+      mrtd: input.mrtdContext.mrtd
+    });
+
+    return callbackUrl;
+  }),
 
   requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
     async ({ input }) => {
@@ -180,7 +250,7 @@ export const createEidIssuanceActorsImplementation = (
 
       trackItwRequest(
         input.identification.mode,
-        isL3IssuanceFeaturesEnabled(input.level) ? "L3" : "L2"
+        input.level === "l3" ? "L3" : "L2"
       );
 
       return issuanceUtils.getPid({
@@ -189,19 +259,6 @@ export const createEidIssuanceActorsImplementation = (
       });
     }
   ),
-
-  revokeWalletInstance: fromPromise(async () => {
-    const state = store.getState();
-    const sessionToken = sessionTokenSelector(state);
-    const integrityKeyTag = itwIntegrityKeyTagSelector(state);
-
-    if (O.isNone(integrityKeyTag)) {
-      return;
-    }
-    assert(sessionToken, "sessionToken is undefined");
-
-    await revokeCurrentWalletInstance(env, sessionToken, integrityKeyTag.value);
-  }),
 
   credentialUpgradeMachine: itwCredentialUpgradeMachine.provide({
     actors: createCredentialUpgradeActorsImplementation(env),

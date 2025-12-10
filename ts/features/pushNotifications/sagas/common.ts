@@ -1,8 +1,6 @@
 import { call, put, select } from "typed-redux-saga/macro";
 import NavigationService from "../../../navigation/NavigationService";
 import { navigateToMainNavigatorAction } from "../../../store/actions/navigation";
-import { isTestEnv } from "../../../utils/environment";
-import { handleStoredLinkingUrlIfNeeded } from "../../linking/sagas";
 import { resetMessageArchivingAction } from "../../messages/store/actions/archiving";
 import { isArchivingDisabledSelector } from "../../messages/store/reducers/archiving";
 import { trackNotificationPermissionsStatus } from "../analytics";
@@ -52,32 +50,7 @@ export function* updateNotificationPermissionsIfNeeded(
   }
 }
 
-/**
- * this method is used to handle all actions that
- * are triggered when the app is resumed from scratch or transitions from
- * background to foreground, and also need to be handled
- * later on in the app's life cycle.
- *
- * two examples are Universal/App Links and Push Notifications, which
- * can transition the app from background or from a closed state to foreground,
- *  and need to be handled once the app has finished loading/initializing.
- */
-export function* maybeHandlePendingBackgroundActions(
-  shouldResetToMainNavigator: boolean = false
-) {
-  // check if we have a stored linking URL to process
-  if (yield* call(handleStoredLinkingUrlIfNeeded)) {
-    return true;
-  }
-  // Check if we have a pending notification message
-  if (yield* call(handlePushNotificationIfNeeded, shouldResetToMainNavigator)) {
-    return true;
-  }
-
-  return false;
-}
-
-function* handlePushNotificationIfNeeded(
+export function* handlePushNotificationIfNeeded(
   shouldResetToMainNavigator: boolean = false
 ) {
   const pendingMessageState = yield* select(pendingMessageStateSelector);
@@ -115,9 +88,3 @@ function* handlePushNotificationIfNeeded(
   }
   return false;
 }
-
-export const testable = isTestEnv
-  ? {
-      handlePushNotificationIfNeeded
-    }
-  : undefined;

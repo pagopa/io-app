@@ -1,3 +1,4 @@
+import { InternalAuthAndMrtdResponse } from "@pagopa/io-react-native-cie";
 import { ErrorActorEvent } from "xstate";
 import { SpidIdp } from "../../../../utils/idps";
 import { CieWarningType } from "../../identification/cie/utils/types";
@@ -62,6 +63,21 @@ export type UserIdentificationCompleted = {
   authRedirectUrl: string;
 };
 
+export type CieCanEntered = {
+  type: "cie-can-entered";
+  can: string;
+};
+
+export type MrtdChallengedSigned = {
+  type: "mrtd-challenged-signed";
+  data: InternalAuthAndMrtdResponse;
+};
+
+export type MrtdPoPVerificationCompleted = {
+  type: "mrtd-pop-verification-completed";
+  authRedirectUrl: string;
+};
+
 export type Retry = {
   type: "retry";
 };
@@ -89,7 +105,12 @@ export type RevokeWalletInstance = {
 export type ExternalErrorEvent = {
   type: "error";
   // Add a custom error code to the error event to distinguish between different errors. Add a new error code for each different error if needed.
-  scope: "ipzs-privacy" | "spid-login" | "cieid-login";
+  scope:
+    | "ipzs-privacy"
+    | "spid-login"
+    | "cieid-login"
+    | "cie-auth"
+    | "cie-mrtd-pop";
   error?: Error;
 };
 
@@ -113,6 +134,9 @@ export type EidIssuanceEvents =
   | SelectSpidIdp
   | CiePinEntered
   | UserIdentificationCompleted
+  | CieCanEntered
+  | MrtdChallengedSigned
+  | MrtdPoPVerificationCompleted
   | AddToWallet
   | GoToWallet
   | AddNewCredential

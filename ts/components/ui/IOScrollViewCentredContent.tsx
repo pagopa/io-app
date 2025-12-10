@@ -10,9 +10,13 @@ import {
 } from "@pagopa/io-app-design-system";
 import { ComponentProps } from "react";
 import { View } from "react-native";
-import { IOScrollView, IOScrollViewActions } from "./IOScrollView";
+import {
+  IOScrollView,
+  IOScrollViewActions,
+  IOScrollViewProps
+} from "./IOScrollView";
 
-export type IOScrollViewCentredContent = {
+export type IOScrollViewCentredContentProps = {
   pictogram: IOPictograms;
   title: string;
   description?: string | Array<BodyProps>;
@@ -21,23 +25,22 @@ export type IOScrollViewCentredContent = {
     "label" | "accessibilityLabel" | "onPress" | "testID"
   >;
   actions: IOScrollViewActions;
-};
+} & Omit<IOScrollViewProps, "centerContent" | "actions">;
 
 /**
- * Istance of `IOScrollView` where the main content is centred and the
- * action(s) is/are placed at the bottom of the page. This component
- * does not make any assumption about the context in which it is used,
- * so you need to configure any header (that you may be using) in the
- * screen or the component that integrates it.
+ * Istance of `IOScrollView` where the main content is centred,
+ * and a pictogram->title->description->link layout is provided.
  */
 export const IOScrollViewCentredContent = ({
   title,
   description,
   additionalLink,
   pictogram,
-  actions
-}: IOScrollViewCentredContent) => (
-  <IOScrollView centerContent actions={actions}>
+  actions,
+  children,
+  ...scrollViewProps
+}: IOScrollViewCentredContentProps) => (
+  <IOScrollView centerContent actions={actions} {...scrollViewProps}>
     <VStack space={16} style={{ alignItems: "center" }}>
       <Pictogram name={pictogram} size={180} />
       <View style={{ paddingHorizontal: 24 }}>
@@ -62,5 +65,6 @@ export const IOScrollViewCentredContent = ({
         </View>
       )}
     </VStack>
+    {children}
   </IOScrollView>
 );

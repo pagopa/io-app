@@ -13,6 +13,7 @@ import com.facebook.react.soloader.OpenSourceMergedSoMapping
 import com.facebook.soloader.SoLoader
 import it.ipzs.cieidsdk.native_bridge.CiePackage
 import it.pagopa.io.app.appreview.AppReviewPackage
+import it.pagopa.io.app.modules.PdfHighResGeneratorPackage
 
 class MainApplication : Application(), ReactApplication {
  
@@ -24,6 +25,7 @@ class MainApplication : Application(), ReactApplication {
             // add(MyReactNativePackage())
             add(CiePackage())
             add(AppReviewPackage())
+            add(PdfHighResGeneratorPackage())
           }
  
         override fun getJSMainModuleName(): String = "index"

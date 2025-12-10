@@ -138,7 +138,7 @@ describe("fetchAarDataSaga", () => {
         Bearer: mockSessionTokenWithBearer,
         iun: mockCurrentState.iun,
         mandateId: mockCurrentState.mandateId,
-        "x-pagopa-pn-io-src": "QRCODE",
+        "x-pagopa-pn-io-src": "QR_CODE",
         isTest: true
       });
     });
@@ -193,7 +193,7 @@ describe("fetchAarDataSaga", () => {
         Bearer: mockSessionTokenWithBearer,
         iun: mockCurrentState.iun,
         mandateId: mockCurrentState.mandateId,
-        "x-pagopa-pn-io-src": "QRCODE",
+        "x-pagopa-pn-io-src": "QR_CODE",
         isTest: true
       });
     });
@@ -236,7 +236,7 @@ describe("fetchAarDataSaga", () => {
         Bearer: mockSessionTokenWithBearer,
         iun: mockCurrentState.iun,
         mandateId: mockCurrentState.mandateId,
-        "x-pagopa-pn-io-src": "QRCODE",
+        "x-pagopa-pn-io-src": "QR_CODE",
         isTest: true
       });
     });
@@ -280,7 +280,7 @@ describe("fetchAarDataSaga", () => {
         Bearer: mockSessionTokenWithBearer,
         iun: mockCurrentState.iun,
         mandateId: mockCurrentState.mandateId,
-        "x-pagopa-pn-io-src": "QRCODE",
+        "x-pagopa-pn-io-src": "QR_CODE",
         isTest: true
       });
     });
@@ -336,7 +336,7 @@ describe("fetchAarDataSaga", () => {
         Bearer: mockSessionTokenWithBearer,
         iun: mockCurrentState.iun,
         mandateId: mockCurrentState.mandateId,
-        "x-pagopa-pn-io-src": "QRCODE",
+        "x-pagopa-pn-io-src": "QR_CODE",
         isTest: true
       });
     });
@@ -386,7 +386,7 @@ describe("fetchAarDataSaga", () => {
         Bearer: mockSessionTokenWithBearer,
         iun: mockCurrentState.iun,
         mandateId: mockCurrentState.mandateId,
-        "x-pagopa-pn-io-src": "QRCODE",
+        "x-pagopa-pn-io-src": "QR_CODE",
         isTest: true
       });
     });

@@ -53,20 +53,8 @@ describe("ItwIdentificationModeSelectionScreen", () => {
     expect(component.queryByTestId("noCieButtonTestID")).toBeNull();
   });
 
-  it("[issuance, l3] should show CiePin and CieId authentication methods", () => {
+  it("[issuance, l3] should show CiePin (w/badge), CieId and SPID authentication methods", () => {
     const component = renderComponent("issuance", "l3");
-
-    expect(component.queryByTestId("CiePinMethodModuleTestID")).not.toBeNull();
-    expect(component.queryByTestId("SpidMethodModuleTestID")).toBeNull();
-    expect(component.queryByTestId("CieIDMethodModuleTestID")).not.toBeNull();
-    expect(
-      component.queryByTestId("CiePinRecommendedBadgeTestID")
-    ).not.toBeNull();
-    expect(component.queryByTestId("noCieButtonTestID")).not.toBeNull();
-  });
-
-  it("[issuance, l3-next] should show CiePin (w/badge), CieId and SPID authentication methods", () => {
-    const component = renderComponent("issuance", "l3-next");
 
     expect(component.queryByTestId("CiePinMethodModuleTestID")).not.toBeNull();
     expect(component.queryByTestId("SpidMethodModuleTestID")).not.toBeNull();
@@ -89,11 +77,11 @@ describe("ItwIdentificationModeSelectionScreen", () => {
     expect(component.queryByTestId("noCieButtonTestID")).toBeNull();
   });
 
-  it("[reissuance, l3] should show CiePin (w/badge) and CieId authentication methods", () => {
+  it("[reissuance, l3] should show CiePin (w/badge) CieId and SPID authentication methods", () => {
     const component = renderComponent("reissuance", "l3");
 
     expect(component.queryByTestId("CiePinMethodModuleTestID")).not.toBeNull();
-    expect(component.queryByTestId("SpidMethodModuleTestID")).toBeNull();
+    expect(component.queryByTestId("SpidMethodModuleTestID")).not.toBeNull();
     expect(component.queryByTestId("CieIDMethodModuleTestID")).not.toBeNull();
     expect(
       component.queryByTestId("CiePinRecommendedBadgeTestID")

@@ -6,7 +6,10 @@ import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
-import { IOScrollViewCentredContent } from "../IOScrollViewCentredContent";
+import {
+  IOScrollViewCentredContent,
+  IOScrollViewCentredContentProps
+} from "../IOScrollViewCentredContent";
 import { IOScrollViewActions } from "../IOScrollView";
 
 const actions: ReadonlyArray<IOScrollViewActions> = [
@@ -48,8 +51,8 @@ const actions: ReadonlyArray<IOScrollViewActions> = [
 const propsFromAction = (
   action: IOScrollViewActions,
   description?: string,
-  additionalLink?: IOScrollViewCentredContent["additionalLink"]
-): IOScrollViewCentredContent => ({
+  additionalLink?: IOScrollViewCentredContentProps["additionalLink"]
+): IOScrollViewCentredContentProps => ({
   actions: action,
   additionalLink,
   description,
@@ -57,7 +60,7 @@ const propsFromAction = (
   title: "This is a title"
 });
 
-const availableProps: ReadonlyArray<IOScrollViewCentredContent> = [
+const availableProps: ReadonlyArray<IOScrollViewCentredContentProps> = [
   ...[...actions].map(action => propsFromAction(action)),
   ...[...actions].map(action =>
     propsFromAction(action, "This is a description")

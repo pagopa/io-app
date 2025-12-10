@@ -2835,7 +2835,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                 ]
                               }
                             >
-                              Questo passaggio non è più necessario
+                              Hai già confermato la tua identità
                             </Text>
                             <View
                               style={
@@ -2865,7 +2865,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                 ]
                               }
                             >
-                              È tutto pronto. Puoi gestire i tuoi documenti digitali nel Portafoglio.
+                              Puoi gestire i tuoi documenti digitali nel Portafoglio.
                             </Text>
                             <View
                               style={
@@ -4099,7 +4099,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                 ]
                               }
                             >
-                              Questo passaggio non è più necessario
+                              Hai già confermato la tua identità
                             </Text>
                             <View
                               style={
@@ -4129,7 +4129,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                 ]
                               }
                             >
-                              È tutto pronto. Puoi gestire i tuoi documenti digitali nel Portafoglio.
+                              Puoi gestire i tuoi documenti digitali nel Portafoglio.
                             </Text>
                             <View
                               style={

@@ -51,7 +51,7 @@ export function* fetchAarDataSaga(
       Bearer: `Bearer ${sessionToken}`,
       iun: currentState.iun,
       mandateId: currentState.mandateId,
-      "x-pagopa-pn-io-src": "QRCODE",
+      "x-pagopa-pn-io-src": "QR_CODE",
       isTest: isSendUATEnvironment
     });
     const result = (yield* call(

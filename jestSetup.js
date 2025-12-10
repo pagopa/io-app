@@ -9,9 +9,9 @@ import mockClipboard from "@react-native-clipboard/clipboard/jest/clipboard-mock
 import nodeFetch from "node-fetch";
 import { NativeModules, AccessibilityInfo } from "react-native";
 import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-info-mock";
+import mockBackHandler from "react-native/Libraries/Utilities/__mocks__/BackHandler";
 import mockZendesk from "./ts/__mocks__/io-react-native-zendesk.ts";
 import { initI18n } from "./ts/i18n.ts";
-
 
 void initI18n();
 
@@ -231,6 +231,8 @@ jest.mock("react-native/Libraries/AppState/AppState", () => {
   };
 });
 
+jest.mock('react-native/Libraries/Utilities/BackHandler', () => mockBackHandler);
+
 jest.mock("mixpanel-react-native", () => ({
   __esModule: true,
   default: () => jest.fn(),
@@ -292,16 +294,14 @@ jest.mock("react-native-bluetooth-state-manager", () => ({
   getState: jest.fn().mockResolvedValue(true)
 }));
 
-jest.mock("@pagopa/io-react-native-iso18013", () => {
-  return {
+jest.mock("@pagopa/io-react-native-iso18013", () => ({
     CBOR: {
       decodeIssuerSigned: jest.fn(() => Promise.resolve("test"))
     },
     COSE: {
       verify: jest.fn(() => Promise.resolve(true))
     }
-  };
-});
+  }));
 
 jest.mock("@pagopa/io-react-native-cie", () => ({
   CieManager: jest.fn()

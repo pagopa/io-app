@@ -33,7 +33,7 @@ import { IOScrollViewWithReveal } from "../../../../components/ui/IOScrollViewWi
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { setAccessibilityFocus } from "../../../../utils/accessibility.ts";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp.tsx";
+import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 import { tosConfigSelector } from "../../../tos/store/selectors/index.ts";
 import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum.ts";
@@ -46,6 +46,7 @@ import {
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog.tsx";
 import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig.ts";
 import { generateItwIOMarkdownRules } from "../../common/utils/markdown.tsx";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors/index.ts";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider.tsx";
 import { selectIsLoading } from "../../machine/eid/selectors.ts";
 
@@ -63,16 +64,17 @@ export const ItwDiscoveryInfoComponent = () => {
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const itwActivationDisabled = useIOSelector(itwIsActivationDisabledSelector);
   const { tos_url } = useIOSelector(tosConfigSelector);
+  const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
   const toast = useIOToast();
 
   useOnFirstRender(
     useCallback(() => {
       machineRef.send({
         type: "start",
-        mode: "issuance",
+        mode: isWalletValid ? "upgrade" : "issuance",
         level: "l3"
       });
-    }, [machineRef])
+    }, [machineRef, isWalletValid])
   );
 
   const dismissalDialog = useItwDismissalDialog({

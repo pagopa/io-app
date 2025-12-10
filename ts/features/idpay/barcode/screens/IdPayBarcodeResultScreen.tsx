@@ -199,9 +199,7 @@ const SuccessContent = ({
       title={{
         label: I18n.t("idpay.barCode.resultScreen.success.header")
       }}
-      description={I18n.t("idpay.barCode.resultScreen.success.body", {
-        initiativeName: barcode.initiativeName
-      })}
+      description={I18n.t("idpay.barCode.resultScreen.success.body")}
     >
       <View style={styles.barcodeContainer}>
         <VSpacer size={4} />

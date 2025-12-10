@@ -4,16 +4,19 @@ import { useIODispatch } from "../../../../store/hooks";
 import { setLoggedOutUserWithDifferentCF } from "../store/actions";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { startApplicationInitialization } from "../../../../store/actions/application";
+import { trackLoginWithNewCF, trackLoginWithNewCFConfirm } from "./analytics";
 
 export const DifferentCFErrorScreen = () => {
   const dispatch = useIODispatch();
 
   useOnFirstRender(() => {
     dispatch(setLoggedOutUserWithDifferentCF());
+    void trackLoginWithNewCF();
   });
 
   const handleNavigateToLandingScreen = () => {
     dispatch(startApplicationInitialization());
+    void trackLoginWithNewCFConfirm();
   };
 
   return (

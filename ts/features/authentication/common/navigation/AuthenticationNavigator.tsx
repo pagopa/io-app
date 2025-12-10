@@ -88,6 +88,10 @@ const AuthenticationStackNavigator = () => (
         name={AUTHENTICATION_ROUTES.ID_ACTIVATION_WIZARD}
         component={IDActivationWizard}
       />
+      <Stack.Screen
+        name={AUTHENTICATION_ROUTES.CIE_LOGIN_CONFIG_SCREEN}
+        component={CieLoginConfigScreen}
+      />
     </Stack.Group>
     <Stack.Screen
       name={AUTHENTICATION_ROUTES.OPT_IN}
@@ -136,11 +140,6 @@ const AuthenticationStackNavigator = () => (
       name={AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN}
       component={ActiveSessionCieIdLoginScreen}
       options={{ headerShown: false }}
-    />
-
-    <Stack.Screen
-      name={AUTHENTICATION_ROUTES.CIE_LOGIN_CONFIG_SCREEN}
-      component={CieLoginConfigScreen}
     />
 
     <Stack.Screen

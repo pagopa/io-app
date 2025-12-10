@@ -189,7 +189,8 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
 
     this.dispatchAnalyticEvent({
       reason: eventReason,
-      cieDescription
+      cieDescription,
+      flow: "auth"
     });
 
     this.setState(

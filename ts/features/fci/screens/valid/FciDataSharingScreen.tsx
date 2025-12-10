@@ -15,7 +15,7 @@ import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollV
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { formatFiscalCodeBirthdayAsShortFormat } from "../../../../utils/dates";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { capitalize } from "../../../../utils/strings";
 import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
 import {

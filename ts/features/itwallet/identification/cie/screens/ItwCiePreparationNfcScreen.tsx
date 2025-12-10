@@ -1,4 +1,3 @@
-import { IOButton } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback } from "react";
@@ -29,9 +28,9 @@ export const ItwCiePreparationNfcScreen = () => {
 
   return (
     <ItwCiePreparationScreenContent
-      title={I18n.t(`features.itWallet.identification.cie.prepare.card.title`)}
+      title={I18n.t(`features.itWallet.identification.cie.prepare.nfc.title`)}
       description={I18n.t(
-        `features.itWallet.identification.cie.prepare.card.description`
+        `features.itWallet.identification.cie.prepare.nfc.description`
       )}
       imageSrc={require("../../../../../../img/features/itWallet/identification/itw_cie_nfc.gif")}
       actions={{
@@ -42,13 +41,6 @@ export const ItwCiePreparationNfcScreen = () => {
         }
       }}
     >
-      <IOButton
-        variant="link"
-        label={I18n.t(
-          `features.itWallet.identification.cie.prepare.nfc.buttonLink`
-        )}
-        onPress={() => infoBottomSheet.present()}
-      />
       {infoBottomSheet.bottomSheet}
     </ItwCiePreparationScreenContent>
   );

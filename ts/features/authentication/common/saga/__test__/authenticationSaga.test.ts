@@ -50,7 +50,7 @@ describe("authenticationSaga", () => {
       .next()
       .put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED))
       .next()
-      .put(analyticsAuthenticationStarted())
+      .put(analyticsAuthenticationStarted("auth"))
       .next()
       .fork(watchTestLoginRequestSaga)
       .next(watchTestLoginRequest)
@@ -66,7 +66,7 @@ describe("authenticationSaga", () => {
       .next()
       .next(false) // fastloginSelector
       .next({ _tag: "some" }) // idpSelector
-      .put(analyticsAuthenticationCompleted())
+      .put(analyticsAuthenticationCompleted("auth"))
       .next()
       .returns(aSessionToken);
   });
@@ -93,7 +93,7 @@ describe("authenticationSaga 2", () => {
       .next()
       .put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED))
       .next()
-      .put(analyticsAuthenticationStarted())
+      .put(analyticsAuthenticationStarted("auth"))
       .next()
       .fork(watchTestLoginRequestSaga)
       .next(watchTestLoginRequest)

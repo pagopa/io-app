@@ -1,8 +1,8 @@
 import * as fs from "fs";
 
 describe("React Native Push Notifications iOS library integration", () => {
-  it("ItaliaApp-Bridgeing-Header.h integrates react-native-push-notification-ios library", () => {
-    const hAppBridgeingHeader = "./ios/ItaliaApp-Bridging-Header.h";
+  it("IO-Bridgeing-Header.h integrates react-native-push-notification-ios library", () => {
+    const hAppBridgeingHeader = "./ios/IO-Bridging-Header.h";
 
     // eslint-disable-next-line functional/no-let
     let fileExists = false;

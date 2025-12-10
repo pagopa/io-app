@@ -148,7 +148,8 @@ describe("analytics", () => {
 
     it("should call 'mixpanelTrack' for 'cieAuthenticationError' with proper parameters", () => {
       const action = cieAuthenticationError({
-        reason: "GENERIC"
+        reason: "GENERIC",
+        flow: "auth"
       });
 
       testable!.trackAction(action);
@@ -157,7 +158,10 @@ describe("analytics", () => {
       expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
       expect(mockMixpanelTrack.mock.calls[0][0]).toBe(action.type);
       expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
-        reason: "GENERIC"
+        event_category: "KO",
+        event_type: undefined,
+        reason: "GENERIC",
+        flow: "auth"
       });
     });
 
@@ -277,7 +281,7 @@ describe("analytics", () => {
     });
 
     it("should call 'mixpanelTrack' for 'analyticsAuthenticationStarted' with proper parameters", () => {
-      const action = analyticsAuthenticationStarted();
+      const action = analyticsAuthenticationStarted("auth");
 
       testable!.trackAction(action);
 
@@ -287,7 +291,7 @@ describe("analytics", () => {
     });
 
     it("should call 'mixpanelTrack' for 'analyticsAuthenticationCompleted' with proper parameters", () => {
-      const action = analyticsAuthenticationCompleted();
+      const action = analyticsAuthenticationCompleted("auth");
 
       testable!.trackAction(action);
 

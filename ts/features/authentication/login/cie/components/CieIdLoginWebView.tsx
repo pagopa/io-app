@@ -103,7 +103,8 @@ const CieIdLoginWebView = ({ spidLevel, isUat }: CieIdLoginProps) => {
       // TODO: move the error tracking in the `AuthErrorScreen`
       trackLoginSpidError(code || message, {
         idp: IdpCIE_ID.id,
-        ...(message ? { "error message": message } : {})
+        ...(message ? { "error message": message } : {}),
+        flow: "auth"
       });
       dispatch(
         loginFailure({

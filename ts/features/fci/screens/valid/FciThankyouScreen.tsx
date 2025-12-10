@@ -1,13 +1,11 @@
-import { FooterActions, Pictogram } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { View } from "react-native";
 import I18n from "i18next";
 import { TypeEnum as ClauseTypeEnum } from "../../../../../definitions/fci/Clause";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { trackFciUxSuccess } from "../../analytics";
-import GenericErrorComponent from "../../components/GenericErrorComponent";
-import { InfoScreenComponent } from "../../components/InfoScreenComponent";
 import LoadingComponent from "../../components/LoadingComponent";
+import SignatureStatusComponent from "../../components/SignatureStatusComponent";
 import { fciEndRequest, fciStartRequest } from "../../store/actions";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
@@ -25,10 +23,11 @@ const FciThankyouScreen = () => {
   );
 
   const ErrorComponent = () => (
-    <GenericErrorComponent
+    <SignatureStatusComponent
       title={I18n.t("features.fci.errors.generic.signing.title")}
       subTitle={I18n.t("features.fci.errors.generic.signing.subTitle")}
       onPress={() => dispatch(fciStartRequest())}
+      pictogram={"umbrella"}
       retry={true}
       assistance={true}
       testID="FciTypErrorScreenTestID"
@@ -36,23 +35,18 @@ const FciThankyouScreen = () => {
   );
 
   const SuccessComponent = () => (
-    <View style={{ flex: 1 }} testID={"FciTypSuccessTestID"}>
-      <InfoScreenComponent
-        image={<Pictogram name={"success"} />}
-        title={I18n.t("features.fci.thankYouPage.title")}
-        body={I18n.t("features.fci.thankYouPage.content")}
-      />
-      <FooterActions
-        actions={{
-          type: "SingleButton",
-          primary: {
-            onPress: () => dispatch(fciEndRequest()),
-            label: I18n.t("features.fci.thankYouPage.cta"),
-            testID: "FciTypCloseButton"
-          }
-        }}
-      />
-    </View>
+    <OperationResultScreenContent
+      isHeaderVisible={false}
+      title={I18n.t("features.fci.thankYouPage.title")}
+      subtitle={I18n.t("features.fci.thankYouPage.content")}
+      pictogram={"success"}
+      testID={"FciTypSuccessTestID"}
+      action={{
+        onPress: () => dispatch(fciEndRequest()),
+        label: I18n.t("features.fci.thankYouPage.cta"),
+        testID: "FciTypCloseButton"
+      }}
+    />
   );
 
   return pot.fold(

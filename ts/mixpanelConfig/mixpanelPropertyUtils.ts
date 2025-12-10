@@ -107,5 +107,5 @@ export const welfareStatusHandler = (
 
 export const cdcStatusHandler = (state: GlobalState): number => {
   const cdcCards = selectWalletCardsByType(state, "cdc");
-  return cdcCards.reduce((sum, card) => sum + card.numberOfCards, 0);
+  return cdcCards.reduce((sum, card) => sum + card.number_of_cards, 0);
 };

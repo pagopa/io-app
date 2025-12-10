@@ -1,14 +1,15 @@
-import { useCallback } from "react";
 import { useRoute } from "@react-navigation/native";
+import { useCallback } from "react";
 import { ToolEnum } from "../../definitions/content/AssistanceToolConfig";
-import {
-  ContextualHelpProps,
-  ContextualHelpPropsMarkdown
-} from "../components/screens/BaseScreenComponent";
+
 import { zendeskSupportStart } from "../features/zendesk/store/actions";
 import { useIODispatch, useIOSelector } from "../store/hooks";
 import { assistanceToolConfigSelector } from "../store/reducers/backendStatus/remoteConfig";
 import { FAQsCategoriesType } from "../utils/faq";
+import {
+  ContextualHelpProps,
+  ContextualHelpPropsMarkdown
+} from "../utils/contextualHelp";
 import {
   assistanceToolRemoteConfig,
   resetCustomFields

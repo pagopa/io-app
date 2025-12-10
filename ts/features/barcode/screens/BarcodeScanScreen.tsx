@@ -23,7 +23,7 @@ import {
   isIdPayEnabledInScanScreenSelector,
   isPnRemoteEnabledSelector
 } from "../../../store/reducers/backendStatus/remoteConfig";
-import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
+import { emptyContextualHelp } from "../../../utils/contextualHelp.ts";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { FCI_ROUTES } from "../../fci/navigation/routes";
 import { IdPayPaymentRoutes } from "../../idpay/payment/navigation/routes";

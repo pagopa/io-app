@@ -89,8 +89,7 @@ describe("activeSessionLoginReducer", () => {
       engagement: {
         hasBlockingScreenBeenVisualized: false,
         showSessionExpirationBanner: true
-      },
-      refreshMessagesSection: true
+      }
     };
     if (
       modifiedState &&
@@ -123,8 +122,7 @@ describe("activeSessionLoginReducer", () => {
       engagement: {
         hasBlockingScreenBeenVisualized: false,
         showSessionExpirationBanner: true
-      },
-      refreshMessagesSection: true
+      }
     };
     const state = activeSessionLoginReducer(
       modifiedState,

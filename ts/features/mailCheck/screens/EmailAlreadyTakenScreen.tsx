@@ -3,7 +3,6 @@ import * as O from "fp-ts/lib/Option";
 import { useCallback, useMemo } from "react";
 import { BodyProps } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
 import { acknowledgeOnEmailValidation } from "../../settings/common/store/actions";
@@ -17,6 +16,7 @@ import {
 } from "../analytics";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
+import { ContextualHelpPropsMarkdown } from "../../../utils/contextualHelp";
 
 export type OnboardingServicesPreferenceScreenNavigationParams = {
   isFirstOnboarding: boolean;

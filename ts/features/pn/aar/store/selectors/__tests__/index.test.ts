@@ -190,7 +190,7 @@ describe("aarAdresseeDenominationSelector", () => {
         { recipientInfo?: { denomination: string; taxId: string } }
       >
     ).recipientInfo?.denomination;
-    it(`should return ${fullName} when state is ${state.type}, and iun matches`, () => {
+    it(`should return ${fullName} when state is ${state.type}`, () => {
       const mockGlobalState = {
         features: {
           pn: {
@@ -199,30 +199,10 @@ describe("aarAdresseeDenominationSelector", () => {
         }
       } as unknown as GlobalState;
 
-      const result = aarAdresseeDenominationSelector(
-        mockGlobalState,
-        "000000000001"
-      );
-      const expected =
-        "iun" in state && state.iun === "000000000001" ? fullName : undefined;
-      expect(result).toBe(expected);
-    });
-  });
-  it("should return undefined when the passed iun is different from the one in the state", () => {
-    const state = sendAarMockStateFactory.displayingNotificationData();
-    const mockGlobalState = {
-      features: {
-        pn: {
-          aarFlow: state
-        }
-      }
-    } as unknown as GlobalState;
+      const result = aarAdresseeDenominationSelector(mockGlobalState);
 
-    const result = aarAdresseeDenominationSelector(
-      mockGlobalState,
-      "different-iun"
-    );
-    expect(result).toBeUndefined();
+      expect(result).toBe(fullName);
+    });
   });
 });
 

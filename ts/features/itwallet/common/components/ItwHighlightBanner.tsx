@@ -1,10 +1,9 @@
 import {
   Badge,
   BodySmall,
-  ButtonLink,
-  ButtonSolid,
   H4,
   HStack,
+  IOButton,
   IOColors,
   VStack,
   WithTestID,
@@ -278,7 +277,8 @@ const StaticContent = (props: Props) => {
       </HStack>
       <IOMarkdown rules={markdownRules} content={description} />
       {size === "large" && (
-        <ButtonSolid
+        <IOButton
+          variant="solid"
           color="contrast"
           label={action}
           onPress={onPress}
@@ -296,7 +296,12 @@ const StaticContent = (props: Props) => {
           accessibilityRole="button"
           onPress={onPress}
         >
-          <ButtonLink color="contrast" label={action} onPress={onPress} />
+          <IOButton
+            variant="link"
+            color="contrast"
+            label={action}
+            onPress={onPress}
+          />
         </Pressable>
       )}
     </View>

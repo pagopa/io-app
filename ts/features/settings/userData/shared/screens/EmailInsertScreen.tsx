@@ -16,6 +16,7 @@ import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import { Route, useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   AccessibilityInfo,
@@ -29,16 +30,31 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import validator from "validator";
-import I18n from "i18next";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
-import { ContextualHelpPropsMarkdown } from "../../../../../components/screens/BaseScreenComponent";
+import { useDetectSmallScreen } from "../../../../../hooks/useDetectSmallScreen";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../../navigation/routes";
-import { abortOnboarding } from "../../../../onboarding/store/actions";
-import { profileUpsert } from "../../../common/store/actions";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import themeVariables from "../../../../../theme/variables";
+import { setAccessibilityFocus } from "../../../../../utils/accessibility";
+import { getFlowType } from "../../../../../utils/analytics";
+import { isDisplayZoomed } from "../../../../../utils/device";
+import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
+import { usePrevious } from "../../../../../utils/hooks/usePrevious";
+import { areStringsEqual } from "../../../../../utils/options";
+import { trackTosUserExit } from "../../../../authentication/common/analytics";
+import {
+  trackEmailDuplicateEditing,
+  trackEmailEditing,
+  trackEmailEditingError,
+  trackSendValidationEmail
+} from "../../../../mailCheck/analytics";
 import { emailValidationSelector } from "../../../../mailCheck/store/selectors/emailValidation";
+import { abortOnboarding } from "../../../../onboarding/store/actions";
+import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
+import { profileUpsert } from "../../../common/store/actions";
 import {
   isProfileEmailAlreadyTakenSelector,
   isProfileEmailValidatedSelector,
@@ -46,22 +62,6 @@ import {
   profileEmailSelector,
   profileSelector
 } from "../../../common/store/selectors";
-import themeVariables from "../../../../../theme/variables";
-import { setAccessibilityFocus } from "../../../../../utils/accessibility";
-import { getFlowType } from "../../../../../utils/analytics";
-import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-import { usePrevious } from "../../../../../utils/hooks/usePrevious";
-import { areStringsEqual } from "../../../../../utils/options";
-import {
-  trackEmailDuplicateEditing,
-  trackEmailEditing,
-  trackEmailEditingError,
-  trackSendValidationEmail
-} from "../../../../mailCheck/analytics";
-import { trackTosUserExit } from "../../../../authentication/common/analytics";
-import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
-import { isDisplayZoomed } from "../../../../../utils/device";
-import { useDetectSmallScreen } from "../../../../../hooks/useDetectSmallScreen";
 
 const ContinueButton = (props: { onContinue: () => void }) => (
   <>

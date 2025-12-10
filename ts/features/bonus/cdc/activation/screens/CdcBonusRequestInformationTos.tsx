@@ -3,7 +3,7 @@ import I18n from "i18next";
 import { useRef } from "react";
 import { useIOSelector } from "../../../../../store/hooks";
 import { getDeviceId } from "../../../../../utils/device";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { emptyContextualHelp } from "../../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
 import BonusInformationComponent, {
