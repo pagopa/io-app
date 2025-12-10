@@ -3060,6 +3060,8 @@
     },
     "favouriteServices": {
       "title": "I miei preferiti",
+      "add": "Aggiungi ai preferiti",
+      "remove": "Rimuovi dai preferiti",
       "toasts": {
         "added": "Aggiunto ai preferiti!",
         "removed": "Rimosso dai preferiti!",
