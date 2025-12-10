@@ -8,6 +8,7 @@ export type SendAARFailurePhase =
   | "Entry Point"
   | "Fetch Notification"
   | "Fetch QRCode"
+  | "Playground"
   | "Show Notification";
 
 export type RecipientInfo = {
