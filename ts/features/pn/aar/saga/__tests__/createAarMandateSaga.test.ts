@@ -8,7 +8,6 @@ import {
   trackSendAARFailure
 } from "../../analytics";
 import { setAarFlowState } from "../../store/actions";
-import { currentAARFlowData } from "../../store/selectors";
 import { sendAARFlowStates } from "../../utils/stateUtils";
 import {
   sendAarMockStateFactory,
@@ -17,25 +16,22 @@ import {
 import { createAarMandateSaga } from "../createAarMandateSaga";
 
 const sessionToken = "token" as any;
-const mockAction = setAarFlowState({
-  type: "creatingMandate",
-  qrCode: "qr",
-  iun: "iun",
-  recipientInfo: {}
-} as any);
-
 const createAarMandateMock = jest.fn();
-
 const currentState = sendAarMockStateFactory.creatingMandate();
+const mockAction = setAarFlowState(currentState);
+
 describe("createAarMandateSaga", () => {
   sendAarMockStates
     .filter(state => state.type !== sendAARFlowStates.creatingMandate)
     .forEach(state => {
       it(`should early exit and track failure if not in creatingMandate state -- state: ${state.type}`, () => {
-        testSaga(createAarMandateSaga, jest.fn(), sessionToken, mockAction)
+        testSaga(
+          createAarMandateSaga,
+          jest.fn(),
+          sessionToken,
+          setAarFlowState(state)
+        )
           .next()
-          .select(currentAARFlowData)
-          .next(state)
           .call(
             trackSendAARFailure,
             "Create Mandate",
@@ -56,8 +52,6 @@ describe("createAarMandateSaga", () => {
       mockAction
     )
       .next()
-      .select(currentAARFlowData)
-      .next(currentState)
       .select(isPnTestEnabledSelector)
       .next(false)
       .call(withRefreshApiCall, createAarMandateMock(), mockAction)
@@ -94,8 +88,6 @@ describe("createAarMandateSaga", () => {
       mockAction
     )
       .next()
-      .select(currentAARFlowData)
-      .next(currentState)
       .select(isPnTestEnabledSelector)
       .next(true)
       .call(withRefreshApiCall, createAarMandateMock(), mockAction)
@@ -131,8 +123,6 @@ describe("createAarMandateSaga", () => {
       mockAction
     )
       .next()
-      .select(currentAARFlowData)
-      .next(currentState)
       .select(isPnTestEnabledSelector)
       .next(true)
       .call(withRefreshApiCall, createAarMandateMock(), mockAction)
@@ -165,8 +155,6 @@ describe("createAarMandateSaga", () => {
       mockAction
     )
       .next()
-      .select(currentAARFlowData)
-      .next(currentState)
       .select(isPnTestEnabledSelector)
       .next(true)
       .call(withRefreshApiCall, createAarMandateMock(), mockAction)
@@ -200,8 +188,6 @@ describe("createAarMandateSaga", () => {
         mockAction
       )
         .next()
-        .select(currentAARFlowData)
-        .next(currentState)
         .select(isPnTestEnabledSelector)
         .next(true)
         .call(withRefreshApiCall, createAarMandateMock(), mockAction)

@@ -12,7 +12,6 @@ import {
 } from "../analytics";
 import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
-import { currentAARFlowData } from "../store/selectors";
 import { SendAARFailurePhase, sendAARFlowStates } from "../utils/stateUtils";
 
 const sendAarFailurePhase: SendAARFailurePhase = "Create Mandate";
@@ -21,7 +20,7 @@ export function* createAarMandateSaga(
   sessionToken: SessionToken,
   action: ReturnType<typeof setAarFlowState>
 ) {
-  const currentState = yield* select(currentAARFlowData);
+  const currentState = action.payload;
   if (currentState.type !== "creatingMandate") {
     yield* call(
       trackSendAARFailure,
