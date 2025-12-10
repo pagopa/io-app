@@ -7,11 +7,13 @@ import {
   aarProblemJsonAnalyticsReport,
   trackSendAARFailure
 } from "../../analytics";
-import { SendAARClient } from "../../api/client";
 import { setAarFlowState } from "../../store/actions";
 import { currentAARFlowData } from "../../store/selectors";
 import { sendAARFlowStates } from "../../utils/stateUtils";
-import { sendAarMockStateFactory } from "../../utils/testUtils";
+import {
+  sendAarMockStateFactory,
+  sendAarMockStates
+} from "../../utils/testUtils";
 import { createAarMandateSaga } from "../createAarMandateSaga";
 
 const sessionToken = "token" as any;
@@ -22,39 +24,43 @@ const mockAction = setAarFlowState({
   recipientInfo: {}
 } as any);
 
-const mockResolvedCall = (resolved: any) =>
-  new Promise((res, _reject) => res(resolved)) as unknown as ReturnType<
-    SendAARClient["createAARMandate"]
-  >;
+const createAarMandateMock = jest.fn();
+
 const currentState = sendAarMockStateFactory.creatingMandate();
 describe("createAarMandateSaga", () => {
-  it("should early exit and track failure if not in creatingMandate state", () => {
-    testSaga(createAarMandateSaga, jest.fn(), sessionToken, mockAction)
-      .next()
-      .select(currentAARFlowData)
-      .next({ type: "otherState" })
-      .call(
-        trackSendAARFailure,
-        "Create Mandate",
-        "Called in wrong state (otherState)"
-      )
-      .next()
-      .isDone();
-  });
+  sendAarMockStates
+    .filter(state => state.type !== sendAARFlowStates.creatingMandate)
+    .forEach(state => {
+      it(`should early exit and track failure if not in creatingMandate state -- state: ${state.type}`, () => {
+        testSaga(createAarMandateSaga, jest.fn(), sessionToken, mockAction)
+          .next()
+          .select(currentAARFlowData)
+          .next(state)
+          .call(
+            trackSendAARFailure,
+            "Create Mandate",
+            `Called in wrong state (${state.type})`
+          )
+          .next()
+          .isDone();
+      });
+    });
   it("should handle an api response that cannot be decoded", () => {
     const failureDecodingResponse = E.left([]);
-    const createAarMandate = jest
-      .fn()
-      .mockReturnValue(mockResolvedCall(failureDecodingResponse));
 
     const failureReason = "An error was thrown (Decoding failure ())";
-    testSaga(createAarMandateSaga, createAarMandate, sessionToken, mockAction)
+    testSaga(
+      createAarMandateSaga,
+      createAarMandateMock,
+      sessionToken,
+      mockAction
+    )
       .next()
       .select(currentAARFlowData)
       .next(currentState)
       .select(isPnTestEnabledSelector)
       .next(false)
-      .call(withRefreshApiCall, createAarMandate(), mockAction)
+      .call(withRefreshApiCall, createAarMandateMock(), mockAction)
       .next(failureDecodingResponse)
       .call(trackSendAARFailure, "Create Mandate", failureReason)
       .next()
@@ -76,23 +82,24 @@ describe("createAarMandateSaga", () => {
       verificationCode: "code" as NonEmptyString,
       mandateId: "id" as NonEmptyString
     };
-    const mandateResponse = {
+    const mandateResponse = E.right({
       status: 201,
       value: { mandate }
-    };
+    });
 
-    const createAarMandate = jest
-      .fn()
-      .mockReturnValue(mockResolvedCall(E.right(mandateResponse)));
-
-    testSaga(createAarMandateSaga, createAarMandate, sessionToken, mockAction)
+    testSaga(
+      createAarMandateSaga,
+      createAarMandateMock,
+      sessionToken,
+      mockAction
+    )
       .next()
       .select(currentAARFlowData)
       .next(currentState)
       .select(isPnTestEnabledSelector)
       .next(true)
-      .call(withRefreshApiCall, createAarMandate(), mockAction)
-      .next(E.right(mandateResponse))
+      .call(withRefreshApiCall, createAarMandateMock(), mockAction)
+      .next(mandateResponse)
       .put(
         setAarFlowState({
           type: "cieCanAdvisory",
@@ -112,23 +119,24 @@ describe("createAarMandateSaga", () => {
       verificationCode: undefined,
       mandateId: undefined
     };
-    const mandateResponse = {
+    const mandateResponse = E.right({
       status: 201,
       value: { mandate }
-    };
+    });
 
-    const createAarMandate = jest
-      .fn()
-      .mockReturnValue(mockResolvedCall(E.right(mandateResponse)));
-
-    testSaga(createAarMandateSaga, createAarMandate, sessionToken, mockAction)
+    testSaga(
+      createAarMandateSaga,
+      createAarMandateMock,
+      sessionToken,
+      mockAction
+    )
       .next()
       .select(currentAARFlowData)
       .next(currentState)
       .select(isPnTestEnabledSelector)
       .next(true)
-      .call(withRefreshApiCall, createAarMandate(), mockAction)
-      .next(E.right(mandateResponse))
+      .call(withRefreshApiCall, createAarMandateMock(), mockAction)
+      .next(mandateResponse)
       .call(trackSendAARFailure, "Create Mandate", errorReason)
       .next()
       .put(
@@ -150,17 +158,18 @@ describe("createAarMandateSaga", () => {
       value: {}
     });
 
-    const createAarMandate = jest
-      .fn()
-      .mockReturnValue(mockResolvedCall(mandateResponse));
-
-    testSaga(createAarMandateSaga, createAarMandate, sessionToken, mockAction)
+    testSaga(
+      createAarMandateSaga,
+      createAarMandateMock,
+      sessionToken,
+      mockAction
+    )
       .next()
       .select(currentAARFlowData)
       .next(currentState)
       .select(isPnTestEnabledSelector)
       .next(true)
-      .call(withRefreshApiCall, createAarMandate(), mockAction)
+      .call(withRefreshApiCall, createAarMandateMock(), mockAction)
       .next(mandateResponse)
       .call(trackSendAARFailure, "Create Mandate", "Fast login expiration")
       .next()
@@ -184,17 +193,18 @@ describe("createAarMandateSaga", () => {
         }
       )}))`;
 
-      const createAarMandate = jest
-        .fn()
-        .mockReturnValue(mockResolvedCall(mandateResponse));
-
-      testSaga(createAarMandateSaga, createAarMandate, sessionToken, mockAction)
+      testSaga(
+        createAarMandateSaga,
+        createAarMandateMock,
+        sessionToken,
+        mockAction
+      )
         .next()
         .select(currentAARFlowData)
         .next(currentState)
         .select(isPnTestEnabledSelector)
         .next(true)
-        .call(withRefreshApiCall, createAarMandate(), mockAction)
+        .call(withRefreshApiCall, createAarMandateMock(), mockAction)
         .next(mandateResponse)
         .call(trackSendAARFailure, "Create Mandate", errorReason)
         .next()
