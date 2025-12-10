@@ -21,7 +21,7 @@ const aarStatesWithoutValidatingMandate = sendAarMockStates.filter(
 const sessionToken = "test-session-token" as SessionToken;
 const sessionTokenWithBearer = `Bearer ${sessionToken}` as SessionToken;
 
-const mockAcceptIOMandate = jest.fn();
+const mockAcceptMandate = jest.fn();
 
 const getMockKoState = (
   prevState: AARFlowState,
@@ -45,7 +45,7 @@ describe("validateMandateSaga", () => {
     isSendUATEnvironment => {
       testSaga(
         validateMandateSaga,
-        mockAcceptIOMandate,
+        mockAcceptMandate,
         sessionToken,
         mockValidatingMandateAction
       )
@@ -56,7 +56,7 @@ describe("validateMandateSaga", () => {
       const { mandateId, nisData, mrtdData, signedVerificationCode } =
         mockValidatingMandateState;
 
-      expect(mockAcceptIOMandate).toHaveBeenCalledWith({
+      expect(mockAcceptMandate).toHaveBeenCalledWith({
         Bearer: sessionTokenWithBearer,
         body: {
           nisData: {
@@ -78,7 +78,7 @@ describe("validateMandateSaga", () => {
     payload => {
       testSaga(
         validateMandateSaga,
-        mockAcceptIOMandate,
+        mockAcceptMandate,
         sessionToken,
         setAarFlowState(payload)
       )
@@ -103,7 +103,7 @@ describe("validateMandateSaga", () => {
 
     testSaga(
       validateMandateSaga,
-      mockAcceptIOMandate,
+      mockAcceptMandate,
       sessionToken,
       mockValidatingMandateAction
     )
@@ -112,7 +112,7 @@ describe("validateMandateSaga", () => {
       .next(true)
       .call(
         withRefreshApiCall,
-        mockAcceptIOMandate(),
+        mockAcceptMandate(),
         mockValidatingMandateAction
       )
       .next(
@@ -146,7 +146,7 @@ describe("validateMandateSaga", () => {
     } ${E.isRight(res) ? res.right.value.status : ""} A detail)`;
     testSaga(
       validateMandateSaga,
-      mockAcceptIOMandate,
+      mockAcceptMandate,
       sessionToken,
       mockValidatingMandateAction
     )
@@ -155,7 +155,7 @@ describe("validateMandateSaga", () => {
       .next(true)
       .call(
         withRefreshApiCall,
-        mockAcceptIOMandate(),
+        mockAcceptMandate(),
         mockValidatingMandateAction
       )
       .next(res)
@@ -173,7 +173,7 @@ describe("validateMandateSaga", () => {
   it('should call "trackSendAARFailure" with "Fast login expiration" and stop on 401', () => {
     testSaga(
       validateMandateSaga,
-      mockAcceptIOMandate,
+      mockAcceptMandate,
       sessionToken,
       mockValidatingMandateAction
     )
@@ -182,7 +182,7 @@ describe("validateMandateSaga", () => {
       .next(true)
       .call(
         withRefreshApiCall,
-        mockAcceptIOMandate(),
+        mockAcceptMandate(),
         mockValidatingMandateAction
       )
       .next(
@@ -200,7 +200,7 @@ describe("validateMandateSaga", () => {
   it("should dispatch KO state on exception throw", () => {
     testSaga(
       validateMandateSaga,
-      mockAcceptIOMandate,
+      mockAcceptMandate,
       sessionToken,
       mockValidatingMandateAction
     )
@@ -209,7 +209,7 @@ describe("validateMandateSaga", () => {
       .next(true)
       .call(
         withRefreshApiCall,
-        mockAcceptIOMandate(),
+        mockAcceptMandate(),
         mockValidatingMandateAction
       )
       .throw(new Error())
@@ -230,7 +230,7 @@ describe("validateMandateSaga", () => {
   it("should dispatch KO state on a decoding failure", () => {
     testSaga(
       validateMandateSaga,
-      mockAcceptIOMandate,
+      mockAcceptMandate,
       sessionToken,
       mockValidatingMandateAction
     )
@@ -239,7 +239,7 @@ describe("validateMandateSaga", () => {
       .next(true)
       .call(
         withRefreshApiCall,
-        mockAcceptIOMandate(),
+        mockAcceptMandate(),
         mockValidatingMandateAction
       )
       .next(E.left([]))

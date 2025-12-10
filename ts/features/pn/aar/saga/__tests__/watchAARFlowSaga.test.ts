@@ -127,7 +127,7 @@ describe("watchAarFlowSaga", () => {
         .next()
         .call(
           validateMandateSaga,
-          mockSendAARClient.acceptIOMandate,
+          mockSendAARClient.acceptAARMandate,
           mockSessionToken,
           action
         )

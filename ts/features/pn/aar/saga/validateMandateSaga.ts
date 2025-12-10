@@ -21,7 +21,7 @@ import {
 const sendAARFailurePhase: SendAARFailurePhase = "Validate Mandate";
 
 export function* validateMandateSaga(
-  acceptIOMandate: SendAARClient["acceptIOMandate"],
+  acceptMandate: SendAARClient["acceptAARMandate"],
   sessionToken: SessionToken,
   action: ReturnType<typeof setAarFlowState>
 ) {
@@ -45,7 +45,7 @@ export function* validateMandateSaga(
   const isSendUATEnvironment = yield* select(isPnTestEnabledSelector);
 
   try {
-    const acceptMandateRequest = acceptIOMandate({
+    const acceptMandateRequest = acceptMandate({
       Bearer: `Bearer ${sessionToken}`,
       body: {
         nisData: {
@@ -63,7 +63,7 @@ export function* validateMandateSaga(
       withRefreshApiCall,
       acceptMandateRequest,
       action
-    )) as unknown as SagaCallReturnType<typeof acceptIOMandate>;
+    )) as unknown as SagaCallReturnType<typeof acceptMandate>;
 
     if (E.isLeft(result)) {
       const reason = `Decoding failure (${readableReportSimplified(

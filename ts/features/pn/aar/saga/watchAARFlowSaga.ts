@@ -49,7 +49,7 @@ function* aarFlowMasterSaga(
     case sendAARFlowStates.validatingMandate:
       yield* call(
         validateMandateSaga,
-        sendAARClient.acceptIOMandate,
+        sendAARClient.acceptAARMandate,
         sessionToken,
         action
       );
