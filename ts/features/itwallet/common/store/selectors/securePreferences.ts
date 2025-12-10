@@ -39,7 +39,7 @@ export const itwShouldDisplayOfflineAccessLimitWarning = createSelector(
     offlineAccessCounter === ITW_MAX_OFFLINE_ACCESS_COUNTER - 1
 );
 
-export const itwAvailableCredentialsCounterSelector = createSelector(
+export const itwUnverifiedCredentialsCounterSelector = createSelector(
   selectSecurePreferencesSlice,
   securePreferences => securePreferences.unverifiedCredentialsAccessCounter
 );
@@ -48,8 +48,8 @@ export const itwAvailableCredentialsCounterSelector = createSelector(
  * Returns `true` if the user has reached the maximum number of accesses
  * during IPZS or AS down periods
  */
-export const itwAvailableCredentialsCounterLimitReached = createSelector(
-  itwAvailableCredentialsCounterSelector,
+export const itwUnverifiedCredentialsCounterLimitReached = createSelector(
+  itwUnverifiedCredentialsCounterSelector,
   unverifiedCredentialsAccessCounter =>
     unverifiedCredentialsAccessCounter >=
     ITW_MAX_UNVERIFIED_CREDENTIALS_ACCESS_COUNTER

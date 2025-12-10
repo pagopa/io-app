@@ -4,8 +4,8 @@ import { Action } from "../../../../../store/actions/types";
 import {
   itwOfflineAccessCounterReset,
   itwOfflineAccessCounterUp,
-  itwAvailableCredentialsCounterUp,
-  itwAvailableCredentialsCounterReset
+  itwUnverifiedCredentialsCounterUp,
+  itwUnverifiedCredentialsCounterReset
 } from "../actions/securePreferences";
 import itwCreateSecureStorage from "../storages/itwSecureStorage";
 
@@ -45,14 +45,14 @@ const reducer = (
       };
     }
 
-    case getType(itwAvailableCredentialsCounterUp): {
+    case getType(itwUnverifiedCredentialsCounterUp): {
       return {
         ...state,
         unverifiedCredentialsAccessCounter:
           state.unverifiedCredentialsAccessCounter + 1
       };
     }
-    case getType(itwAvailableCredentialsCounterReset): {
+    case getType(itwUnverifiedCredentialsCounterReset): {
       return {
         ...state,
         unverifiedCredentialsAccessCounter: 0

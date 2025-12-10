@@ -5,8 +5,8 @@ import { ItwSecurePreferencesState } from "../securePreferences";
 import {
   itwOfflineAccessCounterReset,
   itwOfflineAccessCounterUp,
-  itwAvailableCredentialsCounterReset,
-  itwAvailableCredentialsCounterUp
+  itwUnverifiedCredentialsCounterReset,
+  itwUnverifiedCredentialsCounterUp
 } from "../../actions/securePreferences";
 import { reproduceSequence } from "../../../../../../utils/tests";
 
@@ -36,7 +36,7 @@ describe("IT Wallet secure preferences reducer", () => {
   it("should increment the available credentials counter", () => {
     const targetSate = reproduceSequence({} as GlobalState, appReducer, [
       applicationChangeState("active"),
-      itwAvailableCredentialsCounterUp()
+      itwUnverifiedCredentialsCounterUp()
     ]);
 
     expect(
@@ -61,11 +61,11 @@ describe("IT Wallet secure preferences reducer", () => {
   it("should not increment the available credentials counter beyond the maximum limit", () => {
     const targetSate = reproduceSequence({} as GlobalState, appReducer, [
       applicationChangeState("active"),
-      itwAvailableCredentialsCounterUp(),
-      itwAvailableCredentialsCounterUp(),
-      itwAvailableCredentialsCounterUp(),
-      itwAvailableCredentialsCounterUp(),
-      itwAvailableCredentialsCounterUp()
+      itwUnverifiedCredentialsCounterUp(),
+      itwUnverifiedCredentialsCounterUp(),
+      itwUnverifiedCredentialsCounterUp(),
+      itwUnverifiedCredentialsCounterUp(),
+      itwUnverifiedCredentialsCounterUp()
     ]);
     expect(
       targetSate.features.itWallet.securePreferences
@@ -87,9 +87,9 @@ describe("IT Wallet secure preferences reducer", () => {
   it("should reset the available credentials counter", () => {
     const targetSate = reproduceSequence({} as GlobalState, appReducer, [
       applicationChangeState("active"),
-      itwAvailableCredentialsCounterUp(),
-      itwAvailableCredentialsCounterUp(),
-      itwAvailableCredentialsCounterReset()
+      itwUnverifiedCredentialsCounterUp(),
+      itwUnverifiedCredentialsCounterUp(),
+      itwUnverifiedCredentialsCounterReset()
     ]);
 
     expect(
