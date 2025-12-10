@@ -1,17 +1,16 @@
 import I18n from "i18next";
-import { ContentWrapper, H3, useIOTheme } from "@pagopa/io-app-design-system";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { Fragment } from "react";
+import { IOListViewWithLargeHeader } from "../../../../components/ui/IOListViewWithLargeHeader";
 
 export function FavouriteServicesScreen() {
-  const theme = useIOTheme();
-  useHeaderSecondLevel({
-    title: ""
-  });
   return (
-    <ContentWrapper>
-      <H3 accessibilityRole="header" color={theme["textHeading-secondary"]}>
-        {I18n.t("services.favouriteServices.title")}
-      </H3>
-    </ContentWrapper>
+    <IOListViewWithLargeHeader
+      title={{
+        label: I18n.t("services.favouriteServices.title")
+      }}
+      keyExtractor={() => "empty"}
+      data={[]}
+      renderItem={() => <Fragment />}
+    />
   );
 }
