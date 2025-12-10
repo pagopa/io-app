@@ -15,6 +15,7 @@ import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { PnParamsList } from "../../navigation/params";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import PN_ROUTES from "../../navigation/routes";
+import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 
 export const CIE_CAN_LENGTH = 6;
 
@@ -61,11 +62,15 @@ export const SendAarCieCanInsertionScreen = ({
             can: value
           })
         );
-
-        // TODO: [IOCOM-2749] navigate into CIE scanning educational screen
+        navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+          screen: PN_ROUTES.MAIN,
+          params: {
+            screen: PN_ROUTES.SEND_AAR_CIE_CARD_READING_EDUCATIONAL
+          }
+        });
       }
     },
-    [currentAarState, dispatch]
+    [currentAarState, navigation, dispatch]
   );
 
   const handleGoBack = useCallback(() => {
