@@ -80,7 +80,7 @@ export const useWalletOnboardingWebView = ({
           ONBOARDING_CALLBACK_URL_SCHEMA
         );
         handleOnboardingResult(result);
-      } catch (error) {
+      } catch {
         onOnboardingOutcome({
           outcome: WalletOnboardingOutcomeEnum.CANCELED_BY_USER
         });
