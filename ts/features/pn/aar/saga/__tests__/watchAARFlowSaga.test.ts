@@ -31,7 +31,7 @@ const mockSendAARClient: SendAARClient = {
   aarQRCodeCheck: jest.fn(),
   getAARNotification: jest.fn(),
   getNotificationAttachment: jest.fn(),
-  acceptIOMandate: jest.fn(),
+  acceptAARMandate: jest.fn(),
   createAARMandate: jest.fn()
 };
 
