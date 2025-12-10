@@ -53,8 +53,12 @@ import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { WalletPaymentStepEnum } from "../types";
 import { PAYMENT_STEPS_TOTAL_PAGES } from "../utils";
 import { AmountEuroCents } from "../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
-import { useWalletOnboardingWebView } from "../../onboarding/hooks/useWalletOnboardingWebView";
+import {
+  useWalletOnboardingWebView,
+  WalletOnboardingOutcomeParams
+} from "../../onboarding/hooks/useWalletOnboardingWebView";
 import { WalletOnboardingOutcomeEnum } from "../../onboarding/types/OnboardingOutcomeEnum";
+import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
 
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
@@ -63,20 +67,7 @@ const WalletPaymentPickMethodScreen = () => {
 
   const { startContextualOnboarding, isLoading: isOnboardingLoading } =
     useWalletOnboardingWebView({
-      onOnboardingOutcome: ({ outcome, walletId, orderId, transactionId }) => {
-        if (outcome === WalletOnboardingOutcomeEnum.SUCCESS) {
-          if (walletId && transactionId) {
-            dispatch(
-              paymentsGetPaymentTransactionInfoAction.request({
-                transactionId,
-                walletId
-              })
-            );
-          } else {
-            createTransaction(orderId);
-          }
-        }
-      }
+      onOnboardingOutcome: handleOnboardingOutcome
     });
 
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
@@ -134,6 +125,36 @@ const WalletPaymentPickMethodScreen = () => {
       setAccessibilityFocus(titleRef, 200 as Millisecond);
     }
   }, [currentStep]);
+
+  const handleOnboardingOutcome = ({
+    outcome,
+    walletId,
+    orderId,
+    transactionId
+  }: WalletOnboardingOutcomeParams) => {
+    if (outcome === WalletOnboardingOutcomeEnum.SUCCESS) {
+      if (walletId && transactionId) {
+        dispatch(
+          paymentsGetPaymentTransactionInfoAction.request({
+            transactionId,
+            walletId
+          })
+        );
+      } else {
+        createTransaction(orderId);
+      }
+    } else {
+      navigation.replace(
+        PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR,
+        {
+          screen: PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_RESULT_FEEDBACK,
+          params: {
+            outcome
+          }
+        }
+      );
+    }
+  };
 
   const calculateFeesForSelectedPaymentMethod = useCallback(() => {
     pipe(

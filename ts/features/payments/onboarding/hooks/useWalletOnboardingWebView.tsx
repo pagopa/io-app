@@ -14,7 +14,7 @@ import {
 } from "../types/OnboardingOutcomeEnum";
 import { ONBOARDING_CALLBACK_URL_SCHEMA } from "../utils";
 
-type WalletOnboardingOutcomeParams = {
+export type WalletOnboardingOutcomeParams = {
   outcome: WalletOnboardingOutcome;
   walletId?: string;
   orderId?: string;
