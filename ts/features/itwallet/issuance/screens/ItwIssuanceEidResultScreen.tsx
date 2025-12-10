@@ -1,4 +1,3 @@
-import { Body } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useEffect } from "react";
@@ -115,11 +114,8 @@ const ItwIssuanceEidUpgradeResultContent = ({
     return (
       <LoadingScreenContent
         title={I18n.t("features.itWallet.issuance.upgrade.loading.title")}
-      >
-        <Body style={{ textAlign: "center" }}>
-          {I18n.t("features.itWallet.issuance.upgrade.loading.subtitle")}
-        </Body>
-      </LoadingScreenContent>
+        subtitle={I18n.t("features.itWallet.issuance.upgrade.loading.subtitle")}
+      />
     );
   }
 

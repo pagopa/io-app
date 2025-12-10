@@ -16,7 +16,7 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 
-import { ComponentProps, ReactNode, useEffect } from "react";
+import { ComponentProps, useEffect } from "react";
 import { AccessibilityInfo, Platform, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LoadingIndicator } from "../../components/ui/LoadingIndicator";
@@ -44,7 +44,6 @@ type LoadingScreenContentProps = WithTestID<{
   title: string;
   subtitle?: string | Array<BodyProps>;
   action?: ButtonProps;
-  children?: ReactNode;
   headerVisible?: boolean;
   animatedPictogramSource?: IOAnimatedPictograms;
   banner?: ComponentProps<typeof Banner>;
@@ -54,7 +53,6 @@ export const LoadingScreenContent = ({
   title,
   subtitle,
   action,
-  children,
   headerVisible,
   testID,
   animatedPictogramSource,
@@ -123,7 +121,6 @@ export const LoadingScreenContent = ({
                 <IOButton variant="link" {...action} />
               </View>
             )}
-            {children}
           </VStack>
         </VStack>
       </ContentWrapper>
