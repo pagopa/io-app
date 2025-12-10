@@ -4,6 +4,8 @@
 import {
   Banner,
   Body,
+  BodyProps,
+  ComposedBodyFromArray,
   ContentWrapper,
   H3,
   IOButton,
@@ -40,7 +42,7 @@ const SPACE_BETWEEN_SPINNER_AND_TEXT = 24;
 
 type LoadingScreenContentProps = WithTestID<{
   title: string;
-  subtitle?: string;
+  subtitle?: string | Array<BodyProps>;
   action?: ButtonProps;
   children?: ReactNode;
   headerVisible?: boolean;
@@ -101,7 +103,7 @@ export const LoadingScreenContent = ({
               <LoadingIndicator />
             )}
           </View>
-          <VStack space={8} style={{ justifyContent: "center" }}>
+          <VStack space={8} style={{ alignItems: "center" }}>
             <H3
               style={{ textAlign: "center" }}
               color={theme["textHeading-secondary"]}
@@ -109,9 +111,12 @@ export const LoadingScreenContent = ({
             >
               {title}
             </H3>
-            {subtitle && (
-              <Body style={{ textAlign: "center" }}>{subtitle}</Body>
-            )}
+            {subtitle &&
+              (typeof subtitle === "string" ? (
+                <Body style={{ textAlign: "center" }}>{subtitle}</Body>
+              ) : (
+                <ComposedBodyFromArray textAlign="center" body={subtitle} />
+              ))}
             {action && (
               <View>
                 <VSpacer size={16} />
