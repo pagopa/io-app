@@ -81,7 +81,7 @@ export const ServicesHomeScreen = () => {
       title: I18n.t("services.title"),
       animatedFlatListRef: scrollViewContentRef,
       actions: isFavouriteServiceEnabled
-        ? [actionFavourites, actionSearch, actionSettings] // TODO: help icon disappears if favourites present, is that ok?
+        ? [actionFavourites, actionSettings]
         : [actionSearch, actionSettings]
     }
   });
