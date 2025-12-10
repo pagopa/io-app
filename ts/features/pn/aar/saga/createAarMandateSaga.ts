@@ -1,8 +1,7 @@
 import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
-import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/Either";
-import { type } from "io-ts";
 import { call, put, select } from "typed-redux-saga/macro";
+import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../types/SessionToken";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
@@ -15,7 +14,6 @@ import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
 import { currentAARFlowData } from "../store/selectors";
 import { SendAARFailurePhase, sendAARFlowStates } from "../utils/stateUtils";
-import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 
 const sendAarFailurePhase: SendAARFailurePhase = "Create Mandate";
 export function* createAarMandateSaga(
@@ -56,10 +54,10 @@ export function* createAarMandateSaga(
 
     switch (status) {
       case 201:
-        if (!mandateType.is(value.mandate)) {
-          throw Error("Mandate decoding failure");
-        }
         const { verificationCode, mandateId } = value.mandate;
+        if (mandateId === undefined || verificationCode === undefined) {
+          throw Error(`invalid mandateId or verification code`);
+        }
 
         yield* put(
           setAarFlowState({
@@ -100,8 +98,3 @@ export function* createAarMandateSaga(
     );
   }
 }
-
-const mandateType = type({
-  verificationCode: NonEmptyString,
-  mandateId: NonEmptyString
-});

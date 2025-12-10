@@ -105,6 +105,45 @@ describe("createAarMandateSaga", () => {
       .next()
       .isDone();
   });
+  it("should handle a mandate with missing fields in 201 response", () => {
+    const errorReason =
+      "An error was thrown (invalid mandateId or verification code)";
+    const mandate = {
+      verificationCode: undefined,
+      mandateId: undefined
+    };
+    const mandateResponse = {
+      status: 201,
+      value: { mandate }
+    };
+
+    const createAarMandate = jest
+      .fn()
+      .mockReturnValue(mockResolvedCall(E.right(mandateResponse)));
+
+    testSaga(createAarMandateSaga, createAarMandate, sessionToken, mockAction)
+      .next()
+      .select(currentAARFlowData)
+      .next(currentState)
+      .select(isPnTestEnabledSelector)
+      .next(true)
+      .call(withRefreshApiCall, createAarMandate(), mockAction)
+      .next(E.right(mandateResponse))
+      .call(trackSendAARFailure, "Create Mandate", errorReason)
+      .next()
+      .put(
+        setAarFlowState({
+          type: sendAARFlowStates.ko,
+          previousState: currentState,
+          debugData: {
+            phase: "Create Mandate",
+            reason: errorReason
+          }
+        })
+      )
+      .next()
+      .isDone();
+  });
   it("should handle a 401 response", () => {
     const mandateResponse = E.right({
       status: 401,
