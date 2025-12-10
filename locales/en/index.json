@@ -3058,6 +3058,8 @@
       }
     },
     "favouriteServices": {
+      "add": "Add to favourites",
+      "remove": "Remove from favourites",
       "toasts": {
         "added": "Added to favourites!",
         "removed": "Removed from favourites!",
