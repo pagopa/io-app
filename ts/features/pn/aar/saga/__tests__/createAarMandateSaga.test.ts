@@ -165,21 +165,22 @@ describe("createAarMandateSaga", () => {
   });
   [404, 500, 400, 418].forEach(status => {
     it(`should handle and track a ${status} response `, () => {
+      const responseValue = {
+        status: status as 599,
+        detail: "detail"
+      };
       const mandateResponse = E.right({
         status,
-        value: {
-          status,
-          detail: "detail"
-        }
+        value: responseValue
       });
 
-      const errorReason = `An error was thrown (HTTP request failed (${aarProblemJsonAnalyticsReport(
+      const errorReason = `HTTP request failed (${aarProblemJsonAnalyticsReport(
         status,
         {
           status: status as 599,
           detail: "detail"
         }
-      )}))`;
+      )})`;
 
       testSaga(
         createAarMandateSaga,
@@ -198,6 +199,7 @@ describe("createAarMandateSaga", () => {
           setAarFlowState({
             type: sendAARFlowStates.ko,
             previousState: currentState,
+            error: responseValue,
             debugData: {
               phase: "Create Mandate",
               reason: errorReason

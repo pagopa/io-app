@@ -12,7 +12,11 @@ import {
 } from "../analytics";
 import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
-import { SendAARFailurePhase, sendAARFlowStates } from "../utils/stateUtils";
+import {
+  AARFlowState,
+  SendAARFailurePhase,
+  sendAARFlowStates
+} from "../utils/stateUtils";
 
 const sendAarFailurePhase: SendAARFailurePhase = "Create Mandate";
 export function* createAarMandateSaga(
@@ -80,7 +84,18 @@ export function* createAarMandateSaga(
           status,
           value
         )})`;
-        throw new Error(reason);
+        yield* call(trackSendAARFailure, sendAarFailurePhase, reason);
+        const errorState: AARFlowState = {
+          type: sendAARFlowStates.ko,
+          previousState: currentState,
+          ...(value !== undefined && { error: value }),
+          debugData: {
+            phase: sendAarFailurePhase,
+            reason
+          }
+        };
+        yield* put(setAarFlowState(errorState));
+        return;
     }
   } catch (e: unknown) {
     const reason = `An error was thrown (${unknownToReason(e)})`;
