@@ -69,7 +69,7 @@ export function* testAarAcceptMandateSaga(
     if (mandateId == null) {
       throw Error(`Accept mandate: nullish mandateid (${mandateId})`);
     }
-    const acceptAarMandateRequest = sendAARClient.acceptIOMandate({
+    const acceptAarMandateRequest = sendAARClient.acceptAARMandate({
       Bearer: `Bearer ${sessionToken}`,
       mandateId,
       body: {
@@ -90,7 +90,7 @@ export function* testAarAcceptMandateSaga(
     const result = (yield* call(
       withRefreshApiCall,
       acceptAarMandateRequest
-    )) as unknown as SagaCallReturnType<typeof sendAARClient.acceptIOMandate>;
+    )) as unknown as SagaCallReturnType<typeof sendAARClient.acceptAARMandate>;
 
     if (E.isLeft(result)) {
       const reason = `Accept mandate decoding failure (${readableReportSimplified(
