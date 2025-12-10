@@ -1,6 +1,6 @@
 import I18n from "i18next";
 import { Fragment } from "react";
-import { IOListViewWithLargeHeader } from "../../../../components/ui/IOListViewWithLargeHeader";
+import { IOListViewWithLargeHeader } from "../../../components/ui/IOListViewWithLargeHeader";
 
 export function FavouriteServicesScreen() {
   return (
