@@ -19,6 +19,10 @@ import {
   persistedSendLoginEngagementReducer,
   type SENDLoginEngagementState
 } from "../../loginEngagement/store/reducers";
+import {
+  TempAarMandateState,
+  tempAarMandateReducer
+} from "../../aar/store/reducers/tempAarMandate";
 import { pnActivationReducer, PnActivationState } from "./activation";
 
 export type PnState = {
@@ -26,13 +30,15 @@ export type PnState = {
   bannerDismiss: PnBannerDismissState & PersistPartial;
   aarFlow: AARFlowState;
   loginEngagement: SENDLoginEngagementState & PersistPartial;
+  tempAarMandate: TempAarMandateState;
 };
 
 export const pnReducer = combineReducers<PnState, Action>({
   activation: pnActivationReducer,
   bannerDismiss: persistedPnBannerDismissReducer,
   aarFlow: aarFlowReducer,
-  loginEngagement: persistedSendLoginEngagementReducer
+  loginEngagement: persistedSendLoginEngagementReducer,
+  tempAarMandate: tempAarMandateReducer
 });
 
 /*

@@ -320,6 +320,13 @@ type ItwUserWithoutL3requirements = {
   position: "screen" | "bottom_sheet";
 };
 
+type QualtricsSurveyId = "confirm_eid_flow_success" | "confirm_eid_flow_exit";
+
+export type TrackQualtricsSurvey = {
+  survey_id: QualtricsSurveyId;
+  survey_page: string;
+};
+
 // #region SCREEN VIEW EVENTS
 export const trackWalletDataShare = (properties: ItwWalletDataShare) => {
   void mixpanelTrack(
@@ -534,6 +541,13 @@ export const trackItwOfflineAccessExpired = () => {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_OFFLINE_ACCESS_EXPIRED,
     buildEventProperties("KO", "screen_view")
+  );
+};
+
+export const trackItwSurveyRequest = (properties: TrackQualtricsSurvey) => {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.SURVEY_REQUEST,
+    buildEventProperties("UX", "screen_view", properties)
   );
 };
 
@@ -885,6 +899,24 @@ export function trackItwCredentialQualificationDetail(
     buildEventProperties("UX", "action", properties)
   );
 }
+
+export const trackItwSurveyRequestAccepted = (
+  properties: TrackQualtricsSurvey
+) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.SURVEY_REQUEST_ACCEPTED,
+    buildEventProperties("UX", "action", properties)
+  );
+};
+
+export const trackItwSurveyRequestDeclined = (
+  properties: TrackQualtricsSurvey
+) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.SURVEY_REQUEST_DECLINED,
+    buildEventProperties("UX", "action", properties)
+  );
+};
 
 // #endregion ACTIONS
 
