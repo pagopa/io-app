@@ -1,5 +1,6 @@
 import { testSaga } from "redux-saga-test-plan";
 import NavigationService from "../../../../navigation/NavigationService";
+import { maybeHandlePendingBackgroundActions } from "../../../../sagas/backgroundActions";
 import { navigateToMainNavigatorAction } from "../../../../store/actions/navigation";
 import { handleStoredLinkingUrlIfNeeded } from "../../../linking/sagas";
 import { resetMessageArchivingAction } from "../../../messages/store/actions/archiving";
@@ -16,14 +17,11 @@ import { checkNotificationPermissions } from "../../utils";
 import { navigateToMessageRouterAction } from "../../utils/navigation";
 import {
   checkAndUpdateNotificationPermissionsIfNeeded,
-  maybeHandlePendingBackgroundActions,
-  testable,
+  handlePushNotificationIfNeeded,
   updateNotificationPermissionsIfNeeded
 } from "../common";
 
 describe("maybeHandlePendingBackgroundActions", () => {
-  const pushHandler = testable?.handlePushNotificationIfNeeded;
-
   describe("main functionality", () => {
     const generateTestName = (
       linkingUrlHandled: boolean,
@@ -40,11 +38,6 @@ describe("maybeHandlePendingBackgroundActions", () => {
     [true, false].forEach(linkingUrlHandled =>
       [true, false].forEach(pushNotifHandled =>
         it(generateTestName(linkingUrlHandled, pushNotifHandled), () => {
-          if (pushHandler === undefined) {
-            fail(
-              "testable export does not contain handlePushNotificationIfNeeded"
-            );
-          }
           const saga = testSaga(maybeHandlePendingBackgroundActions, false)
             .next()
             .call(handleStoredLinkingUrlIfNeeded)
@@ -52,7 +45,10 @@ describe("maybeHandlePendingBackgroundActions", () => {
           if (linkingUrlHandled) {
             saga.isDone();
           } else {
-            saga.call(pushHandler, false).next(pushNotifHandled).isDone();
+            saga
+              .call(handlePushNotificationIfNeeded, false)
+              .next(pushNotifHandled)
+              .isDone();
           }
         })
       )
@@ -71,10 +67,7 @@ describe("maybeHandlePendingBackgroundActions", () => {
         fromNotification: true
       });
 
-      if (pushHandler === undefined) {
-        fail("testable export does not contain handlePushNotificationIfNeeded");
-      }
-      testSaga(pushHandler, false)
+      testSaga(handlePushNotificationIfNeeded, false)
         .next()
         .select(pendingMessageStateSelector)
         .next(mockedPendingMessageState)
@@ -96,10 +89,7 @@ describe("maybeHandlePendingBackgroundActions", () => {
         fromNotification: true
       });
 
-      if (pushHandler === undefined) {
-        fail("testable export does not contain pushHandler");
-      }
-      testSaga(pushHandler, true)
+      testSaga(handlePushNotificationIfNeeded, true)
         .next()
         .select(pendingMessageStateSelector)
         .next(mockedPendingMessageState)
@@ -123,10 +113,7 @@ describe("maybeHandlePendingBackgroundActions", () => {
         fromNotification: true
       });
 
-      if (pushHandler === undefined) {
-        fail("testable export does not contain pushHandler");
-      }
-      testSaga(pushHandler, false)
+      testSaga(handlePushNotificationIfNeeded, false)
         .next()
         .select(pendingMessageStateSelector)
         .next(mockedPendingMessageState)
@@ -145,10 +132,7 @@ describe("maybeHandlePendingBackgroundActions", () => {
     });
 
     it("does nothing if there are not pending messages", () => {
-      if (pushHandler === undefined) {
-        fail("testable export does not contain pushHandler");
-      }
-      testSaga(pushHandler, false)
+      testSaga(handlePushNotificationIfNeeded, false)
         .next()
         .select(pendingMessageStateSelector)
         .next(null)
