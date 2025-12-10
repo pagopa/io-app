@@ -127,8 +127,12 @@ export const validCredentialStatuses: Array<ItwCredentialStatus> = [
 
 /**
  * Extracts the verification claim from the SD-JWT,
- * checks whether the `assurance_level` field is equal to `"high"`,
- * and returns `true` only in that case.
+ * checks whether the `assurance_level` field is equal to `"high"` or the
+ * `trust_framework` field is equal to `"it_l2+document_proof"`,
+ * and returns `true` only if one of these conditions is met.
+ *
+ * `"it_l2+document_proof"` indicates that the credential has been issued with
+ * a substantial authentication (SPID, CieID) plus an MRTD PoP verification,
  *
  * @param sdJwt - The SD-JWT string to check
  * @returns boolean indicating if the credential is an ITW credential (L3)
