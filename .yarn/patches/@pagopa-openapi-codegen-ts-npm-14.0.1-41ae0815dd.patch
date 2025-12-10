@@ -1,0 +1,22 @@
+diff --git a/dist/commands/gen-api-models/parse.v3.js b/dist/commands/gen-api-models/parse.v3.js
+index 3b4a61f7891cfdd611fd3f5f9448d7b8ea937202..f7b89d16bf2027358577678b2652694cb7736b1a 100644
+--- a/dist/commands/gen-api-models/parse.v3.js
++++ b/dist/commands/gen-api-models/parse.v3.js
+@@ -263,7 +263,7 @@ const parseOperation = (api, path, extraParameters, defaultSuccessType, defaultE
+             (_d = operation.requestBody.required) !== null && _d !== void 0 ? _d : false
+         ]
+         : [undefined, false];
+-    const bodyParam = ["post", "put"].includes(method) && bodySchema
++    const bodyParam = ["post", "put", "patch"].includes(method) && bodySchema
+         ? // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+             // @ts-ignore
+             "multipart/form-data" in ((_e = operation === null || operation === void 0 ? void 0 : operation.requestBody) === null || _e === void 0 ? void 0 : _e.content)
+@@ -303,7 +303,7 @@ const parseOperation = (api, path, extraParameters, defaultSuccessType, defaultE
+         ...operationParams,
+         ...bodyParam
+     ];
+-    const contentTypeHeaders = (method === "post" || method === "put") &&
++    const contentTypeHeaders = (method === "post" || method === "put" || method === "patch") &&
+         Object.keys([...operationParams, ...bodyParam]).length > 0
+         ? ["Content-Type"]
+         : [];
