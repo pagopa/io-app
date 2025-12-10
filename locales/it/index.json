@@ -3058,10 +3058,8 @@
         "privacyLink": "Informativa sulla privacy"
       }
     },
-    "favourites": {
-      "title": "I miei preferiti"
-    },
     "favouriteServices": {
+      "title": "I miei preferiti",
       "toasts": {
         "added": "Aggiunto ai preferiti!",
         "removed": "Rimosso dai preferiti!",

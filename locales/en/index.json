@@ -3058,10 +3058,8 @@
         "privacyLink": "Privacy information"
       }
     },
-    "favourites": {
-      "title": "My favourites"
-    },
     "favouriteServices": {
+      "title": "My favourites",
       "toasts": {
         "added": "Added to favourites!",
         "removed": "Removed from favourites!",

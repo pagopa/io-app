@@ -12,7 +12,7 @@ export function ServiceFavouritesScreen() {
   return (
     <ContentWrapper>
       <H3 accessibilityRole="header" color={theme["textHeading-secondary"]}>
-        {I18n.t("services.favourites.title")}
+        {I18n.t("services.favouriteServices.title")}
       </H3>
     </ContentWrapper>
   );
