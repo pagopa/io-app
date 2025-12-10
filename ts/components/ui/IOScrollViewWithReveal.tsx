@@ -43,7 +43,7 @@ import { ButtonBlockProps } from "./utils/buttons";
 type ButtonLinkProps = Omit<IOButtonLinkSpecificProps, "color" | "variant">;
 
 export type IOScrollViewRevealActions = {
-  primary: ButtonBlockProps;
+  primary: Omit<ButtonBlockProps, "color">;
   anchor: ButtonLinkProps;
 };
 
