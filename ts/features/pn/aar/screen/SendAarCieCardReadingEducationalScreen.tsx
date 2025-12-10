@@ -87,7 +87,9 @@ export const SendAarCieCardReadingEducationalScreen = ({
           type: "SingleButton",
           primary: {
             testID: "primaryActionID",
-            label: i18n.t("global.buttons.continue"),
+            label: i18n.t(
+              "features.pn.aar.flow.cieScanningAdvisory.primaryAction"
+            ),
             onPress: handleGoNext
           }
         }}

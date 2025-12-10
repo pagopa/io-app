@@ -3971,7 +3971,8 @@
           },
           "cieScanningAdvisory": {
             "title": "Posiziona la CIE su una superficie stabile per la lettura",
-            "description": "Dovrai poggiare il retro del telefono sulla carta e tenerlo fermo per la lettura."
+            "description": "Dovrai poggiare il retro del telefono sulla carta e tenerlo fermo per la lettura.",
+            "primaryAction": "Inizia lettura CIE"
           },
           "cieScanning": {
             "idle": {
