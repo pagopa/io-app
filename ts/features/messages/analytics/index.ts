@@ -544,7 +544,9 @@ export enum UndefinedBearerTokenPhase {
   previousPageMessagesLoading = "previousPageMessagesLoading",
   getPaymentsInfo = "getPaymentsInfo",
   reloadAllMessagesLoading = "reloadAllMessages",
-  upsertMessageStatusAttributes = "upsertMessageStatusAttributes"
+  upsertMessageStatusAttributes = "upsertMessageStatusAttributes",
+  logoutStandard = "logoutStandard",
+  activeSessionLoginLogout = "activeSessionLoginLogout"
 }
 
 export const trackUndefinedBearerToken = (phase: UndefinedBearerTokenPhase) => {
