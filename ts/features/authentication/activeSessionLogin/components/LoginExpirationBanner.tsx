@@ -15,7 +15,8 @@ import { trackHelpCenterCtaTapped } from "../../../../utils/analytics";
 import {
   BANNER_ID,
   trackLoginExpirationBannerClosure,
-  trackLoginExpirationBannerPrompt
+  trackLoginExpirationBannerPrompt,
+  trackLoginExpirationBannerTap
 } from "../analytics";
 import { isActiveSessionLoginEnabledSelector } from "../../activeSessionLogin/store/selectors";
 import {
@@ -43,9 +44,13 @@ export const LoginExpirationBanner = ({ handleOnClose }: Props) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
+  const banner_landing = isActiveSessionLoginEnabled
+    ? AUTHENTICATION_ROUTES.LANDING_ACTIVE_SESSION_LOGIN
+    : helpCenterHowToDoWhenSessionIsExpiredUrl;
+
   useEffect(() => {
-    trackLoginExpirationBannerPrompt();
-  }, []);
+    trackLoginExpirationBannerPrompt(banner_landing);
+  }, [banner_landing]);
 
   const handleOnPress = useCallback(() => {
     if (isActiveSessionLoginEnabled) {
@@ -56,6 +61,9 @@ export const LoginExpirationBanner = ({ handleOnClose }: Props) => {
           screen: AUTHENTICATION_ROUTES.LANDING_ACTIVE_SESSION_LOGIN
         }
       });
+      trackLoginExpirationBannerTap(
+        AUTHENTICATION_ROUTES.LANDING_ACTIVE_SESSION_LOGIN
+      );
     } else {
       trackHelpCenterCtaTapped(
         BANNER_ID,
@@ -69,10 +77,10 @@ export const LoginExpirationBanner = ({ handleOnClose }: Props) => {
   }, [dispatch, error, isActiveSessionLoginEnabled, navigation, routeName]);
 
   const closeHandler = useCallback(() => {
-    trackLoginExpirationBannerClosure();
+    trackLoginExpirationBannerClosure(banner_landing);
     dispatch(closeSessionExpirationBanner());
     handleOnClose();
-  }, [dispatch, handleOnClose]);
+  }, [banner_landing, dispatch, handleOnClose]);
 
   const title = isActiveSessionLoginEnabled
     ? I18n.t("loginFeatures.loginPreferences.expirationBannerNew.title", {
