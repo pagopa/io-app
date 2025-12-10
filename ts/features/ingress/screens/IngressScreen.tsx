@@ -193,22 +193,23 @@ export const IngressScreen = () => {
       />
       <LoadingScreenContent
         testID="ingress-screen-loader-id"
-        contentTitle={content.title}
+        title={content.title}
         animatedPictogramSource="waiting"
-        banner={{
-          showBanner: isOfflineAccessAvailable && showBanner,
-          props: {
-            pictogramName: "identityCheck",
-            color: "neutral",
-            title: I18n.t("startup.offline_access_banner.title"),
-            content: I18n.t("startup.offline_access_banner.content"),
-            action: I18n.t("startup.offline_access_banner.action"),
-            onPress: () => {
-              trackIngressOfflineWalletBannerCTAClicked();
-              navigateOnOfflineMiniApp(OfflineAccessReasonEnum.TIMEOUT);
-            }
-          }
-        }}
+        banner={
+          isOfflineAccessAvailable && showBanner
+            ? {
+                pictogramName: "identityCheck",
+                color: "neutral",
+                title: I18n.t("startup.offline_access_banner.title"),
+                content: I18n.t("startup.offline_access_banner.content"),
+                action: I18n.t("startup.offline_access_banner.action"),
+                onPress: () => {
+                  trackIngressOfflineWalletBannerCTAClicked();
+                  navigateOnOfflineMiniApp(OfflineAccessReasonEnum.TIMEOUT);
+                }
+              }
+            : undefined
+        }
       >
         {content.subtitle && (
           <ContentWrapper style={{ alignItems: "center" }}>
