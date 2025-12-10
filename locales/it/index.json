@@ -2986,7 +2986,8 @@
           }
         }
       },
-      "searchLink": "Cerca tra tutti i servizi locali disponibili"
+      "searchLink": "Cerca tra tutti i servizi locali disponibili",
+      "favourites": "Servizi preferiti"
     },
     "institution": {
       "failure": {
@@ -3058,6 +3059,7 @@
       }
     },
     "favouriteServices": {
+      "title": "I miei preferiti",
       "add": "Aggiungi ai preferiti",
       "remove": "Rimuovi dai preferiti",
       "toasts": {
