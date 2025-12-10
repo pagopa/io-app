@@ -2,7 +2,6 @@ import { Body } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useEffect } from "react";
-import * as O from "fp-ts/lib/Option";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIOSelector } from "../../../../store/hooks.ts";
@@ -21,7 +20,7 @@ import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selec
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
-  selectCredentialTypeOption,
+  selectCredentialType,
   selectIsLoading,
   selectIssuanceMode,
   selectUpgradeFailedCredentials
@@ -37,9 +36,8 @@ export const ItwIssuanceEidResultScreen = () => {
   const failedCredentials = ItwEidIssuanceMachineContext.useSelector(
     selectUpgradeFailedCredentials
   );
-  const credentialType = ItwEidIssuanceMachineContext.useSelector(
-    selectCredentialTypeOption
-  );
+  const credentialType =
+    ItwEidIssuanceMachineContext.useSelector(selectCredentialType);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const itw_flow = isItwL3 ? "L3" : "reissuing_eID";
@@ -70,13 +68,17 @@ export const ItwIssuanceEidResultScreen = () => {
 
   const handleBackToWallet = () => machineRef.send({ type: "go-to-wallet" });
 
-  if (O.isSome(credentialType)) {
-    credentialMachineRef.send({
-      type: "select-credential",
-      mode: "issuance",
-      credentialType: credentialType.value
-    });
+  useEffect(() => {
+    if (credentialType) {
+      credentialMachineRef.send({
+        type: "select-credential",
+        mode: "issuance",
+        credentialType
+      });
+    }
+  }, [credentialType, credentialMachineRef]);
 
+  if (credentialType) {
     return <ItwIssuanceEidCredentialTriggerContent />;
   }
 
