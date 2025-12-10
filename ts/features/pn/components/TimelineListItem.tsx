@@ -57,10 +57,15 @@ export const TimelineListItem = ({
   sendOpeningSource,
   sendUserType
 }: TimelineListItemProps) => {
+  const sendExternalUrl = useIOSelector(pnFrontendUrlSelector);
   const temporaryMandateEnabled = useIOSelector(
     isAarInAppDelegationRemoteEnabledSelector
   );
-  const hideFooter = temporaryMandateEnabled && sendOpeningSource === "aar";
+
+  const hideFooter =
+    temporaryMandateEnabled &&
+    sendOpeningSource === "aar" &&
+    sendUserType === "mandatory";
   const baseFooterHeight = hideFooter ? 0 : baseFooterHeightWithAlert;
   const [footerHeight, setFooterHeight] = useState<number>(baseFooterHeight);
 
@@ -73,7 +78,7 @@ export const TimelineListItem = ({
     windowHeight - topBottomSheetMargin,
     timelineBottomMargin + timelineItemHeight * history.length
   );
-  const sendExternalUrl = useIOSelector(pnFrontendUrlSelector);
+
   const timelineData = useMemo(() => generateTimelineData(history), [history]);
   const { bottomSheet, present } = useIOBottomSheetModal({
     component: <Timeline data={timelineData} footerHeight={footerHeight} />,

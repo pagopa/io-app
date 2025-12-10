@@ -87,13 +87,15 @@ describe("TimelineListItem", () => {
     jest.clearAllMocks();
     jest.restoreAllMocks();
   });
-  // eslint-disable-next-line sonarjs/cognitive-complexity
+  const validCases: ReadonlyArray<[SendOpeningSource, SendUserType]> = [
+    ["message", "not_set"],
+    ["aar", "recipient"],
+    ["aar", "mandatory"]
+  ];
   [false, true].forEach(sendTemporaryMandateEnabled =>
     [[], fullHistory].forEach(history =>
       [false, true].forEach(linkDefined =>
-        sendOpeningSources.forEach(openingSource => {
-          const userType: SendUserType =
-            openingSource === "message" ? "not_set" : "mandatory";
+        validCases.forEach(([openingSource, userType]) => {
           it(`Should match snapshot (temporary mandate ${
             sendTemporaryMandateEnabled ? "enabled" : "disabled"
           }, ${history.length > 0 ? "with" : "no"} history, link ${
@@ -157,7 +159,7 @@ describe("TimelineListItem", () => {
   );
   sendOpeningSources.forEach(openingSource =>
     sendUserTypes.forEach(userType => {
-      const hasCTA = openingSource !== "aar";
+      const hasCTA = openingSource !== "aar" || userType !== "mandatory";
       it(`Should ${
         hasCTA ? "" : "not "
       }call 'trackPNTimelineExternal' when tapping the internal bottom sheet CTA (source ${openingSource} user ${userType})`, () => {
