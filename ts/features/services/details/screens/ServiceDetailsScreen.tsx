@@ -1,4 +1,4 @@
-import { VStack } from "@pagopa/io-app-design-system";
+import { ContentWrapper, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useLinkTo } from "@react-navigation/native";
 import { useCallback, useEffect, useMemo } from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
@@ -21,6 +21,7 @@ import {
   CardWithMarkdownContent,
   CardWithMarkdownContentSkeleton
 } from "../components/CardWithMarkdownContent";
+import { FavouriteServiceButton } from "../components/FavouriteServiceButton";
 import { ServiceDetailsFailure } from "../components/ServiceDetailsFailure";
 import { ServiceDetailsMetadata } from "../components/ServiceDetailsMetadata";
 import { ServiceDetailsPreferences } from "../components/ServiceDetailsPreferences";
@@ -31,7 +32,6 @@ import {
   isErrorServiceDetailsByIdSelector,
   isLoadingServiceDetailsByIdSelector,
   serviceDetailsByIdSelector,
-  serviceMetadataByIdSelector,
   serviceMetadataInfoSelector
 } from "../store/selectors";
 
@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
 export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
   const { serviceId, activate = false } = route.params;
 
-  const linkTo = useLinkTo();
   const dispatch = useIODispatch();
   const isFirstRender = useFirstRender();
 
@@ -68,43 +67,12 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
     serviceDetailsByIdSelector(state, serviceId)
   );
 
-  const isLoadingService = useIOSelector(state =>
+  const isLoading = useIOSelector(state =>
     isLoadingServiceDetailsByIdSelector(state, serviceId)
   );
 
-  const isErrorService = useIOSelector(state =>
+  const isError = useIOSelector(state =>
     isErrorServiceDetailsByIdSelector(state, serviceId)
-  );
-
-  const serviceMetadata = useIOSelector(state =>
-    serviceMetadataByIdSelector(state, serviceId)
-  );
-
-  const serviceMetadataInfo = useIOSelector(state =>
-    serviceMetadataInfoSelector(state, serviceId)
-  );
-
-  const serviceCtas = useMemo(
-    () => getServiceCTAs(serviceId, serviceMetadata),
-    [serviceId, serviceMetadata]
-  );
-
-  const { startFIMSAuthenticationFlow } = useFIMSFromServiceId(serviceId);
-
-  useOnFirstRender(
-    () => {
-      analytics.trackServiceDetails({
-        bottom_cta_available: !!serviceMetadata?.cta,
-        organization_fiscal_code: service?.organization.fiscal_code ?? "",
-        organization_name: service?.organization.name ?? "",
-        service_category: serviceMetadataInfo.isSpecialService
-          ? "special"
-          : "standard",
-        service_id: serviceId,
-        service_name: service?.name ?? ""
-      });
-    },
-    () => !!service
   );
 
   useEffect(() => {
@@ -117,11 +85,11 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
     }, [serviceId, dispatch])
   );
 
-  if (isErrorService) {
+  if (isError) {
     return <ServiceDetailsFailure serviceId={serviceId} />;
   }
 
-  if (isFirstRender || isLoadingService) {
+  if (isFirstRender || isLoading) {
     return (
       <ServiceDetailsScreenComponent>
         <ServicesHeaderSection
@@ -141,10 +109,47 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
     return null;
   }
 
+  return <ServiceDetailsContent activate={activate} service={service} />;
+};
+
+type ServiceDetailsContentProps = {
+  activate: boolean;
+  service: ServiceDetails;
+};
+
+const ServiceDetailsContent = ({
+  activate,
+  service
+}: ServiceDetailsContentProps) => {
+  const { description, id, metadata, name, organization } = service;
+
+  const linkTo = useLinkTo();
+
+  const { startFIMSAuthenticationFlow } = useFIMSFromServiceId(id);
+
+  const serviceMetadataInfo = useIOSelector(state =>
+    serviceMetadataInfoSelector(state, id)
+  );
+
+  useOnFirstRender(() => {
+    analytics.trackServiceDetails({
+      bottom_cta_available: !!metadata.cta,
+      organization_fiscal_code: organization.fiscal_code,
+      organization_name: organization.name,
+      service_category: serviceMetadataInfo.isSpecialService
+        ? "special"
+        : "standard",
+      service_id: id,
+      service_name: name
+    });
+  });
+
+  const ctas = useMemo(() => getServiceCTAs(id, metadata), [id, metadata]);
+
   const handlePressCta = (cta: CTA, ctaType: CtaCategoryType) => {
     analytics.trackServiceDetailsCtaTapped({
       cta_category: ctaType,
-      service_id: serviceId
+      service_id: id
     });
     handleCtaAction(cta, linkTo, (label, url) =>
       startFIMSAuthenticationFlow(label, url)
@@ -154,26 +159,12 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
   return (
     <ServiceDetailsScreenComponent
       activate={activate}
-      ctas={serviceCtas}
+      ctas={ctas}
       kind={serviceMetadataInfo.serviceKind}
       onPressCta={handlePressCta}
-      serviceId={serviceId}
+      serviceId={id}
       title={service.name}
     >
-      <ServiceDetailsContent service={service} />
-    </ServiceDetailsScreenComponent>
-  );
-};
-
-type ServiceDetailsContentProps = {
-  service: ServiceDetails;
-};
-
-const ServiceDetailsContent = ({ service }: ServiceDetailsContentProps) => {
-  const { description, id, name, organization } = service;
-
-  return (
-    <>
       <ServicesHeaderSection
         extraBottomPadding={headerPaddingBottom}
         logoUri={logosForService(service) as ImageSourcePropType}
@@ -181,9 +172,18 @@ const ServiceDetailsContent = ({ service }: ServiceDetailsContentProps) => {
         subTitle={organization.name}
       />
       <VStack space={40}>
-        <View style={styles.cardContainer}>
+        <VStack
+          space={16}
+          style={{
+            marginTop: -headerPaddingBottom,
+            minHeight: headerPaddingBottom
+          }}
+        >
+          <ContentWrapper>
+            <FavouriteServiceButton service={service} />
+          </ContentWrapper>
           <CardWithMarkdownContent content={description} />
-        </View>
+        </VStack>
         <ServiceDetailsTosAndPrivacy serviceId={id} />
         <ServiceDetailsPreferences serviceId={id} />
         <ServiceDetailsMetadata
@@ -191,6 +191,6 @@ const ServiceDetailsContent = ({ service }: ServiceDetailsContentProps) => {
           serviceId={id}
         />
       </VStack>
-    </>
+    </ServiceDetailsScreenComponent>
   );
 };
