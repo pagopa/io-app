@@ -63,7 +63,7 @@ const generateMessageSectionData = (
       ]
     }
   ];
-  // MessageId (not defined is the notification is an AAR)
+  // MessageId (not defined if the notification is an AAR)
   if (messageId != null) {
     const messageIdSectionData: ShowMoreSection = {
       title: I18n.t("messageDetails.headerTitle"),
