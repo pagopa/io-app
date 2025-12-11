@@ -12,7 +12,7 @@ import { formatPaymentNoticeNumber } from "../../../payments/common/utils";
 import { serviceMetadataByIdSelector } from "../../../services/details/store/selectors";
 import { ContactsListItem } from "./ContactsListItem";
 import {
-  ShowMoreItems,
+  ShowMoreItem,
   ShowMoreListItem,
   ShowMoreSection
 } from "./ShowMoreListItem";
@@ -44,7 +44,7 @@ const generateMessageSectionData = (
       ]
     }
   ];
-  const noticeNumberItemArray: ReadonlyArray<ShowMoreItems> = noticeNumber
+  const noticeNumberItemArray: ReadonlyArray<ShowMoreItem> = noticeNumber
     ? [
         {
           accessibilityLabel: I18n.t(
@@ -57,7 +57,7 @@ const generateMessageSectionData = (
         }
       ]
     : [];
-  const payeeFiscalCodeItemArray: ReadonlyArray<ShowMoreItems> = payeeFiscalCode
+  const payeeFiscalCodeItemArray: ReadonlyArray<ShowMoreItem> = payeeFiscalCode
     ? [
         {
           accessibilityLabel: I18n.t(

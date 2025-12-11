@@ -15,11 +15,11 @@ export type ShowMoreListItemProps = {
 };
 
 export type ShowMoreSection = {
-  items: ReadonlyArray<ShowMoreItems>;
+  items: ReadonlyArray<ShowMoreItem>;
   title: string;
 };
 
-export type ShowMoreItems = {
+export type ShowMoreItem = {
   accessibilityLabel: string;
   icon?: IOIcons;
   label: string;
