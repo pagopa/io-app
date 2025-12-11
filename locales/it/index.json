@@ -2986,7 +2986,8 @@
           }
         }
       },
-      "searchLink": "Cerca tra tutti i servizi locali disponibili"
+      "searchLink": "Cerca tra tutti i servizi locali disponibili",
+      "favourites": "Servizi preferiti"
     },
     "institution": {
       "failure": {
@@ -3058,6 +3059,7 @@
       }
     },
     "favouriteServices": {
+      "title": "I miei preferiti",
       "add": "Aggiungi ai preferiti",
       "remove": "Rimuovi dai preferiti",
       "toasts": {
@@ -4027,6 +4029,9 @@
             "cieContextualHelp": {
               "title": "Come accedere a una notifica SEND destinata a un’altra persona",
               "body": "Per visualizzare una notifica SEND destinata a un’altra persona hai bisogno della sua Carta di Identità Elettronica e di uno smartphone che ne supporti la lettura."
+            },
+            "createMandate": {
+              "loadingText": "Attendi qualche secondo"
             }
           }
         }

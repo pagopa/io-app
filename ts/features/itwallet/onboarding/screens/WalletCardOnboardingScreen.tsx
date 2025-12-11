@@ -56,14 +56,15 @@ const activeBadge: Badge = {
 const WalletCardOnboardingScreen = () => {
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
+  const isFiscalCodeWhitelisted = useIOSelector(itwIsL3EnabledSelector);
   useFocusEffect(trackShowCredentialsList);
 
   const isItwSectionVisible = useMemo(
     // IT Wallet credential catalog should be visible if
     () =>
-      isItwValid && // An eID has ben obtained and wallet is valid
-      isItwEnabled, // Remote FF is enabled
-    [isItwValid, isItwEnabled]
+      (isItwValid && isItwEnabled) || // An eID has been obtained, wallet is valid, and remote FF is enabled
+      isFiscalCodeWhitelisted, // OR the user is whitelisted for L3 credentials
+    [isItwValid, isItwEnabled, isFiscalCodeWhitelisted]
   );
 
   return (

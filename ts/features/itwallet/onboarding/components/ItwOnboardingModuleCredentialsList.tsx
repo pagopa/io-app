@@ -12,7 +12,10 @@ import {
 } from "../../common/utils/itwCredentialUtils";
 import { itwRequestedCredentialsSelector } from "../../common/store/selectors/preferences";
 import { itwCredentialsTypesSelector } from "../../credentials/store/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import {
+  itwLifecycleIsITWalletValidSelector,
+  itwLifecycleIsValidSelector
+} from "../../lifecycle/store/selectors";
 import {
   selectCredentialTypeOption,
   selectIsLoading
@@ -36,6 +39,7 @@ export const ItwOnboardingModuleCredentialsList = ({
   const requestedCredentials = useIOSelector(itwRequestedCredentialsSelector);
   const itwCredentialsTypes = useIOSelector(itwCredentialsTypesSelector);
   const isITWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
 
   const isCredentialIssuancePending =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
@@ -49,9 +53,13 @@ export const ItwOnboardingModuleCredentialsList = ({
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL
           });
-        } else if (!isITWalletValid && isNewCredential(type)) {
+        } else if (
+          !isWalletValid ||
+          (!isITWalletValid && isNewCredential(type))
+        ) {
           navigation.navigate(ITW_ROUTES.MAIN, {
-            screen: ITW_ROUTES.ISSUANCE.IT_WALLET_INACTIVE
+            screen: ITW_ROUTES.DISCOVERY.INFO,
+            params: { level: "l3", credentialType: type }
           });
         } else {
           machineRef.send({
@@ -61,7 +69,7 @@ export const ItwOnboardingModuleCredentialsList = ({
           });
         }
       },
-      [isITWalletValid, machineRef, navigation]
+      [isITWalletValid, machineRef, navigation, isWalletValid]
     )
   );
 
