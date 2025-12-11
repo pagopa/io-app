@@ -104,7 +104,8 @@ describe("payments checkout reducer index.ts", () => {
       contextualPayment: {
         onboardingUrl: pot.none,
         onboardedWalletId: undefined,
-        orderId: undefined
+        orderId: undefined,
+        webViewPayload: undefined
       }
     };
     expect(globalState.features.payments.checkout).toStrictEqual(
