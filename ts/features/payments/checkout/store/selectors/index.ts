@@ -35,6 +35,11 @@ export const walletPaymentWebViewPayloadSelector = createSelector(
   state => state.webViewPayload
 );
 
+export const walletContextualOnboardingWebViewPayloadSelector = createSelector(
+  selectPaymentsCheckoutState,
+  state => state.contextualPayment.webViewPayload
+);
+
 export const selectPaymentsOrderId = createSelector(
   selectPaymentsCheckoutState,
   state => state.contextualPayment.orderId

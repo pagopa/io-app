@@ -5,14 +5,20 @@ import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
 import { useState, useCallback, useEffect } from "react";
 import URLParse from "url-parse";
+import { Platform } from "react-native";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { selectPaymentOnboardingRequestResult } from "../store/selectors";
-import { paymentsStartOnboardingAction } from "../store/actions";
+import {
+  contextualOnboardingStartWebViewFlow,
+  paymentsStartOnboardingAction
+} from "../store/actions";
 import {
   WalletOnboardingOutcome,
   WalletOnboardingOutcomeEnum
 } from "../types/OnboardingOutcomeEnum";
 import { ONBOARDING_CALLBACK_URL_SCHEMA } from "../utils";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { PaymentsCheckoutRoutes } from "../../checkout/navigation/routes";
 
 export type WalletOnboardingOutcomeParams = {
   outcome: WalletOnboardingOutcome;
@@ -41,6 +47,7 @@ export const useWalletOnboardingWebView = ({
   onOnboardingOutcome
 }: WalletOnboardingWebViewProps): WalletOnboardingWebView => {
   const dispatch = useIODispatch();
+  const navigation = useIONavigation();
 
   const onboardingUrlPot = useIOSelector(selectPaymentOnboardingRequestResult);
 
@@ -48,6 +55,24 @@ export const useWalletOnboardingWebView = ({
     useState<boolean>(false);
   const isLoading = pot.isLoading(onboardingUrlPot);
   const isError = pot.isError(onboardingUrlPot);
+
+  const startWebviewContextualOnboardingSession = useCallback(
+    (url: string): Promise<string> =>
+      new Promise((resolve, reject) => {
+        navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
+          screen: PaymentsCheckoutRoutes.PAYMENT_ONBOARDING_WEB_VIEW
+        });
+        dispatch(
+          contextualOnboardingStartWebViewFlow({
+            url,
+            onSuccess: resolve,
+            onError: reject,
+            onCancel: reject
+          })
+        );
+      }),
+    [dispatch, navigation]
+  );
 
   const handleOnboardingResult = useCallback(
     (resultUrl: string) => {
@@ -75,10 +100,13 @@ export const useWalletOnboardingWebView = ({
   const openBrowserSessionOnboarding = useCallback(
     async (url: string) => {
       try {
-        const result = await openAuthenticationSession(
-          url,
-          ONBOARDING_CALLBACK_URL_SCHEMA
-        );
+        const result =
+          Platform.OS === "ios"
+            ? await openAuthenticationSession(
+                url,
+                ONBOARDING_CALLBACK_URL_SCHEMA
+              )
+            : await startWebviewContextualOnboardingSession(url);
         handleOnboardingResult(result);
       } catch {
         onOnboardingOutcome({
@@ -86,7 +114,11 @@ export const useWalletOnboardingWebView = ({
         });
       }
     },
-    [onOnboardingOutcome, handleOnboardingResult]
+    [
+      onOnboardingOutcome,
+      handleOnboardingResult,
+      startWebviewContextualOnboardingSession
+    ]
   );
 
   useEffect(() => {

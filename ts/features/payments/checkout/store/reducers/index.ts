@@ -40,12 +40,17 @@ import {
   selectPaymentPspAction,
   walletPaymentSetCurrentStep
 } from "../actions/orchestration";
+import {
+  contextualOnboardingStartWebViewFlow,
+  ContextualOnboardingWebViewPayload
+} from "../../../onboarding/store/actions";
 export const WALLET_PAYMENT_STEP_MAX = 4;
 
 type ContextualPayment = {
   orderId?: string;
   onboardingUrl: pot.Pot<string, NetworkError>;
   onboardedWalletId?: string;
+  webViewPayload?: ContextualOnboardingWebViewPayload;
 };
 
 export type PaymentsCheckoutState = {
@@ -87,7 +92,8 @@ const INITIAL_STATE: PaymentsCheckoutState = {
   contextualPayment: {
     onboardingUrl: pot.none,
     onboardedWalletId: undefined,
-    orderId: undefined
+    orderId: undefined,
+    webViewPayload: undefined
   }
 };
 
@@ -375,6 +381,16 @@ const reducer = (
       return {
         ...state,
         webViewPayload: action.payload
+      };
+
+    // Contextual onboarding Webview on Android
+    case getType(contextualOnboardingStartWebViewFlow):
+      return {
+        ...state,
+        contextualPayment: {
+          ...state.contextualPayment,
+          webViewPayload: action.payload
+        }
       };
   }
   return state;
