@@ -550,7 +550,7 @@ exports[`useSendAarDelegationProposalScreenBottomSheet should render the correct
                               }
                               testID="infoScreenBody"
                             >
-                              La Carta di Identità Elettronica di mario rossi
+                              La Carta di Identità Elettronica di Mario Rossi
                             </Text>
                           </View>
                         </View>

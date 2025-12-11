@@ -1,4 +1,4 @@
-import { call, race, take, takeLatest } from "typed-redux-saga/macro";
+import { call, race, select, take, takeLatest } from "typed-redux-saga/macro";
 import { apiUrlPrefix } from "../../../../config";
 import { SessionToken } from "../../../../types/SessionToken";
 import { isTestEnv } from "../../../../utils/environment";
@@ -7,12 +7,20 @@ import { SendAARClient, createSendAARClientWithLollipop } from "../api/client";
 import {
   setAarFlowState,
   terminateAarFlow,
-  initiateAarFlow
+  initiateAarFlow,
+  testAarCreateMandate,
+  testAarAcceptMandate
 } from "../store/actions";
+import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { sendAARFlowStates } from "../utils/stateUtils";
 import { initiateAarFlowSaga } from "./initiateAarFlowSaga";
 import { fetchAarDataSaga } from "./fetchNotificationDataSaga";
 import { fetchAARQrCodeSaga } from "./fetchQrCodeSaga";
+import {
+  testAarAcceptMandateSaga,
+  testAarCreateMandateSaga
+} from "./testSendNisMrtdSaga";
+import { createAarMandateSaga } from "./createAarMandateSaga";
 
 function* aarFlowMasterSaga(
   sendAARClient: SendAARClient,
@@ -34,6 +42,14 @@ function* aarFlowMasterSaga(
       yield* call(
         fetchAarDataSaga,
         sendAARClient.getAARNotification,
+        sessionToken,
+        action
+      );
+      break;
+    case sendAARFlowStates.creatingMandate:
+      yield* call(
+        createAarMandateSaga,
+        sendAARClient.createAARMandate,
         sessionToken,
         action
       );
@@ -69,6 +85,23 @@ export function* watchAarFlowSaga(
     sessionToken
   );
   yield* takeLatest(initiateAarFlow, initiateAarFlowSaga);
+  const isAarMandateEnabled = yield* select(
+    isAarInAppDelegationRemoteEnabledSelector
+  );
+  if (isAarMandateEnabled) {
+    yield* takeLatest(
+      testAarCreateMandate.request,
+      testAarCreateMandateSaga,
+      sendAARClient,
+      sessionToken
+    );
+    yield* takeLatest(
+      testAarAcceptMandate.request,
+      testAarAcceptMandateSaga,
+      sendAARClient,
+      sessionToken
+    );
+  }
 }
 export const testable = isTestEnv
   ? {
