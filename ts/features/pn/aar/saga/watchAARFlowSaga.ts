@@ -21,6 +21,7 @@ import {
   testAarAcceptMandateSaga,
   testAarCreateMandateSaga
 } from "./testSendNisMrtdSaga";
+import { createAarMandateSaga } from "./createAarMandateSaga";
 
 function* aarFlowMasterSaga(
   sendAARClient: SendAARClient,
@@ -42,6 +43,14 @@ function* aarFlowMasterSaga(
       yield* call(
         fetchAarDataSaga,
         sendAARClient.getAARNotification,
+        sessionToken,
+        action
+      );
+      break;
+    case sendAARFlowStates.creatingMandate:
+      yield* call(
+        createAarMandateSaga,
+        sendAARClient.createAARMandate,
         sessionToken,
         action
       );

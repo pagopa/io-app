@@ -10,7 +10,8 @@ export type SendAARFailurePhase =
   | "Fetch QRCode"
   | "Validate Mandate"
   | "Playground"
-  | "Show Notification";
+  | "Show Notification"
+  | "Create Mandate";
 
 export type RecipientInfo = {
   denomination: string;
@@ -308,3 +309,7 @@ export type AARFlowState =
   | AARFlowDefaultState
   | AARFlowDelegatedState
   | AarErrorStates;
+
+export type AarStatesByName = {
+  [K in AARFlowStateName]: Extract<AARFlowState, { type: K }>;
+};
