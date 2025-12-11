@@ -53,7 +53,7 @@ export const ItwPresentationPidDetailScreen = () => {
 
       {/* Page content */}
       <ContentWrapper>
-        <VStack space={16}>
+        <VStack style={{ paddingVertical: 16 }} space={16}>
           <ItwPresentationPidDetail credential={credential} />
           <ItwPresentationPidDetailFooter credential={credential} />
           <PoweredByItWalletText />
