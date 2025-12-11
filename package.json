@@ -1,6 +1,6 @@
 {
   "name": "io",
-  "version": "3.21.0-rc.7",
+  "version": "3.22.0-rc.0",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -272,7 +272,8 @@
     "react-native-webview@^13.13.5": "patch:react-native-webview@npm%3A13.13.5#./.yarn/patches/react-native-webview-npm-13.13.5-802657184f.patch",
     "react-native-reanimated@^3.17.5": "patch:react-native-reanimated@npm%3A3.17.5#./.yarn/patches/react-native-reanimated-npm-3.17.5-134bd4e99e.patch",
     "react-native-pdf@6.7.7": "patch:react-native-pdf@npm%3A6.7.7#./.yarn/patches/react-native-pdf-npm-6.7.7-7aa1e3a631.patch",
-    "react-native-webview@^13.16.0": "patch:react-native-webview@npm%3A13.16.0#./.yarn/patches/react-native-webview-npm-13.16.0-82f4e13202.patch"
+    "react-native-webview@^13.16.0": "patch:react-native-webview@npm%3A13.16.0#./.yarn/patches/react-native-webview-npm-13.16.0-82f4e13202.patch",
+    "@pagopa/openapi-codegen-ts@^14.0.1": "patch:@pagopa/openapi-codegen-ts@npm%3A14.0.1#./.yarn/patches/@pagopa-openapi-codegen-ts-npm-14.0.1-41ae0815dd.patch"
   },
   "react-native": {
     "path": "path-browserify",
