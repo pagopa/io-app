@@ -245,7 +245,8 @@ export const itwEidIssuanceMachine = setup({
         start: {
           actions: assign(({ event }) => ({
             mode: event.mode,
-            level: event.level
+            level: event.level,
+            credentialType: event.credentialType
           })),
           target: "EvaluatingIssuanceMode"
         },
@@ -967,6 +968,12 @@ export const itwEidIssuanceMachine = setup({
                   }
                 };
               })
+            },
+            close: {
+              target: "#itwEidIssuanceMachine.UserIdentification"
+            },
+            back: {
+              target: "DisplayingCieNfcPreparationInstructions"
             }
           }
         },
