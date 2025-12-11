@@ -2980,7 +2980,8 @@
           }
         }
       },
-      "searchLink": "Search all available local services"
+      "searchLink": "Search all available local services",
+      "favourites": "Favourite services"
     },
     "institution": {
       "failure": {
@@ -3052,6 +3053,7 @@
       }
     },
     "favouriteServices": {
+      "title": "My favourites",
       "add": "Add to favourites",
       "remove": "Remove from favourites",
       "toasts": {
