@@ -63,7 +63,7 @@ export function* validateMandateSaga(
       withRefreshApiCall,
       acceptMandateRequest,
       action
-    )) as unknown as SagaCallReturnType<typeof acceptMandate>;
+    )) as SagaCallReturnType<typeof acceptMandate>;
 
     if (E.isLeft(result)) {
       const reason = `Decoding failure (${readableReportSimplified(
