@@ -1,11 +1,13 @@
 import * as E from "fp-ts/lib/Either";
 import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+import { Platform } from "react-native";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { PaymentClient } from "../../../common/api/client";
 import { paymentsGetPaymentMethodsAction } from "../../store/actions/networking";
 import { withPaymentsSessionToken } from "../../../common/utils/withPaymentsSessionToken";
+import { getDeviceAppVersion } from "../../../../../utils/device";
 
 export function* handleWalletPaymentGetAllMethods(
   getAllPaymentMethods: PaymentClient["getAllPaymentMethodsForIO"],
@@ -16,7 +18,9 @@ export function* handleWalletPaymentGetAllMethods(
       getAllPaymentMethods,
       action,
       {
-        amount: action.payload.amount
+        amount: action.payload.amount,
+        devicePlatform: Platform.select({ ios: "IOS", android: "ANDROID" }),
+        deviceVersion: getDeviceAppVersion()
       },
       "pagoPAPlatformSessionToken"
     );

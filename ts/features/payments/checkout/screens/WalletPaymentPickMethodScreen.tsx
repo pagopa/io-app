@@ -65,11 +65,6 @@ const WalletPaymentPickMethodScreen = () => {
   const navigation = useIONavigation();
   const titleRef = useRef<View>(null);
 
-  const { startContextualOnboarding, isLoading: isOnboardingLoading } =
-    useWalletOnboardingWebView({
-      onOnboardingOutcome: handleOnboardingOutcome
-    });
-
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
   const paymentAmountPot = useIOSelector(walletPaymentAmountSelector);
   const paymentMethodsPot = useIOSelector(walletPaymentAllMethodsSelector);
@@ -143,7 +138,7 @@ const WalletPaymentPickMethodScreen = () => {
       } else {
         createTransaction(orderId);
       }
-    } else {
+    } else if (outcome !== WalletOnboardingOutcomeEnum.CANCELED_BY_USER) {
       navigation.replace(
         PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR,
         {
@@ -155,6 +150,11 @@ const WalletPaymentPickMethodScreen = () => {
       );
     }
   };
+
+  const { startContextualOnboarding, isLoading: isOnboardingLoading } =
+    useWalletOnboardingWebView({
+      onOnboardingOutcome: handleOnboardingOutcome
+    });
 
   const calculateFeesForSelectedPaymentMethod = useCallback(() => {
     pipe(
