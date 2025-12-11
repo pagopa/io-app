@@ -23,7 +23,8 @@ const INITIAL_STATE: PaymentsCheckoutState = {
   contextualPayment: {
     onboardingUrl: pot.none,
     onboardedWalletId: undefined,
-    orderId: undefined
+    orderId: undefined,
+    webViewPayload: undefined
   }
 };
 

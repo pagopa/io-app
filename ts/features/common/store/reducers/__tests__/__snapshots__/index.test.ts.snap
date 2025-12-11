@@ -257,6 +257,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
           "kind": "PotNone",
         },
         "orderId": undefined,
+        "webViewPayload": undefined,
       },
       "currentStep": 0,
       "paymentDetails": {
