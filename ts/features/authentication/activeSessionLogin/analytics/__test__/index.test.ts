@@ -1,5 +1,6 @@
 import {
   trackLoginExpirationBannerPrompt,
+  trackLoginExpirationBannerTap,
   trackLoginExpirationBannerClosure,
   BANNER_ID
 } from "../../analytics";
@@ -30,7 +31,7 @@ describe("Login Expiration Banner analytics", () => {
       mockProps
     );
 
-    trackLoginExpirationBannerPrompt();
+    trackLoginExpirationBannerPrompt(helpCenterHowToDoWhenSessionIsExpiredUrl);
 
     expect(analyticsUtils.buildEventProperties).toHaveBeenCalledWith(
       "UX",
@@ -40,13 +41,32 @@ describe("Login Expiration Banner analytics", () => {
     expect(mixpanel.mixpanelTrack).toHaveBeenCalledWith("BANNER", mockProps);
   });
 
+  it("should track banner tap correctly", () => {
+    const mockProps = { mock: "tap" };
+    (analyticsUtils.buildEventProperties as jest.Mock).mockReturnValue(
+      mockProps
+    );
+
+    trackLoginExpirationBannerTap(helpCenterHowToDoWhenSessionIsExpiredUrl);
+
+    expect(analyticsUtils.buildEventProperties).toHaveBeenCalledWith(
+      "UX",
+      "action",
+      expectedProps
+    );
+    expect(mixpanel.mixpanelTrack).toHaveBeenCalledWith(
+      "TAP_BANNER",
+      mockProps
+    );
+  });
+
   it("should track banner closure correctly", () => {
     const mockProps = { mock: "closure" };
     (analyticsUtils.buildEventProperties as jest.Mock).mockReturnValue(
       mockProps
     );
 
-    trackLoginExpirationBannerClosure();
+    trackLoginExpirationBannerClosure(helpCenterHowToDoWhenSessionIsExpiredUrl);
 
     expect(analyticsUtils.buildEventProperties).toHaveBeenCalledWith(
       "UX",

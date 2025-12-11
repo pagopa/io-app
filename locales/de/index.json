@@ -2692,7 +2692,8 @@
       "institutions": {
         "title": "National"
       },
-      "searchLink": "Suche nach allen verfügbaren Diensten"
+      "searchLink": "Suche nach allen verfügbaren Diensten",
+      "favourites": "Bevorzugte Dienste"
     },
     "institution": {
       "failure": {
@@ -2753,6 +2754,9 @@
         "tosLink": "Nutzungsbedingungen",
         "privacyLink": "Datenschutzerklärung"
       }
+    },
+    "favouriteServices": {
+      "title": "Meine Favoriten"
     }
   },
   "identification": {
