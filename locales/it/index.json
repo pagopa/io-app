@@ -3060,6 +3060,11 @@
         "added": "Aggiunto ai preferiti!",
         "removed": "Rimosso dai preferiti!",
         "limitReached": "Non è possibile aggiungere il servizio ai preferiti perché hai raggiunto il limite massimo."
+      },
+      "emptyList": {
+        "title": "Qui vedrai la lista dei tuoi servizi preferiti",
+        "subtitle": "Inizia la ricerca e salva tra i preferiti i servizi che usi di più.",
+        "searchAction": "Inizia la ricerca"
       }
     }
   },
