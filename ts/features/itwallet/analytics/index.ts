@@ -358,6 +358,13 @@ export const trackCredentialPreview = (
   );
 };
 
+export const trackItwCredentialIntro = (credential: MixPanelCredential) => {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_CREDENTIAL_INTRO,
+    buildEventProperties("UX", "screen_view", { credential })
+  );
+};
+
 export const trackCredentialDetail = (
   credentialDetails: TrackCredentialDetail
 ) => {
