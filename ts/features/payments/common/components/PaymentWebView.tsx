@@ -52,18 +52,21 @@ const PaymentWebView = <T,>({
       ref={webViewRef}
       originWhitelist={originWhiteList || originSchemasWhiteList}
       onShouldStartLoadWithRequest={event => {
-        if (event.url.startsWith(WALLET_WEBVIEW_OUTCOME_SCHEMA)) {
-          onSuccess?.(event.url);
+        const { url, isTopFrame } = event;
+        if (url.startsWith(WALLET_WEBVIEW_OUTCOME_SCHEMA)) {
+          onSuccess?.(url);
+          return false;
         }
-        if (event.url === "about:blank" && event.isTopFrame) {
+        if (url === "about:blank" && isTopFrame) {
           onCancel?.(cancelOutcome);
+          return false;
         }
-        const intent = getIntentFallbackUrl(event.url);
+        const intent = getIntentFallbackUrl(url);
         if (O.isSome(intent)) {
           void Linking.openURL(decodeURIComponent(intent.value));
           return false;
         }
-        return !event.url.startsWith(WALLET_WEBVIEW_OUTCOME_SCHEMA);
+        return true;
       }}
       onNavigationStateChange={event => setCanGoBack(event.canGoBack)}
       onHttpError={() => {
