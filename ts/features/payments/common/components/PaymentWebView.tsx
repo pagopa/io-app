@@ -20,7 +20,6 @@ type PaymentWebViewProps<T> = {
 const originSchemasWhiteList = [
   "https://*",
   `${WALLET_WEBVIEW_OUTCOME_SCHEMA}://*`,
-  `${WALLET_WEBVIEW_OUTCOME_SCHEMA}://`,
   "intent://*",
   "about:*",
   ...(isDevEnv ? ["http://*"] : [])
