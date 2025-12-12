@@ -40,6 +40,7 @@ import { CieIasAndMrtdPlaygroundIntAuthAndMrtdResultScreen } from "../../devMode
 import { CieIasAndMrtdPlaygroundMrtdScreen } from "../../devMode/playgrounds/Cie/screens/mrtd/CieIasAndMrtdPlaygroundMrtdScreen";
 import { CieIasAndMrtdPlaygroundMrtdResultScreen } from "../../devMode/playgrounds/Cie/screens/mrtd/CieIasAndMrtdPlaygroundMrtdResultScreen";
 import { CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen } from "../../devMode/playgrounds/Cie/screens/ias_and_mrtd/CieIasAndMrtdPlaygroundIntAuthAndMrtdScreen";
+import { NotifeePlaygroundScreen } from "../../../notifeeNotificationPlayground/screens/NotifeePlaygroundScreen";
 import { SettingsParamsList } from "./params/SettingsParamsList";
 import { SETTINGS_ROUTES } from "./routes";
 
@@ -235,6 +236,10 @@ const SettingsStackNavigator = () => (
         headerShown: false,
         gestureEnabled: false
       }}
+    />
+    <Stack.Screen
+      name={SETTINGS_ROUTES.NOTIFICATION_WITH_NOTIFEE_PLAYGROUND}
+      component={NotifeePlaygroundScreen}
     />
   </Stack.Navigator>
 );

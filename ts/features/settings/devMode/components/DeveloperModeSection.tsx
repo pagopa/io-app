@@ -412,6 +412,14 @@ const PlaygroundsSection = () => {
           screen: AUTHENTICATION_ROUTES.LANDING_ACTIVE_SESSION_LOGIN
         });
       }
+    },
+    {
+      value: "notifiche schedulate con notifee",
+      onPress: () => {
+        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+          screen: SETTINGS_ROUTES.NOTIFICATION_WITH_NOTIFEE_PLAYGROUND
+        });
+      }
     }
   ];
 
