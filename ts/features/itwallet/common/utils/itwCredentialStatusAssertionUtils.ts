@@ -58,10 +58,8 @@ export const shouldRequestStatusAssertion = ({
   }
 
   switch (storedStatusAssertion.credentialStatus) {
-    // We could not determine the status, try to request another assertion
+    // We could not determine the status or the credential is invalid, try to request another assertion
     case "unknown":
-      return true;
-    // The credential is invalid, no need to request another assertion
     case "invalid":
       return true;
     // When the status assertion is expired request a new one
