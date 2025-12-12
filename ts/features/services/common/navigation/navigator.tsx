@@ -2,7 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { isGestureEnabled } from "../../../../utils/navigation";
 import { ServiceDetailsScreen } from "../../details/screens/ServiceDetailsScreen";
 import { InstitutionServicesScreen } from "../../institution/screens/InstitutionServicesScreen";
-import { FavouriteServicesScreen } from "../../favouriteServices/FavouriteServicesScreen";
+import { FavouriteServicesScreen } from "../../favouriteServices/screens/FavouriteServicesScreen";
 import { ServicesParamsList } from "./params";
 import { SERVICES_ROUTES } from "./routes";
 
