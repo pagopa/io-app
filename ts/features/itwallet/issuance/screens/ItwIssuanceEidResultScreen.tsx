@@ -221,5 +221,5 @@ const ItwIssuanceEidReissuanceResultContent = () => {
  * proceeds toward the credential issuance flow.
  */
 const ItwIssuanceEidCredentialTriggerContent = () => (
-  <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
+  <LoadingScreenContent title={I18n.t("global.genericWaiting")} />
 );
