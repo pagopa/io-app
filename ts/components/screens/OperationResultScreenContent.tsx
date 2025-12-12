@@ -93,7 +93,7 @@ const OperationResultScreenContent = forwardRef<
             <View style={{ alignItems: "center" }}>
               {isAnimatedPictogram ? (
                 <AnimatedPictogram
-                  name={pictogram as IOAnimatedPictograms}
+                  name={pictogram}
                   size={120}
                 />
               ) : (
