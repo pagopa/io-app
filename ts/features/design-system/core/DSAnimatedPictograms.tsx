@@ -19,7 +19,6 @@ import {
 type AnimatedPictogramType = {
   name: IOAnimatedPictograms;
   label: string;
-  loop: AnimatedPictogram["loop"];
 };
 
 export const DSAnimatedPictograms = () => {
@@ -30,18 +29,18 @@ export const DSAnimatedPictograms = () => {
   const pictogramSize: IOPictogramSizeScale = 180;
 
   const pictogramsRefs: Array<AnimatedPictogramType> = [
-    { name: "welcome", label: "Welcome", loop: false },
-    { name: "empty", label: "Empty", loop: true },
-    { name: "scanCardiOS", label: "Scan Card (iOS)", loop: true },
-    { name: "scanCardAndroid", label: "Scan Card (Android)", loop: true },
-    { name: "umbrella", label: "Umbrella", loop: true },
-    { name: "accessDenied", label: "Access Denied", loop: true },
-    { name: "fatalError", label: "Fatal Error", loop: false },
-    { name: "lock", label: "Lock", loop: true },
-    { name: "searchLens", label: "Search", loop: true },
-    { name: "success", label: "Success", loop: true },
-    { name: "attention", label: "Attention", loop: true },
-    { name: "waiting", label: "Waiting", loop: true }
+    { name: "welcome", label: "Welcome" },
+    { name: "empty", label: "Empty" },
+    { name: "scanCardiOS", label: "Scan Card (iOS)" },
+    { name: "scanCardAndroid", label: "Scan Card (Android)" },
+    { name: "umbrella", label: "Umbrella" },
+    { name: "accessDenied", label: "Access Denied" },
+    { name: "fatalError", label: "Fatal Error" },
+    { name: "lock", label: "Lock" },
+    { name: "searchLens", label: "Search" },
+    { name: "success", label: "Success" },
+    { name: "attention", label: "Attention" },
+    { name: "waiting", label: "Waiting" }
   ];
 
   const renderedPictogramsRefs: Array<{
@@ -88,7 +87,6 @@ export const DSAnimatedPictograms = () => {
             key={getCurrentPictogram()?.name || pictogramsRefs[0].name}
             size={pictogramSize}
             name={getCurrentPictogram()?.name || pictogramsRefs[0].name}
-            loop={getCurrentPictogram()?.loop || pictogramsRefs[0].loop}
           />
         </View>
 

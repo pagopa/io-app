@@ -18,7 +18,7 @@ import {
   PropsWithChildren,
   ReactNode
 } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { Platform, ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   AnimatedPictogram,
@@ -44,7 +44,7 @@ type OperationResultScreenContentProps = WithTestID<{
 }>;
 
 /**
- * Helper function to check if a pictogram has an animated version available
+ * Check if a pictogram has an animated version or not
  */
 const hasAnimatedVersion = (
   pictogram: IOPictograms | IOAnimatedPictograms
@@ -56,6 +56,7 @@ const OperationResultScreenContent = forwardRef<
 >(
   (
     {
+      disableAnimatedPictogram = false,
       pictogram,
       title,
       subtitle,
@@ -65,8 +66,7 @@ const OperationResultScreenContent = forwardRef<
       testID,
       isHeaderVisible,
       subtitleProps,
-      topElement = undefined,
-      disableAnimatedPictogram = false
+      topElement = undefined
     },
     ref
   ) => {
@@ -81,8 +81,13 @@ const OperationResultScreenContent = forwardRef<
         ref={ref}
       >
         <ScrollView
-          style={{ flexGrow: 1 }}
-          contentContainerStyle={styles.wrapper}
+          alwaysBounceVertical={false}
+          centerContent={true}
+          contentContainerStyle={[
+            styles.wrapper,
+            /* Android fallback because `centerContent` is only an iOS property */
+            Platform.OS === "android" && styles.wrapperAndroid
+          ]}
         >
           {pictogram && (
             <View style={{ alignItems: "center" }}>
@@ -129,6 +134,7 @@ const OperationResultScreenContent = forwardRef<
               </View>
             </View>
           )}
+
           {isValidElement(children) && cloneElement(children)}
         </ScrollView>
       </SafeAreaView>

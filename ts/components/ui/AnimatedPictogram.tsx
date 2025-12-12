@@ -100,19 +100,32 @@ const staticPictogramsMap: Record<IOAnimatedPictograms, IOPictograms> = {
   waiting: "ended"
 };
 
+const loopPictogramsMap: Record<IOAnimatedPictograms, boolean> = {
+  welcome: false,
+  empty: false,
+  scanCardiOS: true,
+  scanCardAndroid: true,
+  umbrella: true,
+  accessDenied: false,
+  fatalError: false,
+  lock: true,
+  searchLens: true,
+  success: false,
+  attention: false,
+  waiting: true
+};
+
 /* Compared to the static pictograms, the animated pictograms
   seems slightly smaller, so we need to scale them a little to
   uniform the perceived size */
 const sizeMultiplier = 1.25;
 
-export const AnimatedPictogram = ({
-  name,
-  size,
-  loop = true
-}: AnimatedPictogram) => {
+export const AnimatedPictogram = ({ name, size, loop }: AnimatedPictogram) => {
   const reduceMotion = useReducedMotion();
   const { themeType } = useIOThemeContext();
   const isDarkMode = themeType === "dark";
+
+  const loopState = loop ?? loopPictogramsMap[name];
 
   /* Ideally, I would have preferred an implementation using
   dynamic colour overrides from a single JSON Lottie file
@@ -152,7 +165,7 @@ export const AnimatedPictogram = ({
     const elapsedTime = (clock.value - animationStartTime.value) / 1000;
     const currentFrame = elapsedTime * fps;
 
-    return loop
+    return loopState
       ? currentFrame % totalFrames
       : Math.min(currentFrame, totalFrames - 1);
   });
