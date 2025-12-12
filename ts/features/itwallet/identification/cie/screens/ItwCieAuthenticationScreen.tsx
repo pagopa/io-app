@@ -67,9 +67,7 @@ export const ItwCieAuthenticationScreen = () => {
   );
 
   if (pin === undefined || O.isNone(authUrlOption)) {
-    return (
-      <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
-    );
+    return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
   }
 
   /**

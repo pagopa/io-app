@@ -1,37 +1,36 @@
 import {
-  Body,
   ContentWrapper,
   FeatureInfo,
   ForceScrollDownView,
   H2,
   VStack
 } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
-import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
-import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
-import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog.tsx";
-import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
-import { ItwProximityMachineContext } from "../machine/provider.tsx";
-import { selectProximityDetails } from "../machine/selectors.ts";
-import { ItwDataExchangeIcons } from "../../../common/components/ItwDataExchangeIcons.tsx";
 import IOMarkdown from "../../../../../components/IOMarkdown/index.tsx";
+import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { generateDynamicUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig.ts";
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../../urls.ts";
-import { ItwProximityPresentationDetails } from "../components/ItwProximityPresentationDetails.tsx";
-import { ISSUER_MOCK_NAME } from "../../../common/utils/itwMocksUtils.ts";
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
-import { ProximityDetails } from "../utils/itwProximityTypeUtils.ts";
+import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
+import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
 import { identificationRequest } from "../../../../identification/store/actions";
+import { ItwDataExchangeIcons } from "../../../common/components/ItwDataExchangeIcons.tsx";
+import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
+import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog.tsx";
+import { ISSUER_MOCK_NAME } from "../../../common/utils/itwMocksUtils.ts";
 import {
   trackItwProximityContinuePresentation,
   trackItwProximityDataShare
 } from "../analytics";
 import { ITW_PROXIMITY_SCREENVIEW_EVENTS } from "../analytics/enum";
+import { ItwProximityPresentationDetails } from "../components/ItwProximityPresentationDetails.tsx";
+import { ItwProximityMachineContext } from "../machine/provider.tsx";
+import { selectProximityDetails } from "../machine/selectors.ts";
+import { ProximityDetails } from "../utils/itwProximityTypeUtils.ts";
 
 export const ItwProximityClaimsDisclosureScreen = () => {
   const proximityDetails = ItwProximityMachineContext.useSelector(
@@ -51,18 +50,13 @@ export const ItwProximityClaimsDisclosureScreen = () => {
       // to the Failure state.
       () => (
         <LoadingScreenContent
-          contentTitle={I18n.t(
+          title={I18n.t(
             "features.itWallet.presentation.proximity.loadingScreen.title"
           )}
-        >
-          <ContentWrapper style={{ alignItems: "center" }}>
-            <Body>
-              {I18n.t(
-                "features.itWallet.presentation.proximity.loadingScreen.subtitle"
-              )}
-            </Body>
-          </ContentWrapper>
-        </LoadingScreenContent>
+          subtitle={I18n.t(
+            "features.itWallet.presentation.proximity.loadingScreen.subtitle"
+          )}
+        />
       ),
       details => <ContentView proximityDetails={details} />
     )

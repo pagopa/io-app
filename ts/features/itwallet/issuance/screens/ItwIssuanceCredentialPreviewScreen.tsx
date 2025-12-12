@@ -63,9 +63,7 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
       // to the Failure state.
       () => (
         <LoadingScreenContent
-          contentTitle={I18n.t(
-            "features.itWallet.issuance.credentialPreview.loading"
-          )}
+          title={I18n.t("features.itWallet.issuance.credentialPreview.loading")}
         />
       ),
       props => <ContentView {...props} />

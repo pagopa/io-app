@@ -2,23 +2,34 @@
 /**
  * An ingress screen to choose the real first screen the user must navigate to.
  */
-import { memo, useCallback, useEffect, useRef, useState } from "react";
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
-import { AccessibilityInfo, View } from "react-native";
 import I18n from "i18next";
-import { Body, ContentWrapper } from "@pagopa/io-app-design-system";
 import { isEqual } from "lodash";
-import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../store/reducers/persistedPreferences";
-import { trackIngressScreen } from "../../settings/common/analytics";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
+import { AccessibilityInfo, View } from "react-native";
+import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
+import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
+import ModalSectionStatusComponent from "../../../components/SectionStatus/modal";
+import { startupLoadSuccess } from "../../../store/actions/startup";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isBackendStatusLoadedSelector } from "../../../store/reducers/backendStatus/remoteConfig";
-import { setIsBlockingScreen, setOfflineAccessReason } from "../store/actions";
-import ModalSectionStatusComponent from "../../../components/SectionStatus/modal";
+import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../store/reducers/persistedPreferences";
+import { StartupStatusEnum } from "../../../store/reducers/startup";
+import { setAccessibilityFocus } from "../../../utils/accessibility";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { sessionInfoSelector } from "../../authentication/common/store/selectors";
+import { isConnectedSelector } from "../../connectivity/store/selectors";
+import { identificationRequest } from "../../identification/store/actions";
+import { IdentificationBackActionType } from "../../identification/store/reducers";
+import { itwOfflineAccessAvailableSelector } from "../../itwallet/common/store/selectors";
 import { isMixpanelInitializedSelector } from "../../mixpanel/store/selectors";
+import { trackIngressScreen } from "../../settings/common/analytics";
+import { profileSelector } from "../../settings/common/store/selectors";
+import { ProfileError } from "../../settings/common/store/types";
 import {
   trackIngressCdnSystemError,
   trackIngressNoInternetConnection,
@@ -27,21 +38,9 @@ import {
   trackIngressTimeout,
   trackSettingsDiscoverBannerVisualized
 } from "../analytics";
-import { setAccessibilityFocus } from "../../../utils/accessibility";
-import { startupLoadSuccess } from "../../../store/actions/startup";
-import { StartupStatusEnum } from "../../../store/reducers/startup";
-import { isConnectedSelector } from "../../connectivity/store/selectors";
-import { identificationRequest } from "../../identification/store/actions";
+import { setIsBlockingScreen, setOfflineAccessReason } from "../store/actions";
 import { OfflineAccessReasonEnum } from "../store/reducer";
-import { itwOfflineAccessAvailableSelector } from "../../itwallet/common/store/selectors";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { IdentificationBackActionType } from "../../identification/store/reducers";
-import { profileSelector } from "../../settings/common/store/selectors";
-import { sessionInfoSelector } from "../../authentication/common/store/selectors";
 import { checkSessionErrorSelector } from "../store/selectors";
-import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
-import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
-import { ProfileError } from "../../settings/common/store/types";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
 const TIMEOUT_BLOCKING_SCREEN = (25 * 1000) as Millisecond;
@@ -193,29 +192,25 @@ export const IngressScreen = () => {
       />
       <LoadingScreenContent
         testID="ingress-screen-loader-id"
-        contentTitle={content.title}
+        title={content.title}
+        subtitle={content.subtitle}
         animatedPictogramSource="waiting"
-        banner={{
-          showBanner: isOfflineAccessAvailable && showBanner,
-          props: {
-            pictogramName: "identityCheck",
-            color: "neutral",
-            title: I18n.t("startup.offline_access_banner.title"),
-            content: I18n.t("startup.offline_access_banner.content"),
-            action: I18n.t("startup.offline_access_banner.action"),
-            onPress: () => {
-              trackIngressOfflineWalletBannerCTAClicked();
-              navigateOnOfflineMiniApp(OfflineAccessReasonEnum.TIMEOUT);
-            }
-          }
-        }}
-      >
-        {content.subtitle && (
-          <ContentWrapper style={{ alignItems: "center" }}>
-            <Body style={{ textAlign: "center" }}>{content.subtitle}</Body>
-          </ContentWrapper>
-        )}
-      </LoadingScreenContent>
+        banner={
+          isOfflineAccessAvailable && showBanner
+            ? {
+                pictogramName: "identityCheck",
+                color: "neutral",
+                title: I18n.t("startup.offline_access_banner.title"),
+                content: I18n.t("startup.offline_access_banner.content"),
+                action: I18n.t("startup.offline_access_banner.action"),
+                onPress: () => {
+                  trackIngressOfflineWalletBannerCTAClicked();
+                  navigateOnOfflineMiniApp(OfflineAccessReasonEnum.TIMEOUT);
+                }
+              }
+            : undefined
+        }
+      />
     </>
   );
 };
