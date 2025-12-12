@@ -18,6 +18,7 @@ import { initiateAarFlowSaga } from "../initiateAarFlowSaga";
 import { fetchAarDataSaga } from "../fetchNotificationDataSaga";
 import { fetchAARQrCodeSaga } from "../fetchQrCodeSaga";
 import { testable, watchAarFlowSaga } from "../watchAARFlowSaga";
+import { validateMandateSaga } from "../validateMandateSaga";
 import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { createAarMandateSaga } from "../createAarMandateSaga";
 const { aarFlowMasterSaga, raceWithTerminateFlow } = testable as NonNullable<
@@ -94,6 +95,40 @@ describe("watchAarFlowSaga", () => {
         .call(
           fetchAarDataSaga,
           mockSendAARClient.getAARNotification,
+          mockSessionToken,
+          action
+        )
+        .next()
+        .isDone();
+    });
+
+    it('should call the validateMandateSaga when an updateState action has "validatingMandate" as type', () => {
+      const action = setAarFlowState({
+        type: sendAARFlowStates.validatingMandate,
+        recipientInfo: {
+          denomination: "Mario Rossi",
+          taxId: "RSSMRA74D22A001Q"
+        },
+        iun: "123",
+        mandateId: "mandate_id",
+        signedVerificationCode: "signed_nonce",
+        mrtdData: {
+          dg1: "",
+          dg11: "",
+          sod: ""
+        },
+        nisData: {
+          nis: "",
+          publicKey: "",
+          sod: ""
+        }
+      });
+
+      testSaga(aarFlowMasterSaga, mockSendAARClient, mockSessionToken, action)
+        .next()
+        .call(
+          validateMandateSaga,
+          mockSendAARClient.acceptAARMandate,
           mockSessionToken,
           action
         )

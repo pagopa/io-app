@@ -211,7 +211,6 @@ describe("fetchQrCodeSaga", () => {
     });
 
     [
-      (E.left(undefined),
       E.right({
         status: 500,
         value: { status: 500, detail: "A detail" } as AARProblemJson
@@ -219,7 +218,7 @@ describe("fetchQrCodeSaga", () => {
       E.right({
         status: 418,
         value: { status: 418, detail: "A detail" } as AARProblemJson
-      }))
+      })
     ].forEach(res =>
       it(`should dispatch KO state on a response of ${JSON.stringify(
         res
@@ -318,7 +317,7 @@ describe("fetchQrCodeSaga", () => {
       isTest: true
     });
   });
-  it("should dispatch KO state on a decoding failute", () => {
+  it("should dispatch KO state on a decoding failure", () => {
     const failureDecodingResponse = E.left([]);
     const mockApiCall = jest
       .fn()
