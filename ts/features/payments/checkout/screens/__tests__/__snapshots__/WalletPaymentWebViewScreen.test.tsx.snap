@@ -245,7 +245,6 @@ exports[`WalletPaymentWebViewScreen snapshot for component 1`] = `
                           onLoadingStart={[Function]}
                           onMessage={[Function]}
                           onShouldStartLoadWithRequest={[Function]}
-                          paymentRequestEnabled={true}
                           source={
                             {
                               "uri": "https://google.com",
