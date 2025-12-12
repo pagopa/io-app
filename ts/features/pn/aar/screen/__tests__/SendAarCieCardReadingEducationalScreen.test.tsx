@@ -74,7 +74,6 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
         type: sendAARFlowStates.cieCanInsertion
       })
     );
-    expect(mockGoBack).toHaveBeenCalledTimes(1);
     expect(mockNavigate).not.toHaveBeenCalled();
   });
 
@@ -102,7 +101,6 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
         type: sendAARFlowStates.cieCanInsertion
       })
     );
-    expect(mockGoBack).toHaveBeenCalledTimes(1);
     expect(mockNavigate).not.toHaveBeenCalled();
   });
 
@@ -129,7 +127,7 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
   });
 
   it.each(sendAarStatesWithoutCieScanningAdvisory)(
-    'should not dispatch or navigate back when the back button is pressed for the type: "$type"',
+    'should not update the aar state when the back button is pressed for the type: "$type"',
     currentAarState => {
       jest
         .spyOn(AAR_SELECTORS, "currentAARFlowData")
@@ -143,13 +141,12 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
         fireEvent.press(backButton);
       });
 
-      expect(mockGoBack).not.toHaveBeenCalled();
       expect(mockDispatch).not.toHaveBeenCalled();
     }
   );
 
   it.each(sendAarStatesWithoutCieScanningAdvisory)(
-    'should not dispatch or navigate back when the back button is pressed for the type: "$type"',
+    'should not update the aar state when the hardware back button is pressed for the type: "$type"',
     currentAarState => {
       jest
         .spyOn(AAR_SELECTORS, "currentAARFlowData")
@@ -168,11 +165,6 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
       });
 
       expect(mockDispatch).not.toHaveBeenCalled();
-      expect(mockGoBack).not.toHaveBeenCalled();
-      // When state.type is "cieScanning" a navigation occurs
-      if (currentAarState.type !== sendAARFlowStates.cieScanning) {
-        expect(mockNavigate).not.toHaveBeenCalled();
-      }
     }
   );
 
@@ -191,11 +183,6 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
       });
 
       expect(mockDispatch).not.toHaveBeenCalled();
-      expect(mockGoBack).not.toHaveBeenCalled();
-      // When state.type is "cieScanning" a navigation occurs
-      if (currentAarState.type !== sendAARFlowStates.cieScanning) {
-        expect(mockNavigate).not.toHaveBeenCalled();
-      }
     }
   );
 
@@ -229,7 +216,25 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
       } else {
         expect(mockNavigate).not.toHaveBeenCalled();
       }
-      expect(mockGoBack).not.toHaveBeenCalled();
+      expect(mockDispatch).not.toHaveBeenCalled();
+    });
+  });
+  sendAarMockStates.forEach(currentAarState => {
+    const isCieCanInsertion =
+      currentAarState.type === sendAARFlowStates.cieCanInsertion;
+    it(`${
+      isCieCanInsertion ? "should" : "should not"
+    } navigate back when type is "${currentAarState.type}"`, () => {
+      jest
+        .spyOn(AAR_SELECTORS, "currentAARFlowData")
+        .mockReturnValue(currentAarState);
+      renderComponent();
+
+      if (isCieCanInsertion) {
+        expect(mockGoBack).toHaveBeenCalledTimes(1);
+      } else {
+        expect(mockGoBack).not.toHaveBeenCalled();
+      }
       expect(mockDispatch).not.toHaveBeenCalled();
     });
   });
