@@ -78,6 +78,7 @@ const PaymentWebView = <T,>({
       source={{
         uri
       }}
+      paymentRequestEnabled
       androidCameraAccessDisabled
       androidMicrophoneAccessDisabled
     />
