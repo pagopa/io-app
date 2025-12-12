@@ -37,18 +37,27 @@ export const SendAarCieCardReadingEducationalScreen = ({
   const denomination = useIOSelector(aarAdresseeDenominationSelector);
 
   useEffect(() => {
-    if (currentAarState.type === sendAARFlowStates.cieScanning) {
-      const { type: _, ...params } = currentAarState;
+    switch (currentAarState.type) {
+      case sendAARFlowStates.cieScanning: {
+        const { type: _, ...params } = currentAarState;
 
-      navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-        screen: PN_ROUTES.MAIN,
-        params: {
-          screen: PN_ROUTES.SEND_AAR_CIE_CARD_READING,
-          params
-        }
-      });
+        navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+          screen: PN_ROUTES.MAIN,
+          params: {
+            screen: PN_ROUTES.SEND_AAR_CIE_CARD_READING,
+            params
+          }
+        });
+        break;
+      }
+      case sendAARFlowStates.cieCanInsertion: {
+        navigation.goBack();
+        break;
+      }
+      // TODO: [IOCOM-2750] implement navigation into NFC activation screen
+      default:
+        break;
     }
-    // TODO: [IOCOM-2750] implement navigation into NFC activation screen
   }, [currentAarState, navigation]);
 
   const handleGoBack = () => {
@@ -59,7 +68,6 @@ export const SendAarCieCardReadingEducationalScreen = ({
           type: sendAARFlowStates.cieCanInsertion
         })
       );
-      navigation.goBack();
     }
   };
 
