@@ -781,6 +781,15 @@ export function trackWalletNewIdReset(state: GlobalState) {
   );
 }
 
+export const trackItwCredentialStartIssuing = (
+  credential: MixPanelCredential
+) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_START_ISSUING,
+    buildEventProperties("UX", "action", { credential })
+  );
+};
+
 export function trackItwIntroBack(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_INTRO_BACK,

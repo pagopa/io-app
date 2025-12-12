@@ -9,7 +9,8 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../store/hooks";
 import {
   getMixPanelCredential,
-  trackItwCredentialIntro
+  trackItwCredentialIntro,
+  trackItwCredentialStartIssuing
 } from "../../analytics";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
@@ -74,13 +75,18 @@ export const ContentView = ({
     }, [mixPanelCredential])
   );
 
+  const handleContinue = useCallback(() => {
+    trackItwCredentialStartIssuing(mixPanelCredential);
+    machineRef.send({ type: "continue" });
+  }, [machineRef, mixPanelCredential]);
+
   return (
     <IOScrollView
       actions={{
         type: "SingleButton",
         primary: {
           label: I18n.t("global.buttons.continue"),
-          onPress: () => machineRef.send({ type: "continue" }),
+          onPress: handleContinue,
           loading: isLoading
         }
       }}
