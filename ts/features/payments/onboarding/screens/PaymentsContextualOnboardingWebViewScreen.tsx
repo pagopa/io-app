@@ -6,8 +6,8 @@ import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay"
 import { useIOSelector } from "../../../../store/hooks";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { WalletOnboardingOutcomeEnum } from "../types/OnboardingOutcomeEnum";
-import WalletContextualOnboardingWebView from "../components/WalletContextualOnboardingWebView";
 import { walletContextualOnboardingWebViewPayloadSelector } from "../../checkout/store/selectors";
+import PaymentWebView from "../../common/components/PaymentWebView";
 
 const PaymentsContextualOnboardingWebViewScreen = () => {
   const payload = useIOSelector(
@@ -78,7 +78,9 @@ const PaymentsContextualOnboardingWebViewScreen = () => {
   });
 
   return payload?.url ? (
-    <WalletContextualOnboardingWebView
+    <PaymentWebView<WalletOnboardingOutcomeEnum>
+      cancelOutcome={WalletOnboardingOutcomeEnum.CANCELED_BY_USER}
+      errorOutcome={WalletOnboardingOutcomeEnum.GENERIC_ERROR}
       onError={handleOnError}
       onCancel={promptUserToClose}
       onSuccess={handleOnSuccess}

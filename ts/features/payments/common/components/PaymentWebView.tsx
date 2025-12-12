@@ -6,8 +6,16 @@ import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { isDevEnv } from "../../../../utils/environment";
 import { WALLET_WEBVIEW_OUTCOME_SCHEMA } from "../../common/utils/const";
 import { getIntentFallbackUrl } from "../../../authentication/common/utils/login";
-import { WalletOnboardingOutcomeEnum } from "../../onboarding/types/OnboardingOutcomeEnum";
-import { ContextualOnboardingWebViewPayload } from "../store/actions";
+
+type PaymentWebViewProps<T> = {
+  url: string;
+  cancelOutcome: T;
+  errorOutcome: T;
+  onSuccess?: (url: string) => void;
+  onCancel?: (outcome: T) => void;
+  onError?: (outcome: T) => void;
+  originWhiteList?: Array<string>;
+};
 
 const originSchemasWhiteList = [
   "https://*",
@@ -18,12 +26,15 @@ const originSchemasWhiteList = [
   ...(isDevEnv ? ["http://*"] : [])
 ];
 
-const WalletContextualOnboardingWebView = ({
+const PaymentWebView = <T,>({
   onSuccess,
   onCancel,
   onError,
-  url: uri
-}: ContextualOnboardingWebViewPayload) => {
+  url: uri,
+  cancelOutcome,
+  errorOutcome,
+  originWhiteList
+}: PaymentWebViewProps<T>) => {
   const [canGoBack, setCanGoBack] = useState<boolean>(false);
   const webViewRef = useRef<WebView>(null);
 
@@ -31,7 +42,7 @@ const WalletContextualOnboardingWebView = ({
     if (canGoBack) {
       webViewRef.current?.goBack();
     } else {
-      onCancel?.(WalletOnboardingOutcomeEnum.CANCELED_BY_USER);
+      onCancel?.(cancelOutcome);
     }
     return true;
   });
@@ -40,13 +51,13 @@ const WalletContextualOnboardingWebView = ({
     <WebView
       testID="webview"
       ref={webViewRef}
-      originWhitelist={originSchemasWhiteList}
+      originWhitelist={originWhiteList || originSchemasWhiteList}
       onShouldStartLoadWithRequest={event => {
         if (event.url.startsWith(WALLET_WEBVIEW_OUTCOME_SCHEMA)) {
           onSuccess?.(event.url);
         }
         if (event.url === "about:blank" && event.isTopFrame) {
-          onCancel?.(WalletOnboardingOutcomeEnum.CANCELED_BY_USER);
+          onCancel?.(cancelOutcome);
         }
         const intent = getIntentFallbackUrl(event.url);
         if (O.isSome(intent)) {
@@ -56,8 +67,12 @@ const WalletContextualOnboardingWebView = ({
         return !event.url.startsWith(WALLET_WEBVIEW_OUTCOME_SCHEMA);
       }}
       onNavigationStateChange={event => setCanGoBack(event.canGoBack)}
-      onHttpError={() => onError?.(WalletOnboardingOutcomeEnum.GENERIC_ERROR)}
-      onError={() => onError?.(WalletOnboardingOutcomeEnum.GENERIC_ERROR)}
+      onHttpError={() => {
+        onError?.(errorOutcome);
+      }}
+      onError={() => {
+        onError?.(errorOutcome);
+      }}
       allowsBackForwardNavigationGestures
       style={{ flex: 1 }}
       source={{
@@ -69,4 +84,4 @@ const WalletContextualOnboardingWebView = ({
   );
 };
 
-export default WalletContextualOnboardingWebView;
+export default PaymentWebView;
