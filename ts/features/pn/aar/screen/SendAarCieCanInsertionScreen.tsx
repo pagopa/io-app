@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { OTPInput, VSpacer } from "@pagopa/io-app-design-system";
 import { Keyboard, KeyboardAvoidingView, Platform, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -34,6 +34,26 @@ export const SendAarCieCanInsertionScreen = ({
   const headerHeight = useHeaderHeight();
   const isFocused = useIsFocused();
 
+  useEffect(() => {
+    switch (currentAarState.type) {
+      case sendAARFlowStates.cieScanningAdvisory: {
+        navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+          screen: PN_ROUTES.MAIN,
+          params: {
+            screen: PN_ROUTES.SEND_AAR_CIE_CARD_READING_EDUCATIONAL
+          }
+        });
+        break;
+      }
+      case sendAARFlowStates.cieCanAdvisory: {
+        navigation.goBack();
+        break;
+      }
+      default:
+        break;
+    }
+  }, [currentAarState.type, navigation]);
+
   useFocusEffect(
     useCallback(() => {
       setAccessibilityFocus(canPadViewRef, 300 as Millisecond);
@@ -62,15 +82,9 @@ export const SendAarCieCanInsertionScreen = ({
             can: value
           })
         );
-        navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-          screen: PN_ROUTES.MAIN,
-          params: {
-            screen: PN_ROUTES.SEND_AAR_CIE_CARD_READING_EDUCATIONAL
-          }
-        });
       }
     },
-    [currentAarState, navigation, dispatch]
+    [currentAarState, dispatch]
   );
 
   const handleGoBack = useCallback(() => {
@@ -81,9 +95,8 @@ export const SendAarCieCanInsertionScreen = ({
           type: sendAARFlowStates.cieCanAdvisory
         })
       );
-      navigation.goBack();
     }
-  }, [currentAarState, dispatch, navigation]);
+  }, [currentAarState, dispatch]);
 
   return (
     <SafeAreaView style={{ flex: 1 }} edges={["bottom"]}>
