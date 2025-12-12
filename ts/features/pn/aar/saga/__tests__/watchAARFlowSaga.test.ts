@@ -19,6 +19,7 @@ import { fetchAarDataSaga } from "../fetchNotificationDataSaga";
 import { fetchAARQrCodeSaga } from "../fetchQrCodeSaga";
 import { testable, watchAarFlowSaga } from "../watchAARFlowSaga";
 import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { createAarMandateSaga } from "../createAarMandateSaga";
 const { aarFlowMasterSaga, raceWithTerminateFlow } = testable as NonNullable<
   typeof testable
 >;
@@ -106,6 +107,27 @@ describe("watchAarFlowSaga", () => {
       });
 
       testSaga(aarFlowMasterSaga, mockSendAARClient, mockSessionToken, action)
+        .next()
+        .isDone();
+    });
+    it("should call createAarMandateSaga when an updateState action has creatingMandate as payload", () => {
+      const action = setAarFlowState({
+        type: sendAARFlowStates.creatingMandate,
+        recipientInfo: {
+          denomination: "Mario Rossi",
+          taxId: "RSSMRA74D22A001Q"
+        },
+        iun: "123",
+        qrCode: "TESTETST"
+      });
+      testSaga(aarFlowMasterSaga, mockSendAARClient, mockSessionToken, action)
+        .next()
+        .call(
+          createAarMandateSaga,
+          mockSendAARClient.createAARMandate,
+          mockSessionToken,
+          action
+        )
         .next()
         .isDone();
     });
