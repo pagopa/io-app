@@ -18,7 +18,9 @@ import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils
 import { StoredCredential } from "../../common/utils/itwTypesUtils.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors/index.ts";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
+  selectCredentialType,
   selectIsLoading,
   selectIssuanceMode,
   selectUpgradeFailedCredentials
@@ -27,11 +29,15 @@ import {
 export const ItwIssuanceEidResultScreen = () => {
   const route = useRoute();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const credentialMachineRef =
+    ItwCredentialIssuanceMachineContext.useActorRef();
   const issuanceMode =
     ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
   const failedCredentials = ItwEidIssuanceMachineContext.useSelector(
     selectUpgradeFailedCredentials
   );
+  const credentialType =
+    ItwEidIssuanceMachineContext.useSelector(selectCredentialType);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   const itw_flow = isItwL3 ? "L3" : "reissuing_eID";
@@ -61,6 +67,20 @@ export const ItwIssuanceEidResultScreen = () => {
   };
 
   const handleBackToWallet = () => machineRef.send({ type: "go-to-wallet" });
+
+  useEffect(() => {
+    if (credentialType) {
+      credentialMachineRef.send({
+        type: "select-credential",
+        mode: "issuance",
+        credentialType
+      });
+    }
+  }, [credentialType, credentialMachineRef]);
+
+  if (credentialType) {
+    return <ItwIssuanceEidCredentialTriggerContent />;
+  }
 
   if (issuanceMode === "upgrade") {
     return (
@@ -206,3 +226,12 @@ const ItwIssuanceEidReissuanceResultContent = () => {
     </OperationResultScreenContent>
   );
 };
+
+/**
+ * Transitional screen shown right after the eID issuance is completed.
+ * Its only purpose is to display a loading indicator while navigation
+ * proceeds toward the credential issuance flow.
+ */
+const ItwIssuanceEidCredentialTriggerContent = () => (
+  <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
+);
