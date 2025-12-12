@@ -112,9 +112,7 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
     title: I18n.t("wallet.payment.failure.GENERIC_ERROR.title"),
     subtitle: I18n.t("wallet.payment.failure.GENERIC_ERROR.subtitle"),
     action: closeAction,
-    secondaryAction: contactSupportAction,
-    enableAnimatedPictogram: true,
-    loop: true
+    secondaryAction: contactSupportAction
   };
 
   const discoverMoreAction: OperationResultScreenContentProps["action"] = {
@@ -187,9 +185,7 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
           pictogram: "fatalError",
           title: I18n.t("wallet.payment.failure.PAYMENT_UNAVAILABLE.title"),
           action: contactSupportAction,
-          secondaryAction: closeAction,
-          enableAnimatedPictogram: true,
-          loop: false
+          secondaryAction: closeAction
         };
       case "PAYMENT_DATA_ERROR":
         return {
@@ -281,9 +277,7 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
             "wallet.payment.failure.PAYMENT_VERIFY_GENERIC_ERROR.subtitle"
           ),
           action: closeAction,
-          secondaryAction: contactSupportAction,
-          enableAnimatedPictogram: true,
-          loop: true
+          secondaryAction: contactSupportAction
         };
       case "PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR":
         return {
@@ -304,9 +298,7 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
             "wallet.payment.failure.PAYMENT_SLOWDOWN_ERROR.subtitle"
           ),
           action: closeAction,
-          secondaryAction: contactSupportAction,
-          enableAnimatedPictogram: true,
-          loop: true
+          secondaryAction: contactSupportAction
         };
 
       default:

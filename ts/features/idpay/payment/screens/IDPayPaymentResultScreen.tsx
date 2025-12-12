@@ -122,8 +122,6 @@ const IDPayPaymentResultScreen = () => {
       title={I18n.t("idpay.payment.result.success.title")}
       action={defaultCloseAction}
       testID="paymentSuccessScreenTestID"
-      enableAnimatedPictogram
-      loop={false}
     />
   );
 };

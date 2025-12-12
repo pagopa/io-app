@@ -52,6 +52,7 @@ const CgnCTAStartOnboardingComponent: FC<Props> = (props: Props) => {
   if (props.hasError) {
     return (
       <OperationResultScreenContent
+        pictogram="umbrella"
         title={I18n.t("global.genericError")}
         action={{
           label: I18n.t("global.buttons.retry"),

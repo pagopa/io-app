@@ -21,8 +21,6 @@ const CgnActivationIneligibleScreen = () => {
         accessibilityLabel: I18n.t("global.buttons.close"),
         onPress: onExit
       }}
-      enableAnimatedPictogram
-      loop={false}
     />
   );
 };
