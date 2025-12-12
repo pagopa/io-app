@@ -72,7 +72,22 @@ const PaymentWebView = <T,>({
       onHttpError={() => {
         onError?.(errorOutcome);
       }}
-      onError={() => {
+      onError={syntheticEvent => {
+        const { nativeEvent } = syntheticEvent;
+
+        if (nativeEvent.url?.startsWith(WALLET_WEBVIEW_OUTCOME_SCHEMA)) {
+          // This is a "good" error.
+          // We effectively ignore this error because onShouldStartLoadWithRequest handles the logic.
+          return;
+        }
+
+        if (
+          nativeEvent.code === -10 ||
+          nativeEvent.description === "net::ERR_UNKNOWN_URL_SCHEME"
+        ) {
+          return;
+        }
+
         onError?.(errorOutcome);
       }}
       allowsBackForwardNavigationGestures
