@@ -1,4 +1,3 @@
-import { Body } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useEffect } from "react";
@@ -134,14 +133,9 @@ const ItwIssuanceEidUpgradeResultContent = ({
   if (isLoading) {
     return (
       <LoadingScreenContent
-        contentTitle={I18n.t(
-          "features.itWallet.issuance.upgrade.loading.title"
-        )}
-      >
-        <Body style={{ textAlign: "center" }}>
-          {I18n.t("features.itWallet.issuance.upgrade.loading.subtitle")}
-        </Body>
-      </LoadingScreenContent>
+        title={I18n.t("features.itWallet.issuance.upgrade.loading.title")}
+        subtitle={I18n.t("features.itWallet.issuance.upgrade.loading.subtitle")}
+      />
     );
   }
 
@@ -191,9 +185,7 @@ const ItwIssuanceEidReissuanceResultContent = () => {
   const route = useRoute();
 
   if (isLoading) {
-    return (
-      <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
-    );
+    return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
   }
 
   return (
@@ -229,5 +221,5 @@ const ItwIssuanceEidReissuanceResultContent = () => {
  * proceeds toward the credential issuance flow.
  */
 const ItwIssuanceEidCredentialTriggerContent = () => (
-  <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
+  <LoadingScreenContent title={I18n.t("global.genericWaiting")} />
 );

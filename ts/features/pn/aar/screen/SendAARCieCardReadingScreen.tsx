@@ -3,8 +3,8 @@ import { useEffect } from "react";
 import { useIOSelector } from "../../../../store/hooks";
 import { currentAARFlowData } from "../store/selectors";
 import { sendAARFlowStates } from "../utils/stateUtils";
-import { SendAARLoadingComponent } from "../components/SendAARLoadingComponent";
 import type { PnParamsList } from "../../navigation/params";
+import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import type { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import PN_ROUTES from "../../navigation/routes";
 import {
@@ -63,10 +63,9 @@ export const SendAARCieCardReadingScreen = ({
     case sendAARFlowStates.validatingMandate:
     case sendAARFlowStates.fetchingNotificationData:
       return (
-        <SendAARLoadingComponent
-          contentTitle={i18n.t(
-            "features.pn.aar.flow.validatingMandate.loadingText"
-          )}
+        <LoadingScreenContent
+          testID="LoadingScreenContent"
+          title={i18n.t("features.pn.aar.flow.validatingMandate.loadingText")}
         />
       );
     default:
