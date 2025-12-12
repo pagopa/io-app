@@ -1,31 +1,29 @@
-import { ReactElement, useCallback, useEffect, useRef } from "react";
-import { View } from "react-native";
-import { Body, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+import { ReactElement, useCallback, useEffect, useRef } from "react";
+import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
+import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
 } from "../../../navigation/params/AppParamsList";
-import { MessagesParamsList } from "../navigation/params";
 import ROUTES from "../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import PN_ROUTES from "../../pn/navigation/routes";
 import { trackOpenMessage } from "../analytics";
+import { MessagesParamsList } from "../navigation/params";
+import { MESSAGES_ROUTES } from "../navigation/routes";
+import {
+  cancelGetMessageDataAction,
+  getMessageDataAction,
+  SuccessGetMessageDataActionType
+} from "../store/actions";
 import {
   blockedFromPushNotificationSelector,
   messageSuccessDataSelector,
   showSpinnerFromMessageGetStatusSelector,
   thirdPartyMessageDetailsErrorSelector
 } from "../store/reducers/messageGetStatus";
-import {
-  cancelGetMessageDataAction,
-  getMessageDataAction,
-  SuccessGetMessageDataActionType
-} from "../store/actions";
-import PN_ROUTES from "../../pn/navigation/routes";
-import { MESSAGES_ROUTES } from "../navigation/routes";
-import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
-import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 
 export type MessageRouterScreenRouteParams = {
   messageId: string;
@@ -148,14 +146,10 @@ export const MessageRouterScreen = (props: NavigationProps): ReactElement => {
   if (isLoading) {
     return (
       <LoadingScreenContent
-        contentTitle={I18n.t("messageDetails.loadingText")}
+        title={I18n.t("messageDetails.loadingText")}
+        subtitle={I18n.t("messageDetails.pleaseWait")}
         headerVisible
-      >
-        <View style={{ alignItems: "center" }}>
-          <VSpacer size={8} />
-          <Body>{I18n.t("messageDetails.pleaseWait")}</Body>
-        </View>
-      </LoadingScreenContent>
+      />
     );
   }
 

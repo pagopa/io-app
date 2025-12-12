@@ -62,11 +62,7 @@ const CgnCTAStartOnboardingComponent: FC<Props> = (props: Props) => {
     );
   }
 
-  return (
-    <LoadingScreenContent
-      contentTitle={I18n.t("global.remoteStates.loading")}
-    />
-  );
+  return <LoadingScreenContent title={I18n.t("global.remoteStates.loading")} />;
 };
 
 /**

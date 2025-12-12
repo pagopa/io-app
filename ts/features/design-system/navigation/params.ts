@@ -44,6 +44,7 @@ export type DesignSystemParamsList = {
     .route]: undefined;
   [DESIGN_SYSTEM_ROUTES.SCREENS.BONUS_CARD_SCREEN.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.SCREENS.LOADING_SCREEN.route]: undefined;
+  [DESIGN_SYSTEM_ROUTES.SCREENS.LOADING_SCREEN_EXTENDED_PROPS.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.SCREENS.NUMBERPAD.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.COMPONENTS.CARDS.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.DEBUG.SAFE_AREA.route]: undefined;
