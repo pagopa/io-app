@@ -85,47 +85,35 @@ export type AnimatedPictogram = {
   loop?: boolean;
 };
 
-const staticPictogramsMap: Record<IOAnimatedPictograms, IOPictograms> = {
-  welcome: "hello",
-  empty: "empty",
-  scanCardiOS: "nfcScaniOS",
-  scanCardAndroid: "nfcScanAndroid",
-  umbrella: "umbrella",
-  accessDenied: "accessDenied",
-  fatalError: "fatalError",
-  lock: "passcode",
-  searchLens: "searchLens",
-  success: "success",
-  attention: "attention",
-  waiting: "ended"
-};
-
-const loopPictogramsMap: Record<IOAnimatedPictograms, boolean> = {
-  welcome: false,
-  empty: false,
-  scanCardiOS: true,
-  scanCardAndroid: true,
-  umbrella: true,
-  accessDenied: false,
-  fatalError: false,
-  lock: true,
-  searchLens: true,
-  success: false,
-  attention: false,
-  waiting: true
+const pictogramsMap: Record<
+  IOAnimatedPictograms,
+  { static: IOPictograms; loop: boolean }
+> = {
+  welcome: { static: "hello", loop: false },
+  empty: { static: "empty", loop: false },
+  scanCardiOS: { static: "nfcScaniOS", loop: true },
+  scanCardAndroid: { static: "nfcScanAndroid", loop: true },
+  umbrella: { static: "umbrella", loop: true },
+  accessDenied: { static: "accessDenied", loop: false },
+  fatalError: { static: "fatalError", loop: false },
+  lock: { static: "passcode", loop: true },
+  searchLens: { static: "searchLens", loop: true },
+  success: { static: "success", loop: false },
+  attention: { static: "attention", loop: false },
+  waiting: { static: "ended", loop: true }
 };
 
 /* Compared to the static pictograms, the animated pictograms
   seems slightly smaller, so we need to scale them a little to
   uniform the perceived size */
-const sizeMultiplier = 1.25;
+const sizeMultiplier = 1.2;
 
 export const AnimatedPictogram = ({ name, size, loop }: AnimatedPictogram) => {
   const reduceMotion = useReducedMotion();
   const { themeType } = useIOThemeContext();
   const isDarkMode = themeType === "dark";
 
-  const loopState = loop ?? loopPictogramsMap[name];
+  const loopState = loop ?? pictogramsMap[name].loop;
 
   /* Ideally, I would have preferred an implementation using
   dynamic colour overrides from a single JSON Lottie file
@@ -171,7 +159,7 @@ export const AnimatedPictogram = ({ name, size, loop }: AnimatedPictogram) => {
   });
 
   if (reduceMotion || !animation) {
-    return <Pictogram name={staticPictogramsMap[name]} size={size} />;
+    return <Pictogram name={pictogramsMap[name].static} size={size} />;
   }
 
   return (
