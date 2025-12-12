@@ -3066,6 +3066,11 @@
         "added": "Aggiunto ai preferiti!",
         "removed": "Rimosso dai preferiti!",
         "limitReached": "Non è possibile aggiungere il servizio ai preferiti perché hai raggiunto il limite massimo."
+      },
+      "emptyList": {
+        "title": "Qui vedrai la lista dei tuoi servizi preferiti",
+        "subtitle": "Inizia la ricerca e salva tra i preferiti i servizi che usi di più.",
+        "searchAction": "Inizia la ricerca"
       }
     }
   },
@@ -4029,6 +4034,9 @@
             "cieContextualHelp": {
               "title": "Come accedere a una notifica SEND destinata a un’altra persona",
               "body": "Per visualizzare una notifica SEND destinata a un’altra persona hai bisogno della sua Carta di Identità Elettronica e di uno smartphone che ne supporti la lettura."
+            },
+            "createMandate": {
+              "loadingText": "Attendi qualche secondo"
             }
           }
         }
@@ -4644,7 +4652,7 @@
         "screen": {
           "legacy": {
             "title": "La versione digitale dei tuoi documenti, su IO",
-            "content": "Aggiungi la versione digitale dei tuoi documenti personali al Portafoglio dell'app! \n\n Hanno lo **stesso valore legale** di quelli fisici, in specifici contesti d'uso. \n\n ###### È facile e veloce \n Continua per attivare la nuova funzionalità in meno di 3 minuti: oltre **6 Milioni** di persone stanno già usando i **Documenti su IO**!",
+            "content": "Aggiungi la versione digitale dei tuoi documenti personali al Portafoglio dell'app! \n\n Hanno lo **stesso valore legale** di quelli fisici, in specifici contesti d'uso. \n\n ###### È facile e veloce \n Continua per attivare la nuova funzionalità in meno di 3 minuti: oltre **8 Milioni** di persone stanno già usando i **Documenti su IO**!",
             "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d'uso]({{tos_url}}).",
             "actions": {
               "primary": "Continua"

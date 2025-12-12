@@ -7,12 +7,12 @@ import { MESSAGES_ROUTES } from "../../../navigation/routes";
 
 describe("ShowMoreListItem", () => {
   it("should match snapshot, no data", () => {
-    const sections: ShowMoreSection = [];
+    const sections: ReadonlyArray<ShowMoreSection> = [];
     const component = renderComponent(sections);
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should match snapshot, one section, no items", () => {
-    const sections: ShowMoreSection = [
+    const sections: ReadonlyArray<ShowMoreSection> = [
       {
         title: "Section 1 title",
         items: []
@@ -22,7 +22,7 @@ describe("ShowMoreListItem", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should match snapshot, one section, one item, no icon", () => {
-    const sections: ShowMoreSection = [
+    const sections: ReadonlyArray<ShowMoreSection> = [
       {
         title: "Section 1 title",
         items: [
@@ -38,7 +38,7 @@ describe("ShowMoreListItem", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should match snapshot, one section, one item, with icon", () => {
-    const sections: ShowMoreSection = [
+    const sections: ReadonlyArray<ShowMoreSection> = [
       {
         title: "Section 1 title",
         items: [
@@ -55,7 +55,7 @@ describe("ShowMoreListItem", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should match snapshot, one section, two items, no icon", () => {
-    const sections: ShowMoreSection = [
+    const sections: ReadonlyArray<ShowMoreSection> = [
       {
         title: "Section 1 title",
         items: [
@@ -76,7 +76,7 @@ describe("ShowMoreListItem", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should match snapshot, one section, two items, with icon", () => {
-    const sections: ShowMoreSection = [
+    const sections: ReadonlyArray<ShowMoreSection> = [
       {
         title: "Section 1 title",
         items: [
@@ -99,7 +99,7 @@ describe("ShowMoreListItem", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should match snapshot, two sections, different item count", () => {
-    const sections: ShowMoreSection = [
+    const sections: ReadonlyArray<ShowMoreSection> = [
       {
         title: "Section 1 title",
         items: [
@@ -131,7 +131,7 @@ describe("ShowMoreListItem", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should match snapshot, three sections, different item count", () => {
-    const sections: ShowMoreSection = [
+    const sections: ReadonlyArray<ShowMoreSection> = [
       {
         title: "Section 1 title",
         items: [
@@ -185,7 +185,7 @@ describe("ShowMoreListItem", () => {
   });
 });
 
-const renderComponent = (sections: ShowMoreSection) => {
+const renderComponent = (sections: ReadonlyArray<ShowMoreSection>) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, initialState as any);
 

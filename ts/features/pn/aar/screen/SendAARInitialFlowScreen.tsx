@@ -56,8 +56,7 @@ export const SendAARInitialFlowScreen = ({
         navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
           screen: PN_ROUTES.MAIN,
           params: {
-            screen: PN_ROUTES.SEND_AAR_DELEGATION_PROPOSAL,
-            params: flowData
+            screen: PN_ROUTES.SEND_AAR_DELEGATION_PROPOSAL
           }
         });
         break;
