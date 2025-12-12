@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.22.0-rc.1](https://github.com/pagopa/io-app/compare/3.22.0-rc.0...3.22.0-rc.1) (2025-12-11)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-3507](https://pagopa.atlassian.net/browse/SIW-3507)] Update the number of users on the discovery page.  ([#7696](https://github.com/pagopa/io-app/issues/7696)) ([6fe2c96](https://github.com/pagopa/io-app/commit/6fe2c964a50e47583336fe354ec084e6fba7287a))
+* **IT-Wallet:** [[SIW-3417](https://pagopa.atlassian.net/browse/SIW-3417)] Activate IT-Wallet starting from add document ([#7663](https://github.com/pagopa/io-app/issues/7663)) ([47798bc](https://github.com/pagopa/io-app/commit/47798bc3be5bd790a4f35effb87c7e730364059c))
+
+
+### Bug Fixes
+
+* [[IOCOM-2833](https://pagopa.atlassian.net/browse/IOCOM-2833)] No message Id field in more info bottom sheet ([#7698](https://github.com/pagopa/io-app/issues/7698)) ([0a5f19f](https://github.com/pagopa/io-app/commit/0a5f19fc32331b44c96e09d2fd379a7162874399))
+
+
+### Chores
+
+* **Cross:** [[IOXXX-000](https://pagopa.atlassian.net/browse/IOXXX-000)] remove unused file `File.swift` ([#7699](https://github.com/pagopa/io-app/issues/7699)) ([3b0f3c3](https://github.com/pagopa/io-app/commit/3b0f3c34650cf6c8593af365bb5ffe84731b4c33))
+
 ## [3.22.0-rc.0](https://github.com/pagopa/io-app/compare/3.21.0-rc.7...3.22.0-rc.0) (2025-12-10)
 
 
