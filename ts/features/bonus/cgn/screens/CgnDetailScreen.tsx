@@ -124,7 +124,6 @@ const CgnDetailScreen = (props: Props): ReactElement => {
     // subText is a blank space to avoid default value when it is undefined
     return (
       <OperationResultScreenContent
-        enableAnimatedPictogram
         pictogram="umbrella"
         title={I18n.t("wallet.methodDetails.error.title")}
         isHeaderVisible
@@ -137,6 +136,7 @@ const CgnDetailScreen = (props: Props): ReactElement => {
           label: I18n.t("global.buttons.retry"),
           onPress: loadCGN
         }}
+        enableAnimatedPictogram
         loop
       />
     );

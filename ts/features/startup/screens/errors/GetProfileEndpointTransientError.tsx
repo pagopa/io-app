@@ -24,7 +24,6 @@ export const GetProfileEndpointTransientError = () => {
   return (
     <Modal backdropColor={IOColors[theme["appBackground-primary"]]}>
       <OperationResultScreenContent
-        enableAnimatedPictogram
         pictogram="umbrella"
         title={I18n.t(
           "fastLogin.userInteraction.sessionExpired.transientError.title"

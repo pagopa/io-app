@@ -28,7 +28,6 @@ const SystemOffModal = () => {
   return (
     <Modal backdropColor={IOColors[theme["appBackground-primary"]]}>
       <OperationResultScreenContent
-        enableAnimatedPictogram
         pictogram="umbrella"
         title={I18n.t("systemsOff.title")}
         subtitle={subtitle}

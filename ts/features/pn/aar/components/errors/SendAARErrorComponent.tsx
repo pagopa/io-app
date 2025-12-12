@@ -128,7 +128,6 @@ export const SendAARErrorComponent = () => {
   return (
     <>
       <OperationResultScreenContent
-        enableAnimatedPictogram
         testID="SEND_AAR_ERROR"
         isHeaderVisible
         pictogram="umbrella"

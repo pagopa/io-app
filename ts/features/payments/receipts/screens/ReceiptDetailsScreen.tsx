@@ -136,7 +136,6 @@ const ReceiptDetailsScreen = () => {
   if (isError) {
     return (
       <OperationResultScreenContent
-        enableAnimatedPictogram
         pictogram="umbrella"
         title={I18n.t("transaction.details.error.title")}
         action={{
@@ -149,6 +148,7 @@ const ReceiptDetailsScreen = () => {
           accessibilityLabel: I18n.t("global.buttons.back"),
           onPress: navigation.goBack
         }}
+        enableAnimatedPictogram
         loop
       />
     );

@@ -134,7 +134,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
           return {
             title: I18n.t("features.itWallet.issuance.genericError.title"),
             subtitle: I18n.t("features.itWallet.issuance.genericError.body"),
-            enableAnimatedPictogram: true,
             pictogram: "umbrella",
             ...(supportModal.hasContactMethods
               ? { action: supportModalAction, secondaryAction: closeAction }
@@ -173,7 +172,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
             subtitle:
               invalidStatusDetails.message?.description ??
               defaultInvalidStatusMessage.description,
-            enableAnimatedPictogram: true,
             pictogram: "accessDenied",
             ...(supportModal.hasContactMethods
               ? { action: supportModalAction, secondaryAction: closeAction }
@@ -193,7 +191,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
                 )
               }
             ),
-            enableAnimatedPictogram: true,
             pictogram: "umbrella",
             action: {
               label: I18n.t(

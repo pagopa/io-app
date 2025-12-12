@@ -222,7 +222,6 @@ const CgnMerchantsListByCategory = () => {
       />
       {isError(onlineMerchants) && isError(offlineMerchants) ? (
         <OperationResultScreenContent
-          enableAnimatedPictogram
           pictogram="umbrella"
           title={I18n.t("wallet.errors.GENERIC_ERROR")}
           subtitle={I18n.t("wallet.errorTransaction.submitBugText")}
@@ -231,6 +230,7 @@ const CgnMerchantsListByCategory = () => {
             accessibilityLabel: I18n.t("global.buttons.retry"),
             onPress: initLoadingLists
           }}
+          enableAnimatedPictogram
           loop
         />
       ) : (

@@ -252,13 +252,11 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
         };
       case "PAYMENT_CANCELED":
         return {
-          enableAnimatedPictogram: true,
           pictogram: "accessDenied",
           title: I18n.t("wallet.payment.failure.PAYMENT_CANCELED.title"),
           subtitle: I18n.t("wallet.payment.failure.PAYMENT_CANCELED.subtitle"),
           action: closeAction,
-          secondaryAction: discoverMoreAction,
-          loop: false
+          secondaryAction: discoverMoreAction
         };
       case "PAYMENT_DUPLICATED":
         return {
@@ -268,7 +266,6 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
         };
       case "PAYMENT_UNKNOWN":
         return {
-          enableAnimatedPictogram: true,
           pictogram: "searchLens",
           title: I18n.t("wallet.payment.failure.PAYMENT_UNKNOWN.title"),
           subtitle: I18n.t("wallet.payment.failure.PAYMENT_UNKNOWN.subtitle"),
@@ -276,7 +273,6 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
         };
       case "PAYMENT_VERIFY_GENERIC_ERROR":
         return {
-          enableAnimatedPictogram: true,
           pictogram: "umbrella",
           title: I18n.t(
             "wallet.payment.failure.PAYMENT_VERIFY_GENERIC_ERROR.title"
@@ -286,6 +282,7 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
           ),
           action: closeAction,
           secondaryAction: contactSupportAction,
+          enableAnimatedPictogram: true,
           loop: true
         };
       case "PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR":
@@ -301,7 +298,6 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
         };
       case "PAYMENT_SLOWDOWN_ERROR":
         return {
-          enableAnimatedPictogram: true,
           pictogram: "umbrella",
           title: I18n.t("wallet.payment.failure.PAYMENT_SLOWDOWN_ERROR.title"),
           subtitle: I18n.t(
@@ -309,6 +305,7 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
           ),
           action: closeAction,
           secondaryAction: contactSupportAction,
+          enableAnimatedPictogram: true,
           loop: true
         };
 

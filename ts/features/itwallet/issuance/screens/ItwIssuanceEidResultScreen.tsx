@@ -96,7 +96,6 @@ export const ItwIssuanceEidResultScreen = () => {
 
   return (
     <OperationResultScreenContent
-      enableAnimatedPictogram
       pictogram="success"
       title={I18n.t("features.itWallet.issuance.eidResult.success.title")}
       subtitle={I18n.t("features.itWallet.issuance.eidResult.success.subtitle")}
@@ -158,7 +157,6 @@ const ItwIssuanceEidUpgradeResultContent = ({
 
     return (
       <OperationResultScreenContent
-        enableAnimatedPictogram
         pictogram="success"
         title={title}
         subtitle={I18n.t("features.itWallet.issuance.upgrade.failure.subtitle")}
@@ -174,7 +172,6 @@ const ItwIssuanceEidUpgradeResultContent = ({
 
   return (
     <OperationResultScreenContent
-      enableAnimatedPictogram
       pictogram="success"
       title={I18n.t("features.itWallet.issuance.upgrade.success.title")}
       subtitle={I18n.t("features.itWallet.issuance.upgrade.success.subtitle")}
@@ -201,7 +198,6 @@ const ItwIssuanceEidReissuanceResultContent = () => {
 
   return (
     <OperationResultScreenContent
-      enableAnimatedPictogram
       pictogram="success"
       title={I18n.t(
         "features.itWallet.issuance.eidResult.success.reissuance.title"

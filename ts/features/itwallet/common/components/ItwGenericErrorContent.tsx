@@ -9,7 +9,6 @@ export const ItwGenericErrorContent = () => {
   const navigation = useIONavigation();
   return (
     <OperationResultScreenContent
-      enableAnimatedPictogram
       pictogram="fatalError"
       title={I18n.t("features.itWallet.generic.error.title")}
       subtitle={I18n.t("features.itWallet.generic.error.body")}

@@ -24,7 +24,6 @@ export const DifferentCFErrorScreen = () => {
 
   return (
     <OperationResultScreenContent
-      enableAnimatedPictogram
       testID="different-cf-error"
       pictogram="umbrella"
       title={I18n.t("authentication.auth_errors.not_same_cf.title")}

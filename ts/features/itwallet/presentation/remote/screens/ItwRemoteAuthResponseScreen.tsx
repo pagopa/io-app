@@ -47,7 +47,6 @@ export const ItwRemoteAuthResponseScreen = () => {
 
   return (
     <OperationResultScreenContent
-      enableAnimatedPictogram
       pictogram="success"
       title={I18n.t("features.itWallet.presentation.remote.success.title")}
       subtitle={I18n.t(

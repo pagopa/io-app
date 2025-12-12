@@ -59,7 +59,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
           return {
             title: I18n.t(`${i18nNs}.relyingParty.genericError.title`),
             subtitle: I18n.t(`${i18nNs}.relyingParty.genericError.subtitle`),
-            enableAnimatedPictogram: true,
             pictogram: "umbrella",
             action: {
               label: I18n.t(
@@ -72,7 +71,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
           return {
             title: I18n.t(`${i18nNs}.relyingParty.timeout.title`),
             subtitle: I18n.t(`${i18nNs}.relyingParty.timeout.subtitle`),
-            enableAnimatedPictogram: true,
             pictogram: "umbrella",
             action: {
               label: I18n.t(`${i18nNs}.relyingParty.timeout.primaryAction`),

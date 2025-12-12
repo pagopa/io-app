@@ -87,7 +87,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
           return {
             title: I18n.t(`${i18nNs}.unexpectedErrorScreen.title`),
             subtitle: I18n.t(`${i18nNs}.unexpectedErrorScreen.subtitle`),
-            enableAnimatedPictogram: true,
             pictogram: "umbrella",
             action: {
               label: I18n.t(`${i18nNs}.unexpectedErrorScreen.primaryAction`),
@@ -237,7 +236,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
           return {
             title: I18n.t(`${i18nNs}.relyingParty.genericError.title`),
             subtitle: I18n.t(`${i18nNs}.relyingParty.genericError.subtitle`),
-            enableAnimatedPictogram: true,
             pictogram: "umbrella",
             action: {
               label: I18n.t(
@@ -259,7 +257,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
             subtitle: I18n.t(
               `${i18nNs}.relyingParty.invalidRequestObject.subtitle`
             ),
-            enableAnimatedPictogram: true,
             pictogram: "umbrella",
             action: {
               label: I18n.t(
@@ -295,7 +292,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
             subtitle: I18n.t(`${i18nNs}.invalidCredentialsScreen.subtitle`, {
               count
             }),
-            enableAnimatedPictogram: true,
             pictogram: "accessDenied",
             action: {
               label: I18n.t(`${i18nNs}.invalidCredentialsScreen.primaryAction`),

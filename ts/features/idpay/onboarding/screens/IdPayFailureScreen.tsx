@@ -135,7 +135,6 @@ const IdPayFailureScreen = () => {
         };
       case OnboardingFailureEnum.ONBOARDING_UNSATISFIED_REQUIREMENTS:
         return {
-          enableAnimatedPictogram: true,
           pictogram: "accessDenied",
           title: I18n.t(
             "idpay.onboarding.failure.message.UNSATISFIED_REQUIREMENTS.title"
@@ -143,12 +142,10 @@ const IdPayFailureScreen = () => {
           subtitle: I18n.t(
             "idpay.onboarding.failure.message.UNSATISFIED_REQUIREMENTS.subtitle"
           ),
-          action: defaultCloseAction,
-          loop: false
+          action: defaultCloseAction
         };
       case OnboardingFailureEnum.ONBOARDING_USER_NOT_IN_WHITELIST:
         return {
-          enableAnimatedPictogram: true,
           pictogram: "accessDenied",
           title: I18n.t(
             "idpay.onboarding.failure.message.USER_NOT_IN_WHITELIST.title"
@@ -156,8 +153,7 @@ const IdPayFailureScreen = () => {
           subtitle: I18n.t(
             "idpay.onboarding.failure.message.USER_NOT_IN_WHITELIST.subtitle"
           ),
-          action: defaultCloseAction,
-          loop: false
+          action: defaultCloseAction
         };
       case OnboardingFailureEnum.ONBOARDING_INITIATIVE_NOT_STARTED:
         return {
@@ -183,7 +179,6 @@ const IdPayFailureScreen = () => {
         };
       case OnboardingFailureEnum.ONBOARDING_BUDGET_EXHAUSTED:
         return {
-          enableAnimatedPictogram: true,
           pictogram: "fatalError",
           title: I18n.t(
             "idpay.onboarding.failure.message.BUDGET_EXHAUSTED.title"
@@ -191,12 +186,10 @@ const IdPayFailureScreen = () => {
           subtitle: I18n.t(
             "idpay.onboarding.failure.message.BUDGET_EXHAUSTED.subtitle"
           ),
-          action: defaultCloseAction,
-          loop: false
+          action: defaultCloseAction
         };
       case OnboardingFailureEnum.ONBOARDING_USER_UNSUBSCRIBED:
         return {
-          enableAnimatedPictogram: true,
           pictogram: "accessDenied",
           title: I18n.t(
             "idpay.onboarding.failure.message.USER_UNSUBSCRIBED.title"
@@ -205,18 +198,15 @@ const IdPayFailureScreen = () => {
             "idpay.onboarding.failure.message.USER_UNSUBSCRIBED.subtitle"
           ),
           action: defaultCloseAction,
-          secondaryAction: goToInitiativeAction,
-          loop: false
+          secondaryAction: goToInitiativeAction
         };
       case OnboardingFailureEnum.ONBOARDING_ALREADY_ONBOARDED:
         return {
-          enableAnimatedPictogram: true,
           pictogram: "success",
           title: I18n.t(
             "idpay.onboarding.failure.message.USER_ONBOARDED.title"
           ),
-          action: goToInitiativeAction,
-          loop: false
+          action: goToInitiativeAction
         };
       case OnboardingFailureEnum.NOT_ELIGIBLE:
         return {
@@ -239,7 +229,6 @@ const IdPayFailureScreen = () => {
 
       case OnboardingFailureEnum.ONBOARDING_FAMILY_UNIT_ALREADY_JOINED:
         return {
-          enableAnimatedPictogram: true,
           pictogram: "accessDenied",
           title: I18n.t(
             "idpay.onboarding.failure.message.FAMILY_UNIT_ALREADY_JOINED.title"

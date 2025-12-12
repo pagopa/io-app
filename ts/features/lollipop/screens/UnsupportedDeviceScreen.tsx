@@ -33,7 +33,6 @@ const UnsupportedDeviceScreen = () => {
   return (
     <Modal backdropColor={IOColors[theme["appBackground-primary"]]}>
       <OperationResultScreenContent
-        enableAnimatedPictogram
         pictogram="umbrella"
         title={title}
         subtitle={subtitle}

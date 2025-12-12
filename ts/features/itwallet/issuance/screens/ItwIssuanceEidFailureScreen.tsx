@@ -111,7 +111,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
           return {
             title: I18n.t("features.itWallet.issuance.genericError.title"),
             subtitle: I18n.t("features.itWallet.issuance.genericError.body"),
-            enableAnimatedPictogram: true,
             pictogram: "umbrella",
             action: {
               label: I18n.t(
@@ -172,7 +171,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
             subtitle: I18n.t(
               "features.itWallet.issuance.notMatchingIdentityError.body"
             ),
-            enableAnimatedPictogram: true,
             pictogram: "accessDenied",
             action: {
               label: I18n.t(
@@ -197,7 +195,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
             subtitle: I18n.t(
               "features.itWallet.walletRevocation.failureScreen.subtitle"
             ),
-            enableAnimatedPictogram: true,
             pictogram: "umbrella",
             action: {
               label: I18n.t("global.buttons.retry"),
@@ -214,7 +211,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
             subtitle: I18n.t(
               "features.itWallet.issuance.cieNotRegistered.subtitle"
             ),
-            enableAnimatedPictogram: true,
             pictogram: "attention",
             action: {
               label: I18n.t("global.buttons.findOutMore"),
@@ -237,7 +233,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
                 credential: "IT-Wallet"
               }
             ),
-            enableAnimatedPictogram: true,
             pictogram: "umbrella",
             action: {
               label: I18n.t(

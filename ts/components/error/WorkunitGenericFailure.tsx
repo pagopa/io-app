@@ -17,7 +17,6 @@ export const WorkunitGenericFailure = (): ReactElement => {
 
   return (
     <OperationResultScreenContent
-      enableAnimatedPictogram
       testID={"WorkunitGenericFailure"}
       pictogram="umbrella"
       title={I18n.t("global.jserror.title")}

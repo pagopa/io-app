@@ -72,14 +72,13 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
 
   return (
     <OperationResultScreenContent
-      enableAnimatedPictogram
-      pictogram={"attention"}
       title={I18n.t(
         `features.itWallet.identification.cie.warning.${type}.${sectionKey}.title`
       )}
       subtitle={I18n.t(
         `features.itWallet.identification.cie.warning.${type}.${sectionKey}.subtitle`
       )}
+      pictogram={"attention"}
       action={{
         label: I18n.t(
           `features.itWallet.identification.cie.warning.${type}.${sectionKey}.primaryAction`

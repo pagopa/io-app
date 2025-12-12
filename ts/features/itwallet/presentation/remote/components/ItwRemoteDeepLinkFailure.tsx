@@ -74,8 +74,6 @@ export const ItwRemoteDeepLinkFailure = ({ failure, payload }: Props) => {
   return (
     <>
       <OperationResultScreenContent
-        enableAnimatedPictogram
-        pictogram={"umbrella"}
         title={I18n.t(
           "features.itWallet.presentation.remote.deepLinkValidationErrorScreen.title"
         )}
@@ -83,6 +81,7 @@ export const ItwRemoteDeepLinkFailure = ({ failure, payload }: Props) => {
           "features.itWallet.presentation.remote.deepLinkValidationErrorScreen.subtitle"
         )}
         testID={"failure"}
+        pictogram={"umbrella"}
         action={supportModalAction}
         secondaryAction={{
           label: I18n.t(

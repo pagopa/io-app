@@ -35,7 +35,6 @@ const OnboardingCompletedScreen = () => {
 
   return (
     <OperationResultScreenContent
-      enableAnimatedPictogram
       pictogram="success"
       title={I18n.t("onboarding.thankYouPage.title")}
       action={{

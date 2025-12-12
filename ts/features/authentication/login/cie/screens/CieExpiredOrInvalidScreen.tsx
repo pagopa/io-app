@@ -15,7 +15,6 @@ const CieExpiredOrInvalidScreen = () => {
 
   return (
     <OperationResultScreenContent
-      enableAnimatedPictogram
       pictogram="attention"
       title={I18n.t("authentication.landing.expiredCardTitle")}
       subtitle={I18n.t("authentication.landing.expiredCardContent")}

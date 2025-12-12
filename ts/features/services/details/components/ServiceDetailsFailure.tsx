@@ -29,7 +29,6 @@ export const ServiceDetailsFailure = ({
 
   return (
     <OperationResultScreenContent
-      enableAnimatedPictogram
       pictogram="umbrella"
       title={I18n.t("services.details.failure.title")}
       subtitle={I18n.t("services.details.failure.subtitle")}

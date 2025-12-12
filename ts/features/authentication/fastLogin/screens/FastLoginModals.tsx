@@ -52,7 +52,6 @@ const FastLoginModals = (
     }
     return (
       <AskUserInteractionScreen
-        enableAnimatedPictogram
         pictogram="umbrella"
         title={I18n.t(
           "fastLogin.userInteraction.sessionExpired.transientError.title"

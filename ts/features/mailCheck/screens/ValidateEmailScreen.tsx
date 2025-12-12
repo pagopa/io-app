@@ -90,7 +90,6 @@ const ValidateEmailScreen = () => {
 
   return (
     <OperationResultScreenContent
-      enableAnimatedPictogram
       pictogram="attention"
       title={I18n.t("email.cduScreens.validateMail.title")}
       subtitle={bodyPropsArray}

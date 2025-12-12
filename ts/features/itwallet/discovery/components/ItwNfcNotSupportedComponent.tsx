@@ -70,11 +70,10 @@ export const ItwNfcNotSupportedComponent = () => {
 
   return (
     <OperationResultScreenContent
-      enableAnimatedPictogram
-      pictogram="attention"
       testID="itwNfcNotSupportedComponentTestID"
       title={I18n.t("features.itWallet.discovery.nfcNotSupported.title")}
       subtitle={I18n.t("features.itWallet.discovery.nfcNotSupported.subtitle")}
+      pictogram="attention"
       action={action}
       secondaryAction={secondaryAction}
     />
