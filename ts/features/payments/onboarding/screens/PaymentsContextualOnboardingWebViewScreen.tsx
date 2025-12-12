@@ -32,7 +32,7 @@ const PaymentsContextualOnboardingWebViewScreen = () => {
   };
 
   const handleOnSuccess = (url: string) => {
-    navigation.pop();
+    navigation.goBack();
     payload?.onSuccess?.(url);
   };
 
