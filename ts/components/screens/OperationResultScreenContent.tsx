@@ -24,7 +24,6 @@ import {
   AnimatedPictogram,
   IOAnimatedPictograms
 } from "../ui/AnimatedPictogram";
-import { LoadingIndicator } from "../ui/LoadingIndicator";
 
 type ButtonProps = Pick<
   IOButtonProps,
@@ -46,12 +45,10 @@ type OperationResultScreenContentProps = WithTestID<
   } & GraphicAssetProps
 >;
 
-type IOAnimatedPictogramsWithSpinner = IOAnimatedPictograms | "spinner";
-
 type GraphicAssetProps =
   | {
       enableAnimatedPictogram: true;
-      pictogram: IOAnimatedPictogramsWithSpinner;
+      pictogram: IOAnimatedPictograms;
       loop?: AnimatedPictogram["loop"];
     }
   | {
@@ -96,19 +93,12 @@ const OperationResultScreenContent = forwardRef<
           Platform.OS === "android" && styles.wrapperAndroid
         ]}
       >
-        {!enableAnimatedPictogram && pictogram && (
+        {pictogram && (
           <View style={{ alignItems: "center" }}>
-            <Pictogram name={pictogram} size={120} />
-            <VSpacer size={24} />
-          </View>
-        )}
-
-        {enableAnimatedPictogram && pictogram && (
-          <View style={{ alignItems: "center" }}>
-            {pictogram !== "spinner" ? (
+            {enableAnimatedPictogram ? (
               <AnimatedPictogram name={pictogram} size={120} loop={loop} />
             ) : (
-              <LoadingIndicator />
+              <Pictogram name={pictogram} size={120} />
             )}
             <VSpacer size={24} />
           </View>
