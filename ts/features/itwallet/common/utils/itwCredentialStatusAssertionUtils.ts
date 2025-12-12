@@ -63,7 +63,7 @@ export const shouldRequestStatusAssertion = ({
       return true;
     // The credential is invalid, no need to request another assertion
     case "invalid":
-      return false;
+      return true;
     // When the status assertion is expired request a new one
     case "valid":
       return isAfter(

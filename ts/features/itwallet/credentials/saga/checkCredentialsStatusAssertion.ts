@@ -114,17 +114,12 @@ export function* checkCredentialsStatusAssertion() {
     )
   );
 
-  const failedCredentials = updatedCredentials.filter(c =>
-    ["invalid", "unknown"].includes(
-      c.storedStatusAssertion?.credentialStatus ?? ""
-    )
+  const failedCredentials = updatedCredentials.filter(
+    c => c.storedStatusAssertion?.credentialStatus === "unknown"
   );
 
   const successfulCredentials = updatedCredentials.filter(
-    c =>
-      !["invalid", "unknown"].includes(
-        c.storedStatusAssertion?.credentialStatus ?? ""
-      )
+    c => c.storedStatusAssertion?.credentialStatus !== "unknown"
   );
 
   const hasFailures = failedCredentials.length > 0;
@@ -134,27 +129,18 @@ export function* checkCredentialsStatusAssertion() {
     itwUnverifiedCredentialsCounterLimitReached
   );
 
-  // 1 - If EVERY credential status assertion check succeeded, reset the counter
-  if (!hasFailures && hasSuccesses) {
-    yield* put(itwUnverifiedCredentialsCounterReset());
-    yield* put(itwCredentialsStore(updatedCredentials));
-  }
-
-  // 2 - If AT LEAST ONE credential status assertion check failed, increment the counter and store only successful ones
-  else if (hasFailures && hasSuccesses && !isLimitReached) {
-    yield* put(itwUnverifiedCredentialsCounterUp());
-
+  if (hasSuccesses) {
     yield* put(itwCredentialsStore(successfulCredentials));
   }
 
-  // 3 - If the limit is reached, store all the updated credentials (both failed and succeeded)
-  else if (hasFailures && isLimitReached) {
-    yield* put(itwCredentialsStore(updatedCredentials));
-  }
-
-  // 4 - If ALL credential status assertion checks failed, but the limit is not reached, increment the counter
-  else if (hasFailures && !isLimitReached) {
-    yield* put(itwUnverifiedCredentialsCounterUp());
+  if (hasFailures) {
+    if (isLimitReached) {
+      yield* put(itwCredentialsStore(failedCredentials));
+    } else {
+      yield* put(itwUnverifiedCredentialsCounterUp());
+    }
+  } else {
+    yield* put(itwUnverifiedCredentialsCounterReset());
   }
 
   const state: GlobalState = yield* select();
