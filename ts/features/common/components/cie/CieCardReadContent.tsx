@@ -17,7 +17,7 @@ import {
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Platform, View } from "react-native";
+import { Platform, ScrollView, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -205,7 +205,7 @@ const ContentIos = (props: CieCardReadContentProps) => (
 );
 
 const ContentAndroid = (props: CieCardReadContentProps) => (
-  <View style={{ flex: 1, justifyContent: "center" }}>
+  <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}>
     <ContentWrapper>
       <VStack space={24}>
         <CircularProgress
@@ -228,7 +228,7 @@ const ContentAndroid = (props: CieCardReadContentProps) => (
         />
       </VStack>
     </ContentWrapper>
-  </View>
+  </ScrollView>
 );
 
 /**
