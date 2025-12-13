@@ -6,7 +6,6 @@ import Animated, { LinearTransition } from "react-native-reanimated";
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../store/hooks";
 import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
-import { ItwUpgradeBanner } from "../../itwallet/common/components/ItwUpgradeBanner";
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
 import { ItwWalletCardsContainer } from "../../itwallet/wallet/components/ItwWalletCardsContainer";
@@ -83,7 +82,6 @@ const WalletCardsContainer = () => {
 const WalletBannersContainer = memo(() => (
   <VStack space={16}>
     <ItwEnvironmentAlert />
-    <ItwUpgradeBanner />
     <ItwWalletNotAvailableBanner />
     <ItwDiscoveryBannerStandalone />
     {/* Dummy view wich adds a spacer in case one of the above banners is rendered */}
