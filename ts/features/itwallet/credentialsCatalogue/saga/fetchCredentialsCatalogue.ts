@@ -8,7 +8,6 @@ import { itwFetchCredentialsCatalogue } from "../store/actions";
 export function* fetchCredentialsCatalogueSaga() {
   const env = getEnv(yield* select(selectItwEnv));
   try {
-    yield* put(itwFetchCredentialsCatalogue.request());
     const catalogue = yield* call(fetchCredentialsCatalogue, env);
     yield* put(itwFetchCredentialsCatalogue.success(catalogue));
   } catch (e) {
