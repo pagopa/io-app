@@ -139,6 +139,10 @@ export type Context = {
    * Credentials that failed the upgrade process.
    */
   failedCredentials: ReadonlyArray<StoredCredential> | undefined;
+  /**
+   * The credential type that triggered the eID issuance flow.
+   */
+  credentialType: string | undefined;
 };
 
 export const InitialContext: Context = {
@@ -153,5 +157,6 @@ export const InitialContext: Context = {
   eid: undefined,
   failure: undefined,
   legacyCredentials: [],
-  failedCredentials: undefined
+  failedCredentials: undefined,
+  credentialType: undefined
 };
