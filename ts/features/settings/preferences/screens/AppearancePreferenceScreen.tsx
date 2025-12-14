@@ -3,14 +3,23 @@ import {
   RadioGroup,
   useIONewTypeface,
   useIOThemeContext,
-  VStack
+  VStack,
+  IOColors,
+  IOThemeLight,
+  IOThemeDark
 } from "@pagopa/io-app-design-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import { constVoid } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { ReactElement, useState } from "react";
-import { Appearance, useColorScheme, View } from "react-native";
+import {
+  Appearance,
+  useColorScheme,
+  View,
+  NativeModules,
+  Platform
+} from "react-native";
 import { FONT_PERSISTENCE_KEY } from "../../../../common/context/DSTypefaceContext";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import {
@@ -28,6 +37,23 @@ import {
   trackAppearancePreferenceThemeUpdate,
   trackAppearancePreferenceTypefaceUpdate
 } from "../../common/analytics";
+
+const { NavigationBarManager } = NativeModules;
+
+export const updateNavigationBarColor = (theme?: ColorModeChoice | null) => {
+  if (Platform.OS === "android" && NavigationBarManager && theme) {
+    const resolvedTheme = theme === "auto" ? "light" : theme;
+    const backgroundColor =
+      resolvedTheme === "dark"
+        ? IOColors[IOThemeDark["appBackground-primary"]]
+        : IOColors[IOThemeLight["appBackground-primary"]];
+
+    NavigationBarManager.setNavigationBarColor(
+      resolvedTheme,
+      backgroundColor
+    ).catch(constVoid);
+  }
+};
 
 /**
  * Display the appearance related settings
@@ -74,10 +100,12 @@ const AppearancePreferenceScreen = (): ReactElement => {
       if (choice === "auto") {
         Appearance.setColorScheme(undefined);
         setTheme(systemColorScheme);
+        updateNavigationBarColor(systemColorScheme || "light");
         return;
       }
       Appearance.setColorScheme(choice);
       setTheme(choice);
+      updateNavigationBarColor(choice);
     });
   };
 

@@ -1,111 +1,113 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`useSendAreYouSureBottomSheet should match the snapshot 1`] = `
-<Modal
-  accessible={false}
-  backdropComponent={[Function]}
-  backgroundStyle={
-    {
-      "backgroundColor": "#FFFFFF",
+<React.Fragment>
+  <Modal
+    accessible={false}
+    backdropComponent={[Function]}
+    backgroundStyle={
+      {
+        "backgroundColor": "#FFFFFF",
+      }
     }
-  }
-  enableDismissOnClose={true}
-  enableDynamicSizing={true}
-  footerComponent={[Function]}
-  handleComponent={[Function]}
-  importantForAccessibility="yes"
-  maxDynamicContentSize={NaN}
-  onDismiss={[Function]}
-  ref={
-    {
-      "current": null,
+    enableDismissOnClose={true}
+    enableDynamicSizing={true}
+    footerComponent={[Function]}
+    handleComponent={[Function]}
+    importantForAccessibility="yes"
+    maxDynamicContentSize={NaN}
+    onDismiss={[Function]}
+    ref={
+      {
+        "current": null,
+      }
     }
-  }
-  style={
-    {
-      "borderCurve": "continuous",
-      "borderTopLeftRadius": 24,
-      "borderTopRightRadius": 24,
-      "overflow": "hidden",
-    }
-  }
->
-  <ScrollView
-    overScrollMode="never"
     style={
       {
-        "paddingHorizontal": 24,
+        "borderCurve": "continuous",
+        "borderTopLeftRadius": 24,
+        "borderTopRightRadius": 24,
+        "overflow": "hidden",
       }
     }
   >
-    <VStack
-      space={24}
-    >
-      <FeatureInfo
-        body={
-          <Memo(IOMarkdown)
-            content="Se leggi le comunicazioni a valore legale online in tempo, **eviti le raccomandate e risparmi.**"
-          />
-        }
-        pictogramProps={
-          {
-            "name": "savingMoney",
-            "pictogramStyle": "default",
-          }
-        }
-      />
-      <FeatureInfo
-        body={
-          <Memo(IOMarkdown)
-            content="Con il servizio SEND su IO, **ti avvisiamo subito** quando c’è una comunicazione importante per te."
-          />
-        }
-        pictogramProps={
-          {
-            "name": "message",
-            "pictogramStyle": "default",
-          }
-        }
-      />
-      <Memo(IOMarkdown)
-        content="Premendo **Attiva SEND su IO** dichiari di aver letto l'[Informativa Privacy](PRIVACY_URL) e di accettare i [Termini e Condizioni d'uso](TOS_URL)."
-      />
-      <VStack
-        space={16}
-        style={
-          {
-            "alignItems": "center",
-          }
-        }
-      >
-        <ForwardRef
-          fullWidth={true}
-          label="Attiva SEND su IO"
-          loading={false}
-          onPress={[Function]}
-          testID="sendActivationID"
-        />
-        <View>
-          <ForwardRef
-            label="Non attivare SEND su IO"
-            onPress={[Function]}
-            testID="sendDismissalID"
-            textAlign="center"
-            variant="link"
-          />
-        </View>
-        <VSpacer
-          size={8}
-        />
-      </VStack>
-    </VStack>
-    <View
+    <ScrollView
+      overScrollMode="never"
       style={
         {
-          "height": 0,
+          "paddingHorizontal": 24,
         }
       }
-    />
-  </ScrollView>
-</Modal>
+    >
+      <VStack
+        space={24}
+      >
+        <FeatureInfo
+          body={
+            <Memo(IOMarkdown)
+              content="Se leggi le comunicazioni a valore legale online in tempo, **eviti le raccomandate e risparmi.**"
+            />
+          }
+          pictogramProps={
+            {
+              "name": "savingMoney",
+              "pictogramStyle": "default",
+            }
+          }
+        />
+        <FeatureInfo
+          body={
+            <Memo(IOMarkdown)
+              content="Con il servizio SEND su IO, **ti avvisiamo subito** quando c’è una comunicazione importante per te."
+            />
+          }
+          pictogramProps={
+            {
+              "name": "message",
+              "pictogramStyle": "default",
+            }
+          }
+        />
+        <Memo(IOMarkdown)
+          content="Premendo **Attiva SEND su IO** dichiari di aver letto l'[Informativa Privacy](PRIVACY_URL) e di accettare i [Termini e Condizioni d'uso](TOS_URL)."
+        />
+        <VStack
+          space={16}
+          style={
+            {
+              "alignItems": "center",
+            }
+          }
+        >
+          <ForwardRef
+            fullWidth={true}
+            label="Attiva SEND su IO"
+            loading={false}
+            onPress={[Function]}
+            testID="sendActivationID"
+          />
+          <View>
+            <ForwardRef
+              label="Non attivare SEND su IO"
+              onPress={[Function]}
+              testID="sendDismissalID"
+              textAlign="center"
+              variant="link"
+            />
+          </View>
+          <VSpacer
+            size={8}
+          />
+        </VStack>
+      </VStack>
+      <View
+        style={
+          {
+            "height": 0,
+          }
+        }
+      />
+    </ScrollView>
+  </Modal>
+</React.Fragment>
 `;
