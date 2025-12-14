@@ -1,5 +1,4 @@
 import {
-  ButtonSolidProps,
   ContentWrapper,
   FooterActions,
   H5,
@@ -12,13 +11,14 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { useRef, useState, useCallback } from "react";
+import I18n from "i18next";
+import { useCallback, useRef, useState } from "react";
 import { StyleSheet } from "react-native";
 import Pdf from "react-native-pdf";
 import { SafeAreaView } from "react-native-safe-area-context";
-import I18n from "i18next";
 import { ExistingSignatureFieldAttrs } from "../../../../definitions/fci/ExistingSignatureFieldAttrs";
 import { SignatureFieldToBeCreatedAttrs } from "../../../../definitions/fci/SignatureFieldToBeCreatedAttrs";
+import { ButtonBlockProps } from "../../../components/ui/utils/buttons";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { WithTestID } from "../../../types/WithTestID";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
@@ -62,7 +62,7 @@ const DocumentWithSignature = (props: Props) => {
 
   const theme = useIOTheme();
 
-  const continueButtonProps: ButtonSolidProps = {
+  const continueButtonProps: ButtonBlockProps = {
     onPress: onContinuePress,
     label: I18n.t("features.fci.documents.footer.backToSignFieldsList")
   };

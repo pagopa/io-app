@@ -1,9 +1,4 @@
-import {
-  ButtonSolidProps,
-  ContentWrapper,
-  IOToast,
-  VStack
-} from "@pagopa/io-app-design-system";
+import { ContentWrapper, IOToast, VStack } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
 import { TxtLinkNode } from "@textlint/ast-node-types";
 import I18n from "i18next";
@@ -13,6 +8,7 @@ import IOMarkdown from "../../../../components/IOMarkdown";
 import { linkNodeToReactNative } from "../../../../components/IOMarkdown/renderRules";
 import { Renderer } from "../../../../components/IOMarkdown/types";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { ButtonBlockProps } from "../../../../components/ui/utils/buttons";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import {
@@ -61,7 +57,7 @@ const ItwSettingsScreen = () => {
     });
   }, [navigation, routeName]);
 
-  const ctaProps: ButtonSolidProps = useMemo(
+  const ctaProps: ButtonBlockProps = useMemo(
     () => ({
       label: I18n.t(
         `features.itWallet.settings.manage.cta.${
