@@ -16685,13 +16685,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-screenshot-prevent@npm:^1.2.1":
+"react-native-screenshot-prevent@npm:1.2.1":
   version: 1.2.1
   resolution: "react-native-screenshot-prevent@npm:1.2.1"
   peerDependencies:
     react: "*"
     react-native: "*"
   checksum: 5563adea419627ce1a066495c7779ffdfa85bdb9c180b47eb25215175a02fc4af402bf24cea684d208ae18651df9396fb545998dd3c566afe67f119ecfa62a4a
+  languageName: node
+  linkType: hard
+
+"react-native-screenshot-prevent@patch:react-native-screenshot-prevent@npm%3A1.2.1#./.yarn/patches/react-native-screenshot-prevent-npm-1.2.1-d115315590.patch::locator=io%40workspace%3A.":
+  version: 1.2.1
+  resolution: "react-native-screenshot-prevent@patch:react-native-screenshot-prevent@npm%3A1.2.1#./.yarn/patches/react-native-screenshot-prevent-npm-1.2.1-d115315590.patch::version=1.2.1&hash=f317cf&locator=io%40workspace%3A."
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: f0981ff7a6eea4a7260eaa2c0a61f228f3decb7c8fab9ced0aa729f291cbf3db7b63634cc3c1bf9c34eea9c52a10fd89597f50c3d898f510e8b6a54c681aee42
   languageName: node
   linkType: hard
 
