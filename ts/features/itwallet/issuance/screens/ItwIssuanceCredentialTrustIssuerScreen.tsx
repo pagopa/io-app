@@ -57,7 +57,6 @@ import { ItwRequestedClaimsList } from "../components/ItwRequestedClaimsList";
 
 export type ItwIssuanceCredentialTrustIssuerNavigationParams = {
   credentialType?: string;
-  asyncContinuation?: boolean; // TODO to be removed in [SIW-2839]
   isUpgrade?: boolean;
 };
 
@@ -71,7 +70,7 @@ type ScreenProps =
   | ItwIssuanceCredentialTrustIssuerNavigationParams;
 
 const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
-  const { credentialType, asyncContinuation, isUpgrade } =
+  const { credentialType, isUpgrade } =
     ("route" in props ? props.route.params : props) ?? {};
 
   const eidOption = useIOSelector(itwCredentialsEidSelector);
@@ -98,11 +97,10 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
         machineRef.send({
           type: "select-credential",
           credentialType,
-          mode: isUpgrade ? "upgrade" : "issuance",
-          isAsyncContinuation: asyncContinuation // TODO to be removed in [SIW-2839]
+          mode: isUpgrade ? "upgrade" : "issuance"
         });
       }
-    }, [credentialType, asyncContinuation, machineRef, isUpgrade])
+    }, [credentialType, machineRef, isUpgrade])
   );
 
   if (isLoading) {
