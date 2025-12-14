@@ -7,6 +7,7 @@ import { WalletPaymentInputNoticeNumberScreen } from "../screens/WalletPaymentIn
 import { WalletPaymentMakeScreen } from "../screens/WalletPaymentMakeScreen";
 import { WalletPaymentOutcomeScreen } from "../screens/WalletPaymentOutcomeScreen";
 import WalletPaymentWebViewScreen from "../screens/WalletPaymentWebViewScreen";
+import PaymentsContextualOnboardingWebViewScreen from "../../onboarding/screens/PaymentsContextualOnboardingWebViewScreen";
 import { PaymentsCheckoutParamsList } from "./params";
 import { PaymentsCheckoutRoutes } from "./routes";
 
@@ -67,6 +68,13 @@ export const PaymentsCheckoutNavigator = () => (
     <Stack.Screen
       name={PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_WEB_VIEW}
       component={WalletPaymentWebViewScreen}
+      options={{
+        gestureEnabled: false
+      }}
+    />
+    <Stack.Screen
+      name={PaymentsCheckoutRoutes.PAYMENT_ONBOARDING_WEB_VIEW}
+      component={PaymentsContextualOnboardingWebViewScreen}
       options={{
         gestureEnabled: false
       }}

@@ -5,9 +5,17 @@ import * as O from "fp-ts/lib/Option";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { isDevEnv } from "../../../../utils/environment";
 import { WALLET_WEBVIEW_OUTCOME_SCHEMA } from "../../common/utils/const";
-import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
-import { PaymentStartWebViewPayload } from "../store/actions/orchestration";
 import { getIntentFallbackUrl } from "../../../authentication/common/utils/login";
+
+type PaymentWebViewProps<T> = {
+  url: string;
+  cancelOutcome: T;
+  errorOutcome: T;
+  onSuccess?: (url: string) => void;
+  onCancel?: (outcome: T) => void;
+  onError?: (outcome: T) => void;
+  originWhiteList?: Array<string>;
+};
 
 const originSchemasWhiteList = [
   "https://*",
@@ -17,12 +25,15 @@ const originSchemasWhiteList = [
   ...(isDevEnv ? ["http://*"] : [])
 ];
 
-const WalletPaymentWebView = ({
+const PaymentWebView = <T,>({
   onSuccess,
   onCancel,
   onError,
-  url: uri
-}: PaymentStartWebViewPayload) => {
+  url: uri,
+  cancelOutcome,
+  errorOutcome,
+  originWhiteList
+}: PaymentWebViewProps<T>) => {
   const [canGoBack, setCanGoBack] = useState<boolean>(false);
   const webViewRef = useRef<WebView>(null);
 
@@ -30,7 +41,7 @@ const WalletPaymentWebView = ({
     if (canGoBack) {
       webViewRef.current?.goBack();
     } else {
-      onCancel?.(WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER);
+      onCancel?.(cancelOutcome);
     }
     return true;
   });
@@ -39,24 +50,46 @@ const WalletPaymentWebView = ({
     <WebView
       testID="webview"
       ref={webViewRef}
-      originWhitelist={originSchemasWhiteList}
+      originWhitelist={originWhiteList || originSchemasWhiteList}
       onShouldStartLoadWithRequest={event => {
-        if (event.url.startsWith(WALLET_WEBVIEW_OUTCOME_SCHEMA)) {
-          onSuccess?.(event.url);
+        const { url, isTopFrame } = event;
+        if (url.startsWith(WALLET_WEBVIEW_OUTCOME_SCHEMA)) {
+          onSuccess?.(url);
+          return false;
         }
-        if (event.url === "about:blank" && event.isTopFrame) {
-          onCancel?.(WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER);
+        if (url === "about:blank" && isTopFrame) {
+          onCancel?.(cancelOutcome);
+          return false;
         }
-        const intent = getIntentFallbackUrl(event.url);
+        const intent = getIntentFallbackUrl(url);
         if (O.isSome(intent)) {
           void Linking.openURL(decodeURIComponent(intent.value));
           return false;
         }
-        return !event.url.startsWith(WALLET_WEBVIEW_OUTCOME_SCHEMA);
+        return true;
       }}
       onNavigationStateChange={event => setCanGoBack(event.canGoBack)}
-      onHttpError={() => onError?.(WalletPaymentOutcomeEnum.GENERIC_ERROR)}
-      onError={() => onError?.(WalletPaymentOutcomeEnum.GENERIC_ERROR)}
+      onHttpError={() => {
+        onError?.(errorOutcome);
+      }}
+      onError={syntheticEvent => {
+        const { nativeEvent } = syntheticEvent;
+
+        if (nativeEvent.url?.startsWith(WALLET_WEBVIEW_OUTCOME_SCHEMA)) {
+          // This is a "good" error.
+          // We effectively ignore this error because onShouldStartLoadWithRequest handles the logic.
+          return;
+        }
+
+        if (
+          nativeEvent.code === -10 ||
+          nativeEvent.description === "net::ERR_UNKNOWN_URL_SCHEME"
+        ) {
+          return;
+        }
+
+        onError?.(errorOutcome);
+      }}
       allowsBackForwardNavigationGestures
       style={{ flex: 1 }}
       source={{
@@ -69,4 +102,4 @@ const WalletPaymentWebView = ({
   );
 };
 
-export default WalletPaymentWebView;
+export default PaymentWebView;

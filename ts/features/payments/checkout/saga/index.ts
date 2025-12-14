@@ -5,6 +5,7 @@ import {
   paymentsCalculatePaymentFeesAction,
   paymentsCreateTransactionAction,
   paymentsDeleteTransactionAction,
+  paymentsGetContextualOnboardingUrlAction,
   paymentsGetPaymentDetailsAction,
   paymentsGetPaymentMethodsAction,
   paymentsGetPaymentTransactionInfoAction,
@@ -21,6 +22,7 @@ import { handleWalletPaymentGetDetails } from "./networking/handleWalletPaymentG
 import { handleWalletPaymentGetTransactionInfo } from "./networking/handleWalletPaymentGetTransactionInfo";
 import { handleWalletPaymentGetUserWallets } from "./networking/handleWalletPaymentGetUserWallets";
 import { handleWalletPaymentGetRecentMethod } from "./networking/handleWalletPaymentGetRecentMethod";
+import { handleWalletPaymentGetContextualOnboardingUrl } from "./networking/handleWalletPaymentGetContextualOnboardingUrl";
 
 /**
  * Handle the pagoPA payments requests
@@ -81,5 +83,11 @@ export function* watchPaymentsCheckoutSaga(
     paymentsGetRecentPaymentMethodUsedAction.request,
     handleWalletPaymentGetRecentMethod,
     paymentClient.getUserLastPaymentMethodUsed
+  );
+
+  yield* takeLatest(
+    paymentsGetContextualOnboardingUrlAction.request,
+    handleWalletPaymentGetContextualOnboardingUrl,
+    paymentClient.getMethodRedirectUrl
   );
 }

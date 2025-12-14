@@ -13,4 +13,5 @@ export type PaymentsCheckoutParamsList = {
   [PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME]: WalletPaymentOutcomeScreenNavigationParams;
   [PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_FAILURE]: WalletPaymentFailureScreenNavigationParams;
   [PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_WEB_VIEW]: undefined;
+  [PaymentsCheckoutRoutes.PAYMENT_ONBOARDING_WEB_VIEW]: undefined;
 };
