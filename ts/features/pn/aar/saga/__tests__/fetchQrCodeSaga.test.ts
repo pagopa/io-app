@@ -319,6 +319,8 @@ describe("fetchQrCodeSaga", () => {
   });
   it("should dispatch KO state on a decoding failure", () => {
     const failureDecodingResponse = E.left([]);
+    const failureReason = "An error was thrown (Decoding failure ())";
+
     const mockApiCall = jest
       .fn()
       .mockReturnValue(mockResolvedCall(failureDecodingResponse));
@@ -335,11 +337,11 @@ describe("fetchQrCodeSaga", () => {
       .next(true)
       .call(withRefreshApiCall, mockApiCall(), fetchingQrRequestAction)
       .next(failureDecodingResponse)
-      .call(trackSendAARFailure, "Fetch QRCode", "Decoding failure ()")
+      .call(trackSendAARFailure, "Fetch QRCode", failureReason)
       .next()
       .put(
         setAarFlowState(
-          getMockKoState(mockFetchingQrState, undefined, `Decoding failure ()`)
+          getMockKoState(mockFetchingQrState, undefined, failureReason)
         )
       )
       .next()

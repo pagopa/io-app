@@ -228,6 +228,8 @@ describe("validateMandateSaga", () => {
       .isDone();
   });
   it("should dispatch KO state on a decoding failure", () => {
+    const failureReason = "An error was thrown (Decoding failure ())";
+
     testSaga(
       validateMandateSaga,
       mockAcceptMandate,
@@ -243,15 +245,11 @@ describe("validateMandateSaga", () => {
         mockValidatingMandateAction
       )
       .next(E.left([]))
-      .call(trackSendAARFailure, "Validate Mandate", "Decoding failure ()")
+      .call(trackSendAARFailure, "Validate Mandate", failureReason)
       .next()
       .put(
         setAarFlowState(
-          getMockKoState(
-            mockValidatingMandateState,
-            undefined,
-            `Decoding failure ()`
-          )
+          getMockKoState(mockValidatingMandateState, undefined, failureReason)
         )
       )
       .next()
