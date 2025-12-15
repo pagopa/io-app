@@ -274,7 +274,10 @@ type ItwCopyListItem = {
   item_copied: string;
 };
 
-export type ItwOfflineRicaricaAppIOSource = "bottom_sheet" | "banner";
+export type ItwOfflineRicaricaAppIOSource =
+  | "bottom_sheet"
+  | "banner"
+  | "access_expired_screen";
 
 type ItwCredentialInfoDetails = {
   credential: MixPanelCredential;
