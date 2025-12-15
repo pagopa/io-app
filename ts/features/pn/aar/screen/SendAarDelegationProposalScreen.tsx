@@ -62,7 +62,7 @@ export const SendAarDelegationProposalScreen = () => {
       return (
         <LoadingScreenContent
           testID="delegationLoading"
-          contentTitle={i18n.t(
+          title={i18n.t(
             "features.pn.aar.flow.delegated.createMandate.loadingText"
           )}
           headerVisible={false}
