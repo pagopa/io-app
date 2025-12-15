@@ -291,7 +291,8 @@
       "react-native-push-notification@8.1.1": "patches/react-native-push-notification@8.1.1.patch",
       "react-native-reanimated@3.17.5": "patches/react-native-reanimated@3.17.5.patch",
       "react-native-screen-brightness@2.0.0-alpha": "patches/react-native-screen-brightness@2.0.0-alpha.patch",
-      "react-native-webview@13.16.0": "patches/react-native-webview@13.16.0.patch"
+      "react-native-webview@13.16.0": "patches/react-native-webview@13.16.0.patch",
+      "@pagopa/openapi-codegen-ts@14.0.1": "patches/@pagopa__openapi-codegen-ts@14.0.1.patch"
     }
   }
 }
