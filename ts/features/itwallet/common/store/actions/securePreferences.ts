@@ -8,10 +8,10 @@ export const itwOfflineAccessCounterReset = createStandardAction(
 )();
 
 export const itwUnverifiedCredentialsCounterUp = createStandardAction(
-  "ITW_AVAILABLE_CREDENTIALS_COUNTER_UP"
+  "ITW_UNVERIFIED_CREDENTIALS_COUNTER_UP"
 )();
 export const itwUnverifiedCredentialsCounterReset = createStandardAction(
-  "ITW_AVAILABLE_CREDENTIALS_COUNTER_RESET"
+  "ITW_UNVERIFIED_CREDENTIALS_COUNTER_RESET"
 )();
 
 export type ItwSecurePreferencesActions =
