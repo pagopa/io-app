@@ -24,6 +24,11 @@ import {
 } from "../../analytics";
 import { selectItwEnv } from "../../common/store/selectors/environment";
 import { getEnv } from "../../common/utils/environment";
+import { itwUnverifiedCredentialsCounterLimitReached } from "../../common/store/selectors/securePreferences";
+import {
+  itwUnverifiedCredentialsCounterReset,
+  itwUnverifiedCredentialsCounterUp
+} from "../../common/store/actions/securePreferences";
 
 const { isIssuerResponseError, IssuerResponseErrorCodes: Codes } = Errors;
 
@@ -109,7 +114,34 @@ export function* checkCredentialsStatusAssertion() {
     )
   );
 
-  yield* put(itwCredentialsStore(updatedCredentials));
+  const failedCredentials = updatedCredentials.filter(
+    c => c.storedStatusAssertion?.credentialStatus === "unknown"
+  );
+
+  const successfulCredentials = updatedCredentials.filter(
+    c => c.storedStatusAssertion?.credentialStatus !== "unknown"
+  );
+
+  const hasFailures = failedCredentials.length > 0;
+  const hasSuccesses = successfulCredentials.length > 0;
+
+  const isLimitReached = yield* select(
+    itwUnverifiedCredentialsCounterLimitReached
+  );
+
+  if (hasSuccesses) {
+    yield* put(itwCredentialsStore(successfulCredentials));
+  }
+
+  if (hasFailures) {
+    if (isLimitReached) {
+      yield* put(itwCredentialsStore(failedCredentials));
+    } else {
+      yield* put(itwUnverifiedCredentialsCounterUp());
+    }
+  } else {
+    yield* put(itwUnverifiedCredentialsCounterReset());
+  }
 
   const state: GlobalState = yield* select();
   void updateMixpanelProfileProperties(state);
