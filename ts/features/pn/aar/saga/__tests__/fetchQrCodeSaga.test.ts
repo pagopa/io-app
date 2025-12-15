@@ -211,7 +211,6 @@ describe("fetchQrCodeSaga", () => {
     });
 
     [
-      (E.left(undefined),
       E.right({
         status: 500,
         value: { status: 500, detail: "A detail" } as AARProblemJson
@@ -219,7 +218,7 @@ describe("fetchQrCodeSaga", () => {
       E.right({
         status: 418,
         value: { status: 418, detail: "A detail" } as AARProblemJson
-      }))
+      })
     ].forEach(res =>
       it(`should dispatch KO state on a response of ${JSON.stringify(
         res
@@ -318,8 +317,10 @@ describe("fetchQrCodeSaga", () => {
       isTest: true
     });
   });
-  it("should dispatch KO state on a decoding failute", () => {
+  it("should dispatch KO state on a decoding failure", () => {
     const failureDecodingResponse = E.left([]);
+    const failureReason = "An error was thrown (Decoding failure ())";
+
     const mockApiCall = jest
       .fn()
       .mockReturnValue(mockResolvedCall(failureDecodingResponse));
@@ -336,11 +337,11 @@ describe("fetchQrCodeSaga", () => {
       .next(true)
       .call(withRefreshApiCall, mockApiCall(), fetchingQrRequestAction)
       .next(failureDecodingResponse)
-      .call(trackSendAARFailure, "Fetch QRCode", "Decoding failure ()")
+      .call(trackSendAARFailure, "Fetch QRCode", failureReason)
       .next()
       .put(
         setAarFlowState(
-          getMockKoState(mockFetchingQrState, undefined, `Decoding failure ()`)
+          getMockKoState(mockFetchingQrState, undefined, failureReason)
         )
       )
       .next()
