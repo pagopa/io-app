@@ -10,12 +10,12 @@ runs:
     - name: Checkout
       uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
     - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v.4.2.0
-      name: Install pnpm
+      name: Install pnpm # This automatically takes the packageManager field of package.json
       with:
-        version: 10
         cache: true
     - name: Install dependencies
       run: pnpm install
+      shell: bash
     - name: Install dependencies
       run: pnpm install --frozen-lockfile
       shell: bash
