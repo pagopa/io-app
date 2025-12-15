@@ -272,7 +272,10 @@ type ItwCopyListItem = {
   item_copied: string;
 };
 
-export type ItwOfflineRicaricaAppIOSource = "bottom_sheet" | "banner";
+export type ItwOfflineRicaricaAppIOSource =
+  | "bottom_sheet"
+  | "banner"
+  | "access_expired_screen";
 
 type ItwCredentialInfoDetails = {
   credential: MixPanelCredential;
@@ -297,8 +300,7 @@ export enum ItwEidReissuingTrigger {
  * Add new values when implementing additional flows that require L3 upgrade.
  */
 export enum ItwL3UpgradeTrigger {
-  REMOTE_QR_CODE = "remote_qr_code",
-  ADD_CREDENTIAL = "add_credential"
+  REMOTE_QR_CODE = "remote_qr_code"
 }
 
 // TODO: Add reissuing_PID when the L3 PID reissuance flow is ready
@@ -319,6 +321,13 @@ type ItwUserWithoutL3requirements = {
   screen_name: string;
   reason: "user_without_cie" | "user_without_pin";
   position: "screen" | "bottom_sheet";
+};
+
+type QualtricsSurveyId = "confirm_eid_flow_success" | "confirm_eid_flow_exit";
+
+export type TrackQualtricsSurvey = {
+  survey_id: QualtricsSurveyId;
+  survey_page: string;
 };
 
 // #region SCREEN VIEW EVENTS
@@ -535,6 +544,13 @@ export const trackItwOfflineAccessExpired = () => {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_OFFLINE_ACCESS_EXPIRED,
     buildEventProperties("KO", "screen_view")
+  );
+};
+
+export const trackItwSurveyRequest = (properties: TrackQualtricsSurvey) => {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.SURVEY_REQUEST,
+    buildEventProperties("UX", "screen_view", properties)
   );
 };
 
@@ -886,6 +902,24 @@ export function trackItwCredentialQualificationDetail(
     buildEventProperties("UX", "action", properties)
   );
 }
+
+export const trackItwSurveyRequestAccepted = (
+  properties: TrackQualtricsSurvey
+) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.SURVEY_REQUEST_ACCEPTED,
+    buildEventProperties("UX", "action", properties)
+  );
+};
+
+export const trackItwSurveyRequestDeclined = (
+  properties: TrackQualtricsSurvey
+) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.SURVEY_REQUEST_DECLINED,
+    buildEventProperties("UX", "action", properties)
+  );
+};
 
 // #endregion ACTIONS
 

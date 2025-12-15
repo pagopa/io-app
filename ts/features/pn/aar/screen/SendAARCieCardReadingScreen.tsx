@@ -1,15 +1,15 @@
 import i18n from "i18next";
-import { useIOSelector } from "../../../../store/hooks";
-import { currentAARFlowStateType } from "../store/selectors";
-import { sendAARFlowStates } from "../utils/stateUtils";
-import { SendAARLoadingComponent } from "../components/SendAARLoadingComponent";
-import type { PnParamsList } from "../../navigation/params";
+import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import type { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../store/hooks";
+import type { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
 import {
   SendAARCieCardReadingComponent,
   type SendAARCieCardReadingComponentProps
 } from "../components/SendAARCieCardReadingComponent";
+import { currentAARFlowStateType } from "../store/selectors";
+import { sendAARFlowStates } from "../utils/stateUtils";
 
 export type SendAARCieCardReadingScreenRouteParams =
   Readonly<SendAARCieCardReadingComponentProps>;
@@ -29,10 +29,9 @@ export const SendAARCieCardReadingScreen = ({
       return <SendAARCieCardReadingComponent {...route.params} />;
     case sendAARFlowStates.validatingMandate:
       return (
-        <SendAARLoadingComponent
-          contentTitle={i18n.t(
-            "features.pn.aar.flow.validatingMandate.loadingText"
-          )}
+        <LoadingScreenContent
+          testID="LoadingScreenContent"
+          title={i18n.t("features.pn.aar.flow.validatingMandate.loadingText")}
         />
       );
     default:

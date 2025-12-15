@@ -2986,7 +2986,8 @@
           }
         }
       },
-      "searchLink": "Search all available local services"
+      "searchLink": "Search all available local services",
+      "favourites": "Favourite services"
     },
     "institution": {
       "failure": {
@@ -3058,12 +3059,18 @@
       }
     },
     "favouriteServices": {
+      "title": "My favourites",
       "add": "Add to favourites",
       "remove": "Remove from favourites",
       "toasts": {
         "added": "Added to favourites!",
         "removed": "Removed from favourites!",
         "limitReached": "Cannot add service to favourites because you have reached the maximum limit."
+      },
+      "emptyList": {
+        "title": "Here you will see the list of your favorite services",
+        "subtitle": "Start searching and save the services you use the most to your favorites.",
+        "searchAction": "Start searching"
       }
     }
   },

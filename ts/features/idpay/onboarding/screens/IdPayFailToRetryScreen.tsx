@@ -1,5 +1,5 @@
 /* eslint-disable functional/immutable-data */
-import { Body, IOToast } from "@pagopa/io-app-design-system";
+import { IOToast } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -115,17 +115,14 @@ export const IdPayFailToRetryScreen = () => {
       />
       <LoadingScreenContent
         testID="ingress-screen-loader-id"
-        contentTitle={contentTitle}
+        title={contentTitle}
+        subtitle={
+          showSubtitle
+            ? I18n.t("idpay.onboarding.failToRetry.slowDownSubtitle")
+            : undefined
+        }
         animatedPictogramSource="waiting"
-      >
-        {showSubtitle && (
-          <View style={{ alignItems: "center" }}>
-            <Body style={{ textAlign: "center" }}>
-              {I18n.t("idpay.onboarding.failToRetry.slowDownSubtitle")}
-            </Body>
-          </View>
-        )}
-      </LoadingScreenContent>
+      />
     </>
   );
 };
