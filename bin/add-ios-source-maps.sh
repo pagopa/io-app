@@ -7,7 +7,7 @@
 # `  --sourcemap-output "$BUNDLE_FILE.map"`
 # after the line
 # `  --bundle-output "$BUNDLE_FILE" \`
-# This script is ran on each `yarn install` (or `npm install`)
+# This script is ran on each `pnpm install` (or `npm install`)
 # with a `postinstall` script found in `package.json`
 
 # Original target script that is invoked as part of Xcode build process

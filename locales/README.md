@@ -13,7 +13,7 @@ To add a new language you must:
 1. Proceed with the translation by editing the YAML and Markdown files.
     - if is a YAML file (`*.yml`) translate only the text following the colon (e.g. `today:` **`"today"`** become in italian `today:` **`"oggi"`**).
     - if is a Mardown file (`*.md`) translate the text leaving the formatting as is.
-1. Check that the command: ```npm run generate:locales``` (or ```yarn generate:locales```) returns a success message.
+1. Check that the command: ```npm run generate:locales``` (or ```pnpm generate:locales```) returns a success message.
 1. Create a PR using as title `Internationalization {New Language}` (e.g. `Internationalization Italiano`)and apply the label `internationalization`.
 
 If you want to see the result in the app you must:
