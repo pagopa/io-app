@@ -11,29 +11,29 @@ echo "$unstagedFiles"
 echo "🔨 compiling..."
 yarn tsc:noemit
 
+# Determine the base branch for comparison
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 REMOTE_REF="refs/remotes/origin/$BRANCH"
-
 if git show-ref --verify --quiet "$REMOTE_REF"; then
   BASE="origin/$BRANCH"
 else
   BASE="origin/master"
 fi
 
-FILES=$(git diff -z --name-only --diff-filter=ACMRT \
-  "$BASE"...HEAD \
-  -- '*.ts' '*.tsx' '*.json')
+ESLINT_FILES=$(git diff -z --name-only --diff-filter=ACMRT \
+  "$BASE"...HEAD -- '*.ts' '*.tsx')
+if [ -n "$ESLINT_FILES" ]; then
+  echo "Running ESLint on changed files..."
+  printf "%s" "$ESLINT_FILES" | xargs -0 npx eslint \
+    -c .eslintrc.js --ext .ts,.tsx --cache --fix
+fi
 
-echo "Running ESLint on changed files..."
-printf "%s" "$FILES" | xargs -0 npx eslint \
-  -c .eslintrc.js \
-  --ext .ts,.tsx \
-  --cache \
-  --fix
-
-echo "Running Prettier on changed files..."
-printf "%s" "$FILES" | xargs -0 npx prettier \
-  --write
+PRETTIER_FILES=$(git diff -z --name-only --diff-filter=ACMRT \
+  "$BASE"...HEAD -- '*.ts' '*.tsx' '*.json')
+if [ -n "$PRETTIER_FILES" ]; then
+  echo "Running Prettier on changed files..."
+  printf "%s" "$PRETTIER_FILES" | xargs -0 npx prettier --write
+fi
 
 # If we have any modified files don't push
 if [ -n "$(git status --porcelain)" ]; then
