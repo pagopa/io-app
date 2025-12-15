@@ -159,10 +159,7 @@ describe("SendAARInitialFlowScreen", () => {
         {
           screen: PN_ROUTES.MAIN,
           params: {
-            screen: PN_ROUTES.SEND_AAR_DELEGATION_PROPOSAL,
-            params: {
-              type: sendAARFlowStates.notAddressee
-            } as AARFlowState
+            screen: PN_ROUTES.SEND_AAR_DELEGATION_PROPOSAL
           }
         }
       );

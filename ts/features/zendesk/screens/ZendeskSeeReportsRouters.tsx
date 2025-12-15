@@ -90,9 +90,7 @@ const ZendeskSeeReportsRouters = (props: Props) => {
 
   if (pot.isLoading(ticketNumber)) {
     return (
-      <LoadingScreenContent
-        contentTitle={I18n.t("global.remoteStates.loading")}
-      />
+      <LoadingScreenContent title={I18n.t("global.remoteStates.loading")} />
     );
   }
 

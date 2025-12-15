@@ -12,7 +12,7 @@ import { formatPaymentNoticeNumber } from "../../../payments/common/utils";
 import { serviceMetadataByIdSelector } from "../../../services/details/store/selectors";
 import { ContactsListItem } from "./ContactsListItem";
 import {
-  ShowMoreItems,
+  ShowMoreItem,
   ShowMoreListItem,
   ShowMoreSection
 } from "./ShowMoreListItem";
@@ -29,7 +29,7 @@ const generateMessageSectionData = (
   noticeNumber?: string,
   payeeFiscalCode?: string
 ) => {
-  const messageSectionDataArray: ShowMoreSection = [
+  const messageSectionDataArray: ReadonlyArray<ShowMoreSection> = [
     {
       title: I18n.t("messageDetails.headerTitle"),
       items: [
@@ -44,7 +44,7 @@ const generateMessageSectionData = (
       ]
     }
   ];
-  const noticeNumberItemArray: ShowMoreItems = noticeNumber
+  const noticeNumberItemArray: ReadonlyArray<ShowMoreItem> = noticeNumber
     ? [
         {
           accessibilityLabel: I18n.t(
@@ -57,7 +57,7 @@ const generateMessageSectionData = (
         }
       ]
     : [];
-  const payeeFiscalCodeItemArray: ShowMoreItems = payeeFiscalCode
+  const payeeFiscalCodeItemArray: ReadonlyArray<ShowMoreItem> = payeeFiscalCode
     ? [
         {
           accessibilityLabel: I18n.t(
@@ -74,7 +74,7 @@ const generateMessageSectionData = (
   const paymentItemData = noticeNumberItemArray.concat(
     payeeFiscalCodeItemArray
   );
-  const paymentSectionDataArray: ShowMoreSection =
+  const paymentSectionDataArray: ReadonlyArray<ShowMoreSection> =
     paymentItemData.length > 0
       ? [
           {
