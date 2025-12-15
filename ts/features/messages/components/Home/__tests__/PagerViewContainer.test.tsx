@@ -25,10 +25,17 @@ jest.mock("react-redux", () => ({
   useDispatch: () => mockDispatch
 }));
 
+// Avoid Skottie errrors because the `jest` environment doesn't support it
+jest.mock("../../../../../components/ui/AnimatedPictogram", () => ({
+  AnimatedPictogram: () => null,
+  IOAnimatedPictogramsAssets: {}
+}));
+
 describe("PagerViewContainer", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
+    jest.restoreAllMocks();
     mockAccessibilityInfo(false);
   });
   it("should not dispatch 'reloadAllMessages.request' upon first rendering for INBOX with useEffect (since it is dispatched by the PagerView's pageSelected callback)", () => {

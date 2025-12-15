@@ -26,7 +26,6 @@ const EycaActivationLoading: FunctionComponent<Props> = (props: Props) =>
     <OperationResultScreenContent
       testID="eyca-activation-error"
       pictogram="umbrella"
-      enableAnimatedPictogram
       title={I18n.t("bonus.cgn.activation.eyca.error.title")}
       subtitle={I18n.t("bonus.cgn.activation.eyca.error.body")}
       action={{

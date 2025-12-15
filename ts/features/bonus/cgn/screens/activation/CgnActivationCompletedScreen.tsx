@@ -25,8 +25,6 @@ const CgnActivationCompletedScreen = () => {
         testID: "cgnConfirmButtonTestId",
         onPress: onConfirm
       }}
-      enableAnimatedPictogram
-      loop={false}
     />
   );
 };
