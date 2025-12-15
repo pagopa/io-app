@@ -15,21 +15,21 @@ export const NotifeePlaygroundScreen = () => {
   const handleScheduleNotification = async () => {
     try {
       const notificationId = await scheduleNotification(
-        10, // 10 minutes delay
+        5, // 5 minutes delay
         "IO App Playground",
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        "Scheduled Notification - This is a test notification from Notifee Playground."
       );
 
       Alert.alert(
-        "Notifica schedulata!",
-        `La notifica verrà mostrata tra 10 minuti.\nID: ${notificationId}`,
+        "Notification scheduled!",
+        `The notification will be shown in 5 minutes.\nID: ${notificationId}`,
         [{ text: "OK" }]
       );
     } catch (error) {
       // Log error for debugging
       Alert.alert(
-        "Errore",
-        "Non è stato possibile schedulare la notifica. Controlla i permessi.",
+        "Error",
+        "Could not schedule notification. Check permissions.",
         [{ text: "OK" }]
       );
     }
@@ -41,30 +41,28 @@ export const NotifeePlaygroundScreen = () => {
 
       if (scheduledNotifications.length === 0) {
         Alert.alert(
-          "Nessuna notifica schedulata",
-          "Non ci sono notifiche programmate al momento.",
+          "No scheduled notifications",
+          "There are no scheduled notifications at the moment.",
           [{ text: "OK" }]
         );
       } else {
         const notificationsList = scheduledNotifications
           .map(
             (notif, index) =>
-              `${index + 1}. ${notif.notification.title || "Senza titolo"}`
+              `${index + 1}. ${notif.notification.title || "No title"}`
           )
           .join("\n");
 
         Alert.alert(
-          "Notifiche schedulate",
-          `Hai ${scheduledNotifications.length} notifica/e programmate:\n\n${notificationsList}`,
+          "Scheduled notifications",
+          `You have ${scheduledNotifications.length} scheduled notification(s):\n\n${notificationsList}`,
           [{ text: "OK" }]
         );
       }
     } catch (error) {
-      Alert.alert(
-        "Errore",
-        "Non è stato possibile recuperare le notifiche schedulate.",
-        [{ text: "OK" }]
-      );
+      Alert.alert("Error", "Could not retrieve scheduled notifications.", [
+        { text: "OK" }
+      ]);
     }
   };
 
@@ -72,14 +70,12 @@ export const NotifeePlaygroundScreen = () => {
     try {
       await cancelAllScheduledNotifications();
       Alert.alert(
-        "Notifiche cancellate",
-        "Tutte le notifiche schedulate sono state cancellate.",
+        "Notifications cancelled",
+        "All scheduled notifications have been cancelled.",
         [{ text: "OK" }]
       );
     } catch (error) {
-      Alert.alert("Errore", "Non è stato possibile cancellare le notifiche.", [
-        { text: "OK" }
-      ]);
+      Alert.alert("Error", "Could not cancel notifications.", [{ text: "OK" }]);
     }
   };
 
@@ -92,7 +88,7 @@ export const NotifeePlaygroundScreen = () => {
       />
       <VSpacer size={24} />
       <IOButton
-        label="Schedule notification on 10 minutes"
+        label="Schedule notification on 5 minutes"
         onPress={handleScheduleNotification}
         variant="solid"
         color="primary"
