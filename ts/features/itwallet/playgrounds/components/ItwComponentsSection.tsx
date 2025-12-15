@@ -8,12 +8,11 @@ import {
 import { Canvas } from "@shopify/react-native-skia";
 import I18n from "i18next";
 import { useState } from "react";
-import { Alert, useWindowDimensions, View } from "react-native";
+import { useWindowDimensions, View } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { DSComponentViewerBox } from "../../../design-system/components/DSComponentViewerBox";
 import { ItwBrandedBox } from "../../common/components/ItwBrandedBox";
 import { ItwBrandedSkiaGradient } from "../../common/components/ItwBrandedSkiaGradient";
-import { ItwEngagementBanner } from "../../common/components/ItwEngagementBanner";
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
 import { getCredentialStatusObject } from "../../common/utils/itwCredentialStatusUtils";
@@ -169,23 +168,6 @@ const ItwSkeumorphicCredentialItem = ({
   );
 };
 
-export const ItwBannerSection = () => (
-  <View
-    style={{
-      marginHorizontal: -24,
-      paddingHorizontal: 24,
-      paddingBottom: 24
-    }}
-  >
-    <ListItemHeader label="Engagement Banner" />
-    <ItwEngagementBanner
-      variant="activation"
-      onPress={() => Alert.alert("Engagement Banner pressed")}
-      onClosePress={() => Alert.alert("Engagement Banner closed")}
-    />
-  </View>
-);
-
 export const ItwClaimsListSection = () => {
   const theme = useIOTheme();
 
@@ -233,7 +215,6 @@ export const ItwComponentsSection = () => (
     <ItwWalletBrandSection />
     <ItwWalletIdStatusSection />
     <ItwSkeumorphicCredentialSection />
-    <ItwBannerSection />
     <ItwClaimsListSection />
   </>
 );
