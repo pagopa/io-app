@@ -3071,6 +3071,10 @@
         "title": "Qui vedrai la lista dei tuoi servizi preferiti",
         "subtitle": "Inizia la ricerca e salva tra i preferiti i servizi che usi di più.",
         "searchAction": "Inizia la ricerca"
+      },
+      "removeAlert": {
+        "title": "Vuoi rimouvere il servizio dai preferiti?",
+        "confirm": "Si, rimuovi **"
       }
     }
   },
