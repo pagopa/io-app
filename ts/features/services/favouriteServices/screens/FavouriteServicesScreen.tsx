@@ -44,39 +44,44 @@ export function FavouriteServicesScreen() {
 
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<FavouriteServiceType>) => (
-      <ListItemSwipeAction
-        icon="starOff"
-        color="contrast"
-        openedItemRef={openedItemRef}
-        accessibilityLabel={I18n.t("services.favouriteServices.remove")}
-        onRightActionPressed={({ triggerSwipeAction, resetSwipePosition }) => {
-          Alert.alert(
-            I18n.t("services.favouriteServices.removeAlert.title"),
-            undefined,
-            [
-              {
-                text: I18n.t("global.buttons.cancel"),
-                style: "cancel",
-                onPress: () => {
-                  setTimeout(() => {
-                    resetSwipePosition();
-                  }, 50);
-                }
-              },
-              {
-                text: I18n.t("services.favouriteServices.removeAlert.confirm"),
-                style: "destructive",
-                onPress() {
-                  triggerSwipeAction();
-                  dispatch(removeFavouriteService({ id: item.id }));
-                }
-              }
-            ]
-          );
-        }}
+      <View
+        style={{ marginHorizontal: IOVisualCostants.appMarginDefault * -1 }}
       >
-        <View
-          style={{ marginHorizontal: IOVisualCostants.appMarginDefault * -1 }}
+        <ListItemSwipeAction
+          icon="starOff"
+          color="contrast"
+          openedItemRef={openedItemRef}
+          accessibilityLabel={I18n.t("services.favouriteServices.remove")}
+          onRightActionPressed={({
+            triggerSwipeAction,
+            resetSwipePosition
+          }) => {
+            Alert.alert(
+              I18n.t("services.favouriteServices.removeAlert.title"),
+              undefined,
+              [
+                {
+                  text: I18n.t("global.buttons.cancel"),
+                  style: "cancel",
+                  onPress: () => {
+                    setTimeout(() => {
+                      resetSwipePosition();
+                    }, 50);
+                  }
+                },
+                {
+                  text: I18n.t(
+                    "services.favouriteServices.removeAlert.confirm"
+                  ),
+                  style: "destructive",
+                  onPress() {
+                    triggerSwipeAction();
+                    dispatch(removeFavouriteService({ id: item.id }));
+                  }
+                }
+              ]
+            );
+          }}
         >
           <ListItemNav
             value={item.name}
@@ -90,8 +95,8 @@ export function FavouriteServicesScreen() {
               });
             }}
           />
-        </View>
-      </ListItemSwipeAction>
+        </ListItemSwipeAction>
+      </View>
     ),
     [dispatch, navigation]
   );
