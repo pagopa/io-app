@@ -12,11 +12,10 @@ import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import ItWalletDeck from "../../../../../img/features/itWallet/brand/itw_deck_engagement.svg";
-import ItWalletLogo from "../../../../../img/features/itWallet/brand/itw_logo.svg";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { getTxtNodeKey } from "../../../../components/IOMarkdown/renderRules";
 import { Renderer } from "../../../../components/IOMarkdown/types";
-import { useItWalletTheme } from "../utils/theme";
+import { ItwBrandedBox } from "./ItwBrandedBox";
 
 export type ItwEngagementBannerVariant =
   | "activation"
@@ -31,7 +30,6 @@ type Props = {
 };
 
 export const ItwEngagementBanner = (props: WithTestID<Props>) => {
-  const theme = useItWalletTheme();
   const { testID, onPress, onClosePress } = props;
 
   const handleOnClosePress = useCallback(() => {
@@ -57,19 +55,15 @@ export const ItwEngagementBanner = (props: WithTestID<Props>) => {
   }, [onClosePress]);
 
   return (
-    <View
-      testID={testID}
-      style={[
-        styles.container,
-        { backgroundColor: theme["banner-background"] }
-      ]}
-      // A11y related props
-      accessible={true}
-      accessibilityRole="button"
-      onAccessibilityTap={onPress}
-    >
-      <ItWalletDeck width={105} height={145} style={styles.deck} />
-      <BannerContent {...props} onClosePress={handleOnClosePress} />
+    <View testID={testID}>
+      <ItwBrandedBox>
+        <ItWalletDeck width={105} height={145} style={styles.deck} />
+        <BannerContent
+          {...props}
+          onPress={onPress}
+          onClosePress={handleOnClosePress}
+        />
+      </ItwBrandedBox>
     </View>
   );
 };
@@ -116,9 +110,11 @@ const BannerContent = (props: Props) => {
       accessibilityLabel={accessibilityLabel}
       accessibilityRole={"button"}
     >
-      <VStack space={16}>
-        <View style={styles.logo}>
-          <ItWalletLogo width={118} height={24} />
+      <VStack space={8}>
+        <View style={styles.header}>
+          <H4 color="black" style={styles.title}>
+            {title}
+          </H4>
           <IconButton
             color="contrast"
             accessibilityLabel="close"
@@ -126,10 +122,8 @@ const BannerContent = (props: Props) => {
             onPress={onClosePress}
           />
         </View>
-        <H4 color="black" style={styles.title}>
-          {title}
-        </H4>
         <IOMarkdown rules={markdownRules} content={description} />
+
         <IOButton color="primary" label={action} onPress={onPress} fullWidth />
       </VStack>
     </View>
@@ -137,19 +131,12 @@ const BannerContent = (props: Props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    display: "flex",
-    padding: 16,
-    borderRadius: 16,
-    overflow: "hidden",
-    borderWidth: 1
-  },
   deck: {
     position: "absolute",
     right: -8,
     height: 0
   },
-  logo: {
+  header: {
     flexDirection: "row",
     justifyContent: "space-between"
   },
