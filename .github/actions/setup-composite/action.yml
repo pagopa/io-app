@@ -7,23 +7,15 @@ runs:
       uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
       with:
         node-version-file: ".node-version"    
-    - name: Read pnpm version from packageManager version
-      id: package-manager
-      shell: bash
-      run: |
-        echo "PNPM_VERSION=$(node -p "require('./package.json').packageManager")" >> $GITHUB_OUTPUT    
-    - name: Prepare and activate the exact pnpm version
-      shell: bash
-      run: corepack prepare ${{ steps.package-manager.outputs.PNPM_VERSION }} --activate
-    - id: pnpm-cache
-      uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+    - name: Checkout
+      uuses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
+    - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v.4.2.0
+      name: Install pnpm
       with:
-        path: |
-          **/node_modules
-        key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**/package.json') }}
-        restore-keys: |
-          ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          ${{ runner.os }}-pnpm-
+        version: 10
+        cache: true
+    - name: Install dependencies
+      run: pnpm install
     - name: Install dependencies
       run: pnpm install --frozen-lockfile
       shell: bash
