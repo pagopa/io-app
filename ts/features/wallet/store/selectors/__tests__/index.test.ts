@@ -10,6 +10,7 @@ import {
   selectWalletCategories,
   shouldRenderWalletCategorySelector,
   shouldRenderWalletEmptyStateSelector,
+  shouldRenderWalletLoadingStateSelector,
   shouldRenderItwCardsContainerSelector
 } from "..";
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -223,6 +224,46 @@ describe("isWalletEmptySelector", () => {
     );
     expect(isWalletEmpty).toBe(false);
   });
+});
+
+describe("shouldRenderWalletLoadingStateSelector", () => {
+  it.each`
+    walletCards       | isLoading | userMethods              | cgnInformation           | expected | description
+    ${[]}             | ${true}   | ${pot.some([])}          | ${pot.none}              | ${true}  | ${"wallet is empty and placeholders are loading"}
+    ${[]}             | ${false}  | ${pot.noneLoading}       | ${pot.none}              | ${true}  | ${"wallet is empty and userMethods is loading"}
+    ${[]}             | ${false}  | ${pot.some([])}          | ${pot.noneLoading}       | ${true}  | ${"wallet is empty and cgnInformation is loading"}
+    ${[]}             | ${false}  | ${pot.noneLoading}       | ${pot.noneLoading}       | ${true}  | ${"wallet is empty and both userMethods and cgnInformation are loading"}
+    ${[T_CARDS["1"]]} | ${true}   | ${pot.some([])}          | ${pot.none}              | ${false} | ${"wallet has cards even if loading"}
+    ${[]}             | ${false}  | ${pot.some([])}          | ${pot.none}              | ${false} | ${"wallet is empty but nothing is loading"}
+    ${[]}             | ${false}  | ${pot.some([])}          | ${pot.someError({}, {})} | ${false} | ${"wallet is empty but cgnInformation has error"}
+    ${[]}             | ${false}  | ${pot.someError({}, {})} | ${pot.none}              | ${false} | ${"wallet is empty but userMethods has error"}
+  `(
+    "should return $expected when $description",
+    ({ walletCards, isLoading, userMethods, cgnInformation, expected }) => {
+      const globalState = appReducer(
+        undefined,
+        applicationChangeState("active")
+      );
+
+      const shouldRenderWalletLoadingState =
+        shouldRenderWalletLoadingStateSelector(
+          _.merge(
+            globalState,
+            _.set(globalState, "features.wallet", {
+              cards: walletCards,
+              placeholders: {
+                isLoading
+              }
+            }),
+            _.set(globalState, "features.payments.wallet", {
+              userMethods
+            }),
+            _.set(globalState, "bonus.cgn.detail.information", cgnInformation)
+          )
+        );
+      expect(shouldRenderWalletLoadingState).toBe(expected);
+    }
+  );
 });
 
 describe("shouldRenderWalletEmptyStateSelector", () => {

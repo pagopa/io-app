@@ -83,7 +83,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
       animatedRef: scrollViewContentRef,
       actions: [
         {
-          accessibilityLabel: I18n.t("features.wallet.home.cta"),
+          accessibilityLabel: I18n.t("features.wallet.home.screen.legacy.cta"),
           icon: "add",
           onPress: handleAddToWalletButtonPress
         }
