@@ -12,12 +12,11 @@ import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/d
 import { ItwWalletCardsContainer } from "../../itwallet/wallet/components/ItwWalletCardsContainer";
 import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
 import {
-  isWalletEmptySelector,
-  selectIsWalletLoading,
   selectWalletCategories,
   selectWalletOtherCards,
   shouldRenderItwCardsContainerSelector,
-  shouldRenderWalletEmptyStateSelector
+  shouldRenderWalletEmptyStateSelector,
+  shouldRenderWalletLoadingStateSelector
 } from "../store/selectors";
 import { withWalletCategoryFilter } from "../utils";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
@@ -31,8 +30,9 @@ import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
  * and the empty state
  */
 const WalletCardsContainer = () => {
-  const isLoading = useIOSelector(selectIsWalletLoading);
-  const isWalletEmpty = useIOSelector(isWalletEmptySelector);
+  const shouldRenderLoadingState = useIOSelector(
+    shouldRenderWalletLoadingStateSelector
+  );
   const shouldRenderEmptyState = useIOSelector(
     shouldRenderWalletEmptyStateSelector
   );
@@ -41,10 +41,6 @@ const WalletCardsContainer = () => {
   );
 
   useItwWalletInstanceRevocationAlert();
-
-  // Loading state is only displayed if there is the initial loading and there are no cards or
-  // placeholders in the wallet
-  const shouldRenderLoadingState = isLoading && isWalletEmpty;
 
   // Content to render in the wallet screen, based on the current state
   const walletContent = useMemo(() => {
@@ -56,13 +52,14 @@ const WalletCardsContainer = () => {
     }
     return (
       <View testID="walletCardsContainerTestID" style={{ flex: 1 }}>
+        <WalletBannersContainer />
         {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
         <OtherWalletCardsContainer />
       </View>
     );
   }, [
-    shouldRenderEmptyState,
     shouldRenderLoadingState,
+    shouldRenderEmptyState,
     shouldRenderItwCardsContainer
   ]);
 
@@ -71,7 +68,6 @@ const WalletCardsContainer = () => {
       style={{ flex: 1, paddingTop: 16 }}
       layout={LinearTransition.duration(200)}
     >
-      <WalletBannersContainer />
       {walletContent}
     </Animated.View>
   );
