@@ -6289,6 +6289,7 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
                             <View
                               style={
                                 {
+                                  "alignItems": "center",
                                   "display": "flex",
                                   "flexDirection": "column",
                                   "gap": 8,
@@ -6322,14 +6323,6 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
                             </View>
                           </View>
                         </View>
-                        <View
-                          style={
-                            {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>

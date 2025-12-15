@@ -50,9 +50,7 @@ export const ItwIssuanceEidPreviewScreen = () => {
       // If there is no eID in the context (None), we can safely assume the issuing phase is still ongoing.
       // A None eID cannot be stored in the context, as any issuance failure causes the machine to transition
       // to the Failure state.
-      () => (
-        <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
-      ),
+      () => <LoadingScreenContent title={I18n.t("global.genericWaiting")} />,
       eid => <ContentView eid={eid} />
     )
   );
