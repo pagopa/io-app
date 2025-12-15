@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LoadingScreenContent should match the snapshot with title, a child, header hidden 1`] = `
+exports[`LoadingScreenContent should match the snapshot with title, a subtitle, header hidden 1`] = `
 <View
   style={
     {
@@ -569,6 +569,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                             <View
                               style={
                                 {
+                                  "alignItems": "center",
                                   "display": "flex",
                                   "flexDirection": "column",
                                   "gap": 8,
@@ -599,20 +600,32 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                               >
                                 Test Content Title
                               </Text>
-                              <Text>
-                                My test child
+                              <Text
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#555C70",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": 24,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                Test Content Subtitle
                               </Text>
                             </View>
                           </View>
                         </View>
-                        <View
-                          style={
-                            {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>
@@ -627,7 +640,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
 </View>
 `;
 
-exports[`LoadingScreenContent should match the snapshot with title, a child, header shown 1`] = `
+exports[`LoadingScreenContent should match the snapshot with title, a subtitle, header shown 1`] = `
 <View
   style={
     {
@@ -1196,6 +1209,7 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                             <View
                               style={
                                 {
+                                  "alignItems": "center",
                                   "display": "flex",
                                   "flexDirection": "column",
                                   "gap": 8,
@@ -1226,20 +1240,32 @@ exports[`LoadingScreenContent should match the snapshot with title, a child, hea
                               >
                                 Test Content Title
                               </Text>
-                              <Text>
-                                My test child
+                              <Text
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#555C70",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": 24,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                Test Content Subtitle
                               </Text>
                             </View>
                           </View>
                         </View>
-                        <View
-                          style={
-                            {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>
@@ -1823,6 +1849,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                             <View
                               style={
                                 {
+                                  "alignItems": "center",
                                   "display": "flex",
                                   "flexDirection": "column",
                                   "gap": 8,
@@ -1856,14 +1883,6 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                             </View>
                           </View>
                         </View>
-                        <View
-                          style={
-                            {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>
@@ -2447,6 +2466,7 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                             <View
                               style={
                                 {
+                                  "alignItems": "center",
                                   "display": "flex",
                                   "flexDirection": "column",
                                   "gap": 8,
@@ -2480,14 +2500,6 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
                             </View>
                           </View>
                         </View>
-                        <View
-                          style={
-                            {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>

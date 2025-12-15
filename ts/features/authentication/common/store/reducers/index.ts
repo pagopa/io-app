@@ -25,7 +25,7 @@ import {
 } from "../utils/guards";
 import {
   consolidateActiveSessionLoginData,
-  setLoggedOutUserWithDifferentCF
+  setFinalizeLoggedOutUserWithDifferentCF
 } from "../../../activeSessionLogin/store/actions";
 
 // Here we mix the plain AuthenticationState with the keys added by redux-persist
@@ -111,7 +111,7 @@ const authenticationReducer = (
       isActionOf(loginFailure, action) ||
       isActionOf(sessionInvalid, action) ||
       isActionOf(logoutSuccess, action) ||
-      isActionOf(setLoggedOutUserWithDifferentCF, action) ||
+      isActionOf(setFinalizeLoggedOutUserWithDifferentCF, action) ||
       isActionOf(logoutFailure, action)) &&
     isLoggedIn(state)
   ) {

@@ -428,6 +428,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                             <View
                               style={
                                 {
+                                  "alignItems": "center",
                                   "display": "flex",
                                   "flexDirection": "column",
                                   "gap": 8,
@@ -458,52 +459,32 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                               >
                                 Stiamo caricando il messaggio
                               </Text>
-                              <View
+                              <Text
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
                                 style={
-                                  {
-                                    "alignItems": "center",
-                                  }
+                                  [
+                                    {},
+                                    {
+                                      "color": "#555C70",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": 24,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
                                 }
                               >
-                                <View
-                                  style={
-                                    {
-                                      "height": 8,
-                                    }
-                                  }
-                                />
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Attendi qualche secondo
-                                </Text>
-                              </View>
+                                Attendi qualche secondo
+                              </Text>
                             </View>
                           </View>
                         </View>
-                        <View
-                          style={
-                            {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        />
                       </RNCSafeAreaView>
                     </View>
                     <View
@@ -1288,6 +1269,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                             <View
                               style={
                                 {
+                                  "alignItems": "center",
                                   "display": "flex",
                                   "flexDirection": "column",
                                   "gap": 8,
@@ -1318,52 +1300,32 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                               >
                                 Stiamo caricando il messaggio
                               </Text>
-                              <View
+                              <Text
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
                                 style={
-                                  {
-                                    "alignItems": "center",
-                                  }
+                                  [
+                                    {},
+                                    {
+                                      "color": "#555C70",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": 24,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
                                 }
                               >
-                                <View
-                                  style={
-                                    {
-                                      "height": 8,
-                                    }
-                                  }
-                                />
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Attendi qualche secondo
-                                </Text>
-                              </View>
+                                Attendi qualche secondo
+                              </Text>
                             </View>
                           </View>
                         </View>
-                        <View
-                          style={
-                            {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        />
                       </RNCSafeAreaView>
                     </View>
                     <View
@@ -3228,6 +3190,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                             <View
                               style={
                                 {
+                                  "alignItems": "center",
                                   "display": "flex",
                                   "flexDirection": "column",
                                   "gap": 8,
@@ -3258,52 +3221,32 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                               >
                                 Stiamo caricando il messaggio
                               </Text>
-                              <View
+                              <Text
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
                                 style={
-                                  {
-                                    "alignItems": "center",
-                                  }
+                                  [
+                                    {},
+                                    {
+                                      "color": "#555C70",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": 24,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
                                 }
                               >
-                                <View
-                                  style={
-                                    {
-                                      "height": 8,
-                                    }
-                                  }
-                                />
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Attendi qualche secondo
-                                </Text>
-                              </View>
+                                Attendi qualche secondo
+                              </Text>
                             </View>
                           </View>
                         </View>
-                        <View
-                          style={
-                            {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        />
                       </RNCSafeAreaView>
                     </View>
                     <View
@@ -4088,6 +4031,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                             <View
                               style={
                                 {
+                                  "alignItems": "center",
                                   "display": "flex",
                                   "flexDirection": "column",
                                   "gap": 8,
@@ -4118,52 +4062,32 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                               >
                                 Stiamo caricando il messaggio
                               </Text>
-                              <View
+                              <Text
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
                                 style={
-                                  {
-                                    "alignItems": "center",
-                                  }
+                                  [
+                                    {},
+                                    {
+                                      "color": "#555C70",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": 24,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
                                 }
                               >
-                                <View
-                                  style={
-                                    {
-                                      "height": 8,
-                                    }
-                                  }
-                                />
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Attendi qualche secondo
-                                </Text>
-                              </View>
+                                Attendi qualche secondo
+                              </Text>
                             </View>
                           </View>
                         </View>
-                        <View
-                          style={
-                            {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        />
                       </RNCSafeAreaView>
                     </View>
                     <View

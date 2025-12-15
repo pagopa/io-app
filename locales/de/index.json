@@ -2698,7 +2698,8 @@
       "institutions": {
         "title": "National"
       },
-      "searchLink": "Suche nach allen verfügbaren Diensten"
+      "searchLink": "Suche nach allen verfügbaren Diensten",
+      "favourites": "Bevorzugte Dienste"
     },
     "institution": {
       "failure": {
@@ -2759,6 +2760,9 @@
         "tosLink": "Nutzungsbedingungen",
         "privacyLink": "Datenschutzerklärung"
       }
+    },
+    "favouriteServices": {
+      "title": "Meine Favoriten"
     }
   },
   "identification": {
@@ -3229,8 +3233,12 @@
     },
     "wallet": {
       "home": {
-        "emptyMessage": "Verwahre hier deine Zahlungsmethoden, die Nationale Jugendkarte, Boni und Rabatte.",
-        "cta": "Dem Konto hinzufügen",
+        "screen": {
+          "legacy": {
+            "emptyMessage": "Verwahre hier deine Zahlungsmethoden, die Nationale Jugendkarte, Boni und Rabatte.",
+            "cta": "Dem Konto hinzufügen"
+          }
+        },
         "toast": {
           "newMethod": "Element hinzugefügt!"
         },
