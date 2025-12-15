@@ -1,7 +1,7 @@
 import I18n from "i18next";
 import { useCallback, useMemo, useRef } from "react";
-import { ListItemNav } from "@pagopa/io-app-design-system";
-import { Alert, ListRenderItemInfo } from "react-native";
+import { IOVisualCostants, ListItemNav } from "@pagopa/io-app-design-system";
+import { Alert, ListRenderItemInfo, View } from "react-native";
 import { IOListViewWithLargeHeader } from "../../../../components/ui/IOListViewWithLargeHeader";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -75,18 +75,22 @@ export function FavouriteServicesScreen() {
           );
         }}
       >
-        <ListItemNav
-          value={item.name}
-          description={item.institution.name}
-          onPress={() => {
-            navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
-              screen: SERVICES_ROUTES.SERVICE_DETAIL,
-              params: {
-                serviceId: item.id
-              }
-            });
-          }}
-        />
+        <View
+          style={{ marginHorizontal: IOVisualCostants.appMarginDefault * -1 }}
+        >
+          <ListItemNav
+            value={item.name}
+            description={item.institution.name}
+            onPress={() => {
+              navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
+                screen: SERVICES_ROUTES.SERVICE_DETAIL,
+                params: {
+                  serviceId: item.id
+                }
+              });
+            }}
+          />
+        </View>
       </ListItemSwipeAction>
     ),
     [dispatch, navigation]
