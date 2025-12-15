@@ -10,6 +10,12 @@ import { walletUpdate } from "../features/wallet/store/actions";
 import { shouldTriggerWalletUpdate } from "../utils/deepLinkUtils";
 import { GlobalState } from "../store/reducers/types";
 import { initiateAarFlow } from "../features/pn/aar/store/actions";
+import { IO_LOGIN_CIE_URL_SCHEME } from "../features/authentication/login/cie/utils/cie";
+
+const deepLinkStorageBlacklistRegex = new RegExp(
+  `^${IO_LOGIN_CIE_URL_SCHEME}`,
+  "i"
+);
 
 export const linkingSubscription =
   (dispatch: Dispatch<Action>, store: Store<Readonly<GlobalState>>) =>
@@ -39,7 +45,13 @@ export const linkingSubscription =
         }
       } else {
         // If we are not logged in, we store the URL to be processed later
-        dispatch(storeLinkingUrl(url));
+
+        // as of writing, the only deep link that is dispatched after an app wake, but before the login's completion
+        // is the CIEID login one.
+        // it is then necessary to ignore it to avoid letting it rewrite other deep links that may be useful after login.
+        if (!deepLinkStorageBlacklistRegex.test(url.trim())) {
+          dispatch(storeLinkingUrl(url));
+        }
       }
 
       // If we have a deep link with utm_medium and utm_source parameters, we want to track it
