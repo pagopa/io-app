@@ -120,3 +120,7 @@ sentry.properties
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Local cache
+.eslintcache
+tsconfig.tsbuildinfo
