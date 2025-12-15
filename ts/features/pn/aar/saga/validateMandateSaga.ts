@@ -66,21 +66,9 @@ export function* validateMandateSaga(
     )) as SagaCallReturnType<typeof acceptMandate>;
 
     if (E.isLeft(result)) {
-      const reason = `Decoding failure (${readableReportSimplified(
-        result.left
-      )})`;
-      yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
-      yield* put(
-        setAarFlowState({
-          type: sendAARFlowStates.ko,
-          previousState: { ...action.payload },
-          debugData: {
-            phase: sendAARFailurePhase,
-            reason
-          }
-        })
+      throw new Error(
+        `Decoding failure (${readableReportSimplified(result.left)})`
       );
-      return;
     }
 
     const { status, value } = result.right;
