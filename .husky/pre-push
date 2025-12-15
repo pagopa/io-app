@@ -20,19 +20,19 @@ else
   BASE="origin/master"
 fi
 
-ESLINT_FILES=$(git diff -z --name-only --diff-filter=ACMRT \
-  "$BASE"...HEAD -- '*.ts' '*.tsx')
-if [ -n "$ESLINT_FILES" ]; then
+if ! git diff --quiet --diff-filter=ACMRT "$BASE"...HEAD -- '*.ts' '*.tsx'; then
   echo "Running ESLint on changed files..."
-  printf "%s" "$ESLINT_FILES" | xargs -0 npx eslint \
-    -c .eslintrc.js --ext .ts,.tsx --cache --fix
+  git diff -z --name-only --diff-filter=ACMRT \
+    "$BASE"...HEAD -- '*.ts' '*.tsx' \
+  | xargs -0 npx eslint \
+      -c .eslintrc.js --ext .ts,.tsx --cache --fix
 fi
 
-PRETTIER_FILES=$(git diff -z --name-only --diff-filter=ACMRT \
-  "$BASE"...HEAD -- '*.ts' '*.tsx' '*.json')
-if [ -n "$PRETTIER_FILES" ]; then
+if ! git diff --quiet --diff-filter=ACMRT "$BASE"...HEAD -- '*.ts' '*.tsx' '*.json'; then
   echo "Running Prettier on changed files..."
-  printf "%s" "$PRETTIER_FILES" | xargs -0 npx prettier --write
+  git diff -z --name-only --diff-filter=ACMRT \
+    "$BASE"...HEAD -- '*.ts' '*.tsx' '*.json' \
+  | xargs -0 npx prettier --write
 fi
 
 # If we have any modified files don't push
