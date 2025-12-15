@@ -3073,8 +3073,8 @@
         "searchAction": "Inizia la ricerca"
       },
       "removeAlert": {
-        "title": "Vuoi rimouvere il servizio dai preferiti?",
-        "confirm": "Si, rimuovi **"
+        "title": "Vuoi rimuovere il servizio dai preferiti?",
+        "confirm": "Sì, rimuovi"
       }
     }
   },
