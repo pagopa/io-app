@@ -44,25 +44,32 @@ const basePayments = [
 ];
 
 describe("MessageBottomMenu", () => {
+  const validCases: ReadonlyArray<[SendOpeningSource, SendUserType]> = [
+    ["message", "not_set"],
+    ["aar", "mandatory"],
+    ["aar", "recipient"]
+  ];
   basePayments.forEach(payments =>
     [undefined, false, true].forEach(isCancelled =>
-      basePaidNoticeCodes.forEach(paidNoticeCode => {
-        it(`Should match snapshot (payments ${
-          payments ? payments.length : "undefined"
-        }, isCancelled ${isCancelled}, paidNoticeCodes ${
-          paidNoticeCode ? paidNoticeCode.length : "undefined"
-        })`, () => {
-          const component = renderComponent(
-            baseHistory,
-            payments,
-            isCancelled,
-            paidNoticeCode,
-            "message",
-            "not_set"
-          );
-          expect(component).toMatchSnapshot();
-        });
-      })
+      basePaidNoticeCodes.forEach(paidNoticeCode =>
+        validCases.forEach(([openingSource, userType]) => {
+          it(`Should match snapshot (payments ${
+            payments ? payments.length : "undefined"
+          }, isCancelled ${isCancelled}, paidNoticeCodes ${
+            paidNoticeCode ? paidNoticeCode.length : "undefined"
+          }), source (${openingSource}), type (${userType})`, () => {
+            const component = renderComponent(
+              baseHistory,
+              payments,
+              isCancelled,
+              paidNoticeCode,
+              openingSource,
+              userType
+            );
+            expect(component).toMatchSnapshot();
+          });
+        })
+      )
     )
   );
 });
