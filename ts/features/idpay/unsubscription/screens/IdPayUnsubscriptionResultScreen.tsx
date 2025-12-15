@@ -49,8 +49,6 @@ const IdPayUnsubscriptionResultScreen = () => {
 
   return (
     <OperationResultScreenContent
-      enableAnimatedPictogram
-      loop={pictogram === "umbrella"}
       pictogram={pictogram}
       title={title}
       subtitle={subtitle}

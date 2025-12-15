@@ -105,6 +105,10 @@ const DESIGN_SYSTEM_ROUTES = {
     LOADING_SCREEN: {
       route: "DS_LOADING_SCREEN",
       title: "Loading Screen"
+    },
+    LOADING_SCREEN_EXTENDED_PROPS: {
+      route: "DS_LOADING_SCREEN_EXT",
+      title: "Loading Screen (extended props)"
     }
   },
   DEBUG: {
