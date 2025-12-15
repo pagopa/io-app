@@ -61,21 +61,9 @@ export function* fetchAarDataSaga(
     )) as unknown as SagaCallReturnType<typeof fetchData>;
 
     if (E.isLeft(result)) {
-      const reason = `Decoding failure (${readableReportSimplified(
-        result.left
-      )})`;
-      yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
-      yield* put(
-        setAarFlowState({
-          type: sendAARFlowStates.ko,
-          previousState: currentState,
-          debugData: {
-            phase: sendAARFailurePhase,
-            reason
-          }
-        })
+      throw new Error(
+        `Decoding failure (${readableReportSimplified(result.left)})`
       );
-      return;
     }
 
     const { status, value } = result.right;
