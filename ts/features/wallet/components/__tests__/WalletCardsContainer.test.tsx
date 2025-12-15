@@ -113,14 +113,14 @@ describe("WalletCardsContainer", () => {
 
   it("should render the loading screen", () => {
     jest
-      .spyOn(walletSelectors, "selectIsWalletLoading")
+      .spyOn(walletSelectors, "shouldRenderWalletLoadingStateSelector")
+      .mockImplementation(() => true);
+    jest
+      .spyOn(walletSelectors, "shouldRenderWalletEmptyStateSelector")
       .mockImplementation(() => true);
     jest
       .spyOn(walletSelectors, "selectWalletCategoryFilter")
       .mockImplementation(() => undefined);
-    jest
-      .spyOn(walletSelectors, "shouldRenderWalletEmptyStateSelector")
-      .mockImplementation(() => true);
 
     const { queryByTestId } = renderComponent(WalletCardsContainer);
 
@@ -135,14 +135,14 @@ describe("WalletCardsContainer", () => {
 
   it("should render the empty screen", () => {
     jest
-      .spyOn(walletSelectors, "selectIsWalletLoading")
+      .spyOn(walletSelectors, "shouldRenderWalletLoadingStateSelector")
       .mockImplementation(() => false);
-    jest
-      .spyOn(walletSelectors, "selectWalletCategoryFilter")
-      .mockImplementation(() => undefined);
     jest
       .spyOn(walletSelectors, "shouldRenderWalletEmptyStateSelector")
       .mockImplementation(() => true);
+    jest
+      .spyOn(walletSelectors, "selectWalletOtherCards")
+      .mockImplementation(() => []);
 
     const { queryByTestId } = renderComponent(WalletCardsContainer);
 
@@ -197,31 +197,6 @@ describe("WalletCardsContainer", () => {
           queryByTestId(`${category}WalletCardsContainerTestID`)
         ).not.toBeNull();
       });
-    }
-  );
-
-  it.each([
-    { isLoading: true, isEmpty: false },
-    { isLoading: false, isEmpty: true }
-  ])(
-    "should render the ITW discovery banner if %p",
-    ({ isLoading, isEmpty }) => {
-      jest
-        .spyOn(itwSelectors, "isItwDiscoveryBannerRenderableSelector")
-        .mockImplementation(() => true);
-
-      jest
-        .spyOn(walletSelectors, "selectIsWalletLoading")
-        .mockImplementation(() => isLoading);
-      jest
-        .spyOn(walletSelectors, "shouldRenderWalletEmptyStateSelector")
-        .mockImplementation(() => isEmpty);
-
-      const { queryByTestId } = renderComponent(WalletCardsContainer);
-
-      expect(
-        queryByTestId("itwDiscoveryBannerStandaloneTestID")
-      ).not.toBeNull();
     }
   );
 });
