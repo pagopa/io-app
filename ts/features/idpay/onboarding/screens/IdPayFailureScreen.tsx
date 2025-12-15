@@ -135,29 +135,25 @@ const IdPayFailureScreen = () => {
         };
       case OnboardingFailureEnum.ONBOARDING_UNSATISFIED_REQUIREMENTS:
         return {
-          pictogram: "error",
+          pictogram: "accessDenied",
           title: I18n.t(
             "idpay.onboarding.failure.message.UNSATISFIED_REQUIREMENTS.title"
           ),
           subtitle: I18n.t(
             "idpay.onboarding.failure.message.UNSATISFIED_REQUIREMENTS.subtitle"
           ),
-          action: defaultCloseAction,
-          enableAnimatedPictogram: true,
-          loop: false
+          action: defaultCloseAction
         };
       case OnboardingFailureEnum.ONBOARDING_USER_NOT_IN_WHITELIST:
         return {
-          pictogram: "error",
+          pictogram: "accessDenied",
           title: I18n.t(
             "idpay.onboarding.failure.message.USER_NOT_IN_WHITELIST.title"
           ),
           subtitle: I18n.t(
             "idpay.onboarding.failure.message.USER_NOT_IN_WHITELIST.subtitle"
           ),
-          action: defaultCloseAction,
-          enableAnimatedPictogram: true,
-          loop: false
+          action: defaultCloseAction
         };
       case OnboardingFailureEnum.ONBOARDING_INITIATIVE_NOT_STARTED:
         return {
@@ -190,13 +186,11 @@ const IdPayFailureScreen = () => {
           subtitle: I18n.t(
             "idpay.onboarding.failure.message.BUDGET_EXHAUSTED.subtitle"
           ),
-          action: defaultCloseAction,
-          enableAnimatedPictogram: true,
-          loop: false
+          action: defaultCloseAction
         };
       case OnboardingFailureEnum.ONBOARDING_USER_UNSUBSCRIBED:
         return {
-          pictogram: "error",
+          pictogram: "accessDenied",
           title: I18n.t(
             "idpay.onboarding.failure.message.USER_UNSUBSCRIBED.title"
           ),
@@ -204,9 +198,7 @@ const IdPayFailureScreen = () => {
             "idpay.onboarding.failure.message.USER_UNSUBSCRIBED.subtitle"
           ),
           action: defaultCloseAction,
-          secondaryAction: goToInitiativeAction,
-          enableAnimatedPictogram: true,
-          loop: false
+          secondaryAction: goToInitiativeAction
         };
       case OnboardingFailureEnum.ONBOARDING_ALREADY_ONBOARDED:
         return {
@@ -214,9 +206,7 @@ const IdPayFailureScreen = () => {
           title: I18n.t(
             "idpay.onboarding.failure.message.USER_ONBOARDED.title"
           ),
-          action: goToInitiativeAction,
-          enableAnimatedPictogram: true,
-          loop: false
+          action: goToInitiativeAction
         };
       case OnboardingFailureEnum.NOT_ELIGIBLE:
         return {
