@@ -4,24 +4,50 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import PN_ROUTES from "../../../navigation/routes";
-import { SendAARCieCardReadingScreen } from "../SendAARCieCardReadingScreen";
-import { sendAARFlowStates } from "../../utils/stateUtils";
+import {
+  SendAARCieCardReadingScreen,
+  SendAARCieCardReadingScreenProps
+} from "../SendAARCieCardReadingScreen";
 import * as AAR_SELECTORS from "../../store/selectors";
+import { sendAarMockStates } from "../../utils/testUtils";
+import { sendAARFlowStates } from "../../utils/stateUtils";
+
+const mockReplace = jest.fn();
 
 jest.mock("../../components/SendAARCieCardReadingComponent");
 
 describe("SendAARCieCardReadingScreen", () => {
-  it.each(Object.values(sendAARFlowStates))(
-    'should match the snapshot for the flowType = "%s"',
-    flowType => {
-      jest
-        .spyOn(AAR_SELECTORS, "currentAARFlowStateType")
-        .mockReturnValue(flowType);
+  afterEach(jest.clearAllMocks);
+
+  it.each(sendAarMockStates)(
+    'should match the snapshot for the flowType = "$type"',
+    aarState => {
+      jest.spyOn(AAR_SELECTORS, "currentAARFlowData").mockReturnValue(aarState);
       const component = renderComponent();
 
       expect(component.toJSON()).toMatchSnapshot();
     }
   );
+
+  sendAarMockStates.forEach(aarState => {
+    const { type } = aarState;
+    const shouldNavigate =
+      type === sendAARFlowStates.ko ||
+      type === sendAARFlowStates.displayingNotificationData;
+
+    it(`${
+      shouldNavigate ? "should" : "should not"
+    } call "replace" when type is: "${type}"`, () => {
+      jest.spyOn(AAR_SELECTORS, "currentAARFlowData").mockReturnValue(aarState);
+      renderComponent();
+
+      if (shouldNavigate) {
+        expect(mockReplace).toHaveBeenCalledTimes(1);
+      } else {
+        expect(mockReplace).not.toHaveBeenCalled();
+      }
+    });
+  });
 });
 
 function renderComponent() {
@@ -29,9 +55,12 @@ function renderComponent() {
   const store = createStore(appReducer, baseState as any);
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    ({ route, navigation }) => (
+    ({ route, navigation }: SendAARCieCardReadingScreenProps) => (
       <SendAARCieCardReadingScreen
-        navigation={navigation}
+        navigation={{
+          ...navigation,
+          replace: mockReplace
+        }}
         route={{
           ...route,
           params: {
