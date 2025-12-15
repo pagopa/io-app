@@ -596,6 +596,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             <View
                               style={
                                 {
+                                  "alignItems": "center",
                                   "display": "flex",
                                   "flexDirection": "column",
                                   "gap": 8,
@@ -629,14 +630,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             </View>
                           </View>
                         </View>
-                        <View
-                          style={
-                            {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>
@@ -1247,6 +1240,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             <View
                               style={
                                 {
+                                  "alignItems": "center",
                                   "display": "flex",
                                   "flexDirection": "column",
                                   "gap": 8,
@@ -1280,14 +1274,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             </View>
                           </View>
                         </View>
-                        <View
-                          style={
-                            {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>
@@ -1898,6 +1884,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             <View
                               style={
                                 {
+                                  "alignItems": "center",
                                   "display": "flex",
                                   "flexDirection": "column",
                                   "gap": 8,
@@ -1931,14 +1918,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             </View>
                           </View>
                         </View>
-                        <View
-                          style={
-                            {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>
@@ -2549,6 +2528,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             <View
                               style={
                                 {
+                                  "alignItems": "center",
                                   "display": "flex",
                                   "flexDirection": "column",
                                   "gap": 8,
@@ -2582,14 +2562,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             </View>
                           </View>
                         </View>
-                        <View
-                          style={
-                            {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>
@@ -3200,6 +3172,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             <View
                               style={
                                 {
+                                  "alignItems": "center",
                                   "display": "flex",
                                   "flexDirection": "column",
                                   "gap": 8,
@@ -3233,14 +3206,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             </View>
                           </View>
                         </View>
-                        <View
-                          style={
-                            {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>
@@ -3851,6 +3816,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             <View
                               style={
                                 {
+                                  "alignItems": "center",
                                   "display": "flex",
                                   "flexDirection": "column",
                                   "gap": 8,
@@ -3884,14 +3850,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             </View>
                           </View>
                         </View>
-                        <View
-                          style={
-                            {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>
@@ -4502,6 +4460,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             <View
                               style={
                                 {
+                                  "alignItems": "center",
                                   "display": "flex",
                                   "flexDirection": "column",
                                   "gap": 8,
@@ -4535,14 +4494,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             </View>
                           </View>
                         </View>
-                        <View
-                          style={
-                            {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>
@@ -5153,6 +5104,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             <View
                               style={
                                 {
+                                  "alignItems": "center",
                                   "display": "flex",
                                   "flexDirection": "column",
                                   "gap": 8,
@@ -5186,14 +5138,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             </View>
                           </View>
                         </View>
-                        <View
-                          style={
-                            {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>
@@ -5804,6 +5748,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             <View
                               style={
                                 {
+                                  "alignItems": "center",
                                   "display": "flex",
                                   "flexDirection": "column",
                                   "gap": 8,
@@ -5837,14 +5782,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             </View>
                           </View>
                         </View>
-                        <View
-                          style={
-                            {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>
@@ -6455,6 +6392,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             <View
                               style={
                                 {
+                                  "alignItems": "center",
                                   "display": "flex",
                                   "flexDirection": "column",
                                   "gap": 8,
@@ -6488,14 +6426,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             </View>
                           </View>
                         </View>
-                        <View
-                          style={
-                            {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>
@@ -7106,6 +7036,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             <View
                               style={
                                 {
+                                  "alignItems": "center",
                                   "display": "flex",
                                   "flexDirection": "column",
                                   "gap": 8,
@@ -7139,14 +7070,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             </View>
                           </View>
                         </View>
-                        <View
-                          style={
-                            {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>
@@ -7757,6 +7680,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             <View
                               style={
                                 {
+                                  "alignItems": "center",
                                   "display": "flex",
                                   "flexDirection": "column",
                                   "gap": 8,
@@ -7790,14 +7714,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             </View>
                           </View>
                         </View>
-                        <View
-                          style={
-                            {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>
@@ -8408,6 +8324,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             <View
                               style={
                                 {
+                                  "alignItems": "center",
                                   "display": "flex",
                                   "flexDirection": "column",
                                   "gap": 8,
@@ -8441,14 +8358,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             </View>
                           </View>
                         </View>
-                        <View
-                          style={
-                            {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>
@@ -10019,6 +9928,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             <View
                               style={
                                 {
+                                  "alignItems": "center",
                                   "display": "flex",
                                   "flexDirection": "column",
                                   "gap": 8,
@@ -10052,14 +9962,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             </View>
                           </View>
                         </View>
-                        <View
-                          style={
-                            {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>
@@ -10670,6 +10572,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             <View
                               style={
                                 {
+                                  "alignItems": "center",
                                   "display": "flex",
                                   "flexDirection": "column",
                                   "gap": 8,
@@ -10703,14 +10606,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                             </View>
                           </View>
                         </View>
-                        <View
-                          style={
-                            {
-                              "marginBottom": 16,
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        />
                       </RNCSafeAreaView>
                     </View>
                   </View>

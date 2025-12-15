@@ -132,8 +132,6 @@ const ReceiptPreviewScreen = () => {
     <OperationResultScreenContent
       pictogram="umbrella"
       title={I18n.t("global.genericError")}
-      enableAnimatedPictogram
-      loop
     />
   );
 };
