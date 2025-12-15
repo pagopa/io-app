@@ -4302,8 +4302,6 @@
     },
     "wallet": {
       "home": {
-        "emptyMessage": "Custodisci qui i tuoi metodi di pagamento, Carta Giovani Nazionale, bonus e sconti.",
-        "cta": "Aggiungi al Portafoglio",
         "toast": {
           "newMethod": "Elemento aggiunto!"
         },

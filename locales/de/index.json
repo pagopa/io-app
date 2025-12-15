@@ -3227,8 +3227,12 @@
     },
     "wallet": {
       "home": {
-        "emptyMessage": "Verwahre hier deine Zahlungsmethoden, die Nationale Jugendkarte, Boni und Rabatte.",
-        "cta": "Dem Konto hinzufügen",
+        "screen": {
+          "legacy": {
+            "emptyMessage": "Verwahre hier deine Zahlungsmethoden, die Nationale Jugendkarte, Boni und Rabatte.",
+            "cta": "Dem Konto hinzufügen"
+          }
+        },
         "toast": {
           "newMethod": "Element hinzugefügt!"
         },
