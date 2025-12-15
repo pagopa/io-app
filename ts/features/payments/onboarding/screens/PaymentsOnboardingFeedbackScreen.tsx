@@ -54,7 +54,7 @@ const pictogramByOutcome: Record<
 > = {
   [WalletOnboardingOutcomeEnum.SUCCESS]: "success",
   [WalletOnboardingOutcomeEnum.GENERIC_ERROR]: "umbrella",
-  [WalletOnboardingOutcomeEnum.AUTH_ERROR]: "error",
+  [WalletOnboardingOutcomeEnum.AUTH_ERROR]: "accessDenied",
   [WalletOnboardingOutcomeEnum.TIMEOUT]: "time",
   [WalletOnboardingOutcomeEnum.CANCELED_BY_USER]: "trash",
   [WalletOnboardingOutcomeEnum.INVALID_SESSION]: "umbrella",

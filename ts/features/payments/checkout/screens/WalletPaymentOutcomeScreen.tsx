@@ -237,9 +237,7 @@ const WalletPaymentOutcomeScreen = () => {
             amount: paymentAmount
           }),
           subtitle: I18n.t("wallet.payment.outcome.SUCCESS.subtitle"),
-          action: closeSuccessAction,
-          enableAnimatedPictogram: true,
-          loop: false
+          action: closeSuccessAction
         };
       case WalletPaymentOutcomeEnum.GENERIC_ERROR:
       default:
@@ -247,17 +245,14 @@ const WalletPaymentOutcomeScreen = () => {
           pictogram: "umbrella",
           title: I18n.t("wallet.payment.outcome.GENERIC_ERROR.title"),
           subtitle: I18n.t("wallet.payment.outcome.GENERIC_ERROR.subtitle"),
-          action: closeFailureAction,
-          enableAnimatedPictogram: true
+          action: closeFailureAction
         };
       case WalletPaymentOutcomeEnum.AUTH_ERROR:
         return {
-          pictogram: "error",
+          pictogram: "accessDenied",
           title: I18n.t("wallet.payment.outcome.AUTH_ERROR.title"),
           subtitle: I18n.t("wallet.payment.outcome.AUTH_ERROR.subtitle"),
-          action: closeFailureAction,
-          enableAnimatedPictogram: true,
-          loop: false
+          action: closeFailureAction
         };
       case WalletPaymentOutcomeEnum.INVALID_DATA:
         return {
@@ -303,12 +298,10 @@ const WalletPaymentOutcomeScreen = () => {
         };
       case WalletPaymentOutcomeEnum.EXCESSIVE_AMOUNT:
         return {
-          pictogram: "error",
+          pictogram: "accessDenied",
           title: I18n.t("wallet.payment.outcome.EXCESSIVE_AMOUNT.title"),
           subtitle: I18n.t("wallet.payment.outcome.EXCESSIVE_AMOUNT.subtitle"),
-          action: closeFailureAction,
-          enableAnimatedPictogram: true,
-          loop: false
+          action: closeFailureAction
         };
       case WalletPaymentOutcomeEnum.INVALID_METHOD:
         return {
@@ -358,14 +351,12 @@ const WalletPaymentOutcomeScreen = () => {
         };
       case WalletPaymentOutcomeEnum.PAYPAL_REMOVED_ERROR:
         return {
-          pictogram: "error",
+          pictogram: "accessDenied",
           title: I18n.t("wallet.payment.outcome.PAYPAL_REMOVED_ERROR.title"),
           subtitle: I18n.t(
             "wallet.payment.outcome.PAYPAL_REMOVED_ERROR.subtitle"
           ),
-          action: closeFailureAction,
-          enableAnimatedPictogram: true,
-          loop: false
+          action: closeFailureAction
         };
       case WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER:
         return {
@@ -411,8 +402,7 @@ const WalletPaymentOutcomeScreen = () => {
           title: I18n.t("wallet.payment.outcome.BE_NODE_KO.title"),
           subtitle: I18n.t("wallet.payment.outcome.BE_NODE_KO.subtitle"),
           action: closeFailureAction,
-          secondaryAction: contactSupportAction,
-          enableAnimatedPictogram: true
+          secondaryAction: contactSupportAction
         };
       case WalletPaymentOutcomeEnum.PSP_ERROR:
         return {
@@ -429,8 +419,7 @@ const WalletPaymentOutcomeScreen = () => {
           subtitle: I18n.t(
             "wallet.payment.outcome.AUTH_REQUEST_ERROR.subtitle"
           ),
-          action: closeFailureAction,
-          enableAnimatedPictogram: true
+          action: closeFailureAction
         };
     }
   };

@@ -3968,6 +3968,11 @@
             "title": "Inserisci il codice a 6 cifre che trovi in basso a destra della CIE",
             "description": "È il codice a 6 cifre (CAN) che trovi stampato sul fronte della Carta di Identità Elettronica, in basso a destra."
           },
+          "cieScanningAdvisory": {
+            "title": "Posiziona la CIE su una superficie stabile per la lettura",
+            "description": "Dovrai poggiare il retro del telefono sulla carta e tenerlo fermo per la lettura.",
+            "primaryAction": "Inizia lettura CIE"
+          },
           "cieScanning": {
             "idle": {
               "title": "Poggia il retro del telefono sulla CIE",

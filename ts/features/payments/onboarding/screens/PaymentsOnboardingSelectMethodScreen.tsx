@@ -60,8 +60,6 @@ const PaymentsOnboardingSelectMethodScreen = () => {
           accessibilityLabel: I18n.t("global.genericRetry"),
           onPress: () => dispatch(paymentsOnboardingGetMethodsAction.request())
         }}
-        enableAnimatedPictogram
-        loop
       />
     );
   }
