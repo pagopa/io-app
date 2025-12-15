@@ -9,31 +9,28 @@ import {
   SendAARCieCardReadingScreenProps
 } from "../SendAARCieCardReadingScreen";
 import * as AAR_SELECTORS from "../../store/selectors";
-import { sendAarMockStateFactory } from "../../utils/testUtils";
+import { sendAarMockStates } from "../../utils/testUtils";
 import { sendAARFlowStates } from "../../utils/stateUtils";
 
 const mockReplace = jest.fn();
 
 jest.mock("../../components/SendAARCieCardReadingComponent");
 
-const aarStates = Object.entries(sendAarMockStateFactory);
-
 describe("SendAARCieCardReadingScreen", () => {
   afterEach(jest.clearAllMocks);
 
-  it.each(aarStates)(
-    'should match the snapshot for the flowType = "%s"',
-    (_, getAarState) => {
-      jest
-        .spyOn(AAR_SELECTORS, "currentAARFlowData")
-        .mockReturnValue(getAarState());
+  it.each(sendAarMockStates)(
+    'should match the snapshot for the flowType = "$type"',
+    aarState => {
+      jest.spyOn(AAR_SELECTORS, "currentAARFlowData").mockReturnValue(aarState);
       const component = renderComponent();
 
       expect(component.toJSON()).toMatchSnapshot();
     }
   );
 
-  aarStates.forEach(([type, getAarState]) => {
+  sendAarMockStates.forEach(aarState => {
+    const { type } = aarState;
     const shouldNavigate =
       type === sendAARFlowStates.ko ||
       type === sendAARFlowStates.displayingNotificationData;
@@ -41,9 +38,7 @@ describe("SendAARCieCardReadingScreen", () => {
     it(`${
       shouldNavigate ? "should" : "should not"
     } call "replace" when type is: "${type}"`, () => {
-      jest
-        .spyOn(AAR_SELECTORS, "currentAARFlowData")
-        .mockReturnValue(getAarState());
+      jest.spyOn(AAR_SELECTORS, "currentAARFlowData").mockReturnValue(aarState);
       renderComponent();
 
       if (shouldNavigate) {
