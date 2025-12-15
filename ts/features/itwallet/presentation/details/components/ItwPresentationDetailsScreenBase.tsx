@@ -1,5 +1,4 @@
 import {
-  ButtonSolidProps,
   FooterActions,
   useFooterActionsMeasurements,
   useIOToast
@@ -11,12 +10,13 @@ import Animated, {
   useAnimatedScrollHandler,
   useSharedValue
 } from "react-native-reanimated";
+import { ButtonBlockProps } from "../../../../../components/ui/utils/buttons.ts";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
 import { useHeaderPropsByCredentialType } from "../../../common/utils/itwStyleUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 
-export type CredentialCtaProps = Omit<ButtonSolidProps, "fullWidth">;
+export type CredentialCtaProps = ButtonBlockProps;
 
 export type ItwPresentationDetailsScreenBaseProps = {
   credential: StoredCredential;
