@@ -25,7 +25,7 @@ export const ItwIdentificationIdpSelectionScreen = () => {
   const idpValue = isReady(idps) ? idps.value : idpsFallback;
   const randomIdps = useRef<ReadonlyArray<SpidIdp>>(randomOrderIdps(idpValue));
 
-  useItwDismissalDialog({
+  const dismissalDialog = useItwDismissalDialog({
     customLabels: {
       body: I18n.t(
         "features.itWallet.discovery.screen.itw.dismissalDialog.body"
@@ -46,7 +46,10 @@ export const ItwIdentificationIdpSelectionScreen = () => {
   };
 
   return (
-    <IOScrollViewWithLargeHeader title={{ label: "" }}>
+    <IOScrollViewWithLargeHeader
+      goBack={dismissalDialog.show}
+      title={{ label: "" }}
+    >
       <IdpsGrid
         idps={randomIdps.current}
         onIdpSelected={onIdpSelected}
