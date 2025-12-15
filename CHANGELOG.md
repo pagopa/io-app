@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.22.0-canary.7796](https://github.com/pagopa/io-app/compare/3.22.0-rc.1...3.22.0-canary.7796) (2025-12-15)
+
+
+### Features
+
+* [[IOPAE-2315](https://pagopa.atlassian.net/browse/IOPAE-2315)] Add Empty State to Favourite Services ([#7701](https://github.com/pagopa/io-app/issues/7701)) ([67f41cb](https://github.com/pagopa/io-app/commit/67f41cb7ae10e43d1b5f9ad5206f22fe3cf2ef53))
+* Add mock implementation for Notifee notifications ([915e6c3](https://github.com/pagopa/io-app/commit/915e6c30d6d179191549358afa4ef4f85f959ec2))
+* Add Notifee integration for scheduling notifications ([c5182ae](https://github.com/pagopa/io-app/commit/c5182ae699bec636d69ae7b332bb6eab92f193b9))
+* Update notification scheduling to 5 minutes and improve alert messages ([3981fa8](https://github.com/pagopa/io-app/commit/3981fa8a03b87547fffdc023271ac39dd07abba2))
+
 ## [3.22.0-rc.1](https://github.com/pagopa/io-app/compare/3.22.0-rc.0...3.22.0-rc.1) (2025-12-11)
 
 
