@@ -13,7 +13,8 @@ import {
   itwSetWalletUpgradeMDLDetailsBannerHidden,
   itwFreezeSimplifiedActivationRequirements,
   itwClearSimplifiedActivationRequirements,
-  itwSetPidReissuingSurveyHidden
+  itwSetPidReissuingSurveyHidden,
+  itwSetActivationBannerHidden
 } from "../actions/preferences";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
@@ -44,6 +45,8 @@ export type ItwPreferencesState = {
   // Indicates whether the bottom sheet survey is visible when the user quits
   // the reissuing flow only for the first time
   isPidReissuingSurveyHidden?: boolean;
+  // Indicates whether the activation banner should be hidden
+  isActivationBannerHidden?: boolean;
 };
 
 export const itwPreferencesInitialState: ItwPreferencesState = {
@@ -160,6 +163,13 @@ const reducer = (
       return {
         ...state,
         isPidReissuingSurveyHidden: action.payload
+      };
+    }
+
+    case getType(itwSetActivationBannerHidden): {
+      return {
+        ...state,
+        isActivationBannerHidden: action.payload
       };
     }
 
