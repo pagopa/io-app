@@ -272,7 +272,10 @@ type ItwCopyListItem = {
   item_copied: string;
 };
 
-export type ItwOfflineRicaricaAppIOSource = "bottom_sheet" | "banner";
+export type ItwOfflineRicaricaAppIOSource =
+  | "bottom_sheet"
+  | "banner"
+  | "access_expired_screen";
 
 type ItwCredentialInfoDetails = {
   credential: MixPanelCredential;
@@ -297,8 +300,7 @@ export enum ItwEidReissuingTrigger {
  * Add new values when implementing additional flows that require L3 upgrade.
  */
 export enum ItwL3UpgradeTrigger {
-  REMOTE_QR_CODE = "remote_qr_code",
-  ADD_CREDENTIAL = "add_credential"
+  REMOTE_QR_CODE = "remote_qr_code"
 }
 
 // TODO: Add reissuing_PID when the L3 PID reissuance flow is ready

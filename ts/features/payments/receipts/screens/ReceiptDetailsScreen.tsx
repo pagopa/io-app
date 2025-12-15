@@ -148,8 +148,6 @@ const ReceiptDetailsScreen = () => {
           accessibilityLabel: I18n.t("global.buttons.back"),
           onPress: navigation.goBack
         }}
-        enableAnimatedPictogram
-        loop
       />
     );
   }

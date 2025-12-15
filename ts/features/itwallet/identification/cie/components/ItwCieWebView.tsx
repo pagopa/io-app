@@ -166,7 +166,7 @@ export const ItwCieAuthenticationWebview = ({
         />
       )}
       <View style={StyleSheet.absoluteFillObject}>
-        <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
+        <LoadingScreenContent title={I18n.t("global.genericWaiting")} />
       </View>
     </>
   );

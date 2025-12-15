@@ -2,6 +2,43 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.22.0-rc.2](https://github.com/pagopa/io-app/compare/3.22.0-rc.1...3.22.0-rc.2) (2025-12-12)
+
+
+### Features
+
+* **AAR:** [[IOCOM-2749](https://pagopa.atlassian.net/browse/IOCOM-2749)] CIE scanning educational screen ([#7705](https://github.com/pagopa/io-app/issues/7705)) ([ac38f3e](https://github.com/pagopa/io-app/commit/ac38f3ee82ed07ebd2137356d67b2f34d1930943))
+* [[IOPAE-2315](https://pagopa.atlassian.net/browse/IOPAE-2315)] Add Empty State to Favourite Services ([#7701](https://github.com/pagopa/io-app/issues/7701)) ([67f41cb](https://github.com/pagopa/io-app/commit/67f41cb7ae10e43d1b5f9ad5206f22fe3cf2ef53))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-3468](https://pagopa.atlassian.net/browse/SIW-3468)] Fix limit reached screen source for mixpanel event ([#7697](https://github.com/pagopa/io-app/issues/7697)) ([681c1d4](https://github.com/pagopa/io-app/commit/681c1d46fd61e1a8c879f536d778f1ff8e4176ca))
+
+
+### Chores
+
+* [[IOPLT-1459](https://pagopa.atlassian.net/browse/IOPLT-1459)] Enable the animated pictogram on instances of `OperationResultScreenContent` by default ([#7694](https://github.com/pagopa/io-app/issues/7694)) ([972f33c](https://github.com/pagopa/io-app/commit/972f33cd838e6ddb1761ed0068311cef3151d669))
+* [[IOPLT-1489](https://pagopa.atlassian.net/browse/IOPLT-1489)] Refactor `LoadingScreenContent` ([#7703](https://github.com/pagopa/io-app/issues/7703)) ([8cab9f9](https://github.com/pagopa/io-app/commit/8cab9f93193a9d053a90b26f12f03ad20c1b6082))
+
+## [3.22.0-rc.1](https://github.com/pagopa/io-app/compare/3.22.0-rc.0...3.22.0-rc.1) (2025-12-11)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-3507](https://pagopa.atlassian.net/browse/SIW-3507)] Update the number of users on the discovery page.  ([#7696](https://github.com/pagopa/io-app/issues/7696)) ([6fe2c96](https://github.com/pagopa/io-app/commit/6fe2c964a50e47583336fe354ec084e6fba7287a))
+* **IT-Wallet:** [[SIW-3417](https://pagopa.atlassian.net/browse/SIW-3417)] Activate IT-Wallet starting from add document ([#7663](https://github.com/pagopa/io-app/issues/7663)) ([47798bc](https://github.com/pagopa/io-app/commit/47798bc3be5bd790a4f35effb87c7e730364059c))
+
+
+### Bug Fixes
+
+* [[IOCOM-2833](https://pagopa.atlassian.net/browse/IOCOM-2833)] No message Id field in more info bottom sheet ([#7698](https://github.com/pagopa/io-app/issues/7698)) ([0a5f19f](https://github.com/pagopa/io-app/commit/0a5f19fc32331b44c96e09d2fd379a7162874399))
+
+
+### Chores
+
+* **Cross:** [[IOXXX-000](https://pagopa.atlassian.net/browse/IOXXX-000)] remove unused file `File.swift` ([#7699](https://github.com/pagopa/io-app/issues/7699)) ([3b0f3c3](https://github.com/pagopa/io-app/commit/3b0f3c34650cf6c8593af365bb5ffe84731b4c33))
+
 ## [3.22.0-rc.0](https://github.com/pagopa/io-app/compare/3.21.0-rc.7...3.22.0-rc.0) (2025-12-10)
 
 

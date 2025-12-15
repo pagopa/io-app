@@ -1,5 +1,4 @@
 import { ComponentProps } from "react";
-import { Text } from "react-native";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
@@ -10,28 +9,28 @@ import LoadingScreenContent from "../LoadingScreenContent";
 describe("LoadingScreenContent", () => {
   it("should match the snapshot with title, no children, header hidden", () => {
     const defaultProps = {
-      contentTitle: "Test Content Title"
+      title: "Test Content Title"
     } as ComponentProps<typeof LoadingScreenContent>;
     expect(renderComponent(defaultProps)).toMatchSnapshot();
   });
   it("should match the snapshot with title, no children, header shown", () => {
     const defaultProps = {
-      contentTitle: "Test Content Title",
+      title: "Test Content Title",
       headerVisible: true
     } as ComponentProps<typeof LoadingScreenContent>;
     expect(renderComponent(defaultProps)).toMatchSnapshot();
   });
-  it("should match the snapshot with title, a child, header hidden", () => {
+  it("should match the snapshot with title, a subtitle, header hidden", () => {
     const defaultProps = {
-      contentTitle: "Test Content Title",
-      children: <Text>{"My test child"}</Text>
+      title: "Test Content Title",
+      subtitle: "Test Content Subtitle"
     } as ComponentProps<typeof LoadingScreenContent>;
     expect(renderComponent(defaultProps)).toMatchSnapshot();
   });
-  it("should match the snapshot with title, a child, header shown", () => {
+  it("should match the snapshot with title, a subtitle, header shown", () => {
     const defaultProps = {
-      contentTitle: "Test Content Title",
-      children: <Text>{"My test child"}</Text>,
+      title: "Test Content Title",
+      subtitle: "Test Content Subtitle",
       headerVisible: true
     } as ComponentProps<typeof LoadingScreenContent>;
     expect(renderComponent(defaultProps)).toMatchSnapshot();
