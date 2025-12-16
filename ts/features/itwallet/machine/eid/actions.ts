@@ -11,6 +11,7 @@ import {
   trackItWalletIDMethodSelected,
   trackItwDeactivated,
   trackItwIdAuthenticationCompleted,
+  trackItwIdVerifiedDocument,
   trackSaveCredentialSuccess,
   updateITWStatusAndPIDProperties
 } from "../../analytics";
@@ -343,7 +344,8 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  trackPrimaryIdAuthenticationCompleted: ({
+  // Track SPID+CIE first phase
+  trackItwIdAuthenticationCompleted: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     assert(context.identification, "identification context is undefined");
@@ -353,5 +355,18 @@ export const createEidIssuanceActionsImplementation = (
     );
 
     trackItwIdAuthenticationCompleted(context.identification.mode);
+  },
+
+  // Track SPID+CIE final phase
+  trackItwIdVerifiedDocument: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assert(context.identification, "identification context is undefined");
+    assert(
+      context.identification.mode !== "ciePin",
+      "identification mode can not be ciePin"
+    );
+
+    trackItwIdVerifiedDocument(context.identification.mode);
   }
 });

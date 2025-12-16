@@ -1406,6 +1406,15 @@ export const trackItwIdAuthenticationCompleted = (
   );
 };
 
+export const trackItwIdVerifiedDocument = (
+  ITW_ID_method: Exclude<ItwIdMethod, "ciePin">
+) => {
+  void mixpanelTrack(
+    ITW_TECH_EVENTS.ITW_ID_VERIFIED_DOCUMENT,
+    buildEventProperties("TECH", undefined, { ITW_ID_method })
+  );
+};
+
 // #endregion TECH
 
 // #region PROFILE AND SUPER PROPERTIES UPDATE
