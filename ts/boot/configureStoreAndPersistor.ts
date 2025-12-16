@@ -672,7 +672,7 @@ const logger = createLogger({
 });
 
 // configure Reactotron if the app is running in dev mode
-export const RTron = isDevEnv ? configureReactotron() : undefined;
+export const RTron = undefined;
 const sagaMiddleware = createSagaMiddleware();
 
 function configureStoreAndPersistor(): {
@@ -693,9 +693,9 @@ function configureStoreAndPersistor(): {
 
   // add Reactotron enhancer if the app is running in dev mode
   const enhancer: StoreEnhancer =
-    RTron && RTron.createEnhancer
-      ? composeEnhancers(middlewares, RTron.createEnhancer())
-      : composeEnhancers(middlewares);
+    // RTron && RTron.createEnhancer
+    //   ? composeEnhancers(middlewares, RTron.createEnhancer())
+    composeEnhancers(middlewares);
 
   const store: Store = createStore<
     PersistedGlobalState,
