@@ -1,1 +1,0 @@
-Da, mogoče je zahtevati več kot eno digitalno identiteto – tudi z različnimi stopnjami varnosti – z različnimi upravitelji digitalne identitete. V primeru posedovanja več identitet se lahko vsak državljan prosto prijavi v IO z želenimi poverilnicami SPID.

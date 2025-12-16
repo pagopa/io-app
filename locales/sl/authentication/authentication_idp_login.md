@@ -1,3 +1,0 @@
-Za prijavo moraš v ustrezna polja vnesti svojo davčno številko in geslo.
-**Geslo je alfanumerična koda, ki si jo nastavil/a pri ustvarjanju svoje digitalne identitete SPID.** Če se ga ne spomniš, lahko izbereš obnovitev gesla in začneš ustrezen postopek, ki ga upravlja neposredno ponudnik identitete.
-Ko boš vnesel/la davčno št. in geslo, boš prejel/a OTP od svojega ponudnika identitete: potrdi zahtevo za dostop in se vrni v aplikacijo IO za nadaljevanje prijave. Na tej točki boš našel/la zaslon, ki pooblašča ponudnika identitete, da IO posreduje vrsto informacij, ki so potrebne za uporabo aplikacije, in različne storitve, ki jih ponujajo javni organi prek IO: pritisniti moraš »Odobri«, da privoliš in nadaljuješ s postopkom avtentikacije.

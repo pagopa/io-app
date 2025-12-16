@@ -1,1 +1,0 @@
-**Tvoj prednostni koledar je privzeto tisti, ki je povezan s tvojo e-pošto**, če si se prijavil/a z Google računom. E-poštni naslov, povezan s tvojim koledarjem, lahko kadar koli spremeniš, da boš prejemal/a IO opomnike na koledar, ki ga največ uporabljaš.

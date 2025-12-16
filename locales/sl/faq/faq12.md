@@ -1,1 +1,0 @@
-Morda je težava povezana z integracijo med SPID-om in aplikacijo IO. Prijavi težavo z uporabo gumbov na dnu te strani: potrudili se bomo, da ti pomagamo in ti cim prej omogocimo dostop do aplikacije IO.

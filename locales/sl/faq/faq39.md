@@ -1,1 +1,0 @@
-Identifikacijska koda je edinstvena koda, ki jo, ob transakciji, z namenom identifikacije, generira pagoPA. To kodo lahko uporabiš v komunikaciji s pagoPA ali z ustanovami v primeru, da potrebuješ pomoč.

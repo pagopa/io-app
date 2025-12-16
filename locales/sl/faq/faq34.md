@@ -1,2 +1,0 @@
-QR koda je dvodimenzionalna črtna koda ali matrika, sestavljena iz črnih kvadratkov, razporejenih znotraj belega kvadratnega vzorca. QR koda povezuje fizični svet z digitalnim: QR kodo, natisnjeno na listu, lahko skeniramo s kamero telefona za dostop do digitalne vsebine, kot je npr. spletna stran, plačilo, članek.
-QR koda, ki jo najdeš na obvestilu o plačilu, je povezana na Kodo obvestila, ki ti omogoča, da aktiviraš postopek plačila za določen namen, številko in davčno številko – s čimer se izogneš ročnemu vnosu teh podatkov med postopkom plačila.

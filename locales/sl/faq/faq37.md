@@ -1,1 +1,0 @@
-Trenutno lahko dodaš debetne, kreditne, predplačniške in PagoBANCOMAT kartice. Dodajanje drugih načinov plačila je načrtovan v naslednjih mesecih. Oglej si posodobljen seznam na strani [Načini plačila](https://io.italia.it/metodi-pagamento).

@@ -1,1 +1,0 @@
-Ko je preverjanje pristnosti koncano, se boš znašel/la v aplikaciji IO. Na strani profila pod naslovom zasebnost si lahko kadarkoli ogledaš informacije o obdelavi osebnih podatkov uporabnikov aplikacije IO (13. clen Uredbe EU št. 2016/679).

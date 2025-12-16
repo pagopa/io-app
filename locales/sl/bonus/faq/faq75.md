@@ -1,1 +1,0 @@
-Če se ti v povzetku podatkov bonusa, povezanega s tvojimi vzdrževanimi družinskimi člani, nekaj ne zdi pravilno, boš moral/a verjetno predložiti nov DSU, za posodobitev seznama članov in povezanega indikatorja ISEE. V tem primeru moraš samo slediti navodilom v aplikaciji in preklicati prošnjo. V primeru preklica, boš lahko pozneje znova prosil za Bonus.

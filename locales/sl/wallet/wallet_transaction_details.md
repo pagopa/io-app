@@ -1,2 +1,0 @@
-**Tukaj si lahko ogledaš povzetek transakcije**.
-Ta transakcija se nanaša na plačilo prek pagoPA, plačilne platforme za javno upravo. Če si pred aktivacijo računa v aplikaciji IO opravili plačila s pagoPA na spletnih mestih ali aplikacijah upnikov, boš tukaj našel/la celotno zgodovino vseh uspešnih transakcij. Seveda boš tukaj našel/la tudi povzetek vsake uspešne transakcije, ki si jo opravil/a prek aplikacija IO.

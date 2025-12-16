@@ -1,1 +1,0 @@
-**Tukaj najdeš informacije v zvezi z zasebnostjo tvojega profila**: lahko si ogledaš informacije o obdelavi osebnih podatkov, izbrišeš svoj racun in izvoziš osebne podatke, povezane s tvojim profilom.

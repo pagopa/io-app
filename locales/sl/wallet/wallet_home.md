@@ -1,2 +1,0 @@
-**Na strani Denarnica so navedeni tvoji nacini placila, bonusi in kartice s popusti ter zgodovina transakcij, izvedenih s pagoPA**, placilno platformo za javno upravo.
-Tu lahko placaš tudi vsa papirnata obvestila o placilu z logotipom pagoPA: skeniraj QR kodoR, ki jo najdeš v papirnatem obvestilu, in zakljuci placilo neposredno iz aplikacije. IO trenutno podpira samo placila s kreditno/debetno kartico, vendar bo kmalu dodanih vec nacinov placila.

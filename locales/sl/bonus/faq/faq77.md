@@ -1,1 +1,0 @@
-Ne. Če želiš zaprositi za Počitniški bonus, moraš imeti veljaven ISEE tipa »navaden« ali »v teku« (v skladu z 9. členom Uredbe predsednika ministrskega sveta št. 159 z dne 5. december 2013), ki ne presega 40.000 evrov. V vseh drugih primerih (če na primer tvoj ISEE vsebuje samo »zmanjšane kazalnike«), ISEE ne bo veljaven v namene prošnje Počitniškega bonusa.

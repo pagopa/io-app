@@ -1,1 +1,0 @@
-Onemogočanje storitve pomeni, da v aplikaciji IO od te storitve ne boš prejemal/a več sporočil. Ustanova, ki zagotavlja storitev, lahko v vsakem primeru stopi v stik s tabo ali ti z njo prek drugih kanalov, kot so spletna stran, e-pošta, telefonska številka ali pripadajoča pisarna.

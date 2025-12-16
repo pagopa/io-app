@@ -1,1 +1,0 @@
-Za dostop do aplikacije IO je potrebno pooblastiti svojega ponudnika identitete, da posreduje tvojo davčno številko, ime, priimek, e-poštni naslov in številko mobilnega telefona na platformo IO. Aplikacija IO ustanovi ne sporoči tvoje davčne številke, vendar lahko vsaka ustanova uporabi aplikacijo IO, da ti piše le, če že ima tvoje podatke (in torej razmerje s tabo).

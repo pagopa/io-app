@@ -1,2 +1,0 @@
-V podrobnostih sporočila si lahko ogledaš informacije v zvezi z določeno ustanovo in ponudnikom. Če slediš povezavi do profila storitve, boš našel/la razširjene informacije in kontaktne podatke, preko katerih lahko stopiš v stik s ponudnikom storitev.
-Odvisno od kontaktnih metod, ki jih uporablja posamezen organ in služba, lahko kontaktni podatki vključujejo: naslov fizičnega okenca, telefonsko številko, e-poštni naslov in/ali CEP (PEC), spletno stran, spletno pomoč, mobilno aplikacijo.

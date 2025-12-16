@@ -1,2 +1,0 @@
-Biometrično prepoznavanje se od uporabnika zahteva med prijavo (če je seja še vedno aktivna), kar omogoča hiter vstop v aplikacijo IO, ne da bi morali vsakič znova vnesti svoje uporabniško ime, geslo in OTP, ter kot potrditev med plačilom oz. drugim pomembnim dejanjem, ki neposredno vpliva na varnost (kot je brisanje svojega računa).
-Biometrična prepoznava ostane aktivna 30 dni od zadnjega dostopa; na 31. dan seja poteče in boš moral/a ponovno izvesti vtentikiracijo.

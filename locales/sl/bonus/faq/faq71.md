@@ -1,2 +1,0 @@
-Da. Od 1. julija dalje, ko boš, prek aplikacije IO, prosil/a za Počitniški bonus in bo ta aktiviran, se lahko poljubno odločiš, ali ga boš uporabil/a za počitnice, na katerih so prisotni vsi vzdrževani člani družine ali samo nekateri. Ni nujno, da ga osebno porabiš ali da si osebno prisoten/na.
-Upoštevaj, da bo naslovnik računa (ali komercialnega dokumenta ali računa/potrdila), ki ga je izdal ponudnik turistične storitve, prav tako upravičen do davčne olajšave, ki jo predvideva Počitniški bonus, v davčni napovedi za naslednje leto.

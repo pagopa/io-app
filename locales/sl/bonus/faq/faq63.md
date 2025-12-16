@@ -1,3 +1,0 @@
-Počitniški bonus lahko porabiš v nastanitvenih objektih, ki sodelujejo v pobudi in se nahajajo na državnem ozemlju. Bonus, pripisan tvojim vzdrževanim družinskim članom, je identificiran z identifikacijsko kodo, kateri je povezana tudi QR koda (ki jo je mogoče prebrati neposredno z zaslona telefona). Hotelirju sporoči samo to kodo in tvojo davčno številko ali pa mu, ob plačilu bivanja, pokaži QR kodo.
-Za več informacij: [io.italia.it/bonus-vacanze](https://io.italia.it/bonus-vacanze)
-Poleg tega si lahko ogledaš [Uporabniški priročnik](https://www.agenziaentrate.gov.it/portale/documents/20143/233439/Guida_Bonus_Vacanze_v1.pdf/1bbb218f-b17f-6ccc-4c0c-62af8d7bb205) na spletni strani Agencije za javne prihodke.

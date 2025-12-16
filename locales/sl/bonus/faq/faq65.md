@@ -1,1 +1,0 @@
-Sodelovanje turističnih nastanitvenih objektov v pobudi je brezplačno in ni predviden mehanizem za »vpis« v seznam. Struktura mora prek svojih kanalov obvestiti stranke, ali sprejema Počitniški bonus ali ne. Zator, preden ga zahtevaš, se prepričaj, da ga boš lahko uporabil/a tam, kjer si se odločil/a za naslednje počitnice.

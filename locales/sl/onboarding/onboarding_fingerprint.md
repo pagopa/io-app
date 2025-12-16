@@ -1,2 +1,0 @@
-**Če želiš do aplikacije dostopati hitreje, ne da bi moral/a vsakič vnesti kodo za odklepanje, lahko to storiš** tako, da omogočiš biometrično prepoznavanje prek prstnega odtisa neposredno v nastavitvah operacijskega sistema.
-V razdelku profil, v aplikaciji IO, se lahko kadar koli odločiš, ali želiš obdržati ali onemogočiti biometrično prepoznavanje… poskusi in videl/a boš, da ne boš želel/a nikoli brez njega!

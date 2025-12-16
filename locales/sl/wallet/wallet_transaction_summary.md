@@ -1,1 +1,0 @@
-**Tukaj si lahko ogledaš povzetek transakcije, ki jo nameravaš izvesti.** Povzetek transakcije je posodobljen v tem trenutku, ko lahko nadaljuješ s plačilom: zaradi tega je lahko cifra večja, glede na obresti, ki jih zaračuna ustanova upnica.

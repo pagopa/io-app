@@ -1,3 +1,0 @@
-V zgornjem delu tvojega profila si lahko ogledaš digitalno različico nekaterih svojih dokumentov, kot so faksimile davčne številke, elektronska osebna izkaznica, zdravstvena izkaznica (v razvoju).
-Ti dokumenti so faksimile, torej ne nadomeščajo v celoti fizičnega dokumenta, ampak jih lahko za branje podatkov in črtne kode na dokumentu uporabijo trgovci, ki to potrebujejo, npr. v lekarni ali na pošti.
-Če izbereš kartico na vrhu strani, si lahko ogledaš njene podrobnosti. Če se znova dotakneš faksimila, boš poleg podrobnosti videl/a celozaslonski predogled kartice (za lažje skeniranje kode na kartici).

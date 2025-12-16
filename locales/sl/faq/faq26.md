@@ -1,3 +1,0 @@
-Ne, v tej prvi izdaji ni mogoče odgovoriti na sporočilo določenega servisa neposredno iz aplikacije IO.
-Aplikacija je trenutno kanal, ki omogoča komunikacijo med ustanovo in državljanom ter podpira izvajanje nekaterih operacij, kot je plačevanje.
-Če se moraš obrniti na ustanovo ali imaš vprašanja glede prejetega sporočila, si lahko ogledaš vse informacije v zvezi s storitvijo in ponudnikom v podrobnostih sporočila. Poleg tega, če slediš povezavi do profila storitve, boš našel/la kontaktne podatke, preko katerih lahko neposredno kontaktiraš subjekt (naslov okenca, telefon, spletna stran, aplikacija itd.).

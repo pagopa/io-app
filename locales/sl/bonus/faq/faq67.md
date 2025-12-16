@@ -1,1 +1,0 @@
-Ne. Po predložitvi enotne nadomestne izjave (DSU) za izračun ISEE podjetju INPS, za prošnjo za bonus prek IO, ti ni treba storiti ničesar drugega. Ko predložiš prošnjo, aplikacija sama preveri, neposredno v sistemu INPS, ali je tvoj ISEE pod zahtevanim pragom.

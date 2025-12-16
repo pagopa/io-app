@@ -1,2 +1,0 @@
-Aplikacija IO omogoča prejemanje različnih vrst sporočil: obvestila o plačilu (z možnostjo sočasnega plačila prek aplikacije), opomnike na roke, obvestila in razne posodobitve.
-Ne gre za generična sporočila, ki se nanašajo na dejavnost ustanove, temveč za sporočila, ki zadevajo tebe osebno, na primer sporočilo, ki te opozarja na potek veljavnosti dokumenta. Ne pričakuj, da boš v aplikaciji IO prejemal neželeno pošto – pisale ti bodo samo storitve, ki ti bodo imele kaj pomembnega povedati.

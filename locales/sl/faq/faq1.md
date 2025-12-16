@@ -1,1 +1,0 @@
-SPID je avtentikacijski sistem, ki državljanom in podjetjem omogoča dostop do spletnih storitev javne uprave in pridruženih zasebnikov z unikatno digitalno identiteto. Identiteta SPID je sestavljena iz poverilnic (uporabniškega imena in gesla), ki se izdajo uporabniku in omogočajo dostop do vseh spletnih storitev.

@@ -1,1 +1,0 @@
-Metode prepoznavanja, ki temeljijo na biometriji, so se sčasoma izkazale za varnejše od številskih ali alfanumeričnih gesel, ki so pogosto ranljiva ali nenamerno posredovana drugim ljudem. Biometrično prepoznavanje nudi, v primerjavi z vnosom kode za odklepanje,  prednost hitrejše avtentikacije in omogoča hitrejše izvajanje operacij v aplikaciji IO.

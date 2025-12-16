@@ -1,1 +1,0 @@
-Da, pri vsakem novem plačilu lahko izbereš upravitelja, ki se ti zdi najbolj primeren. Tistega, ki ga izbereš za plačilno storitev, ni nujno da je tvoja banka ali institucija, ki ti zagotavlja tvojo kreditno ali debetno kartico.
