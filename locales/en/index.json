@@ -3639,7 +3639,8 @@
             "byName": "Alphabetical order"
           }
         },
-        "discountOf": "Discount of {{discount}}%"
+        "discountOf": "Discount of {{discount}}%",
+        "a11yTitle": "Category: {{categoryName}}"
       },
       "merchantDetail": {
         "title": {
