@@ -904,7 +904,7 @@ export const trackStartCredentialUpgrade = (credential: MixPanelCredential) => {
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_START_REISSUING,
     buildEventProperties("UX", "action", { credential })
   );
-}
+};
 
 export const trackItwSurveyRequestAccepted = (
   properties: TrackQualtricsSurvey
