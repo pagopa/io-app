@@ -1521,12 +1521,6 @@
         "message": "pagoPA samodejno posodobi znesek, da zagotovi, da si plačal/a točno toliko, kot dolguješ, in se tako izogneš preplačilim ali drugim obrestim",
         "cta": "V redu je, dobro"
       },
-      "loadingMessage": {
-        "activation": "Kontaktiramo ustanovo, počakaj nekaj sekund",
-        "verification": "Preverjamo tvoje podatke o plačilu",
-        "generic": "Končujem preverjanje tvojega obvestila, počakaj nekaj sekund …",
-        "wallet": "Preverjam, če obstajajo shranjeni načini plačila …"
-      },
       "contextualHelpTitle": "Povzetek transakcije",
       "contextualHelpContent": "**Tukaj si lahko ogledaš povzetek transakcije, ki jo nameravaš izvesti.** Povzetek transakcije je posodobljen v tem trenutku, ko lahko nadaljuješ s plačilom: zaradi tega je lahko cifra večja, glede na obresti, ki jih zaračuna ustanova upnica.\r\n",
       "errorDetails": {
@@ -1862,6 +1856,45 @@
       "confirm": "Da, izvrši izhod",
       "cancel": "Ne, nadaljuj",
       "success": "Težave z dodajanjem? Obrni se na svojo banko."
+    },
+    "payment": {
+      "failure": {
+        "PAYMENT_UNAVAILABLE": {
+          "title": "S tem obvestilom je tehnična težava"
+        },
+        "PAYMENT_DATA_ERROR": {
+          "title": "Podatki v obvestilu so napačni"
+        },
+        "DOMAIN_UNKNOWN": {
+          "title": "Ustanova upnica ima težave pri odzivanju"
+        },
+        "PAYMENT_ONGOING": {
+          "title": "Plačilo že poteka, poskusi znova čez nekaj minut",
+          "PAA_PAGAMENTO_IN_CORSO": {
+            "title": "Plačilo za to obvestilo že poteka, poskusi znova čez 30 minut.",
+            "subtitle": "Če si že počakal/a 30 minut in je plačilo še vedno blokirano, nam s spodnjim gumbom pošlji prijavo."
+          },
+          "PPT_PAGAMENTO_IN_CORSO": {
+            "countdownTitle": "C'è già un'operazione in corso, riprova tra {{minutes}} minuti",
+            "countdownExpiredTitle": "Plačilo že poteka, poskusi znova čez nekaj minut"
+          }
+        },
+        "PAYMENT_CANCELED": {
+          "title": "Ustanova upnica je to obvestilo preklicala"
+        },
+        "PAYMENT_EXPIRED": {
+          "title": "Obvestilo je poteklo in ga ni več mogoče plačati"
+        },
+        "PAYMENT_DUPLICATED": {
+          "title": "To obvestilo je bilo že plačano!"
+        },
+        "PAYMENT_INVALID_AMOUNT": {
+          "title": "Znesek, naveden v opozorilu, ni pravilen, če si podatke vnesel/a ročno, preveri pravilnost in poskusi znova."
+        },
+        "PAYMENT_UNKNOWN": {
+          "title": "Ustanova, ki ga je izdala, tega obvestila o plačilu ne prepozna, plačila ni mogoče izvesti."
+        }
+      }
     }
   },
   "saveCard": {
