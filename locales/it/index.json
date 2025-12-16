@@ -3601,6 +3601,7 @@
         "navigationTitle": "Agevolazioni",
         "screenTitle": "Scopri le opportunità",
         "merchantsAll": "Tutti i partner",
+        "a11yTitle": "Categoria: {{categoryName}}",
         "tabs": {
           "perInitiative": "Per categoria",
           "perMerchant": "Per partner",
