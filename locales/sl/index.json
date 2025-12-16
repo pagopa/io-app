@@ -251,10 +251,6 @@
     "copyText": "kopiraj",
     "copyFeedbackButton": "kopirano"
   },
-  "betaBanner": {
-    "title": "aplikacija IO",
-    "description": "Tvoja priporočila nam pomagajo se dan za dnem izboljševati."
-  },
   "connection": {
     "status": {
       "offline": "Brez povezave! Nekaj ​​ne bo delovalo."
@@ -661,13 +657,6 @@
         "title": "Tvoja seja je potekla",
         "body": "Iz varnostnih razlogov te prosimo, da po 30 dneh od zadnjega dostopa s SPID-om ali CIE znova vneseš svoje poverilnice za uporabo IO."
       },
-      "cie_unsupported": {
-        "title": "Dostop s CIE ni na voljo",
-        "body": "Naprava, ki jo uporabljaš, ne podpira dostopa z elektronsko osebno izkaznico (CIE). Dostop s CIE podpirajo:\n\n- naprave z NFC čipom in operacijskim sistemom Android 6.0 ali novejšim;\n- iPhone od modela 7 naprej z operacijskim sistemom iOS 13 ali novejšim.\n",
-        "android_desc": "Natančneje, za dostop z elektronsko osebno izkaznico (CIE), mora tvoja Android naprava imeti:\n",
-        "os_version_unsupported": "operacijski sistem Android 6.0 ali novejši",
-        "nfc_incompatible": "združljiv čip NFC"
-      },
       "contentTitleCie": "Nimaš SPID ali CIE?",
       "cie_information_request": "**CIE**, elektronska osebna izkaznica (Carta di Identità Elettronica), ti omogoča dostop do vseh storitev javne uprave. Uporabiš jo lahko za udoben dostop do IO na svojem pametnem telefonu. Potreboval/a boš tudi PIN, katerega polovico prejmeš v matičnem uradu in polovico po pošti, skupaj s kartico.\n\n## CIE je varna\n\nSkupaj s SPID-om je CIE edino orodje, ki ti omogoča, da svojo digitalno identiteto potrdiš z najvišjo stopnjo varnosti.\n\n## Kako do CIE\n\nZa CIE lahko zaprosiš na matičnem uradu tvoje občine stalnega ali začasnega prebivališča: če želiš izvedeti več, obišči spletno stran [https://www.cartaidentita.interno.gov.it](https://www.cartaidentita.interno.gov.it)\n",
       "spid_or_cie": "Za uporabo IO se moraš opremiti z enim od teh digitalnih orodij, ki z gotovostjo potrjujejo tvojo identiteto.",
@@ -690,8 +679,6 @@
       "card3-content": "S skeniranjem QR kode lahko hitro plačaš tudi papirnato obvestilo",
       "card4-title": "Prijaviš se lahko samo s SPID-om",
       "card4-content": "Naprava, ki jo uporabljaš, ne podpira dostopa z elektronsko osebno izkaznico (CIE)",
-      "card5-title": "Dobrodošel/la v prvi javni različici IO!",
-      "card5-content": "Zgoraj desno boš našel/la »?« da lahko odpreš klepet z ekipo IO, če nekaj ne deluje, kot bi moralo.",
       "expiredCardTitle": "Kartica je potekla ali ni več veljavna",
       "expiredCardHeaderTitle": "Prijavi se s CIE",
       "expiredCardContent": "Uporabljena kartica ni več veljavna ali ji je potekla veljavnost.\nČe se želiš avtentikirati in dostopati do IO, moraš uporabiti SPID.",
@@ -706,10 +693,7 @@
         "apduNotSupported": "Operacijski sistem ne podpira branja vaše elektronske osebne izkaznice. Za več informacij se obrni na proizvajalca tvoje naprave.",
         "retry": "Ponovno poskusi",
         "noNfcConnectionTitle": "Si naslonil/a kartico?",
-        "noNfcConnectionContent": "Zdi se, da tvoj pametni telefon ni zaznal veljavne kartice.\nPostavi ja na zadnjo stran naprave in poskusi znova. Ko telefon prepozna kartico, potrebuje še nekaj sekund, da prebere podatke.\nČe ne veš, kje je na tvoji napravi antena NFC, poskusi premikati kartico po zadnji strani naprave, dokler ti aplikacija ne pove, da jo drži, kjer je.\n",
-        "enableNfcTitle": "Omogoči NFC",
-        "enableNfcHeader": "NFC preverjanje",
-        "enableNfcContent": "Če želiš aplikaciji omogočiti preverjanje tvoje elektronske osebne izkaznice, moraš najprej aktivirati funkcijo NFC tvoje naprave. Vrni se sem, ko boš končal/a!"
+        "noNfcConnectionContent": "Zdi se, da tvoj pametni telefon ni zaznal veljavne kartice.\nPostavi ja na zadnjo stran naprave in poskusi znova. Ko telefon prepozna kartico, potrebuje še nekaj sekund, da prebere podatke.\nČe ne veš, kje je na tvoji napravi antena NFC, poskusi premikati kartico po zadnji strani naprave, dokler ti aplikacija ne pove, da jo drži, kjer je.\n"
       },
       "pin": {
         "accessibility": {
@@ -720,8 +704,7 @@
         "pinCardTitle": "Vnesite PIN tvoje osebne izkaznice",
         "pinCardHeader": "Prijavi se s CIE",
         "pinCardContent": "Koda PIN je sestavljena iz 8 števk. Štiri števke, ki so ti jih dostavili na matičnem uradu in še 4 števke soti skupaj s kartico poslali na dom. Sestavi jih skupaj v tem vrstnem redu in jih prosim vnesi sem.",
-        "incorrectCiePinTitle": "Napačen PIN, imaš še {{remainingCount}} poskus/a/e",
-        "incorrectCiePinHeaderTitle": "Napačen PIN",
+
         "incorrectCiePinContent1": "Zaradi tvoje varnosti lahko PIN kartice poskusiš vnesti največ trikrat. Nato boš moral/a kartico odkleniti z vnosom PUK-a.",
         "incorrectCiePinContent2": "Ne pozabi, da je koda PIN vaše elektronske osebne izkaznice (CIE) sestavljena iz 8 števk. Štiri številke, ki so ti jih dali v matičnem uradu, in druge štiri številke, ki so ti jih skupaj s kartico poslali na dom.",
         "alert": "Ali se res želiš vrniti nazaj?",
@@ -733,15 +716,11 @@
         "contextualHelpCTA": "Si pozabil/a kodo PIN/PUK?"
       },
       "pinTempLocked": {
-        "header": "Prijavi se s CIE",
-        "title": "Kartica je začasno blokirana",
-        "content": "Uporabljena kartica je bila blokirana, ker si se prevečkrat poskušal/a prijaviti z napačno kodo PIN.\nNi problema: odkleneš jo lahko s **kodo PUK**, ki si jo prejel/a s kartico.\nZa dokončanje te operacije pa moraš **uporabiti posebno brezplačno aplikacijo**, **CieID**.\nKo odkleneš kartico, se boš lahko znova prijavil/a v IO.\n",
-        "button": "Prenesi / odpri CieID"
+        "title": "Kartica je začasno blokirana"
       },
       "card": {
         "title": "Nasloni kartico",
         "titleiOS": "Kartico drži pri miru",
-        "headerTitle": "Prijavi se s CIE",
         "layCardMessageHeader": "Svojo elektronsko osebno izkaznico za nekaj sekund nasloni na hrbtno stran telefona.",
         "layCardMessageHeaderiOS": "Senzor je nameščen na zgornjem delu naprave.",
         "layCardMessageFooter": "Če ne veš točno, kje je antena NFC, premakni kartico na različne točke in počakaj nekaj sekund, dokler ne začutiš vibriranja.",
@@ -762,9 +741,6 @@
         },
         "error": {
           "readerCardLostTitle": "Ponovno približaj kartico",
-          "readerCardLostTitleiOS": "Prehitro si odstranil/a kartico",
-          "readerCardLostHeader": "Podatkov kartice še nismo prebrali.",
-          "readerCardLostHeaderiOS": "Podatkov kartice še nismo prebrali. Prosim poskusi znova.",
           "onTagLost": "Prehitro si odstranil/a kartico. Kartico drži na hrbtni strani pametnega telefona, dokler se na zaslonu ne prikaže potrditev. Trajalo bo nekaj sekund.",
           "tryAgain": "Med preverjanjem kartice je prišlo do napake. To je verjetno trenutna napaka, poskusi znova!",
           "generic": "Med preverjanjem kartice je prišlo do napake. Če težave ne moreš rešiti, nam jo prijavi z »?« zgoraj desno. Hvala!",
@@ -772,40 +748,18 @@
           "unknownCardContent": "Zdi se, da uporabljena kartica ni elektronska osebna izkaznica (CIE).",
           "unknownCardHelpLink": "Kaj je elektronska osebna izkaznica CIE?"
         }
-      },
-      "dataUsageConsent": {
-        "retryCTA": "Vstop"
       }
     },
     "spid": "SPID",
     "spid_information_request": {
       "headerTitle": "Nimaš SPID-a?",
-      "contentTitle": "Kaj je SPID?",
-      "paragraph1": "SPID, sistem javne digitalne identitete, ti omogoča dostop do vseh storitev javne uprave z enotno digitalno identiteto (uporabniško ime in geslo).",
-      "paragraph2": "Če želiš, nam pusti svoj e-poštni naslov za prejemanje opomnikov in posodobitev o tej aplikaciji",
-      "paragraph3": "Z nadaljevanjem izjavljaš, da sprejemaš",
-      "tosLinkText": "pravila o obdelavi osebnih podatkov",
-      "continue": "Nadaljuj"
+      "contentTitle": "Kaj je SPID?"
     },
     "spid_information": {
       "spid": "**SPID**, sistem javne digitalne identitete (Sistema Pubblico di Identità Digitale), ti omogoča dostop do vseh storitev javne uprave z enotno digitalno identiteto (uporabniško ime in geslo). [Če želiš izvedeti več](https://www.spid.gov.it)\n\n## SPID je varen\n\nSPID ti omogoča, da na spletu počneš stvari, ki si jih prej lahko počel/a samo osebno: za registracijo na SPID boš torej moral/a **potrditi svojo identiteto** tako, da opraviš prepoznavanje pri ponudniku identitete. To je tisto, kar boš moral/a storiti:\n",
       "headerTitle": "Nimaš SPID-a?",
       "contentTitle": "Kaj je SPID?",
-      "moreLinkText": "Izvej več",
-      "subtitle": "SPID je varen",
-      "paragraph1": "SPID, sistem javne digitalne identitete, ti omogoča dostop do vseh storitev javne uprave z enotno digitalno identiteto (uporabniško ime in geslo).",
-      "paragraph2-part1": "SPID ti omogoča, da na spletu počneš stvari, ki si jih prej lahko počel/a samo osebno: za registriracijo na SPID boš moral/a",
-      "paragraph2-bold": "potrditi svojo identiteto",
-      "paragraph2-part2": "tako, da opraviš prepoznavanje pri ponudniku identitete. Tukaj je tisto, kar boš moral/a storiti:",
-      "point1-value": "1",
-      "point1-content": "Izberi svojega\nponudnika identitete",
-      "point2-value": "2",
-      "point2-content": "Vnesi osebne podatke in mobilni telefon",
-      "point3-value": "3",
-      "point3-content": "Naloži kopijo osebnih dokumentov",
-      "point4-value": "4",
-      "point4-content": "Dokončaj\nprepoznavanje",
-      "knowMore": "Več lahko izveš na spletni strani spid.gov.it"
+      "subtitle": "SPID je varen"
     },
     "idp_selection": {
       "headerTitle": "Domov",
@@ -832,23 +786,11 @@
         "body": "Ponudnik identitete, ki si ga izbral/a, trenutno ni na voljo: poskusiš lahko znova pozneje. Če imaš drugo identiteto SPID, izberi drugega ponudnika. Ali lahko prijaviš težavo z uporabo ikone »?« zgoraj desno."
       },
       "login": {
-        "title": "Napaka pri prijavi",
-        "body": "Med prijavo je prišlo do napake, poskusi znova!"
-      },
-      "spid": {
-        "unknown": "Neznana napaka",
-        "error_19": "Prevečkrat si vnesel/a napačno uporabniško ime ali geslo: poskusi znova čez nekaj minut ali se obrni na svojega ponudnika identitete SPID, za spremembo poverilnic.",
-        "error_20": "Iz varnostnih razlogov IO zahteva prijavo z dvojnim faktorjem preverjanja pristnosti: obrni se na svojega ponudnika identitete SPID, da boš izvedel/a, kako se uporablja.",
-        "error_21": "Predolgo je minilo, odkar si se začel/a prijavljati: prosim, začni znova.",
-        "error_22": "Za uporabo IO se moraš strinjati s pošiljanjem nekaterih podatkov. Ponovno vstopi in podaj svoje soglasje.",
-        "error_23": "Tvoja identiteta SPID je začasno onemogočena ali preklicana. Če želiš ponovno aktivirati svoj račun, se obrni na svojega ponudnika identitete SPID.",
-        "error_25": "Preklical/a si operacijo prijave: poskusiš lahko znova, kadar koli želiš.",
-        "error_1001": "Dostop zavrnjen: nisi dosegel/a minimalne starosti, potrebne za uporabo IO"
+        "title": "Napaka pri prijavi"
       }
     },
     "expiredSessionBanner": {
-      "title": "Varnostno obvestilo",
-      "message": "Da bodo tvoji zasebni podatki varni, se znova prijavi s svojimi poverilnicami SPID, hvala!"
+      "title": "Varnostno obvestilo"
     }
   },
   "email": {
@@ -1765,15 +1707,6 @@
         }
       }
     },
-    "satispay": {
-      "details": {
-        "infobox": {
-          "one": "Satispay",
-          "two": "  še ne omogoča plačevanja preko IO",
-          "three": ": ta funkcija bo omogočena z naslednjimi različicami aplikacije."
-        }
-      }
-    },
     "cobadge": {
       "details": {
         "card": {
@@ -2669,15 +2602,6 @@
       }
     },
     "bonusVacanze": {
-      "accessibility": {
-        "preview": "Počitniški bonus, najvišji znesek {{value}} euro, {{status}}",
-        "card": "Tvoj Počitniški bonus s kodo {{code}} z največjo vrednostjo {{value}} evrov je {{status}}"
-      },
-      "statusInfo": {
-        "validBetween": "Ta Počitniški bonus boš lahko uporabljal/a od {{from}} do {{to}}",
-        "bonusRejected": "Pozor! Ta Počitniški bonus je bil preklican",
-        "redeemed": "Ta Počitniškii bonus je bil uporabljen dne {{date}}"
-      },
       "multipleBonus": "Zahteval/a in aktiviral/a si dva ali več bonusov. Prepričaj se, da uporabljaš tistega, ki je povezan s pravilnim DSU, da se izogneš temu, da bodo tisti, ki uporabljajo bonus, deležni naknadnih poravnav.",
       "usableAmount": "Se lahko uporabi v nastanitvenem objektu",
       "taxBenefit": "Se lahko odbije v davčni napovedi",
@@ -2696,113 +2620,24 @@
       "shareMessage": "To je koda za vaš Počitniški bonus:",
       "saveScreenShotOk": "Bonus shranjen v tvoji galeriji!",
       "savedOn": "Shranjeno dne",
-      "detail": {
-        "contextualHelp": {
-          "title": "Počitniški bonus",
-          "body": "Tukaj boš videl/a podrobnosti Počitniškega bonusa in informacije, ki jih potrebuješ za porabo bonusa."
-        }
-      },
-      "checkBonusEligibility": {
-        "loading": "Preverjam upravičenost do dostopa do bonusa"
-      },
-      "cta": {
-        "requestBonus": "Prosi za bonus",
-        "cancelRequest": "Prekliči zahtevo",
-        "qrCode": "QR koda",
-        "copyCode": "Kopiraj kodo",
-        "openQRCode": "Pokaži QR kodo"
-      },
       "eligibility": {
         "loading": "Preverjamo ISEE tvojih vzdrževanih družinskih članov z INPS.\nProsim, počakaj.",
-        "iseeNotAvailable": {
-          "title": "Žal nam je.\nTrenutno nimaš v veljavi navadnega ali trenutnega ISEE.",
-          "text": {
-            "first": "Za izračun navadnega ali trenutnega ISEE je potrebno predložiti Enotno nadomestno izjavo (DSU), preden lahko znova zahtevaš Počitniški bonus.\n\nTakoj lahko narediš ",
-            "secondo": "spletno simulacijo",
-            "third": " na spletnem mestu INPS, da preveriš svojo upravičenost, ali zahtevaš ISEE na kanalih, ki jih ponuja INPS."
-          },
-          "goToDSU": "Prosi za ISEE"
-        },
-        "iseeNotEligible": {
-          "title": "Oprosti!\nTvoj ISEE presega zahtevani prag.",
-          "text": "Če se je finančni položaj tvoje družine od zadnje predstavljene enotne nadomestne izjave (DSU) spremenil, lahko predložiš novo prek kanalov, ki jih ponuja INPS.",
-          "goToNewDSU": "Prosi za nov ISEE"
-        },
         "activateBonus": {
-          "contextualHelp": {
-            "title": "Počitniški bonus tvojih vzdrževanih družinskih članov",
-            "body": "To je predogled podrobnosti Počitniškega bonusa, na razpolago za tvoje vzdrževane družinske člane:\n- skupni znesek, razdeljen na najvišji znesek, ki ga je mogoče porabiti v nastanitvenem objektu (npr. hotel, kamp, ​​kmetija, nočitev z zajtrkom ipd.) in znesek, ki se lahko odbije v naslednji davčni napovedi;\n- vzdrževani družinski člani, ki ga lahko uporabljajo.\n\nČe podatki v zvezi z tvojimi vzdrževanimi družinskimi člani niso pravilni, preveri pri [centru za stike] (https://www.inps.it/nuovoportaleinps/default.aspx?sPathID=%3b0%3b46671%3b46670%3b&lastMenu=46670&iMenu=24&iNodo=46670&p4=2) pri INPS-u."
-          },
           "headerTitle": "Prošnja za ISEE",
           "title": "Dobre novice!",
           "description": "Tvoji vzdrževani družinski člani so upravičeni do naslednjega počitniškega bonusa:",
-          "reminder": {
-            "text": "Vsak vzdrževani družinski član prispeva k določitvi zneska in lahko porabi bonus. Če podatki niso pravilni ali posodobljeni, te v izogib težavam po uporabi bonusa vabimo, da predložiš nov DSU, preden nadaljuješ s prošnjo."
-          },
           "discrepancies": {
             "attention": "Pozor!",
             "text": "INPS je sporočil o nekaterih pomanjkljivostih ali neskladjih v tvojem ISEE. Pred nadaljevanjem preveri, ali je vse pravilno. Če se odločiš nadaljevati, boš morda moral/a predložiti dokumentacijo za dokazovanje popolnosti in resničnosti podatkov, navedenih v DSU. V nasprotnem primeru lahko oddaš nov DSU in zahtevaš bonus pozneje."
           },
           "activateCTA": "Aktiviraj bonus"
-        },
-        "timeout": {
-          "title": "Preverjamo tvoj ISEE.",
-          "description": {
-            "first": "Poslali ti bomo sporočilo v aplikaciji takoj, ko bo preverjanje dokončano.\n\nKo ga prejmeš, če bo odogvor pozitiven, ne pozabi izpolniti svoje prošnje",
-            "second": "v 24. urah",
-            "third": ", sicer boš moral/a začeti znova."
-          }
-        },
-        "activationPending": {
-          "title": "Bonus za tvoje vzdrževane družinske člane je že zahtevan in je v aktivaciji.",
-          "description": "Ko je aktiviran, boš prejel/a sporočilo."
-        },
-        "underage": {
-          "title": "Žal nam je. Za Počitniški bonus lahko zaprosijo samo polnoletni državljani"
         }
       },
       "activation": {
         "loading": "Tvojo zahtevo smo posredovali Agenciji za javne prihodke (Agenzia delle Entrate)\nProsim, počakaj.",
-        "goToDetails": "Pokaži Počitniški bonus",
         "timeout": {
-          "title": "Obdelujemo tvojo zahtevo.",
-          "description": "Ko bo tvoj bonus pripravljen, ti bomo v aplikaciji poslali sporočilo."
-        },
-        "alreadyRedeemed": {
-          "title": "Bonus za tvoje vzdrževane družinske člane je že aktiven!",
-          "body": "Podrobnosti si lahko ogledaš v razdelku Denarnica.",
-          "cta": "Oglej si razpoložljive bonuse"
-        },
-        "eligibilityExpired": {
-          "title": "Čas je potekel.",
-          "body": "24 ur za nadaljevanje tvoje prošnje je poteklo. Prosimo te, da narediš novo prošnjo.",
-          "cta": "Nova prošnja za bonus"
-        },
-        "confirm": {
-          "title": "Pozor",
-          "body": "Če nadaljuješ s postopkom, prošnje ne bo več mogoče preklicati.",
-          "cancel": "Nazaj na prošnjo",
-          "confirm": "Nadaljuj"
-        },
-        "completed": {
-          "title": "Čestitamo!",
-          "description": "Tvoj bonus je aktiven"
+          "title": "Obdelujemo tvojo zahtevo."
         }
-      },
-      "abort": {
-        "title": "Prekliči",
-        "body": "Ali res želiš izstopiti iz procesa? Če želiš ponovno zahtevati Počitniški bonus, boš moral/a ponoviti vse od začetka.",
-        "cancel": "Nadaljuj",
-        "confirm": "Prekliči zahtevo",
-        "completed": "Zahteva preklicana"
-      },
-      "composition": {
-        "amount": "Najvišji znesek",
-        "expendable": "Se lahko uporabi v nastanitvenem objektu",
-        "taxBenefit": "Se lahko odbije v davčni napovedi"
-      },
-      "family": {
-        "title": "Kdo lahko unovči bonus?"
       }
     },
     "bonusList": {
@@ -2817,10 +2652,6 @@
       "contextualHelp": {
         "title": "Počitniški bonus",
         "body": "Tukaj si lahko ogledaš vse informacije v zvezi s Počitniškim bonusom, določbo, ki jo je izdal Odlok o ponovnem zagonu, za spodbujanje turizma po karanteni zaradi izrednih razmer zaradi koronavirusa."
-      },
-      "requestAlert": {
-        "title": "Pozor",
-        "content": "Bonus si že pridobil/a, nadaljuj s poršnjo le, če se je tvoja situacija spremenila in si oddal/a nov DSU za posodobitev ISEE.\nObveščamo te, da uporaba bonusov, ustvarjenih na podlagi nepravilnih DSU, sproža dejanja za povrnitev ugodnosti od uporabnika.\nAli potrjuješ, da želiš nadaljevati?"
       }
     },
     "request": "Prosi za nov bonus",
@@ -2836,15 +2667,9 @@
       "content": "# Bonus Terms & Conditions\n\nS sprejetjem teh pogojev:\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Donec molestie metus hendrerit mauris maximus, cursus accumsan leo semper. Nullam sollicitudin neque suscipit nibh imperdiet maximus. Fusce eleifend, enim nec lobortis tristique, elit odio mollis dui, aliquam suscipit ante neque et justo. In tincidunt viverra elit eget faucibus. Donec nec sem non velit sodales maximus eget ornare urna. Aenean maximus enim consequat augue blandit rhoncus. Fusce congue arcu turpis, a rhoncus nulla commodo euismod. Aliquam erat volutpat. Ut pulvinar placerat semper. Aliquam fermentum pulvinar dui, pulvinar maximus arcu vestibulum in. Nullam magna dolor, posuere et quam a, mattis fringilla risus. In finibus in leo nec pellentesque.\n\nAenean maximus et sem sit amet vestibulum. Donec vestibulum neque eget erat fermentum imperdiet. Nullam pretium commodo libero, eget ullamcorper erat accumsan sit amet. Suspendisse at nunc suscipit, vestibulum nulla sodales, eleifend nunc. Quisque orci turpis, euismod eget euismod vitae, dictum ut quam. Etiam vitae velit id orci pretium lobortis at eget mauris. Maecenas vel bibendum purus. Donec in sapien accumsan, dictum sem at, molestie felis. Morbi efficitur malesuada finibus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.\n\nDuis quis ligula vitae ipsum pharetra gravida. Aenean blandit, nunc ut pellentesque efficitur, mauris nibh accumsan ex, non convallis urna metus condimentum leo. Vivamus vitae magna consequat, placerat odio vel, efficitur quam. Sed condimentum consectetur turpis ac tincidunt. Donec in neque quis mauris auctor lacinia. Sed porttitor euismod orci, sed fringilla tortor fermentum sed. Vestibulum eget suscipit nunc.\n\nNam ullamcorper quam sed facilisis imperdiet. Vestibulum quis accumsan neque, non placerat lacus. Quisque gravida cursus eleifend. Nullam quis felis ante. Nulla id efficitur nisi. Nulla in ullamcorper turpis. Curabitur eros turpis, ornare eu massa at, sagittis commodo enim. Nunc eget cursus enim, nec elementum elit. Curabitur a interdum quam, in egestas mi. In eu imperdiet leo. Aenean dictum vulputate tortor, vel semper metus ultricies ut.\n\nMauris efficitur lacinia velit, non imperdiet lorem sodales et. Phasellus tortor ex, efficitur ut fermentum eget, tincidunt nec erat. Maecenas quis volutpat mauris. Cras posuere, lectus sed feugiat bibendum, dui magna pretium arcu, tristique iaculis risus ligula id elit. Sed libero felis, mattis et felis quis, convallis tempus lacus. Mauris aliquet dapibus elit, volutpat porta mi ultricies sit amet. Integer vel felis eu magna gravida auctor. In hac habitasse platea dictumst. Nam rhoncus ipsum a placerat consequat. Duis auctor tempor diam nec aliquet. Donec id sollicitudin odio. Curabitur consectetur auctor erat nec eleifend. Pellentesque et dui sapien. Vestibulum varius viverra leo.\n\nAenean sagittis accumsan arcu a rutrum. Mauris eu tristique arcu. In sit amet est eleifend, fermentum nisl et, pellentesque est. Curabitur arcu enim, mattis eu est sit amet, vestibulum tristique velit. Vestibulum quis neque fermentum diam faucibus volutpat a at lorem. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ornare nisi risus, nec laoreet urna mollis sit amet. Donec luctus efficitur velit. Fusce cursus, eros et convallis tristique, nibh massa feugiat elit, eget fringilla enim nibh in mauris. Sed sit amet orci lacinia, malesuada sem eget, commodo augue. Vestibulum commodo quis quam et laoreet. Pellentesque laoreet quis mi quis tincidunt. Donec condimentum erat in feugiat gravida."
     },
     "bpd": {
-      "accessibility": {
-        "card": {
-          "preview": "Cashback, obdobje od {{startDate}} do {{endDate}}. Zbrani znesek {{amount}} €"
-        }
-      },
       "title": "Cashback",
       "description": "Prejmi povračilo, ko v trgovinah plačuješ s to metodo",
       "name": "Cashback",
-      "earned": "Zbrani znesek",
       "cta": {
         "activeBonus": "Aktiviraj Cashback"
       },
@@ -2914,12 +2739,6 @@
         "skip": "Ne, hvala",
         "confirm": "Informacije in aktivacija"
       },
-      "activateOnNewMethods": {
-        "title": "Ali želiš aktivirati Cashback?",
-        "body1": "Aktiviraj Cashback pri načinih plačila, shranjenih vtvoji Denarnici, da začneš zbirati veljavne transakcije.",
-        "body2": "Če želiš, lahko, za te načine plačila, Cashback aktiviraš tudi pozneje.",
-        "skip": "Ne zdaj"
-      },
       "iban": {
         "bpdCompletedMessage": "Ta pobuda se je končala in IBAN ni več mogoče spremeniti",
         "cta": {
@@ -2965,29 +2784,6 @@
             "title": "IBAN za akreditacijo",
             "noIbanBody": "Nastavi svoj IBAN, da boš lahko prejel/a zbrani Cashback",
             "button": "Nastavi IBAN"
-          },
-          "transactionsCountOverview": {
-            "title": "Tvoje transakcije",
-            "of": "na",
-            "closedPeriodKOBody": "Nisi dosegel/la {{transactions}} transakcij, potrebnih za pridobitev povračila: prejel/a bi {{amount}} €. Poskusi v naslednjem obdobju!",
-            "currentPeriodKOBody": {
-              "one": "Moral bi zbrati vsaj",
-              "two": " {{transactions}} transakcij,",
-              "three": " da se odklene Cashback, ki si ga zbral/a!"
-            },
-            "currentPeriodUnlockBody": "Čestitamo {{name}}! Presegel/la si prag {{transactions}} transakcij in odklenil/a Cashback!",
-            "currentPeriodMaxAmount": "Čestitke {{name}}! Dosegel/la si največji predvideni znesek!",
-            "currentPeriodSuperCashback": "Trenutno bi bil/a upravičen/a do {{superCashbackAmount}} € Super Cashback-a! Nadaljuj na tej poti, da ostaneš na lestvici.",
-            "gracePeriodBody": "To obdobje povračila denarja se je končalo dne {{date}}. Čakamo na najnovejše transakcije, da izračunamo povračila. Ko bo operacija končana, boš prejel/a sporočilo.",
-            "closedPeriodOKBody": "Čestitke {{name}}!\nUpravičen/a si do povračila {{amount}} €",
-            "closedPeriodMaxAmount": ", največje možno povračilo",
-            "closedPeriodSuperCashback": ", od tega {{amount}} € Super Cashback-a",
-            "moneyTransfer": "Ko bo nakazilo na izbrani IBAN opravljeno, boš prejel/a sporočilo.",
-            "inactivePeriodBody": "Veljavne transakcije boš lahko začel/a zbirati od dne {{date}}",
-            "label": {
-              "one": "Veljavne transakcije: 1",
-              "other": "Veljavne transakcije: {{transactions}}"
-            }
           },
           "ranking": {
             "title": "Tvoj položaj",
@@ -3060,62 +2856,11 @@
             "canceled": "Preklic"
           }
         },
-        "paymentMethods": {
-          "add": {
-            "cta": "Dodaj način plačila v Cashback",
-            "alertBody": "Način plačila, ki ga dodajaš, bo shranjeno v Denarnici aplikacije IO in, če je združljivo, se lahko uporablja tudi za kakršna koli plačila v aplikaciji."
-          },
-          "noPaymentMethods": "Če želiš začeti zbirati veljavne transakcije, moraš dodati vsaj en način plačila",
-          "noActiveMethod": "Za zbiranje veljavnih transakcij moraš imeti aktivirano vsaj en način plačila",
-          "error": "Tudi če si trenutno ni mogoče ogledati tvojih načinov plačila, bomo zabeležili transakcije, izvedene z načini, ki so že omogočeni za Cashback.",
-          "activateOnOthersChannel": {
-            "text1": "Aktiviraj se na ",
-            "text2": "drugih kanalih",
-            "title": "Načini, ki so bili dodani iz drugih kanalov",
-            "body": "Te načine plačila si dodal/a v Cashback neposredno iz kanalov, ki jih ponuja tvoja banka ali aplikacija za plačevanje. Beleženje transakcij za te metode lahko omogočiš ali onemogočiš tudi iz IO.\nČe želiš nekatere od teh metod uporabiti tudi za plačilo prek IO, jih dodaj v svojo Denarnico!",
-            "addWallet": "Dodaj v Denarnico",
-            "whyOtherCards": {
-              "title": "Zakaj vidim kartice, ki jih ne prepoznam?",
-              "body": "Ne skrbi, to so virtualne različice tvojih kartic, ki jih Apple, Google in Samsung uporabljajo za zaščito tvojih nakupov prek svojih »denarnic«. Delamo s tistimi, ki sodelujejo pri pobudi, da bi izboljšali pogled te vrste kartic v aplikaciji IO.",
-              "cta": "Izvej več"
-            }
-          },
-          "notActivable": {
-            "header": "Ni ga mogoče aktivirati ali ni združljivo",
-            "title": "Način ni aktiviran",
-            "body": "Nekdo drug je trenutno že aktiviral Cashback na tem načinu plačila: Cashback lahko aktivira samo en uporabnik hkrati za vsak način plačila."
-          },
-          "notCompatible": {
-            "title": "Nezdružljiv način",
-            "body": "Način plačila ni združljiv s Cashback-om, ker banka še ni aktivirala podpore za te funkcije. Za več podrobnosti se obrni na svojo banko."
-          },
-          "activate": {
-            "title": "Aktivirati Cashback na ta način plačila?",
-            "body": "Aktivacija bo delovala **od jutri**, zato današnje transakcije ne bodo veljavne za namene Cashback-a.",
-            "disclaimer": "Z izbiro {{aktiviraj}} izjavljaš, da si lastnik/ca tega načina plačila."
-          },
-          "deactivate": {
-            "title": "Želiš onemogočiti Cashback pri tem načinu plačila?",
-            "body": "Če potrdiš to izbiro, se transakcije, izvedene s tem načinom, ne bodo več zbirale. Deaktivacija bo veljala **od jutri**, tako da se lahko transakcije, opravljene danes, še zbirajo."
-          }
-        },
         "card": {
           "status": {
             "active": "Aktiven",
             "closed": "Zaključeno",
             "inactive": "Prihaja"
-          }
-        },
-        "superCashback": {
-          "rankLabel": "{{position}}. uporabnik na lestvici",
-          "rankTitle": "Lestvica najboljših Super Cashback",
-          "howItWorks": {
-            "title": "Kako deluje?",
-            "body": "**{{citizens}} državljanov** z največjim številom transakcij **prejmejo Super Cashback, nagrado v višini {{amount}} €**.",
-            "status": {
-              "active": "**Lestvica se spreminja vsak dan.** Ko bo konsolidirana, boš prejel/a sporočilo.",
-              "closed": "Razvrstitev za to obdobje je zaključena."
-            }
           }
         },
         "lastUpdate": "Posodobljeno ob {{hour}} dne {{date}}"
@@ -3198,11 +2943,9 @@
           "categories": "Kategorije",
           "cta": {
             "cancel": "Odstrani",
-            "confirm": {
-              "zero": "Uporabite filtre",
-              "one": "Uporabi filtre ({{count}})",
-              "other": "Uporabi filtre ({{count}})"
-            }
+            "confirm_zero": "Uporabite filtre",
+            "confirm_one": "Uporabi filtre ({{count}})",
+            "confirm_other": "Uporabi filtre ({{count}})"
           },
           "order": {
             "byDistance": "Glede na bližino tvoje lokacije",
@@ -3221,21 +2964,9 @@
         },
         "title": {
           "deals": "Ugodnosti",
-          "description": "Opis",
-          "services": "Storitve",
-          "addresses": "Naslovi",
-          "hours": "Vozni redi",
-          "validity": "Veljavnost",
-          "discountCode": "Koda za popust",
-          "conditions": "Pogoji"
-        },
-        "cta": {
-          "label": "Pojdi na spletno mesto operaterja",
-          "landingPage": "Dostop do ugodnosti",
-          "discountUrl": "Pojdi na ugodnost"
+          "description": "Opis"
         },
         "categories": {
-          "all": "Vsi operaterji",
           "counting": "in drugih {{count}}",
           "cultureAndEntertainment": "Kultura in prosti čas",
           "health": "Zdravje in dobro počutje",
@@ -3375,239 +3106,6 @@
             "one": "1 sekundo",
             "other": "{{seconds}} sekund"
           }
-        }
-      }
-    },
-    "sv": {
-      "headerTitle": "Sicilia Vola",
-      "voucherGeneration": {
-        "acceptTos": {
-          "alert": {
-            "title": "Pozor",
-            "message": "Obveščamo te, da podatki, ki jih vneseš, dejansko predstavljajo samocertifikacijo. Vsaka lažna prijava bo kaznovana po UPR št. 445/2000",
-            "buttons": {
-              "ok": "Nadaljuj",
-              "ko": "Prekliči zahtevo"
-            }
-          },
-          "buttons": {
-            "requestBonus": "Zahtevaj kodo za popust"
-          }
-        },
-        "checkResidence": {
-          "title": "Dežela stalnega prebivališča",
-          "items": {
-            "inSicily": "Živim na Siciliji",
-            "notInSicily": "Živim v drugi deželi"
-          },
-          "info": "Ne pozabi, da so popusti na voljo samo državljanom s stalnim prebivališčem na Siciliji."
-        },
-        "selectBeneficiaryCategory": {
-          "title": "Izjavljam, da sem",
-          "categories": {
-            "student": "študent/ka izven kraja sedeža",
-            "disabled": "hud invalid",
-            "worker": "zaposlen/a z delovnim mestom izven Sicilije",
-            "sick": "pacient/ka s potrebo po zdravljenju zunaj Sicilije",
-            "other": "nič od naštetega"
-          }
-        },
-        "student": {
-          "selectDestination": {
-            "title": "StudentSelectDestinationScreen"
-          }
-        },
-        "disabled": {
-          "additionalInfo": {
-            "title": "Dodatne informacije",
-            "disclaimer": {
-              "normal": "Izjavljam, da izpolnjujem zahteve iz",
-              "link": "3. člena, 3. odstavka, zakona št. 104 z dne 5 februar 1992"
-            }
-          }
-        },
-        "worker": {
-          "selectDestination": {
-            "title": "WorkerSelectDestinationScreen"
-          }
-        },
-        "sick": {
-          "selectDestination": {
-            "title": "SickSelectDestinationScreen"
-          }
-        },
-        "checkIncome": {
-          "title": "Izjavljam tudi",
-          "threshold": {
-            "under": "da imam letni bruto dohodek nižji ali enak {{amount}}",
-            "over": "da imam letni bruto dohodek, ki presega {{amount}}"
-          }
-        },
-        "selectFlightsDate": {
-          "title": "Datum leta",
-          "subtitle": "Navedi vrsto leta in datum(e), ko boš potoval/a",
-          "flights_choice": {
-            "departure": "Enosmerni let",
-            "return": "Tudi povratni let"
-          },
-          "labels": {
-            "departure": "Datum odhoda",
-            "return": "Datum vrnitve"
-          }
-        },
-        "summary": {
-          "title": "Povzetek",
-          "subtitle1": {
-            "normal1": "Z nadaljevanjem, na lastno odgovornost izjavljaš, da si seznanjen/a s kazenskimi sankcijami v primeru neresničnih izjav in ponarejanja listin (",
-            "link": "čl. 76 UPR št. 445 z dne 28. decembra 2000",
-            "normal2": "), da izpolnjuješ naslednje zahteve"
-          },
-          "subtitle2": "in, da prosiš kodo za popust za let z naslednjimi značilnostmi:",
-          "fields": {
-            "residence": {
-              "label": "Bivališče:",
-              "value": "Sicilija"
-            },
-            "category": {
-              "label": "Kategorija:",
-              "value": {
-                "disabled": "Težji invalid po 3. odstavku 3. člena zakona št. 104 z dne 5 februar 1992",
-                "student": "Študent/ka izven kraja sedeža",
-                "worker": "Zaposlen/a z delovnim mestom izven Sicilije",
-                "sick": "Pacient/ka s potrebo po zdravljenju zunaj Sicilije"
-              }
-            },
-            "flightDate": {
-              "label": "Datum leta:",
-              "disabled": "Vse"
-            },
-            "availableDestination": "Možni cilji:"
-          }
-        },
-        "voucherGenerated": {
-          "title": "Tu je tvoja koda za popust",
-          "subtitle": "Vnesi jo na portalu ali sporoči na blagajni podjetja ob nakupu vstopnice. Opozarjamo te, da je koda imenska in je ne morejo uporabljati drugi."
-        },
-        "ko": {
-          "checkIncome": {
-            "title": "Oprosti.\nNimaš značilnosti za dostop do popustov.",
-            "body": "Sicilia Vola popusti so namenjeni samo tistim z bruto osebnim dohodkom nižjim od 25.000 €."
-          },
-          "selectBeneficiaryCategory": {
-            "title": "Oprosti.\nNimaš značilnosti za dostop do popustov.",
-            "body": "Popusti Sicilia Vola so namenjeni samo kategorijam iz spiska na prejšnjem zaslonu."
-          },
-          "checkResidence": {
-            "title": "Oprosti.\nNimaš značilnosti za dostop do popustov.",
-            "body": "Popusti Sicilia Vola so namenjeni samo prebivalcem Sicilije."
-          },
-          "timeout": {
-            "title": "Tvoja koda za popust Sicilia Vola se generira.",
-            "body": "Ko bo aplikacija IO pripravljena, boš prejel/a sporočilo."
-          }
-        }
-      },
-      "voucherList": {
-        "title": "Tvoje kode za popust so na voljo",
-        "loading": "Poteka nalaganje",
-        "filter": {
-          "title": "Filtriraj kupone",
-          "searchValuePlaceholder": "Iskanje kode kupona",
-          "stateSection": {
-            "title": "Država"
-          },
-          "dateSection": {
-            "title": "Datum",
-            "departure": "Datum odhoda",
-            "return": "Datum vrnitve"
-          },
-          "cta": {
-            "removeFilter": "Odstrani",
-            "applyFilter": {
-              "zero": "Uporabi filtre",
-              "other": "Uporabi filtre ({{count}})"
-            }
-          }
-        },
-        "emptyList": {
-          "title": "Ni na voljo kod za popust",
-          "subtitle": "Poišči uporabljene ali potekle kode ali zaprosi za novo kodo",
-          "cta": "Ustvari novo kodo"
-        },
-        "error": "Tvojih kuponov ne moremo obnoviti, poskusi znova.",
-        "details": {
-          "title": "Tvoja koda za popust",
-          "fields": {
-            "uniqueCode": "Identifikacijska koda",
-            "beneficiary": "Upravičenec",
-            "residence": {
-              "label": "Prebivališče",
-              "value": "Sicilija"
-            },
-            "category": "Kategorija",
-            "flightDate": "Datum leta",
-            "possibleDestination": "Možne destinacije"
-          },
-          "cta": {
-            "voucherRevocation": "Preklic kupona",
-            "openQr": "Odpri QR kodo"
-          },
-          "voucherRevocation": {
-            "alert": {
-              "title": "Pozor",
-              "message": "Si prepričan/a, da želiš nadaljevati? Koda za popust bo izbrisana.",
-              "cta": {
-                "ok": "Nadaljuj",
-                "ko": "Prekliči zahtevo"
-              }
-            },
-            "toast": {
-              "ok": "Kupon je bil uspešno izbrisan",
-              "ko": "Napaka pri brisanju bona. Poskusi ponovno"
-            }
-          }
-        }
-      },
-      "components": {
-        "voucherVisualDetails": {
-          "uniqueCode": "Identifikacijska koda",
-          "qrCode": "QR koda",
-          "barCode": "Črtna koda"
-        },
-        "destinationLabels": {
-          "universityName": "Ime univerze",
-          "companyName": "Uradno ime podjetja",
-          "hospitalName": "Ime objekta ali izvajalca poklicne dejavnosti",
-          "municipality": "Občina"
-        },
-        "voucherBottomsheet": {
-          "title": "Koda za popust Sicilia Vola",
-          "cta": {
-            "exit": "Izhod",
-            "voucherRevocation": "Preklic kupona"
-          }
-        },
-        "destinationSelector": {
-          "state": {
-            "title": "Izberi državo",
-            "label": "Država",
-            "placeholder": "Izberi državo"
-          },
-          "municipality": {
-            "title": "Izberi občino",
-            "label": "Občina",
-            "placeholder": "Izberi občino",
-            "ko": {
-              "label1": "Napaka pri nalaganju občin.",
-              "label2": "Poskusi ponovno"
-            }
-          }
-        }
-      },
-      "pdfVoucher": {
-        "toast": {
-          "ok": "Kupon je uspešno shranjen",
-          "ko": "Težave pri shranjevanju kupona"
         }
       }
     },
