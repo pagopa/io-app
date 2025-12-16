@@ -65,7 +65,7 @@ describe("shouldRequestStatusAssertion", () => {
     expect(shouldRequestStatusAssertion(mockCredential)).toEqual(false);
   });
 
-  it("return false when the credential status is invalid", () => {
+  it("return true when the credential status is invalid", () => {
     jest.useFakeTimers().setSystemTime(new Date("2024-08-27T10:30:00+00:00"));
 
     const mockCredential: StoredCredential = {
@@ -74,7 +74,7 @@ describe("shouldRequestStatusAssertion", () => {
         credentialStatus: "invalid"
       }
     };
-    expect(shouldRequestStatusAssertion(mockCredential)).toEqual(false);
+    expect(shouldRequestStatusAssertion(mockCredential)).toEqual(true);
   });
 
   it("return true when the credential status is unknown", () => {
