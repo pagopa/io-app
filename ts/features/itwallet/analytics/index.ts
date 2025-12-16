@@ -215,6 +215,11 @@ type TrackCieCanParams = {
   ITW_ID_method: ItwIdMethod;
 };
 
+type TrackItwCiePinTutorialCie = {
+  itw_flow: ItwFlow;
+  ITW_ID_method: ItwIdMethod;
+};
+
 export type CieCardVerifyFailureReason =
   | "CERTIFICATE_EXPIRED"
   | "CERTIFICATE_REVOKED";
@@ -504,10 +509,12 @@ export function trackItwCieInfoBottomSheet(
   );
 }
 
-export function trackItwCiePinTutorialCie(itw_flow: ItwFlow) {
+export function trackItwCiePinTutorialCie(
+  properties: TrackItwCiePinTutorialCie
+) {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_CIE_PIN_TUTORIAL_CIE,
-    buildEventProperties("UX", "screen_view", { itw_flow })
+    buildEventProperties("UX", "screen_view", properties)
   );
 }
 
