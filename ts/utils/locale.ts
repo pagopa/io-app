@@ -12,6 +12,8 @@ import {
   LocalizedMessageKeys
 } from "../i18n";
 import { LanguageEnum } from "../../definitions/pagopa/ecommerce/RequestAuthorizationRequest";
+
+type LocaleSubset = Exclude<Locales, "sl">;
 /**
  * Helpers for handling locales
  */
@@ -21,7 +23,7 @@ import { LanguageEnum } from "../../definitions/pagopa/ecommerce/RequestAuthoriz
  * If not italian, for all other languages italian is the default.
  */
 export const getFullLocale = (): LocalizedMessageKeys =>
-  localeToLocalizedMessageKey.get(I18n.language as Locales) ??
+  localeToLocalizedMessageKey.get(I18n.language as LocaleSubset) ??
   localeFallback.localizedMessageKey;
 /**
  * Returns the primary component of a locale
@@ -40,7 +42,8 @@ export function getLocalePrimary(
 }
 
 // return the current locale set in the device (this could be different from the app supported languages)
-export const getCurrentLocale = (): Locales => I18n.language as Locales;
+export const getCurrentLocale = (): LocaleSubset =>
+  I18n.language as LocaleSubset;
 
 /**
  * return the primary component of the current locale (i.e: it-US -> it)

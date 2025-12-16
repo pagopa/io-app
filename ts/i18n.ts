@@ -7,6 +7,7 @@ import { Locales } from "../locales/locales";
 import it from "../locales/it/index.json";
 import en from "../locales/en/index.json";
 import de from "../locales/de/index.json";
+import sl from "../locales/sl/index.json";
 import { PreferredLanguageEnum } from "../definitions/session_manager/PreferredLanguage";
 
 const resources = {
@@ -18,6 +19,9 @@ const resources = {
   },
   de: {
     index: de
+  },
+  sl: {
+    index: sl
   }
 };
 
@@ -29,7 +33,7 @@ type FallBackLocale = {
 };
 
 export const localeToLocalizedMessageKey = new Map<
-  Locales,
+  Exclude<Locales, "sl">,
   LocalizedMessageKeys
 >([
   ["it", "it-IT"],
@@ -43,8 +47,7 @@ export const localeToPreferredLanguageMapping = new Map<
 >([
   ["it", PreferredLanguageEnum.it_IT],
   ["en", PreferredLanguageEnum.en_GB],
-  ["de", PreferredLanguageEnum.de_DE],
-  ["sl", PreferredLanguageEnum.sl_SI]
+  ["de", PreferredLanguageEnum.de_DE]
 ]);
 
 // define the locale fallback used in the whole app code
