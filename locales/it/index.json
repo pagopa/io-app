@@ -3062,6 +3062,7 @@
       "title": "I miei preferiti",
       "add": "Aggiungi ai preferiti",
       "remove": "Rimuovi dai preferiti",
+      "sortButton": "Ordina",
       "toasts": {
         "added": "Aggiunto ai preferiti!",
         "removed": "Rimosso dai preferiti!",
@@ -3075,6 +3076,15 @@
       "removeAlert": {
         "title": "Vuoi rimuovere il servizio dai preferiti?",
         "confirm": "Sì, rimuovi"
+      },
+      "bottomSheet": {
+        "title": "Ordina la lista",
+        "a11y": "Ordina i servizi preferiti",
+        "content": {
+          "addedAt_desc": "Dal più recente",
+          "name_asc": "Per nome (A-Z)",
+          "addedAt_asc": "Dal primo aggiunto"
+        }
       }
     }
   },
