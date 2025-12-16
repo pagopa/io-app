@@ -1346,6 +1346,15 @@ export const trackItwRemoteStart = () => {
   );
 };
 
+export const trackItwIdAuthenticationCompleted = (
+  ITW_ID_method: "spid" | "cieId"
+) => {
+  void mixpanelTrack(
+    ITW_TECH_EVENTS.ITW_ID_AUTHENTICATION_COMPLETED,
+    buildEventProperties("TECH", undefined, { ITW_ID_method })
+  );
+};
+
 // #endregion TECH
 
 // #region PROFILE AND SUPER PROPERTIES UPDATE

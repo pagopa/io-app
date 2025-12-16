@@ -95,6 +95,7 @@ export const itwEidIssuanceMachine = setup({
     trackWalletInstanceCreation: notImplemented,
     trackWalletInstanceRevocation: notImplemented,
     trackIdentificationMethodSelected: notImplemented,
+    trackPrimaryIdAuthenticationCompleted: notImplemented,
 
     /**
      * Context manipulation
@@ -850,7 +851,8 @@ export const itwEidIssuanceMachine = setup({
       onDone: [
         {
           guard: "requiresMrtdVerification",
-          target: "MrtdPoP"
+          target: "MrtdPoP",
+          actions: "trackPrimaryIdAuthenticationCompleted"
         },
         {
           target: "Issuance"

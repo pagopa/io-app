@@ -10,6 +10,7 @@ import { checkCurrentSession } from "../../../authentication/common/store/action
 import {
   trackItWalletIDMethodSelected,
   trackItwDeactivated,
+  trackItwIdAuthenticationCompleted,
   trackSaveCredentialSuccess,
   updateITWStatusAndPIDProperties
 } from "../../analytics";
@@ -340,5 +341,17 @@ export const createEidIssuanceActionsImplementation = (
       ITW_ID_method: event.mode,
       itw_flow: context.level === "l3" ? "L3" : "L2"
     });
+  },
+
+  trackPrimaryIdAuthenticationCompleted: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assert(context.identification, "identification context is undefined");
+    assert(
+      context.identification.mode !== "ciePin",
+      "identification mode can not be ciePin"
+    );
+
+    trackItwIdAuthenticationCompleted(context.identification.mode);
   }
 });
