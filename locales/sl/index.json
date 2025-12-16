@@ -1761,19 +1761,14 @@
         "title": "Pogoji in zasebnost",
         "privacyLink": "Politika zasebnosti"
       },
-      "emailForwarding": "Pošljanje tebi e-pošto"
+      "preferences": {
+        "messageReadStatus": "Prejemanje potrdil o branju",
+        "pushNotifications": "Pošiljanje potisnih obvestil"
+      }
     },
     "title": "Storitve",
-    "subTitle": "Aktiviraj ali deaktiviraj storitve, od katerih lahko prejemaš sporočila",
     "contextualHelpTitle": "Kaj lahko storiš v svojih storitvah",
-    "contextualHelpContent": "**Na strani Storitve si lahko ogledaš seznam ustanov, ki ponujajo storitve na IO, in seznam storitev, povezanih s posamezno ustanovo.** Storitve so razdeljene med lokalne, kjer lahko izbereš ustanove, ki te zanimajo, glede na geografsko območje, kjer živiš, državno, tj. centralne uprave, ki ponujajo storitve vsem italijanskim državljanom, in končno vse, kjer lahko najdeš celoten seznam vseh storitev, ki so na voljo na IO (tako lokalnih kot državnih).\nVabimo te, da uporabiš to stran za ogled storitev, ki jih ponuja IO, nastavitev seznama lokalnih storitev in podrobnosti o posameznih storitvah. Kadar koli nova lokalna ali državna storitev dospe na IO, boš prejel/a obvestilo, tako da lahko takoj preveriš, za kaj gre in ali je zate uporabna.\n",
-    "serviceIsEnabled": "Kontaktiranje tebe preko aplikacije",
-    "serviceNotEnabled": "Storitev ni aktivna",
-    "pushNotifications": "Pošiljanje potisnih obvestil",
-    "messageReadStatus": "Prejemanje potrdil o branju",
-    
-    "otherAppsInfo": "To storitev lahko uporabljaš tudi kot",
-    "contactsAndInfo": "Kontakti in informacije"
+    "contextualHelpContent": "**Na strani Storitve si lahko ogledaš seznam ustanov, ki ponujajo storitve na IO, in seznam storitev, povezanih s posamezno ustanovo.** Storitve so razdeljene med lokalne, kjer lahko izbereš ustanove, ki te zanimajo, glede na geografsko območje, kjer živiš, državno, tj. centralne uprave, ki ponujajo storitve vsem italijanskim državljanom, in končno vse, kjer lahko najdeš celoten seznam vseh storitev, ki so na voljo na IO (tako lokalnih kot državnih).\nVabimo te, da uporabiš to stran za ogled storitev, ki jih ponuja IO, nastavitev seznama lokalnih storitev in podrobnosti o posameznih storitvah. Kadar koli nova lokalna ali državna storitev dospe na IO, boš prejel/a obvestilo, tako da lahko takoj preveriš, za kaj gre in ali je zate uporabna.\n"
   },
   "identification": {
     "title": "Podravljen/a!",
