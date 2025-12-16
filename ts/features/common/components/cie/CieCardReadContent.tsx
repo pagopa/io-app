@@ -24,6 +24,7 @@ import Animated, {
   withSpring
 } from "react-native-reanimated";
 import { CircularProgress } from "../../../../components/ui/CircularProgress";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { isDevEnv } from "../../../../utils/environment";
 import { platformSelect } from "../../utils";
@@ -205,7 +206,7 @@ const ContentIos = (props: CieCardReadContentProps) => (
 );
 
 const ContentAndroid = (props: CieCardReadContentProps) => (
-  <View style={{ flex: 1, justifyContent: "center" }}>
+  <IOScrollView centerContent>
     <ContentWrapper>
       <VStack space={24}>
         <CircularProgress
@@ -228,7 +229,7 @@ const ContentAndroid = (props: CieCardReadContentProps) => (
         />
       </VStack>
     </ContentWrapper>
-  </View>
+  </IOScrollView>
 );
 
 /**

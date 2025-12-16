@@ -8,6 +8,7 @@ export type SendAARFailurePhase =
   | "Entry Point"
   | "Fetch Notification"
   | "Fetch QRCode"
+  | "Validate Mandate"
   | "Playground"
   | "Show Notification"
   | "Create Mandate";
@@ -260,10 +261,7 @@ export const validAARStatusTransitions = new Map<
   ],
   [
     sendAARFlowStates.validatingMandate,
-    new Set([
-      sendAARFlowStates.ko,
-      sendAARFlowStates.displayingNotificationData
-    ])
+    new Set([sendAARFlowStates.ko, sendAARFlowStates.fetchingNotificationData])
   ]
 ]);
 
