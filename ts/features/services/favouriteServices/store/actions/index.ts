@@ -1,5 +1,8 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { ServiceType } from "../../../favouriteServices/types";
+import type {
+  FavouriteServicesSortType,
+  ServiceType
+} from "../../../favouriteServices/types";
 import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 
 export const addFavouriteServiceRequest = createStandardAction(
@@ -14,7 +17,12 @@ export const removeFavouriteService = createStandardAction(
   "REMOVE_FAVOURITE_SERVICE"
 )<{ id: ServiceId }>();
 
+export const setFavouriteServicesSortType = createStandardAction(
+  "SET_FAVOURITE_SERVICES_SORT_TYPE"
+)<FavouriteServicesSortType>();
+
 export type FavouriteServicesActions =
   | ActionType<typeof addFavouriteServiceRequest>
   | ActionType<typeof addFavouriteServiceSuccess>
-  | ActionType<typeof removeFavouriteService>;
+  | ActionType<typeof removeFavouriteService>
+  | ActionType<typeof setFavouriteServicesSortType>;

@@ -19,3 +19,8 @@ export type FavouriteServiceType = ServiceType & {
    */
   addedAt: number;
 };
+
+export type FavouriteServicesSortType =
+  | "addedAt_asc"
+  | "addedAt_desc"
+  | "name_asc";
