@@ -1,4 +1,4 @@
-name: Start a new release cycle on stores
+name: Release new cycle
 on:
   workflow_dispatch:
     inputs:

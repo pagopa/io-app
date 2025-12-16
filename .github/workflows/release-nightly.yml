@@ -1,4 +1,4 @@
-name: Nightly release new app version
+name: Release nightly
 on:
   schedule:
     - cron: '59 21 * * *'
@@ -8,7 +8,6 @@ concurrency:
   cancel-in-progress: false
 jobs:
   detect-changes:
-    name: Detect changes since last tag
     runs-on: ubuntu-latest
     outputs:
       has_changes: ${{ steps.detect.outputs.HAS_CHANGES }}
