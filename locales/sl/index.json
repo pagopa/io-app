@@ -108,7 +108,6 @@
         "unread_plural": "{{messages}} novih sporočil"
       }
     },
-    "ioWebSite": "https://io.italia.it",
     "symbols": {
       "question": "?",
       "asterisk": "*"
@@ -208,17 +207,6 @@
       "invalidSearchBarText": "Vnesi vsaj {{minCharacter}} znake",
       "noResultsFound": "Za to iskanje ni rezultatov: poskusi iskati nekaj drugega.",
       "noResultsTitle": "Brez rezultata."
-    },
-    "localNotifications": {
-      "spidLogin": {
-        "title": "Če želiš začeti uporabljati aplikacijo, se prijavi",
-        "message": "IO deluje le, če si se vsaj enkrat prijavil/a"
-      }
-    },
-    "media": {
-      "email": "Epošta",
-      "pec": "CEP(PEC)",
-      "phone": "Telefon"
     }
   },
   "tablet": {
@@ -229,15 +217,10 @@
     "bodyiOS": "Videti je, da je bil na tvoji napravi izveden **jailbreak** postopek.\n\nTo se zgodi, ko je operacijski sistem spremenjen ali ko je nameščen anormalno. Morda je bila ogrožena celovitost operacijskega sistema in morda aplikacija IO ne bo delovala pravilno.\n\nČe je mogoče, ne nadaljuj in namesti aplikacijo IO na drugo napravo, ki ima zdrav in posodobljen operacijski sistem.\n\nČe nadaljuješ, se strinjaš, da boš še naprej uporabljal/a ponujene storitve na lastno odgovornost, saj lahko pomanjkanje celovitosti vodi do kraje podatkov in/ali drugih goljufivih dejavnosti. Prav tako se strinjaš, da razvijalec aplikacije v nobenem primeru ni odgovoren za kakršno koli škodo, izgubo ali posledice, ki jih lahko utrpiš zaradi uporabe aplikacije IO v takšnem operacijskem sistemu.\n",
     "bodyAndroid": "Videti je, da je **root** omogočen v tvoji napravi.\n\nTo se zgodi, ko je operacijski sistem spremenjen ali ko je nameščen anormalno. Morda je bila ogrožena celovitost operacijskega sistema in morda aplikacija IO ne bo delovala pravilno.\n\nČe je mogoče, ne nadaljuj in namesti aplikacijo IO na drugo napravo, ki ima zdrav in posodobljen operacijski sistem.\n\nČe nadaljuješ, se strinjaš, da boš še naprej uporabljal/a ponujene storitve na lastno odgovornost, saj lahko pomanjkanje celovitosti vodi do kraje podatkov in/ali drugih goljufivih dejavnosti. Prav tako se strinjaš, da razvijalec aplikacije v nobenem primeru ni odgovoren za kakršno koli škodo, izgubo ali posledice, ki jih lahko utrpiš zaradi uporabe aplikacije IO v takšnem operacijskem sistemu.\n",
     "continueAlert": {
-      "title": "Nadaljuj",
-      "body": "Si razumel tveganje in želiš nadaljevati?",
-      "confirmText": "Da",
-      "cancelText": "Prekliči"
+      "title": "Nadaljuj"
     },
     "cancelAlert": {
-      "title": "Izhod",
-      "body": "Aplikacijo lahko zapreš",
-      "confirmText": "Zapri"
+      "title": "Izhod"
     }
   },
   "locales": {
@@ -291,13 +274,6 @@
       "body": "Če imaš težave z dostopom do aplikacije, prosimo, da to prijaviš naši ekipi in v najkrajšem možnem času bomo težavo odpravili."
     }
   },
-  "login": {
-    "welcome": {
-      "line1": "dobrodošel v svoje",
-      "line2": "digitalno državljanstvo"
-    },
-    "expiration_info": "Iz varnostnih razlogov se boš moral/a vsakih 30 dni znova avtenticirati s CIE ali SPID."
-  },
   "inbox": {
     "enableButton": "Omogoči mapo Prejeto.",
     "disableButton": "Onemogoči mapo Prejeto.",
@@ -306,24 +282,11 @@
   "profile": {
     "fiscalCode": {
       "accessibility": {
-        "unavailable": "Ni na voljo",
-        "preview": {
-          "label": "Predogled tvoje davčne številke",
-          "hint": "Aktiviraj za ogled faksimila tvoje davčne številke"
-        },
-        "front": {
-          "label": "Sprednja stran dokumenta Davčna številka {{code}} od {{name}} {{family_name}}, spol {{gender}}, rojen/a v {{placeOfBirth}}, {{province}} dne {{birthDate}}",
-          "hint": "Aktivirajte za preklop na celozaslonski pogled"
-        },
-        "rear": {
-          "label": "Črtna koda tvojega dokumenta",
-          "hint": "Aktiviraj za preklop na celozaslonski pogled"
-        }
+        "unavailable": "Ni na voljo"
       },
       "title": "Tvoji osebni dokumenti",
       "fiscalCode": "Davčna številka",
       "help": "**Tukaj je prikazan faksimile tvoje davčne številke.**\nFaksimile ne nadomesti fizičnega dokumenta, temveč omogoča branje podatkov in črtne kode na hrbtni strani.\nV primeru homokodije (ko imata dve osebi, po določenem izračunu, isto davčno številko) se podatki, ustvarjeni v faksimilu, morda ne ujemajo z osebnimi podatki.\n",
-      "content": "Faksimile davčne številke ne nadomesti fizičnega dokumenta, ampak omogoča branje podatkov ali črtne kode na zadnji strani.",
       "facSimile": "FAKSIMILE"
     },
     "sections": {
@@ -335,18 +298,7 @@
       "alertTitle": "Ali res želiš zapreti aplikacijo?",
       "alertMessage": "Ko se boš naslednjič prijavil/a, se boš moral/a avtentikirati s CIE ali SPID-om.",
       "loading": "Odjava v teku …",
-      "exit": "Izhod",
-      "cta": {
-        "header": "Kako želiš zapustiti aplikacijo?",
-        "keepData": {
-          "title": "Odjavi se, vendar obdrži moje podatke",
-          "description": "Za uporabo IO se boš moral/a znova prijaviti s svojo digitalno identiteto, vendar bodo vse nastavitve na voljo, ko zaženeš aplikacijo. Ta funkcija ne povzroči, da aplikacija izbriše tvoje osebne podatke."
-        },
-        "resetData": {
-          "title": "Zapri in ponastavi aplikacijo",
-          "description": "Nastavitve in podatki, shranjeni v tvoji napravi, bodo ponastavljeni. Ta funkcija ne povzroči, da aplikacija izbriše tvoje osebne podatke."
-        }
-      }
+      "exit": "Izhod"
     },
     "errors": {
       "load": "Napaka pri nalaganju profila",
@@ -869,19 +821,6 @@
       "title": "Si res želiš zapreti aplikacijo IO?",
       "description": "Za nadaljnjo uporabo aplikacije se boš moral/a znova prijaviti"
     },
-    "fingerprint": {
-      "headerTitle": "Aktivacija",
-      "title": "Biometrična avtentikacija",
-      "body": {
-        "enrolledText": "Namesto kode za odklepanje lahko, za hitrejši in varnejši dostop do aplikacije ter avtorizacijo transakcij in plačil, uporabljaš {{biometryType}}.\n\nBiometrični podatki so shranjeni v pomnilniku tvojega telefona, na noben način ne bodo posredovani IO sistemom ali shranjeni drugje.\n\nMetodo biometrične avtentikacije lahko kadar koli onemogočiš v nastavitvah aplikacije.\n",
-        "enrolledType": {
-          "fingerprint": "tvoj prstni odtis",
-          "faceId": "Face ID",
-          "touchId": "Touch ID"
-        },
-        "notEnrolledText": "Zaznali smo, da nimaš aktivirane biometrične prijave. Če jo želiš aktivirati, jo lahko nastaviš v svoji napravi in ​​nato aktiviraš v varnostnih nastavitvah aplikacije.\r\n"
-      }
-    },
     "shareData": {
       "title": "Nastavi IO"
     },
@@ -902,9 +841,6 @@
         }
       }
     }
-  },
-  "lipsum": {
-    "medium": "Etiam habebis sem dicantur magna mollis euismod. Contra legem facit qui id facit quod lex prohibet. Integer legentibus erat a ante historiarum dapibus. Excepteur sint obcaecat cupiditat non proident culpa. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Magna pars studiorum, prodita quaerimus. Non equidem invideo, miror magis posuere velit aliquet. Inmensae subtilitatis, obscuris et malesuada fames."
   },
   "datetimes": {
     "yesterday": "včeraj",
@@ -1070,19 +1006,6 @@
           "title": "Nismo našli nobene kartice",
           "body": "Na tvoje ime ni kartice PagoBANCOMAT: za več informacij se obrni na svojo banko."
         },
-        "koNotFoundSingleBank": {
-          "title": "V tej banki nismo našli nobene kartice",
-          "body": "Ni kartice PagoBANCOMAT na tvoje ime.\nČe želiš, lahko IO poišče po vseh bankah.",
-          "continue": "Nadaljuj"
-        },
-        "koServicesError": {
-          "title": "Kartic ni bilo mogoče obnoviti: izberi svojo banko",
-          "body": "Za ogled seznama kartic PagoBANCOMAT na tvoje ime navedi banko, ki je izdala tvojo kartico.",
-          "chooseTheBank": "Izberite banko"
-        },
-        "loadingSearch": {
-          "title": "Pridobivamo tvoj seznam kartic.\n\nProsimo, počakaj nekaj sekund …"
-        },
         "add": {
           "title": "Dodajte PagoBancomat",
           "label": "PagoBancomat kartica {{current}} od {{length}}",
@@ -1226,53 +1149,6 @@
             }
           }
         }
-      },
-      "privative": {
-        "headerTitle": "Dodaj kartico supermarketa",
-        "choosePrivativeIssuer": {
-          "loading": "Nalagamo nastavitve\n\nProsim, počakajte nekaj sekund",
-          "title": "Izberi blagovno znamko svoje kartice",
-          "body": "Če kartico dodaš v svojo denarnico, se lahko pridružiš pobudam, ki so na voljo na IO.",
-          "koDisabled": {
-            "title": "Ta supermarket še ne ponuja te funkcije",
-            "body": "Prizadevamo si, da bi ti kmalu omogočili dodajanje kartice."
-          },
-          "koUnavailable": {
-            "title": "Ne moremo vzpostaviti stika s strežnikom",
-            "body": "Delamo na rešitvi problema."
-          }
-        },
-        "addPrivativeCardNumber": {
-          "title": "Vnesi številko kartice",
-          "body": "Vnesi števke na sprednji strani. IO bo preveril, ali je kartica povezana s tvojo davčno številko.",
-          "disclaimer": {
-            "text1": "Če nadaljuješ, sprejmeš ",
-            "text2": "informacije o obdelavi osebnih podatkov"
-          }
-        },
-        "search": {
-          "loading": "Preverjamo tvojo kartico.\n\nProsim, počakaj nekaj sekund",
-          "koTimeout": {
-            "title": "Tvoje kartice trenutno ni mogoče preveriti",
-            "body": "Prosim, poskusi znova"
-          },
-          "koNotFound": {
-            "title": "S to kartico je težava",
-            "body": "Poskusi znova vnesti številko ali pa se za pomoč obrni na službo za stranke supermarketa.",
-            "cta": {
-              "modifyCardNumber": "Spremeni številko kartice"
-            }
-          },
-          "koServiceError": {
-            "title": "Tvoje kartice trenutno ni mogoče obnoviti",
-            "body": "Prosim, poskusi kasneje"
-          }
-        },
-        "add": {
-          "screenTitle": "Ali želiš dodati to kartico?",
-          "loading": "Dodajamo tvojo kartico.\n\nProsim, počakaj nekaj sekund …",
-          "blocked": "Ta kartica je blokirana in je zato ni mogoče aktivirati za pridružitev pobudam, ki so na voljo na IO. Obrni se na tvoj supermarket."
-        }
       }
     },
     "alert": {
@@ -1301,12 +1177,6 @@
     "transactionsLoadMore": "Naloži prejšnje",
     "transacionsLoadingMore": "Nalaganje prejšnjih …",
     "transactionsShow": "Prikaži operacije",
-    "pickPaymentMethod": {
-      "unavailable": {
-        "title": "Ta način plačila še ni na voljo",
-        "message": "Ta način plačila bo na voljo v eni prihodnjih različic"
-      }
-    },
     "add": "dodaj",
     "delete": {
       "successful": "Metoda je odstranjena iz tvoje Denarnice",
@@ -1323,18 +1193,11 @@
       "failed": "Kartice ni mogoče dodati",
       "failedCardAlreadyExists": "Kartica, ki jo vstavljaš, je že prisotna",
       "contextualHelpTitle": "Kako dodati način plačila",
-      "contextualHelpContent": "**Tukaj lahko dodaš nov način plačila**, ki bo nato prikazan med tvojimi shranjenimi načini v Denarnici.\nVneseno metodo lahko kadar koli pozneje spremeniš ali izbrišeš, tako da vstopiš v Denarnico in na seznamu izbereš način plačila, ki ga želiš spremeniti.\n",
-      "abort": {
-        "title": "Ali želiš preklicati vnos novega plačilnega sredstva?",
-        "confirm": "Prekliči vnos",
-        "cancel": "Nadaljuj z vnašanjem",
-        "success": "Vnos načina plačila je bil uspešno preklican"
-      }
+      "contextualHelpContent": "**Tukaj lahko dodaš nov način plačila**, ki bo nato prikazan med tvojimi shranjenimi načini v Denarnici.\nVneseno metodo lahko kadar koli pozneje spremeniš ali izbrišeš, tako da vstopiš v Denarnico in na seznamu izbereš način plačila, ki ga želiš spremeniti.\n"
     },
     "textMsg": {
       "title": "Potrditvena koda",
       "header": "SMS potrditvena koda",
-      "newCode": "Zahtevaj novo kodo",
       "info": "Vnesi kodo, ki smo jo poslali prek SMS-a na tvojo telefonsko številko"
     },
     "transactionDetails": "Podrobnosti o transakciji",
@@ -1538,21 +1401,12 @@
         "name": "Aplikacije in orodja za digitalno plačevanje",
         "description": "Tvoja najljubša digitalna orodja na IO"
       },
-      "loyalty": {
-        "name": "Plačilna kartica supermarketa",
-        "description": "Kartica, ki jo uporabljaš za nakupovanje"
-      },
       "pagobancomat": {
         "name": "Kartica PagoBANCOMAT",
         "description": "Kartica, ki jo uporabljaš za plačevanje v trgovinah"
       },
       "bank": {
-        "name": "Bancomat Pay",
-        "maxFee": "Najvišja provizija 0,50 €"
-      },
-      "satispay": {
-        "name": "Satispay",
-        "description": "Aplikacija za pametno plačevanje"
+        "name": "Bancomat Pay"
       },
       "bancomatPay": {
         "name": "BANCOMAT Pay",
@@ -1630,7 +1484,6 @@
       }
     },
     "acceptedCards": "Sprejete kartice",
-    "missingDataCTA": "Ti manjka kakšen podatek?",
     "openAcceptedCardsPageCTA": "Ugotovi, katere kartice so sprejete",
     "missingDataText": {
       "body": "Če ne najdeš varnostne kode, tvoja kartica morda ni omogočena za spletna plačila.",
@@ -1662,32 +1515,6 @@
     "whyAFee": {
       "title": "Zakaj stroški transakcije?",
       "text": "Vsaka operacija nakazila denarja (gotovine ali e-denarja) ima stroške, ki zagotavljajo, da bo to plačilo varno in uspešno izvedeno.\nVsak upravitelj (ali PSP, ponudnik plačilnih storitev) predlaga stroške transakcije v skladu s svojimi poslovnimi politikami in pogodbenimi pogoji.\nS pagoPA so ti stroški pregledni in državljani lahko svobodno izberejo najugodnejšo in priročno možnost. Preden nadaljuješ s plačilom, preveri znesek, ki ga izbrani PSP ponudnik zahteva za izvedbo plačila.\n"
-    },
-    "errors": {
-      "TECHNICAL": "S tem obvestilom je tehnična težava",
-      "DATA": "Podatki v obvestilu so napačni",
-      "EC": "Ustanova upnica ima težave pri odzivanju",
-      "ONGOING": "Plačilo že poteka, poskusi znova čez nekaj minut",
-      "ONGOING_SUBTITLE": "Če je že preteklo preveč časa, nam sporoči!",
-      "REVOKED": "Ustanova upnica je to obvestilo preklicala",
-      "EXPIRED": "Obvestilo je poteklo in ga ni več mogoče plačati",
-      "GENERIC_ERROR": "Prišlo je do nepričakovane napake",
-      "GENERIC_ERROR_SUBTITLE": "Poskusi znova ali nas kontaktiraj za pomoč.",
-      "DUPLICATED": "To obvestilo je bilo že plačano!",
-      "INVALID_AMOUNT": "Znesek, naveden v opozorilu, ni pravilen, če si podatke vnesel/a ročno, preveri pravilnost in poskusi znova.",
-      "PAYMENT_EXPIRED": "Plačilo za to obvestilo ni več na voljo, ker je obvestilo poteklo.",
-      "PAYMENT_UNAVAILABLE": "Plačilo za to obvestilo trenutno ni na voljo, poskusi znova pozneje.",
-      "PAYMENT_UNKNOWN": "Ustanova, ki ga je izdala, tega obvestila o plačilu ne prepozna, plačila ni mogoče izvesti.",
-      "DOMAIN_UNKNOWN": "To obvestilo je izdala ustanova, ki ni akreditirana za pagoPA, plačila ni mogoče izvesti.",
-      "MISSING_PAYMENT_ID": "Ustanova, ki je izdala to obvestilo, ima trenutno nekaj težav pri upravljanju plačila, poskusi znova!",
-      "PAYMENT_ONGOING_NOCANCEL": "Plačilo za to obvestilo že poteka, poskusi znova čez 30 minut.",
-      "PAYMENT_ONGOING_NOCANCEL_TIMEOUT": "Če si že počakal/a 30 minut in je plačilo še vedno blokirano, nam s spodnjim gumbom pošlji prijavo.",
-      "PAYMENT_ONGOING_CANCELLED": "Tvoj prejšnji poskus plačila se preklicuje, znova boš lahko poskusil/a plačati obvestilo čez {{remainingMinutes}} minut/o/i/e.",
-      "PAYMENT_ONGOING_CANCELLED_TIMEOUT": "Preklic tega plačila je bil zahtevan pred več kot 15 minutami, vendar je še vedno blokiran. Uporabi spodnji gumb, da nam pošlješ prijavo.",
-      "contactECsubtitle": "Za več informacij se obrni na ustanovo.",
-      "assistanceLabel": "Za pomoč uporabi kodo:",
-      "sendReport": "Pošlji prijavo",
-      "loadingData": "napaka pri nalaganju, poskusi znova."
     },
     "walletCardTransaction": {
       "contextualHelpTitle": "Transakcije, opravljene s to metodo",
@@ -1820,9 +1647,6 @@
         },
         "PAYMENT_DUPLICATED": {
           "title": "To obvestilo je bilo že plačano!"
-        },
-        "PAYMENT_INVALID_AMOUNT": {
-          "title": "Znesek, naveden v opozorilu, ni pravilen, če si podatke vnesel/a ročno, preveri pravilnost in poskusi znova."
         },
         "PAYMENT_UNKNOWN": {
           "title": "Ustanova, ki ga je izdala, tega obvestila o plačilu ne prepozna, plačila ni mogoče izvesti."
@@ -1971,19 +1795,6 @@
         "subtitle": "Z zgornjim gumbom si oglejte roke, ki so že pretekli."
       }
     },
-    "medical": {
-      "not_available": "n/a",
-      "prescription": "Elektronski recept",
-      "memo": "Opomnik za stranko",
-      "nre": "Številka elektronskega recepta",
-      "iup": "Identifikacijska koda rezervacije",
-      "patient_fiscal_code": "Davčna številka stranke",
-      "prescriber_fiscal_code": "Davčna številka zdravnika",
-      "deadline": "Ta recept poteče dne {{date}}",
-      "barcodes": "Črtne kode",
-      "nationalService": "Državna zdravstvena služba (Servizio Sanitario Nazionale)",
-      "note": "Izdano na podlagi 16. odstavka 11. člena Zakonske uredbe št. 78 z dne 31. maja 2010 in 4. odstavka 1. člena Ministrske uredbe z dne 2. novembra 2011"
-    },
     "pagination": {
       "migration": {
         "started": "Počakaj, posodabljamo razdelek s sporočili",
@@ -2011,16 +1822,6 @@
     "errorText": "Podatkov o sporočilu ni bilo mogoče naložiti",
     "retryText": "To je verjetno začasna napaka … poskusi znova!",
     "submitBugText": "Če težave ne odpraviš, nam jo sporoči z »?« zgoraj desno, hvala!",
-    "rawInfoLink": {
-      "showLabel": "Podrobnosti sporočila",
-      "hideLabel": "Zapri podrobnosti"
-    },
-    "rawInfoLabels": {
-      "createdAt": "Datum",
-      "organizationName": "Objavil",
-      "departmentName": "Oddelek",
-      "serviceName": "Storitev"
-    },
     "addMemo": "Dodaj opomnik dne <b>{{date}}</b> [ob <b>{{hour}}</b>]\r\n",
     "dateSending": "Datum in čas pošiljanja:",
     "sender": "Pošiljatelj:",
@@ -2149,24 +1950,6 @@
     "close": "Zapri",
     "emptyListMessage": "Trenutno ni na voljo nobena storitev, povleci navzdol za posodobitev"
   },
-  "serviceDetail": {
-    "fiscalCode": "DŠ ustanove",
-    "fiscalCodeAccessibility": "Davčna številka ustanove",
-    "contacts": {
-      "title": "Ta storitev lahko:"
-    },
-    "headerTitle": "Podrobnosti storitve",
-    "contextualHelpContent": "**Na tej strani lahko omogočiš ali onemogočiš komunikacijo v zvezi z določeno storitvijo.** Zapomni si, da ti bodo potom IO pisale samo storitve, ki ti lahko sporočijo  tiste informacije, ki so namenjene izključno tebi. Ne boš prejemal neželenih sporočil ali druge vsebine. Zaradi tega so vse storitve privzeto aktivne, ko je aplikacija nameščena.\nČe prejemaš sporočila, ki te ne zanimajo, ali če meniš, da ni koristno dostopati do določene storitve prek IO, ker imaš raje druge kanale, lahko posamezno storitev kadar koli onemogočiš preko te strani. Ko je storitev onemogočena, ne boš več prejemal/a njenih obvestil prek IO, ampak bodo s tabo stopili v stik prek drugih razpoložljivih kanalov (npr. e-pošta, pošta, SMS).\nNa tej strani lahko upravljaš tudi pošiljanje s to storitvijo potisnih obvestil na telefon in posredovanje sporočil, tudi na e-pošto, glede na tvoje želje.\n",
-    "onUpdateEnabledChannelsFailure": "Pri shranjevanju nastavitev je prišlo do začasne napake, poskusi znova.",
-    "disableTitle": "Ali res želiš deaktivirati storitev?",
-    "disableMsg": "Ne pozabi, da ti bodo na IO pisale samo storitve, ki imajo dejansko nekaj prilagojenih informacij za sporočanje. Ne boš prejemal/a neželenih sporočil. Če storitev onemogočiš, te ne bo mogla več kontaktirati preko IO (dokler je ponovno ne omogočiš). Storitev lahko še naprej uporabljaš preko drugih kanalov (okence, spletna stran itd.)",
-    "lockedMailAlert": "Posredovanje sporočil prek e-pošte je globalno {{enabled}}:",
-    "updatePreferences": "Sprememba nastavitev",
-    "goTo": "Pojdi na nastavitve",
-    "enabled": "omogočeno",
-    "disabled": "onemogočeno",
-    "notValidated": "Če želiš omogočiti e-poštna obvestila, moraš potrditi svoj e-poštni naslov."
-  },
   "identification": {
     "title": "Podravljen/a!",
     "titleProfileName": "Pozdravljen/a {{profileName}}!",
@@ -2175,9 +1958,6 @@
     "logoutProfileName": "Ali nisi ti {{profileName}}?",
     "logoutDescription": "Lahko se prijaviš s svojimi poverilnicami SPID ali CIE. Ta seja bo prekinjena.",
     "logoutDescriptionProfileName": "Lahko se prijaviš s svojimi poverilnicami SPID ali CIE. Seja {{profileName}} bo prekinjena.",
-    "subtitleCode": "Vnesi kodo za odklepanje",
-    "subtitleCodeFingerprint": "uporabi svoj prstni odtis ali kodo za odklepanje",
-    "subtitleCodeFaceId": "uporabi Face ID ali kodo za odklepanje",
     "biometric": {
       "fingerprintType": "Prstni odtis",
       "title": "Biometrična identifikacija",
@@ -2208,12 +1988,6 @@
       },
       "confirmValid": "Pravilna koda za odklepanje"
     },
-    "unlock_screen": {
-      "help": {
-        "title": "Dostop s kodo za odklepanje",
-        "content": "**Koda za odklepanje je varnostna koda, ki ohranja tvoje podatke zaščitene v aplikaciji IO in jo nastaviš sam/a, ko se prvič prijaviš**.\nČe v aplikacijo vstopaš prvič, poljubno nastavi svojo številčno kodo in si jo zapomni, da jo boš lahko uporabljal/a pri vseh nadaljnjih dostopih.\nČe si jo že nastavil/a in se je ne spomniš, lahko izbereš »Pozabil/la sem kodo za odklepanje« in nastaviš novo kodo.\nKoda za odklepanje je povezana z napravo, na kateri jo nastaviš: če zamenjaš telefon, jo boš moral/a znova nastaviti, ko prvič dostopaš do aplikacije IO.\n"
-      }
-    },
     "forgetCode": {
       "confirmTitle": "Si pozabil/a kodo za odklepanje?",
       "confirmMsg": "Če želiš izbrati novo kodo za odklepanje, se boš moral/a znova prijaviti.",
@@ -2221,12 +1995,7 @@
     }
   },
   "calendarEvents": {
-    "calendarSelect": "V kateri koledar želiš dodati dogodek?",
-    "removeRequest": {
-      "title": "Ali res želiš odstraniti dogodek?",
-      "ok": "Odstrani dogodek",
-      "cancel": "Prekliči operacijo"
-    }
+    "calendarSelect": "V kateri koledar želiš dodati dogodek?"
   },
   "reminders": {
     "emptyMonth": "V tem mesecu ni rokov",
@@ -2251,15 +2020,8 @@
   },
   "contextualHelp": {
     "title": "IO pomoč",
-    "sendScreenshot": {
-      "cta": "Deli posnetek zaslona (screenshot), za lažjo rešitev težave."
-    },
     "sendPersonalInfo": {
-      "title": "Nova prijava",
-      "description": "Skupina IO je na voljo za reševanje kakršnih koli ** težav** z aplikacijo ali za prejemanje **predlogov ** uporabnikov glede **izboljšav ali novih funkcij**.\n\nČe imaš dvome o **vsebini sporočila** ali o storitvi, ti svetujemo, da se **obrneš na pristojni organ**: kontakte boš našel/la na dnu sporočila ali na strani z opisom te storitve.",
-      "cta": "Napiši svojo davčno številko, da bo reševanje težave lažje.",
-      "informativeTitle": "Kako veš mojo davčno številko?",
-      "informativeDescription": "Davčna številka je del tistega nabora podatkov, ki jih aplikacija IO prejme od SPID identitete ali od elektronske osebne izkaznice (CIE), s katero si se prijavil/a. Skupaj s prijavo ni obvezno poslati davčne številke, vendar omogoča IO pomoči strankam bolj usmerjeno analizo sistemov in tako skrajša čas za rešitev težave. Za več informacij o obdelavi podatkov si oglej naš pravilnik o zasebnosti."
+      "title": "Nova prijava"
     }
   },
   "bottomSheets": {
@@ -2672,242 +2434,6 @@
       "name": "Cashback",
       "cta": {
         "activeBonus": "Aktiviraj Cashback"
-      },
-      "unsubscribe": {
-        "cta": "Prekliči svoj vpis v Cashback",
-        "title": "Deaktivacija Cashback-a",
-        "body1": "Ali res želiš preklicati vpis v Cashback?",
-        "body2": "Če potrdiš, tvojih transakcij ne bo več mogoče registrirati za Cashback, niti se ne boš mogel/la potegovati za Super Cashback; poleg tega **ne boš mogel/la izterjati povračila**, če ti je bilo priznano. Deaktivacija Cashback-a bo imela učinek **tudi na drugih kanalih**, ki si jih uporabil/a za aktivacijo (home banking, aplikacija itd.).\n\nČe Cashback znova aktiviraš pozneje, **boš znova začel/a s transakcijami od nič**.",
-        "confirmCta": "Prekliči vpis",
-        "loading": "Preklicujemo tvoj vpis",
-        "success": "Tvoj vpis v Cashback je bil preklican",
-        "failure": "Ni bilo mogoče preklicati tvojega vpisa, prosim, poskusi znova"
-      },
-      "onboarding": {
-        "alert": {
-          "title": "Cashback je že aktiven",
-          "body": "Več podrobnosti si lahko ogledaš v svoji Denarnici.",
-          "cancel": "Zapri",
-          "confirm": "Pojdi nazaj"
-        },
-        "loadingActivationStatus": {
-          "title": "Preverjam stanje aktivacije"
-        },
-        "declaration": {
-          "header": "Če želiš aktivirati Cashback, moraš izjaviti",
-          "cta": "Izjavljam",
-          "conditions": {
-            "age": "da sem polnoleten/na",
-            "resident": "da prebivam v Italiji",
-            "owner": {
-              "normal": "da boš aktiviral/a za namene Cashback-a ",
-              "bold": "samo načine plačila, katerih si lastnik/ca"
-            },
-            "personal_use": {
-              "normal": "da boš plačilna sredstva, na katerih je aktiven Cashback, uporabljal/a samo za nakupe v osebne namene, ",
-              "bold": "ki niso povezani s poslovnimi, umetniškimi ali poklicnimi dejavnostmi"
-            }
-          },
-          "disclaimer": {
-            "normal1": "Ta samoizjava je podana v skladu z ",
-            "link": "Uredbo predsednika dežele z dne 28. decembra 2000 št. 445, člen 46 in 47",
-            "normal2": " in se zavedam kazenskih sankcij in izgube pravice do povračila v primeru lažne prijave"
-          }
-        },
-        "loadingActivateBpd": {
-          "title": "Aktivacija Cashback-a poteka",
-          "body": "Prosim, počakaj …"
-        },
-        "noPaymentMethod": {
-          "title": "Dodaj vsaj eno plačilno sredstvo",
-          "body": "Če želiš začeti zbirati veljavne transakcije, dodaj svoja priljubljena načine plačila v svojo Denarnico: glavne plačilne kartice, aplikacije in druga digitalna orodja so podprti že danes.\n\nDruga orodja bodo podprta v prihodnosti: nova načine plačila lahko dodaš v IO kadar koli, nato za vsako lahko aktiviraš Cashback!"
-        },
-        "enrollPaymentMethod": {
-          "title": "Izberi katere načine plačila želiš aktivirati",
-          "body1": "Aktiviraj Cashback pri načinih plačila, shranjenih v tvoji Denarnici, da začneš zbirati veljavne transakcije.",
-          "body2": "Kasneje lahko v svojo Denarnico dodš druge načine plačila in za njih aktiviraš Cashback."
-        },
-        "errorPaymentMethod": {
-          "title": "Smo skoraj pri koncu, aktiviraj še Cashback na svojih načinih plačila!",
-          "body": "Omogoči Cashback pri načinih plačila, ki so že v tvoji Denarnici, ali pa dodaj nove.",
-          "cta": "Aktiviraj načine plačila"
-        }
-      },
-      "suggestActivation": {
-        "title": "Ali želiš aktivirati Cashback?",
-        "body": "Dodal/a si načine plačila, združljive s Cashbackom, pobudo, ki jo spodbujata Predsedstvo vlade ter Ministrstvo za ekonomijo in finance, da bi spodbudili večjo uporabo elektronskega denarja na državni ravni.\n\nPovračilo lahko prejmeš za nakupe s karticami, debetnimi karticami in plačilnimi aplikacijami.\n\n",
-        "skip": "Ne, hvala",
-        "confirm": "Informacije in aktivacija"
-      },
-      "iban": {
-        "bpdCompletedMessage": "Ta pobuda se je končala in IBAN ni več mogoče spremeniti",
-        "cta": {
-          "bpdNotActiveTitle": "Pozor",
-          "bpdNotActiveMessage": "nisi vpisan za Cashback, prijavi se in poskusite znova.",
-          "noActivePeriodTitle": "Pozor",
-          "noActivePeriodMessage": "trenutno Cashback ni aktiviran."
-        },
-        "iban": "IBAN",
-        "edit": "Spremeni IBAN",
-        "verify": "Preveri IBAN",
-        "insertion": {
-          "title": "IBAN za akreditacijo",
-          "body1": "Če želiš prejeti povračila, vnesi svojo ",
-          "body1Bold": "kodo IBAN brez presledkov",
-          "body2": "Preverili bomo IBAN, da ugotovimo, ali je tekoči račun vpisan na tvoje ime. Lahko ga vneseš tudi pozneje."
-        },
-        "koWrong": {
-          "title": "Napačen IBAN",
-          "text1": "IBAN, ki si ga vnesel/la",
-          "text2": "ni pravilen: prosim, preveri ga!"
-        },
-        "koCannotVerify": {
-          "title": "Tvojega IBAN ni bilo mogoče preveriti",
-          "text1": "Če si prepričan/a, da IBAN",
-          "text2": "odgovarja računu, na katerega želiš prejemati akreditacije, lahko nadaljuješ."
-        },
-        "koNotOwned": {
-          "title": "Preveri vneseni IBAN",
-          "text1": "IBAN",
-          "text2": "ni registriran na"
-        },
-        "loading": "Preverjamo tvoj IBAN\n\nProsim, počakaj.",
-        "success": "IBAN je bil uspešno vnesen"
-      },
-      "details": {
-        "howItWorks": {
-          "title": "Božični Extra Cashback",
-          "body": "1. Program Cashback je razdeljen na obdobja. Trenutno obdobje se začne **{{startDate}}** in konča **{{endDate}}**. **Nabiraj transakcije**, ki veljajo ves čas trajanja vsakega obdobja z **načini plačila, ki si jih aktiviral/a**.\n\n2. Če v tem obdobju dosežeš **{{minTransactionNumber}} transakcij**, boš prejel/a povračilo v višini {{cashbackPercentage}}%, do največjega povračila **{{maxTransactionCashback}} evrov** na transakcijo in največ **{{maxPeriodCashback}} evrov** za celotno obdobje.\n\n3. Ob koncu obdobja boš prejel/a zbrano povračilo na IBAN, ki si ga navedel/la.\n\n"
-        },
-        "components": {
-          "iban": {
-            "title": "IBAN za akreditacijo",
-            "noIbanBody": "Nastavi svoj IBAN, da boš lahko prejel/a zbrani Cashback",
-            "button": "Nastavi IBAN"
-          },
-          "ranking": {
-            "title": "Tvoj položaj",
-            "notReady": {
-              "title": "Kdaj bom lahko videl/a lestvico Super Cashback-a?",
-              "body": "Razvrstitev temelji na ** številu transakcij**, opravljenih z načini plačila, na katerih si aktiviral/a Cashback.\n\nPokazali bomo tvoj položaj na lestvici, **ko bo porazdelitev udeležencev pomembnejša**: v tem trenutku je veliko uporabnikov z enakim številom transakcij.\n\nKo bo razvrstitev objavljena, se bo uvrstitev, do konca 6 mesecev, **še naprej spreminjala**, odvisna od števila transakcij vseh udeležencev."
-            }
-          }
-        },
-        "transaction": {
-          "label": {
-            "one": "Transakcije: 1",
-            "other": "Transakcije: {{transactions}}"
-          },
-          "title": "Tvoje transakcije",
-          "goToButton": "Podrobnosti transakcij",
-          "loading": "Pridobivamo spisek tvojih transakcij.\n\nPočakaj nekaj sekund …",
-          "error": {
-            "title": "Pridobivanje podatkov traja dlje, kot je bilo pričakovano",
-            "body": "Trenutno ne moremo pridobiti tvojih transakcij. Ne skrbi, seznam bo kmalu spet na voljo.",
-            "pageLoading": "Transakcij ne moremo pridobiti, poskusi znova."
-          },
-          "noPaymentMethod": {
-            "text1": "Moraš aktivirati ",
-            "text2": "vsaj en način plačila ",
-            "text3": "za Cashback, da začneš zbirati potrebne transakcije"
-          },
-          "detail": {
-            "empty": {
-              "text1": "Ni še veljavnih transakcij.",
-              "text2": "Preveri znova v naslednjih dneh!"
-            },
-            "summary": {
-              "bottomSheet": {
-                "title": "Kdaj boš videl transakcije?",
-                "body": "**Ali še vedno ne vidiš transakcij?**\n\n- Preveri, ali jetvoja banka že **objavila** transakcijo: podatki se prenesejo v aplikacijo v 5 delovnih dneh po objavi.\n\n- Plačila s storitvami Google Pay, Apple Pay in Samsung Pay še niso podprte. Sodelujemo s tvojo banko, da bi podprli tudi to vrsto transakcije.\n\n- Transakcija je bila morda obdelana s POS napravo subjekta (acquirer), **ki še ni povezan v sistem Cashback**.",
-                "readMore": "Preberi več"
-              },
-              "calendarBlock": {
-                "text1": "Obveščamo te, da lahko pretečejo trije delovni dnevi, ",
-                "text2": "preden boš videl transakcijo na aplikaciji IO",
-                "text3": "."
-              },
-              "lastUpdated": "Zadnja posodobitev: ",
-              "link": "Manjka kaj?",
-              "body": {
-                "text1": "V obdobju",
-                "text2": "si skupno zbral/a ",
-                "text3": {
-                  "one": "1 veljavno transakcijo",
-                  "other": "{{transactions}} veljavnih transakcij"
-                },
-                "text4": "in zbral/a",
-                "text5": "povračilo v višini "
-              },
-              "milestone": {
-                "title": "Čestitamo, dosegel/la si {{cashbackValue}}",
-                "body": "Dosegel/la si največji predvideni znesek v tem obdobju. Nadaljuj z zbiranjem veljavnih transakcij, da se povzpneš na lestvici!"
-              }
-            },
-            "title": "Podrobnosti o transakciji",
-            "paymentCircuit": "Vrsta kartice",
-            "transactionAmount": "Znesek transakcije",
-            "cashbackAmount": "Znesek Cashback-a",
-            "acquirerId": "ID transakcije Acquirer-ja",
-            "issuerId": "ID transakcije izdajatelja",
-            "maxCashbackWarning": "Za vsako transakcijo lahko prejmeš Cashback za največ {{amount}} €.",
-            "maxCashbackForPeriodWarning": "Za to obdobje si že dosegel/la največje povračilo.",
-            "canceledOperationWarning": "Ta transakcija je razveljavitev, kar pomeni, da prekliče transakcijo, ki je bila predhodno opravljena.",
-            "canceled": "Preklic"
-          }
-        },
-        "card": {
-          "status": {
-            "active": "Aktiven",
-            "closed": "Zaključeno",
-            "inactive": "Prihaja"
-          }
-        },
-        "lastUpdate": "Posodobljeno ob {{hour}} dne {{date}}"
-      },
-      "optInPaymentMethods": {
-        "cashbackUpdate": {
-          "header": "Novice in novosti",
-          "title": "Novosti Cashback-a",
-          "subtitle": "Ministrstvo za ekonomijo in finance",
-          "body": "<H3>\n  Cashback se je končal\n</H3>\n<body>\n  Zakon št. 234 z dne 30. decembra 2021 je določil konec programa Cashback. To pomeni, da ne boš mogel/la več zbirati novih povračil.\n</body>\n<H3>\n  Kaj se zdaj zgodi?\n</H3>\n<body>\n  Kartice Cashback-a bodo odstranjene iz Denarnice.\n</body>\n<H3>\n  Kaj pa moji načini plačila?\n</H3>\n<body>\n  Izbereš lahko, ali želiš obdržati ali izbrisati vse načine plačila v Denarnici.\n</body>\n<ul style=\"list-style-type: square\">\n  <li>\n    <body>\n      <b> Če jih obdržiš</b>, jih lahko uporabiš za prihodnje popuste, bonuse in pobude ali za druge funkcije, kot je plačevanje v aplikaciji. To ni dokončna odločitev: kadar koli jih lahko izbrišeš.\n      Upravljalec za obdelavo podatkov ne bo več Ministrstvo za gospodarstvo in finance, temveč PagoPA S.p.A., kot upravljalec aplikacije IO: za več informacij glej Obvestilo o zasebnosti.\n    </body>\n  </li>\n  <li>\n      <body>\n          <b>Če jih izbrišeš</b>, bodo trajno odstranjeni. Če se želiš pridružiti prihodnjim pobudam ali jih želiš uporabiti za druge funkcije, jih boš moral/a znova dodati.\n      </body>\n  </li>\n</ul>"
-        },
-        "choice": {
-          "header": "Konfiguriraj IO",
-          "title": "Ali želiš obdržati svoje načine plačila?",
-          "subtitle": "Če jih obdržiš, jih lahko uporabiš za prihodnje popuste, bonuse in pobude ali za druge funkcije, kot je plačevanje v aplikaciji.",
-          "suggestedOption": "Priporočeno",
-          "options": {
-            "keepAll": {
-              "title": "V Denarnici obdrži vse načine plačila",
-              "body": "Če so združljivi, jih lahko uporabiš za prihodnje popuste, bonuse in pobude ali za druge funkcije, kot je plačevanje v aplikaciji. Nastavitve svojih načinov lahko kadar koli spremeniš ali načine izbrišeš."
-            },
-            "deleteAll": {
-              "title": "Iz Denarnicezbriši vse načine plačila",
-              "body": "Vsi načini plačila, ki si jih dodal/a do sedaj, bodo trajno odstranjeni. Kadarkoli jih lahko ponovno dodaš, vendar boš moral/a ponovno vnesti podatke in ponoviti postopke avtorizacije."
-            }
-          },
-          "deleteAllButton": "Izbriši vse načine plačila"
-        },
-        "deletePaymentMethodsBottomSheet": {
-          "title": "Ali res želiš izbrisati naslednje načine plačila iz Denarnice?",
-          "subtitle": "Kadarkoli jih lahko ponovno dodaš, vendar boš moral/a ponovno vnesti podatke in ponoviti postopke avtorizacije."
-        },
-        "thankYouPage": {
-          "cta": {
-            "goToWallet": "Pojdi v Denarnico",
-            "retry": "Poskusi ponovno"
-          },
-          "success": {
-            "title": "Končano!",
-            "body": "Shranili smo tvojo izbiro"
-          },
-          "retryAfterDeletion": {
-            "title": "Prišlo je do nepričakovane napake",
-            "body": "Tvoji načini plačila niso bili izbrisani. Poskusi znova ali pojdi v Denarnico in jih ročno izbriši."
-          },
-          "toast": "Tvoja izbira ni bila shranjena. Ponovno poskusi pozneje."
-        }
       }
     },
     "cgn": {
@@ -2954,14 +2480,6 @@
         }
       },
       "merchantDetail": {
-        "bucket": {
-          "alert": {
-            "cta": "Razumem!"
-          },
-          "error": {
-            "noCode": "Kode za popust te ugodnosti so trenutno potekle, poskusi znova pozneje"
-          }
-        },
         "title": {
           "deals": "Ugodnosti",
           "description": "Opis"
@@ -2994,9 +2512,6 @@
             "pending": "Izvedi več o EYCA",
             "bottomSheet": "Oglej si ugodnosti EYCA"
           }
-        },
-        "tos": {
-          "link": "Obvestilo o obdelavi osebnih podatkov"
         },
         "information": {
           "active": "Kartica je aktivna in jo lahko uporabljaš do {{date}}",
@@ -3079,101 +2594,19 @@
       },
       "otp": {
         "error": "Zaradi tehnične težave nismo uspeli ustvariti kode za popust. Prosimo te, da poskusiš znova.",
-        "screen": {
-          "title": "Uporabi kodo za popust",
-          "cta": "Kopiraj kodo",
-          "text1": "Kopiraj to kodo v ustrezno polje na spletnem mestu trgovca do",
-          "text2": "Ko koda poteče, ni več veljavna",
-          "link": "Koda ne deluje?",
-          "bottomSheet": {
-            "body": {
-              "text1": "Nekateri trgovci zahtevajo vnos ",
-              "text2": "statične kode za popust.",
-              "text3": "Na seznamu spletnih trgovcev poišči trgovca, ki te zanima, in preveri aktualne ponudbe.",
-              "text4": "Znotraj opisa ponudbe boš našel/la kodo za pridobitev popusta, ki jo lahko kopiraš in prilepiš v spletno mesto trgovca."
-            },
-            "cta": "Pojdi na seznam trgovcev"
-          }
-        },
         "code": {
           "title": "Tvoja koda za popust",
           "validUntil": "Velja še",
-          "minutes": {
-            "one": "1 minuto",
-            "other": "{{minutes}} minut"
-          },
-          "seconds": {
-            "one": "1 sekundo",
-            "other": "{{seconds}} sekund"
-          }
+          "minutes_one": "1 minuto",
+          "minutes_other": "{{minutes}} minut",
+          "seconds_one": "1 sekundo",
+          "seconds_other": "{{seconds}} sekund"
         }
       }
     },
     "cdc": {
-      "title": "Kartica za kulturo (Carta della Cultura)",
-      "serviceCta": {
-        "activable": "Aktiviraj kartico",
-        "pending": "Prošnja poslana",
-        "error": {
-          "status": "Potrebnih informacij ni bilo mogoče pridobiti. Prosimo te, da poskusiš znova."
-        }
-      },
       "serviceEntryPoint": {
         "notAvailable": "Storitev trenutno ni na voljo. Poskusi pozneje."
-      },
-      "bonusRequest": {
-        "bonusRequested": {
-          "loading": {
-            "title": "Pošiljamo tvojo prošnjo za aktivacijo …",
-            "subtitle": "Opozarjamo te, da so veljavne samo prošnje za leta, v katerih si prijavil/a prebivališče v Italiji. Prosim, počakaj"
-          },
-          "requestCompleted": {
-            "title": "Tvoja prošnja je bila poslana!",
-            "body": "Ko bodo lestvice dokončne, boš prejel/a sporočilo na IO.",
-            "cta": "Razumem!"
-          },
-          "partiallySuccess": {
-            "title": "Tukaj je rezultat tvojih poršenj",
-            "body": {
-              "success": "Prošnja za {{successfulYears}} je bila sprejeta.",
-              "fail": {
-                "residenceAbroad": "Prošnje v zvezi z {{failedYears}} ni bilo mogoče poslati, ker ne prebivaš v Italiji.",
-                "notEligible": "Prošnje v zvezi z {{failedYears}} ni bilo mogoče poslati, ker za izbrano leto ni mogoče zahtevati Kartice za kulturo.",
-                "alreadyRegistered": "Prošnje v zvezi z {{failedYears}} ni bilo mogoče poslati, ker si že poslal/a prošnjo za aktivacijo za to leto.",
-                "initiativeFinished": "Prošnje v zvezi z {{failedYears}} ni bilo mogoče poslati, ker je obdobje za vložitev prošnje poteklo."
-              }
-            }
-          },
-          "ko": {
-            "requirementsError": {
-              "title": "Žal nimaš pogojev za predložitev prošnje za Kartico za kulturo",
-              "body": "Kartica za kulturo je na voljo samo državljanom s stalnim prebivališčem v Italiji."
-            },
-            "wrongFormat": {
-              "title": "Storitev Kartice za kulturo trenutno ni na voljo.",
-              "body": "Opravičujemo se za nevšečnosti.\nProsimo, poskusi znova pozneje."
-            },
-            "genericError": {
-              "title": "Pri tvoji prošnji je prišlo do napake",
-              "body": "Opravičujemo se za nevšečnosti.\nProsimo, poskusi znova pozneje."
-            }
-          }
-        },
-        "selectResidence": {
-          "header": "Prebivališče",
-          "items": {
-            "residesInItaly": "Živim v Italiji",
-            "residesAbroad": "Živim v tujini"
-          },
-          "info": "Kartica za kulturo (Carta della Cultura) je na voljo samo državljanom s stalnim prebivališčem v Italiji. Za vsako leto navedi svoje prebivališče."
-        },
-        "selectYear": {
-          "header": "Za katero leto želiš zaprositi za Kartico za kulturo?",
-          "body": "Za vsako izbrano leto tvoj ISEE ne sme preseči 15.000 € in tvoje prebivališče mora biti na ozemlju Italije."
-        },
-        "misc": {
-          "conjunction": ", "
-        }
       }
     }
   },
@@ -3182,73 +2615,6 @@
       "loading": {
         "title": "Nalagam podrobnosti sporočila",
         "subtitle": "Počakaj par sekund"
-      }
-    },
-    "mvl": {
-      "title": "sporočilo s pravno vrednostjo",
-      "ko": {
-        "genericError": {
-          "title": "Pri pridobivanju sporočila je prišlo do napake",
-          "subtitle": "Prosim, poskusi ponovno"
-        }
-      },
-      "details": {
-        "hasAttachments": "vsebuje priloge",
-        "attachments": {
-          "title": "Priloge",
-          "toast": {
-            "success": "Prenos končan"
-          },
-          "bottomSheet": {
-            "warning": {
-              "title": "Bodi pozoren/na na priloge",
-              "body": "IO ne more zagotoviti varnosti priloge - shrani v svojo napravo ali deli samo datoteke, za katere meniš, da so dovolj varne."
-            },
-            "loading": {
-              "title": "Priloga",
-              "body": "Prenesem prilogo"
-            },
-            "failing": {
-              "title": "Priloga",
-              "details": "Ni mi uspelo prenesti priloge. Poskusi znova ali odpri prošnjo"
-            },
-            "checkBox": "V redu, ne pokaži več"
-          },
-          "pdfPreview": {
-            "title": "Predogled PDF-ja",
-            "singleBtn": "Shrani, natisni ali deli",
-            "open": "Odpri",
-            "save": "Shrani",
-            "savedAtLocation": "Dokument {{name}} je bil shranjen v mapi Prenosi.",
-            "errors": {
-              "previewing": {
-                "title": "Predogled ni na voljo",
-                "body": "Če si želiš ogledati dokument, ga prenesi in odpri z aplikacijo za branje PDF datotek."
-              },
-              "sharing": "Pri delitvi dokumenta je prišlo do napake.",
-              "opening": "Prišlo je do napake pri odpiranju dokumenta. Morda nii namestil/a aplikacije za odpiranje PDF datotek.",
-              "saving": "Med shranjevanjem dokumenta je prišlo do napake."
-            }
-          }
-        },
-        "body": {
-          "plain": "golo besedilo",
-          "html": "html"
-        },
-        "metadata": {
-          "title": "sporočilo ima pravno vrednost",
-          "description": "Dne {{date}} ob {{time}} ti je »{{sender}}« poslal sporočilo »{{subject}}«",
-          "messageId": "Identifikator sporočila:",
-          "links": {
-            "copy": "Kopiraj identifikatorja sporočila",
-            "recipients": "Pokaži celoten seznam prejemnikov",
-            "signature": "Prikaži podrobnosti podpisa",
-            "certificates": "Pokaži certifikate",
-            "originalMessage": "Prenesi izvirno sporočilo",
-            "datiCert": "Prenesi daticert.xml",
-            "smime": "Prenesi smime.p7s"
-          }
-        }
       }
     },
     "pn": {
