@@ -154,6 +154,7 @@ export const ItwBrandedBox = ({
       style={[
         styles.container,
         {
+          borderRadius: cornerRadius,
           backgroundColor: theme["banner-background"]
         }
       ]}
@@ -166,7 +167,9 @@ export const ItwBrandedBox = ({
         style={{
           position: "absolute",
           height: size.height,
-          width: size.width
+          width: size.width,
+          // Allow touches to go through the canvas
+          pointerEvents: "none"
         }}
       >
         {/* Animated light effect */}
@@ -188,7 +191,6 @@ export const ItwBrandedBox = ({
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 16,
     borderCurve: "continuous",
     padding: 16,
     gap: 6,

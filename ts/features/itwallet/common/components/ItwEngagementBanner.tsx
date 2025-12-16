@@ -3,6 +3,7 @@ import {
   H4,
   IconButton,
   IOButton,
+  VSpacer,
   VStack,
   WithTestID
 } from "@pagopa/io-app-design-system";
@@ -16,6 +17,7 @@ import IOMarkdown from "../../../../components/IOMarkdown";
 import { getTxtNodeKey } from "../../../../components/IOMarkdown/renderRules";
 import { Renderer } from "../../../../components/IOMarkdown/types";
 import { ItwBrandedBox } from "./ItwBrandedBox";
+import { PoweredByItWalletText } from "./PoweredByItWalletText";
 
 export type ItwEngagementBannerVariant =
   | "activation"
@@ -24,13 +26,16 @@ export type ItwEngagementBannerVariant =
   | "upgrade_expiring";
 
 type Props = {
-  variant: ItwEngagementBannerVariant;
-  onPress: () => void;
+  title: string;
+  description: string;
+  action: string;
+  onActionPress: () => void;
   onClosePress: () => void;
 };
 
 export const ItwEngagementBanner = (props: WithTestID<Props>) => {
-  const { testID, onPress, onClosePress } = props;
+  const { testID, title, description, action, onActionPress, onClosePress } =
+    props;
 
   const handleOnClosePress = useCallback(() => {
     Alert.alert(
@@ -53,28 +58,6 @@ export const ItwEngagementBanner = (props: WithTestID<Props>) => {
       ]
     );
   }, [onClosePress]);
-
-  return (
-    <View testID={testID}>
-      <ItwBrandedBox>
-        <ItWalletDeck width={105} height={145} style={styles.deck} />
-        <BannerContent
-          {...props}
-          onPress={onPress}
-          onClosePress={handleOnClosePress}
-        />
-      </ItwBrandedBox>
-    </View>
-  );
-};
-
-const BannerContent = (props: Props) => {
-  const { variant, onPress, onClosePress } = props;
-
-  const i18nNamespace = "features.itWallet.engagementBanner";
-  const title = I18n.t(`${i18nNamespace}.${variant}.title`);
-  const description = I18n.t(`${i18nNamespace}.${variant}.description`);
-  const action = I18n.t(`${i18nNamespace}.${variant}.action`);
 
   // Generates a complete fallbackAccessibilityLabel by concatenating the title, content, and action
   // if they are present. Removes markdown formatting characters like asterisks.
@@ -105,27 +88,40 @@ const BannerContent = (props: Props) => {
 
   return (
     <View
+      testID={testID}
       accessible={true}
       // A11y related props
       accessibilityLabel={accessibilityLabel}
       accessibilityRole={"button"}
+      onAccessibilityTap={onActionPress}
     >
-      <VStack space={8}>
-        <View style={styles.header}>
-          <H4 color="black" style={styles.title}>
-            {title}
-          </H4>
-          <IconButton
-            color="contrast"
-            accessibilityLabel="close"
-            icon="closeMedium"
-            onPress={onClosePress}
-          />
-        </View>
-        <IOMarkdown rules={markdownRules} content={description} />
-
-        <IOButton color="primary" label={action} onPress={onPress} fullWidth />
-      </VStack>
+      <ItwBrandedBox>
+        <ItWalletDeck width={105} height={145} style={styles.deck} />
+        <VStack space={8}>
+          <View style={styles.header}>
+            <H4 color="black" style={styles.content}>
+              {title}
+            </H4>
+            <IconButton
+              color="contrast"
+              accessibilityLabel="close"
+              icon="closeMedium"
+              onPress={handleOnClosePress}
+            />
+          </View>
+          <View style={styles.content}>
+            <IOMarkdown rules={markdownRules} content={description} />
+          </View>
+          <PoweredByItWalletText />
+        </VStack>
+        <VSpacer size={8} />
+        <IOButton
+          color="primary"
+          label={action}
+          onPress={onActionPress}
+          fullWidth
+        />
+      </ItwBrandedBox>
     </View>
   );
 };
@@ -140,7 +136,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between"
   },
-  title: {
+  content: {
     width: "80%"
   }
 });
