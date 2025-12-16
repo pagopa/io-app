@@ -19,7 +19,11 @@ import {
 } from "../../../analytics";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
-import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
+import { type IdentificationContext } from "../../../machine/eid/context.ts";
+import {
+  isL3FeaturesEnabledSelector,
+  selectIdentification
+} from "../../../machine/eid/selectors";
 import { CieManagerFailure, CieManagerState } from "../hooks/useCieManager";
 import { isNfcError } from "../utils/error";
 import {
@@ -49,12 +53,17 @@ export const ItwCieCardReadFailureContent = ({
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
+  const identification =
+    ItwEidIssuanceMachineContext.useSelector(selectIdentification);
 
   // Display failure information for debug
   useDebugInfo({ failure });
 
   // Track error on mount
-  useEffect(() => trackError(failure, isL3, progress));
+  useEffect(
+    () => trackError({ failure, isL3, identification, readProgress: progress }),
+    [failure, isL3, progress, identification]
+  );
 
   const dismissalDialog = useItwDismissalDialog({
     handleDismiss: () => issuanceActor.send({ type: "close" })
@@ -210,11 +219,19 @@ export const ItwCieCardReadFailureContent = ({
   );
 };
 
-const trackError = (
-  failure: CieManagerFailure,
-  isL3: boolean,
-  readProgress?: number
-) => {
+type TrackErrorParams = {
+  failure: CieManagerFailure;
+  isL3: boolean;
+  readProgress?: number;
+  identification?: IdentificationContext;
+};
+
+const trackError = ({
+  failure,
+  isL3,
+  readProgress,
+  identification
+}: TrackErrorParams) => {
   const itw_flow: ItwFlow = isL3 ? "L3" : "L2";
   // readProgress is a number between 0 and 1, mixpanel needs a number between 0 and 100
   const progress = Number(((readProgress ?? 0) * 100).toFixed(0));
@@ -267,7 +284,11 @@ const trackError = (
         return;
 
       case "CANCELLED_BY_USER":
-        trackItWalletCardReadingClose(progress);
+        trackItWalletCardReadingClose({
+          cie_reading_progress: progress,
+          itw_flow: isL3 ? "L3" : "L2",
+          ITW_ID_method: identification?.mode
+        });
         return;
     }
   }

@@ -220,6 +220,10 @@ type TrackCieScreenProperties = {
   ITW_ID_method?: ItwIdMethod;
 };
 
+type TrackItWalletCardReadingClose = {
+  cie_reading_progress: number;
+} & TrackCieScreenProperties;
+
 export type CieCardVerifyFailureReason =
   | "CERTIFICATE_EXPIRED"
   | "CERTIFICATE_REVOKED";
@@ -440,10 +444,12 @@ export function trackItWalletCieCardReading(
   );
 }
 
-export function trackItWalletCieCardReadingSuccess(itw_flow: ItwFlow) {
+export function trackItWalletCieCardReadingSuccess(
+  properties: TrackCieScreenProperties
+) {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_CARD_READING_SUCCESS,
-    buildEventProperties("UX", "screen_view", { itw_flow })
+    buildEventProperties("UX", "screen_view", properties)
   );
 }
 
@@ -1002,10 +1008,12 @@ export function trackItWalletLastErrorPin(
   );
 }
 
-export function trackItWalletCardReadingClose(cie_reading_progress: number) {
+export function trackItWalletCardReadingClose(
+  properties: TrackItWalletCardReadingClose
+) {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CIE_CARD_READING_CLOSE,
-    buildEventProperties("UX", "error", { cie_reading_progress })
+    buildEventProperties("UX", "error", properties)
   );
 }
 
