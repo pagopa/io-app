@@ -35,7 +35,6 @@ export default function* root() {
     call(watchPendingActionsSaga),
     call(watchUtmLinkSaga),
     call(watchLogoutSaga),
-    call(watchWalletSaga),
     call(watchForceLogoutActiveSessionLogin),
     zendeskEnabled ? call(watchZendeskSupportSaga) : undefined
   ]);
