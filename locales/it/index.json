@@ -2560,12 +2560,6 @@
           "title": "Abilita il metodo per effettuare pagamenti in app",
           "subtitle": "Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”."
         },
-        "PAYMENT_METHODS_NOT_AVAILABLE": {
-          "title": "Vuoi pagare con carta? Aggiungila ora!",
-          "subtitle": "Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.",
-          "primaryAction": "Aggiungi carta",
-          "secondaryAction": "Usa altri metodi"
-        },
         "PAYMENT_METHODS_EXPIRED": {
           "title": "La tua carta è scaduta!",
           "subtitle": "Rimuovi la carta e aggiungine una nuova.\nVerrà salvata nel Portafoglio, così la prossima volta potrai pagare più facilmente.",
@@ -3608,6 +3602,7 @@
         "navigationTitle": "Agevolazioni",
         "screenTitle": "Scopri le opportunità",
         "merchantsAll": "Tutti i partner",
+        "a11yTitle": "Categoria: {{categoryName}}",
         "tabs": {
           "perInitiative": "Per categoria",
           "perMerchant": "Per partner",
