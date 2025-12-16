@@ -184,7 +184,10 @@ type TrackITWalletIDMethodSelected = {
   itw_flow: ItwFlow;
 };
 
-type TrackITWalletSpidIDPSelected = { idp: string };
+type TrackITWalletSpidIDPSelected = {
+  idp: string;
+  itw_flow: ItwFlow;
+};
 
 type TrackItWalletCieCardVerifyFailure = {
   reason: CieCardVerifyFailureReason;
@@ -393,10 +396,10 @@ export function trackItWalletIDMethod(itw_flow: ItwFlow) {
   );
 }
 
-export function trackItWalletSpidIDPSelection() {
+export function trackItWalletSpidIDPSelection(itw_flow: ItwFlow) {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_SPID_IDP_SELECTION,
-    buildEventProperties("UX", "screen_view")
+    buildEventProperties("UX", "screen_view", { itw_flow })
   );
 }
 
