@@ -14,15 +14,7 @@
       "petek",
       "sobota"
     ],
-    "abbr_day_names": [
-      "ned",
-      "pon",
-      "tor",
-      "sre",
-      "čet",
-      "pet",
-      "sob"
-    ],
+    "abbr_day_names": ["ned", "pon", "tor", "sre", "čet", "pet", "sob"],
     "month_names": [
       "",
       "januar",
@@ -53,10 +45,7 @@
       "nov",
       "dec"
     ],
-    "meridian": [
-      "am",
-      "pm"
-    ]
+    "meridian": ["am", "pm"]
   },
   "global": {
     "you": "TI",
