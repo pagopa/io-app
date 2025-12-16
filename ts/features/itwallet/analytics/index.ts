@@ -193,17 +193,27 @@ type TrackItWalletCieCardVerifyFailure = {
   reason: CieCardVerifyFailureReason;
   itw_flow: ItwFlow;
   cie_reading_progress: number;
+  ITW_ID_method?: ItwIdMethod;
 };
 
 type TrackItWalletCieCardReadingFailure = {
   reason: CieCardReadingFailureReason;
   itw_flow: ItwFlow;
   cie_reading_progress: number;
+  ITW_ID_method?: ItwIdMethod;
 };
 
 type TrackItWalletCieCardReadingUnexpectedFailure = {
   reason: string | undefined;
   cie_reading_progress: number;
+  itw_flow: ItwFlow;
+  ITW_ID_method?: ItwIdMethod;
+};
+
+type TrackItWalletErrorCardReading = {
+  itw_flow: ItwFlow;
+  cie_reading_progress: number;
+  ITW_ID_method?: ItwIdMethod;
 };
 
 type TrackGetChallengeInfoFailure = {
@@ -215,14 +225,16 @@ type TrackCieCanProperties = {
   ITW_ID_method?: ItwIdMethod;
 };
 
-type TrackCieScreenProperties = {
+type TrackItWalletCardReadingClose = {
+  cie_reading_progress: number;
   itw_flow: ItwFlow;
   ITW_ID_method?: ItwIdMethod;
 };
 
-type TrackItWalletCardReadingClose = {
-  cie_reading_progress: number;
-} & TrackCieScreenProperties;
+type TrackCieScreenProperties = {
+  itw_flow: ItwFlow;
+  ITW_ID_method?: ItwIdMethod;
+};
 
 export type CieCardVerifyFailureReason =
   | "CERTIFICATE_EXPIRED"
@@ -969,12 +981,11 @@ export const trackItwSurveyRequestDeclined = (
 // #region ERRORS
 
 export function trackItWalletErrorCardReading(
-  itw_flow: ItwFlow,
-  cie_reading_progress: number
+  properties: TrackItWalletErrorCardReading
 ) {
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_CIE_CARD_READING_ERROR,
-    buildEventProperties("UX", "error", { itw_flow, cie_reading_progress })
+    buildEventProperties("UX", "error", properties)
   );
 }
 

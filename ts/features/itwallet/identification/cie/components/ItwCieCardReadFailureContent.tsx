@@ -239,7 +239,11 @@ const trackError = ({
   if (isNfcError(failure)) {
     switch (failure.name) {
       case "TAG_LOST":
-        trackItWalletErrorCardReading(itw_flow, progress);
+        trackItWalletErrorCardReading({
+          itw_flow,
+          cie_reading_progress: progress,
+          ITW_ID_method: identification?.mode
+        });
         return;
       case "WRONG_PIN":
         if (failure.attemptsLeft > 1) {
@@ -255,21 +259,24 @@ const trackError = ({
         trackItWalletCieCardVerifyFailure({
           itw_flow,
           reason: "CERTIFICATE_EXPIRED",
-          cie_reading_progress: progress
+          cie_reading_progress: progress,
+          ITW_ID_method: identification?.mode
         });
         return;
       case "CERTIFICATE_REVOKED":
         trackItWalletCieCardVerifyFailure({
           itw_flow,
           reason: "CERTIFICATE_REVOKED",
-          cie_reading_progress: progress
+          cie_reading_progress: progress,
+          ITW_ID_method: identification?.mode
         });
         return;
       case "NOT_A_CIE":
         trackItWalletCieCardReadingFailure({
           reason: CieCardReadingFailureReason.ON_TAG_DISCOVERED_NOT_CIE,
           itw_flow,
-          cie_reading_progress: progress
+          cie_reading_progress: progress,
+          ITW_ID_method: identification?.mode
         });
         return;
       case "GENERIC_ERROR":
@@ -279,14 +286,15 @@ const trackError = ({
         trackItWalletCieCardReadingFailure({
           reason: CieCardReadingFailureReason[failure.name],
           itw_flow,
-          cie_reading_progress: progress
+          cie_reading_progress: progress,
+          ITW_ID_method: identification?.mode
         });
         return;
 
       case "CANCELLED_BY_USER":
         trackItWalletCardReadingClose({
           cie_reading_progress: progress,
-          itw_flow: isL3 ? "L3" : "L2",
+          itw_flow,
           ITW_ID_method: identification?.mode
         });
         return;
@@ -295,6 +303,8 @@ const trackError = ({
 
   trackItWalletCieCardReadingUnexpectedFailure({
     reason: failure?.name ?? "UNEXPECTED_ERROR",
-    cie_reading_progress: progress
+    cie_reading_progress: progress,
+    itw_flow,
+    ITW_ID_method: identification?.mode
   });
 };
