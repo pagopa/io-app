@@ -13,6 +13,7 @@ import {
 } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
 import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga.ts";
 import { watchItwCredentialsCatalogueSaga } from "../../credentialsCatalogue/saga/index.ts";
+import { syncItwAnalyticsProperties } from "../../analytics/saga";
 import { watchItwEnvironment } from "./environment";
 import { watchItwOfflineAccess } from "./offlineAccess.ts";
 
@@ -23,6 +24,9 @@ export function* watchItwSaga(): SagaIterator {
   yield* fork(checkFiscalCodeEnabledSaga);
   // Fetch and process the Digital Credentials Catalogue
   yield* fork(watchItwCredentialsCatalogueSaga);
+
+  // Sync ITW analytics properties
+  yield* fork(syncItwAnalyticsProperties);
 
   const isWalletInstanceConsistent = yield* call(
     checkWalletInstanceInconsistencySaga

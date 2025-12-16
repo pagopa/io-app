@@ -10,10 +10,8 @@ import {
   useIONavigation
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import {
-  getMixPanelCredential,
-  trackItwHasAlreadyCredential
-} from "../../analytics";
+import { trackItwHasAlreadyCredential } from "../../analytics";
+import { getMixPanelCredential } from "../../analytics/utils/analyticsUtils";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";

@@ -15,15 +15,11 @@ import {
   itwLifecycleIsValidSelector
 } from "../../lifecycle/store/selectors";
 import { itwCredentialsStore } from "../store/actions";
-import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
-import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
-import { GlobalState } from "../../../../store/reducers/types";
-import {
-  getMixPanelCredential,
-  trackItwStatusCredentialAssertionFailure
-} from "../../analytics";
 import { selectItwEnv } from "../../common/store/selectors/environment";
 import { getEnv } from "../../common/utils/environment";
+import { syncItwAnalyticsProperties } from "../../analytics/saga";
+import { getMixPanelCredential } from "../../analytics/utils/analyticsUtils";
+import { trackItwStatusCredentialAssertionFailure } from "../../analytics";
 
 const { isIssuerResponseError, IssuerResponseErrorCodes: Codes } = Errors;
 
@@ -111,7 +107,5 @@ export function* checkCredentialsStatusAssertion() {
 
   yield* put(itwCredentialsStore(updatedCredentials));
 
-  const state: GlobalState = yield* select();
-  void updateMixpanelProfileProperties(state);
-  void updateMixpanelSuperProperties(state);
+  yield* call(syncItwAnalyticsProperties);
 }

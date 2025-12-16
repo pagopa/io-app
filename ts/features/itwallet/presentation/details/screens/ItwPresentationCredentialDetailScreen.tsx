@@ -19,11 +19,11 @@ import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventSc
 import { identificationRequest } from "../../../../identification/store/actions/index.ts";
 import {
   CREDENTIAL_STATUS_MAP,
-  getMixPanelCredential,
   trackCredentialDetail,
   trackWalletCredentialShowFAC_SIMILE,
   trackWalletCredentialShowTrustmark
 } from "../../../analytics";
+import { getMixPanelCredential } from "../../../analytics/utils/analyticsUtils.ts";
 import ItwCredentialNotFound from "../../../common/components/ItwCredentialNotFound.tsx";
 import { useItwFeaturesEnabled } from "../../../common/hooks/useItwFeaturesEnabled.ts";
 import { itwSetReviewPending } from "../../../common/store/actions/preferences.ts";

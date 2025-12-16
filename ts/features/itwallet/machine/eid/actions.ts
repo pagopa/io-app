@@ -10,9 +10,9 @@ import { checkCurrentSession } from "../../../authentication/common/store/action
 import {
   trackItWalletIDMethodSelected,
   trackItwDeactivated,
-  trackSaveCredentialSuccess,
-  updateITWStatusAndPIDProperties
+  trackSaveCredentialSuccess
 } from "../../analytics";
+import { updateITWStatusAndPIDProperties } from "../../analytics/properties/propertyUpdaters";
 import {
   itwSetAuthLevel,
   itwFreezeSimplifiedActivationRequirements,
@@ -327,7 +327,7 @@ export const createEidIssuanceActionsImplementation = (
 
   trackWalletInstanceRevocation: () => {
     const isItwL3 = itwLifecycleIsITWalletValidSelector(store.getState());
-    trackItwDeactivated(store.getState(), isItwL3 ? "ITW_PID" : "ITW_ID_V2");
+    trackItwDeactivated(isItwL3 ? "ITW_PID" : "ITW_ID_V2");
   },
 
   trackIdentificationMethodSelected: ({

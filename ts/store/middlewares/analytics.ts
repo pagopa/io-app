@@ -47,7 +47,7 @@ import { buildEventProperties } from "../../utils/analytics";
 import { trackServicesAction } from "../../features/services/common/analytics";
 import { trackMessagesActionsPostDispatch } from "../../features/messages/analytics";
 import { trackIdentificationAction } from "../../features/identification/analytics";
-import { trackOfflineAccessReason } from "../../features/itwallet/analytics";
+import { updateOfflineAccessReason } from "../../features/itwallet/analytics/properties/propertyUpdaters";
 import { trackLoginFailure } from "../../features/authentication/common/analytics";
 import { trackSessionCorrupted } from "../../features/authentication/activeSessionLogin/analytics";
 import { trackContentAction } from "./contentAnalytics";
@@ -190,7 +190,7 @@ export const actionTracking =
       void trackIdentificationAction(action);
 
       // Define MP super property that indicates the reason for offline access
-      void trackOfflineAccessReason(action, middleware.getState());
+      void updateOfflineAccessReason(action);
 
       const fciEnvironment = fciEnvironmentSelector(middleware.getState());
       void trackFciAction(fciEnvironment)(action);

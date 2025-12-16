@@ -4,7 +4,6 @@ import {
   CredentialIssuanceFailureType
 } from "../../machine/credential/failure";
 import {
-  getMixPanelCredential,
   trackAddCredentialFailure,
   trackAddCredentialUnexpectedFailure,
   trackCredentialInvalidStatusFailure,
@@ -12,6 +11,7 @@ import {
   trackItwAddCredentialNotTrustedIssuer,
   trackItWalletDeferredIssuing
 } from "../../analytics";
+import { getMixPanelCredential } from "../../analytics/utils/analyticsUtils";
 import {
   serializeFailureReason,
   shouldSerializeReason
