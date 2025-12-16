@@ -101,11 +101,6 @@
           "label": "Kontekstualna pomoč",
           "hint": "Dostop do informacij o vsebini trenutnega zaslona"
         }
-      },
-      "chat": {
-        "description": "Servisna sporočila IO",
-        "unread_singular": "{{messages}} novo sporočilo",
-        "unread_plural": "{{messages}} novih sporočil"
       }
     },
     "symbols": {
@@ -234,11 +229,6 @@
     "copyText": "kopiraj",
     "copyFeedbackButton": "kopirano"
   },
-  "connection": {
-    "status": {
-      "offline": "Brez povezave! Nekaj ​​ne bo delovalo."
-    }
-  },
   "errors": {
     "loginError": "V fazi prijave je prišlo do napake, ponovi postopek.",
     "profileUpdateError": "Med posodabljanjem tvojega profila je prišlo do napake."
@@ -270,8 +260,7 @@
       "cta_2": "Ignoriraj"
     },
     "contextualHelp": {
-      "title": "Težave z inicializacijo?",
-      "body": "Če imaš težave z dostopom do aplikacije, prosimo, da to prijaviš naši ekipi in v najkrajšem možnem času bomo težavo odpravili."
+      "title": "Težave z inicializacijo?"
     }
   },
   "inbox": {
@@ -303,12 +292,6 @@
     "errors": {
       "load": "Napaka pri nalaganju profila",
       "upsert": "Napaka pri ustvarjanju ali posodabljanju profila"
-    },
-    "alerts": {
-      "emailNotValidated": {
-        "title": "Nepreverjeni e-poštni naslov",
-        "subtitle": "Če želiš nadaljevati z operacijo, moraš potrditi e-poštni naslov. Če želiš to narediti, pojdite v razdelek profil in izberi nastavitve."
-      }
     },
     "main": {
       "title": "Profil",
@@ -344,7 +327,6 @@
         "removeAccount": {
           "title": "Izbriši svoj račun",
           "description": "Trajno izbriše tvoj račun in osebne podatke",
-          "error": "Pri zahtevi za odstranitev tvojega računa je prišlo do napake, poskusi znova.",
           "alert": {
             "activeBonusTitle": "Aktivni bonusi",
             "activeBonusDescription": "Videti je, da imaš aktivne bonuse. Želimo te obvestiti, da brisanje tvojega profila ni isto kot preklic bonusov ali odjava od kakršnih koli pobud. Za upravljanje svojih bonusov pojdi v razdelek Denarnica, sicer izberi Nadaljuj.",
@@ -358,7 +340,6 @@
             }
           },
           "info": {
-            "body": "Svojo pravico do izbrisa IO profila lahko uveljavljaš kadar koli.\n\nObveščamo te, da je izbris tvojega računa dokončen in se bo zgodil v 30 dneh od zahteve.\n\nČe se odločiš nadaljevati, ne boš več mogel/la obnoviti sporočil ali nastavitev, ki si jih nastavil/a v aplikaciji.\nUpoštevaj tudi, da morebitni bonusi ali popusti, pridobljeni prek aplikacije IO, ne bodo več dostopni.\n\nNa aplikacijo IO se boš lahko kadar koli znova naročil/a z izvedbo novega postopka registracije potom SPID-a ali CIE.",
             "cta": "Nadaljuj"
           },
           "details": {
@@ -381,10 +362,6 @@
           "cta": "Zahtevaj kopijo svojih podatkov",
           "title": "Dostop do tvojih podatkov",
           "description": "Prejmi kopijo podatkov, povezanih s tvojim IO profilom",
-          "info": {
-            "title": "Podatke o profilu IO lahko kadar koli preneseš.",
-            "body": "Seznam tvojih podatkov vključuje:\n\n- davčno številko;\n- elektronski naslov, ki si ga navedel/la, in možna potrditev njegove veljavnosti;\n- besedilo sporočil, ki si jih prejel/a;\n- nastavitve obveščanja.\n\n\nPodatki bodo preneseni v formatu **YAML**, standardnem formatu, ki v računalništvu omogoča izmenjavo podatkov med različnimi aplikacijami.\n\nPostopek prenosa podatkov je zaščiten z geslom, ki ti ga bomo skupaj s povezavo za prenos poslali v sporočilu v aplikaciji.\nPo pripravi, bo kopija tvojih podatkov dostopna 15 dni.\n\n\n**Informacije o obdelavi tvojih podatkov**\n\nV skladu z GDPR-jem potrjujemo, da obdelujemo tvoje osebne podatke, direktno v aplikaciji Io.\nZlasti obdelujemo tvoje identifikacijske in kontaktne podatke za namene identifikacije in avtentikacije, registracijo nastavitev in pošiljanje sporočil, ki so strogo povezana z delovanjem aplikacije, za pomoč pri delovanju in odpravljanjem napak aplikacije, ter dejavnosti, namenjene zagotavljanju varnosti. Poleg tega, kot odgovorni za obdelovalce podatkov ustanov ponudnika, da bi ti omogočili uporabo storitev, obdelujemo, poleg tvojih identifikacijskih in kontaktnih podatkov, tudi podatke it sporočil.\n\nNekatere podatke, ki jih obdelujemo, so bili zbrani od tvojega ponudnika SPID-a ob registraciji ali, če si registriran/a prek CIE, od Ministrstva za notranje zadeve.\n\nTvoje podatke obdelujejo tudi tretji dobavitelji, ki se nahajajo v državah zunaj EGP. Za nakazila izven EU uporabljamo jamstva, ki jih določa čl. 44 in naslednji členi iz GDPR. Zlasti uporabljamo dobavitelje s certifikatom Privacy Shield in v vsakem primeru, kjer je to potrebno, smo te dobavitelje zavezali k spoštovanju standardnih pogodbenih pogojev, ki jih je odobrila Komisija.\n\nTvoje podatke hranimo omejen čas. Zlasti podatki, ki se nanašajo na sporočila, poslana v imenu Posredovalnih organov, se izbrišejo po 3 letih od njihovega prejema, tvoji identifikacijski podatki pa se hranijo 10 let od tvojega preklica.\n\nPravico imaš zahtevati uveljavitev tvoje pravice do omejitve in nasprotovanja obdelavi ter zahtevati popravek tvojega elektronskega naslova. Za varstvo osebnih podatkov se lahko obrneš tudi na Garanta.\nV zvezi s podatki o storitvah, ki jih ponujajo ponudniki, je treba vse pravice uveljavljati pri njih.\n\n\nVeč informacij je na voljo v našem [Obvestilu o zasebnosti](ioit://PROFILE_PRIVACY), ki je dostopno kadar koli na strani Profil/Zasebnost in pogoji uporabe.\n"
-          },
           "alert": {
             "requestTitle": "Ali res želiš izvoziti vse svoje podatke?",
             "oldRequest": "Eno zahtevo za izvoz podatkov smo že obdelali.",
@@ -461,15 +438,9 @@
       },
       "appInfo": {
         "title": "Informacije o IO",
-        "description": "Več o aplikaciji IO",
-        "contextualHelpContent": "Živijo! Na tej strani smo zbrali nekaj koristnih informacij za **hitro spoznavanje aplikacije IO **. Od ideje, s katero se je rodila aplikacija, do trenutnega stanja odprte beta različice.\n\n**Kaj je IO**\n-------------\nProjekt IO (io.italia.it) je pomemben korak v viziji italijanske vlade o digitalnem državljanstvu. Zasnovala ga je [Ekipa za digitalno preobrazbo](https://teamdigitale.governo.it/), danes pa ga razvija [PagoPA S.p.A.](https://www.pagopa.it/). Njen namen pa je **olajšati državljanom dostop do vseh digitalnih storitev javne uprave** in do pravic, ki jih te storitve zagotavljajo.\n\nRezultat tega projekta je javna [IO, aplikacija za storitve](https://io.italia.it/): enoten kanal, prek katerega vse lokalne in državne ustanove (občine, dežele, centralne agencije), ponujajo svoje storitve državljanom, na preprost in prilagojen način, **neposredno preko pametnega telefona**.\n\nPreko aplikacije, IO zagotavlja uresničitev [člena 64bis](https://docs.italia.it/italia/piano-triennale-ict/codice-amministrazione-digitale-docs/it/v2017-12-13/_rst/capo5_sezione3_art64-bis.html) [Zakonika o elektronski upravi](https://docs.italia.it/italia/piano-triennale-ict/codice-amministrazione-digitale-docs/it/v2017-12-13/index.html), ki vzpostavlja **enotno dostopno točko za vse digitalne storitve**, ki jih zagotavlja Predsedstvo vlade.\n\n**Trenutno stanje projekta IO**\n------------------------------------\n### Iz open-beta …\nOd marca 2019 je približno 2000 državljanov na različnih delih ozemlja eksperimentiralo z aplikacijo v različici closed-beta (»zaprta« beta): omejenemu številu ljudi smo dali možnost, da namestijo in preizkusijo IO na svojem pametnem telefonu s prvim izborom funkcionalnosti in pravih storitev. Cilj: prepoznati in odpraviti napake (hrošče) in optimizirati uporabniško izkušnjo, zahvaljujoč zbranim povratnim informacijam.\n\n### … do open-beta\nSpomladi 2020 smo vsem državljanom omogočili »odprto« beta različico aplikacije (open-beta). To pomeni, da si lahko danes vsakdo, ki želi, prenese in namesti IO na svoj pametni telefon in tako sodeluje v drugi fazi eksperimentiranja. Tako kot ti počneš, je zdaj mogoče, da vsi začnejo uporabljati aplikacijo, saj vedo, da se bo nenehno razvijala in izboljševala zaradi neposredne izkušnje ljudi, ki jim je namenjena.<br/>\nVeč državnih in lokalnih ustanov je že vključilo svoje storitve, veliko jih bo dodanih v prihodnosti. Če ustanov na tvojem območju ne vidiš med razpoložljivimi, je to zato, ker se njihove storitve še v fazi integracije. Če želiš izvedeti več, povprašaj svojo občino ali deželo, ali so aktivirali postopek za prisotnost na IO in v kateri fazi so. Tvoj glas je lahko pomemben signal!\n\nČe želiš izvedeti več o naslednjih korakih v razvoju aplikacije, si oglej [Načrt](https://io.italia.it/roadmap/#nextsteps) na spletni strani IO.\n\n**Katere novosti so temelj za IO?**\n------------------------------\n### Sprememba paradigme\nIO izraža **novo vizijo javnih storitev**, popolnoma **osredotočeno na potrebe uporabnika**. Običajno moraš ti – kot posamezni državljan – razumeti, kako dostopati do storitev različnih organov in upravljati obveznosti do države, na več deset različnih spletnih mestih in aplikacijah. **Z IO te različne uprave kontaktirajo neposredno**, prek ene same aplikacije. To ti omogoča upravljanje operacij, povezanih z določeno storitvijo, na **hiter, pravočasen in varen** način, udobno s pametnega telefona.\n\n### Uporabnik vedno v središču\nIdeja za IO je postaviti ljudi v središče inovacijskega procesa javne uprave. Projekt je pravzaprav nastal z analizo potreb državljanov v glavnih trenutkih interakcije z javnimi organi in se razvija s **stalnim prispevkom uporabnikov**; to – poleg posebnih funkcij, ki ti omogočajo pošiljanje poročil in predlogov ekipi IO med uporabo aplikacije – vključuje trenutke **sooblikovanja z državljani** v različnih fazah razvoja. V prihodnje, če boš želel, je lahko tudi tvoja pomoč neprecenljiva!\n\n### Odprtokodni model\nIO je projekt zasnovan kot **kolektivna dediščina**: ima **povsem odprtokodno** dušo, torej temelji na odprtih in sodelovalnih razvojnih procesih. Vsa koda komponent, vsa dokumentacija, razprave in razvojna orodja so **javni in lahko dostopni**, prav tako je vmesnik zasnovan v skladu s smernicami in z uporabo kompletov, ki jih je predlagal [designers.italia.it ](https://designers.italia.it). Če si razvijalec ali oblikovalec in želiš prispevati k projektu, poišči [način sodelovanja](https://io.italia.it/sviluppatori/) na spletni strani IO.\n\n**Varna avtentikacija**\n------------------------\nIO je kanal, prek katerega lahko, od vseh javnih uprav, prejemaš sporočila, ki vključujejo tvoje osebne podatke, kot so na primer tisti, ki se nanašajo na tvoje delo, zdravje ali plačila državi. Zaradi tega **je bistvenega pomena, da smo gotovi, da si tisti, ki uporablja aplikacijo v tvojem imenu, res ti**. In da lahko samo ti dostopaš do informacij, ki so tebi namenjene.<br/>\nDa na varen način zagotoviš svojo identiteto v aplikaciji, se lahko prijaviš s svojimi **poverilnicami [SPID](https://innovazione.gov.it/it/progetti/spid/)** ali pa s svojo **elektronsko osebno izkaznico ([CIE](https://innovazione.gov.it/it/progetti/cie/)) in kodo PIN**, ki si jo prejel/a ob izdaji le-te, in ki zagotavlja, da si lahko edini/a, ki jo uporablja (tudi če je dokument ukraden). Po prvi registraciji boš lažje dostopal/a z vnosom kode za odklepanje (ki jo sam/a izbereš) ali z biometričnim prepoznavanjem (prepoznavanjem prstnega odtisa ali obraza). Koda za odklepanje in biometrični podatki so shranjeni šifrirano samo v tvojem telefonu in se na noben način ne pošiljajo ali shranjujejo kje drugje.\n\nZa več informacij o projektu obišči spletno stran [io.italia.it](http://io.italia.it).\n\n"
+        "description": "Več o aplikaciji IO"
       },
       "developersSectionHeader": "Razvijalci",
-      "experimentalFeatures": {
-        "confirmTitle": "Poskusne funkcije",
-        "confirmMessage": "Poskusne funkcije lahko povzročijo nestabilnost aplikacije. Ali jih res želiš omogočiti?",
-        "bannerMessage": "Uporabljaš poskusne funkcije, ki so lahko nepopolne ali nestabilne."
-      },
       "pagoPaEnvironment": {
         "pagoPaEnv": "Testno okolje pagoPA",
         "pagoPAEnvAlert": "Sprememba zahteva ponovni zagon aplikacije",
@@ -482,8 +453,7 @@
       },
       "appVersion": "Različica aplikacije",
       "backendVersion": "Različica zaledja (Backend)",
-      "debugMode": "Način odpravljanja napak",
-      "showroom": "Razstavni prostor uporabniškega vmesnika"
+      "debugMode": "Način odpravljanja napak"
     },
     "data": {
       "title": "Tvoji podatki",
@@ -491,19 +461,7 @@
       "list": {
         "email": "Naslov e-pošte",
         "need_validate": "Za potrditev",
-        "nameSurname": "Ime in priimek",
-        "spid": {
-          "headerTitle": "Podatki SPID",
-          "email": "E-pošta SPID"
-        }
-      },
-      "email": {
-        "contextualHelpTitle": "Kako upravljati svojo e-pošto",
-        "contextualHelpContent": "Ta e-poštni naslov je tisti, ki si ga potrdil/a med registracijo.\n**To e-poštni naslov lahko kadar koli spremeniš, glede na svoje potrebe:**\ns spremembo naslova bodo vsa potrdila o plačilu dostavljena na nov naslov, prav tako prejeta sporočila (kot je določeno v nastavitvah posredovanja sporočil).\nOpozarjamo te, da je tvoj račun pagoPA povezan z e-poštnim naslovom, s katerim si opravil/a prvo registracijo, zato v primeru spremembe morda ne boš več videl/a arhiva vseh svojih transakcij v aplikaciji IO.\n"
-      },
-      "spid_email": {
-        "contextualHelpTitle": "Ta podatek je nastavljen v tvojem SPID profilu",
-        "contextualHelpContent": "IO pridobi tvoj e-poštni naslov iz tvojih podatkov SPID. Lahko ga spremeniš v profilu SPID-a tvojega ponudnika identitete, vendar boš morda pozvan, da se znova prijaviš v IO.\r\n"
+        "nameSurname": "Ime in priimek"
       }
     },
     "security": {
@@ -524,12 +482,9 @@
       "contextualHelpContent": "**V Nastavitvah lahko preveri� in spremeni� nastavitve**, ki jih uporabljajo vse storitve na IO.\nTu si lahko ogleda� e-po�tni naslov, telefonsko �tevilko in jezik, povezan z racunom, ter omogoci� ali onemogoci� biometricno prepoznavanje.\n",
       "list": {
         "wip": "V obdelavi",
-        "language": "Jezik",
         "digitalDomicile": "Digitalni domicil",
-        "service_contact": "Upravljanje storitev",
         "preferred_calendar": {
-          "title": "Priljubljeni koledar",
-          "not_selected": "Ni izbrano"
+          "title": "Priljubljeni koledar"
         },
         "preferred_language": {
           "title": "Priljubljeni jezik",
@@ -540,9 +495,6 @@
           },
           "not_selected": "Ni izbrano"
         }
-      },
-      "empty": {
-        "default": "Nobena nastavitev ni nastavljena"
       },
       "unavailable": {
         "title": "Ta nastavitev je nastavljena v tvojem profilu SPID"
@@ -565,11 +517,6 @@
       }
     }
   },
-  "userMetadata": {
-    "errors": {
-      "upsertVersion": "S to različico ni mogoče ustvariti ali posodobiti uporabniških metapodatkov"
-    }
-  },
   "navigation": {
     "messages": "Sporočila",
     "profile": "Profil",
@@ -589,12 +536,7 @@
     "selectIdp": "Za prijavo izberi svojega upravitelja identitet SPID",
     "selectDemoIdp": "Če še nimaš lastne identitete SPID, lahko brskaš po aplikaciji v predstavitvenem načinu",
     "loginErrorAlert": {
-      "title": "Napaka pri prijavi",
-      "message": "Oprosti, pri prijavi je prišlo do napake. Lahko poskusiš znova?"
-    },
-    "subscription": {
-      "line1": "SPID je digitalna identiteta za dostop do spletnih storitev italijanske javne uprave",
-      "line2": "Vnesi svoj e-poštni naslov, da ga aktiviraš."
+      "title": "Napaka pri prijavi"
     }
   },
   "authentication": {
@@ -749,7 +691,6 @@
     "read": {
       "title": "Tvoj e-poštni naslov",
       "info": "To je e-poštni naslov, ki si ga povezal/a z računom SPID. Če želiš, lahko v IO uporabiš drug e-poštni naslov. Da bo nov naslov deloval, ga boš moral/a potrditi s klikom na povezavo, ki jo boš prejel/a v svoj e-poštni predal.",
-      "details": "Ta naslov lahko spremeniš, kar boš moral/a potrditi s klikom na povezavo, ki ti jo bomo poslali v tvoj nabiralnik. Medtem bodo funkcije IO, ki so odvisne od e-pošte (plačila, posredovanje sporočil itd.), onemogočene.",
       "alert": "Opozorilo: tvoj račun pagoPA je povezan s tvojim e-poštnim naslovom, tako da, če ga spremeniš, v aplikaciji ne boš več našel/la svojih transakcij in načinov plačila.",
       "help": "Tvoj SPID profil prenese v IO tvoj e-poštni naslov. Če je naslov napačen ali ga ne uporabljš več, ga lahko spremeniš neposredno pri svojem ponudniku storitev SPID."
     },
@@ -811,9 +752,7 @@
       "subTitle": "To je 6-mestna koda, ki jo potrebuješ za prijavo v IO in odobritev nekaterih operacij v aplikaciji.",
       "pinLabel": "Ustvari kodo za odklepanje",
       "pinConfirmationLabel": "Ponovi kodo za odklepanje",
-      "tutorial": "Kodo lahko kadar koli spremeniš v Profil > Varnost",
       "errors": {
-        "length": "Koda nima 6 števk",
         "match": "Koda se ne ujema"
       }
     },
@@ -825,21 +764,7 @@
       "title": "Nastavi IO"
     },
     "thankYouPage": {
-      "title": "Konfiguracija končana!",
-      "body": "Zdaj lahko začneš uporabljati IO"
-    }
-  },
-  "forms": {
-    "validators": {
-      "required": "Zahtevana vrednost",
-      "email": "E-poštni naslov ni veljaven"
-    },
-    "spidInformation": {
-      "fields": {
-        "email": {
-          "placeholder": "e-poštni naslov"
-        }
-      }
+      "title": "Konfiguracija končana!"
     }
   },
   "datetimes": {
@@ -935,9 +860,6 @@
         "dateTime": "Datum in čas",
         "detailTitle": "Podrobnosti",
         "help": "Če si naletel/a na težave pri vnosu tega načina plačila, piši za več informacij in podrobnosti"
-      },
-      "details": {
-        "header": "Podrobnosti metode"
       }
     },
     "searchAbi": {
@@ -980,20 +902,12 @@
         "bancomat": "BANCOMAT {{bankName}}",
         "coBadge": "Kartica {{brand}}, {{bankName}}",
         "bancomatPay": "BANCOMATPay {{bankName}}",
-        "privative": "Kartica zvestobe, številka kartice se konča z {{blurredNumber}}",
         "cta": "Oglej si podrobnosti metode",
         "bankNotAvailable": "ime banke ni na voljo"
       },
       "addElement": "Dodaj predmet v Denarnico",
       "cardsPreview": "Predogled načinov plačila. Aktiviraj za dostop do seznama svojih metod",
-      "cardHolder": "Naslovnik kartice",
-      "transactionListItem": {
-        "payment": {
-          "read": "Transakcija",
-          "unread": "Transakcija še za prebrati"
-        },
-        "label": "{{payment}} za {{merchant}} v znesku {{amount}} euro, z dne {{datetime}} ob {{hours}} z namenom {{reason}}. Aktiviraj za vse podrobnosti"
-      }
+      "cardHolder": "Naslovnik kartice"
     },
     "onboarding": {
       "bancomat": {
@@ -1522,11 +1436,6 @@
     },
     "bancomat": {
       "details": {
-        "infobox": {
-          "one": "PagoBANCOMAT kartice",
-          "two": "ne dovolijo plačevanja preko IO",
-          "three": ", vendar samo na fizičnih točkah (POS)."
-        },
         "debit": {
           "title": "Ali ima tvoja kartica več kot en logotip?",
           "body": "Če so na tvoji kartici PagoBANCOMAT označeni tudi drugi mednarodni logosi, lahko dodaš isto kartico z drugim operaterjem tako, da poiščeš vse debetne (ali kreditne) kartice izdane na tvoje ime.",
@@ -1681,7 +1590,6 @@
       "message": {
         "read": "Sporočilo",
         "unread": "Neprebrano sporočilo",
-        "archived": "Arhivirano",
         "description": "{{newMessage}}, prejeto od {{organizationName}}, {{serviceName}}. {{zadeva}}. {{receivedAt}}. {{država}}",
         "received_on": "prejeto dne",
         "received_at": "prejeto ob uri"
@@ -1690,13 +1598,10 @@
     "contextualHelpTitle": "Kaj lahko počneš v svojih Sporočilih",
     "contextualHelpContent": "**Razdelek Sporočila objema vsa prejeta sporočila ustanov, ki ponujajo svoje storitve prek IO**.\nNastaviš lahko opomnike za roke ali plačaš obvestilo neposredno iz sporočila.\nSporočila so razdeljena med **prejeta** (ki vsebuje vsa sporočila, ki so prispela in niso arhivirana), **potekla** (ki prikazuje samo sporočila, ki imajo datum poteka, ki olajša upravljanje stvari, ki jih moraš še storiti) in **arhivirana** (kjer dobiš vsa arhivirana sporočila).\nČe želiš arhivirati sporočilo, preprosto pritisni in drži območje sporočila, ki ga želiš arhivirati, in izbereš gumb »Arhiviraj«, ki se bo v tistem trenutku pojavil na zaslonu.\n",
     "counting": {
-      "zero": "Brez sporočil",
-      "one": "Imaš 1 sporočilo",
-      "other": "Imaš {{count}} sporočil/i/a"
+      "one": "Imaš 1 sporočilo"
     },
     "tab": {
       "inbox": "Prejeta",
-      "deadlines": "Potečena",
       "archive": "Arhivirana"
     },
     "contentTitle": "Sporočila",
@@ -1716,29 +1621,6 @@
       "unarchive": "Ponastaviti",
       "selectAll": "Vsa",
       "deselectAll": "Nobenega",
-      "payment": {
-        "expired": "Plačilo je poteklo",
-        "paid": "To obvestilo je bilo plačano. Oglej si račun v svojem",
-        "addMemo": {
-          "block1": "Dodaj opomnik za",
-          "block2": "ob"
-        },
-        "expiringOrValidAlert": {
-          "block1": "To obvestilo poteče dne"
-        },
-        "expiredAlert": {
-          "block1": "Obvestilo je poteklo ob",
-          "block2": "dne"
-        }
-      },
-      "prescription": {
-        "addMemo": "Ta recept poteče dne",
-        "expiringAlert": "Ta recept poteče danes",
-        "expiredAlert": {
-          "block1": "Recept je potekel ob",
-          "block2": "dne"
-        }
-      },
       "pay": "Plačaj {{amount}} €",
       "onlyPay": "Plačaj",
       "paid": "Plačano",
@@ -1789,19 +1671,6 @@
         "subtitle": "Osveži, za videti, če si prejel/a kakšno novo sporočilo."
       }
     },
-    "deadlines": {
-      "emptyMessage": {
-        "title": "Nimaš predvidenih rokov.",
-        "subtitle": "Z zgornjim gumbom si oglejte roke, ki so že pretekli."
-      }
-    },
-    "pagination": {
-      "migration": {
-        "started": "Počakaj, posodabljamo razdelek s sporočili",
-        "succeeded": "Končano!",
-        "failed": "Razdelka s sporočili ni bilo mogoče posodobiti."
-      }
-    },
     "operations": {
       "archive": {
         "success": "Arhiviranje uspešno!",
@@ -1849,26 +1718,9 @@
   },
   "send_email_messages": {
     "title": "Posredovanje sporočil preko elektronske pošte",
-    "subtitle": "Želiš, da IO posreduje vsebino sporočil tudi za",
-    "options": {
-      "disable_all": {
-        "label": "Onemogoči za vse storitve",
-        "info": "Ne boš več prejemal/a e-poštnih sporočil"
-      },
-      "enable_all": {
-        "label": "Omogoči za vse aktivne storitve",
-        "info": "Vsako sporočilo bo posredovano na tvojo e-pošto, če storitev to omogoča"
-      },
-      "by_service": {
-        "label": "Izberi storitev za storitev",
-        "info": "V zavihku posamezne storitve lahko izbereš, da povezana sporočila prejemaš tudi po e-pošti"
-      }
-    }
+    "subtitle": "Želiš, da IO posreduje vsebino sporočil tudi za"
   },
   "services": {
-    "accessibility": {
-      "edit": "Spremeni nastavitev storitev"
-    },
     "optIn": {
       "preferences": {
         "completed": {
@@ -1904,6 +1756,13 @@
         }
       }
     },
+    "details": {
+      "tosAndPrivacy": {
+        "title": "Pogoji in zasebnost",
+        "privacyLink": "Politika zasebnosti"
+      },
+      "emailForwarding": "Pošljanje tebi e-pošto"
+    },
     "title": "Storitve",
     "subTitle": "Aktiviraj ali deaktiviraj storitve, od katerih lahko prejemaš sporočila",
     "contextualHelpTitle": "Kaj lahko storiš v svojih storitvah",
@@ -1912,43 +1771,9 @@
     "serviceNotEnabled": "Storitev ni aktivna",
     "pushNotifications": "Pošiljanje potisnih obvestil",
     "messageReadStatus": "Prejemanje potrdil o branju",
-    "emailForwarding": "Pošljanje tebi e-pošto",
-    "tosAndPrivacy": "Pogoji in zasebnost",
-    "tosLink": "Pogoji uporabe",
-    "privacyLink": "Politika zasebnosti",
+    
     "otherAppsInfo": "To storitev lahko uporabljaš tudi kot",
-    "otherAppWeb": "Na spletu na",
-    "otherAppIos": "Aplikacijo za iOS",
-    "otherAppAndroid": "Aplikacijo za Android",
-    "contactsAndInfo": "Kontakti in informacije",
-    "visitWebsite": "Obišči spletno stran",
-    "askForAssistance": "Zahtevaj pomoč",
-    "contactAddress": "Naslov",
-    "contactPhone": "Telefon",
-    "contactSupport": "Pomoč strankam",
-    "areasOfInterest": {
-      "selectMessage": "Izberi geografska območja (občine, dežele itd.), kjer prebivaš ali jih običajno obiskuješ, da si tukaj ogledaš povezane storitve. Kadar koli jih lahko spremeniš.",
-      "selectMessageEmptyOrgs": "Lokacije trenutno ni mogoče dodati. Povleci navzdol, da osvežiš podatke in poskusiš znova izbrati območje.",
-      "addButton": "Dodaj svoja območja zanimanja",
-      "editButton": "Uredi območja zanimanja",
-      "searchEmpty": "Če ne najdeš svojega območja zanimanja, to pomeni, da subjekti tega ozemlja še ne objavljajo storitev na IO."
-    },
-    "tab": {
-      "locals": "Domača",
-      "national": "Državna",
-      "all": "Vsa"
-    },
-    "loading": {
-      "title": "Nalagam seznam storitev",
-      "subtitle": "počakaj nekaj sekund …"
-    },
-    "enableAll": "Uporabi hitro nastavitev",
-    "disableAll": "Uporabi ročno konfiguracijo",
-    "updatingServiceMode": "Počakaj …",
-    "disableAllTitle": "Ali res želiš onemogočiti vse storitve?",
-    "disableAllMsg": "Ne pozabi, da ti bodo na IO pisale samo storitve, ki imajo dejansko nekaj prilagojenih informacij za sporočanje. Ne boš prejemal/a neželenih sporočil. Če deaktiviraš vse storitve, te ne bodo mogli več kontaktirati preko IO (dokler jih ponovno ne aktiviraš). Storitve lahko še naprej uporabljaš preko drugih kanalov (okenca, spletna stran, itd.)",
-    "close": "Zapri",
-    "emptyListMessage": "Trenutno ni na voljo nobena storitev, povleci navzdol za posodobitev"
+    "contactsAndInfo": "Kontakti in informacije"
   },
   "identification": {
     "title": "Podravljen/a!",
@@ -2618,12 +2443,6 @@
       }
     },
     "pn": {
-      "open": {
-        "warning": {
-          "title": "To sporočilo vsebuje obvestilo s pravno veljavo",
-          "body": "<div class=\"container\">\n    <p>\n\n        <body>\n            Če nadaljuješ, ti bo obvestilo zakonito dostavljeno. Odpiranje sporočila\n            na IO je enakovredno podpisu povratnice tradicionalnega priporočenega pisma.\n        </body>\n    </p>\n    <p>\n\n        <body>\n            <b>Pošiljatelj:</b> {{sender}}\n            <br />\n            <b>Zadeva:</b> {{subject}}\n            <br />\n            <b>Datum in ura:</b> {{date}}\n            <br />\n            <b>Koda IUN:</b> {{iun}}\n        </body>\n    </p>\n</div>"
-        }
-      },
       "service": {
         "activate": "Aktiviraj storitev",
         "deactivate": "Onemogoči storitev",
@@ -2697,7 +2516,6 @@
       "navigationData": "Navigacijski podatki v aplikaciji IO",
       "navigationDataValue": "Na primer zadnji zaslon ali sporočilo, prikazano v aplikaciji IO",
       "devicePerformance": "Zmogljivost naprave",
-      "devicePerformanceData": "Raven pomnilnika inbaterije",
       "stock": "Podatki obvestila o plačilu",
       "stockValue": "Vključno z napako, ki si jo pravkar prejel/a",
       "prominentDisclosure": "Dostop do galerije naprave",
