@@ -1,4 +1,5 @@
 name: PR title Jira
+
 on:
   pull_request:
     types:
@@ -6,6 +7,7 @@ on:
       - edited
       - reopened
       - synchronize
+      
 jobs:
   lint:
     name: Check for Jira issue in PR title
