@@ -1,9 +1,6 @@
-import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { IOColors } from "../core/variables/IOColors";
-
-const DEFAULT_OVERLAY_OPACITY = 1;
-const DEFAULT_BACKGROUND_COLOR = IOColors.white;
+import { IOColors } from "@pagopa/io-app-design-system";
+import { ReactNode } from "react";
 
 const styles = StyleSheet.create({
   container: {
@@ -11,12 +8,11 @@ const styles = StyleSheet.create({
   },
   overlay: {
     position: "absolute",
-    inset: 0,
     top: 0,
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: DEFAULT_BACKGROUND_COLOR,
+    backgroundColor: IOColors.white,
     zIndex: 1,
     justifyContent: "center"
   },
@@ -26,38 +22,42 @@ const styles = StyleSheet.create({
 });
 
 type Props = Readonly<{
-  foreground?: React.ReactNode;
-  opacity?: number;
   backgroundColor?: string;
+  children?: ReactNode;
+  foreground?: ReactNode;
+  opacity?: number;
 }>;
 
 /**
  * Creates a full screen overlay on top of another screen.
  *
  * Used for loading spinners and error screens.
+ *
+ * @deprecated This component is really old and it's already used
+ * in many components with different tasks. We should refactor
+ * the existing components with a more specific component
+ * for each case.
  */
-export const Overlay: React.SFC<Props> = props => {
-  const {
-    opacity = DEFAULT_OVERLAY_OPACITY,
-    backgroundColor = DEFAULT_BACKGROUND_COLOR
-  } = props;
-  return (
-    <View style={styles.container} testID={"overlayComponent"}>
-      {props.foreground && (
-        <View
-          style={[
-            styles.overlay,
-            {
-              opacity,
-              backgroundColor
-            }
-          ]}
-        >
-          {props.foreground}
-        </View>
-      )}
-
-      <View style={[styles.container, styles.back]}>{props.children}</View>
-    </View>
-  );
-};
+export const Overlay = ({
+  backgroundColor = IOColors.white,
+  children,
+  foreground,
+  opacity = 1
+}: Props) => (
+  <View style={styles.container} testID={"overlayComponent"}>
+    {foreground && (
+      <View
+        style={[
+          styles.overlay,
+          {
+            opacity,
+            backgroundColor
+          }
+        ]}
+      >
+        {foreground}
+      </View>
+    )}
+    <View style={[styles.container, styles.back]}>{children}</View>
+  </View>
+);

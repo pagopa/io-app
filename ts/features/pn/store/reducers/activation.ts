@@ -1,14 +1,13 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { loadServicePreference } from "../../../../store/actions/services/servicePreference";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { pnActivationUpsert } from "../actions/service";
+import { pnActivationUpsert } from "../actions";
 
-export type PnActivationState = pot.Pot<boolean, Error>;
+export type PnActivationState = {
+  isActivating: boolean;
+};
 
-export const initialState: PnActivationState = pot.none;
+const initialState = { isActivating: false };
 
 /**
  * Store the activation state of the PN service
@@ -21,18 +20,17 @@ export const pnActivationReducer = (
 ): PnActivationState => {
   switch (action.type) {
     case getType(pnActivationUpsert.request):
-      return pot.toUpdating(state, action.payload);
+      return {
+        isActivating: true
+      };
     case getType(pnActivationUpsert.success):
-      return pot.some(action.payload);
     case getType(pnActivationUpsert.failure):
-      return pot.toError(state, action.payload);
-    case getType(loadServicePreference.request):
-      return pot.none;
+      return {
+        isActivating: false
+      };
   }
   return state;
 };
 
-export const pnActivationSelector = createSelector(
-  [(state: GlobalState) => state.features.pn.activation],
-  (_): PnActivationState => _
-);
+export const isLoadingPnActivationSelector = (state: GlobalState) =>
+  state.features.pn.activation.isActivating;

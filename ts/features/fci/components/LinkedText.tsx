@@ -1,8 +1,6 @@
-import * as React from "react";
+import { Body, H4, H6, WithTestID } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
-import { H4 } from "../../../components/core/typography/H4";
-import { Link } from "../../../components/core/typography/Link";
-import { WithTestID } from "../../../types/WithTestID";
+import { Fragment } from "react";
 
 type Props = WithTestID<{
   text: string;
@@ -57,7 +55,7 @@ const LinkedText = (props: Props) => {
     text: string,
     onPress: (holder: string) => void
   ) => {
-    const parts = getMatchedLinks(text);
+    const innerParts = getMatchedLinks(text);
 
     // a function to render the link
     const getTextWithLinkComponent = (matched: string, index: number) => {
@@ -65,18 +63,21 @@ const LinkedText = (props: Props) => {
       const textToBeLinked = splitted[1];
       const url = splitted[2];
       return (
-        <Link
+        <Body
+          weight="Semibold"
+          asLink
+          avoidPressable
           key={index}
           onPress={() =>
             onPress(getOrReplaceTagWithLink(url, props.replacementUrl))
           }
         >
           {textToBeLinked}
-        </Link>
+        </Body>
       );
     };
 
-    return parts.map(
+    return innerParts.map(
       (part, index) => part && getTextWithLinkComponent(part, index)
     );
   };
@@ -90,16 +91,12 @@ const LinkedText = (props: Props) => {
     <H4>
       {textWithSeparator.split("$@").map((text, index) =>
         O.isSome(O.fromNullable(arrayOfLinkedText[index])) ? (
-          <>
-            <H4 weight={"Regular"} color={"bluegreyDark"}>
-              {text}
-            </H4>
+          <Fragment key={index}>
+            <H6>{text}</H6>
             {arrayOfLinkedText[index]}
-          </>
+          </Fragment>
         ) : (
-          <H4 weight={"Regular"} color={"bluegreyDark"}>
-            {text}
-          </H4>
+          <H6 key={index}>{text}</H6>
         )
       )}
     </H4>

@@ -1,16 +1,16 @@
+import { IOToast } from "@pagopa/io-app-design-system";
+import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
-import * as E from "fp-ts/lib/Either";
-import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
+import { identity, pipe } from "fp-ts/lib/function";
 import { Platform } from "react-native";
-import { pipe } from "fp-ts/lib/function";
+import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
+import I18n from "i18next";
+import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { TranslationKeys } from "../../locales/locales";
-import I18n from "../i18n";
 import { AddCalendarEventPayload } from "../store/actions/calendarEvents";
 import { CalendarEvent } from "../store/reducers/entities/calendarEvents/calendarEventsByMessageId";
-import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { formatDateAsReminder } from "./dates";
-import { showToast } from "./showToast";
 
 /**
  * Utility functions to interact with the device calendars
@@ -87,7 +87,7 @@ export function convertLocalCalendarName(calendarTitle: string) {
     O.fromNullable,
     O.fold(
       () => calendarTitle,
-      s => I18n.t(s)
+      s => I18n.t(s as any)
     )
   );
 }
@@ -97,7 +97,7 @@ export function convertLocalCalendarName(calendarTitle: string) {
  * and right is a boolean -> true === the is in calendar
  * @param eventId
  */
-export const isEventInCalendar = (
+export const legacyIsEventInCalendar = (
   eventId: string
 ): TE.TaskEither<Error, boolean> => {
   const authTask = TE.tryCatch(
@@ -171,12 +171,11 @@ export const saveCalendarEvent = (
     alarms: []
   })
     .then(eventId => {
-      showToast(
+      IOToast.success(
         I18n.t("messages.cta.reminderAddSuccess", {
           title,
           calendarTitle: convertLocalCalendarName(calendar.title)
-        }),
-        "success"
+        })
       );
       const messageId = message.id;
       if (onAddCalendarEvent) {
@@ -186,7 +185,7 @@ export const saveCalendarEvent = (
         });
       }
     })
-    .catch(_ => showToast(I18n.t("messages.cta.reminderAddFailure"), "danger"));
+    .catch(_ => IOToast.error(I18n.t("messages.cta.reminderAddFailure")));
 };
 
 export const removeCalendarEventFromDeviceCalendar = (
@@ -196,15 +195,77 @@ export const removeCalendarEventFromDeviceCalendar = (
   if (calendarEvent) {
     RNCalendarEvents.removeEvent(calendarEvent.eventId)
       .then(_ => {
-        showToast(I18n.t("messages.cta.reminderRemoveSuccess"), "success");
+        IOToast.success(I18n.t("messages.cta.reminderRemoveSuccess"));
         if (onRemoveEvent) {
           onRemoveEvent(calendarEvent);
         }
       })
-      .catch(_ =>
-        showToast(I18n.t("messages.cta.reminderRemoveFailure"), "danger")
-      );
+      .catch(_ => IOToast.error(I18n.t("messages.cta.reminderRemoveFailure")));
   } else {
-    showToast(I18n.t("messages.cta.reminderRemoveFailure"), "danger");
+    IOToast.error(I18n.t("messages.cta.reminderRemoveFailure"));
   }
 };
+
+/**
+ * Check and request the permission to access the device calendar
+ * @returns a boolean that is true if the permission is granted
+ */
+export const requestCalendarPermission = async (): Promise<boolean> => {
+  const checkResult = await RNCalendarEvents.checkPermissions();
+  if (checkResult === "authorized") {
+    return true;
+  }
+
+  const requestStatus = await RNCalendarEvents.requestPermissions();
+  return requestStatus === "authorized";
+};
+
+/**
+ * Check if the event is in the device calendar
+ */
+export const isEventInCalendar = (eventId: string) =>
+  pipe(
+    TE.tryCatch(() => requestCalendarPermission(), E.toError),
+    TE.chain(TE.fromPredicate(identity, () => Error("Permission not granted"))),
+    TE.chain(() =>
+      TE.tryCatch(() => RNCalendarEvents.findEventById(eventId), E.toError)
+    ),
+    TE.map(ev => ev !== null)
+  );
+
+/**
+ * Add an event to the device calendar
+ */
+export const saveEventToDeviceCalendarTask = (
+  calendarId: string,
+  dueDate: Date,
+  title: string
+) =>
+  TE.tryCatch(
+    () =>
+      RNCalendarEvents.saveEvent(title, {
+        calendarId,
+        startDate: dueDate.toISOString(),
+        endDate: dueDate.toISOString(),
+        allDay: true,
+        alarms: []
+      }),
+    E.toError
+  );
+
+/**
+ * Remove an event from the device calendar
+ */
+export const removeEventFromDeviceCalendarTask = (eventId: string) =>
+  pipe(
+    TE.tryCatch(() => RNCalendarEvents.removeEvent(eventId), E.toError),
+    TE.map(_ => eventId)
+  );
+
+/**
+ * Find the device calendars
+ */
+export const findDeviceCalendarsTask = TE.tryCatch(
+  () => RNCalendarEvents.findCalendars(),
+  E.toError
+);

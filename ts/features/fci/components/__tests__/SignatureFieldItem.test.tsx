@@ -1,7 +1,6 @@
-import * as React from "react";
 import { fireEvent, render } from "@testing-library/react-native";
+import I18n from "i18next";
 import SignatureFieldItem from "../SignatureFieldItem";
-import I18n from "../../../../i18n";
 
 type Props = {
   title: string;
@@ -31,7 +30,7 @@ describe("Test SignatureFieldItem component", () => {
     expect(component).toBeTruthy();
     expect(component.queryByText("Clause title 1")).toBeTruthy();
   });
-  it("should render a SignatureFieldItem component with checkbox unchecked", () => {
+  it("should render a SignatureFieldItem component with checkbox enabled", () => {
     const props = {
       title: "Clause title 1",
       onChange: jest.fn(),
@@ -39,43 +38,27 @@ describe("Test SignatureFieldItem component", () => {
     };
     const component = renderComponent({ ...props });
     expect(component).toBeTruthy();
-    expect(
-      component.getByTestId("SignatureFieldItemCheckboxTestID")
-    ).toBeTruthy();
-    expect(component.queryAllByText("io-checkbox-off")).toBeTruthy();
+    const listItemCheckbox = component.getByTestId("ListItemCheckbox");
+    expect(listItemCheckbox).toBeTruthy();
+    const checkbox = component.getByTestId("AnimatedCheckboxInput");
+    expect(checkbox).toBeTruthy();
+    expect(checkbox).toBeEnabled();
   });
-  it("should render a SignatureFieldItem component with checkbox checked", () => {
+  it("should render a SignatureFieldItem component with checkbox disabled", () => {
     const props = {
       title: "Clause title 1",
-      value: true,
+      value: false,
+      disabled: true,
       onChange: jest.fn(),
       onPressDetail: jest.fn()
     };
     const component = renderComponent({ ...props });
     expect(component).toBeTruthy();
-    expect(
-      component.getByTestId("SignatureFieldItemCheckboxTestID")
-    ).toBeTruthy();
-    expect(component.queryAllByText("io-checkbox-on")).toBeTruthy();
-  });
-  it("should render a SignatureFieldItem component with checkbox clickable", () => {
-    const onPress = jest.fn();
-    const props = {
-      title: "Clause title 1",
-      value: true,
-      onChange: onPress,
-      onPressDetail: jest.fn()
-    };
-    const component = renderComponent({ ...props });
-    expect(component).toBeTruthy();
-    const rightButton = component.getByTestId("SignatureFieldItemButtonTestID");
-    expect(rightButton).toBeTruthy();
-    expect(rightButton).toBeEnabled();
-    fireEvent.press(rightButton);
-    expect(component.queryAllByText("io-checkbox-on")).toBeTruthy();
-    fireEvent.press(rightButton);
-    expect(component.queryAllByText("io-checkbox-off")).toBeTruthy();
-    expect(onPress).toHaveBeenCalledTimes(2);
+    const listItemCheckbox = component.getByTestId("ListItemCheckbox");
+    expect(listItemCheckbox).toBeTruthy();
+    const checkbox = component.getByTestId("AnimatedCheckboxInput");
+    expect(checkbox).toBeTruthy();
+    expect(checkbox).toBeDisabled();
   });
   it("should render a SignatureFieldItem component with right text for details link", () => {
     const props = {

@@ -1,23 +1,25 @@
 import {
-  Body,
-  Container,
-  Content,
-  Right,
-  Text as NBText,
+  IOButton,
+  FooterActions,
+  H2,
+  IconButton,
+  IOColors,
+  Pictogram,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+
+import { FunctionComponent, useEffect, useState } from "react";
+import {
+  BackHandler,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
   View
-} from "native-base";
-import * as React from "react";
-import { BackHandler, Image, SafeAreaView, StyleSheet } from "react-native";
+} from "react-native";
 import WebView from "react-native-webview";
-import brokenLinkImage from "../../../../../img/broken-link.png";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
+import I18n from "i18next";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
-import AppHeader from "../../../../components/ui/AppHeader";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import IconFont from "../../../../components/ui/IconFont";
-import I18n from "../../../../i18n";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../../utils/webview";
-import { bonusVacanzeStyle } from "../../bonusVacanze/components/Styles";
 
 type Props = {
   onClose: () => void;
@@ -37,11 +39,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
-
-  errorTitle: {
-    fontSize: 20,
-    marginTop: 10
-  },
   errorButtonsContainer: {
     position: "absolute",
     bottom: 30,
@@ -52,28 +49,23 @@ const styles = StyleSheet.create({
 
 /**
  * Component to show the TOS for the bonus activation flow
+ * @deprecated This component is really old and should be removed/refactored
  */
-const TosBonusComponent: React.FunctionComponent<Props> = props => {
+const TosBonusComponent: FunctionComponent<Props> = props => {
   const handleBackPressed = () => {
     props.onClose();
     return true;
   };
-  const [isLoadEnd, setOnLoadEnd] = React.useState(false);
-  const [hasError, setHasError] = React.useState(false);
-  React.useEffect(() => {
+  const [isLoadEnd, setOnLoadEnd] = useState(false);
+  const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
     const subscription = BackHandler.addEventListener(
       "hardwareBackPress",
       handleBackPressed
     );
     return () => subscription.remove();
   });
-
-  const closeButtonProps = {
-    block: true,
-    primary: true,
-    onPress: props.onClose,
-    title: I18n.t("global.buttons.close")
-  };
 
   const handleLoadEnd = () => setOnLoadEnd(true);
 
@@ -87,64 +79,72 @@ const TosBonusComponent: React.FunctionComponent<Props> = props => {
     }
     return (
       <View style={styles.errorContainer}>
-        <Image source={brokenLinkImage} resizeMode="contain" />
-        <NBText style={styles.errorTitle} bold={true}>
-          {I18n.t("onboarding.tos.error")}
-        </NBText>
+        <Pictogram name="lostConnection" />
+        <VSpacer size={16} />
+        <H2>{I18n.t("onboarding.tos.error")}</H2>
 
         <View style={styles.errorButtonsContainer}>
-          <ButtonDefaultOpacity
+          <IOButton
+            fullWidth
+            variant="outline"
+            label={I18n.t("global.buttons.retry")}
             onPress={() => {
               setOnLoadEnd(false);
               setHasError(false);
             }}
-            style={{ flex: 2 }}
-            block={true}
-            primary={true}
-          >
-            <NBText>{I18n.t("global.buttons.retry")}</NBText>
-          </ButtonDefaultOpacity>
+          />
         </View>
       </View>
     );
   };
+
+  // TODO: Remove HOC to use the theme
   const ContainerComponent = withLoadingSpinner(() => (
-    <Container>
-      <AppHeader noLeft={true}>
-        <Body />
-        <Right>
-          <ButtonDefaultOpacity onPress={props.onClose} transparent={true}>
-            <IconFont name="io-close" />
-          </ButtonDefaultOpacity>
-        </Right>
-      </AppHeader>
-      <SafeAreaView style={bonusVacanzeStyle.flex}>
-        <Content contentContainerStyle={styles.flex1} noPadded={true}>
-          {renderError()}
-          {!hasError && (
-            <View style={styles.flex1}>
-              <WebView
-                androidCameraAccessDisabled={true}
-                androidMicrophoneAccessDisabled={true}
-                textZoom={100}
-                style={styles.flex2}
-                onLoadEnd={handleLoadEnd}
-                onError={handleError}
-                source={{ uri: props.tos_url }}
-                injectedJavaScript={closeInjectedScript(AVOID_ZOOM_JS)}
-              />
-            </View>
-          )}
-        </Content>
-        {isLoadEnd && (
-          <FooterWithButtons
-            type="SingleButton"
-            leftButton={closeButtonProps}
-          />
+    <SafeAreaView style={{ flex: 1, backgroundColor: IOColors.white }}>
+      <View
+        style={{
+          paddingHorizontal: 16,
+          alignItems: "flex-end"
+        }}
+      >
+        <IconButton
+          color="neutral"
+          accessibilityLabel={I18n.t("global.buttons.close")}
+          icon="closeLarge"
+          onPress={props.onClose}
+        />
+      </View>
+      <ScrollView contentContainerStyle={styles.flex1}>
+        {renderError()}
+        {!hasError && (
+          <View style={styles.flex1}>
+            <WebView
+              androidCameraAccessDisabled={true}
+              androidMicrophoneAccessDisabled={true}
+              textZoom={100}
+              style={styles.flex2}
+              onLoadEnd={handleLoadEnd}
+              onError={handleError}
+              source={{ uri: props.tos_url }}
+              injectedJavaScript={closeInjectedScript(AVOID_ZOOM_JS)}
+            />
+          </View>
         )}
-      </SafeAreaView>
-    </Container>
+      </ScrollView>
+      {isLoadEnd && (
+        <FooterActions
+          actions={{
+            type: "SingleButton",
+            primary: {
+              onPress: props.onClose,
+              label: I18n.t("global.buttons.close")
+            }
+          }}
+        />
+      )}
+    </SafeAreaView>
   ));
+
   return <ContainerComponent isLoading={!isLoadEnd} />;
 };
 

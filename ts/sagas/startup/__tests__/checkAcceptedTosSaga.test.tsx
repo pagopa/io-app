@@ -1,20 +1,18 @@
-import { createStore } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
-
 import {
   NonNegativeInteger,
   NonNegativeNumber
 } from "@pagopa/ts-commons/lib/numbers";
-import { View } from "react-native";
-import { tosVersion } from "../../../config";
-import { applicationChangeState } from "../../../store/actions/application";
+import { select } from "redux-saga/effects";
 import { navigateToTosScreen } from "../../../store/actions/navigation";
-import { tosAccepted } from "../../../store/actions/onboarding";
-import { appReducer } from "../../../store/reducers";
-import { isProfileFirstOnBoarding } from "../../../store/reducers/profile";
-import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import { tosAccepted } from "../../../features/onboarding/store/actions";
+import { isProfileFirstOnBoarding } from "../../../features/settings/common/store/utils/guards";
 import mockedProfile from "../../../__mocks__/initializedProfile";
 import { checkAcceptedTosSaga } from "../checkAcceptedTosSaga";
+import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
+import { tosConfigSelector } from "../../../features/tos/store/selectors";
+
+const tosVersion = 3.2 as NonNegativeNumber;
 
 describe("checkAcceptedTosSaga", () => {
   const firstOnboardingProfile = {
@@ -23,7 +21,10 @@ describe("checkAcceptedTosSaga", () => {
     is_email_enabled: true,
     is_inbox_enabled: true,
     is_webhook_enabled: true,
-    version: 0 as NonNegativeInteger
+    version: 0 as NonNegativeInteger,
+    service_preferences_settings: {
+      mode: ServicesPreferencesModeEnum.LEGACY
+    }
   };
 
   const oldOnboardedProfile = {
@@ -46,9 +47,6 @@ describe("checkAcceptedTosSaga", () => {
   };
 
   beforeEach(() => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
-    renderScreenFakeNavRedux(View, "DUMMY", {}, store);
     jest.useRealTimers();
   });
 
@@ -65,6 +63,7 @@ describe("checkAcceptedTosSaga", () => {
   describe("when user has already accepted the last version of ToS", () => {
     it("should do nothing", () =>
       expectSaga(checkAcceptedTosSaga, updatedProfile)
+        .provide([[select(tosConfigSelector), { tos_version: tosVersion }]])
         .not.call(navigateToTosScreen)
         .run());
   });
@@ -75,6 +74,7 @@ describe("checkAcceptedTosSaga", () => {
         ...oldOnboardedProfile,
         accepted_tos_version: undefined
       })
+        .provide([[select(tosConfigSelector), { tos_version: tosVersion }]])
         .call(navigateToTosScreen)
         .run());
   });
@@ -82,6 +82,7 @@ describe("checkAcceptedTosSaga", () => {
   describe("when user has accepted an old version of ToS", () => {
     it("should navigate to the terms of service screen and succeed when ToS get accepted", () =>
       expectSaga(checkAcceptedTosSaga, notUpdatedProfile)
+        .provide([[select(tosConfigSelector), { tos_version: tosVersion }]])
         .call(navigateToTosScreen)
         .take(tosAccepted)
         .run());
@@ -90,6 +91,7 @@ describe("checkAcceptedTosSaga", () => {
   describe("when user has never accepted an ToS because he is accessing the app for the first time", () => {
     it("should navigate to the terms of service screen and succeed when ToS get accepted", () =>
       expectSaga(checkAcceptedTosSaga, firstOnboardingProfile)
+        .provide([[select(tosConfigSelector), { tos_version: tosVersion }]])
         .call(navigateToTosScreen)
         .take(tosAccepted)
         .run());

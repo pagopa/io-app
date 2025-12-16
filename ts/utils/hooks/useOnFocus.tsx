@@ -27,5 +27,6 @@ export const useActionOnFocus = (
       loadAction();
       setLastUpdate(now);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFocused]);
 };

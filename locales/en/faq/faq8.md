@@ -1,1 +1,0 @@
-Yes, it is possible to request more than one digital identity - even with different levels of security - with the opportunity to contact different digital identity managers. In case of possession of multiple identities, each citizen is free to log in to IO with the SPID credentials he prefers.

@@ -12,7 +12,7 @@ import {
   remoteLoading,
   remoteReady,
   remoteUndefined
-} from "../../../../bonus/bpd/model/RemoteValue";
+} from "../../../../../common/model/RemoteValue";
 import {
   getZendeskConfig,
   zendeskRequestTicketNumber,
@@ -24,21 +24,24 @@ import { ZendeskState } from "../index";
 
 const INITIAL_STATE: ZendeskState = {
   zendeskConfig: remoteUndefined,
-  ticketNumber: pot.none
+  ticketNumber: pot.none,
+  zendeskSubcategoriesErrorMap: remoteUndefined
 };
 
 const mockCategory: ZendeskCategory = {
   value: "mock_value",
   description: {
     "it-IT": "mock_description",
-    "en-EN": "mock_description"
+    "en-EN": "mock_description",
+    "de-DE": "mock_description"
   }
 };
 const mockSubcategory: ZendeskSubCategory = {
   value: "mock_value",
   description: {
     "it-IT": "mock_description",
-    "en-EN": "mock_description"
+    "en-EN": "mock_description",
+    "de-DE": "mock_description"
   }
 };
 
@@ -141,9 +144,13 @@ describe("Zendesk reducer", () => {
     store.dispatch(zendeskSelectedCategory(mockCategory));
     store.dispatch(
       zendeskSupportStart({
-        assistanceForPayment: false,
-        assistanceForCard: false,
-        startingRoute: "n/a"
+        startingRoute: "n/a",
+        assistanceType: {
+          payment: false,
+          card: false,
+          fci: false,
+          itWallet: false
+        }
       })
     );
     expect(

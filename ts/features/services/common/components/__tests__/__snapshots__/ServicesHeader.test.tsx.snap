@@ -1,0 +1,129 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ServicesHeader component should match the snapshot 1`] = `
+<View
+  importantForAccessibility="no"
+  style={
+    {
+      "alignItems": "center",
+      "flexDirection": "row",
+      "justifyContent": "space-between",
+      "paddingVertical": 6,
+    }
+  }
+  testID="services-header"
+>
+  <View
+    accessibilityElementsHidden={true}
+    accessible={false}
+    importantForAccessibility="no-hide-descendants"
+    style={
+      {
+        "marginRight": 16,
+      }
+    }
+  >
+    <View
+      accessibilityIgnoresInvertColors={true}
+      style={
+        [
+          {
+            "borderColor": "rgba(14,15,19,0.1)",
+            "borderCurve": "continuous",
+            "borderWidth": 1,
+            "overflow": "hidden",
+          },
+          {
+            "backgroundColor": "#FFFFFF",
+            "borderRadius": 12,
+            "height": 66,
+            "padding": 9,
+            "width": 66,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          [
+            {
+              "backgroundColor": "#FFFFFF",
+              "borderCurve": "continuous",
+              "overflow": "hidden",
+            },
+            {
+              "borderRadius": 3,
+            },
+          ]
+        }
+      >
+        <Image
+          accessibilityIgnoresInvertColors={true}
+          onError={[Function]}
+          source={
+            {
+              "testUri": "../../../img/test/logo.png",
+            }
+          }
+          style={
+            {
+              "height": "100%",
+              "resizeMode": "contain",
+              "width": "100%",
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <Text
+      accessibilityRole="header"
+      allowFontScaling={true}
+      dynamicTypeRamp="title2"
+      maxFontSizeMultiplier={1.5}
+      style={
+        [
+          {},
+          {
+            "color": "#2B2E38",
+            "fontFamily": "Titillio",
+            "fontSize": 22,
+            "fontStyle": "normal",
+            "fontWeight": "600",
+            "lineHeight": 33,
+          },
+        ]
+      }
+    >
+      #### title ####
+    </Text>
+    <Text
+      allowFontScaling={true}
+      dynamicTypeRamp="footnote"
+      maxFontSizeMultiplier={1.5}
+      style={
+        [
+          {},
+          {
+            "color": "#555C70",
+            "fontFamily": "Titillio",
+            "fontSize": 14,
+            "fontStyle": "normal",
+            "fontWeight": "400",
+            "lineHeight": 21,
+          },
+        ]
+      }
+    >
+      #### subTitle ####
+    </Text>
+  </View>
+</View>
+`;

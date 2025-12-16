@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`userBehaviourReducer Should match snapshot 1`] = `
+{
+  "pushNotificationBannerDismissalCount": 0,
+  "pushNotificationBannerForceDismissionDate": undefined,
+}
+`;

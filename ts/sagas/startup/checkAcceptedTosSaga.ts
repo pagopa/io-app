@@ -1,21 +1,24 @@
-import { call, put, take } from "typed-redux-saga/macro";
+import { call, put, select, take } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
+import { StackActions } from "@react-navigation/native";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
-import { tosVersion } from "../../config";
 import { navigateToTosScreen } from "../../store/actions/navigation";
-import { tosAccepted } from "../../store/actions/onboarding";
-import { profileUpsert } from "../../store/actions/profile";
-import { isProfileFirstOnBoarding } from "../../store/reducers/profile";
+import { tosAccepted } from "../../features/onboarding/store/actions";
+import { profileUpsert } from "../../features/settings/common/store/actions";
+import { isProfileFirstOnBoarding } from "../../features/settings/common/store/utils/guards";
 import { ReduxSagaEffect } from "../../types/utils";
+import NavigationService from "../../navigation/NavigationService";
+import { tosConfigSelector } from "../../features/tos/store/selectors";
 
 export function* checkAcceptedTosSaga(
   userProfile: InitializedProfile
 ): Generator<
   ReduxSagaEffect,
   void,
-  | ActionType<typeof profileUpsert["success"]>
-  | ActionType<typeof profileUpsert["failure"]>
+  | ActionType<(typeof profileUpsert)["success"]>
+  | ActionType<(typeof profileUpsert)["failure"]>
 > {
+  const tosVersion = (yield* select(tosConfigSelector)).tos_version;
   // The user has to explicitly accept the new version of ToS if:
   // - this is the first access
   // - the user profile stores the user accepted an old version of ToS
@@ -34,9 +37,14 @@ export function* checkAcceptedTosSaga(
   ) {
     // Navigate to the TosScreen
     yield* call(navigateToTosScreen);
+
     // Wait the user accept the ToS
     yield* take(tosAccepted);
 
+    yield* call(
+      NavigationService.dispatchNavigationAction,
+      StackActions.popToTop()
+    );
     /**
      * The user profile is updated storing the last ToS version.
      * If the user logs in for the first time, the accepted tos version is stored once the profile in initialized

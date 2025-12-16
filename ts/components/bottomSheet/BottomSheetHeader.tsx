@@ -1,76 +1,62 @@
-import * as React from "react";
-import { useEffect } from "react";
-import { StyleSheet } from "react-native";
-import { View } from "native-base";
+import { H4, IconButton, IOVisualCostants } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import I18n from "../../i18n";
-import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
-import { H3 } from "../core/typography/H3";
-import IconFont from "../ui/IconFont";
-import { IOStyles } from "../core/variables/IOStyles";
-import { IOColors } from "../core/variables/IOColors";
+import {
+  createRef,
+  FunctionComponent,
+  isValidElement,
+  ReactNode,
+  useEffect
+} from "react";
+import { StyleSheet, View } from "react-native";
+import I18n from "i18next";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 
 const styles = StyleSheet.create({
-  row: {
+  bottomSheetHeader: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    ...IOStyles.horizontalContentPadding,
-    paddingTop: 24,
-    backgroundColor: IOColors.white,
-    borderTopRightRadius: 16,
-    borderTopLeftRadius: 16
-  },
-  modalClose: {
-    paddingRight: 0,
-    justifyContent: "flex-end"
-  },
-  icon: {
-    paddingRight: 0
+    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    paddingTop: IOVisualCostants.appMarginDefault,
+    paddingBottom: IOVisualCostants.appMarginDefault
   }
 });
 
 type Props = {
-  title: string | React.ReactNode;
+  title: string | ReactNode;
   onClose: () => void;
 };
 
-export const BottomSheetHeader: React.FunctionComponent<Props> = ({
+export const BottomSheetHeader: FunctionComponent<Props> = ({
   title,
   onClose
 }: Props) => {
-  const headerRef = React.createRef<View>();
+  const headerRef = createRef<View>();
 
   useEffect(() => {
     setAccessibilityFocus(headerRef, 1000 as Millisecond);
   }, [headerRef]);
 
   return (
-    <View style={styles.row} ref={headerRef}>
-      {React.isValidElement(title) ? (
+    <View style={styles.bottomSheetHeader} ref={headerRef}>
+      {isValidElement(title) ? (
         title
       ) : (
         <View
-          style={IOStyles.flex}
+          style={{ flex: 1 }}
           accessible={true}
           accessibilityRole={"header"}
           accessibilityLabel={typeof title === "string" ? title : undefined}
         >
-          <H3>{title}</H3>
+          <H4>{title}</H4>
         </View>
       )}
-      <ButtonDefaultOpacity
-        onPressWithGestureHandler={true}
-        style={styles.modalClose}
+      <IconButton
+        color="neutral"
         onPress={onClose}
-        transparent={true}
-        accessible={true}
-        accessibilityRole={"button"}
+        icon="closeMedium"
         accessibilityLabel={I18n.t("global.buttons.close")}
-      >
-        <IconFont name="io-close" color={IOColors.grey} style={styles.icon} />
-      </ButtonDefaultOpacity>
+      />
     </View>
   );
 };

@@ -18,7 +18,13 @@ const keychainDB: KeychainDB = {};
 
 // eslint-disable-next-line functional/immutable-data
 module.exports = {
-  ACCESSIBLE: jest.fn(),
+  ACCESSIBLE: {
+    WHEN_UNLOCKED_THIS_DEVICE_ONLY: "WHEN_UNLOCKED_THIS_DEVICE_ONLY"
+  },
+
+  STORAGE_TYPE: {
+    AES_GCM_NO_AUTH: "AES_GCM_NO_AUTH"
+  },
 
   getGenericPassword: jest.fn((options: Options) =>
     keychainDB[options.service]
@@ -28,7 +34,7 @@ module.exports = {
 
   setGenericPassword: jest.fn(
     (username: string, password: string, options: Options) => {
-      // eslint-disable-next-line
+      // eslint-disable-next-line functional/immutable-data
       keychainDB[options.service] = {
         username,
         password,
@@ -40,7 +46,7 @@ module.exports = {
 
   resetGenericPassword: jest.fn((options: Options | undefined) => {
     if (options) {
-      // eslint-disable-next-line
+      // eslint-disable-next-line functional/immutable-data
       delete keychainDB[options.service];
     }
     return Promise.resolve(true);

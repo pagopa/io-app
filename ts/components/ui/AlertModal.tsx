@@ -1,16 +1,14 @@
-import { Text as NBText } from "native-base";
-import React from "react";
 import {
-  BackHandler,
-  NativeEventSubscription,
-  StyleSheet,
-  View
-} from "react-native";
-import variables from "../../theme/variables";
-import { IOColors, hexToRgba } from "../core/variables/IOColors";
-import { Overlay } from "./Overlay";
-
-const opaqueBgColor = hexToRgba(IOColors.black, 0.6);
+  Body,
+  hexToRgba,
+  IOColors,
+  IOVisualCostants
+} from "@pagopa/io-app-design-system";
+import { StyleSheet, View } from "react-native";
+import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
+import themeVariables from "../../theme/variables";
+import { useModalStyle } from "../../utils/hooks/useModalStyle";
+import { AlertModalOverlay } from "./AlertModalOverlay";
 
 const styles = StyleSheet.create({
   container: {
@@ -19,56 +17,43 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: "auto",
     width: "auto",
-    backgroundColor: IOColors.white,
-    padding: variables.contentPadding,
-    marginLeft: variables.contentPadding,
-    marginRight: variables.contentPadding,
-    borderRadius: 8
-  },
-  message: {
-    color: IOColors.black
+    padding: themeVariables.contentPadding,
+    marginHorizontal: IOVisualCostants.appMarginDefault,
+    borderCurve: "continuous",
+    borderRadius: 16
   }
 });
 
-type Props = Readonly<{
+type AlertModalProps = Readonly<{
   message: string;
 }>;
 
 /**
  * A custom alert to show a message
  */
-export class AlertModal extends React.PureComponent<Props> {
-  private subscription: NativeEventSubscription | undefined;
-  constructor(props: Props) {
-    super(props);
-  }
+export const AlertModal = ({ message }: AlertModalProps) => {
+  useHardwareBackButton(() => true);
 
-  public componentDidMount() {
-    // eslint-disable-next-line functional/immutable-data
-    this.subscription = BackHandler.addEventListener(
-      "hardwareBackPress",
-      this.onBackPressed
-    );
-  }
+  const { backdrop, modal } = useModalStyle();
 
-  public componentWillUnmount() {
-    this.subscription?.remove();
-  }
-
-  private onBackPressed() {
-    return true;
-  }
-
-  public render() {
-    return (
-      <Overlay
-        backgroundColor={opaqueBgColor}
-        foreground={
-          <View style={styles.container}>
-            <NBText style={styles.message}>{this.props.message}</NBText>
-          </View>
-        }
-      />
-    );
-  }
-}
+  return (
+    <AlertModalOverlay
+      backgroundColor={backdrop.backgroundColor}
+      opacity={backdrop.opacity}
+      foreground={
+        <View
+          style={[
+            styles.container,
+            {
+              backgroundColor: modal.backgroundColor,
+              borderWidth: 1,
+              borderColor: hexToRgba(IOColors.white, 0.1)
+            }
+          ]}
+        >
+          <Body>{message}</Body>
+        </View>
+      }
+    />
+  );
+};

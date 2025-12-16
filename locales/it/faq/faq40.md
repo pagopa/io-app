@@ -1,1 +1,0 @@
-Tutte le ricevute rimangono visibili nella sezione 'Portafoglio' nella lista 'Le tue operazioni' (in alto la più recente). In questo momento non è possibile rimuoverle o organizzarle diversamente.

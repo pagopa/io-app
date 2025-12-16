@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Dji-FG-dfn"/>
+                        <viewControllerLayoutGuide type="bottom" id="BW8-EI-1Nz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="aL7-ys-jhQ">
+                                <rect key="frame" x="28.5" y="571" width="318" height="48"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_pagopa" translatesAutoresizingMaskIntoConstraints="NO" id="ur6-nk-fTh" userLabel="PagoPa logo">
+                                        <rect key="frame" x="0.0" y="0.0" width="101" height="48"/>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_consiglio_ministri" translatesAutoresizingMaskIntoConstraints="NO" id="Tei-FP-Id0">
+                                        <rect key="frame" x="133" y="0.0" width="43" height="48"/>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="euNextLogo" translatesAutoresizingMaskIntoConstraints="NO" id="BYK-0Z-U9E">
+                                        <rect key="frame" x="208" y="0.0" width="110" height="48"/>
+                                    </imageView>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="center" preservesSuperviewLayoutMargins="YES" axis="vertical" distribution="equalSpacing" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="HOS-XJ-5yj">
+                                <rect key="frame" x="97" y="237.5" width="181.5" height="92.5"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_io" translatesAutoresizingMaskIntoConstraints="NO" id="pdm-K5-7Ya">
+                                        <rect key="frame" x="58.5" y="0.0" width="64" height="52"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JZQ-jS-lo4">
+                                        <rect key="frame" x="0.0" y="72" width="181.5" height="20.5"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="l’app dei servizi pubblici">
+                                                <attributes>
+                                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" metaFont="system" size="17"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.109803915" green="0.23921570180000001" blue="0.85490196939999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstAttribute="bottomMargin" secondItem="aL7-ys-jhQ" secondAttribute="bottom" constant="48" id="1g8-n7-WYZ"/>
+                            <constraint firstItem="HOS-XJ-5yj" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="9ZI-w2-W7r"/>
+                            <constraint firstItem="HOS-XJ-5yj" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="-50" id="iLY-zI-7Jw"/>
+                            <constraint firstItem="aL7-ys-jhQ" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="nr1-zv-P1U"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="euNextLogo" width="110" height="26"/>
+        <image name="logo_consiglio_ministri" width="43" height="48"/>
+        <image name="logo_io" width="64" height="52"/>
+        <image name="logo_pagopa" width="101" height="28"/>
+    </resources>
+</document>

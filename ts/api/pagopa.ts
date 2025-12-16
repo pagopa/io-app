@@ -25,7 +25,6 @@ import _ from "lodash";
 import {
   addWalletCreditCardUsingPOSTDecoder,
   AddWalletCreditCardUsingPOSTT,
-  addWalletSatispayUsingPOSTDecoder,
   changePayOptionDecoder,
   checkPaymentUsingGETDefaultDecoder,
   CheckPaymentUsingGETT,
@@ -35,7 +34,6 @@ import {
   favouriteWalletUsingPOSTDecoder,
   FavouriteWalletUsingPOSTT,
   GetAllPspsUsingGETT,
-  getConsumerUsingGETDefaultDecoder,
   getPaypalPspsUsingGETDefaultDecoder,
   GetPaypalPspsUsingGETT,
   getPspListUsingGETDecoder,
@@ -69,12 +67,10 @@ import {
   GetCobadgeByRequestIdUsingGETT,
   getCobadgesUsingGETDefaultDecoder,
   GetCobadgesUsingGETT,
-  GetConsumerUsingGETT,
   getPansUsingGETDefaultDecoder,
   GetPansUsingGETT,
   getWalletsV2UsingGETDecoder
 } from "../../definitions/pagopa/walletv2/requestTypes";
-import { SatispayRequest } from "../../definitions/pagopa/walletv2/SatispayRequest";
 import {
   NullableWallet,
   PagoPAErrorResponse,
@@ -128,7 +124,6 @@ export type GetTransactionsUsingGETT = r.IGetApiRequestType<
   { readonly Bearer: string; readonly start: number },
   "Authorization",
   never,
-  // eslint-disable-next-line
   | r.IResponseType<200, TransactionListResponse>
   | r.IResponseType<401, undefined>
   | r.IResponseType<403, undefined>
@@ -212,7 +207,7 @@ const getPatchedWalletsUsingGETDecoder = <O>(
   r.composeResponseDecoders(
     r.composeResponseDecoders(
       r.composeResponseDecoders(
-        r.ioResponseDecoder<200, typeof type["_A"], typeof type["_O"]>(
+        r.ioResponseDecoder<200, (typeof type)["_A"], (typeof type)["_O"]>(
           200,
           type,
           payload => {
@@ -467,36 +462,6 @@ const addPans: AddWalletsBancomatCardUsingPOSTTExtra = {
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   body: p => JSON.stringify(p.bancomatCardsRequest),
   response_decoder: addWalletsBancomatCardUsingPOSTDecoderCustom
-};
-
-const searchSatispay: GetConsumerUsingGETT = {
-  method: "get",
-  url: () => `/v1/satispay/consumers`,
-  query: () => ({}),
-  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: getConsumerUsingGETDefaultDecoder()
-};
-
-export type AddWalletSatispayUsingPOSTTExtra = r.IPostApiRequestType<
-  { readonly Bearer: string; readonly satispayRequest: SatispayRequest },
-  "Content-Type" | "Authorization",
-  never,
-  | r.IResponseType<200, PatchedWalletV2Response>
-  | r.IResponseType<201, undefined>
-  | r.IResponseType<401, undefined>
-  | r.IResponseType<403, undefined>
-  | r.IResponseType<404, undefined>
->;
-
-const addWalletSatispayUsingPOSTDecoderCustom =
-  addWalletSatispayUsingPOSTDecoder({ 200: PatchedWalletV2Response });
-const addSatispayToWallet: AddWalletSatispayUsingPOSTTExtra = {
-  method: "post",
-  url: () => `/v1/satispay/add-wallet`,
-  query: () => ({}),
-  body: ({ satispayRequest }) => JSON.stringify(satispayRequest),
-  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-  response_decoder: addWalletSatispayUsingPOSTDecoderCustom
 };
 
 const searchBPay: GetBpayListUsingGETT = {
@@ -846,16 +811,6 @@ export function PaymentManagerClient(
         withPaymentManagerToken,
         fn => (token: PaymentManagerToken) =>
           fn(token)({ bancomatCardsRequest: cards })
-      ),
-    searchSatispay: pipe(
-      createFetchRequestForApi(searchSatispay, altOptions),
-      withPaymentManagerToken
-    ),
-    addSatispayToWallet: (satispayRequest: SatispayRequest) =>
-      pipe(
-        createFetchRequestForApi(addSatispayToWallet, altOptions),
-        withPaymentManagerToken,
-        fn => (token: PaymentManagerToken) => fn(token)({ satispayRequest })
       ),
     searchBPay: (abi?: string) =>
       pipe(

@@ -1,0 +1,1110 @@
+{
+  "issuerConf": {
+    "federation_entity": {
+      "organization_name": "Istituto Poligrafico e Zecca di Stato",
+      "homepage_uri": "https://api.eudi-wallet-it-issuer.it/rp",
+      "policy_uri": "https://api.eudi-wallet-it-issuer.it/rp",
+      "logo_uri": "https://api.eudi-wallet-it-issuer.it/public/logo.svg",
+      "tos_uri": "https://api.eudi-wallet-it-issuer.it/rp"
+    },
+    "openid_credential_issuer": {
+      "credentials_supported": [
+        {
+          "cryptographic_suites_supported": ["RS256"],
+          "cryptographic_binding_methods_supported": ["jwk"],
+          "display": [
+            {
+              "background_color": "#12107c",
+              "name": "QEAA Issuer",
+              "logo": {
+                "alt_text": "logo",
+                "url": "https://api.eudi-wallet-it-issuer.it/public/logo.svg"
+              },
+              "text_color": "#FFFFFF",
+              "locale": "it-IT"
+            },
+            {
+              "background_color": "#12107c",
+              "name": "QEAA Issuer",
+              "logo": {
+                "alt_text": "logo",
+                "url": "https://api.eudi-wallet-it-issuer.it/public/logo.svg"
+              },
+              "text_color": "#FFFFFF",
+              "locale": "en-US"
+            }
+          ],
+          "format": "vc+sd-jwt",
+          "credential_definition": {
+            "credentialSubject": {
+              "accompanying_person_right": {
+                "display": [
+                  {
+                    "name": "Diritto all'accompagnatore",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Accompanying Person Right",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "birthdate": {
+                "display": [
+                  {
+                    "name": "Data di Nascita",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Date of Birth",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "serial_number": {
+                "display": [
+                  {
+                    "name": "Numero Seriale",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Serial Number",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "given_name": {
+                "display": [
+                  {
+                    "name": "Nome",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "First Name",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "fiscal_code": {
+                "display": [
+                  {
+                    "name": "Codice Fiscale",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Fiscal Code",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "expiration_date": {
+                "display": [
+                  {
+                    "name": "Data di Scadenza",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Expiration Date",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "family_name": {
+                "display": [
+                  {
+                    "name": "Cognome",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Family Name",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              }
+            },
+            "type": ["EuropeanDisabilityCard"]
+          },
+          "id": "europeandisabilitycard.eudi-wallet-it-issuer.it"
+        },
+        {
+          "cryptographic_suites_supported": ["RS256"],
+          "cryptographic_binding_methods_supported": ["jwk"],
+          "display": [
+            {
+              "background_color": "#12107c",
+              "name": "QEAA Issuer",
+              "logo": {
+                "alt_text": "logo",
+                "url": "https://api.eudi-wallet-it-issuer.it/public/logo.svg"
+              },
+              "text_color": "#FFFFFF",
+              "locale": "it-IT"
+            },
+            {
+              "background_color": "#12107c",
+              "name": "QEAA Issuer",
+              "logo": {
+                "alt_text": "logo",
+                "url": "https://api.eudi-wallet-it-issuer.it/public/logo.svg"
+              },
+              "text_color": "#FFFFFF",
+              "locale": "en-US"
+            }
+          ],
+          "format": "vc+sd-jwt",
+          "credential_definition": {
+            "credentialSubject": {
+              "place_of_birth": {
+                "display": [
+                  {
+                    "name": "Luogo di Nascita",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Place of Birth",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "institution_number_team": {
+                "display": [
+                  {
+                    "name": "Numero identificativo dell'istituzione (TEAM)",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Institution Number (TEAM)",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "birthdate": {
+                "display": [
+                  {
+                    "name": "Data di Nascita",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Date of Birth",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "province": {
+                "display": [
+                  {
+                    "name": "Provincia",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Province",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "nation": {
+                "display": [
+                  {
+                    "name": "Nazione",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Nation",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "sex": {
+                "display": [
+                  {
+                    "name": "Sesso",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Sex",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "expiry_date": {
+                "display": [
+                  {
+                    "name": "Data di Scadenza",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Expiry Date",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "document_number_team": {
+                "display": [
+                  {
+                    "name": "Numero identificativo della tessera (TEAM)",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Document Number (TEAM)",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "given_name": {
+                "display": [
+                  {
+                    "name": "Nome",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "First Name",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "fiscal_code": {
+                "display": [
+                  {
+                    "name": "Codice Fiscale",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Fiscal Code",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "family_name": {
+                "display": [
+                  {
+                    "name": "Cognome",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Family Name",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              }
+            },
+            "type": ["EuropeanHealthInsuranceCard"]
+          },
+          "id": "europeanhealthinsurancecard.eudi-wallet-it-issuer.it"
+        },
+        {
+          "cryptographic_suites_supported": ["RS256"],
+          "cryptographic_binding_methods_supported": ["jwk"],
+          "display": [
+            {
+              "background_color": "#12107c",
+              "name": "QEAA Issuer",
+              "logo": {
+                "alt_text": "logo",
+                "url": "https://api.eudi-wallet-it-issuer.it/public/logo.svg"
+              },
+              "text_color": "#FFFFFF",
+              "locale": "it-IT"
+            },
+            {
+              "background_color": "#12107c",
+              "name": "QEAA Issuer",
+              "logo": {
+                "alt_text": "logo",
+                "url": "https://api.eudi-wallet-it-issuer.it/public/logo.svg"
+              },
+              "text_color": "#FFFFFF",
+              "locale": "en-US"
+            }
+          ],
+          "format": "vc+sd-jwt",
+          "credential_definition": {
+            "credentialSubject": {
+              "un_distinguishing_sign": {
+                "display": [
+                  {
+                    "name": "Segno distintivo UN",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "UN Distinguishing Sign",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "driving_privileges": {
+                "display": [
+                  {
+                    "name": "Categorie di veicoli",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Driving Privileges",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "birthdate": {
+                "display": [
+                  {
+                    "name": "Data di nascita",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Date of Birth",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "document_number": {
+                "display": [
+                  {
+                    "name": "Numero di documento",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Document Number",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "issue_date": {
+                "display": [
+                  {
+                    "name": "Data di rilascio",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Issue Date",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "issuing_country": {
+                "display": [
+                  {
+                    "name": "Paese di rilascio",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Issuing Country",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "issuing_authority": {
+                "display": [
+                  {
+                    "name": "AutoritÃ  di rilascio",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Issuing Authority",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "expiry_date": {
+                "display": [
+                  {
+                    "name": "Data di scadenza",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Expiry Date",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "given_name": {
+                "display": [
+                  {
+                    "name": "Nome",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "First Name",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "portrait": {
+                "display": [
+                  {
+                    "name": "Foto",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Portrait",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "family_name": {
+                "display": [
+                  {
+                    "name": "Cognome",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Family Name",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              }
+            },
+            "type": ["mDL"]
+          },
+          "id": "mdl.eudi-wallet-it-issuer.it"
+        },
+        {
+          "cryptographic_suites_supported": ["RS256"],
+          "cryptographic_binding_methods_supported": ["jwk"],
+          "display": [
+            {
+              "background_color": "#12107c",
+              "name": "QEAA Issuer",
+              "logo": {
+                "alt_text": "logo",
+                "url": "https://api.eudi-wallet-it-issuer.it/public/logo.svg"
+              },
+              "text_color": "#FFFFFF",
+              "locale": "it-IT"
+            },
+            {
+              "background_color": "#12107c",
+              "name": "QEAA Issuer",
+              "logo": {
+                "alt_text": "logo",
+                "url": "https://api.eudi-wallet-it-issuer.it/public/logo.svg"
+              },
+              "text_color": "#FFFFFF",
+              "locale": "en-US"
+            }
+          ],
+          "format": "vc+mdoc-cbor",
+          "credential_definition": {
+            "credentialSubject": {
+              "un_distinguishing_sign": {
+                "display": [
+                  {
+                    "name": "Segno distintivo UN",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "UN Distinguishing Sign",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "driving_privileges": {
+                "display": [
+                  {
+                    "name": "Categorie di veicoli",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Driving Privileges",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "birthdate": {
+                "display": [
+                  {
+                    "name": "Data di nascita",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Date of Birth",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "document_number": {
+                "display": [
+                  {
+                    "name": "Numero di documento",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Document Number",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "issue_date": {
+                "display": [
+                  {
+                    "name": "Data di rilascio",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Issue Date",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "issuing_country": {
+                "display": [
+                  {
+                    "name": "Paese di rilascio",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Issuing Country",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "issuing_authority": {
+                "display": [
+                  {
+                    "name": "AutoritÃ  di rilascio",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Issuing Authority",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "expiry_date": {
+                "display": [
+                  {
+                    "name": "Data di scadenza",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Expiry Date",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "given_name": {
+                "display": [
+                  {
+                    "name": "Nome",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "First Name",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "portrait": {
+                "display": [
+                  {
+                    "name": "Foto",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Portrait",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "family_name": {
+                "display": [
+                  {
+                    "name": "Cognome",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Family Name",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              }
+            },
+            "type": ["mDL"]
+          },
+          "id": "mdl.eudi-wallet-it-issuer.it"
+        }
+      ],
+      "pushed_authorization_request_endpoint": "https://api.eudi-wallet-it-issuer.it/as/par",
+      "dpop_signing_alg_values_supported": ["RS256"],
+      "jwks": {
+        "keys": [
+          {
+            "kty": "RSA",
+            "e": "AQAB",
+            "use": "sig",
+            "n": "w4wEivQmGFZ04_ucwCqDihZcygppZfPa7KYA2D88mZz_JHLPsyip7LqSloB6xln1gp1UQREGiutv10FHvn3TXVj5P6pj7xp88nWZVaRpGKeGXgWxzzB4DcPv4Wykk5p2kkeezMYsspFM22YyVVD0tWBKbaJyFqEI60QrtXws1jXOv5KGX8DW0BryjNB5x1_QHWrASYzEPaybApgweioWWdxVjzkinLRX_G93xqU_3973vd_ysrfv5hSh5R5AiBP5S1iuC1MA2Ftv98etbv8iQ_zKy-Epk8JPI9VS9qqfgx0kKUjtaTSaT_TNtanv-bye8WDXE0-ik6DOScfEMS00Ww",
+            "kid": "eNN-g5i6CnLKcltQBp6abbioGMbzM6muW3vuxw6uh88"
+          },
+          {
+            "x": "2tne15IlA54fRLm3K-XhNpKPym9ZWfGnxpVSPMdTAww",
+            "kty": "EC",
+            "y": "_8Ou8nC0N2wo0JbFnXrt0vT0vBKW-wl1ZwuzZChPm30",
+            "use": "sig",
+            "crv": "P-256",
+            "kid": "HW1xkgr4AvQqDWaedvdcjmK0ve5RAO59pcVnZX6nCEQ"
+          }
+        ]
+      },
+      "credential_issuer": "api.eudi-wallet-it-issuer.it",
+      "authorization_endpoint": "https://api.eudi-wallet-it-issuer.it/authorize",
+      "token_endpoint": "https://api.eudi-wallet-it-issuer.it/token",
+      "credential_endpoint": "https://api.eudi-wallet-it-issuer.it/credential"
+    },
+    "wallet_relying_party": {
+      "client_registration_types": ["automatic"],
+      "authorization_signed_response_alg": ["RS256", "ES256"],
+      "jwks": {
+        "keys": [
+          {
+            "kty": "RSA",
+            "e": "AQAB",
+            "alg": "RS256",
+            "use": "sig",
+            "n": "3F299SoApwJL5Hojh3u7K4DRPvzIZa5P491cfz1NfLS7iOcagFcndm6STRCevKEtUZPhAzONrr1m_O_X2sh5jD_BHNO_H4nxlQ-cX8XD41I7HNrqnlLM3f0kggM-2Y5dEPWigC-rOUKR6-xCLlft-eNONcDjobp0W8TX8qQvSAJ94eb6WzUCUUUrgKGdJtOg2B-8ms-cqebKpJG2LFX5uX2JAe3jDcVKSy5afC-2Rh5rF4udfMCE1WlkR-fatwACArIvdScCm8PbyRv1bxCQ8e4U4tLXylCmA8O-WmMaQ4xE-_gQ-K2EHKQnKEgb0vj_OJkziokdpqktUyv3WaD-fw",
+            "kid": "rGThDYcE5PiCXYGc5Dj54YGvosJQSsNMCxxaS_jzldU"
+          },
+          {
+            "kty": "RSA",
+            "e": "AQAB",
+            "alg": "RSA-OAEP-256",
+            "use": "enc",
+            "n": "7h47mZx-sTTf79Ai4b4hIbkeeDaQbZPrMvo0lOh3DE3rs34gaAOsPjrYCJNx0LgIVkNJ501x-aKpdVBAzksHyQ7lcoD_nA1ycJ6BqbCV7MllfEWuYlE0yUPw1EO2bjHuBFdTm76Ic2boBUaLLxz6x5qaYZJWQdjTHV_aJxjmI36XvTP-IoKv80m4Y9Qsabcf_TYGTIOyPwX6q35DYIZuTXXdz46-hTC2zXbgDl1NnuxT4fZvXdNwnBn4BL3juVD-hqDB4otw782lIMUEcWE_AEqKxI8xiKxs-rsEDKqEx5nTYVPPdcfFHPHO-iJoZK9452UE_bcHWl_3NkoYDxNTDw",
+            "kid": "7jEc7RB5Q7B-aFIvIZ9VTmK-SF7Eqzf8xWc7qCArg2Y"
+          }
+        ]
+      },
+      "grant_types": ["refresh_token", "authorization_code"],
+      "default_max_age": 1111,
+      "subject_type": "pairwise",
+      "application_type": "web",
+      "presentation_definitions": [
+        {
+          "input_descriptors": [
+            {
+              "format": {
+                "jwt": {
+                  "alg": ["EdDSA", "ES256"]
+                },
+                "constraints": {
+                  "limit_disclosure": "required",
+                  "fields": [
+                    {
+                      "filter": {
+                        "const": "PersonIdentificationData",
+                        "type": "string"
+                      },
+                      "path": ["$.sd-jwt.type"]
+                    },
+                    {
+                      "filter": {
+                        "type": "object"
+                      },
+                      "path": ["$.sd-jwt.cnf"]
+                    },
+                    {
+                      "intent_to_retain": "true",
+                      "path": ["$.sd-jwt.family_name"]
+                    },
+                    {
+                      "intent_to_retain": "true",
+                      "path": ["$.sd-jwt.given_name"]
+                    },
+                    {
+                      "intent_to_retain": "true",
+                      "path": ["$.sd-jwt.unique_id"]
+                    }
+                  ]
+                }
+              },
+              "id": "pid-sd-jwt:unique_id+given_name+family_name"
+            }
+          ],
+          "id": "pid-sd-jwt:unique_id+given_name+family_name"
+        },
+        {
+          "input_descriptors": [
+            {
+              "format": {
+                "mso_mdoc": {
+                  "alg": ["EdDSA", "ES256"]
+                },
+                "constraints": {
+                  "limit_disclosure": "required",
+                  "fields": [
+                    {
+                      "filter": {
+                        "const": "org.iso.18013.5.1.mDL",
+                        "type": "string"
+                      },
+                      "path": ["$.mdoc.doctype"]
+                    },
+                    {
+                      "filter": {
+                        "const": "org.iso.18013.5.1",
+                        "type": "string"
+                      },
+                      "path": ["$.mdoc.namespace"]
+                    },
+                    {
+                      "intent_to_retain": "false",
+                      "path": ["$.mdoc.family_name"]
+                    },
+                    {
+                      "intent_to_retain": "false",
+                      "path": ["$.mdoc.portrait"]
+                    },
+                    {
+                      "intent_to_retain": "false",
+                      "path": ["$.mdoc.driving_privileges"]
+                    }
+                  ]
+                }
+              },
+              "id": "mDL"
+            }
+          ],
+          "id": "mDL-sample-req"
+        }
+      ],
+      "redirect_uris": [
+        ["https://api.eudi-wallet-it-issuer.it/oidc/rp/callback"]
+      ],
+      "client_id": "http://api.eudi-wallet-it-issuer.it/rp",
+      "vp_formats": {
+        "jwt_vp_json": {
+          "alg": ["EdDSA", "ES256K"]
+        }
+      },
+      "authorization_encrypted_response_alg": ["RSA-OAEP", "RSA-OAEP-256"],
+      "authorization_encrypted_response_enc": [
+        "A128CBC-HS256",
+        "A192CBC-HS384",
+        "A256CBC-HS512",
+        "A128GCM",
+        "A192GCM",
+        "A256GCM"
+      ],
+      "id_token_encrypted_response_alg": ["RSA-OAEP", "RSA-OAEP-256"],
+      "id_token_encrypted_response_enc": [
+        "A128CBC-HS256",
+        "A192CBC-HS384",
+        "A256CBC-HS512",
+        "A128GCM",
+        "A192GCM",
+        "A256GCM"
+      ],
+      "request_uris": [["https://api.eudi-wallet-it-issuer.it/request_uri"]],
+      "require_auth_time": true,
+      "client_name": "EUDI Wallet IT Issuer",
+      "contacts": ["ipzssviluppo@gmail.com"],
+      "response_types": ["code"],
+      "id_token_signed_response_alg": ["RS256", "ES256"]
+    }
+  },
+  "keyTag": "0.1367222649959264",
+  "format": "vc+sd-jwt",
+  "credential": "",
+  "parsedCredential": {
+    "place_of_birth": {
+      "mandatory": true,
+      "value": {
+        "country": "IT",
+        "locality": "Rome"
+      },
+      "name": {
+        "it-IT": "Luogo di Nascita",
+        "en-US": "Place of Birth"
+      }
+    },
+    "institution_number_team": {
+      "mandatory": true,
+      "value": "500001",
+      "name": {
+        "it-IT": "Numero identificativo dell'istituzione (TEAM)",
+        "en-US": "Institution Number (TEAM)"
+      }
+    },
+    "birthdate": {
+      "mandatory": true,
+      "value": "1991-01-06",
+      "name": {
+        "it-IT": "Data di Nascita",
+        "en-US": "Date of Birth"
+      }
+    },
+    "province": {
+      "mandatory": true,
+      "value": "Rome",
+      "name": {
+        "it-IT": "Provincia",
+        "en-US": "Province"
+      }
+    },
+    "nation": {
+      "mandatory": true,
+      "value": "IT",
+      "name": {
+        "it-IT": "Nazione",
+        "en-US": "Nation"
+      }
+    },
+    "sex": {
+      "mandatory": true,
+      "value": "M",
+      "name": {
+        "it-IT": "Sesso",
+        "en-US": "Sex"
+      }
+    },
+    "expiry_date": {
+      "mandatory": true,
+      "value": "2025-02-22",
+      "name": {
+        "it-IT": "Data di Scadenza",
+        "en-US": "Expiry Date"
+      }
+    },
+    "document_number_team": {
+      "mandatory": true,
+      "value": "80380000000000000001",
+      "name": {
+        "it-IT": "Numero identificativo della tessera (TEAM)",
+        "en-US": "Document Number (TEAM)"
+      }
+    },
+    "given_name": {
+      "mandatory": true,
+      "value": "Casimira",
+      "name": {
+        "it-IT": "Nome",
+        "en-US": "First Name"
+      }
+    },
+    "fiscal_code": {
+      "mandatory": true,
+      "value": "TINIT-RSSMRA80A10H501A",
+      "name": {
+        "it-IT": "Codice Fiscale",
+        "en-US": "Fiscal Code"
+      }
+    },
+    "family_name": {
+      "mandatory": true,
+      "value": "Savoia",
+      "name": {
+        "it-IT": "Cognome",
+        "en-US": "Family Name"
+      }
+    }
+  },
+  "credentialConfigurationSchema": {
+    "place_of_birth": {
+      "display": [
+        {
+          "name": "Luogo di Nascita",
+          "locale": "it-IT"
+        },
+        {
+          "name": "Place of Birth",
+          "locale": "en-US"
+        }
+      ],
+      "mandatory": true
+    },
+    "institution_number_team": {
+      "display": [
+        {
+          "name": "Numero identificativo dell'istituzione (TEAM)",
+          "locale": "it-IT"
+        },
+        {
+          "name": "Institution Number (TEAM)",
+          "locale": "en-US"
+        }
+      ],
+      "mandatory": true
+    },
+    "birthdate": {
+      "display": [
+        {
+          "name": "Data di Nascita",
+          "locale": "it-IT"
+        },
+        {
+          "name": "Date of Birth",
+          "locale": "en-US"
+        }
+      ],
+      "mandatory": true
+    },
+    "province": {
+      "display": [
+        {
+          "name": "Provincia",
+          "locale": "it-IT"
+        },
+        {
+          "name": "Province",
+          "locale": "en-US"
+        }
+      ],
+      "mandatory": true
+    },
+    "nation": {
+      "display": [
+        {
+          "name": "Nazione",
+          "locale": "it-IT"
+        },
+        {
+          "name": "Nation",
+          "locale": "en-US"
+        }
+      ],
+      "mandatory": true
+    },
+    "sex": {
+      "display": [
+        {
+          "name": "Sesso",
+          "locale": "it-IT"
+        },
+        {
+          "name": "Sex",
+          "locale": "en-US"
+        }
+      ],
+      "mandatory": true
+    },
+    "expiry_date": {
+      "display": [
+        {
+          "name": "Data di Scadenza",
+          "locale": "it-IT"
+        },
+        {
+          "name": "Expiry Date",
+          "locale": "en-US"
+        }
+      ],
+      "mandatory": true
+    },
+    "document_number_team": {
+      "display": [
+        {
+          "name": "Numero identificativo della tessera (TEAM)",
+          "locale": "it-IT"
+        },
+        {
+          "name": "Document Number (TEAM)",
+          "locale": "en-US"
+        }
+      ],
+      "mandatory": true
+    },
+    "given_name": {
+      "display": [
+        {
+          "name": "Nome",
+          "locale": "it-IT"
+        },
+        {
+          "name": "First Name",
+          "locale": "en-US"
+        }
+      ],
+      "mandatory": true
+    },
+    "fiscal_code": {
+      "display": [
+        {
+          "name": "Codice Fiscale",
+          "locale": "it-IT"
+        },
+        {
+          "name": "Fiscal Code",
+          "locale": "en-US"
+        }
+      ],
+      "mandatory": true
+    },
+    "family_name": {
+      "display": [
+        {
+          "name": "Cognome",
+          "locale": "it-IT"
+        },
+        {
+          "name": "Family Name",
+          "locale": "en-US"
+        }
+      ],
+      "mandatory": true
+    }
+  },
+  "credentialType": "EuropeanHealthInsuranceCard",
+  "displayData": {
+    "incoming": false,
+    "title": "Tessera Sanitaria",
+    "icon": "healthCard",
+    "textColor": "black",
+    "firstLine": ["given_name", "family_name"],
+    "secondLine": ["fiscal_code"],
+    "order": [
+      "given_name",
+      "family_name",
+      "birthdate",
+      "place_of_birth",
+      "sex",
+      "fiscal_code",
+      "expiry_date",
+      "province",
+      "nation",
+      "institution_number_team",
+      "document_number_team",
+      "evidence"
+    ]
+  },
+  "jwt": {
+    "expiration": "2030-11-22T14:09:41Z",
+    "issuedAt": "2024-11-13T14:09:41Z"
+  }
+}

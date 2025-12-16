@@ -1,2 +1,0 @@
-**Here you can enable or disable your biometric recognition.** The biometric recognition is already disabled if not supported by this device.  
- The activation of the biometric recognition makes it possible to carry out some operations in a faster way, without using the unlock code: for example, you will be able to confirm a payment with the fingerprint, or to quickly re-access the application (if the session is still active).

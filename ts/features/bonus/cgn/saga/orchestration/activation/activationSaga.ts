@@ -1,3 +1,4 @@
+import { CommonActions } from "@react-navigation/native";
 import { SagaIterator } from "redux-saga";
 import { call } from "typed-redux-saga/macro";
 import NavigationService from "../../../../../../navigation/NavigationService";
@@ -6,13 +7,9 @@ import {
   executeWorkUnit,
   withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
-import { navigateBack } from "../../../../../../store/actions/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
-import BONUSVACANZE_ROUTES from "../../../../bonusVacanze/navigation/routes";
-import {
-  navigateToCgnActivationInformationTos,
-  navigateToCgnDetails
-} from "../../../navigation/actions";
+import { ITW_ROUTES } from "../../../../../itwallet/navigation/routes";
+import { MESSAGES_ROUTES } from "../../../../../messages/navigation/routes";
 import CGN_ROUTES from "../../../navigation/routes";
 import {
   cgnActivationBack,
@@ -20,6 +17,10 @@ import {
   cgnActivationComplete,
   cgnActivationFailure
 } from "../../../store/actions/activation";
+import {
+  navigateToCgnActivationInformationTos,
+  navigateToCgnDetails
+} from "../navigation/actions";
 
 function* cgnActivationWorkUnit() {
   return yield* call(executeWorkUnit, {
@@ -31,6 +32,11 @@ function* cgnActivationWorkUnit() {
     failure: cgnActivationFailure
   });
 }
+
+const INITIAL_SCREENS_TO_WALLET_HOME: ReadonlyArray<string> = [
+  ITW_ROUTES.ONBOARDING,
+  CGN_ROUTES.DETAILS.DETAILS
+];
 
 /**
  * This saga handles the CGN activation workflow
@@ -45,12 +51,38 @@ export function* handleCgnStartActivationSaga(): SagaIterator {
   );
 
   if (initialScreen?.name === CGN_ROUTES.ACTIVATION.CTA_START_CGN) {
-    yield* call(NavigationService.navigate, ROUTES.MESSAGES_HOME);
+    yield* call(NavigationService.navigate, ROUTES.MAIN, {
+      screen: MESSAGES_ROUTES.MESSAGES_HOME
+    });
   }
   if (result === "completed") {
-    if (initialScreen?.name === BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST) {
-      yield* call(navigateBack);
+    if (
+      initialScreen?.name &&
+      INITIAL_SCREENS_TO_WALLET_HOME.includes(initialScreen.name)
+    ) {
+      yield* call(
+        NavigationService.dispatchNavigationAction,
+        CommonActions.reset({
+          index: 0,
+          routes: [
+            {
+              name: ROUTES.MAIN,
+              params: {
+                screen: ROUTES.WALLET_HOME,
+                params: { newMethodAdded: true }
+              }
+            },
+            {
+              name: CGN_ROUTES.DETAILS.MAIN,
+              params: {
+                screen: CGN_ROUTES.DETAILS.DETAILS
+              }
+            }
+          ]
+        })
+      );
+    } else {
+      yield* call(navigateToCgnDetails);
     }
-    yield* call(navigateToCgnDetails);
   }
 }

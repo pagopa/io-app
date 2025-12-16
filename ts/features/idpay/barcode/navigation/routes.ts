@@ -1,0 +1,4 @@
+export const IdPayBarcodeRoutes = {
+  IDPAY_BARCODE_MAIN: "IDPAY_BARCODE_MAIN",
+  IDPAY_BARCODE_RESULT: "IDPAY_BARCODE_RESULT"
+} as const;

@@ -1,10 +1,11 @@
 /**
- * A saga to manage notifications
+ * A saga to manage session invalidation
  */
 import { put, select } from "typed-redux-saga/macro";
-import { sessionInvalid } from "../store/actions/authentication";
 import { isFirstRunAfterInstallSelector } from "../store/reducers/installation";
 import { ReduxSagaEffect } from "../types/utils";
+import { clearCurrentSession } from "../features/authentication/common/store/actions";
+import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 
 /**
  * This generator function removes user data from previous application
@@ -20,7 +21,8 @@ export function* previousInstallationDataDeleteSaga(): Generator<
   > = yield* select(isFirstRunAfterInstallSelector);
 
   if (isFirstRunAfterInstall) {
-    // invalidate the session
-    yield* put(sessionInvalid());
+    // remove authentication data from the storage
+    yield* put(clearCurrentSession());
   }
+  yield* put(previousInstallationDataDeleteSuccess());
 }

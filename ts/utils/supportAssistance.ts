@@ -1,11 +1,11 @@
-import ZendDesk from "io-react-native-zendesk";
+import * as ZendDesk from "@pagopa/io-react-native-zendesk";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { ToolEnum } from "../../definitions/content/AssistanceToolConfig";
 import { ZendeskCategory } from "../../definitions/content/ZendeskCategory";
-import { ZendeskConfig } from "../features/zendesk/store/reducers";
-import { getValueOrElse } from "../features/bonus/bpd/model/RemoteValue";
+import { getValueOrElse } from "../common/model/RemoteValue";
 import { zendeskEnabled } from "../config";
+import { ZendeskConfig } from "../features/zendesk/store/reducers";
 
 export type ZendeskAppConfig = {
   key: string;
@@ -51,6 +51,31 @@ export const zendeskDefaultAnonymousConfig: ZendeskAppConfig = {
   logId
 };
 
+export const getZendeskConfig = (zendeskToken: string | undefined) =>
+  pipe(
+    zendeskToken,
+    O.fromNullable,
+    O.map(
+      (zT: string): ZendeskAppConfig => ({
+        ...zendeskDefaultJwtConfig,
+        token: zT // this is actually not used by the zendesk sdk...
+        // https://github.com/pagopa/io-react-native-zendesk/blob/main/ios/RNZendeskChat.m#L180
+        // https://github.com/pagopa/io-react-native-zendesk/blob/main/index.d.ts#L75C3-L75C3
+      })
+    ),
+    O.getOrElseW(() => zendeskDefaultAnonymousConfig)
+  );
+
+export const getZendeskIdentity = (zendeskToken: string | undefined) =>
+  pipe(
+    zendeskToken,
+    O.fromNullable,
+    O.map((zT: string): JwtIdentity | AnonymousIdentity => ({
+      token: zT
+    })),
+    O.getOrElseW(() => ({}))
+  );
+
 // If is not possible to get the assistance tool remotely assume it is none.
 export const assistanceToolRemoteConfig = (aTC: ToolEnum | undefined) =>
   pipe(
@@ -81,19 +106,85 @@ export const addTicketTag = ZendDesk.addTicketTag;
 export const dismissSupport = ZendDesk.dismiss;
 export const zendeskCategoryId = "1900004702053";
 export const zendeskBlockedPaymentRptIdId = "4414297346833";
+export const zendeskPaymentOrgFiscalCode = "13442126418705";
+export const zendeskPaymentStartOrigin = "13442129971473";
+export const zendeskPaymentFailure = "13442145527057";
+export const zendeskPaymentNav = "13442200871953";
 export const zendeskDeviceAndOSId = "4414316795921";
 export const zendeskidentityProviderId = "4414310934673";
 export const zendeskCurrentAppVersionId = "4414316660369";
 export const zendeskVersionsHistoryId = "4419641151505";
-export const zendeskPaymentCategory: ZendeskCategory = {
-  value: "pagamenti_pagopa",
-  description: { "it-IT": "Pagamento pagoPA", "en-EN": "pagoPA payment" }
+export const zendeskFciId = "14874226407825";
+export const zendeskItWalletFailureCode = "31775197295633";
+export const zendeskIdPayCategoryId = "8086481365265";
+
+export const defaultZendeskPaymentCategory: ZendeskCategory = {
+  value: "io_pagamenti_pagopa",
+  description: {
+    "it-IT": "Pagamento pagoPA",
+    "en-EN": "pagoPA payment",
+    "de-DE": "pagoPA-Zahlung"
+  }
 };
+
 export const zendeskPaymentMethodCategory: ZendeskCategory = {
   value: "metodo_di_pagamento",
   description: {
     "it-IT": "Metodo di pagamento",
-    "en-EN": "Payment method"
+    "en-EN": "Payment method",
+    "de-DE": "Zahlungsmethode"
+  }
+};
+export const zendeskFCICategory: ZendeskCategory = {
+  value: "firma_con_io",
+  description: {
+    "it-IT": "Firma con IO",
+    "en-EN": "Firma con IO",
+    "de-DE": "Firma con IO"
+  }
+};
+export const zendeskItWalletCategory: ZendeskCategory = {
+  value: "it_wallet",
+  description: {
+    "it-IT": "Documenti su IO",
+    "en-EN": "Documenti su IO",
+    "de-DE": "Dokumente in IO"
+  }
+};
+
+export const defaultIdPayExpenseCategory: ZendeskCategory = {
+  value: "idpay_guidonia",
+  description: {
+    "it-IT": "Pagamento pagoPA",
+    "en-EN": "pagoPA payment",
+    "de-DE": "pagoPA-Zahlung"
+  }
+};
+
+export const defaultZendeskIDPayCategory: ZendeskCategory = {
+  value: "idpay",
+  description: {
+    "it-IT": "IDPay",
+    "en-EN": "IDPay",
+    "de-DE": "IDPay"
+  }
+};
+
+export const defaultZendeskBonusesCategory: ZendeskCategory = {
+  value: "bonus_e_iniziative",
+  description: {
+    "it-IT": "Bonus e iniziative",
+    "en-EN": "Bonuses and initiatives",
+    "de-DE": "Bonus und Initiativen"
+  }
+};
+
+export const zendeskSendCategory: ZendeskCategory = {
+  value: "io_send",
+  description: {
+    "it-IT": "SEND",
+    "en-EN": "SEND",
+    "de-DE": "SEND"
   }
 };
 
@@ -107,13 +198,10 @@ export const resetAssistanceData = () => {
 export const hasSubCategories = (zendeskCategory: ZendeskCategory): boolean =>
   (zendeskCategory.zendeskSubCategories?.subCategories ?? []).length > 0;
 // help can be shown only when remote FF is  zendesk + local FF + emailValidated
-export const canShowHelp = (
-  assistanceTool: ToolEnum,
-  isEmailValidated: boolean
-): boolean => {
+export const canShowHelp = (assistanceTool: ToolEnum): boolean => {
   switch (assistanceTool) {
     case ToolEnum.zendesk:
-      return zendeskEnabled && isEmailValidated;
+      return zendeskEnabled;
     case ToolEnum.instabug:
     case ToolEnum.web:
     case ToolEnum.none:
@@ -130,3 +218,5 @@ export const handleSendAssistanceLog = (
       appendLog(log);
   }
 };
+
+export const PAGOPA_SUPPORT_PHONE_NUMBER = "0645202323";

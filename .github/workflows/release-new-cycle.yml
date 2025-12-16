@@ -1,0 +1,260 @@
+name: Start a new release cycle on stores
+on:
+  workflow_dispatch:
+    inputs:
+      releaseLevel:
+        description: Version to bump
+        required: true
+        type: choice
+        default: minor
+        options: 
+        - major
+        - minor
+        - patch
+jobs:
+  run-static-checks:
+    uses: ./.github/workflows/staticcheck.yaml
+  bump-app-version:
+    needs: run-static-checks
+    runs-on: ubuntu-latest
+    environment: prod
+    outputs:
+      currentAppVersion: ${{ steps.github-release-creation.outputs.CURRENT_APP_VERSION }}
+    steps:
+      - id: checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
+        with:
+          fetch-depth: 0
+          ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
+      - id: setup-node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: ".node-version"
+      - id: yarn-cache
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+      - id: install-packages
+        run: yarn install --frozen-lockfile
+      - id: bump-version
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          if [[ ${{ github.event.inputs.releaseLevel }} == "major" ]]; then
+            echo "Bumping the major version"
+            yarn start-breaking-cycle
+          elif [[ ${{ github.event.inputs.releaseLevel }} == "minor" ]]; then
+            echo "Bumping the minor version"
+            yarn start-release-cycle
+          elif [[ ${{ github.event.inputs.releaseLevel }} == "patch" ]]; then
+            echo "Bumping the patch version"
+            yarn start-fix-cycle
+          else
+            echo "Unknown release level: ${{ github.event.inputs.releaseLevel }}"
+            exit 1
+          fi
+      - id: push-tags
+        run: |
+          git push --no-verify --follow-tags origin HEAD:${GITHUB_REF#refs/heads/}
+      - id: github-release-creation
+        run: |
+          APP_VERSION=$(node -p -e "require('./package.json').version")
+          echo "CURRENT_APP_VERSION=$APP_VERSION" >> $GITHUB_OUTPUT
+          gh release create $APP_VERSION --latest --generate-notes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  release-android:
+    needs: bump-app-version
+    environment: prod
+    runs-on: ubuntu-latest
+    steps:
+      - id: checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
+        with:
+          fetch-depth: 0
+          ref: ${{ needs.bump-app-version.outputs.currentAppVersion }}
+      - id: setup-node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: ".node-version"
+      - id: yarn-cache
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+      - id: install-packages
+        run: yarn install --frozen-lockfile
+      - id: download-locales
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          name: locales
+          path: locales/
+      - id: download-api-client
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          name: api-client
+          path: definitions/
+      - id: setup-jdk-17
+        uses: actions/setup-java@5ffc13f4174014e2d4d4572b3d74c3fa61aeb2c2 #v3.11.0
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+      - id: setup-android-sdk
+        uses: android-actions/setup-android@00854ea68c109d98c75d956347303bf7c45b0277 #v3.2.1
+      - id: setup-ruby
+        uses: ruby/setup-ruby@a4effe49ee8ee5b8b5091268c473a4628afb5651 #v1.245.0
+        with:
+          bundler-cache: true
+      - id: build-release-android
+        run: |
+          ./scripts/android-release.sh ./android/app
+          cd android && bundle exec fastlane alpha
+        shell: bash
+        env:
+          RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
+          ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE: ${{secrets.ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE}}
+          ENCODED_IOAPP_JSON_KEY_FILE: ${{secrets.ENCODED_IOAPP_JSON_KEY_FILE}}
+          ENCODED_IO_APP_RELEASE_KEYSTORE: ${{secrets.ENCODED_IO_APP_RELEASE_KEYSTORE}}
+          ENCODED_IO_APP_SENTRY_PROPERTIES: ${{secrets.ENCODED_IO_APP_SENTRY_PROPERTIES}}
+          IO_APP_RELEASE_STORE_FILE : ${{secrets.IO_APP_RELEASE_STORE_FILE}}
+          IO_APP_RELEASE_STORE_PASSWORD: ${{secrets.IO_APP_RELEASE_STORE_PASSWORD}}
+          IO_APP_RELEASE_KEY_ALIAS: ${{secrets.IO_APP_RELEASE_KEY_ALIAS}}
+          IO_APP_RELEASE_KEY_PASSWORD: ${{secrets.IO_APP_RELEASE_KEY_PASSWORD}}
+      - id: download-universal-apk-from-store
+        # We don't want to fail whole job if the universal APK is not downloaded from the play store
+        continue-on-error: true
+        run: |
+          ./scripts/android-release.sh ./android/app          
+          cd android
+          VERSION_CODE=$(sed -n 's/.*versionCode \(.*\)/\1/p' "app/build.gradle")
+          echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
+          bundle exec fastlane download_apk
+        env:
+          RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
+          ENCODED_IOAPP_JSON_KEY_FILE: ${{secrets.ENCODED_IOAPP_JSON_KEY_FILE}}          
+          VERSION_CODE: ${{ env.VERSION_CODE }}
+      - id: upload-universal-apk          
+        # We don't want to fail whole job if the universal APK upload step fails
+        continue-on-error: true
+        uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
+        with:
+          name: io-app-universal.apk
+          path: android/io-app-universal.apk
+      - id: upload-aab
+        # We don't want to fail whole job if the AAB upload step fails
+        continue-on-error: true
+        uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
+        with:
+          name: app-release.aab
+          path: android/app/build/outputs/bundle/productionRelease/app-production-release.aab
+      - id: upload-android-assets-release
+        continue-on-error: true
+        run: |
+          APP_VERSION=$(node -p -e "require('./package.json').version")
+          gh release upload $APP_VERSION android/app/build/outputs/bundle/productionRelease/app-production-release.aab#android-app-release.aab android/io-app-universal.apk#io-app-universal.apk
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  release-ios:
+    needs: bump-app-version
+    environment: prod
+    runs-on: macos-15-xlarge
+    steps:
+      - id: set-xcode-version
+        run: sudo xcode-select -s '/Applications/Xcode_16.4.0.app/Contents/Developer'
+        shell: bash
+      - id: checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
+        with:
+          fetch-depth: 0
+          ref: ${{ needs.bump-app-version.outputs.currentAppVersion }}
+      - id: setup-node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: ".node-version"
+      - id: yarn-cache
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+      - id: install-packages
+        run: yarn install --frozen-lockfile
+      - id: download-locales
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          name: locales
+          path: locales/
+      - id: download-api-client
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          name: api-client
+          path: definitions/
+      - id: setup-ruby
+        uses: ruby/setup-ruby@a4effe49ee8ee5b8b5091268c473a4628afb5651 #v1.245.0
+        with:
+          bundler-cache: true
+      - id: prepare-ios-build
+        run: ./scripts/ios-release-build.sh
+        env:
+          APP_STORE_API_KEY_ID: ${{secrets.APP_STORE_API_KEY_ID}}
+          APP_STORE_API_PRIVATE_KEY: ${{secrets.APP_STORE_API_PRIVATE_KEY}}
+          ENCODED_IO_APP_SENTRY_PROPERTIES: ${{secrets.ENCODED_IO_APP_SENTRY_PROPERTIES}}
+      - id: add-ssh-deploy-key
+        run: |
+          echo -e "Host github.com
+            AddKeysToAgent yes
+            IdentityFile ~/.ssh/id_ed25519" > ~/.ssh/config
+          echo -e "$SSH_DEPLOY_KEY" > ~/.ssh/id_ed25519
+          chmod 400 ~/.ssh/id_ed25519
+          ssh-add ~/.ssh/id_ed25519
+        env:
+          SSH_DEPLOY_KEY: ${{secrets.SSH_CERTS_DEPLOY_KEY}}
+      - id: build-upload-app-store
+        name: Build & submit to App store
+        run: |
+          cd ios
+          bundle exec fastlane beta_circleci_testflight
+        env:
+          LC_ALL: en_US.UTF-8
+          LANG: en_US.UTF-8
+          RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
+          APP_STORE_API_KEY_ID: ${{secrets.APP_STORE_API_KEY_ID}}
+          APP_STORE_API_PRIVATE_KEY: ${{secrets.APP_STORE_API_PRIVATE_KEY}}
+          APP_STORE_API_KEY_ISSUER_ID: ${{secrets.APP_STORE_API_KEY_ISSUER_ID}}
+          ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD: ${{secrets.ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD}}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      - id: upload-dsym-files
+        # Sometimes the build-upload-app-store step fails for timeout,
+        # in this case we want to upload the dSYM files anyway
+        if: ${{ always() }} 
+        # We don't want to fail whole job if the dSYM upload step fails
+        continue-on-error: true 
+        uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8 # v4.0.3
+        with:
+          name: IO.app.dSYM.zip
+          path: ios/IO.app.dSYM.zip
+      - id: upload-ipa
+        # We don't want to fail whole job if the IPA upload step fails
+        continue-on-error: true
+        uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
+        with:
+          name: IO.ipa
+          path: ios/IO.ipa
+      - id: upload-ipa-release
+        continue-on-error: true
+        run: |
+          APP_VERSION=$(node -p -e "require('./package.json').version")
+          gh release upload $APP_VERSION ios/IO.ipa#IO-iOS.ipa
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

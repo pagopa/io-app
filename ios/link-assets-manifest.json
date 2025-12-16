@@ -2,88 +2,120 @@
   "migIndex": 1,
   "data": [
     {
-      "path": "assets/fonts/TitilliumWeb/TitilliumWeb-Black.ttf",
-      "sha1": "921818b27376916a4b5c965a185a085e8cfb290b"
+      "path": "assets/fonts/TitilliumSansPro/TitilliumSansPro-Black.otf",
+      "sha1": "becf8bd5053f5529785c9d1d975f2d6f54446d47"
     },
     {
-      "path": "assets/fonts/TitilliumWeb/TitilliumWeb-Bold.ttf",
-      "sha1": "3bc9a271126cdbaac7cc6b1ba1337be0b85ed3e7"
+      "path": "assets/fonts/TitilliumSansPro/TitilliumSansPro-BlackItalic.otf",
+      "sha1": "629d0a177a09ff5a0407a1933e1dc7da2596e932"
     },
     {
-      "path": "assets/fonts/TitilliumWeb/TitilliumWeb-BoldItalic.ttf",
-      "sha1": "ecb7c2de90d29ec3d4498ccffd679d5b7a98f953"
+      "path": "assets/fonts/TitilliumSansPro/TitilliumSansPro-Bold.otf",
+      "sha1": "5348d5fdb96da25b0b444b6cf433100e17b2c944"
     },
     {
-      "path": "assets/fonts/TitilliumWeb/TitilliumWeb-ExtraLight.ttf",
-      "sha1": "2e8b93d715296e8af8cf40f29bbd2b063d5f8452"
+      "path": "assets/fonts/TitilliumSansPro/TitilliumSansPro-BoldItalic.otf",
+      "sha1": "170e2ddfb7c9238da7149ebc2c158f773dfb806c"
     },
     {
-      "path": "assets/fonts/TitilliumWeb/TitilliumWeb-ExtraLightItalic.ttf",
-      "sha1": "0cdb18ed1e51ef5e45b064738b68419408012c42"
+      "path": "assets/fonts/TitilliumSansPro/TitilliumSansPro-Italic.otf",
+      "sha1": "3a483a824e237fac9612a74a5bb2753cc2e27ad3"
     },
     {
-      "path": "assets/fonts/TitilliumWeb/TitilliumWeb-Italic.ttf",
-      "sha1": "534f2382ef0dfe384bedfc8788ca2c06c49c2d22"
+      "path": "assets/fonts/TitilliumSansPro/TitilliumSansPro-Light.otf",
+      "sha1": "096f9b521b0fc0e7ebe6c60890fbfe312e7e4b01"
     },
     {
-      "path": "assets/fonts/TitilliumWeb/TitilliumWeb-Light.ttf",
-      "sha1": "9886dd5e4d6c1f3c2f78c993f081538da95d477e"
+      "path": "assets/fonts/TitilliumSansPro/TitilliumSansPro-LightItalic.otf",
+      "sha1": "cb79fca7e696cc66989aa4e0fda29e36e78cf630"
     },
     {
-      "path": "assets/fonts/TitilliumWeb/TitilliumWeb-LightItalic.ttf",
-      "sha1": "be2d84e6477962a7ebe835b04d0fd0abd43ba1b6"
+      "path": "assets/fonts/TitilliumSansPro/TitilliumSansPro-Regular.otf",
+      "sha1": "0a8be559a9a9d8ce47eb6ca3de9db16f42a00580"
     },
     {
-      "path": "assets/fonts/TitilliumWeb/TitilliumWeb-Regular.ttf",
-      "sha1": "ab1daa57ce1ccf444bf82dcef734aa8b0231a872"
+      "path": "assets/fonts/TitilliumSansPro/TitilliumSansPro-Semibold.otf",
+      "sha1": "fa6cff8c0046996bc9fb124abf5799408eb3b369"
     },
     {
-      "path": "assets/fonts/TitilliumWeb/TitilliumWeb-SemiBold.ttf",
-      "sha1": "fe68c5b8eb5862de863d4969c679ac145f0eb796"
+      "path": "assets/fonts/TitilliumSansPro/TitilliumSansPro-SemiboldItalic.otf",
+      "sha1": "f7af68d514449c94b2d2f6cd249e56c9d74f5cd0"
     },
     {
-      "path": "assets/fonts/TitilliumWeb/TitilliumWeb-SemiBoldItalic.ttf",
-      "sha1": "f81d3a5f38c6bda1fb3547bf91fe0b68b54066c5"
+      "path": "assets/fonts/TitilliumSansPro/TitilliumSansPro-Thin.otf",
+      "sha1": "dd3f889e6ca51de7e2006418b0125c02421fe574"
     },
     {
-      "path": "assets/fonts/io-icon-font/.DS_Store",
-      "sha1": "e04404d4d5745fc9f18dd5095422229022964536"
+      "path": "assets/fonts/TitilliumSansPro/TitilliumSansPro-ThinItalic.otf",
+      "sha1": "6bb6bf0c5d7a7f50606cc276cc4ef1787f52a928"
     },
     {
-      "path": "assets/fonts/io-icon-font/io-icon-font.ttf",
-      "sha1": "89f1dc6b2cf7006f20483dde41c99a8f66df1fbe"
+      "path": "assets/fonts/Titillio/Titillio-Black.otf",
+      "sha1": "ab71d06a0c7cbac0f069ad37758de4ffb6105b75"
     },
     {
-      "path": "assets/fonts/Ionicons/Ionicons.ttf",
-      "sha1": "991bb7fac9709cd58da37901770efd4703c542ed"
+      "path": "assets/fonts/Titillio/Titillio-BlackItalic.otf",
+      "sha1": "984c6762c6a4007dbaa4191450701dfe4b3c32e2"
     },
     {
-      "path": "assets/fonts/RobotoMono/LICENSE.txt",
-      "sha1": "47b573e3824cd5e02a1a3ae99e2735b49e0256e4"
+      "path": "assets/fonts/Titillio/Titillio-Bold.otf",
+      "sha1": "063279df70343ff1d64386422197b916c28fc46e"
     },
     {
-      "path": "assets/fonts/RobotoMono/RobotoMono-Bold.ttf",
-      "sha1": "fe961419f07925a6157fc9336465ffc9733559f8"
+      "path": "assets/fonts/Titillio/Titillio-BoldItalic.otf",
+      "sha1": "0d4912434cd31bb17a79de5620a9002589184aa2"
     },
     {
-      "path": "assets/fonts/RobotoMono/RobotoMono-BoldItalic.ttf",
-      "sha1": "0616f8fbbcea1445bbf6d3785dc1fecc4be0f5fc"
+      "path": "assets/fonts/Titillio/Titillio-Extrablack.otf",
+      "sha1": "91bc736eb8911eeaf7e8c6af129fc6584b6a73e2"
     },
     {
-      "path": "assets/fonts/RobotoMono/RobotoMono-Light.ttf",
-      "sha1": "497e1b333f3f42db8d8c6a00c1a815f9736a91f6"
+      "path": "assets/fonts/Titillio/Titillio-ExtrablackItalic.otf",
+      "sha1": "0949d60e776b7b776ffae8b42ed2c680d4e8e259"
     },
     {
-      "path": "assets/fonts/RobotoMono/RobotoMono-LightItalic.ttf",
-      "sha1": "7532e32aeb53d6884145355b69da58a270a2c404"
+      "path": "assets/fonts/Titillio/Titillio-Extrabold.otf",
+      "sha1": "e2157b363c0dab2a12236aec75016d666dd2f099"
     },
     {
-      "path": "assets/fonts/RobotoMono/RobotoMono-Regular.ttf",
-      "sha1": "5d9f74e520201742179c673e33e19d8633fd4b46"
+      "path": "assets/fonts/Titillio/Titillio-ExtraboldItalic.otf",
+      "sha1": "0fb6f663dad1559230d754a885c56b3ae9e7633c"
     },
     {
-      "path": "assets/fonts/RobotoMono/RobotoMono-RegularItalic.ttf",
-      "sha1": "b2863e22d4491bd1866a7ab4f1d6f52db07166a6"
+      "path": "assets/fonts/Titillio/Titillio-Light.otf",
+      "sha1": "75dff329af1d38450d73e2ffa42046c209ebeecd"
+    },
+    {
+      "path": "assets/fonts/Titillio/Titillio-LightItalic.otf",
+      "sha1": "3a896c3efe30713e424b4923f896794c02a731e4"
+    },
+    {
+      "path": "assets/fonts/Titillio/Titillio-Regular.otf",
+      "sha1": "2ef70364b63b023170e556be1c1142fd2f39c921"
+    },
+    {
+      "path": "assets/fonts/Titillio/Titillio-RegularItalic.otf",
+      "sha1": "076718292c7a43b4274b18057fe2149f24a2147c"
+    },
+    {
+      "path": "assets/fonts/Titillio/Titillio-Semibold.otf",
+      "sha1": "40ae4e6ceb0d41c48aea604d2755936d86dc704d"
+    },
+    {
+      "path": "assets/fonts/Titillio/Titillio-SemiboldItalic.otf",
+      "sha1": "6e0eb54a25d0cfc63113f2aefc9207381fa98a64"
+    },
+    {
+      "path": "assets/fonts/Titillio/Titillio-Thin.otf",
+      "sha1": "8a66b26e0f70dcb60f599726fd5ced68f18b8ae0"
+    },
+    {
+      "path": "assets/fonts/Titillio/Titillio-ThinItalic.otf",
+      "sha1": "9257e7b33a4e2b3cbba6c6a46701b886b9520f3c"
+    },
+    {
+      "path": "assets/fonts/FiraCode/FiraCode-Medium.ttf",
+      "sha1": "0550c09902c501ff13cce519af884ee557b094e7"
     }
   ]
 }

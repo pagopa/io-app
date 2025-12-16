@@ -3,13 +3,13 @@
 exports[`Test DocumentsNavigationBar component should render a DocumentsNavigationBar Component with props correctly 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "borderBottomWidth": 0,
         "elevation": 8,
         "position": "relative",
-        "shadowColor": "#000000",
-        "shadowOffset": Object {
+        "shadowColor": "#0E0F13",
+        "shadowOffset": {
           "height": 2,
           "width": 0,
         },
@@ -17,248 +17,311 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         "shadowRadius": 3,
         "zIndex": 999,
       },
-      Object {
+      {
         "alignItems": "center",
-        "backgroundColor": "#FFFFFF",
-        "borderColor": "#CCD4DC",
         "flexDirection": "row",
-        "paddingBottom": 12,
+        "paddingBottom": 14,
         "paddingTop": 12,
+      },
+      {
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#D2D6E3",
       },
     ]
   }
 >
   <View
-    accessibilityRole="button"
-    accessibilityState={
-      Object {
-        "disabled": undefined,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    forwardedRef={[Function]}
-    hitSlop={
-      Object {
-        "bottom": 4,
-        "top": 4,
-      }
-    }
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
     style={
-      Object {
-        "alignItems": "center",
-        "alignSelf": "flex-start",
-        "backgroundColor": "transparent",
-        "borderBottomWidth": null,
-        "borderColor": "#007aff",
-        "borderLeftWidth": null,
-        "borderRadius": 5,
-        "borderRightWidth": null,
-        "borderTopWidth": null,
-        "borderWidth": undefined,
-        "elevation": 0,
-        "flex": 1,
+      {
+        "display": "flex",
         "flexDirection": "row",
-        "height": 45,
-        "justifyContent": "space-between",
-        "opacity": 1,
-        "paddingBottom": 6,
-        "paddingTop": 6,
-        "shadowColor": null,
-        "shadowOffset": null,
-        "shadowOpacity": null,
-        "shadowRadius": null,
+        "gap": 8,
       }
     }
-    testID="DocumentsNavigationBarLeftButtonTestID"
   >
-    <Text
-      accessibilityElementsHidden={true}
-      accessibilityLabel=""
-      accessible={false}
-      allowFontScaling={false}
-      importantForAccessibility="no-hide-descendants"
-      style={
-        Array [
-          Object {
-            "color": "#0073E6",
-            "fontSize": 12,
-          },
-          Array [
-            Object {},
-            Object {
-              "color": "#0073E6",
+    <View
+      accessibilityLabel="previous"
+      accessibilityRole="button"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": false,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      hitSlop={8}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="DocumentsNavigationBarLeftButtonTestID"
+    >
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "justifyContent": "center",
             },
-            Object {},
-          ],
-          Object {
-            "fontFamily": "io-icon-font",
+            {
+              "height": 24,
+              "width": 24,
+            },
+            false,
+          ]
+        }
+      >
+        <RNSVGSvgView
+          accessibilityElementsHidden={true}
+          accessibilityLabel=""
+          accessible={false}
+          align="xMidYMid"
+          animatedProps={
+            {
+              "color": undefined,
+            }
+          }
+          bbHeight={36}
+          bbWidth={36}
+          color="#0B3EE3"
+          focusable={false}
+          height={36}
+          importantForAccessibility="no-hide-descendants"
+          meetOrSlice={0}
+          minX={0}
+          minY={0}
+          style={
+            [
+              {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              {
+                "flex": 0,
+                "height": 36,
+                "width": 36,
+              },
+            ]
+          }
+          vbHeight={24}
+          vbWidth={24}
+          width={36}
+        >
+          <RNSVGGroup
+            fill={
+              {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+          >
+            <RNSVGPath
+              clipRule={0}
+              d="M15.7071 5.29289c-.3905-.39052-1.0237-.39052-1.4142 0L8.29289 11.2929c-.39052.3905-.39052 1.0237 0 1.4142l6.00001 6c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L10.4142 12l5.2929-5.29289c.3905-.39053.3905-1.02369 0-1.41422Z"
+              fill={
+                {
+                  "type": 2,
+                }
+              }
+              fillRule={0}
+              propList={
+                [
+                  "fill",
+                  "fillRule",
+                ]
+              }
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+    </View>
+    <Text
+      allowFontScaling={true}
+      dynamicTypeRamp="headline"
+      maxFontSizeMultiplier={1.5}
+      style={
+        [
+          {},
+          {
+            "color": "#0E0F13",
+            "fontFamily": "Titillio",
+            "fontSize": 16,
             "fontStyle": "normal",
-            "fontWeight": "normal",
+            "fontWeight": "600",
+            "lineHeight": 24,
           },
-          Object {},
         ]
       }
     >
-      v
+      Documento 1 di 2
     </Text>
-  </View>
-  <Text
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 16,
-        "lineHeight": 22,
+    <View
+      accessibilityLabel="next"
+      accessibilityRole="button"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": false,
+          "expanded": undefined,
+          "selected": undefined,
+        }
       }
-    }
-    style={
-      Array [
-        Object {
-          "fontSize": 16,
-          "lineHeight": 22,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
-          "fontStyle": "normal",
-          "fontWeight": "700",
-        },
-      ]
-    }
-    weight="Bold"
-    weightColorFactory={[Function]}
-  >
-    Documento 1 di 2
-  </Text>
-  <View
-    accessibilityRole="button"
-    accessibilityState={
-      Object {
-        "disabled": undefined,
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
       }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    forwardedRef={[Function]}
-    hitSlop={
-      Object {
-        "bottom": 4,
-        "top": 4,
-      }
-    }
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "alignSelf": "flex-start",
-        "backgroundColor": "transparent",
-        "borderBottomWidth": null,
-        "borderColor": "#007aff",
-        "borderLeftWidth": null,
-        "borderRadius": 5,
-        "borderRightWidth": null,
-        "borderTopWidth": null,
-        "borderWidth": undefined,
-        "elevation": 0,
-        "flex": 1,
-        "flexDirection": "row",
-        "height": 45,
-        "justifyContent": "space-between",
-        "opacity": 1,
-        "paddingBottom": 6,
-        "paddingTop": 6,
-        "shadowColor": null,
-        "shadowOffset": null,
-        "shadowOpacity": null,
-        "shadowRadius": null,
-      }
-    }
-    testID="DocumentsNavigationBarRightButtonTestID"
-  >
-    <Text
-      accessibilityElementsHidden={true}
-      accessibilityLabel=""
-      accessible={false}
-      allowFontScaling={false}
-      importantForAccessibility="no-hide-descendants"
-      style={
-        Array [
-          Object {
-            "color": "#0073E6",
-            "fontSize": 12,
-          },
-          Array [
-            Object {},
-            Object {
-              "color": "#0073E6",
-            },
-            Object {},
-          ],
-          Object {
-            "fontFamily": "io-icon-font",
-            "fontStyle": "normal",
-            "fontWeight": "normal",
-          },
-          Object {},
-        ]
-      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      hitSlop={8}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      testID="DocumentsNavigationBarRightButtonTestID"
     >
-      t
-    </Text>
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "justifyContent": "center",
+            },
+            {
+              "height": 24,
+              "width": 24,
+            },
+            false,
+          ]
+        }
+      >
+        <RNSVGSvgView
+          accessibilityElementsHidden={true}
+          accessibilityLabel=""
+          accessible={false}
+          align="xMidYMid"
+          animatedProps={
+            {
+              "color": undefined,
+            }
+          }
+          bbHeight={36}
+          bbWidth={36}
+          color="#0B3EE3"
+          focusable={false}
+          height={36}
+          importantForAccessibility="no-hide-descendants"
+          meetOrSlice={0}
+          minX={0}
+          minY={0}
+          style={
+            [
+              {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              {
+                "flex": 0,
+                "height": 36,
+                "width": 36,
+              },
+            ]
+          }
+          vbHeight={24}
+          vbWidth={24}
+          width={36}
+        >
+          <RNSVGGroup
+            fill={
+              {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+          >
+            <RNSVGPath
+              clipRule={0}
+              d="M8.29289 5.29289c.39053-.39052 1.02369-.39052 1.41422 0l5.99999 6.00001c.3905.3905.3905 1.0237 0 1.4142l-5.99999 6c-.39053.3905-1.02369.3905-1.41422 0-.39052-.3905-.39052-1.0237 0-1.4142L13.5858 12 8.29289 6.70711c-.39052-.39053-.39052-1.02369 0-1.41422Z"
+              fill={
+                {
+                  "type": 2,
+                }
+              }
+              fillRule={0}
+              propList={
+                [
+                  "fill",
+                  "fillRule",
+                ]
+              }
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+      </View>
+    </View>
   </View>
   <View
     style={
-      Object {
+      {
         "flex": 1,
       }
     }
   />
-  <Text
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 16,
-        "lineHeight": 22,
+  <View
+    style={
+      {
+        "paddingHorizontal": 24,
       }
     }
-    style={
-      Array [
-        Object {
-          "paddingHorizontal": 24,
-        },
-        Object {
-          "fontSize": 16,
-          "lineHeight": 22,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
-          "fontStyle": "normal",
-          "fontWeight": "700",
-        },
-      ]
-    }
-    weight="Bold"
-    weightColorFactory={[Function]}
   >
-    Pagina 1 di 2
-  </Text>
+    <Text
+      allowFontScaling={true}
+      dynamicTypeRamp="headline"
+      maxFontSizeMultiplier={1.5}
+      style={
+        [
+          {},
+          {
+            "color": "#0E0F13",
+            "fontFamily": "Titillio",
+            "fontSize": 16,
+            "fontStyle": "normal",
+            "fontWeight": "600",
+            "lineHeight": 24,
+          },
+        ]
+      }
+    >
+      Pagina 1 di 2
+    </Text>
+  </View>
 </View>
 `;

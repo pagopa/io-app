@@ -3,158 +3,290 @@
 exports[`Test SignatureFieldItem component should render a SignatureFieldItem component with props correctly 1`] = `
 <View
   style={
-    Array [
-      Object {},
-      Object {
-        "paddingBottom": 16,
-        "paddingTop": 16,
-      },
-    ]
+    {
+      "paddingBottom": 16,
+      "paddingTop": 8,
+    }
   }
 >
   <View
-    accessibilityRole="radio"
+    accessibilityLabel="Clause title 1"
+    accessibilityRole="checkbox"
     accessibilityState={
-      Object {
+      {
+        "busy": undefined,
         "checked": false,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
       }
     }
     accessible={true}
     collapsable={false}
     focusable={true}
+    onBlur={[Function]}
     onClick={[Function]}
+    onFocus={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
     onResponderTerminate={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "borderBottomColor": "#E6E9F2",
-        "borderBottomWidth": 1,
-        "flexDirection": "row",
-        "opacity": 1,
-        "paddingBottom": 14,
-      }
-    }
-    testID="SignatureFieldItemButtonTestID"
+    onTouchEnd={[Function]}
+    testID="ListItemCheckbox"
   >
     <View
+      needsOffscreenAlphaCompositing={true}
       style={
-        Array [
-          Object {},
-          Object {
-            "flexDirection": "column",
+        [
+          {
+            "marginHorizontal": -24,
+            "paddingHorizontal": 24,
+            "paddingVertical": 12,
           },
-          Object {
-            "flex": 1,
+          {
+            "backgroundColor": undefined,
+          },
+          {
+            "opacity": 1,
           },
         ]
       }
     >
-      <Text
-        color="bluegreyDark"
-        font="TitilliumWeb"
-        fontStyle={
-          Object {
-            "fontSize": 16,
-            "lineHeight": 22,
+      <View
+        style={
+          {
+            "transform": [
+              {
+                "scale": undefined,
+              },
+            ],
           }
         }
-        style={
-          Array [
-            Object {
-              "marginRight": 22,
-            },
-            Object {
-              "fontSize": 16,
-              "lineHeight": 22,
-            },
-            Object {
-              "color": "#17324D",
-              "fontFamily": "Titillium Web",
-              "fontStyle": "normal",
-              "fontWeight": "700",
-            },
-          ]
-        }
-        testID="SignatureFieldItemTitleTestID"
-        weight="Bold"
-        weightColorFactory={[Function]}
       >
-        Clause title 1
-      </Text>
-      <Text
-        accessibilityRole="link"
-        color="blue"
-        defaultColor="blue"
-        defaultWeight="SemiBold"
-        font="TitilliumWeb"
-        fontStyle={
-          Object {
-            "fontSize": 16,
-            "textDecorationLine": "underline",
+        <View
+          style={
+            {
+              "alignItems": "flex-start",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            }
           }
+        >
+          <View
+            style={
+              {
+                "columnGap": 18,
+                "flexDirection": "row",
+                "flexShrink": 1,
+              }
+            }
+          >
+            <Text
+              allowFontScaling={true}
+              dynamicTypeRamp="headline"
+              maxFontSizeMultiplier={1.5}
+              style={
+                [
+                  {},
+                  {
+                    "color": "#0E0F13",
+                    "fontFamily": "Titillio",
+                    "fontSize": 16,
+                    "fontStyle": "normal",
+                    "fontWeight": "600",
+                    "lineHeight": 24,
+                  },
+                  {
+                    "flexShrink": 1,
+                  },
+                ]
+              }
+            >
+              Clause title 1
+            </Text>
+          </View>
+          <View
+            style={
+              {
+                "width": 8,
+              }
+            }
+          />
+          <View
+            accessibilityElementsHidden={true}
+            importantForAccessibility="no-hide-descendants"
+            pointerEvents="none"
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={false}
+              collapsable={false}
+              focusable={true}
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "height": 36,
+                  "width": 36,
+                }
+              }
+              testID="AnimatedCheckboxInput"
+            >
+              <View
+                style={
+                  [
+                    {
+                      "borderCurve": "continuous",
+                      "borderWidth": 2,
+                      "left": 0,
+                      "position": "absolute",
+                      "top": 0,
+                    },
+                    {
+                      "borderRadius": 7.5,
+                      "height": 36,
+                      "width": 36,
+                    },
+                    {
+                      "borderColor": "#636B82",
+                    },
+                  ]
+                }
+              />
+              <View
+                style={
+                  [
+                    {
+                      "borderCurve": "continuous",
+                      "left": 0,
+                      "position": "absolute",
+                      "top": 0,
+                    },
+                    {
+                      "borderRadius": 7.5,
+                      "height": 36,
+                      "width": 36,
+                    },
+                    {
+                      "backgroundColor": "#0B3EE3",
+                    },
+                    {
+                      "opacity": 0,
+                      "transform": [
+                        {
+                          "scale": undefined,
+                        },
+                      ],
+                    },
+                  ]
+                }
+              />
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "paddingBottom": 8,
+        "paddingTop": 4,
+      }
+    }
+  >
+    <View
+      accessibilityRole="link"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
         }
-        onPress={[MockFunction]}
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+    >
+      <Text
+        accessibilityHint="Visualizza sul documento dove metterai la firma"
+        accessibilityRole="link"
+        allowFontScaling={true}
+        dynamicTypeRamp="body"
+        maxFontSizeMultiplier={1.5}
         style={
-          Array [
-            Object {
-              "paddingBottom": 16,
-              "paddingTop": 16,
-            },
-            Object {
-              "fontSize": 16,
+          [
+            {
               "textDecorationLine": "underline",
             },
-            Object {
-              "color": "#0073E6",
-              "fontFamily": "Titillium Web",
+            {
+              "color": "#0B3EE3",
+              "fontFamily": "Titillio",
+              "fontSize": 16,
               "fontStyle": "normal",
               "fontWeight": "600",
+              "lineHeight": 24,
             },
           ]
         }
         testID="SignatureFieldItemDetailTestID"
-        weight="SemiBold"
       >
-        See on document
+        Vedi sul documento
       </Text>
     </View>
-    <Text
-      accessibilityElementsHidden={true}
-      accessibilityLabel=""
-      accessible={false}
-      allowFontScaling={false}
-      importantForAccessibility="no-hide-descendants"
-      style={
-        Array [
-          Object {
-            "color": "#17324D",
-            "fontSize": 22,
-          },
-          Array [
-            Object {},
-            Object {
-              "color": "#17324D",
-            },
-            Object {
-              "fontSize": 22,
-            },
-          ],
-          Object {
-            "fontFamily": "io-icon-font",
-            "fontStyle": "normal",
-            "fontWeight": "normal",
-          },
-          Object {},
-        ]
-      }
-      testID="SignatureFieldItemCheckboxTestID"
-    >
-      R
-    </Text>
   </View>
 </View>
 `;

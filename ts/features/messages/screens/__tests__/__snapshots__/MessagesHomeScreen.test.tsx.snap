@@ -1,0 +1,758 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = `
+<View
+  style={
+    {
+      "flex": 1,
+    }
+  }
+>
+  <RNCSafeAreaProvider
+    onInsetsChange={[Function]}
+    style={
+      [
+        {
+          "flex": 1,
+        },
+        undefined,
+      ]
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#FFFFFF",
+            "flex": 1,
+          },
+          undefined,
+        ]
+      }
+    >
+      <RNSScreenContainer
+        onLayout={[Function]}
+        style={
+          {
+            "flex": 1,
+          }
+        }
+      >
+        <RNSScreen
+          activityState={2}
+          collapsable={false}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
+          pointerEvents="box-none"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
+          sheetCornerRadius={-1}
+          sheetElevation={24}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
+          style={
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
+          }
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "opacity": 1,
+              }
+            }
+          />
+          <View
+            accessibilityElementsHidden={false}
+            closing={false}
+            collapsable={false}
+            gestureVelocityImpact={0.3}
+            importantForAccessibility="auto"
+            onClose={[Function]}
+            onGestureBegin={[Function]}
+            onGestureCanceled={[Function]}
+            onGestureEnd={[Function]}
+            onOpen={[Function]}
+            onTransition={[Function]}
+            pointerEvents="box-none"
+            style={
+              [
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                },
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+              ]
+            }
+            transitionSpec={
+              {
+                "close": {
+                  "animation": "spring",
+                  "config": {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
+                "open": {
+                  "animation": "spring",
+                  "config": {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
+              }
+            >
+              <View
+                collapsable={false}
+                enabled={false}
+                handlerTag={1}
+                handlerType="PanGestureHandler"
+                needsOffscreenAlphaCompositing={false}
+                onGestureHandlerEvent={[Function]}
+                onGestureHandlerStateChange={[Function]}
+                style={
+                  {
+                    "flex": 1,
+                    "transform": [
+                      {
+                        "translateX": 0,
+                      },
+                      {
+                        "translateX": 0,
+                      },
+                    ],
+                  }
+                }
+              >
+                <View
+                  pointerEvents="box-none"
+                  style={
+                    [
+                      {
+                        "flex": 1,
+                        "overflow": "hidden",
+                      },
+                      [
+                        {
+                          "backgroundColor": "#FFFFFF",
+                        },
+                        undefined,
+                      ],
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      {
+                        "flex": 1,
+                        "flexDirection": "column-reverse",
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        {
+                          "flex": 1,
+                        }
+                      }
+                    >
+                      <View
+                        style={
+                          {
+                            "flex": 1,
+                          }
+                        }
+                      >
+                        <View
+                          testID="mock_toasts"
+                        >
+                          This is a mock for Toasts
+                        </View>
+                        <View
+                          testID="mock_tab_navigation_container"
+                        >
+                          This is a mock for TabNavigationContainer
+                        </View>
+                        <LEGACY_RNCViewPager
+                          layoutDirection="ltr"
+                          onMoveShouldSetResponderCapture={[Function]}
+                          onPageScroll={[Function]}
+                          onPageScrollStateChanged={[Function]}
+                          onPageSelected={[Function]}
+                          testID="mock_pager_view_container"
+                          useLegacy={true}
+                        >
+                          <View
+                            collapsable={false}
+                            style={
+                              {
+                                "bottom": 0,
+                                "left": 0,
+                                "position": "absolute",
+                                "right": 0,
+                                "top": 0,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                [
+                                  undefined,
+                                  {
+                                    "bottom": 0,
+                                    "left": 0,
+                                    "position": "absolute",
+                                    "right": 0,
+                                    "top": 0,
+                                  },
+                                ]
+                              }
+                            >
+                              Mock Inbox
+                            </View>
+                          </View>
+                          <View
+                            collapsable={false}
+                            style={
+                              {
+                                "bottom": 0,
+                                "left": 0,
+                                "position": "absolute",
+                                "right": 0,
+                                "top": 0,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                [
+                                  undefined,
+                                  {
+                                    "bottom": 0,
+                                    "left": 0,
+                                    "position": "absolute",
+                                    "right": 0,
+                                    "top": 0,
+                                  },
+                                ]
+                              }
+                            >
+                              Mock Archive
+                            </View>
+                          </View>
+                        </LEGACY_RNCViewPager>
+                        <View
+                          testID="mock_preconditions"
+                        >
+                          This is a mock for Preconditions
+                        </View>
+                        <View
+                          testID="mock_security_suggestions"
+                        >
+                          This is a mock for Security Suggestions
+                        </View>
+                      </View>
+                    </View>
+                    <View
+                      collapsable={false}
+                      pointerEvents="box-none"
+                    >
+                      <View
+                        accessibilityElementsHidden={false}
+                        importantForAccessibility="auto"
+                        onLayout={[Function]}
+                        pointerEvents="box-none"
+                        style={null}
+                      >
+                        <View
+                          accessibilityRole="header"
+                          style={
+                            [
+                              {
+                                "backgroundColor": "#FFFFFF",
+                              },
+                              {
+                                "paddingTop": 0,
+                              },
+                            ]
+                          }
+                        >
+                          <View
+                            style={
+                              {
+                                "alignItems": "center",
+                                "flexDirection": "row",
+                                "height": 56,
+                                "justifyContent": "space-between",
+                                "paddingHorizontal": 24,
+                                "width": "100%",
+                              }
+                            }
+                          >
+                            <View
+                              accessibilityRole="header"
+                              accessible={true}
+                            >
+                              <Text
+                                allowFontScaling={true}
+                                dynamicTypeRamp="title1"
+                                maxFontSizeMultiplier={1.25}
+                                numberOfLines={1}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#0E0F13",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 26,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "700",
+                                      "lineHeight": 34,
+                                    },
+                                    {
+                                      "flexShrink": 1,
+                                    },
+                                  ]
+                                }
+                              >
+                                Messaggi
+                              </Text>
+                            </View>
+                            <View
+                              style={
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "flexShrink": 0,
+                                  "gap": 16,
+                                }
+                              }
+                            >
+                              <View
+                                accessibilityLabel="Cerca"
+                                accessibilityRole="button"
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": false,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
+                                }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                hitSlop={8}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
+                              >
+                                <View
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                      false,
+                                    ]
+                                  }
+                                >
+                                  <RNSVGSvgView
+                                    accessibilityElementsHidden={true}
+                                    accessibilityLabel=""
+                                    accessible={false}
+                                    align="xMidYMid"
+                                    animatedProps={
+                                      {
+                                        "color": undefined,
+                                      }
+                                    }
+                                    bbHeight={36}
+                                    bbWidth={36}
+                                    color="#0B3EE3"
+                                    focusable={false}
+                                    height={36}
+                                    importantForAccessibility="no-hide-descendants"
+                                    meetOrSlice={0}
+                                    minX={0}
+                                    minY={0}
+                                    style={
+                                      [
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderWidth": 0,
+                                        },
+                                        {
+                                          "flex": 0,
+                                          "height": 36,
+                                          "width": 36,
+                                        },
+                                      ]
+                                    }
+                                    vbHeight={24}
+                                    vbWidth={24}
+                                    width={36}
+                                  >
+                                    <RNSVGGroup
+                                      fill={
+                                        {
+                                          "payload": 4278190080,
+                                          "type": 0,
+                                        }
+                                      }
+                                    >
+                                      <RNSVGPath
+                                        clipRule={0}
+                                        d="M2 11c0-4.97056 4.02944-9 9-9 4.9706 0 9 4.02944 9 9 0 4.9706-4.0294 9-9 9-4.97056 0-9-4.0294-9-9Zm9-11C4.92487 0 0 4.92487 0 11c0 6.0751 4.92487 11 11 11 2.6775 0 5.1316-.9566 7.0391-2.5468l4.2539 4.2539c.3906.3906 1.0237.3906 1.4143 0 .3905-.3905.3905-1.0237 0-1.4142l-4.254-4.2539C21.0434 16.1315 22 13.6775 22 11c0-6.07513-4.9249-11-11-11Z"
+                                        fill={
+                                          {
+                                            "type": 2,
+                                          }
+                                        }
+                                        fillRule={0}
+                                        propList={
+                                          [
+                                            "fill",
+                                            "fillRule",
+                                          ]
+                                        }
+                                      />
+                                    </RNSVGGroup>
+                                  </RNSVGSvgView>
+                                </View>
+                              </View>
+                              <View
+                                accessibilityLabel="Impostazioni"
+                                accessibilityRole="button"
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": false,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
+                                }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                hitSlop={8}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
+                              >
+                                <View
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                      false,
+                                    ]
+                                  }
+                                >
+                                  <RNSVGSvgView
+                                    accessibilityElementsHidden={true}
+                                    accessibilityLabel=""
+                                    accessible={false}
+                                    align="xMidYMid"
+                                    animatedProps={
+                                      {
+                                        "color": undefined,
+                                      }
+                                    }
+                                    bbHeight={36}
+                                    bbWidth={36}
+                                    color="#0B3EE3"
+                                    focusable={false}
+                                    height={36}
+                                    importantForAccessibility="no-hide-descendants"
+                                    meetOrSlice={0}
+                                    minX={0}
+                                    minY={0}
+                                    style={
+                                      [
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderWidth": 0,
+                                        },
+                                        {
+                                          "flex": 0,
+                                          "height": 36,
+                                          "width": 36,
+                                        },
+                                      ]
+                                    }
+                                    vbHeight={24}
+                                    vbWidth={24}
+                                    width={36}
+                                  >
+                                    <RNSVGGroup
+                                      fill={
+                                        {
+                                          "payload": 4278190080,
+                                          "type": 0,
+                                        }
+                                      }
+                                    >
+                                      <RNSVGPath
+                                        clipRule={0}
+                                        d="m21.4821 15.175.0019.0047c-.4302 1.2836-1.1141 2.452-1.9932 3.4452l-.0055.0009c-.046.0066-.131.0032-.2359-.0313-1.042-.3427-2.224-.2575-3.2508.3354-1.0272.593-1.6921 1.5744-1.916 2.6486-.0226.1083-.0623.1838-.0909.2202l-.0032.004c-.6419.1294-1.3069.1975-1.9888.1975-.6827 0-1.3484-.0682-1.9911-.198l-.0032-.0039c-.0286-.0365-.06825-.1119-.09083-.2201-.22404-1.0741-.88889-2.0554-1.91596-2.6483-1.0263-.5926-2.20756-.678-3.24919-.3359-.10486.0344-.18988.0378-.23584.0312l-.00546-.0009c-.87903-.9933-1.56294-2.1618-1.99294-3.4455l.00181-.0047c.01726-.043.06273-.1149.14513-.1885.81895-.7311 1.33691-1.798 1.33691-2.9846.00001-1.1868-.51811-2.25392-1.33727-2.98502-.0824-.07355-.12788-.14547-.14514-.18845l-.00182-.0047c.42973-1.28339 1.11323-2.45168 1.99178-3.44493l.00547-.00086c.04601-.00659.13111-.00321.23602.03129 1.04196.34264 2.2238.25737 3.25054-.33542 1.02775-.59337 1.6928-1.57555 1.91641-2.65045.02253-.10832.06218-.18381.09088-.22032l.0032-.00395c.6425-.12971 1.3081-.19795 1.9906-.19795.6817 0 1.3466.06808 1.9884.19748l.0031.00395c.0287.03653.0684.11207.0909.22042.2236 1.07505.8887 2.05738 1.9165 2.65082 1.0273.59309 2.2098.67815 3.2521.3349.105-.03455.1901-.03797.2361-.03138l.0055.00086c.8786.99315 1.5622 2.16132 1.992 3.44463l-.0018.0047c-.0173.04302-.0628.11497-.1453.18853-.8197.73112-1.3382 1.79855-1.3382 2.98585 0 1.187.5184 2.2543 1.3379 2.9855.0824.0735.128.1455.1452.1885Zm-.5185 4.8035c1.0737-1.2056 1.9085-2.6303 2.4288-4.1996.3285-.9908-.2322-1.846-.7241-2.2848-.4121-.3677-.6693-.8998-.6693-1.4931 0-.5935.2573-1.1256.6695-1.4933.4919-.4388 1.0527-1.29392.7243-2.28479-.5199-1.56892-1.3542-2.99331-2.4274-4.19884-.6936-.77909-1.7138-.72221-2.3402-.51591-.5243.17263-1.1131.12916-1.6266-.16731-.5138-.29663-.8459-.78522-.9583-1.32591-.1344-.646-.5956-1.5603-1.6195-1.77016-.7828-.16044-1.5927-.24454-2.4211-.24454-.8294 0-1.6401.0843-2.4238.24511C8.55239.45538 8.09129 1.3693 7.95694 2.01512c-.11247.54062-.44459 1.02913-.95833 1.32574-.51324.29632-1.10172.33989-1.62576.16756-.6264-.20599-1.64621-.26249-2.33947.51639C1.96026 5.23046 1.12602 6.65497.60624 8.22399c-.32813.99048.23214 1.84531.72378 2.28411.41199.3677.66901.8996.66901 1.4929 0 .5931-.25694 1.125-.66883 1.4927-.4916.4388-1.05176 1.2937-.72351 2.2842.52011 1.5693 1.35484 2.9941 2.42853 4.1999.69302.7782 1.71212.722 2.3383.5163.52388-.172 1.11207-.1284 1.62509.1678.51341.2964.84542.7845.9581 1.3247.13464.6454.59583 1.5585 1.61869 1.7684.7838.1609 1.5947.2452 2.4243.2452.8286 0 1.6386-.0841 2.4216-.2446 1.0232-.2098 1.4846-1.1232 1.6192-1.7688.1126-.5403.4447-1.0284.9581-1.3249.5133-.2963 1.1018-.3399 1.6259-.1675.6262.206 1.6457.2625 2.3391-.5159ZM8.99997 12c0-1.6569 1.34313-3.00005 3.00003-3.00005 1.6568 0 3 1.34315 3 3.00005 0 1.6568-1.3432 3-3 3-1.6569 0-3.00003-1.3432-3.00003-3ZM12 6.99995c-2.76145 0-5.00003 2.23858-5.00003 5.00005 0 2.7614 2.23858 5 5.00003 5 2.7614 0 5-2.2386 5-5 0-2.76147-2.2386-5.00005-5-5.00005Z"
+                                        fill={
+                                          {
+                                            "type": 2,
+                                          }
+                                        }
+                                        fillRule={0}
+                                        propList={
+                                          [
+                                            "fill",
+                                            "fillRule",
+                                          ]
+                                        }
+                                      />
+                                    </RNSVGGroup>
+                                  </RNSVGSvgView>
+                                </View>
+                              </View>
+                              <View
+                                accessibilityLabel="Aiuto contestuale"
+                                accessibilityRole="button"
+                                accessibilityState={
+                                  {
+                                    "busy": undefined,
+                                    "checked": undefined,
+                                    "disabled": false,
+                                    "expanded": undefined,
+                                    "selected": undefined,
+                                  }
+                                }
+                                accessibilityValue={
+                                  {
+                                    "max": undefined,
+                                    "min": undefined,
+                                    "now": undefined,
+                                    "text": undefined,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                hitSlop={8}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
+                              >
+                                <View
+                                  style={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                      false,
+                                    ]
+                                  }
+                                >
+                                  <RNSVGSvgView
+                                    accessibilityElementsHidden={true}
+                                    accessibilityLabel=""
+                                    accessible={false}
+                                    align="xMidYMid"
+                                    animatedProps={
+                                      {
+                                        "color": undefined,
+                                      }
+                                    }
+                                    bbHeight={36}
+                                    bbWidth={36}
+                                    color="#0B3EE3"
+                                    focusable={false}
+                                    height={36}
+                                    importantForAccessibility="no-hide-descendants"
+                                    meetOrSlice={0}
+                                    minX={0}
+                                    minY={0}
+                                    style={
+                                      [
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderWidth": 0,
+                                        },
+                                        {
+                                          "flex": 0,
+                                          "height": 36,
+                                          "width": 36,
+                                        },
+                                      ]
+                                    }
+                                    vbHeight={24}
+                                    vbWidth={24}
+                                    width={36}
+                                  >
+                                    <RNSVGGroup
+                                      fill={
+                                        {
+                                          "payload": 4278190080,
+                                          "type": 0,
+                                        }
+                                      }
+                                    >
+                                      <RNSVGPath
+                                        clipRule={0}
+                                        d="M6 8c0-3.31371 2.68629-6 6-6 3.3137 0 6 2.68629 6 6 0 2.7248-1.8172 5.0278-4.3079 5.7583C12.3754 14.1446 11 15.2973 11 17v1c0 .5523.4477 1 1 1s1-.4477 1-1v-1c0-.5064.452-1.087 1.255-1.3225C17.5744 14.7039 20 11.6365 20 8c0-4.41828-3.5817-8-8-8-4.41828 0-8 3.58172-8 8 0 .55228.44772 1 1 1s1-.44772 1-1Zm7.5 14.5c0 .8284-.6716 1.5-1.5 1.5s-1.5-.6716-1.5-1.5.6716-1.5 1.5-1.5 1.5.6716 1.5 1.5Z"
+                                        fill={
+                                          {
+                                            "type": 2,
+                                          }
+                                        }
+                                        fillRule={0}
+                                        propList={
+                                          [
+                                            "fill",
+                                            "fillRule",
+                                          ]
+                                        }
+                                      />
+                                    </RNSVGGroup>
+                                  </RNSVGSvgView>
+                                </View>
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </RNSScreen>
+      </RNSScreenContainer>
+      <View
+        collapsable={false}
+        pointerEvents="box-none"
+        style={
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
+        }
+      />
+    </View>
+  </RNCSafeAreaProvider>
+</View>
+`;

@@ -1,14 +1,47 @@
-import { ActionType, createStandardAction } from "typesafe-actions";
-import { pnActivationUpsert } from "./service";
+import {
+  ActionType,
+  createAction,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../../pushNotifications/analytics";
 
-/**
- * Set whether to show a warning message when opening a PN message.
- * The preference will be persisted.
- */
-export const pnPreferencesSetWarningForMessageOpening = createStandardAction(
-  "PN_PREFERENCES_SET_WARNING_FOR_MESSAGE_OPENING"
-)<boolean>();
+type TogglePnActivationRequestPaylad = {
+  value: boolean;
+  onSuccess?: () => void;
+  onFailure?: (isRateLimitError?: boolean) => void;
+};
+
+type PNPaymentStatusTracking = {
+  openingSource: SendOpeningSource;
+  userType: SendUserType;
+  messageId: string;
+};
+type CancelPnPaymentStatusTracking = {
+  messageId: string;
+};
+
+export const pnActivationUpsert = createAsyncAction(
+  "PN_ACTIVATION_UPSERT_REQUEST",
+  "PN_ACTIVATION_UPSERT_SUCCESS",
+  "PN_ACTIVATION_UPSERT_FAILURE"
+)<TogglePnActivationRequestPaylad, void, void>();
+
+export const startPNPaymentStatusTracking = createStandardAction(
+  "PN_START_TRACKING_PAYMENT_STATUS"
+)<PNPaymentStatusTracking>();
+export const cancelPNPaymentStatusTracking = createStandardAction(
+  "PN_CANCEL_PAYMENT_STATUS_TRACKING"
+)<CancelPnPaymentStatusTracking>();
+export const dismissPnActivationReminderBanner = createAction(
+  "DISMISS_PN_ACTIVATION_REMINDER_BANNER"
+);
 
 export type PnActions =
-  | ActionType<typeof pnPreferencesSetWarningForMessageOpening>
-  | ActionType<typeof pnActivationUpsert>;
+  | ActionType<typeof pnActivationUpsert>
+  | ActionType<typeof startPNPaymentStatusTracking>
+  | ActionType<typeof cancelPNPaymentStatusTracking>
+  | ActionType<typeof dismissPnActivationReminderBanner>;

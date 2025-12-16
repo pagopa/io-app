@@ -1,7 +1,9 @@
 # see https://help.github.com/en/articles/about-code-owners#example-of-a-codeowners-file
 
-* @pagopa/io-app
+* @pagopa/io-app @ChrisMattew @gispada @freddi301
 
-/locales/ @pagopa/io-app @thisisjp
-/ios/ItaliaApp/it.lproj/ @pagopa/io-app @thisisjp
-/ios/ItaliaApp/en.lproj/ @pagopa/io-app @thisisjp
+/locales/ @pagopa/io-app @thisisjp @ChrisMattew @gispada @freddi301
+/ios/IO/it.lproj/ @pagopa/io-app @thisisjp @ChrisMattew @gispada @freddi301
+/ios/IO/en.lproj/ @pagopa/io-app @thisisjp @ChrisMattew @gispada @freddi301
+/ts/features/design-system @pagopa/io-app @dmnplb @ChrisMattew @gispada @freddi301
+/ts/components/ui @pagopa/io-app @dmnplb @ChrisMattew @gispada @freddi301

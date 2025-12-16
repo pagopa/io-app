@@ -1,11 +1,25 @@
-import I18n from "react-native-i18n";
+import i18next, { InitOptions } from "i18next";
+import { initReactI18next } from "react-i18next";
 
-// If the following import is missing, generate it by running:
-// npm run generate:locales
-import * as locales from "../locales/locales";
-import { Locales } from "../locales/locales";
-import { PreferredLanguageEnum } from "../definitions/backend/PreferredLanguage";
 import { BackendStatusMessage } from "../definitions/content/BackendStatusMessage";
+import { Locales } from "../locales/locales";
+
+import it from "../locales/it/index.json";
+import en from "../locales/en/index.json";
+import de from "../locales/de/index.json";
+import { PreferredLanguageEnum } from "../definitions/session_manager/PreferredLanguage";
+
+const resources = {
+  it: {
+    index: it
+  },
+  en: {
+    index: en
+  },
+  de: {
+    index: de
+  }
+};
 
 export type LocalizedMessageKeys = keyof BackendStatusMessage;
 type FallBackLocale = {
@@ -19,7 +33,8 @@ export const localeToLocalizedMessageKey = new Map<
   LocalizedMessageKeys
 >([
   ["it", "it-IT"],
-  ["en", "en-EN"]
+  ["en", "en-EN"],
+  ["de", "de-DE"]
 ]);
 
 export const localeToPreferredLanguageMapping = new Map<
@@ -38,63 +53,22 @@ export const localeFallback: FallBackLocale = {
   locale: "it",
   localeEnum: PreferredLanguageEnum.it_IT
 };
+export const availableTranslations: ReadonlyArray<Locales> = Object.keys(
+  resources
+).map(k => k as Locales);
 
-// eslint-disable-next-line
-I18n.fallbacks = true;
-// Should the app fallback to Italian if user locale (o the current translation key) doesn't exists
-// eslint-disable-next-line
-I18n.defaultLocale = localeFallback.locale;
+export const initI18n = async () =>
+  await i18next.use(initReactI18next).init({
+    lng: "it",
+    fallbackLng: "it",
+    defaultNS: "index",
+    react: {
+      useSuspense: true
+    },
+    interpolation: { escapeValue: false },
+    resources
+  } as InitOptions);
 
-// Define the supported translations
-// eslint-disable-next-line
-I18n.translations = {
-  it: locales.localeIT,
-  en: locales.localeEN,
-  de: locales.localeDE,
-  sl: locales.localeSL
+export const setLocale = (locale: Locales) => {
+  void i18next.changeLanguage(locale);
 };
-
-export const availableTranslations: ReadonlyArray<locales.Locales> =
-  Object.keys(I18n.translations).map(k => k as locales.Locales);
-
-export function setLocale(lang: locales.Locales) {
-  // eslint-disable-next-line
-  I18n.locale = lang;
-}
-
-type TranslateT = {
-  // allow unsafe translations only when a defaultValue gets passed
-  // allows the use of implicit pluralization of translations, use count as numeral variable
-  // how-to use pluralization explained here https://github.com/pagopa/io-app/pull/2366
-  (
-    scope: string,
-    options: { defaultValue: string; count?: number } & Omit<
-      I18n.TranslateOptions,
-      "defaultValue"
-    >
-  ): string;
-  // or else, the lookup must be safe
-  (scope: locales.TranslationKeys, options?: I18n.TranslateOptions): string;
-};
-
-/**
- * Replacement for the I18n type for making the
- *
- * We can't simply add our definition for "t" as it will be
- * merged with the existing one (overloaded) keeping it unsafe by
- * making it accept any key.
- */
-interface TypedI18n {
-  readonly t: TranslateT;
-  readonly translate: TranslateT;
-  readonly locale: locales.Locales;
-  readonly currentLocale: () => locales.Locales;
-  readonly toNumber: typeof I18n.toNumber;
-  readonly toCurrency: typeof I18n.toCurrency;
-  readonly strftime: typeof I18n.strftime;
-  readonly toTime: typeof I18n.toTime;
-}
-
-const TypedI18n = I18n as TypedI18n;
-
-export default TypedI18n;

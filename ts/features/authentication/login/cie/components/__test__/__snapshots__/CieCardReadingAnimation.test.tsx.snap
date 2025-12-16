@@ -1,0 +1,689 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CieCardReadingAnimation Should match the snapshot 1`] = `
+<View
+  style={
+    {
+      "flex": 1,
+    }
+  }
+>
+  <RNCSafeAreaProvider
+    onInsetsChange={[Function]}
+    style={
+      [
+        {
+          "flex": 1,
+        },
+        undefined,
+      ]
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#FFFFFF",
+            "flex": 1,
+          },
+          undefined,
+        ]
+      }
+    >
+      <View
+        collapsable={false}
+        pointerEvents="box-none"
+        style={
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
+        }
+      >
+        <View
+          accessibilityElementsHidden={false}
+          importantForAccessibility="auto"
+          onLayout={[Function]}
+          pointerEvents="box-none"
+          style={null}
+        >
+          <View
+            collapsable={false}
+            pointerEvents="box-none"
+            style={
+              {
+                "bottom": 0,
+                "left": 0,
+                "opacity": 1,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "zIndex": 0,
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              style={
+                [
+                  {
+                    "flex": 1,
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.85,
+                    "shadowRadius": 0,
+                  },
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "shadowColor": "rgb(216, 216, 216)",
+                  },
+                  [
+                    {},
+                    false,
+                  ],
+                ]
+              }
+            />
+          </View>
+          <View
+            collapsable={false}
+            pointerEvents="box-none"
+            style={
+              [
+                {
+                  "height": 44,
+                  "maxHeight": undefined,
+                  "minHeight": undefined,
+                  "opacity": undefined,
+                  "transform": undefined,
+                },
+              ]
+            }
+          >
+            <View
+              pointerEvents="none"
+              style={
+                {
+                  "height": 0,
+                }
+              }
+            />
+            <View
+              pointerEvents="box-none"
+              style={
+                {
+                  "alignItems": "stretch",
+                  "flex": 1,
+                  "flexDirection": "row",
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="box-none"
+                style={
+                  {
+                    "alignItems": "flex-start",
+                    "flexBasis": 0,
+                    "flexGrow": 1,
+                    "justifyContent": "center",
+                    "marginStart": 0,
+                    "opacity": 1,
+                  }
+                }
+              />
+              <View
+                collapsable={false}
+                pointerEvents="box-none"
+                style={
+                  {
+                    "justifyContent": "center",
+                    "marginHorizontal": 16,
+                    "maxWidth": 718,
+                    "opacity": 1,
+                  }
+                }
+              >
+                <Text
+                  accessibilityRole="header"
+                  aria-level="1"
+                  collapsable={false}
+                  numberOfLines={1}
+                  onLayout={[Function]}
+                  style={
+                    [
+                      {
+                        "fontSize": 17,
+                        "fontWeight": "600",
+                      },
+                      {
+                        "color": "rgb(28, 28, 30)",
+                      },
+                      undefined,
+                    ]
+                  }
+                >
+                  CIE_CARD_READER_SCREEN
+                </Text>
+              </View>
+              <View
+                collapsable={false}
+                pointerEvents="box-none"
+                style={
+                  {
+                    "alignItems": "flex-end",
+                    "flexBasis": 0,
+                    "flexGrow": 1,
+                    "justifyContent": "center",
+                    "marginEnd": 0,
+                    "opacity": 1,
+                  }
+                }
+              />
+            </View>
+          </View>
+        </View>
+      </View>
+      <RNSScreenContainer
+        onLayout={[Function]}
+        style={
+          {
+            "flex": 1,
+          }
+        }
+      >
+        <RNSScreen
+          activityState={2}
+          collapsable={false}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
+          pointerEvents="box-none"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
+          sheetCornerRadius={-1}
+          sheetElevation={24}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
+          style={
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
+          }
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "opacity": 1,
+              }
+            }
+          />
+          <View
+            accessibilityElementsHidden={false}
+            closing={false}
+            collapsable={false}
+            gestureVelocityImpact={0.3}
+            importantForAccessibility="auto"
+            onClose={[Function]}
+            onGestureBegin={[Function]}
+            onGestureCanceled={[Function]}
+            onGestureEnd={[Function]}
+            onOpen={[Function]}
+            onTransition={[Function]}
+            pointerEvents="box-none"
+            style={
+              [
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                },
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+              ]
+            }
+            transitionSpec={
+              {
+                "close": {
+                  "animation": "spring",
+                  "config": {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
+                "open": {
+                  "animation": "spring",
+                  "config": {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
+              }
+            >
+              <View
+                collapsable={false}
+                enabled={false}
+                handlerTag={-1}
+                handlerType="PanGestureHandler"
+                needsOffscreenAlphaCompositing={false}
+                onGestureHandlerEvent={[Function]}
+                onGestureHandlerStateChange={[Function]}
+                style={
+                  {
+                    "flex": 1,
+                    "transform": [
+                      {
+                        "translateX": 0,
+                      },
+                      {
+                        "translateX": 0,
+                      },
+                    ],
+                  }
+                }
+              >
+                <View
+                  pointerEvents="box-none"
+                  style={
+                    [
+                      {
+                        "flex": 1,
+                        "overflow": "hidden",
+                      },
+                      [
+                        {
+                          "backgroundColor": "#FFFFFF",
+                        },
+                        undefined,
+                      ],
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      {
+                        "flex": 1,
+                        "flexDirection": "column-reverse",
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        {
+                          "flex": 1,
+                        }
+                      }
+                    >
+                      <View
+                        accessible={false}
+                        style={
+                          {
+                            "alignSelf": "center",
+                          }
+                        }
+                      >
+                        <View
+                          style={
+                            {
+                              "alignItems": "center",
+                              "justifyContent": "center",
+                            }
+                          }
+                          testID="circular-progress-0"
+                        >
+                          <RNSVGSvgView
+                            align="xMidYMid"
+                            bbHeight={180}
+                            bbWidth={180}
+                            fill="none"
+                            focusable={false}
+                            height={180}
+                            meetOrSlice={0}
+                            minX={0}
+                            minY={0}
+                            style={
+                              [
+                                {
+                                  "backgroundColor": "transparent",
+                                  "borderWidth": 0,
+                                },
+                                {
+                                  "flex": 0,
+                                  "height": 180,
+                                  "width": 180,
+                                },
+                              ]
+                            }
+                            vbHeight={180}
+                            vbWidth={180}
+                            width={180}
+                          >
+                            <RNSVGGroup
+                              fill={null}
+                              propList={
+                                [
+                                  "fill",
+                                ]
+                              }
+                            >
+                              <RNSVGGroup
+                                fill={
+                                  {
+                                    "payload": 4278190080,
+                                    "type": 0,
+                                  }
+                                }
+                                matrix={
+                                  [
+                                    6.123233995736766e-17,
+                                    -1,
+                                    1,
+                                    6.123233995736766e-17,
+                                    0,
+                                    180,
+                                  ]
+                                }
+                              >
+                                <RNSVGCircle
+                                  cx={90}
+                                  cy={90}
+                                  fill={
+                                    {
+                                      "payload": 4278190080,
+                                      "type": 0,
+                                    }
+                                  }
+                                  propList={
+                                    [
+                                      "stroke",
+                                      "strokeWidth",
+                                    ]
+                                  }
+                                  r={88.5}
+                                  stroke={
+                                    {
+                                      "payload": 4293454833,
+                                      "type": 0,
+                                    }
+                                  }
+                                  strokeWidth={3}
+                                />
+                                <RNSVGCircle
+                                  cx={90}
+                                  cy={90}
+                                  fill={
+                                    {
+                                      "payload": 4278190080,
+                                      "type": 0,
+                                    }
+                                  }
+                                  propList={
+                                    [
+                                      "stroke",
+                                      "strokeWidth",
+                                      "strokeDasharray",
+                                      "strokeLinecap",
+                                    ]
+                                  }
+                                  r={88.5}
+                                  stroke={
+                                    {
+                                      "payload": 4278190080,
+                                      "type": 0,
+                                    }
+                                  }
+                                  strokeDasharray={
+                                    [
+                                      565.4866776461628,
+                                      565.4866776461628,
+                                    ]
+                                  }
+                                  strokeLinecap={1}
+                                  strokeWidth={3}
+                                />
+                              </RNSVGGroup>
+                            </RNSVGGroup>
+                          </RNSVGSvgView>
+                          <View
+                            style={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "justifyContent": "center",
+                                  "overflow": "hidden",
+                                  "position": "absolute",
+                                },
+                                {
+                                  "borderRadius": 87,
+                                  "height": 174,
+                                  "width": 174,
+                                },
+                              ]
+                            }
+                          >
+                            <View
+                              style={
+                                {
+                                  "height": 210,
+                                  "paddingStart": 15,
+                                  "paddingTop": 25,
+                                  "width": 210,
+                                }
+                              }
+                            >
+                              <RNSVGSvgView
+                                align="xMidYMid"
+                                bbHeight="100%"
+                                bbWidth="100%"
+                                focusable={false}
+                                height="100%"
+                                meetOrSlice={0}
+                                minX={0}
+                                minY={0}
+                                style={
+                                  [
+                                    {
+                                      "backgroundColor": "transparent",
+                                      "borderWidth": 0,
+                                    },
+                                    {
+                                      "flex": 0,
+                                      "height": "100%",
+                                      "width": "100%",
+                                    },
+                                  ]
+                                }
+                                vbHeight={240}
+                                vbWidth={240}
+                                width="100%"
+                              >
+                                <RNSVGGroup
+                                  fill={
+                                    {
+                                      "payload": 4278190080,
+                                      "type": 0,
+                                    }
+                                  }
+                                >
+                                  <RNSVGPath
+                                    d="m180.1 169.56-71.27-26.27c-4.97-1.83-9.8897-2.7-14.6397-2.57-9.17.24-15.28 3.56-18.15 9.87-2.07 4.56-1.33 7.86 2.27 10.07 5.54 3.41 14.62 2.48 16.23.48.88-1.09 2.26-3.77 1.9-6.91-.32-2.75-1.94-5.27-4.79-7.5l2.46-3.16c3.74 2.91 5.86 6.33 6.3097 10.19.49 4.16-1.1797 7.92-2.7497 9.88-3.35 4.17-14.98 4.4-21.45.42-5.31-3.27-6.7-8.78-3.81-15.14 3.5-7.71 11-11.93 21.68-12.21 5.24-.13 10.6797.81 16.1297 2.82l71.27 26.27-1.38 3.75-.01.01Z"
+                                    fill={
+                                      {
+                                        "payload": 4278927075,
+                                        "type": 0,
+                                      }
+                                    }
+                                    propList={
+                                      [
+                                        "fill",
+                                      ]
+                                    }
+                                  />
+                                  <RNSVGPath
+                                    d="m100.01 154.85-2.2297-3.32c.25-.17 6.0697-4.03 11.8297-3.77l-.19 4c-4.43-.22-9.36 3.06-9.41 3.1v-.01ZM78.7802 184.37c-4.15-2.1-6.77-5.1-7.8-8.92-1.97-7.36 2.91-14.96 3.12-15.28l3.35 2.19-1.67-1.09 1.68 1.09c-.04.06-4.12 6.45-2.61 12.08.72 2.66 2.65 4.8 5.73 6.37l-1.81 3.57.01-.01ZM112.46 190.12c-6.57-3.8-8.86-8.6-9.62-11.96-.83-3.65-.1-6.37-.02-6.67l3.84 1.11-1.92-.55 1.93.54c-.09.34-2.13 8.33 7.79 14.08l-2 3.46v-.01ZM93.8103 182.84l-3.33-2.22c2.4-3.6 3.28-6.79 2.61-9.46-.78-3.13-3.53-4.63-3.56-4.65l1.85-3.55c.18.09 4.31 2.28 5.57 7.15.99 3.83-.07 8.12-3.14 12.73Z"
+                                    fill={
+                                      {
+                                        "payload": 4278927075,
+                                        "type": 0,
+                                      }
+                                    }
+                                    propList={
+                                      [
+                                        "fill",
+                                      ]
+                                    }
+                                  />
+                                  <RNSVGPath
+                                    d="M90.4501 199.23c-1.1 0-2.18-.17-3.2-.52-3.02-1.02-8.54-3.95-11.61-12.06-.51-1.34-.35-2.79.44-4 .78-1.2 2.08-1.96 3.5-2.05l18.64-1.12h.09c1.8799.06 3.6399.94 4.8299 2.4 1.22 1.5 1.73 3.46 1.4 5.38-1.02 5.86-5.0199 9.99-11.2699 11.61-.94.24-1.88.37-2.81.37l-.01-.01Zm7.8-15.75-18.44 1.11c-.21.01-.33.15-.38.23-.06.09-.12.24-.05.41 2.36 6.25 6.28 8.72 9.15 9.69 1.14.38 2.42.41 3.73.07 4.78-1.24 7.58-4.08 8.3399-8.43.13-.78-.07-1.57-.56-2.17-.4499-.55-1.0799-.88-1.7799-.92l-.01.01Z"
+                                    fill={
+                                      {
+                                        "payload": 4278927075,
+                                        "type": 0,
+                                      }
+                                    }
+                                    propList={
+                                      [
+                                        "fill",
+                                      ]
+                                    }
+                                  />
+                                  <RNSVGPath
+                                    d="M165.53 226.17c-32.54-15.26-72.9396-27.2-73.3396-27.32l1.13-3.84c.41.12 41.0896 12.15 73.9096 27.54l-1.7 3.62Z"
+                                    fill={
+                                      {
+                                        "payload": 4278927075,
+                                        "type": 0,
+                                      }
+                                    }
+                                    propList={
+                                      [
+                                        "fill",
+                                      ]
+                                    }
+                                  />
+                                  <RNSVGPath
+                                    d="M100.56 220c-2.7599 0-4.9999-2.24-4.9999-5v-16.83l.72-.32c4.2499-1.87 7.3699-5.63 8.4299-10.15l.84-1.22v28.53c0 2.76-2.24 5-5 5l.01-.01ZM105.56 148.21l-5.6299 2.54-4.37-6.07v-38.51h9.9999v42.04Z"
+                                    fill={
+                                      {
+                                        "payload": 4289392367,
+                                        "type": 0,
+                                      }
+                                    }
+                                    propList={
+                                      [
+                                        "fill",
+                                      ]
+                                    }
+                                  />
+                                  <RNSVGPath
+                                    d="M100.02 111.32c23.207 0 42.02-22.0097 42.02-49.16 0-27.1503-18.813-49.16-42.02-49.16C76.813 13 58 35.0097 58 62.16c0 27.1503 18.813 49.16 42.02 49.16Z"
+                                    fill={
+                                      {
+                                        "payload": 4289392367,
+                                        "type": 0,
+                                      }
+                                    }
+                                    propList={
+                                      [
+                                        "fill",
+                                      ]
+                                    }
+                                  />
+                                  <RNSVGPath
+                                    d="M118.13 92.36c-.5 0-.98-.25-1.27-.7L81.73 36.21c-.44-.7-.24-1.63.46-2.07.7-.44 1.63-.23 2.07.46l35.13 55.45c.44.7.24 1.63-.46 2.07-.25.16-.53.23-.8.23v.01Z"
+                                    fill={
+                                      {
+                                        "payload": 4278240714,
+                                        "type": 0,
+                                      }
+                                    }
+                                    propList={
+                                      [
+                                        "fill",
+                                      ]
+                                    }
+                                  />
+                                  <RNSVGPath
+                                    d="M82.9998 92.36c-.27 0-.55-.08-.8-.23-.7-.44-.91-1.37-.46-2.07L116.86 34.6c.44-.7 1.37-.91 2.07-.46.7.45.91 1.37.46 2.07L84.2598 91.66c-.29.45-.77.7-1.27.7h.01Z"
+                                    fill={
+                                      {
+                                        "payload": 4278240714,
+                                        "type": 0,
+                                      }
+                                    }
+                                    propList={
+                                      [
+                                        "fill",
+                                      ]
+                                    }
+                                  />
+                                </RNSVGGroup>
+                              </RNSVGSvgView>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </RNSScreen>
+      </RNSScreenContainer>
+    </View>
+  </RNCSafeAreaProvider>
+</View>
+`;

@@ -1,0 +1,74 @@
+@startuml name ViewMessageList-ioApp
+
+participant PagerViewContainer
+participant MessageList
+database Redux
+participant allPaginatedReducer
+participant HandleReloadAllMessages
+entity BE
+
+note over PagerViewContainer
+React component
+embedded in
+MessagesHomeScreen
+end note
+
+/ note over MessageList
+React component
+embedded in
+PagerViewContainer
+end note
+
+/ note over HandleReloadAllMessages
+saga
+end note
+
+PagerViewContainer -> Redux : MessagePagePotFromCategorySelector
+activate PagerViewContainer
+Redux -> PagerViewContainer : Pot.None
+
+MessageList -> Redux : messageListForCategorySelector
+activate MessageList
+Redux -> MessageList : empty UIMessages[]
+note left
+UI logic infers
+empty state
+end note
+deactivate MessageList
+
+PagerViewContainer -> Redux : dispatch reloadAllMessages.request
+deactivate PagerViewContainer
+
+Redux -> allPaginatedReducer ++ : passes reloadAllMessages.request
+allPaginatedReducer -> Redux --: return new state
+
+Redux -> HandleReloadAllMessages ++ : forward reloadAllMessages.request
+
+HandleReloadAllMessages --> BE : call Api
+note left: api/v1/messages
+
+MessageList -> Redux : MessageListForCategorySelector
+activate MessageList
+Redux -> MessageList : undefined
+note left
+UI logic infers
+loading state
+end note
+deactivate MessageList
+
+BE --> HandleReloadAllMessages : PaginatedPublicMessagesCollection
+HandleReloadAllMessages -> Redux -- : dispatch reloadAllMessages.success
+
+Redux -> allPaginatedReducer ++ : passes reloadAllMessages.success
+allPaginatedReducer -> Redux -- : return new state
+
+MessageList -> Redux: MessageListForCategorySelector
+activate MessageList
+Redux -> MessageList : UIMessages[]
+note left
+UI logic infers
+nonEmpty state
+end note
+deactivate MessageList
+
+@enduml

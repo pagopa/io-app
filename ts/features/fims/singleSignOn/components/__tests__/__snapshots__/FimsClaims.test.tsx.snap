@@ -1,0 +1,590 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FimsClaims component renders correctly with 2 claims and renders 1 Dividers 1`] = `
+<View
+  style={
+    [
+      {
+        "borderRadius": 8,
+        "paddingHorizontal": 24,
+      },
+      {
+        "backgroundColor": "#F4F5F8",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "paddingVertical": 12,
+      }
+    }
+  >
+    <Text
+      allowFontScaling={true}
+      dynamicTypeRamp="headline"
+      maxFontSizeMultiplier={1.5}
+      style={
+        [
+          {},
+          {
+            "color": "#0E0F13",
+            "fontFamily": "Titillio",
+            "fontSize": 16,
+            "fontStyle": "normal",
+            "fontWeight": "600",
+            "lineHeight": 24,
+          },
+        ]
+      }
+    >
+      E-Mail address
+    </Text>
+    <RNSVGSvgView
+      accessibilityElementsHidden={true}
+      accessibilityLabel=""
+      accessible={false}
+      align="xMidYMid"
+      bbHeight={24}
+      bbWidth={24}
+      color="#BBC2D6"
+      focusable={false}
+      height={24}
+      importantForAccessibility="no-hide-descendants"
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        [
+          {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          {
+            "flex": 0,
+            "height": 24,
+            "width": 24,
+          },
+        ]
+      }
+      vbHeight={24}
+      vbWidth={24}
+      width={24}
+    >
+      <RNSVGGroup
+        fill={
+          {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+      >
+        <RNSVGPath
+          clipRule={0}
+          d="M21.7071 5.29289c.3905.39053.3905 1.02369 0 1.41422L10.4142 18c-.78103.781-2.04736.7811-2.82841 0l-5.2929-5.2929c-.39052-.3905-.39052-1.0237 0-1.4142.39053-.3905 1.02369-.3905 1.41422 0L9 16.5858 20.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0Z"
+          fill={
+            {
+              "type": 2,
+            }
+          }
+          fillRule={0}
+          propList={
+            [
+              "fill",
+              "fillRule",
+            ]
+          }
+        />
+      </RNSVGGroup>
+    </RNSVGSvgView>
+  </View>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "paddingVertical": 12,
+      }
+    }
+  >
+    <Text
+      allowFontScaling={true}
+      dynamicTypeRamp="headline"
+      maxFontSizeMultiplier={1.5}
+      style={
+        [
+          {},
+          {
+            "color": "#0E0F13",
+            "fontFamily": "Titillio",
+            "fontSize": 16,
+            "fontStyle": "normal",
+            "fontWeight": "600",
+            "lineHeight": 24,
+          },
+        ]
+      }
+    >
+      Full name
+    </Text>
+    <RNSVGSvgView
+      accessibilityElementsHidden={true}
+      accessibilityLabel=""
+      accessible={false}
+      align="xMidYMid"
+      bbHeight={24}
+      bbWidth={24}
+      color="#BBC2D6"
+      focusable={false}
+      height={24}
+      importantForAccessibility="no-hide-descendants"
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        [
+          {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          {
+            "flex": 0,
+            "height": 24,
+            "width": 24,
+          },
+        ]
+      }
+      vbHeight={24}
+      vbWidth={24}
+      width={24}
+    >
+      <RNSVGGroup
+        fill={
+          {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+      >
+        <RNSVGPath
+          clipRule={0}
+          d="M21.7071 5.29289c.3905.39053.3905 1.02369 0 1.41422L10.4142 18c-.78103.781-2.04736.7811-2.82841 0l-5.2929-5.2929c-.39052-.3905-.39052-1.0237 0-1.4142.39053-.3905 1.02369-.3905 1.41422 0L9 16.5858 20.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0Z"
+          fill={
+            {
+              "type": 2,
+            }
+          }
+          fillRule={0}
+          propList={
+            [
+              "fill",
+              "fillRule",
+            ]
+          }
+        />
+      </RNSVGGroup>
+    </RNSVGSvgView>
+  </View>
+</View>
+`;
+
+exports[`FimsClaims component renders correctly with 3 claims and renders 2 Dividers 1`] = `
+<View
+  style={
+    [
+      {
+        "borderRadius": 8,
+        "paddingHorizontal": 24,
+      },
+      {
+        "backgroundColor": "#F4F5F8",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "paddingVertical": 12,
+      }
+    }
+  >
+    <Text
+      allowFontScaling={true}
+      dynamicTypeRamp="headline"
+      maxFontSizeMultiplier={1.5}
+      style={
+        [
+          {},
+          {
+            "color": "#0E0F13",
+            "fontFamily": "Titillio",
+            "fontSize": 16,
+            "fontStyle": "normal",
+            "fontWeight": "600",
+            "lineHeight": 24,
+          },
+        ]
+      }
+    >
+      E-Mail address
+    </Text>
+    <RNSVGSvgView
+      accessibilityElementsHidden={true}
+      accessibilityLabel=""
+      accessible={false}
+      align="xMidYMid"
+      bbHeight={24}
+      bbWidth={24}
+      color="#BBC2D6"
+      focusable={false}
+      height={24}
+      importantForAccessibility="no-hide-descendants"
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        [
+          {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          {
+            "flex": 0,
+            "height": 24,
+            "width": 24,
+          },
+        ]
+      }
+      vbHeight={24}
+      vbWidth={24}
+      width={24}
+    >
+      <RNSVGGroup
+        fill={
+          {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+      >
+        <RNSVGPath
+          clipRule={0}
+          d="M21.7071 5.29289c.3905.39053.3905 1.02369 0 1.41422L10.4142 18c-.78103.781-2.04736.7811-2.82841 0l-5.2929-5.2929c-.39052-.3905-.39052-1.0237 0-1.4142.39053-.3905 1.02369-.3905 1.41422 0L9 16.5858 20.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0Z"
+          fill={
+            {
+              "type": 2,
+            }
+          }
+          fillRule={0}
+          propList={
+            [
+              "fill",
+              "fillRule",
+            ]
+          }
+        />
+      </RNSVGGroup>
+    </RNSVGSvgView>
+  </View>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "paddingVertical": 12,
+      }
+    }
+  >
+    <Text
+      allowFontScaling={true}
+      dynamicTypeRamp="headline"
+      maxFontSizeMultiplier={1.5}
+      style={
+        [
+          {},
+          {
+            "color": "#0E0F13",
+            "fontFamily": "Titillio",
+            "fontSize": 16,
+            "fontStyle": "normal",
+            "fontWeight": "600",
+            "lineHeight": 24,
+          },
+        ]
+      }
+    >
+      Full name
+    </Text>
+    <RNSVGSvgView
+      accessibilityElementsHidden={true}
+      accessibilityLabel=""
+      accessible={false}
+      align="xMidYMid"
+      bbHeight={24}
+      bbWidth={24}
+      color="#BBC2D6"
+      focusable={false}
+      height={24}
+      importantForAccessibility="no-hide-descendants"
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        [
+          {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          {
+            "flex": 0,
+            "height": 24,
+            "width": 24,
+          },
+        ]
+      }
+      vbHeight={24}
+      vbWidth={24}
+      width={24}
+    >
+      <RNSVGGroup
+        fill={
+          {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+      >
+        <RNSVGPath
+          clipRule={0}
+          d="M21.7071 5.29289c.3905.39053.3905 1.02369 0 1.41422L10.4142 18c-.78103.781-2.04736.7811-2.82841 0l-5.2929-5.2929c-.39052-.3905-.39052-1.0237 0-1.4142.39053-.3905 1.02369-.3905 1.41422 0L9 16.5858 20.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0Z"
+          fill={
+            {
+              "type": 2,
+            }
+          }
+          fillRule={0}
+          propList={
+            [
+              "fill",
+              "fillRule",
+            ]
+          }
+        />
+      </RNSVGGroup>
+    </RNSVGSvgView>
+  </View>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "paddingVertical": 12,
+      }
+    }
+  >
+    <Text
+      allowFontScaling={true}
+      dynamicTypeRamp="headline"
+      maxFontSizeMultiplier={1.5}
+      style={
+        [
+          {},
+          {
+            "color": "#0E0F13",
+            "fontFamily": "Titillio",
+            "fontSize": 16,
+            "fontStyle": "normal",
+            "fontWeight": "600",
+            "lineHeight": 24,
+          },
+        ]
+      }
+    >
+      Fiscal Code
+    </Text>
+    <RNSVGSvgView
+      accessibilityElementsHidden={true}
+      accessibilityLabel=""
+      accessible={false}
+      align="xMidYMid"
+      bbHeight={24}
+      bbWidth={24}
+      color="#BBC2D6"
+      focusable={false}
+      height={24}
+      importantForAccessibility="no-hide-descendants"
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        [
+          {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          {
+            "flex": 0,
+            "height": 24,
+            "width": 24,
+          },
+        ]
+      }
+      vbHeight={24}
+      vbWidth={24}
+      width={24}
+    >
+      <RNSVGGroup
+        fill={
+          {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+      >
+        <RNSVGPath
+          clipRule={0}
+          d="M21.7071 5.29289c.3905.39053.3905 1.02369 0 1.41422L10.4142 18c-.78103.781-2.04736.7811-2.82841 0l-5.2929-5.2929c-.39052-.3905-.39052-1.0237 0-1.4142.39053-.3905 1.02369-.3905 1.41422 0L9 16.5858 20.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0Z"
+          fill={
+            {
+              "type": 2,
+            }
+          }
+          fillRule={0}
+          propList={
+            [
+              "fill",
+              "fillRule",
+            ]
+          }
+        />
+      </RNSVGGroup>
+    </RNSVGSvgView>
+  </View>
+</View>
+`;
+
+exports[`FimsClaims component renders correctly with a single claim and does not render Divider 1`] = `
+<View
+  style={
+    [
+      {
+        "borderRadius": 8,
+        "paddingHorizontal": 24,
+      },
+      {
+        "backgroundColor": "#F4F5F8",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "paddingVertical": 12,
+      }
+    }
+  >
+    <Text
+      allowFontScaling={true}
+      dynamicTypeRamp="headline"
+      maxFontSizeMultiplier={1.5}
+      style={
+        [
+          {},
+          {
+            "color": "#0E0F13",
+            "fontFamily": "Titillio",
+            "fontSize": 16,
+            "fontStyle": "normal",
+            "fontWeight": "600",
+            "lineHeight": 24,
+          },
+        ]
+      }
+    >
+      E-Mail address
+    </Text>
+    <RNSVGSvgView
+      accessibilityElementsHidden={true}
+      accessibilityLabel=""
+      accessible={false}
+      align="xMidYMid"
+      bbHeight={24}
+      bbWidth={24}
+      color="#BBC2D6"
+      focusable={false}
+      height={24}
+      importantForAccessibility="no-hide-descendants"
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
+      style={
+        [
+          {
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
+          },
+          {
+            "flex": 0,
+            "height": 24,
+            "width": 24,
+          },
+        ]
+      }
+      vbHeight={24}
+      vbWidth={24}
+      width={24}
+    >
+      <RNSVGGroup
+        fill={
+          {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+      >
+        <RNSVGPath
+          clipRule={0}
+          d="M21.7071 5.29289c.3905.39053.3905 1.02369 0 1.41422L10.4142 18c-.78103.781-2.04736.7811-2.82841 0l-5.2929-5.2929c-.39052-.3905-.39052-1.0237 0-1.4142.39053-.3905 1.02369-.3905 1.41422 0L9 16.5858 20.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0Z"
+          fill={
+            {
+              "type": 2,
+            }
+          }
+          fillRule={0}
+          propList={
+            [
+              "fill",
+              "fillRule",
+            ]
+          }
+        />
+      </RNSVGGroup>
+    </RNSVGSvgView>
+  </View>
+</View>
+`;
+
+exports[`FimsClaims component renders correctly with an empty claims list and does not render Divider 1`] = `
+<View
+  style={
+    [
+      {
+        "borderRadius": 8,
+        "paddingHorizontal": 24,
+      },
+      {
+        "backgroundColor": "#F4F5F8",
+      },
+    ]
+  }
+/>
+`;

@@ -2,7 +2,7 @@ import { IOFontWeight } from "../fonts";
 
 export const fontWeightsMocks: ReadonlyArray<IOFontWeight> = [
   "Bold",
-  "SemiBold",
+  "Semibold",
   "Regular",
   "Light"
 ];

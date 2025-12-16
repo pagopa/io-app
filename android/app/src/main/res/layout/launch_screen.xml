@@ -1,103 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@color/ic_launcher_background"
+>
+
+
+  <ImageView
+    android:id="@+id/ioLogo"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/logo_io"
+    app:layout_constraintBottom_toTopOf="@+id/logoConsiglioMinistri"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <TextView
+    android:id="@+id/splashTitle"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/splash_bg"
-    android:paddingBottom="48px">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="62dp"
-                    android:src="@mipmap/logo_io"
-                    android:foregroundGravity="center_horizontal"
-                    android:layout_gravity="center_vertical"
-                    android:id="@+id/ioLogo"
-                    android:layout_centerHorizontal="true"/>
-
-            </RelativeLayout>
+    android:layout_height="30dp"
+    android:layout_marginTop="16dp"
+    android:gravity="center"
+    android:text="@string/splash_io_name"
+    android:textColor="#FFFFFF"
+    android:textSize="16sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/ioLogo" />
 
 
+  <ImageView
+    android:id="@+id/logoPagopa"
+    android:layout_width="wrap_content"
+    android:layout_height="28dp"
+    android:src="@drawable/logo_pagopa"
+    app:layout_constraintBottom_toBottomOf="@+id/logoConsiglioMinistri"
+    app:layout_constraintEnd_toStartOf="@+id/logoConsiglioMinistri"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="@+id/logoConsiglioMinistri" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/splash_io_name"
-                android:paddingTop="16dp"
-                android:textSize="16dp"
-                android:gravity="center_horizontal"
-                android:textColor="#FFFFFF"
-                />
+  <ImageView
+    android:id="@+id/logoConsiglioMinistri"
+    android:layout_width="wrap_content"
+    android:layout_height="48dp"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:layout_marginBottom="48dp"
+    android:src="@mipmap/logo_consiglio_ministri"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
 
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@mipmap/logo_consiglio_ministri" />
-
-      <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:orientation="vertical">
-
-        <View
-          android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:layout_gravity="center"
-          android:layout_marginVertical="26dp"
-          android:layout_marginStart="0dp"
-          android:layout_marginEnd="0dp"
-          android:background="@android:color/darker_gray"
-          android:backgroundTint="#FFFFFF" />
-
-        <LinearLayout
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:layout_marginBottom="44dp"
-          android:orientation="horizontal">
-
-          <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="16dp"
-            android:layout_weight="1"
-            android:src="@mipmap/logo_pagopa" />
-
-          <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
-            android:layout_weight="1"
-            android:src="@mipmap/eu_next_logo" />
-        </LinearLayout>
-      </LinearLayout>
-
-    </LinearLayout>
-</LinearLayout>
+  <ImageView
+    android:id="@+id/logoEuNext"
+    android:layout_width="wrap_content"
+    android:layout_height="25dp"
+    android:layout_centerVertical="true"
+    android:src="@drawable/eu_next_logo"
+    app:layout_constraintBottom_toBottomOf="@+id/logoConsiglioMinistri"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toEndOf="@+id/logoConsiglioMinistri"
+    app:layout_constraintTop_toTopOf="@+id/logoConsiglioMinistri" />
+</androidx.constraintlayout.widget.ConstraintLayout>

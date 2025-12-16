@@ -12,15 +12,17 @@ import {
 import { ActionType } from "typesafe-actions";
 import * as E from "fp-ts/lib/Either";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { BackendFciClient } from "../../api/backendFci";
 import {
-  fciCancelPollingFilledDocument,
   fciLoadQtspFilledDocument,
   fciPollFilledDocument
 } from "../../store/actions";
 import { getNetworkError } from "../../../../utils/errors";
 import { FilledDocumentDetailView } from "../../../../../definitions/fci/FilledDocumentDetailView";
 import { fciPollFilledDocumentReadySelector } from "../../store/reducers/fciPollFilledDocument";
+import { FciClient } from "../../api/backendFci";
+import { SessionToken } from "../../../../types/SessionToken";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import { SagaCallReturnType } from "../../../../types/utils";
 
 // Polling frequency timeout
 const POLLING_FREQ_TIMEOUT = 2000 as Millisecond;
@@ -33,13 +35,20 @@ const POLLING_TIME_THRESHOLD = (10 * 2000) as Millisecond;
  * A saga to post filled Document.
  */
 export function* handleCreateFilledDocument(
-  postQtspFilledBody: ReturnType<typeof BackendFciClient>["postQtspFilledBody"],
-  action: ActionType<typeof fciLoadQtspFilledDocument["request"]>
+  postQtspFilledBody: FciClient["createFilledDocument"],
+  bearerToken: SessionToken,
+  action: ActionType<(typeof fciLoadQtspFilledDocument)["request"]>
 ): SagaIterator {
   try {
-    const postQtspFilledBodyResponse = yield* call(postQtspFilledBody, {
-      documentToFill: action.payload
+    const postQtspFilledBodyRequest = postQtspFilledBody({
+      body: action.payload,
+      Bearer: `Bearer ${bearerToken}`
     });
+    const postQtspFilledBodyResponse = (yield* call(
+      withRefreshApiCall,
+      postQtspFilledBodyRequest,
+      action
+    )) as unknown as SagaCallReturnType<typeof postQtspFilledBody>;
 
     if (E.isLeft(postQtspFilledBodyResponse)) {
       throw Error(readablePrivacyReport(postQtspFilledBodyResponse.left));
@@ -58,6 +67,10 @@ export function* handleCreateFilledDocument(
       if (qtspFilledDocumentUrl) {
         yield* call(filledDocumentPollWatcher, qtspFilledDocumentUrl);
       }
+      return;
+    }
+
+    if (postQtspFilledBodyResponse.right.status === 401) {
       return;
     }
 
@@ -80,6 +93,7 @@ export function* watchFciPollSaga(
 ) {
   while (true) {
     try {
+      yield* put(fciPollFilledDocument.request());
       const response = yield* call(fetch, qtspFilledDocumentUrl);
       const responseStatus = response.status;
       if (responseStatus === 200) {
@@ -88,12 +102,12 @@ export function* watchFciPollSaga(
             isReady: true
           })
         );
-        yield* put(fciCancelPollingFilledDocument());
+        yield* put(fciPollFilledDocument.cancel());
       }
       yield* delay(POLLING_FREQ_TIMEOUT);
     } catch (e) {
       yield* put(fciPollFilledDocument.failure(getNetworkError(e)));
-      yield* put(fciCancelPollingFilledDocument());
+      yield* put(fciPollFilledDocument.cancel());
     } finally {
       if (yield* cancelled()) {
         const isFilledDocumentReady: ReturnType<
@@ -116,7 +130,7 @@ export function* filledDocumentPollWatcher(
 ) {
   yield* race({
     task: call(watchFciPollSaga, filledDocumentUrl),
-    cancel: take(fciCancelPollingFilledDocument),
+    cancel: take(fciPollFilledDocument.cancel),
     delay: delay(POLLING_TIME_THRESHOLD)
   });
 }

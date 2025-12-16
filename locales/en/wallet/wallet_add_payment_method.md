@@ -1,1 +1,0 @@
-**Here you can add a new payment method**, which will then be displayed among your saved methods in the Wallet section. You can always edit or cancel a payment method in a second moment, by selecting it from the list.

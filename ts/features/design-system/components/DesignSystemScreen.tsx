@@ -1,17 +1,30 @@
-import * as React from "react";
-import { View, ScrollView } from "react-native";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import { ContentWrapper, IOVisualCostants } from "@pagopa/io-app-design-system";
+
+import { ReactNode } from "react";
+import { ScrollView, View } from "react-native";
+import { useScreenEndMargin } from "../../../hooks/useScreenEndMargin";
 
 type Props = {
   title: string;
-  children: React.ReactNode;
+  children: ReactNode;
+  noMargin?: boolean;
 };
 
-export const DesignSystemScreen = ({ title, children }: Props) => (
-  <BaseScreenComponent goBack={true} headerTitle={title}>
-    <ScrollView>
-      <View style={IOStyles.horizontalContentPadding}>{children}</View>
+export const DesignSystemScreen = ({ children, noMargin = false }: Props) => {
+  const { screenEndMargin } = useScreenEndMargin();
+
+  return (
+    <ScrollView
+      contentContainerStyle={{
+        paddingTop: IOVisualCostants.appMarginDefault,
+        paddingBottom: screenEndMargin
+      }}
+    >
+      {noMargin ? (
+        <View>{children}</View>
+      ) : (
+        <ContentWrapper>{children}</ContentWrapper>
+      )}
     </ScrollView>
-  </BaseScreenComponent>
-);
+  );
+};

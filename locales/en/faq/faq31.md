@@ -1,2 +1,0 @@
-From the details of the message, you can view information relating to the specific service and provider. If you follow the link to the service profile you will find the extended information, and the contact details through which you can contact the service provider.
-Depending on the contact methods managed by the individual body and service, the contact details may include: physical counter address, telephone number, email and / or PEC address, website, online assistance, mobile app.

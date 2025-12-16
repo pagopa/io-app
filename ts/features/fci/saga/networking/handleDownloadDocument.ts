@@ -8,12 +8,12 @@ import { fciDownloadPreview } from "../../store/actions";
 import { getFileNameFromUrl } from "../../components/DocumentViewer";
 
 export const FciDownloadPreviewDirectoryPath =
-  RNFS.CachesDirectoryPath + "/files";
+  RNFS.CachesDirectoryPath + "/fci";
 
 /**
  * Builds the save path for the given attachment
  */
-const savePath = (url: string) =>
+export const savePath = (url: string) =>
   FciDownloadPreviewDirectoryPath + "/" + getFileNameFromUrl(url);
 
 /**
@@ -27,7 +27,8 @@ export function* handleDownloadDocument(
   try {
     const config = yield* call(ReactNativeBlobUtil.config, {
       path: savePath(document.url),
-      timeout: fetchTimeout
+      timeout: fetchTimeout,
+      fileCache: true
     });
     const result = yield* call(config.fetch, "GET", document.url);
     const { status } = result.info();

@@ -1,77 +1,77 @@
-import * as React from "react";
-import Pdf from "react-native-pdf";
-import { PDFDocument, rgb } from "pdf-lib";
-import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import ReactNativeBlobUtil from "react-native-blob-util";
-import { constNull, pipe } from "fp-ts/lib/function";
+import { FooterActionsInline, IOColors } from "@pagopa/io-app-design-system";
+import {
+  RouteProp,
+  StackActions,
+  useIsFocused,
+  useNavigation,
+  useRoute
+} from "@react-navigation/native";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as S from "fp-ts/lib/string";
-import * as O from "fp-ts/lib/Option";
-import { SafeAreaView, StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import IconFont from "../../../../components/ui/IconFont";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { IOColors } from "../../../../components/core/variables/IOColors";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import I18n from "../../../../i18n";
-import DocumentsNavigationBar from "../../components/DocumentsNavigationBar";
-import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
-import { fciSignatureDetailDocumentsSelector } from "../../store/reducers/fciSignatureRequest";
-import { FCI_ROUTES } from "../../navigation/routes";
-import { SignatureField } from "../../../../../definitions/fci/SignatureField";
+import { useRef, useState, useEffect, ComponentProps } from "react";
+import { StyleSheet, View } from "react-native";
+import Pdf from "react-native-pdf";
+import I18n from "i18next";
 import { TypeEnum as ClauseType } from "../../../../../definitions/fci/Clause";
-import { FciParamsList } from "../../navigation/params";
-import { ExistingSignatureFieldAttrs } from "../../../../../definitions/fci/ExistingSignatureFieldAttrs";
 import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
-import { fciUpdateDocumentSignaturesRequest } from "../../store/actions";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { emptyContextualHelp } from "../../../../utils/contextualHelp";
+import { trackFciDocOpeningSuccess, trackFciSigningDoc } from "../../analytics";
+import DocumentsNavigationBar from "../../components/DocumentsNavigationBar";
+import LoadingComponent from "../../components/LoadingComponent";
+import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
+import { useFciNoSignatureFields } from "../../hooks/useFciNoSignatureFields";
+import { FciParamsList } from "../../navigation/params";
+import { FCI_ROUTES } from "../../navigation/routes";
+import {
+  fciClearStateRequest,
+  fciDownloadPreview,
+  fciUpdateDocumentSignaturesRequest
+} from "../../store/actions";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
-import { useIODispatch } from "../../../../store/hooks";
-import { SignatureFieldToBeCreatedAttrs } from "../../../../../definitions/fci/SignatureFieldToBeCreatedAttrs";
+import { fciDownloadPathSelector } from "../../store/reducers/fciDownloadPreview";
+import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
+import { fciSignatureDetailDocumentsSelector } from "../../store/reducers/fciSignatureRequest";
+import {
+  getOptionalSignatureFields,
+  getRequiredSignatureFields,
+  getSignatureFieldsLength
+} from "../../utils/signatureFields";
 
 const styles = StyleSheet.create({
   pdf: {
     flex: 1,
-    backgroundColor: IOColors.bluegrey
+    backgroundColor: IOColors["grey-700"]
   }
 });
 
 export type FciDocumentsScreenNavigationParams = Readonly<{
-  attrs: SignatureField["attrs"];
   currentDoc: number;
 }>;
 
-type SignatureFieldAttrType =
-  | ExistingSignatureFieldAttrs
-  | SignatureFieldToBeCreatedAttrs;
-
-const hasUniqueName = (
-  f: SignatureFieldAttrType
-): f is ExistingSignatureFieldAttrs =>
-  (f as ExistingSignatureFieldAttrs).unique_name !== undefined;
-
 const FciDocumentsScreen = () => {
-  const pdfRef = React.useRef<Pdf>(null);
-  const [totalPages, setTotalPages] = React.useState(0);
-  const [currentPage, setCurrentPage] = React.useState(0);
-  const [currentDoc, setCurrentDoc] = React.useState(0);
-  const [signaturePage, setSignaturePage] = React.useState(0);
-  const [pdfString, setPdfString] = React.useState<string>("");
-  const [isPdfLoaded, setIsPdfLoaded] = React.useState(false);
-  const documents = useSelector(fciSignatureDetailDocumentsSelector);
-  const navigation = useNavigation();
+  const pdfRef = useRef<Pdf>(null);
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const route = useRoute<RouteProp<FciParamsList, "FCI_DOCUMENTS">>();
-  const attrs = route.params.attrs as
-    | ExistingSignatureFieldAttrs
-    | SignatureFieldToBeCreatedAttrs;
-  const cDoc = route.params.currentDoc;
-  const documentSignaturesSelector = useSelector(fciDocumentSignaturesSelector);
+  const currentDoc = route.params.currentDoc ?? 0;
+  const documents = useIOSelector(fciSignatureDetailDocumentsSelector);
+  const downloadPath = useIOSelector(fciDownloadPathSelector);
+  const fciEnvironment = useIOSelector(fciEnvironmentSelector);
+  const navigation = useNavigation();
+  const documentSignaturesSelector = useIOSelector(
+    fciDocumentSignaturesSelector
+  );
   const dispatch = useIODispatch();
+  const isFocused = useIsFocused();
 
-  React.useEffect(() => {
+  useEffect(() => {
+    if (documents.length !== 0 && isFocused) {
+      dispatch(fciDownloadPreview.request({ url: documents[currentDoc].url }));
+    }
     // if the user hasn't checked any signauture field,
     // we need to initialize the documentSignatures state
     if (RA.isEmpty(documentSignaturesSelector)) {
@@ -88,179 +88,73 @@ const FciDocumentsScreen = () => {
         })
       );
     }
-  }, [dispatch, documentSignaturesSelector, documents]);
+  }, [dispatch, documentSignaturesSelector, documents, currentDoc, isFocused]);
 
-  const pdfFromBase64 = (r: string) => `data:application/pdf;base64,${r}`;
-
-  /**
-   * Get the pdf url from documents,
-   * download it as base64 string and
-   * load the pdf as pdf-lib object
-   * to draw a rect over the signature field
-   * @param uniqueName the of the signature field
-   */
-  const drawRectangleOverSignatureFieldById = React.useCallback(
-    async (uniqueName: string) => {
-      // TODO: refactor this function to use fp-ts
-      const doc = documents[currentDoc];
-      const url = doc.url;
-
-      const existingPdfBytes = await ReactNativeBlobUtil.fetch("GET", url).then(
-        res => res.base64()
-      );
-
-      setIsPdfLoaded(false);
-
-      await PDFDocument.load(pdfFromBase64(existingPdfBytes)).then(res => {
-        // get the signature field by unique name
-        pipe(
-          res.findPageForAnnotationRef(
-            res.getForm().getSignature(uniqueName).ref
-          ),
-          O.fromNullable,
-          O.map(pageRef => {
-            const page = res.getPages().indexOf(pageRef);
-            setSignaturePage(page + 1);
-            // The signature field is extracted by its unique_name.
-            // Using low-level acrofield (acrobat field) it is possible
-            // to obtain the elements of the signature field such as the
-            // box that contains it. Once the box is obtained, its
-            // coordinates are used to draw a rectangle on the related page.
-            const signature = res.getForm().getSignature(uniqueName);
-            const [widget] = signature.acroField.getWidgets();
-            const rect = widget.getRectangle();
-            res.getPage(page).drawRectangle({
-              x: rect.x,
-              y: rect.y,
-              width: rect.width,
-              height: rect.height,
-              color: rgb(0, 0.77, 0.79),
-              opacity: 0.5,
-              borderOpacity: 0.75
-            });
-          })
-        );
-
-        return res.saveAsBase64().then(r => setPdfString(pdfFromBase64(r)));
-      });
-    },
-    [documents, currentDoc]
-  );
-
-  /**
-   * Get the pdf url from documents,
-   * download it as base64 string and
-   * load the pdf as pdf-lib object
-   * to draw a rect over the signature field
-   * giving a set of coordinates
-   * @param attrs the signature field attrs containing the coords
-   */
-  const drawRectangleOverSignatureFieldByCoordinates = React.useCallback(
-    async (attrs: SignatureFieldToBeCreatedAttrs) => {
-      // TODO: refactor this function to use fp-ts
-      const doc = documents[currentDoc];
-      const url = doc.url;
-
-      const existingPdfBytes = await ReactNativeBlobUtil.fetch("GET", url).then(
-        res => res.base64()
-      );
-
-      setIsPdfLoaded(false);
-
-      await PDFDocument.load(pdfFromBase64(existingPdfBytes)).then(res => {
-        const page = attrs.page;
-        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-        setSignaturePage(page.valueOf() + 1);
-        // The signature box is drawn using the coordinates of the signature field.
-        res.getPage(page).drawRectangle({
-          x: attrs.bottom_left.x ?? 0,
-          y: attrs.bottom_left.y ?? 0,
-          height: Math.abs(
-            (attrs.top_right.y ?? 0) - (attrs.bottom_left.y ?? 0)
-          ),
-          width: Math.abs(
-            (attrs.top_right.x ?? 0) - (attrs.bottom_left.x ?? 0)
-          ),
-          color: rgb(0, 0.77, 0.79),
-          opacity: 0.5,
-          borderOpacity: 0.75
-        });
-
-        return res.saveAsBase64().then(r => setPdfString(pdfFromBase64(r)));
-      });
-    },
-    [documents, currentDoc]
-  );
-
-  const onSignatureDetail = React.useCallback(
-    (attrs: ExistingSignatureFieldAttrs | SignatureFieldToBeCreatedAttrs) => {
-      if (hasUniqueName(attrs)) {
-        drawRectangleOverSignatureFieldById(attrs.unique_name).catch(
-          readableReport // TODO: it should be displayed to the user?
-        );
-      } else {
-        drawRectangleOverSignatureFieldByCoordinates(attrs).catch(
-          readableReport // TODO: it should be displayed to the user?
-        );
-      }
-    },
-    [
-      drawRectangleOverSignatureFieldByCoordinates,
-      drawRectangleOverSignatureFieldById
-    ]
-  );
-
-  React.useEffect(() => {
-    pipe(
-      attrs,
-      O.fromNullable,
-      O.map(_ => {
-        setCurrentDoc(cDoc);
-        onSignatureDetail(_);
-      }),
-      O.getOrElse(() => {
-        setCurrentDoc(cDoc ?? 0);
-        setPdfString("");
-        setSignaturePage(0);
-      })
-    );
-  }, [attrs, cDoc, onSignatureDetail]);
-
-  React.useEffect(() => {
-    if (isPdfLoaded) {
-      pipe(
-        pdfRef.current,
-        O.fromNullable,
-        O.map(_ => _.setPage(signaturePage))
+  useEffect(() => {
+    // with a document opened, we can track the opening success event
+    if (documents[currentDoc] && isFocused) {
+      trackFciDocOpeningSuccess(
+        currentDoc + 1,
+        getRequiredSignatureFields(
+          documents[currentDoc]?.metadata.signature_fields
+        ).length,
+        getOptionalSignatureFields(
+          documents[currentDoc]?.metadata.signature_fields
+        ).length,
+        fciEnvironment
       );
     }
-  }, [pdfRef, signaturePage, isPdfLoaded]);
+  }, [currentDoc, documents, isFocused, fciEnvironment]);
 
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
 
-  const onContinuePress = () =>
-    navigation.navigate(FCI_ROUTES.SIGNATURE_FIELDS, {
-      documentId: documents[currentDoc].id,
-      currentDoc
-    });
+  const {
+    present: showNoSignatureFieldsBs,
+    bottomSheet: fciNoSignatureFields
+  } = useFciNoSignatureFields({ currentDoc });
+
+  const onContinuePress = () => {
+    if (getSignatureFieldsLength(documents[currentDoc]) > 0) {
+      trackFciSigningDoc(fciEnvironment);
+      navigation.dispatch(
+        StackActions.push(FCI_ROUTES.SIGNATURE_FIELDS, {
+          documentId: documents[currentDoc].id,
+          currentDoc
+        })
+      );
+    } else {
+      showNoSignatureFieldsBs();
+    }
+  };
 
   const onCancelPress = () => present();
 
-  const cancelButtonProps = {
-    block: true,
-    light: false,
-    bordered: true,
+  const cancelButtonProps: ComponentProps<
+    typeof FooterActionsInline
+  >["startAction"] = {
     onPress: onCancelPress,
-    title: I18n.t("global.buttons.cancel")
+    label: I18n.t("features.fci.documents.footer.cancel")
   };
 
-  const continueButtonProps = {
-    block: true,
-    primary: true,
+  const continueButtonProps: ComponentProps<
+    typeof FooterActionsInline
+  >["endAction"] = {
     onPress: onContinuePress,
-    title: I18n.t("global.buttons.continue")
+    label: I18n.t("features.fci.documents.footer.continue")
   };
+
+  const keepReadingButtonProps: ComponentProps<
+    typeof FooterActionsInline
+  >["endAction"] = {
+    onPress: () => pointToPage(totalPages),
+    label: I18n.t("global.buttons.continue")
+  };
+
+  const endActionButtonProps: ComponentProps<
+    typeof FooterActionsInline
+  >["endAction"] =
+    currentPage < totalPages ? keepReadingButtonProps : continueButtonProps;
 
   const pointToPage = (page: number) =>
     pipe(
@@ -269,37 +163,27 @@ const FciDocumentsScreen = () => {
       O.map(_ => _.setPage(page))
     );
 
-  const keepReadingButtonProps = {
-    block: true,
-    light: true,
-    bordered: true,
-    onPress: () => pointToPage(totalPages),
-    title: I18n.t("global.buttons.continue")
-  };
-
-  const gotoSignatureButtonProps = {
-    block: true,
-    primary: true,
-    onPress: onContinuePress,
-    title: "Procedi alla firma"
-  };
-
   const renderPager = () => (
+    /** Be aware that, in react-native-pdf 6.7.7, on Android, there
+     * is a bug where onLoadComplete callback is not called. So,
+     * in order to detect proper PDF loading ending, we rely on
+     * onPageChanged, which is called to report that the first page
+     * has loaded */
     <Pdf
       ref={pdfRef}
       source={{
-        uri: S.isEmpty(pdfString) ? `${documents[currentDoc].url}` : pdfString
+        uri: `${downloadPath}`
       }}
-      onLoadProgress={() => setIsPdfLoaded(false)}
       onLoadComplete={(numberOfPages, _) => {
         setTotalPages(numberOfPages);
-        setIsPdfLoaded(true);
       }}
-      onPageChanged={(page, _) => {
+      onPageChanged={(page, numberOfPages) => {
+        if (totalPages === 0) {
+          setTotalPages(numberOfPages);
+        }
         setCurrentPage(page);
       }}
-      onError={constNull}
-      onPressLink={constNull}
+      enablePaging
       style={styles.pdf}
     />
   );
@@ -328,34 +212,24 @@ const FciDocumentsScreen = () => {
     );
   };
 
-  const customGoBack: React.ReactElement = (
-    <TouchableDefaultOpacity
-      onPress={onCancelPress}
-      accessible={true}
-      accessibilityLabel={I18n.t("global.buttons.back")}
-      accessibilityRole={"button"}
-    >
-      <IconFont name={"io-close"} style={{ color: IOColors.bluegrey }} />
-    </TouchableDefaultOpacity>
-  );
-
-  const renderFooterButtons = () => {
-    if (S.isEmpty(pdfString)) {
-      return currentPage < totalPages
-        ? keepReadingButtonProps
-        : continueButtonProps;
-    } else {
-      return gotoSignatureButtonProps;
+  useHeaderSecondLevel({
+    title: I18n.t("features.fci.title"),
+    supportRequest: true,
+    contextualHelp: emptyContextualHelp,
+    goBack: () => {
+      if (currentDoc <= 0) {
+        dispatch(fciClearStateRequest());
+      }
+      navigation.goBack();
     }
-  };
+  });
+
+  if (S.isEmpty(downloadPath)) {
+    return <LoadingComponent />;
+  }
 
   return (
-    <BaseScreenComponent
-      goBack={true}
-      headerTitle={I18n.t("features.fci.title")}
-      customGoBack={customGoBack}
-      contextualHelp={emptyContextualHelp}
-    >
+    <>
       <DocumentsNavigationBar
         indicatorPosition={"right"}
         titleLeft={I18n.t("features.fci.documentsBar.titleLeft", {
@@ -366,32 +240,27 @@ const FciDocumentsScreen = () => {
           currentPage,
           totalPages
         })}
-        iconLeftColor={
-          currentPage === 1 ? IOColors.bluegreyLight : IOColors.blue
-        }
-        iconRightColor={
-          currentPage === totalPages ? IOColors.bluegreyLight : IOColors.blue
-        }
+        iconLeftDisabled={currentPage === 1}
+        iconRightDisabled={currentPage === totalPages}
         onPrevious={onPrevious}
         onNext={onNext}
         disabled={false}
         testID={"FciDocumentsNavBarTestID"}
       />
-      <SafeAreaView style={IOStyles.flex} testID={"FciDocumentsScreenTestID"}>
+      <View style={{ flex: 1 }} testID={"FciDocumentsScreenTestID"}>
         {documents.length > 0 && (
           <>
             {renderPager()}
-
-            <FooterWithButtons
-              type={"TwoButtonsInlineThird"}
-              leftButton={cancelButtonProps}
-              rightButton={renderFooterButtons()}
+            <FooterActionsInline
+              startAction={cancelButtonProps}
+              endAction={endActionButtonProps}
             />
           </>
         )}
-      </SafeAreaView>
+      </View>
       {fciAbortSignature}
-    </BaseScreenComponent>
+      {fciNoSignatureFields}
+    </>
   );
 };
 export default FciDocumentsScreen;

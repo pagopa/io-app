@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`persistedPnBannerDismissReducer should match snapshot [if this test fails, remember to add a migration to the store before updating the snapshot] 1`] = `
+{
+  "dismissed": false,
+}
+`;

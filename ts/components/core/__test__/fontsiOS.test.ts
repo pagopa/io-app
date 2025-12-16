@@ -14,33 +14,21 @@ describe("makeFontStyleObject behaviour on iOS", () => {
   });
   it("call makeFontStyleObject without parameters should have default values", () => {
     const font = makeFontStyleObject();
-    expect(font.fontFamily).toBe("Titillium Web");
+    expect(font.fontFamily).toBe("Titillium Sans Pro");
     expect(font.fontStyle).toBe(FontStyle.normal);
     expect(font.fontWeight).toBeUndefined();
   });
   it("default font family should be Titillium if specify the weight", () => {
     const font = makeFontStyleObject("Bold");
-    expect(font.fontFamily).toBe("Titillium Web");
+    expect(font.fontFamily).toBe("Titillium Sans Pro");
     expect(font.fontStyle).toBe(FontStyle.normal);
     expect(font.fontWeight).toBe("700");
   });
-  it("TitilliumWeb, all weight", () => {
+  it("TitilliumSansPro, all weight", () => {
     italics.map(isItalic =>
       fontWeightsMocks.map(fw => {
-        const font = makeFontStyleObject(fw, isItalic, "TitilliumWeb");
-        expect(font.fontFamily).toBe(`Titillium Web`);
-        expect(font.fontStyle).toBe(
-          isItalic ? FontStyle.italic : FontStyle.normal
-        );
-        expect(font.fontWeight).toBe(fontWeights[fw]);
-      })
-    );
-  });
-  it("RobotoMono, all weight", () => {
-    italics.map(isItalic =>
-      fontWeightsMocks.map(fw => {
-        const font = makeFontStyleObject(fw, isItalic, "RobotoMono");
-        expect(font.fontFamily).toBe(`Roboto Mono`);
+        const font = makeFontStyleObject(fw, isItalic, "TitilliumSansPro");
+        expect(font.fontFamily).toBe(`Titillium Sans Pro`);
         expect(font.fontStyle).toBe(
           isItalic ? FontStyle.italic : FontStyle.normal
         );

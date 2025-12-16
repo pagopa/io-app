@@ -4,7 +4,7 @@ import {
   navigateToCgnActivationCompleted,
   navigateToCgnActivationLoading,
   navigateToCgnActivationTimeout
-} from "../../../../navigation/actions";
+} from "../../../orchestration/navigation/actions";
 import CGN_ROUTES from "../../../../navigation/routes";
 import { cgnActivationStatus } from "../../../../store/actions/activation";
 import { CgnActivationProgressEnum } from "../../../../store/reducers/activation";

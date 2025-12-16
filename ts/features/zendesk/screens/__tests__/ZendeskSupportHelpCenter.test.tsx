@@ -3,10 +3,10 @@ import { RenderAPI } from "@testing-library/react-native";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import ROUTES from "../../../../navigation/routes";
 import ZendeskSupportHelpCenter from "../ZendeskSupportHelpCenter";
-import { isLoading } from "../../../bonus/bpd/model/RemoteValue";
+import { isLoading } from "../../../../common/model/RemoteValue";
 
 jest.useFakeTimers();
 
@@ -37,7 +37,7 @@ describe("the ZendeskSupportHelpCenter screen", () => {
 });
 
 function renderComponent(store: Store<GlobalState>) {
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     ZendeskSupportHelpCenter,
     ROUTES.MAIN,
     {},

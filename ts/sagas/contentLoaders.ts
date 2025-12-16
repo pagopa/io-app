@@ -1,16 +1,17 @@
 /**
  * This module implements the sagas to retrive data from the content client:
  */
-import * as E from "fp-ts/lib/Either";
-import * as t from "io-ts";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { BasicResponseType } from "@pagopa/ts-commons/lib/requests";
+import * as E from "fp-ts/lib/Either";
+import * as t from "io-ts";
 import { SagaIterator } from "redux-saga";
 import { call, put, takeEvery, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { ContextualHelp } from "../../definitions/content/ContextualHelp";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";
 import { ContentClient } from "../api/content";
+import { loadAvailableBonuses } from "../features/bonus/common/store/actions/availableBonusesTypes";
 import {
   contentMunicipalityLoad,
   loadContextualHelpData,
@@ -18,7 +19,6 @@ import {
 } from "../store/actions/content";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
-import { loadAvailableBonuses } from "../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import { convertUnknownToError } from "../utils/errors";
 
 const contentClient = ContentClient();
@@ -69,7 +69,7 @@ function* fetchMunicipalityMetadata(
  * A saga that watches for and executes requests to load municipality metadata.
  */
 function* watchContentMunicipalityLoadSaga(
-  action: ActionType<typeof contentMunicipalityLoad["request"]>
+  action: ActionType<(typeof contentMunicipalityLoad)["request"]>
 ): SagaIterator {
   const codiceCatastale = action.payload;
   try {

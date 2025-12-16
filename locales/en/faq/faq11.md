@@ -1,1 +1,0 @@
-Depending on the regulation established by your Identity Provider, if 5 consecutive failed authentication attempts are detected, you can go through different protection measures (from instant blocking of credentials to the need to wait 15 minutes before proceeding with a new attempt to insert).

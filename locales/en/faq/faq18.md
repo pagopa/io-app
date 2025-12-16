@@ -1,1 +1,0 @@
-Yes, it will be possible to reset the unlock code in the profile section by selecting the 'Reset unlock code' item. You will be asked to start the authentication process again, typing a new Unlock code after the SPID or CIE authentication.

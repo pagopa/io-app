@@ -1,0 +1,9 @@
+"NSBluetoothAlwaysUsageDescription" = "IO richiede l'accesso al Bluetooth per completare la verifica dei documenti";
+"NSBluetoothPeripheralUsageDescription" = "IO richiede l'accesso al Bluetooth per completare la verifica dei documenti";
+"NSCameraUsageDescription" = "Potrai leggere codici QR e pagare gli avvisi pagoPA.";
+"NSCalendarsUsageDescription" = "Se acconsenti, potrai aggiungere le scadenze al tuo calendario e impostare un promemoria.";
+"NSContactsUsageDescription" = "IO ha necessità di accedere ai tuoi contatti per permetterti di aggiungerli come partecipanti alle scadenze";
+"NSFaceIDUsageDescription" = "Potrai accedere più facilmente in app senza digitare il codice di sblocco.";
+"NSPhotoLibraryUsageDescription" = "Potrai salvare bonus e certificati, caricare screenshot e avvisi di pagamento.";
+"NSMicrophoneUsageDescription" = "IO ha necessità di accedere al microfono nel caso in cui desideri mandare una nota vocale";
+"NSPhotoLibraryAddUsageDescription" = "Potrai salvare immagini dall'app sul tuo dispositivo.";

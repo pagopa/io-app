@@ -1,151 +1,175 @@
-import * as React from "react";
-import { SafeAreaView, FlatList, View } from "react-native";
-import { useSelector } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
-import { constNull } from "fp-ts/lib/function";
-import { H1 } from "../../../../components/core/typography/H1";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import I18n from "../../../../i18n";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import {
+  Divider,
+  IOVisualCostants,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import I18n from "i18next";
+import { ComponentProps, useEffect, useState } from "react";
+import { FlatList } from "react-native";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { emptyContextualHelp } from "../../../../utils/contextualHelp";
+import { loadServicePreference } from "../../../services/details/store/actions/preference";
+import { servicePreferencePotByIdSelector } from "../../../services/details/store/selectors";
+import { isServicePreferenceResponseSuccess } from "../../../services/details/types/ServicePreferenceResponse";
+import { trackFciUxConversion } from "../../analytics";
+import LinkedText from "../../components/LinkedText";
+import LoadingComponent from "../../components/LoadingComponent";
+import QtspClauseListItem from "../../components/QtspClauseListItem";
+import SignatureStatusComponent from "../../components/SignatureStatusComponent";
+import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
+import { useFciCheckService } from "../../hooks/useFciCheckService";
+import { FCI_ROUTES } from "../../navigation/routes";
+import { fciEndRequest, fciStartSigningRequest } from "../../store/actions";
+import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
+import { fciMetadataServiceIdSelector } from "../../store/reducers/fciMetadata";
+import {
+  fciPollFilledDocumentErrorSelector,
+  fciPollFilledDocumentReadySelector
+} from "../../store/reducers/fciPollFilledDocument";
 import {
   fciQtspClausesSelector,
   fciQtspPrivacyTextSelector,
   fciQtspPrivacyUrlSelector
 } from "../../store/reducers/fciQtspClauses";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
-import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
-import customVariables from "../../../../theme/variables";
-import QtspClauseListItem from "../../components/QtspClauseListItem";
-import { FCI_ROUTES } from "../../navigation/routes";
-import { useIODispatch } from "../../../../store/hooks";
-import { fciEndRequest, fciStartSigningRequest } from "../../store/actions";
-import { LoadingErrorComponent } from "../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import {
-  fciPollFilledDocumentErrorSelector,
-  fciPollFilledDocumentReadySelector
-} from "../../store/reducers/fciPollFilledDocument";
-import GenericErrorComponent from "../../components/GenericErrorComponent";
-import LinkedText from "../../components/LinkedText";
-import { H4 } from "../../../../components/core/typography/H4";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 const FciQtspClausesScreen = () => {
-  const [clausesChecked, setClausesChecked] = React.useState(0);
-  const qtspClausesSelector = useSelector(fciQtspClausesSelector);
-  const qtspPrivacyTextSelector = useSelector(fciQtspPrivacyTextSelector);
-  const qtspPrivacyUrlSelector = useSelector(fciQtspPrivacyUrlSelector);
-  const isPollFilledDocumentReady = useSelector(
+  const dispatch = useIODispatch();
+  const navigation = useIONavigation();
+  const [clausesChecked, setClausesChecked] = useState(0);
+  const fciServiceId = useIOSelector(fciMetadataServiceIdSelector);
+  const servicePreferencePot = useIOSelector(state =>
+    servicePreferencePotByIdSelector(state, fciServiceId)
+  );
+  const qtspClausesSelector = useIOSelector(fciQtspClausesSelector);
+  const qtspPrivacyTextSelector = useIOSelector(fciQtspPrivacyTextSelector);
+  const qtspPrivacyUrlSelector = useIOSelector(fciQtspPrivacyUrlSelector);
+  const isPollFilledDocumentReady = useIOSelector(
     fciPollFilledDocumentReadySelector
   );
-  const fciPollFilledDocumentError = useSelector(
+  const fciPollFilledDocumentError = useIOSelector(
     fciPollFilledDocumentErrorSelector
   );
+  const fciEnvironment = useIOSelector(fciEnvironmentSelector);
 
-  const navigation = useNavigation();
-  const dispatch = useIODispatch();
+  const servicePreferenceValue = pot.getOrElse(servicePreferencePot, undefined);
 
-  const { present, bottomSheet: fciAbortSignature } =
+  const isServiceActive =
+    servicePreferenceValue &&
+    isServicePreferenceResponseSuccess(servicePreferenceValue) &&
+    servicePreferenceValue.value.inbox;
+
+  useEffect(() => {
+    if (fciServiceId) {
+      dispatch(loadServicePreference.request(fciServiceId as ServiceId));
+    }
+  }, [dispatch, fciServiceId]);
+
+  const { present: showCheckService, bottomSheet: fciCheckService } =
+    useFciCheckService();
+
+  const { present: showAbort, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
 
   const openUrl = (url: string) => {
-    navigation.navigate(FCI_ROUTES.DOC_PREVIEW, { documentUrl: url });
+    navigation.navigate(FCI_ROUTES.MAIN, {
+      screen: FCI_ROUTES.DOC_PREVIEW,
+      params: {
+        documentUrl: url
+      }
+    });
   };
 
-  const LoadingComponent = () => (
-    <LoadingErrorComponent
-      isLoading={true}
-      loadingCaption={""}
-      onRetry={constNull}
-      testID={"FciLoadingScreenTestID"}
-    />
-  );
-
   if (fciPollFilledDocumentError && !isPollFilledDocumentReady) {
-    return <GenericErrorComponent onPress={() => dispatch(fciEndRequest())} />;
+    return (
+      <SignatureStatusComponent
+        title={I18n.t("features.fci.errors.generic.default.title")}
+        subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
+        onPress={() => dispatch(fciEndRequest())}
+        pictogram={"umbrella"}
+        assistance={true}
+        testID="PollingErrorComponentTestID"
+      />
+    );
   } else if (!isPollFilledDocumentReady) {
-    return <LoadingComponent />;
+    return <LoadingComponent testID={"FciLoadingScreenTestID"} />;
   }
 
   const renderClausesFields = () => (
-    <View style={{ flex: 1 }}>
-      <View
-        style={[
-          IOStyles.flex,
-          { paddingBottom: customVariables.contentPadding }
-        ]}
-      >
-        <FlatList
-          data={qtspClausesSelector}
-          keyExtractor={(_, index) => `${index}`}
-          ItemSeparatorComponent={() => (
-            <ItemSeparatorComponent noPadded={true} />
-          )}
-          renderItem={({ item }) => (
-            <QtspClauseListItem
-              clause={item}
-              onChange={value =>
-                value
-                  ? setClausesChecked(clausesChecked + 1)
-                  : setClausesChecked(clausesChecked - 1)
-              }
-              onLinkPress={openUrl}
-            />
-          )}
-          ListFooterComponent={
-            <LinkedText
-              text={qtspPrivacyTextSelector}
-              replacementUrl={qtspPrivacyUrlSelector}
-              onPress={openUrl}
-            />
+    <FlatList
+      contentContainerStyle={{
+        paddingHorizontal: IOVisualCostants.appMarginDefault
+      }}
+      scrollEnabled={false}
+      data={qtspClausesSelector}
+      keyExtractor={(_, index) => `${index}`}
+      ItemSeparatorComponent={() => <Divider />}
+      renderItem={({ item }) => (
+        <QtspClauseListItem
+          clause={item}
+          onChange={value =>
+            value
+              ? setClausesChecked(clausesChecked + 1)
+              : setClausesChecked(clausesChecked - 1)
           }
-          keyboardShouldPersistTaps={"handled"}
-          testID={"FciQtspClausesListTestID"}
+          onLinkPress={openUrl}
         />
-      </View>
-    </View>
+      )}
+      ListFooterComponent={
+        <>
+          <Divider />
+          <VSpacer size={24} />
+          <LinkedText
+            text={qtspPrivacyTextSelector}
+            replacementUrl={qtspPrivacyUrlSelector}
+            onPress={openUrl}
+          />
+        </>
+      }
+      keyboardShouldPersistTaps={"handled"}
+      testID={"FciQtspClausesListTestID"}
+    />
   );
 
-  const cancelButtonProps = {
-    block: true,
-    light: false,
-    bordered: true,
-    onPress: present,
-    title: I18n.t("global.buttons.cancel")
-  };
-
-  const continueButtonProps = {
-    block: true,
-    primary: true,
-    disabled: clausesChecked !== qtspClausesSelector.length,
-    onPress: () => dispatch(fciStartSigningRequest()),
-    title: I18n.t("global.buttons.continue")
+  const actions: ComponentProps<typeof IOScrollView>["actions"] = {
+    type: "TwoButtons",
+    primary: {
+      disabled: clausesChecked !== qtspClausesSelector.length,
+      label: I18n.t("global.buttons.continue"),
+      onPress: () => {
+        if (isServiceActive) {
+          trackFciUxConversion(fciEnvironment);
+          dispatch(fciStartSigningRequest());
+        } else {
+          showCheckService();
+        }
+      }
+    },
+    secondary: {
+      onPress: showAbort,
+      label: I18n.t("global.buttons.cancel")
+    }
   };
 
   return (
-    <BaseScreenComponent
-      goBack={true}
-      headerTitle={I18n.t("features.fci.signatureFields.title")}
+    <IOScrollViewWithLargeHeader
+      testID={"FciQtspClausesTestID"}
+      title={{
+        label: I18n.t("features.fci.qtspTos.title")
+      }}
+      description={I18n.t("features.fci.qtspTos.subTitle")}
+      actions={actions}
       contextualHelp={emptyContextualHelp}
+      headerActionsProp={{ showHelp: true }}
     >
-      <SafeAreaView style={IOStyles.flex} testID={"FciQtspClausesTestID"}>
-        <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
-          <H1>{I18n.t("features.fci.qtspTos.title")}</H1>
-          <VSpacer size={8} />
-          <H4 weight="Regular" color={"bluegreyDark"}>
-            {I18n.t("features.fci.qtspTos.subTitle")}
-          </H4>
-          {renderClausesFields()}
-        </View>
-        <FooterWithButtons
-          type={"TwoButtonsInlineThird"}
-          leftButton={cancelButtonProps}
-          rightButton={continueButtonProps}
-        />
-      </SafeAreaView>
+      {renderClausesFields()}
       {fciAbortSignature}
-    </BaseScreenComponent>
+      {fciCheckService}
+    </IOScrollViewWithLargeHeader>
   );
 };
 export default FciQtspClausesScreen;

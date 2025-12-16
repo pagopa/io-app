@@ -1,0 +1,514 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PageNotFound Should match the snapshot 1`] = `
+<RNCSafeAreaView
+  edges={
+    {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "additive",
+    }
+  }
+  style={
+    {
+      "flexGrow": 1,
+    }
+  }
+>
+  <RCTScrollView
+    alwaysBounceVertical={false}
+    centerContent={true}
+    contentContainerStyle={
+      [
+        {
+          "alignContent": "center",
+          "alignItems": "stretch",
+          "flexGrow": 1,
+          "justifyContent": "center",
+          "padding": 24,
+        },
+        false,
+      ]
+    }
+  >
+    <View>
+      <View
+        style={
+          {
+            "alignItems": "center",
+          }
+        }
+      >
+        <RNSVGSvgView
+          align="xMidYMid"
+          bbHeight={120}
+          bbWidth={120}
+          focusable={false}
+          height={120}
+          meetOrSlice={0}
+          minX={0}
+          minY={0}
+          style={
+            [
+              {
+                "backgroundColor": "transparent",
+                "borderWidth": 0,
+              },
+              {
+                "flex": 0,
+                "height": 120,
+                "width": 120,
+              },
+            ]
+          }
+          vbHeight={240}
+          vbWidth={240}
+          width={120}
+        >
+          <RNSVGGroup
+            fill={
+              {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
+          >
+            <RNSVGPath
+              d="M102.76 55c27.83 0 50.39 22.56 50.39 50.39 0 1.8-.1 3.58-.28 5.33l-3.63-2.63-3.97-1.84s-5.58.69-6.49 0c-.91-.69-3.36.07-3.68.25-.32.18-3.22 3.07-3.22 3.07l-1.28 3.54v3.94l1.28 2.9v1.89l-5.56-1.38s-.81-.19-2.71-.63c-1.89-.44-7.77-.02-7.96-.87-.19-.85-.1-.92-1.53-1.1-1.43-.17-4.95-.81-4.95-.81l-2.77-.35-2.72-.24s-3.41.83-3.63.98c-.2299.15-2.6699 6.32-2.6699 6.32v1.98l-.93 1.54-2.44 1.36-3.35 3.73.43 8.12 4.02 4.73-4.02 5.58.99 3.82c-22.7-4.9-39.71-25.08-39.71-49.25 0-27.83 22.56-50.39 50.3899-50.39V55Z"
+              fill={
+                {
+                  "payload": 4289392367,
+                  "type": 0,
+                }
+              }
+              propList={
+                [
+                  "fill",
+                ]
+              }
+            />
+            <RNSVGPath
+              d="M202.651 164.54c-.11-.13-10.98-13.21-23.59-26.68-20.84-22.26-30.19-28.43-34.36-29.69-5.3-1.6-9.25-.7-11.14 2.51-1.96 3.35-1.13 8.07.92 10.06.66.63.8 1.63.35 2.42-.45.79-1.38 1.18-2.26.94-.18-.05-18.54-4.97-29.01-5.63-1.05-.06-2.06.29-2.85.99-.8004.72-1.2704 1.72-1.3204 2.8-.09 2.07 1.3904 3.83 3.4304 4.11 9.84 1.33 22.46 3.45 26.75 6.03l-2.06 3.43c-2.84-1.71-12.03-3.71-25.22-5.49-4.1104-.55-7.0804-4.1-6.9004-8.25.1-2.17 1.04-4.16 2.65-5.6 1.59-1.43 3.6404-2.14 5.7704-2.01 7.67.48 18.97 3.05 25.23 4.59-1.02-3.37-.72-7.37 1.07-10.42 1.36-2.31 5.61-7.36 15.74-4.31 15.87 4.78 58.09 55.48 59.88 57.64l-3.08 2.55v.01Z"
+              fill={
+                {
+                  "payload": 4278927075,
+                  "type": 0,
+                }
+              }
+              propList={
+                [
+                  "fill",
+                ]
+              }
+            />
+            <RNSVGPath
+              d="M122.41 150.3c-2.3-1.73-10.9-2.99-22.9898-3.37-5.84-.18-10.47-5.09-10.32-10.94.11-4.47 3.04-8.44 7.28-9.87l2.11-.71 1.27 3.79-2.11.71c-2.66.89-4.49 3.37-4.55 6.17-.09 3.66 2.8 6.73 6.45 6.85 13.6498.43 22.1598 1.83 25.2698 4.17l-2.4 3.2h-.01Z"
+              fill={
+                {
+                  "payload": 4278927075,
+                  "type": 0,
+                }
+              }
+              propList={
+                [
+                  "fill",
+                ]
+              }
+            />
+            <RNSVGPath
+              d="M162.49 209.47c-16.99-25.12-39-41.13-65.4198-47.6l-.51-.12c-2.85-.7-5.15-2.77-6.15-5.53-1.04-2.86-.5-6.12 1.4-8.5l3.29-4.1 3.12 2.5-3.29 4.1c-1.04 1.3-1.33 3.07-.76 4.64.55 1.51 1.8 2.63 3.35 3.02l.5.12c27.4098 6.71 50.2198 23.28 67.7798 49.25l-3.31 2.24v-.02ZM142.327 127.059l-2.585 3.052 8.021 6.792 2.585-3.052-8.021-6.792Z"
+              fill={
+                {
+                  "payload": 4278927075,
+                  "type": 0,
+                }
+              }
+              propList={
+                [
+                  "fill",
+                ]
+              }
+            />
+            <RNSVGPath
+              d="M150.6 155.74c-6.01-10.42-2.18-27.59-2.01-28.32l3.9.89c-.04.16-3.65 16.38 1.58 25.42l-3.46 2-.01.01ZM130.063 127.83l-12.575 27.227 3.632 1.677 12.574-27.226-3.631-1.678Z"
+              fill={
+                {
+                  "payload": 4278927075,
+                  "type": 0,
+                }
+              }
+              propList={
+                [
+                  "fill",
+                ]
+              }
+            />
+            <RNSVGPath
+              d="M123.15 84.47c-.39 0-.79-.15-1.08-.46-.57-.6-.55-1.55.05-2.12l31.26-29.92c.6-.57 1.55-.55 2.12.05.57.6.55 1.55-.05 2.12l-31.26 29.92c-.29.28-.66.42-1.04.42v-.01ZM106.62 75.54c-.82 0-1.49-.66-1.5-1.48l-.45-41.54c0-.83.66-1.51 1.48-1.52h.02c.82 0 1.49.66 1.5 1.48l.45 41.54c0 .83-.66 1.51-1.48 1.52h-.02ZM87.8601 82.24c-.39 0-.78-.15-1.07-.45l-26.8-27.47c-.58-.59-.57-1.54.03-2.12.59-.58 1.54-.57 2.12.03l26.8 27.47c.58.59.57 1.54-.03 2.12-.29.28-.67.43-1.05.43v-.01ZM82.0598 100.99c-.06 0-.12 0-.18-.01l-45.55-5.36c-.82-.1-1.41-.84-1.31-1.67.1-.82.84-1.41 1.66-1.31l45.56 5.36c.82.1 1.41.84 1.31 1.67-.09.76-.74 1.32-1.49 1.32Z"
+              fill={
+                {
+                  "payload": 4278240714,
+                  "type": 0,
+                }
+              }
+              propList={
+                [
+                  "fill",
+                ]
+              }
+            />
+          </RNSVGGroup>
+        </RNSVGSvgView>
+        <View
+          style={
+            {
+              "height": 24,
+            }
+          }
+        />
+      </View>
+      <Text
+        accessibilityRole="header"
+        allowFontScaling={true}
+        dynamicTypeRamp="title2"
+        maxFontSizeMultiplier={1.5}
+        style={
+          [
+            {},
+            {
+              "color": "#0E0F13",
+              "fontFamily": "Titillio",
+              "fontSize": 22,
+              "fontStyle": "normal",
+              "fontWeight": "600",
+              "lineHeight": 33,
+            },
+            {
+              "textAlign": "center",
+            },
+          ]
+        }
+      >
+        Qui non c’è nulla!
+      </Text>
+      <View
+        style={
+          {
+            "height": 8,
+          }
+        }
+      />
+      <Text
+        allowFontScaling={true}
+        dynamicTypeRamp="body"
+        maxFontSizeMultiplier={1.5}
+        style={
+          [
+            {},
+            {
+              "color": "#555C70",
+              "fontFamily": "Titillio",
+              "fontSize": 16,
+              "fontStyle": "normal",
+              "fontWeight": "400",
+              "lineHeight": 24,
+            },
+            {
+              "textAlign": "center",
+            },
+          ]
+        }
+      >
+        Questa pagina non esiste o non è disponibile nella versione dell’app che stai usando.
+Prova ad aggiornare IO.
+      </Text>
+      <View
+        style={
+          {
+            "alignItems": "center",
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "height": 24,
+            }
+          }
+        />
+        <View>
+          <View
+            accessibilityLabel="Aggiorna l'app"
+            accessibilityRole="button"
+            accessibilityState={
+              {
+                "busy": false,
+                "checked": undefined,
+                "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              {
+                "alignSelf": "auto",
+                "flexShrink": 1,
+              }
+            }
+            testID="pageNotFoundBtnUpdateId"
+          >
+            <View
+              style={
+                [
+                  {
+                    "alignItems": "center",
+                    "borderCurve": "continuous",
+                    "elevation": 0,
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "overflow": "hidden",
+                    "textAlignVertical": "center",
+                  },
+                  false,
+                  {
+                    "backgroundColor": undefined,
+                  },
+                  {
+                    "paddingHorizontal": 24,
+                  },
+                  {
+                    "backgroundColor": "#0B3EE3",
+                    "borderColor": "#FFFFFF",
+                    "borderRadius": 8,
+                    "borderWidth": 0,
+                    "height": 48,
+                  },
+                  {},
+                ]
+              }
+            >
+              <View
+                style={
+                  [
+                    {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    },
+                    {
+                      "columnGap": 8,
+                    },
+                    false,
+                  ]
+                }
+              >
+                <Text
+                  accessibilityElementsHidden={true}
+                  accessible={false}
+                  allowFontScaling={true}
+                  ellipsizeMode="tail"
+                  importantForAccessibility="no-hide-descendants"
+                  maxFontSizeMultiplier={1.5}
+                  numberOfLines={1}
+                  style={
+                    [
+                      {},
+                      {
+                        "color": "#0E0F13",
+                        "fontFamily": "Titillio",
+                        "fontSize": 16,
+                        "fontStyle": "normal",
+                        "fontWeight": "600",
+                        "lineHeight": undefined,
+                      },
+                      [
+                        {
+                          "textAlign": "auto",
+                        },
+                        {
+                          "color": "#FFFFFF",
+                        },
+                        {
+                          "color": undefined,
+                        },
+                      ],
+                    ]
+                  }
+                >
+                  Aggiorna l'app
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "alignItems": "center",
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "height": 24,
+            }
+          }
+        />
+        <View>
+          <View
+            accessibilityLabel="Chiudi"
+            accessibilityRole="button"
+            accessibilityState={
+              {
+                "busy": false,
+                "checked": undefined,
+                "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            hitSlop={
+              {
+                "bottom": 14,
+                "left": 24,
+                "right": 24,
+                "top": 14,
+              }
+            }
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              {
+                "alignSelf": "flex-start",
+              }
+            }
+            testID="pageNotFoundBtnCloseId"
+          >
+            <View
+              style={
+                [
+                  {
+                    "alignItems": "center",
+                    "borderCurve": "continuous",
+                    "elevation": 0,
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                    "overflow": "hidden",
+                    "textAlignVertical": "center",
+                  },
+                  false,
+                  {},
+                  {
+                    "paddingHorizontal": 0,
+                  },
+                  {
+                    "backgroundColor": "transparent",
+                    "borderColor": "#0B3EE3",
+                    "borderRadius": 8,
+                    "borderWidth": 0,
+                    "height": undefined,
+                  },
+                  {},
+                ]
+              }
+            >
+              <View
+                style={
+                  [
+                    {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    },
+                    {
+                      "columnGap": 8,
+                    },
+                    false,
+                  ]
+                }
+              >
+                <Text
+                  accessibilityElementsHidden={true}
+                  accessible={false}
+                  allowFontScaling={true}
+                  ellipsizeMode="tail"
+                  importantForAccessibility="no-hide-descendants"
+                  maxFontSizeMultiplier={1.5}
+                  numberOfLines={1}
+                  style={
+                    [
+                      {},
+                      {
+                        "color": "#0E0F13",
+                        "fontFamily": "Titillio",
+                        "fontSize": 16,
+                        "fontStyle": "normal",
+                        "fontWeight": "600",
+                        "lineHeight": 20,
+                      },
+                      [
+                        {
+                          "textAlign": "auto",
+                        },
+                        {
+                          "color": "#0B3EE3",
+                        },
+                        {
+                          "color": undefined,
+                        },
+                      ],
+                    ]
+                  }
+                >
+                  Chiudi
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</RNCSafeAreaView>
+`;

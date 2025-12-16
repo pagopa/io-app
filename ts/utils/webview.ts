@@ -12,69 +12,18 @@ export const ON_SCROLL_END_LISTENER = `window.onscroll=function(){
     }
 };`;
 
-export const APP_EVENT_HANDLER = `
-function sendMessagesToRN(message) {
-  if (message) {
-    if (window.ReactNativeWebView) {
-      window.ReactNativeWebView.postMessage(JSON.stringify(message));
-    }
-    return;
-  }
-  console.error("Specify a message to send");
+/**
+ * This script listens to load and resize events to get the height
+ * and also has a fallback timeout to send the height after 300ms
+ */
+export const GET_CONTENT_HEIGHT_SCRIPT = `
+function sendHeight() {
+  var html = document.documentElement;
+  window.ReactNativeWebView.postMessage(html.offsetHeight);
 }
-
-function closeModal() {
-  const message = {
-    type: "CLOSE_MODAL"
-  };
-  sendMessagesToRN(message);
-}
-
-function showLoader() {
-  const message = {
-    type: "START_LOAD"
-  };
-  sendMessagesToRN(message);
-}
-
-function hideLoader() {
-  const message = {
-    type: "END_LOAD"
-  };
-  sendMessagesToRN(message);
-}
-
-function showSuccess(payload) {
-  const message = {
-    type: "SHOW_SUCCESS",
-    ...payload
-  };
-  sendMessagesToRN(message);
-}
-
-function showErrorMessage(payload) {
-  const message = {
-    type: "SHOW_ERROR",
-    ...payload
-  };
-  sendMessagesToRN(message);
-}
-
-function showAlertBox(payload) {
-  const message = {
-    type: "SHOW_ALERT",
-    ...payload
-  };
-  sendMessagesToRN(message);
-}
-
-function checkInjectionCompleted() {
-  if(typeof onInjectionCompleted === 'function') {
-    onInjectionCompleted();
-  }
-}
-
-checkInjectionCompleted();
+window.addEventListener("load", sendHeight);
+window.addEventListener("resize", sendHeight);
+sendHeight();
 `;
 
 const endTrue = "true;";

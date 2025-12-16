@@ -76,7 +76,7 @@ const testCases: ReadonlyArray<
     {
       pm: {
         ...paymentMethod,
-        enableableFunctions: [EnableableFunctionsEnum.BPD],
+        enableableFunctions: [],
         pagoPA: true
       },
       expected: {

@@ -8,18 +8,22 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { Errors } from "io-ts";
-import { Locales, TranslationKeys } from "../../locales/locales";
-import I18n from "../i18n";
+import I18n from "i18next";
+import { Locales } from "../../locales/locales";
 import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";
-import { getLocalePrimary, localeDateFormat } from "./locale";
-import { ExpireStatus } from "./messages";
+import { getLocalePrimary } from "./locale";
 import { NumberFromString } from "./number";
 
 type DateFnsLocale = typeof import("date-fns/locale/it");
 
 type DFNSLocales = Record<Locales, DateFnsLocale>;
 
-const locales: DFNSLocales = { it: dfns_it, en: dfns_en, de: dfns_de, sl: dfns_sl };
+const locales: DFNSLocales = {
+  it: dfns_it,
+  en: dfns_en,
+  de: dfns_de,
+  sl: dfns_sl
+};
 
 export const pad = (n: number) => n.toString().padStart(2, "0");
 
@@ -48,37 +52,11 @@ export const formatFiscalCodeBirthdayAsShortFormat = (
     )
   );
 
-export const formatFiscalCodeBirthdayAsAccessibilityReadableFormat = (
-  date: Date | undefined
-): string =>
-  pipe(
-    date,
-    O.fromNullable,
-    O.chain(O.fromPredicate(d => !isNaN(d.getTime()))),
-    O.fold(
-      () => I18n.t("global.date.invalid"),
-      d => {
-        const year = d.getUTCFullYear();
-        const month = d.getUTCMonth() + 1;
-        const date = d.getUTCDate();
-        const day = d.getUTCDay();
-        const dayTranslationKey = I18n.t(
-          `date.day_names.${day}` as TranslationKeys
-        );
-        const monthTranslationKey = I18n.t(
-          `date.month_names.${month}` as TranslationKeys
-        );
-
-        return `${dayTranslationKey} ${date} ${monthTranslationKey} ${year}`;
-      }
-    )
-  );
-
 // return a string representing the date dd/MM/YYYY (ex: 1 Jan 1970 -> 01/01/1970)
 export const formatDateAsShortFormat = (date: Date): string =>
   isNaN(date.getTime())
     ? I18n.t("global.date.invalid")
-    : I18n.strftime(date, I18n.t("global.dateFormats.shortFormat"));
+    : new Intl.DateTimeFormat("it", { dateStyle: "short" }).format(date);
 
 export function formatDateAsMonth(date: Date): ReturnType<typeof format> {
   return format(date, "MMM");
@@ -118,7 +96,7 @@ export function format(
   date: string | number | Date,
   dateFormat?: string
 ): ReturnType<typeof dateFnsFormat> {
-  const localePrimary = getLocalePrimary(I18n.currentLocale());
+  const localePrimary = getLocalePrimary(I18n.language);
   return dateFnsFormat(
     date,
     dateFormat,
@@ -228,6 +206,18 @@ export const isExpired = (
 };
 
 /**
+ * This function returns true or false is the provided expiryDate is expired or not
+ * @param expiryDate
+ */
+export const isExpiredDate = (expiryDate: Date): boolean => {
+  const now = new Date();
+  const nowYearMonth = new Date(now.getFullYear(), now.getMonth());
+  return nowYearMonth > expiryDate;
+};
+
+export type ExpireStatus = "VALID" | "EXPIRING" | "EXPIRED";
+
+/**
  * A function to check if the given date is in the past or in the future.
  * It returns:
  * -VALID, if the date is in the future
@@ -291,8 +281,38 @@ export const getTranslatedShortNumericMonthYear = (
   if (isNaN(year) || isNaN(indexedMonth)) {
     return undefined;
   }
-  return localeDateFormat(
-    new Date(year, indexedMonth - 1),
-    I18n.t("global.dateFormats.shortNumericMonthYear")
-  );
+  return new Intl.DateTimeFormat("it", {
+    month: "2-digit",
+    year: "2-digit"
+  }).format(new Date(year, indexedMonth - 1));
+};
+
+/**
+ * Generates a locale formatted timestamp,
+ * used to force the refresh of the Image component cache for Android devices
+ * every 24 hours.
+ * @returns the actual locale date short format without slashes.
+ */
+export const toAndroidCacheTimestamp = () =>
+  new Intl.DateTimeFormat("it", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric"
+  })
+    .format(new Date())
+    .replace(/\//g, "");
+
+/**
+ * This function returns a Date object from a string in format "YYYYMM"
+ * @param expiryDate
+ */
+export const getDateFromExpiryDate = (expiryDate: string): Date | undefined => {
+  try {
+    const year = +expiryDate.slice(0, 4);
+    const month = +expiryDate.slice(4, 6);
+    const date = new Date(year, month - 1);
+    return isNaN(date.getDate()) ? undefined : date;
+  } catch {
+    return undefined;
+  }
 };

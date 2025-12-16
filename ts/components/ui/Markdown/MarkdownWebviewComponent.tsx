@@ -2,12 +2,12 @@ import { useLinkTo } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React from "react";
+import { LegacyRef } from "react";
 import { StyleProp, ViewStyle } from "react-native";
 import { WebView } from "react-native-webview";
 import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
-import { handleInternalLink } from "./handlers/internalLink";
+import { handleInternalLink } from "../../../utils/internalLink";
 import { handleLinkMessage, isIoInternalLink } from "./handlers/link";
 import { WebViewMessage } from "./types";
 
@@ -16,7 +16,7 @@ type Props = {
   handleLoadEnd: () => void;
   html: string;
   webviewKey: number;
-  webViewRef: React.RefObject<WebView>;
+  webViewRef: LegacyRef<WebView>;
   setLoadingFalse: () => void;
   setHtmlBodyHeight: (h: number) => void;
   shouldHandleLink?: (link: string) => boolean;
@@ -26,7 +26,7 @@ type Props = {
   testID?: string;
 };
 
-const MarkdownWebviewComponent = (props: Props) => {
+export const MarkdownWebviewComponent = (props: Props) => {
   const linkTo = useLinkTo();
 
   const handleWebViewMessage = (event: WebViewMessageEvent) => {
@@ -65,7 +65,6 @@ const MarkdownWebviewComponent = (props: Props) => {
       })
     );
   };
-
   return (
     <WebView
       androidCameraAccessDisabled={true}
@@ -90,4 +89,3 @@ const MarkdownWebviewComponent = (props: Props) => {
     />
   );
 };
-export default MarkdownWebviewComponent;

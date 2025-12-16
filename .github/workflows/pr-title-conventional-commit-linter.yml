@@ -1,0 +1,96 @@
+name: "Check for conventional commit change type inside the PR title"
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - reopened
+      - synchronize
+
+jobs:
+  lint:
+    name: Validate PR Title
+    runs-on: ubuntu-22.04
+    env:
+      VALID_TYPES: "feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert"
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      COMMENT_TITLE: "## PR Title Validation for conventional commit type"
+      # https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
+      TITLE: ${{ github.event.pull_request.title }}
+    steps:
+      - name: Check PR Title Format
+        id: lint
+        run: |
+          PR_TITLE="$TITLE"
+          if [[ "$PR_TITLE" =~ ^([a-z]+)(\(([ a-zA-Z0-9_-]+)\))?:[[:space:]]*(.+)$ ]]; then
+            TYPE=${BASH_REMATCH[1]}
+            CONTEXT=${BASH_REMATCH[3]}
+            DESCRIPTION=${BASH_REMATCH[4]}
+            echo fix: $TYPE
+            echo context: $CONTEXT
+            echo description: $DESCRIPTION
+            echo "PR_TYPE=$TYPE" >> $GITHUB_ENV
+            echo "PR_CONTEXT=$CONTEXT" >> $GITHUB_ENV
+            echo "PR_DESCRIPTION=$DESCRIPTION" >> $GITHUB_ENV
+            if [[ ! "$TYPE" =~ ^($VALID_TYPES)$ ]]; then
+              echo "VALIDATION_RESULT=warning" >> $GITHUB_ENV
+            else
+              echo "VALIDATION_RESULT=success" >> $GITHUB_ENV
+            fi
+          else
+            echo "VALIDATION_RESULT=failure" >> $GITHUB_ENV
+          fi
+
+      - name: Find Existing Comment
+        id: find_comment
+        run: |
+          EXISTING_COMMENT=$(gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
+            --jq ".[] | select(.body | startswith(\"$COMMENT_TITLE\")) | .id")          
+          COMMENT_COUNT=$(echo "$EXISTING_COMMENT" | wc -l)
+          if [ "$COMMENT_COUNT" -gt 1 ]; then
+            echo "Multiple comments found with the same title. Please review the comments."
+            exit 2
+          else
+            echo "EXISTING_COMMENT_ID=$EXISTING_COMMENT" >> $GITHUB_ENV
+          fi
+
+      - name: Add or Update Comment
+        run: |
+          COMMENT_BODY="$COMMENT_TITLE"$'\n\n'
+          if [[ "${{ env.VALIDATION_RESULT }}" == "success" ]]; then
+            COMMENT_BODY+=":white_check_mark: **All good!** PR title follows the conventional commit type."
+          elif [[ "${{ env.VALIDATION_RESULT }}" == "warning" ]]; then
+            COMMENT_BODY+=":warning: **PR title is valid**, but uses an unconventional type."
+          else
+            COMMENT_BODY+=":x: **PR title is invalid.**"$'\n'
+            COMMENT_BODY+="It must follow the format \`type(context): description\`."$'\n\n'
+            COMMENT_BODY+="**Valid types:**"$'\n'
+            COMMENT_BODY+="- \`feat\`"$'\n'
+            COMMENT_BODY+="- \`fix\`"$'\n'
+            COMMENT_BODY+="- \`docs\`"$'\n'
+            COMMENT_BODY+="- \`style\`"$'\n'
+            COMMENT_BODY+="- \`refactor\`"$'\n'
+            COMMENT_BODY+="- \`perf\`"$'\n'
+            COMMENT_BODY+="- \`test\`"$'\n'
+            COMMENT_BODY+="- \`build\`"$'\n'
+            COMMENT_BODY+="- \`ci\`"$'\n'
+            COMMENT_BODY+="- \`chore\`"$'\n'
+            COMMENT_BODY+="- \`revert\`"
+          fi
+
+          if [[ -n "${{ env.EXISTING_COMMENT_ID }}" ]]; then
+            # Update the existing comment
+            gh api repos/${{ github.repository }}/issues/comments/${{ env.EXISTING_COMMENT_ID }} \
+              -X PATCH -F body="$COMMENT_BODY"
+          else
+            # Create a new comment
+            gh api repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
+              -X POST -F body="$COMMENT_BODY"
+          fi
+
+      - name: Fail if Title Invalid
+        if: ${{ env.VALIDATION_RESULT == 'failure' }}
+        run: |
+          echo "Pull request title (${{ github.event.pull_request.title }}) is not properly formatted."
+          exit 1

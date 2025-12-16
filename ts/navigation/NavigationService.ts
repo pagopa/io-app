@@ -3,15 +3,23 @@ import {
   NavigationContainerRef
 } from "@react-navigation/native";
 import { Route } from "@react-navigation/routers";
-import React from "react";
-import { mixpanelTrack } from "../mixpanel";
 
-export const navigationRef = React.createRef<NavigationContainerRef>();
+import { createRef, RefObject } from "react";
+import { mixpanelTrack } from "../mixpanel";
+import { AppParamsList } from "./params/AppParamsList";
+
+export const navigationRef = createRef<NavigationContainerRef<AppParamsList>>();
 // eslint-disable-next-line functional/no-let
 let isNavigationReady: boolean = false;
 
+// eslint-disable-next-line functional/no-let
+let isMainNavigatorReady = false;
+
+export const setMainNavigatorReady = () => {
+  isMainNavigatorReady = true;
+};
+
 export const setNavigationReady = () => {
-  // eslint-disable-next-line functional/immutable-data
   isNavigationReady = true;
 };
 
@@ -30,19 +38,34 @@ const withLogging =
   };
 
 // NavigationContainerComponent
-const getNavigator = (): React.RefObject<NavigationContainerRef> =>
-  navigationRef;
+const getNavigator =
+  (): RefObject<NavigationContainerRef<AppParamsList> | null> => navigationRef;
 
 // NavigationParams
-const navigate = (routeName: string, params?: any) => {
+// This definition comes from react-navigation navigate definition.
+export type NavigationParams<T extends keyof AppParamsList> = T extends unknown
+  ? // This condition checks if the params are optional,
+    // which means it's either undefined or a union with undefined
+    undefined extends AppParamsList[T]
+    ?
+        | [screen: T] // if the params are optional, we don't have to provide it
+        | [screen: T, params: AppParamsList[T]]
+    : [screen: T, params: AppParamsList[T]]
+  : never;
+
+const navigate = <T extends keyof AppParamsList>(
+  ...args: NavigationParams<T>
+) => {
   if (isNavigationReady) {
-    navigationRef.current?.navigate(routeName, params);
+    navigationRef.current?.navigate(...args);
   }
 };
 
 const dispatchNavigationAction = (action: NavigationAction) => {
   navigationRef.current?.dispatch(action);
 };
+
+const getIsMainNavigatorReady = () => isMainNavigatorReady;
 
 const getCurrentRouteName = (): string | undefined =>
   navigationRef.current?.getCurrentRoute()?.name;
@@ -66,5 +89,6 @@ export default {
   getCurrentRoute,
   getCurrentState,
   getIsNavigationReady,
-  setNavigationReady
+  setNavigationReady,
+  getIsMainNavigatorReady
 };

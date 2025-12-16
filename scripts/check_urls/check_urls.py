@@ -26,9 +26,9 @@ tagged_people = ["<!here>"]
 SLACK_CHANNEL = "#io_dev_app_status"
 
 # a list of remote uris consumed by the app for content presentation
-remote_content_uri = ["https://assets.cdn.io.italia.it/bonus/bonus_available_v2.json",
-                      "https://assets.cdn.io.italia.it/contextualhelp/data.json",
-                      "https://assets.cdn.io.italia.it/status/backend.json"]
+remote_content_uri = ["https://assets.cdn.io.pagopa.it/bonus/bonus_available_v2.json",
+                      "https://assets.cdn.io.pagopa.it/contextualhelp/data.json",
+                      "https://assets.cdn.io.pagopa.it/status/backend.json"]
 
 
 class IOUrl(object):
@@ -214,7 +214,7 @@ run_test = len(argv) > 1 and argv[1] == "run_tests"
 # since this code is executed multiple time for each process spawned
 # we have to ensure the init part is execute only the first time
 if not run_test and __name__ == '__main__':
-    files_black_list = {"testFaker.ts", "PayWebViewModal.tsx", "paymentPayloads.ts", "mvlMock.ts", "message.ts",
+    files_black_list = {"testFaker.ts", "PayWebViewModal.tsx", "paymentPayloads.ts", "message.ts",
                         "supportAssistance.ts", "ZendeskAskPermissions.tsx"}
 
     manager = Manager()
@@ -223,24 +223,19 @@ if not run_test and __name__ == '__main__':
     urls_black_list = {
         # 403 when this check runs (in the middle of the night)
         "https://id.lepida.it/docs/manuale_utente.pdf",
-        # still not available
-        "https://io.italia.it/carta-giovani-nazionale/informativa-beneficiari",
-        # still not available
-        "https://io.italia.it/carta-giovani-nazionale/guida-beneficiari",
-        # the article is available but the response status code is 403
-        "https://help.mixpanel.com/hc/en-us/articles/115004494803-Disable-Geolocation-Collection",
-        "https://assets.cdn.io.italia.it",
-        "https://www.trusttechnologies.it/wp-content/uploads/SPIDPRIN.TT_.DPMU15000.03-Guida-Utente-al-servizio-TIM-ID.pdf",
-        "https://www.trusttechnologies.it/contatti/#form",
-        "https://support.namirial.com/it/faq/faq-tsp/faq-tsp-spid",
-        "https://paytipper.com/wp-content/uploads/2021/02/logo.png",
-        "https://fims-dev-app-provider.azurewebsites.net/",
         # returns a 404 anytime the check runs but it actually works fine
         "https://checkout.pagopa.it/dona",
-        # todo remove from blacklist when the url is available
-        "https://io.italia.it/app-content/tos_privacy_cartacultura.html/",
-        # todo remove from blacklist when the url is available
-        "https://cittadini.notifichedigitali.it"
+        # Mixpanel EU endpoint
+        "https://api-eu.mixpanel.com"
+        # Profile 412 status error types
+        # Already taken type
+        "https://ioapp.it/problems/email-already-taken"
+        # EIC UAT endpoint
+        "https://collaudo.idserver.servizicie.interno.gov.it/idp"
+        # localhost is not reachable
+        "https://localhost",
+        # not accessible outside of PagoPA
+        "https://docs.google.com/presentation/d/11rEttb7lJYlRqgFpl4QopyjFmjt2Q0K8uis6JhAQaCw/edit#slide=id.p"
     }
     locales = (abspath(join(dirname(__file__), "../..", "locales")), set())
     ts_dir = (abspath(join(dirname(__file__), "../..", "ts")), files_black_list)

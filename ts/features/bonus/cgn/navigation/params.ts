@@ -17,14 +17,16 @@ export type CgnActivationParamsList = {
 export type CgnDetailsParamsList = {
   [CGN_ROUTES.DETAILS.DETAILS]: undefined;
   [CGN_ROUTES.DETAILS.MERCHANTS.CATEGORIES]: undefined;
-  [CGN_ROUTES.DETAILS.MERCHANTS.LIST]: undefined;
   [CGN_ROUTES.DETAILS.MERCHANTS
     .LIST_BY_CATEGORY]: CgnMerchantListByCategoryScreenNavigationParams;
-  [CGN_ROUTES.DETAILS.MERCHANTS.TABS]: undefined;
   [CGN_ROUTES.DETAILS.MERCHANTS
     .DETAIL]: CgnMerchantDetailScreenNavigationParams;
   [CGN_ROUTES.DETAILS.MERCHANTS
     .LANDING_WEBVIEW]: CgnMerchantLandingWebviewNavigationParams;
+  [CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT]: undefined;
+  [CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT_CODE]: undefined;
+  [CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT_CODE_FAILURE]: undefined;
+  [CGN_ROUTES.DETAILS.MERCHANTS.SEARCH]: undefined;
 };
 
 export type CgnEYCAActivationParamsList = {

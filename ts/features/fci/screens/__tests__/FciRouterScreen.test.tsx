@@ -1,9 +1,11 @@
 import { createStore, Store } from "redux";
 import configureMockStore from "redux-mock-store";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { act } from "@testing-library/react-native";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
-import { getTimeoutError } from "../../../../utils/errors";
+import { getNetworkError } from "../../../../utils/errors";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { FCI_ROUTES } from "../../navigation/routes";
 import {
@@ -11,10 +13,13 @@ import {
   fciStartRequest
 } from "../../store/actions";
 import FciRouterScreen from "../FciRouterScreen";
-import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
-import { StatusEnum as SignatureRequestDetailViewStatusEnum } from "../../../../../definitions/fci/SignatureRequestDetailView";
+import {
+  mockedError,
+  mockSignatureRequestDetailView
+} from "../../types/__mocks__/SignatureRequestDetailView.mock";
+import mockedProfile from "../../../../__mocks__/initializedProfile";
+import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
 
-const genericError = getTimeoutError();
 const now = new Date();
 
 describe("Test FciRouterScreen", () => {
@@ -23,16 +28,22 @@ describe("Test FciRouterScreen", () => {
   });
   it("With the default store state, the loading screen should be rendered", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
+    const store = createStore(appReducer, {
+      ...globalState,
+      profile: pot.some(mockedProfile)
+    } as any);
     const render = renderComponent(store);
 
     expect(
       render.component.queryByTestId("FciRouterLoadingScreenTestID")
     ).not.toBeNull();
   });
-  it("With a failure, the loading screen should be rendered GenericErrorComponent", () => {
+  it("With a generic failure, the loading screen should be rendered GenericErrorComponentTestID", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
+    const store = createStore(appReducer, {
+      ...globalState,
+      profile: pot.some(mockedProfile)
+    } as any);
 
     const render = renderComponent(store);
 
@@ -40,15 +51,51 @@ describe("Test FciRouterScreen", () => {
       render.component.queryByTestId("FciRouterLoadingScreenTestID")
     ).not.toBeNull();
 
-    render.store.dispatch(fciSignatureRequestFromId.failure(genericError));
+    act(() => {
+      store.dispatch(
+        fciSignatureRequestFromId.failure(
+          getNetworkError(
+            new Error(JSON.stringify({ ...mockedError, status: 500 }))
+          )
+        )
+      );
+    });
 
     expect(
       render.component.queryByTestId("GenericErrorComponentTestID")
     ).not.toBeNull();
   });
+  it("With a generic failure and a response status equal to 404, the loading screen should be rendered WrongUserErrorComponentTestID", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, {
+      ...globalState,
+      profile: pot.some(mockedProfile)
+    } as any);
+
+    const render = renderComponent(store);
+
+    expect(
+      render.component.queryByTestId("FciRouterLoadingScreenTestID")
+    ).not.toBeNull();
+
+    act(() => {
+      render.store.dispatch(
+        fciSignatureRequestFromId.failure(
+          getNetworkError(new Error(JSON.stringify(mockedError)))
+        )
+      );
+    });
+
+    expect(
+      render.component.queryByTestId("WrongUserErrorComponentTestID")
+    ).not.toBeNull();
+  });
   it("With a right and expired signature request, the success component should be rendered an error", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
+    const store = createStore(appReducer, {
+      ...globalState,
+      profile: pot.some(mockedProfile)
+    } as any);
 
     const render = renderComponent(store);
 
@@ -61,9 +108,11 @@ describe("Test FciRouterScreen", () => {
       render.component.queryByTestId("FciRouterLoadingScreenTestID")
     ).not.toBeNull();
 
-    render.store.dispatch(
-      fciSignatureRequestFromId.success(expiredSignatureRequest)
-    );
+    act(() => {
+      render.store.dispatch(
+        fciSignatureRequestFromId.success(expiredSignatureRequest)
+      );
+    });
 
     expect(
       render.component.queryByTestId("ExpiredSignatureRequestTestID")
@@ -71,7 +120,10 @@ describe("Test FciRouterScreen", () => {
   });
   it("With a right signature request with status WAIT_FOR_QTSP, the success component should be rendered an error", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
+    const store = createStore(appReducer, {
+      ...globalState,
+      profile: pot.some(mockedProfile)
+    } as any);
 
     const render = renderComponent(store);
 
@@ -81,11 +133,14 @@ describe("Test FciRouterScreen", () => {
 
     const qtspSignatureRequest = {
       ...mockSignatureRequestDetailView,
-      status: SignatureRequestDetailViewStatusEnum.WAIT_FOR_QTSP
+      status: SignatureRequestStatusEnum.WAIT_FOR_QTSP
     };
-    render.store.dispatch(
-      fciSignatureRequestFromId.success(qtspSignatureRequest)
-    );
+
+    act(() => {
+      render.store.dispatch(
+        fciSignatureRequestFromId.success(qtspSignatureRequest)
+      );
+    });
 
     expect(
       render.component.queryByTestId("WaitQtspSignatureRequestTestID")
@@ -94,7 +149,10 @@ describe("Test FciRouterScreen", () => {
   it("With a right signature request with status WAIT_FOR_SIGNATURE, the fciStartingRequest should be dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const mockStore = configureMockStore<GlobalState>();
-    const store: ReturnType<typeof mockStore> = mockStore(globalState);
+    const store: ReturnType<typeof mockStore> = mockStore({
+      ...globalState,
+      profile: pot.some(mockedProfile)
+    });
 
     const render = renderComponent(store);
 
@@ -104,12 +162,15 @@ describe("Test FciRouterScreen", () => {
 
     const qtspSignatureRequest = {
       ...mockSignatureRequestDetailView,
-      status: SignatureRequestDetailViewStatusEnum.WAIT_FOR_SIGNATURE
+      status: SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE
     };
-    render.store.dispatch(
-      fciSignatureRequestFromId.success(qtspSignatureRequest)
-    );
-    render.store.dispatch(fciStartRequest());
+    act(() => {
+      render.store.dispatch(
+        fciSignatureRequestFromId.success(qtspSignatureRequest)
+      );
+      render.store.dispatch(fciStartRequest());
+    });
+
     expect(store.getActions()).toContainEqual(fciStartRequest());
   });
 });

@@ -1,5 +1,10 @@
 import * as E from "fp-ts/lib/Either";
-import { deriveCustomHandledLink } from "../link";
+import {
+  deriveCustomHandledLink,
+  isHttpLink,
+  isHttpsLink,
+  isIoInternalLink
+} from "../link";
 
 const loadingCases: ReadonlyArray<
   [input: string, expectedResult: ReturnType<typeof deriveCustomHandledLink>]
@@ -75,4 +80,103 @@ describe("deriveCustomHandledLink", () => {
       expect(result).toEqual(expectedResult);
     }
   );
+});
+
+describe("isHttpsLink", () => {
+  ["https://", "hTtPs://", "HTTPS://"].forEach(protocol => {
+    it(`should return true for '${protocol}'`, () => {
+      const isHttps = isHttpsLink(`${protocol}whatever`);
+      expect(isHttps).toBe(true);
+    });
+  });
+  [
+    "https:/",
+    "https:",
+    "https",
+    "http://",
+    "ioit://",
+    "iohandledlink://",
+    "iosso://",
+    "clipboard://",
+    "clipboard:",
+    "sms://",
+    "sms:",
+    "tel://",
+    "tel:",
+    "mailto://",
+    "mailto:",
+    "copy://",
+    "copy:"
+  ].forEach(protocol => {
+    it(`should return false for '${protocol}'`, () => {
+      const isHttps = isHttpsLink(`${protocol}whatever`);
+      expect(isHttps).toBe(false);
+    });
+  });
+});
+
+describe("isHttpLink", () => {
+  ["http://", "hTtP://", "HTTP://"].forEach(protocol => {
+    it(`should return true for '${protocol}'`, () => {
+      const isHttp = isHttpLink(`${protocol}whatever`);
+      expect(isHttp).toBe(true);
+    });
+  });
+  [
+    "http:/",
+    "http:",
+    "http",
+    "https://",
+    "ioit://",
+    "iohandledlink://",
+    "iosso://",
+    "clipboard://",
+    "clipboard:",
+    "sms://",
+    "sms:",
+    "tel://",
+    "tel:",
+    "mailto://",
+    "mailto:",
+    "copy://",
+    "copy:"
+  ].forEach(protocol => {
+    it(`should return false for '${protocol}'`, () => {
+      const isHttp = isHttpLink(`${protocol}whatever`);
+      expect(isHttp).toBe(false);
+    });
+  });
+});
+
+describe("isIoInternalLink", () => {
+  ["ioit://", "iOiT://", "IOIT://"].forEach(protocol => {
+    it(`should return true for '${protocol}'`, () => {
+      const isIOLink = isIoInternalLink(`${protocol}whatever`);
+      expect(isIOLink).toBe(true);
+    });
+  });
+  [
+    "ioit:/",
+    "ioit:",
+    "ioit",
+    "https://",
+    "http://",
+    "iosso://",
+    "iohandledlink://",
+    "clipboard://",
+    "clipboard:",
+    "sms://",
+    "sms:",
+    "tel://",
+    "tel:",
+    "mailto://",
+    "mailto:",
+    "copy://",
+    "copy:"
+  ].forEach(protocol => {
+    it(`should return false for '${protocol}'`, () => {
+      const isIOLink = isIoInternalLink(`${protocol}whatever`);
+      expect(isIOLink).toBe(false);
+    });
+  });
 });

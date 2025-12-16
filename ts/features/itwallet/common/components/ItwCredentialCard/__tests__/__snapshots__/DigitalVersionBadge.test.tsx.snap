@@ -1,0 +1,1197 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DigitalVersionBadge should render correctly EuropeanDisabilityCard in state default 1`] = `
+<View
+  style={
+    {
+      "bottom": 16,
+      "position": "absolute",
+      "right": 2,
+    }
+  }
+>
+  <View
+    onLayout={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "borderCurve": "continuous",
+          "borderRadius": 24,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginEnd": -8,
+          "overflow": "hidden",
+          "paddingEnd": 16,
+          "paddingHorizontal": 8,
+          "paddingVertical": 4,
+        },
+        {
+          "backgroundColor": "#E8EEF4",
+        },
+      ]
+    }
+  >
+    <Text
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      numberOfLines={1}
+      style={
+        {
+          "alignSelf": "center",
+          "color": "#01527F",
+          "flexShrink": 1,
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+          "zIndex": 20,
+        }
+      }
+    >
+      Versione digitale
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`DigitalVersionBadge should render correctly EuropeanDisabilityCard in state faded 1`] = `
+<View
+  style={
+    {
+      "bottom": 16,
+      "position": "absolute",
+      "right": 2,
+    }
+  }
+>
+  <View
+    onLayout={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "borderCurve": "continuous",
+          "borderRadius": 24,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginEnd": -8,
+          "overflow": "hidden",
+          "paddingEnd": 16,
+          "paddingHorizontal": 8,
+          "paddingVertical": 4,
+        },
+        {
+          "backgroundColor": "#E8EEF4",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "#FFFFFF",
+          "bottom": 0,
+          "left": 0,
+          "opacity": 0.6,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+          "zIndex": 10,
+        }
+      }
+    />
+    <Text
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      numberOfLines={1}
+      style={
+        {
+          "alignSelf": "center",
+          "color": "#01527F",
+          "flexShrink": 1,
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+          "zIndex": 20,
+        }
+      }
+    >
+      Versione digitale
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`DigitalVersionBadge should render correctly EuropeanDisabilityCard in state greyscale 1`] = `
+<View
+  style={
+    {
+      "bottom": 16,
+      "position": "absolute",
+      "right": 2,
+    }
+  }
+>
+  <View
+    onLayout={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "borderCurve": "continuous",
+          "borderRadius": 24,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginEnd": -8,
+          "overflow": "hidden",
+          "paddingEnd": 16,
+          "paddingHorizontal": 8,
+          "paddingVertical": 4,
+        },
+        {
+          "backgroundColor": "#EDEDED",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "#FFFFFF",
+          "bottom": 0,
+          "left": 0,
+          "opacity": 0.6,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+          "zIndex": 10,
+        }
+      }
+    />
+    <Text
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      numberOfLines={1}
+      style={
+        {
+          "alignSelf": "center",
+          "color": "#3F3F3F",
+          "flexShrink": 1,
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+          "zIndex": 20,
+        }
+      }
+    >
+      Versione digitale
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`DigitalVersionBadge should render correctly EuropeanHealthInsuranceCard in state default 1`] = `
+<View
+  style={
+    {
+      "bottom": 16,
+      "position": "absolute",
+      "right": 2,
+    }
+  }
+>
+  <View
+    onLayout={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "borderCurve": "continuous",
+          "borderRadius": 24,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginEnd": -8,
+          "overflow": "hidden",
+          "paddingEnd": 16,
+          "paddingHorizontal": 8,
+          "paddingVertical": 4,
+        },
+        {
+          "backgroundColor": "#ABD8F2",
+        },
+      ]
+    }
+  >
+    <Text
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      numberOfLines={1}
+      style={
+        {
+          "alignSelf": "center",
+          "color": "#032D5C",
+          "flexShrink": 1,
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+          "zIndex": 20,
+        }
+      }
+    >
+      Versione digitale
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`DigitalVersionBadge should render correctly EuropeanHealthInsuranceCard in state faded 1`] = `
+<View
+  style={
+    {
+      "bottom": 16,
+      "position": "absolute",
+      "right": 2,
+    }
+  }
+>
+  <View
+    onLayout={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "borderCurve": "continuous",
+          "borderRadius": 24,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginEnd": -8,
+          "overflow": "hidden",
+          "paddingEnd": 16,
+          "paddingHorizontal": 8,
+          "paddingVertical": 4,
+        },
+        {
+          "backgroundColor": "#ABD8F2",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "#FFFFFF",
+          "bottom": 0,
+          "left": 0,
+          "opacity": 0.6,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+          "zIndex": 10,
+        }
+      }
+    />
+    <Text
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      numberOfLines={1}
+      style={
+        {
+          "alignSelf": "center",
+          "color": "#032D5C",
+          "flexShrink": 1,
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+          "zIndex": 20,
+        }
+      }
+    >
+      Versione digitale
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`DigitalVersionBadge should render correctly EuropeanHealthInsuranceCard in state greyscale 1`] = `
+<View
+  style={
+    {
+      "bottom": 16,
+      "position": "absolute",
+      "right": 2,
+    }
+  }
+>
+  <View
+    onLayout={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "borderCurve": "continuous",
+          "borderRadius": 24,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginEnd": -8,
+          "overflow": "hidden",
+          "paddingEnd": 16,
+          "paddingHorizontal": 8,
+          "paddingVertical": 4,
+        },
+        {
+          "backgroundColor": "#CDCDCD",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "#FFFFFF",
+          "bottom": 0,
+          "left": 0,
+          "opacity": 0.6,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+          "zIndex": 10,
+        }
+      }
+    />
+    <Text
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      numberOfLines={1}
+      style={
+        {
+          "alignSelf": "center",
+          "color": "#262626",
+          "flexShrink": 1,
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+          "zIndex": 20,
+        }
+      }
+    >
+      Versione digitale
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`DigitalVersionBadge should render correctly InvalidCredentialType in state default 1`] = `null`;
+
+exports[`DigitalVersionBadge should render correctly education_degree in state default 1`] = `
+<View
+  style={
+    {
+      "bottom": 16,
+      "position": "absolute",
+      "right": 2,
+    }
+  }
+>
+  <View
+    onLayout={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "borderCurve": "continuous",
+          "borderRadius": 24,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginEnd": -8,
+          "overflow": "hidden",
+          "paddingEnd": 16,
+          "paddingHorizontal": 8,
+          "paddingVertical": 4,
+        },
+        {
+          "backgroundColor": undefined,
+        },
+      ]
+    }
+  >
+    <Text
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      numberOfLines={1}
+      style={
+        {
+          "alignSelf": "center",
+          "color": "#403C36",
+          "flexShrink": 1,
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+          "zIndex": 20,
+        }
+      }
+    >
+      Versione digitale
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`DigitalVersionBadge should render correctly education_degree in state faded 1`] = `
+<View
+  style={
+    {
+      "bottom": 16,
+      "position": "absolute",
+      "right": 2,
+    }
+  }
+>
+  <View
+    onLayout={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "borderCurve": "continuous",
+          "borderRadius": 24,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginEnd": -8,
+          "overflow": "hidden",
+          "paddingEnd": 16,
+          "paddingHorizontal": 8,
+          "paddingVertical": 4,
+        },
+        {
+          "backgroundColor": undefined,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "#FFFFFF",
+          "bottom": 0,
+          "left": 0,
+          "opacity": 0.6,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+          "zIndex": 10,
+        }
+      }
+    />
+    <Text
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      numberOfLines={1}
+      style={
+        {
+          "alignSelf": "center",
+          "color": "#403C36",
+          "flexShrink": 1,
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+          "zIndex": 20,
+        }
+      }
+    >
+      Versione digitale
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`DigitalVersionBadge should render correctly education_degree in state greyscale 1`] = `
+<View
+  style={
+    {
+      "bottom": 16,
+      "position": "absolute",
+      "right": 2,
+    }
+  }
+>
+  <View
+    onLayout={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "borderCurve": "continuous",
+          "borderRadius": 24,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginEnd": -8,
+          "overflow": "hidden",
+          "paddingEnd": 16,
+          "paddingHorizontal": 8,
+          "paddingVertical": 4,
+        },
+        {
+          "backgroundColor": undefined,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "#FFFFFF",
+          "bottom": 0,
+          "left": 0,
+          "opacity": 0.6,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+          "zIndex": 10,
+        }
+      }
+    />
+    <Text
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      numberOfLines={1}
+      style={
+        {
+          "alignSelf": "center",
+          "color": "#3D3D3D",
+          "flexShrink": 1,
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+          "zIndex": 20,
+        }
+      }
+    >
+      Versione digitale
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`DigitalVersionBadge should render correctly education_enrollment in state default 1`] = `
+<View
+  style={
+    {
+      "bottom": 16,
+      "position": "absolute",
+      "right": 2,
+    }
+  }
+>
+  <View
+    onLayout={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "borderCurve": "continuous",
+          "borderRadius": 24,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginEnd": -8,
+          "overflow": "hidden",
+          "paddingEnd": 16,
+          "paddingHorizontal": 8,
+          "paddingVertical": 4,
+        },
+        {
+          "backgroundColor": undefined,
+        },
+      ]
+    }
+  >
+    <Text
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      numberOfLines={1}
+      style={
+        {
+          "alignSelf": "center",
+          "color": "#403C36",
+          "flexShrink": 1,
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+          "zIndex": 20,
+        }
+      }
+    >
+      Versione digitale
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`DigitalVersionBadge should render correctly education_enrollment in state faded 1`] = `
+<View
+  style={
+    {
+      "bottom": 16,
+      "position": "absolute",
+      "right": 2,
+    }
+  }
+>
+  <View
+    onLayout={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "borderCurve": "continuous",
+          "borderRadius": 24,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginEnd": -8,
+          "overflow": "hidden",
+          "paddingEnd": 16,
+          "paddingHorizontal": 8,
+          "paddingVertical": 4,
+        },
+        {
+          "backgroundColor": undefined,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "#FFFFFF",
+          "bottom": 0,
+          "left": 0,
+          "opacity": 0.6,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+          "zIndex": 10,
+        }
+      }
+    />
+    <Text
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      numberOfLines={1}
+      style={
+        {
+          "alignSelf": "center",
+          "color": "#403C36",
+          "flexShrink": 1,
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+          "zIndex": 20,
+        }
+      }
+    >
+      Versione digitale
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`DigitalVersionBadge should render correctly education_enrollment in state greyscale 1`] = `
+<View
+  style={
+    {
+      "bottom": 16,
+      "position": "absolute",
+      "right": 2,
+    }
+  }
+>
+  <View
+    onLayout={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "borderCurve": "continuous",
+          "borderRadius": 24,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginEnd": -8,
+          "overflow": "hidden",
+          "paddingEnd": 16,
+          "paddingHorizontal": 8,
+          "paddingVertical": 4,
+        },
+        {
+          "backgroundColor": undefined,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "#FFFFFF",
+          "bottom": 0,
+          "left": 0,
+          "opacity": 0.6,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+          "zIndex": 10,
+        }
+      }
+    />
+    <Text
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      numberOfLines={1}
+      style={
+        {
+          "alignSelf": "center",
+          "color": "#3D3D3D",
+          "flexShrink": 1,
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+          "zIndex": 20,
+        }
+      }
+    >
+      Versione digitale
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`DigitalVersionBadge should render correctly mDL in state default 1`] = `
+<View
+  style={
+    {
+      "bottom": 16,
+      "position": "absolute",
+      "right": 2,
+    }
+  }
+>
+  <View
+    onLayout={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "borderCurve": "continuous",
+          "borderRadius": 24,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginEnd": -8,
+          "overflow": "hidden",
+          "paddingEnd": 16,
+          "paddingHorizontal": 8,
+          "paddingVertical": 4,
+        },
+        {
+          "backgroundColor": "#FADCF5",
+        },
+      ]
+    }
+  >
+    <Text
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      numberOfLines={1}
+      style={
+        {
+          "alignSelf": "center",
+          "color": "#5E303E",
+          "flexShrink": 1,
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+          "zIndex": 20,
+        }
+      }
+    >
+      Versione digitale
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`DigitalVersionBadge should render correctly mDL in state faded 1`] = `
+<View
+  style={
+    {
+      "bottom": 16,
+      "position": "absolute",
+      "right": 2,
+    }
+  }
+>
+  <View
+    onLayout={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "borderCurve": "continuous",
+          "borderRadius": 24,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginEnd": -8,
+          "overflow": "hidden",
+          "paddingEnd": 16,
+          "paddingHorizontal": 8,
+          "paddingVertical": 4,
+        },
+        {
+          "backgroundColor": "#FADCF5",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "#FFFFFF",
+          "bottom": 0,
+          "left": 0,
+          "opacity": 0.6,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+          "zIndex": 10,
+        }
+      }
+    />
+    <Text
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      numberOfLines={1}
+      style={
+        {
+          "alignSelf": "center",
+          "color": "#5E303E",
+          "flexShrink": 1,
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+          "zIndex": 20,
+        }
+      }
+    >
+      Versione digitale
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`DigitalVersionBadge should render correctly mDL in state greyscale 1`] = `
+<View
+  style={
+    {
+      "bottom": 16,
+      "position": "absolute",
+      "right": 2,
+    }
+  }
+>
+  <View
+    onLayout={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "borderCurve": "continuous",
+          "borderRadius": 24,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginEnd": -8,
+          "overflow": "hidden",
+          "paddingEnd": 16,
+          "paddingHorizontal": 8,
+          "paddingVertical": 4,
+        },
+        {
+          "backgroundColor": "#E8E8E8",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "#FFFFFF",
+          "bottom": 0,
+          "left": 0,
+          "opacity": 0.6,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+          "zIndex": 10,
+        }
+      }
+    />
+    <Text
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      numberOfLines={1}
+      style={
+        {
+          "alignSelf": "center",
+          "color": "#3F3F3F",
+          "flexShrink": 1,
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+          "zIndex": 20,
+        }
+      }
+    >
+      Versione digitale
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`DigitalVersionBadge should render correctly residency in state default 1`] = `
+<View
+  style={
+    {
+      "bottom": 16,
+      "position": "absolute",
+      "right": 2,
+    }
+  }
+>
+  <View
+    onLayout={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "borderCurve": "continuous",
+          "borderRadius": 24,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginEnd": -8,
+          "overflow": "hidden",
+          "paddingEnd": 16,
+          "paddingHorizontal": 8,
+          "paddingVertical": 4,
+        },
+        {
+          "backgroundColor": undefined,
+        },
+      ]
+    }
+  >
+    <Text
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      numberOfLines={1}
+      style={
+        {
+          "alignSelf": "center",
+          "color": "#403C36",
+          "flexShrink": 1,
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+          "zIndex": 20,
+        }
+      }
+    >
+      Versione digitale
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`DigitalVersionBadge should render correctly residency in state faded 1`] = `
+<View
+  style={
+    {
+      "bottom": 16,
+      "position": "absolute",
+      "right": 2,
+    }
+  }
+>
+  <View
+    onLayout={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "borderCurve": "continuous",
+          "borderRadius": 24,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginEnd": -8,
+          "overflow": "hidden",
+          "paddingEnd": 16,
+          "paddingHorizontal": 8,
+          "paddingVertical": 4,
+        },
+        {
+          "backgroundColor": undefined,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "#FFFFFF",
+          "bottom": 0,
+          "left": 0,
+          "opacity": 0.6,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+          "zIndex": 10,
+        }
+      }
+    />
+    <Text
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      numberOfLines={1}
+      style={
+        {
+          "alignSelf": "center",
+          "color": "#403C36",
+          "flexShrink": 1,
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+          "zIndex": 20,
+        }
+      }
+    >
+      Versione digitale
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`DigitalVersionBadge should render correctly residency in state greyscale 1`] = `
+<View
+  style={
+    {
+      "bottom": 16,
+      "position": "absolute",
+      "right": 2,
+    }
+  }
+>
+  <View
+    onLayout={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "borderCurve": "continuous",
+          "borderRadius": 24,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginEnd": -8,
+          "overflow": "hidden",
+          "paddingEnd": 16,
+          "paddingHorizontal": 8,
+          "paddingVertical": 4,
+        },
+        {
+          "backgroundColor": undefined,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "#FFFFFF",
+          "bottom": 0,
+          "left": 0,
+          "opacity": 0.6,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+          "zIndex": 10,
+        }
+      }
+    />
+    <Text
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      numberOfLines={1}
+      style={
+        {
+          "alignSelf": "center",
+          "color": "#3D3D3D",
+          "flexShrink": 1,
+          "fontFamily": "Titillio",
+          "fontSize": 12,
+          "fontStyle": "normal",
+          "fontWeight": "600",
+          "lineHeight": 16,
+          "textTransform": "uppercase",
+          "zIndex": 20,
+        }
+      }
+    >
+      Versione digitale
+    </Text>
+  </View>
+</View>
+`;

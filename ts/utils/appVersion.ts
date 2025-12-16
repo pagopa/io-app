@@ -1,21 +1,21 @@
 import * as E from "fp-ts/lib/Either";
 import { PatternString } from "@pagopa/ts-commons/lib/strings";
 import { Platform } from "react-native";
-import DeviceInfo from "react-native-device-info";
 import semver, { SemVer } from "semver";
 import { pipe } from "fp-ts/lib/function";
-import { ioWebSiteUrl } from "./global";
 import { NumberFromString } from "./number";
+import { getDeviceAppVersion } from "./device";
 
 export const storeUrl = Platform.select({
   ios: "itms-apps://itunes.apple.com/it/app/io/id1501681835",
   android: "market://details?id=it.pagopa.io.app",
-  default: ioWebSiteUrl
+  default: "https://io.italia.it/"
 });
+
 export const webStoreURL = Platform.select({
   ios: "https://apps.apple.com/it/app/io/id1501681835",
   android: "https://play.google.com/store/apps/details?id=it.pagopa.io.app",
-  default: ioWebSiteUrl
+  default: "https://io.italia.it/"
 });
 
 const VersionFormat = PatternString("^\\d+(.\\d+){0,3}$");
@@ -85,8 +85,4 @@ export const isVersionSupported = (
   return semSatisfies;
 };
 
-export const getAppVersion = () =>
-  Platform.select({
-    ios: DeviceInfo.getReadableVersion(),
-    default: DeviceInfo.getVersion()
-  });
+export const getAppVersion = (): string => getDeviceAppVersion();

@@ -1,1 +1,0 @@
-If something does not seem correct in the Bonus summary data associated with your household, you may need to submit a new DSU in order to update the list of components and its ISEE indicator. In this case, simply follow the directions provided in the app and cancel the request. In case of cancellation, you can reapply for the Bonus at a later time.

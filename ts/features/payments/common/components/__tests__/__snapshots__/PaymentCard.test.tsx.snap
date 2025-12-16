@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PaymentCard should match snapshot for loading 1`] = `
+<View
+  style={
+    [
+      {
+        "aspectRatio": 1.6,
+        "borderCurve": "continuous",
+        "borderRadius": 8,
+        "borderWidth": 2,
+        "padding": 16,
+        "paddingTop": 8,
+      },
+      {
+        "backgroundColor": "#E8EBF1",
+        "borderColor": "#D2D6E3",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      {
+        "flex": 1,
+        "justifyContent": "space-between",
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "height": 48,
+          "justifyContent": "space-between",
+        }
+      }
+    >
+      <View
+        collapsable={false}
+        style={
+          {
+            "backgroundColor": "#D2D6E3",
+            "borderCurve": "continuous",
+            "borderRadius": 28,
+            "height": 24,
+            "opacity": 0.55,
+            "width": "60%",
+          }
+        }
+      />
+      <View
+        collapsable={false}
+        style={
+          {
+            "backgroundColor": "#D2D6E3",
+            "borderCurve": "continuous",
+            "borderRadius": 28,
+            "height": 24,
+            "opacity": 0.55,
+            "width": "20%",
+          }
+        }
+      />
+    </View>
+    <View
+      style={
+        {
+          "display": "flex",
+          "flexDirection": "column",
+          "gap": 8,
+        }
+      }
+    >
+      <View
+        collapsable={false}
+        style={
+          {
+            "backgroundColor": "#D2D6E3",
+            "borderCurve": "continuous",
+            "borderRadius": 28,
+            "height": 16,
+            "opacity": 0.55,
+            "width": "55%",
+          }
+        }
+      />
+      <View
+        collapsable={false}
+        style={
+          {
+            "backgroundColor": "#D2D6E3",
+            "borderCurve": "continuous",
+            "borderRadius": 28,
+            "height": 16,
+            "opacity": 0.55,
+            "width": "45%",
+          }
+        }
+      />
+    </View>
+  </View>
+</View>
+`;

@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pnReducer should match snapshot 1`] = `
+{
+  "aarFlow": {
+    "type": "none",
+  },
+  "activation": {
+    "isActivating": false,
+  },
+  "bannerDismiss": {
+    "dismissed": false,
+  },
+  "loginEngagement": {
+    "hasSendEngagementScreenBeenDismissed": false,
+  },
+  "tempAarMandate": {
+    "mandate": {
+      "kind": "undefined",
+    },
+    "validation": {
+      "kind": "undefined",
+    },
+  },
+}
+`;

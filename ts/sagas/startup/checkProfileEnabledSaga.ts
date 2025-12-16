@@ -4,11 +4,14 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { startApplicationInitialization } from "../../store/actions/application";
-import { profileFirstLogin, profileUpsert } from "../../store/actions/profile";
+import {
+  profileFirstLogin,
+  profileUpsert
+} from "../../features/settings/common/store/actions";
 import {
   hasProfileEmail,
   isProfileFirstOnBoarding
-} from "../../store/reducers/profile";
+} from "../../features/settings/common/store/utils/guards";
 import { ReduxSagaEffect } from "../../types/utils";
 
 function* enableProfileInboxWebhook() {
@@ -25,8 +28,8 @@ export function* checkProfileEnabledSaga(
 ): Generator<
   ReduxSagaEffect,
   void,
-  | ActionType<typeof profileUpsert["success"]>
-  | ActionType<typeof profileUpsert["failure"]>
+  | ActionType<(typeof profileUpsert)["success"]>
+  | ActionType<(typeof profileUpsert)["failure"]>
 > {
   const atv = pipe(
     profile.accepted_tos_version,

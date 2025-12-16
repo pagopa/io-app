@@ -3,7 +3,7 @@
 exports[`WebviewComponent tests snapshot for component 1`] = `
 <View
   style={
-    Object {
+    {
       "flex": 1,
     }
   }
@@ -11,11 +11,10 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "backgroundColor": "#FFFFFF",
           "bottom": 0,
-          "inset": 0,
           "justifyContent": "center",
           "left": 0,
           "position": "absolute",
@@ -23,7 +22,7 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
           "top": 0,
           "zIndex": 1,
         },
-        Object {
+        {
           "backgroundColor": "rgba(255,255,255,0.7)",
           "opacity": 1,
         },
@@ -32,48 +31,233 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "flex": 1,
-            "height": 100,
-            "justifyContent": "center",
-          },
-          undefined,
-        ]
+        {
+          "alignItems": "center",
+          "flex": 1,
+          "height": 100,
+          "justifyContent": "center",
+        }
       }
     >
-      <ActivityIndicator
-        size="large"
-      />
-      <Text
+      <View
+        accessibilityHint="Attendi il caricamento del contenuto"
+        accessibilityLabel="Caricamento in corso"
+        accessibilityRole="progressbar"
         accessible={true}
-        alignCenter={true}
         style={
-          Array [
-            Object {
-              "color": "#000",
-              "fontFamily": "System",
-              "fontSize": 16,
-            },
-            Object {
-              "padding": 24,
-            },
-          ]
+          {
+            "height": 48,
+            "width": 48,
+          }
         }
-        uppercase={false}
+        testID="refreshIndicator"
       >
-        Wait a few seconds..
-      </Text>
+        <View
+          collapsable={false}
+          style={
+            {
+              "transform": [
+                {
+                  "rotateZ": "0deg",
+                },
+              ],
+            }
+          }
+          testID="LoadingSpinnerAnimatedTestID"
+        >
+          <RNSVGSvgView
+            align="xMidYMid"
+            bbHeight={48}
+            bbWidth={48}
+            fill="none"
+            focusable={false}
+            height={48}
+            meetOrSlice={0}
+            minX={0}
+            minY={0}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "borderWidth": 0,
+                },
+                {
+                  "flex": 0,
+                  "height": 48,
+                  "width": 48,
+                },
+              ]
+            }
+            vbHeight={48}
+            vbWidth={48}
+            width={48}
+          >
+            <RNSVGGroup
+              fill={null}
+              propList={
+                [
+                  "fill",
+                ]
+              }
+            >
+              <RNSVGDefs>
+                <RNSVGLinearGradient
+                  gradient={
+                    [
+                      0,
+                      736995,
+                      1,
+                      -16040221,
+                    ]
+                  }
+                  gradientTransform={null}
+                  gradientUnits={0}
+                  name="spinner-secondHalf"
+                  x1="0%"
+                  x2="100%"
+                  y1="0%"
+                  y2="0%"
+                />
+                <RNSVGLinearGradient
+                  gradient={
+                    [
+                      0,
+                      -16040221,
+                      1,
+                      -16040221,
+                    ]
+                  }
+                  gradientTransform={null}
+                  gradientUnits={0}
+                  name="spinner-firstHalf"
+                  x1="0%"
+                  x2="100%"
+                  y1="0%"
+                  y2="0%"
+                />
+              </RNSVGDefs>
+              <RNSVGGroup
+                fill={
+                  {
+                    "payload": 4278190080,
+                    "type": 0,
+                  }
+                }
+                propList={
+                  [
+                    "strokeWidth",
+                  ]
+                }
+                strokeWidth={5}
+              >
+                <RNSVGPath
+                  d="M 2.5 24 A 21.5 21.5 0 0 1 45.5 24"
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
+                  }
+                  propList={
+                    [
+                      "stroke",
+                    ]
+                  }
+                  stroke={
+                    {
+                      "brushRef": "spinner-secondHalf",
+                      "type": 1,
+                    }
+                  }
+                />
+                <RNSVGPath
+                  d="M 45.5 24 A 21.5 21.5 0 0 1 2.5 24"
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
+                  }
+                  propList={
+                    [
+                      "stroke",
+                    ]
+                  }
+                  stroke={
+                    {
+                      "brushRef": "spinner-firstHalf",
+                      "type": 1,
+                    }
+                  }
+                />
+                <RNSVGPath
+                  d="M 2.5 24 A 21.5 21.5 0 0 1 2.5 22.75"
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
+                  }
+                  propList={
+                    [
+                      "stroke",
+                      "strokeLinecap",
+                    ]
+                  }
+                  stroke={
+                    {
+                      "payload": 4278927075,
+                      "type": 0,
+                    }
+                  }
+                  strokeLinecap={1}
+                />
+              </RNSVGGroup>
+            </RNSVGGroup>
+          </RNSVGSvgView>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "padding": 24,
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          dynamicTypeRamp="title2"
+          maxFontSizeMultiplier={1.5}
+          style={
+            [
+              {},
+              {
+                "color": "#2B2E38",
+                "fontFamily": "Titillio",
+                "fontSize": 22,
+                "fontStyle": "normal",
+                "fontWeight": "600",
+                "lineHeight": 33,
+              },
+              {
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Attendi qualche secondo...
+        </Text>
+      </View>
     </View>
   </View>
   <View
     style={
-      Array [
-        Object {
+      [
+        {
           "flex": 1,
         },
-        Object {
+        {
           "zIndex": 0,
         },
       ]
@@ -81,8 +265,8 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
+        [
+          {
             "flex": 1,
             "overflow": "hidden",
           },
@@ -92,18 +276,26 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
     >
       <RNCWebView
         allowsInlineMediaPlayback={true}
+        allowsPictureInPictureMediaPlayback={true}
         androidCameraAccessDisabled={true}
         androidMicrophoneAccessDisabled={true}
-        cacheEnabled={true}
+        cacheEnabled={false}
+        fraudulentWebsiteWarningEnabled={true}
+        hasOnFileDownload={false}
+        hasOnOpenWindowEvent={false}
         injectedJavaScriptBeforeContentLoadedForMainFrameOnly={true}
         injectedJavaScriptForMainFrameOnly={true}
         javaScriptEnabled={true}
         mediaPlaybackRequiresUserAction={true}
         messagingEnabled={false}
+        messagingModuleName=""
+        newSource={
+          {
+            "uri": "https://google.com",
+          }
+        }
         onContentProcessDidTerminate={[Function]}
-        onError={[Function]}
         onHttpError={[Function]}
-        onLoadEnd={[Function]}
         onLoadingError={[Function]}
         onLoadingFinish={[Function]}
         onLoadingProgress={[Function]}
@@ -111,24 +303,26 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
         onMessage={[Function]}
         onShouldStartLoadWithRequest={[Function]}
         source={
-          Object {
+          {
             "uri": "https://google.com",
           }
         }
         style={
-          Array [
-            Object {
+          [
+            {
               "flex": 1,
               "overflow": "hidden",
             },
-            Object {
+            {
               "backgroundColor": "#ffffff",
             },
-            Object {
+            {
               "flex": 1,
             },
           ]
         }
+        testID="webview"
+        textInteractionEnabled={true}
         useSharedProcessPool={true}
       />
     </View>

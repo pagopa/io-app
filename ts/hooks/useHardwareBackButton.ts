@@ -1,7 +1,13 @@
-import { useEffect } from "react";
+/* eslint-disable functional/immutable-data */
 import { BackHandler } from "react-native";
-import * as React from "react";
+import { useCallback, useEffect, useRef } from "react";
 
+/**
+ * Custom hook to handle the hardware back button on Android devices
+ * @param handler - a function that will be called when the user presses the back button.
+ *  The function must return true if the back button must not be bubbled up, false otherwise.
+ * See more: https://reactnative.dev/docs/backhandler
+ */
 export const useHardwareBackButton = (handler: () => boolean) => {
   useEffect(() => {
     const subscription = BackHandler.addEventListener(
@@ -23,13 +29,22 @@ export const useHardwareBackButton = (handler: () => boolean) => {
  * @return a function to call when the component is opened
  */
 export const useHardwareBackButtonToDismiss = (onDismiss: () => void) => {
-  const [isComponentOpened, setIsComponentOpened] = React.useState(false);
+  const isComponentOpened = useRef(false);
+
   useHardwareBackButton(() => {
-    const isOpen = isComponentOpened;
+    const isOpen = isComponentOpened.current;
     onDismiss();
-    setIsComponentOpened(false);
+    isComponentOpened.current = false;
     // true only if we handle the back
     return isOpen;
   });
-  return () => setIsComponentOpened(true);
+
+  return {
+    onOpen: useCallback(() => {
+      isComponentOpened.current = true;
+    }, []),
+    onClose: useCallback(() => {
+      isComponentOpened.current = false;
+    }, [])
+  };
 };

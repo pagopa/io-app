@@ -1,44 +1,53 @@
+import {
+  Alert,
+  ContentWrapper,
+  H4,
+  IOToast,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
-import { View, SafeAreaView, ScrollView } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
+
+import { ReactElement } from "react";
 import { connect } from "react-redux";
-import { StatusEnum } from "../../../../../definitions/cgn/CardActivated";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
+import I18n from "i18next";
+import { Card } from "../../../../../definitions/cgn/Card";
+import {
+  CardActivated,
+  StatusEnum
+} from "../../../../../definitions/cgn/CardActivated";
+import { CardExpired } from "../../../../../definitions/cgn/CardExpired";
+import { CardRevoked } from "../../../../../definitions/cgn/CardRevoked";
+import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
+import eycaLogo from "../../../../../img/bonus/cgn/eyca_logo.png";
+import { isLoading } from "../../../../common/model/RemoteValue";
+import { BonusCardScreenComponent } from "../../../../components/BonusCard";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import SectionStatusComponent from "../../../../components/SectionStatus";
-import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import I18n from "../../../../i18n";
+import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
+import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
-import { navigateBack } from "../../../../store/actions/navigation";
 import { Dispatch } from "../../../../store/actions/types";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   cgnMerchantVersionSelector,
   isCGNEnabledSelector
-} from "../../../../store/reducers/backendStatus";
+} from "../../../../store/reducers/backendStatus/remoteConfig";
+import { profileSelector } from "../../../settings/common/store/selectors";
 import { GlobalState } from "../../../../store/reducers/types";
-import customVariables from "../../../../theme/variables";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { formatDateAsShortFormat } from "../../../../utils/dates";
 import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
-import { confirmButtonProps } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
-import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
-import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/reducers/availableBonusesTypes";
-import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
-import { isLoading } from "../../bpd/model/RemoteValue";
-import CgnCardComponent from "../components/detail/CgnCardComponent";
+import { capitalizeTextName } from "../../../../utils/strings";
+import { openWebUrl } from "../../../../utils/url";
+import { availableBonusTypesSelectorFromId } from "../../common/store/selectors";
+import { ID_CGN_TYPE } from "../../common/utils";
+import { CgnAnimatedBackground } from "../components/CgnAnimatedBackground";
+import { CgnCardStatus } from "../components/CgnCardStatus";
 import CgnOwnershipInformation from "../components/detail/CgnOwnershipInformation";
 import CgnStatusDetail from "../components/detail/CgnStatusDetail";
 import CgnUnsubscribe from "../components/detail/CgnUnsubscribe";
 import EycaDetailComponent from "../components/detail/eyca/EycaDetailComponent";
-import {
-  navigateToCgnMerchantsList,
-  navigateToCgnMerchantsTabs
-} from "../navigation/actions";
+import { useCgnUnsubscribe } from "../hooks/useCgnUnsubscribe";
 import { CgnDetailsParamsList } from "../navigation/params";
 import CGN_ROUTES from "../navigation/routes";
 import { cgnDetails } from "../store/actions/details";
@@ -49,27 +58,42 @@ import {
   cgnDetailsInformationSelector,
   isCgnDetailsLoading
 } from "../store/reducers/details";
-import { eycaDetailSelector } from "../store/reducers/eyca/details";
+import {
+  eycaDetailSelector,
+  EycaDetailsState
+} from "../store/reducers/eyca/details";
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
+import { EYCA_WEBSITE_DISCOUNTS_PAGE_URL } from "../utils/constants";
 import { canEycaCardBeShown } from "../utils/eyca";
-import { IOColorGradients } from "../../../../components/core/variables/IOColors";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
+import { cgnActivationStart } from "../store/actions/activation";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const [gradFirstColor, gradSecondColor] = IOColorGradients.cgn;
-
-const HEADER_BACKGROUND_COLOR = gradFirstColor;
-const GRADIENT_END_COLOR = gradSecondColor;
+function getLogoUris(card: Card | undefined, eycaDetails: EycaDetailsState) {
+  const canCgnLogoBeShown = CardActivated.is(card);
+  const canDisplayEycaLogo =
+    canCgnLogoBeShown && canEycaCardBeShown(eycaDetails);
+  return [
+    ...(canCgnLogoBeShown ? [cgnLogo] : []),
+    ...(canDisplayEycaLogo ? [eycaLogo] : [])
+  ];
+}
 
 /**
  * Screen to display all the information about the active CGN
  */
-const CgnDetailScreen = (props: Props): React.ReactElement => {
-  const [cardLoading, setCardLoading] = useState(true);
+const CgnDetailScreen = (props: Props): ReactElement => {
   const navigation =
     useNavigation<IOStackNavigationProp<CgnDetailsParamsList, "CGN_DETAILS">>();
+  const dispatch = useIODispatch();
+
+  // to display EYCA info component the CGN initiative needs to be enabled by remote
+  const canDisplayEycaDetails =
+    canEycaCardBeShown(props.eycaDetails) &&
+    props.isCgnEnabled &&
+    CardActivated.is(props.cgnDetails);
 
   const loadCGN = () => {
     props.loadCgnDetails();
@@ -78,114 +102,174 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
 
   useActionOnFocus(loadCGN);
 
-  const onCardLoadEnd = () => setCardLoading(false);
-
   useHardwareBackButton(() => {
-    props.goBack();
+    navigation.goBack();
     return true;
   });
 
-  // to display EYCA info component the CGN initiative needs to be enabled by remote
-  const canDisplayEycaDetails =
-    canEycaCardBeShown(props.eycaDetails) && props.isCgnEnabled;
+  const { requestUnsubscription } = useCgnUnsubscribe();
+
+  const eycaDetails = useIOSelector(eycaDetailSelector);
+
+  const logoUris = getLogoUris(props.cgnDetails, eycaDetails);
+
+  const currentProfile = useIOSelector(profileSelector);
+
+  const startCgnActiviation = () => {
+    dispatch(loadAvailableBonuses.request());
+    dispatch(cgnActivationStart());
+  };
+
+  if (pot.isError(props.potCgnDetails)) {
+    // subText is a blank space to avoid default value when it is undefined
+    return (
+      <OperationResultScreenContent
+        pictogram="umbrella"
+        title={I18n.t("wallet.methodDetails.error.title")}
+        isHeaderVisible
+        subtitle={I18n.t("wallet.methodDetails.error.subtitle")}
+        action={{
+          label: I18n.t("global.buttons.close"),
+          onPress: navigation.goBack
+        }}
+        secondaryAction={{
+          label: I18n.t("global.buttons.retry"),
+          onPress: loadCGN
+        }}
+      />
+    );
+  }
+
+  if (props.isCgnInfoLoading || isLoading(props.unsubscriptionStatus)) {
+    return <BonusCardScreenComponent isLoading />;
+  }
+
+  const showDiscoverCta =
+    props.isCgnEnabled && props.cgnDetails?.status === StatusEnum.ACTIVATED;
+
+  const onPressShowCgnDiscounts = () => {
+    navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.CATEGORIES);
+  };
+
+  const footerActions: IOScrollViewActions | undefined = (() => {
+    if (showDiscoverCta) {
+      const primary = {
+        label: canDisplayEycaDetails
+          ? I18n.t("bonus.cgn.detail.cta.buyers")
+          : I18n.t("bonus.cgn.detail.cta.discover"),
+        onPress: onPressShowCgnDiscounts
+      };
+
+      const secondary = {
+        label: I18n.t("bonus.cgn.detail.cta.eyca.showEycaDiscounts"),
+        accessibilityLabel: I18n.t(
+          "bonus.cgn.detail.cta.eyca.showEycaDiscounts"
+        ),
+        onPress: () =>
+          openWebUrl(EYCA_WEBSITE_DISCOUNTS_PAGE_URL, () =>
+            IOToast.error(I18n.t("bonus.cgn.generic.linkError"))
+          )
+      };
+
+      return canDisplayEycaDetails
+        ? { type: "TwoButtons", primary, secondary }
+        : { type: "SingleButton", primary };
+    }
+
+    if (CardExpired.is(props.cgnDetails)) {
+      return {
+        type: "SingleButton",
+        primary: {
+          color: "danger",
+          label: I18n.t("bonus.cgn.activation.deactivate.expired"),
+          onPress: requestUnsubscription
+        }
+      };
+    }
+
+    return undefined;
+  })();
+
+  if (!props.cgnDetails) {
+    return (
+      <OperationResultScreenContent
+        pictogram="cardFavourite"
+        isHeaderVisible
+        title={I18n.t("bonus.cgn.detail.empty.title")}
+        subtitle={I18n.t("bonus.cgn.detail.empty.subtitle")}
+        action={{
+          label: I18n.t("bonus.cgn.detail.empty.activateCta"),
+          onPress: startCgnActiviation
+        }}
+        secondaryAction={{
+          label: I18n.t("global.buttons.close"),
+          onPress: navigation.goBack
+        }}
+      />
+    );
+  }
 
   return (
-    <LoadingSpinnerOverlay
-      isLoading={
-        props.isCgnInfoLoading ||
-        (props.cgnDetails && cardLoading) ||
-        isLoading(props.unsubscriptionStatus)
+    <BonusCardScreenComponent
+      logoUris={logoUris}
+      name={I18n.t("bonus.cgn.name")}
+      title={I18n.t("bonus.cgn.name")}
+      organizationName={I18n.t("bonus.cgn.departmentName")}
+      cardBackground={<CgnAnimatedBackground />}
+      actions={footerActions}
+      status={
+        props.cgnDetails ? <CgnCardStatus card={props.cgnDetails} /> : undefined
+      }
+      cardFooter={
+        <H4
+          color="black"
+          style={{
+            textAlign: "center",
+            marginHorizontal: 16,
+            marginBottom: 16
+          }}
+        >
+          {pot.isSome(currentProfile)
+            ? `${capitalizeTextName(
+                currentProfile.value.name
+              )} ${capitalizeTextName(currentProfile.value.family_name)}`
+            : ""}
+        </H4>
       }
     >
-      <BaseScreenComponent
-        headerBackgroundColor={HEADER_BACKGROUND_COLOR}
-        goBack={props.goBack}
-        headerTitle={I18n.t("bonus.cgn.name")}
-        dark={true}
-        titleColor={"white"}
-        contextualHelp={emptyContextualHelp}
-      >
-        <SafeAreaView style={IOStyles.flex}>
-          <FocusAwareStatusBar
-            backgroundColor={HEADER_BACKGROUND_COLOR}
-            barStyle={"light-content"}
+      <ContentWrapper style={{ flex: 1 }}>
+        {CardRevoked.is(props.cgnDetails) && (
+          <Alert
+            variant="error"
+            content={I18n.t("bonus.cgn.detail.information.revoked", {
+              reason: props.cgnDetails.revocation_reason
+            })}
           />
-          {pot.isError(props.potCgnDetails) ? ( // subText is a blank space to avoid default value when it is undefined
-            <GenericErrorComponent
-              subText={" "}
-              onRetry={loadCGN}
-              onCancel={props.goBack}
-            />
-          ) : (
-            <>
-              <ScrollView style={IOStyles.flex} bounces={false}>
-                {/* cgn gradient */}
-                <LinearGradient
-                  colors={[HEADER_BACKGROUND_COLOR, GRADIENT_END_COLOR]}
-                >
-                  <View
-                    style={[IOStyles.horizontalContentPadding, { height: 149 }]}
-                  />
-                </LinearGradient>
-                {props.cgnDetails && (
-                  <CgnCardComponent
-                    cgnDetails={props.cgnDetails}
-                    onCardLoadEnd={onCardLoadEnd}
-                  />
-                )}
-                <View
-                  style={[
-                    IOStyles.flex,
-                    IOStyles.horizontalContentPadding,
-                    { paddingTop: customVariables.contentPadding }
-                  ]}
-                >
-                  {/* <VSpacer size={44} /> */}
-                  <VSpacer size={40} />
-                  <VSpacer size={4} />
-
-                  {/* Ownership block rendering owner's fiscal code */}
-                  <CgnOwnershipInformation />
-                  <ItemSeparatorComponent noPadded />
-                  <VSpacer size={16} />
-                  {props.cgnDetails && (
-                    // Renders status information including activation and expiring date and a badge that represents the CGN status
-                    // ACTIVATED - EXPIRED - REVOKED
-                    <CgnStatusDetail cgnDetail={props.cgnDetails} />
-                  )}
-                  {canDisplayEycaDetails && (
-                    <>
-                      <ItemSeparatorComponent noPadded />
-                      <VSpacer size={16} />
-                      <EycaDetailComponent />
-                    </>
-                  )}
-                  <VSpacer size={24} />
-                  <ItemSeparatorComponent noPadded />
-                  <CgnUnsubscribe />
-                </View>
-              </ScrollView>
-              <SectionStatusComponent sectionKey={"cgn"} />
-              {props.isCgnEnabled &&
-                props.cgnDetails?.status === StatusEnum.ACTIVATED && (
-                  <FooterWithButtons
-                    type={"SingleButton"}
-                    leftButton={confirmButtonProps(
-                      props.isMerchantV2Enabled
-                        ? props.navigateToMerchantsTabs
-                        : () =>
-                            navigation.navigate(
-                              CGN_ROUTES.DETAILS.MERCHANTS.CATEGORIES
-                            ),
-                      I18n.t("bonus.cgn.detail.cta.buyers")
-                    )}
-                  />
-                )}
-            </>
-          )}
-        </SafeAreaView>
-      </BaseScreenComponent>
-    </LoadingSpinnerOverlay>
+        )}
+        {CardExpired.is(props.cgnDetails) && (
+          <Alert
+            variant="error"
+            content={I18n.t("bonus.cgn.detail.information.expired", {
+              date: formatDateAsShortFormat(props.cgnDetails.expiration_date)
+            })}
+          />
+        )}
+        <VSpacer size={16} />
+        <CgnOwnershipInformation
+        // Ownership block rendering owner's fiscal code
+        />
+        <VSpacer size={16} />
+        {props.cgnDetails && (
+          // Renders status information including activation and expiring date and a badge that represents the CGN status
+          // ACTIVATED - EXPIRED - REVOKED
+          <CgnStatusDetail cgnDetail={props.cgnDetails} />
+        )}
+        {canDisplayEycaDetails && <EycaDetailComponent />}
+        <VSpacer size={24} />
+        {CardActivated.is(props.cgnDetails) && <CgnUnsubscribe />}
+      </ContentWrapper>
+      <SectionStatusComponent sectionKey={"cgn"} />
+    </BonusCardScreenComponent>
   );
 };
 
@@ -202,11 +286,8 @@ const mapStateToProps = (state: GlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   unsubscribe: () => dispatch(cgnUnsubscribe.request()),
-  goBack: () => navigateBack(),
   loadEycaDetails: () => dispatch(cgnEycaStatus.request()),
-  loadCgnDetails: () => dispatch(cgnDetails.request()),
-  navigateToMerchantsList: () => navigateToCgnMerchantsList(),
-  navigateToMerchantsTabs: () => navigateToCgnMerchantsTabs()
+  loadCgnDetails: () => dispatch(cgnDetails.request())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CgnDetailScreen);

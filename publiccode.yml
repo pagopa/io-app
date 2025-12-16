@@ -1,18 +1,18 @@
-# This repository adheres to the publiccode.yml standard by including this 
+# This repository adheres to the publiccode.yml standard by including this
 # metadata file that makes public software easily discoverable.
 # More info at https://github.com/italia/publiccode.yml
 
-publiccodeYmlVersion: '0.2'
+publiccodeYmlVersion: "0.2"
 name: IO
-logo: "img/app-logo.svg"
-releaseDate: '2023-02-16'
-url: 'https://github.com/pagopa/io-app'
+logo: "img/io-app-icon.png"
+releaseDate: "2024-11-21"
+url: "https://github.com/pagopa/io-app"
 applicationSuite: IO
-landingURL: 'https://io.italia.it/'
-softwareVersion: 2.26.0-rc.2
+landingURL: "https://ioapp.it/"
+softwareVersion: 3.22.0-rc.3
 developmentStatus: beta
 softwareType: standalone/mobile
-roadmap: 'https://io.italia.it/'
+roadmap: "https://ioapp.it/"
 platforms:
   - ios
   - android
@@ -21,8 +21,8 @@ categories:
 maintenance:
   type: internal
   contacts:
-    - name: Matteo Boschi
-      email: matteo.boschi@pagopa.it
+    - name: Team IO App
+      email: ioappcore@pagopa.it
 legal:
   license: EUPL-1.2
   mainCopyrightOwner: PagoPA S.p.A.
@@ -41,7 +41,7 @@ localisation:
     - it
     - en
 it:
-  countryExtensionVersion: '0.2'
+  countryExtensionVersion: "0.2"
   piattaforme:
     spid: true
     pagopa: true
@@ -53,7 +53,7 @@ it:
     misureMinimeSicurezza: true
     gdpr: true
   riuso:
-    codiceIPA: PCM
+    codiceIPA: 5n2tr557
 description:
   it:
     genericName: Mobile Application
@@ -88,7 +88,7 @@ description:
 
       - fungere da _reference implementation_ delle integrazioni con la
       piattaforma di Cittadinanza Digitale
-    documentation: 'https://github.com/pagopa/io-app'
+    documentation: "https://github.com/pagopa/io-app"
     features:
       - Messaggi
       - Pagamenti

@@ -1,9 +1,10 @@
 /**
  * Mocked version of the BackendClient.
  */
-
-const mockedGetSession = jest.fn();
-
-export const BackendClient = () => ({
-  getSession: mockedGetSession
-});
+export const BackendClient = {
+  getMessage: jest.fn(),
+  getMessages: jest.fn(),
+  getSession: jest.fn(),
+  getThirdPartyMessagePrecondition: jest.fn(),
+  upsertMessageStatusAttributes: jest.fn()
+};

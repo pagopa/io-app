@@ -1,0 +1,132 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FimsPrivacyInfo component render LoadingSkeleton when privacyUrl is undefined 1`] = `
+<View
+  accessibilityHint="Attendi il caricamento del contenuto"
+  accessibilityLabel="Caricamento in corso"
+  accessible={true}
+  testID="skeleton"
+>
+  <View
+    accessibilityElementsHidden={true}
+    importantForAccessibility="no-hide-descendants"
+  >
+    <View
+      style={
+        {
+          "display": "flex",
+          "flexDirection": "column",
+          "gap": 8,
+        }
+      }
+    >
+      <View
+        collapsable={false}
+        style={
+          {
+            "backgroundColor": "#E8EBF1",
+            "borderCurve": "continuous",
+            "borderRadius": 4,
+            "height": 21,
+            "opacity": 0.55,
+            "width": "98%",
+          }
+        }
+      />
+      <View
+        collapsable={false}
+        style={
+          {
+            "backgroundColor": "#E8EBF1",
+            "borderCurve": "continuous",
+            "borderRadius": 4,
+            "height": 21,
+            "opacity": 0.55,
+            "width": "86%",
+          }
+        }
+      />
+    </View>
+  </View>
+</View>
+`;
+
+exports[`FimsPrivacyInfo component renders correctly with privacyUrl defined 1`] = `
+<Text
+  allowFontScaling={true}
+  dynamicTypeRamp="body"
+  maxFontSizeMultiplier={1.5}
+  style={
+    [
+      {},
+      {
+        "color": "#555C70",
+        "fontFamily": "Titillio",
+        "fontSize": 16,
+        "fontStyle": "normal",
+        "fontWeight": "400",
+        "lineHeight": 24,
+      },
+    ]
+  }
+>
+  Per maggiori informazioni, leggi 
+  <View
+    accessibilityRole="link"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+  >
+    <Text
+      accessibilityRole="link"
+      allowFontScaling={true}
+      dynamicTypeRamp="body"
+      maxFontSizeMultiplier={1.5}
+      style={
+        [
+          {
+            "textDecorationLine": "underline",
+          },
+          {
+            "color": "#0B3EE3",
+            "fontFamily": "Titillio",
+            "fontSize": 16,
+            "fontStyle": "normal",
+            "fontWeight": "600",
+            "lineHeight": 24,
+          },
+        ]
+      }
+      testID="body-primary-action"
+    >
+      l’Informativa sulla Privacy 
+    </Text>
+  </View>
+</Text>
+`;

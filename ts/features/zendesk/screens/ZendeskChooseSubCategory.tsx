@@ -1,24 +1,18 @@
-import { ListItem } from "native-base";
-import React from "react";
 import {
-  FlatList,
-  ListRenderItemInfo,
-  SafeAreaView,
-  ScrollView
-} from "react-native";
-import { useDispatch } from "react-redux";
+  Banner,
+  ContentWrapper,
+  Divider,
+  IOVisualCostants,
+  ListItemNav,
+  useIOToast,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import { FlatList, ListRenderItemInfo } from "react-native";
+import I18n from "i18next";
 import { ZendeskSubCategory } from "../../../../definitions/content/ZendeskSubCategory";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
-import { H1 } from "../../../components/core/typography/H1";
-import { H4 } from "../../../components/core/typography/H4";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import IconFont from "../../../components/ui/IconFont";
-import View from "../../../components/ui/TextWithIcon";
-import I18n from "../../../i18n";
+import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../store/hooks";
-import customVariables from "../../../theme/variables";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { getFullLocale } from "../../../utils/locale";
 import {
   addTicketCustomField,
@@ -26,14 +20,17 @@ import {
 } from "../../../utils/supportAssistance";
 import { ZendeskParamsList } from "../navigation/params";
 import {
+  ZendeskAssistanceType,
   zendeskSelectedSubcategory,
   zendeskSupportFailure
 } from "../store/actions";
 import { zendeskSelectedCategorySelector } from "../store/reducers";
+import { openWebUrl } from "../../../utils/url";
+import { trackHelpCenterCtaTapped } from "../../../utils/analytics";
+import { getOrFallback } from "../../../utils/object";
 
 export type ZendeskChooseSubCategoryNavigationParams = {
-  assistanceForPayment: boolean;
-  assistanceForCard: boolean;
+  assistanceType: ZendeskAssistanceType;
 };
 
 type Props = IOStackNavigationRouteProps<
@@ -46,9 +43,13 @@ type Props = IOStackNavigationRouteProps<
  * see {@link ZendeskChooseCategory} to check the previous category screen
  */
 const ZendeskChooseSubCategory = (props: Props) => {
+  const { error } = useIOToast();
   const selectedCategory = useIOSelector(zendeskSelectedCategorySelector);
-  const dispatch = useDispatch();
-  const { assistanceForPayment, assistanceForCard } = props.route.params;
+  const dispatch = useIODispatch();
+  const {
+    params: { assistanceType },
+    name: routeName
+  } = props.route;
   const selectedSubcategory = (subcategory: ZendeskSubCategory) =>
     dispatch(zendeskSelectedSubcategory(subcategory));
   const zendeskWorkUnitFailure = (reason: string) =>
@@ -71,78 +72,76 @@ const ZendeskChooseSubCategory = (props: Props) => {
     selectedCategory.zendeskSubCategories?.subCategories ?? [];
   const subCategoriesId: string =
     selectedCategory.zendeskSubCategories?.id ?? "";
+  const bannerEducational =
+    selectedCategory.zendeskSubCategories?.bannerEducational;
 
   const locale = getFullLocale();
 
-  const renderItem = (listItem: ListRenderItemInfo<ZendeskSubCategory>) => {
-    const subCategory = listItem.item;
-    return (
-      <ListItem
-        onPress={() => {
-          selectedSubcategory(subCategory);
-          // Set sub-category as custom field
-          addTicketCustomField(subCategoriesId, subCategory.value);
-          props.navigation.navigate("ZENDESK_ASK_PERMISSIONS", {
-            assistanceForPayment,
-            assistanceForCard
-          });
-        }}
-        first={listItem.index === 0}
-        style={{ paddingRight: 0 }}
-        testID={subCategory.value}
-      >
-        <View
-          style={{
-            flex: 1,
-            flexDirection: "row",
-            justifyContent: "space-between"
-          }}
-        >
-          <H4
-            weight={"Regular"}
-            color={"bluegreyDark"}
-            style={{
-              flex: 1,
-              flexGrow: 1
-            }}
-          >
-            {subCategory.description[locale]}
-          </H4>
-          <View>
-            <IconFont
-              name={"io-right"}
-              size={24}
-              color={customVariables.contentPrimaryBackground}
-            />
-          </View>
-        </View>
-      </ListItem>
-    );
-  };
-
-  // The void customRightIcon is needed to have a centered header title
-  return (
-    <BaseScreenComponent
-      showChat={false}
-      goBack={true}
-      customRightIcon={{
-        iconName: "",
-        onPress: () => true
+  const renderItem = ({
+    item: subCategory
+  }: ListRenderItemInfo<ZendeskSubCategory>) => (
+    <ListItemNav
+      testID={subCategory.value}
+      value={subCategory.description[locale]}
+      onPress={() => {
+        selectedSubcategory(subCategory);
+        // Set sub-category as custom field
+        addTicketCustomField(subCategoriesId, subCategory.value);
+        props.navigation.navigate("ZENDESK_ASK_PERMISSIONS", {
+          assistanceType
+        });
       }}
-      headerTitle={selectedCategory.description[locale]}
+    />
+  );
+
+  return (
+    <IOScrollViewWithLargeHeader
+      title={{
+        label: I18n.t("support.chooseCategory.title.subCategory"),
+        section: selectedCategory.description[locale]
+      }}
+      ignoreSafeAreaMargin={true}
+      testID={"ZendeskChooseCategory"}
     >
-      <SafeAreaView style={IOStyles.flex} testID={"ZendeskChooseCategory"}>
-        <ScrollView style={IOStyles.horizontalContentPadding}>
-          <H1>{I18n.t("support.chooseCategory.title.subCategory")}</H1>
-          <VSpacer size={16} />
-          <FlatList
-            data={subCategories}
-            keyExtractor={c => c.value}
-            renderItem={renderItem}
+      {bannerEducational && (
+        <ContentWrapper>
+          <Banner
+            pictogramName="help"
+            color="neutral"
+            title={getOrFallback(bannerEducational.title, locale, "it-IT")}
+            content={getOrFallback(bannerEducational.content, locale, "it-IT")}
+            action={getOrFallback(
+              bannerEducational.action.label,
+              locale,
+              "it-IT"
+            )}
+            onPress={() => {
+              const url = getOrFallback(
+                bannerEducational.action.href,
+                locale,
+                "it-IT"
+              );
+
+              trackHelpCenterCtaTapped(selectedCategory.value, url, routeName);
+              openWebUrl(url, () => {
+                error(I18n.t("global.jserror.title"));
+              });
+            }}
           />
-        </ScrollView>
-      </SafeAreaView>
-    </BaseScreenComponent>
+          <VSpacer size={8} />
+        </ContentWrapper>
+      )}
+      <FlatList
+        scrollEnabled={false}
+        contentContainerStyle={{
+          paddingHorizontal: IOVisualCostants.appMarginDefault
+        }}
+        data={subCategories}
+        keyExtractor={c => c.value}
+        renderItem={renderItem}
+        ItemSeparatorComponent={Divider}
+      />
+    </IOScrollViewWithLargeHeader>
   );
 };
 

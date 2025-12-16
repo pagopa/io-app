@@ -8,7 +8,8 @@ import { NetworkError } from "../../../../../utils/errors";
 export const cgnDetails = createAsyncAction(
   "CGN_DETAILS_REQUEST",
   "CGN_DETAILS_SUCCESS",
-  "CGN_DETAILS_FAILURE"
-)<void, Card, NetworkError>();
+  "CGN_DETAILS_FAILURE",
+  "CGN_DETAILS_FAILURE_CANCEL"
+)<void, Card, NetworkError, void>();
 
 export type CgnDetailsActions = ActionType<typeof cgnDetails>;

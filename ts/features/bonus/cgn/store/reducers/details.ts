@@ -40,6 +40,12 @@ const reducer = (
         ...state,
         information: pot.toError(state.information, action.payload)
       };
+    // This action is fired when the user is not elegible to have a CGN or it doesn't have it onboarded
+    case getType(cgnDetails.cancel):
+      return {
+        ...state,
+        information: pot.none
+      };
     case getType(cgnUnsubscribe.success):
       return INITIAL_STATE;
   }

@@ -1,5 +1,6 @@
 import hoistNonReactStatics from "hoist-non-react-statics";
-import * as React from "react";
+
+import { Component, ComponentType } from "react";
 import LoadingSpinnerOverlay from "../LoadingSpinnerOverlay";
 
 /**
@@ -15,8 +16,8 @@ export function withLoadingSpinner<
     loadingOpacity?: number;
     onCancel?: any;
   }>
->(WrappedComponent: React.ComponentType<P>) {
-  class WithLoadingSpinner extends React.Component<P> {
+>(WrappedComponent: ComponentType<P>) {
+  class WithLoadingSpinner extends Component<P> {
     public render() {
       const { isLoading, loadingCaption, loadingOpacity, onCancel } =
         this.props;

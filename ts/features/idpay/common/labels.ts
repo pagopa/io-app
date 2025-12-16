@@ -1,5 +1,7 @@
-import { StatusEnum } from "../../../../definitions/idpay/wallet/InstrumentDTO";
-import I18n from "../../../i18n";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
+import { StatusEnum } from "../../../../definitions/idpay/InstrumentDTO";
 
 type InstrumentStatusLabels = {
   [key in StatusEnum]: string;
@@ -16,5 +18,30 @@ const instrumentStatusLabels: InstrumentStatusLabels = {
     "idpay.configuration.instruments.instrumentStatus.pendingDeactivation"
   )
 };
+
+type OperationTypeLabels = {
+  [key: string]: string;
+};
+
+const circuitTypeLabels: OperationTypeLabels = {
+  "00": "Bancomat",
+  "01": "Visa",
+  "02": "Mastercard",
+  "03": "Amex",
+  "04": "JCB",
+  "05": "UnionPay",
+  "06": "Diners",
+  "07": "PostePay",
+  "08": "BancomatPay",
+  "10": "PrivateCircuit"
+};
+
+export const getLabelForCircuitType = (circuitType: string | undefined) =>
+  pipe(
+    circuitType,
+    O.fromNullable,
+    O.chain(type => O.fromNullable(circuitTypeLabels[type])),
+    O.getOrElse(() => "-")
+  );
 
 export { instrumentStatusLabels };

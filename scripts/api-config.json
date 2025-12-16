@@ -1,25 +1,25 @@
 {
   "global": {
     "autoLogin": true,
-    "allowRandomValues" : false
+    "allowRandomValues": false
   },
   "profile": {
     "attrs": {
       "name": "Gian Maria"
     }
   },
-  "messages":{
+  "messages": {
     "paymentsCount": 1,
     "paymentInvalidAfterDueDateWithValidDueDateCount": 1,
     "paymentInvalidAfterDueDateWithExpiredDueDateCount": 1,
     "paymentWithValidDueDateCount": 1,
     "paymentWithExpiredDueDateCount": 1,
-    "medicalCount": 1,
     "withCTA": true,
-    "withEUCovidCert": true,
+    "generateLegacyGreenPassMessage": true,
     "withValidDueDateCount": 1,
     "withInValidDueDateCount": 1,
     "standardMessageCount": 1,
+    "archivedMessageCount": 0,
     "allowRandomValues": false
   },
   "wallet": {
@@ -28,7 +28,7 @@
       "pspFeeAmount": 100
     },
     "methods": {
-      "walletCreditCardCount":1
+      "walletCreditCardCount": 1
     }
   },
   "features": {

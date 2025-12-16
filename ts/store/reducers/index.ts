@@ -1,63 +1,81 @@
+/* eslint-disable no-underscore-dangle */
 /**
  * Aggregates all defined reducers
  */
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { combineReducers, Reducer } from "redux";
-import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
+import {
+  createMigrate,
+  MigrationManifest,
+  PersistConfig,
+  PersistedState,
+  PersistPartial,
+  persistReducer,
+  purgeStoredState
+} from "redux-persist";
 import { isActionOf } from "typesafe-actions";
 import { versionInfoReducer } from "../../common/versionInfo/store/reducers/versionInfo";
-import bonusReducer from "../../features/bonus/bonusVacanze/store/reducers";
-import { featuresPersistor } from "../../features/common/store/reducers";
-import lollipopReducer, {
-  initialLollipopState
-} from "../../features/lollipop/store/reducers/lollipop";
+import { appearanceSettingsReducerInitialState } from "../../features/appearanceSettings/store/reducers";
+import { appFeedbackInitialState } from "../../features/appReviews/store/reducers";
 import {
   logoutFailure,
   logoutSuccess,
   sessionExpired
-} from "../actions/authentication";
+} from "../../features/authentication/common/store/actions";
+import authenticationReducer, {
+  INITIAL_STATE as authenticationInitialState,
+  AuthenticationState
+} from "../../features/authentication/common/store/reducers";
+import { fastLoginOptInInitialState } from "../../features/authentication/fastLogin/store/reducers/optInReducer";
+import { cieReducer } from "../../features/authentication/login/cie/store/reducers";
+import { cieLoginInitialState } from "../../features/authentication/login/cie/store/reducers/cieLogin";
+import { activeSessionLoginInitialState } from "../../features/authentication/activeSessionLogin/store/reducer";
+import bonusReducer from "../../features/bonus/common/store/reducers";
+import { featuresPersistor } from "../../features/common/store/reducers";
+import {
+  fillShowLockModal,
+  INITIAL_STATE as identificationInitialState,
+  identificationReducer,
+  IdentificationState
+} from "../../features/identification/store/reducers";
+import { lollipopPersistor } from "../../features/lollipop/store";
+import { initialLollipopState } from "../../features/lollipop/store/reducers/lollipop";
+import emailValidationReducer from "../../features/mailCheck/store/reducers/emailValidation";
+import onboardingReducer from "../../features/onboarding/store/reducers";
+import { profileSettingsReducerInitialState } from "../../features/profileSettings/store/reducers";
+import { persistedNotificationsReducer } from "../../features/pushNotifications/store/reducers";
+import profileReducer from "../../features/settings/common/store/reducers";
+import userDataProcessingReducer from "../../features/settings/common/store/reducers/userDataProcessing";
+import { trialSystemActivationStatusReducer } from "../../features/trialSystem/store/reducers";
+import { whatsNewInitialState } from "../../features/whatsnew/store/reducers";
+import { isDevEnv } from "../../utils/environment";
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
-import authenticationReducer, {
-  AuthenticationState,
-  INITIAL_STATE as autenticationInitialState
-} from "./authentication";
-import backendStatusReducer from "./backendStatus";
-import backoffErrorReducer from "./backoffError";
-import cieReducer from "./cie";
+import { backendInfoReducer } from "./backendStatus/backendInfo";
+import remoteConfigReducer from "./backendStatus/remoteConfig";
+import sectionStatusReducer from "./backendStatus/sectionStatus";
+import statusMessagesReducer from "./backendStatus/statusMessages";
 import contentReducer, {
   initialContentState as contentInitialContentState
 } from "./content";
 import crossSessionsReducer from "./crossSessions";
-import { debugReducer } from "./debug";
-import emailValidationReducer from "./emailValidation";
+import { debugPersistor } from "./debug";
 import entitiesReducer, {
   entitiesPersistConfig,
   EntitiesState
 } from "./entities";
-import identificationReducer, {
-  IdentificationState,
-  INITIAL_STATE as identificationInitialState
-} from "./identification";
 import installationReducer from "./installation";
 import { navigationReducer } from "./navigation";
-import notificationsReducer from "./notifications";
-import onboardingReducer from "./onboarding";
-import paymentsReducer from "./payments";
 import persistedPreferencesReducer, {
   initialPreferencesState
 } from "./persistedPreferences";
 import preferencesReducer from "./preferences";
-import profileReducer from "./profile";
 import searchReducer from "./search";
+import startupReducer from "./startup";
 import { GlobalState } from "./types";
-import userDataProcessingReducer from "./userDataProcessing";
-import userMetadataReducer from "./userMetadata";
-import walletReducer from "./wallet";
-import { WALLETS_INITIAL_STATE as walletsInitialState } from "./wallet/wallets";
 
 // A custom configuration to store the authentication into the Keychain
 export const authenticationPersistConfig: PersistConfig = {
@@ -66,12 +84,29 @@ export const authenticationPersistConfig: PersistConfig = {
   blacklist: ["deepLink"]
 };
 
+export const IDENTIFICATION_STATE_MIGRATION_VERSION = 0;
+export const identificationStateMigration: MigrationManifest = {
+  // version 0
+  // we added showLockModal
+  "0": (state: PersistedState) => {
+    const previousState = state as IdentificationState & PersistPartial;
+    const failData = previousState.fail
+      ? fillShowLockModal(previousState.fail)
+      : undefined;
+    return {
+      ...previousState,
+      fail: failData
+    } as PersistedState;
+  }
+};
 // A custom configuration to store the fail information of the identification section
 export const identificationPersistConfig: PersistConfig = {
   key: "identification",
   storage: AsyncStorage,
   blacklist: ["progress"],
-  transforms: [DateISO8601Transform]
+  transforms: [DateISO8601Transform],
+  version: IDENTIFICATION_STATE_MIGRATION_VERSION,
+  migrate: createMigrate(identificationStateMigration, { debug: isDevEnv })
 };
 
 /**
@@ -93,15 +128,17 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   //
   appState: appStateReducer,
   navigation: navigationReducer,
-  backoffError: backoffErrorReducer,
-  wallet: walletReducer,
   versionInfo: versionInfoReducer,
-  backendStatus: backendStatusReducer,
+  remoteConfig: remoteConfigReducer,
+  statusMessages: statusMessagesReducer,
+  sectionStatus: sectionStatusReducer,
+  backendInfo: backendInfoReducer,
   preferences: preferencesReducer,
   search: searchReducer,
   cie: cieReducer,
   bonus: bonusReducer,
   assistanceTools: assistanceToolsReducer,
+  startup: startupReducer,
   //
   // persisted state
   //
@@ -120,22 +157,21 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   ),
   features: featuresPersistor,
   onboarding: onboardingReducer,
-  notifications: notificationsReducer,
+  notifications: persistedNotificationsReducer,
   profile: profileReducer,
   userDataProcessing: userDataProcessingReducer,
-  userMetadata: userMetadataReducer,
   entities: persistReducer<EntitiesState, Action>(
     entitiesPersistConfig,
     entitiesReducer
   ),
-  debug: debugReducer,
+  debug: debugPersistor,
   persistedPreferences: persistedPreferencesReducer,
   installation: installationReducer,
-  payments: paymentsReducer,
   content: contentReducer,
   emailValidation: emailValidationReducer,
   crossSessions: crossSessionsReducer,
-  lollipop: lollipopReducer
+  lollipop: lollipopPersistor,
+  trialSystem: trialSystemActivationStatusReducer
 });
 
 export function createRootReducer(
@@ -164,69 +200,133 @@ export function createRootReducer(
       state = state
         ? ({
             authentication: {
-              ...autenticationInitialState,
-              // eslint-disable-next-line no-underscore-dangle
+              ...authenticationInitialState,
+
               _persist: state.authentication._persist
             },
+            // cie status must be kept
+            cie: {
+              ...state.cie
+            },
             // backend status must be kept
-            backendStatus: state.backendStatus,
+            backendInfo: state.backendInfo,
+            remoteConfig: state.remoteConfig,
+            statusMessages: state.statusMessages,
+            sectionStatus: state.sectionStatus,
             // keep servicesMetadata from content section
             content: {
-              ...contentInitialContentState
+              ...contentInitialContentState,
+              contextualHelp: state.content.contextualHelp
             },
             // keep hashed fiscal code
             crossSessions: state.crossSessions,
             // data should be kept across multiple sessions
             entities: {
-              services: state.entities.services,
               organizations: state.entities.organizations,
-              messagesStatus: state.entities.messagesStatus,
               paymentByRptId: state.entities.paymentByRptId,
               calendarEvents: state.entities.calendarEvents,
-              transactionsRead: state.entities.transactionsRead,
-              // eslint-disable-next-line no-underscore-dangle
               _persist: state.entities._persist
             },
             features: {
-              mvl: {
-                // eslint-disable-next-line no-underscore-dangle
-                _persist: state.features.mvl._persist
+              // connectivityStatus must be kept
+              connectivityStatus: {
+                ...state.features.connectivityStatus
+              },
+              appFeedback: {
+                ...appFeedbackInitialState,
+                _persist: state.features.appFeedback._persist
+              },
+              whatsNew: {
+                ...whatsNewInitialState,
+                _persist: state.features.whatsNew._persist
+              },
+              loginFeatures: {
+                fastLogin: {
+                  optIn: {
+                    ...fastLoginOptInInitialState,
+                    _persist:
+                      state.features.loginFeatures.fastLogin.optIn._persist
+                  },
+                  securityAdviceAcknowledged: {
+                    acknowledged:
+                      state.features.loginFeatures.fastLogin
+                        .securityAdviceAcknowledged.acknowledged,
+                    _persist:
+                      state.features.loginFeatures.fastLogin
+                        .securityAdviceAcknowledged._persist
+                  }
+                },
+                cieLogin: {
+                  ...cieLoginInitialState,
+                  isCieIDTourGuideEnabled:
+                    state.features.loginFeatures.cieLogin
+                      .isCieIDTourGuideEnabled,
+                  _persist: state.features.loginFeatures.cieLogin._persist
+                },
+                activeSessionLogin: {
+                  ...activeSessionLoginInitialState,
+                  _persist:
+                    state.features.loginFeatures.activeSessionLogin._persist
+                }
+              },
+              profileSettings: {
+                ...profileSettingsReducerInitialState,
+                _persist: state.features.profileSettings._persist
+              },
+              appearanceSettings: {
+                ...appearanceSettingsReducerInitialState,
+                showAppearanceBanner:
+                  state.features.appearanceSettings.showAppearanceBanner,
+                _persist: state.features.appearanceSettings._persist
+              },
+              /**
+               * IT Wallet state persists across sessions and is explicitly reset on session changes
+               * via the itwLifecycleStoresReset action to ensure proper cleanup.
+               * We can avoid to replicate the _persist property because itWallet already is a persisted
+               * reducer.
+               */
+              itWallet: {
+                ...state.features.itWallet
               },
               pn: {
-                // eslint-disable-next-line no-underscore-dangle
-                _persist: state.features.pn._persist
+                // Logout changes are already handled in PN's reducer.
+                // This way, we make sure that if the user leaves the application
+                // before the persistance is updated, we do not find ourselves
+                // with a dirty state.
+                ...state.features.pn
               },
-              // eslint-disable-next-line no-underscore-dangle
               _persist: state.features._persist
             },
             identification: {
               ...identificationInitialState,
-              // eslint-disable-next-line no-underscore-dangle
               _persist: state.identification._persist
             },
             // notifications must be kept
             notifications: {
-              ...state.notifications
-            },
-            // payments must be kept
-            payments: {
-              ...state.payments
+              ...state.notifications,
+              installation: {
+                ...state.notifications.installation,
+                // Make sure to register the token again upon login, since
+                // such process deletes the token from the notification hub
+                registeredToken: undefined,
+                tokenStatus: { status: "unsent" }
+              },
+              _persist: state.notifications._persist
             },
             // isMixpanelEnabled must be kept
+            // isFingerprintEnabled must be kept only if true
             persistedPreferences: {
               ...initialPreferencesState,
-              isMixpanelEnabled: state.persistedPreferences.isMixpanelEnabled
-            },
-            wallet: {
-              wallets: {
-                ...walletsInitialState,
-                // eslint-disable-next-line no-underscore-dangle
-                _persist: state.wallet.wallets._persist
-              }
+              isMixpanelEnabled: state.persistedPreferences.isMixpanelEnabled,
+              isFingerprintEnabled: state.persistedPreferences
+                .isFingerprintEnabled
+                ? true
+                : undefined
             },
             lollipop: {
               ...initialLollipopState,
-              keyTag: state.lollipop.keyTag
+              keyTag: state.lollipop.keyTag,
+              _persist: state.lollipop._persist
             }
           } as GlobalState)
         : state;

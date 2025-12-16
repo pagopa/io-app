@@ -1,12 +1,9 @@
-import * as React from "react";
+import { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { useSelector } from "react-redux";
-import IconFont from "../../../components/ui/IconFont";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { IOColors } from "../../../components/core/variables/IOColors";
-import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
+import { CheckboxLabel } from "@pagopa/io-app-design-system";
 import { QtspClause } from "../../../../definitions/fci/QtspClause";
 import { fciQtspFilledDocumentUrlSelector } from "../store/reducers/fciQtspFilledDocument";
+import { useIOSelector } from "../../../store/hooks";
 import LinkedText from "./LinkedText";
 
 type Props = {
@@ -25,8 +22,8 @@ const styles = StyleSheet.create({
 });
 
 const QtspClauseListItem = (props: Props) => {
-  const [checked, setChecked] = React.useState(props.checked || false);
-  const qtspFilledDocumentUrl = useSelector(fciQtspFilledDocumentUrlSelector);
+  const [checked, setChecked] = useState(props.checked || false);
+  const qtspFilledDocumentUrl = useIOSelector(fciQtspFilledDocumentUrlSelector);
   const onChange = (value: boolean) => {
     setChecked(value);
     props.onChange(value);
@@ -39,32 +36,20 @@ const QtspClauseListItem = (props: Props) => {
   return (
     <View style={styles.container} testID="QtspClauseListItemContainerTestID">
       <View style={{ flex: 1 }} testID="QtspClauseLinkedTextTestID">
-        {
-          <LinkedText
-            text={props.clause.text}
-            replacementUrl={qtspFilledDocumentUrl}
-            onPress={onPressLinkedText}
-          />
-        }
+        <LinkedText
+          text={props.clause.text}
+          replacementUrl={qtspFilledDocumentUrl}
+          onPress={onPressLinkedText}
+        />
       </View>
-      <View style={IOStyles.horizontalContentPadding} />
-      <TouchableDefaultOpacity
-        accessibilityRole={"radio"}
-        testID={"QtspClauseListItemButtonTestID"}
-        onPress={() => {
+      <CheckboxLabel
+        label=""
+        checked={checked}
+        onValueChange={() => {
           onChange(!checked);
           setChecked(!checked);
         }}
-      >
-        <View style={IOStyles.column}>
-          <IconFont
-            testID="QtspClauseListItemCheckboxTestID"
-            name={checked ? "io-checkbox-on" : "io-checkbox-off"}
-            color={checked ? IOColors.blue : IOColors.bluegreyDark}
-            size={22}
-          />
-        </View>
-      </TouchableDefaultOpacity>
+      />
     </View>
   );
 };

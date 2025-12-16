@@ -1,12 +1,17 @@
-import * as t from "io-ts";
+import { IOToast } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
-import I18n from "../../../../i18n";
-import { showToast } from "../../../../utils/showToast";
-import { openWebUrl } from "../../../../utils/url";
+import * as t from "io-ts";
+import I18n from "i18next";
 import { IO_INTERNAL_LINK_PREFIX } from "../../../../utils/navigation";
+import { openWebUrl } from "../../../../utils/url";
 
 export const isIoInternalLink = (href: string): boolean =>
-  href.startsWith(IO_INTERNAL_LINK_PREFIX);
+  href.toLowerCase().startsWith(IO_INTERNAL_LINK_PREFIX);
+
+export const isHttpsLink = (href: string): boolean =>
+  href.toLowerCase().startsWith("https://");
+export const isHttpLink = (href: string): boolean =>
+  href.toLowerCase().startsWith("http://");
 
 /**
  * a dedicated codec for CustomHandledLink
@@ -77,6 +82,6 @@ export function handleLinkMessage(href: string) {
 // try to open the given url. If it fails an error toast will shown
 export function openLink(url: string, customError?: string) {
   const error = customError || I18n.t("global.genericError");
-  const getErrorToast = () => showToast(error);
+  const getErrorToast = () => IOToast.error(error);
   openWebUrl(url, getErrorToast);
 }

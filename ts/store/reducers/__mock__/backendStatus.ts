@@ -1,10 +1,8 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../../definitions/content/BackendStatus";
 import { Config } from "../../../../definitions/content/Config";
 import { LevelEnum } from "../../../../definitions/content/SectionStatus";
-import { BackendStatusState } from "../backendStatus";
+import { absolutePortalLinksFallback } from "../backendStatus/remoteConfig";
 
 export const baseRawBackendStatus: BackendStatus = {
   is_alive: true,
@@ -46,8 +44,8 @@ export const baseRawBackendStatus: BackendStatus = {
       is_visible: false,
       level: LevelEnum.critical,
       web_url: {
-        "it-IT": "https://io.italia.it/",
-        "en-EN": "https://io.italia.it/"
+        "it-IT": absolutePortalLinksFallback.io_showcase,
+        "en-EN": absolutePortalLinksFallback.io_showcase
       },
       message: {
         "it-IT":
@@ -60,8 +58,8 @@ export const baseRawBackendStatus: BackendStatus = {
       is_visible: false,
       level: LevelEnum.normal,
       web_url: {
-        "it-IT": "https://io.italia.it/",
-        "en-EN": "https://io.italia.it/"
+        "it-IT": absolutePortalLinksFallback.io_showcase,
+        "en-EN": absolutePortalLinksFallback.io_showcase
       },
       message: {
         "it-IT":
@@ -74,8 +72,8 @@ export const baseRawBackendStatus: BackendStatus = {
       is_visible: false,
       level: LevelEnum.critical,
       web_url: {
-        "it-IT": "https://io.italia.it/",
-        "en-EN": "https://io.italia.it/"
+        "it-IT": absolutePortalLinksFallback.io_showcase,
+        "en-EN": absolutePortalLinksFallback.io_showcase
       },
       message: {
         "it-IT":
@@ -88,8 +86,8 @@ export const baseRawBackendStatus: BackendStatus = {
       is_visible: false,
       level: LevelEnum.critical,
       web_url: {
-        "it-IT": "https://io.italia.it/",
-        "en-EN": "https://io.italia.it/"
+        "it-IT": absolutePortalLinksFallback.io_showcase,
+        "en-EN": absolutePortalLinksFallback.io_showcase
       },
       message: {
         "it-IT":
@@ -247,23 +245,18 @@ export const baseRawBackendStatus: BackendStatus = {
       enabled: true,
       merchants_v2: false
     },
-    uaDonations: {
-      enabled: false,
-      banner: {
-        visible: false,
-        description: {
-          "it-IT": "descrizione mock banner",
-          "en-EN": "mock banner description"
-        },
-        url: "mockbannerurl"
-      }
-    },
     fims: {
       enabled: false,
       domain: "mockFimsDomain"
     },
     cdc: {
       enabled: false
+    },
+    cdcV2: {
+      min_app_version: {
+        android: "0.0.0.0",
+        ios: "0.0.0.0"
+      }
     },
     barcodesScanner: {
       dataMatrixPosteEnabled: false
@@ -281,6 +274,13 @@ export const baseRawBackendStatus: BackendStatus = {
         ios: "0.0.0.0"
       }
     },
+    newPaymentSection: {
+      enabled: false,
+      min_app_version: {
+        android: "0.0.0.0",
+        ios: "0.0.0.0"
+      }
+    },
     lollipop: {
       enabled: false,
       min_app_version: {
@@ -290,16 +290,39 @@ export const baseRawBackendStatus: BackendStatus = {
     },
     pn: {
       enabled: false,
-      frontend_url: ""
+      min_app_version: {
+        android: "2.35.0.1",
+        ios: "2.35.0.1"
+      },
+      frontend_url: "",
+      optInServiceId: ""
     },
-    payments: {}
+    payments: {},
+    tos: {
+      tos_url: "https://www.example.com",
+      tos_version: 3.2
+    },
+    absolutePortalLinks: {
+      io_web: "https://ioapp.it/it/accedi/",
+      io_showcase: "https://io.italia.it/"
+    },
+    itw: {
+      enabled: false,
+      min_app_version: {
+        android: "0.0.0.0",
+        ios: "0.0.0.0"
+      },
+      feedback_banner_visible: true,
+      disabled_identification_methods: [],
+      disabled_credentials: [],
+      ipatente_cta_visible: true,
+      ipatente_cta_config: {
+        visibility: true,
+        url: "",
+        service_id: ""
+      }
+    }
   }
-};
-
-export const baseBackendState: BackendStatusState = {
-  status: O.some(baseRawBackendStatus),
-  areSystemsDead: false,
-  deadsCounter: 0
 };
 
 export const baseBackendConfig: Config = {
@@ -330,23 +353,18 @@ export const baseBackendConfig: Config = {
     enabled: true,
     merchants_v2: false
   },
-  uaDonations: {
-    enabled: false,
-    banner: {
-      visible: false,
-      description: {
-        "it-IT": "descrizione mock banner",
-        "en-EN": "mock banner description"
-      },
-      url: "mockbannerurl"
-    }
-  },
   fims: {
     enabled: false,
     domain: "mockFimsDomain"
   },
   cdc: {
     enabled: false
+  },
+  cdcV2: {
+    min_app_version: {
+      android: "0.0.0.0",
+      ios: "0.0.0.0"
+    }
   },
   barcodesScanner: {
     dataMatrixPosteEnabled: false
@@ -364,6 +382,13 @@ export const baseBackendConfig: Config = {
       ios: "0.0.0.0"
     }
   },
+  newPaymentSection: {
+    enabled: false,
+    min_app_version: {
+      android: "0.0.0.0",
+      ios: "0.0.0.0"
+    }
+  },
   lollipop: {
     enabled: false,
     min_app_version: {
@@ -373,21 +398,36 @@ export const baseBackendConfig: Config = {
   },
   pn: {
     enabled: false,
-    frontend_url: ""
+    min_app_version: {
+      android: "2.35.0.1",
+      ios: "2.35.0.1"
+    },
+    frontend_url: "",
+    optInServiceId: ""
   },
-  payments: {}
+  payments: {},
+  absolutePortalLinks: {
+    io_showcase: "https://io.italia.it/",
+    io_web: "https://ioapp.it/"
+  },
+  tos: {
+    tos_url: "https://www.example.com",
+    tos_version: 3.2
+  },
+  itw: {
+    enabled: false,
+    min_app_version: {
+      android: "0.0.0.0",
+      ios: "0.0.0.0"
+    },
+    feedback_banner_visible: true,
+    disabled_credentials: [],
+    disabled_identification_methods: [],
+    ipatente_cta_visible: true,
+    ipatente_cta_config: {
+      visibility: true,
+      url: "",
+      service_id: ""
+    }
+  }
 };
-
-export const withBpdRankingConfig = (
-  baseState: BackendStatusState,
-  newConfig: Config
-): BackendStatusState => ({
-  ...baseState,
-  status: pipe(
-    baseState.status,
-    O.map(s => ({
-      ...s,
-      config: { ...newConfig }
-    }))
-  )
-});

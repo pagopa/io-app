@@ -1,7 +1,6 @@
-import * as React from "react";
+import { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
-import { IOColors } from "../core/variables/IOColors";
-import { RefreshIndicator } from "./RefreshIndicator";
+import { LoadingIndicator } from "./LoadingIndicator";
 
 const styles = StyleSheet.create({
   refreshBox: {
@@ -9,24 +8,19 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
-  },
-
-  whiteBg: {
-    backgroundColor: IOColors.white
   }
 });
 
-interface Props {
-  caption?: React.ReactNode;
-  white?: boolean;
-  action?: React.ReactNode;
-}
+type Props = {
+  action?: ReactNode;
+  caption?: ReactNode;
+};
 
-const BoxedRefreshIndicator: React.SFC<Props> = props => (
-  <View style={[styles.refreshBox, props.white && styles.whiteBg]}>
-    <RefreshIndicator />
-    {props.caption ? props.caption : null}
-    {props.action ? props.action : null}
+const BoxedRefreshIndicator = ({ action, caption }: Props) => (
+  <View style={styles.refreshBox}>
+    <LoadingIndicator testID="refreshIndicator" />
+    {caption ? caption : null}
+    {action ? action : null}
   </View>
 );
 

@@ -1,12 +1,16 @@
+/* eslint-disable functional/immutable-data */
 const regexVersion = /([0-9.]+)(-rc.(\d+))?/gm;
-
+const regexCanaryVersion = /([0-9.]+)(-canary.(\d+))?/gm;
 /**
  * Return the version (without the rc).
  * eg: "1.4.0-rc.0" will return => "1.4.0"
  * @param rawVersion
  * @return {string}
  */
-module.exports.getVersion = function(rawVersion) {
+module.exports.getVersion = function (rawVersion) {
+  if (rawVersion.indexOf("canary") !== -1) {
+    return rawVersion.replace(regexCanaryVersion, "$1");
+  }
   return rawVersion.replace(regexVersion, "$1");
 };
 
@@ -17,6 +21,9 @@ module.exports.getVersion = function(rawVersion) {
  * @return {string}
  */
 function getRC(rawVersion) {
+  if (rawVersion.indexOf("canary") !== -1) {
+    return rawVersion.replace(regexCanaryVersion, "$3");
+  }
   return rawVersion.replace(regexVersion, "$3");
 }
 
@@ -29,6 +36,9 @@ function getRC(rawVersion) {
  * @return {boolean}
  */
 function isRc(rawVersion) {
+  if (rawVersion.indexOf("canary") !== -1) {
+    return rawVersion.replace(regexCanaryVersion, "$3") !== "";
+  }
   return rawVersion.replace(regexVersion, "$3") !== "";
 }
 
@@ -42,12 +52,12 @@ function isRc(rawVersion) {
  * @param currentBuildVersion
  * @return {*}
  */
-module.exports.iosGetBuildVersion = function(rawVersion, currentBuildVersion) {
+module.exports.iosGetBuildVersion = function (rawVersion, currentBuildVersion) {
   return isRc(rawVersion)
     ? getRC(rawVersion)
     : parseInt(currentBuildVersion, 10) + 1;
 };
 
-module.exports.androidGetBuildVersion = function(rawVersion) {
+module.exports.androidGetBuildVersion = function (rawVersion) {
   return isRc(rawVersion) ? getRC(rawVersion) : undefined;
 };

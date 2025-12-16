@@ -1,3 +1,4 @@
+import { ActionType } from "typesafe-actions";
 import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import {
@@ -12,6 +13,7 @@ import { readablePrivacyReport } from "../../../../../../../utils/reporters";
 import { BackendCGN } from "../../../../api/backendCgn";
 import { cgnEycaStatus } from "../../../../store/actions/eyca/details";
 import { EycaDetailKOStatus } from "../../../../store/reducers/eyca/details";
+import { withRefreshApiCall } from "../../../../../../authentication/fastLogin/saga/utils";
 
 const eycaStatusMap: Record<number, EycaDetailKOStatus> = {
   403: "INELIGIBLE",
@@ -29,11 +31,16 @@ const eycaStatusMap: Record<number, EycaDetailKOStatus> = {
  * @param getEycaStatus
  */
 export function* handleGetEycaStatus(
-  getEycaStatus: ReturnType<typeof BackendCGN>["getEycaStatus"]
+  getEycaStatus: ReturnType<typeof BackendCGN>["getEycaStatus"],
+  getEycaStatusAction: ActionType<(typeof cgnEycaStatus)["request"]>
 ): Generator<ReduxSagaEffect, void, any> {
   try {
-    const eycaInformationResult: SagaCallReturnType<typeof getEycaStatus> =
-      yield* call(getEycaStatus, {});
+    const eycaInformationRequest = getEycaStatus({});
+    const eycaInformationResult = (yield* call(
+      withRefreshApiCall,
+      eycaInformationRequest,
+      getEycaStatusAction
+    )) as unknown as SagaCallReturnType<typeof getEycaStatus>;
     if (E.isLeft(eycaInformationResult)) {
       yield* put(
         cgnEycaStatus.failure(

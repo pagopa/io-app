@@ -1,7 +1,6 @@
 // Main config file. Mostly read the configuration from .env files
 
 import { CommaSeparatedListOf } from "@pagopa/ts-commons/lib/comma-separated-list";
-import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { Millisecond, Second } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
@@ -12,7 +11,7 @@ import Config from "react-native-config";
 
 // default repository for fetching app content (e.g. services metadata)
 const DEFAULT_CONTENT_REPO_URL =
-  "https://assets.cdn.io.italia.it" as NonEmptyString;
+  "https://assets.cdn.io.pagopa.it" as NonEmptyString;
 
 // default timeout of fetch (in ms)
 const DEFAULT_FETCH_TIMEOUT_MS = 8000;
@@ -31,66 +30,52 @@ const DEFAULT_FETCH_PAYMENT_MANAGER_LONG_TIMEOUT_MS = 10000;
 // default seconds of background activity before asking the unlock code login
 const DEFAULT_BACKGROUND_ACTIVITY_TIMEOUT_S = 30;
 
+// default fast login max retries
+const DEFAULT_FAST_LOGIN_MAX_RETRIES = 3;
+
 // Default number of workers to fetch message.
 const DEFAULT_TOT_MESSAGE_FETCH_WORKERS = 5;
-
-// Default number of workers to fetch service.
-const DEFAULT_TOT_SERVICE_FETCH_WORKERS = 5;
 
 // TODO: calculate the page size based on available screen space and item's height
 // https://pagopa.atlassian.net/browse/IA-474
 const DEFAULT_PAGE_SIZE = 12;
 
+// Default mixpanel EU url
+const DEFAULT_MIXPANEL_URL = "https://api-eu.mixpanel.com";
+// Default sentry dsn url
+// This can be public as per docs https://docs.sentry.io/concepts/key-terms/dsn-explainer/#dsn-utilization
+const DEFAULT_SENTRY_DSN =
+  "https://43b87dcfc91f9cfdfaf71b254eb8f58e@o4507197393469440.ingest.de.sentry.io/4507221483585616";
+
 export const environment: string = Config.ENVIRONMENT;
 export const apiUrlPrefix: string = Config.API_URL_PREFIX;
+export const apiLoginUrlPrefix: string = Config.API_LOGIN_URL_PREFIX;
 export const pagoPaApiUrlPrefix: string = Config.PAGOPA_API_URL_PREFIX;
 export const pagoPaApiUrlPrefixTest: string = Config.PAGOPA_API_URL_PREFIX_TEST;
+export const mixpanelUrl = pipe(
+  Config.MIXPANEL_URL,
+  NonEmptyString.decode,
+  E.getOrElse(() => DEFAULT_MIXPANEL_URL)
+);
 export const mixpanelToken: string = Config.MIXPANEL_TOKEN;
-export const debugRemotePushNotification =
-  Config.DEBUG_REMOTE_PUSH_NOTIFICATION === "YES";
+export const sentryDsn: string = pipe(
+  Config.SENTRY_DSN,
+  NonEmptyString.decode,
+  E.getOrElse(() => DEFAULT_SENTRY_DSN)
+);
 export const isDebugBiometricIdentificationEnabled =
   Config.DEBUG_BIOMETRIC_IDENTIFICATION === "YES";
 
-export const bonusVacanzeEnabled: boolean =
-  Config.BONUS_VACANZE_ENABLED === "YES";
-
-export const myPortalEnabled: boolean = Config.MYPORTAL_ENABLED === "YES";
-
-export const bpdEnabled: boolean = Config.BPD_ENABLED === "YES";
-
-export const bpdApiUrlPrefix: string = Config.BPD_API_URL_PREFIX;
-
-export const bpdApiSitUrlPrefix: string = Config.BPD_API_SIT;
-export const bpdApiUatUrlPrefix: string = Config.BPD_API_UAT;
+export const bonusApiUrlPrefix: string = Config.BONUS_API_URL_PREFIX;
 
 export const isPlaygroundsEnabled: boolean =
   Config.PLAYGROUNDS_ENABLED === "YES";
 
-// EU Covid Certificate feature flag
-export const euCovidCertificateEnabled: boolean =
-  Config.EU_COVID_CERT_ENABLED === "YES";
-
-// SiciliaVola Feature Flag
-export const svEnabled: boolean = Config.SICILIAVOLA_ENABLED === "YES";
-
 // Zendesk Feature Flag
 export const zendeskEnabled: boolean = Config.ZENDESK_ENABLED === "YES";
 
-// MVL messages
-export const mvlEnabled: boolean = Config.MVL_ENABLED === "YES";
-
 // CGN new merchants features
 export const cgnMerchantsV2Enabled = Config.CGN_MERCHANTS_V2_ENABLED === "YES";
-
-// Opt-in payments method
-export const bpdOptInPaymentMethodsEnabled =
-  Config.BPD_OPT_IN_PAYMENT_METHODS === "YES";
-
-// Ukraine donation
-export const uaDonationsEnabled = Config.UA_DONATIONS_ENABLED === "YES";
-
-// FIMS (Federated Identity Management System) Feature Flag
-export const fimsEnabled = Config.FIMS_ENABLED === "YES";
 
 // CdC (Carta della cultura) Feature Flag
 export const cdcEnabled = Config.CDC_ENABLED === "YES";
@@ -102,24 +87,45 @@ export const premiumMessagesOptInEnabled =
 export const scanAdditionalBarcodesEnabled =
   Config.SCAN_ADDITIONAL_BARCODES_ENABLED === "YES";
 
-// Redesign of the transaction summary screen
-export const newTransactionSummaryEnabled =
-  Config.NEW_TRANSACTION_SUMMARY_ENABLED === "YES";
-
 // FCI (Firma con IO) Feature Flag
 export const fciEnabled = Config.FCI_ENABLED === "YES";
 
-// LOLLIPOP login
-export const lollipopLoginEnabled = Config.LOLLIPOP_LOGIN_ENABLED === "YES";
+// SPID Relay State
+export const spidRelayState = Config.SPID_RELAY_STATE;
 
-// PN (Piattaforma Notifiche) Feature Flag
-export const pnEnabled = Config.PN_ENABLED === "YES";
+// Fast Login Feature Flag
+export const fastLoginEnabled = Config.FAST_LOGIN_ENABLED === "YES";
 
-// Opt-in for reminder push notifications
-export const remindersOptInEnabled = Config.REMINDERS_OPT_IN_ENABLED === "YES";
+// Fast login bypass opt-in
+export const fastLoginOptIn = Config.FAST_LOGIN_OPTIN === "YES";
 
-// version of ToS
-export const tosVersion: NonNegativeNumber = 4.4 as NonNegativeNumber;
+// CIE Login Flow with dev server Feature Flag
+export const cieLoginFlowWithDevServerEnabled =
+  Config.CIE_LOGIN_WITH_DEV_SERVER_ENABLED === "YES";
+
+// Native Login Feature Flag
+export const nativeLoginEnabled = Config.NATIVE_LOGIN_ENABLED === "YES";
+
+// #region Help Center URLs
+
+/**
+ * Help Center URL for the "What to do when the session is expired" article
+ * hard-coded for now [by design]( https://www.figma.com/design/BDwCywRh6ibbfuvfq8DavO?node-id=12490-33508#1129981819)
+ */
+export const helpCenterHowToDoWhenSessionIsExpiredUrl =
+  "https://assistenza.ioapp.it/hc/it/articles/32616176301713" as NonEmptyString;
+/**
+ * Help Center URL for the "How to login with SPID" article
+ */
+export const helpCenterHowToLoginWithSpidUrl =
+  "https://assistenza.ioapp.it/hc/it/sections/30616637679505" as NonEmptyString;
+/**
+ * Help Center URL for the "How to login with EIC" article
+ */
+export const helpCenterHowToLoginWithEicUrl =
+  "https://assistenza.ioapp.it/hc/it/articles/30724124984593#h_01JF0DQRRPJWY61RAFNG2AKF3R" as NonEmptyString;
+
+// #endregion
 
 export const fetchTimeout = pipe(
   parseInt(Config.FETCH_TIMEOUT_MS, 10),
@@ -163,20 +169,8 @@ export const totMessageFetchWorkers = pipe(
   E.getOrElse(() => DEFAULT_TOT_MESSAGE_FETCH_WORKERS)
 );
 
-export const totServiceFetchWorkers = pipe(
-  parseInt(Config.TOT_SERVICE_FETCH_WORKERS, 10),
-  t.Integer.decode,
-  E.getOrElse(() => DEFAULT_TOT_SERVICE_FETCH_WORKERS)
-);
-
 export const shufflePinPadOnPayment =
   Config.SHUFFLE_PINPAD_ON_PAYMENT === "YES";
-
-export const privacyUrl: string = pipe(
-  Config.PRIVACY_URL,
-  t.string.decode,
-  E.getOrElse(() => "https://io.italia.it/app-content/tos_privacy.html")
-);
 
 export const zendeskPrivacyUrl: string = pipe(
   Config.ZENDESK_PRIVACY_URL,
@@ -184,10 +178,25 @@ export const zendeskPrivacyUrl: string = pipe(
   E.getOrElse(() => "https://www.pagopa.it/it/privacy-policy-assistenza/")
 );
 
-export const localServicesWebUrl: string = pipe(
-  Config.LOCAL_SERVICE_WEB_URL,
-  t.string.decode,
-  E.getOrElse(() => "https://io.italia.it")
+export const cieSpidMoreInfoUrl: string = pipe(
+  Config.CIE_SPID_INFORMATION_URL,
+  NonEmptyString.decode,
+  E.getOrElse(() => "https://identitadigitale.gov.it")
+);
+
+export const pinPukHelpUrl: string = pipe(
+  Config.PIN_PUK_HELP_URL,
+  NonEmptyString.decode,
+  E.getOrElse(
+    () =>
+      "https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk"
+  )
+);
+
+export const fastLoginMaxRetries = pipe(
+  parseInt(Config.FAST_LOGIN_MAX_RETRIES, 10),
+  t.Integer.decode,
+  E.getOrElse(() => DEFAULT_FAST_LOGIN_MAX_RETRIES)
 );
 
 export const pageSize: number = DEFAULT_PAGE_SIZE;
@@ -218,11 +227,17 @@ export const POSTE_DATAMATRIX_SCAN_PREFERRED_PSPS:
  * IDPay
  */
 
-export const idPayEnabled = Config.IDPAY_ENABLED === "YES";
-
 export const idPayTestToken =
   Config.IDPAY_API_TEST_TOKEN !== "" ? Config.IDPAY_API_TEST_TOKEN : undefined;
 
 export const idPayApiUatBaseUrl = Config.IDPAY_API_UAT_BASEURL;
+export const idPayApiUatVersion = Config.IDPAY_API_UAT_VERSION;
 
 export const idPayApiBaseUrl = Config.IDPAY_API_BASEURL;
+export const idPayApiVersion = Config.IDPAY_API_VERSION;
+
+export const walletApiBaseUrl = Config.WALLET_API_BASEURL;
+export const walletApiUatBaseUrl = Config.WALLET_API_UAT_BASEURL;
+
+// Default pin for dev mode
+export const defaultPin = "162534";

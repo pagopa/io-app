@@ -1,127 +1,98 @@
-import * as React from "react";
-import { Text as NBText, Toast as NBToast } from "native-base";
-
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import {
+  IOButton,
+  H4,
+  IOToast,
+  ToastNotification,
+  VStack,
+  useIOTheme
+} from "@pagopa/io-app-design-system";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { showToast } from "../../../utils/showToast";
-import { H2 } from "../../../components/core/typography/H2";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 
-export const DSToastNotifications = () => (
-  <DesignSystemScreen title={"Toast Notifications (NativeBase)"}>
-    <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
-      Type
-    </H2>
+const sectionTitleMargin = 16;
+const sectionMargin = 40;
+const componentMargin = 8;
 
-    <ButtonDefaultOpacity
-      bordered={true}
-      block={true}
-      onPress={() => {
-        NBToast.show({
-          text: "Here's the default behavior"
-        });
-      }}
-    >
-      <NBText>Default behavior</NBText>
-    </ButtonDefaultOpacity>
+export const DSToastNotifications = () => {
+  const theme = useIOTheme();
 
-    <VSpacer size={16} />
+  return (
+    <DesignSystemScreen title={"Toast Notifications (NativeBase)"}>
+      <VStack space={sectionMargin}>
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>Events</H4>
+          <VStack space={componentMargin}>
+            <IOButton
+              fullWidth
+              variant="outline"
+              label="Neutral"
+              accessibilityLabel="Neutral"
+              onPress={() => IOToast.show("Hello!")}
+            />
+            <IOButton
+              fullWidth
+              variant="outline"
+              label="Error"
+              accessibilityLabel="Error"
+              onPress={() => IOToast.error("Error")}
+            />
+            <IOButton
+              fullWidth
+              variant="outline"
+              label="Info"
+              accessibilityLabel="Info"
+              onPress={() => IOToast.info("Info")}
+            />
+            <IOButton
+              fullWidth
+              variant="outline"
+              label="Success"
+              accessibilityLabel="Success"
+              onPress={() => IOToast.success("Success")}
+            />
+            <IOButton
+              fullWidth
+              variant="outline"
+              label="Warning"
+              accessibilityLabel="Warning"
+              onPress={() => IOToast.warning("Warning")}
+            />
+            <IOButton
+              fullWidth
+              variant="outline"
+              label="Hide all"
+              accessibilityLabel="Hide all"
+              onPress={() => IOToast.hideAll()}
+            />
+          </VStack>
+        </VStack>
 
-    <ButtonDefaultOpacity
-      bordered={true}
-      block={true}
-      onPress={() => {
-        showToast("Example of a danger message");
-      }}
-    >
-      <NBText>Danger</NBText>
-    </ButtonDefaultOpacity>
-
-    <VSpacer size={16} />
-
-    <ButtonDefaultOpacity
-      bordered={true}
-      block={true}
-      onPress={() => {
-        showToast("Example of a success message", "success");
-      }}
-    >
-      <NBText>Success</NBText>
-    </ButtonDefaultOpacity>
-
-    <VSpacer size={16} />
-
-    <ButtonDefaultOpacity
-      bordered={true}
-      block={true}
-      onPress={() => {
-        showToast("Example of a warning message", "warning");
-      }}
-    >
-      <NBText>Warning</NBText>
-    </ButtonDefaultOpacity>
-
-    <H2
-      color={"bluegrey"}
-      weight={"SemiBold"}
-      style={{ marginTop: 24, marginBottom: 16 }}
-    >
-      Position
-    </H2>
-    <ButtonDefaultOpacity
-      bordered={true}
-      block={true}
-      onPress={() => {
-        showToast("Here's the notification at the top", "danger", "top");
-      }}
-    >
-      <NBText>Default · Top</NBText>
-    </ButtonDefaultOpacity>
-
-    <VSpacer size={16} />
-
-    <ButtonDefaultOpacity
-      bordered={true}
-      block={true}
-      onPress={() => {
-        showToast("Here's the notification at the center", "danger", "center");
-      }}
-    >
-      <NBText>Default · Center</NBText>
-    </ButtonDefaultOpacity>
-
-    <VSpacer size={16} />
-
-    <ButtonDefaultOpacity
-      bordered={true}
-      block={true}
-      onPress={() => {
-        showToast("Here's the notification at the bottom", "danger", "bottom");
-      }}
-    >
-      <NBText>Default · Bottom</NBText>
-    </ButtonDefaultOpacity>
-
-    <H2
-      color={"bluegrey"}
-      weight={"SemiBold"}
-      style={{ marginTop: 24, marginBottom: 16 }}
-    >
-      Misc
-    </H2>
-
-    <ButtonDefaultOpacity
-      bordered={true}
-      block={true}
-      onPress={() => {
-        NBToast.show({
-          text: "Here's the default behavior with multi-line loooong loooooong text"
-        });
-      }}
-    >
-      <NBText>Multi-line text</NBText>
-    </ButtonDefaultOpacity>
-
-    <VSpacer size={40} />
-  </DesignSystemScreen>
-);
+        <VStack space={sectionTitleMargin}>
+          <H4 color={theme["textHeading-default"]}>Component</H4>
+          <VStack space={componentMargin}>
+            <ToastNotification message="Neutral" icon="checkTickBig" />
+            <ToastNotification
+              message="Error"
+              icon="errorFilled"
+              variant="error"
+            />
+            <ToastNotification
+              message="Info"
+              icon="infoFilled"
+              variant="info"
+            />
+            <ToastNotification
+              message="Success"
+              icon="success"
+              variant="success"
+            />
+            <ToastNotification
+              message="Warning"
+              icon="warningFilled"
+              variant="warning"
+            />
+          </VStack>
+        </VStack>
+      </VStack>
+    </DesignSystemScreen>
+  );
+};

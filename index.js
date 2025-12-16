@@ -1,3 +1,4 @@
+/* eslint-disable functional/immutable-data */
 /**
  * Main app entrypoint
  */
@@ -16,15 +17,21 @@ import {
   setJSExceptionHandler,
   setNativeExceptionHandler
 } from "react-native-exception-handler";
+import * as Sentry from "@sentry/react-native";
 
-import { App } from "./ts/App";
-import { mixpanel } from "./ts/mixpanel";
+import App from "./ts/App";
+import {initI18n} from "./ts/i18n";
+import { isMixpanelInstanceInitialized, mixpanelTrack } from "./ts/mixpanel";
 import { name as appName } from "./app.json";
+
+void initI18n();
 
 const errorHandler = (e, isFatal) => {
   if (isFatal) {
-    if (mixpanel) {
-      mixpanel.track("APPLICATION_ERROR", {
+    Sentry.captureMessage("JSException");
+    Sentry.captureException(e);
+    if (isMixpanelInstanceInitialized()) {
+      mixpanelTrack("APPLICATION_ERROR", {
         TYPE: "js",
         ERROR: JSON.stringify(e),
         APP_VERSION: DeviceInfo.getReadableVersion()
@@ -38,35 +45,22 @@ const errorHandler = (e, isFatal) => {
         `
     );
   } else {
+    // eslint-disable-next-line no-console
     console.log(e); // So that we can see it in the ADB logs in case of Android if needed
   }
 };
 
 setJSExceptionHandler(errorHandler);
 setNativeExceptionHandler(exceptionString => {
-  if (mixpanel) {
-    mixpanel.track("APPLICATION_ERROR", {
+  Sentry.captureMessage("NativeException");
+  Sentry.captureException(exceptionString);
+  if (isMixpanelInstanceInitialized()) {
+    mixpanelTrack("APPLICATION_ERROR", {
       TYPE: "native",
       ERROR: exceptionString,
       APP_VERSION: DeviceInfo.getReadableVersion()
     });
   }
 });
-
-// Please note that any LogBox can cause e2e tests to fail.
-// TODO: temp only, to complete the porting to 0.63.x
-LogBox.ignoreLogs([
-  "componentWillReceiveProps",
-  "Function components cannot be given refs",
-  "Animated",
-  "Virtualized",
-  "currentlyFocusedField"
-]);
-
-// Disable allowFontScaling for Text/TextInput component
-Text.defaultProps = Text.defaultProps || {};
-Text.defaultProps.allowFontScaling = false;
-TextInput.defaultProps = TextInput.defaultProps || {};
-TextInput.defaultProps.allowFontScaling = false;
 
 AppRegistry.registerComponent(appName, () => App);

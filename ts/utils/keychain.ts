@@ -22,10 +22,12 @@ const PIN_KEY = "PIN";
 export async function setGenericPasswordWithDefaultAccessibleOption(
   username: string,
   password: string,
-  options?: Keychain.Options
+  options?: Keychain.SetOptions
 ) {
   return Keychain.setGenericPassword(username, password, {
     ...options,
+    // Force AES-GCM encryption for Android
+    storage: Keychain.STORAGE_TYPE.AES_GCM_NO_AUTH,
     // The data in the keychain item can be accessed only while the device is unlocked by the user.
     // This is recommended for items that need to be accessible only while the application is in the foreground. Items
     // with this attribute do not migrate to a new device. Thus, after restoring from a backup of a different device,
@@ -38,7 +40,11 @@ export async function setGenericPasswordWithDefaultAccessibleOption(
  * Saves the provided unlock code in the Keychain
  */
 export async function setPin(pin: PinString): Promise<boolean> {
-  return await setGenericPasswordWithDefaultAccessibleOption(PIN_KEY, pin);
+  const result = await setGenericPasswordWithDefaultAccessibleOption(
+    PIN_KEY,
+    pin
+  );
+  return typeof result !== "boolean";
 }
 
 /**

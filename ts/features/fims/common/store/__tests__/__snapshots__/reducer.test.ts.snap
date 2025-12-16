@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fimsReducer should match snapshot 1`] = `
+{
+  "history": {
+    "consentsList": {
+      "kind": "PotNone",
+    },
+    "historyExportState": {
+      "kind": "undefined",
+    },
+  },
+  "sso": {
+    "ctaText": undefined,
+    "currentFlowState": "idle",
+    "ephemeralSessionOniOS": false,
+    "relyingPartyServiceId": undefined,
+    "relyingPartyUrl": undefined,
+    "ssoData": {
+      "kind": "PotNone",
+    },
+  },
+}
+`;

@@ -1,15 +1,13 @@
-import * as React from "react";
 import { Store } from "redux";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-import { fireEvent } from "@testing-library/react-native";
 import { mockQtspClausesMetadata } from "../../types/__mocks__/QtspClausesMetadata.mock";
 import { QtspClause } from "../../../../../definitions/fci/QtspClause";
 import QtspClauseListItem from "../QtspClauseListItem";
 import { GlobalState } from "../../../../store/reducers/types";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { fciLoadQtspFilledDocument } from "../../store/actions";
 import { qtspFilledDocument } from "../../types/__mocks__/CreateFilledDocumentBody.mock";
@@ -39,6 +37,7 @@ describe("Test QtspClauseListItem component", () => {
     };
     const component = renderComponent({ ...props }, store);
     expect(component).toBeTruthy();
+    expect(component).toMatchSnapshot();
   });
   it("should render a QtspClauseListItem component with container", () => {
     const mockStore = configureMockStore<GlobalState>();
@@ -84,11 +83,11 @@ describe("Test QtspClauseListItem component", () => {
     const component = renderComponent({ ...props }, store);
     expect(component).toBeTruthy();
     expect(
-      component.getByTestId("QtspClauseListItemCheckboxTestID")
+      component.getByTestId("QtspClauseListItemContainerTestID")
     ).toBeTruthy();
-    expect(component.queryAllByText("io-checkbox-on")).toBeTruthy();
+    expect(component.queryAllByText("legCheckOn")).toBeTruthy();
   });
-  it("should render a QtspClauseListItem component with checkbox clickable", () => {
+  it("should render a QtspClauseListItem component with checkbox enabled", () => {
     const mockStore = configureMockStore<GlobalState>();
     const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
@@ -101,14 +100,9 @@ describe("Test QtspClauseListItem component", () => {
     };
     const component = renderComponent({ ...props }, store);
     expect(component).toBeTruthy();
-    const rightButton = component.getByTestId("QtspClauseListItemButtonTestID");
-    expect(rightButton).toBeTruthy();
-    expect(rightButton).toBeEnabled();
-    fireEvent.press(rightButton);
-    expect(component.queryAllByText("io-checkbox-on")).toBeTruthy();
-    fireEvent.press(rightButton);
-    expect(component.queryAllByText("io-checkbox-off")).toBeTruthy();
-    expect(onPress).toHaveBeenCalledTimes(2);
+    const checkbox = component.getByTestId("AnimatedCheckbox");
+    expect(checkbox).toBeTruthy();
+    expect(checkbox).toBeEnabled();
   });
   it("should render a QtspClauseListItem component with right text for clause", () => {
     const mockStore = configureMockStore<GlobalState>();
@@ -133,7 +127,7 @@ function renderComponent(props: Props, store: Store<GlobalState>) {
       <QtspClauseListItem {...props} />
     </Provider>
   );
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     () => Component,
     FCI_ROUTES.QTSP_TOS,
     { ...props },

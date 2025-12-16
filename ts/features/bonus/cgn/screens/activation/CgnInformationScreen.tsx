@@ -1,26 +1,26 @@
-import * as React from "react";
+import { FunctionComponent } from "react";
 import { connect } from "react-redux";
-import I18n from "../../../../../i18n";
+import I18n from "i18next";
+import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { availableBonusTypesSelectorFromId } from "../../../bonusVacanze/store/reducers/availableBonusesTypes";
-import { ID_CGN_TYPE } from "../../../bonusVacanze/utils/bonus";
+import { emptyContextualHelp } from "../../../../../utils/contextualHelp";
 import BonusInformationComponent from "../../../common/components/BonusInformationComponent";
+import { availableBonusTypesSelectorFromId } from "../../../common/store/selectors";
+import { ID_CGN_TYPE } from "../../../common/utils";
 import {
   cgnActivationBack,
   cgnActivationCancel,
   cgnRequestActivation
 } from "../../store/actions/activation";
-import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 
-export type Props = ReturnType<typeof mapDispatchToProps> &
+type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 /**
  * This Screen shows all the information about the cgn program, with the rules and t&c.
  */
-const CgnInformationScreen: React.FunctionComponent<Props> = (props: Props) => {
+const CgnInformationScreen: FunctionComponent<Props> = (props: Props) => {
   const onConfirm = () => props.userActivateCgn();
   useHardwareBackButton(() => {
     props.onBack();
@@ -32,6 +32,7 @@ const CgnInformationScreen: React.FunctionComponent<Props> = (props: Props) => {
         <BonusInformationComponent
           onBack={props.onBack}
           primaryCtaText={I18n.t("bonus.cgn.cta.activeBonus")}
+          secondaryAction={{ type: "back", text: I18n.t("bonus.cgn.cta.back") }}
           bonus={props.bonus}
           onConfirm={onConfirm}
           onCancel={props.onCancel}

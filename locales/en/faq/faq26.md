@@ -1,3 +1,0 @@
-No, in this first release it is not possible to reply to a service message directly from the IO app.
-The app is currently a channel that facilitates communication from the institution to the citizen, and supports the performance of some operations such as payment.
-If you need to contact an institution or have questions about a communication received, you can view all the information relating to the service and the provider in the message details. Furthermore, if you follow the link to the service profile, you will find the contact details through which you can contact the institution directly (counter address, telephone, website, app, etc.).

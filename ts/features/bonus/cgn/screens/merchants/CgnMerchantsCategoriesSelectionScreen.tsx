@@ -1,181 +1,134 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useNavigation } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as React from "react";
-import { useEffect, useMemo, useRef } from "react";
-import { View, FlatList, ListRenderItemInfo, Platform } from "react-native";
-import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
-import { IOBadge } from "../../../../../components/core/IOBadge";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
-import { H1 } from "../../../../../components/core/typography/H1";
 import {
-  IOColors,
-  getGradientColorValues
-} from "../../../../../components/core/variables/IOColors";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import { EdgeBorderComponent } from "../../../../../components/screens/EdgeBorderComponent";
-import I18n from "../../../../../i18n";
-import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { showToast } from "../../../../../utils/showToast";
-import CgnMerchantCategoryItem from "../../components/merchants/CgnMerchantCategoryItem";
-import { CgnDetailsParamsList } from "../../navigation/params";
+  IOIcons,
+  TabItem,
+  TabNavigation,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import { useState } from "react";
+import I18n from "i18next";
+import { IOListViewWithLargeHeader } from "../../../../../components/ui/IOListViewWithLargeHeader";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { useDisableRootNavigatorGesture } from "../../hooks/useDisableRootNavigatorGesture";
 import CGN_ROUTES from "../../navigation/routes";
-import { cgnCategories } from "../../store/actions/categories";
-import { cgnCategoriesListSelector } from "../../store/reducers/categories";
-import { getCategorySpecs } from "../../utils/filters";
+import { CgnMerchantCategoriesListScreen } from "./CgnMerchantCategoriesListScreen";
+import { CgnMerchantsListScreen } from "./CgnMerchantsListScreen";
+
+export const CgnMerchantsHomeTabRoutes = {
+  CGN_CATEGORIES: "CGN_CATEGORIES",
+  CGN_MERCHANTS_ALL: "CGN_MERCHANTS_ALL"
+} as const;
+
+type CgnMerchantsHomeTabParamsList = {
+  [CgnMerchantsHomeTabRoutes.CGN_CATEGORIES]: undefined;
+  [CgnMerchantsHomeTabRoutes.CGN_MERCHANTS_ALL]: undefined;
+};
+
+type TabOption = {
+  title: string;
+  icon: IOIcons;
+};
+
+const tabOptions: Record<keyof CgnMerchantsHomeTabParamsList, TabOption> = {
+  [CgnMerchantsHomeTabRoutes.CGN_CATEGORIES]: {
+    icon: "initiatives",
+    title: I18n.t("bonus.cgn.merchantsList.tabs.perInitiative")
+  },
+  [CgnMerchantsHomeTabRoutes.CGN_MERCHANTS_ALL]: {
+    icon: "merchant",
+    title: I18n.t("bonus.cgn.merchantsList.tabs.perMerchant")
+  }
+};
 
 const CgnMerchantsCategoriesSelectionScreen = () => {
-  const isFirstRender = useRef<boolean>(true);
-  const dispatch = useIODispatch();
-  const potCategories = useIOSelector(cgnCategoriesListSelector);
-  const navigation =
-    useNavigation<
-      IOStackNavigationProp<CgnDetailsParamsList, "CGN_MERCHANTS_CATEGORIES">
-    >();
+  const { navigate } = useIONavigation();
+  useDisableRootNavigatorGesture();
+  const [selectedTab, setSelectedTab] = useState<
+    keyof CgnMerchantsHomeTabParamsList
+  >(CgnMerchantsHomeTabRoutes.CGN_CATEGORIES);
 
-  const loadCategories = () => {
-    dispatch(cgnCategories.request());
-  };
+  const categoriesScreen = CgnMerchantCategoriesListScreen();
+  const merchantsScreen = CgnMerchantsListScreen();
 
-  useEffect(loadCategories, [dispatch]);
+  const {
+    data,
+    renderItem,
+    refreshControlProps,
+    ListFooterComponent,
+    ListEmptyComponent,
+    skeleton
+  } =
+    selectedTab === CgnMerchantsHomeTabRoutes.CGN_CATEGORIES
+      ? categoriesScreen
+      : merchantsScreen;
 
-  const isError = useMemo(() => pot.isError(potCategories), [potCategories]);
+  const tabRoutesKeys = Object.keys(CgnMerchantsHomeTabRoutes);
 
-  useEffect(() => {
-    if (!isFirstRender.current && isError) {
-      showToast(I18n.t("global.genericError"), "danger");
-    }
-    // eslint-disable-next-line functional/immutable-data
-    isFirstRender.current = false;
-  }, [isError]);
+  const ListHeaderComponent = (
+    <>
+      <TabNavigation
+        includeContentMargins={false}
+        tabAlignment="start"
+        selectedIndex={tabRoutesKeys.indexOf(selectedTab)}
+      >
+        {tabRoutesKeys.map((routeKey, index) => {
+          const route = routeKey as keyof CgnMerchantsHomeTabParamsList;
+          const onPress = () => setSelectedTab(route);
 
-  const renderCategoryElement = (
-    info: ListRenderItemInfo<
-      | ProductCategoryWithNewDiscountsCount
-      | { productCategory: "All"; newDiscounts: number }
-    >
-  ) => {
-    if (info.item.productCategory === "All") {
-      return (
-        <CgnMerchantCategoryItem
-          title={I18n.t("bonus.cgn.merchantDetail.categories.all")}
-          colors={getGradientColorValues("cgnAll")}
-          onPress={() => navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.LIST)}
-          child={
-            <View style={[{ alignItems: "flex-end" }, IOStyles.flex]}>
-              <VSpacer size={16} />
-              <IOBadge
-                small
-                text={`${info.item.newDiscounts} ${I18n.t(
-                  "bonus.cgn.merchantsList.news"
-                )}`}
-                labelColor={"blue"}
-              />
-            </View>
-          }
-        />
-      );
-    }
-    const specs = getCategorySpecs(info.item.productCategory);
-    const countAvailable = info.item.newDiscounts > 0;
-    return pipe(
-      specs,
-      O.fold(
-        () => null,
-        s => {
-          const categoryIcon = (
-            <View
-              style={[
-                countAvailable ? IOStyles.row : {},
-                { alignItems: "flex-end" }
-              ]}
-            >
-              {countAvailable && (
-                <View style={IOStyles.flex}>
-                  <IOBadge
-                    small
-                    text={`${info.item.newDiscounts} ${I18n.t(
-                      "bonus.cgn.merchantsList.news"
-                    )}`}
-                    labelColor={"blue"}
-                  />
-                </View>
-              )}
-              {s.icon({
-                height: 32,
-                width: 32,
-                fill: IOColors.white,
-                style: { justifyContent: "flex-end" }
-              })}
-            </View>
+          const label = tabOptions[route].title;
+          const accessibilityLabel = I18n.t(
+            "bonus.cgn.merchantsList.tabs.a11y",
+            {
+              label,
+              index: index + 1,
+              total: tabRoutesKeys.length
+            }
           );
-
           return (
-            <CgnMerchantCategoryItem
-              title={I18n.t(s.nameKey)}
-              colors={s.colors}
-              onPress={() => {
-                navigation.navigate(
-                  CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY,
-                  {
-                    category: s.type
-                  }
-                );
-              }}
-              child={categoryIcon}
+            <TabItem
+              testID={`cgn-merchants-tab-${route}`}
+              icon={tabOptions[route].icon}
+              label={label}
+              accessibilityLabel={accessibilityLabel}
+              key={route}
+              onPress={onPress}
             />
           );
-        }
-      )
-    );
-  };
-
-  const allNews = pot.isSome(potCategories)
-    ? potCategories.value.reduce<number>(
-        (acc, val) => acc + (val.newDiscounts as number),
-        0
-      )
-    : 0;
-
-  const categoriesToArray: ReadonlyArray<
-    | ProductCategoryWithNewDiscountsCount
-    | { productCategory: "All"; newDiscounts: number }
-  > = [
-    { productCategory: "All", newDiscounts: allNews },
-    ...(pot.isSome(potCategories) ? potCategories.value : [])
-  ];
+        })}
+      </TabNavigation>
+      <VSpacer size={16} />
+    </>
+  );
 
   return (
-    <BaseScreenComponent
-      goBack
-      headerTitle={I18n.t("bonus.cgn.merchantsList.navigationTitle")}
-      contextualHelp={emptyContextualHelp}
-    >
-      <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-        <H1>{I18n.t("bonus.cgn.merchantsList.categoriesList.title")}</H1>
-        <VSpacer size={24} />
-        <FlatList
-          showsVerticalScrollIndicator={Platform.OS !== "ios"}
-          columnWrapperStyle={{ justifyContent: "space-between" }}
-          style={IOStyles.flex}
-          data={categoriesToArray}
-          refreshing={pot.isLoading(potCategories)}
-          onRefresh={loadCategories}
-          renderItem={renderCategoryElement}
-          numColumns={2}
-          keyExtractor={(
-            item:
-              | ProductCategoryWithNewDiscountsCount
-              | { productCategory: "All"; newDiscounts: number }
-          ) => item.productCategory}
-          ListFooterComponent={<EdgeBorderComponent />}
-        />
-      </View>
-    </BaseScreenComponent>
+    <IOListViewWithLargeHeader
+      keyExtractor={item => ("id" in item ? item.id : item.productCategory)}
+      title={{
+        label: I18n.t("bonus.cgn.merchantsList.screenTitle")
+      }}
+      headerActionsProp={{
+        showHelp: true,
+        headerType: "twoActions",
+        secondAction: {
+          icon: "search",
+          testID: "search-button",
+          onPress() {
+            navigate(CGN_ROUTES.DETAILS.MAIN, {
+              screen: CGN_ROUTES.DETAILS.MERCHANTS.SEARCH
+            });
+          },
+          accessibilityLabel: I18n.t(
+            "bonus.cgn.merchantSearch.goToSearchAccessibilityLabel"
+          )
+        }
+      }}
+      renderItem={({ item, index }) => renderItem(item as any, index)}
+      data={[...data]}
+      refreshControlProps={refreshControlProps}
+      ListHeaderComponent={ListHeaderComponent}
+      skeleton={skeleton}
+      ListFooterComponent={ListFooterComponent}
+      ListEmptyComponent={ListEmptyComponent}
+    />
   );
 };
 

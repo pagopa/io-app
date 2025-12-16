@@ -1,0 +1,117 @@
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../../../pushNotifications/analytics";
+import {
+  cancelPNPaymentStatusTracking,
+  dismissPnActivationReminderBanner,
+  pnActivationUpsert,
+  startPNPaymentStatusTracking
+} from "../index";
+
+describe("PN actions", () => {
+  describe("pnActivationUpsert", () => {
+    it("should create a request action with the provided payload", () => {
+      const payload = {
+        value: true,
+        onSuccess: jest.fn(),
+        onFailure: jest.fn()
+      };
+      const payload_withRateLimitedFailure = {
+        value: true,
+        onSuccess: jest.fn(),
+        onFailure: jest.fn((_isRateLimitError?: boolean) => {
+          void null;
+        })
+      };
+
+      const action = pnActivationUpsert.request(payload);
+      const action_rateLimited = pnActivationUpsert.request(
+        payload_withRateLimitedFailure
+      );
+
+      expect(action).toEqual({
+        type: "PN_ACTIVATION_UPSERT_REQUEST",
+        payload
+      });
+      expect(action_rateLimited).toEqual({
+        type: "PN_ACTIVATION_UPSERT_REQUEST",
+        payload: payload_withRateLimitedFailure
+      });
+    });
+
+    it("should create a success action", () => {
+      const action = pnActivationUpsert.success();
+
+      expect(action).toEqual({
+        type: "PN_ACTIVATION_UPSERT_SUCCESS"
+      });
+    });
+
+    it("should create a failure action", () => {
+      const action = pnActivationUpsert.failure();
+
+      expect(action).toEqual({
+        type: "PN_ACTIVATION_UPSERT_FAILURE"
+      });
+    });
+  });
+
+  const sendOpeningSources: ReadonlyArray<SendOpeningSource> = [
+    "aar",
+    "message",
+    "not_set"
+  ];
+  const sendUserTypes: ReadonlyArray<SendUserType> = [
+    "mandatory",
+    "not_set",
+    "recipient"
+  ];
+
+  describe("startPNPaymentStatusTracking", () => {
+    sendOpeningSources.forEach(sendOpeningSource => {
+      sendUserTypes.forEach(sendUserType => {
+        it(`should create a start tracking action with the provided messageId (opening source: ${sendOpeningSource}, user type ${sendUserType})`, () => {
+          const messageId = "message-123";
+
+          const action = startPNPaymentStatusTracking({
+            openingSource: sendOpeningSource,
+            userType: sendUserType,
+            messageId
+          });
+
+          expect(action).toEqual({
+            type: "PN_START_TRACKING_PAYMENT_STATUS",
+            payload: {
+              openingSource: sendOpeningSource,
+              userType: sendUserType,
+              messageId
+            }
+          });
+        });
+      });
+    });
+  });
+
+  describe("cancelPNPaymentStatusTracking", () => {
+    it("should create a cancel tracking action", () => {
+      const messageId = "message-123";
+      const action = cancelPNPaymentStatusTracking({ messageId });
+
+      expect(action).toEqual({
+        type: "PN_CANCEL_PAYMENT_STATUS_TRACKING",
+        payload: { messageId }
+      });
+    });
+  });
+
+  describe("dismissPnActivationReminderBanner", () => {
+    it("should create a dismiss banner action", () => {
+      const action = dismissPnActivationReminderBanner();
+
+      expect(action).toEqual({
+        type: "DISMISS_PN_ACTIVATION_REMINDER_BANNER"
+      });
+    });
+  });
+});

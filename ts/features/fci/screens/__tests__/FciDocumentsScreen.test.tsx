@@ -1,4 +1,3 @@
-import * as React from "react";
 import { createStore, Store } from "redux";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -6,33 +5,45 @@ import { GlobalState } from "../../../../store/reducers/types";
 import FciDocumentsScreen from "../valid/FciDocumentsScreen";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
-import { fciSignatureRequestFromId } from "../../store/actions";
+import {
+  fciDownloadPreview,
+  fciSignatureRequestFromId
+} from "../../store/actions";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 
 describe("Test FciDocuments screen", () => {
   beforeEach(() => {
     jest.useFakeTimers();
   });
-  it("should render the FciDocuments screen", () => {
+  it("it should render the FciDocuments screen", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store: Store<GlobalState> = createStore(
       appReducer,
       globalState as any
     );
     store.dispatch(
-      fciSignatureRequestFromId.success(mockSignatureRequestDetailView)
+      fciSignatureRequestFromId.success({
+        ...mockSignatureRequestDetailView
+      })
     );
     const component = renderComponent(store);
     expect(component).toBeTruthy();
   });
-  it("should render the content and footer with at least one document", () => {
+  it("it should render the content and footer", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store: Store<GlobalState> = createStore(
       appReducer,
       globalState as any
     );
     store.dispatch(
-      fciSignatureRequestFromId.success(mockSignatureRequestDetailView)
+      fciSignatureRequestFromId.success({
+        ...mockSignatureRequestDetailView
+      })
+    );
+    store.dispatch(
+      fciDownloadPreview.success({
+        path: mockSignatureRequestDetailView.documents[0].url
+      })
     );
     const testComponent = renderComponent(store);
     expect(testComponent).toBeTruthy();
@@ -43,7 +54,7 @@ describe("Test FciDocuments screen", () => {
 });
 
 const renderComponent = (store: Store) =>
-  renderScreenFakeNavRedux<GlobalState>(
+  renderScreenWithNavigationStoreContext<GlobalState>(
     () => <FciDocumentsScreen />,
     FCI_ROUTES.DOCUMENTS,
     {},

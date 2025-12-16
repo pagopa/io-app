@@ -1,19 +1,15 @@
-import * as React from "react";
+import { IOColors, hexToRgba, useIOTheme } from "@pagopa/io-app-design-system";
 import {
-  Text,
-  View,
-  StyleSheet,
-  Image as NativeImage,
+  ImageBackground,
   ImageSourcePropType,
-  ImageBackground
+  Image as NativeImage,
+  StyleSheet,
+  Text,
+  View
 } from "react-native";
-import {
-  IOColors,
-  hexToRgba
-} from "../../../components/core/variables/IOColors";
-import { H5 } from "../../../components/core/typography/H5";
 
 /* Fake Transparent BG */
+import { ReactNode } from "react";
 import FakeTransparentBg from "../../../../img/utils/transparent-background-pattern.png";
 
 export const assetItemGutter = 16;
@@ -22,7 +18,6 @@ const styles = StyleSheet.create({
   assetWrapper: {
     width: "50%",
     justifyContent: "flex-start",
-    marginBottom: 16,
     paddingHorizontal: assetItemGutter / 2
   },
   assetWrapperSmall: {
@@ -38,19 +33,30 @@ const styles = StyleSheet.create({
     height: "200%",
     opacity: 0.4
   },
+  assetLabel: {
+    fontSize: 12
+  },
   assetItem: {
     overflow: "hidden",
     position: "relative",
     aspectRatio: 1,
     borderRadius: 8,
-    padding: 32,
     alignItems: "center",
     justifyContent: "center",
     borderColor: hexToRgba(IOColors.black, 0.1),
     borderWidth: 1
   },
-  assetItemSmall: {
-    padding: 24
+  assetItemSpacingSmall: {
+    padding: 16
+  },
+  assetItemSpacingLarge: {
+    padding: 32
+  },
+  assetItemBleed: {
+    paddingRight: 0,
+    paddingLeft: 8,
+    paddingVertical: 4,
+    justifyContent: "flex-end"
   },
   assetItemDark: {
     backgroundColor: IOColors.black
@@ -70,19 +76,22 @@ const styles = StyleSheet.create({
     top: 4
   },
   pillRaster: {
-    backgroundColor: IOColors.yellow,
+    backgroundColor: IOColors["warning-500"],
     color: IOColors.black
   },
-  pillIconFont: {
-    backgroundColor: IOColors.aqua,
-    color: IOColors.black
+  pillBleed: {
+    backgroundColor: IOColors["success-500"],
+    color: IOColors.white
   }
 });
 
 type DSAssetViewerBoxProps = {
   name: string;
-  image: React.ReactNode;
-  type?: "vector" | "raster" | "iconFont";
+  image: ReactNode;
+  /* "bleed" shows the pictogram without padding
+  "hasBleed" shows the pictgram label on top right */
+  type?: "vector" | "raster" | "bleed" | "hasBleed";
+  spacing?: "small" | "large";
   size?: "small" | "medium";
   colorMode?: "light" | "dark";
 };
@@ -101,9 +110,9 @@ const pillMap = {
     style: styles.pillRaster,
     text: "Png"
   },
-  iconFont: {
-    style: styles.pillIconFont,
-    text: "Font"
+  hasBleed: {
+    style: styles.pillBleed,
+    text: "Bleed"
   }
 };
 
@@ -112,55 +121,67 @@ export const DSAssetViewerBox = ({
   image,
   type = "vector",
   size = "medium",
+  spacing = "large",
   colorMode = "light"
-}: DSAssetViewerBoxProps) => (
-  <View
-    style={[
-      styles.assetWrapper,
-      size === "small" ? styles.assetWrapperSmall : {}
-    ]}
-  >
+}: DSAssetViewerBoxProps) => {
+  const theme = useIOTheme();
+
+  return (
     <View
       style={[
-        styles.assetItem,
-        size === "small" ? styles.assetItemSmall : {},
-        colorMode === "dark" ? styles.assetItemDark : {}
+        styles.assetWrapper,
+        size === "small" ? styles.assetWrapperSmall : {}
       ]}
     >
-      <ImageBackground
-        style={styles.fakeTransparentBg}
-        source={FakeTransparentBg}
-      />
-      {image}
-      {type !== "vector" && (
-        <Text
-          style={[
-            styles.pill,
-            size === "small" ? styles.pillSmall : {},
-            pillMap[type].style
-          ]}
-        >
-          {pillMap[type].text}
-        </Text>
-      )}
+      <View
+        style={[
+          styles.assetItem,
+          type === "bleed" ? styles.assetItemBleed : {},
+          spacing === "large"
+            ? styles.assetItemSpacingLarge
+            : styles.assetItemSpacingSmall,
+          colorMode === "dark" ? styles.assetItemDark : {}
+        ]}
+      >
+        <ImageBackground
+          style={styles.fakeTransparentBg}
+          source={FakeTransparentBg}
+        />
+        {image}
+        {type === "raster" ||
+          (type === "hasBleed" && (
+            <Text
+              style={[
+                styles.pill,
+                size === "small" ? styles.pillSmall : {},
+                pillMap[type].style
+              ]}
+            >
+              {pillMap[type].text}
+            </Text>
+          ))}
+      </View>
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginTop: 4
+        }}
+      >
+        {name && (
+          <Text
+            numberOfLines={1}
+            ellipsizeMode="tail"
+            style={[
+              styles.assetLabel,
+              { color: IOColors[theme["textBody-tertiary"]] }
+            ]}
+          >
+            {name}
+          </Text>
+        )}
+      </View>
     </View>
-    <View
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        marginTop: 4
-      }}
-    >
-      {name && (
-        <H5
-          color={"bluegrey"}
-          style={{ alignSelf: "flex-start" }}
-          weight={"Regular"}
-        >
-          {name}
-        </H5>
-      )}
-    </View>
-  </View>
-);
+  );
+};

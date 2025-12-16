@@ -1,10 +1,9 @@
-import * as React from "react";
 import { createStore, Store } from "redux";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";
 import { FCI_ROUTES } from "../../navigation/routes";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { fciLoadQtspClauses, fciPollFilledDocument } from "../../store/actions";
 import FciQtspClausesScreen from "../valid/FciQtspClausesScreen";
 import { mockQtspClausesMetadata } from "../../types/__mocks__/QtspClausesMetadata.mock";
@@ -76,7 +75,7 @@ describe("Test FciQtspClauses screen", () => {
     expect(component).toBeTruthy();
     expect(component.queryByTestId("FciLoadingScreenTestID")).toBeTruthy();
   });
-  it("should render the GenericErrorComponent when network error problem occurs or polling is stopped if time limit reached", () => {
+  it("should render the SignatureStatusComponent when network error problem occurs or polling is stopped if time limit reached", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store: Store<GlobalState> = createStore(
       appReducer,
@@ -87,12 +86,12 @@ describe("Test FciQtspClauses screen", () => {
     const component = renderComponent(store);
     expect(component).toBeTruthy();
     expect(component.queryByTestId("FciLoadingScreenTestID")).toBeFalsy();
-    expect(component.queryByTestId("GenericErrorComponentTestID")).toBeTruthy();
+    expect(component.queryByTestId("PollingErrorComponentTestID")).toBeTruthy();
   });
 });
 
 const renderComponent = (store: Store) =>
-  renderScreenFakeNavRedux<GlobalState>(
+  renderScreenWithNavigationStoreContext<GlobalState>(
     () => <FciQtspClausesScreen />,
     FCI_ROUTES.QTSP_TOS,
     {},

@@ -3,11 +3,20 @@ import FingerprintScanner, {
   AuthenticateAndroid,
   AuthenticateIOS,
   Biometrics,
-  FingerprintScannerError
+  FingerprintScannerError,
+  Errors
 } from "react-native-fingerprint-scanner";
+import I18n from "i18next";
 import { isDebugBiometricIdentificationEnabled } from "../config";
-import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
+
+/**
+ * Retrieve biometric settings from the base system. This function wraps the basic
+ * method "isSensorAvailable" of react-native-fingerprint-scanner library and simplifies the possible returned values in
+ * function of its usage.
+ *
+ * More info about library can be found here: https://github.com/hieuvp/react-native-fingerprint-scanner
+ */
 
 const biometricErrors = [
   // possibly working, but the string returned is undocumented
@@ -17,7 +26,7 @@ const biometricErrors = [
   "UNAVAILABLE"
 ] as const;
 
-export type BiometricsErrorType = typeof biometricErrors[number];
+export type BiometricsErrorType = (typeof biometricErrors)[number];
 
 export type BiometricsValidType =
   // happy path
@@ -87,3 +96,67 @@ export const biometricAuthenticationRequest = (
       // We need to explicitly release the listener to avoid bugs on android platform
       void FingerprintScanner.release();
     });
+
+type biometricState = "Available" | "NotEnrolled" | "NotSupported";
+
+export const getBometricState = (): Promise<biometricState> =>
+  new Promise(resolve => {
+    FingerprintScanner.isSensorAvailable()
+      .then(_ => resolve("Available"))
+      .catch(e => {
+        const error = e as FingerprintScannerError;
+        if (error.name === "FingerprintScannerNotEnrolled") {
+          resolve("NotEnrolled");
+        } else {
+          resolve("NotSupported");
+        }
+      });
+  });
+
+export type BiometriActivationUserType =
+  | "ACTIVATED"
+  | "AUTH_FAILED"
+  | "PERMISSION_DENIED"
+  | "SENSOR_ERROR";
+
+const mayUserActivateBiometricWithDependency = (
+  getBiometricsTypeInternal: Promise<BiometricsType>
+): Promise<BiometriActivationUserType> =>
+  new Promise((resolve, reject) => {
+    getBiometricsTypeInternal
+      .then(value => {
+        if (value === "FACE_ID") {
+          FingerprintScanner.authenticate({
+            description: I18n.t(
+              "identification.biometric.popup.sensorDescription"
+            ),
+            fallbackEnabled: false
+          } as AuthenticateIOS)
+            .then(_ => resolve("ACTIVATED"))
+            .catch((err: Errors) => {
+              reject(handleErrorDuringBiometricActivation(err));
+            });
+        } else {
+          resolve("ACTIVATED");
+        }
+      })
+      .catch(_ => {
+        reject("SENSOR_ERROR");
+      });
+  });
+
+export const mayUserActivateBiometric = () =>
+  mayUserActivateBiometricWithDependency(getBiometricsType());
+
+export const biometricFunctionForTests = {
+  mayUserActivateBiometricWithDependency
+};
+
+function handleErrorDuringBiometricActivation(
+  err: Errors
+): BiometriActivationUserType {
+  if (err.name === "FingerprintScannerNotAvailable") {
+    return "PERMISSION_DENIED";
+  }
+  return "AUTH_FAILED";
+}

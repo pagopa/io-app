@@ -1,33 +1,38 @@
+import {
+  Body,
+  ContentWrapper,
+  H2,
+  IOButtonBlockSpecificProps,
+  useIOThemeContext,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as AR from "fp-ts/lib/Array";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Text as NBText, View } from "native-base";
-import * as React from "react";
-import { ComponentProps } from "react";
-import { Image, SafeAreaView, StyleSheet } from "react-native";
-import { widthPercentageToDP } from "react-native-responsive-screen";
+import {
+  ComponentProps,
+  forwardRef,
+  useContext,
+  useImperativeHandle
+} from "react";
+import { Image, ImageStyle, StyleProp } from "react-native";
+import Animated, {
+  useAnimatedRef,
+  useSharedValue
+} from "react-native-reanimated";
+import I18n from "i18next";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
-import { H1 } from "../../../../components/core/typography/H1";
-import { H3 } from "../../../../components/core/typography/H3";
-import { Link } from "../../../../components/core/typography/Link";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { withLightModalContext } from "../../../../components/helpers/withLightModalContext";
-import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
-import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { EdgeBorderComponent } from "../../../../components/screens/EdgeBorderComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { LightModalContextInterface } from "../../../../components/ui/LightModal";
-import Markdown from "../../../../components/ui/Markdown";
-import I18n from "../../../../i18n";
-import customVariables from "../../../../theme/variables";
-import { useScreenReaderEnabled } from "../../../../utils/accessibility";
-import { getRemoteLocale } from "../../../../utils/messages";
+import IOMarkdown from "../../../../components/IOMarkdown";
+import {
+  IOScrollView,
+  IOScrollViewActions
+} from "../../../../components/ui/IOScrollView";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { LightModalContext } from "../../../../components/ui/LightModal";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { maybeNotNullyString } from "../../../../utils/strings";
-import { confirmButtonProps } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
+import { getRemoteLocale } from "../../../messages/utils/ctas";
 import TosBonusComponent from "./TosBonusComponent";
 
 type OwnProps = {
@@ -36,52 +41,22 @@ type OwnProps = {
   onConfirm?: () => void;
   onCancel?: () => void;
   primaryCtaText: string;
+  secondaryAction?: SecondaryAction;
+  imageStyle?: StyleProp<ImageStyle>;
 };
 
+type SecondaryAction = { type: "back"; text: string };
+
 type Props = OwnProps &
-  LightModalContextInterface &
   Pick<
-    ComponentProps<typeof BaseScreenComponent>,
+    ComponentProps<typeof IOScrollViewWithLargeHeader>,
     "contextualHelp" | "contextualHelpMarkdown" | "faqCategories"
   >;
 
-const CSS_STYLE = `
-body {
-  font-size: ${customVariables.fontSizeBase}px;
-  color: ${customVariables.textColorDark}
-}
+export type BonusInformationComponentRef = {
+  scrollTo: (y: number) => void;
+};
 
-h4 {
-  font-size: ${customVariables.fontSize2}px;
-}
-`;
-const coverImageWidth = Math.min(48, widthPercentageToDP("30%"));
-const styles = StyleSheet.create({
-  flexEnd: {
-    alignSelf: "flex-start"
-  },
-  flexStart: {
-    width: widthPercentageToDP("70%"),
-    alignSelf: "center"
-  },
-  cover: {
-    resizeMode: "contain",
-    width: coverImageWidth,
-    height: coverImageWidth
-  },
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between"
-  },
-  urlButton: { flex: 1, textAlign: "center" }
-});
-
-const loadingOpacity = 0.9;
-// for long content markdown computed height should be not enough
-const extraMarkdownBodyHeight = 20;
-
-// TODO get the tos footer from props
 const getTosFooter = (
   maybeBonusTos: O.Option<string>,
   maybeRegulationUrl: O.Option<{ url: string; name: string }>,
@@ -100,78 +75,85 @@ const getTosFooter = (
               // if tos is defined and the regolation url is not defined
               // return the link (BONUS VACANZE)
               <>
-                <VSpacer size={40} />
-                <ItemSeparatorComponent noPadded={true} />
-                <VSpacer size={40} />
-                <NBText dark={true}>
+                <Body color="grey-850">
                   {I18n.t("bonus.bonusVacanze.advice")}
-                </NBText>
-                <Link
-                  weight={"SemiBold"}
+                </Body>
+                <Body
+                  asLink
+                  weight={"Semibold"}
                   numberOfLines={1}
                   onPress={() => handleModalPress(bT)}
                 >
                   {I18n.t("bonus.tos.title")}
-                </Link>
+                </Body>
               </>
             ),
             // if tos and regulation url is defined
             // return a markdown footer including both links reference (BPD)
             rU => (
-              <>
-                <VSpacer size={40} />
-                <ItemSeparatorComponent noPadded={true} />
-                <VSpacer size={40} />
-                <Markdown
-                  cssStyle={CSS_STYLE}
-                  extraBodyHeight={extraMarkdownBodyHeight}
-                >
-                  {I18n.t("bonus.termsAndConditionFooter", {
-                    ctaText,
-                    regulationLink: rU.url,
-                    tosUrl: bT
-                  })}
-                </Markdown>
-              </>
+              <IOMarkdown
+                content={I18n.t("bonus.termsAndConditionFooter", {
+                  ctaText,
+                  regulationLink: rU.url,
+                  tosUrl: bT
+                })}
+              />
             )
           )
         )
     )
   );
 
+// value is defined the height of the image
+const imageHeight: number = 270;
+
 /**
  * A screen to explain how the bonus activation works and how it will be assigned
  */
-const BonusInformationComponent: React.FunctionComponent<Props> = props => {
-  const [isMarkdownLoaded, setMarkdownLoaded] = React.useState(false);
-  const isScreenReaderEnabled = useScreenReaderEnabled();
-
+const BonusInformationComponent = forwardRef((props: Props, ref) => {
+  const { showModal, hideModal } = useContext(LightModalContext);
   const bonusType = props.bonus;
+  const { imageStyle: imageProps } = props;
   const bonusTypeLocalizedContent: BonusAvailableContent =
     bonusType[getRemoteLocale()];
 
-  const cancelButtonProps = {
-    block: true,
-    light: true,
-    bordered: true,
-    onPress: props.onCancel,
-    title: I18n.t("global.buttons.cancel")
-  };
-  const requestButtonProps = confirmButtonProps(
-    props.onConfirm ?? constNull,
-    props.primaryCtaText,
-    undefined,
-    "activate-bonus-button"
-  );
+  const scrollTranslationY = useSharedValue(0);
 
-  const onMarkdownLoaded = () => {
-    setMarkdownLoaded(true);
+  const animatedScrollViewRef = useAnimatedRef<Animated.ScrollView>();
+
+  useHeaderSecondLevel({
+    title: bonusTypeLocalizedContent.title,
+    scrollValues: {
+      triggerOffset: imageHeight,
+      contentOffsetY: scrollTranslationY
+    },
+    supportRequest: true,
+    enableDiscreteTransition: true,
+    animatedRef: animatedScrollViewRef
+  });
+
+  const cancelButtonProps: IOButtonBlockSpecificProps = {
+    label: I18n.t("global.buttons.cancel"),
+    fullWidth: true,
+    color: "danger",
+    onPress: props.onCancel ?? constNull
+  };
+
+  const requestButtonProps: IOButtonBlockSpecificProps = {
+    label: props.primaryCtaText,
+    fullWidth: true,
+    onPress: props.onConfirm ?? constNull,
+    testID: "activate-bonus-button"
+  };
+
+  const backButtonProps = {
+    label: props.secondaryAction?.text ?? "",
+    fullWidth: true,
+    onPress: props.onBack ?? constNull
   };
 
   const handleModalPress = (tos: string) =>
-    props.showModal(
-      <TosBonusComponent tos_url={tos} onClose={props.hideModal} />
-    );
+    showModal(<TosBonusComponent tos_url={tos} onClose={hideModal} />);
 
   // bonus rules url should be the first one in the urls list
   const maybeRegulationUrl = pipe(
@@ -180,100 +162,79 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
     O.chain(urls => AR.lookup(0, [...urls]))
   );
 
-  // render a stack of button each one representing a url
-  const renderUrls = () => {
-    const urls = bonusTypeLocalizedContent.urls;
-    if (urls === undefined || urls.length === 0) {
-      return null;
-    }
-    const buttons = urls.map((url, idx) => (
-      <View key={`${idx}_${url.url}`}>
-        <ButtonDefaultOpacity
-          bordered={true}
-          onPress={() => handleModalPress(url.url)}
-        >
-          <NBText style={styles.urlButton}>{url.name}</NBText>
-        </ButtonDefaultOpacity>
-        {idx !== urls.length - 1 && <VSpacer size={8} />}
-      </View>
-    ));
-    return <>{buttons}</>;
-  };
+  const { themeType } = useIOThemeContext();
+  const isDark = themeType === "dark";
+
   const maybeBonusTos = maybeNotNullyString(bonusTypeLocalizedContent.tos_url);
+  const maybeHeroImage =
+    isDark && bonusType.hero_image_dark
+      ? maybeNotNullyString(bonusType.hero_image_dark)
+      : maybeNotNullyString(bonusType.hero_image);
 
-  const maybeCover = maybeNotNullyString(bonusType.cover);
-  const maybeSponsorshipDescription = maybeNotNullyString(
-    bonusType.sponsorship_description
-  );
-  const footerComponent = props.onConfirm ? (
-    <FooterWithButtons
-      type="TwoButtonsInlineThird"
-      leftButton={cancelButtonProps}
-      rightButton={requestButtonProps}
-    />
-  ) : (
-    <FooterWithButtons type="SingleButton" leftButton={cancelButtonProps} />
-  );
-  const ContainerComponent = withLoadingSpinner(() => (
-    <BaseScreenComponent
-      goBack={props.onBack ?? true}
-      headerTitle={bonusTypeLocalizedContent.name}
-      contextualHelpMarkdown={props.contextualHelpMarkdown}
-      contextualHelp={props.contextualHelp}
-      faqCategories={props.faqCategories}
-    >
-      <SafeAreaView style={IOStyles.flex}>
-        {isScreenReaderEnabled && isMarkdownLoaded && footerComponent}
-        <Content>
-          <View style={styles.row}>
-            <View style={styles.flexStart}>
-              {O.isSome(maybeSponsorshipDescription) && (
-                <H3>{maybeSponsorshipDescription.value}</H3>
-              )}
+  const actions: IOScrollViewActions = props.secondaryAction
+    ? {
+        type: "TwoButtons",
+        primary: props.onConfirm ? requestButtonProps : cancelButtonProps,
+        secondary: backButtonProps
+      }
+    : {
+        type: "SingleButton",
+        primary: requestButtonProps
+      };
 
-              <H1>{bonusTypeLocalizedContent.title}</H1>
-            </View>
-            <View style={styles.flexEnd}>
-              {O.isSome(maybeCover) && (
-                <Image
-                  source={{ uri: maybeCover.value }}
-                  style={styles.cover}
-                />
-              )}
-            </View>
-          </View>
-          <VSpacer size={24} />
-          <NBText dark={true}>{bonusTypeLocalizedContent.subtitle}</NBText>
+  useImperativeHandle(ref, () => ({
+    scrollTo: (y: number) => {
+      animatedScrollViewRef.current?.scrollTo({ y, animated: true });
+    }
+  }));
 
-          <VSpacer size={16} />
-          <ItemSeparatorComponent noPadded={true} />
-          <Markdown
-            cssStyle={CSS_STYLE}
-            extraBodyHeight={extraMarkdownBodyHeight}
-            onLoadEnd={onMarkdownLoaded}
-          >
-            {bonusTypeLocalizedContent.content}
-          </Markdown>
-          <VSpacer size={40} />
-          {isMarkdownLoaded && renderUrls()}
-          {getTosFooter(
-            maybeBonusTos,
-            maybeRegulationUrl,
-            handleModalPress,
-            props.primaryCtaText
-          )}
-          {isMarkdownLoaded && <EdgeBorderComponent />}
-        </Content>
-        {!isScreenReaderEnabled && isMarkdownLoaded && footerComponent}
-      </SafeAreaView>
-    </BaseScreenComponent>
-  ));
   return (
-    <ContainerComponent
-      isLoading={!isMarkdownLoaded}
-      loadingOpacity={loadingOpacity}
-    />
+    <IOScrollView
+      animatedRef={animatedScrollViewRef}
+      includeContentMargins={false}
+      snapOffset={imageHeight}
+      headerConfig={{
+        type: "base",
+        title: bonusTypeLocalizedContent.title
+      }}
+      actions={actions}
+    >
+      {O.isSome(maybeHeroImage) && (
+        <>
+          <Image
+            accessibilityIgnoresInvertColors
+            source={{ uri: maybeHeroImage.value }}
+            style={
+              imageProps ?? {
+                width: "100%",
+                height: imageHeight,
+                resizeMode: "stretch"
+              }
+            }
+          />
+          <VSpacer size={24} />
+        </>
+      )}
+      <ContentWrapper>
+        <H2 accessibilityRole="header">{bonusTypeLocalizedContent.title}</H2>
+        <VSpacer size={16} />
+        <IOMarkdown
+          content={
+            bonusTypeLocalizedContent.subtitle +
+            "\n" +
+            bonusTypeLocalizedContent.content
+          }
+        />
+        <VSpacer size={40} />
+        {getTosFooter(
+          maybeBonusTos,
+          maybeRegulationUrl,
+          handleModalPress,
+          props.primaryCtaText
+        )}
+      </ContentWrapper>
+    </IOScrollView>
   );
-};
+});
 
-export default withLightModalContext(BonusInformationComponent);
+export default BonusInformationComponent;

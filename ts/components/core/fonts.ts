@@ -8,25 +8,30 @@ import { Platform } from "react-native";
 
 export type IOFontFamily = keyof typeof fonts;
 
-const weights = ["Light", "Regular", "SemiBold", "Bold"] as const;
-export type IOFontWeight = typeof weights[number];
+const weights = ["Light", "Regular", "Semibold", "Bold"] as const;
+export type IOFontWeight = (typeof weights)[number];
 
 const weightValues = ["300", "400", "600", "700"] as const;
-export type FontWeightValue = typeof weightValues[number];
+export type FontWeightValue = (typeof weightValues)[number];
 
-const fontKeys: ReadonlyArray<IOFontFamily> = ["TitilliumWeb", "RobotoMono"];
+const fontKeys: ReadonlyArray<IOFontFamily> = ["TitilliumSansPro"];
 
 /**
  * Choose the font name based on the platform
  */
 const fonts = {
-  TitilliumWeb: Platform.select({
-    android: "TitilliumWeb",
-    ios: "Titillium Web"
+  TitilliumSansPro: Platform.select({
+    android: "TitilliumSansPro",
+    ios: "Titillium Sans Pro"
   }),
-  RobotoMono: Platform.select({
-    android: "RobotoMono",
-    ios: "Roboto Mono"
+  ReadexPro: Platform.select({
+    android: "ReadexPro",
+    ios: "Readex Pro"
+  }),
+  FiraCode: Platform.select({
+    android: "FiraCode",
+    web: "FiraCode",
+    ios: "Fira Code"
   })
 };
 
@@ -37,7 +42,7 @@ const fonts = {
 export const fontWeights: Record<IOFontWeight, FontWeightValue> = {
   Light: "300",
   Regular: "400",
-  SemiBold: "600",
+  Semibold: "600",
   Bold: "700"
 };
 
@@ -90,11 +95,12 @@ export const allUsedFonts = [
  * @param weight
  * @param isItalic
  * @param font
+ * @deprecated Don't use local `makeFontStyleObject`. Import it from `io-app-design-system` instead.
  */
 export const makeFontStyleObject = (
   weight: IOFontWeight | undefined = undefined,
   isItalic: boolean | undefined = false,
-  font: IOFontFamily | undefined = "TitilliumWeb"
+  font: IOFontFamily | undefined = "TitilliumSansPro"
 ): FontStyleObject =>
   Platform.select({
     default: {

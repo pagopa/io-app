@@ -1,5 +1,5 @@
+import I18n from "i18next";
 import { PayPalInfo } from "../../definitions/pagopa/PayPalInfo";
-import I18n from "../i18n";
 
 // return the email used in the paypal account. If it can't be found "n/a" will be returned
 // it is inside the default psp ¯\_(ツ)_/¯ that could be one in the relative array 'pspInfo'

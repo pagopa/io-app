@@ -1,54 +1,68 @@
-import * as React from "react";
-import { View } from "native-base";
-import { FlatList, ListRenderItemInfo, Platform } from "react-native";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
-import { EdgeBorderComponent } from "../../../../../components/screens/EdgeBorderComponent";
+import {
+  Badge,
+  ContentWrapper,
+  H6,
+  HSpacer,
+  ListItemNav
+} from "@pagopa/io-app-design-system";
+import { ListRenderItem, View } from "react-native";
+import I18n from "i18next";
+import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
 import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
-import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
-import CgnMerchantListItem from "./CgnMerchantListItem";
+import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
 
 type Props = {
-  merchantList: ReadonlyArray<OfflineMerchant | OnlineMerchant>;
   onItemPress: (id: Merchant["id"]) => void;
-  onRefresh: () => void;
-  refreshing: boolean;
+  count: number;
 };
 
-// Component that renders the list of merchants as a FlatList
-const CgnMerchantsListView: React.FunctionComponent<Props> = (props: Props) => {
-  const renderListItem = (
-    listItem: ListRenderItemInfo<OfflineMerchant | OnlineMerchant>
-  ) => (
-    <CgnMerchantListItem
-      categories={listItem.item.productCategories}
-      name={listItem.item.name}
-      onPress={() => props.onItemPress(listItem.item.id)}
-      isNew={listItem.item.newDiscounts}
-    />
-  );
+export const CgnMerchantListViewRenderItem =
+  (props: Props): ListRenderItem<OfflineMerchant | OnlineMerchant> =>
+  ({ item, index }) => {
+    const accessibilityLabel =
+      (item?.numberOfNewDiscounts
+        ? I18n.t("bonus.cgn.merchantsList.categoriesList.a11y", {
+            name: item.name,
+            count: item.numberOfNewDiscounts
+          })
+        : item.newDiscounts
+        ? `${item.name} ${I18n.t("bonus.cgn.merchantsList.news")}`
+        : item.name) + getListItemAccessibilityLabelCount(props.count, index);
 
-  return (
-    <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
-      <FlatList
-        showsVerticalScrollIndicator={Platform.OS !== "ios"}
-        scrollEnabled={true}
-        data={props.merchantList}
-        ItemSeparatorComponent={() => (
-          <ItemSeparatorComponent noPadded={true} />
-        )}
-        refreshing={props.refreshing}
-        onRefresh={props.onRefresh}
-        renderItem={renderListItem}
-        keyExtractor={c => c.id}
-        keyboardShouldPersistTaps={"handled"}
-        ListFooterComponent={
-          props.merchantList.length > 0 && <EdgeBorderComponent />
-        }
-      />
-    </View>
-  );
-};
-
-export default CgnMerchantsListView;
+    return (
+      <ContentWrapper>
+        <ListItemNav
+          onPress={() => props.onItemPress(item.id)}
+          value={
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
+              <H6 style={{ flexGrow: 1, flexShrink: 1 }}>{item.name}</H6>
+              <HSpacer />
+              {item.newDiscounts && (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center"
+                  }}
+                >
+                  <Badge
+                    accessible={false}
+                    variant="cgn"
+                    text={
+                      item.numberOfNewDiscounts
+                        ? item.numberOfNewDiscounts.toString()
+                        : I18n.t("bonus.cgn.merchantsList.news")
+                    }
+                  />
+                </View>
+              )}
+            </View>
+          }
+          accessibilityLabel={accessibilityLabel}
+        />
+      </ContentWrapper>
+    );
+  };

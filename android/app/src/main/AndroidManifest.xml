@@ -4,20 +4,23 @@
   <queries>
     <intent>
       <action android:name="android.intent.action.VIEW" />
-      <data android:scheme="http"/>
+      <data android:scheme="http" android:host="*" />
     </intent>
     <intent>
       <action android:name="android.intent.action.VIEW" />
-      <data android:scheme="https"/>
+      <data android:scheme="https" android:host="*" />
     </intent>
   </queries>
 
   <supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="false"/>
 
+  <!-- Required to access NFC hardware -->
+  <uses-permission android:name="android.permission.NFC" />
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.VIBRATE" />
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+  <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
   <!-- Force removal of ACCESS_WIFI_STATE see https://pagopa.atlassian.net/browse/IA-557 -->
   <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" tools:node="remove" />
   <!-- Force removal of READ_PHONE_STATE due to react-native-device-info library see https://github.com/react-native-community/react-native-device-info/issues/955 -->
@@ -29,29 +32,38 @@
   <uses-permission android:name="android.permission.READ_CALENDAR" />
   <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
-  <!-- Required by @react-native-community/cameraroll -->
-  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
   <!-- Required by react-native-vision-camera -->
   <uses-permission android:name="android.permission.CAMERA" />
 
   <!-- Required by react-native-fingerprint-scanner -->
-  <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
+  <uses-permission android:name="android.permission.USE_FINGERPRINT" />
   <uses-permission android:name="android.permission.USE_BIOMETRIC" />
 
   <!-- Required for local notifications -->
   <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
-  <application
-    android:name=".MainApplication"
-    android:label="@string/app_name"
-    android:icon="@mipmap/ic_launcher"
-    android:usesCleartextTraffic="true"
-    android:roundIcon="@mipmap/ic_launcher_round"
-    android:allowBackup="false"
-    android:requestLegacyExternalStorage="true"
-    android:theme="@style/AppTheme">
+  <!-- Required for BLE (Bluetooth Low Energy) SDK >= 31 -->
+  <uses-permission 
+    android:name="android.permission.BLUETOOTH_SCAN" 
+    android:usesPermissionFlags="neverForLocation" />
+  <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+  <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+  <!-- Required for BLE (Bluetooth Low Energy) SDK < 31 -->
+  <uses-permission 
+    android:name="android.permission.BLUETOOTH" 
+    android:maxSdkVersion="30" />
+  <uses-permission 
+    android:name="android.permission.BLUETOOTH_ADMIN" 
+    android:maxSdkVersion="30" />
+  <uses-permission 
+    android:name="android.permission.ACCESS_FINE_LOCATION" 
+    android:maxSdkVersion="30" />
+
+  <application android:name=".MainApplication" android:label="@string/app_name"
+    android:icon="@mipmap/ic_launcher" android:usesCleartextTraffic="true"
+    android:roundIcon="@mipmap/ic_launcher_round" android:allowBackup="false"
+    android:requestLegacyExternalStorage="true" android:theme="@style/AppTheme"
+    android:supportsRtl="true" android:largeHeap="true">
 
     <!-- START Required by react-native-push-notification -->
 
@@ -80,6 +92,10 @@
 
 
     <!-- END Required by react-native-push-notification -->
+
+    <!-- Sentry -->
+
+    <meta-data android:name="io.sentry.anr.enable" android:value="false" />
 
     <!-- Mixpanel -->
 
@@ -110,7 +126,7 @@
     <activity android:name="zendesk.messaging.MessagingActivity" android:theme="@style/ZendeskTheme" />
     <!-- END Zendesk -->
 
-    <activity android:name=".MainActivity" android:launchMode="singleTask" android:label="@string/app_name" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode" android:windowSoftInputMode="adjustResize" android:exported="true">
+    <activity android:name=".MainActivity" android:launchMode="singleTop" android:label="@string/app_name" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode" android:windowSoftInputMode="adjustResize" android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
@@ -120,9 +136,48 @@
         <action android:name="android.intent.action.VIEW" />
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE" />
-        <data android:scheme="ioit" android:host="ioit" />
+        <data android:scheme="ioit" />
       </intent-filter>
+
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:scheme="iowalletcie" />
+      </intent-filter>
+
+      <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:scheme="https" />
+        <data android:host="continua.io.pagopa.it" />
+      </intent-filter>
+
+      <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:scheme="https" />
+        <data android:host="cittadini.uat.notifichedigitali.it" />
+        <data android:host="cittadini.notifichedigitali.it" />
+        <data android:pathPrefix="/io" />
+      </intent-filter>
+
     </activity>
+
+    <!-- Trigger Google Play services to install the backported photo picker module. -->
+    <!-- This is needed by react-native-image-picker because we target a minSdkVersion < 30. In can be removed when we target minSdkVersion >= 30. 
+    https://developer.android.com/training/data-storage/shared/photopicker#device-availability -->
+    <service android:name="com.google.android.gms.metadata.ModuleDependencies"
+            android:enabled="false"
+            android:exported="false"
+            tools:ignore="MissingClass">
+      <intent-filter>
+          <action android:name="com.google.android.gms.metadata.MODULE_DEPENDENCIES" />
+      </intent-filter>
+      <meta-data android:name="photopicker_activity:0:required" android:value="" />
+    </service>
   </application>
 
 </manifest>

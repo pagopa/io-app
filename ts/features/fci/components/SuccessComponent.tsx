@@ -1,20 +1,12 @@
-import * as React from "react";
-import I18n from "../../../i18n";
-import imageExpired from "../../../../img/wallet/errors/payment-expired-icon.png";
-import hourglass from "../../../../img/pictograms/hourglass.png";
-import {
-  SignatureRequestDetailView,
-  StatusEnum as SignatureRequestDetailStatus
-} from "../../../../definitions/fci/SignatureRequestDetailView";
-import { useIODispatch } from "../../../store/hooks";
-import {
-  fciEndRequest,
-  fciShowSignedDocumentsStartRequest,
-  fciStartRequest
-} from "../store/actions";
-import { daysBetweenDate } from "../utils/dates";
-import ErrorComponent from "./ErrorComponent";
-import GenericErrorComponent from "./GenericErrorComponent";
+import I18n from "i18next";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
+import { fciEndRequest, fciStartRequest } from "../store/actions";
+import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";
+import { trackFciDocOpening } from "../analytics";
+import { fciSignatureDetailDocumentsSelector } from "../store/reducers/fciSignatureRequest";
+import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
+import SignatureStatusComponent from "./SignatureStatusComponent";
 
 /**
  * A component to render the cases of success for a signature request
@@ -24,66 +16,87 @@ const SuccessComponent = (props: {
 }) => {
   const now = new Date();
   const expires_at = new Date(props.signatureRequest.expires_at);
-  const updated_at = new Date(props.signatureRequest.updated_at);
+  const issuer_email = props.signatureRequest.issuer.email;
   const status = props.signatureRequest.status;
+  const fciDocuments = useIOSelector(fciSignatureDetailDocumentsSelector);
+  const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const dispatch = useIODispatch();
 
   // if the user (signer) has not signed and the request is expired
   // the user can no longer sign anymore
   if (
-    (status === SignatureRequestDetailStatus.WAIT_FOR_SIGNATURE ||
-      status === SignatureRequestDetailStatus.REJECTED) &&
+    (status === SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE ||
+      status === SignatureRequestStatusEnum.REJECTED) &&
     expires_at < now
   ) {
     return (
-      <ErrorComponent
+      <SignatureStatusComponent
         title={I18n.t("features.fci.errors.expired.title")}
         subTitle={I18n.t("features.fci.errors.expired.subTitle")}
         onPress={() => dispatch(fciEndRequest())}
-        image={imageExpired}
+        email={issuer_email}
+        pictogram={"ended"}
         testID={"ExpiredSignatureRequestTestID"}
-      />
-    );
-  }
-
-  // if 90 days have passed since the request has been signed
-  // the user (signer) could not download the signed documents
-  if (
-    status === SignatureRequestDetailStatus.SIGNED &&
-    daysBetweenDate(updated_at, now) > 90
-  ) {
-    return (
-      <ErrorComponent
-        title={I18n.t("features.fci.errors.expiredAfterSigned.title")}
-        subTitle={I18n.t("features.fci.errors.expiredAfterSigned.subTitle")}
-        onPress={() => dispatch(fciEndRequest())}
-        image={imageExpired}
-        testID={"ExpiredSignedSignatureRequestTestID"}
       />
     );
   }
 
   // the signature request could have various status
   switch (status) {
-    case SignatureRequestDetailStatus.WAIT_FOR_SIGNATURE:
+    case SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE:
+      trackFciDocOpening(expires_at, fciDocuments.length, fciEnvironment);
       dispatch(fciStartRequest());
       return null;
-    case SignatureRequestDetailStatus.WAIT_FOR_QTSP:
+    case SignatureRequestStatusEnum.WAIT_FOR_QTSP:
       return (
-        <ErrorComponent
+        <SignatureStatusComponent
           title={I18n.t("features.fci.errors.waitForQtsp.title")}
           subTitle={I18n.t("features.fci.errors.waitForQtsp.subTitle")}
           onPress={() => dispatch(fciEndRequest())}
-          image={hourglass}
+          pictogram={"timing"}
           testID={"WaitQtspSignatureRequestTestID"}
         />
       );
-    case SignatureRequestDetailStatus.SIGNED:
-      dispatch(fciShowSignedDocumentsStartRequest());
-      return null;
+    case SignatureRequestStatusEnum.SIGNED:
+      return (
+        <SignatureStatusComponent
+          title={I18n.t("features.fci.errors.signed.title")}
+          subTitle={I18n.t("features.fci.errors.signed.subTitle")}
+          onPress={() => dispatch(fciEndRequest())}
+          pictogram={"success"}
+          testID={"SignedSignatureRequestTestID"}
+        />
+      );
+    case SignatureRequestStatusEnum.REJECTED:
+      return (
+        <SignatureStatusComponent
+          title={I18n.t("features.fci.errors.generic.rejected.title")}
+          subTitle={I18n.t("features.fci.errors.generic.rejected.subTitle")}
+          email={issuer_email}
+          onPress={() => dispatch(fciEndRequest())}
+          pictogram={"umbrella"}
+          testID="RejectedSignatureRequestTestID"
+        />
+      );
+    case SignatureRequestStatusEnum.CANCELLED:
+      return (
+        <SignatureStatusComponent
+          title={I18n.t("features.fci.errors.generic.cancelled.title")}
+          subTitle={I18n.t("features.fci.errors.generic.cancelled.subTitle")}
+          email={issuer_email}
+          onPress={() => dispatch(fciEndRequest())}
+          pictogram={"ended"}
+          testID={"CancelledSignatureRequestTestID"}
+        />
+      );
     default:
       return (
-        <GenericErrorComponent onPress={() => dispatch(fciEndRequest())} />
+        <SignatureStatusComponent
+          title={I18n.t("features.fci.errors.generic.default.title")}
+          subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
+          pictogram={"umbrella"}
+          onPress={() => dispatch(fciEndRequest())}
+        />
       );
   }
 };

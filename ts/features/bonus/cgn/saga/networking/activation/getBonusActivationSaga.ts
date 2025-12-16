@@ -25,7 +25,7 @@ const statusProgressRecord: Record<403 | 409, CgnActivationProgressEnum> = {
   409: CgnActivationProgressEnum.EXISTS
 };
 
-export type CgnStatusPollingSaga = ReturnType<typeof handleCgnStatusPolling>;
+type CgnStatusPollingSaga = ReturnType<typeof handleCgnStatusPolling>;
 
 /**
  * Function that handles the activation of a CGN
@@ -116,12 +116,11 @@ export const handleCgnStatusPolling = (
             throw Error(
               `CGN Activation status ${cgnActivationResult.right.value.status}`
             );
-            break;
           // activation is still pending skip
           case StatusEnum.PENDING:
             break;
           default:
-            void mixpanelTrack(getType(cgnActivationStatus.failure), {
+            mixpanelTrack(getType(cgnActivationStatus.failure), {
               reason: `unexpected status result ${cgnActivationResult.right.value.status}`
             });
             break;

@@ -1,128 +1,123 @@
+import {
+  HeaderSecondLevel,
+  IOCategoryIcons
+} from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
-import { ComponentProps, FC } from "react";
-import { SvgProps } from "react-native-svg";
-import LinearGradient from "react-native-linear-gradient";
-import { TranslationKeys } from "../../../../../locales/locales";
+import { StatusBarProps } from "react-native";
+import I18n from "i18next";
 import {
   ProductCategory,
   ProductCategoryEnum
 } from "../../../../../definitions/cgn/merchants/ProductCategory";
-import Learning from "../../../../../img/bonus/cgn/categories/learning.svg";
-import Sport from "../../../../../img/bonus/cgn/categories/sport.svg";
-import Home from "../../../../../img/bonus/cgn/categories/home.svg";
-import Travel from "../../../../../img/bonus/cgn/categories/travel.svg";
-import Wellness from "../../../../../img/bonus/cgn/categories/wellness.svg";
-import Culture from "../../../../../img/bonus/cgn/categories/culture.svg";
-import Telco from "../../../../../img/bonus/cgn/categories/telephoneInternet.svg";
-import Bank from "../../../../../img/bonus/cgn/categories/financialServices.svg";
-import SustainableMobility from "../../../../../img/bonus/cgn/categories/sustainableMobility.svg";
-import Job from "../../../../../img/bonus/cgn/categories/job.svg";
-import I18n from "../../../../i18n";
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
-import { getGradientColorValues } from "../../../../components/core/variables/IOColors";
+import { TranslationKeys } from "../../../../../locales/locales";
 
-export type Category = {
+type Category = {
   type: ProductCategory;
-  icon: FC<SvgProps>;
+  icon: IOCategoryIcons;
   nameKey: TranslationKeys;
-  colors: ComponentProps<typeof LinearGradient>["colors"];
+  colors: string;
+  textColor: "white" | "black";
+  statusBarStyle: StatusBarProps["barStyle"];
+  headerVariant: HeaderSecondLevel["variant"];
 };
 
 export const categories: Record<ProductCategory, Category> = {
   [ProductCategoryEnum.cultureAndEntertainment]: {
     type: ProductCategoryEnum.cultureAndEntertainment,
-    icon: Culture,
+    icon: "categCulture",
     nameKey: "bonus.cgn.merchantDetail.categories.cultureAndEntertainment",
-    colors: getGradientColorValues("cgnCulture")
+    colors: "#AA338B",
+    textColor: "white",
+    statusBarStyle: "light-content",
+    headerVariant: "contrast"
   },
   [ProductCategoryEnum.health]: {
     type: ProductCategoryEnum.health,
-    icon: Wellness,
+    icon: "categWellness",
     nameKey: "bonus.cgn.merchantDetail.categories.health",
-    colors: getGradientColorValues("cgnHealth")
+    colors: "#B5D666",
+    textColor: "black",
+    statusBarStyle: "dark-content",
+    headerVariant: "neutral"
   },
   [ProductCategoryEnum.learning]: {
     type: ProductCategoryEnum.learning,
-    icon: Learning,
+    icon: "categLearning",
     nameKey: "bonus.cgn.merchantDetail.categories.learning",
-    colors: getGradientColorValues("cgnLearning")
+    colors: "#2A61AE",
+    textColor: "white",
+    statusBarStyle: "light-content",
+    headerVariant: "contrast"
   },
   [ProductCategoryEnum.sports]: {
     type: ProductCategoryEnum.sports,
-    icon: Sport,
+    icon: "categSport",
     nameKey: "bonus.cgn.merchantDetail.categories.sport",
-    colors: getGradientColorValues("cgnSport")
+    colors: "#65BE72",
+    textColor: "black",
+    statusBarStyle: "dark-content",
+    headerVariant: "neutral"
   },
   [ProductCategoryEnum.home]: {
     type: ProductCategoryEnum.home,
-    icon: Home,
+    icon: "categHome",
     nameKey: "bonus.cgn.merchantDetail.categories.home",
-    colors: getGradientColorValues("cgnHome")
+    colors: "#F8D547",
+    textColor: "black",
+    statusBarStyle: "dark-content",
+    headerVariant: "neutral"
   },
   [ProductCategoryEnum.telephonyAndInternet]: {
     type: ProductCategoryEnum.telephonyAndInternet,
-    icon: Telco,
+    icon: "categTelco",
     nameKey: "bonus.cgn.merchantDetail.categories.telco",
-    colors: getGradientColorValues("cgnTelco")
+    colors: "#0089C7",
+    textColor: "white",
+    statusBarStyle: "light-content",
+    headerVariant: "contrast"
   },
   [ProductCategoryEnum.bankingServices]: {
     type: ProductCategoryEnum.bankingServices,
-    icon: Bank,
+    icon: "categFinance",
     nameKey: "bonus.cgn.merchantDetail.categories.finance",
-    colors: getGradientColorValues("cgnFinance")
+    colors: "#4F51A3",
+    textColor: "white",
+    statusBarStyle: "light-content",
+    headerVariant: "contrast"
   },
   [ProductCategoryEnum.travelling]: {
     type: ProductCategoryEnum.travelling,
-    icon: Travel,
+    icon: "categTravel",
     nameKey: "bonus.cgn.merchantDetail.categories.travel",
-    colors: getGradientColorValues("cgnTravel")
+    colors: "#E02F6E",
+    textColor: "white",
+    statusBarStyle: "light-content",
+    headerVariant: "contrast"
   },
   [ProductCategoryEnum.sustainableMobility]: {
     type: ProductCategoryEnum.sustainableMobility,
-    icon: SustainableMobility,
+    icon: "categMobility",
     nameKey: "bonus.cgn.merchantDetail.categories.mobility",
-    colors: getGradientColorValues("cgnMobility")
+    colors: "#00AEB1",
+    textColor: "black",
+    statusBarStyle: "dark-content",
+    headerVariant: "neutral"
   },
   [ProductCategoryEnum.jobOffers]: {
     type: ProductCategoryEnum.jobOffers,
-    icon: Job,
+    icon: "categJobOffers",
     nameKey: "bonus.cgn.merchantDetail.categories.job",
-    colors: getGradientColorValues("cgnJobOffers")
+    colors: "#FAAE56",
+    textColor: "black",
+    statusBarStyle: "dark-content",
+    headerVariant: "neutral"
   }
 };
 
 export const getCategorySpecs = (
   category: ProductCategory
 ): O.Option<Category> => O.fromNullable(categories[category]);
-
-export type OrderType = {
-  label: TranslationKeys;
-  value: string;
-};
-
-// export const orders: ReadonlyArray<OrderType> = [
-//   {
-//     label: "bonus.cgn.merchantsList.filter.order.byDistance",
-//     value: "distance"
-//   },
-//   {
-//     label: "bonus.cgn.merchantsList.filter.order.byName",
-//     value: "alphabetical"
-//   }
-// ];
-
-export const orders: Record<string, OrderType> = {
-  distance: {
-    label: "bonus.cgn.merchantsList.filter.order.byDistance",
-    value: "distance"
-  },
-  name: {
-    label: "bonus.cgn.merchantsList.filter.order.byName",
-    value: "alphabetical"
-  }
-};
-
-export const CATEGORY_GRADIENT_ANGLE = 57.23;
 
 export const orderCategoriesByNameKey = (
   categories: ReadonlyArray<ProductCategoryWithNewDiscountsCount>
@@ -135,9 +130,11 @@ export const orderCategoriesByNameKey = (
     } else if (O.isSome(c1Specs) && O.isNone(c2Specs)) {
       return -1;
     } else if (O.isSome(c1Specs) && O.isSome(c2Specs)) {
-      return I18n.t(c1Specs.value.nameKey)
+      return I18n.t(c1Specs.value.nameKey as any)
         .toLocaleLowerCase()
-        .localeCompare(I18n.t(c2Specs.value.nameKey).toLocaleLowerCase());
+        .localeCompare(
+          I18n.t(c2Specs.value.nameKey as any).toLocaleLowerCase()
+        );
     }
 
     return 0;

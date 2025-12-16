@@ -17,6 +17,14 @@ import fciDownloadPreviewReducer, {
 import fciPollFilledDocumentReducer, {
   FciPollFilledDocumentState
 } from "./fciPollFilledDocument";
+import fciMetadataReducer, { FciMetadataRequestState } from "./fciMetadata";
+import fciSignaturesListRequestReducer, {
+  FciSignaturesListRequestState
+} from "./fciSignaturesList";
+import fciSignatureFieldDrawingReducer, {
+  FciSignatureFieldDrawingState
+} from "./fciSignatureFieldDrawing";
+import fciEnvironmentReducer, { FciEnvironmentState } from "./fciEnvironment";
 
 export type FciState = {
   signatureRequest: FciSignatureRequestState;
@@ -24,8 +32,12 @@ export type FciState = {
   qstpFilledDocument: FciQtspFilledDocumentState;
   signature: FciSignatureState;
   documentSignatures: FciDocumentSignaturesState;
+  signatureFieldDrawing: FciSignatureFieldDrawingState;
   documentPreview: FciDownloadPreviewState;
   pollFilledDocument: FciPollFilledDocumentState;
+  metadata: FciMetadataRequestState;
+  signaturesList: FciSignaturesListRequestState;
+  environment: FciEnvironmentState;
 };
 
 const fciReducer = combineReducers<FciState, Action>({
@@ -34,8 +46,12 @@ const fciReducer = combineReducers<FciState, Action>({
   qstpFilledDocument: fciLoadQtspFilledDocumentReducer,
   signature: fciSignatureReducer,
   documentSignatures: fciDocumentSignaturesReducer,
+  signatureFieldDrawing: fciSignatureFieldDrawingReducer,
   documentPreview: fciDownloadPreviewReducer,
-  pollFilledDocument: fciPollFilledDocumentReducer
+  pollFilledDocument: fciPollFilledDocumentReducer,
+  metadata: fciMetadataReducer,
+  signaturesList: fciSignaturesListRequestReducer,
+  environment: fciEnvironmentReducer
 });
 
 export default fciReducer;

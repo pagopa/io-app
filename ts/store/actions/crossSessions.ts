@@ -5,6 +5,9 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 
+type DifferentProfileLoggedInType = {
+  isNewInstall: boolean;
+};
 /**
  * set the profile hashed fiscal code
  */
@@ -17,7 +20,7 @@ export const setProfileHashedFiscalCode = createStandardAction(
  */
 export const differentProfileLoggedIn = createStandardAction(
   "CROSS_SESSION_DIFFERENT_PROFILE_LOGGED_ID"
-)<void>();
+)<DifferentProfileLoggedInType | void>();
 
 export type CrossSessionsActions =
   | ActionType<typeof setProfileHashedFiscalCode>

@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   ActivityIndicator as RNActivityIndicator,
   ActivityIndicatorProps

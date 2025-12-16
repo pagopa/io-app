@@ -6,10 +6,12 @@ import {
   IGetApiRequestType,
   IPostApiRequestType
 } from "@pagopa/ts-commons/lib/requests";
-import { AccessToken } from "../../definitions/backend/AccessToken";
-import { PasswordLogin } from "../../definitions/backend/PasswordLogin";
+import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { BackendStatus } from "../../definitions/content/BackendStatus";
 import { defaultRetryingFetch } from "../utils/fetch";
+import { AccessToken } from "../../definitions/session_manager/AccessToken";
+import { PasswordLogin } from "../../definitions/session_manager/PasswordLogin";
+import { getLoginHeaders } from "../features/authentication/common/utils/login";
 
 type PostTestLoginT = IPostApiRequestType<
   PasswordLogin,
@@ -59,16 +61,35 @@ export function BackendPublicClient(
     fetchApi
   };
 
-  const postLoginTestT: PostTestLoginT = {
+  const getPostLoginTestT = (
+    publicKey?: PublicKey,
+    hashAlgorithm?: string,
+    isFastLogin?: boolean,
+    idpId?: string
+  ): PostTestLoginT => ({
     method: "post",
-    url: () => `/test-login`,
+    url: () => `/api/auth/v1/test-login`,
     query: _ => ({}),
-    headers: ApiHeaderJson,
+    headers:
+      publicKey && hashAlgorithm
+        ? () => ({
+            "Content-Type": "application/json",
+            ...getLoginHeaders(publicKey, hashAlgorithm, !!isFastLogin, idpId)
+          })
+        : ApiHeaderJson,
     body: (passwordLogin: PasswordLogin) => JSON.stringify(passwordLogin),
     response_decoder: basicResponseDecoder(AccessToken)
-  };
+  });
 
   return {
-    postTestLogin: createFetchRequestForApi(postLoginTestT, options)
+    postTestLogin: (
+      publicKey?: PublicKey,
+      hashAlgorithm?: string,
+      isFastLogin?: boolean
+    ) =>
+      createFetchRequestForApi(
+        getPostLoginTestT(publicKey, hashAlgorithm, isFastLogin, "spid"),
+        options
+      )
   };
 }

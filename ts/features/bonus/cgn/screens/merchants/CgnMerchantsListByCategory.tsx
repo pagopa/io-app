@@ -1,27 +1,35 @@
+import {
+  ContentWrapper,
+  Divider,
+  H3,
+  HSpacer,
+  IOColors,
+  IOVisualCostants,
+  Icon,
+  hexToRgba
+} from "@pagopa/io-app-design-system";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
-import * as React from "react";
-import { useMemo } from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
+
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { Platform, RefreshControl, View } from "react-native";
+import Animated, { useAnimatedRef } from "react-native-reanimated";
+import I18n from "i18next";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
-import { H1 } from "../../../../../components/core/typography/H1";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import GenericErrorComponent from "../../../../../components/screens/GenericErrorComponent";
-import I18n from "../../../../../i18n";
-import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import {
   getValueOrElse,
   isError,
   isLoading
-} from "../../../bpd/model/RemoteValue";
-import CgnMerchantsListView from "../../components/merchants/CgnMerchantsListView";
+} from "../../../../../common/model/RemoteValue";
+import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
+import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";
+import { CgnMerchantListViewRenderItem } from "../../components/merchants/CgnMerchantsListView";
 import { CgnDetailsParamsList } from "../../navigation/params";
 import CGN_ROUTES from "../../navigation/routes";
 import {
@@ -32,25 +40,16 @@ import {
   cgnOfflineMerchantsSelector,
   cgnOnlineMerchantsSelector
 } from "../../store/reducers/merchants";
-import { CATEGORY_GRADIENT_ANGLE, getCategorySpecs } from "../../utils/filters";
+import { getCategorySpecs } from "../../utils/filters";
 import { mixAndSortMerchants } from "../../utils/merchants";
-import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 
 export type CgnMerchantListByCategoryScreenNavigationParams = Readonly<{
   category: ProductCategoryEnum;
 }>;
 
-const styles = StyleSheet.create({
-  listContainer: {
-    paddingTop: 5,
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
-    backgroundColor: IOColors.white,
-    top: -20
-  }
-});
-
 const CgnMerchantsListByCategory = () => {
+  const animatedFlatListRef = useAnimatedRef<Animated.FlatList<any>>();
+
   const dispatch = useIODispatch();
   const route =
     useRoute<
@@ -67,7 +66,7 @@ const CgnMerchantsListByCategory = () => {
     [route]
   );
 
-  const navigation =
+  const { navigate } =
     useNavigation<
       IOStackNavigationProp<CgnDetailsParamsList, "CGN_MERCHANTS_CATEGORIES">
     >();
@@ -82,12 +81,15 @@ const CgnMerchantsListByCategory = () => {
     [route]
   );
 
+  const [isPullRefresh, setIsPullRefresh] = useState(false);
+
   const initLoadingLists = () => {
     dispatch(cgnOfflineMerchants.request(categoryFilter));
     dispatch(cgnOnlineMerchants.request(categoryFilter));
+    setIsPullRefresh(false);
   };
 
-  React.useEffect(initLoadingLists, [route, categoryFilter, dispatch]);
+  useEffect(initLoadingLists, [route, categoryFilter, dispatch]);
 
   // Mixes online and offline merchants to render on the same list
   // merchants are sorted by name
@@ -100,70 +102,155 @@ const CgnMerchantsListByCategory = () => {
     [onlineMerchants, offlineMerchants]
   );
 
-  const onItemPress = (id: Merchant["id"]) => {
-    navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.DETAIL, {
-      merchantID: id
-    });
-  };
+  const onItemPress = useCallback(
+    (id: Merchant["id"]) => {
+      navigate(CGN_ROUTES.DETAILS.MERCHANTS.DETAIL, {
+        merchantID: id
+      });
+    },
+    [navigate]
+  );
+
+  useHeaderSecondLevel({
+    title: I18n.t(
+      pipe(
+        categorySpecs,
+        O.fromNullable,
+        O.fold(
+          () => "bonus.cgn.merchantsList.navigationTitle",
+          cs => cs.nameKey as any
+        )
+      )
+    ),
+    enableDiscreteTransition: true,
+    animatedRef: animatedFlatListRef,
+    backgroundColor: categorySpecs?.colors,
+    variant: categorySpecs?.headerVariant,
+    supportRequest: true,
+    secondAction: {
+      icon: "search",
+      onPress() {
+        navigate(CGN_ROUTES.DETAILS.MERCHANTS.SEARCH);
+      },
+      accessibilityLabel: I18n.t(
+        "bonus.cgn.merchantSearch.goToSearchAccessibilityLabel"
+      )
+    }
+  });
+
+  const renderItem = useMemo(
+    () =>
+      CgnMerchantListViewRenderItem({
+        onItemPress,
+        count: merchantsAll.length
+      }),
+    [merchantsAll.length, onItemPress]
+  );
+
+  const isListLoading =
+    isLoading(onlineMerchants) || isLoading(offlineMerchants);
+
+  const isListRefreshing = isListLoading && isPullRefresh;
+
+  const header = () => (
+    <>
+      {Platform.OS === "ios" && (
+        <View
+          style={{
+            position: "absolute",
+            height: 1000,
+            backgroundColor: categorySpecs?.colors,
+            top: -1000,
+            right: 0,
+            left: 0
+          }}
+        />
+      )}
+      {categorySpecs && (
+        <ContentWrapper
+          style={{
+            backgroundColor: categorySpecs.colors,
+            paddingBottom: 24
+          }}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: hexToRgba(IOColors.white, 0.2),
+                height: 66,
+                width: 66,
+                borderRadius: 8
+              }}
+            >
+              <Icon
+                name={categorySpecs.icon}
+                size={32}
+                color={categorySpecs.textColor}
+              />
+            </View>
+            <HSpacer size={16} />
+            <View style={{ flex: 1 }}>
+              <H3 color={categorySpecs.textColor}>
+                {I18n.t(categorySpecs.nameKey as any)}
+              </H3>
+            </View>
+          </View>
+        </ContentWrapper>
+      )}
+    </>
+  );
+  const refreshControl = (
+    <RefreshControl
+      style={{ zIndex: 1 }}
+      tintColor={IOColors[categorySpecs?.textColor ?? "black"]}
+      refreshing={isListRefreshing}
+      onRefresh={() => {
+        initLoadingLists();
+        setIsPullRefresh(true);
+      }}
+    />
+  );
 
   return (
-    <BaseScreenComponent
-      goBack
-      headerTitle={I18n.t(
-        pipe(
-          categorySpecs,
-          O.fromNullable,
-          O.fold(
-            () => "bonus.cgn.merchantsList.navigationTitle",
-            cs => cs.nameKey
-          )
-        )
-      )}
-      contextualHelp={emptyContextualHelp}
-    >
-      {categorySpecs && (
-        <LinearGradient
-          useAngle={true}
-          angle={CATEGORY_GRADIENT_ANGLE}
-          colors={categorySpecs.colors}
-          style={[
-            IOStyles.horizontalContentPadding,
-            {
-              paddingTop: 16,
-              paddingBottom: 32
-            }
-          ]}
-        >
-          <View style={[IOStyles.row, { alignItems: "center" }]}>
-            <H1 color={"white"} style={[IOStyles.flex, { paddingRight: 30 }]}>
-              {I18n.t(categorySpecs.nameKey)}
-            </H1>
-            {categorySpecs.icon({
-              width: 57,
-              height: 57,
-              fill: IOColors.white,
-              style: { justifyContent: "flex-end" }
-            })}
-          </View>
-        </LinearGradient>
-      )}
+    <>
+      <FocusAwareStatusBar
+        animated
+        backgroundColor={categorySpecs?.colors}
+        barStyle={categorySpecs?.statusBarStyle}
+      />
       {isError(onlineMerchants) && isError(offlineMerchants) ? (
-        <SafeAreaView style={IOStyles.flex}>
-          <GenericErrorComponent onRetry={initLoadingLists} />
-        </SafeAreaView>
+        <OperationResultScreenContent
+          pictogram="umbrella"
+          title={I18n.t("wallet.errors.GENERIC_ERROR")}
+          subtitle={I18n.t("wallet.errorTransaction.submitBugText")}
+          action={{
+            label: I18n.t("global.buttons.retry"),
+            accessibilityLabel: I18n.t("global.buttons.retry"),
+            onPress: initLoadingLists
+          }}
+        />
       ) : (
-        <View style={[IOStyles.flex, styles.listContainer]}>
-          <CgnMerchantsListView
-            merchantList={merchantsAll}
-            onItemPress={onItemPress}
-            onRefresh={initLoadingLists}
-            refreshing={
-              isLoading(onlineMerchants) || isLoading(offlineMerchants)
-            }
-          />
-        </View>
+        <Animated.FlatList
+          ref={animatedFlatListRef}
+          style={{ flexGrow: 1 }}
+          scrollEventThrottle={8}
+          snapToEnd={false}
+          contentContainerStyle={{
+            flexGrow: 1,
+            paddingBottom: IOVisualCostants.appMarginDefault
+          }}
+          refreshControl={refreshControl}
+          data={merchantsAll}
+          keyExtractor={item => item.id}
+          ListEmptyComponent={CgnMerchantListSkeleton}
+          renderItem={renderItem}
+          ItemSeparatorComponent={() => <Divider />}
+          ListHeaderComponent={header}
+        />
       )}
-    </BaseScreenComponent>
+    </>
   );
 };
 

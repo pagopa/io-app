@@ -1,50 +1,55 @@
-import * as React from "react";
-import { ComponentProps, useEffect, useState } from "react";
 import {
+  BottomSheetBackdrop,
+  BottomSheetBackdropProps,
+  BottomSheetFooter,
+  BottomSheetFooterProps,
   BottomSheetModal,
   BottomSheetScrollView,
   useBottomSheetModal
 } from "@gorhom/bottom-sheet";
-import { View, Dimensions, Modal, Platform } from "react-native";
-import { BottomSheetFooterProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetFooter";
-import { BlurredBackgroundComponent } from "../../components/bottomSheet/BlurredBackgroundComponent";
+import {
+  IOBottomSheetHeaderRadius,
+  IOColors,
+  VSpacer,
+  IOVisualCostants,
+  useIOTheme
+} from "@pagopa/io-app-design-system";
+import { NonEmptyArray } from "fp-ts/lib/NonEmptyArray";
+import {
+  JSX,
+  ReactElement,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from "react";
+import {
+  AccessibilityInfo,
+  Dimensions,
+  Modal,
+  Platform,
+  StyleSheet,
+  View
+} from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BottomSheetHeader } from "../../components/bottomSheet/BottomSheetHeader";
 import { useHardwareBackButtonToDismiss } from "../../hooks/useHardwareBackButton";
-import { TestID } from "../../types/WithTestID";
-import { IOStyles } from "../../components/core/variables/IOStyles";
 import { isScreenReaderEnabled } from "../accessibility";
-import { VSpacer } from "../../components/core/spacer/Spacer";
+import { useModalStyle } from "./useModalStyle";
 
-type Props = {
-  children: React.ReactNode;
-  footer?: React.ReactNode;
-} & TestID;
+const screenHeight = Dimensions.get("window").height;
 
-/**
- * Build the base content of a BottomSheet including content padding and a ScrollView
- */
-const BottomSheetContent: React.FunctionComponent<Props> = ({
-  children,
-  testID
-}: Props) => (
-  <View
-    style={{ flex: 1, ...IOStyles.horizontalContentPadding }}
-    testID={testID}
-  >
-    <BottomSheetScrollView>{children}</BottomSheetScrollView>
-  </View>
-);
-
-export type BottomSheetModalProps = {
-  content: React.ReactNode;
-  config: {
-    snapPoints: ReadonlyArray<number>;
-    backdropComponent: ComponentProps<
-      typeof BottomSheetModal
-    >["backdropComponent"];
-    handleComponent: React.ReactElement;
-  };
-};
+const styles = StyleSheet.create({
+  bottomSheet: {
+    borderTopRightRadius: IOBottomSheetHeaderRadius,
+    borderTopLeftRadius: IOBottomSheetHeaderRadius,
+    borderCurve: "continuous",
+    // Don't delete the overflow property
+    // oterwise the above borderRadius won't work
+    overflow: "hidden"
+  }
+});
 
 export type IOBottomSheetModal = {
   present: () => void;
@@ -53,116 +58,147 @@ export type IOBottomSheetModal = {
 };
 
 /**
- * Utility function to build a BottomSheet considering accessibility. This will create a common BottomSheet object to be used in the `present` function
- * that is available only in component context since it uses the context api made available from https://gorhom.github.io/react-native-bottom-sheet/modal/methods
- * @param content
- * @param title
- * @param snapPoint
- * @param onClose
+ * @typedef BottomSheetOptions
+ * @type {BottomSheetOptions}
+ * @property {component} component The React.Element to be rendered inside the bottom sheet body
+ * @property {title} title String or React.Element to be rendered as bottom-sheet header title
+ * @property {footer} footer React.Element or undefined to be rendered as sticky footer of our bottom sheet
+ * @property {snapPoint} snapPoint The array of points used to pin the height of the bottom sheet
+ * @property {onDismiss} onDismiss The possible function to be used as an effect of the dismissal of the bottom sheet
  */
-export const bottomSheetContent = (
-  content: React.ReactNode,
-  title: string | React.ReactNode,
-  snapPoint: number,
-  onClose: () => void
-): BottomSheetModalProps => {
-  const header = <BottomSheetHeader title={title} onClose={onClose} />;
-
-  const bottomSheetBody: React.ReactNode = (
-    <BottomSheetContent>{content}</BottomSheetContent>
-  );
-
-  return {
-    content: bottomSheetBody,
-    config: {
-      snapPoints: [Math.min(snapPoint, Dimensions.get("window").height)],
-      backdropComponent: () => BlurredBackgroundComponent(onClose),
-      handleComponent: header
-    }
-  };
+type BottomSheetOptions = {
+  component: ReactNode;
+  title: string | ReactNode;
+  snapPoint?: NonEmptyArray<number | string>;
+  footer?: ReactElement;
+  onDismiss?: () => void;
 };
 
 /**
  * Hook to generate a bottomSheet with a title, snapPoint and a component, in order to wrap the invocation of bottomSheetContent
- * @param component
- * @param title
- * @param snapPoint
- * @param footer
- * @param onDismiss callback to be called when the bottom sheet is dismissed
+ * @param bottomSheetOptions
+ * @see {BottomSheetOptions}
  */
-export const useIOBottomSheetModal = (
-  component: React.ReactNode,
-  title: string | React.ReactNode,
-  snapPoint: number,
-  footer?: React.ReactElement,
-  onDismiss?: () => void
-): IOBottomSheetModal => {
+export const useIOBottomSheetModal = ({
+  component,
+  title,
+  snapPoint,
+  footer,
+  onDismiss
+}: BottomSheetOptions): IOBottomSheetModal => {
+  const insets = useSafeAreaInsets();
+  const theme = useIOTheme();
   const { dismissAll } = useBottomSheetModal();
-  const bottomSheetModalRef = React.useRef<BottomSheetModal>(null);
-  const setBSOpened = useHardwareBackButtonToDismiss(dismissAll);
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const { onOpen, onClose } = useHardwareBackButtonToDismiss(dismissAll);
   const [screenReaderEnabled, setIsScreenReaderEnabled] =
     useState<boolean>(false);
 
-  const bottomSheetProps = bottomSheetContent(
-    component,
-    title,
-    snapPoint,
-    dismissAll
+  const {
+    backdrop: { opacity: backdropOpacity },
+    modal: { backgroundColor }
+  } = useModalStyle();
+
+  const header = <BottomSheetHeader title={title} onClose={dismissAll} />;
+  const bottomSheetContent = (
+    <BottomSheetScrollView
+      style={{
+        paddingHorizontal: IOVisualCostants.appMarginDefault
+      }}
+      overScrollMode={"never"}
+    >
+      {component}
+      {footer ? (
+        <>
+          <VSpacer size={48} />
+          <VSpacer size={48} />
+        </>
+      ) : (
+        <View style={{ height: insets.bottom }} />
+      )}
+    </BottomSheetScrollView>
   );
 
-  const present = () => {
-    bottomSheetModalRef.current?.present();
-    setBSOpened();
+  const handleDismiss = () => {
+    onDismiss?.();
+    onClose();
   };
 
+  const present = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+    onOpen();
+  }, [onOpen]);
+
+  // // Add opacity fade effect to backdrop
+  const BackdropElement = useCallback(
+    (backdropProps: BottomSheetBackdropProps) => (
+      <BottomSheetBackdrop
+        {...backdropProps}
+        opacity={backdropOpacity}
+        appearsOnIndex={0}
+        disappearsOnIndex={-1}
+      />
+    ),
+    [backdropOpacity]
+  );
+
   useEffect(() => {
+    // Check if the screen reader is enabled when the component is mounted
     isScreenReaderEnabled()
-      .then(sre => setIsScreenReaderEnabled(sre))
+      .then(setIsScreenReaderEnabled)
       .catch(_ => setIsScreenReaderEnabled(false));
+    // Subscribe to `screenReaderChanged` to properly update the state.
+    // The method above is necessary because the event listener is triggered
+    // only when the screen reader internal state changes.
+    // Unfortunately its function is not executed on subscription.
+    const screenReaderChangedSubscription = AccessibilityInfo.addEventListener(
+      "screenReaderChanged",
+      setIsScreenReaderEnabled
+    );
+    return () => screenReaderChangedSubscription.remove();
   }, []);
 
   const bottomSheet = (
     <BottomSheetModal
-      footerComponent={(_: BottomSheetFooterProps) =>
-        footer !== undefined ? (
-          <>
+      style={styles.bottomSheet}
+      backgroundStyle={{ backgroundColor }}
+      footerComponent={(props: BottomSheetFooterProps) =>
+        footer ? (
+          <BottomSheetFooter
+            {...props}
+            // bottomInset={insets.bottom}
+            style={{
+              paddingBottom: insets.bottom,
+              backgroundColor: IOColors[theme["appBackground-primary"]]
+            }}
+          >
             {footer}
-            <VSpacer size={16} />
-          </>
+          </BottomSheetFooter>
         ) : null
       }
-      snapPoints={[snapPoint]}
+      enableDynamicSizing={!snapPoint}
+      maxDynamicContentSize={screenHeight - insets.top}
+      snapPoints={snapPoint}
       ref={bottomSheetModalRef}
-      handleComponent={_ => bottomSheetProps.config.handleComponent}
-      backdropComponent={bottomSheetProps.config.backdropComponent}
+      handleComponent={_ => header}
+      backdropComponent={BackdropElement}
       enableDismissOnClose={true}
       accessible={false}
-      // set this attribute to an empty string to avoid the default announcement from the library
-      accessibilityPositionChangeAnnouncement={""}
-      handleComponentAccessibility={{
-        accessible: false
-      }}
       importantForAccessibility={"yes"}
-      onDismiss={onDismiss}
+      onDismiss={handleDismiss}
     >
       {screenReaderEnabled && Platform.OS === "android" ? (
         <Modal>
-          <View style={IOStyles.flex} accessible={true}>
-            {bottomSheetProps.config.handleComponent}
-            {bottomSheetProps.content}
+          <View style={{ flex: 1 }} accessible={true}>
+            {header}
+            {bottomSheetContent}
           </View>
-          <>
-            {footer !== undefined ? (
-              <>
-                {footer}
-                <VSpacer size={16} />
-              </>
-            ) : null}
-            <VSpacer size={16} />
-          </>
+          {footer && (
+            <View style={{ paddingBottom: insets.bottom }}>{footer}</View>
+          )}
         </Modal>
       ) : (
-        bottomSheetProps.content
+        bottomSheetContent
       )}
     </BottomSheetModal>
   );

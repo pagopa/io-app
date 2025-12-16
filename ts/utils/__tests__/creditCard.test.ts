@@ -3,30 +3,30 @@ import { CreditCardDetector, SupportedBrand } from "../creditCard";
 
 describe("Test CC validate function", () => {
   /*
-    Test Table structure for nested describe.each. 
+    Test Table structure for nested describe.each.
     Please note that in our case expected result is simply a string.
 
     [
         [
-            "test category n.1", 
+            "test category n.1",
             [
                 ["test name n. 1.1", {expected results n. 1.1}]
                 ["test name n. 1.2", {expected results n. 1.2}]
                 ...
             ]
-            
+
         ],
         [
-            "test category n.2", 
+            "test category n.2",
             [
                 ["test name n. 2.1", {expected results n. 2.1}]
                 ["test name n. 2.2", {expected results n. 2.2}]
                 ...
             ]
-            
+
         ],
     ]
-    
+
     */
   const supportedBrands = CreditCardDetector.supportedBrands;
   const testTable: Array<[string, Array<[O.Option<string>, SupportedBrand]>]> =

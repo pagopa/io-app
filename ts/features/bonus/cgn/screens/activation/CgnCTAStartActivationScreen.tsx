@@ -1,32 +1,32 @@
 import { useNavigation } from "@react-navigation/native";
-import * as React from "react";
-import { useRef } from "react";
+
+import { FC, useEffect, useRef } from "react";
 import { Alert } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import I18n from "../../../../../i18n";
-import { isCGNEnabledSelector } from "../../../../../store/reducers/backendStatus";
+import I18n from "i18next";
+import { isCGNEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
-import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { loadAvailableBonuses } from "../../../bonusVacanze/store/actions/bonusVacanze";
+import { ID_CGN_TYPE } from "../../../common/utils";
+import { loadAvailableBonuses } from "../../../common/store/actions/availableBonusesTypes";
 import {
   availableBonusTypesSelectorFromId,
   isAvailableBonusErrorSelector,
   supportedAvailableBonusSelector
-} from "../../../bonusVacanze/store/reducers/availableBonusesTypes";
-import { ID_CGN_TYPE } from "../../../bonusVacanze/utils/bonus";
+} from "../../../common/store/selectors";
 import { cgnActivationStart } from "../../store/actions/activation";
+import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 
-export type Props = ReturnType<typeof mapDispatchToProps> &
+type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
-const loadingCaption = () => I18n.t("global.remoteStates.loading");
 
 /**
  * this is a dummy screen reachable only from a message CTA
  */
-const CgnCTAStartOnboardingComponent: React.FC<Props> = (props: Props) => {
+const CgnCTAStartOnboardingComponent: FC<Props> = (props: Props) => {
   const isFirstRender = useRef<boolean>(true);
 
   // load available bonus when component is focused
@@ -34,7 +34,7 @@ const CgnCTAStartOnboardingComponent: React.FC<Props> = (props: Props) => {
 
   const { availableBonus, startCgn, cgnBonus } = props;
 
-  React.useEffect(() => {
+  useEffect(() => {
     // cgnActivationStart navigate to ToS screen that needs cgb bonus from available bonus list
     if (availableBonus.length > 0 && cgnBonus && isFirstRender.current) {
       startCgn();
@@ -43,15 +43,26 @@ const CgnCTAStartOnboardingComponent: React.FC<Props> = (props: Props) => {
     }
   }, [availableBonus, startCgn, cgnBonus]);
 
-  return (
-    <BaseScreenComponent goBack={true} headerTitle={I18n.t("bonus.cgn.name")}>
-      <LoadingErrorComponent
-        isLoading={!props.hasError}
-        loadingCaption={loadingCaption()}
-        onRetry={props.loadAvailableBonus}
+  useHeaderSecondLevel({
+    title: I18n.t("bonus.cgn.name"),
+    canGoBack: true,
+    transparent: true
+  });
+
+  if (props.hasError) {
+    return (
+      <OperationResultScreenContent
+        pictogram="umbrella"
+        title={I18n.t("global.genericError")}
+        action={{
+          label: I18n.t("global.buttons.retry"),
+          onPress: props.loadAvailableBonus
+        }}
       />
-    </BaseScreenComponent>
-  );
+    );
+  }
+
+  return <LoadingScreenContent title={I18n.t("global.remoteStates.loading")} />;
 };
 
 /**

@@ -1,10 +1,10 @@
 import { call, select, take } from "typed-redux-saga/macro";
+import { StackActions } from "@react-navigation/native";
 import { navigateToServicesPreferenceModeSelectionScreen } from "../../store/actions/navigation";
-import { servicesOptinCompleted } from "../../store/actions/onboarding";
-import {
-  isServicesPreferenceModeSet,
-  profileServicePreferencesModeSelector
-} from "../../store/reducers/profile";
+import { servicesOptinCompleted } from "../../features/onboarding/store/actions";
+import { profileServicePreferencesModeSelector } from "../../features/settings/common/store/selectors";
+import { isServicesPreferenceModeSet } from "../../features/settings/common/store/utils/guards";
+import NavigationService from "../../navigation/NavigationService";
 
 /**
  * if the current profile has not services preference mode set
@@ -24,4 +24,8 @@ export function* askServicesPreferencesModeOptin(isFirstOnboarding: boolean) {
   });
   // wait until a choice is done by the user
   yield* take(servicesOptinCompleted);
+  yield* call(
+    NavigationService.dispatchNavigationAction,
+    StackActions.popToTop()
+  );
 }

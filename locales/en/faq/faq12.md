@@ -1,1 +1,0 @@
-There may be a problem related to the integration between SPID and the IO app. Report the problem using the buttons at the bottom of this page: we will do our best to assist you and allow you to access the IO app as soon as possible.

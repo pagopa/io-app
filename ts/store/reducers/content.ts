@@ -1,17 +1,16 @@
 /**
  * Implements the reducers for static content.
  */
-import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { pipe } from "fp-ts/lib/function";
 import { ContextualHelp } from "../../../definitions/content/ContextualHelp";
 import { Idp } from "../../../definitions/content/Idp";
+import { IdpData } from "../../../definitions/content/IdpData";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
 import { ScreenCHData } from "../../../definitions/content/ScreenCHData";
-import { SpidIdp } from "../../../definitions/content/SpidIdp";
-import { SpidIdps } from "../../../definitions/content/SpidIdps";
 import {
   isReady,
   remoteError,
@@ -19,17 +18,21 @@ import {
   remoteReady,
   remoteUndefined,
   RemoteValue
-} from "../../features/bonus/bpd/model/RemoteValue";
-import { IdentityProviderId } from "../../models/IdentityProvider";
+} from "../../common/model/RemoteValue";
+import { getRemoteLocale } from "../../features/messages/utils/ctas";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
-import { idps as idpsFallback, LocalIdpsFallback } from "../../utils/idps";
-import { getRemoteLocale } from "../../utils/messages";
+import {
+  fromGeneratedToLocalSpidIdp,
+  idps as idpsFallback,
+  SpidIdp
+} from "../../utils/idps";
+import { getCurrentLocale } from "../../utils/locale";
 import {
   contentMunicipalityLoad,
   loadContextualHelpData,
   loadIdps
 } from "../actions/content";
-import { clearCache } from "../actions/profile";
+import { clearCache } from "../../features/settings/common/store/actions";
 import { Action } from "../actions/types";
 import { currentRouteSelector } from "./navigation";
 import { GlobalState } from "./types";
@@ -41,7 +44,7 @@ import { GlobalState } from "./types";
 export type ContentState = Readonly<{
   municipality: MunicipalityState;
   contextualHelp: pot.Pot<ContextualHelp, Error>;
-  idps: RemoteValue<SpidIdps, Error>;
+  idps: RemoteValue<ReadonlyArray<SpidIdp>, Error>;
 }>;
 
 export type MunicipalityState = Readonly<{
@@ -70,34 +73,48 @@ export const contextualHelpDataSelector = (
 
 export const idpsStateSelector = createSelector(
   contentSelector,
-  (content: ContentState): ContentState["idps"] => content.idps
+  (contentInternal: ContentState): ContentState["idps"] => contentInternal.idps
 );
 
 export const idpsSelector = createSelector(
   idpsStateSelector,
-  (idps: ContentState["idps"]): ReadonlyArray<SpidIdp | LocalIdpsFallback> =>
-    isReady(idps) ? idps.value.items : idpsFallback
+  (idps: ContentState["idps"]): ReadonlyArray<SpidIdp> =>
+    isReady(idps) ? idps.value : idpsFallback
+);
+
+export const idpsRemoteValueSelector = createSelector(
+  idpsStateSelector,
+  (idps: ContentState["idps"]) => idps
 );
 
 /**
  * return an option with Idp contextual help data if they are loaded and defined
  * @param id
  */
-export const idpContextualHelpDataFromIdSelector = (id: SpidIdp["id"]) =>
+export const idpContextualHelpDataFromIdSelector = (
+  id: SpidIdp["id"] | undefined
+) =>
   createSelector<GlobalState, pot.Pot<ContextualHelp, Error>, O.Option<Idp>>(
     contextualHelpDataSelector,
     contextualHelpData =>
-      pot.getOrElse(
-        pot.map(contextualHelpData, data => {
-          const locale = getRemoteLocale();
-
-          return pipe(
-            data[locale],
-            O.fromNullable,
-            O.chain(l => O.fromNullable(l.idps[id as IdentityProviderId]))
-          );
-        }),
-        O.none
+      pipe(
+        id,
+        O.fromNullable,
+        O.fold(
+          () => O.none,
+          () =>
+            pot.getOrElse(
+              pot.map(contextualHelpData, data => {
+                const locale = getRemoteLocale();
+                return pipe(
+                  data[locale],
+                  O.fromNullable,
+                  O.chain(l => O.fromNullable(l.idps[id as keyof IdpData]))
+                );
+              }),
+              O.none
+            )
+        )
       )
   );
 
@@ -117,10 +134,12 @@ export const screenContextualHelpDataSelector = createSelector<
       if (currentRoute === undefined) {
         return O.none;
       }
-      const locale = getRemoteLocale();
+      const locale = getCurrentLocale();
+
+      const localeData = data[locale];
       const screenData =
-        data[locale] !== undefined
-          ? data[locale].screens.find(
+        localeData !== undefined
+          ? localeData.screens.find(
               s =>
                 s.route_name.toLowerCase() === currentRoute.toLocaleLowerCase()
             )
@@ -143,13 +162,15 @@ export const getContextualHelpDataFromRouteSelector = (route: string) =>
       if (route === undefined) {
         return O.none;
       }
-      const locale = getRemoteLocale();
+      const locale = getCurrentLocale();
+      const localeData = data[locale];
       const screenData =
-        data[locale] !== undefined
-          ? data[locale].screens.find(
+        localeData !== undefined
+          ? localeData.screens.find(
               s => s.route_name.toLowerCase() === route.toLocaleLowerCase()
             )
           : undefined;
+
       return O.fromNullable(screenData);
     })
   );
@@ -220,7 +241,7 @@ export default function content(
     case getType(loadIdps.success):
       return {
         ...state,
-        idps: remoteReady(action.payload)
+        idps: remoteReady(fromGeneratedToLocalSpidIdp(action.payload.items))
       };
 
     case getType(loadIdps.failure):

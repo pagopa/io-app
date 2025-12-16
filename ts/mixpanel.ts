@@ -1,76 +1,77 @@
-import { Appearance } from "react-native";
-import { MixpanelInstance } from "react-native-mixpanel";
-import { mixpanelToken } from "./config";
-import { isScreenReaderEnabled } from "./utils/accessibility";
-import { getAppVersion } from "./utils/appVersion";
-import { isAndroid, isIos } from "./utils/platform";
-import {
-  getDeviceId,
-  getFontScale,
-  isScreenLockSet as isScreenLockSetFunc
-} from "./utils/device";
-import { getBiometricsType } from "./utils/biometrics";
+import { Mixpanel, MixpanelProperties } from "mixpanel-react-native";
+import { mixpanelToken, mixpanelUrl } from "./config";
+import { getDeviceId } from "./utils/device";
+import { GlobalState } from "./store/reducers/types";
+import { updateMixpanelSuperProperties } from "./mixpanelConfig/superProperties";
+import { updateMixpanelProfileProperties } from "./mixpanelConfig/profileProperties";
+import { isTestEnv } from "./utils/environment";
 
-// eslint-disable-next-line
-export let mixpanel: MixpanelInstance | undefined;
+type EnqueuedMixpanelEvent = {
+  eventName: string;
+  id: string;
+  properties: Record<string, unknown>;
+};
+
+// Do not export this variables, since it creates a strong dependency on such instances
+// eslint-disable-next-line functional/no-let
+let mixpanel: Mixpanel | undefined;
+const uninitializedMixpanelTrackingQueue = new Map<
+  string,
+  EnqueuedMixpanelEvent
+>();
 
 /**
  * Initialize mixpanel at start
  */
-export const initializeMixPanel = async () => {
+export const initializeMixPanel = async (state: GlobalState) => {
   if (mixpanel !== undefined) {
     return;
   }
-  const privateInstance = new MixpanelInstance(mixpanelToken);
-  await privateInstance.initialize();
+  const trackAutomaticEvents = true;
+  const privateInstance = new Mixpanel(mixpanelToken, trackAutomaticEvents);
+  await privateInstance.init(undefined, undefined, mixpanelUrl);
   mixpanel = privateInstance;
-  await setupMixpanel(mixpanel);
+
+  // On app first open
+  // On profile page, when user opt-in
+  mixpanel.optInTracking();
+  mixpanel.setUseIpAddressForGeolocation(false);
+
+  await updateMixpanelSuperProperties(state);
+  await updateMixpanelProfileProperties(state);
+
+  processEnqueuedMixpanelEvents();
 };
 
-const setupMixpanel = async (mp: MixpanelInstance) => {
-  const screenReaderEnabled: boolean = await isScreenReaderEnabled();
-  await mp.optInTracking();
-  // on iOS it can be deactivate by invoking a SDK method
-  // on Android it can be done adding an extra config in AndroidManifest
-  // see https://help.mixpanel.com/hc/en-us/articles/115004494803-Disable-Geolocation-Collection
-  if (isIos) {
-    await mp.disableIpAddressGeolocalization();
-  }
-  const fontScale = await getFontScale();
-  const biometricTechnology = await getBiometricsType();
-  const isScreenLockSet = await isScreenLockSetFunc();
-  await mp.registerSuperProperties({
-    isScreenReaderEnabled: screenReaderEnabled,
-    fontScale,
-    appReadableVersion: getAppVersion(),
-    colorScheme: Appearance.getColorScheme(),
-    biometricTechnology,
-    isScreenLockSet
-  });
+export const identifyMixpanel = async () => {
   // Identify the user using the device uniqueId
-  await mp.identify(getDeviceId());
+  await mixpanel?.identify(getDeviceId());
 };
 
-export const terminateMixpanel = async () => {
+export const resetMixpanel = () => {
+  // Reset mixpanel auto generated uniqueId
+  mixpanel?.reset();
+};
+
+export const terminateMixpanel = () => {
   if (mixpanel) {
-    await mixpanel.flush();
-    await mixpanel.optOutTracking();
+    const mp = mixpanel;
+    mp.flush();
+    // Wait for the flush to complete
+    // (mainly) to let profile properties to update.
+    setTimeout(() => {
+      mp.optOutTracking();
+    }, 1000);
     mixpanel = undefined;
   }
-  return Promise.resolve();
 };
 
-export const setMixpanelPushNotificationToken = (token: string) => {
-  if (mixpanel) {
-    if (isIos) {
-      return mixpanel.addPushDeviceToken(token);
-    }
-    if (isAndroid) {
-      return mixpanel.setPushRegistrationId(token);
-    }
-  }
-  return Promise.resolve();
-};
+export const isMixpanelInstanceInitialized = () => mixpanel != null;
+
+export const getPeople = () => mixpanel?.getPeople();
+
+export const registerSuperProperties = (properties: MixpanelProperties) =>
+  mixpanel?.registerSuperProperties(properties);
 
 /**
  * Track an event with properties
@@ -81,3 +82,45 @@ export const mixpanelTrack = (
   event: string,
   properties?: Record<string, unknown>
 ) => mixpanel?.track(event, properties);
+
+/**
+ * Use this method to enqueue a tracking event when mixpanel has not been initialized yet.
+ * Be aware that you should not enqueue an event if the user has chosen to opt-out from tracking.
+ * This method does nothing if mixpanel is already initialized.
+ *
+ * Normally, you should use this method when you have to track something upon application initialization,
+ * before the mixpanel initialization saga has run. In such case, you must check the 'isMixpanelEnabled'
+ * preference (in persistedPreferences) from the redux-store, before using this method. Such property
+ * maps the opt-in/opt-out user's choice. Rehydration of the property always happens before any saga is run.
+ *
+ * @param eventName Mixpanel event name
+ * @param id Unique identifier for the enqueueing, in case you have to override it later
+ * @param properties Mixpanel properties
+ */
+export const enqueueMixpanelEvent = (
+  eventName: string,
+  id: string,
+  properties: Record<string, unknown>
+) => {
+  if (mixpanel != null) {
+    return;
+  }
+
+  uninitializedMixpanelTrackingQueue.set(id, {
+    eventName,
+    id,
+    properties
+  });
+};
+
+const processEnqueuedMixpanelEvents = () => {
+  // This works since elements in a Map are iterated in the insertion order
+  for (const [_key, value] of uninitializedMixpanelTrackingQueue) {
+    mixpanel?.track(value.eventName, value.properties);
+  }
+  uninitializedMixpanelTrackingQueue.clear();
+};
+
+export const testable = isTestEnv
+  ? { processEnqueuedMixpanelEvents, uninitializedMixpanelTrackingQueue }
+  : undefined;

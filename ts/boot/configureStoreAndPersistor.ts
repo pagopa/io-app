@@ -1,16 +1,15 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import _ from "lodash";
+import * as O from "fp-ts/lib/Option";
+import _, { merge, omit } from "lodash";
 import {
   applyMiddleware,
   compose,
   createStore,
   Middleware,
   Reducer,
-  Store
+  StoreEnhancer
 } from "redux";
-import createDebugger from "redux-flipper";
-import { createLogger } from "redux-logger";
 import {
   createMigrate,
   MigrationManifest,
@@ -20,14 +19,22 @@ import {
   persistReducer,
   persistStore
 } from "redux-persist";
+import { createLogger } from "redux-logger";
 import createSagaMiddleware from "redux-saga";
-import { remoteUndefined } from "../features/bonus/bpd/model/RemoteValue";
-import { initialLollipopState } from "../features/lollipop/store/reducers/lollipop";
-import { mvlPersistConfig } from "../features/mvl";
+import {
+  isReady,
+  remoteReady,
+  remoteUndefined,
+  RemoteValue
+} from "../common/model/RemoteValue";
+import { CURRENT_REDUX_LOLLIPOP_STORE_VERSION } from "../features/lollipop/store";
+import {
+  initialLollipopState,
+  LollipopState
+} from "../features/lollipop/store/reducers/lollipop";
 import rootSaga from "../sagas";
-import { Action, StoreEnhancer } from "../store/actions/types";
+import { Action, Store } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
-import { addMessagesIdsByServiceId } from "../store/migrations/addMessagesIdsByServiceId";
 import {
   authenticationPersistConfig,
   createRootReducer
@@ -35,22 +42,27 @@ import {
 import { ContentState } from "../store/reducers/content";
 import { entitiesPersistConfig } from "../store/reducers/entities";
 import {
-  InstallationState,
-  INSTALLATION_INITIAL_STATE
+  INSTALLATION_INITIAL_STATE,
+  InstallationState
 } from "../store/reducers/installation";
-import { NotificationsState } from "../store/reducers/notifications";
-import { getInitialState as getInstallationInitialState } from "../store/reducers/notifications/installation";
+import {
+  NOTIFICATIONS_STORE_VERSION,
+  NotificationsState
+} from "../features/pushNotifications/store/reducers";
+import { generateInitialState } from "../features/pushNotifications/store/reducers/installation";
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
-import { walletsPersistConfig } from "../store/reducers/wallet";
 import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
 import { PotTransform } from "../store/transforms/potTransform";
-import { isDevEnv } from "../utils/environment";
+import { isDevEnv, isTestEnv } from "../utils/environment";
+import { PersistedPreferencesState } from "../store/reducers/persistedPreferences";
+import { SpidIdps } from "../../definitions/content/SpidIdps";
+import { fromGeneratedToLocalSpidIdp } from "../utils/idps";
 import { configureReactotron } from "./configureRectotron";
 
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 21;
+const CURRENT_REDUX_STORE_VERSION = 49;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -62,7 +74,7 @@ const migrations: MigrationManifest = {
       ...state,
       notifications: {
         ...((state as any).notifications ? (state as any).notifications : {}),
-        installation: getInstallationInitialState()
+        installation: generateInitialState()
       }
     } as PersistedState),
 
@@ -78,7 +90,13 @@ const migrations: MigrationManifest = {
   // Version 2
   // Adds messagesIdsByServiceId
   "2": (state: PersistedState) =>
-    addMessagesIdsByServiceId(state as PersistedGlobalState),
+    merge({}, state, {
+      entities: {
+        messages: {
+          idsByServiceId: {} // this has been removed after moving to paginated messages
+        }
+      }
+    }),
 
   // Version 3
   // we changed the entities of organizations
@@ -149,16 +167,7 @@ const migrations: MigrationManifest = {
 
   // Version 7
   // we empty the services list to get both services list and services metadata being reloaded and persisted
-  "7": (state: PersistedState) => ({
-    ...state,
-    entities: {
-      ...(state as PersistedGlobalState).entities,
-      services: {
-        ...(state as PersistedGlobalState).entities.services,
-        byId: {}
-      }
-    }
-  }),
+  "7": (state: PersistedState) => _.set(state, "entities.services.byId", {}),
 
   // Version 8
   // we load services scope in an specific view. So now it is uselss to hold (old) services metadata
@@ -281,6 +290,8 @@ const migrations: MigrationManifest = {
   },
   // Version 19
   // add features.MVL section with default preferences
+  // Please note that MVL was completely removed since app version v2.33.x
+  // (last migration version for v2.33.x is migration 22)
   "19": (state: PersistedState) => ({
     ...state,
     features: {
@@ -307,7 +318,318 @@ const migrations: MigrationManifest = {
   "21": (state: PersistedState) => ({
     ...state,
     lollipop: initialLollipopState
-  })
+  }),
+  // Version 22
+  // This migration is necessary because
+  // in version 21 we switched from a keyTag of type string to a keyTag of type Option,
+  // also moving the persistence from the root reducer to the lollipop reducer.
+  // Therefore, there are users who are loading the old string state from the root reducer
+  // and need to convert it to the new Option state,
+  // since they don't have the lollipop persisted state yet.
+  "22": (state: PersistedState) => {
+    const lollipop: LollipopState = (state as PersistedGlobalState).lollipop;
+    const keyTag = lollipop?.keyTag as unknown;
+    if (typeof keyTag === "string") {
+      return {
+        ...state,
+        lollipop: {
+          ...initialLollipopState,
+          keyTag: keyTag ? O.some(keyTag) : O.none,
+          _persist: {
+            version: CURRENT_REDUX_LOLLIPOP_STORE_VERSION,
+            rehydrated: true
+          }
+        }
+      };
+    }
+    return state;
+  },
+  // Version 23
+  // Removes `isExperimentalFeaturesEnabled` property from persistedPreferences,
+  // since is it not used anymore in the bottom bar logic
+  "23": (state: PersistedState) => {
+    const persistedPreferences = (state as PersistedGlobalState)
+      .persistedPreferences;
+    return {
+      ...state,
+      persistedPreferences: {
+        ..._.omit(persistedPreferences, "isExperimentalFeaturesEnabled")
+      }
+    };
+  },
+  // Version 24
+  // Adds payments history archive persistence
+  "24": (state: PersistedState) =>
+    merge(state, {
+      features: {
+        payments: {
+          history: {
+            archive: []
+          }
+        }
+      }
+    }),
+  // Version 25
+  // Adds new wallet section FF
+  "25": (state: PersistedState) =>
+    merge(state, {
+      persistedPreferences: {
+        isNewWalletSectionEnabled: false
+      }
+    }),
+  // Version 26
+  // Adds shouldShowPaymentsRedirectBanner persistence in feature wallet reducer
+  "26": (state: PersistedState) =>
+    merge(state, {
+      features: {
+        wallet: {
+          preferences: {}
+        }
+      }
+    }),
+  // Version 27
+  // Adds it wallet section FF
+  "27": (state: PersistedState) =>
+    merge(state, {
+      persistedPreferences: {
+        isItWalletTestEnabled: false
+      }
+    }),
+  // Adds shouldShowAddMethodsBanner persistence in payments/home feature reducer
+  "28": (state: PersistedState) =>
+    merge(state, {
+      features: {
+        payments: {
+          home: {
+            shouldShowAddMethodsBanner: true
+          }
+        }
+      }
+    }),
+  // Adds wallet cards placeholders persistence in wallet feature reducer
+  "29": (state: PersistedState) =>
+    merge(state, {
+      features: {
+        wallet: {
+          placeholders: {}
+        }
+      }
+    } as GlobalState),
+  // Version 30
+  // Adds new Messages Home FF
+  "30": (state: PersistedState) =>
+    merge(state, {
+      persistedPreferences: {
+        isNewHomeSectionEnabled: false
+      }
+    }),
+  // version 31
+  // remove userMetadata from persisted state
+  "31": (state: PersistedState) => omit(state, "userMetadata"),
+  // Version 32
+  // Removes new Messages Home FF
+  "32": (state: PersistedState) =>
+    omit(state, "persistedPreferences.isNewHomeSectionEnabled"),
+  // Version 33
+  // Removes it wallet section FF
+  "33": (state: PersistedState) =>
+    omit(state, "persistedPreferences.isItWalletTestEnabled"),
+  // removes show scan section and hide profile local FF
+  "34": (state: PersistedState) =>
+    omit(state, "persistedPreferences.isNewScanSectionEnabled"),
+  // as a result of the PR revert, the data above was reinserted
+  // PR: https://github.com/pagopa/io-app/pull/6145
+  "35": (state: PersistedState) =>
+    merge(state, {
+      persistedPreferences: {
+        isNewScanSectionEnabled: false
+      }
+    }),
+  // Remove isNewScanSectionEnabled from persistedPreferences
+  "36": (state: PersistedState) =>
+    omit(state, "persistedPreferences.isNewScanSectionEnabled"),
+  // Move 'notifications' from root persistor to its own
+  "37": (state: PersistedState) => {
+    const typedState = state as GlobalState;
+    return {
+      ...state,
+      notifications: {
+        ...typedState.notifications,
+        installation: {
+          ...typedState.notifications.installation,
+          tokenStatus: { status: "unsent" }
+        },
+        _persist: {
+          version: NOTIFICATIONS_STORE_VERSION,
+          rehydrated: true
+        }
+      }
+    };
+  },
+  // Remove old wallets&payments feature and persisted state
+  "38": (state: PersistedState) => omit(state, "payments"),
+  // Add 'isIOMarkdownEnabledOnMessagesAndServices' to 'persistedPreferences'
+  "39": (state: PersistedState) => {
+    const typedState = state as GlobalState;
+    return {
+      ...state,
+      persistedPreferences: {
+        ...typedState.persistedPreferences,
+        isIOMarkdownEnabledOnMessagesAndServices: false
+      }
+    };
+  },
+  // Add 'isItwOfflineAccessEnabled' to 'persistedPreferences'
+  "40": (state: PersistedState) => {
+    const typedState = state as GlobalState;
+    return {
+      ...state,
+      persistedPreferences: {
+        ...typedState.persistedPreferences,
+        isItwOfflineAccessEnabled: false
+      }
+    };
+  },
+  // Add 'fontPreference' to 'persistedPreferences'
+  "41": (state: PersistedState) => {
+    const typedState = state as GlobalState;
+    return {
+      ...state,
+      persistedPreferences: {
+        ...typedState.persistedPreferences,
+        fontPreference: "comfortable"
+      }
+    };
+  },
+  // Remove 'isIOMarkdownEnabledOnMessagesAndServices' and rename 'isDesignSystemEnabled' to 'isExperimentalDesignEnabled'
+  "42": (state: PersistedState) => {
+    const typedState = state as GlobalState & {
+      persistedPreferences: PersistedPreferencesState & {
+        isDesignSystemEnabled: boolean;
+        isIOMarkdownEnabledOnMessagesAndServices: boolean;
+      };
+    };
+    const {
+      isDesignSystemEnabled,
+      isIOMarkdownEnabledOnMessagesAndServices,
+      ...remaining
+    } = typedState.persistedPreferences;
+    return {
+      ...state,
+      persistedPreferences: {
+        ...remaining,
+        isExperimentalDesignEnabled: isDesignSystemEnabled
+      }
+    };
+  },
+  // Convert persisted IDPS from autogenerated spec to new local spec
+  "43": (state: PersistedState) => {
+    // Be aware that 'typedState' is not the entire content of 'state'.
+    // We cast it to a partial type to represent the legacy part
+    // that we want to convert but the instance of 'state' contains
+    // all of the persisted data (which is later spread)
+    const typedState = state as {
+      content: {
+        idps: RemoteValue<SpidIdps, Error>;
+      };
+    };
+
+    return {
+      // See comment above for 'state's content
+      ...state,
+      content: {
+        // See comment above: 'typedState' contains more data that it is shown by the Typescript Intellisense
+        ...typedState.content,
+        idps: isReady(typedState.content.idps)
+          ? remoteReady(
+              fromGeneratedToLocalSpidIdp(typedState.content.idps.value.items)
+            )
+          : { ...typedState.content.idps }
+      }
+    };
+  },
+  // Remove isItwOfflineAccessEnabled from persistedPreferences
+  "44": (state: PersistedState) =>
+    omit(state, "persistedPreferences.isItwOfflineAccessEnabled"),
+  // Add useMessagePaymentInfoV2 to persistedPreferences
+  "45": (state: PersistedState) => {
+    // Be aware that 'typedState' is not the entire content of 'state'.
+    // We cast it to a partial type to represent the legacy part
+    // that we want to convert but the instance of 'state' contains
+    // all of the persisted data (which is later spread)
+    const typedState = state as {
+      persistedPreferences: object;
+    };
+    return {
+      ...state,
+      persistedPreferences: {
+        ...typedState.persistedPreferences,
+        useMessagePaymentInfoV2: false
+      }
+    };
+  },
+  // Remove useMessagePaymentInfoV2 to persistedPreferences
+  "46": (state: PersistedState) => {
+    // Be aware that 'typedState' is not the entire content of 'state'.
+    // We cast it to a partial type to represent the legacy part
+    // that we want to convert but the instance of 'state' contains
+    // all of the persisted data (which is later spread)
+    const typedState = state as {
+      persistedPreferences: {
+        useMessagePaymentInfoV2: boolean;
+      };
+    };
+    const { useMessagePaymentInfoV2, ...restPersistedPreferences } =
+      typedState.persistedPreferences;
+    return {
+      ...state,
+      persistedPreferences: {
+        ...restPersistedPreferences
+      }
+    };
+  },
+  // Add 'isAarFeatureEnabled' to 'persistedPreferences'
+  "47": (state: PersistedState) => {
+    const typedState = state as GlobalState;
+    return {
+      ...state,
+      persistedPreferences: {
+        ...typedState.persistedPreferences,
+        isAarFeatureEnabled: false
+      }
+    };
+  },
+  // Add 'themePreference' to 'persistedPreferences'
+  "48": (state: PersistedState) => {
+    const typedState = state as GlobalState;
+    return {
+      ...state,
+      persistedPreferences: {
+        ...typedState.persistedPreferences,
+        themePreference: "light"
+      }
+    };
+  },
+  // Remove 'isAarFeatureEnabled' from 'persistedPreferences'
+  "49": (state: PersistedState) => {
+    // Be aware that 'typedState' is not the entire content of 'state'.
+    // We cast it to a partial type to represent the legacy part
+    // that we want to convert but the instance of 'state' contains
+    // all of the persisted data (which is later spread)
+    const typedState = state as {
+      persistedPreferences: {
+        isAarFeatureEnabled: boolean;
+      };
+    };
+    const { isAarFeatureEnabled, ...restPersistedPreferences } =
+      typedState.persistedPreferences;
+    return {
+      ...state,
+      persistedPreferences: {
+        ...restPersistedPreferences
+      }
+    };
+  }
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
@@ -317,22 +639,14 @@ const rootPersistConfig: PersistConfig = {
   storage: AsyncStorage,
   version: CURRENT_REDUX_STORE_VERSION,
   migrate: createMigrate(migrations, { debug: isDevEnv }),
-  // Entities and features implement a persisted reduce that avoids persisting messages.
-  // Other entities section will be persisted
-  blacklist: ["entities", "features"],
   // Sections of the store that must be persisted and rehydrated with this storage.
   whitelist: [
     "onboarding",
-    "notifications",
     "profile",
-    "debug",
     "persistedPreferences",
     "installation",
-    "payments",
     "content",
-    "userMetadata",
-    "crossSessions",
-    "lollipop"
+    "crossSessions"
   ],
   // Transform functions used to manipulate state on store/rehydrate
   // TODO: add optionTransform https://www.pivotaltracker.com/story/show/170998374
@@ -347,9 +661,7 @@ const persistedReducer: Reducer<PersistedGlobalState, Action> = persistReducer<
   createRootReducer([
     rootPersistConfig,
     authenticationPersistConfig,
-    walletsPersistConfig,
-    entitiesPersistConfig,
-    mvlPersistConfig
+    entitiesPersistConfig
   ])
 );
 
@@ -361,17 +673,12 @@ const logger = createLogger({
 
 // configure Reactotron if the app is running in dev mode
 export const RTron = isDevEnv ? configureReactotron() : undefined;
-const sagaMiddleware = createSagaMiddleware(
-  // cast to any due to a type lacking
-  RTron ? { sagaMonitor: (RTron as any).createSagaMonitor() } : {}
-);
+const sagaMiddleware = createSagaMiddleware();
 
-function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
-  /**
-   * If available use redux-devtool version of the compose function that allow
-   * the inspection of the store from the devtool.
-   */
-
+function configureStoreAndPersistor(): {
+  store: Store;
+  persistor: Persistor;
+} {
   const composeEnhancers =
     // eslint-disable-next-line no-underscore-dangle
     (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -382,15 +689,9 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
     analytics.actionTracking // generic tracker for selected redux actions
   ];
 
-  const devMiddleware: ReadonlyArray<Middleware> = isDevEnv
-    ? [createDebugger()]
-    : [];
+  const middlewares = applyMiddleware(...baseMiddlewares);
 
-  const middlewares = applyMiddleware(
-    ...[...baseMiddlewares, ...devMiddleware]
-  );
   // add Reactotron enhancer if the app is running in dev mode
-
   const enhancer: StoreEnhancer =
     RTron && RTron.createEnhancer
       ? composeEnhancers(middlewares, RTron.createEnhancer())
@@ -404,11 +705,6 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
   >(persistedReducer, enhancer);
   const persistor = persistStore(store);
 
-  if (isDebuggingInChrome) {
-    // eslint-disable-next-line
-    (window as any).store = store;
-  }
-
   // Run the main saga
   sagaMiddleware.run(rootSaga);
 
@@ -416,3 +712,6 @@ function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
 }
 
 export const { store, persistor } = configureStoreAndPersistor();
+export const testable = isTestEnv
+  ? { CURRENT_REDUX_STORE_VERSION, migrations }
+  : undefined;

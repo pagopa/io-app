@@ -11,7 +11,7 @@ import {
   navigateToCgnActivationPending,
   navigateToCgnActivationTimeout,
   navigateToCgnAlreadyActive
-} from "../../../navigation/actions";
+} from "../navigation/actions";
 import CGN_ROUTES from "../../../navigation/routes";
 import {
   cgnActivationCancel,
@@ -42,7 +42,7 @@ const getNextNavigationStep = (
       )
     : navigateToCgnActivationLoading;
 
-export const isLoadingScreen = (screenName: string) =>
+const isLoadingScreen = (screenName: string) =>
   screenName === CGN_ROUTES.ACTIVATION.LOADING;
 
 export function* cgnActivationWorker(cgnActivationSaga: CgnActivationType) {

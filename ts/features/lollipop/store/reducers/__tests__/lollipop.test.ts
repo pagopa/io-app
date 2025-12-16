@@ -1,14 +1,16 @@
 import * as O from "fp-ts/lib/Option";
-import { Tuple2, ITuple2 } from "@pagopa/ts-commons/lib/tuples";
-import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
-import { baseRawBackendStatus } from "../../../../../store/reducers/__mock__/backendStatus";
-import { isLollipopEnabledSelector } from "../../../../../store/reducers/backendStatus";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { getAppVersion } from "../../../../../utils/appVersion";
+import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { lollipopKeyTagSave } from "../../actions/lollipop";
-import lollipopReducer, { lollipopSelector } from "./../lollipop";
+import {
+  lollipopKeyTagSave,
+  lollipopRemoveEphemeralPublicKey,
+  lollipopRemovePublicKey,
+  lollipopSetEphemeralPublicKey,
+  lollipopSetPublicKey,
+  lollipopSetSupportedDevice
+} from "../../actions/lollipop";
+import lollipopReducer, { testable } from "./../lollipop";
 
 jest.mock("react-native-device-info", () => ({
   getReadableVersion: jest.fn().mockReturnValue("1.2.3.4"),
@@ -19,114 +21,77 @@ const globalState = appReducer(undefined, applicationChangeState("active"));
 
 describe("Lollipop state", () => {
   it("Test selectors and reducers", () => {
-    const lollipopState = lollipopSelector(globalState);
-    expect(lollipopState.keyTag).toBe(undefined);
+    const lollipopState = testable?.lollipopSelector(globalState);
+    expect(lollipopState?.keyTag).toBe(O.none);
     const newLollipopState = lollipopReducer(
       lollipopState,
       lollipopKeyTagSave({ keyTag: "newKeyTag" })
     );
-    expect(newLollipopState.keyTag).toBe("newKeyTag");
+    expect(newLollipopState.keyTag).toStrictEqual(O.some("newKeyTag"));
   });
-});
 
-describe("LolliPOP remote flag test", () => {
-  const status: BackendStatus = {
-    ...baseRawBackendStatus
-  };
-
-  function checkLollipopFlagWithBrokenStatus(expectedValue: boolean) {
-    const customStoreWithMissingMinAppVersionInLollipopConfig = {
-      backendStatus: {
-        status: O.some({
-          ...status,
-          config: {}
-        })
-      }
-    } as unknown as GlobalState;
-    const isLollipopEnabled = isLollipopEnabledSelector(
-      customStoreWithMissingMinAppVersionInLollipopConfig
+  it("should handle lollipopSetPublicKey action", () => {
+    const lollipopState = testable?.lollipopSelector(globalState);
+    const publicKey = {
+      publicKey: "publicKey" as unknown as PublicKey
+    };
+    const newLollipopState = lollipopReducer(
+      lollipopState,
+      lollipopSetPublicKey({ publicKey: publicKey.publicKey })
     );
-    expect(isLollipopEnabled).toBe(expectedValue);
-  }
+    expect(newLollipopState.publicKey).toStrictEqual(
+      O.some(publicKey.publicKey)
+    );
+  });
 
-  function checkBrokenLollipopFlagTest(
-    minAppVersion: string | undefined,
-    currentAppVersion: string,
-    expectedValue: boolean
-  ) {
-    const testTitle = `LolliPOP${
-      expectedValue ? "" : " NOT"
-    } enabled with min version ${minAppVersion} for actual version ${currentAppVersion}`;
-    it(testTitle, () => {
-      checkLollipopFlagWithBrokenStatus(expectedValue);
-    });
-  }
+  it("should handle lollipopRemovePublicKey action", () => {
+    const lollipopState = testable?.lollipopSelector(globalState);
+    const stateWithPublicKey = lollipopReducer(
+      lollipopState,
+      lollipopSetPublicKey({ publicKey: "publicKey" as unknown as PublicKey })
+    );
+    const newLollipopState = lollipopReducer(
+      stateWithPublicKey,
+      lollipopRemovePublicKey()
+    );
+    expect(newLollipopState.publicKey).toBe(O.none);
+  });
 
-  [
-    Tuple2("0.0.0.0", false),
-    Tuple2("1.2.3.0", false),
-    Tuple2("-1", false),
-    Tuple2("1.2.3.5", false),
-    Tuple2("", false),
-    Tuple2(undefined, false),
-    Tuple2("?$&&/!@", false)
-  ].forEach((t: ITuple2<string | undefined, boolean>) =>
-    checkBrokenLollipopFlagTest(t.e1, currentAppVersion, t.e2)
-  );
+  it("should handle lollipopSetEphemeralPublicKey action", () => {
+    const lollipopState = testable?.lollipopSelector(globalState);
+    const ephemeralPublicKey = "ephemeralPublicKey" as unknown as PublicKey;
+    const newLollipopState = lollipopReducer(
+      lollipopState,
+      lollipopSetEphemeralPublicKey({
+        publicKey: ephemeralPublicKey
+      })
+    );
+    expect(newLollipopState.ephemeralKey.ephemeralPublicKey).toStrictEqual(
+      ephemeralPublicKey
+    );
+  });
 
-  function checkIfLollipopFlagIsEnableForThisAppVersion(
-    minAppVersion: string | undefined,
-    expectedValue: boolean
-  ) {
-    const customStore = {
-      backendStatus: {
-        status: O.some({
-          ...status,
-          config: {
-            ...status.config,
-            lollipop: {
-              enabled: false,
-              min_app_version: {
-                android: minAppVersion,
-                ios: minAppVersion
-              }
-            }
-          }
-        })
-      }
-    } as unknown as GlobalState;
+  it("should handle lollipopRemoveEphemeralPublicKey action", () => {
+    const lollipopState = testable?.lollipopSelector(globalState);
+    const stateWithEphemeralPublicKey = lollipopReducer(
+      lollipopState,
+      lollipopSetEphemeralPublicKey({
+        publicKey: "ephemeralPublicKey" as unknown as PublicKey
+      })
+    );
+    const newLollipopState = lollipopReducer(
+      stateWithEphemeralPublicKey,
+      lollipopRemoveEphemeralPublicKey()
+    );
+    expect(newLollipopState.ephemeralKey.ephemeralPublicKey).toBe(undefined);
+  });
 
-    const isLollipopEnabled = isLollipopEnabledSelector(customStore);
-    expect(isLollipopEnabled).toBe(expectedValue);
-  }
-
-  function checkLollipopFlagTest(
-    minAppVersion: string | undefined,
-    currentAppVersion: string,
-    expectedValue: boolean
-  ) {
-    const testTitle = `LolliPOP${
-      expectedValue ? "" : " NOT"
-    } enabled with min version ${minAppVersion} for actual version ${currentAppVersion}`;
-    it(testTitle, () => {
-      checkIfLollipopFlagIsEnableForThisAppVersion(
-        minAppVersion,
-        expectedValue
-      );
-    });
-  }
-
-  const currentAppVersion = getAppVersion();
-
-  [
-    Tuple2("0.0.0.0", true),
-    Tuple2("1.2.3.0", true),
-    Tuple2("-1", true),
-    Tuple2("1.2.3.5", false),
-    Tuple2("", true),
-    Tuple2(undefined, true),
-    Tuple2("?$&&/!@", true)
-  ].forEach((t: ITuple2<string | undefined, boolean>) =>
-    checkLollipopFlagTest(t.e1, currentAppVersion, t.e2)
-  );
+  it("should handle lollipopSetSupportedDevice action", () => {
+    const lollipopState = testable?.lollipopSelector(globalState);
+    const newLollipopState = lollipopReducer(
+      lollipopState,
+      lollipopSetSupportedDevice(true)
+    );
+    expect(newLollipopState.supportedDevice).toBe(true);
+  });
 });

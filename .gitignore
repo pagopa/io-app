@@ -21,10 +21,10 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
-project.xcworkspace
+**/.xcode.env.local
 
 # Ruby / CocoaPods
-/ios/Pods/
+**/Pods/
 /vendor/bundle/
 
 # Android/IntelliJ
@@ -37,6 +37,8 @@ local.properties
 *.iml
 *.hprof
 Google Play Android Developer-04750d2c0cf8.json
+.cxx/
+.kotlin/
 
 **/fastlane/report.xml
 **/fastlane/Preview.html
@@ -104,3 +106,17 @@ GeneratedDotEnv.m
 
 # XState Typegen
 **/*.typegen.*
+
+# Sentry prop file
+sentry.properties
+
+# Temporary files created by Metro to check the health of the file watcher
+.metro-health-check*
+
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

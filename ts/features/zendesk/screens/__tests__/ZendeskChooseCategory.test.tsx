@@ -16,6 +16,7 @@ import ZendeskChooseCategory from "../ZendeskChooseCategory";
 jest.useFakeTimers();
 
 const mockedNavigation = jest.fn();
+const mockedSetOptions = jest.fn();
 
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
@@ -24,7 +25,8 @@ jest.mock("@react-navigation/native", () => {
     useNavigation: () => ({
       addListener: () => jest.fn(),
       navigate: mockedNavigation,
-      dispatch: jest.fn()
+      dispatch: jest.fn(),
+      setOptions: mockedSetOptions
     })
   };
 });
@@ -38,7 +40,8 @@ const mockedZendeskConfig: Zendesk = {
         value: "mockedValue",
         description: {
           "it-IT": "mockedDescription",
-          "en-EN": "mockedDescription"
+          "en-EN": "mockedDescription",
+          "de-DE": "mockedDescription"
         }
       }
     ]
@@ -52,7 +55,8 @@ const mockedZendeskSubcategories: ZendeskSubCategories = {
       value: "mockedSubcategoryValue",
       description: {
         "it-IT": "mockedSubcategorydescription",
-        "en-EN": "mockedSubcategorydescription"
+        "en-EN": "mockedSubcategorydescription",
+        "de-DE": "mockedSubcategorydescription"
       }
     }
   ]

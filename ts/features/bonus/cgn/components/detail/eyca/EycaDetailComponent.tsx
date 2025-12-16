@@ -1,14 +1,19 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as React from "react";
-import { useEffect } from "react";
-import { ActivityIndicator } from "react-native";
+
+import { JSX, useEffect } from "react";
 import { connect } from "react-redux";
+import {
+  Alert,
+  ListItemHeader,
+  LoadingSpinner
+} from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { CardPending } from "../../../../../../../definitions/cgn/CardPending";
 import { EycaCard } from "../../../../../../../definitions/cgn/EycaCard";
 import { Dispatch } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { isLoading } from "../../../../bpd/model/RemoteValue";
+import { isLoading } from "../../../../../../common/model/RemoteValue";
 import {
   cgnEycaActivation,
   cgnEycaActivationStatusRequest
@@ -21,9 +26,7 @@ import {
   eycaCardSelector,
   eycaDetailSelector
 } from "../../../store/reducers/eyca/details";
-import EycaErrorComponent from "./EycaErrorComponent";
 import { useEycaInformationBottomSheet } from "./EycaInformationComponent";
-import EycaPendingComponent from "./EycaPendingComponent";
 import EycaStatusDetailsComponent from "./EycaStatusDetailsComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -41,23 +44,21 @@ const EycaDetailComponent = (props: Props) => {
   }, [eyca, getEycaActivationStatus]);
 
   const errorComponent = (
-    <EycaErrorComponent
-      onRetry={props.requestEycaActivation}
-      openBottomSheet={present}
+    <Alert
+      content={I18n.t("bonus.cgn.detail.status.eycaError")}
+      testID="eyca-error-component"
+      variant="error"
+      onPress={props.requestEycaActivation}
+      action={I18n.t("global.buttons.retry")}
     />
   );
 
-  const renderComponentEycaStatus = (eyca: EycaCard): React.ReactNode => {
+  const renderComponentEycaStatus = (eyca: EycaCard): JSX.Element | null => {
     switch (eyca.status) {
       case "ACTIVATED":
       case "REVOKED":
       case "EXPIRED":
-        return (
-          <EycaStatusDetailsComponent
-            eycaCard={eyca}
-            openBottomSheet={present}
-          />
-        );
+        return <EycaStatusDetailsComponent eycaCard={eyca} />;
       case "PENDING":
         return pipe(
           props.eycaActivationStatus,
@@ -68,7 +69,11 @@ const EycaDetailComponent = (props: Props) => {
               as === "ERROR" || as === "NOT_FOUND" ? (
                 errorComponent
               ) : (
-                <EycaPendingComponent openBottomSheet={present} />
+                <Alert
+                  testID="eyca-pending-component"
+                  variant="info"
+                  content={I18n.t("bonus.cgn.detail.status.eycaPending")}
+                />
               )
           )
         );
@@ -79,18 +84,26 @@ const EycaDetailComponent = (props: Props) => {
   return (
     <>
       {props.isLoading ? (
-        <ActivityIndicator
-          color={"black"}
-          accessible={false}
-          importantForAccessibility={"no-hide-descendants"}
-          accessibilityElementsHidden={true}
-        />
+        <LoadingSpinner size={48} />
       ) : (
-        pipe(
-          props.eyca,
-          O.fromNullable,
-          O.fold(() => errorComponent, renderComponentEycaStatus)
-        )
+        <>
+          <ListItemHeader
+            label={I18n.t("bonus.cgn.detail.status.eyca")}
+            endElement={{
+              type: "iconButton",
+              componentProps: {
+                icon: "info",
+                onPress: present,
+                accessibilityLabel: "Apri bottom sheet"
+              }
+            }}
+          />
+          {pipe(
+            props.eyca,
+            O.fromNullable,
+            O.fold(() => errorComponent, renderComponentEycaStatus)
+          )}
+        </>
       )}
       {bottomSheet}
     </>

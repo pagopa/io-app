@@ -1,165 +1,175 @@
-import { useCallback, useEffect, useState } from "react";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import ReactNativeBlobUtil from "react-native-blob-util";
+import { useIOToast } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
+import { useCallback, useEffect } from "react";
 import RNFS from "react-native-fs";
-import i18n from "../../../i18n";
-import { mixpanelTrack } from "../../../mixpanel";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { ContentTypeValues } from "../../../types/contentType";
-import { isIos } from "../../../utils/platform";
-import { showToast } from "../../../utils/showToast";
-import { mvlPreferencesSetWarningForAttachments } from "../../mvl/store/actions";
-import { mvlPreferencesSelector } from "../../mvl/store/reducers/preferences";
-import { downloadAttachment } from "../../../store/actions/messages";
-import { UIAttachment } from "../../../store/reducers/entities/messages/types";
-import { downloadPotForMessageAttachmentSelector } from "../../../store/reducers/entities/messages/downloads";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
+import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
+import { MESSAGES_ROUTES } from "../navigation/routes";
 import {
-  trackThirdPartyMessageAttachmentCancel,
-  trackThirdPartyMessageAttachmentShowPreview
-} from "../../../utils/analytics";
-import { useDownloadAttachmentBottomSheet } from "./useDownloadAttachmentBottomSheet";
+  cancelPreviousAttachmentDownload,
+  clearRequestedAttachmentDownload,
+  downloadAttachment
+} from "../store/actions";
+import {
+  downloadedMessageAttachmentSelector,
+  hasErrorOccourredOnRequestedDownloadSelector,
+  isDownloadingMessageAttachmentSelector,
+  isRequestedAttachmentDownloadSelector
+} from "../store/reducers/downloads";
+import { attachmentDisplayName } from "../utils/attachments";
+import {
+  trackPNAttachmentDownloadFailure,
+  trackPNAttachmentOpening
+} from "../../pn/analytics";
+import { trackThirdPartyMessageAttachmentShowPreview } from "../analytics";
+import PN_ROUTES from "../../pn/navigation/routes";
+import NavigationService from "../../../navigation/NavigationService";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../pushNotifications/analytics";
 
-// This hook has a different behaviour if the attachment is a PN
-// one or a generic third-party attachment. This has been done to
-// preserve the PN flow and use the bottom sheet to warn the user
-// when selecting an attachment (if the skip-bottom-sheet preference
-// is not set). When selecting a PN attachment, this hook takes care
-// of downloading the attachment before going into the attachment
-// preview component. If the attachment is from a third-party message
-// (generic attachment) then the download is delegated to another
-// part of the application and this hook just displays the bootom sheet
 export const useAttachmentDownload = (
-  attachment: UIAttachment,
-  openPreview: (attachment: UIAttachment) => void
+  messageId: string,
+  attachment: ThirdPartyAttachment,
+  sendOpeningSource: SendOpeningSource,
+  sendUserType: SendUserType,
+  serviceId: ServiceId,
+  onPreNavigate?: () => void
 ) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const attachmentId = attachment.id;
+  const isSendAttachment = sendOpeningSource !== "not_set";
 
   const dispatch = useIODispatch();
+  const store = useIOStore();
+  const toast = useIOToast();
 
-  const { showAlertForAttachments } = useIOSelector(mvlPreferencesSelector);
-
-  const downloadPot = useIOSelector(state =>
-    downloadPotForMessageAttachmentSelector(state, attachment)
+  const download = useIOSelector(state =>
+    downloadedMessageAttachmentSelector(state, messageId, attachmentId)
+  );
+  const isFetching = useIOSelector(state =>
+    isDownloadingMessageAttachmentSelector(state, messageId, attachmentId)
   );
 
-  const openAttachment = useCallback(async () => {
-    const download = pot.toUndefined(downloadPot);
+  const isDownloadError = useIOSelector(state =>
+    hasErrorOccourredOnRequestedDownloadSelector(state, messageId, attachmentId)
+  );
 
-    if (pot.isError(downloadPot)) {
-      void mixpanelTrack("PN_ATTACHMENT_DOWNLOADFAILURE");
-      showToast(
-        i18n.t("features.mvl.details.attachments.bottomSheet.failing.details")
+  const attachmentCategory = attachment.category;
+  const doNavigate = useCallback(() => {
+    dispatch(clearRequestedAttachmentDownload());
+    onPreNavigate?.();
+    if (isSendAttachment) {
+      trackPNAttachmentOpening(
+        sendOpeningSource,
+        sendUserType,
+        attachmentCategory
       );
-    } else if (download) {
-      const path = download.path;
-      const attachment = download.attachment;
-      if (attachment.contentType === ContentTypeValues.applicationPdf) {
-        openPreview(attachment);
-      } else {
-        if (isIos) {
-          ReactNativeBlobUtil.ios.presentOptionsMenu(path);
-        } else {
-          try {
-            const downloadFilePath =
-              await ReactNativeBlobUtil.MediaCollection.copyToMediaStore(
-                {
-                  name: attachment.displayName,
-                  parentFolder: "",
-                  mimeType: attachment.contentType
-                },
-                "Download",
-                path
-              );
-
-            await ReactNativeBlobUtil.android.addCompleteDownload({
-              mime: attachment.contentType,
-              title: attachment.displayName,
-              showNotification: true,
-              description: attachment.displayName,
-              path: downloadFilePath
-            });
-          } catch (ex) {
-            showToast(
-              i18n.t(
-                "features.mvl.details.attachments.bottomSheet.failing.details"
-              )
-            );
+      NavigationService.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+        screen: PN_ROUTES.MAIN,
+        params: {
+          screen: PN_ROUTES.MESSAGE_ATTACHMENT,
+          params: {
+            attachmentId,
+            messageId
           }
         }
-      }
+      });
+    } else {
+      NavigationService.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+        screen: MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT,
+        params: {
+          messageId,
+          serviceId,
+          attachmentId
+        }
+      });
     }
-  }, [downloadPot, openPreview]);
+  }, [
+    attachmentCategory,
+    attachmentId,
+    dispatch,
+    isSendAttachment,
+    messageId,
+    onPreNavigate,
+    sendOpeningSource,
+    sendUserType,
+    serviceId
+  ]);
+
+  const checkPathAndNavigate = useCallback(
+    async (downloadPath: string) => {
+      if (await RNFS.exists(downloadPath)) {
+        doNavigate();
+      } else {
+        dispatch(clearRequestedAttachmentDownload());
+      }
+    },
+    [dispatch, doNavigate]
+  );
+  const onModuleAttachmentPress = useCallback(async () => {
+    if (isFetching) {
+      return;
+    }
+
+    if (!isSendAttachment) {
+      trackThirdPartyMessageAttachmentShowPreview();
+    }
+
+    // Make sure to cancel whatever download may already be running
+    dispatch(cancelPreviousAttachmentDownload());
+
+    if (download && (await RNFS.exists(download.path))) {
+      doNavigate();
+    } else {
+      dispatch(
+        downloadAttachment.request({
+          attachment,
+          messageId,
+          skipMixpanelTrackingOnFailure: isSendAttachment,
+          serviceId
+        })
+      );
+    }
+  }, [
+    isFetching,
+    isSendAttachment,
+    dispatch,
+    download,
+    doNavigate,
+    attachment,
+    messageId,
+    serviceId
+  ]);
 
   useEffect(() => {
-    const wasLoading = isLoading;
-    const isStillLoading = pot.isLoading(downloadPot);
-
-    if (wasLoading && !isStillLoading) {
-      void openAttachment();
-    }
-    setIsLoading(isStillLoading);
-  }, [downloadPot, isLoading, setIsLoading, openAttachment]);
-
-  const isGenericAttachment = attachment.category === "GENERIC";
-  const downloadAttachmentIfNeeded = async () => {
-    if (pot.isLoading(downloadPot)) {
-      return;
-    }
-
-    // Do not download the attachment for generic third party message
-    if (isGenericAttachment) {
-      openPreview(attachment);
-      return;
-    }
-
-    const path = pot.toUndefined(downloadPot)?.path;
-    const fileExists = path !== undefined ? await RNFS.exists(path) : false;
-    if (fileExists) {
-      await openAttachment();
-    } else {
-      dispatch(downloadAttachment.request(attachment));
-    }
-  };
-
-  const { present, bottomSheet, dismiss } = useDownloadAttachmentBottomSheet({
-    isGenericAttachment,
-    onConfirm: dontAskAgain => {
-      if (isGenericAttachment) {
-        trackThirdPartyMessageAttachmentShowPreview();
-      } else {
-        void mixpanelTrack("PN_ATTACHMENTDISCLAIMER_ACCEPTED");
+    const state = store.getState();
+    if (
+      download &&
+      isRequestedAttachmentDownloadSelector(state, messageId, attachmentId)
+    ) {
+      void checkPathAndNavigate(download.path);
+    } else if (isDownloadError) {
+      dispatch(clearRequestedAttachmentDownload());
+      if (isSendAttachment) {
+        trackPNAttachmentDownloadFailure(attachmentCategory);
       }
-      dispatch(mvlPreferencesSetWarningForAttachments(!dontAskAgain));
-      void downloadAttachmentIfNeeded();
-      dismiss();
-    },
-    onCancel: () => {
-      if (isGenericAttachment) {
-        trackThirdPartyMessageAttachmentCancel();
-      } else {
-        void mixpanelTrack("PN_ATTACHMENTDISCLAIMER_REJECTED");
-      }
-      dismiss();
+      toast.error(I18n.t("messageDetails.attachments.failing.details"));
     }
-  });
+  }, [
+    attachmentCategory,
+    attachmentId,
+    checkPathAndNavigate,
+    dispatch,
+    download,
+    isDownloadError,
+    isSendAttachment,
+    messageId,
+    store,
+    toast
+  ]);
 
-  const onAttachmentSelect = () => {
-    if (!isGenericAttachment) {
-      void mixpanelTrack("PN_ATTACHMENT_OPEN");
-    }
-    if (showAlertForAttachments) {
-      if (!isGenericAttachment) {
-        void mixpanelTrack("PN_ATTACHMENTDISCLAIMER_SHOW_SUCCESS");
-      }
-      present();
-    } else {
-      void downloadAttachmentIfNeeded();
-    }
-  };
-
-  return {
-    downloadPot,
-    onAttachmentSelect,
-    bottomSheet
-  };
+  const displayName = attachmentDisplayName(attachment);
+  return { displayName, isFetching, onModuleAttachmentPress };
 };

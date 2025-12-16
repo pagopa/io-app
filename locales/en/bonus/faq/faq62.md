@@ -1,3 +1,0 @@
-If the app warns you that your DSU has "omissions or discrepancies", you can:
-- stop the Bonus request and submit a new DSU to update your ISEE. In this case, you can request the Bonus again later;
-- or you can verify the DSU sent through INPS channels and - if all is correct - continue with the request anyway. If you decide to continue with the activation of the Bonus, after having used it at the chosen tourist facility, you may be called to provide the documentation to prove the completeness and truthfulness of the data indicated in the DSU.

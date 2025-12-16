@@ -1,0 +1,81 @@
+name: Distribute latest uploaded beta
+on: workflow_dispatch
+jobs:
+  distribute-android:
+    environment: prod
+    runs-on: ubuntu-latest
+    steps:
+      - id: checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
+        with:
+          fetch-depth: 0
+      - id: setup-ruby
+        uses: ruby/setup-ruby@a4effe49ee8ee5b8b5091268c473a4628afb5651 #v1.245.0
+        with:
+          bundler-cache: true
+      - id: build-release-android
+        run: |
+          ./scripts/android-release.sh ./android/app
+          cd android
+          bundle exec fastlane promote_internal_to_alpha
+        shell: bash
+        env:
+          RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
+          ENCODED_IOAPP_JSON_KEY_FILE: ${{secrets.ENCODED_IOAPP_JSON_KEY_FILE}}
+  distribute-ios:
+    environment: prod
+    runs-on: macos-15-xlarge
+    steps:
+      - id: checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
+        with:
+          fetch-depth: 0
+      - id: setup-ruby
+        uses: ruby/setup-ruby@a4effe49ee8ee5b8b5091268c473a4628afb5651 #v1.245.0
+        with:
+          bundler-cache: true
+      - id: prepare-ios-build
+        run: ./scripts/ios-release-build.sh
+        env:
+          APP_STORE_API_KEY_ID: ${{secrets.APP_STORE_API_KEY_ID}}
+          APP_STORE_API_PRIVATE_KEY: ${{secrets.APP_STORE_API_PRIVATE_KEY}}
+          ENCODED_IO_APP_SENTRY_PROPERTIES: ${{secrets.ENCODED_IO_APP_SENTRY_PROPERTIES}}
+      - id: distribute-app-testflight
+        name: Distribute beta to specific groupd
+        run: |
+          cd ios
+          bundle exec fastlane distribute_beta_testflight
+        env:
+          LC_ALL: en_US.UTF-8
+          LANG: en_US.UTF-8
+          RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
+          APP_STORE_API_KEY_ID: ${{secrets.APP_STORE_API_KEY_ID}}
+          APP_STORE_API_PRIVATE_KEY: ${{secrets.APP_STORE_API_PRIVATE_KEY}}
+          APP_STORE_API_KEY_ISSUER_ID: ${{secrets.APP_STORE_API_KEY_ISSUER_ID}}
+  notify-new-version:
+    environment: dev
+    runs-on: ubuntu-latest
+    needs:
+        - distribute-android
+        - distribute-ios
+    steps:
+      - id: checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
+      - id: setup-node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: ".node-version"
+      - id: yarn-cache
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+      - id: install-packages
+        run: yarn install --frozen-lockfile
+      - id: send-notification
+        run: 'yarn ts-node --skip-project -O ''{"lib":["es2015"]}'' scripts/ts/notifyNewAppVersion/notifyNewAppVersion.ts'
+        env: 
+          IO_APP_SLACK_HELPER_BOT_TOKEN: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}

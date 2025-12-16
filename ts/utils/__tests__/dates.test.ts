@@ -1,7 +1,12 @@
-import { getMonth, getYear } from "date-fns";
+import { format, getMonth, getYear } from "date-fns";
 import * as E from "fp-ts/lib/Either";
 import MockDate from "mockdate";
-import { getExpireStatus, isExpired } from "../dates";
+import {
+  getDateFromExpiryDate,
+  getExpireStatus,
+  isExpired,
+  isExpiredDate
+} from "../dates";
 
 describe("getExpireStatus", () => {
   it("should be VALID", () => {
@@ -71,5 +76,40 @@ describe("getExpireStatus", () => {
         today.getFullYear().toString().substring(2, 4)
       )
     ).toEqual(E.right(false));
+  });
+});
+
+describe("isExpiredDate", () => {
+  it("should mark the card as valid, not expired", () => {
+    const today = new Date();
+    expect(isExpiredDate(today)).toEqual(false);
+  });
+
+  it("should mark the card as expired, not valid", () => {
+    const today = new Date();
+    expect(
+      isExpiredDate(new Date(today.getFullYear(), today.getMonth() - 1))
+    ).toEqual(true);
+  });
+});
+
+describe("getDateFromExpiryDate", () => {
+  it("should return undefined is invalid input", () => {
+    const date = getDateFromExpiryDate("invalid");
+    expect(date).toBeUndefined();
+  });
+
+  it("should mark the card as valid, not expired", () => {
+    const today = new Date();
+    const date = getDateFromExpiryDate(format(today, "YYYYMM"));
+    expect(isExpiredDate(date!)).toEqual(false);
+  });
+
+  it("should mark the card as expired, not valid", () => {
+    const today = new Date();
+    const date = getDateFromExpiryDate(
+      format(new Date(today.getFullYear(), today.getMonth() - 1), "YYYYMM")
+    );
+    expect(isExpiredDate(date!)).toEqual(true);
   });
 });

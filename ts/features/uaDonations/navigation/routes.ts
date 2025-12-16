@@ -1,5 +1,0 @@
-const UADONATION_ROUTES = {
-  WEBVIEW: "UADONATION_ROUTES_WEBVIEW"
-} as const;
-
-export default UADONATION_ROUTES;

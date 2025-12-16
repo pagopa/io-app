@@ -11,7 +11,7 @@ declare module "react-native-barcode-builder" {
     width?: number;
     height?: number;
     background?: string;
-    format: barcodeTypes;
+    format?: barcodeTypes;
     text?: string;
     lineColor?: string;
     onError?: () => void;

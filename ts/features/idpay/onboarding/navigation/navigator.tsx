@@ -1,100 +1,103 @@
+import { createStackNavigator } from "@react-navigation/stack";
+import { isGestureEnabled } from "../../../../utils/navigation";
 import {
-  ParamListBase,
-  PathConfigMap,
-  RouteProp
-} from "@react-navigation/native";
-import {
-  StackNavigationProp,
-  createStackNavigator
-} from "@react-navigation/stack";
-import React from "react";
-import BoolValuePrerequisitesScreen from "../screens/BoolValuePrerequisitesScreen";
-import CompletionScreen from "../screens/CompletionScreen";
-import FailureScreen from "../screens/FailureScreen";
-import InitiativeDetailsScreen, {
-  InitiativeDetailsScreenRouteParams
-} from "../screens/InitiativeDetailsScreen";
-import MultiValuePrerequisitesScreen from "../screens/MultiValuePrerequisitesScreen";
-import PDNDPrerequisitesScreen from "../screens/PDNDPrerequisitesScreen";
-import { IDPayOnboardingMachineProvider } from "../xstate/provider";
+  IdPayOnboardingMachineContext,
+  IdPayOnboardingMachineProvider
+} from "../machine/provider";
+import IdPayBoolValuePrerequisitesScreen from "../screens/IdPayBoolValuePrerequisitesScreen";
+import IdPayCompletionScreen from "../screens/IdPayCompletionScreen";
+import IdPayEnableMessageScreen from "../screens/IdPayEnableMessageScreen";
+import IdPayEnableNotificationScreen from "../screens/IdPayEnableNotificationScreen";
+import { IdPayFailToRetryScreen } from "../screens/IdPayFailToRetryScreen";
+import IdPayFailureScreen from "../screens/IdPayFailureScreen";
+import { IdPayInitiativeDetailsScreen } from "../screens/IdPayInitiativeDetailsScreen";
+import IdPayInputFormVerificationScreen from "../screens/IdPayInputFormVerificationScreen";
+import IdPayLoadingScreen from "../screens/IdPayLoadingScreen";
+import IdPayMultiValuePrerequisitesScreen from "../screens/IdPayMultiValuePrerequisitesScreen";
+import IdPayPDNDPrerequisitesScreen from "../screens/IdPayPDNDPrerequisitesScreen";
+import { IdPayFeatureFlagGuard } from "../../common/components/IdPayFeatureFlagGuard";
+import { IdPayOnboardingParamsList } from "./params";
+import { IdPayOnboardingRoutes } from "./routes";
 
-export const IDPayOnboardingRoutes = {
-  IDPAY_ONBOARDING_MAIN: "IDPAY_ONBOARDING_MAIN",
-  IDPAY_ONBOARDING_INITIATIVE_DETAILS: "IDPAY_ONBOARDING_INITIATIVE_DETAILS",
-  IDPAY_ONBOARDING_PDNDACCEPTANCE: "IDPAY_ONBOARDING_PDNDACCEPTANCE",
-  IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS: "IDPAY_ONBOARDING_SELF_DECLARATIONS",
-  IDPAY_ONBOARDING_COMPLETION: "IDPAY_ONBOARDING_COMPLETION",
-  IDPAY_ONBOARDING_FAILURE: "IDPAY_ONBOARDING_FAILURE",
-  IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS:
-    "IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS"
-} as const;
+const Stack = createStackNavigator<IdPayOnboardingParamsList>();
 
-export type IDPayOnboardingParamsList = {
-  [IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS]: InitiativeDetailsScreenRouteParams;
-  [IDPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS]: undefined;
-  [IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE]: undefined;
-  [IDPayOnboardingRoutes.IDPAY_ONBOARDING_COMPLETION]: undefined;
-  [IDPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE]: undefined;
-  [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS]: undefined;
-};
+export const IdPayOnboardingNavigator = () => (
+  <IdPayOnboardingMachineProvider>
+    <IdPayFeatureFlagGuard>
+      <InnerNavigator />
+    </IdPayFeatureFlagGuard>
+  </IdPayOnboardingMachineProvider>
+);
 
-const Stack = createStackNavigator<IDPayOnboardingParamsList>();
+const InnerNavigator = () => {
+  const idPayOnboardingMachineRef = IdPayOnboardingMachineContext.useActorRef();
 
-export const idPayOnboardingLinkingOptions: PathConfigMap = {
-  [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN]: {
-    path: "idpay",
-    screens: {
-      [IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS]:
-        "onboarding/:serviceId"
-    }
-  }
-};
-
-export const IDPayOnboardingNavigator = () => (
-  <IDPayOnboardingMachineProvider>
+  return (
     <Stack.Navigator
       initialRouteName={
-        IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS
+        IdPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS
       }
-      screenOptions={{ headerShown: false }}
+      screenOptions={{ gestureEnabled: isGestureEnabled }}
+      screenListeners={{
+        beforeRemove: () => {
+          // Read more on https://reactnavigation.org/docs/preventing-going-back/
+          // Whenever we have a back navigation action we send a "back" event to the machine.
+          // Since the back event is accepted only by specific states, we can safely send a back event to each machine
+          idPayOnboardingMachineRef.send({ type: "back" });
+        }
+      }}
     >
       <Stack.Screen
-        name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS}
-        component={InitiativeDetailsScreen}
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_ENABLE_MESSAGE}
+        component={IdPayEnableMessageScreen}
+        options={{ headerShown: false, gestureEnabled: false }}
       />
       <Stack.Screen
-        name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS}
-        component={BoolValuePrerequisitesScreen}
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS}
+        component={IdPayInitiativeDetailsScreen}
       />
       <Stack.Screen
-        name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS}
-        component={MultiValuePrerequisitesScreen}
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS}
+        component={IdPayBoolValuePrerequisitesScreen}
       />
       <Stack.Screen
-        name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE}
-        component={PDNDPrerequisitesScreen}
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_INPUT_FORM}
+        component={IdPayInputFormVerificationScreen}
       />
       <Stack.Screen
-        name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_COMPLETION}
-        component={CompletionScreen}
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS}
+        component={IdPayMultiValuePrerequisitesScreen}
       />
       <Stack.Screen
-        name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE}
-        component={FailureScreen}
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE}
+        component={IdPayPDNDPrerequisitesScreen}
+      />
+      <Stack.Screen
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_COMPLETION}
+        component={IdPayCompletionScreen}
         options={{ gestureEnabled: false }}
       />
-    </Stack.Navigator>
-  </IDPayOnboardingMachineProvider>
-);
-export type IDPayOnboardingStackNavigationRouteProps<
-  ParamList extends ParamListBase,
-  RouteName extends keyof ParamList = string
-> = {
-  navigation: IDPayOnboardingStackNavigationProp<ParamList, RouteName>;
-  route: RouteProp<ParamList, RouteName>;
-};
+      <Stack.Screen
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_ENABLE_NOTIFICATIONS}
+        component={IdPayEnableNotificationScreen}
+        options={{ gestureEnabled: false, headerShown: false }}
+      />
+      <Stack.Screen
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE}
+        component={IdPayFailureScreen}
+        options={{ gestureEnabled: false, headerShown: false }}
+      />
+      <Stack.Screen
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE_TO_RETRY}
+        component={IdPayFailToRetryScreen}
+        options={{ gestureEnabled: false, headerShown: false }}
+      />
 
-export type IDPayOnboardingStackNavigationProp<
-  ParamList extends ParamListBase,
-  RouteName extends keyof ParamList = string
-> = StackNavigationProp<IDPayOnboardingParamsList & ParamList, RouteName>;
+      <Stack.Screen
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_LOADING}
+        component={IdPayLoadingScreen}
+        options={{ gestureEnabled: false, headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+};

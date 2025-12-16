@@ -30,7 +30,7 @@ platform :android do
     gradle(
       task: "assemble",
       build_type: "Debug",
-      flags: "-x bundleReleaseJsAndAssets --no-daemon"
+      # flags: "-x bundleReleaseJsAndAssets --no-daemon"
     )
   end
 
@@ -41,8 +41,22 @@ platform :android do
 
     gradle(
       task: "bundle",
+      flavor: "production",
       build_type: "Release",
-      flags: "-x bundleReleaseJsAndAssets --no-daemon"
+      # flags: "-x bundleReleaseJsAndAssets --no-daemon"
+    )
+  end
+
+  desc "Build the App in release mode for Canary"
+  lane :build_canary_release do
+    # Ensure that your git status is not dirty
+    #ensure_git_status_clean
+
+    gradle(
+      task: "bundle",
+      flavor: "canary",
+      build_type: "Release",
+      # flags: "-x bundleReleaseJsAndAssets --no-daemon"
     )
   end
 
@@ -62,6 +76,23 @@ platform :android do
     )
   end
 
+  desc "Build the App in release mode and deploy a new alpha version to the Google Play Store (Canary)"
+  lane :alpha_canary do
+    build_canary_release
+
+    # Generate the changelog from the last commit message
+    changelog_from_git_commits(
+      commits_count: 1
+    )
+
+    upload_to_play_store(
+      track: "internal",
+      package_name: "it.pagopa.io.app.canary",
+      skip_upload_screenshots: true,
+      skip_upload_images: true
+    )
+  end
+
   desc "Promote the internal version to alpha"
   lane :promote_internal_to_alpha do
     upload_to_play_store(track: "internal", track_promote_to: "alpha")
@@ -71,6 +102,26 @@ platform :android do
   lane :deploy do
     gradle(task: "assembleRelease")
     supply
+  end
+
+  desc "Download universal APK file from Google Play"
+  lane :download_apk do
+    version_code = ENV['VERSION_CODE'].to_i
+    download_universal_apk_from_google_play(
+      package_name: "it.pagopa.io.app",
+      destination: "io-app-universal.apk",
+      version_code: version_code
+    )
+  end
+
+  desc "Download universal APK file from Google Play (Canary)"
+  lane :download_canary_apk do
+    version_code = ENV['VERSION_CODE'].to_i
+    download_universal_apk_from_google_play(
+      package_name: "it.pagopa.io.app.canary",
+      destination: "io-app-canary-universal.apk",
+      version_code: version_code
+    )
   end
 
   # You can define as many lanes as you want

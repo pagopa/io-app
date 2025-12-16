@@ -1,5 +1,3 @@
-import * as O from "fp-ts/lib/Option";
-import * as t from "io-ts";
 import {
   enumType,
   ReplaceProp1,
@@ -7,42 +5,43 @@ import {
   requiredProp1 as reqP,
   tag
 } from "@pagopa/ts-commons/lib/types";
-import { ImageSourcePropType, ImageURISource } from "react-native";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as t from "io-ts";
+import { ImageSourcePropType } from "react-native";
 import { Amount as AmountPagoPA } from "../../definitions/pagopa/Amount";
 import { CreditCard as CreditCardPagoPA } from "../../definitions/pagopa/CreditCard";
+import { EnableableFunctions } from "../../definitions/pagopa/EnableableFunctions";
 import { Pay as PayPagoPA } from "../../definitions/pagopa/Pay";
+import { PayPalInfo } from "../../definitions/pagopa/PayPalInfo";
 import { PayRequest as PayRequestPagoPA } from "../../definitions/pagopa/PayRequest";
 import { Psp as PspPagoPA } from "../../definitions/pagopa/Psp";
 import { PspListResponseCD as PspListResponsePagoPA } from "../../definitions/pagopa/PspListResponseCD";
 import { PspResponse as PspResponsePagoPA } from "../../definitions/pagopa/PspResponse";
 import { Session as SessionPagoPA } from "../../definitions/pagopa/Session";
 import { SessionResponse as SessionResponsePagoPA } from "../../definitions/pagopa/SessionResponse";
+import {
+  Transaction as TransactionPagoPA,
+  Transaction as TTransactionPagoPA
+} from "../../definitions/pagopa/Transaction";
 import { TransactionListResponse as TransactionListResponsePagoPA } from "../../definitions/pagopa/TransactionListResponse";
 import { TransactionResponse as TransactionResponsePagoPA } from "../../definitions/pagopa/TransactionResponse";
 import { Wallet as WalletPagoPA } from "../../definitions/pagopa/Wallet";
 import { WalletListResponse as WalletListResponsePagoPA } from "../../definitions/pagopa/WalletListResponse";
 import { WalletResponse as WalletResponsePagoPA } from "../../definitions/pagopa/WalletResponse";
+import { WalletTypeEnum } from "../../definitions/pagopa/WalletV2";
 import { Abi } from "../../definitions/pagopa/walletv2/Abi";
 import { BPayInfo as BPayInfoPagoPa } from "../../definitions/pagopa/walletv2/BPayInfo";
-import { SatispayInfo as SatispayInfoPagoPa } from "../../definitions/pagopa/walletv2/SatispayInfo";
-import { WalletTypeEnum } from "../../definitions/pagopa/WalletV2";
+import {
+  CardInfo,
+  TypeEnum as CreditCardTypeEnum
+} from "../../definitions/pagopa/walletv2/CardInfo";
 import {
   CreditCardCVC,
   CreditCardExpirationMonth,
   CreditCardExpirationYear,
   CreditCardPan
 } from "../utils/input";
-import {
-  TypeEnum as CreditCardTypeEnum,
-  CardInfo
-} from "../../definitions/pagopa/walletv2/CardInfo";
-import { EnableableFunctions } from "../../definitions/pagopa/EnableableFunctions";
-import { PayPalInfo } from "../../definitions/pagopa/PayPalInfo";
-import {
-  Transaction as TransactionPagoPA,
-  Transaction as TTransactionPagoPA
-} from "../../definitions/pagopa/Transaction";
 
 /**
  * Union of all possible credit card types
@@ -117,7 +116,6 @@ export type Psp = t.TypeOf<typeof Psp>;
 // required attributes
 const PatchedPaymentMethodInfo = t.union([
   CardInfo,
-  SatispayInfoPagoPa,
   BPayInfoPagoPa,
   PayPalInfo
 ]);
@@ -161,8 +159,6 @@ export type RawPaymentMethod =
   | RawBancomatPaymentMethod
   | RawCreditCardPaymentMethod
   | RawBPayPaymentMethod
-  | RawSatispayPaymentMethod
-  | RawPrivativePaymentMethod
   | RawPayPalPaymentMethod;
 
 export type RawBancomatPaymentMethod = WalletV2WithoutInfo & {
@@ -175,19 +171,9 @@ export type RawCreditCardPaymentMethod = WalletV2WithoutInfo & {
   info: CardInfo;
 };
 
-export type RawPrivativePaymentMethod = WalletV2WithoutInfo & {
-  kind: "Privative";
-  info: CardInfo;
-};
-
 export type RawBPayPaymentMethod = WalletV2WithoutInfo & {
   kind: "BPay";
   info: BPayInfoPagoPa;
-};
-
-export type RawSatispayPaymentMethod = WalletV2WithoutInfo & {
-  kind: "Satispay";
-  info: SatispayInfoPagoPa;
 };
 
 export type RawPayPalPaymentMethod = WalletV2WithoutInfo & {
@@ -200,10 +186,6 @@ export const isRawBancomat = (
   pm: RawPaymentMethod | undefined
 ): pm is RawBancomatPaymentMethod => pm?.kind === "Bancomat";
 
-export const isRawSatispay = (
-  pm: RawPaymentMethod | undefined
-): pm is RawSatispayPaymentMethod => pm?.kind === "Satispay";
-
 export const isRawPayPal = (
   pm: RawPaymentMethod | undefined
 ): pm is RawPayPalPaymentMethod => pm?.kind === "PayPal";
@@ -211,10 +193,6 @@ export const isRawPayPal = (
 export const isRawCreditCard = (
   pm: RawPaymentMethod | undefined
 ): pm is RawCreditCardPaymentMethod => pm?.kind === "CreditCard";
-
-export const isRawPrivative = (
-  pm: RawPaymentMethod | undefined
-): pm is RawPrivativePaymentMethod => pm?.kind === "Privative";
 
 export const isRawBPay = (
   pm: RawPaymentMethod | undefined
@@ -240,16 +218,9 @@ export type CreditCardPaymentMethod = RawCreditCardPaymentMethod &
   PaymentMethodRepresentation &
   WithAbi;
 
-export type PrivativePaymentMethod = RawPrivativePaymentMethod &
-  PaymentMethodRepresentation & {
-    gdoLogo?: ImageURISource;
-  };
-
 export type BPayPaymentMethod = RawBPayPaymentMethod &
   PaymentMethodRepresentation &
   WithAbi;
-export type SatispayPaymentMethod = RawSatispayPaymentMethod &
-  PaymentMethodRepresentation;
 
 export type PayPalPaymentMethod = RawPayPalPaymentMethod &
   PaymentMethodRepresentation;
@@ -258,18 +229,12 @@ export type PaymentMethod =
   | BancomatPaymentMethod
   | CreditCardPaymentMethod
   | BPayPaymentMethod
-  | SatispayPaymentMethod
-  | PrivativePaymentMethod
   | PayPalPaymentMethod;
 
 // payment methods type guards
 export const isBancomat = (
   pm: PaymentMethod | undefined
 ): pm is BancomatPaymentMethod => pm?.kind === "Bancomat";
-
-export const isSatispay = (
-  pm: PaymentMethod | undefined
-): pm is SatispayPaymentMethod => pm?.kind === "Satispay";
 
 export const isPayPal = (
   pm: PaymentMethod | undefined
@@ -285,11 +250,6 @@ export const isCreditCard = (
 export const isBPay = (
   pm: PaymentMethod | undefined
 ): pm is BPayPaymentMethod => (pm === undefined ? false : pm.kind === "BPay");
-
-export const isPrivativeCard = (
-  pm: PaymentMethod | undefined
-): pm is PrivativePaymentMethod =>
-  pm === undefined ? false : pm.kind === "Privative";
 
 /**
  * A refined Wallet

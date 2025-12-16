@@ -1,1 +1,0 @@
-**A digital version of your fiscal code is displayed here.** The facsimile does not replace the physical document, but allows to show it and read the barcode from the device itself. In the case of homebody, the data generated in the facsimile may not correspond to your personal data.

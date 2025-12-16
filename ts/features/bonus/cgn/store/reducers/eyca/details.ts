@@ -10,7 +10,7 @@ import {
   remoteReady,
   remoteUndefined,
   RemoteValue
-} from "../../../../bpd/model/RemoteValue";
+} from "../../../../../../common/model/RemoteValue";
 import { NetworkError } from "../../../../../../utils/errors";
 import { EycaCard } from "../../../../../../../definitions/cgn/EycaCard";
 

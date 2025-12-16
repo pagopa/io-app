@@ -1,0 +1,277 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PdfViewer should match the snapshot 1`] = `
+<View
+  style={
+    {
+      "flex": 1,
+    }
+  }
+  testID="overlayComponent"
+>
+  <View
+    style={
+      [
+        {
+          "backgroundColor": "#FFFFFF",
+          "bottom": 0,
+          "justifyContent": "center",
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+          "zIndex": 1,
+        },
+        {
+          "backgroundColor": "rgba(255,255,255,0.7)",
+          "opacity": 1,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flex": 1,
+          "height": 100,
+          "justifyContent": "center",
+        }
+      }
+    >
+      <View
+        accessibilityHint="Attendi il caricamento del contenuto"
+        accessibilityLabel="Caricamento in corso"
+        accessibilityRole="progressbar"
+        accessible={true}
+        style={
+          {
+            "height": 48,
+            "width": 48,
+          }
+        }
+        testID="refreshIndicator"
+      >
+        <View
+          collapsable={false}
+          style={
+            {
+              "transform": [
+                {
+                  "rotateZ": "0deg",
+                },
+              ],
+            }
+          }
+          testID="LoadingSpinnerAnimatedTestID"
+        >
+          <RNSVGSvgView
+            align="xMidYMid"
+            bbHeight={48}
+            bbWidth={48}
+            fill="none"
+            focusable={false}
+            height={48}
+            meetOrSlice={0}
+            minX={0}
+            minY={0}
+            style={
+              [
+                {
+                  "backgroundColor": "transparent",
+                  "borderWidth": 0,
+                },
+                {
+                  "flex": 0,
+                  "height": 48,
+                  "width": 48,
+                },
+              ]
+            }
+            vbHeight={48}
+            vbWidth={48}
+            width={48}
+          >
+            <RNSVGGroup
+              fill={null}
+              propList={
+                [
+                  "fill",
+                ]
+              }
+            >
+              <RNSVGDefs>
+                <RNSVGLinearGradient
+                  gradient={
+                    [
+                      0,
+                      736995,
+                      1,
+                      -16040221,
+                    ]
+                  }
+                  gradientTransform={null}
+                  gradientUnits={0}
+                  name="spinner-secondHalf"
+                  x1="0%"
+                  x2="100%"
+                  y1="0%"
+                  y2="0%"
+                />
+                <RNSVGLinearGradient
+                  gradient={
+                    [
+                      0,
+                      -16040221,
+                      1,
+                      -16040221,
+                    ]
+                  }
+                  gradientTransform={null}
+                  gradientUnits={0}
+                  name="spinner-firstHalf"
+                  x1="0%"
+                  x2="100%"
+                  y1="0%"
+                  y2="0%"
+                />
+              </RNSVGDefs>
+              <RNSVGGroup
+                fill={
+                  {
+                    "payload": 4278190080,
+                    "type": 0,
+                  }
+                }
+                propList={
+                  [
+                    "strokeWidth",
+                  ]
+                }
+                strokeWidth={5}
+              >
+                <RNSVGPath
+                  d="M 2.5 24 A 21.5 21.5 0 0 1 45.5 24"
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
+                  }
+                  propList={
+                    [
+                      "stroke",
+                    ]
+                  }
+                  stroke={
+                    {
+                      "brushRef": "spinner-secondHalf",
+                      "type": 1,
+                    }
+                  }
+                />
+                <RNSVGPath
+                  d="M 45.5 24 A 21.5 21.5 0 0 1 2.5 24"
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
+                  }
+                  propList={
+                    [
+                      "stroke",
+                    ]
+                  }
+                  stroke={
+                    {
+                      "brushRef": "spinner-firstHalf",
+                      "type": 1,
+                    }
+                  }
+                />
+                <RNSVGPath
+                  d="M 2.5 24 A 21.5 21.5 0 0 1 2.5 22.75"
+                  fill={
+                    {
+                      "payload": 4278190080,
+                      "type": 0,
+                    }
+                  }
+                  propList={
+                    [
+                      "stroke",
+                      "strokeLinecap",
+                    ]
+                  }
+                  stroke={
+                    {
+                      "payload": 4278927075,
+                      "type": 0,
+                    }
+                  }
+                  strokeLinecap={1}
+                />
+              </RNSVGGroup>
+            </RNSVGGroup>
+          </RNSVGSvgView>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "padding": 24,
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          dynamicTypeRamp="title2"
+          maxFontSizeMultiplier={1.5}
+          style={
+            [
+              {},
+              {
+                "color": "#2B2E38",
+                "fontFamily": "Titillio",
+                "fontSize": 22,
+                "fontStyle": "normal",
+                "fontWeight": "600",
+                "lineHeight": 33,
+              },
+              {
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Caricamento del documento...
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      [
+        {
+          "flex": 1,
+        },
+        {
+          "zIndex": 0,
+        },
+      ]
+    }
+  >
+    <View
+      accessibilityLabel="Anteprima documento PDF"
+      accessible={true}
+      style={
+        {
+          "flex": 1,
+        }
+      }
+    />
+  </View>
+</View>
+`;

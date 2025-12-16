@@ -1,0 +1,4116 @@
+{
+  "accessibility": {
+    "doubleTapToActivateHint": "Doppeltippen zum Aktivieren",
+    "buttons": {
+      "torch": {
+        "turnOn": "Taschenlampe einschalten",
+        "turnOff": "Taschenlampe ausschalten"
+      }
+    }
+  },
+  "date": {
+    "formats": {
+      "default": "%d.%m.%Y",
+      "short": "%d %B",
+      "long": "%d %B %Y"
+    },
+    "day_names": [
+      "Sonntag",
+      "Montag",
+      "Dienstag",
+      "Mittwoch",
+      "Donnerstag",
+      "Freitag",
+      "Samstag"
+    ],
+    "abbr_day_names": ["So.", "Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa."],
+    "month_names": [
+      " ",
+      "Januar",
+      "Februar",
+      "März",
+      "April",
+      "Mai",
+      "Juni",
+      "Juli",
+      "August",
+      "September",
+      "Oktober",
+      "November",
+      "Dezember"
+    ],
+    "abbr_month_names": [
+      " ",
+      "Jan.",
+      "Feb.",
+      "März",
+      "Apr.",
+      "Mai",
+      "Jun.",
+      "Jul.",
+      "Aug.",
+      "Sept.",
+      "Okt.",
+      "Nov.",
+      "Dez."
+    ],
+    "meridian": ["am", "pm"]
+  },
+  "global": {
+    "why": "Warum?",
+    "you": "DU",
+    "id": "ID",
+    "badges": {
+      "blocked": "Blockiert",
+      "onGoing": "In Bearbeitung",
+      "failed": "Fehlgeschlagen",
+      "cancelled": "Abgebrochen",
+      "reversal": "Stornierung"
+    },
+    "modules": {
+      "paymentNotice": {
+        "badges": {
+          "paid": "Bezahlt",
+          "error": "Fehler",
+          "expired": "Abgelaufen",
+          "revoked": "Widerrufen",
+          "canceled": "Annulliert",
+          "inprogress": "In Bearbeitung"
+        }
+      }
+    },
+    "password": "Passwort",
+    "username": "Benutzername",
+    "disclaimer_beta": "Wenn du Probleme bei der Anmeldung hast, lass es uns bitte wissen!",
+    "unknown": "Unbekannt",
+    "sectionStatus": {
+      "moreInfo": "mehr Informationen"
+    },
+    "accessibility": {
+      "minusSymbol": "minus",
+      "reload": "Neu laden",
+      "search": "Suchen",
+      "switchLabel": "Zum Aktivieren auswählen",
+      "inputLabel": "{{header}}, Überschrift",
+      "textField": "{{inputLabel}}, Textfeld",
+      "description": "Beschreibung",
+      "dateField": "Zwei Ziffern für den Monat, zwei für das Jahr",
+      "threeDigits": "3 Ziffern",
+      "fourDigits": "4 Ziffern",
+      "dateFormat": "DD MMMM YYYY",
+      "expanded": "Erweiterter Absatz",
+      "collapsed": "Eingeklappter Absatz",
+      "active": "Aktiver Zustand",
+      "inactive": "Inktiver Zustand",
+      "linkHint": "Wenn du dieses Element aktivierst, wirst du zum Browser des Geräts weitergeleitet",
+      "alert": "Hinweis",
+      "activityIndicator": {
+        "label": "Wird geladen",
+        "hint": "Warte, bis der Inhalt geladen ist"
+      },
+      "header": {
+        "label": "Kopfzeile der Anwendung"
+      },
+      "contextualHelp": {
+        "close": "Schließe die kontextbezogene Hilfe",
+        "open": {
+          "label": "Kontextbezogene Hilfe",
+          "hint": "Greif auf Informationen über den Inhalt des aktuellen Bildschirms zu"
+        }
+      },
+      "progressTracker": "{{index}} von {{total}}"
+    },
+    "symbols": {
+      "question": "?",
+      "asterisk": "*"
+    },
+    "localization": {
+      "delimiterSeparator": ".",
+      "decimalSeparator": ","
+    },
+    "date": {
+      "invalid": "Ungültiges Datum",
+      "today": "heute",
+      "tomorrow": "morgen"
+    },
+    "dateFormats": {
+      "shortFormat": "%d.%m.%Y",
+      "shortFormatWithTime": "%d.%m.%Y, %H:%M",
+      "fullFormatShortMonthLiteral": "%d %b %Y",
+      "fullFormatShortMonthLiteralWithTime": "%d %b %Y, %H:%M",
+      "fullFormatShortMonthLiteralWithoutTime": "%d %b %Y",
+      "fullFormatFullMonthLiteral": "%d %B %Y",
+      "fullMonthLiteral": "%B",
+      "fullMonthLiteralWithYear": "%B %Y",
+      "timeFormat": "%H:%M",
+      "timeFormatWithTimezone": "%H:%M:%S (%z)",
+      "dayMonthWithTime": "%d %b, %H:%M",
+      "dayMonthWithoutTime": "%d %b",
+      "dayFullMonth": "%d %B",
+      "numericMonthYear": "%m/%Y",
+      "shortNumericMonthYear": "%m/%-y",
+      "monthYear": "MMMM YYYY",
+      "dayAndMonth": "dddd D MMMM",
+      "dayMonth": "DD.MM.",
+      "dayMonthYear": "D MMMM YYYY",
+      "weekdayDayMonthYear": "dddd D MMMM YYYY",
+      "dateTimePicker": "gg.mm.yyyy"
+    },
+    "genericError": "Es liegt ein vorübergehendes Problem vor, bitte versuche es erneut.",
+    "genericAlert": "Achtung!",
+    "genericWaiting": "Warte ein paar Sekunden...",
+    "genericThanks": "Danke",
+    "genericShare": "Teilen",
+    "genericSave": "Speichern",
+    "genericRetry": "Erneut versuchen",
+    "jserror": {
+      "title": "Es ist ein unerwarteter Fehler aufgetreten",
+      "message": "Wir haben dies unserem Team gemeldet! Bitte schließe die App und starte diese erneut!"
+    },
+    "markdown": {
+      "decodeError": "Die Nachricht kann nicht entschlüsselt werden"
+    },
+    "buttons": {
+      "consent": "Zulassen",
+      "deny": "Verweigern",
+      "share": "Teilen",
+      "delete": "Löschen",
+      "cancel": "Abbrechen",
+      "settings": "Einstellungen",
+      "ok": "OK",
+      "ok2": "Ok",
+      "continue": "Weiter",
+      "notNow": "Jetzt nicht",
+      "retry": "Wiederholen",
+      "back": "Zurück",
+      "confirm": "Bestätigen",
+      "close": "Schließen",
+      "exit": "Beenden",
+      "saveSelection": "Speichern Sie die Auswahl",
+      "search": "Suche",
+      "skip": "Überspringen",
+      "add": "Hinzufügen",
+      "edit": "Ändern",
+      "info": "Info",
+      "activate": "Aktivieren",
+      "activate2": "Aktivieren",
+      "deactivate": "Deaktivieren",
+      "show": "Anzeigen",
+      "update": "Aktualisieren",
+      "updateIO": "IO aktualisieren",
+      "findOutMore": "Mehr erfahren",
+      "details": "Details",
+      "choose": "Auswählen",
+      "copy": "Kopieren"
+    },
+    "navigator": {
+      "messages": "Mitteilungen",
+      "wallet": "Konto",
+      "scan": "Scannen",
+      "payments": "Zahlungen",
+      "documents": "Dokumente",
+      "profile": "Profil",
+      "services": "Dienste"
+    },
+    "actions": {
+      "retry": "Es ist ein Fehler aufgetreten, bitte versuche es erneut.",
+      "search": "Suchtext"
+    },
+    "remoteStates": {
+      "loading": "Wird geladen...",
+      "wait": "Warten ein paar Sekunden...",
+      "notAvailable": "Nicht verfügbar"
+    },
+    "notImplemented": "NICHT IMPLEMENTIERT",
+    "search": {
+      "invalidSearchBarText": "Mindestens {{minCharacter}} Zeichen eingeben",
+      "noResultsFound": "Es gibt keine Ergebnisse für diese Suche: versuche etwas anderes.",
+      "noResultsTitle": "Keine Ergebnisse"
+    }
+  },
+  "tablet": {
+    "message": "Die Benutzeroberfläche von IO ist für Smartphones optimiert, aber alle mit deinem Gerät kompatiblen Funktionen sind weiterhin verfügbar."
+  },
+  "rooted": {
+    "title": "Es sieht so aus, als ob die Sicherheit deines Geräts kompromittiert ist!",
+    "body": "Wenn du auf 'Weiter' tippst, erklärst du dich damit einverstanden, auf eigene Gefahr fortzufahren, andernfalls schließe die App.",
+    "learnMoreButton": {
+      "title": "Was bedeutet das?"
+    },
+    "learnMoreBottomsheet": {
+      "title": "Sicherheit deines Geräts"
+    },
+    "bodyiOS": "Auf deinem Gerät ist ein **Jailbreak** durchgeführt worden. Dies ist der Fall, wenn das Betriebssystem auf ungewöhnliche Weise verändert oder installiert wurde. Dies könnte die Integrität des Systems gefährden und die IO-App könnte nicht richtig funktionieren.\n\n**Was kann ich tun**\n\nWir empfehlen dir, die IO-App auf einem anderen Gerät mit einem intakten und aktuellen Betriebssystem zu verwenden.\n\nWenn du damit fortfährst, erklärst du dich damit einverstanden, die Interaktion mit den Diensten auf dein eigenes Risiko fortzusetzen. Ein Mangel an Integrität kann zu Datendiebstahl oder anderen betrügerischen Aktivitäten führen. Du erklärst dich auch damit einverstanden, dass der App-Entwickler in keiner Weise für Schäden, Verluste oder Folgen verantwortlich ist, die durch die IO-App in diesem Ausführungskontext verursacht werden.\n",
+    "bodyAndroid": "Du hast **Root-Rechte** auf deinem Gerät aktiviert. Dies ist der Fall, wenn das Betriebssystem auf ungewöhnliche Weise verändert oder installiert wurde. Dies könnte die Integrität des Systems gefährden und die IO-App könnte nicht richtig funktionieren.\n\n**Was kann ich tun**\n\nWir empfehlen dir, die IO-App auf einem anderen Gerät mit einem intakten und aktuellen Betriebssystem zu verwenden.\n\nWenn du damit fortfährst, erklärst du dich damit einverstanden, die Interaktion mit den Diensten auf dein eigenes Risiko fortzusetzen. Ein Mangel an Integrität kann zu Datendiebstahl oder anderen betrügerischen Aktivitäten führen. Du erklärst dich auch damit einverstanden, dass der App-Entwickler in keiner Weise für Schäden, Verluste oder Folgen verantwortlich ist, die durch die IO-App in diesem Ausführungskontext verursacht werden.\n",
+    "continueAlert": {
+      "title": "Weiter"
+    },
+    "cancelAlert": {
+      "title": "Beenden"
+    }
+  },
+  "locales": {
+    "it": "Italienisch",
+    "en": "Englisch",
+    "de": "Deutsch"
+  },
+  "clipboard": {
+    "copyIntoClipboard": "in die Zwischenablage kopieren",
+    "copyFeedback": "In die Zwischenablage kopiert",
+    "copyText": "kopieren",
+    "copyFeedbackButton": "kopiert"
+  },
+  "errors": {
+    "loginError": "Es gab einen Fehler beim Anmelden, wiederhole den Vorgang.",
+    "profileUpdateError": "Beim Aktualisieren deines Profils ist ein Fehler aufgetreten."
+  },
+  "permissionRationale": {
+    "storage": {
+      "title": "Zugriff auf die Galerie gewähren",
+      "message": "Du kannst Gutscheine und Zertifikate speichern und Screenshots und Zahlungsmitteilungen hochladen."
+    },
+    "camera": {
+      "title": "Zugriff auf die Kamera gewähren",
+      "message": "Du kannst QR-Codes lesen und pagoPA-Mitteilungen bezahlen."
+    },
+    "calendar": {
+      "title": "Zugriff auf den Kalender gewähren",
+      "message": "Du kannst Fälligkeiten in deinem Kalender eintragen und eine Benachrichtigung einstellen."
+    },
+    "torch": {
+      "title": "Zugriff auf die Kamera gewähren",
+      "message": "Wir brauchen Zugang zur Kamera, um die Taschenlampenfunktion zu benutzen."
+    }
+  },
+  "startup": {
+    "title": "Wir bereiten dein Erlebnis in IO vor",
+    "title2": "Ein bisschen mehr Geduld...",
+    "authentication": "Benutzer authentifiziert",
+    "sessionInfo": "SPID-Attribute geladen",
+    "profileInfo": "Benutzerprofil geladen",
+    "profileEnabled": "Benutzerprofil aktiviert",
+    "userDeletePendingAlert": {
+      "title": "Profil wird gelöscht",
+      "message": "Wenn du deine Meinung geändert hast, kannst du deine Anfrage im Abschnitt Datenschutz in den Einstellungen löschen.",
+      "cta_1": "Geh zu den Einstellungen",
+      "cta_2": "Ignorieren"
+    },
+    "contextualHelp": {
+      "title": "Initialisierungsprobleme?"
+    },
+    "connection_lost": {
+      "title": "Du hast keine aktive Internetverbindung",
+      "description": "Überprüfe deine Verbindung und starte die App neu"
+    },
+    "slowdowns_results_screen": {
+      "title": "Die Dinge scheinen etwas langsam zu gehen",
+      "subtitle": "Dies kann von unseren Systemen oder von der Verbindung deines Geräts abhängen. Bitte versuche es in ein paar Minuten erneut."
+    },
+    "cdn_unreachable_results_screen": {
+      "title": "Etwas hat nicht funktioniert",
+      "subtitle": "Schließe die App und versuche es in ein paar Minuten erneut."
+    }
+  },
+  "login": {
+    "biometric_info": "Um dich anzumelden, gib einfach den Entsperrcode ein oder verwende, falls aktiviert, deinen Fingerabdruck oder dein Gesicht."
+  },
+  "inbox": {
+    "enableButton": "Posteingang aktivieren",
+    "disableButton": "Posteingang deaktivieren",
+    "enableCallToActionDescription": "Aktiviere den Posteingang, um Mitteilungen anzusehen"
+  },
+  "settings": {
+    "informativeBanner": {
+      "content": "Suchst du dein Profil? Wir haben es verschoben, es befindet sich jetzt in der oberen rechten Ecke!",
+      "action": "Geh zu den Einstellungen"
+    }
+  },
+  "profile": {
+    "fiscalCode": {
+      "accessibility": {
+        "unavailable": "Nicht verfügbar"
+      },
+      "title": "Deine persönlichen Dokumente",
+      "fiscalCode": "Steuernummer",
+      "description": "Verwende den Strichcode, um deine Steuernummer mitzuteilen, wenn du dazu aufgefordert wirst.",
+      "facSimile": "Faksimile",
+      "copyCode": "Steuernummer kopieren",
+      "codeCopied": "Steuernummer kopiert"
+    },
+    "sections": {
+      "spid": "SPID PROFIL"
+    },
+    "unknown": "Unbekannt",
+    "logout": {
+      "menulabel": "IO beenden",
+      "alertTitle": "Möchtest du wirklich beenden?",
+      "alertMessage": "Wenn du dich das nächste Mal anmeldest, musst du dich erneut mit CIE oder SPID authentifizieren.",
+      "loading": "IO wird beendet",
+      "exit": "Beenden"
+    },
+    "errors": {
+      "load": "Fehler beim Laden des Profils",
+      "upsert": "Fehler beim Erstellen oder Aktualisieren des Profils"
+    },
+    "main": {
+      "title": "Profil",
+      "logout": "Abmelden/Beenden",
+      "forgetCurrentSession": "Aktuelle Sitzung löschen",
+      "clearAsyncStorage": "Inhalt von AsyncStorage löschen",
+      "dumpAsyncStorage": "AsyncStorage-Inhalt herunterladen",
+      "sentryTestEvent": "Teile Fehler",
+      "contextualHelpTitle": "Was du in deinem Profil machen kannst",
+      "developerModeOn": "Entwicklermodus aktiviert",
+      "cache": {
+        "alert": "Bist du sicher den Cache löschen zu wollen?",
+        "clear": "Cache löschen",
+        "cleared": "Der Cache wurde geleert."
+      },
+      "data": {
+        "title": "Deine Daten",
+        "description": "Deine Informationen überprüfen"
+      },
+      "preferences": {
+        "title": "Einstellungen",
+        "description": "Einstellungen der App verwalten"
+      },
+      "security": {
+        "title": "Sicherheit",
+        "description": "Biometrischen Zugang und PIN verwalten"
+      },
+      "privacy": {
+        "title": "Datenschutz und Nutzungsbedingungen",
+        "description": "Deine Rechte und Pflichten bei der Nutzung der IO-App",
+        "subtitle": "Hier findest du Informationen über deine Rechte und Pflichten sowie über die Verarbeitung personenbezogener Daten.",
+        "loading": "Warte ein paar Sekunden, wir überprüfen dein Profil...",
+        "errorMessage": "Wir können den Status deiner Anfrage nicht abrufen. Bitte versuche es erneut.",
+        "removeAccount": {
+          "title": "Dein Profil löschen",
+          "description": "Dein Profil und deine persönlichen Daten löschen",
+          "alert": {
+            "activeBonusTitle": "Dein Profil löschen",
+            "activeBonusDescription": "Es scheint, dass du einigen Initiativen auf IO beigetreten bist. Wenn du dein Profil löschst, werden die Initiativen, denen du beigetreten bist, nicht beendet.\n\nUm sie zu verwalten, geh zum Abschnitt 'Konto', andernfalls wähle 'Löschen'.",
+            "oldRequest": "Du hast bereits beantragt, dass dein Profil gelöscht wird",
+            "oldRequestSubtitle": "Wir bearbeiten deine Anfrage.\n\nWenn du deine Meinung geändert hast oder versehentlich die Löschung beantragt hast, tippe bitte auf 'Löschung abbrechen'.",
+            "cta": {
+              "manageBonus": "Geh zum Konto",
+              "continue": "Profil löschen",
+              "return": "Zurück",
+              "cancel": "Löschung abbrechen"
+            }
+          },
+          "info": {
+            "title": "Dein Profil löschen",
+            "description": "Du kannst jederzeit von deinem Recht Gebrauch machen, dein IO-Profil zu löschen.",
+            "banner": "Dein Profil wird innerhalb von 30 Tagen nach deinem Antrag endgültig gelöscht.",
+            "body": {
+              "p1": "Wenn du dich entscheidest fortzufahren, kannst du die Mitteilungen oder Einstellungen, die du in der App festgelegt hast, nicht mehr abrufen.",
+              "p2": {
+                "firstPart": "Alle Boni oder Rabatte, die du über die IO-App erhalten hast, ",
+                "lastPart": "sind nicht mehr verfügbar."
+              },
+              "p3": "Du kannst jederzeit wieder in die IO-App einsteigen, indem du dich über SPID oder CIE erneut anmeldest."
+            },
+            "cta": "Mit der Löschung fortfahren"
+          },
+          "details": {
+            "title": "Warum möchtest du dein Profil bei IO löschen?",
+            "body": "Wir würden gerne wissen, warum du dein Profil löschst, damit wir uns in Zukunft verbessern können. Wenn du den Grund nicht mitteilen möchtest, überspringe bitte diesen Schritt und tippe auf 'Profil löschen'.",
+            "question": "Was ist der Grund dafür?",
+            "answer_1": "Ich halte IO nicht mehr für nützlich",
+            "answer_2": "Ich fühle mich in IO nicht sicher",
+            "answer_3": "Ich habe die App nie benutzt",
+            "answer_4": "Keiner der oben genannten Punkte",
+            "labelOpenAnswer": "Schreib deinen Grund",
+            "cta": "Dein Profil löschen"
+          },
+          "success": {
+            "title": "Wir haben deine Anfrage erhalten",
+            "body": "Dein Profil wird innerhalb von 30 Tagen gelöscht. Du kannst jederzeit wieder zu IO zurückkehren, indem du dich mit SPID oder CIE anmeldest.",
+            "cta": "Schließen"
+          }
+        },
+        "exportData": {
+          "cta": "Eine Kopie der Daten anfordern",
+          "title": "Zugriff auf deine Daten",
+          "subtitle": "Du kannst die wichtigsten Daten deines IO-Profils jederzeit herunterladen.",
+          "description": "Du erhältst eine Kopie der mit deinem IO-Profil verbundenen Daten",
+          "detail": {
+            "bulletList": {
+              "title": "Deine Daten sind:",
+              "item1": "deine Steuernummer;",
+              "item2": "die von dir angegebene E-Mail-Adresse und ggf. eine Bestätigung ihrer Validierung;",
+              "item3": "den Text der Mitteilungen, die du erhalten hast;",
+              "item4": "deine Benachrichtigungseinstellungen."
+            },
+            "paragraph1": "Die Informationen werden im YAML-Format heruntergeladen, einem Standardformat, das in der Datenverarbeitung den Austausch von Daten zwischen verschiedenen Anwendungen ermöglicht.",
+            "paragraph2": {
+              "part1": "Du erhältst eine ",
+              "part2": "Mitteilung in IO ",
+              "part3": "mit einem Link und einem 15 Tage lang gültigen Passwort."
+            },
+            "paragraph3": {
+              "part1": "Weitere Informationen findest du in der",
+              "link": "IO-Datenschutzrichtlinie."
+            }
+          },
+          "alert": {
+            "requestTitle": "Möchtest du wirklich all deine Daten exportieren?",
+            "oldRequest": "Wir bearbeiten bereits eine Anfrage zum Datenexport",
+            "confirmSubtitle": "Nach der Bearbeitung erhältst du eine E-Mail mit allen Informationen, die mit deinem Profil verbunden sind."
+          },
+          "error": "Bei der Anfrage zum Datenexport ist ein Fehler aufgetreten, bitte versuche es erneut!"
+        },
+        "privacyPolicy": {
+          "title": "Datenschutz und Nutzungsbedingungen",
+          "description": "Sieh die Datenschutzbestimmungen und Nutzungsbedingungen der IO-App an",
+          "header": "Informationen über die Verarbeitung persönlicher Daten der Nutzer der IO-App",
+          "updated": "Wir haben unsere Datenschutzbestimmungen und unsere Nutzungsbedingungen aktualisiert.",
+          "infobox": "Es ist notwendig, die Datenschutzbestimmungen und die Nutzungsbedingungen zu lesen und zu akzeptieren",
+          "contextualHelpTitlePolicy": "Informationen über die Datenschutzbestimmungen und die Nutzungsbedingungen des Dienstes",
+          "contextualHelpTitle": "Deine Datenschutzeinstellungen"
+        },
+        "shareData": {
+          "title": "Datenschutz",
+          "listItem": {
+            "title": "Freigabe von Nutzungsdaten",
+            "description": "Unterstütze das IO-Team bei der Überwachung der Funktionsweise der App"
+          },
+          "screen": {
+            "description": "Wenn du deine Daten weitergibst, hilfst du uns, dein IO-Erlebnis zu verbessern und dir gezielte Unterstützung zu bieten.",
+            "why": {
+              "description": {
+                "one": "Wir verwenden ",
+                "two": "nur die Daten, die notwendig sind, ",
+                "three": "um das Funktionieren der App zu überwachen und die angebotenen Dienste zu verbessern."
+              },
+              "cta": "Warum wir Daten erfassen"
+            },
+            "security": {
+              "description": {
+                "one": "Wir ergreifen Sicherheitsmaßnahmen ",
+                "two": "zum Schutz ",
+                "three": "deiner Daten."
+              },
+              "cta": "Wie wir die Daten schützen"
+            },
+            "gdpr": {
+              "description": {
+                "one": "Wir arbeiten nur mit Lieferanten zusammen, die Daten ",
+                "two": "transparent und sicher verarbeiten."
+              },
+              "cta": "Wer sind die Lieferanten?"
+            },
+            "additionalInformation": {
+              "description": "Für weitere Informationen lies bitte die ",
+              "cta": "Datenschutzerklärung und die Nutzungsbedingungen"
+            },
+            "profileSettings": "Du kannst deine Wahl jederzeit unter Einstellungen > Datenschutz und Nutzungsbedingungen ändern",
+            "cta": {
+              "shareData": "Daten freigeben",
+              "dontShareData": "Daten nicht freigeben"
+            },
+            "confirmToast": "Einstellungen aktualisiert!"
+          },
+          "alert": {
+            "title": "Du hast entschieden, deine Daten \nnicht weiterzugeben",
+            "body": "Wenn du dies bestätigst, können wir dir nicht gezielt helfen, da uns möglicherweise die notwendigen Daten zur Lösung des Problems fehlen."
+          },
+          "whyBottomSheet": {
+            "title": "Warum wir Daten erfassen",
+            "body": "Wir sammeln keine Daten für Marketingzwecke. \n\nWir verwenden Tools, die es uns ermöglichen, Daten darüber aufzuzeichnen, wie du die App nutzt, um **dir einen besseren Service zu bieten** und **dich bei Bedarf zu unterstützen**."
+          },
+          "securityBottomSheet": {
+            "title": "Was ist eine Pseudonymisierung?",
+            "body": "Sie ist die Verarbeitung personenbezogener Daten in einer Weise, dass die personenbezogener Daten ohne Hinzuziehung zusätzlicher Informationen nicht mehr einer bestimmten betroffenen Person zugeordnet werden können, sofern diese zusätzlichen Informationen gesondert aufbewahrt werden und technischen und organisatorischen Maßnahmen unterliegen, die gewährleisten, dass diese personenbezogener Daten nicht einer identifizierten oder identifizierbaren natürlichen Person zugewiesen werden können."
+          }
+        }
+      },
+      "appInfo": {
+        "title": "Über IO",
+        "description": "Erfahren mehr über die IO-App",
+        "subtitle": "Hier findest du weitere Einzelheiten über die IO-App und erfahre mehr über ihre Einsatzmöglichkeiten.",
+        "paragraphTitle": "Was ist IO?",
+        "paragraphBody1": "IO, die App für öffentliche Dienste, ",
+        "paragraphBody2": "bietet dir einen einzigen Kanal für die einfache Interaktion mit lokalen und nationalen Behörden (Gemeinden, Regionen, Zentralbehörden) direkt von deinem Gerät aus. Dank IO treten die einzelnen Verwaltungen rechtzeitig und individuell mit dir in Kontakt und ermöglichen dir, Verfahren im Zusammenhang mit einer bestimmten Dienstleistung - wie Bescheide, Zahlungen, Fristen und Benachrichtigungen - einfach und sicher zu verwalten.",
+        "bannerBody": "Möchtest du mehr erfahren?",
+        "bannerButton": "Geh zur IO-Website"
+      },
+      "developersSectionHeader": "Entwickler",
+      "testEnvironmentSectionHeader": "Testumgebung",
+      "appVersion": "Version",
+      "backendVersion": "Backend-Version",
+      "debugMode": "Debug-Modus",
+      "designSystem": "Design System",
+      "banner": {
+        "title": "Möchtest du deine Steuernummer anzeigen?",
+        "action": "Geh zum Abschnitt 'Deine Daten'.",
+        "close": "Schließe das Banner und zeige es nicht mehr an."
+      }
+    },
+    "data": {
+      "title": "Deine Daten",
+      "subtitle": "Hier findest du deine anagrafischen Daten und Kontaktdaten, die von IO verwendet werden",
+      "list": {
+        "email": "E-Mail-Adresse",
+        "need_validate": "Noch zu bestätigen",
+        "nameSurname": "Vor- und Nachname",
+        "fiscalCode": "Steuernummer"
+      }
+    },
+    "security": {
+      "title": "Sicherheit",
+      "subtitle": "Verwalte die Authentifizierungsmethoden in der App",
+      "list": {
+        "biometric_recognition": {
+          "title": "Biometrische Erkennung",
+          "subtitle": "Verwende dein Gesicht oder deinen Abdruck.",
+          "needed_to_disable": "Bestätigung zur Deaktivierung erforderlich"
+        }
+      }
+    },
+    "preferences": {
+      "title": "Einstellungen",
+      "subtitle": "Mit diesen Einstellungen kannst du dein IO-Erlebnis individuell gestalten.",
+      "genericToastTitle": "Einstellungen aktualisiert!",
+      "contextualHelpTitle": "Deine Einstellungen",
+      "list": {
+        "wip": "In Bearbeitung",
+        "digitalDomicile": "Digitales Domizil",
+        "service_contact": {
+          "title": "Dienste verwalten",
+          "subtitle": "Wähle, wer dich kontaktieren kann"
+        },
+        "send_email_messages": {
+          "title": "Weiterleitung von Mitteilungen per E-Mail",
+          "subtitle": "Vorschau der Mitteilung erhalten"
+        },
+        "language": {
+          "title": "Sprache",
+          "subtitle": "Wähle die Sprache"
+        },
+        "preferred_calendar": {
+          "title": "Bevorzugter Kalender",
+          "description": "Wähle einen Kalender"
+        },
+        "preferred_language": {
+          "title": "Bevorzugte Sprache",
+          "subtitle": "In welcher Sprache möchtest du die App nutzen?",
+          "alert": {
+            "title": "Möchtest du die Sprache ändern in",
+            "subtitle": "Du musst die App neu starten, um die Änderung zu übernehmen"
+          },
+          "toast": {
+            "success": {
+              "title": "Sprache geändert"
+            }
+          },
+          "not_selected": "Nicht ausgewählt",
+          "banner": {
+            "button": "Mehr erfahren"
+          }
+        },
+        "notifications": {
+          "title": "Push-Benachrichtigungen",
+          "subtitle": "Vorschau und Erinnerung zulassen"
+        }
+      },
+      "unavailable": {
+        "title": "Diese Einstellung wird von deinem SPID-Profil festgelegt"
+      },
+      "language": {
+        "contextualHelpTitle": "Wie verwalte ich die Spracheinstellung?"
+      },
+      "email": {
+        "forward": {
+          "contextualHelpTitle": "Wie verwalte ich die Nachrichtenweiterleitung?"
+        }
+      },
+      "calendar": {
+        "contextualHelpTitle": "Was ist dein bevorzugter Kalender?",
+        "local_calendar": "Lokaler Kalender",
+        "birthday_calendar": "Geburtstage"
+      },
+      "notifications": {
+        "contextualHelpTitle": "Push-Benachrichtigungen",
+        "header": "Push-Benachrichtigungen",
+        "title": "Push-Benachrichtigungen anpassen",
+        "subtitle": "Wähle, ob du eine Vorschau anzeigen und Erinnerungen erhalten möchtest.",
+        "titleExistingUser": "Benachrichtigungen anpassen",
+        "subtitleExistingUser": "Jetzt kannst du sofort sehen, wer dir geschrieben hat oder dich an wichtige Nachrichten erinnern lassen.",
+        "reminders": {
+          "title": "Erinnerungen zulassen",
+          "description": "Auf Antrag der Körperschaft erhältst du Push-Benachrichtigungen kurz vor Fälligkeit oder wenn du die Nachrichten noch nicht gelesen hast"
+        },
+        "preview": {
+          "title": "Vorschau anzeigen",
+          "description": "Absender und Betreff in die Push-Benachrichtigung einfügen · ",
+          "link": "Weitere Informationen",
+          "bottomSheet": {
+            "title": "Vorschau anzeigen",
+            "content": "Wenn diese Option aktiviert ist, werden bei Push-Benachrichtigungen der Absender und der Betreff von Nachrichten angezeigt, auch wenn der Bildschirm gesperrt ist. Diese Informationen werden vom Hersteller deines Betriebssystems und von den Apps der Drittanbieter, die möglicherweise ausgeführt werden, verarbeitet.",
+            "cta": "OK, habe verstanden!"
+          }
+        },
+        "error": "Bei deiner Anfrage ist ein Fehler aufgetreten"
+      }
+    }
+  },
+  "navigation": {
+    "messages": "Mitteilungen",
+    "profile": "Profil",
+    "accessibility": "Abschnitt {{section}}, Panel, {{order}} von 4",
+    "accessibilityWithBadge": "Abschnitt {{section}}, {{unread}} neue Elemente, Panel, {{order}} von 4",
+    "selected": "Ausgewählt ist"
+  },
+  "cie": {
+    "title": "Karte berühren",
+    "layCardMessageHeader": "Halte deine elektronische Identitätskarte für einige Sekunden auf die Rückseite deines Telefons.",
+    "layCardMessageFooter": "Wenn du nicht genau weißt, wo sich der NFC-Sensor befindet, halte deine Karte an verschiedene Stellen und warte ein paar Sekunden, bis du einen Ton hörst.",
+    "booking_url": "https://www.prenotazionicie.interno.gov.it/?locale=de"
+  },
+  "spid": {
+    "login": "LOGIN",
+    "loginButton": "LOGIN MIT",
+    "selectIdp": "Um mit der Anmeldung fortzufahren, wähle deinen SPID-Anbieter.",
+    "selectDemoIdp": "Wenn du noch keine eigene SPID-Identität hast, verwende die App im Demo-Modus",
+    "loginErrorAlert": {
+      "title": "Fehler bei der Anmeldung"
+    },
+    "pending_login": {
+      "title": "Anmeldung in Arbeit",
+      "details": "Wenn du die Sitzung im Browser geöffnet hast, fahre von dort aus fort. Andernfalls gehe zurück und starte eine neue Anmeldung!",
+      "button": "Zurück zur Liste"
+    }
+  },
+  "authentication": {
+    "landing": {
+      "accessibility": {
+        "carousel": {
+          "label": "Vorstellung von IO",
+          "hint": "Karussell mit einer einführenden Anleitung zur IO-Funktionalität. Wähle, um den Inhalt kennenzulernen."
+        }
+      },
+      "cie_bottom_sheet": {
+        "title": "Wie willst du dich anmelden?",
+        "module_cie_pin": {
+          "title": "Anmeldung mit CIE + PIN",
+          "subtitle": "Benutze die elektronische Identitätskarte und die PIN"
+        },
+        "module_cie_id": {
+          "title": "Anmeldung mit CieID",
+          "subtitle": "Benutze die App CieID"
+        },
+        "help_banner": {
+          "title": "Nicht sicher, was du wählen solltest?",
+          "action": "Wir helfen dir"
+        }
+      },
+      "contentTitleCie": "Du hast keinen SPID oder CIE?",
+      "spid_or_cie": "Um IO nutzen zu können, musst du über eine dieser digitalen Werkzeuge verfügen, die deine Identität in sicherer Weise bestätigen.",
+      "request_cie": "CIE anfordern",
+      "request_spid": "SPID anfordern",
+      "contextualHelpTitle": "Zugang zur IO-App",
+      "loginSpid": "Anmeldung mit SPID",
+      "loginCie": "Anmeldung mit CIE",
+      "loginSpidCie": "Anmeldung mit SPID oder CIE",
+      "infoSpidCie": "Einführung in SPID und CIE",
+      "loginSpidCieContent": "Ab heute kannst du dich zusätzlich zu SPID mit deiner elektronischen Identitätskarte (CIE) anmelden",
+      "privacyLink": "Datenschutzerklärung",
+      "nospid": "Du hast keinen SPID? Erfahre mehr",
+      "nospid-nocie": "Du hast keinen SPID und keine CIE? Erfahre mehr",
+      "expiredCardTitle": "CIE-Verifizierung fehlgeschlagen",
+      "expiredCardHeaderTitle": "Anmeldung mit CIE",
+      "expiredCardContent": "Die verwendete Karte ist möglicherweise abgelaufen oder nicht mehr gültig. Versuche dich mit SPID bei der App anzumelden.",
+      "expiredCardHelp": "Wie erneuert man seine elektronische Identitätskarte?",
+      "tour_guide": {
+        "title": "Neu",
+        "content": "Jetzt kannst du CieID verwenden, um dich in IO anzumelden!"
+      }
+    },
+    "cieidUrlErrorScreen": {
+      "title": "Wir können dich nicht mit der CieID-App authentifizieren",
+      "description": "Verwende eine andere Methode zum Anmelden"
+    },
+    "wizards": {
+      "cie_id_wizard": {
+        "title": "Hast du die CieID-App?",
+        "description": "Wenn du die CieID-App auf deinem Gerät hast, melde dich bei IO an, indem du die Anmeldedaten der App eingibst. Du kannst auch dein Gesicht oder deinen Fingerabdruck oder den Code, den du für die CieID-App eingerichtet hast, verwenden.",
+        "actions": {
+          "primary": {
+            "label": "Ja, mit CieID anmelden"
+          },
+          "secondary": {
+            "label": "Ich habe CieID nicht"
+          }
+        },
+        "link": "Was ist CieID?"
+      },
+      "cie_pin_wizard": {
+        "title": "Hast du deine elektronische Identitätskarte und deine PIN?",
+        "description": "Wenn du deine elektronischen Identitätskarte zur Hand hast, kannst du dich bei IO anmelden, indem du die PIN der Karte eingibst und sie in die Nähe des Geräts hältst, damit die Daten gelesen werden können.",
+        "actions": {
+          "primary": {
+            "label": "Ja, mit CIE + PIN anmelden"
+          },
+          "secondary": {
+            "label": "Ich habe keine CIE und PIN"
+          }
+        },
+        "bottom_sheet": {
+          "title": "Wo kann ich die PIN der CIE finden?",
+          "link": "Hast du deine PIN vergessen?",
+          "cta": {
+            "label": "Wo kann ich die PIN der CIE finden?"
+          }
+        }
+      },
+      "spid_wizard": {
+        "title": "Hast du SPID?",
+        "description": "Wenn du einen SPID hast, kannst du dich bei IO anmelden, indem du deine Anmeldedaten eingibst, dein Gesicht oder deinen Fingerabdruck verwendest oder über die App deines SPID-Anbieters.",
+        "actions": {
+          "primary": {
+            "label": "Ja, mit SPID anmelden"
+          },
+          "secondary": {
+            "label": "Ich habe keinen SPID"
+          }
+        }
+      },
+      "id_activation_wizard": {
+        "title": "Aktiviere deine digitale Identität!",
+        "description": "Du musst einen aktiven SPID oder eine CIE (elektronische Identitätskarte) haben, um IO nutzen zu können.",
+        "list_items": {
+          "title": "Wie aktivieren?",
+          "request_cie": {
+            "label": "Deine CIE beantragen"
+          },
+          "activate_cie": {
+            "title": "CIE-Zugangsdaten aktivieren"
+          },
+          "activate_spid": {
+            "title": "SPID aktivieren"
+          }
+        },
+        "actions": {
+          "primary": {
+            "label": "Schließen"
+          }
+        }
+      }
+    },
+    "auth_errors": {
+      "error_19": {
+        "title": "Du hast zu viele Anmeldeversuche gemacht",
+        "subtitle": "Du hast zu oft einen falschen Benutzernamen oder ein falsches Passwort eingegeben. Bitte überprüfe deine Anmeldedaten und versuche es in ein paar Minuten noch einmal, oder wende dich an deinen SPID-Identitätsanbieter, um deine Anmeldedaten zu ändern."
+      },
+      "error_20": {
+        "title": "Es war nicht möglich dich anzumelden",
+        "subtitle": "Aus Sicherheitsgründen musst du eine Identität mit einer höheren Sicherheitsstufe verwenden. Weitere Informationen erhältst du von deinem SPID-Identitätsanbieter."
+      },
+      "error_21": {
+        "title": "Es ist zu viel Zeit vergangen",
+        "subtitle": "Es ist zu viel Zeit vergangen, seit du mit dem Anmelden begonnen hast: Fang noch einmal von vorne an."
+      },
+      "error_22": {
+        "title": "Du hast der Übermittlung von Daten nicht zugestimmt",
+        "subtitle": "Um Zugang zu erhalten, ist es erforderlich, der Übermittlung bestimmter Daten zuzustimmen."
+      },
+      "error_23": {
+        "title": "Identität gesperrt oder widerrufen",
+        "subtitle": "Deine SPID-Identität wurde gesperrt oder widerrufen. Für weitere Informationen wende dich bitte an deinen SPID-Identitätsanbieter."
+      },
+      "error_25": {
+        "title": "Du hast den Vorgang abgebrochen",
+        "subtitle": "Um einzusteigen, versuche es einfach noch einmal, wann immer du willst."
+      },
+      "error_1001": {
+        "title": "Du hast das erforderliche Mindestalter nicht erreicht",
+        "subtitle": "Um dich anzumelden, musst du mindestens 18 Jahre alt sein."
+      },
+      "missing_saml_response": {
+        "title": "Es war nicht möglich, dich anzumelden",
+        "subtitle": "Es ist derzeit nicht möglich, dich mit deinem SPID-Identitätsanbieter anzumelden. Bitte versuche es in ein paar Minuten erneut."
+      },
+      "generic": {
+        "title": "Es war nicht möglich dich anzumelden",
+        "subtitle": "Beim Anmelden ist ein Problem aufgetreten. Bitte versuche es in ein paar Minuten erneut."
+      }
+    },
+    "cie_id": {
+      "error_screen": {
+        "title": "Du kannst dich nicht mit CieID anmelden?",
+        "cie_pin_supported": {
+          "description": "Wenn du deine elektronische Identitätskarte zur Hand hast, verwende sie für den Zugang zu IO.\n\nGib die CIE-PIN ein und halte sie in die Nähe des Geräts, damit die Daten gelesen werden können.",
+          "primary_action_label": "Mit CIE + PIN anmelden"
+        },
+        "cie_pin_not_supported": {
+          "description": "Wenn du einen SPID hast, melde dich bei IO an, indem du deine Anmeldedaten eingibst, dein Gesicht oder deinen Fingerabdruck verwendest oder über die App deines SPID-Anbieters.",
+          "primary_action_label": "Mit SPID anmelden"
+        },
+        "secondary_action_label": "Schließen"
+      },
+      "cie_not_installed": {
+        "title": "Wir können die CieID-App nicht finden",
+        "description": "Um darauf zugreifen zu können, musst du die App auf deinem Gerät installiert haben.",
+        "primary_action_label": "CieID installieren"
+      }
+    },
+    "cie": {
+      "genericTitle": "Anmeldung mit CIE",
+      "cie": "CIE",
+      "noDataTitle": "Um IO zu verwenden, musst du das Senden von Daten zulassen",
+      "nfc": {
+        "apduNotSupported": "Das Betriebssystem unterstützt das Lesen der elektronischen Identitätskarte nicht. Versuche, SPID zu verwenden, um dich in der App anzumelden.",
+        "retry": "Erneut versuchen",
+        "noNfcConnectionTitle": "Hast du die Karte berührt?",
+        "title": "Aktiviere NFC um fortzufahren",
+        "subtitle": "Um IO das Lesen deiner CIE zu erlauben, aktiviere NFC in den Einstellungen deines Geräts.",
+        "listItemTitle": "Wie geht's:",
+        "action": "Öffne Einstellungen",
+        "listItemLabel1": "Schritt 1",
+        "listItemValue1": "Rufe die Einstellungen deines Geräts auf",
+        "listItemLabel2": "Schritt 2",
+        "listItemValue2": "Suche nach 'NFC'",
+        "listItemLabel3": "Schritt 3",
+        "listItemValue3": "Aktiviere NFC",
+        "activeNfcAlert": "Aktiviere NFC, damit IO deine CIE lesen kann!",
+        "activeNFCAlertButton": "Aktiviere NFC"
+      },
+      "pin": {
+        "accessibility": {
+          "placeholderLabel": "PIN der elektronischen Identitätskarte",
+          "label": "Eingabefeld für die PIN der elektronischen Identitätskarte",
+          "hint": "Gib in diesem Feld die 8-stellige PIN deiner elektronischen Identitätskarte ein.",
+          "deleteLabel": "Du hast {{number}} gelöscht"
+        },
+        "pinCardTitle": "Gib die PIN deiner Identitätskarte ein",
+        "pinCardHeader": "Anmeldung mit CIE",
+        "pinCardContent": "Der PIN-Code besteht aus 8 Ziffern. Vier Ziffern wurden dir beim Meldeamt ausgehändigt und weitere vier Ziffern wurden dir mit der Karte nach Hause geschickt. Setze diese in dieser Reihenfolge zusammen und trage sie bitte hier ein.",
+        "incorrectCiePinTitle1": "Die PIN ist nicht korrekt",
+        "incorrectCiePinTitle2": "Du hast 2 mal eine falsche PIN eingegeben",
+        "lockedCiePinTitle": "Du hast zu oft eine falsche PIN eingegeben",
+        "incorrectCiePinContent1": "Du hast noch 2 Versuche übrig, überprüfe und versuche es erneut.",
+        "incorrectCiePinContent2": "Nach dem dritten falschen Versuch wird die PIN gesperrt. Um sie zu entsperren und eine neue einzustellen, musst du den PUK-Code in der CieID-App eingeben.",
+        "incorrectCiePinSecondaryActionLabel2": "Hast du deine PIN vergessen?",
+        "lockedCiePinContent": "Die PIN deiner CIE wurde gesperrt. Um sie zu entsperren und eine neue einzustellen, musst du den PUK-Code in der CieID-App eingeben.",
+        "lockedSecondaryActionLabel": "Hast du deinen PUK vergessen?",
+        "alert": "Möchtest du wirklich zurückgehen?",
+        "subtitleHelp": "Die PIN ist ein 8-stelliger Code.",
+        "subtitleCTA": "Wo finde ich ihn?",
+        "bottomSheetCTA": "Hast du deine PIN vergessen?",
+        "contextualHelpTitle": "Wo kann ich meine PIN und meinen PUK finden?",
+        "contextualHelpCTA": "Hast du deine PIN / deinen PUK vergessen?"
+      },
+      "pinTempLocked": {
+        "title": "Karte vorübergehend gesperrt"
+      },
+      "card": {
+        "title": "Halte die CIE auf die Rückseite des Geräts",
+        "titleiOS": "Halte die CIE oben auf das Gerät",
+        "layCardMessageHeader": "Wenn die Karte nicht gelesen wird, halte sie an eine andere Stelle und warte ein paar Sekunden, bis du eine Vibration spürst.",
+        "layCardMessageHeaderiOS": "Wenn die Karte nicht gelesen wird, halte sie an eine andere Stelle und warte einige Sekunden.",
+        "layCardMessageFooter": "Wenn du nicht genau weißt, wo sich der NFC-Sensor befindet, halte die Karte an verschiedene Stellen und warte ein paar Sekunden, bis du eine Vibration spürst.",
+        "cieCardValid": "Lesen abgeschlossen!",
+        "readerCardTitle": "Halte sie einige Sekunden lang still.",
+        "readerCardHeader": "Wir lesen die Daten deiner Identitätskarte ein und überprüfen deren Gültigkeit.",
+        "readerCardFooter": "Halte die Karte noch ein paar Sekunden in dieser Position",
+        "iosAlert": {
+          "readingInstructions": "Halte deine elektronische Identitätskarte oben auf das Telefon.",
+          "moreTags": "Es wurden mehrere Karten identifiziert. Bitte lege eine Karte nach der anderen an.",
+          "readingInProgress": "WIRD GELESEN \nHalte die Karte einige Sekunden lang still...",
+          "readingSuccess": "Lesen abgeschlossen!",
+          "invalidCard": "Die verwendete Karte scheint keine elektronische Identitätskarte (CIE) zu sein.",
+          "tagLost": "Du hast die Karte zu früh entfernt.",
+          "cardLocked": "Die PIN der CIE ist gesperrt",
+          "wrongPin1AttemptLeft": "Du hast zweimal eine falsche PIN eingegeben",
+          "wrongPin2AttemptLeft": "Die PIN ist nicht korrekt",
+          "genericError": "Es ist ein unerwarteter Fehler aufgetreten. Bitte versuche es erneut."
+        },
+        "error": {
+          "readerCardLostTitle": "Du hast die Karte zu früh entfernt",
+          "onTagLost": "Halte die Karte wieder auf die Rückseite des Geräts.",
+          "tryAgain": "Bei der Verifizierung deiner Karte ist ein Fehler aufgetreten. Es handelt sich wahrscheinlich um einen temporäres Problem, bitte versuche es erneut!",
+          "generic": "Bei der Verifizierung deiner Karte ist ein Fehler aufgetreten. Wenn du das Problem nicht lösen kannst, teile uns dies bitte über das Symbol '?' in der oberen rechten Ecke mit. Danke!",
+          "unknownCardTitle": "Unbekannte Karte",
+          "unknownCardContent": "Die verwendete Karte scheint keine elektronische Identitätskarte zu sein.",
+          "unknownCardHelpLink": "Was ist eine elektronische Identitätskarte?",
+          "genericErrorTitle": "Wir konnten die Daten nicht von der Karte abrufen",
+          "genericErrorSubtitle": "Wenn das Problem mehrmals auftritt, warte ein paar Minuten und versuche es erneut."
+        }
+      }
+    },
+    "spid": "SPID",
+    "spid_information_request": {
+      "headerTitle": "Du hast keinen SPID?",
+      "contentTitle": "Was ist SPID?"
+    },
+    "spid_information": {
+      "headerTitle": "Du hast keinen SPID?",
+      "contentTitle": "Was ist SPID?",
+      "subtitle": "SPID ist sicher"
+    },
+    "opt_in": {
+      "contextualHelpTitle": "Authentifizierung",
+      "contextualHelpContent": "Hier findest du Informationen darüber, wie du dich bei IO authentifizieren kannst, sowie einige Sicherheitstipps.",
+      "title": "Ab sofort kannst du leichter auf IO zugreifen",
+      "identity_check": "Du musst dich nicht mehr alle 30 Tage mit SPID oder CIE identifizieren, sondern nur noch einmal im Jahr oder wenn du die App verlässt",
+      "security_suggests": "Einige Sicherheitstipps",
+      "passcode": "In allen anderen Fällen reicht dein Gesicht, dein Fingerabdruck oder dein Entsperrcode aus.",
+      "notification": "Du erhältst bei jedem neuen Zugang eine E-Mail. Wenn du diese nicht erkennst, kannst dz den Zugang zu IO sperren.",
+      "button_accept_lv": "Ja, Schnellzugriff einrichten",
+      "button_decline_lv": "Melde dich alle 30 Tage mit SPID oder CIE an"
+    },
+    "security_suggestions": {
+      "fingerprint": "Gib deinen biometrischen Erkennungs- oder Entsperrcode nicht an Dritte weiter.",
+      "io_logout": "Wenn du dieses Gerät verlierst, beende IO über die Website",
+      "io_lock_access": "Wenn du glaubst, dass deine SPID- oder CIE-Anmeldedaten kompromittiert wurden, blockiere den Zugriff auf IO über die Website",
+      "access_new_device": "Wenn du mit einem fremden Gerät auf IO zugreifst, denk daran, dich bei der App abzumelden.",
+      "navigate_to_the_site": "Website besuchen"
+    },
+    "idp_selection": {
+      "headerTitle": "Home",
+      "contentTitle": "Wähle deinen Identitätsanbieter",
+      "contextualHelpTitle": "Wer ist dein Identitätsanbieter?"
+    },
+    "idp_login": {
+      "headerTitle": "Anmelden",
+      "contextualHelpTitle": "Wie lautet dein Passwort",
+      "contextualHelpTitle2": "Benötigst du Hilfe bei der Anmeldung mit SPID?",
+      "openTicket": "Ticket erstellen",
+      "recoverDescription": "Wenn du dein Passwort vergessen hast, tippe bitte auf die Schaltfläche unten.",
+      "dualRecoverDescription": "Wenn du deine Anmeldedaten vergessen hast, tippe bitte auf die unten stehenden Schaltflächen.",
+      "recoverUsername": "Benutzername wiederherstellen",
+      "recoverPassword": "Passwort wiederherstellen"
+    },
+    "idp_login_success": {
+      "contentTitle": "Hallo {{name}}!"
+    },
+    "errors": {
+      "notoken": "Die Sitzung ist nicht verfügbar oder ist ungültig",
+      "logout": "Fehler beim Abmelden",
+      "network": {
+        "title": "Zugriffsproblem",
+        "body": "Der von dir gewählte Identitätsanbieter ist im Moment nicht verfügbar. Du kannst es später noch einmal versuchen.\nWenn du eine andere SPID-Identität hast, wähle bitte einen anderen Anbieter.\nDu kannst das Problem über das Symbol '?' in der oberen rechten Ecke melden."
+      },
+      "login": {
+        "title": "Fehler beim Anmelden"
+      }
+    },
+    "expiredSessionBanner": {
+      "title": "Sicherheitshinweis"
+    },
+    "unlock": {
+      "title": "Zugang entsperren",
+      "subtitlel2": "Um die App nutzen zu können, müsst du zunächst den Zugang zu IO entsperren.",
+      "subtitlel3": "Um mit all deinen SPID-Anmeldedaten oder deiner CIE auf die App zugreifen zu können, musst du den Zugang entsperren.",
+      "learnmore": "Mehr erfahren",
+      "loginIO": "Nicht jetzt, IO öffnen"
+    },
+    "unlockmodal": {
+      "title": "Was bedeutet das?",
+      "description1_1": "Wenn du den Zugang zu IO aus Sicherheitsgründen gesperrt hast, musst du ihn zunächst entsperren, um die App wieder öffnen zu können.",
+      "description1_2": "Alternativ kannst du die App auch über ein Login mit der",
+      "description1_3": "höchsten Sicherheitsstufe öffnen.",
+      "description1_4": "Diese Art der Authentifizierung erfordert einen Benutzernamen, ein Passwort und ein physisches Medium, wie z.B. eine CIE.",
+      "title2": "Möchtest du den Zugang zu IO entsperren?",
+      "listitem1": "Stell sicher, dass du deine digitale Identität abgesichert hast, indem du deine Anmeldedaten bei deinem Identitätsanbieter änderst.",
+      "listitem2_1": "Greif über das Internet auf IO zu, indem du deine SPID-Anmeldedaten oder deine CIE verwendest.",
+      "listitem2_2": "Geh zur Website",
+      "listitem3_1": "Geh zum Abschnitt",
+      "listitem3_2": "IO-Zugang entsperren",
+      "listitem3_3": "und folge den angegebenen Schritten. Wenn du dazu aufgefordert wirst, gib den",
+      "listitem3_4": "Wiederherstellungscode",
+      "listitem3_5": "ein, um den Vorgang zu bestätigen."
+    }
+  },
+  "email": {
+    "cduScreens": {
+      "validateMail": {
+        "title": "Ist das deine E-Mail?",
+        "subtitle": "Um die App weiter nutzen zu können, musst du deine E-Mail-Adresse bestätigen:",
+        "editButton": "Nein, ändern",
+        "validateButton": "Ja, bestätigen",
+        "header": {
+          "title": "IO konfigurieren"
+        },
+        "help": {
+          "body": "Um die App weiter nutzen zu können, musst du deine E-Mail-Adresse bestätigen"
+        }
+      },
+      "emailAlreadyTaken": {
+        "title": "Deine E-Mail-Adresse ändern",
+        "subtitleStart": "Deine E-Mail-Adresse",
+        "subtitleEnd": "wird bereits auf IO verwendet, du musst eine andere eingeben, um die App weiter nutzen zu können.",
+        "editButton": "E-Mail-Adresse ändern",
+        "header": {
+          "title": "IO konfigurieren"
+        },
+        "help": {
+          "body": "Deine E-Mail-Adresse wird bereits auf IO verwendet; du musst eine andere eingeben, um die App weiter benutzen zu können."
+        }
+      }
+    },
+    "read": {
+      "title": "Deine E-Mail-Adresse",
+      "info": "Das ist die E-Mail-Adresse, die mit deinem SPID-Konto verknüpft ist. Wenn du magst, kannst du in IO eine andere E-Mail-Adresse verwenden. Um die neue E-Mail-Adresse zu aktivieren, musst du sie bestätigen, indem du auf den Link tippst, den du mittels E-Mail erhalten hast.",
+      "alert": "Achtung: dein pagoPA Konto ist mit deiner E-Mail-Adresse verknüpft. Wenn du sie änderst, wird IO deine registrierten Zahlungsmethoden und Transaktionen nicht mehr auflisten.",
+      "help": "Dein SPID-Profil übermittelt deine E-Mail-Adresse an die IO-App. Sollte die Adresse falsch sein oder nicht mehr verwendet werden, kannst du sie direkt in deinem SPID-Konto bearbeiten."
+    },
+    "insert": {
+      "header": "Aktivierung",
+      "title": "E-Mail-Adresse eingeben",
+      "subtitle": "Einige Funktionen der IO-App benötigen deine E-Mail-Adresse.",
+      "label": "Persönliche E-Mail-Adresse",
+      "alert": "Du verwendest bereits diese E-Mail-Adresse",
+      "help": {
+        "title": "E-Mail"
+      },
+      "alertTitle": "Diese E-Mail-Adresse wird bereits verwendet",
+      "alertDescription": "Dies kann der Fall sein, wenn du mit einem Familienmitglied die gleiche Adresse teilst",
+      "alertButton": "Andere E-Mail-Adresse verwenden"
+    },
+    "newinsert": {
+      "header": "IO konfigurieren",
+      "title": "Wie lautet Ihre E-Mail?",
+      "subtitle": "Sie wird verwendet, um dir Mitteilungen wie Zahlungsbestätigungen oder Support-Nachrichten zu senden.",
+      "label": "Persönliche E-Mail Adresse",
+      "alert": {
+        "title": "{{email}} wird bereits verwendet, bitte gib eine andere ein.",
+        "description1": "E-Mail-Adresse bereits verwendet",
+        "description2": "Gib eine andere E-Mail-Adresse als die aktuelle ein",
+        "description3": "Du verwendest diese E-Mail-Adresse bereits",
+        "invalidemail": "Gib eine gültige E-Mail-Adresse ein",
+        "modaltitle": "Diese E-Mail-Adresse ist bereits verwendet",
+        "modaldescription": "Dies kann der Fall sein, wenn du dieselbe Adresse wie ein Familienmitglied hast",
+        "modalbutton": "Andere E-Mail-Adresse verwenden"
+      }
+    },
+    "edit": {
+      "title": "E-Mail-Adresse bearbeiten",
+      "subtitle": "Jetzt benutzt du",
+      "validated": "Die zuvor angegebene und bestätigte E-Mail-Adresse lautet",
+      "label": "Neue persönliche E-Mail-Adresse",
+      "cta": "E-Mail bearbeiten",
+      "upsert_ok": "Die Anfrage zur Änderung der E-Mail-Adresse wurde erfolgreich übermittelt",
+      "upsert_ko": "Fehler bei der Anfrage zur Änderung der E-Mail-Adresse, versuche es erneut"
+    },
+    "validate": {
+      "title": "Erinnere dich, deine E-Mail-Adresse zu bestätigen!",
+      "header": "E-Mail-Bestätigung",
+      "content1": "Wir haben eine E-Mail an <b>{{E-Mail}}</b> mit einem Link zur Bestätigung gesendet: tippe einfach auf diesen Link.<br/>Solange deine E-Mail-Adresse nicht bestätigt ist, werden einige Funktionen der App (Zahlungen, Nachrichtenweiterleitung per E-Mail usw.) nicht nutzbar sein, aber du kannst einige andere Funktionen trotzdem nutzen (z. B. Dienste, Nachrichten usw.)",
+      "content2": "Für einige Funktionen von IO musst du deine E-Mail-Adresse bestätigen. <br/> Wir haben eine E-Mail an <b>{{email}}</b> gesendet: Öffne deine E-Mails und tippe auf den Link.",
+      "cta": "Sende eine neue E-Mail zur Bestätigung",
+      "sent": "E-Mail gesendet",
+      "send_validation_ok": "E-Mail zur Bestätigung gesendet",
+      "send_validation_ko": "Beim Senden der E-Mail ist ein Fehler aufgetreten. Versuche es erneut.",
+      "help": "Dein SPID-Profil übermittelt deine E-Mail-Adresse an IO. Sollte die Adresse falsch sein oder nicht mehr verwendet werden, kannst du sie direkt in deinem SPID-Konto bearbeiten.",
+      "validation_ok": "Deine E-Mail-Adresse wurde bestätigt. Du kannst nun alle Funktionen von IO benutzen.",
+      "validated": "E-Mail bestätigt!",
+      "validated_ok": "Danke, jetzt kannst du alle Zahlungsfunktionen, Nachrichtenweiterleitung usw. nutzen."
+    },
+    "newvalidate": {
+      "title": "Wir haben dir eine E-Mail gesendet",
+      "subtitle": "Um deine E-Mail-Adresse zu bestätigen, folge den Anweisungen der E-Mail an",
+      "link": "Ist sie nicht korrekt?",
+      "countdowntext": "Eine neue E-Mail anfordern in ",
+      "buttonlabelsent": "E-Mail gesendet",
+      "buttonlabelsentagain": "E-Mail erneut senden",
+      "toast": "Erledigt! Prüf deinen Posteingang."
+    },
+    "newvalidemail": {
+      "title": "E-Mail bestätigt!",
+      "subtitle": "Du empfängst IO-Mitteilungen unter:"
+    }
+  },
+  "onboarding": {
+    "contextualHelpTitle": "Wie funktioniert die biometrische Erkennung",
+    "tos": {
+      "headerTitle": "IO einrichten",
+      "accept": "Akzeptieren",
+      "error": "Wir konnten die Datenschutzrichtlinie und die Allgemeinen Geschäftsbedingungen nicht abrufen",
+      "alert": {
+        "title": "Achtung",
+        "message": "Bitte lies den vollständigen Inhalt der Nutzungsbedingungen und der Datenschutzbestimmungen um fortzufahren"
+      }
+    },
+    "unlockCode": {
+      "reset": "Ändere den Code",
+      "contextualHelpTitle": "Wie lautet dein Entsperrcode?"
+    },
+    "pin": {
+      "headerTitle": "IO einrichten",
+      "title": "Entsprerrcode erstellen",
+      "subTitle": "Dies ist der 6-stellige Code für den Zugriff auf IO und die Autorisierung bestimmter Vorgänge in der App.",
+      "pinLabel": "Lege einen Entsperrcode fest",
+      "pinConfirmationLabel": "Wiederhole den Entsperrcode",
+      "errors": {
+        "invalid": {
+          "title": "Zu einfach!",
+          "description": "Wähle einen Code, der schwer zu erraten ist und weder eine einzelne, sich wiederholende Zahl (z. B. 000000) noch eine Liste von geordneten Zahlen (z. B. 123456 oder 654321) enthält.",
+          "cta": "Erstelle einen anderen Code"
+        },
+        "match": "Der Code stimmt nicht überein"
+      },
+      "policy": {
+        "title": "Wie wähle ich den Code aus?",
+        "description": "Der Entsperrcode besteht aus 6 Ziffern und du benötigst ihn, um auf IO zuzugreifen und bestimmte Vorgänge in der App zu autorisieren.",
+        "bulletListTitle": "Wähle einen Code, der schwer zu erraten ist und nicht folgenden Inhalt hat:",
+        "firstItem": "eine sich wiederholende Zahl (z.B. 000000)",
+        "secondItem": "eine Liste von geordneten Zahlen (z.B. 123456 oder 654321)"
+      },
+      "success": {
+        "message": "Du hast den Code geändert!"
+      }
+    },
+    "pinConfirmation": {
+      "title": "Bestätige den Entsperrcode",
+      "errors": {
+        "match": {
+          "title": "Der eingegebene Code ist anders als der erste",
+          "cta": "Erneut versuchen"
+        }
+      }
+    },
+    "alert": {
+      "title": "Möchtest du dich wirklich abmelden?",
+      "description": "Du musst dich erneut anmelden, um die App wieder zu verwenden"
+    },
+    "exitAlert": {
+      "title": "Möchtest du dich von IO abmelden?",
+      "description": "Du musst dich erneut mit SPID oder CIE anmelden um die App zu benutzen."
+    },
+    "biometric": {
+      "headerTitle": "IO einrichten",
+      "available": {
+        "title": "Biometrische Erkennung aktiveren",
+        "settings": "Du kannst deine Wahl jederzeit unter Einstellungen > Sicherheit ändern",
+        "body": {
+          "text": "Du kannst dein Gesicht oder deinen Fingerabdruck anstelle des Entsperrcodes verwenden. Damit kannst du schneller und sicherer auf die App zugreifen und Transaktionen und Zahlungen autorisieren.",
+          "infoStart": "Du kannst die biometrische Erkennung anstelle des Entsperrcodes verwenden. Sie ermöglicht dir den Zugriff auf die App und die Bestätigung von Transaktionen und Zahlungen",
+          "biometricType": "mit deinem Gesicht oder Fingerabdruck",
+          "infoEnd": "auf schnellere und sicherere Weise.",
+          "enrolledText": "Die biometrischen Daten werden im Speicher deines Telefons gespeichert und werden in keiner Weise an IO-Systeme weitergegeben oder von anderen Parteien gespeichert.",
+          "notEnrolled": {
+            "text": "Dazu musst du die biometrische Erkennung zuerst in den Systemeinstellungen deines Geräts konfigurieren.",
+            "label": "Wie geht's?",
+            "step1": {
+              "label": "Schritt 1",
+              "value": "Rufe die Einstellungen deines Geräts auf"
+            },
+            "step2": {
+              "label": "Schritt 2",
+              "value": "Konfiguriere dein Gesicht oder deinen Fingerabdruck"
+            },
+            "step3": {
+              "label": "Schritt 3",
+              "value": "Aktiviere sie in IO unter Einstellungen > Sicherheit"
+            }
+          }
+        }
+      },
+      "unavailable": {
+        "title": "Schütze dein Gerät",
+        "subtitle": "IO sendet dir Mitteilungen, die dich persönlich betreffen. Stelle sicher, dass nur du auf die App zugreifen kannst, indem du einen Code oder ein Zeichen zum Entsperren des Geräts festlegst.",
+        "body": {
+          "label": "Wie geht's?",
+          "step1": {
+            "label": "Schritt 1",
+            "value": "Rufe die Einstellungen deines Geräts auf"
+          },
+          "step2": {
+            "label": "Schritt 2",
+            "value": "Erstelle einen Code oder Zeiche zum Entsperren des Geräts"
+          }
+        }
+      }
+    },
+    "shareData": {
+      "title": "IO einrichten"
+    },
+    "thankYouPage": {
+      "title": "Einrichtung abgeschlossen!"
+    },
+    "notifications": {
+      "badge": "Neuigkeiten",
+      "headerTitle": "IO einrichten",
+      "continue": "Weiter",
+      "preview": {
+        "accessibilityLabelPrefix": "Hier ein Beispiel:",
+        "reminderOnPreviewOnTitle": "Du hast eine fällige Zahlungsmitteilung",
+        "reminderOnPreviewOnMessage": "Öffne die App und bezahle die Zahlungsmitteilung von ACI",
+        "reminderOffPreviewOnTitle": "Gemeinde Ipazia",
+        "reminderOffPreviewOnMessage": "Die Einschreibungen für die Sommerbetreuung sind offen",
+        "reminderOnPreviewOffTitle": "Du hast eine fällige Zahlungsmitteilung",
+        "reminderOnPreviewOffMessage": "Öffne die App um sie zu bezahlen",
+        "reminderOffPreviewOffTitle": "Du hast eine neue Mitteilung",
+        "reminderOffPreviewOffMessage": "Öffne die App um sie zu lesen"
+      },
+      "contextualHelpTitle": "Push-Benachrichtigungen"
+    },
+    "infoConsent": {
+      "headerTitle": "IO einrichten",
+      "title": "Aktiviere Push-Benachrichtigungen, um keine wichtigen Nachrichten zu verpassen!",
+      "subTitle": "Dazu musst du die Einstellungen in den Systemeinstellungen deines Geräts ändern.",
+      "openSettings": "Einstellungen aufrufen",
+      "continue": "Jetzt nicht",
+      "contextualHelpTitle": "Push-Benachrichtigungen",
+      "instructions": {
+        "title": "So geht's:",
+        "label": "Schritt",
+        "ios": {
+          "step1": "Gehe zu 'Einstellungen'",
+          "step2": "Wähle 'Benachrichtigungen'",
+          "step3": "Aktiviere 'Benachrichtigungen zulassen'"
+        },
+        "android": {
+          "step1": "Gehe zu 'Einstellungen'",
+          "step2": "Wähle 'Apps'",
+          "step3": "Wähle 'IO'",
+          "step4": "Wähle 'Benachrichtigungen'",
+          "step5": "Aktiviere 'Benachrichtigungen zulassen'"
+        }
+      }
+    }
+  },
+  "datetimes": {
+    "yesterday": "gestern",
+    "todayAt": "heute um",
+    "notValid": "Ungültiges Datum"
+  },
+  "payment": {
+    "alertNoPaymentMethods": {
+      "title": "Füge eine Zahlungsmethode für In-App-Zahlungen hinzu",
+      "message": "Die Zahlungsmethode wird im Konto gespeichert, so dass du beim nächsten Mal einfacher bezahlen kannst.",
+      "buttons": {
+        "ok": "Weiter",
+        "ko": "Abbrechen"
+      }
+    },
+    "alertNoActivePaymentMethods": {
+      "title": "Um diese Funktion zu nutzen, aktiviere In-App-Zahlungen",
+      "message": "Aktiviere mindestens eine Zahlungsmethode aus deinem Konto oder füge eine neue Zahlungsmethode hinzu.",
+      "buttons": {
+        "ok": "Gehe zum Konto",
+        "ko": "Abbrechen"
+      }
+    },
+    "abortWebView": {
+      "title": "Möchtest du die aktuelle Zahlung abbrechen?",
+      "confirm": "Zahlung abbrechen",
+      "cancel": "Mit der Zahlung fortfahren",
+      "success": "Die Zahlung wurde ordnungsgemäß abgebrochen"
+    },
+    "errorDetails": "Details",
+    "currentPsp": "Die Zahlung wird durgeführt von",
+    "noPsp": "Du hast noch keinen Zahlungsdienstleister ausgewählt",
+    "changePsp": "Wähle den Anbieter",
+    "IUV": "IUV",
+    "IUV_extended": "Einheitlicher Zahlungskodex (IUV)",
+    "notice": "Zahlungsmitteilung",
+    "noticeCode": "Zahlungsmitteilungskodex",
+    "recipientFiscalCode": "Steuernummer des Empfängers",
+    "paidConfirm": "Du hast {{amount}} gezahlt",
+    "details": {
+      "state": {
+        "successful": "Erfolgreich",
+        "incomplete": "Nicht abgeschlossen",
+        "failed": "Fehlgeschlagen"
+      },
+      "info": {
+        "buttons": {
+          "copy": "Kopieren",
+          "help": "Support kontaktieren"
+        },
+        "title": "Details der Zahlung",
+        "enteCreditore": "Gläubiger",
+        "causaleVersamento": "Zahlungsgrund",
+        "dateAndTime": "Datum und Uhrzeit",
+        "outcomeCode": "Ergebniscode",
+        "onlyDate": "Datum",
+        "paymentAmount": "Zahlungsbetrag",
+        "transactionCosts": "Transaktionsgebühr",
+        "transactionCode": "Identifikationscode der Transaktion",
+        "help": "Solltest du ein Problem mit dieser Zahlung haben, schreib uns für weitere Informationen und Details"
+      },
+      "list": {
+        "empty": {
+          "title": "Keine Zahlungsversuche",
+          "description": "IO hat keine Zahlungsversuche gespeichert. Hier findest du deine letzten Zahlungsversuche"
+        },
+        "title": "Zahlungsversuche",
+        "iuv": "Einheitlicher Zahlungskodex (IUV) {{iuv}}"
+      }
+    },
+    "confirm": {
+      "totalAmount": "Zu zahlender Gesamtbetrag",
+      "pay": "Zahle ",
+      "payWith": "Zahle mit ",
+      "fee": "Kommission ",
+      "feeAppliedBy": "Angewandt von: ",
+      "editButton": "Ändern",
+      "termsAndConditions": "Mit dem Fortfahren akzeptieren Sie die [Nutzungsbedingungen](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/) und bestätigen, die [Datenschutzerklärung](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/) von {{pspName}} gelesen zu haben.",
+      "a11y": {
+        "announce": "Zusammenfassung Ihrer Zahlung"
+      }
+    }
+  },
+  "wallet": {
+    "methodDetails": {
+      "cobadgeTitle": "Debitkarte",
+      "cardGeneric": "Karte",
+      "a11y": {
+        "credit": {
+          "hpan": "{{circuit}} mit der Endung {{spacedHpan}}",
+          "owner": "lautend auf: {{fullOwnerName}}"
+        },
+        "paypal": {
+          "owner": "Konto: {{email}}"
+        },
+        "bpay": {
+          "phone": "Mobiltelefonnummer: {{phoneNumber}}",
+          "owner": "lautend auf: {{fullOwnerName}}"
+        },
+        "bancomat": {
+          "bank": "PagoBANCOMAT-Karte {{bankName}}",
+          "owner": "lautend auf: {{fullOwnerName}}"
+        },
+        "cobadge": {
+          "bank": "Kreditkarte {{bankName}}",
+          "owner": "lautend auf: {{fullOwnerName}}"
+        }
+      },
+      "expired": "Die Zahlungsmethode ist abgelaufen und kann nicht mehr für In-App-Zahlungen verwendet werden.",
+      "isSupportedBanner": {
+        "title": "Möchtest du in der App bezahlen?",
+        "content": "Finde heraus, welche Zahlungsmethoden du in dein Konto aufnehmen kannst.",
+        "cta": "Mehr erfahren"
+      },
+      "error": {
+        "title": "Es ist ein Fehler aufgetreten",
+        "subtitle": "Versuche es erneut oder kontaktiere den Support",
+        "primaryButton": "Schließen",
+        "secondaryButton": "Erneut versuchen"
+      }
+    },
+    "wallet": "Konto",
+    "refreshWallet": "Konto aktualisieren",
+    "favourite": {
+      "setFavoriteTitle": "Als Favorit festlegen",
+      "setFavoriteSubtitle": "Wenn du in der App bezahlst, wird dir IO automatisch diese Zahlungsmethode anzeigen"
+    },
+    "incoming": {
+      "title": "Demnächst verfügbar",
+      "message": "In einer zukünftigen Version von IO wird diese Zahlungsmethode ebenfalls zur Verfügung stehen"
+    },
+    "featured": "Highlights",
+    "creditCard": {
+      "onboardingAttempts": {
+        "title": "Versuche vom Hinzufügen von Zahlungsmethoden",
+        "emptyTitle": "Kein Versuch vom Hinzufügen von Zahlungsmethoden",
+        "emptyBody": "IO hat keine Versuche Zahlungsmethoden hinzuzufügen gespeichert. Hier findest du deine letzten Versuche",
+        "lastAttemptsTitle": "Letzten Versuche",
+        "success": "Hinzugefügt",
+        "failure": "Fehlgeschlagen",
+        "dateTime": "Datum und Uhrzeit",
+        "detailTitle": "Details",
+        "help": "Wenn du bei der Eingabe dieser Zahlungsmethode auf ein Problem gestoßen bist, dann schreib uns bitte für weitere Informationen und Details"
+      },
+      "validUntil": "Gültig bis {{expDate}}"
+    },
+    "searchAbi": {
+      "header": "{{methodName}} hinzufügen",
+      "bancomat": {
+        "title": "Suche deine PagoBANCOMAT-Karten",
+        "description": {
+          "text1": "Indem du PagoBANCOMAT zu deinem Konto hinzufügst, kannst du an den auf IO verfügbaren Initiativen teilnehmen.\nWenn du fortfährst, akzeptierst du die ",
+          "text2": "Datenschutzbestimmungen.",
+          "text3": "Wenn du möchtest, kannst du die Bank wählen, bei der du eine aktive PagoBANCOMAT-Karte hast. ",
+          "text4": "Liste der verfügbaren Banken"
+        }
+      },
+      "bpay": {
+        "title": "Zahle auf IO mit BANCOMAT-Pay",
+        "description": {
+          "text1": "Füge BANCOMAT Pay hinzu, um pagoPA-Zahlungsmitteilungen einfacher zu bezahlen sowie an den auf IO verfügbaren Initiativen teilzunehmen.\nWenn du fortfährst, akzeptierst du die ",
+          "text2": "Datenschutzbestimmungen.",
+          "text3": "Tippe auf 'Weiter', um nach Konten, die auf dich lauten, zu suchen oder suche die Bank, bei der du ein aktives BANCOMAT Pay Konto hast. ",
+          "text4": "Liste der verfügbaren Banken"
+        }
+      },
+      "cobadge": {
+        "title": "Suche deine Karten im internationalen Zahlungsnetzwerk",
+        "description": {
+          "text1": "Wenn du alle Maestro-, Mastercard-, V-Pay- und Visa-Karten, die mit dir verbunden sind, zu deinem Konto hinzufügst, können sie an den auf IO verfügbaren Initiativen teilnehmen.",
+          "text3": "Für weitere Informationen sieh dir die ",
+          "text4": "Datenschutzbestimmungen an."
+        }
+      },
+      "bankName": "Name der Bank",
+      "noName": "Name nicht verfügbar",
+      "loading": "Bankenliste wird geladen..."
+    },
+    "accessibility": {
+      "sectionCardLabel": "Zahlungsmethoden aktualisieren",
+      "sectionCardHint": "Aktualisiere die Liste der Zahlungmethoden",
+      "folded": {
+        "creditCard": "{{brand}}-Karte, die Kartennummer endet mit {{blurredNumber}}",
+        "bancomat": "BANCOMAT {{bankName}}",
+        "coBadge": "{{brand}}-Karte, {{bankName}}",
+        "bancomatPay": "BANCOMAT Pay {{bankName}}",
+        "cta": "Details zur Zahlungsmethode anzeigen",
+        "bankNotAvailable": "Bankenname nicht verfügbar"
+      },
+      "addElement": "Element zum Konto hinzufügen",
+      "cardsPreview": "Vorschau der Zahlungsmethoden. Aktiviere, um die Liste deiner Zahlungsmethoden aufzurufen",
+      "cardHolder": "Karteninhaber"
+    },
+    "onboarding": {
+      "paymentMethodsList": {
+        "header": {
+          "title": "Zahlungsmethode hinzufügen",
+          "subtitle": "Die Zahlungsmethode wird gespeichert und kann verwendet werden, um In-App-Zahlungen vorzunehmen oder kompatiblen Initiativen beizutreten."
+        }
+      },
+      "bancomat": {
+        "headerTitle": "PagoBANCOMAT-Karte hinzufügen",
+        "koTimeout": {
+          "title": "Wir konnten deine PagoBANCOMAT-Karten nicht finden",
+          "body": "Versuche es erneut"
+        },
+        "koNotFound": {
+          "title": "Wir konnten keine Karten finden",
+          "body": "Es gibt keine PagoBANCOMAT-Karten auf deinen Namen: Wende dich bitte für weitere Informationen an deine Bank."
+        },
+        "add": {
+          "title": "PagoBancomat hinzufügen",
+          "label": "PagoBancomat-Karte {{current}} von {{length}}",
+          "screenTitle": "Möchtest du diese Karte hinzufügen?",
+          "bodySingular": "Wir haben eine Karte gefunden, die auf deinen Namen ausgestellt ist. Tippe auf 'Hinzufügen', um diese Karte hinzuzufügen oder tippe auf 'Überspringen', um den Vorgang abzubrechen.",
+          "bodyPlural": "Wir haben {{number}} Karten gefunden, die auf deinen Namen ausgestellt sind. Tippe auf 'Hinzufügen', um diese Karte hinzuzufügen oder tippe auf 'Überspringen', um zur nächsten Karte zu gelangen.",
+          "loading": "Wir fügen gerade deine PagoBANCOMAT-Karte hinzu\n\nWarte ein paar Sekunden...",
+          "warning": "Wenn du nicht all deine Karten findest, versuche später nocheinmal die fehlende Karte hinzuzufügen, indem du die Bank, wo du dein Kontokorrent hast, auswählst.",
+          "blocked": "Diese Karte ist gesperrt und kann daher nicht aktiviert werden, um an den auf IO verfügbaren Initiativen teilzunehmen. Wende dich an deine Bank."
+        }
+      },
+      "bPay": {
+        "headerTitle": "BANCOMAT Pay hinzufügen",
+        "loadingSearch": "Wir rufen deine BANCOMAT Pay Konten ab.\n\nWarte ein paar Sekunden",
+        "add": {
+          "label": "BANCOMAT Pay Konto {{current}} von {{length}}",
+          "screenTitle": "Möchtest du dieses Konto hinzufügen?"
+        },
+        "loadingAdd": "Wir fügen gerade dein BANCOMAT Pay Konto hinzu.\n\nWarte ein paar Sekunden",
+        "koTimeout": {
+          "title": "Deine Daten können nicht abgerufen werden",
+          "body": "Versuche es bitte erneut"
+        },
+        "koNotFound": {
+          "title": "Wir haben kein aktives BANCOMAT Pay Konto gefunden",
+          "body": "Wende dich an deine Bank um BANCOMAT Pay zu aktivieren!"
+        }
+      },
+      "paypal": {
+        "name": "PayPal",
+        "headerTitle": "PayPal hinzufügen",
+        "emailNotAvailable": "nicht verfügbar",
+        "start": {
+          "title": "Zahle in IO mit PayPal",
+          "body": "Verknüpfe dein PayPal-Konto und bezahle die pagoPA-Zahlungsmitteilungen noch einfacher: du kannst auch dein Kontokorrent verwenden!"
+        },
+        "updatePsp": {
+          "headerTitle": "Dienstleister auswählen",
+          "title": "Mit welchem Dienstleister möchtest du bezahlen?",
+          "body": "Jeder Dienstleister schlägt eine Transaktionsgebühr vor.\nIn dieser Liste findest du alle Dienstleister, die mit deiner Zahlungsmethode kompatibel sind, auch wenn du nicht deren Kunde bist.",
+          "leftColumnTitle": "Dienstleister",
+          "rightColumnTitle": "Transaktionsgebühr (€)"
+        },
+        "selectPsp": {
+          "title": "Mit welchem Dienstleister möchtest du dein PayPal-Konto benutzen?",
+          "body": "Wenn du pagoPA benutzt, wählst du den Dienstleister aus, der dir am passendsten ist.\nDu kannst diese Wahl bei jeder Zahlung entsprechend der vorgeschlagenen Transaktionsgebühr ändern.",
+          "link": "Was ist der Zahlungsdienstleister der Transaktion?",
+          "leftColumnTitle": "Dienstleister",
+          "rightColumnTitle": "Info und Kosten",
+          "infoBottomSheet": {
+            "title": "Wer ist {{pspName}}?",
+            "ctaTitle": "Verstanden",
+            "row1Description": "{{pspName}} ist ein Zahlungsdienstleister (PSP), der deine Transaktionen über PayPal abwickeln kann.",
+            "row2Description1": "Bei Bezahlung einer Zahlungsmitteilung beträgt die Transaktionsgebühr maximal ",
+            "row2Description2": ". Der genaue Betrag wird dir vor der Bestätigung angezeigt.",
+            "row3Description1": "Es gelten die Nutzungsbedingungen und die Datenschutzbestimmungen von {{psp}}."
+          },
+          "whatIsPspBottomSheet": {
+            "title": "Was ist der Zahlungsdienstleister der Transaktion?",
+            "body": "Es ist das Unternehmen – auch als PSP (Payment Service Provider) bezeichnet – das den Betrag im Namen des Zahlungsempfängers einnimmt und dafür eine Gebühr für die angebotene Dienstleistung erheben kann.\nBei jeder Zahlung kannst du den Zahlungsdienstleister wählen, der dir am besten passt – egal ob du Kunde dessen bist oder nicht."
+          }
+        },
+        "paypalAlreadyAdded": {
+          "alert": {
+            "title": "Du hast bereits ein PayPal-Konto in deinem Konto",
+            "message": "Wenn du fortfährst, wird das neue Konto dein altes ersetzen."
+          }
+        },
+        "onBoardingCompleted": {
+          "title": "Fertig!",
+          "body": "Jetzt kannst du die Einstellungen deiner neuen Zahlungsmethode anzeigen.",
+          "primaryButton": "Weiter"
+        },
+        "onBoardingCompletedWhilePayment": {
+          "title": "Fertig!",
+          "body": "Jetzt kannst du mit der Zahlung fortfahren.",
+          "primaryButton": "Weiter"
+        },
+        "paymentCheckout": {
+          "transactionCost": "Transaktionsgebühr",
+          "pspHandler": "Durchgeführt von {{pspName}}",
+          "privacyDisclaimer": "Wenn du fortfährst, verstehst und akzeptierst du die",
+          "privacyTerms": "Nutzungsbedingungen und Datenschutzbestimmungen"
+        }
+      },
+      "coBadge": {
+        "headerTitle": "Internationales Zahlungsnetz hinzufügen",
+        "start": {
+          "loading": "Wir laden die Einstellungen\n\nWarte ein paar Sekunden",
+          "koDisabled": {
+            "title": "Deine Bank bietet diese Funktion noch nicht an",
+            "body": "Wir arbeiten daran, dir bald die Möglichkeit zu geben, deine Karte mit internationalem Zahlungsnetz hinzuzufügen."
+          },
+          "koUnavailable": {
+            "title": "Wir konnten deine Bank nicht kontaktieren",
+            "body": "Wir arbeiten an der Lösung des Problems."
+          }
+        },
+        "search": {
+          "loading": "Wir laden die Liste deiner Karten\n\nWarte bitte ein paar Sekunden",
+          "koTimeout": {
+            "title": "Wir können deine Karten nicht abrufen",
+            "body": "Bitte versuche es erneut"
+          },
+          "koNotFound": {
+            "title": "Wir haben keine Karten bei Banken, die am Dienst teilnehmen, gefunden",
+            "body": "Es gibt keine Karten mit internationalem Zahlungsnetz auf deinen Namen: Wende dich an deine Bank, um weitere Informationen zu erhalten."
+          },
+          "koSingleBankNotFound": {
+            "title": "Wir konnten keine Karten bei dieser Bank finden",
+            "body": "Es gibt keine Karten mit internationalem Zahlungsnetz auf deinen Namen.\nWenn du magst, kann IO alle teilnehmenden Banken durchsuchen."
+          },
+          "koServiceError": {
+            "title": "Wir konnten keine Karten finden",
+            "body": "Bitte versuche es später erneut"
+          }
+        },
+        "add": {
+          "screenTitle": "Möchtest du diese Karte hinzufügen?",
+          "label": "Karte mit internationalem Zahlungsnetz {{current}} von {{length}}",
+          "blocked": "Diese Karte ist gesperrt und kann daher nicht aktiviert werden, um an den auf IO verfügbaren Initiativen teilzunehmen. Wende dich an deine Bank.",
+          "warning1": "In einigen Fällen können die angezeigten Daten von denen auf der physischen Karte abweichen: ",
+          "warning2": "Bei Zweifeln wende dich an deine Bank.",
+          "loading": "Wir fügen die Karte mit internationalem Zahlungsnetz hinzu\n\nWarte ein paar Sekunden..."
+        },
+        "chooseType": {
+          "title": "Kannst du mit deiner Karte auch online einkaufen?",
+          "description": "Anhand dieser Frage können wir besser verstehen, wie deine Karte funktioniert und dir helfen, sie zu deinem Konto hinzuzufügen.",
+          "path": {
+            "enabled": {
+              "title": "Ja, sie ist für Online-Käufe aktiviert.",
+              "description": "Wir überprüfen die Kartendaten mit deiner Bank, normalerweise per SMS oder Push-Benachrichtigung"
+            },
+            "disabled": {
+              "title": "Nein, ich benutze sie nur in Geschäften",
+              "description": "Wir durchsuchen alle auf deinem Namen lautenden Karten bei den am Dienst teilnehmenden Banken"
+            },
+            "unknown": {
+              "title": "Ich weiß es nicht",
+              "description": "Wir durchsuchen alle auf deinem Namen lautenden Karten bei den am Dienst teilnehmenden Banken"
+            }
+          }
+        }
+      },
+      "generalError": "Beim Hinzufügen der Zahlungsmethode trat ein allgemeiner Fehler auf",
+      "outcome": {
+        "SUCCESS": {
+          "title": "Die Karte wurde hinzugefügt!",
+          "subtitle": "",
+          "primaryAction": "Details anzeigen",
+          "secondaryAction": "Weiter"
+        },
+        "GENERIC_ERROR": {
+          "title": "Es ist ein unerwarteter Fehler aufgetreten",
+          "subtitle": "Versuche es erneut oder kontaktiere den Support",
+          "primaryAction": "Schließen"
+        },
+        "AUTH_ERROR": {
+          "title": "Autorisierung verweigert",
+          "subtitle": "Vergewissere dich, dass du die Anweisungen deiner Bank oder Zahlungsapp korrekt befolgt hast.",
+          "primaryAction": "Schließen",
+          "secondaryAction": "Was kannst du tun?",
+          "bottomSheet": {
+            "title": "Was ist zu tun, wenn das Hinzufügen der Methode fehlschlägt?",
+            "description": "**Kredit- oder Debitkarte** Bitte erkundige dich bei deiner Bank. Die häufigsten Fälle sind: \n- deine Karte ist nicht für Online-Einkäufe freigeschaltet.\n- du hast den 3DS-Dienst noch nicht aktiviert: Dies ist ein Sicherheitssystem für Online-Zahlungen.\n- deine Karte wurde gesperrt oder blockiert.\n- du hast deine Karte 'pausiert'.\n**Andere Methoden** Wende dich an den Support der Zahlungsmethode und frage nach dem Grund für die Ablehnung."
+          }
+        },
+        "TIMEOUT": {
+          "title": "Die Sitzung ist abgelaufen",
+          "subtitle": "Zu deiner Sicherheit hast du nur eine begrenzte Zeit, um den Vorgang abzuschließen.",
+          "primaryAction": "Schließen"
+        },
+        "CANCELED_BY_USER": {
+          "title": "Der Vorgang wurde abgebrochen",
+          "subtitle": "",
+          "primaryAction": "Schließen"
+        },
+        "INVALID_SESSION": {
+          "title": "Es ist ein unerwarteter Fehler aufgetreten",
+          "subtitle": "Versuche es erneut oder kontaktiere den Support",
+          "primaryAction": "Schließen"
+        },
+        "ALREADY_ONBOARDED": {
+          "title": "Du hast diese Zahlungsmethode bereits hinzugefügt",
+          "subtitle": "",
+          "primaryAction": "Schließen"
+        },
+        "BPAY_NOT_FOUND": {
+          "title": "Wir haben kein aktives BANCOMAT Pay Konto gefunden.",
+          "subtitle": "Wende dich an deine Bank, um den Dienst zu aktivieren.",
+          "primaryAction": "Schließen"
+        },
+        "PSP_ERROR_ONBOARDING": {
+          "title": "Das Hinzufügen der Methode ist fehlgeschlagen",
+          "subtitle": "Bitte versuche es später noch einmal. Sollte das Problem weiterhin bestehen, wende dich bitte an deine Bank.",
+          "primaryAction": "Schließen"
+        },
+        "BE_KO": {
+          "title": "Wir haben einige Probleme beim Hinzufügen der Zahlungsmethode",
+          "subtitle": "Versuche es später erneut.",
+          "primaryAction": "Schließen",
+          "secondaryAction": "Kontaktiere den Support"
+        }
+      }
+    },
+    "alert": {
+      "supportedCardPageLinkError": "Beim Öffnen der Übersichtsseite der unterstützten Karten ist ein Fehler aufgetreten.",
+      "msgErrorUpdateApp": "Beim Öffnen des App-Stores ist ein Fehler aufgetreten",
+      "titlePagoPaUpdateApp": "Update erforderlich",
+      "messagePagoPaUpdateApp": "IO führt häufig kleine Verbesserungen und neue Funktionen ein: Um dein Konto weiterhin nutzen zu können, musst du die App auf die neueste Version aktualisieren.",
+      "btnUpdateApp": "Aktualisiere die IO-App",
+      "favorite": "Um diese Option zu ändern, wähle eine andere Zahlungsmethode aus deinem Konto und lege diese als bevorzugt fest.",
+      "amex": "Zahlungen mit American Express-Karten für Beträge über 1000 € sind derzeit nicht möglich."
+    },
+    "contextualHelpTitle": "Was du in deinem Konto machen kannst",
+    "creditcards": "Kreditkarten",
+    "paymentMethods": "Zahlungsmethoden",
+    "paymentMethod": "Zahlungsmethode",
+    "paymentMethodDesc": "Kredit-, Debit-, Prepaid-Karten, Paypal, und mehr",
+    "walletLoadMessage": "Zahlungsmethoden laden...",
+    "walletLoadFailure": "Das Laden der Zahlungsmethoden ist fehlgeschlagen, bitte versuche es erneut.",
+    "transactionsLoadMessage": "Laden der Transaktionenhistorie...",
+    "transactionsLoadFailure": "Das Laden deiner Transaktionen ist fehlgeschlagen, bitte versuche es erneut.",
+    "transactionHelpMessage": {
+      "text1": "Probleme mit einer Zahlung oder dem Hinzufügen einer neuen Methode?",
+      "text2": "Konsultiere die Hilfe rechts oben auf dieser Seite."
+    },
+    "transactionsLoadMore": "Weitere Transaktionen laden",
+    "transacionsLoadingMore": "Lade weitere Transaktionen...",
+    "transactionsShow": "Zeige deine Transaktionen",
+    "add": "hinzufügen",
+    "delete": {
+      "ios": {
+        "confirm": "Zahlungsmethode entfernen"
+      },
+      "android": {
+        "confirm": "Entfernen"
+      },
+      "successful": "Zahlungsmethode von deinem Konto entfernt!",
+      "failed": "Es gab ein Problem, bitte versuche es erneut"
+    },
+    "newPaymentMethod": {
+      "add": "Hinzufügen",
+      "show": "Anzeigen",
+      "refresh": "Aktualisieren",
+      "addButton": "Neue Zahlungsmethode",
+      "addDescription": "Füge eine Zahlungsmethode hinzu, um in Sekundenschnelle in IO zu bezahlen oder fordere die Aktivierung einer Bonus- oder Rabattkarte an.",
+      "walletAlert": "In deinem Konto sind Zahlungsmethoden registriert, aber keine davon ist mit IO kompatibel.",
+      "successful": "Die Karte wurde erfolgreich hinzugefügt!",
+      "failed": "Die Karte konnte nicht hinzugefügt werden",
+      "failedCardAlreadyExists": "Die Karte ist bereits in deinem Konto",
+      "contextualHelpTitle": "Hinzufügen einer Zahlungsmethode"
+    },
+    "textMsg": {
+      "title": "Bestätigungscode",
+      "header": "SMS-Bestätigungscode",
+      "info": "Gib den Code ein, den wir per SMS an deine Telefonnummer gesendet haben"
+    },
+    "transactionDetails": "Transaktionsdetails",
+    "transactionFullReason": "Vollständiger Grund",
+    "saveCard": {
+      "contextualHelpTitle": "Eine Karte in IO speichern",
+      "header": "Karte speichern",
+      "title": "Ist alles richtig?",
+      "subtitle": "Wenn du die Karte zu deinem Konto hinzufügst, kannst du In-App-Zahlungen vornehmen und an Initiativen teilnehmen, die auf IO verfügbar sind.",
+      "infoTitle": "Als bevorzugte Zahlungsmethode festlegen",
+      "info": "Diese Zahlungsmethode wird automatisch für die nächste Zahlung in IO vorgeschlagen",
+      "notice": "Um deine Karte zu überprüfen, behalten wir vorübergehend 0,02 € ein. Keine Sorge: Wir werden den Betrag so schnell wie möglich zurückzahlen.",
+      "temporaryError": "Beim Speichern dieser Karte ist ein Fehler aufgetreten",
+      "temporarySubError": "Wir haben keine Antwort von den Sicherheitssystemen erhalten. Wir entschuldigen uns für die Unannehmlichkeiten.",
+      "loadWalletsErrorTitle": "Die Systeme benötigen länger als erwartet",
+      "loadWalletsErrorBody": "Wir haben keine Antwort von den Sicherheitssystemen erhalten, aber deine Karte könnte hinzugefügt worden sein. Bitte aktualisiere dein Konto, bevor du es erneut versuchst.",
+      "loadingAlert": "Deine Kartendaten werden überprüft..."
+    },
+    "challenge3ds": {
+      "header": "Zahlung autorisieren",
+      "description": "Der Kartenaussteller benötigt deine Bestätigung. Wenn du Probleme hast, wende dich bitte an deine Bank."
+    },
+    "saveCardInPayment": {
+      "header": "Mit dieser Karte bezahlen",
+      "title": "Möchtest du mit dieser Karte bezahlen?",
+      "save": "Mit dieser Karte bezahlen"
+    },
+    "thanks": "✓ Danke!",
+    "endPayment": "Deine Zahlung wurde erfolgreich abgeschlossen",
+    "pickPsp": {
+      "headerTitle": "Dienstleister auswählen",
+      "title": "Mit welchem Dienstleister möchtest du bezahlen?",
+      "info": "Jeder Dienstleister schlägt eine Transaktionsgebühr vor.",
+      "info2": "In dieser Liste findest du alle Dienstleister,",
+      "info2Bold": "die mit deiner Zahlungsmethode kompatibel sind, auch wenn du nicht deren Kunde bist.",
+      "provider": "Dienstleister",
+      "maxFee": "Transaktionsgebühr",
+      "loadingPsps": "Dienstleister werden geladen...",
+      "onUpdateWalletPspFailure": "Vorgang ist fehlgeschlagen, bitte versuche es erneut",
+      "contextualHelpTitle": "Dienstleister auswählen"
+    },
+    "ConfirmPayment": {
+      "header": "Zahlungsübersicht",
+      "total": "Gesamt",
+      "paymentInformations": "Zahlungsdaten",
+      "payWith": "Zahle mit",
+      "transactionCosts": "Transaktionsgebühr",
+      "edit": "Bearbeiten",
+      "providedBy": "Durchgeführt von",
+      "pay": "Bezahle",
+      "cancelPayment": "Transaktion abbrechen",
+      "fee": "Transaktionsgebühr",
+      "identificationMessage": "Bestätige die Transaktion durch Eingabe deines Entsperrcodes",
+      "transactionSuccess": "Die Zahlung wurde abgeschlossen!",
+      "transactionFailure": "Bei der Zahlung ist ein Fehler aufgetreten, bitte versuche es erneut!",
+      "transactionTimeout": "Die Bestätigung der Zahlung konnte nicht abrufen werden!",
+      "confirmCancelTitle": "Möchtest du diese Zahlung abbrechen?",
+      "confirmCancelPayment": "Diese Zahlung abbrechen",
+      "confirmContinuePayment": "Mit der Zahlung fortfahren",
+      "cancelPaymentSuccess": "Die Zahlung dieser Aufforderung wurde abgebrochen, du kannst sie in wenigen Minuten erneut bezahlen",
+      "accessibility": {
+        "edit": "zum Bearbeiten antippen",
+        "transactionCosts": "{{cost}}, Transaktion {{psp}}"
+      }
+    },
+    "payWith": {
+      "noWallets": {
+        "title": "Keine Zahlungsmethoden gespeichert",
+        "text": "Füge eine Zahlungsmethode hinzu, um mit der Zahlung fortzufahren"
+      },
+      "header": "Zahlungsmethode auswählen",
+      "title": "Bezahle mit",
+      "text": "Wähle eine Zahlungsmethode von deinem Konto aus oder füge eine neue hinzu.",
+      "fetchPspFailure": "Temporärer Fehler, bitte versuche es erneut",
+      "noPspsAvailable": "Diese Zahlungsmethode kann nicht verwendet werden",
+      "contextualHelpTitle": "Auswahl der Zahlungsmethode",
+      "pickPaymentMethod": {
+        "title": "Mit welcher Zahlungsmethode möchtest du bezahlen?",
+        "description": "{{firstElement}} · {{secondElement}}",
+        "disabled": {
+          "title": "Deaktivierte Zahlungsmethoden"
+        },
+        "notAvailable": {
+          "title": "Inkompatible Zahlungsmethoden",
+          "arriving": {
+            "bottomSheetTitle": "Wir arbeiten an der Unterstützung dieser Zahlungsmethode",
+            "bottomSheetDescription": "Versuche in der Zwischenzeit, mit einer anderen Methode zu bezahlen. Du kannst pagoPA auch in deiner bevorzugten Zahlungs-App oder auf der Website deines Zahlungsempfängers nutzen."
+          },
+          "unaccepted": {
+            "bottomSheetTitle": "Warum kann ich nicht mit dieser Karte bezahlen?",
+            "bottomSheetDescription": "Das Zahlungsnetzwerk dieser Karte erlaubt es dir an physischen Verkaufsstellen zu bezahlen, aber nicht online. Wenn deine Karte für Online-Zahlungen aktiviert ist, füge sie als 'Debit- oder Kreditkarte' zu deinem Konto hinzu."
+          },
+          "payment_disabled": {
+            "bottomSheetTitle": "Warum kann ich nicht mit dieser Zahlungsmethode bezahlen?",
+            "bottomSheetDescription": "Die Funktion 'In-App-Zahlungen' ist möglicherweise deaktiviert. Bevor du versuchst, die Zahlung erneut vorzunehmen, gehe bitte wie folgt vor:\n\n1. gehe zum Bereich 'Konto';\n2. wähle die gewünschte Zahlungsmethode aus;\n3. aktiviere 'In-App-Zahlungen'."
+          }
+        }
+      }
+    },
+    "firstTransactionSummary": {
+      "loading": "Informationen werden abgerufen",
+      "title": "Zahlungsdetails",
+      "amount": "Betrag",
+      "total": "Insgesamt bezahlt",
+      "expireDate": "Zahlungsfrist",
+      "dueDate": "Zahlbar innerhalb",
+      "tranche": "Rate",
+      "info": "Mehr Infos unter:",
+      "tel": "Tel:",
+      "email": "E-Mail:",
+      "PEC": "PEC:",
+      "recipient": "Zahlungsempfänger",
+      "object": "Zahlungsgrund",
+      "date": "Datum und Uhrzeit",
+      "iuv": "IUV-Kode",
+      "entityCode": "Steuernummer Körperschaft",
+      "updatedAmount": "Aktualisierter Betrag",
+      "fee": "Transaktionsgebühr",
+      "idTransaction": "Identifikationscode der Transaktion",
+      "amountInfo": {
+        "title": "Ist der Betrag anders als auf der pagoPA-Benachrichtigung?",
+        "message": "Wenn sich der Betrag ändert, bedeutet das, dass er automatisch aktualisiert wurde.\n\nFalls er höher ist, können Zinsen, Strafen oder Benachrichtigungskosten anfallen.\n\nHandelt es sich bei der pagoPA-Mitteilung um eine rechtlich relevante Kommunikation, kann die Erhöhung des zu zahlenden Betrags verschiedene Gründe haben, zum Beispiel:\n- wenn du die Mitteilung per Einschreiben erhalten hast (die Druck- und Versandkosten können zu deinen Lasten gehen);\n- die Anzahl der Zustellversuche.\nFür weitere Details wende dich bitte an die  Gläubigerinstitution.\n\nFür weitere Details wende dich bitte an die Gläubigerinstitution, da pagoPA die Gründe für die Aktualisierung nicht kennt.",
+        "cta": "OK, habe verstanden"
+      },
+      "contextualHelpTitle": "Zusammenfassung der Transaktion",
+      "errorDetails": {
+        "title": "Details zum Fehler",
+        "errorCode": "Fehlercode",
+        "messageId": "ID der Nachricht",
+        "copyToClipboard": "Daten für die Assistenz kopieren"
+      },
+      "a11y": {
+        "announce": "Riepilogo dati avviso"
+      }
+    },
+    "errorTransaction": {
+      "submitBugText": "Wenn du das Problem nicht lösen kannst, teile uns dies bitte über das Symbol '?' in der oberen rechten Ecke mit. Danke!"
+    },
+    "insertManually": {
+      "header": "Zahlungsmitteilungsdaten einfügen",
+      "title": "Was möchtest du bezahlen?",
+      "info": "Gib die Daten ein, die auf der Zahlungsmitteilung angegeben sind.",
+      "link": "Wo finde ich die Daten?",
+      "noticeCode": "Zahlungsmitteilungskodex",
+      "entityCode": "Steuernummer der Körperschaft",
+      "amount": "Betrag (€)",
+      "proceed": "Mit der Transaktion fortfahren",
+      "contextualHelpTitle": "Manuelle Zahlungsdateneingabe"
+    },
+    "total": "Insgesamt",
+    "amount": "Betrag €",
+    "payAmount": "Geschuldeter Betrag",
+    "transactionFee": "Transaktionsgebühr",
+    "why": "Warum?",
+    "paymentReason": "Zahlungsgrund",
+    "recipient": "Körperschaft",
+    "date": "Datum",
+    "time": "Uhrzeit",
+    "psp": "Zahlungsdienstleister",
+    "receipt": "Transaktionsquittung",
+    "seeReceipt": "Siehe Quittung",
+    "transactions": "Transaktionen",
+    "transaction": "Transaktion",
+    "noTransactions": "Es liegen keine Transaktionen vor.",
+    "noNewTransactions": "Es gibt keine neuen Transaktionen.",
+    "noneTransactions": "Es gibt keine Transaktionen",
+    "noTransactionsInWalletHome": "Du hast noch keine Transaktion durchgeführt.",
+    "noTransactionsInTransactionsScreen": "Du hast mit dieser Zahlungsmethode noch nie über IO oder pagoPA bezahlt. In dieser Liste siehst du nur die Transaktionen, die mit dieser Zahlungsmethode durchgeführt wurden.",
+    "payNotice": "Zahlungsmitteilung bezahlen",
+    "latestTransactions": "Deine Transaktionen",
+    "creditDebitCards": "Kredit-/Debitkarten",
+    "addPaymentMethodTitle": "Zahlungsmethode hinzufügen",
+    "continue": "Weiter zur Zahlung",
+    "backToPayments": "Zurück zu den Zahlungen",
+    "methods": {
+      "comingSoon": "demnächst verfügbar",
+      "newCome": "Neu",
+      "card": {
+        "name": "Kredit-, Debit- oder Prepaid-Karten",
+        "shortName": "Karte",
+        "description": "Die Karte, die du online und in Geschäften benutzt",
+        "pagoPaCapability": {
+          "title": "In-App-Zahlungen",
+          "description": "Zahle die Mitteilungen mit pagoPA-Logo",
+          "active": "Aktiv",
+          "arriving": "demnächst verfügbar",
+          "incompatible": "Nicht kompatibel",
+          "bottomSheetTitle": "Warum kann ich nicht in der App bezahlen?",
+          "bottomSheetBody": "Diese Zahlungsmethode ist nicht für Online-Zahlungen geeignet.",
+          "bottomSheetCTA": "Entdecke die unterstützten Zahlungsmethoden",
+          "operationCompleted": "Vorgang abgeschlossen!",
+          "operationError": "Deaktivierung fehlgeschlagen"
+        }
+      },
+      "bonus": {
+        "name": "Rabatte, Boni und andere Initiativen",
+        "description": "Initiativen von öffentlichen Verwaltungen zur Unterstützung von Ausgaben oder Dienstleistungen im Zusammenhang mit Zahlungen"
+      },
+      "digital": {
+        "name": "Apps und digitale Zahlungsmethoden",
+        "description": "Deine bevorzugten digitalen Tools auf IO"
+      },
+      "pagobancomat": {
+        "name": "PagoBANCOMAT-Karte",
+        "description": "Das Zahlungsnetzwerk, mit dem du in Geschäften bezahlst"
+      },
+      "bank": {
+        "name": "BANCOMAT Pay"
+      },
+      "bancomatPay": {
+        "name": "BANCOMAT Pay",
+        "description": "Bezahlen mit Karte oder verbundenem Kontokorrent"
+      },
+      "postepayApp": {
+        "name": "Postepay",
+        "description": "Deine Postepay-App"
+      },
+      "postepay": {
+        "name": "BancoPosta oder Postepay-Karte",
+        "description": "Die Karten von Poste Italiane"
+      },
+      "paypal": {
+        "name": "PayPal",
+        "description": "Bezahlen mit Karte oder verbundenem Kontokorrent"
+      },
+      "bancomat": {
+        "name": "PagoBANCOMAT"
+      },
+      "cobadge": {
+        "name": "Internationales Zahlungsnetzwerk"
+      },
+      "notImplemented": "Demnächst verfügbar"
+    },
+    "addCardTitle": "Kartendetails",
+    "dummyCard": {
+      "labels": {
+        "holder": {
+          "label": "Karteninhaber",
+          "description": {
+            "base": "Beachte die Reihenfolge auf der Karte",
+            "error": "Keine Akzentbuchstaben oder Symbole verwenden"
+          }
+        },
+        "pan": "Kartenummer",
+        "expirationDate": "Verfallsdatum",
+        "securityCode": "Sicherheitscode",
+        "securityCode4D": "CID (4 Ziffern)"
+      },
+      "values": {
+        "holder": "Max Mustermann",
+        "pan": "0000 0000 0000 0000",
+        "expirationDate": "mm/yy",
+        "securityCode": "•••",
+        "securityCode4D": "••••"
+      },
+      "accessibility": {
+        "holder": {
+          "base": "Karteninhaber, beachte die Reihenfolge auf der Karte",
+          "error": "Karteninhaber, keine Akzentbuchstaben oder Symbole verwenden"
+        },
+        "pan": {
+          "base": "Kartenummer",
+          "error": "Kartenummer. Bitte gib mindestens {{minLength}} Ziffern ein"
+        },
+        "expirationDate": {
+          "base": "Verfallsdatum, zwei Ziffern für den Monat, zwei für das Jahr",
+          "error": "Verfallsdatum, zwei Ziffern für den Monat, zwei für das Jahr. Bitte gib ein gültiges Datum ein"
+        },
+        "securityCode": {
+          "3D": {
+            "base": "Sicherheitscode, 3 Ziffern",
+            "error": "Sicherheitscode. Bitte gib 3 Ziffern ein"
+          },
+          "4D": {
+            "base": "CID, 4 Ziffern",
+            "error": "CID. Bitte gib 4 Ziffern ein"
+          }
+        },
+        "button": {
+          "fieldError": "Um fortzufahren, korrigiere bitte das Feld {{field}}",
+          "missingFields": "Um fortzufahren, fülle bitte alle Felder aus"
+        }
+      }
+    },
+    "acceptedCards": "Akzeptierte Karten",
+    "openAcceptedCardsPageCTA": "Entdecke die akzeptierten Karten",
+    "missingDataText": {
+      "body": "Wenn du den Sicherheitscode nicht findest, ist deine Karte möglicherweise nicht für Online-Zahlungen freigeschaltet.",
+      "cta": "Deine Karten suchen"
+    },
+    "chooseMethod": "Wähle die bevorzugte Zahlungsmethode",
+    "QRtoPay": {
+      "chooser": "Bild aus der Galerie wählen",
+      "wrongQrCode": "QR-Code nicht gültig. Gib die Daten manuell ein.",
+      "byCameraTitle": "QR-Code scannen",
+      "cameraUsageInfo": "Scanne den QR-Code der Zahlungsmitteilung oder gib die Daten (Zahlungsmitteilungskodex und Steuernummer Körperschaft) manuell ein",
+      "setManually": "Manuell eingeben",
+      "enroll_cta": "Um den QR-Code auf der Zahlungsmitteilung zu scannen, musst du IO zunächst erlauben, die Kamera zu verwenden. Du kannst dies über das Menü 'Einstellungen' deines Geräts tun.",
+      "readStorageDisclosure": {
+        "title": "Zugriff auf die Galerie zulassen",
+        "message": "Du kannst Screenshots und Zahlungsmitteilungen hochladen"
+      },
+      "settingsAlert": {
+        "title": "Offenbar wurde der Zugang zu der Galerie verweigert",
+        "message": "IO benötigt Zugang zu deiner Galerie, um Boni und Zertifikate zu speichern oder Screenshots und Zahlungsmitteilungen hochzuladen",
+        "buttonText": {
+          "settings": "Berechtigungen aktivieren",
+          "cancel": "Abbrechen"
+        }
+      },
+      "contextualHelpTitle": "Wie man eine Zahlungsmitteilung bezahlen kann"
+    },
+    "whyAFee": {
+      "title": "Warum Transaktionsgebühren?"
+    },
+    "errors": {
+      "GENERIC_ERROR": "Ein unerwarteter Fehler ist aufgetreten",
+      "GENERIC_ERROR_SUBTITLE": "Bitte versuche es erneut oder kontaktiere uns."
+    },
+    "walletCardTransaction": {
+      "contextualHelpTitle": "Mit dieser Zahlungsmethode durchgeführte Transaktionen"
+    },
+    "bancomat": {
+      "details": {
+        "debit": {
+          "title": "Deine Karte hat mehr als ein Logo?",
+          "body": "Wenn deine PagoBANCOMAT Karte andere internationale Zahlungsnetzwerke aufweist, kannst du diese hinzufügen, indem du nach allen Debit- oder Kreditkarten auf deinen Namen suchst.",
+          "addCta": "Zweites Zahlungsnetzwerk hinzufügen"
+        }
+      }
+    },
+    "cobadge": {
+      "details": {
+        "card": {
+          "validUntil": "Gültig bis {{expiryDate}}"
+        }
+      }
+    },
+    "newRemove": {
+      "title": "Möchtest du diese Zahlungsmethode entfernen?",
+      "body": "Wir werden die Zahlungsmethode von deinem Konto entfernen. Alle Initiativen, mit denen sie verknüpft ist, werden innerhalb von 24 Stunden deaktiviert.",
+      "warningCapability": "Die Funktionen werden auch deaktiviert: "
+    },
+    "capability": {
+      "title": "Verfügbare Initiativen"
+    },
+    "outcomeMessage": {
+      "cta": {
+        "close": "Schließen",
+        "learnMore": "Mehr erfahren",
+        "visualizeCard": "Karte anzeigen"
+      },
+      "fallback": {
+        "title": "Es ist ein unerwarteter Fehler aufgetreten",
+        "description": "Wenn das Problem weiterhin besteht, wende dich an den Support."
+      },
+      "code1": {
+        "title": "Es ist ein unerwarteter Fehler aufgetreten",
+        "description": "Wenn das Problem weiterhin besteht, wende dich an den Support."
+      },
+      "code2": {
+        "title": "Autorisierung verweigert",
+        "description": "Deine Bank hat die Transaktion nicht genehmigt. Überprüfe, ob du die verschiedenen von deiner Bank geforderten Codes korrekt eingegeben hast."
+      },
+      "code3": {
+        "title": "Die Daten der Karte sind fehlerhaft",
+        "description": "Lösche die Karte aus deinem Konto und versuche, sie erneut hinzuzufügen. Vergewissere dich, dass die eingegebenen Daten genau mit denen auf der Karte übereinstimmen."
+      },
+      "code4": {
+        "title": "Prüfe deine E-Mails",
+        "description": "Es war nicht möglich, das Ergebnis der Zahlung zu überprüfen. Wenn sie erfolgreich war, erhältst du in Kürze eine E-Mail mit der Quittung. Solltest du die E-Mail nicht erhalten, wende dich bitte an den Support."
+      },
+      "code7": {
+        "title": "Es liegt ein Problem mit deiner Karte vor",
+        "description": "Es wurde kein Betrag abgebucht. Für weitere Informationen wende dich bitte an deine Bank."
+      },
+      "code8": {
+        "title": "Die Transaktion wurde abgebrochen"
+      },
+      "code10": {
+        "title": "Autorisierung verweigert",
+        "description": "Du hast wahrscheinlich die Obergrenze deiner Zahlungsmethode überschritten. Erkundige dich bei deiner Bank, bevor du es erneut versuchst."
+      },
+      "code15": {
+        "title": "Zahlungsmethode für In-App-Zahlungen aktivieren",
+        "description": "Bevor du die Zahlung erneut versuchst, wähle die Zahlungsmethode in deinem Konto aus und aktiviere die Funktion 'In-App-Zahlungen'."
+      },
+      "code18": {
+        "title": "Es ist ein unerwarteter Fehler aufgetreten",
+        "description": "Wenn das Problem weiterhin besteht, wende dich an den Support."
+      },
+      "code19": {
+        "title": "Autorisierung verweigert",
+        "description": "Möglicherweise hast du pagoPA von automatischen PayPal-Zahlungen ausgeschlossen. Lösche das PayPal-Konto aus deinem Konto, füge es wieder hinzu und versuche erneut, die Zahlung vorzunehmen."
+      },
+      "addCreditCard": {
+        "success": {
+          "title": "Deine Karte wurde erfolgreich hinzugefügt!"
+        }
+      },
+      "payment": {
+        "success": {
+          "title": "Danke, die Transaktion war erfolgreich!",
+          "description1": "Wir senden eine Quittung an",
+          "description2": "Du kannst sie auch in deinem Konto finden."
+        }
+      }
+    },
+    "abortWebView": {
+      "title": "Möchtest du den aktuellen Vorgang abbrechen?",
+      "confirm": "Ja, beenden",
+      "cancel": "Nein, fortfahren",
+      "success": "Probleme beim Hinzufügen? Wende dich an deine Bank."
+    },
+    "payment": {
+      "barcodes": {
+        "choice": {
+          "title": "Es wurden mehrere Codes entdeckt. Welchen möchtest du verwenden?"
+        }
+      },
+      "manual": {
+        "noticeNumber": {
+          "title": "Gib den Zahlungsmitteilungskodex ein",
+          "subtitle": "Er hat 18 Ziffern und ist neben dem QR-Code zu finden.",
+          "validationError": "18 Ziffern, die mit 0, 1 oder 3 beginnen.",
+          "placeholder": "Zahlungsmitteilungskodex",
+          "a11y": "Fehler. Falscher Mitteilungscode. Es hat 18 Ziffern, Sie finden es in der Nähe des Code QR."
+        },
+        "fiscalCode": {
+          "title": "Gib die Steuernummer der Körperschaft ein",
+          "subtitle": "Sie hat 11 Ziffern und ist neben dem QR-Code zu finden.",
+          "validationError": "11 Ziffern eingeben.",
+          "placeholder": "Steuernummer der Körperschaft",
+          "a11y": "Fehler. Steuergesetzbuch des falschen Gläubigers. Es hat 11 Ziffern, Sie finden es in der Nähe des QR -Code"
+        }
+      },
+      "abortDialog": {
+        "title": "Möchtest du den Vorgang abbrechen?",
+        "confirm": "Ja, abbrechen",
+        "cancel": "Nein, zurück"
+      },
+      "methodType": {
+        "fastPayPalPayment": "PayPal-Schnellzahlung"
+      },
+      "methodSelection": {
+        "header": "Zahlungsmethode auswählen",
+        "yourMethods": "Gespeicherte",
+        "otherMethods": "Alle Zahlungsmethoden",
+        "latestMethod": "Zuletzt verwendet",
+        "alert": {
+          "body": "Aufgrund des größeren Betrags sind einige Zahlungsmethoden nicht verfügbar.",
+          "cta": "OK, habe verstanden!"
+        }
+      },
+      "psp": {
+        "title": "Wähle, von wem die Zahlung abgewickelt werden soll",
+        "description": "Jeder Zahlungsdienstleister (PSP) schlägt eine Provision vor.",
+        "taxDescription": "In dieser Liste findest du alle kompatiblen Anbieter,",
+        "taxDescriptionBold": "auch wenn du nicht deren Kunde bist.",
+        "defaultName": "Anbieter (PSP)",
+        "pspTitle": "Anbieter (PSP)",
+        "pspSortButton": "Sortieren",
+        "featuredReason": "Weil du bereits Kunde bist",
+        "continueButton": "Weiter",
+        "sortBottomSheet": {
+          "default": "Standard",
+          "amount": "Nach Betrag",
+          "name": "Nach Name"
+        }
+      },
+      "failure": {
+        "PAYMENT_UNAVAILABLE": {
+          "title": "Es gibt ein technisches Problem mit dieser Zahlungsmitteilung."
+        },
+        "PAYMENT_DATA_ERROR": {
+          "title": "Die Daten der Zahlungsmitteilung sind falsch"
+        },
+        "DOMAIN_UNKNOWN": {
+          "title": "Die ausstellende Körperschaft hat Probleme bei der Bearbeitung",
+          "subtitle": "Bitte versuche es später noch einmal. Wenn das Problem weiterhin besteht, wende dich bitte an den Support."
+        },
+        "PAYMENT_ONGOING": {
+          "title": "Es ist bereits eine Zahlung im Gange, bitte versuche es später noch einmal",
+          "subtitle": "Wenn das Problem weiterhin besteht, kannst du ein Ticket erstellen."
+        },
+        "PAYMENT_EXPIRED": {
+          "title": "Die Zahlungsmitteilung ist abgelaufen und kann nicht mehr bezahlt werden",
+          "subtitle": "Wende dich für weitere Informationen an die Körperschaft."
+        },
+        "PAYMENT_CANCELED": {
+          "title": "Die ausstellende Körperschaft hat diese Zahlungsmitteilung zurückgezogen",
+          "subtitle": "Wende dich für weitere Informationen an die Körperschaft.",
+          "action": "Mehr erfahren"
+        },
+        "PAYMENT_DUPLICATED": {
+          "title": "Diese Zahlungsmitteilung wurde bereits bezahlt!"
+        },
+        "PAYMENT_VERIFY_GENERIC_ERROR": {
+          "title": "Wir können den Status dieser Zahlungsmitteilung nicht überprüfen",
+          "subtitle": "Bitte versuche es später noch einmal. Wenn das Problem weiterhin besteht, wende dich bitte an den Support."
+        },
+        "GENERIC_ERROR": {
+          "title": "Ein unerwarteter Fehler ist aufgetreten",
+          "subtitle": "Versuche es erneut oder wende dich an den Support."
+        },
+        "PAYMENT_SLOWDOWN_ERROR": {
+          "title": "Wir haben einige Probleme mit den pagoPA-Systemen",
+          "subtitle": "Versuche es später erneut."
+        },
+        "PAYMENT_UNKNOWN": {
+          "title": "Wir können die Zahlungsmitteilung nicht finden",
+          "subtitle": "Die Zahlungsmitteilung kann bereits bezahlt worden sein. Wende dich bitte an den ausstellende Körperschaft."
+        },
+        "PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR": {
+          "title": "Die ausgewählte Zahlungsmethode ist nicht verfügbar",
+          "subtitle": "Dies kann passieren, wenn der zu zahlende Betrag besonders hoch ist oder wenn du versuchst, eine digitale Steuer- oder Gebührmarke zu bezahlen.",
+          "action": "Wähle eine andere Zahlungsmethode"
+        }
+      },
+      "outcome": {
+        "SUCCESS": {
+          "title": "Du hast {{amount}} bezahlt",
+          "subtitle": "Die Quittung ist im Abschnitt 'Zahlungen'. verfügbar",
+          "button": "OK, schließen",
+          "banner": {
+            "title": "Kannst du uns sagen, wie es lief?",
+            "content": "Erzähl uns von deinen Erfahrungen mit der Zahlung und hilf uns, uns zu verbessern.",
+            "action": "Zur Umfrage"
+          }
+        },
+        "GENERIC_ERROR": {
+          "title": "Es ist ein unerwarteter Fehler aufgetreten",
+          "subtitle": "Es wurde kein Betrag abgebucht."
+        },
+        "AUTH_ERROR": {
+          "title": "Autorisierung verweigert",
+          "subtitle": "Es wurde kein Betrag abgebucht.\nVergewissere dich, dass du die Anweisungen deiner Bank oder Zahlungsapp korrekt befolgt hast."
+        },
+        "INVALID_DATA": {
+          "title": "Die Daten der Zahlungsmethode sind falsch",
+          "subtitle": "Wenn du mit einer Debit- oder Kreditkarte bezahlt hast, musst du die Daten wie auf der Karte angegeben eingeben."
+        },
+        "TIMEOUT": {
+          "title": "Die Sitzung ist abgelaufen",
+          "subtitle": "Es wurde kein Betrag abgebucht.\nZu deiner Sicherheit hast du nur eine begrenzte Zeit, um den Vorgang abzuschließen."
+        },
+        "CIRCUIT_ERROR": {
+          "title": "Das Kartennetzwerk deiner Karte wird nicht unterstützt"
+        },
+        "MISSING_FIELDS": {
+          "title": "Es fehlen einige Daten, um mit der Zahlung fortzufahren"
+        },
+        "INVALID_CARD": {
+          "title": "Die Zahlungsmethode ist abgelaufen oder nicht mehr gültig",
+          "subtitle": "Weitere Informationen erhältst du bei deiner Bank."
+        },
+        "CANCELED_BY_USER": {
+          "title": "Der Vorgang wurde abgebrochen",
+          "subtitle": "Wenn du die Zahlungsmitteilung bezahlen willst, warte ein paar Minuten, bevor du es erneut versuchst."
+        },
+        "EXCESSIVE_AMOUNT": {
+          "title": "Autorisierung verweigert",
+          "subtitle": "Es wurde kein Betrag abgebucht.\nDu hast wahrscheinlich die Obergrenze deiner Zahlungsmethode überschritten."
+        },
+        "INVALID_METHOD": {
+          "title": "Die Zahlungsmethode wird nicht unterstützt"
+        },
+        "WAITING_CONFIRMATION_EMAIL": {
+          "title": "Warte auf eine Bestätigung per E-Mail",
+          "subtitle": "Die Zahlung wurde noch nicht abgeschlossen: Wenn du innerhalb von 15 Minuten keine positive Bestätigung an {{email}} erhältst, versuche es bitte erneut.",
+          "defaultSubtitle": "Du erhältst das Ergebnis deiner Zahlung mittels E-Mail an die verbundene E-Mail-Adresse."
+        },
+        "METHOD_NOT_ENABLED": {
+          "title": "Zahlungsmethode in der App aktivieren",
+          "subtitle": "Bevor du die Zahlung erneut versuchst, wähle die Zahlungsmethode in deinem Konto aus und aktiviere die Funktion 'In-App-Zahlungen'."
+        },
+        "PAYMENT_METHODS_NOT_AVAILABLE": {
+          "title": "Möchtest du mit Karte bezahlen? Füge sie jetzt hinzu!",
+          "subtitle": "Die Methode wird im Konto gespeichert, so dass du beim nächsten Mal einfacher bezahlen kannst.",
+          "primaryAction": "Karte hinzufügen",
+          "secondaryAction": "Andere Methoden verwenden"
+        },
+        "PAYMENT_REVERSED": {
+          "title": "Die Zahlung ist fehlgeschlagen",
+          "subtitle": "Der autorisierte Betrag wurde auf deine Zahlungsmethode zurücküberwiesen. Die Überweisung kann einige Zeit dauern.",
+          "primaryAction": "Mehr erfahren",
+          "secondaryAction": "Schließen"
+        },
+        "PAYPAL_REMOVED_ERROR": {
+          "title": "Autorisierung abgelehnt",
+          "subtitle": "Möglicherweise hast du pagoPA von automatischen PayPal-Zahlungen ausgeschlossen. Lösche das PayPal-Konto aus deinem Konto, füge es wieder hinzu und versuche erneut, die Zahlung durchzuführen."
+        },
+        "IN_APP_BROWSER_CLOSED_BY_USER": {
+          "title": "Du hast die Zahlung abgebrochen",
+          "subtitle": "Überprüfe das Ergebnis im Tab Zahlungen. Wenn du eine Zahlung vornehmen möchtest, warte bitte mindestens 15 Minuten, bevor du es erneut versuchst."
+        },
+        "INSUFFICIENT_AVAILABILITY_ERROR": {
+          "title": "Dein Guthaben auf der Karte ist nicht ausreichend.",
+          "subtitle": "Es wurde kein Betrag abgebucht. Bevor du es erneut versuchst, lade die Karte auf oder verwende eine andere Zahlungsmethode."
+        },
+        "CVV_ERROR": {
+          "title": "Der eingegebene Sicherheitscode ist falsch",
+          "subtitle": "Es wurde kein Betrag abgebucht. Der Code (CVV oder CVC) ist 3-stellig und befindet sich auf der Rückseite der Karte. Bei American Express hat der Code (CID) 4 Ziffern und befindet sich auf der Vorderseite."
+        },
+        "PLAFOND_LIMIT_ERROR": {
+          "title": "Du hast das Ausgabenlimit deiner Karte überschritten",
+          "subtitle": "Es wurde kein Betrag abgebucht. Bevor du es erneut versuchst, ändere das Ausgabenlimit oder verwende eine andere Zahlungsmethode."
+        },
+        "BE_NODE_KO": {
+          "title": "Wir haben Probleme mit den Zahlungssystemen",
+          "subtitle": "Überprüfe das Ergebnis der Zahlung im Tab Zahlungen, andernfalls warte einige Minuten, bevor du es erneut versuchst."
+        },
+        "PSP_ERROR": {
+          "title": "Die Zahlung ist fehlgeschlagen",
+          "subtitle": "Es wurde kein Betrag abgebucht. Sollte das Problem weiterhin bestehen, versuche es mit einer anderen Methode oder einem anderen Zahlungsanbieter."
+        },
+        "AUTH_REQUEST_ERROR": {
+          "title": "Wir haben Probleme mit den Zahlungssystemen",
+          "subtitle": "Versuche es später erneut."
+        }
+      },
+      "support": {
+        "button": "Support kontaktieren",
+        "supportTitle": "Support kontaktieren",
+        "phone": "{{phoneNumber}} anrufen",
+        "chat": "Im Chat um Hilfe fragen",
+        "additionalDataTitle": "Zusätzliche Daten",
+        "copyAll": "Alles kopieren",
+        "errorCode": "Fehlercode",
+        "noticeNumber": "Zahlungsmitteilungskodex",
+        "entityCode": "Steuernummer Körperschaft"
+      }
+    }
+  },
+  "saveCard": {
+    "saveCard": "Karte speichern",
+    "header": "Möchtest du diese Karte speichern?",
+    "favoriteTitle": "Die Karte als bevorzugte Zahlungsmethode festlegen",
+    "favoriteText": "Diese Zahlungsmethode wird dir automatisch bei der nächsten Zahlung vorgeschlagen"
+  },
+  "cardComponent": {
+    "validUntil": "Gültig bis",
+    "expiresOn": "Läuft ab am",
+    "expiredCard": "Karte abgelaufen am",
+    "actions": "Aktionen",
+    "setFavorite": "Als Favorit festlegen",
+    "unsetFavorite": "Aus Favoriten entfernen",
+    "deleteTitle": "Möchtest du diese Zahlungsmethode entfernen?",
+    "deleteMsg": "Diese Zahlungsmethode wird entfernt",
+    "deleteLoading": "Zahlungsmethode wird gerade gelöscht",
+    "neverUsed": "Nie verwendet",
+    "lastUsage": "Letzte Verwendung",
+    "detailsAndTransactions": "Details und Transaktionen",
+    "pick": "Diese Zahlungsmethode verwenden",
+    "removeCta": "Aus dem Konto entfernen"
+  },
+  "messages": {
+    "accessibility": {
+      "message": {
+        "archive": "archiviare",
+        "description": "{{newMessage}}, erhalten von {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{instructions}}",
+        "deselectInstructions": "Tieni premuto per deselezionare",
+        "read": "Mitteilung",
+        "received_at": "erhalten um",
+        "received_on": "erhalten am",
+        "selectInstructions": "Press and hold to select and later",
+        "selected": "ausgewählt",
+        "unarchive": "unarchive",
+        "unread": "Ungelesene Mitteilung"
+      }
+    },
+    "contextualHelpTitle": "Mitteilungen verwenden",
+    "counting": {
+      "one": "Du hast eine Mitteilung"
+    },
+    "tab": {
+      "inbox": "Erhalten",
+      "archive": "Archiviert"
+    },
+    "contentTitle": "Mitteilungen",
+    "refresh": "Nach unten ziehen zum Aktualisieren",
+    "loading": "Mitteilungen werden geladen...",
+    "yesterday": "gestern",
+    "errorLoading": {
+      "details": "Fehler beim Laden der Mitteilungsdetails",
+      "senderInfo": "Absender unbekannt",
+      "serviceInfo": "Fehlende Informationen zum Dienst",
+      "departmentInfo": "Fehlende Informationen zur Abteilung",
+      "noTitle": "Ohne Titel"
+    },
+    "loadingErrorTitle": "Mitteilungen konnten nicht geladen werden",
+    "cta": {
+      "archive": "Archivieren",
+      "unarchive": "Wiederherstellen",
+      "selectAll": "Alle",
+      "deselectAll": "Keine",
+      "pay": "Bezahle {{amount}} €",
+      "onlyPay": "Bezahlen",
+      "paid": "Bezahlt",
+      "seeNotice": "Ansehen",
+      "reminder": "Erinnerung",
+      "reminderShort": "Memo",
+      "reminderCalendarSelect": "In welchem Kalender möchtest du die Erinnerung hinzufügen?",
+      "reminderTitle": "Erinnerung für: {{title}}",
+      "reminderAlertTitle": "Ein Ereignis ist bereits vorhanden",
+      "reminderAlertDescription": "Im Kalender gibt es bereits ein vorgemerktes Ereignis, das der ausgewählten Nachricht entspricht. Möchtest du das vorherige beibehalten oder ein neues hinzufügen?",
+      "reminderAlertKeep": "Behalte die vorherige Erinnerung",
+      "reminderAlertAdd": "Eine neue Erinnerung hinzufügen",
+      "reminderAddSuccess": "Erinnerung hinzugefügt",
+      "reminderAddFailure": "Fehler beim Hinzufügen der Erinnerung, bitte versuche es erneut",
+      "reminderRemoveRequest": {
+        "title": "Möchtest du wirklich die Erinnerung entfernen?",
+        "ok": "Erinnerung entfernen",
+        "cancel": "Vorgang abbrechen"
+      },
+      "reminderRemoveSuccess": "Erinnerung entfernt",
+      "reminderRemoveFailure": "Fehler beim Entfernen der Erinnerung, bitte versuche es erneut",
+      "preferenceCalendarSelect": "Wähle deinen Standardkalender",
+      "calendarPermDenied": {
+        "title": "Zugriff zulassen",
+        "description": "Wir haben keinen Zugriff auf deinen Kalender. Bitte aktiviere die Berechtigungen, um fortzufahren.",
+        "ok": "Berechtigungen freigeben",
+        "cancel": "Abbrechen"
+      },
+      "errors": {
+        "fetchCalendars": "Fehler beim Laden der Kalender"
+      },
+      "helper": "IO merkt sich diese Auswahl, du kannst sie über die App-Einstellungen ändern."
+    },
+    "badge": {
+      "expired": "Abgelaufen",
+      "paid": "Bezahlt"
+    },
+    "unknownSender": "Unbekannter Absender",
+    "noContent": "Inhalt nicht verfügbar",
+    "archive": {
+      "emptyMessage": {
+        "title": "Dein Archiv ist leer.",
+        "subtitle": "Halte eine Mitteilung gedrückt, um sie in das Archiv zu verschieben. Du kannst auch mehrere Mitteilungen gleichzeitig archivieren. Archivierte Mitteilungen werden nicht gelöscht und stehen in den Suchergebnissen zur Verfügung."
+      }
+    },
+    "inbox": {
+      "emptyMessage": {
+        "title": "Deine Mitteilungsliste ist leer.",
+        "subtitle": "Aktualisiere, um zu prüfen, ob neue Mitteilungen vorhanden sind."
+      }
+    },
+    "operations": {
+      "archive": {
+        "success": "Erfolgreich archiviert!",
+        "failure": "Die Archivierung ist fehlgeschlagen"
+      },
+      "generic": {
+        "failure": "Der Vorgang ist fehlgeschlagen",
+        "success": "Vorgang erfolgreich!"
+      },
+      "restore": {
+        "success": "Wiederherstellung durchgeführt.",
+        "failure": "Die Wiederherstellung ist fehlgeschlagen"
+      }
+    },
+    "search": {
+      "emptyState": {
+        "title": "Mindestens drei Zeichen eingeben"
+      },
+      "input": {
+        "cancel": "Abbrechen",
+        "clear": "Löschen",
+        "placeholderShort": "Text eingeben"
+      }
+    }
+  },
+  "messageDetails": {
+    "accessibilityAttachmentIcon": "Enthält Anhänge",
+    "contextualHelpTitle": "Mitteilungsdetails",
+    "headerTitle": "Mitteilung",
+    "emptyMessage": "Kein Inhalt",
+    "loadingText": "Laden der Mitteilungsdetails läuft...",
+    "errorText": "Wir konnten die Details deiner Mitteilung nicht laden",
+    "retryText": "Es handelt sich wahrscheinlich um einen temporären Fehler... bitte versuche es erneut!",
+    "submitBugText": "Wenn das Problem nicht gelöst ist, lasse es uns bitte über dem '?'-Symbol in der oberen rechten Ecke wissen, danke!",
+    "dateSending": "Datum und Uhrzeit:",
+    "sender": "Absender:",
+    "service": "Dienst:",
+    "question": "Ist etwas unklar?",
+    "answer": "Wenn du dich über den Inhalt der Mitteilung im Unklaren bist, einen Fehler melden möchtest oder weitere Einzelheiten benötigst, kannst du dich direkt an die Ansprechpartner des Dienstes wenden und dabei die folgende Nachrichten-ID angeben.",
+    "call": "Anrufen",
+    "sendEmail": "Sende eine E-Mail",
+    "write": "Schreib uns",
+    "id": "ID:",
+    "remoteContentError": {
+      "title": "Die Details der Mitteilung konnten nicht abgerufen werden",
+      "body": "Wir haben einen Fehler in den von der Körperschaft bereitgestellten Informationen gefunden. Bitte versuche es in ein paar Minuten erneut. Wenn das Problem weiterhin besteht, wende dich bitte an den Support."
+    },
+    "attachments": {
+      "loading": "Laden des Dokuments...",
+      "badFormat": "Das Format des Anhangs wird nicht unterstützt. Kontaktiere den Absender",
+      "corruptedFile": "Der Anhang ist beschädigt und kann nicht geöffnet werden. Kontaktiere den Absender",
+      "downloadFailed": "Der Anhang ist derzeit nicht verfügbar. Bitte versuche es erneut oder kontaktiere den Absender",
+      "showPreview": "Vorschau anzeigen",
+      "failing": {
+        "details": "Der Anhang konnte nicht heruntergeladen werden. Bitte versuche es erneut oder öffne eine Ticket"
+      }
+    },
+    "banner": {
+      "content1": "Das ist eine",
+      "content2": "dynamische Mitteilung:",
+      "content3": "der Inhalt kann sich im Laufe der Zeit ändern, damit du aktuelle Informationen erhältst.",
+      "action": "Mehr erfahren"
+    },
+    "bottomSheet": {
+      "title": "Was ist eine dynamische Mitteilung?",
+      "body": "Die versendende Körperschaft kann den Inhalt dieser Nachricht auch nach dem Versand aktualisieren, um sicherzustellen, dass die Informationen stets korrekt und relevant sind.\n\n Dies geschieht in bestimmten Fällen, wie z. B. bei der Aktualisierung veralteter Informationen oder nicht mehr gültiger Anhänge.\n\n Wenn die Körperschaft dich über neue Informationen oder wichtige Aktualisierungen informieren muss, wird sie dies mittels einer neuen Mitteilung tun.",
+      "bodyPt1": "Es handelt sich um eine Mitteilung, die die Körperschaft ",
+      "bodyPt2": "nach dem Senden ändern kann",
+      "bodyPt3": ". Auf diese Weise sind die darin enthaltenen Informationen immer korrekt.\nEine Körperschaft kann die Informationen in einer dynamischen Mitteilung ",
+      "bodyPt4": "nur in bestimmten Fällen",
+      "bodyPt5": " ändern, zum Beispiel um alte Informationen zu ändern oder eine nicht mehr gültige Anlage zu aktualisieren.\nWenn sie dir neue Informationen oder wichtige Aktualisierungen mitteilen muss, schickt sie dir eine neue Mitteilung."
+    },
+    "footer": {
+      "contacts": "Absender kontaktieren",
+      "showMoreData": "Mehr anzeigen"
+    },
+    "showMoreDataBottomSheet": {
+      "title": "Identifikationsdaten",
+      "messageId": "MitteilungsID",
+      "messageIdAccessibility": "MitteilungsID kopieren",
+      "pagoPAHeader": "pagoPA Zahlungsmitteilung",
+      "noticeCode": "Zahlungsmitteilungskodex",
+      "noticeCodeAccessibility": "Zahlungsmitteilungskodex, kopieren",
+      "entityFiscalCode": "Steuernummer Körperschaft",
+      "entityFiscalCodeAccessibility": "Steuernummer Körperschaft, kopieren"
+    },
+    "contactsBottomSheet": {
+      "title": "Hilfe",
+      "body": "Wenn du dir über den Inhalt der Nachricht im Unklaren bist, wende dich an die Körperschaft, von der du die Nachricht erhalten hast.",
+      "actions": {
+        "call": "Anrufen",
+        "email": "E-Mail schreiben"
+      }
+    }
+  },
+  "messagePDFPreview": {
+    "title": "PDF-Vorschau",
+    "singleBtn": "Speichern oder teilen",
+    "singleBtnAccessibility": "Dokument speichern oder teilen",
+    "open": "Öffnen",
+    "save": "Speichern",
+    "saveAccessibility": "Dokument speichern",
+    "savedAtLocation": "Das Dokument {{name}} wurde im Ordner Download gespeichert.",
+    "share": "Teilen",
+    "shareAccessibility": "Dokument teilen",
+    "pdfAccessibility": "Vorschau PDF-Dokument",
+    "errors": {
+      "previewing": {
+        "title": "Keine Vorschau verfügbar",
+        "body": "Um das Dokument anzusehen, lade es herunter und öffne es mit einer PDF-App."
+      },
+      "sharing": "Beim Freigeben des Dokuments ist ein Fehler aufgetreten.",
+      "opening": "Beim Öffnen des Dokuments ist ein Fehler aufgetreten. Möglicherweise hast du keine PDF-App installiert.",
+      "saving": "Beim Speichern des Dokuments ist ein Fehler aufgetreten."
+    }
+  },
+  "notifications": {
+    "profileBanner": {
+      "title": "Aktiviere Push-Benachrichtigungen, damit du weißt, wenn du eine Mitteilung auf IO erhältst.",
+      "cta": "Push-Benachrichtigungen aktivieren"
+    },
+    "installation": {
+      "errorTitle": "Push-Benachrichtigungen",
+      "errorMessage": "Bei der Registrierung des Push-Benachrichtigungsdienstes ist ein Fehler unterlaufen"
+    },
+    "modal": {
+      "content": "Aktiviere Push-Benachrichtigungen, um sofort zu erfahren, wenn du eine neue Mitteilung in der App erhältst.",
+      "primaryButton": "Push-Benachrichtigungen aktivieren",
+      "secondaryButton": "Jetzt nicht",
+      "title": "Verpasse keine wichtigen Mitteilungen!"
+    }
+  },
+  "biometric_recognition": {
+    "contextualHelpTitle": "So funktioniert die biometrische Erkennung",
+    "switchLabel": "Biometrische Erkennung aktiveren",
+    "enroll_cta": "Die biometrische Erkennung ist auf diesem Gerät vorhanden, aber nicht konfiguriert. Wechsle zu den Einstellungen deines Geräts und aktiviere dort den Dienst, um diese Funktion zu nutzen.",
+    "enroll_btnLabel": "Zu den Einstellungen",
+    "needed_to_disable": "Bestätigung zur Deaktivierung erforderlich"
+  },
+  "send_email_messages": {
+    "title": "Mitteilungen mittels E-Mail weiterleiten",
+    "subtitle": "Möchtest du, dass IO eine Vorschau der Mitteilung an die E-Mail-Adresse sendet:",
+    "switch": {
+      "title": "Eine Vorschau per E-Mail senden",
+      "subtitle": "Du erhältst eine Vorschau der Mitteilung an deine E-Mail-Adresse, sofern der Dienst dies zulässt."
+    }
+  },
+  "services": {
+    "optIn": {
+      "preferences": {
+        "completed": {
+          "title": "Einstellungen gespeichert!",
+          "body": "Du kannst die Liste der verfügbaren Dienste jederzeit im Abschnitt Dienste einsehen.",
+          "cta": "Verfügbare Dienste anzeigen"
+        },
+        "banner": "Du kannst deine Wahl jederzeit unter Einstellungen > Einstellungen ändern",
+        "oldUsersBadge": "Aktuelle Einstellungen",
+        "choiceLabel": "Deine Wahl:",
+        "unavailable": "Nicht ausgewählt",
+        "title": "Wie möchtest du die Dienste auf IO konfigurieren?",
+        "body": "IO ist einfach, weil du nichts tun musst: wenn ein Dienst dir etwas Wichtiges mitzuteilen hat, kann er dir eine Mitteilung senden.",
+        "quickConfig": {
+          "value": "Schnelleinrichtung",
+          "label": "Alle Dienste, die du nicht deaktiviert hast, können dich kontaktieren.",
+          "title": "Schnelleinrichtung benutzen",
+          "successAlert": "Du hast die Schnelleinrichtung aktiviert",
+          "body": {
+            "text1": "Nur Dienste, die dir etwas Wichtiges mitzuteilen haben, werden dich kontaktieren.",
+            "text2": "Du kannst die Mitteilungen von Diensten, die dich nicht interessieren, jederzeit deaktivieren."
+          }
+        },
+        "manualConfig": {
+          "value": "Manuelle Konfiguration",
+          "label": "Nur die Dienste, die du aktiviert hast, können dich kontaktieren.",
+          "title": "Manuell konfigurieren",
+          "successAlert": "Du hast die manuelle Konfiguration aktiviert",
+          "body": {
+            "text1": "Kein Dienst wird dich kontaktieren können. Um Mitteilungen zu empfangen, musst du sie einzeln konfigurieren."
+          },
+          "bottomSheet": {
+            "title": "Wenn du bestätigst, erhältst du keine Mitteilungen",
+            "body": "Bei einer manuellen Konfiguration können dir weder aktuelle noch zukünftige IO-Dienste Mitteilungen senden. Damit Dienste, an denen du interessiert bist, dich kontaktieren können, musst du sie einzeln konfigurieren, indem du den Punkt 'In der App kontaktieren' auf jeder Registerkarte des Dienstes aktivierst."
+          }
+        }
+      }
+    },
+    "title": "Dienste",
+    "contextualHelpTitle": "Was du in deinen Diensten machen kannst",
+    "new": "Neu",
+    "home": {
+      "bottomSheet": {
+        "content": {
+          "servicesPreferences": {
+            "value": "Wer kann dir schreiben?",
+            "description": "Wähle, wer dich kontaktieren kann"
+          },
+          "settings": {
+            "value": "Alle Einstellungen",
+            "description": "Verwalte deine Daten und Nutzungseinstellungen"
+          }
+        }
+      },
+      "featured": {
+        "services": {
+          "title": "Im Vordergrund"
+        },
+        "institutions": {
+          "title": "Hervorgehobene Körperschaften"
+        }
+      },
+      "institutions": {
+        "title": "National"
+      },
+      "searchLink": "Suche nach allen verfügbaren Diensten",
+      "favourites": "Bevorzugte Dienste"
+    },
+    "institution": {
+      "failure": {
+        "title": "Es liegt ein vorübergehendes Problem vor, bitte versuche es erneut",
+        "subtitle": "Dienste werden geladen",
+        "back": "Zurück",
+        "retry": "Erneut versuchen"
+      },
+      "header": {
+        "subtitle_one": "{{count}} Dienst verfügbar",
+        "subtitle_other": "{{count}} Dienste verfügbar"
+      }
+    },
+    "search": {
+      "input": {
+        "placeholder": "Suche nach einer Körperschaft",
+        "placeholderShort": "Körperschaft suchen",
+        "cancel": "Abbrechen",
+        "clear": "Löschen"
+      },
+      "emptyState": {
+        "invalidQuery": {
+          "title": "Gib den Namen einer Körperschaft ein, \nnational oder lokal."
+        },
+        "noResults": {
+          "title": "Kein Dienst gefunden",
+          "subtitle": "Gib den Namen einer bestehenden nationalen oder lokalen Körperschaft ein."
+        }
+      }
+    },
+    "details": {
+      "failure": {
+        "title": "Es liegt ein vorübergehendes Problem vor, bitte versuche es erneut",
+        "subtitle": "Wir rufen die Details des Dienstes ab",
+        "back": "Zurück",
+        "retry": "Erneut versuchen"
+      },
+      "preferences": {
+        "title": "Dieser Dienst kann",
+        "inbox": "In der App kontaktieren",
+        "pushNotifications": "Push-Benachrichtigungen senden",
+        "messageReadStatus": "Lesebestätigungen erhalten"
+      },
+      "metadata": {
+        "title": "Kontakte und Informationen",
+        "website": "Website besuchen",
+        "downloadApp": "App herunterladen",
+        "support": "Hilfe anfordern",
+        "phone": "Körperschaft anrufen",
+        "email": "E-Mail senden",
+        "pec": "PEC-Mail senden",
+        "fiscalCode": "Steuernummer Körperschaft",
+        "address": "Adresse",
+        "serviceId": "Dienst ID"
+      },
+      "tosAndPrivacy": {
+        "title": "Nutzungsbedingungen und Datenschutzbestimmungen",
+        "tosLink": "Nutzungsbedingungen",
+        "privacyLink": "Datenschutzerklärung"
+      }
+    },
+    "favouriteServices": {
+      "title": "Meine Favoriten"
+    }
+  },
+  "identification": {
+    "instructions": {
+      "useFingerPrintOrUnlockCode": "benutze deinen **Fingerabdruck** oder benutze deinen **Entsperrcode**",
+      "useFingerPrintOrUnlockCodeA11y": "benutze deinen Fingerabdruck oder benutze deinen Entsperrcode",
+      "useFaceIdOrUnlockCode": "benutze dein **Gesicht** oder benutze deinen **Entsperrcode**",
+      "useFaceIdOrUnlockCodeA11y": "benutze dein Gesicht oder benutze deinen Entsperrcode",
+      "useUnlockCode": "benutze deinen **Entsperrcode**",
+      "useUnlockCodeA11y": "benutze deinen Entsperrcode"
+    },
+    "title": "Hallo {{name}}!",
+    "titleProfileName": "Hallo {{profileName}}!",
+    "titleValidation": "Vorgang genehmigen",
+    "logout": "Abmelden",
+    "logoutProfileName": "Du bist nicht {{profileName}}?",
+    "logoutDescription": "Du kannst dich mit deinem SPID oder deiner CIE anmelden. Diese Sitzung wird abgemeldet.",
+    "logoutDescriptionProfileName": "Du kannst dich mit deinem SPID oder deiner CIE anmelden. Die Sitzung von {{profileName}} wird abgemeldet.",
+    "biometric": {
+      "fingerprintType": "Fingerabdruck",
+      "title": "Biometrische Identifikation",
+      "popup": {
+        "reason": "Identifikation durch TouchID fehlgeschlagen",
+        "title": "Identifikation erforderlich",
+        "sensorDescription": "Berührungssensor"
+      }
+    },
+    "fail": {
+      "remainingAttempts": "Du hast noch {{attempts}} Versuche übrig",
+      "remainingAttemptSingle": "Du hast noch einen Versuch übrig",
+      "tooManyAttempts": "Du hast zu oft den falschen Code eingegeben!",
+      "waitMessage": "Versuche es erneut in:"
+    },
+    "unlockCode": {
+      "accessibility": {
+        "unlockHint": "Du hast {{number}} von {{length}} Ziffern eingegeben",
+        "fingerprint": "Anmeldung mit dem Fingerabdruck",
+        "faceId": "Anmeldung mit FaceID",
+        "delete": "Letzte eingefügte Ziffer löschen"
+      },
+      "reset": {
+        "button": "Hast du deinen",
+        "code": "Entsperrcode vergessen",
+        "button_short": "Entsperrcode ändern",
+        "subtitle": "Einen neuen 6-stelligen Code festlegen."
+      },
+      "confirmValid": "Entsperrcode korrekt"
+    },
+    "forgetCode": {
+      "confirmTitle": "Hast du den Entsperrcode vergessen?",
+      "confirmMsg": "Um einen neuen Entsperrcode festlegen zu können, musst du dich erneut anmelden.",
+      "confirmMsgWithTask": "Um einen neuen Entsperrcode festlegen zu können, musst du den aktuellen Vorgang abbrechen und dich neu anmelden."
+    }
+  },
+  "calendarEvents": {
+    "calendarSelect": "In welchen Kalender möchtest du den Termin eintragen?"
+  },
+  "reminders": {
+    "emptyMonth": "Keine Fälligkeiten für diesen Monat",
+    "loadMoreData": "Bisherige Fälligkeiten",
+    "noOtherDeadlines": "Es gibt keine weiteren Fälligkeiten"
+  },
+  "openMaps": {
+    "genericError": "Beim Öffnen der Karte ist ein Fehler aufgetreten",
+    "openAddressOnMap": "Adresse auf der Karte öffnen"
+  },
+  "genericError": "Ein Fehler ist aufgetreten",
+  "titleUpdateApp": "Aktualisiere IO!",
+  "msgErrorUpdateApp": "Beim Öffnen des App-Stores ist ein Fehler aufgetreten",
+  "messageUpdateApp": "IO führt häufig kleine Verbesserungen und neue Funktionen ein: Um die App weiterhin nutzen zu können, ist es notwendig, sie auf die neueste Version zu aktualisieren.",
+  "titleUpdateAppAlert": "Um fortzufahren, aktualisiere IO",
+  "messageUpdateAppAlert": "Es ist eine neue Version von IO auf {{storeName}} verfügbar, aktualisiere sie, um diese Funktion zu nutzen.",
+  "openStore": "Öffne {{storeName}}",
+  "btnUpdateApp": "Aktualisiere IO",
+  "systemsOff": {
+    "title": "Es gibt ein Problem mit unseren Systemen",
+    "closeApp": "Schließe die App und versuche es in ein paar Minuten erneut."
+  },
+  "contextualHelp": {
+    "title": "IO hilft dir",
+    "sendPersonalInfo": {
+      "title": "Neues Ticket"
+    }
+  },
+  "bottomSheets": {
+    "ciePin": {
+      "title": "Wo finde ich meine PIN?",
+      "content": "Der PIN-Code besteht aus 8 Ziffern. Er wurde dir in zwei Momenten mitgeteilt:  \n\n• die ersten 4 Ziffern wurden dir beim Meldeamt ausgehändigt;  \n• die letzten 4 Ziffern wurden dir zusammen mit der elektronischen Identitätskarte nach Hause geschickt.  \n  \nSetze diese in dieser Reihenfolge zusammen und trage sie bitte hier ein.\n"
+    }
+  },
+  "bonus": {
+    "accessibility": {
+      "sectionCardLabel": "Boni und Rabatte aktualisieren",
+      "sectionCardHint": "Aktualisiere die Liste der aktiven Boni"
+    },
+    "state": {
+      "completed": {
+        "caption": "beendet",
+        "description": "Diese Initiative ist beendet und kann nicht mehr beantragt werden."
+      }
+    },
+    "bonusList": {
+      "title": "Bonus oder Rabatt hinzufügen",
+      "contentTitle": "Wähle einen der verfügbaren Boni aus",
+      "contextualHelp": {
+        "title": "Hinzufügen eines Bonus oder Rabatts",
+        "body": "Hier kannst du den Bonus oder Rabatt auswählen, die du hinzufügen möchten. Sobald sie aktiviert sind, werden sie in der Rubrik 'Konto' angezeigt. Du kannst die Details des Bonus oder des Rabatts jederzeit einsehen, indem du den Bereich 'Konto' aufrufst und das entsprechende Element in der Liste auswählst."
+      }
+    },
+    "request": "Beantrage einen neuen Bonus",
+    "requestLabel": "Boni und Rabatte",
+    "requestTitle": "Anfrage",
+    "validity_interval": "vom {{from}} bis {{to}}",
+    "active": "Aktiv",
+    "failed": "Fehlgeschlagen",
+    "redeemed": "Eingelöst",
+    "termsAndConditionFooter": "Premendo \"{{ctaText}}\" dichiari di essere in possesso dei requisiti e di aver letto e compreso la [Guida]({{regulationLink}}) e l'[Informativa Privacy]({{tosUrl}})",
+    "tos": {
+      "title": "Datenschutzbestimmungen"
+    },
+    "cgn": {
+      "generic": {
+        "linkError": "Die Website des Anbieters ist zur Zeit nicht erreichbar. Bitte versuche es später noch einmal."
+      },
+      "accessibility": {
+        "code": "Durch Tippen auf das Elements wird der Code kopiert"
+      },
+      "name": "Nationale Jugendkarte",
+      "departmentName": "Präsidium des italienischen Ministerrates, Abteilung für Jugendpolitik und Zivildienst",
+      "merchantSearch": {
+        "goToSearchAccessibilityLabel": "Zur Suche der Teilnehmer gehen",
+        "emptyList": {
+          "shortQuery": {
+            "titleWithCount": "Suche unter {{merchantCount}} Partnern der Nationalen Jugendkarte",
+            "titleWithoutCount": "Suche bei den Partnern der Nationalen Jugendkarte"
+          },
+          "noResults": {
+            "title": "Wir haben nichts gefunden",
+            "subtitle": "Versuche, mit anderen Begriffen zu suchen.\nWenn du nicht fündig wirst, ist der Partner möglicherweise nicht beigetreten oder hat keine aktiven Angebote."
+          }
+        },
+        "input": {
+          "placeholder": "Suchen",
+          "cancel": "Abbrechen",
+          "clear": "Löschen"
+        }
+      },
+      "merchantsList": {
+        "news": "Neu",
+        "online": "Online",
+        "places": "Orte",
+        "navigationTitle": "Rabatte und Ermäßigungen",
+        "screenTitle": "Alle Vorteile entdecken",
+        "merchantsAll": "Alle Partner",
+        "tabs": {
+          "perInitiative": "Nach Kategorie",
+          "perMerchant": "Nach Partner"
+        },
+        "cta": {
+          "filter": "Filtern"
+        },
+        "categoriesList": {
+          "title": "Wähle eine Kategorie und entdecke Rabatte und Ermäßigungen",
+          "bottomSheet": {
+            "cta": "Wie sind die Kategorien angeordnet?",
+            "title": "Wie sind die Kategorien angeordnet?",
+            "content": "Um deine Suche zu erleichtern und deine Erfahrung zu verbessern, haben wir die Kategorien nach der Häufigkeit der Nutzung geordnet. Diese Informationen sind nicht mit deinem Profil verknüpft, sondern beruhen auf den Gesamtdaten aller Nutzer, die die Nationale Jugendkarte nutzen und der Verarbeitung ihrer Daten zugestimmt haben."
+          },
+          "a11y": "{{name}}, {{count}} Neue Möglichkeiten gefunden"
+        },
+        "filter": {
+          "title": "Anbieter filtern",
+          "searchTitle": "Suche nach Name",
+          "inputPlaceholder": "Suche nach Geschäft, Theater oder sonstigem",
+          "addressTitle": "Suche nach Adresse",
+          "addressPlaceholder": "Adresse suchen",
+          "sliderLabel": "Entfernung, in der gesucht werden soll",
+          "sliderUnit": "Km",
+          "orderTitle": "Anzeigen",
+          "categories": "Kategorien",
+          "cta": {
+            "cancel": "Entfernen",
+            "confirm_zero": "Filter anwenden",
+            "confirm_one": "({{count}}) Filter anwenden",
+            "confirm_other": "({{count}}) Filter anwenden"
+          },
+          "order": {
+            "byDistance": "Nach der Nähe zu deinem Standort",
+            "byName": "Alphabetisch geordnet"
+          }
+        },
+        "discountOf": "Rabatt des {{discount}}%"
+      },
+      "merchantDetail": {
+        "title": {
+          "deals": "Vorteil",
+          "description": "Beschreibung",
+          "contactInfo": "Adressen"
+        },
+        "cta": {
+          "website": "Geh zur Webseite des Partners"
+        },
+        "categories": {
+          "counting": "und weitere {{count}}",
+          "cultureAndEntertainment": "Kultur und Freizeit",
+          "health": "Gesundheit und Wohlbefinden",
+          "learning": "Aus- und Weiterbildung",
+          "sport": "Sport",
+          "home": "Haushalt",
+          "telco": "Telefonie und Internet",
+          "finance": "Bank- und Finanzdienstleistungen",
+          "travel": "Reisen und Transport",
+          "mobility": "Nachhaltige Mobilität",
+          "job": "Jobs und Ausbildungsplätze"
+        },
+        "information": {
+          "address": "Adresse",
+          "allNational": "Alle landesweiten Verkaufsstellen"
+        },
+        "discount": {
+          "description": "Beschreibung",
+          "conditions": "Bedingungen",
+          "validity": "Gültigkeit",
+          "cta": {
+            "api": "Rabattcode aktivieren",
+            "static": "Zum Rabattcode",
+            "bucket": "Zum Rabattcode",
+            "landingpage": "Zum Rabatt gehen",
+            "createNew": "Neuer Rabattcode"
+          },
+          "secondaryCta": "Zum Rabatt gehen",
+          "title": "Hier ist der Rabattcode!",
+          "expired": "Der Code ist abgelaufen",
+          "copyButton": "Rabattcode kopieren",
+          "error": "Zurzeit ist es nicht möglich, einen Code zu generieren."
+        }
+      },
+      "cta": {
+        "activeBonus": "Nationale Jugendkarte aktivieren",
+        "back": "Jetzt nicht",
+        "deactivateBonus": "Aus dem Konto entfernen",
+        "goToDetail": "Karte benützen"
+      },
+      "detail": {
+        "cta": {
+          "buyers": "CGN-Vorteile entdecken",
+          "discover": "Vorteile entdecken",
+          "otp": "Code generieren",
+          "eyca": {
+            "copy": "EYCA Kartennummer kopieren",
+            "pending": "EYCA-Vorteile entdecken",
+            "bottomSheet": "Besuche die EYCA Website",
+            "showEycaDiscounts": "EYCA-Vorteile entdecken"
+          }
+        },
+        "information": {
+          "active": "Die Karte ist aktiv und kann bis zum {{date}} verwendet werden.",
+          "warning": "Achtung! ",
+          "revoked": "Diese Karte wurde aus folgendem Grund widerrufen: {{reason}}",
+          "expired": "Diese Karte ist am {{date}} abgelaufen"
+        },
+        "ownership": "Wer kann die Karte benutzen?",
+        "status": {
+          "title": "Nationale Jugendkarte (CGN)",
+          "eyca": "EYCA Karte",
+          "eycaCircuit": "EYCA Netzwerk",
+          "eycaNumber": "Kartennummer",
+          "eycaPending": "Wir verknüpfen deine nationale Jugendkarte mit einer EYCA Nummer.",
+          "eycaError": "Wir hatten Probleme mit den EYCA Systemen.",
+          "eycaBottomSheetTitle": "Was ist EYCA?",
+          "eycaDescription": "Bis zum Alter von 31 Jahren ist **deine Nationale Jugendkarte Mitglied der EYCA** (European Youth Card Association).\nDu kannst die Karte bei den teilnehmenden Partnern verwenden, um die Vorteile für kulturelle Aktivitäten, Einkaufen, Transport, Verpflegung und Unterkunft auch in den europäischen Ländern, die an dem Programm teilnehmen, zu nutzen.",
+          "badge": {
+            "active": "Aktiv",
+            "revoked": "Widerrufen",
+            "expired": "Abgelaufen"
+          },
+          "date": {
+            "valid_until": "Gültig bis {{date}}",
+            "activated": "Aktiviert am",
+            "expired": "Abgelaufen am",
+            "revoked": "Widerrufen am"
+          },
+          "expiration": {
+            "cgn": "Gültig bis",
+            "eyca": "Gültig bis"
+          },
+          "a11y": {
+            "cardStatus": "Charterstatus: {{status}}"
+          }
+        }
+      },
+      "activation": {
+        "eyca": {
+          "loading": {
+            "caption": "Wir bearbeiten deine Anfrage",
+            "subCaption": "Bitte warte etwas."
+          },
+          "error": {
+            "title": "Der EYCA-Dienst ist zurzeit nicht verfügbar.",
+            "body": "Wir entschuldigen uns für die Unannehmlichkeiten.\nBitte versuche es später noch einmal."
+          }
+        },
+        "loading": {
+          "caption": "Wir aktivieren deine Nationale Jugendkarte",
+          "subCaption": "Bitte warte ein paar Sekunden..."
+        },
+        "error": {
+          "title": "Der Dienst Nationale Jugendkarte ist derzeit nicht verfügbar.",
+          "body": "Es tut uns leid, bitte versuche es später noch einmal."
+        },
+        "ineligible": {
+          "title": "Leider erfüllst du nicht die Voraussetzungen für die Nationale Jugendkarte.",
+          "body": "Die Nationale Jugendkarte ist nur für italienische und europäische Staatsbürger mit Wohnsitz in Italien im Alter von 18 bis 35 Jahren erhältlich."
+        },
+        "timeout": {
+          "title": "Wir bearbeiten deine Anfrage.",
+          "body": "Wir werden dir eine Nachricht in der App schicken, wenn deine Jugendkarte aktiv ist."
+        },
+        "alreadyActive": {
+          "title": "Deine Nationale Jugendkarte ist bereits aktiv!",
+          "body": "Du findest sie im Tab Konto der App."
+        },
+        "pending": {
+          "title": "Deine Nationale Jugendkarte wird gerade aktiviert.",
+          "body": "Du erhältst eine Nachricht, wenn sie aktiviert ist."
+        },
+        "success": {
+          "title": "Geschafft!",
+          "body": "Deine Nationale Jugendkarte ist aktiv."
+        },
+        "deactivate": {
+          "toast": "Zahlungsmethode von deinem Konto entfernt!",
+          "alert": {
+            "title": "Karte deaktivieren",
+            "message": "Die Karte wird deaktiviert und du hast keinen Zugang mehr zu den verfügbaren Vorteilen."
+          },
+          "expired": "Vom Konto entfernen"
+        }
+      },
+      "otp": {
+        "error": "Aufgrund eines technischen Problems war es uns nicht möglich, einen Rabattcode zu generieren. Bitte versuche es erneut.",
+        "code": {
+          "title": "Dein Rabattcode",
+          "validUntil": "Noch gültig für",
+          "minutes_one": "1 Minute",
+          "minutes_other": "{{minutes}} Minuten",
+          "seconds_one": "1 Sekunde",
+          "seconds_other": "{{seconds}} Sekunden"
+        }
+      }
+    },
+    "cdc": {
+      "request": "Richiedi Carta della Cultura"
+    }
+  },
+  "features": {
+    "messages": {
+      "pushNotifications": {
+        "banner": {
+          "title": "Verpasse keine wichtigen Mitteilungen",
+          "body": "Aktiviere Push-Benachrichtigungen, damit du weißt, wenn du eine Mitteilung auf IO erhältst",
+          "CTA": "Push-Benachrichtigungen aktivieren",
+          "bottomSheet": {
+            "title": "Möchtest du diesen Hinweis nicht mehr sehen?",
+            "body": "Bitte beachte, dass die Aktivierung von Push-Benachrichtigungen dazu beitragen kann, dass du wichtige Mitteilungen und Zahlungsfristen nicht verpasst.",
+            "cta": "Später erinnern",
+            "cta2": "Nicht erneut anzeigen"
+          }
+        }
+      },
+      "attachmentDownloadFeedback": "Download läuft",
+      "attachments": "Anhänge",
+      "loading": {
+        "title": "Die Details der Mitteilung werden geladen",
+        "subtitle": "Warte ein paar Sekunden"
+      },
+      "updateBottomSheet": {
+        "title": "Aktualisiere die IO-App",
+        "subtitle": "App IO Version {{value}} ist erforderlich, um diese Funktion zu nutzen. Bitte aktualisiere die App, um fortzufahren."
+      },
+      "badge": {
+        "dueDate": "Abgelaufen am {{date}} um {{time}}"
+      },
+      "alert": {
+        "addReminder": "Erinnerung hinzufügen",
+        "removeReminder": "Erinnerung entfernen",
+        "content": "Läuft am {{date}} um {{time}} ab"
+      },
+      "payments": {
+        "title": "pagoPA-Zahlungsmitteilungen",
+        "noticeCode": "Zahlungsmitteilungskodex",
+        "pay": "Zahlen"
+      }
+    },
+    "greenPass": {
+      "button": "Zurück",
+      "title": "Dieser Dienst ist auf IO nicht mehr aktiv"
+    },
+    "pn": {
+      "service": {
+        "activate": "Aktiviere den Dienst",
+        "deactivate": "Deaktiviere den Dienst",
+        "toast": {
+          "activated": "Vielen Dank, der Dienst ist aktiv!",
+          "error": "Bei deiner Anfrage ist ein Fehler aufgetreten"
+        }
+      },
+      "details": {
+        "badge": {
+          "legalValue": "Rechtsgültig"
+        },
+        "title": "Details der Mitteilung",
+        "noticeCode": "Zahlungsmitteilungskodex",
+        "loadError": {
+          "title": "Etwas ist schief gelaufen",
+          "body": "Die Details zu deiner Mitteilung konnten nicht abgerufen werden. Bitte versuche es erneut"
+        },
+        "cancelledMessage": {
+          "body": "Diese Zustellung wurde vom Absender gelöscht. Du kannst dessen Inhalt ignorieren.",
+          "unpaidPayments": "Für die Erstattung von Zahlungen im Zusammenhang mit diesem Bescheid wende dich bitte an den Absender.",
+          "unpaidPaymentsNew": "Für die Erstattung von Zahlungen wende dich bitte an die Körperschaft.",
+          "payments": "Zahlungen"
+        },
+        "paymentSection": {
+          "title": "pagoPA-Zahlungsmitteilungen",
+          "morePayments": "Alle Zahlungsmitteilungen anzeigen",
+          "bottomSheetTitle": "Welche Zahlungsmitteilung möchtest du bezahlen?"
+        },
+        "attachmentsSection": {
+          "title": "Anhänge"
+        },
+        "f24Section": {
+          "title": "F24-Formulare",
+          "description": "Wenn du es vorziehst, kannst du diesen Bescheid über F24 bezahlen.",
+          "showAll": "F24-Formulare anzeigen",
+          "bottomSheet": {
+            "title": "Beiliegende F24-Formulare"
+          }
+        },
+        "infoSection": {
+          "title": "Informationen zur Zustellung",
+          "iun": "IUN-Code",
+          "iunAccessibility": "IUN-Code, kopieren",
+          "iunSectionTitle": "Zustellung"
+        },
+        "timeline": {
+          "goToSend": "Zugang zu SEND",
+          "menuTitle": "Status der Zustellung",
+          "newInfo": "In der Web-Version findest du weitere Einzelheiten, Quittungen und Bescheinigungen, die gegenüber Dritten vollstreckbar sind.",
+          "title": "STATUS DER ZUSTELLUNG",
+          "status": {
+            "ACCEPTED": "Hinterlegt",
+            "CANCELLED": "Annulliert",
+            "DELIVERED": "Zugestellt",
+            "DELIVERING": "In Zustellung",
+            "EFFECTIVE_DATE": "Abgeschlossen wegen Ablaufs der Hinterlegungsfrist",
+            "UNREACHABLE": "Empfänger nicht auffindbar",
+            "VIEWED": "Gelesen",
+            "PAID": "Bezahlt",
+            "REFUSED": "VERWEIGERT",
+            "IN_VALIDATION": "IN VALIDIERUNG"
+          },
+          "expand": "Vorherigen Status anzeigen",
+          "info": "Über die Web-Version des Dienstes kannst du die Details zu jedem Status, die Annahmebestätigung und den Zustellnachweis, die gegenüber Dritten geltend gemacht werden können, einsehen",
+          "cta": "Zugang zur Webversion"
+        }
+      }
+    },
+    "wallet": {
+      "home": {
+        "screen": {
+          "legacy": {
+            "emptyMessage": "Verwahre hier deine Zahlungsmethoden, die Nationale Jugendkarte, Boni und Rabatte.",
+            "cta": "Dem Konto hinzufügen"
+          }
+        },
+        "toast": {
+          "newMethod": "Element hinzugefügt!"
+        },
+        "paymentsBanner": {
+          "title": "Möchtest du eine Aufforderung bezahlen?",
+          "action": "Geh zum Bereich Zahlungen",
+          "close": "Schließen"
+        },
+        "otherMethods": {
+          "error": {
+            "banner": {
+              "label": "Wir konnten einige Elemente der Liste nicht laden.",
+              "cta": "Erneut versuchen"
+            }
+          }
+        }
+      },
+      "cards": {
+        "categories": {
+          "all": "Alle",
+          "bonus": "Initiativen für das Gemeinwohl",
+          "cgn": "Nationale Jugendkarte",
+          "itw": "Dokumente",
+          "payment": "Zahlungsmethoden",
+          "other": "Bonus und mehr"
+        }
+      },
+      "onboarding": {
+        "title": "Was möchtest du deinem Konto hinzufügen?",
+        "sections": {
+          "itw": "Dokumente",
+          "other": "Mehr"
+        },
+        "badge": {
+          "active": "Bereits vorhanden",
+          "unavailable": "Nicht verfügbar",
+          "requested": "In Bearbeitung"
+        },
+        "options": {
+          "cgn": "Nationale Jugendkarte",
+          "welfare": "Initiativen für das Gemeinwohl",
+          "payments": "Zahlungsmethoden"
+        }
+      }
+    },
+    "payments": {
+      "backoff": {
+        "second": "1 Sekunde",
+        "seconds": "{{seconds}} Sekunden",
+        "minute": "1 Minute",
+        "minutes": "{{minutes}} Minuten",
+        "retryCountDown": "Du kannst es in {{time}} erneut versuchen."
+      },
+      "title": "Zahlungen",
+      "cta": "Aufforderung bezahlen",
+      "remoteAlert": {
+        "cta": "Mehr erfahren"
+      },
+      "methods": {
+        "title": "Zahlungsmethoden",
+        "button": "Hinzufügen",
+        "banner": {
+          "content": "Füge dem Konto eine Zahlungsmethode hinzu, damit du nicht jedes Mal die Daten eingeben musst.",
+          "action": "Zahlungsmethode hinzufügen"
+        },
+        "status": {
+          "expired": "Abgelaufen"
+        },
+        "error": {
+          "banner": {
+            "label": "Das Laden der Zahlungsmethoden ist fehlgeschlagen.",
+            "retryButton": "Erneut versuchen"
+          }
+        }
+      },
+      "transactions": {
+        "multiplePayment": "Mehrfache Zahlung",
+        "title": "Transaktionsverlauf",
+        "button": "Alle anzeigen",
+        "empty": {
+          "title": "Hier siehst du deine pagoPA-Quittungen",
+          "content": "Bezahle eine Zahlungsmitteilung in der App oder mittels jedem pagoPA-fähigen Kanal."
+        },
+        "status": {
+          "failure": "FEHLGESCHLAGEN",
+          "success": ""
+        },
+        "receipt": {
+          "loading": "Die Quittung wird geladen...",
+          "title": "pagoPA-Quittung",
+          "shareButton": "Speichern oder teilen",
+          "error": "Die Quittung konnte nicht abgerufen werden.",
+          "download": "Quittung abrufen",
+          "hideFromList": "Von der Liste verstecken",
+          "delete": {
+            "successful": "Die Quittung wurde ausgeblendet",
+            "failed": "Es ist ein Fehler aufgetreten, bitte versuche es erneut"
+          },
+          "hideBanner": {
+            "title": "Möchtest du diese Quittung aus deiner Liste ausblenden?",
+            "content": "Dieser Vorgang ist unwiderruflich. Die Quittung wird nicht mehr in deiner Quittungsliste angezeigt.",
+            "accept": "Ja, ausblenden"
+          }
+        },
+        "details": {
+          "totalFeeUnknown": "Der Gesamtbetrag enthält keine Provisionskosten: du findest diese in dem Dokument, das du von {{pspName}} erhalten hast.",
+          "totalFeeUnknownPsp": "Die Gesamtsumme enthält keine Provisionskosten: du findest diese in dem Dokument, das du vom Zahlungsdienstleister (PSP) erhalten hast."
+        },
+        "error": {
+          "banner": {
+            "label": "Das Laden der Qittungen ist fehlgeschlagen.",
+            "retryButton": "Erneut versuchen"
+          }
+        },
+        "filters": {
+          "tabs": {
+            "all": "Alle",
+            "payer": "Ich habe dafür bezahlt",
+            "debtor": "Auf mich lautend"
+          }
+        },
+        "list": {
+          "empty": {
+            "title": "Keine Quittung gefunden",
+            "subtitle": "Wenn du eine Quittung für eine pagoPA-Zahlungsmitteilung suchst, die du in der Vergangenheit bezahlt hast, wende dich an den Gläubiger."
+          },
+          "emptyPayer": {
+            "title": "Hier siehst du Belege für deine Zahlungen"
+          }
+        }
+      },
+      "details": {
+        "payPal": {
+          "banner": {
+            "title": "Möchtest du in 3 Raten zahlen?",
+            "content": "Verwende nicht diese Methode. Wähle bei der Bezahlung 'PayPal (auch in 3 Raten)'."
+          }
+        },
+        "pspAlert": {
+          "description": "Für diese Methode ist die Schnellzahlung mit dem Anbieter {{pspBusinessName}} aktiv.",
+          "action": "Was bedeutet das?",
+          "title": "Was bedeutet das?",
+          "explainationContent": "Wenn du diese Methode gespeichert hast, hast du {{pspBusinessName}} autorisiert, Transaktionen über 'PayPal-Schnellzahlung' abzuwickeln.\n\nWenn du einen anderen Anbieter verwenden möchtest, füge die Methode erneut zu deinem Konto hinzu.\n\nUm die Autorisierung zu widerrufen, entferne die Methode aus deinem Konto.\n\nVerwende die PayPal-App, um die Karte oder das Bankkonto zu ändern, von der/dem du die Gebühren abbuchen möchtest."
+        }
+      },
+      "errors": {
+        "transactionCreationError": "Es gibt ein Problem mit den Bezahlsystemen."
+      },
+      "checkout": {
+        "bottomSheet": {
+          "PAYMENT_REVERSED": {
+            "title": "Was tun, wenn die Zahlung fehlschlägt?",
+            "payNotice": "**Bezahle die Zahlungsmitteilung**\nDenke daran, die Zahlungsmitteilung innerhalb der von der Körperschaft gesetzten Fristen zu bezahlen. Wenn du nicht über IO zahlen kannst, [entdecke andere pagoPA-fähige Kanäle]({{url}})",
+            "waitRefund": "**Warte auf die Erstattung**\nNormalerweise wird der Betrag innerhalb weniger Minuten wieder gutgeschrieben. In anderen Fällen kann die Geldüberweisung auf dein Konto oder deine Karte länger dauern.",
+            "contactSupport": "**Kontaktiere den Support**\nWenn du nach 5 Werktagen immer noch keine Rückerstattung erhalten hast, kontaktiere bitte den Support."
+          }
+        }
+      }
+    },
+    "itWallet": {
+      "credentialName": {
+        "eid": "Digitale Identität",
+        "mdl": "Führerschein",
+        "dc": "Europäische Behindertenkarte",
+        "ts": "Gesundheitskarte - Europäische Krankenversicherungskarte"
+      },
+      "wallet": {
+        "active": "Aktiv",
+        "inactive": "Nicht aktiv"
+      },
+      "card": {
+        "status": {
+          "expired": "Abgelaufen",
+          "expiring": "Ablaufend",
+          "pending": "In Bearbeitung",
+          "invalid": "Ungültig",
+          "verificationExpiring": "Überprüfen",
+          "verificationExpired": "Überprüfen"
+        },
+        "digital": "Digitale Version"
+      },
+      "generic": {
+        "error": {
+          "title": "Es gibt ein Problem mit unseren Systemen",
+          "body": "Versuche es in ein paar Minuten erneut. Wenn das Problem erneut auftritt, wende dich an den Support."
+        },
+        "alert": {
+          "title": "Möchtest du den Vorgang abbrechen?",
+          "body": "Du musst alle Schritte erneut durchführen",
+          "confirm": "Ja, unterbrechen",
+          "cancel": "Nein, fortfahren"
+        },
+        "dataSource": {
+          "multi": "Bereitgestellt von {{credentialSource}}",
+          "single": "Bereitgestellt von {{credentialSource}}"
+        },
+        "placeholders": {
+          "claimNotAvailable": "Eigenschaft nicht erkannt",
+          "claimLabelNotAvailable": "Eigenschaft nicht vorhanden",
+          "organizationName": "Körperschaft nicht verfügbar"
+        }
+      },
+      "verifiableCredentials": {
+        "claims": {
+          "uniqueId": "Eindeutige ID",
+          "givenName": "Name",
+          "familyName": "Nachname",
+          "taxIdCode": "Steuernummer",
+          "birthdate": "Geburtsdatum",
+          "placeOfBirth": "Geburtsort",
+          "expirationDate": "Ablaufdatum",
+          "securityLevel": "Sicherheitsstufe",
+          "info": "Mehr über diese Daten",
+          "releasedBy": "Ausstellung der digitalen Version",
+          "attachments": "Anhänge",
+          "authenticSource": "Quelle der Daten",
+          "mdl": {
+            "category": "Führerschein {{category}}",
+            "issuedDate": "Gültig von",
+            "expirationDate": "Gültig bis",
+            "restrictionConditions": "Beschränkungen"
+          }
+        }
+      },
+      "discovery": {
+        "banner": {
+          "home": {
+            "title": "Neu: Dokumente in IO",
+            "content": "Du kannst jetzt die digitale Version deiner Dokumente in dein IO-Konto aufnehmen!",
+            "action": "Start"
+          },
+          "onboarding": {
+            "content": "Aktiviere Dokumente in IO, um die digitale Version deiner Dokumente zum Konto hinzuzufügen",
+            "action": "Start"
+          }
+        },
+        "upcomingWalletBanner": {
+          "title": "Demnächst: deine Dokumente in IO",
+          "content": "Bald kannst du digitale Versionen deiner persönlichen Dokumente wie Führerschein und Gesundheitskarte in dein IO-Konto einfügen!",
+          "action": "Mehr erfahren"
+        },
+        "alreadyActive": {
+          "title": "Dokumente in IO ist bereits aktiv",
+          "content": "Füge weiterhin digitale Versionen deiner Dokumente zu deinem Konto hinzu.",
+          "action": "Gehe zum Konto"
+        },
+        "ipzsPrivacy": {
+          "title": "Deine Dokumente in IO sind sicher",
+          "warning": "Indem du auf **Weiter** tippst, erklärst du, dass du den **Datenschutzhinweis** gelesen und verstanden hast.",
+          "button": {
+            "label": "Weiter"
+          }
+        }
+      },
+      "identification": {
+        "nfc": {
+          "title": "NFC aktivieren, um fortzufahren",
+          "description": "Damit IO deine CIE lesen kann, aktiviere NFC in den Einstellungen deines Geräts.",
+          "header": "Wie geht das",
+          "steps": {
+            "1": "Öffne 'Einstellungen'",
+            "2": "Suche nach 'NFC'",
+            "3": "Aktiviere die Funktion",
+            "label": "Schritt {{value}}"
+          },
+          "primaryAction": "Einstellungen öffnen",
+          "secondaryAction": "Weiter"
+        },
+        "cieId": {
+          "loading": {
+            "title": "Verbindung mit der CieID-App läuft...",
+            "subtitle": "Bestätige den Zugang in der CieID-App, um die Verbindung fortzusetzen oder abzubrechen",
+            "cancel": "Verbindung abbrechen"
+          }
+        }
+      },
+      "issuance": {
+        "credentialAuth": {
+          "title": "{{credentialName}}: erforderliche Daten",
+          "subtitle": "Sie werden mit **{{organization}}** für die Bereitstellung der digitalen Version des Dokuments geteilt.",
+          "requiredClaims": "Erforderliche Daten",
+          "disclaimer": {
+            "0": "Deine Daten sind sicher und werden nur zu den in der Datenschutzrichtlinie beschriebenen Zwecken verarbeitet.",
+            "1": "Die Daten werden nur so lange weitergegeben, wie es dauert, bis die digitale Version des Dokuments bereitgestellt wird."
+          },
+          "tos": "Indem du auf **Weiter** tippst, bestätigst du, dass du die [Datenschutzrichtlinie]({{privacyUrl}}) gelesen und verstanden hast."
+        },
+        "eidPreview": {
+          "title": "Identität verifiziert",
+          "subtitle": "Du aktivierst **Dokumente in IO** als:",
+          "actions": {
+            "primary": "Weiter",
+            "secondary": "Abbrechen"
+          }
+        },
+        "credentialPreview": {
+          "loading": "Warte noch ein paar Sekunden, ohne die App zu beenden.",
+          "title": "{{credential}}: Hier eine Vorschau deiner Daten",
+          "bottomSheet": {
+            "about": {
+              "title": "Wer ist das?",
+              "subtitle": "Das ist die Körperschaft, die dir die digitale Version deiner Dokumente zur Verfügung stellt.\n\nUm zu erfahren, wie sie deine Daten verarbeitet, konsultiere bitte die [Datenschutzrichtlinie]({{privacyUrl}})."
+            },
+            "authSource": {
+              "title": "Wer ist das?",
+              "subtitle": "Es ist die Körperschaft, die die in deinem Dokument enthaltenen Daten bereitstellt."
+            }
+          },
+          "actions": {
+            "primary": "Dem Konto hinzufügen",
+            "secondary": "Abbrechen"
+          }
+        },
+        "eidResult": {
+          "success": {
+            "title": "È tutto pronto!",
+            "subtitle": "Ora puoi aggiungere il primo documento al Portafoglio di IO.",
+            "primaryAction": "Aggiungi primo documento",
+            "secondaryAction": "Continua più tardi"
+          }
+        },
+        "credentialResult": {
+          "toast": "Erledigt!"
+        },
+        "notMatchingIdentityError": {
+          "title": "Unerkannte Identität",
+          "body": "Aktiviere Dokumente in IO mit der gleichen Identität, die du für den Zugriff auf die IO-App verwendest. Überprüfe deine Anmeldedaten und versuche es erneut.",
+          "primaryAction": "Zugriff wiederholen",
+          "secondaryAction": "Schließen"
+        },
+        "genericError": {
+          "title": "Es ist ein unerwarteter Fehler aufgetreten",
+          "body": "Die Körperschaft, die digitale Versionen von Dokumenten ausgibt, hat Probleme und arbeitet bereits an deren Lösung: Versuche es später noch einmal.",
+          "primaryAction": "Schließen"
+        },
+        "notEntitledCredentialError": {
+          "title": "Das Dokument kann nicht hinzugefügt werden",
+          "body": "Vergewissere dich, dass du im Besitz des gültigen physischen Dokuments bist, bevor du dessen digitale Version anforderst.",
+          "primaryAction": "Verstanden"
+        },
+        "asyncCredentialError": {
+          "title": "Das Führerscheinamt bearbeitet deinen Antrag",
+          "body": "Du erhältst in der App eine Mitteilung, dass du fortfahren kannst, sobald dein Antrag bearbeitet ist.",
+          "primaryAction": "Verstanden"
+        },
+        "credentialAlreadyAdded": {
+          "title": "Du hast dieses Dokument bereits",
+          "body": "Die digitale Version des Dokuments befindet sich bereits in deinem Konto.",
+          "primaryAction": "Gehe zum Dokument"
+        },
+        "walletInstanceNotActive": {
+          "documentiSuIo": {
+            "title": "Aktiviere Dokumente in IO, um fortzufahren",
+            "body": "Um deine Dokumente zum Konto hinzuzufügen, musst du Folgendes aktivieren: ",
+            "bodyBold": "Dokumente in IO"
+          },
+          "itWallet": {
+            "title": "Ottieni IT-Wallet per continuare",
+            "body": "Per aggiungere nuovi documenti al tuo Portafoglio di IO ottieni IT-Wallet: ti basta avere con te la Carta di Identità Elettronica (CIE).",
+            "bodyBold": ""
+          },
+          "primaryAction": "Start",
+          "secondaryAction": "Jetzt nicht"
+        },
+        "credentialNotFound": {
+          "title": "Dokument zum Konto hinzufügen",
+          "subtitle": "Um Dokumente in IO zu verwenden, füge sie zunächst dem Konto hinzu. Das geht schnell und einfach."
+        }
+      },
+      "notMatchingIdentityScreen": {
+        "title": "Du meldest dich mit einem neuen Gerät an",
+        "message": "Wenn du dich von einem anderen Gerät als dem üblichen (z. B. dem einer anderen Person) in IO anmeldest, werden aus Sicherheitsgründen diese Funktionalitäten zurückgesetzt:\n\n- Dokumente in IO",
+        "banner": {
+          "title": "Wir empfehlen, dass du nur von deinem Gerät aus auf die App zugreifst."
+        },
+        "alert": {
+          "title": "Möchtest du dich wirklich abmelden?",
+          "message": "Du musst dich erneut mit SPID oder CIE anmelden, um die App nutzen zu können."
+        }
+      },
+      "unsupportedDevice": {
+        "text": "Ab dem 02.07.2024 ist dein Gerät möglicherweise nicht mehr mit IO kompatibel.",
+        "moreInfo": "Mehr erfahren",
+        "error": {
+          "title": "Dein Gerät unterstützt Dokumente in IO nicht",
+          "body": "Dein Gerät verfügt nicht über die erforderlichen Sicherheitsanforderungen für diese Funktion.",
+          "primaryAction": "Schließen",
+          "secondaryAction": "Mehr erfahren"
+        }
+      },
+      "presentation": {
+        "alerts": {
+          "statusAction": "Was kann ich tun?",
+          "mdl": {
+            "content": "Du kannst deinen Führerschein nur in Italien verwenden, um bei einer Polizeikontrolle deine Fahrtauglichkeit nachzuweisen."
+          },
+          "ehc": {
+            "content": "Du kannst deine Gesundheitskarte - Europäische Krankenversicherungskarte auf IO verwenden, um Dienstleistungen des nationalen Gesundheitsdienstes in Anspruch zu nehmen."
+          },
+          "edc": {
+            "content": "Du kannst deinen Europäischen Behindertenausweis auf IO verwenden, um Dienstleistungen auf italienischem Gebiet in Anspruch zu nehmen, und zwar in denselben Verwendungszusammenhängen wie dein physisches Dokument."
+          },
+          "expired": {
+            "content": "Das Dokument ist nicht mehr gültig. Wenn du das neue gültige Dokument bereits hast, kannst du die digitale Version im Konto aktualisieren",
+            "action": "Dokument aktualisieren"
+          },
+          "expiring": {
+            "content": "Es verbleiben noch {{days}} Tage, bevor das Dokument abläuft."
+          }
+        },
+        "bottomSheets": {
+          "eidInfo": {
+            "title": "Dokumente in IO:\nIdentität verifiziert",
+            "titleExpired": "Dokumente in IO:\nVerifiziere deine Identität",
+            "contentTop": "Mit **Dokumente in IO** speicherst du digitale Versionen deiner Dokumente im IO-Konto.",
+            "contentBottom": "###### Wie funktioniert das?\n\nDeine **Identität wird bei der Aktivierung über SPID oder CIE verifiziert**.",
+            "triggerLabel": "Was ist das?",
+            "alert": {
+              "documents": {
+                "valid": "Die letzte Überprüfung ist vom {{date}}.",
+                "expiring": "Überprüfe deine Identität bis {{date}}.",
+                "expired": "Für die weitere Nutzung von Dokumente in IO ist ein kurzer Überprüfungsschritt erforderlich."
+              }
+            }
+          },
+          "mDL": {
+            "expiring": {
+              "title": "Führerschein in IO: ablaufendes Dokument",
+              "content": "Verlängere deinen Führerschein in den Büros des Ministeriums für Infrastruktur und Verkehr - Generaldirektion für Motorisierung oder bei einer autorisierten Stelle in deiner Nähe.\n\nDu musst dich einer medizinischen Untersuchung bei einem qualifizierten Arzt unterziehen und die vorgeschriebenen Formulare ausfüllen.\n\n###### Welche Dokumente sollte ich bereithalten?\n\n - den ablaufenden oder abgelaufenen Führerschein\n - ein Ausweisdokument\n - die Steuernummer\n - ein aktuelles Foto in Passgröße"
+            }
+          },
+          "EuropeanHealthInsuranceCard": {
+            "expiring": {
+              "title": "Gesundheitskarte in IO: ablaufendes Dokument",
+              "content": "Deine Gesundheitskarte wird automatisch erneuert und dann an deine bei der Agentur der Einnahmen registrierte Adresse geschickt.\n\nWenn du sie bereits erhalten hast, kannst du dieses Dokument aus deinem Konto löschen und die neue, aktualisierte digitale Version hinzufügen."
+            }
+          },
+          "EuropeanDisabilityCard": {
+            "expiring": {
+              "title": "Europäischer Behindertenausweis in IO: ablaufendes Dokument",
+              "content": "Du kannst die Verlängerung deines Europäischen Behindertenausweises bei der Stelle beantragen, die ihn ausgestellt hat.\n\n Informiere dich auf der offiziellen Website des INPS oder wende dich an deinen Sanitätsbetrieb, da die Verlängerung je nach Art der Behinderung und den Vorschriften in deinem Gebiet unterschiedlich ausfallen kann."
+            }
+          }
+        },
+        "credentialDetails": {
+          "card": {
+            "front": "Vorderseite ",
+            "back": "Rückseite",
+            "showFront": "Zeige Vorderseite ",
+            "showBack": "Zeige Rückseite"
+          },
+          "personalDataTitle": "Persönliche Daten",
+          "documentDataTitle": "Daten des Dokuments",
+          "lastUpdated": "Daten zum {{lastUpdateTime}}",
+          "boolClaim": {
+            "true": "Ja",
+            "false": "Nein"
+          },
+          "hiddenClaim": "Ausgeblendet",
+          "fiscalCode": {
+            "label": "Deine Steuernummer",
+            "action": "Tippe, um den Barcode zu vergrößern und im Vollbildmodus anzuzeigen."
+          },
+          "status": {
+            "valid": "Gültig",
+            "invalid": "Ungültig",
+            "expired": "Abgelaufen",
+            "expiring": "Ablaufend"
+          },
+          "actions": {
+            "removeFromWallet": "Vom Konto entfernen",
+            "requestAssistance": "Stimmt etwas nicht?",
+            "showClaimValues": "Dokumentattribute anzeigen",
+            "hideClaimValues": "Dokumentattribute ausblenden"
+          },
+          "dialogs": {
+            "remove": {
+              "title": "Möchtest du das Dokument aus dem Konto entfernen?",
+              "content": "Wenn du deine Meinung änderst, kannst du es später wieder hinzufügen.",
+              "confirm": "Ja, entfernen"
+            }
+          },
+          "toast": {
+            "removed": "Erledigt!"
+          },
+          "verificationExpired": {
+            "title": "Überprüfe die digitale Version des Dokuments",
+            "content": "Dies ist ein notwendiger Sicherheitsschritt, um das Dokument '{{credentialName}}' in IO weiter zu verwenden.",
+            "primaryAction": "Start"
+          }
+        },
+        "ctas": {
+          "trustmark": "Echtheitszertifikat anzeigen",
+          "openPdf": "Dokument anzeigen",
+          "shareButton": "Speichern oder freigeben",
+          "fiscalCode": "Deine Steuernummer"
+        }
+      },
+      "trustmark": {
+        "description": "Zeige den QR-Code vor, um die Echtheit des Dokuments zu bestätigen, wenn du dazu aufgefordert wirst.",
+        "qrCode": "QR-Code zur Authentizität von Dokumenten"
+      },
+      "walletRevocation": {
+        "cta": "Dokumente in IO deaktivieren",
+        "confirmScreen": {
+          "title": "Möchtest du Dokumente in IO wirklich deaktivieren?",
+          "subtitle": "Du löschst die Dokumente, die du dem Konto hinzugefügt hast.\nWenn du deine Meinung änderst, kannst du Dokumente in IO in Zukunft wieder aktivieren.",
+          "action": "Bestätige und fortfahren"
+        },
+        "loadingScreen": {
+          "title": "Wir deaktivieren {{name}}...",
+          "subtitle": "Warte ein paar Sekunden"
+        },
+        "failureScreen": {
+          "title": "Ein unerwarteter Fehler ist aufgetreten",
+          "subtitle": "Der Dienst konnte nicht deaktiviert werden. Bitte versuche es erneut."
+        }
+      },
+      "walletInstanceRevoked": {
+        "alert": {
+          "cta": "Mehr erfahren",
+          "closeButton": "Schließen",
+          "closeButtonAlt": "Verstanden",
+          "revokedByWalletProvider": {
+            "title": "Dokumente in IO wurde deaktiviert",
+            "content": "Um die Voraussetzungen für die weitere Nutzung der Funktionen auf deinem Gerät zu prüfen, tippe auf 'Mehr erfahren'."
+          },
+          "newWalletInstanceCreated": {
+            "title": "Dokumente in IO wurde auf diesem Gerät deaktiviert",
+            "content": "Aus Sicherheitsgründen kannst du deine IO-Dokumente immer nur auf einem Gerät gleichzeitig verwenden."
+          },
+          "revokedByUser": {
+            "title": "Du hast Dokumente in IO deaktiviert",
+            "content": "Wenn du deine Meinung änderst, kannst du Dokumente in IO in Zukunft wieder aktivieren."
+          }
+        }
+      }
+    }
+  },
+  "support": {
+    "ticketList": {
+      "noTicket": {
+        "title": "Du hast keine offenen Tickets",
+        "body": "Wenn du Hilfe benötigst, erstelle bitte ein neues Ticket."
+      }
+    },
+    "helpCenter": {
+      "header": "Hilfe",
+      "cta": {
+        "contactSupport": "Ticket erstellen",
+        "seeReports": "Offene Tickets"
+      },
+      "supportComponent": {
+        "title": "Benötigst du Hilfe?",
+        "subtitle": "Wirf einen Blick in die FAQ: Wenn du die gesuchte Antwort nicht findest, erstelle ein Ticket. Wenn du bereits eine Ticket eröffnet hast und dessen Status überprüfen oder Details hinzufügen möchtest, wähle bitte 'Offene Tickets'.",
+        "adviceMessage": "Wenn dein Problem den Inhalt einer Nachricht oder den Dienst einer Körperschaft betrifft, wende dich bitte an die Körperschaft: du findest die entsprechenden Kontaktdaten in der Nachricht oder in den Details des Dienstes."
+      }
+    },
+    "panicMode": {
+      "title": "Leider können wir dir zur Zeit nicht helfen",
+      "body": "Wir wissen, dass es ein Problem gibt, und wir arbeiten daran, es zu lösen. Wenn das Problem weiterhin besteht oder wenn du in einer anderen Angelegenheit Hilfe benötigst, versuche bitte, uns später erneut zu kontaktieren."
+    },
+    "errorGetZendeskToken": {
+      "title": "Wir können derzeit kein Ticket erstellen",
+      "subtitle": "Versuche es später erneut"
+    },
+    "askPermissions": {
+      "nameSurname": "Vor- und Nachname",
+      "fiscalCode": "Steuernummer",
+      "emailAddress": "E-Mail-Adresse",
+      "deviceAndOS": "Gerät und Betriebssystem",
+      "ipAddress": "IP-Adresse",
+      "ipAddressValue": "Einschließlich der geschätzten geografischen Position",
+      "appVersionsHistory": "Versionsverlauf der App",
+      "appVersionsHistoryValue": "Um herauszufinden, ob das Problem von der letzten Aktualisierung abhängt",
+      "identityProvider": "Identitätsanbieter",
+      "navigationData": "IO-App Navigationsdaten",
+      "navigationDataValue": "z.B. der letzte Bildschirm oder die letzte in der IO-App angezeigte Nachricht",
+      "devicePerformance": "Leistung des Geräts",
+      "devicePerformanceDataAndroid": "Speicher und Akkustand",
+      "devicePerformanceDataiOS": "Speicher ({{storage}}) und Akkustand",
+      "stock": "Daten zur Zahlungsmitteilung",
+      "stockValue": "Einschließlich des Fehlers, den du gerade erhalten hast",
+      "card": "Angaben zur Zahlungsmethode",
+      "cardValue": "Nummer (verschlüsselt), Ablaufdatum, Zahlungsnetzwerk",
+      "fci": "Identifikation der Signaturanfrage",
+      "fciValue": "Um die aktuelle Anfrage zu prüfen",
+      "prominentDisclosure": "Zugriff auf die Galerie des Geräts",
+      "prominentDisclosureData": "Zum Hochladen von Fotos und Screenshots",
+      "header": "Erstelle ein Ticket",
+      "listTitle": "Offene Tickets",
+      "title": "Gibst du uns deine Zustimmung?",
+      "listBody": "Um deine offenen Tickets laden zu können, benötigen wir Zugriff auf einige deiner Daten.",
+      "privacyLink": "Lies die Datenschutzbestimmungen",
+      "body": "Um dein Ticket beantworten zu können, benötigen wir Zugriff auf einige deiner Daten. Wenn du deine Zustimmung verweigerst, musst du uns eine allgemeine Anfrage per E-Mail senden.",
+      "listHeader": "Wenn du deine Zustimmung gibst, erhalten wir diese Daten:",
+      "cta": {
+        "allow": "Zustimmen",
+        "denies": "Ablehnen"
+      },
+      "toast": {
+        "emailClientNotFound": "Wenn du Hilfe benötigst, schreib uns an: {{emailAddress}}"
+      }
+    },
+    "chooseCategory": {
+      "header": "Erstelle ein Ticket",
+      "title": {
+        "category": "Wähle einen Bereich aus",
+        "subCategory": "Kannst du uns mehr Details nennen?"
+      },
+      "subTitle": {
+        "category": "Hilf uns, besser zu verstehen, wie wir dir helfen können, indem du den Bereich deines Problems auswählst: Wir werden uns so schnell wie möglich während der Geschäftszeiten bei dir melden."
+      }
+    }
+  },
+  "barcodeScan": {
+    "error": "IO kann diesen Code nicht erkennen",
+    "tabs": {
+      "scan": "Scannen",
+      "upload": "Hochladen",
+      "input": "Eingeben",
+      "a11y": {
+        "scan": "Scannen, 1 von 3",
+        "upload": "Hochladen, 2 von 3",
+        "input": "Eingeben, 3 von 3"
+      }
+    },
+    "upload": {
+      "image": "Ein Bild hochladen",
+      "file": "Eine Datei hochladen"
+    },
+    "manual": {
+      "authorize": "Eine Transaktion genehmigen",
+      "notice": "Eine pagoPA-Mitteilung bezahlen"
+    },
+    "permissions": {
+      "undefined": {
+        "title": "Wir brauchen deine Zustimmung",
+        "label": "Erlaube den Zugriff, um QR-Codes mit der Kamera deines Geräts scannen zu können.",
+        "action": "Zugriff gewähren"
+      },
+      "denied": {
+        "title": "Du hast den Zugriff verweigert, die Kamera zu benutzen",
+        "label": "Um den Zugriff zu gewähren, geh zu den Einstellungen deines Betriebssystems.",
+        "action": "Zu den Einstellungen"
+      }
+    },
+    "multipleResultsAlert": {
+      "title": "Du hast mehrere Codes gescannt",
+      "body": "Scanne nur einen Code auf einmal",
+      "action": "Erneut versuchen"
+    }
+  },
+  "unsupportedDevice": {
+    "warning": "Dein Gerät könnte bald nicht mehr mit IO kompatibel sein.",
+    "title": "Dieses Gerät ist nicht mehr kompatibel mit IO",
+    "subtitle": "Stell sicher, dass dein Betriebssystem auf die neueste Version aktualisiert ist. Wenn dies bereits der Fall ist, musst du dich von einem anderen Gerät aus anmelden, um IO weiter nutzen zu können.",
+    "cta": {
+      "faq": "Warum?"
+    }
+  },
+  "fastLogin": {
+    "loadingScreen": {
+      "title": "Wir authentifizieren dich"
+    },
+    "userInteraction": {
+      "sessionExpired": {
+        "noPin": {
+          "title": "Es ist zu lange her!",
+          "subtitle": "Aus Sicherheitsgründen musst du dich erneut mit SPID oder CIE identifizieren. Anschließend kannst du die IO-Konfiguration dort fortfahren, wo du aufgehört hast.",
+          "submitButtonTitle": "Fortfahren"
+        },
+        "continueNavigation": {
+          "title": "Deine Sitzung ist abgelaufen",
+          "subtitle": "Melde dich an, um die App weiter zu nutzen.",
+          "submitButtonTitle": "Anmelden",
+          "cancelButtonTitle": "Abbrechen"
+        },
+        "transientError": {
+          "title": "Wir konnten dich nicht authentifizieren",
+          "subtitle": "Schließ die App und versuche es in ein paar Minuten erneut.",
+          "submitButtonTitle": "Zu den FAQ"
+        }
+      }
+    },
+    "whatsNew": {
+      "title": "Wir haben den Zugang zu IO verbessert!",
+      "subtitle": "Du musst dich jetzt nur noch einmal im Jahr mit deinem SPID oder deiner CIE authentifizieren. Danach brauchst du dich nur noch mit deinem Entsperrcode oder biometrischen Merkmalen anmelden."
+    }
+  },
+  "whatsNew": {
+    "title": "Was ändert sich?"
+  },
+  "bonusCard": {
+    "validUntil": "Gültig bis {{endDate}}",
+    "expiring": "Verfällt am {{endDate}}",
+    "expired": "Abgelaufen am {{endDate}}",
+    "paused": "In Pause",
+    "removed": "Entfernt",
+    "used": "Utilizzato"
+  },
+  "transaction": {
+    "details": {
+      "error": {
+        "title": "Wir konnten die Quittung nicht abrufen"
+      },
+      "title": "Details zur Transaktion",
+      "totalAmount": "Insgesamt",
+      "totalFee": "Der Gesamtbetrag umfasst ",
+      "totalFeePsp": "Provision, berechnet von {{pspName}}.",
+      "totalFeeNoPsp": "Provision, die vom Transaktionsdienstleister (PSP) erhoben wird.",
+      "bannerImported": {
+        "content": "Die pagoPA-Quittung ist nicht verfügbar. Wende dich an den Zahlungsempfängers, wenn du den Zahlungsbeleg, d. h. das Dokument, das die Begleichung einer Schuld bescheinigt, benötigst."
+      },
+      "info": {
+        "title": "Informationen zur Transaktion",
+        "pspName": "Zahlungsdienstleister (PSP)",
+        "dateAndHour": "Datum und Uhrzeit",
+        "transactionId": "Transaktions-ID",
+        "paymentMethod": "Zahlungsmethode",
+        "authCode": "Autorisierungscode",
+        "rrn": "RRN",
+        "executedBy": "Ausgeführt von",
+        "headedTo": "Zahlungsmethode, ausgestellt auf",
+        "alert": {
+          "content": "Wende dich an den Gläubiger, wenn du die Quittung benötigst."
+        }
+      },
+      "operation": {
+        "amount": "Betrag",
+        "creditor": "Gläubiger",
+        "debtor": "Schuldner",
+        "iuv": "IUV",
+        "subject": "Zahlungsgrund",
+        "noticeCode": "Kodex der Zahlungsmitteilung/IUV",
+        "noticeCodeAccessible": "Codice avviso/Identificativo Univoco Versamento",
+        "taxCode": "Steuernummer Körperschaft"
+      }
+    }
+  },
+  "FIMS": {
+    "updateApp": {
+      "header": "Aktualisiere die App, um fortzufahren",
+      "body": "Um weiterhin alle Funktionen nutzen zu können, lade die neue Version von IO aus dem Store herunter."
+    },
+    "history": {
+      "errorStates": {
+        "dataUnavailable": "Daten nicht verfügbar",
+        "ko": {
+          "title": "Es gibt ein vorübergehendes Problem",
+          "body": "Hier kannst du den Verlauf deiner Zugriffe auf externe Dienste über IO einsehen und eine Kopie per E-Mail anfordern."
+        },
+        "toast": "Beim Laden der Liste ist ein Problem aufgetreten. Bitte versuche es erneut"
+      },
+      "emptyBody": "Du hast noch keine Dienste Dritter in Anspruch genommen",
+      "exportData": {
+        "alerts": {
+          "areYouSure": "Willst du wirklich eine Kopie aller Zugänge exportieren?",
+          "alreadyExporting": {
+            "title": "Wir bearbeiten bereits einen Exportantrag.",
+            "body": "Wenn die Bearbeitung abgeschlossen ist, erhältst du eine E-Mail mit allen Informationen zum Zugriffsverlauf."
+          }
+        },
+        "CTA": "Eine Kopie per E-Mail anfordern",
+        "successToast": "Erledigt! Prüfe dein Postfach.",
+        "errorToast": "Beim Senden der Anfrage ist ein Problem aufgetreten. Bitte versuche es erneut"
+      },
+      "profileCTA": {
+        "title": "Kontrolle deiner Zugriffe",
+        "subTitle": "Zugriffshistorie mit IO anzeigen"
+      },
+      "historyScreen": {
+        "header": "Deine Zugänge auf Dienste Dritter",
+        "body": "Hier kannst du die Historie deiner Zugänge auf externe Dienste über IO einsehen und eine Kopie per E-Mail anfordern."
+      }
+    },
+    "loadingScreen": {
+      "abort": {
+        "title": "Du hast den Zugang zu diesem Dienst abgebrochen"
+      },
+      "consents": {
+        "title": "Warte ein paar Sekunden"
+      },
+      "idle": {
+        "title": "Warte ein paar Sekunden"
+      },
+      "fastLogin_forced_restart": {
+        "title": "Warte ein paar Sekunden"
+      },
+      "in-app-browser-loading": {
+        "title": "Wir leiten dich zum Dienst weiter"
+      },
+      "subtitle": "Warte ein paar Sekunden"
+    },
+    "consentsScreen": {
+      "errorStates": {
+        "authentication": {
+          "body": "Der Webservice der Körperschaft ist derzeit nicht verfügbar",
+          "title": "Der Dienst konnte nicht erreicht werden"
+        },
+        "general": {
+          "body": "Es gab ein Problem beim Abrufen der Daten: Wir arbeiten daran, es so schnell wie möglich zu lösen",
+          "title": "Es liegt ein vorübergehendes Problem vor, bitte versuche es später noch einmal."
+        },
+        "missingInAppBrowser": {
+          "body": "Um einen sicheren Zugriff zu gewährleisten, lade den auf deinem Gerät installierten Browser herunter oder aktualisiere ihn.",
+          "title": "Aktualisiere deinen Browser um fortzufahren"
+        }
+      },
+      "inAppBrowserError": "Beim Senden der Anfrage ist ein Problem aufgetreten. Bitte versuche es erneut",
+      "title": "Um auf den Dienst zugreifen zu können, müssen die folgenden Daten freigegeben werden",
+      "subtitle": "IO wird die erforderlichen Daten an ",
+      "subtitle2": " weitergeben für deine Authentifizierung bei ",
+      "requiredData": "Erforderliche Daten",
+      "privacy1": "Für weitere Informationen lies bitte die ",
+      "privacyCta": "Datenschutzrichtlinie  ",
+      "bottomSheet": {
+        "title": "Dienste von Drittanbietern über IO: So funktioniert es",
+        "body": "Damit du auf einen externen Dienst zugreifen kannst, ohne dich jedes Mal zu authentifizieren, gibt die IO-App einige deiner Daten an den Anbieter weiter.",
+        "body2": "Deine Daten sind sicher und werden nur zu den Zwecken verarbeitet, die von der Körperschaft angegeben sind.",
+        "bodyPrivacy": "Datenschutzrichtlinie"
+      }
+    }
+  },
+  "idpay": {
+    "configuration": {
+      "iban": {
+        "onboarding": {
+          "error": {
+            "iban": "Iban ist nicht gültig",
+            "name": "Assoziiert einen Namen mit der Iban"
+          }
+        }
+      }
+    },
+    "unsubscription": {
+      "removeAlert": {
+        "title": "Möchten Sie {{initiativeName}} aus der Brieftasche löschen?",
+        "content": "Der Bonus wird entfernt."
+      }
+    },
+    "onboarding": {
+      "enableMessages": {
+        "cancelAction": "Stornieren",
+        "subtitle": "Questo passaggio è necessario per procedere con la richiesta. Ti permetterà di ricevere gli aggiornamenti sul {{initiativeName}}.",
+        "title": "Aktivieren Sie die Möglichkeit, Sie in der App zu kontaktieren",
+        "confirmAction": "OK, aktiv"
+      },
+      "enableNotification": {
+        "title": "Non perderti l’esito delle tue richieste",
+        "subtitle": "Attiva le notifiche push per sapere subito quando ricevi un nuovo messaggio in app.",
+        "action": "Attiva notifiche push",
+        "deny": "Non attivare",
+        "success": "Sie aktivierten Push -Benachrichtigungen",
+        "advice": "Consigliato"
+      },
+      "failToRetry": {
+        "contentTitle": "Stiamo per collegarti.\n Attendi qualche secondo..."
+      },
+      "loading": {
+        "subtitle": "Attendi qualche secondo",
+        "title": "Stiamo elaborando la tua richiesta"
+      }
+    },
+    "support": {
+      "errorCode": "Fehlercode",
+      "serviceId": "Service ID",
+      "initiativeId": "ID Initiative",
+      "supportTitle": "Contatta l'assistenza",
+      "chat": "Chiedi aiuto in chat",
+      "additionalDataTitle": "Dati aggiuntivi",
+      "copyAll": "Copia tutti"
+    }
+  }
+}

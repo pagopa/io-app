@@ -1,24 +1,35 @@
 import { SagaIterator } from "redux-saga";
-import { call, put } from "typed-redux-saga/macro";
+import { call, put, select } from "typed-redux-saga/macro";
 import * as E from "fp-ts/lib/Either";
+import { ActionType } from "typesafe-actions";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { BackendFciClient } from "../../api/backendFci";
 import { fciLoadQtspClauses } from "../../store/actions";
 import { getNetworkError } from "../../../../utils/errors";
+import { SessionToken } from "../../../../types/SessionToken";
+import { FciClient } from "../../api/backendFci";
+import { fciIssuerEnvironmentSelector } from "../../store/reducers/fciSignatureRequest";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import { SagaCallReturnType } from "../../../../types/utils";
 
 /*
  * A saga to load a QTSP metadata.
  */
 export function* handleGetQtspMetadata(
-  getQtspClausesMetadata: ReturnType<
-    typeof BackendFciClient
-  >["getQtspClausesMetadata"]
+  getQtspClausesMetadata: FciClient["getQtspClausesMetadata"],
+  bearerToken: SessionToken,
+  action: ActionType<(typeof fciLoadQtspClauses)["request"]>
 ): SagaIterator {
   try {
-    const getQtspClausesMetadataResponse = yield* call(
-      getQtspClausesMetadata,
-      {}
-    );
+    const issuerEnvironment = yield* select(fciIssuerEnvironmentSelector);
+    const getQtspClausesMetadataRequest = getQtspClausesMetadata({
+      Bearer: `Bearer ${bearerToken}`,
+      "x-iosign-issuer-environment": issuerEnvironment
+    });
+    const getQtspClausesMetadataResponse = (yield* call(
+      withRefreshApiCall,
+      getQtspClausesMetadataRequest,
+      action
+    )) as unknown as SagaCallReturnType<typeof getQtspClausesMetadata>;
 
     if (E.isLeft(getQtspClausesMetadataResponse)) {
       throw Error(readablePrivacyReport(getQtspClausesMetadataResponse.left));
@@ -28,6 +39,10 @@ export function* handleGetQtspMetadata(
       yield* put(
         fciLoadQtspClauses.success(getQtspClausesMetadataResponse.right.value)
       );
+      return;
+    }
+
+    if (getQtspClausesMetadataResponse.right.status === 401) {
       return;
     }
 

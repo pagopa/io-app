@@ -8,7 +8,7 @@ import { fciClearStateRequest, fciPollFilledDocument } from "../../actions";
 const genericError = getNetworkError("Generic Error");
 
 describe("FciPollFilledDocumentReducer", () => {
-  it("The initial state should be a pot.some with initial value", () => {
+  it("it should be a pot.some with initial value", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     expect(globalState.features.fci.pollFilledDocument).toStrictEqual(
       pot.some({
@@ -16,17 +16,17 @@ describe("FciPollFilledDocumentReducer", () => {
       })
     );
   });
-  it("The pollFilledDocument should be pot.noneLoading if the fciPollFilledDocument.request is dispatched", () => {
+  it("it should be pot.some with isReady equal to false if the fciPollFilledDocumentRequest is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(fciPollFilledDocument.request());
     expect(store.getState().features.fci.pollFilledDocument).toStrictEqual(
-      pot.someLoading({
+      pot.some({
         isReady: false
       })
     );
   });
-  it("The pollFilledDocument should be pot.some with payload as value if the fciPollFilledDocument.success is dispatched", () => {
+  it("it should be pot.some with payload as value if the fciPollFilledDocumentSuccess is dispatched", () => {
     const payload = { isReady: true };
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
@@ -35,7 +35,7 @@ describe("FciPollFilledDocumentReducer", () => {
       pot.some(payload)
     );
   });
-  it("The pollFilledDocument should be pot.noneError if the fciPollFilledDocument.failure is dispatched", () => {
+  it("it should be pot.noneError and isReady equal to false if the fciPollFilledDocumentFailure is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(fciPollFilledDocument.failure(genericError));
@@ -48,7 +48,7 @@ describe("FciPollFilledDocumentReducer", () => {
       )
     );
   });
-  it("The pollFilledDocument should be pot.none if the fciClearStateRequest is dispatched", () => {
+  it("it should be pot.some and isReady equal to false if the fciClearStateRequest is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(fciClearStateRequest());

@@ -6,8 +6,10 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
+    "plugin:react-native-a11y/all",
     "plugin:sonarjs/recommended",
-    "prettier"
+    "prettier",
+    "@react-native"
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
@@ -25,9 +27,14 @@ module.exports = {
     "import",
     "functional",
     "sonarjs",
-    "@jambit/typed-redux-saga"
+    "@jambit/typed-redux-saga",
+    "@stylistic/eslint-plugin-js"
   ],
   rules: {
+    //Rules from react 17 https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html#eslint
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-uses-react": "off",
+    "comma-dangle": ["error", "never"],
     "no-case-declarations": "off",
     "no-inner-declarations": "off",
     "prefer-const": "error",
@@ -46,7 +53,9 @@ module.exports = {
     "no-console": "error",
     "no-caller": "error",
     "no-bitwise": "error",
+    "no-void": "off",
     "no-duplicate-imports": "error",
+    quotes: "off",
     eqeqeq: ["error", "smart"],
     "max-classes-per-file": ["error", 1],
     "guard-for-in": "error",
@@ -93,6 +102,14 @@ module.exports = {
     "react/display-name": "off",
     "react/jsx-key": "error",
     "react/jsx-no-bind": ["error", { allowArrowFunctions: true }],
+    "react/no-unstable-nested-components": [
+      "off",
+      {
+        allowAsProps: true
+      }
+    ],
+    "react/no-direct-mutation-state": "off",
+    "react/require-render-return": "off",
     "functional/no-let": "error",
     "functional/immutable-data": "error",
     "sonarjs/no-small-switch": "off",
@@ -104,7 +121,27 @@ module.exports = {
     "react-native/no-color-literals": "error",
     "react-native/no-raw-text":
       "off" /* Error when you launch the lint command */,
-    "react-native/no-single-element-style-arrays": "warn"
+    "react-native/no-single-element-style-arrays": "warn",
+    /* Too much verbose. It also requires a lot of effort in the main repo */
+    "react-native-a11y/has-accessibility-hint": "off",
+    "no-restricted-imports": [
+      "error",
+      {
+        paths: [
+          {
+            name: "i18n-js",
+            message:
+              'Importing I18n from "i18n-js" is not allowed. Import it from "ts/i18n.ts" instead.'
+          },
+          {
+            name: "@pagopa/ts-commons",
+            importNames: ["pot"],
+            message:
+              'Importing { pot } from "@pagopa/ts-commons" is not allowed. Use \'import * as pot from "@pagopa/ts-commons/lib/pot"\' instead.'
+          }
+        ]
+      }
+    ]
   },
   env: {
     "react-native/react-native": true

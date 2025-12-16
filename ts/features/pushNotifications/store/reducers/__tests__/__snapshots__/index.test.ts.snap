@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`index Main pushNotifications reducer notificationsReducer initial state should match snapshot 1`] = `
+{
+  "environment": {
+    "applicationInitialized": false,
+    "engagementScreenShownThisSession": false,
+    "onboardingInstructionsShown": false,
+    "pushNotificationPermissionsRequestDuration": undefined,
+    "systemNotificationsEnabled": false,
+  },
+  "installation": {
+    "registeredToken": undefined,
+    "token": undefined,
+    "tokenStatus": {
+      "status": "unsent",
+    },
+  },
+  "pendingMessage": null,
+  "userBehaviour": {
+    "pushNotificationBannerDismissalCount": 0,
+    "pushNotificationBannerForceDismissionDate": undefined,
+  },
+}
+`;
+
+exports[`index Main pushNotifications reducer persistedNotificationsReducer initial state should match snapshot 1`] = `
+{
+  "environment": {
+    "applicationInitialized": false,
+    "engagementScreenShownThisSession": false,
+    "onboardingInstructionsShown": false,
+    "pushNotificationPermissionsRequestDuration": undefined,
+    "systemNotificationsEnabled": false,
+  },
+  "installation": {
+    "registeredToken": undefined,
+    "token": undefined,
+    "tokenStatus": {
+      "status": "unsent",
+    },
+  },
+  "pendingMessage": null,
+  "userBehaviour": {
+    "pushNotificationBannerDismissalCount": 0,
+    "pushNotificationBannerForceDismissionDate": undefined,
+  },
+}
+`;

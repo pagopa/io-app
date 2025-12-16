@@ -1,78 +1,77 @@
+import {
+  ContentWrapper,
+  Divider,
+  IOButton,
+  IOToast,
+  IOVisualCostants,
+  ListItemHeader,
+  ListItemInfo,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React, { useEffect } from "react";
-import { SafeAreaView, ScrollView, View } from "react-native";
-import BatteryIcon from "../../../../img/assistance/battery.svg";
-import CardIcon from "../../../../img/assistance/card.svg";
-import EmailIcon from "../../../../img/assistance/email.svg";
-import GalleryIcon from "../../../../img/assistance/gallery.svg";
-import StockIcon from "../../../../img/assistance/giacenza.svg";
-import HistoryIcon from "../../../../img/assistance/history.svg";
-import InfoIcon from "../../../../img/assistance/info.svg";
-import LoginIcon from "../../../../img/assistance/login.svg";
-import NameSurnameIcon from "../../../../img/assistance/nameSurname.svg";
-import DeviceIcon from "../../../../img/assistance/telefonia.svg";
-import WebSiteIcon from "../../../../img/assistance/website.svg";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
-import { H1 } from "../../../components/core/typography/H1";
-import { H3 } from "../../../components/core/typography/H3";
-import { H4 } from "../../../components/core/typography/H4";
-import { Link } from "../../../components/core/typography/Link";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import { constNull, pipe } from "fp-ts/lib/function";
+import _ from "lodash";
+import { ComponentProps, useCallback, useEffect } from "react";
+import { FlatList, ListRenderItemInfo, Platform } from "react-native";
+import I18n from "i18next";
+import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
+import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
 import { zendeskPrivacyUrl } from "../../../config";
-import I18n from "../../../i18n";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { mixpanelTrack } from "../../../mixpanel";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   idpSelector,
-  isLoggedIn,
   zendeskTokenSelector
-} from "../../../store/reducers/authentication";
+} from "../../authentication/common/store/selectors";
 import { appVersionHistorySelector } from "../../../store/reducers/installation";
 import {
   profileEmailSelector,
   profileFiscalCodeSelector,
   profileNameSurnameSelector
-} from "../../../store/reducers/profile";
+} from "../../settings/common/store/selectors";
 import { getAppVersion } from "../../../utils/appVersion";
-import { getModel, getSystemVersion } from "../../../utils/device";
+import {
+  getFreeDiskStorage,
+  getModel,
+  getSystemVersion
+} from "../../../utils/device";
 import { getFullLocale } from "../../../utils/locale";
 import { isIos } from "../../../utils/platform";
-import { showToast } from "../../../utils/showToast";
+import { formatBytesWithUnit } from "../../../utils/strings";
 import {
   addTicketCustomField,
   addTicketTag,
   anonymousAssistanceAddress,
   anonymousAssistanceAddressWithSubject,
-  AnonymousIdentity,
+  getZendeskConfig,
+  getZendeskIdentity,
   initSupportAssistance,
-  JwtIdentity,
   openSupportTicket,
   setUserIdentity,
-  ZendeskAppConfig,
   zendeskCurrentAppVersionId,
-  zendeskDefaultAnonymousConfig,
-  zendeskDefaultJwtConfig,
   zendeskDeviceAndOSId,
   zendeskidentityProviderId,
   zendeskVersionsHistoryId
 } from "../../../utils/supportAssistance";
 import { handleItemOnPress, openWebUrl } from "../../../utils/url";
-import ZendeskItemPermissionComponent, {
-  ItemPermissionProps
-} from "../components/ZendeskItemPermissionComponent";
 import { ZendeskParamsList } from "../navigation/params";
+import ZENDESK_ROUTES from "../navigation/routes";
 import {
+  type ZendeskAssistanceType,
+  zendeskStopPolling,
   zendeskSupportCompleted,
   zendeskSupportFailure
 } from "../store/actions";
 import {
+  getZendeskTokenStatusSelector,
   zendeskSelectedCategorySelector,
-  zendeskSelectedSubcategorySelector
+  zendeskSelectedSubcategorySelector,
+  ZendeskTokenStatusEnum
 } from "../store/reducers";
+import { isLoggedIn } from "../../authentication/common/store/utils/guards";
 
 /**
  * Transform an array of string into a Zendesk
@@ -80,102 +79,16 @@ import {
  */
 const arrayToZendeskValue = (arr: Array<string>) => arr.join(", ");
 
-type ItemProps = {
-  fiscalCode: string;
-  nameSurname: string;
-  email: string;
-  deviceDescription: string;
-  identityProvider: string;
+export type ItemPermissionProps = Pick<
+  ComponentProps<typeof ListItemInfo>,
+  "testID" | "label" | "value" | "icon"
+> & {
+  id?: string;
+  zendeskID?: string;
 };
 
-const iconProps = { width: 24, height: 24 };
-
-const getItems = (props: ItemProps): ReadonlyArray<ItemPermissionProps> => [
-  {
-    id: "profileNameSurname",
-    icon: <NameSurnameIcon {...iconProps} />,
-    title: I18n.t("support.askPermissions.nameSurname"),
-    value: props.nameSurname,
-    testId: "profileNameSurname"
-  },
-  {
-    id: "profileFiscalCode",
-    icon: <CardIcon {...iconProps} />,
-    title: I18n.t("support.askPermissions.fiscalCode"),
-    value: props.fiscalCode,
-    testId: "profileFiscalCode"
-  },
-  {
-    id: "profileEmail",
-    icon: <EmailIcon {...iconProps} />,
-    title: I18n.t("support.askPermissions.emailAddress"),
-    value: props.email,
-    testId: "profileEmail"
-  },
-  {
-    id: "galleryProminentDisclosure",
-    icon: <GalleryIcon {...iconProps} />,
-    title: I18n.t("support.askPermissions.prominentDisclosure"),
-    value: I18n.t("support.askPermissions.prominentDisclosureData"),
-    testId: "galleryProminentDisclosure"
-  },
-  {
-    id: "paymentIssues",
-    icon: <StockIcon {...iconProps} />,
-    title: I18n.t("support.askPermissions.stock"),
-    value: I18n.t("support.askPermissions.stockValue"),
-    testId: "paymentIssues"
-  },
-  {
-    id: "addCardIssues",
-    icon: <CardIcon {...iconProps} />,
-    title: I18n.t("support.askPermissions.card"),
-    value: I18n.t("support.askPermissions.cardValue"),
-    testId: "addCardIssues"
-  },
-  {
-    icon: <DeviceIcon {...iconProps} />,
-    title: I18n.t("support.askPermissions.deviceAndOS"),
-    value: props.deviceDescription,
-    zendeskId: zendeskDeviceAndOSId,
-    testId: "deviceAndOS"
-  },
-  {
-    icon: <BatteryIcon {...iconProps} />,
-    title: I18n.t("support.askPermissions.devicePerformance"),
-    value: I18n.t("support.askPermissions.devicePerformanceData"),
-    testId: "devicePerformance"
-  },
-  {
-    icon: <WebSiteIcon {...iconProps} />,
-    title: I18n.t("support.askPermissions.ipAddress"),
-    value: I18n.t("support.askPermissions.ipAddressValue"),
-    testId: "ipAddress"
-  },
-  {
-    icon: <InfoIcon {...iconProps} />,
-    title: I18n.t("support.askPermissions.appVersionsHistory"),
-    value: I18n.t("support.askPermissions.appVersionsHistoryValue"),
-    testId: "appVersionsHistory"
-  },
-  {
-    icon: <LoginIcon {...iconProps} />,
-    title: I18n.t("support.askPermissions.identityProvider"),
-    value: props.identityProvider,
-    zendeskId: zendeskidentityProviderId,
-    testId: "identityProvider"
-  },
-  {
-    icon: <HistoryIcon {...iconProps} />,
-    title: I18n.t("support.askPermissions.navigationData"),
-    value: I18n.t("support.askPermissions.navigationDataValue"),
-    testId: "navigationData"
-  }
-];
-
 export type ZendeskAskPermissionsNavigationParams = {
-  assistanceForPayment: boolean;
-  assistanceForCard: boolean;
+  assistanceType: ZendeskAssistanceType;
 };
 
 /**
@@ -186,14 +99,19 @@ const ZendeskAskPermissions = () => {
   const route =
     useRoute<RouteProp<ZendeskParamsList, "ZENDESK_ASK_PERMISSIONS">>();
 
-  const { assistanceForPayment, assistanceForCard } = route.params;
+  const { assistanceType } = route.params;
 
   const dispatch = useIODispatch();
+  const navigation = useIONavigation();
   const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
+  const dispatchZendeskUiDismissed = useCallback(
+    () => dispatch(zendeskStopPolling()),
+    [dispatch]
+  );
   const notAvailable = I18n.t("global.remoteStates.notAvailable");
   const isUserLoggedIn = useIOSelector(s => isLoggedIn(s.authentication));
   const identityProvider = pipe(
-    useIOSelector(idpSelector),
+    useIOSelector(idpSelector, _.isEqual),
     O.map(idp => idp.name),
     O.getOrElse(() => notAvailable)
   );
@@ -210,52 +128,138 @@ const ZendeskAskPermissions = () => {
   const zendeskSelectedSubcategory = useIOSelector(
     zendeskSelectedSubcategorySelector
   );
+  // the zendeskToken could be undefined also if you are logged-in
+  // because the retrieval of the zendeskToken is in progress
   const zendeskToken = useIOSelector(zendeskTokenSelector);
+  const getZendeskTokenStatus = useIOSelector(getZendeskTokenStatusSelector);
 
   useEffect(() => {
-    const zendeskConfig = pipe(
-      zendeskToken,
-      O.fromNullable,
-      O.map(
-        (zT: string): ZendeskAppConfig => ({
-          ...zendeskDefaultJwtConfig,
-          token: zT
-        })
-      ),
-      O.getOrElseW(() => zendeskDefaultAnonymousConfig)
-    );
+    // This check is added because there may be a getSession running
+    // that retrieves the zendeskToken and consequently the zendeskToken
+    // may be undefined even though the user is logged in
+    if (getZendeskTokenStatus !== ZendeskTokenStatusEnum.REQUEST) {
+      const zendeskConfig = getZendeskConfig(zendeskToken);
+      initSupportAssistance(zendeskConfig);
 
-    initSupportAssistance(zendeskConfig);
-
-    // In Zendesk we have two configuration: JwtConfig and AnonymousConfig.
-    // The AnonymousConfig is used for the anonymous user.
-    // Since the zendesk session token and the profile are provided by two different endpoint
-    // we sequentially check both:
-    // - if the zendeskToken is present the user will be authenticated via jwt
-    // - nothing is available (the user is not authenticated in IO) the user will be totally anonymous also in Zendesk
-    const zendeskIdentity = pipe(
-      zendeskToken,
-      O.fromNullable,
-      O.map((zT: string): JwtIdentity | AnonymousIdentity => ({
-        token: zT
-      })),
-      O.getOrElseW(() => ({}))
-    );
-
-    setUserIdentity(zendeskIdentity);
-  }, [dispatch, zendeskToken]);
+      // In Zendesk we have two configuration: JwtConfig and AnonymousConfig.
+      // The AnonymousConfig is used for the anonymous user.
+      // Since the zendesk session token and the profile are provided by two different endpoint
+      // we sequentially check both:
+      // - if the zendeskToken is present the user will be authenticated via jwt
+      // - nothing is available (the user is not authenticated in IO) the user will be totally anonymous also in Zendesk
+      const zendeskIdentity = getZendeskIdentity(zendeskToken);
+      setUserIdentity(zendeskIdentity);
+    }
+  }, [dispatch, getZendeskTokenStatus, zendeskToken]);
 
   const currentVersion = getAppVersion();
 
-  const itemsProps: ItemProps = {
-    fiscalCode,
-    nameSurname,
-    email,
-    deviceDescription: `${getModel()} · ${
-      isIos ? "iOS" : "Android"
-    } · ${getSystemVersion()}`,
-    identityProvider
-  };
+  const permissionItems: ReadonlyArray<ItemPermissionProps> = [
+    {
+      id: "profileNameSurname",
+      icon: "profile",
+      label: I18n.t("support.askPermissions.nameSurname"),
+      value: nameSurname,
+      testID: "profileNameSurname"
+    },
+    {
+      id: "profileFiscalCode",
+      icon: "fiscalCodeIndividual",
+      label: I18n.t("support.askPermissions.fiscalCode"),
+      value: fiscalCode,
+      testID: "profileFiscalCode"
+    },
+    {
+      id: "profileEmail",
+      icon: "email",
+      label: I18n.t("support.askPermissions.emailAddress"),
+      value: email,
+      testID: "profileEmail"
+    },
+    {
+      id: "galleryProminentDisclosure",
+      icon: "gallery",
+      label: I18n.t("support.askPermissions.prominentDisclosure"),
+      value: I18n.t("support.askPermissions.prominentDisclosureData"),
+      testID: "galleryProminentDisclosure"
+    },
+    {
+      id: "paymentIssues",
+      icon: "docGiacenza",
+      label: I18n.t("support.askPermissions.stock"),
+      value: I18n.t("support.askPermissions.stockValue"),
+      testID: "paymentIssues"
+    },
+    {
+      id: "addCardIssues",
+      icon: "creditCard",
+      label: I18n.t("support.askPermissions.card"),
+      value: I18n.t("support.askPermissions.cardValue"),
+      testID: "addCardIssues"
+    },
+    {
+      id: "addFciIssues",
+      icon: "docGiacenza",
+      label: I18n.t("support.askPermissions.fci"),
+      value: I18n.t("support.askPermissions.fciValue"),
+      testID: "addFciIssues"
+    },
+    {
+      icon: "device",
+      label: I18n.t("support.askPermissions.deviceAndOS"),
+      value: `${getModel()} · ${
+        isIos ? "iOS" : "Android"
+      } ${getSystemVersion()}`,
+      zendeskID: zendeskDeviceAndOSId,
+      testID: "deviceAndOS"
+    },
+    {
+      icon: "battery",
+      label: I18n.t("support.askPermissions.devicePerformance"),
+      value: Platform.select({
+        ios: I18n.t("support.askPermissions.devicePerformanceDataiOS", {
+          storage: formatBytesWithUnit(getFreeDiskStorage())
+        }),
+        android: I18n.t("support.askPermissions.devicePerformanceDataAndroid")
+      }),
+      testID: "devicePerformance"
+    },
+    {
+      icon: "website",
+      label: I18n.t("support.askPermissions.ipAddress"),
+      value: I18n.t("support.askPermissions.ipAddressValue"),
+      testID: "ipAddress"
+    },
+    {
+      icon: "info",
+      label: I18n.t("support.askPermissions.appVersionsHistory"),
+      value: I18n.t("support.askPermissions.appVersionsHistoryValue"),
+      testID: "appVersionsHistory"
+    },
+    {
+      icon: "login",
+      label: I18n.t("support.askPermissions.identityProvider"),
+      value: identityProvider,
+      zendeskID: zendeskidentityProviderId,
+      testID: "identityProvider"
+    },
+    {
+      icon: "history",
+      label: I18n.t("support.askPermissions.navigationData"),
+      value: I18n.t("support.askPermissions.navigationDataValue"),
+      testID: "navigationData"
+    }
+  ];
+
+  const showHeader =
+    getZendeskTokenStatus !== ZendeskTokenStatusEnum.REQUEST &&
+    getZendeskTokenStatus !== ZendeskTokenStatusEnum.ERROR;
+
+  useHeaderSecondLevel({
+    title: "",
+    canGoBack: showHeader,
+    headerShown: showHeader
+  });
 
   // It should never happens since it is selected in the previous screen
   if (zendeskSelectedCategory === undefined) {
@@ -265,9 +269,11 @@ const ZendeskAskPermissions = () => {
 
   const itemsToRemove: ReadonlyArray<string> = [
     // if user is not asking assistance for a payment, remove the related items from those ones shown
-    ...(!assistanceForPayment ? ["paymentIssues"] : []),
+    ...(!assistanceType.payment ? ["paymentIssues"] : []),
     // if user is not asking assistance for a payment, remove the related items from those ones shown
-    ...(!assistanceForCard ? ["addCardIssues"] : []),
+    ...(!assistanceType.card ? ["addCardIssues"] : []),
+    // if user is not asking assistance for a signing flow, remove the related items from those ones shown
+    ...(!assistanceType.fci ? ["addFciIssues"] : []),
     // if user is not logged in, remove the items related to his/her profile
     ...(!isUserLoggedIn
       ? ["profileNameSurname", "profileFiscalCode", "profileEmail"]
@@ -275,9 +281,11 @@ const ZendeskAskPermissions = () => {
     // if the OS is IOS remove the item related to the gallery prominent disclosure
     ...(isIos ? ["galleryProminentDisclosure"] : [])
   ];
-  const items = getItems(itemsProps)
-    .filter(it => (!assistanceForPayment ? it.id !== "paymentIssues" : true))
-    .filter(it => (!assistanceForCard ? it.id !== "addCardIssues" : true))
+
+  const items = permissionItems
+    .filter(it => (!assistanceType.payment ? it.id !== "paymentIssues" : true))
+    .filter(it => (!assistanceType.card ? it.id !== "addCardIssues" : true))
+    .filter(it => (!assistanceType.fci ? it.id !== "addFciIssues" : true))
     .filter(it => !itemsToRemove.includes(it.id ?? ""))
     // remove these item whose have no value associated
     .filter(it => it.value !== notAvailable);
@@ -292,11 +300,10 @@ const ZendeskAskPermissions = () => {
       undefined,
       constNull,
       () => {
-        showToast(
+        IOToast.warning(
           I18n.t("support.askPermissions.toast.emailClientNotFound", {
             emailAddress: anonymousAssistanceAddress
-          }),
-          "warning"
+          })
         );
       }
     )();
@@ -307,8 +314,8 @@ const ZendeskAskPermissions = () => {
   const handleOnContinuePress = () => {
     // Set custom fields
     items.forEach(it => {
-      if (it.value !== undefined && it.zendeskId !== undefined) {
-        addTicketCustomField(it.zendeskId, it.value);
+      if (it.value !== undefined && it.zendeskID !== undefined) {
+        addTicketCustomField(it.zendeskID, it.value as string);
       }
     });
 
@@ -327,69 +334,95 @@ const ZendeskAskPermissions = () => {
     // Tag the ticket with the current app version
     addTicketTag(currentVersion);
 
-    openSupportTicket();
+    openSupportTicket(() => dispatchZendeskUiDismissed());
     void mixpanelTrack("ZENDESK_OPEN_TICKET");
     workUnitCompleted();
   };
-  const cancelButtonProps = {
-    testID: "cancelButtonId",
-    primary: false,
-    bordered: true,
-    onPress: handleOnCancel,
-    title: I18n.t("support.askPermissions.cta.denies")
+
+  const buttonConf: ComponentProps<
+    typeof IOScrollViewWithLargeHeader
+  >["actions"] = {
+    type: "TwoButtons",
+    primary: {
+      label: I18n.t("support.askPermissions.cta.allow"),
+      testID: "continueButtonId",
+      onPress: handleOnContinuePress
+    },
+    secondary: {
+      label: I18n.t("support.askPermissions.cta.denies"),
+      testID: "cancelButtonId",
+      onPress: handleOnCancel
+    }
   };
-  const continueButtonProps = {
-    testID: "continueButtonId",
-    bordered: false,
-    onPress: handleOnContinuePress,
-    title: I18n.t("support.askPermissions.cta.allow")
-  };
+
+  const renderPermissionItem = ({
+    item
+  }: ListRenderItemInfo<ItemPermissionProps>) => (
+    <ListItemInfo
+      testID={item?.testID}
+      label={item?.label}
+      value={item?.value}
+      icon={item?.icon}
+    />
+  );
+
+  if (
+    getZendeskTokenStatus === ZendeskTokenStatusEnum.REQUEST &&
+    isUserLoggedIn
+  ) {
+    return <LoadingSpinnerOverlay isLoading />;
+  }
+
+  if (
+    getZendeskTokenStatus === ZendeskTokenStatusEnum.ERROR &&
+    isUserLoggedIn
+  ) {
+    navigation.navigate(ZENDESK_ROUTES.MAIN, {
+      screen: ZENDESK_ROUTES.ERROR_REQUEST_ZENDESK_TOKEN
+    });
+    return undefined;
+  }
 
   return (
-    <BaseScreenComponent
-      showChat={false}
-      goBack={true}
-      // customRightIcon is needed to have a centered header title
-      customRightIcon={{
-        iconName: "",
-        onPress: constNull
+    <IOScrollViewWithLargeHeader
+      title={{
+        label: I18n.t("support.askPermissions.title"),
+        section: I18n.t("support.askPermissions.header")
       }}
-      headerTitle={I18n.t("support.askPermissions.header")}
+      testID={"ZendeskAskPermissions"}
+      description={I18n.t("support.askPermissions.body")}
+      ignoreSafeAreaMargin={true}
+      actions={buttonConf}
     >
-      <SafeAreaView style={IOStyles.flex} testID={"ZendeskAskPermissions"}>
-        <ScrollView>
-          <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-            <H1>{I18n.t("support.askPermissions.title")}</H1>
-            <VSpacer size={16} />
-            <H4 weight={"Regular"}>{I18n.t("support.askPermissions.body")}</H4>
-            <VSpacer size={4} />
-            <Link
-              onPress={() => {
-                openWebUrl(zendeskPrivacyUrl, () =>
-                  showToast(I18n.t("global.jserror.title"))
-                );
-              }}
-            >
-              {I18n.t("support.askPermissions.privacyLink")}
-            </Link>
-            <VSpacer size={8} />
-            <H3>{I18n.t("support.askPermissions.listHeader")}</H3>
-
-            {items.map((item, idx) => (
-              <ZendeskItemPermissionComponent
-                key={`permission_item_${idx}`}
-                {...item}
-              />
-            ))}
-          </View>
-        </ScrollView>
-        <FooterWithButtons
-          type={"TwoButtonsInlineHalf"}
-          leftButton={cancelButtonProps}
-          rightButton={continueButtonProps}
+      <ContentWrapper>
+        <IOButton
+          variant="link"
+          accessibilityRole="link"
+          label={I18n.t("support.askPermissions.privacyLink")}
+          onPress={() => {
+            openWebUrl(zendeskPrivacyUrl, () =>
+              IOToast.error(I18n.t("global.jserror.title"))
+            );
+          }}
         />
-      </SafeAreaView>
-    </BaseScreenComponent>
+      </ContentWrapper>
+
+      <VSpacer size={16} />
+
+      <FlatList
+        scrollEnabled={false}
+        contentContainerStyle={{
+          paddingHorizontal: IOVisualCostants.appMarginDefault
+        }}
+        ListHeaderComponent={
+          <ListItemHeader label={I18n.t("support.askPermissions.listHeader")} />
+        }
+        data={items}
+        keyExtractor={(item, idx) => `permission_item_${item}_${idx}`}
+        renderItem={renderPermissionItem}
+        ItemSeparatorComponent={() => <Divider />}
+      />
+    </IOScrollViewWithLargeHeader>
   );
 };
 

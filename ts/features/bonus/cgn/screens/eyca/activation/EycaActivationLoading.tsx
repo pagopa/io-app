@@ -1,32 +1,45 @@
-import * as React from "react";
+import { FunctionComponent } from "react";
 import { connect } from "react-redux";
-import { GlobalState } from "../../../../../../store/reducers/types";
+import I18n from "i18next";
+import { isError, isLoading } from "../../../../../../common/model/RemoteValue";
+import { OperationResultScreenContent } from "../../../../../../components/screens/OperationResultScreenContent";
 import { Dispatch } from "../../../../../../store/actions/types";
-import { LoadingErrorComponent } from "../../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import I18n from "../../../../../../i18n";
-import { eycaActivationStatusSelector } from "../../../store/reducers/eyca/activation";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import LoadingComponent from "../../../../../fci/components/LoadingComponent";
 import {
   cgnEycaActivation,
   cgnEycaActivationCancel
 } from "../../../store/actions/eyca/activation";
-import { isError, isLoading } from "../../../../bpd/model/RemoteValue";
+import { eycaActivationStatusSelector } from "../../../store/reducers/eyca/activation";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const EycaActivationLoading: React.FunctionComponent<Props> = (
-  props: Props
-) => (
-  <LoadingErrorComponent
-    isLoading={props.isLoading}
-    onRetry={props.onRetry}
-    loadingCaption={I18n.t("bonus.cgn.activation.eyca.loading.caption")}
-    loadingSubtitle={I18n.t("bonus.cgn.activation.eyca.loading.subCaption")}
-    errorText={I18n.t("bonus.cgn.activation.eyca.error.title")}
-    errorSubText={I18n.t("bonus.cgn.activation.eyca.error.body")}
-    onAbort={props.onCancel}
-  />
-);
+const EycaActivationLoading: FunctionComponent<Props> = (props: Props) =>
+  props.isLoading ? (
+    <LoadingComponent
+      captionTitle={I18n.t("bonus.cgn.activation.eyca.loading.caption")}
+      captionSubtitle={I18n.t("bonus.cgn.activation.eyca.loading.subCaption")}
+      testID="eyca-activation-loading"
+    />
+  ) : (
+    <OperationResultScreenContent
+      testID="eyca-activation-error"
+      pictogram="umbrella"
+      title={I18n.t("bonus.cgn.activation.eyca.error.title")}
+      subtitle={I18n.t("bonus.cgn.activation.eyca.error.body")}
+      action={{
+        label: I18n.t("global.buttons.retry"),
+        onPress: props.onRetry,
+        testID: "eyca-activation-retry-button"
+      }}
+      secondaryAction={{
+        label: I18n.t("global.buttons.cancel"),
+        onPress: props.onCancel,
+        testID: "eyca-activation-cancel-button"
+      }}
+    />
+  );
 
 const mapStateToProps = (state: GlobalState) => {
   const eycaActivation = eycaActivationStatusSelector(state);

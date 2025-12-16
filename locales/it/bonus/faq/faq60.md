@@ -1,1 +1,0 @@
-Non ancora. Questa è solo l'anteprima del bonus reale. Se vuoi proseguire la richiesta, clicca il pulsante "Attiva il Bonus" in fondo alla pagina. 

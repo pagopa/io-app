@@ -1,4 +1,6 @@
+import I18n from "i18next";
 import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
+import { formatDateAsShortFormat } from "../../../../utils/dates";
 
 type CgnUserAgeRange = "18-25" | "26-30" | "31-35" | "unrecognized";
 
@@ -20,3 +22,26 @@ export const getCgnUserAgeRange = (
   }
   return "unrecognized";
 };
+
+type CGNBadgeStatus = "expired" | "active" | "revoked";
+
+const getStatusLabel = (status: CGNBadgeStatus) => {
+  switch (status) {
+    case "expired":
+      return I18n.t("bonus.cgn.detail.status.date.expired");
+    case "active":
+      return I18n.t("bonus.cgn.detail.status.expiration.cgn");
+    case "revoked":
+      return I18n.t("bonus.cgn.detail.status.date.revoked");
+  }
+};
+
+export const getAccessibleExpirationDate = (
+  expirationDate: Date,
+  status: CGNBadgeStatus
+) =>
+  `${getStatusLabel(status)}: ${formatDateAsShortFormat(
+    expirationDate
+  )}. ${I18n.t("bonus.cgn.detail.status.a11y.cardStatus", {
+    status: I18n.t(`bonus.cgn.detail.status.badge.${status}`)
+  })}`;

@@ -1,25 +1,18 @@
 {
+  "extends": "@react-native/typescript-config/tsconfig.json",
   "compilerOptions": {
+    "jsx": "react-jsx",
     "target": "esnext",
-    "module": "commonjs",
     "lib": ["es6", "dom", "es2019"],
-    "jsx": "react",
-    "noEmit": true,
-    "moduleResolution": "node",
     "importHelpers": true,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
     "noImplicitAny": true,
     "preserveConstEnums": true,
     "allowJs": false,
-    "strict": true,
     "noImplicitReturns": true,
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "strictFunctionTypes": true,
-    "skipLibCheck": true,
-    "isolatedModules": true,
-    "useUnknownInCatchVariables": true
+    "useUnknownInCatchVariables": true,
   },
   "exclude": [
     "android",

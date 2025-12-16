@@ -6,20 +6,29 @@ import {
 import { Zendesk } from "../../../../../definitions/content/Zendesk";
 import { ZendeskCategory } from "../../../../../definitions/content/ZendeskCategory";
 import { ZendeskSubCategory } from "../../../../../definitions/content/ZendeskSubCategory";
+import { ZendeskSubcategoriesErrors } from "../../../../../definitions/content/ZendeskSubcategoriesErrors";
+import { NetworkError } from "../../../../utils/errors";
+import { FAQsCategoriesType } from "../../../../utils/faq";
 import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
-} from "../../../../components/screens/BaseScreenComponent";
-import { NetworkError } from "../../../../utils/errors";
-import { FAQsCategoriesType } from "../../../../utils/faq";
+} from "../../../../utils/contextualHelp";
+
+export type ZendeskAssistanceType = Partial<{
+  payment: boolean;
+  card: boolean;
+  fci: boolean;
+  itWallet: boolean;
+  idPay: boolean;
+  send: boolean;
+}>;
 
 export type ZendeskStartPayload = {
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
   startingRoute: string;
-  assistanceForPayment: boolean;
-  assistanceForCard: boolean;
+  assistanceType: ZendeskAssistanceType;
 };
 /**
  * The user chooses to start the workflow to open a support request
@@ -32,6 +41,27 @@ export const zendeskSupportStart = createStandardAction(
  */
 export const zendeskSupportCompleted = createStandardAction(
   "ZENDESK_SUPPORT_COMPLETED"
+)<void>();
+
+/**
+ * The zendesk getSession polling is stopped
+ */
+export const zendeskStopPolling = createStandardAction(
+  "ZENDESK_STOP_POLLING"
+)<void>();
+
+/**
+ * The zendesk getSession polling is iterated
+ */
+export const zendeskPollingIteration = createStandardAction(
+  "ZENDESK_POLLING_ITERATION"
+)<void>();
+
+/**
+ * The zendesk getSession polling is started
+ */
+export const zendeskStartPolling = createStandardAction(
+  "ZENDESK_START_POLLING"
 )<void>();
 
 /**
@@ -56,6 +86,15 @@ export const zendeskSupportFailure = createStandardAction(
 )<string>();
 
 /**
+ * Request the zendesk token to getSession
+ */
+export const getZendeskToken = createAsyncAction(
+  "GET_ZENDESK_TOKEN_REQUEST",
+  "GET_ZENDESK_TOKEN_SUCCESS",
+  "GET_ZENDESK_TOKEN_FAILURE"
+)<undefined, undefined, "401" | void>();
+
+/**
  * Request the zendesk config
  */
 export const getZendeskConfig = createAsyncAction(
@@ -63,6 +102,15 @@ export const getZendeskConfig = createAsyncAction(
   "ZENDESK_CONFIG_SUCCESS",
   "ZENDESK_CONFIG_FAILURE"
 )<void, Zendesk, NetworkError>();
+
+/**
+ * Request the zendesk payment config
+ */
+export const getZendeskPaymentConfig = createAsyncAction(
+  "ZENDESK_PAYMENT_CONFIG_REQUEST",
+  "ZENDESK_PAYMENT_CONFIG_SUCCESS",
+  "ZENDESK_PAYMENT_CONFIG_FAILURE"
+)<void, ZendeskSubcategoriesErrors, NetworkError>();
 
 // user selected a category
 export const zendeskSelectedCategory = createStandardAction(
@@ -86,10 +134,15 @@ export const zendeskRequestTicketNumber = createAsyncAction(
 export type ZendeskSupportActions =
   | ActionType<typeof zendeskSupportStart>
   | ActionType<typeof zendeskSupportCompleted>
+  | ActionType<typeof zendeskStopPolling>
+  | ActionType<typeof zendeskPollingIteration>
+  | ActionType<typeof zendeskStartPolling>
   | ActionType<typeof zendeskSupportCancel>
   | ActionType<typeof zendeskSupportBack>
   | ActionType<typeof zendeskSupportFailure>
+  | ActionType<typeof getZendeskToken>
   | ActionType<typeof getZendeskConfig>
   | ActionType<typeof zendeskSelectedCategory>
   | ActionType<typeof zendeskRequestTicketNumber>
-  | ActionType<typeof zendeskSelectedSubcategory>;
+  | ActionType<typeof zendeskSelectedSubcategory>
+  | ActionType<typeof getZendeskPaymentConfig>;

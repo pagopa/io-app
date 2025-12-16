@@ -1,34 +1,40 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import React, { useEffect } from "react";
-import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { useNavigation } from "@react-navigation/native";
+import { useCallback, useEffect } from "react";
+
+import I18n from "i18next";
+import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
+import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
+import {
+  AppParamsList,
+  IOStackNavigationProp,
+  IOStackNavigationRouteProps
+} from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { zendeskTokenSelector } from "../../../store/reducers/authentication";
+import { zendeskTokenSelector } from "../../authentication/common/store/selectors";
 import { isStrictSome } from "../../../utils/pot";
 import {
-  AnonymousIdentity,
+  getZendeskConfig,
+  getZendeskIdentity,
   initSupportAssistance,
-  JwtIdentity,
   setUserIdentity,
-  showSupportTickets,
-  ZendeskAppConfig,
-  zendeskDefaultAnonymousConfig,
-  zendeskDefaultJwtConfig
+  showSupportTickets
 } from "../../../utils/supportAssistance";
-import { LoadingErrorComponent } from "../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import ZendeskEmptyTicketsComponent from "../components/ZendeskEmptyTicketsComponent";
 import { ZendeskParamsList } from "../navigation/params";
 import {
+  ZendeskAssistanceType,
   zendeskRequestTicketNumber,
+  zendeskStopPolling,
   zendeskSupportCompleted
 } from "../store/actions";
-import { zendeskTicketNumberSelector } from "../store/reducers";
+import {
+  zendeskConfigSelector,
+  zendeskTicketNumberSelector
+} from "../store/reducers";
+import { handleContactSupport } from "../utils";
 
 export type ZendeskSeeReportsRoutersNavigationParams = {
-  assistanceForPayment: boolean;
-  assistanceForCard: boolean;
+  assistanceType: ZendeskAssistanceType;
 };
 
 type Props = IOStackNavigationRouteProps<
@@ -46,21 +52,17 @@ const ZendeskSeeReportsRouters = (props: Props) => {
   const dispatch = useIODispatch();
   const zendeskToken = useIOSelector(zendeskTokenSelector);
   const ticketNumber = useIOSelector(zendeskTicketNumberSelector);
-  const { assistanceForPayment, assistanceForCard } = props.route.params;
+  const { assistanceType } = props.route.params;
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const zendeskRemoteConfig = useIOSelector(zendeskConfigSelector);
+
+  const dispatchZendeskUiDismissed = useCallback(
+    () => dispatch(zendeskStopPolling()),
+    [dispatch]
+  );
 
   useEffect(() => {
-    const zendeskConfig = pipe(
-      zendeskToken,
-      O.fromNullable,
-      O.map(
-        (zT: string): ZendeskAppConfig => ({
-          ...zendeskDefaultJwtConfig,
-          token: zT
-        })
-      ),
-      O.getOrElseW(() => zendeskDefaultAnonymousConfig)
-    );
-
+    const zendeskConfig = getZendeskConfig(zendeskToken);
     initSupportAssistance(zendeskConfig);
 
     // In Zendesk we have two configuration: JwtConfig and AnonymousConfig.
@@ -69,44 +71,66 @@ const ZendeskSeeReportsRouters = (props: Props) => {
     // we sequentially check both:
     // - if the zendeskToken is present the user will be authenticated via jwt
     // - nothing is available (the user is not authenticated in IO) the user will be totally anonymous also in Zendesk
-    const zendeskIdentity = pipe(
-      zendeskToken,
-      O.fromNullable,
-      O.map((zT: string): JwtIdentity | AnonymousIdentity => ({
-        token: zT
-      })),
-      O.getOrElseW(() => ({}))
-    );
-
+    const zendeskIdentity = getZendeskIdentity(zendeskToken);
     setUserIdentity(zendeskIdentity);
     dispatch(zendeskRequestTicketNumber.request());
   }, [dispatch, zendeskToken]);
 
+  const handleContactSupportPress = useCallback(
+    () => handleContactSupport(navigation, assistanceType, zendeskRemoteConfig),
+    [navigation, assistanceType, zendeskRemoteConfig]
+  );
+
   useEffect(() => {
     if (isStrictSome(ticketNumber) && ticketNumber.value > 0) {
-      showSupportTickets();
+      showSupportTickets(() => dispatchZendeskUiDismissed());
       dispatch(zendeskSupportCompleted());
     }
-  }, [ticketNumber, dispatch]);
+  }, [ticketNumber, dispatch, dispatchZendeskUiDismissed]);
 
-  if (!isStrictSome(ticketNumber) && !pot.isNone(ticketNumber)) {
+  if (pot.isLoading(ticketNumber)) {
     return (
-      <LoadingErrorComponent
-        isLoading={pot.isLoading(ticketNumber)}
-        loadingCaption={I18n.t("global.remoteStates.loading")}
-        onRetry={() => {
-          dispatch(zendeskRequestTicketNumber.request());
+      <LoadingScreenContent title={I18n.t("global.remoteStates.loading")} />
+    );
+  }
+
+  if (pot.isError(ticketNumber)) {
+    return (
+      <OperationResultScreenContent
+        pictogram={"umbrella"}
+        title={I18n.t("global.genericError")}
+        action={{
+          label: I18n.t("global.buttons.retry"),
+          onPress: () => {
+            dispatch(zendeskRequestTicketNumber.request());
+          }
+        }}
+        secondaryAction={{
+          label: I18n.t("global.buttons.back"),
+          onPress: () => props.navigation.goBack()
         }}
       />
     );
   }
 
-  // if is some and there are 0 tickets show the Empty list component
+  // if is some and there are 0 tickets show the specific empty state
   if (pot.isNone(ticketNumber) || ticketNumber.value === 0) {
     return (
-      <ZendeskEmptyTicketsComponent
-        assistanceForPayment={assistanceForPayment}
-        assistanceForCard={assistanceForCard}
+      <OperationResultScreenContent
+        testID={"emptyTicketsComponent"}
+        pictogram={"help"}
+        title={I18n.t("support.ticketList.noTicket.title")}
+        subtitle={I18n.t("support.ticketList.noTicket.body")}
+        action={{
+          label: I18n.t("support.helpCenter.cta.contactSupport"),
+          onPress: handleContactSupportPress,
+          testID: "continueButtonId"
+        }}
+        secondaryAction={{
+          label: I18n.t("global.buttons.back"),
+          onPress: () => navigation.goBack(),
+          testID: "cancelButtonId"
+        }}
       />
     );
   }

@@ -2,474 +2,338 @@
 
 exports[`Test LinkedText component should render a LinkedText component with props correctly 1`] = `
 <Text
-  color="bluegreyDark"
-  font="TitilliumWeb"
-  fontStyle={
-    Object {
-      "fontSize": 16,
-      "lineHeight": 22,
-    }
-  }
+  allowFontScaling={true}
+  dynamicTypeRamp="title3"
+  maxFontSizeMultiplier={1.5}
   style={
-    Array [
-      Object {
-        "fontSize": 16,
-        "lineHeight": 22,
-      },
-      Object {
-        "color": "#17324D",
-        "fontFamily": "Titillium Web",
+    [
+      {},
+      {
+        "color": "#0E0F13",
+        "fontFamily": "Titillio",
+        "fontSize": 20,
         "fontStyle": "normal",
-        "fontWeight": "700",
+        "fontWeight": "600",
+        "lineHeight": 24,
       },
     ]
   }
-  weight="Bold"
-  weightColorFactory={[Function]}
 >
   <Text
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 16,
-        "lineHeight": 22,
-      }
-    }
+    allowFontScaling={true}
+    dynamicTypeRamp="headline"
+    maxFontSizeMultiplier={1.5}
     style={
-      Array [
-        Object {
+      [
+        {},
+        {
+          "color": "#0E0F13",
+          "fontFamily": "Titillio",
           "fontSize": 16,
-          "lineHeight": 22,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
-    weightColorFactory={[Function]}
   />
   <Text
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 16,
-        "lineHeight": 22,
-      }
-    }
+    allowFontScaling={true}
+    dynamicTypeRamp="headline"
+    maxFontSizeMultiplier={1.5}
     style={
-      Array [
-        Object {
+      [
+        {},
+        {
+          "color": "#0E0F13",
+          "fontFamily": "Titillio",
           "fontSize": 16,
-          "lineHeight": 22,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
-    weightColorFactory={[Function]}
   >
     C
   </Text>
   <Text
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 16,
-        "lineHeight": 22,
-      }
-    }
+    allowFontScaling={true}
+    dynamicTypeRamp="headline"
+    maxFontSizeMultiplier={1.5}
     style={
-      Array [
-        Object {
+      [
+        {},
+        {
+          "color": "#0E0F13",
+          "fontFamily": "Titillio",
           "fontSize": 16,
-          "lineHeight": 22,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
-    weightColorFactory={[Function]}
   >
     l
   </Text>
   <Text
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 16,
-        "lineHeight": 22,
-      }
-    }
+    allowFontScaling={true}
+    dynamicTypeRamp="headline"
+    maxFontSizeMultiplier={1.5}
     style={
-      Array [
-        Object {
+      [
+        {},
+        {
+          "color": "#0E0F13",
+          "fontFamily": "Titillio",
           "fontSize": 16,
-          "lineHeight": 22,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
-    weightColorFactory={[Function]}
   >
     a
   </Text>
   <Text
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 16,
-        "lineHeight": 22,
-      }
-    }
+    allowFontScaling={true}
+    dynamicTypeRamp="headline"
+    maxFontSizeMultiplier={1.5}
     style={
-      Array [
-        Object {
+      [
+        {},
+        {
+          "color": "#0E0F13",
+          "fontFamily": "Titillio",
           "fontSize": 16,
-          "lineHeight": 22,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
-    weightColorFactory={[Function]}
   >
     u
   </Text>
   <Text
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 16,
-        "lineHeight": 22,
-      }
-    }
+    allowFontScaling={true}
+    dynamicTypeRamp="headline"
+    maxFontSizeMultiplier={1.5}
     style={
-      Array [
-        Object {
+      [
+        {},
+        {
+          "color": "#0E0F13",
+          "fontFamily": "Titillio",
           "fontSize": 16,
-          "lineHeight": 22,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
-    weightColorFactory={[Function]}
   >
     s
   </Text>
   <Text
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 16,
-        "lineHeight": 22,
-      }
-    }
+    allowFontScaling={true}
+    dynamicTypeRamp="headline"
+    maxFontSizeMultiplier={1.5}
     style={
-      Array [
-        Object {
+      [
+        {},
+        {
+          "color": "#0E0F13",
+          "fontFamily": "Titillio",
           "fontSize": 16,
-          "lineHeight": 22,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
-    weightColorFactory={[Function]}
   >
     e
   </Text>
   <Text
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 16,
-        "lineHeight": 22,
-      }
-    }
+    allowFontScaling={true}
+    dynamicTypeRamp="headline"
+    maxFontSizeMultiplier={1.5}
     style={
-      Array [
-        Object {
+      [
+        {},
+        {
+          "color": "#0E0F13",
+          "fontFamily": "Titillio",
           "fontSize": 16,
-          "lineHeight": 22,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
-    weightColorFactory={[Function]}
   >
      
   </Text>
   <Text
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 16,
-        "lineHeight": 22,
-      }
-    }
+    allowFontScaling={true}
+    dynamicTypeRamp="headline"
+    maxFontSizeMultiplier={1.5}
     style={
-      Array [
-        Object {
+      [
+        {},
+        {
+          "color": "#0E0F13",
+          "fontFamily": "Titillio",
           "fontSize": 16,
-          "lineHeight": 22,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
-    weightColorFactory={[Function]}
   >
     t
   </Text>
   <Text
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 16,
-        "lineHeight": 22,
-      }
-    }
+    allowFontScaling={true}
+    dynamicTypeRamp="headline"
+    maxFontSizeMultiplier={1.5}
     style={
-      Array [
-        Object {
+      [
+        {},
+        {
+          "color": "#0E0F13",
+          "fontFamily": "Titillio",
           "fontSize": 16,
-          "lineHeight": 22,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
-    weightColorFactory={[Function]}
   >
     i
   </Text>
   <Text
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 16,
-        "lineHeight": 22,
-      }
-    }
+    allowFontScaling={true}
+    dynamicTypeRamp="headline"
+    maxFontSizeMultiplier={1.5}
     style={
-      Array [
-        Object {
+      [
+        {},
+        {
+          "color": "#0E0F13",
+          "fontFamily": "Titillio",
           "fontSize": 16,
-          "lineHeight": 22,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
-    weightColorFactory={[Function]}
   >
     t
   </Text>
   <Text
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 16,
-        "lineHeight": 22,
-      }
-    }
+    allowFontScaling={true}
+    dynamicTypeRamp="headline"
+    maxFontSizeMultiplier={1.5}
     style={
-      Array [
-        Object {
+      [
+        {},
+        {
+          "color": "#0E0F13",
+          "fontFamily": "Titillio",
           "fontSize": 16,
-          "lineHeight": 22,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
-    weightColorFactory={[Function]}
   >
     l
   </Text>
   <Text
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 16,
-        "lineHeight": 22,
-      }
-    }
+    allowFontScaling={true}
+    dynamicTypeRamp="headline"
+    maxFontSizeMultiplier={1.5}
     style={
-      Array [
-        Object {
+      [
+        {},
+        {
+          "color": "#0E0F13",
+          "fontFamily": "Titillio",
           "fontSize": 16,
-          "lineHeight": 22,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
-    weightColorFactory={[Function]}
   >
     e
   </Text>
   <Text
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 16,
-        "lineHeight": 22,
-      }
-    }
+    allowFontScaling={true}
+    dynamicTypeRamp="headline"
+    maxFontSizeMultiplier={1.5}
     style={
-      Array [
-        Object {
+      [
+        {},
+        {
+          "color": "#0E0F13",
+          "fontFamily": "Titillio",
           "fontSize": 16,
-          "lineHeight": 22,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
-    weightColorFactory={[Function]}
   >
      
   </Text>
   <Text
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 16,
-        "lineHeight": 22,
-      }
-    }
+    allowFontScaling={true}
+    dynamicTypeRamp="headline"
+    maxFontSizeMultiplier={1.5}
     style={
-      Array [
-        Object {
+      [
+        {},
+        {
+          "color": "#0E0F13",
+          "fontFamily": "Titillio",
           "fontSize": 16,
-          "lineHeight": 22,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
-    weightColorFactory={[Function]}
   >
     1
   </Text>
   <Text
-    color="bluegreyDark"
-    font="TitilliumWeb"
-    fontStyle={
-      Object {
-        "fontSize": 16,
-        "lineHeight": 22,
-      }
-    }
+    allowFontScaling={true}
+    dynamicTypeRamp="headline"
+    maxFontSizeMultiplier={1.5}
     style={
-      Array [
-        Object {
+      [
+        {},
+        {
+          "color": "#0E0F13",
+          "fontFamily": "Titillio",
           "fontSize": 16,
-          "lineHeight": 22,
-        },
-        Object {
-          "color": "#17324D",
-          "fontFamily": "Titillium Web",
           "fontStyle": "normal",
-          "fontWeight": "400",
+          "fontWeight": "600",
+          "lineHeight": 24,
         },
       ]
     }
-    weight="Regular"
-    weightColorFactory={[Function]}
   />
 </Text>
 `;

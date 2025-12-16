@@ -1,83 +1,44 @@
-import * as React from "react";
-import { View } from "native-base";
-import { StyleSheet } from "react-native";
-import { connect } from "react-redux";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { useNavigation } from "@react-navigation/native";
+import { FunctionComponent } from "react";
+import { StyleSheet, View } from "react-native";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
-import { navigateToCgnMerchantLandingWebview } from "../../navigation/actions";
-import { Dispatch } from "../../../../../store/actions/types";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { DiscountCodeType } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
-import { useCgnDiscountDetailBottomSheet } from "../../hooks/useCgnDiscountDetailBottomSheet";
-import { Label } from "../../../../../components/core/typography/Label";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
-import IconFont from "../../../../../components/ui/IconFont";
-import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
-import { IOBadge } from "../../../../../components/core/IOBadge";
-import I18n from "../../../../../i18n";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
+import { useIODispatch } from "../../../../../store/hooks";
+import { CgnDetailsParamsList } from "../../navigation/params";
+import CGN_ROUTES from "../../navigation/routes";
+import { selectMerchantDiscount } from "../../store/actions/merchants";
+import { ModuleCgnDiscount } from "./ModuleCgnDiscount";
 
 type Props = {
   discount: Discount;
-  operatorName: string;
-  merchantType?: DiscountCodeType;
-} & ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
+};
 
 const styles = StyleSheet.create({
-  container: { justifyContent: "space-between", alignItems: "center" },
-  listItem: {
-    paddingHorizontal: 16,
-    flex: 1,
-    paddingVertical: 20,
-    marginBottom: 16,
-    borderRadius: 8,
-    borderColor: IOColors.bluegreyLight,
-    borderStyle: "solid",
-    borderWidth: 1
+  container: {
+    paddingVertical: 4
   }
 });
 
-const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
-  discount,
-  operatorName,
-  merchantType,
-  navigateToLandingWebview
+export const CgnMerchantDiscountItem: FunctionComponent<Props> = ({
+  discount
 }: Props) => {
-  const { present, bottomSheet: cgnDiscountDetail } =
-    useCgnDiscountDetailBottomSheet(
-      discount,
-      operatorName,
-      merchantType,
-      navigateToLandingWebview
-    );
+  const navigation =
+    useNavigation<
+      IOStackNavigationProp<
+        CgnDetailsParamsList,
+        "CGN_MERCHANTS_DISCOUNT_SCREEN"
+      >
+    >();
+  const dispatch = useIODispatch();
+
+  const onDiscountPress = () => {
+    dispatch(selectMerchantDiscount(discount));
+    navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT);
+  };
+
   return (
-    <TouchableDefaultOpacity style={styles.listItem} onPress={present}>
-      <View style={[IOStyles.row, styles.container]}>
-        <View style={[IOStyles.flex, IOStyles.row]}>
-          <Label weight={"SemiBold"} color={"bluegreyDark"}>
-            {`${discount.name} `}
-            {discount.isNew && (
-              <IOBadge text={I18n.t("bonus.cgn.merchantsList.news")} small />
-            )}
-          </Label>
-        </View>
-        <IconFont name={"io-right"} color={IOColors.blue} size={24} />
-      </View>
-      {cgnDiscountDetail}
-    </TouchableDefaultOpacity>
+    <View style={styles.container}>
+      <ModuleCgnDiscount onPress={onDiscountPress} discount={discount} />
+    </View>
   );
 };
-
-const mapStateToProps = (_: GlobalState) => ({});
-
-const mapDispatchToProps = (_: Dispatch) => ({
-  navigateToLandingWebview: (url: string, referer: string) =>
-    navigateToCgnMerchantLandingWebview({
-      landingPageUrl: url,
-      landingPageReferrer: referer
-    })
-});
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CgnMerchantDiscountItem);

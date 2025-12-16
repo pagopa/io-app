@@ -1,28 +1,25 @@
-{"types": [
-  {"type": "feat", "section": "Features"},
-  {"type": "fix", "section": "Bug Fixes"},
-  {"type": "chore", "section": "Chores"},
-  {"type": "docs", "hidden": true},
-  {"type": "style",  "hidden": true},
-  {"type": "refactor",  "hidden": true},
-  {"type": "perf",  "hidden": true},
-  {"type": "test", "hidden": true}
-],
+{
+  "types": [
+    { "type": "feat", "section": "Features" },
+    { "type": "fix", "section": "Bug Fixes" },
+    { "type": "chore", "section": "Chores" },
+    { "type": "docs", "hidden": true },
+    { "type": "style", "hidden": true },
+    { "type": "refactor", "hidden": true },
+    { "type": "perf", "hidden": true },
+    { "type": "test", "hidden": true }
+  ],
   "bumpFiles": [
     {
       "filename": "package.json",
       "type": "json"
     },
     {
-      "filename": "ios/ItaliaApp/Info.plist",
+      "filename": "ios/IO/Info.plist",
       "updater": "scripts/changelog/plist_updater.js"
     },
     {
-      "filename": "ios/ItaliaAppTests/Info.plist",
-      "updater": "scripts/changelog/plist_updater.js"
-    },
-    {
-      "filename": "ios/ItaliaApp.xcodeproj/project.pbxproj",
+      "filename": "ios/IO.xcodeproj/project.pbxproj",
       "updater": "scripts/changelog/pbxproj_updater.js"
     },
     {
@@ -34,5 +31,4 @@
       "updater": "scripts/changelog/publiccode_updater.js"
     }
   ]
-
 }

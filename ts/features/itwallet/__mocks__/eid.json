@@ -1,0 +1,330 @@
+{
+  "issuerConf": {
+    "federation_entity": {
+      "organization_name": "Istituto Poligrafico e Zecca di Stato",
+      "homepage_uri": "https://api.eudi-wallet-it-pid-provider.it/ci",
+      "policy_uri": "https://api.eudi-wallet-it-pid-provider.it/ci",
+      "logo_uri": "https://api.eudi-wallet-it-pid-provider.it/public/logo.svg",
+      "tos_uri": "https://api.eudi-wallet-it-pid-provider.it/ci"
+    },
+    "openid_credential_issuer": {
+      "credentials_supported": [
+        {
+          "cryptographic_suites_supported": ["RS256"],
+          "cryptographic_binding_methods_supported": ["jwk"],
+          "display": [
+            {
+              "background_color": "#12107c",
+              "name": "PID Provider italiano",
+              "logo": {
+                "alt_text": "logo",
+                "url": "https://api.eudi-wallet-it-pid-provider.it/public/logo.svg"
+              },
+              "text_color": "#FFFFFF",
+              "locale": "it-IT"
+            },
+            {
+              "background_color": "#12107c",
+              "name": "Italian PID Provider",
+              "logo": {
+                "alt_text": "logo",
+                "url": "https://api.eudi-wallet-it-pid-provider.it/public/logo.svg"
+              },
+              "text_color": "#FFFFFF",
+              "locale": "en-US"
+            }
+          ],
+          "format": "vc+sd-jwt",
+          "credential_definition": {
+            "credentialSubject": {
+              "place_of_birth": {
+                "display": [
+                  {
+                    "name": "Luogo di Nascita",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Place of Birth",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "birthdate": {
+                "display": [
+                  {
+                    "name": "Data di Nascita",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Date of Birth",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "unique_id": {
+                "display": [
+                  {
+                    "name": "Identificativo univoco",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Unique Identifier",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "tax_id_code": {
+                "display": [
+                  {
+                    "name": "Codice Fiscale",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Tax ID Number",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "given_name": {
+                "display": [
+                  {
+                    "name": "Nome",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "First Name",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              },
+              "family_name": {
+                "display": [
+                  {
+                    "name": "Cognome",
+                    "locale": "it-IT"
+                  },
+                  {
+                    "name": "Family Name",
+                    "locale": "en-US"
+                  }
+                ],
+                "mandatory": true
+              }
+            },
+            "type": ["PersonIdentificationData"]
+          },
+          "id": "api.eudi-wallet-it-pid-provider.it"
+        }
+      ],
+      "pushed_authorization_request_endpoint": "https://api.eudi-wallet-it-pid-provider.it/as/par",
+      "dpop_signing_alg_values_supported": ["RS256"],
+      "jwks": {
+        "keys": [
+          {
+            "kty": "RSA",
+            "e": "AQAB",
+            "use": "sig",
+            "n": "w4wEivQmGFZ04_ucwCqDihZcygppZfPa7KYA2D88mZz_JHLPsyip7LqSloB6xln1gp1UQREGiutv10FHvn3TXVj5P6pj7xp88nWZVaRpGKeGXgWxzzB4DcPv4Wykk5p2kkeezMYsspFM22YyVVD0tWBKbaJyFqEI60QrtXws1jXOv5KGX8DW0BryjNB5x1_QHWrASYzEPaybApgweioWWdxVjzkinLRX_G93xqU_3973vd_ysrfv5hSh5R5AiBP5S1iuC1MA2Ftv98etbv8iQ_zKy-Epk8JPI9VS9qqfgx0kKUjtaTSaT_TNtanv-bye8WDXE0-ik6DOScfEMS00Ww",
+            "kid": "eNN-g5i6CnLKcltQBp6abbioGMbzM6muW3vuxw6uh88"
+          },
+          {
+            "kty": "RSA",
+            "e": "AQAB",
+            "use": "enc",
+            "n": "p-n2ZWylS5LH-_bPnMLbza4EGezv-onhkXoPxrvRqx_aEaxikwP_8jIhmLCYad0JKMTB_rRiNuH3-bzly1tq9-YxtUadzNybUknvAyPW4KQ_cx1RKv4w7kqBk-rKYaStUoZL70xJa_vfnnLQ1aosDmpIyzYGhy5SEvvxUHI4GX_7p-aec-ejdLGvb2d1tWrN7mXWSZSMOAI51ktHDFUm2FvUkQWt_7d-KqMbej3g-F8GobKdIiFC9sOWeTW5xhR100dvRpSsY-NrEKJ3qlNOGQiXydqcBmvQkuGT_S_q_p3ButRWawn4h6xkf5TIZbvZ6Gtkd1hXRXb1kuRts7gVow",
+            "kid": "hXHZQOEOkgQRwIVM9aUNOcQWHW1UQI9vQQsWIB2gjNE"
+          }
+        ]
+      },
+      "credential_issuer": "api.eudi-wallet-it-pid-provider.it",
+      "authorization_endpoint": "https://api.eudi-wallet-it-pid-provider.it/authorize",
+      "token_endpoint": "https://api.eudi-wallet-it-pid-provider.it/token",
+      "credential_endpoint": "https://api.eudi-wallet-it-pid-provider.it/credential"
+    }
+  },
+  "keyTag": "ITW_PID_KEY_TAG",
+  "credential": "",
+  "format": "vc+sd-jwt",
+  "parsedCredential": {
+    "place_of_birth": {
+      "mandatory": true,
+      "value": {
+        "country": "IT",
+        "locality": "Rome"
+      },
+      "name": {
+        "it-IT": "Luogo di Nascita",
+        "en-US": "Place of Birth"
+      }
+    },
+    "birthdate": {
+      "mandatory": true,
+      "value": "1991-01-06",
+      "name": {
+        "it-IT": "Data di Nascita",
+        "en-US": "Date of Birth"
+      }
+    },
+    "unique_id": {
+      "mandatory": true,
+      "value": "idANPR",
+      "name": {
+        "it-IT": "Identificativo univoco",
+        "en-US": "Unique Identifier"
+      }
+    },
+    "tax_id_code": {
+      "mandatory": true,
+      "name": {
+        "it-IT": "Codice Fiscale",
+        "en-US": "Tax ID Number"
+      }
+    },
+    "given_name": {
+      "mandatory": true,
+      "value": "Casimira",
+      "name": {
+        "it-IT": "Nome",
+        "en-US": "First Name"
+      }
+    },
+    "family_name": {
+      "mandatory": true,
+      "value": "Savoia",
+      "name": {
+        "it-IT": "Cognome",
+        "en-US": "Family Name"
+      }
+    },
+    "tax_id_number": {
+      "value": "TAMMRA80A41H501I",
+      "mandatory": false,
+      "name": "tax_id_number"
+    },
+    "evidence": {
+      "value": [
+        {
+          "type": "electronic_record",
+          "record": {
+            "type": "https://eudi.wallet.cie.gov.it",
+            "source": {
+              "organization_name": "Ministero dell'Interno",
+              "organization_id": "urn:eudi:it:organization_id:ipa_code:m_it",
+              "country_code": "IT"
+            }
+          }
+        }
+      ],
+      "mandatory": false,
+      "name": "evidence"
+    }
+  },
+  "credentialConfigurationSchema": {
+    "place_of_birth": {
+      "display": [
+        {
+          "name": "Luogo di Nascita",
+          "locale": "it-IT"
+        },
+        {
+          "name": "Place of Birth",
+          "locale": "en-US"
+        }
+      ],
+      "mandatory": true
+    },
+    "birthdate": {
+      "display": [
+        {
+          "name": "Data di Nascita",
+          "locale": "it-IT"
+        },
+        {
+          "name": "Date of Birth",
+          "locale": "en-US"
+        }
+      ],
+      "mandatory": true
+    },
+    "unique_id": {
+      "display": [
+        {
+          "name": "Identificativo univoco",
+          "locale": "it-IT"
+        },
+        {
+          "name": "Unique Identifier",
+          "locale": "en-US"
+        }
+      ],
+      "mandatory": true
+    },
+    "tax_id_code": {
+      "display": [
+        {
+          "name": "Codice Fiscale",
+          "locale": "it-IT"
+        },
+        {
+          "name": "Tax ID Number",
+          "locale": "en-US"
+        }
+      ],
+      "mandatory": true
+    },
+    "given_name": {
+      "display": [
+        {
+          "name": "Nome",
+          "locale": "it-IT"
+        },
+        {
+          "name": "First Name",
+          "locale": "en-US"
+        }
+      ],
+      "mandatory": true
+    },
+    "family_name": {
+      "display": [
+        {
+          "name": "Cognome",
+          "locale": "it-IT"
+        },
+        {
+          "name": "Family Name",
+          "locale": "en-US"
+        }
+      ],
+      "mandatory": true
+    }
+  },
+  "displayData": {
+    "title": "Identità digitale",
+    "icon": "archive",
+    "incoming": false,
+    "textColor": "white",
+    "firstLine": ["given_name", "family_name"],
+    "secondLine": ["tax_id_number"],
+    "order": [
+      "given_name",
+      "family_name",
+      "birthdate",
+      "place_of_birth",
+      "unique_id",
+      "tax_id_number",
+      "tax_id_code",
+      "evidence"
+    ]
+  },
+  "credentialType": "PersonIdentificationData",
+  "jwt": {
+    "expiration": "2030-11-22T14:09:41Z",
+    "issuedAt": "2024-11-13T14:09:41Z"
+  }
+}

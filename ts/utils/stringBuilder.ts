@@ -1,5 +1,5 @@
+import I18n from "i18next";
 import { CardInfo } from "../../definitions/pagopa/walletv2/CardInfo";
-import I18n from "../i18n";
 
 const DISPLAYED_DIGITS = 2;
 
@@ -15,14 +15,21 @@ export const centsToAmount = (cents: number): number =>
 
 export const formatNumberAmount = (
   amount: number,
-  displayCurrency: boolean = false
-): string =>
-  I18n.toCurrency(amount, {
-    precision: DISPLAYED_DIGITS,
-    delimiter: I18n.t("global.localization.delimiterSeparator"),
-    separator: I18n.t("global.localization.decimalSeparator"),
-    format: displayCurrency ? "€ %n" : "%n"
-  });
+  displayCurrency: boolean = false,
+  currencyPosition: "left" | "right" = "left"
+): string => {
+  const formattedAmount = new Intl.NumberFormat(I18n.language, {
+    useGrouping: true,
+    maximumFractionDigits: DISPLAYED_DIGITS,
+    minimumFractionDigits: DISPLAYED_DIGITS
+  }).format(amount);
+
+  return displayCurrency
+    ? currencyPosition === "left"
+      ? `€ ${formattedAmount}`
+      : `${formattedAmount} €`
+    : `${formattedAmount}`;
+};
 
 /**
  * Converts in a localized value/amount removing the decimal part after the decimal separator
@@ -32,18 +39,22 @@ export const formatNumberAmount = (
 export const formatNumberWithNoDigits = (
   amount: number,
   displayCurrency: boolean = false
-): string =>
-  I18n.toCurrency(amount, {
-    precision: 0,
-    delimiter: I18n.t("global.localization.delimiterSeparator"),
-    separator: I18n.t("global.localization.decimalSeparator"),
-    format: displayCurrency ? "€ %n" : "%n"
-  });
+): string => {
+  const formattedAmount = new Intl.NumberFormat(I18n.language, {
+    useGrouping: true,
+    maximumFractionDigits: 0,
+    minimumFractionDigits: 0
+  }).format(amount);
+
+  return displayCurrency ? `€ ${formattedAmount}` : `${formattedAmount}`;
+};
 
 export const formatNumberCentsToAmount = (
   cents: number,
-  displayCurrency: boolean = false
-): string => formatNumberAmount(centsToAmount(cents), displayCurrency);
+  displayCurrency: boolean = false,
+  currencyPosition: "left" | "right" = "left"
+): string =>
+  formatNumberAmount(centsToAmount(cents), displayCurrency, currencyPosition);
 
 export const buildExpirationDate = (creditCard: CardInfo): string =>
   `${creditCard.expireMonth}/${creditCard.expireYear}`;
@@ -54,8 +65,8 @@ export const buildExpirationDate = (creditCard: CardInfo): string =>
  * @param amount
  */
 export const formatIntegerNumber = (amount: number): string =>
-  I18n.toNumber(amount, {
-    precision: 0,
-    delimiter: I18n.t("global.localization.delimiterSeparator"),
-    separator: I18n.t("global.localization.decimalSeparator")
-  });
+  new Intl.NumberFormat(I18n.language, {
+    useGrouping: true,
+    maximumFractionDigits: 0,
+    minimumFractionDigits: 0
+  }).format(amount);

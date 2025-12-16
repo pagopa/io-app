@@ -3,7 +3,9 @@ import {
   addEvery,
   capitalize,
   isStringNullyOrEmpty,
-  maybeNotNullyString
+  maybeNotNullyString,
+  formatBytesWithUnit,
+  capitalizeTextName
 } from "../strings";
 
 describe("capitalize", () => {
@@ -79,5 +81,65 @@ describe("addEvery", () => {
 
   it("should add a * every 2 chars", () => {
     expect(addEvery("hello", "*", 1)).toEqual("h*e*l*l*o*");
+  });
+});
+
+describe("formatBytesWithUnit", () => {
+  it("should format bytes with the correct unit (B)", () => {
+    expect(formatBytesWithUnit(505)).toEqual("505 B");
+  });
+
+  it("should format bytes with the correct unit (KB)", () => {
+    expect(formatBytesWithUnit(1000)).toEqual("1 KB");
+  });
+
+  it("should format bytes with the correct unit (MB)", () => {
+    expect(formatBytesWithUnit(1048576)).toEqual("1 MB");
+  });
+
+  it("should format bytes with the correct unit (GB)", () => {
+    expect(formatBytesWithUnit(1733741824)).toEqual("1.7 GB");
+  });
+
+  it("should format bytes with the correct unit (TB)", () => {
+    expect(formatBytesWithUnit(1345001000200123)).toEqual("1.3 TB");
+  });
+
+  it("should format bytes with the correct unit (B)", () => {
+    expect(formatBytesWithUnit(0)).toEqual("0 B");
+  });
+
+  it("should format bytes with the correct unit (B) when providing NaN", () => {
+    expect(formatBytesWithUnit(NaN)).toEqual("0 B");
+  });
+
+  it("should format bytes with the correct unit (B) when providing a negative number", () => {
+    expect(formatBytesWithUnit(-1234)).toEqual("0 B");
+  });
+});
+
+describe("capitalizeTextName", () => {
+  it("should return a string where each word has the first char in uppercase", () => {
+    expect(capitalizeTextName("capitalize")).toEqual("Capitalize");
+  });
+
+  it("should return a string where each word has the first char in uppercase even after an apostrophe", () => {
+    expect(capitalizeTextName("Capit'Alize")).toEqual("Capit'Alize");
+  });
+
+  it("should return a string where each word has the first char in uppercase even after an apostrophe-2", () => {
+    expect(capitalizeTextName("capit'alize")).toEqual("Capit'Alize");
+  });
+
+  it("should return a string where each word has the first char in uppercase even after an apostrophe-3", () => {
+    expect(capitalizeTextName("Capit'alize")).toEqual("Capit'Alize");
+  });
+
+  it("should return a string where each word has the first char in uppercase even after an apostrophe-4", () => {
+    expect(capitalizeTextName("capit'Alize")).toEqual("Capit'Alize");
+  });
+
+  it("should return a string where each word has the first char in uppercase even after an apostrophe-5", () => {
+    expect(capitalizeTextName("CAPIT'ALIZE")).toEqual("Capit'Alize");
   });
 });

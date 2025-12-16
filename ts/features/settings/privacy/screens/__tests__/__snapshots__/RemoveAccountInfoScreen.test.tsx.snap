@@ -1,0 +1,1196 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RemoveAccountInfoScreen should match snapshot 1`] = `
+<View
+  style={
+    {
+      "flex": 1,
+    }
+  }
+>
+  <RNCSafeAreaProvider
+    onInsetsChange={[Function]}
+    style={
+      [
+        {
+          "flex": 1,
+        },
+        undefined,
+      ]
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#FFFFFF",
+            "flex": 1,
+          },
+          undefined,
+        ]
+      }
+    >
+      <RNSScreenContainer
+        onLayout={[Function]}
+        style={
+          {
+            "flex": 1,
+          }
+        }
+      >
+        <RNSScreen
+          activityState={2}
+          collapsable={false}
+          gestureResponseDistance={
+            {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
+          pointerEvents="box-none"
+          sheetAllowedDetents={
+            [
+              1,
+            ]
+          }
+          sheetCornerRadius={-1}
+          sheetElevation={24}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetInitialDetent={0}
+          sheetLargestUndimmedDetent={-1}
+          style={
+            [
+              {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              {
+                "zIndex": undefined,
+              },
+            ]
+          }
+        >
+          <View
+            collapsable={false}
+            style={
+              {
+                "opacity": 1,
+              }
+            }
+          />
+          <View
+            accessibilityElementsHidden={false}
+            closing={false}
+            collapsable={false}
+            gestureVelocityImpact={0.3}
+            importantForAccessibility="auto"
+            onClose={[Function]}
+            onGestureBegin={[Function]}
+            onGestureCanceled={[Function]}
+            onGestureEnd={[Function]}
+            onOpen={[Function]}
+            onTransition={[Function]}
+            pointerEvents="box-none"
+            style={
+              [
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                },
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+              ]
+            }
+            transitionSpec={
+              {
+                "close": {
+                  "animation": "spring",
+                  "config": {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
+                "open": {
+                  "animation": "spring",
+                  "config": {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                [
+                  {
+                    "flex": 1,
+                  },
+                  undefined,
+                  null,
+                ]
+              }
+            >
+              <View
+                collapsable={false}
+                enabled={false}
+                handlerTag={1}
+                handlerType="PanGestureHandler"
+                needsOffscreenAlphaCompositing={false}
+                onGestureHandlerEvent={[Function]}
+                onGestureHandlerStateChange={[Function]}
+                style={
+                  {
+                    "flex": 1,
+                    "transform": [
+                      {
+                        "translateX": 0,
+                      },
+                      {
+                        "translateX": 0,
+                      },
+                    ],
+                  }
+                }
+              >
+                <View
+                  pointerEvents="box-none"
+                  style={
+                    [
+                      {
+                        "flex": 1,
+                        "overflow": "hidden",
+                      },
+                      [
+                        {
+                          "backgroundColor": "#FFFFFF",
+                        },
+                        undefined,
+                      ],
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      {
+                        "flex": 1,
+                        "flexDirection": "column-reverse",
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        {
+                          "flex": 1,
+                        }
+                      }
+                    >
+                      <RCTScrollView
+                        collapsable={false}
+                        contentContainerStyle={
+                          [
+                            {
+                              "paddingBottom": 56,
+                              "paddingHorizontal": 0,
+                            },
+                            {},
+                          ]
+                        }
+                        decelerationRate="normal"
+                        onScroll={[Function]}
+                        scrollEventThrottle={8}
+                        snapToEnd={false}
+                        snapToOffsets={
+                          [
+                            0,
+                            0,
+                          ]
+                        }
+                      >
+                        <View>
+                          <View
+                            onLayout={[Function]}
+                            style={
+                              {
+                                "paddingHorizontal": 24,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 8,
+                                }
+                              }
+                            >
+                              <Text
+                                accessibilityLabel="Elimina il tuo profilo"
+                                accessibilityRole="header"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="title1"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#0E0F13",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 26,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 34,
+                                    },
+                                  ]
+                                }
+                              >
+                                Elimina il tuo profilo
+                              </Text>
+                            </View>
+                          </View>
+                          <View
+                            style={
+                              {
+                                "paddingHorizontal": 24,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                {
+                                  "height": 16,
+                                }
+                              }
+                            />
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="body"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              Puoi esercitare il tuo diritto alla cancellazione del tuo profilo IO in qualsiasi momento.
+                            </Text>
+                          </View>
+                          <View
+                            style={
+                              {
+                                "height": 16,
+                              }
+                            }
+                          />
+                          <View
+                            style={
+                              {
+                                "height": 8,
+                              }
+                            }
+                          />
+                          <View
+                            style={
+                              {
+                                "paddingHorizontal": 24,
+                              }
+                            }
+                          >
+                            <View
+                              accessible={false}
+                              style={
+                                [
+                                  {
+                                    "alignContent": "center",
+                                    "alignItems": "flex-start",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 8,
+                                    "flexDirection": "row",
+                                    "padding": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#F4F5F8",
+                                  },
+                                ]
+                              }
+                            >
+                              <View
+                                accessibilityLabel="Il tuo profilo sarà eliminato definitivamente entro 30 giorni dalla richiesta."
+                                accessibilityRole="text"
+                                accessible={true}
+                                style={
+                                  {
+                                    "alignSelf": "center",
+                                    "flex": 1,
+                                    "gap": 4,
+                                  }
+                                }
+                              >
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="footnote"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 14,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 21,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Il tuo profilo sarà eliminato definitivamente entro 30 giorni dalla richiesta.
+                                </Text>
+                              </View>
+                              <View
+                                style={
+                                  [
+                                    {
+                                      "marginRight": -16,
+                                    },
+                                    {
+                                      "alignSelf": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                <RNSVGSvgView
+                                  align="xMidYMid"
+                                  bbHeight={80}
+                                  bbWidth={80}
+                                  focusable={false}
+                                  height={80}
+                                  meetOrSlice={0}
+                                  minX={0}
+                                  minY={0}
+                                  style={
+                                    [
+                                      {
+                                        "backgroundColor": "transparent",
+                                        "borderWidth": 0,
+                                      },
+                                      {
+                                        "flex": 0,
+                                        "height": 80,
+                                        "width": 80,
+                                      },
+                                    ]
+                                  }
+                                  vbHeight={240}
+                                  vbWidth={240}
+                                  width={80}
+                                >
+                                  <RNSVGGroup
+                                    fill={
+                                      {
+                                        "payload": 4278190080,
+                                        "type": 0,
+                                      }
+                                    }
+                                  >
+                                    <RNSVGPath
+                                      d="M185.04 102.91L182.33 106.14L179.12 108.17L173.91 110.09L168.03 107.77L163.58 101.84L160.08 94.1L160.55 87.96L159.15 86.35L155.57 83.19L154.12 79.53L154.41 74.04L151.3 72.25L149.05 72.73L142.54 74.72L134.89 75.96L131.51 76.66L124.36 75.13L121.55 73.4L120.1 68.59L120.65 64.78L129.35 59.57L127.43 58.46C123.64 56.27 118.96 56.27 115.17 58.46L62.13 89.07C58.34 91.26 56 95.31 56 99.69V160.92C56 165.3 58.34 169.35 62.13 171.54L115.16 202.16C118.95 204.35 123.63 204.35 127.42 202.16L180.45 171.54C184.24 169.35 186.58 165.3 186.58 160.92V101.8L185.04 102.9V102.91Z"
+                                      fill={
+                                        {
+                                          "payload": 4289392367,
+                                          "type": 0,
+                                        }
+                                      }
+                                      propList={
+                                        [
+                                          "fill",
+                                        ]
+                                      }
+                                    />
+                                    <RNSVGPath
+                                      d="M186.58 94.65V92.61L186.13 92.35L186.58 94.65Z"
+                                      fill={
+                                        {
+                                          "payload": 4289392367,
+                                          "type": 0,
+                                        }
+                                      }
+                                      propList={
+                                        [
+                                          "fill",
+                                        ]
+                                      }
+                                    />
+                                    <RNSVGPath
+                                      d="M239.62 101.63C203.58 103.8 175.5 93.02 174.33 92.56L175.78 88.83C176.06 88.94 204.26 99.75 239.38 97.63L239.62 101.62V101.63Z"
+                                      fill={
+                                        {
+                                          "payload": 4278927075,
+                                          "type": 0,
+                                        }
+                                      }
+                                      propList={
+                                        [
+                                          "fill",
+                                        ]
+                                      }
+                                    />
+                                    <RNSVGPath
+                                      d="M187.04 98.92C187.04 100.81 186.72 102.91 185.73 104.86C184.3 107.65 181.8 109.57 178.31 110.56C171.6 112.46 164.77 107.18 160.98 101.1C156.64 94.13 156.27 86.92 160.03 82.72C167.77 74.1 176.67 75.32 177.05 75.38L176.46 79.34C176.18 79.3 169.26 78.44 163.01 85.4C160.11 88.63 161.61 94.55 164.37 98.99C167.27 103.64 172.53 108.04 177.22 106.71C179.63 106.03 181.24 104.83 182.16 103.05C184.07 99.35 182.31 94.33 182.29 94.28L186.05 92.92C186.11 93.09 187.04 95.7 187.04 98.92Z"
+                                      fill={
+                                        {
+                                          "payload": 4278927075,
+                                          "type": 0,
+                                        }
+                                      }
+                                      propList={
+                                        [
+                                          "fill",
+                                        ]
+                                      }
+                                    />
+                                    <RNSVGPath
+                                      d="M239.86 52.54C221.11 54.8 206.61 54.24 196.07 53.74C191.31 53.52 186.81 53.3 182.05 53.37C167.01 53.57 150.53 57.15 150.36 57.18L150.25 57.2C129.24 60.62 124.42 65.01 123.42 67.31C123.13 67.99 122.86 69.08 124 70.78C125.45 72.95 128.14 74.25 131.02 74.16C153.41 73.5 169.38 59.74 169.54 59.61L172.18 62.62C171.49 63.23 155.01 77.46 131.14 78.16C126.9 78.29 122.89 76.31 120.68 73C119.06 70.57 118.75 68.05 119.76 65.71C122.15 60.21 131.9 56.14 149.56 53.25C150.8 52.98 166.82 49.56 182 49.36C186.87 49.3 191.43 49.51 196.26 49.74C206.64 50.23 220.96 50.78 239.38 48.57L239.86 52.54Z"
+                                      fill={
+                                        {
+                                          "payload": 4278927075,
+                                          "type": 0,
+                                        }
+                                      }
+                                      propList={
+                                        [
+                                          "fill",
+                                        ]
+                                      }
+                                    />
+                                    <RNSVGPath
+                                      d="M206.07 50.39L204.28 53.97C183.67 43.66 165.04 39.2 161.21 41.63C160.64 42 160.33 42.44 160.22 43.09C159.82 45.43 162.1 49.4 163.64 51.36L160.49 53.83C159.97 53.17 155.45 47.26 156.28 42.43C156.58 40.68 157.54 39.24 159.06 38.27C166.39 33.6 191.19 42.97 206.06 50.4L206.07 50.39Z"
+                                      fill={
+                                        {
+                                          "payload": 4278927075,
+                                          "type": 0,
+                                        }
+                                      }
+                                      propList={
+                                        [
+                                          "fill",
+                                        ]
+                                      }
+                                    />
+                                    <RNSVGPath
+                                      d="M160.7 84.12L159.78 88.01C159.6 87.97 155.36 86.94 153.03 82.78C151.16 79.46 151.06 75.22 152.72 70.18L156.52 71.43C155.24 75.33 155.23 78.48 156.49 80.77C157.93 83.39 160.68 84.1 160.71 84.11L160.7 84.12Z"
+                                      fill={
+                                        {
+                                          "payload": 4278927075,
+                                          "type": 0,
+                                        }
+                                      }
+                                      propList={
+                                        [
+                                          "fill",
+                                        ]
+                                      }
+                                    />
+                                    <RNSVGPath
+                                      d="M123.54 141.98C122.71 141.98 122.04 141.31 122.04 140.48V93.85C122.04 93.02 122.71 92.35 123.54 92.35C124.37 92.35 125.04 93.02 125.04 93.85V140.48C125.04 141.31 124.37 141.98 123.54 141.98Z"
+                                      fill={
+                                        {
+                                          "payload": 4278240714,
+                                          "type": 0,
+                                        }
+                                      }
+                                      propList={
+                                        [
+                                          "fill",
+                                        ]
+                                      }
+                                    />
+                                    <RNSVGPath
+                                      d="M123.69 161.34C126.252 161.34 128.33 159.263 128.33 156.7C128.33 154.137 126.252 152.06 123.69 152.06C121.127 152.06 119.05 154.137 119.05 156.7C119.05 159.263 121.127 161.34 123.69 161.34Z"
+                                      fill={
+                                        {
+                                          "payload": 4278240714,
+                                          "type": 0,
+                                        }
+                                      }
+                                      propList={
+                                        [
+                                          "fill",
+                                        ]
+                                      }
+                                    />
+                                  </RNSVGGroup>
+                                </RNSVGSvgView>
+                              </View>
+                            </View>
+                            <View
+                              style={
+                                {
+                                  "height": 24,
+                                }
+                              }
+                            />
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="body"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              Se decidi di proseguire non potrai più recuperare i messaggi o le preferenze che hai impostato nell'app.
+                            </Text>
+                            <View
+                              style={
+                                {
+                                  "height": 16,
+                                }
+                              }
+                            />
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="body"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              <Text
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#555C70",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": 24,
+                                    },
+                                  ]
+                                }
+                              >
+                                Eventuali bonus o sconti ottenuti tramite l'app IO 
+                              </Text>
+                              <Text
+                                allowFontScaling={true}
+                                dynamicTypeRamp="body"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#555C70",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 16,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 24,
+                                    },
+                                  ]
+                                }
+                              >
+                                non saranno più accessibili.
+                              </Text>
+                            </Text>
+                            <View
+                              style={
+                                {
+                                  "height": 16,
+                                }
+                              }
+                            />
+                            <Text
+                              allowFontScaling={true}
+                              dynamicTypeRamp="body"
+                              maxFontSizeMultiplier={1.5}
+                              style={
+                                [
+                                  {},
+                                  {
+                                    "color": "#555C70",
+                                    "fontFamily": "Titillio",
+                                    "fontSize": 16,
+                                    "fontStyle": "normal",
+                                    "fontWeight": "400",
+                                    "lineHeight": 24,
+                                  },
+                                ]
+                              }
+                            >
+                              Potrai entrare di nuovo su IO in qualsiasi momento, effettuando una nuova registrazione tramite SPID o CIE.
+                            </Text>
+                          </View>
+                        </View>
+                      </RCTScrollView>
+                      <View
+                        pointerEvents="box-none"
+                        style={
+                          [
+                            {
+                              "bottom": 0,
+                              "justifyContent": "flex-end",
+                              "position": "absolute",
+                              "width": "100%",
+                            },
+                            {
+                              "height": 120,
+                              "paddingBottom": 24,
+                            },
+                          ]
+                        }
+                      >
+                        <View
+                          pointerEvents="none"
+                          style={
+                            [
+                              {
+                                "bottom": 0,
+                                "left": 0,
+                                "position": "absolute",
+                                "right": 0,
+                                "top": 0,
+                              },
+                              false,
+                            ]
+                          }
+                        >
+                          <View
+                            style={
+                              [
+                                {
+                                  "opacity": undefined,
+                                },
+                                false,
+                              ]
+                            }
+                          >
+                            <BVLinearGradient
+                              colors={
+                                [
+                                  16777215,
+                                  218103807,
+                                  419430399,
+                                  620756991,
+                                  822083583,
+                                  1040187391,
+                                  1241513983,
+                                  1442840575,
+                                  1644167167,
+                                  1845493759,
+                                  2046820351,
+                                  2264924159,
+                                  2466250751,
+                                  2667577343,
+                                  2868903935,
+                                  3070230527,
+                                  3271557119,
+                                  3489660927,
+                                  3690987519,
+                                  3892314111,
+                                  4093640703,
+                                  4294967295,
+                                ]
+                              }
+                              endPoint={
+                                {
+                                  "x": 0.5,
+                                  "y": 1,
+                                }
+                              }
+                              locations={
+                                [
+                                  0,
+                                  0.047619047619047616,
+                                  0.09523809523809523,
+                                  0.14285714285714285,
+                                  0.19047619047619047,
+                                  0.23809523809523808,
+                                  0.2857142857142857,
+                                  0.3333333333333333,
+                                  0.38095238095238093,
+                                  0.42857142857142855,
+                                  0.47619047619047616,
+                                  0.5238095238095237,
+                                  0.5714285714285714,
+                                  0.6190476190476191,
+                                  0.6666666666666666,
+                                  0.7142857142857142,
+                                  0.7619047619047619,
+                                  0.8095238095238095,
+                                  0.8571428571428571,
+                                  0.9047619047619047,
+                                  0.9523809523809523,
+                                  1,
+                                ]
+                              }
+                              startPoint={
+                                {
+                                  "x": 0.5,
+                                  "y": 0,
+                                }
+                              }
+                              style={
+                                {
+                                  "height": 99.6,
+                                }
+                              }
+                            />
+                          </View>
+                          <View
+                            style={
+                              {
+                                "backgroundColor": "#FFFFFF",
+                                "bottom": 0,
+                                "height": 20.4,
+                              }
+                            }
+                          />
+                        </View>
+                        <View
+                          onLayout={[Function]}
+                          pointerEvents="box-none"
+                          style={
+                            {
+                              "flexShrink": 0,
+                              "paddingHorizontal": 24,
+                              "width": "100%",
+                            }
+                          }
+                        >
+                          <View
+                            accessibilityLabel="Procedi con l’eliminazione"
+                            accessibilityRole="button"
+                            accessibilityState={
+                              {
+                                "busy": false,
+                                "checked": undefined,
+                                "disabled": false,
+                                "expanded": undefined,
+                                "selected": undefined,
+                              }
+                            }
+                            accessibilityValue={
+                              {
+                                "max": undefined,
+                                "min": undefined,
+                                "now": undefined,
+                                "text": undefined,
+                              }
+                            }
+                            accessible={true}
+                            collapsable={false}
+                            focusable={true}
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onResponderGrant={[Function]}
+                            onResponderMove={[Function]}
+                            onResponderRelease={[Function]}
+                            onResponderTerminate={[Function]}
+                            onResponderTerminationRequest={[Function]}
+                            onStartShouldSetResponder={[Function]}
+                            style={
+                              {
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  false,
+                                  {
+                                    "backgroundColor": undefined,
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#D13333",
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {},
+                                ]
+                              }
+                            >
+                              <View
+                                style={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
+                                  ]
+                                }
+                              >
+                                <Text
+                                  accessibilityElementsHidden={true}
+                                  accessible={false}
+                                  allowFontScaling={true}
+                                  ellipsizeMode="tail"
+                                  importantForAccessibility="no-hide-descendants"
+                                  maxFontSizeMultiplier={1.5}
+                                  numberOfLines={1}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#0E0F13",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": undefined,
+                                      },
+                                      [
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#FFFFFF",
+                                        },
+                                        {
+                                          "color": undefined,
+                                        },
+                                      ],
+                                    ]
+                                  }
+                                >
+                                  Procedi con l’eliminazione
+                                </Text>
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+                    <View
+                      collapsable={false}
+                      pointerEvents="box-none"
+                    >
+                      <View
+                        accessibilityElementsHidden={false}
+                        importantForAccessibility="auto"
+                        onLayout={[Function]}
+                        pointerEvents="box-none"
+                        style={null}
+                      >
+                        <View
+                          accessibilityRole="header"
+                          style={
+                            [
+                              {
+                                "borderBottomWidth": 1,
+                                "borderColor": "rgba(210,214,227,0)",
+                              },
+                              {},
+                              {
+                                "backgroundColor": undefined,
+                                "borderColor": undefined,
+                              },
+                            ]
+                          }
+                        >
+                          <View
+                            style={
+                              [
+                                {
+                                  "marginTop": 0,
+                                },
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "flexGrow": 1,
+                                  "height": 56,
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 24,
+                                },
+                              ]
+                            }
+                          >
+                            <View
+                              accessibilityLabel="Indietro"
+                              accessibilityRole="button"
+                              accessibilityState={
+                                {
+                                  "busy": undefined,
+                                  "checked": undefined,
+                                  "disabled": false,
+                                  "expanded": undefined,
+                                  "selected": undefined,
+                                }
+                              }
+                              accessibilityValue={
+                                {
+                                  "max": undefined,
+                                  "min": undefined,
+                                  "now": undefined,
+                                  "text": undefined,
+                                }
+                              }
+                              accessible={true}
+                              collapsable={false}
+                              focusable={true}
+                              hitSlop={8}
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onResponderGrant={[Function]}
+                              onResponderMove={[Function]}
+                              onResponderRelease={[Function]}
+                              onResponderTerminate={[Function]}
+                              onResponderTerminationRequest={[Function]}
+                              onStartShouldSetResponder={[Function]}
+                            >
+                              <View
+                                style={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "height": 24,
+                                      "width": 24,
+                                    },
+                                    false,
+                                  ]
+                                }
+                              >
+                                <RNSVGSvgView
+                                  accessibilityElementsHidden={true}
+                                  accessibilityLabel=""
+                                  accessible={false}
+                                  align="xMidYMid"
+                                  animatedProps={
+                                    {
+                                      "color": undefined,
+                                    }
+                                  }
+                                  bbHeight={36}
+                                  bbWidth={36}
+                                  color="#0E0F13"
+                                  focusable={false}
+                                  height={36}
+                                  importantForAccessibility="no-hide-descendants"
+                                  meetOrSlice={0}
+                                  minX={0}
+                                  minY={0}
+                                  style={
+                                    [
+                                      {
+                                        "backgroundColor": "transparent",
+                                        "borderWidth": 0,
+                                      },
+                                      {
+                                        "flex": 0,
+                                        "height": 36,
+                                        "width": 36,
+                                      },
+                                    ]
+                                  }
+                                  vbHeight={24}
+                                  vbWidth={24}
+                                  width={36}
+                                >
+                                  <RNSVGGroup
+                                    fill={
+                                      {
+                                        "payload": 4278190080,
+                                        "type": 0,
+                                      }
+                                    }
+                                  >
+                                    <RNSVGPath
+                                      clipRule={0}
+                                      d="M12.7071.2929c-.3905-.39053-1.0237-.39053-1.4142 0l-11 11c-.39053.3905-.39053 1.0237 0 1.4142l11 11c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L2.41421 12 12.7071 1.70711c.3905-.39053.3905-1.0237 0-1.41422Z"
+                                      fill={
+                                        {
+                                          "type": 2,
+                                        }
+                                      }
+                                      fillRule={0}
+                                      propList={
+                                        [
+                                          "fill",
+                                          "fillRule",
+                                        ]
+                                      }
+                                    />
+                                  </RNSVGGroup>
+                                </RNSVGSvgView>
+                              </View>
+                            </View>
+                            <View
+                              accessibilityElementsHidden={false}
+                              accessibilityLabel="Elimina il tuo profilo"
+                              accessibilityRole="header"
+                              accessible={true}
+                              importantForAccessibility="yes"
+                              style={
+                                {
+                                  "flexGrow": 1,
+                                  "flexShrink": 1,
+                                  "marginHorizontal": 16,
+                                }
+                              }
+                            >
+                              <Text
+                                accessible={false}
+                                allowFontScaling={true}
+                                maxFontSizeMultiplier={1.5}
+                                numberOfLines={1}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#0E0F13",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 14,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": undefined,
+                                    },
+                                    [
+                                      {
+                                        "color": "#0E0F13",
+                                        "textAlign": "center",
+                                      },
+                                      {
+                                        "opacity": undefined,
+                                      },
+                                    ],
+                                  ]
+                                }
+                              >
+                                Elimina il tuo profilo
+                              </Text>
+                            </View>
+                            <View
+                              style={
+                                {
+                                  "display": "flex",
+                                  "flexDirection": "row",
+                                  "flexShrink": 0,
+                                  "gap": 24,
+                                }
+                              }
+                            >
+                              <View
+                                style={
+                                  {
+                                    "width": 24,
+                                  }
+                                }
+                              />
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </RNSScreen>
+      </RNSScreenContainer>
+      <View
+        collapsable={false}
+        pointerEvents="box-none"
+        style={
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ],
+          ]
+        }
+      />
+    </View>
+  </RNCSafeAreaProvider>
+</View>
+`;

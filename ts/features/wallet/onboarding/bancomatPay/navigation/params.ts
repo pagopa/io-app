@@ -1,7 +1,0 @@
-import WALLET_ONBOARDING_BPAY_ROUTES from "./routes";
-
-export type PaymentMethodOnboardingBPayParamsList = {
-  [WALLET_ONBOARDING_BPAY_ROUTES.START]: undefined;
-  [WALLET_ONBOARDING_BPAY_ROUTES.CHOOSE_BANK]: undefined;
-  [WALLET_ONBOARDING_BPAY_ROUTES.SEARCH_AVAILABLE_USER_ACCOUNT]: undefined;
-};

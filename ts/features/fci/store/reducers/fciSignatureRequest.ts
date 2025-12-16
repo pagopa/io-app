@@ -7,6 +7,9 @@ import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
 import { fciSignatureRequestFromId, fciClearStateRequest } from "../actions";
+import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
+import { QtspDocumentToSign } from "../../utils/signature";
+import { IssuerEnvironmentEnum } from "../../../../../definitions/fci/IssuerEnvironment";
 
 export type FciSignatureRequestState = pot.Pot<
   SignatureRequestDetailView,
@@ -59,4 +62,48 @@ export const fciDocumentSignatureFieldsSelector = (
     )
   );
 
+export const fciDocumentsWithUrlSelector = (
+  documents: ReadonlyArray<DocumentToSign>
+) =>
+  createSelector(fciSignatureRequestSelector, signatureDetailView =>
+    pot.getOrElse(
+      pot.map(signatureDetailView, signatureRequest =>
+        signatureRequest.documents.map(
+          d =>
+            ({
+              ...documents.find(dd => dd.document_id === d.id),
+              url: d.url
+            } as QtspDocumentToSign)
+        )
+      ),
+      []
+    )
+  );
+
+/**
+ * @deprecated Use the new {@link fciEnvironmentSelector} instead.
+ */
+export const fciIssuerEnvironmentSelector = createSelector(
+  fciSignatureRequestSelector,
+  signatureDetailView =>
+    pot.isSome(signatureDetailView)
+      ? signatureDetailView.value.issuer.environment
+      : IssuerEnvironmentEnum.TEST
+);
+
+export const fciSignatureRequestIdSelector = createSelector(
+  fciSignatureRequestSelector,
+  signatureDetailView =>
+    pot.isSome(signatureDetailView) ? signatureDetailView.value.id : undefined
+);
+
+/**
+ * Selects the dossier title if present, undefined otherwise.
+ */
+export const fciSignatureRequestDossierTitleSelector = (state: GlobalState) => {
+  const signatureRequest = state.features.fci.signatureRequest;
+  return pot.isSome(signatureRequest)
+    ? signatureRequest.value.dossier_title
+    : undefined;
+};
 export default reducer;

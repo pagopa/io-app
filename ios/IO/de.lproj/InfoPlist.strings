@@ -1,0 +1,7 @@
+"NSCameraUsageDescription" = "Du kannst QR-Codes lesen und pagoPA-Mitteilungen bezahlen."; 
+"NSCalendarsUsageDescription" = "Du kannst Fälligkeiten in deinem Kalender eintragen und eine Benachrichtigung einstellen."; 
+"NSContactsUsageDescription" = "IO benötigt Zugriff auf deine Kontakte, damit du sie als Teilnehmer zu Terminen hinzufügen kannst."; 
+"NSFaceIDUsageDescription" = "Du kannst dich direkt in der App einloggen ohne den Entsperrcode einzugeben."; 
+"NSPhotoLibraryUsageDescription" = "Du kannst Gutscheine und Zertifikate speichern und Screenshots und Zahlungsmitteilungen hochladen.";
+"NSMicrophoneUsageDescription" = "IO benötigt Zugriff auf das Mikrofon, wenn du eine Sprachnachricht senden möchtest."; 
+"NSPhotoLibraryAddUsageDescription" = "Du kannst Bilder aus der App auf deinem Gerät speichern.";

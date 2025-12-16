@@ -5,7 +5,7 @@ import {
   remoteReady,
   remoteUndefined,
   RemoteValue
-} from "../../../bpd/model/RemoteValue";
+} from "../../../../../common/model/RemoteValue";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { cgnUnsubscribe } from "../actions/unsubscribe";
@@ -15,7 +15,7 @@ import { cgnActivationComplete } from "../actions/activation";
 
 export type CgnUnsubscribeState = RemoteValue<true, NetworkError>;
 /**
- * Keep the state of "unsubscribe" from bpd outcome
+ * Keep the state of "unsubscribe" from bonus outcome
  * @param state
  * @param action
  */

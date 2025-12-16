@@ -38,10 +38,11 @@ def requestCieAuthPage(
 
     # Do the required attempts
     while not (nAttempts >= maxAttempts or statusFlag):
-        # do the requests
-        response = requests.get(
+        # do the requests with a session to keep session data between requests
+        s = requests.Session()
+        response = s.get(
             uri, headers=headers, allow_redirects=True, timeout=timeout)
-        response = requests.post(
+        response = s.post(
             response.url, headers=headers, data=payload, allow_redirects=True, timeout=timeout)
         # set conditions for next step
         nAttempts += 1
@@ -54,11 +55,14 @@ def postSlack(
         token,
         message="Page containig CIE button unreachable",
         uri="https://slack.com/api/chat.postMessage",
-        channel='#io_status'):
+        channel='#io_dev_app_status'):
+
+    if not token:
+        print("Slack token is None")    
 
     slackHeaders = {
         "Content-type": "application/json",
-        "Authorization": "Bearer " + token
+        "Authorization": f"Bearer {token}"
     }
 
     slackPayload = {
@@ -70,7 +74,7 @@ def postSlack(
         uri, headers=slackHeaders, json=slackPayload, allow_redirects=True)
 
 
-def main(uri="https://app-backend.io.italia.it/login?entityID=xx_servizicie&authLevel=SpidL2",
+def main(uri="https://app-backend.io.italia.it/login?entityID=xx_servizicie&authLevel=SpidL3",
          headers=cieHeaders,
          payload=ciePayload,
          maxAttempts=5,
@@ -81,6 +85,7 @@ def main(uri="https://app-backend.io.italia.it/login?entityID=xx_servizicie&auth
         cieAuthPageResponse = requestCieAuthPage(
             uri, headers, payload, maxAttempts, timeoutPerRequest)
         cieAuthPageResponse.raise_for_status()
+        print("[OK] Page containing CIE button reachable!")
     except requests.exceptions.RequestException:
         print("[Fatal Error] Page containing CIE button unrechable", file=sys.stderr)
         postSlack(os.environ.get("IO_APP_SLACK_HELPER_BOT_TOKEN", None))
@@ -94,7 +99,7 @@ def main(uri="https://app-backend.io.italia.it/login?entityID=xx_servizicie&auth
 
 
 if __name__ == "__main__":
-    main(uri="https://app-backend.io.italia.it/login?entityID=xx_servizicie&authLevel=SpidL2",
+    main(uri="https://app-backend.io.italia.it/login?entityID=xx_servizicie&authLevel=SpidL3",
          headers=cieHeaders,
          payload=ciePayload,
          maxAttempts=5,

@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Overlay Should match all-properties snapshot 1`] = `
+<View
+  style={
+    {
+      "flex": 1,
+    }
+  }
+  testID="overlayComponent"
+>
+  <View
+    style={
+      [
+        {
+          "backgroundColor": "#FFFFFF",
+          "bottom": 0,
+          "justifyContent": "center",
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+          "zIndex": 1,
+        },
+        {
+          "backgroundColor": "#FF0000",
+          "opacity": 0.65,
+        },
+      ]
+    }
+  >
+    <Text>
+      This is a foreground
+    </Text>
+  </View>
+  <View
+    style={
+      [
+        {
+          "flex": 1,
+        },
+        {
+          "zIndex": 0,
+        },
+      ]
+    }
+  >
+    <Text>
+      This is a child
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Overlay Should match base snapshot 1`] = `
+<View
+  style={
+    {
+      "flex": 1,
+    }
+  }
+  testID="overlayComponent"
+>
+  <View
+    style={
+      [
+        {
+          "flex": 1,
+        },
+        {
+          "zIndex": 0,
+        },
+      ]
+    }
+  />
+</View>
+`;

@@ -3,7 +3,7 @@
  * on top of the root component.
  */
 
-import React from "react";
+import { Component, createContext, PropsWithChildren, ReactNode } from "react";
 import {
   Animated,
   Dimensions,
@@ -13,13 +13,12 @@ import {
   View
 } from "react-native";
 import { isScreenReaderEnabled } from "../../utils/accessibility";
-
 export type LightModalContextInterface = Readonly<{
-  component: React.ReactNode;
-  showModal: (component: React.ReactNode) => void;
-  showModalFadeInAnimation: (component: React.ReactNode) => void;
+  component: ReactNode;
+  showModal: (component: ReactNode) => void;
+  showModalFadeInAnimation: (component: ReactNode) => void;
   showAnimatedModal: (
-    component: React.ReactNode,
+    component: ReactNode,
     animatedValue?: AnimationLightModal
   ) => void;
   hideModal: () => void;
@@ -27,16 +26,15 @@ export type LightModalContextInterface = Readonly<{
   setOnHiddenModal: (callback: () => void) => void;
 }>;
 
-export const LightModalContext =
-  React.createContext<LightModalContextInterface>({
-    component: null,
-    showModal: () => undefined,
-    showModalFadeInAnimation: () => undefined,
-    showAnimatedModal: () => undefined,
-    hideModal: () => undefined,
-    onHiddenModal: () => undefined,
-    setOnHiddenModal: () => undefined
-  });
+export const LightModalContext = createContext<LightModalContextInterface>({
+  component: null,
+  showModal: () => undefined,
+  showModalFadeInAnimation: () => undefined,
+  showAnimatedModal: () => undefined,
+  hideModal: () => undefined,
+  onHiddenModal: () => undefined,
+  setOnHiddenModal: () => undefined
+});
 
 type Props = Record<string, unknown>;
 
@@ -134,9 +132,12 @@ export type AnimationLightModal =
 
 export const LightModalConsumer = LightModalContext.Consumer;
 
-export class LightModalProvider extends React.Component<Props, State> {
+export class LightModalProvider extends Component<
+  PropsWithChildren<Props>,
+  State
+> {
   public showAnimatedModal = async (
-    childComponent: React.ReactNode,
+    childComponent: ReactNode,
     styledAnimation: AnimationLightModal = RightLeftAnimation
   ) => {
     const isScreenReaderActive = await isScreenReaderEnabled();
@@ -157,7 +158,7 @@ export class LightModalProvider extends React.Component<Props, State> {
     );
   };
 
-  public showModalFadeInAnimation = async (childComponent: React.ReactNode) => {
+  public showModalFadeInAnimation = async (childComponent: ReactNode) => {
     const isScreenReaderActive = await isScreenReaderEnabled();
     const component = (
       <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
@@ -178,7 +179,7 @@ export class LightModalProvider extends React.Component<Props, State> {
     );
   };
 
-  public showModal = async (childComponent: React.ReactNode) => {
+  public showModal = async (childComponent: ReactNode) => {
     const isScreenReaderActive = await isScreenReaderEnabled();
     const component = (
       <View style={styles.container}>
@@ -230,6 +231,6 @@ export class LightModalProvider extends React.Component<Props, State> {
   }
 }
 
-export const LightModalRoot: React.SFC = () => (
+export const LightModalRoot = () => (
   <LightModalConsumer>{({ component }) => component}</LightModalConsumer>
 );

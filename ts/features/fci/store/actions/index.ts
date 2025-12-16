@@ -3,6 +3,7 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+import * as O from "fp-ts/lib/Option";
 import { CreateFilledDocument } from "../../../../../definitions/fci/CreateFilledDocument";
 import { CreateSignatureBody } from "../../../../../definitions/fci/CreateSignatureBody";
 import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
@@ -11,6 +12,11 @@ import { QtspClausesMetadataDetailView } from "../../../../../definitions/fci/Qt
 import { SignatureDetailView } from "../../../../../definitions/fci/SignatureDetailView";
 import { SignatureRequestDetailView } from "../../../../../definitions/fci/SignatureRequestDetailView";
 import { NetworkError } from "../../../../utils/errors";
+import { Metadata } from "../../../../../definitions/fci/Metadata";
+import { SignatureRequestList } from "../../../../../definitions/fci/SignatureRequestList";
+import { Document } from "../reducers/fciSignatureFieldDrawing";
+import { SignatureFieldAttrType } from "../../components/DocumentWithSignature";
+import { EnvironmentEnum } from "../../../../../definitions/fci/Environment";
 
 /**
  * get and handle the signatureRequest from id
@@ -90,33 +96,50 @@ export const fciStartSigningRequest = createStandardAction(
 )<void>();
 
 /**
- * start the FCI signed start action
- */
-export const fciShowSignedDocumentsStartRequest = createStandardAction(
-  "FCI_SIGNED_DOCUMENTS_START_REQUEST"
-)<void>();
-
-/**
- * start the FCI signed end action
- */
-export const fciShowSignedDocumentsEndRequest = createStandardAction(
-  "FCI_SIGNED_DOCUMENTS_END_REQUEST"
-)<void>();
-
-/**
  * clear the FCI store
  */
 export const fciEndRequest = createStandardAction("FCI_END_REQUEST")<void>();
 
+/**
+ * poll the filled document
+ * to check if it is ready
+ * to be downloaded
+ */
 export const fciPollFilledDocument = createAsyncAction(
-  "POLL_FILLED_DOCUMENT_REQUEST",
-  "POLL_FILLED_DOCUMENT_SUCCESS",
-  "POLL_FILLED_DOCUMENT_FAILURE"
-)<void, { isReady: boolean }, NetworkError>();
+  "FCI_POLL_FILLED_DOCUMENT_REQUEST",
+  "FCI_POLL_FILLED_DOCUMENT_SUCCESS",
+  "FCI_POLL_FILLED_DOCUMENT_FAILURE",
+  "FCI_POLL_FILLED_DOCUMENT_CANCEL"
+)<void, { isReady: boolean }, NetworkError, void>();
 
-export const fciCancelPollingFilledDocument = createStandardAction(
-  "POLL_FILLED_DOCUMENT_CANCEL"
-)<void>();
+export const fciClearAllFiles = createStandardAction("CLEAR_ALL_FILES")<{
+  path: string;
+}>();
+
+export const fciMetadataRequest = createAsyncAction(
+  "FCI_METADATA_REQUEST",
+  "FCI_METADATA_SUCCESS",
+  "FCI_METADATA_FAILURE"
+)<void, Metadata, NetworkError>();
+
+export const fciSignaturesListRequest = createAsyncAction(
+  "FCI_SIGNATURES_LIST_REQUEST",
+  "FCI_SIGNATURES_LIST_SUCCESS",
+  "FCI_SIGNATURES_LIST_FAILURE"
+)<void, SignatureRequestList, NetworkError>();
+
+export const fciDocumentSignatureFields = createAsyncAction(
+  "FCI_DOCUMENT_SIGNATURE_FIELDS_REQUEST",
+  "FCI_DOCUMENT_SIGNATURE_FIELDS_SUCCESS",
+  "FCI_DOCUMENT_SIGNATURE_FIELDS_FAILURE"
+)<{ uri: string; attrs: SignatureFieldAttrType }, Document, Error>();
+
+/**
+ * Action to interact with the environment reducer.
+ */
+export const fciEnvironmentSet = createStandardAction("FCI_ENVIRONMENT_SET")<
+  O.Option<EnvironmentEnum>
+>();
 
 export type FciActions =
   | ActionType<typeof fciSignatureRequestFromId>
@@ -130,7 +153,9 @@ export type FciActions =
   | ActionType<typeof fciEndRequest>
   | ActionType<typeof fciDownloadPreview>
   | ActionType<typeof fciDownloadPreviewClear>
-  | ActionType<typeof fciShowSignedDocumentsStartRequest>
-  | ActionType<typeof fciShowSignedDocumentsEndRequest>
   | ActionType<typeof fciPollFilledDocument>
-  | ActionType<typeof fciCancelPollingFilledDocument>;
+  | ActionType<typeof fciClearAllFiles>
+  | ActionType<typeof fciMetadataRequest>
+  | ActionType<typeof fciSignaturesListRequest>
+  | ActionType<typeof fciDocumentSignatureFields>
+  | ActionType<typeof fciEnvironmentSet>;

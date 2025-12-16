@@ -1,0 +1,209 @@
+name: Zendesk Trigger Manager
+
+on:
+  workflow_dispatch:
+    inputs:
+      # Input #1: Choice of the action to perform
+      action:
+        description: "Choose the action to perform"
+        required: true
+        type: choice
+        options:
+          - "View Trigger Status"
+          - "Update App Version"
+        default: "View Trigger Status"
+      # Input #2: App version string, needed only for the update
+      # To "disable" the trigger for a specific version, set a non-existing version
+      app_version:
+        description: |
+          App version in the form `x.y.z.w` (ex: `3.15.0.1`) - Required only for update.              
+          To disable the trigger set it to `0.disabled` (defult).
+        type: string
+        required: false
+        default: "0.disabled"
+
+# Restrict all permissions for the GITHUB_TOKEN for security hardening
+permissions: {}
+
+jobs:
+  get-trigger-status:
+    # Run this job only if the user chose 'View Trigger Status'
+    if: github.event.inputs.action == 'View Trigger Status'
+    runs-on: ubuntu-latest
+    environment: prod
+    env:
+      ZENDESK_DOMAIN: ${{ secrets.ZENDESK_DOMAIN }}
+      ZENDESK_TRIGGER_ID: ${{ secrets.ZENDESK_TRIGGER_ID }}
+      ZENDESK_OAUTH_TOKEN: ${{ secrets.ZENDESK_OAUTH_TOKEN }}
+    steps:
+      - name: Check Zendesk Trigger Status
+        id: check_status
+        run: |
+          # Executes the API call to Zendesk using curl
+          # The URL is dynamically built using secrets from the 'prod' environment
+          # The authentication token is read from GitHub secrets
+          response=$(curl -s "https://$ZENDESK_DOMAIN.zendesk.com/api/v2/triggers/$ZENDESK_TRIGGER_ID.json" \
+            -H "Authorization: Bearer $ZENDESK_OAUTH_TOKEN")
+
+          # Check if the response contains an error
+          if echo "$response" | jq -e '.error' > /dev/null; then
+            echo "::error::Error received from Zendesk:"
+            echo "$response"
+            exit 1
+          fi
+
+          # Extract the required data from the JSON response using jq
+          IS_ACTIVE=$(echo "$response" | jq '.trigger.active')
+          APP_VERSION_TAG=$(echo "$response" | jq -r '.trigger.conditions.all[] | select(.field=="current_tags") | .value')
+
+          # Write the results to the Job Summary page
+          echo "### :white_check_mark: Zendesk Trigger Status" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Active:** \`$IS_ACTIVE\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **App Version Tag:** \`$APP_VERSION_TAG\`" >> $GITHUB_STEP_SUMMARY
+
+  update-trigger-app-version:
+    # Run this job only if the user chose 'Update App Version'
+    if: github.event.inputs.action == 'Update App Version'
+    runs-on: ubuntu-latest
+    environment: prod
+    env:
+      APP_VERSION: ${{ github.event.inputs.app_version }}
+      ZENDESK_BRAND_ID: ${{ secrets.ZENDESK_BRAND_ID }}
+      ZENDESK_WEBHOOK_ID: ${{ secrets.ZENDESK_WEBHOOK_ID }}
+      ZENDESK_DOMAIN: ${{ secrets.ZENDESK_DOMAIN }}
+      ZENDESK_TRIGGER_ID: ${{ secrets.ZENDESK_TRIGGER_ID }}
+      ZENDESK_OAUTH_TOKEN: ${{ secrets.ZENDESK_OAUTH_TOKEN }}
+    outputs:
+      is_active: ${{ steps.update_trigger.outputs.is_active }}
+      app_version: ${{ steps.update_trigger.outputs.app_version }}
+    steps:
+      - name: Check if App Version is provided
+        run: |
+          # Check empty
+          if [[ -z "$APP_VERSION" ]]; then
+            echo "::error::App version is mandatory."
+            exit 1
+          fi
+
+          # Check version format (allow 0.disabled or x.y.z.w)
+          if [[ "$APP_VERSION" != "0.disabled" && ! "$APP_VERSION" =~ ^[0-9]+(\.[0-9]+){3,}$ ]]; then
+            echo "::error::App version '$APP_VERSION' is not in a valid format (x.y.z.w) or 0.disabled."
+            exit 1
+          fi
+
+          echo "::notice::App version '$APP_VERSION' is valid."
+      - name: Generate payload for update
+        id: generate_payload
+        run: |
+          # Use jq to safely build the JSON payload from environment variables.
+          # This prevents shell injection vulnerabilities from the workflow inputs.
+          jq -n \
+            --arg version "$APP_VERSION" \
+            --arg brand_id "$ZENDESK_BRAND_ID" \
+            --arg webhook_id "$ZENDESK_WEBHOOK_ID" \
+            '{
+              "trigger": {
+                "conditions": {
+                  "all": [
+                    { "field": "current_tags", "operator": "includes", "value": $version },
+                    { "field": "update_type", "operator": "is", "value": "Create" },
+                    { "field": "brand_id", "operator": "is", "value": $brand_id }
+                  ],
+                  "any": []
+                },
+                "actions": [
+                  {
+                    "field": "notification_webhook",
+                    "value": [
+                      $webhook_id,
+                      "{\n  \"channel\": \"#prod_io_segnalazioni_rollout\",\n  \"text\": \"*NUOVA SEGNALAZIONE*\\nlink: {{ticket.url}}\\n{{ticket.description}}\",\n  \"unfurl_links\": false,\n  \"unfurl_media\": false\n}"
+                    ]
+                  }
+                ]
+              }
+            }' > payload.json
+
+          echo "Generated payload:"
+          cat payload.json
+
+      - name: Update Zendesk Trigger
+        id: update_trigger
+        run: |
+          # Executes the PUT API call to update the trigger
+          # Sends the payload.json file as the request body
+          response=$(curl -s -w "\n%{http_code}" -X PUT "https://$ZENDESK_DOMAIN.zendesk.com/api/v2/triggers/$ZENDESK_TRIGGER_ID.json" \
+            -H "Authorization: Bearer $ZENDESK_OAUTH_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d @payload.json)
+
+          # Extract the body and status code from the response
+          http_code=$(echo "$response" | tail -n1)
+          body=$(echo "$response" | sed '$d')
+
+          # Check the HTTP status code to determine the outcome
+          if [ "$http_code" -eq 200 ]; then
+            echo "::notice::Trigger successfully updated to version $APP_VERSION!"
+            
+            # Extract and display the updated status and version tag from the response body
+            IS_ACTIVE=$(echo "$body" | jq '.trigger.active')
+            APP_VERSION_TAG=$(echo "$body" | jq -r '.trigger.conditions.all[] | select(.field=="current_tags") | .value')
+
+            # Write the results to the Job Summary page
+            echo "### :white_check_mark: Zendesk Trigger Status" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "- **Active:** \`$IS_ACTIVE\`" >> $GITHUB_STEP_SUMMARY
+            echo "- **App Version Tag:** \`$APP_VERSION_TAG\`" >> $GITHUB_STEP_SUMMARY
+
+            # Set outputs for use in subsequent steps
+            echo "is_active=$IS_ACTIVE" >> "$GITHUB_OUTPUT"
+            echo "app_version=$APP_VERSION_TAG" >> "$GITHUB_OUTPUT"            
+          else
+            echo "::error::Error while updating the trigger. Status code: $http_code"
+            echo "Response from Zendesk:"
+            echo "$body"
+            exit 1
+          fi
+
+  send-slack-notification:
+    # Run this job only if the user chose 'Update App Version'
+    if: github.event.inputs.action == 'Update App Version'
+    runs-on: ubuntu-latest
+    needs: update-trigger-app-version
+    environment: dev
+    steps:
+      - name: Send Slack Notification on Success
+        continue-on-error: true
+        env:
+          IO_APP_SLACK_HELPER_BOT_TOKEN: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}
+          IS_ACTIVE: ${{ needs.update-trigger-app-version.outputs.is_active }}
+          APP_VERSION_TAG: ${{ needs.update-trigger-app-version.outputs.app_version }}
+        run: |
+          echo "IS_ACTIVE=$IS_ACTIVE"
+          echo "APP_VERSION_TAG=$APP_VERSION_TAG"
+          if [[ "$APP_VERSION_TAG" == "0.disabled" ]]; then
+            STATUS_ICON=":x:"
+          else
+            STATUS_ICON=":white_check_mark:"
+          fi
+
+          # Use jq to safely construct the JSON payload for Slack          
+          slack_payload=$(jq -n \
+            --arg channel "prod_io_segnalazioni_rollout" \
+            --arg text ":zap: *_Zendesk Trigger Status_*
+            
+            - *Active:* \`$IS_ACTIVE\`
+            - *App Version Tag:* \`$APP_VERSION_TAG\`
+            - *Forwarding Enabled:* $STATUS_ICON" \
+            '{
+              "channel": $channel,
+              "text": $text,
+              "unfurl_links": false,
+              "unfurl_media": false
+            }')
+
+          # Post the message to Slack using curl
+          curl -X POST https://slack.com/api/chat.postMessage \
+            -H "Authorization: Bearer $IO_APP_SLACK_HELPER_BOT_TOKEN" \
+            -H "Content-Type: application/json; charset=utf-8" \
+            -d "$slack_payload"

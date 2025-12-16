@@ -5,7 +5,7 @@ import {
   remoteError,
   remoteLoading,
   remoteReady
-} from "../../../../bpd/model/RemoteValue";
+} from "../../../../../../common/model/RemoteValue";
 import { cgnGenerateOtp } from "../../actions/otp";
 import { cgnOtpDataSelector } from "../otp";
 import { OtpCode } from "../../../../../../../definitions/cgn/OtpCode";
@@ -13,9 +13,14 @@ import { getGenericError } from "../../../../../../utils/errors";
 
 describe("cgnOtpReducer", () => {
   it("should be loading", () => {
+    const onError = jest.fn();
+    const onSuccess = jest.fn();
     const globalState: GlobalState = appReducer(
       undefined,
-      cgnGenerateOtp.request()
+      cgnGenerateOtp.request({
+        onError,
+        onSuccess
+      })
     );
     expect(cgnOtpDataSelector(globalState)).toEqual(remoteLoading);
   });

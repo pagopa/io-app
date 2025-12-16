@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`stateUtils snapshots flowStates 1`] = `
+{
+  "androidNFCActivation": "androidNFCActivation",
+  "cieCanAdvisory": "cieCanAdvisory",
+  "cieCanInsertion": "cieCanInsertion",
+  "cieScanning": "cieScanning",
+  "cieScanningAdvisory": "cieScanningAdvisory",
+  "creatingMandate": "creatingMandate",
+  "displayingAARToS": "displayingAARToS",
+  "displayingNotificationData": "displayingNotificationData",
+  "fetchingNotificationData": "fetchingNotificationData",
+  "fetchingQRData": "fetchingQRData",
+  "ko": "ko",
+  "nfcNotSupportedFinal": "nfcNotSupportedFinal",
+  "none": "none",
+  "notAddressee": "notAddressee",
+  "notAddresseeFinal": "notAddresseeFinal",
+  "validatingMandate": "validatingMandate",
+}
+`;
+
+exports[`stateUtils snapshots validTransitions 1`] = `
+Map {
+  "none" => Set {
+    "displayingAARToS",
+  },
+  "displayingAARToS" => Set {
+    "fetchingQRData",
+  },
+  "fetchingQRData" => Set {
+    "fetchingNotificationData",
+    "notAddresseeFinal",
+    "notAddressee",
+    "ko",
+  },
+  "fetchingNotificationData" => Set {
+    "displayingNotificationData",
+    "ko",
+  },
+  "displayingNotificationData" => Set {},
+  "notAddresseeFinal" => Set {},
+  "ko" => Set {
+    "fetchingQRData",
+    "fetchingNotificationData",
+  },
+  "notAddressee" => Set {
+    "creatingMandate",
+    "nfcNotSupportedFinal",
+  },
+  "creatingMandate" => Set {
+    "cieCanAdvisory",
+    "ko",
+  },
+  "cieCanAdvisory" => Set {
+    "cieCanInsertion",
+  },
+  "cieCanInsertion" => Set {
+    "cieCanAdvisory",
+    "cieScanningAdvisory",
+  },
+  "cieScanningAdvisory" => Set {
+    "cieCanInsertion",
+    "androidNFCActivation",
+    "cieScanning",
+  },
+  "androidNFCActivation" => Set {
+    "cieScanning",
+  },
+  "cieScanning" => Set {
+    "cieScanningAdvisory",
+    "validatingMandate",
+  },
+  "validatingMandate" => Set {
+    "ko",
+    "fetchingNotificationData",
+  },
+}
+`;

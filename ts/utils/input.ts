@@ -4,7 +4,7 @@ import * as t from "io-ts";
 import * as _ from "lodash";
 import { PatternString } from "@pagopa/ts-commons/lib/strings";
 import { pipe } from "fp-ts/lib/function";
-import I18n from "../i18n";
+import I18n from "i18next";
 import { CreditCard } from "../types/pagopa";
 import { CreditCardDetector, SupportedBrand } from "./creditCard";
 import { isStringNullyOrEmpty } from "./strings";
@@ -22,10 +22,7 @@ export const CreditCardPan = PatternString(
 );
 export type CreditCardPan = t.TypeOf<typeof CreditCardPan>;
 
-export const CreditCardHolder = PatternString(
-  // eslint-disable-next-line no-useless-escape
-  `^([\x20-\x5f\x61-\x7d]+)$`
-);
+export const CreditCardHolder = PatternString(`^([\x20-\x5f\x61-\x7d]+)$`);
 
 export type CreditCardHolder = t.TypeOf<typeof CreditCardHolder>;
 /**

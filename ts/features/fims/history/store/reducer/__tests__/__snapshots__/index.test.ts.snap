@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`INITIAL_STATE Should match snapshot 1`] = `
+{
+  "consentsList": {
+    "kind": "PotNone",
+  },
+  "historyExportState": {
+    "kind": "undefined",
+  },
+}
+`;

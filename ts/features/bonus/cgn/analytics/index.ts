@@ -1,6 +1,6 @@
 import { getType } from "typesafe-actions";
-import { mixpanel } from "../../../../mixpanel";
 import { Action } from "../../../../store/actions/types";
+import { mixpanelTrack } from "../../../../mixpanel";
 import { getNetworkErrorMessage } from "../../../../utils/errors";
 import {
   cgnActivationBack,
@@ -28,10 +28,11 @@ import { cgnCodeFromBucket } from "../store/actions/bucket";
 import { cgnUnsubscribe } from "../store/actions/unsubscribe";
 import { cgnCategories } from "../store/actions/categories";
 
+export type TrackCgnStatus = "active" | "not_active";
+
 const trackCgnAction =
-  (mp: NonNullable<typeof mixpanel>) =>
   // eslint-disable-next-line complexity
-  (action: Action): Promise<void> => {
+  (action: Action): void => {
     switch (action.type) {
       case getType(cgnActivationStart):
       case getType(cgnRequestActivation):
@@ -55,19 +56,21 @@ const trackCgnAction =
       case getType(cgnEycaStatus.request):
       case getType(cgnUnsubscribe.request):
       case getType(cgnUnsubscribe.success):
-        return mp.track(action.type);
+        return mixpanelTrack(action.type);
       case getType(cgnOfflineMerchants.success):
       case getType(cgnOnlineMerchants.success):
-        return mp.track(action.type, { foundMerchants: action.payload.length });
+        return mixpanelTrack(action.type, {
+          foundMerchants: action.payload.length
+        });
       case getType(cgnCodeFromBucket.success):
-        return mp.track(action.type, { status: action.payload.kind });
+        return mixpanelTrack(action.type, { status: action.payload.kind });
       case getType(cgnEycaStatus.success):
       case getType(cgnActivationStatus.success):
-        return mp.track(action.type, { status: action.payload.status });
+        return mixpanelTrack(action.type, { status: action.payload.status });
       case getType(cgnEycaActivation.success):
-        return mp.track(action.type, { status: action.payload });
+        return mixpanelTrack(action.type, { status: action.payload });
       case getType(cgnActivationStatus.failure):
-        return mp.track(action.type, { reason: action.payload.message });
+        return mixpanelTrack(action.type, { reason: action.payload.message });
       case getType(cgnDetails.failure):
       case getType(cgnGenerateOtp.failure):
       case getType(cgnEycaActivation.failure):
@@ -78,15 +81,14 @@ const trackCgnAction =
       case getType(cgnCodeFromBucket.failure):
       case getType(cgnCategories.failure):
       case getType(cgnUnsubscribe.failure):
-        return mp.track(action.type, {
+        return mixpanelTrack(action.type, {
           reason: getNetworkErrorMessage(action.payload)
         });
       case getType(cgnActivationFailure):
-        return mp.track(action.type, {
+        return mixpanelTrack(action.type, {
           reason: action.payload
         });
     }
-    return Promise.resolve();
   };
 
 export default trackCgnAction;

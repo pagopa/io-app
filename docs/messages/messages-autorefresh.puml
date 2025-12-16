@@ -1,0 +1,52 @@
+@startuml
+box "UI logic" #LightBlue
+participant PagerViewContainer
+note right of PagerViewContainer
+child of MessagesHomeScreen
+end note
+participant loadNewlyReceivedMessagesIfNeededCallback
+end box
+participant getLoadPreviousPageMessagesActionIfAllowed
+note right of getLoadPreviousPageMessagesActionIfAllowed
+ part of homeUtils.ts
+ end note
+database Redux
+participant allPaginatedReducer
+participant handleLoadPrediousPageMessages
+note right of handleLoadPrediousPageMessages
+ saga
+ end note
+database BE
+
+create loadNewlyReceivedMessagesIfNeededCallback
+PagerViewContainer -> loadNewlyReceivedMessagesIfNeededCallback  :| page landing \n|  switch between inbox and archived tab
+loadNewlyReceivedMessagesIfNeededCallback->Redux  : store.getState()
+activate loadNewlyReceivedMessagesIfNeededCallback
+activate Redux
+    Redux->loadNewlyReceivedMessagesIfNeededCallback: current app state
+deactivate Redux
+    loadNewlyReceivedMessagesIfNeededCallback -> getLoadPreviousPageMessagesActionIfAllowed ++ : get action to dispatch
+    note left: app state is passed as an arg
+    getLoadPreviousPageMessagesActionIfAllowed->getLoadPreviousPageMessagesActionIfAllowed: 60 seconds have passed since last call \n && no async operations on messages are running?  \n if so return loadPreviousPageMessages.request
+    getLoadPreviousPageMessagesActionIfAllowed -> loadNewlyReceivedMessagesIfNeededCallback -- : action || undefined
+    loadNewlyReceivedMessagesIfNeededCallback -> Redux : if an action is returned, track the event on mixpanel and dispatch it
+deactivate loadNewlyReceivedMessagesIfNeededCallback
+
+activate Redux
+Redux->allPaginatedReducer ++ : passes loadPreviousPageMessages.request
+allPaginatedReducer->Redux -- : return new state
+' -------
+Redux->handleLoadPrediousPageMessages : forward loadPreviousPageMessages.request
+deactivate Redux
+
+activate handleLoadPrediousPageMessages
+handleLoadPrediousPageMessages-->BE : call Api
+BE-->handleLoadPrediousPageMessages: PaginatedPublicMessagesCollection
+handleLoadPrediousPageMessages->Redux --: dispatch loadPreviousPageMessagesAction.success
+' ---------
+activate Redux
+Redux->allPaginatedReducer  : passes loadPreviousPageMessages.success
+deactivate Redux
+activate allPaginatedReducer
+allPaginatedReducer->Redux -- : return new state
+@enduml
