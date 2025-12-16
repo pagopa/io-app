@@ -361,6 +361,13 @@ export const trackCredentialPreview = (
   );
 };
 
+export const trackItwCredentialIntro = (credential: MixPanelCredential) => {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_CREDENTIAL_INTRO,
+    buildEventProperties("UX", "screen_view", { credential })
+  );
+};
+
 export const trackCredentialDetail = (
   credentialDetails: TrackCredentialDetail
 ) => {
@@ -769,6 +776,15 @@ export function trackWalletNewIdReset(state: GlobalState) {
     buildEventProperties("UX", "action")
   );
 }
+
+export const trackItwCredentialStartIssuing = (
+  credential: MixPanelCredential
+) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_START_ISSUING,
+    buildEventProperties("UX", "action", { credential })
+  );
+};
 
 export function trackItwIntroBack(itw_flow: ItwFlow) {
   void mixpanelTrack(
