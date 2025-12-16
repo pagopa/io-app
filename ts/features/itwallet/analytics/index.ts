@@ -180,7 +180,7 @@ type TrackITWalletBannerClosureProperties = {
 };
 
 type TrackITWalletIDMethodSelected = {
-  ITW_ID_method: "spid" | "ciePin" | "cieId";
+  ITW_ID_method: ItwIdMethod;
   itw_flow: ItwFlow;
 };
 
@@ -204,6 +204,11 @@ type TrackItWalletCieCardReadingFailure = {
 type TrackItWalletCieCardReadingUnexpectedFailure = {
   reason: string | undefined;
   cie_reading_progress: number;
+};
+
+type TrackGetChallengeInfoFailure = {
+  ITW_ID_method: "spid" | "cieId";
+  reason?: string;
 };
 
 export type CieCardVerifyFailureReason =
@@ -1220,6 +1225,15 @@ export const trackItwEidReissuingMandatory = (
   void mixpanelTrack(
     ITW_ERRORS_EVENTS.ITW_REISSUING_EID_MANDATORY,
     buildEventProperties("KO", "screen_view", { action })
+  );
+};
+
+export const trackMrtdPoPChallengeInfoFailed = (
+  properties: TrackGetChallengeInfoFailure
+) => {
+  void mixpanelTrack(
+    ITW_ERRORS_EVENTS.ITW_GET_CHALLENGE_INFO_FAILED,
+    buildEventProperties("KO", "screen_view", properties)
   );
 };
 
