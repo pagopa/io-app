@@ -17,7 +17,10 @@ export const ItwDiscoveryBannerStandalone = () => {
   }
 
   return (
-    <View testID="itwDiscoveryBannerStandaloneTestID">
+    <View
+      testID="itwDiscoveryBannerStandaloneTestID"
+      style={{ marginVertical: 16 }}
+    >
       <ItwDiscoveryBanner ignoreMargins={true} closable={false} />
     </View>
   );

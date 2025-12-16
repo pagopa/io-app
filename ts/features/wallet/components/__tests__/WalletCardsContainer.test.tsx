@@ -286,7 +286,9 @@ describe("OtherWalletCardsContainer", () => {
       .mockImplementation(() => [T_CARDS["1"], T_CARDS["2"], T_CARDS["3"]]);
 
     const { queryByTestId } = renderComponent(OtherWalletCardsContainer);
-    expect(queryByTestId(`walletCardsCategoryOtherHeaderTestID`)).toBeNull();
+    expect(
+      queryByTestId(`walletCardsCategoryOtherHeaderTestID`)
+    ).not.toBeNull();
     expect(queryByTestId(`walletCardTestID_payment_payment_1`)).not.toBeNull();
     expect(queryByTestId(`walletCardTestID_bonus_idPay_2`)).not.toBeNull();
     expect(queryByTestId(`walletCardTestID_cgn_cgn_3`)).not.toBeNull();

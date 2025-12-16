@@ -1288,7 +1288,6 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                               "alignItems": "center",
                               "flexDirection": "row",
                               "gap": 8,
-                              "justifyContent": "center",
                             }
                           }
                           testID="poweredByItWalletTextTestID"

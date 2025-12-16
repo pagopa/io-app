@@ -19,12 +19,6 @@ import { Renderer } from "../../../../components/IOMarkdown/types";
 import { ItwBrandedBox } from "./ItwBrandedBox";
 import { PoweredByItWalletText } from "./PoweredByItWalletText";
 
-export type ItwEngagementBannerVariant =
-  | "activation"
-  | "upgrade"
-  | "upgrade_empty"
-  | "upgrade_expiring";
-
 type Props = {
   title: string;
   description: string;
@@ -95,7 +89,7 @@ export const ItwEngagementBanner = (props: WithTestID<Props>) => {
       accessibilityRole={"button"}
       onAccessibilityTap={onActionPress}
     >
-      <ItwBrandedBox>
+      <ItwBrandedBox borderRadius={8}>
         <ItWalletDeck width={105} height={145} style={styles.deck} />
         <VStack space={8}>
           <View style={styles.header}>

@@ -1,4 +1,3 @@
-import { StyleSheet, View } from "react-native";
 import {
   BodySmall,
   IOAlertSpacing,
@@ -6,9 +5,10 @@ import {
   Icon
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+import { StyleSheet, View } from "react-native";
 import { useIOSelector } from "../../../../store/hooks";
-import { itwIsWalletInstanceStatusFailureSelector } from "../../walletInstance/store/selectors";
 import { withWalletCategoryFilter } from "../../../wallet/utils";
+import { itwIsWalletInstanceStatusFailureSelector } from "../../walletInstance/store/selectors";
 
 /**
  * Component shown when it is not possible to retrieve the wallet instance status
@@ -26,7 +26,10 @@ export const ItwWalletNotAvailableBanner = withWalletCategoryFilter(
     }
 
     return (
-      <View style={styles.bannerContainer}>
+      <View
+        testID="itwWalletNotAvailableBannerTestID"
+        style={styles.bannerContainer}
+      >
         <Icon name="warningFilled" />
         <BodySmall style={styles.textCenter}>
           {I18n.t("features.itWallet.generic.walletNotAvailable.message")}

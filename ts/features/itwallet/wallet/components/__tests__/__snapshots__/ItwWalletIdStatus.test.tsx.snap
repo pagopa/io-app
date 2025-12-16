@@ -56,13 +56,13 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
         [
           {
             "borderCurve": "continuous",
-            "borderRadius": 16,
             "gap": 6,
             "overflow": "hidden",
             "padding": 16,
           },
           {
             "backgroundColor": "#F2F9FF",
+            "borderRadius": 16,
           },
         ]
       }
@@ -312,6 +312,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
         style={
           {
             "height": 0,
+            "pointerEvents": "none",
             "position": "absolute",
             "width": 0,
           }
@@ -707,13 +708,13 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpiring
         [
           {
             "borderCurve": "continuous",
-            "borderRadius": 16,
             "gap": 6,
             "overflow": "hidden",
             "padding": 16,
           },
           {
             "backgroundColor": "#F2F9FF",
+            "borderRadius": 16,
           },
         ]
       }
@@ -853,6 +854,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpiring
         style={
           {
             "height": 0,
+            "pointerEvents": "none",
             "position": "absolute",
             "width": 0,
           }
@@ -1248,13 +1250,13 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "valid" 1`] 
         [
           {
             "borderCurve": "continuous",
-            "borderRadius": 16,
             "gap": 6,
             "overflow": "hidden",
             "padding": 16,
           },
           {
             "backgroundColor": "#F2F9FF",
+            "borderRadius": 16,
           },
         ]
       }
@@ -1350,6 +1352,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "valid" 1`] 
         style={
           {
             "height": 0,
+            "pointerEvents": "none",
             "position": "absolute",
             "width": 0,
           }
