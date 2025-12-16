@@ -49,10 +49,6 @@ export const itwSetPidReissuingSurveyHidden = createStandardAction(
   "ITW_SET_PID_REISSUING_SURVEY_HIDDEN"
 )<boolean>();
 
-export const itwSetActivationBannerHidden = createStandardAction(
-  "ITW_SET_ACTIVATION_BANNER_HIDDEN"
-)<boolean>();
-
 export type ItwPreferencesActions =
   | ActionType<typeof itwCloseDiscoveryBanner>
   | ActionType<typeof itwFlagCredentialAsRequested>
@@ -65,5 +61,4 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwSetWalletUpgradeMDLDetailsBannerHidden>
   | ActionType<typeof itwFreezeSimplifiedActivationRequirements>
   | ActionType<typeof itwClearSimplifiedActivationRequirements>
-  | ActionType<typeof itwSetPidReissuingSurveyHidden>
-  | ActionType<typeof itwSetActivationBannerHidden>;
+  | ActionType<typeof itwSetPidReissuingSurveyHidden>;

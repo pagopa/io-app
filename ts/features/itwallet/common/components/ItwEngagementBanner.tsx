@@ -20,17 +20,25 @@ import { ItwBrandedBox } from "./ItwBrandedBox";
 import { PoweredByItWalletText } from "./PoweredByItWalletText";
 
 type Props = {
+  // Content
   title: string;
   description: string;
   action: string;
-  onActionPress: () => void;
-  onClosePress: () => void;
+  dismissable?: boolean;
+  // Events
+  onPress: () => void;
+  onDismiss: () => void;
 };
 
-export const ItwEngagementBanner = (props: WithTestID<Props>) => {
-  const { testID, title, description, action, onActionPress, onClosePress } =
-    props;
-
+export const ItwEngagementBanner = ({
+  testID,
+  title,
+  description,
+  action,
+  dismissable,
+  onPress,
+  onDismiss
+}: WithTestID<Props>) => {
   const handleOnClosePress = useCallback(() => {
     Alert.alert(
       I18n.t("features.itWallet.engagementBanner.dismissAlert.title"),
@@ -47,11 +55,11 @@ export const ItwEngagementBanner = (props: WithTestID<Props>) => {
             "features.itWallet.engagementBanner.dismissAlert.confirm"
           ),
           style: "destructive",
-          onPress: onClosePress
+          onPress: onDismiss
         }
       ]
     );
-  }, [onClosePress]);
+  }, [onDismiss]);
 
   // Generates a complete fallbackAccessibilityLabel by concatenating the title, content, and action
   // if they are present. Removes markdown formatting characters like asterisks.
@@ -87,7 +95,7 @@ export const ItwEngagementBanner = (props: WithTestID<Props>) => {
       // A11y related props
       accessibilityLabel={accessibilityLabel}
       accessibilityRole={"button"}
-      onAccessibilityTap={onActionPress}
+      onAccessibilityTap={onPress}
     >
       <ItwBrandedBox borderRadius={8}>
         <ItWalletDeck width={105} height={145} style={styles.deck} />
@@ -96,13 +104,15 @@ export const ItwEngagementBanner = (props: WithTestID<Props>) => {
             <H4 color="black" style={styles.content}>
               {title}
             </H4>
-            <IconButton
-              testID="itwEngagementBannerCloseButtonTestID"
-              color="contrast"
-              accessibilityLabel="close"
-              icon="closeMedium"
-              onPress={handleOnClosePress}
-            />
+            {dismissable && (
+              <IconButton
+                testID="itwEngagementBannerCloseButtonTestID"
+                color="contrast"
+                accessibilityLabel="close"
+                icon="closeMedium"
+                onPress={handleOnClosePress}
+              />
+            )}
           </View>
           <View style={styles.content}>
             <IOMarkdown rules={markdownRules} content={description} />
@@ -114,7 +124,7 @@ export const ItwEngagementBanner = (props: WithTestID<Props>) => {
           testID="itwEngagementBannerActionButtonTestID"
           color="primary"
           label={action}
-          onPress={onActionPress}
+          onPress={onPress}
           fullWidth
         />
       </ItwBrandedBox>

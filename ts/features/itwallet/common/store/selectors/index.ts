@@ -12,7 +12,6 @@ import {
 } from "../../../lifecycle/store/selectors";
 import { itwIsWalletInstanceStatusFailureSelector } from "../../../walletInstance/store/selectors";
 import {
-  itwIsActivationBannerHiddenSelector,
   itwIsDiscoveryBannerHiddenSelector,
   itwIsL3EnabledSelector,
   itwIsWalletUpgradeMDLDetailsBannerHiddenSelector
@@ -134,14 +133,12 @@ export const itwShouldHideEidLifecycleAlert = (state: GlobalState): boolean =>
  * - The wallet is not offline
  * - The L3 feature flag is enabled
  * - The wallet is not valid (not yet active()
- * - The banner was not previously dismissed by the user
  */
 export const itwShouldRenderActivationBannerSelector = (state: GlobalState) =>
   isItwEnabledSelector(state) &&
   !offlineAccessReasonSelector(state) &&
   itwIsL3EnabledSelector(state) &&
-  !itwLifecycleIsValidSelector(state) &&
-  !itwIsActivationBannerHiddenSelector(state);
+  !itwLifecycleIsValidSelector(state);
 
 /**
  * Returns whether the new IT-Wallet upgrade banner should be rendered.
@@ -149,11 +146,9 @@ export const itwShouldRenderActivationBannerSelector = (state: GlobalState) =>
  * - The wallet is not offline
  * - The L3 feature flag is enabled
  * - The user does not already have a valid IT Wallet
- * - The banner was not previously dismissed by the user
  */
 export const itwShouldRenderUpgradeBannerSelector = (state: GlobalState) =>
   isItwEnabledSelector(state) &&
   !offlineAccessReasonSelector(state) &&
   itwIsL3EnabledSelector(state) &&
-  !itwShouldRenderNewItWalletSelector(state) &&
-  !itwIsActivationBannerHiddenSelector(state);
+  !itwShouldRenderNewItWalletSelector(state);

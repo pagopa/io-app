@@ -1,9 +1,8 @@
 import I18n from "i18next";
 import { View } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useIOSelector } from "../../../../store/hooks";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { itwSetActivationBannerHidden } from "../store/actions/preferences";
 import { itwShouldRenderActivationBannerSelector } from "../store/selectors";
 import { ItwEngagementBanner } from "./ItwEngagementBanner";
 
@@ -14,7 +13,6 @@ import { ItwEngagementBanner } from "./ItwEngagementBanner";
  */
 export const ItwActivationBanner = () => {
   const navigation = useIONavigation();
-  const dispatch = useIODispatch();
 
   const isBannerVisible = useIOSelector(
     itwShouldRenderActivationBannerSelector
@@ -24,14 +22,14 @@ export const ItwActivationBanner = () => {
     return null;
   }
 
-  const handleOnActionPress = () => {
+  const handleOnPress = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.ONBOARDING
     });
   };
 
-  const handleOnClosePress = () => {
-    dispatch(itwSetActivationBannerHidden(true));
+  const handleDismiss = () => {
+    // TODO implement banner dismissal logic
   };
 
   return (
@@ -42,8 +40,9 @@ export const ItwActivationBanner = () => {
           "features.itWallet.engagementBanner.activation.description"
         )}
         action={I18n.t("features.itWallet.engagementBanner.activation.action")}
-        onActionPress={handleOnActionPress}
-        onClosePress={handleOnClosePress}
+        onPress={handleOnPress}
+        onDismiss={handleDismiss}
+        dismissable={true}
       />
     </View>
   );

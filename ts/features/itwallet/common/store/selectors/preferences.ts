@@ -94,9 +94,3 @@ export const itwIsSimplifiedActivationRequired = (state: GlobalState) =>
  */
 export const itwIsPidReissuingSurveyHiddenSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.isPidReissuingSurveyHidden;
-
-/**
- * Selects the state that indicates whether the activation banner should be hidden.
- */
-export const itwIsActivationBannerHiddenSelector = (state: GlobalState) =>
-  state.features.itWallet.preferences.isActivationBannerHidden;

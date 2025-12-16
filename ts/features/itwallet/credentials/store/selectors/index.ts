@@ -282,3 +282,21 @@ export const itwCredentialsListByTypeSelector = (key: string) =>
       O.getOrElse<ReadonlyArray<StoredCredential>>(() => [])
     )
   );
+
+/**
+ * Returns whether the wallet has at least one credential that is expiring or expired.
+ *
+ * @param state - The global state.
+ * @returns Whether the wallet has at least one expiring or expired credential.
+ */
+export const itwHasExpiringCredentialsSelector = createSelector(
+  itwCredentialsSelector,
+  credentials => {
+    const statues = Object.values(credentials).map(credential =>
+      getCredentialStatus(credential)
+    );
+    return statues.some(
+      status => status === "jwtExpiring" || status === "jwtExpired"
+    );
+  }
+);

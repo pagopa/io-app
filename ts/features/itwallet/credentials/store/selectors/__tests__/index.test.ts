@@ -12,7 +12,8 @@ import {
   selectFiscalCodeFromEid,
   selectNameSurnameFromEid,
   itwCredentialsByTypeSelector,
-  itwCredentialsListByTypeSelector
+  itwCredentialsListByTypeSelector,
+  itwHasExpiringCredentialsSelector
 } from "../index";
 import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import {
@@ -359,5 +360,49 @@ describe("itwCredentialsListByTypeSelector", () => {
     expect(
       itwCredentialsListByTypeSelector(CredentialType.DRIVING_LICENSE)(state)
     ).toEqual([]);
+  });
+});
+
+describe("itwHasExpiringCredentialsSelector", () => {
+  it("should return true when there is at least one expiring credential", () => {
+    const state = getStateWithCredentials({
+      [mockedDisabilityCard.credentialId]: mockedDisabilityCard,
+      [mockedDrivingLicense.credentialId]: mockedDrivingLicense,
+      [mockedMdocDrivingLicense.credentialId]: mockedMdocDrivingLicense
+    });
+    expect(itwHasExpiringCredentialsSelector(state)).toEqual(true);
+  });
+
+  it("should return false when all credensials are valid", () => {
+    const state = getStateWithCredentials({
+      [mockedDisabilityCard.credentialId]: {
+        ...mockedDisabilityCard,
+        jwt: {
+          issuedAt: "2024-09-30T07:32:49.000Z",
+          expiration: new Date(
+            new Date().setFullYear(new Date().getFullYear() + 1)
+          ).toISOString()
+        }
+      },
+      [mockedDrivingLicense.credentialId]: {
+        ...mockedDrivingLicense,
+        jwt: {
+          issuedAt: "2024-09-30T07:32:49.000Z",
+          expiration: new Date(
+            new Date().setFullYear(new Date().getFullYear() + 1)
+          ).toISOString()
+        }
+      },
+      [mockedMdocDrivingLicense.credentialId]: {
+        ...mockedMdocDrivingLicense,
+        jwt: {
+          issuedAt: "2024-09-30T07:32:49.000Z",
+          expiration: new Date(
+            new Date().setFullYear(new Date().getFullYear() + 1)
+          ).toISOString()
+        }
+      }
+    });
+    expect(itwHasExpiringCredentialsSelector(state)).toEqual(false);
   });
 });
