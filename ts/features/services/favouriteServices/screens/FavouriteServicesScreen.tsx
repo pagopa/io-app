@@ -48,7 +48,7 @@ export const FavouriteServicesScreen = () => {
         }}
       />
     );
-  }, [present, sortedServices]);
+  }, [present, sortedServices.length]);
 
   const ListEmptyComponent = useCallback(
     () => (
