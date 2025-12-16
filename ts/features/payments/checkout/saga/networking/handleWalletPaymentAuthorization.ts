@@ -13,29 +13,46 @@ import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { PaymentClient } from "../../../common/api/client";
 import { withPaymentsSessionToken } from "../../../common/utils/withPaymentsSessionToken";
 import { paymentsStartPaymentAuthorizationAction } from "../../store/actions/networking";
+import { CardsDetailTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/CardsDetailType";
+
+type WalletAuthorizationAction = ActionType<
+  (typeof paymentsStartPaymentAuthorizationAction)["request"]
+>;
+
+const buildAuthorizationDetailsBody = (
+  payload: WalletAuthorizationAction["payload"]
+): AuthorizationDetails => {
+  if (payload.orderId !== undefined) {
+    return {
+      detailType: CardsDetailTypeEnum.cards,
+      orderId: payload.orderId,
+      paymentMethodId: payload.paymentMethodId
+    };
+  }
+
+  if (payload.walletId !== undefined) {
+    return {
+      detailType: WalletDetailTypeEnum.wallet,
+      walletId: payload.walletId
+    };
+  }
+
+  return {
+    detailType:
+      payload.paymentMethodManagement ===
+      PaymentMethodManagementTypeEnum.REDIRECT
+        ? RedirectDetailTypeEnum.redirect
+        : ApmDetailTypeEnum.apm,
+    paymentMethodId: payload.paymentMethodId
+  };
+};
 
 export function* handleWalletPaymentAuthorization(
   requestTransactionAuthorization: PaymentClient["requestTransactionAuthorizationForIO"],
-  action: ActionType<
-    (typeof paymentsStartPaymentAuthorizationAction)["request"]
-  >
+  action: WalletAuthorizationAction
 ) {
   try {
-    const details: AuthorizationDetails =
-      action.payload.walletId !== undefined
-        ? {
-            detailType: WalletDetailTypeEnum.wallet,
-            walletId: action.payload.walletId
-          }
-        : {
-            detailType:
-              action.payload.paymentMethodManagement ===
-              PaymentMethodManagementTypeEnum.REDIRECT
-                ? RedirectDetailTypeEnum.redirect
-                : ApmDetailTypeEnum.apm,
-            paymentMethodId: action.payload.paymentMethodId
-          };
-
+    const details = buildAuthorizationDetailsBody(action.payload);
     const language = getLanguageEnumFromPreferredLocale();
 
     const requestBody: RequestAuthorizationRequest = {

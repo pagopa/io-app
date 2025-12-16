@@ -1,7 +1,8 @@
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { ServiceType } from "../types";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 
-const DEFAULT_SERVICE_ID = "serviceId";
+const DEFAULT_SERVICE_ID = "serviceId" as ServiceId;
 const DEFAULT_FISCAL_CODE = "12345678901" as OrganizationFiscalCode;
 
 export const createMockFavouriteService = (

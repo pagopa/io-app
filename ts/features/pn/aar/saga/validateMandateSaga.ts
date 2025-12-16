@@ -1,7 +1,6 @@
 import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { call, put, select } from "typed-redux-saga/macro";
-import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../types/SessionToken";
 import { SagaCallReturnType } from "../../../../types/utils";
@@ -13,46 +12,58 @@ import {
 } from "../analytics";
 import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
-import { currentAARFlowData } from "../store/selectors";
 import {
   AARFlowState,
   SendAARFailurePhase,
   sendAARFlowStates
 } from "../utils/stateUtils";
 
-const sendAARFailurePhase: SendAARFailurePhase = "Fetch QRCode";
+const sendAARFailurePhase: SendAARFailurePhase = "Validate Mandate";
 
-export function* fetchAARQrCodeSaga(
-  fetchQRCode: SendAARClient["aarQRCodeCheck"],
+export function* validateMandateSaga(
+  acceptMandate: SendAARClient["acceptAARMandate"],
   sessionToken: SessionToken,
   action: ReturnType<typeof setAarFlowState>
 ) {
-  const currentState = yield* select(currentAARFlowData);
-  if (currentState.type !== sendAARFlowStates.fetchingQRData) {
+  if (action.payload.type !== sendAARFlowStates.validatingMandate) {
     yield* call(
       trackSendAARFailure,
       sendAARFailurePhase,
-      `Called in wrong state (${currentState.type})`
+      `Called in wrong state (${action.payload.type})`
     );
     return;
   }
 
-  const { qrCode } = currentState;
+  const {
+    signedVerificationCode,
+    nisData,
+    mrtdData,
+    mandateId,
+    iun,
+    recipientInfo
+  } = action.payload;
   const isSendUATEnvironment = yield* select(isPnTestEnabledSelector);
 
   try {
-    const fetchQrRequest = fetchQRCode({
+    const acceptMandateRequest = acceptMandate({
       Bearer: `Bearer ${sessionToken}`,
       body: {
-        aarQrCodeValue: qrCode
+        nisData: {
+          nis: nisData.nis,
+          pub_key: nisData.publicKey,
+          sod: nisData.sod
+        },
+        signedNonce: signedVerificationCode,
+        mrtdData
       },
-      isTest: isSendUATEnvironment
+      isTest: isSendUATEnvironment,
+      mandateId
     });
     const result = (yield* call(
       withRefreshApiCall,
-      fetchQrRequest,
+      acceptMandateRequest,
       action
-    )) as unknown as SagaCallReturnType<typeof fetchQRCode>;
+    )) as SagaCallReturnType<typeof acceptMandate>;
 
     if (E.isLeft(result)) {
       throw new Error(
@@ -62,8 +73,7 @@ export function* fetchAARQrCodeSaga(
 
     const { status, value } = result.right;
     switch (status) {
-      case 200:
-        const { iun, recipientInfo, mandateId } = value;
+      case 204:
         const nextState: AARFlowState = {
           type: sendAARFlowStates.fetchingNotificationData,
           iun,
@@ -80,23 +90,7 @@ export function* fetchAARQrCodeSaga(
           "Fast login expiration"
         );
         return;
-
-      case 403:
-        const isDelegationEnabled = yield* select(
-          isAarInAppDelegationRemoteEnabledSelector
-        );
-        const stateToPut = isDelegationEnabled
-          ? sendAARFlowStates.notAddressee
-          : sendAARFlowStates.notAddresseeFinal;
-        const notAddresseeState: AARFlowState = {
-          type: stateToPut,
-          iun: value.iun,
-          recipientInfo: { ...value.recipientInfo },
-          qrCode
-        };
-        yield* put(setAarFlowState(notAddresseeState));
-        return;
-
+      // TODO: [IOCOM-2844] Map 400 and 422 errors
       default:
         const reason = `HTTP request failed (${aarProblemJsonAnalyticsReport(
           status,
@@ -105,7 +99,7 @@ export function* fetchAARQrCodeSaga(
         yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
         const errorState: AARFlowState = {
           type: sendAARFlowStates.ko,
-          previousState: { ...currentState },
+          previousState: { ...action.payload },
           ...(value !== undefined && { error: value }),
           debugData: {
             phase: sendAARFailurePhase,
@@ -121,7 +115,7 @@ export function* fetchAARQrCodeSaga(
     yield* put(
       setAarFlowState({
         type: sendAARFlowStates.ko,
-        previousState: { ...currentState },
+        previousState: { ...action.payload },
         debugData: {
           phase: sendAARFailurePhase,
           reason
