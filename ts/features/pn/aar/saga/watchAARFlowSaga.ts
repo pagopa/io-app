@@ -16,10 +16,12 @@ import { sendAARFlowStates } from "../utils/stateUtils";
 import { initiateAarFlowSaga } from "./initiateAarFlowSaga";
 import { fetchAarDataSaga } from "./fetchNotificationDataSaga";
 import { fetchAARQrCodeSaga } from "./fetchQrCodeSaga";
+import { validateMandateSaga } from "./validateMandateSaga";
 import {
   testAarAcceptMandateSaga,
   testAarCreateMandateSaga
 } from "./testSendNisMrtdSaga";
+import { createAarMandateSaga } from "./createAarMandateSaga";
 
 function* aarFlowMasterSaga(
   sendAARClient: SendAARClient,
@@ -41,6 +43,22 @@ function* aarFlowMasterSaga(
       yield* call(
         fetchAarDataSaga,
         sendAARClient.getAARNotification,
+        sessionToken,
+        action
+      );
+      break;
+    case sendAARFlowStates.creatingMandate:
+      yield* call(
+        createAarMandateSaga,
+        sendAARClient.createAARMandate,
+        sessionToken,
+        action
+      );
+      break;
+    case sendAARFlowStates.validatingMandate:
+      yield* call(
+        validateMandateSaga,
+        sendAARClient.acceptAARMandate,
         sessionToken,
         action
       );

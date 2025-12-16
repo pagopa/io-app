@@ -59,8 +59,7 @@ const LimitWarningScreenContent = ({
 };
 
 const LimitReachedScreenContent = () => {
-  const handleAppRestart = useAppRestartAction("banner");
-
+  const handleAppRestart = useAppRestartAction("access_expired_screen");
   useFocusEffect(trackItwOfflineAccessExpired);
 
   return (

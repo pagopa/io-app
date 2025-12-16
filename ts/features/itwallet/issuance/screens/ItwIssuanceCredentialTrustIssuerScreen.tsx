@@ -106,9 +106,7 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
   );
 
   if (isLoading) {
-    return (
-      <LoadingScreenContent contentTitle={I18n.t("global.genericWaiting")} />
-    );
+    return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
   }
 
   return pipe(

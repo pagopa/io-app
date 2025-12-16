@@ -2559,12 +2559,6 @@
           "title": "Abilita il metodo per effettuare pagamenti in app",
           "subtitle": "Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”."
         },
-        "PAYMENT_METHODS_NOT_AVAILABLE": {
-          "title": "Vuoi pagare con carta? Aggiungila ora!",
-          "subtitle": "Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.",
-          "primaryAction": "Aggiungi carta",
-          "secondaryAction": "Usa altri metodi"
-        },
         "PAYMENT_METHODS_EXPIRED": {
           "title": "Your card is expired!",
           "subtitle": "Remove the card and add a new one.\nIt will be saved in your Wallet, making it easier for you to pay next time.",
@@ -2986,7 +2980,8 @@
           }
         }
       },
-      "searchLink": "Search all available local services"
+      "searchLink": "Search all available local services",
+      "favourites": "Favourite services"
     },
     "institution": {
       "failure": {
@@ -3058,12 +3053,22 @@
       }
     },
     "favouriteServices": {
+      "title": "My favourites",
       "add": "Add to favourites",
       "remove": "Remove from favourites",
       "toasts": {
         "added": "Added to favourites!",
         "removed": "Removed from favourites!",
         "limitReached": "Cannot add service to favourites because you have reached the maximum limit."
+      },
+      "emptyList": {
+        "title": "Here you will see the list of your favorite services",
+        "subtitle": "Start searching and save the services you use the most to your favorites.",
+        "searchAction": "Start searching"
+      },
+      "removeAlert": {
+        "title": "Do you want to remove the service from favorites?",
+        "confirm": "Yes, remove"
       }
     }
   },
@@ -4301,8 +4306,6 @@
     },
     "wallet": {
       "home": {
-        "emptyMessage": "Custodisci qui i tuoi metodi di pagamento, Carta Giovani Nazionale, bonus e sconti.",
-        "cta": "Aggiungi al Portafoglio",
         "toast": {
           "newMethod": "Elemento aggiunto!"
         },

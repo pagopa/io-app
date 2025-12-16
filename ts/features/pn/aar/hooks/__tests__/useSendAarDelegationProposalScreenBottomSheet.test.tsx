@@ -13,10 +13,16 @@ import { useSendAarDelegationProposalScreenBottomSheet } from "../useSendAarDele
 
 const mockDispatch = jest.fn();
 const bottomSheet = jest.spyOn(BS_HOOK, "useIOBottomSheetModal");
+const identificationSuccessMock = jest.fn();
+const identificationCancelMock = jest.fn();
 
 const getBsProps = () => {
   renderHook(() =>
-    useSendAarDelegationProposalScreenBottomSheet("mario rossi")
+    useSendAarDelegationProposalScreenBottomSheet({
+      citizenName: "Mario Rossi",
+      onIdentificationSuccess: identificationSuccessMock,
+      onIdentificationCancel: identificationCancelMock
+    })
   );
   expect(bottomSheet).toHaveBeenCalledTimes(1);
   const callParameters = bottomSheet.mock.calls;
@@ -61,6 +67,12 @@ describe("useSendAarDelegationProposalScreenBottomSheet", () => {
     expect(mockDispatch).toHaveBeenCalledTimes(1);
     const dispatchArgs = mockDispatch.mock.calls[0][0];
     expect(dispatchArgs.type).toEqual(getType(identificationRequest));
+    const onCancelCallback =
+      dispatchArgs.payload.identificationCancelData.onCancel;
+    expect(onCancelCallback).toBe(identificationCancelMock);
+    const onSuccessCallback =
+      dispatchArgs.payload.identificationSuccessData.onSuccess;
+    expect(onSuccessCallback).toBe(identificationSuccessMock);
   });
 });
 const renderComponent = (ComponentToRender: ComponentType<any>) => {
