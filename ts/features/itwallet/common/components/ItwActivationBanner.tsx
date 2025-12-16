@@ -7,6 +7,11 @@ import { itwSetActivationBannerHidden } from "../store/actions/preferences";
 import { itwShouldRenderActivationBannerSelector } from "../store/selectors";
 import { ItwEngagementBanner } from "./ItwEngagementBanner";
 
+/**
+ * Banner displayed to users which are able to activate IT-Wallet.
+ * If the user taps on the action button, they will be redirected to the IT-Wallet credential onboarding screen.
+ * The wallet activiation si contextual to the credential issuance flow.
+ */
 export const ItwActivationBanner = () => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();

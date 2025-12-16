@@ -97,6 +97,7 @@ export const ItwEngagementBanner = (props: WithTestID<Props>) => {
               {title}
             </H4>
             <IconButton
+              testID="itwEngagementBannerCloseButtonTestID"
               color="contrast"
               accessibilityLabel="close"
               icon="closeMedium"
@@ -110,6 +111,7 @@ export const ItwEngagementBanner = (props: WithTestID<Props>) => {
         </VStack>
         <VSpacer size={8} />
         <IOButton
+          testID="itwEngagementBannerActionButtonTestID"
           color="primary"
           label={action}
           onPress={onActionPress}
