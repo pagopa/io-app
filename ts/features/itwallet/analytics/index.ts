@@ -207,8 +207,12 @@ type TrackItWalletCieCardReadingUnexpectedFailure = {
 };
 
 type TrackGetChallengeInfoFailure = {
-  ITW_ID_method: "spid" | "cieId";
+  ITW_ID_method: Exclude<ItwIdMethod, "ciePin">;
   reason?: string;
+};
+
+type TrackCieCanParams = {
+  ITW_ID_method: ItwIdMethod;
 };
 
 export type CieCardVerifyFailureReason =
@@ -558,6 +562,20 @@ export const trackItwOfflineAccessExpired = () => {
 export const trackItwSurveyRequest = (properties: TrackQualtricsSurvey) => {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.SURVEY_REQUEST,
+    buildEventProperties("UX", "screen_view", properties)
+  );
+};
+
+export const trackItwIdCieCanTutorialCan = (properties: TrackCieCanParams) => {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_ID_CIE_CAN_TUTORIAL_CAN,
+    buildEventProperties("UX", "screen_view", properties)
+  );
+};
+
+export const trackItwIdEnterCan = (properties: TrackCieCanParams) => {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_ID_ENTER_CAN,
     buildEventProperties("UX", "screen_view", properties)
   );
 };
@@ -1361,7 +1379,7 @@ export const trackItwRemoteStart = () => {
 };
 
 export const trackItwIdAuthenticationCompleted = (
-  ITW_ID_method: "spid" | "cieId"
+  ITW_ID_method: Exclude<ItwIdMethod, "ciePin">
 ) => {
   void mixpanelTrack(
     ITW_TECH_EVENTS.ITW_ID_AUTHENTICATION_COMPLETED,

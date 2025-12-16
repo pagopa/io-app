@@ -25,6 +25,8 @@ import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventSc
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
 import { isCieLoginUatEnabledSelector } from "../../../../authentication/login/cie/store/selectors";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { selectIdentification } from "../../../machine/eid/selectors";
+import { trackItwIdEnterCan } from "../../../analytics";
 
 const CIE_CAN_LENGTH = 6;
 
@@ -33,6 +35,9 @@ export const ItwCieCanScreen = () => {
 
   const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const identification =
+    ItwEidIssuanceMachineContext.useSelector(selectIdentification);
+
   const [can, setCan] = useState("");
   const canPadViewRef = useRef<View>(null);
 
@@ -50,6 +55,14 @@ export const ItwCieCanScreen = () => {
     useCallback(() => {
       setAccessibilityFocus(canPadViewRef, 300 as Millisecond);
     }, [])
+  );
+
+  useFocusEffect(
+    useCallback(() => {
+      if (identification) {
+        trackItwIdEnterCan({ ITW_ID_method: identification.mode });
+      }
+    }, [identification])
   );
 
   useHeaderSecondLevel({
