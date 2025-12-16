@@ -211,13 +211,13 @@ type TrackGetChallengeInfoFailure = {
   reason?: string;
 };
 
-type TrackCieCanParams = {
-  ITW_ID_method: ItwIdMethod;
+type TrackCieCanProperties = {
+  ITW_ID_method?: ItwIdMethod;
 };
 
-type TrackItwCiePinTutorialCie = {
+type TrackCieScreenProperties = {
   itw_flow: ItwFlow;
-  ITW_ID_method: ItwIdMethod;
+  ITW_ID_method?: ItwIdMethod;
 };
 
 export type CieCardVerifyFailureReason =
@@ -431,10 +431,12 @@ export function trackItWalletCieNfcActivation(itw_flow: ItwFlow) {
   );
 }
 
-export function trackItWalletCieCardReading(itw_flow: ItwFlow) {
+export function trackItWalletCieCardReading(
+  properties: TrackCieScreenProperties
+) {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_CIE_CARD_READING,
-    buildEventProperties("UX", "screen_view", { itw_flow })
+    buildEventProperties("UX", "screen_view", properties)
   );
 }
 
@@ -510,7 +512,7 @@ export function trackItwCieInfoBottomSheet(
 }
 
 export function trackItwCiePinTutorialCie(
-  properties: TrackItwCiePinTutorialCie
+  properties: TrackCieScreenProperties
 ) {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_CIE_PIN_TUTORIAL_CIE,
@@ -573,14 +575,16 @@ export const trackItwSurveyRequest = (properties: TrackQualtricsSurvey) => {
   );
 };
 
-export const trackItwIdCieCanTutorialCan = (properties: TrackCieCanParams) => {
+export const trackItwIdCieCanTutorialCan = (
+  properties: TrackCieCanProperties
+) => {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_ID_CIE_CAN_TUTORIAL_CAN,
     buildEventProperties("UX", "screen_view", properties)
   );
 };
 
-export const trackItwIdEnterCan = (properties: TrackCieCanParams) => {
+export const trackItwIdEnterCan = (properties: TrackCieCanProperties) => {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_ID_ENTER_CAN,
     buildEventProperties("UX", "screen_view", properties)

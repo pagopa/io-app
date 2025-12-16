@@ -22,12 +22,10 @@ export const ItwCiePreparationNfcScreen = () => {
 
   useFocusEffect(
     useCallback(() => {
-      if (identification) {
-        trackItwCiePinTutorialCie({
-          itw_flow,
-          ITW_ID_method: identification.mode
-        });
-      }
+      trackItwCiePinTutorialCie({
+        itw_flow,
+        ITW_ID_method: identification?.mode
+      });
     }, [itw_flow, identification])
   );
 

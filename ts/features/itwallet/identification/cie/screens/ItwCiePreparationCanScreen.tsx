@@ -15,9 +15,7 @@ export const ItwCiePreparationCanScreen = () => {
 
   useFocusEffect(
     useCallback(() => {
-      if (identification) {
-        trackItwIdCieCanTutorialCan({ ITW_ID_method: identification.mode });
-      }
+      trackItwIdCieCanTutorialCan({ ITW_ID_method: identification?.mode });
     }, [identification])
   );
 

@@ -59,9 +59,7 @@ export const ItwCieCanScreen = () => {
 
   useFocusEffect(
     useCallback(() => {
-      if (identification) {
-        trackItwIdEnterCan({ ITW_ID_method: identification.mode });
-      }
+      trackItwIdEnterCan({ ITW_ID_method: identification?.mode });
     }, [identification])
   );
 
