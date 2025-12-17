@@ -71,7 +71,7 @@ export const SendAarActivateNfcScreen = ({
               );
             },
             accessibilityLabel: i18n.t("global.buttons.close"),
-            testID: "header-close"
+            testID: "closeActionID"
           }}
         />
       )
