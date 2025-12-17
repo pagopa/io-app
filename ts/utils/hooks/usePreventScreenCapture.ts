@@ -9,10 +9,6 @@ const activeTags: Set<string> = new Set();
 const preventScreenCapture = (tag: string) => {
   if (!activeTags.has(tag)) {
     activeTags.add(tag);
-    console.log(
-      "Preventing screen capture, active tags:",
-      Array.from(activeTags)
-    );
     RNScreenshotPrevent.enableSecureView();
   }
 };
@@ -20,7 +16,6 @@ const preventScreenCapture = (tag: string) => {
 const allowScreenCapture = (tag: string) => {
   activeTags.delete(tag);
   if (activeTags.size === 0) {
-    console.log("Allowing screen capture");
     RNScreenshotPrevent.disableSecureView();
   }
 };
@@ -43,9 +38,9 @@ export function usePreventScreenCapture(key?: string) {
 
   useFocusEffect(
     useCallback(() => {
-      // if (isDevEnv) {
-      //   return;
-      // }
+      if (isDevEnv) {
+        return;
+      }
 
       clearTimeout(timeoutRef.current);
 

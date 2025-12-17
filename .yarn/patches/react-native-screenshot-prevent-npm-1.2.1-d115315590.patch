@@ -1431,6 +1431,24 @@ index bfbde95cd58cfd922419b3af59d5a152b69dbde8..f353e85e82ba7480352036ef35dfde86
 -export declare const addListener: (fn: FN) => void;
 +export declare const addListener: (fn: FN) => Return;
  export default RNScreenshotPrevent;
+diff --git a/package.json b/package.json
+index 42c26ead07c8d2c70443aa312fe0502c4dffd4be..f1262b359de295d2005b5b0657d2b69217ceaa0e 100644
+--- a/package.json
++++ b/package.json
+@@ -127,6 +127,12 @@
+   "codegenConfig": {
+     "name": "RNScreenshotPreventSpec",
+     "type": "modules",
+-    "jsSrcsDir": "src"
++    "jsSrcsDir": "src",
++    "android": {
++      "javaPackageName": "com.killserver.screenshotprev"
++    },
++    "ios": {  
++      "libraryName": "RNScreenshotPrevent"
++    }
+   }
+ }
 diff --git a/src/NativeRNScreenshotPrevent.ts b/src/NativeRNScreenshotPrevent.ts
 new file mode 100644
 index 0000000000000000000000000000000000000000..e0c2ae2ed44e86e68e750e701baf9df841e5a91f
