@@ -2,18 +2,24 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
-import { FavouriteServiceType } from "../../../favouriteServices/types";
+import type {
+  FavouriteServicesSortType,
+  FavouriteServiceType
+} from "../../../favouriteServices/types";
 import {
   addFavouriteServiceSuccess,
-  removeFavouriteService
+  removeFavouriteService,
+  setFavouriteServicesSortType
 } from "../../../favouriteServices/store/actions";
 
 export type FavouriteServicesState = {
   dataById: Record<string, FavouriteServiceType>;
+  sortType: FavouriteServicesSortType;
 };
 
 const INITIAL_STATE: FavouriteServicesState = {
-  dataById: {}
+  dataById: {},
+  sortType: "addedAt_desc"
 };
 
 const reducer = (
@@ -38,6 +44,12 @@ const reducer = (
       return {
         ...state,
         dataById: rest
+      };
+    }
+    case getType(setFavouriteServicesSortType): {
+      return {
+        ...state,
+        sortType: action.payload
       };
     }
     default:
