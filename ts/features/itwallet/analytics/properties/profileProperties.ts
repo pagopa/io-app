@@ -14,7 +14,6 @@ export const updateItwProfileProperties = (state: GlobalState) => {
   }
 
   const props = buildItwBaseProperties(state);
-  console.log("Setting ITW profile properties:", props);
   getPeople()?.set(props);
 };
 
@@ -25,6 +24,5 @@ export const forceUpdateItwProfileProperties = (
     return;
   }
 
-  console.log("Force setting ITW profile properties:", partialProps);
   getPeople()?.set(partialProps);
 };

@@ -45,11 +45,6 @@ export const updateItwAnalyticsProperties = (state: GlobalState) => {
   const baseProps = buildItwBaseProperties(state);
   const superProps = buildItwSuperProperties(state);
 
-  console.log("Updating ITW analytics properties", {
-    baseProps,
-    superProps
-  });
-
   updateItwProfilePropertiesWithProps(baseProps);
   updateItwSuperPropertiesWithProps({
     ...baseProps,

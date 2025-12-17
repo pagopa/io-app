@@ -56,4 +56,6 @@ export function* watchItwOfflineSaga(): SagaIterator {
   yield* fork(watchItwEnvironment);
   // Handle offline access counter increment and reset
   yield* fork(watchItwOfflineAccess);
+  // Sync ITW analytics properties
+  yield* fork(syncItwAnalyticsProperties);
 }

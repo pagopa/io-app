@@ -19,14 +19,10 @@ export const updateItwSuperProperties = (state: GlobalState) => {
   if (!isMixpanelInstanceInitialized()) {
     return;
   }
-  console.log(
-    "Mixpanel instance is initialized for ITW super properties update."
-  );
 
   const baseProps = buildItwBaseProperties(state);
   const superProps = buildItwSuperProperties(state);
 
-  console.log("Registering ITW super properties:", baseProps, superProps);
   registerSuperProperties({
     ...baseProps,
     ...superProps
@@ -40,7 +36,6 @@ export const forceUpdateItwSuperProperties = (
     return;
   }
 
-  console.log("Force registering ITW super properties:", partialProps);
   registerSuperProperties(partialProps);
 };
 
