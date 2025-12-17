@@ -90,7 +90,7 @@ describe("stateUtils", () => {
       ],
       [
         sendAARFlowStates.validatingMandate,
-        [sendAARFlowStates.displayingNotificationData, sendAARFlowStates.ko]
+        [sendAARFlowStates.fetchingNotificationData, sendAARFlowStates.ko]
       ]
     ];
 

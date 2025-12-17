@@ -3,7 +3,6 @@ import {
   HeaderSecondLevel,
   hexToRgba,
   IOButton,
-  IOButtonBlockSpecificProps,
   IOButtonLinkSpecificProps,
   IOColors,
   IOSpacer,
@@ -39,16 +38,12 @@ import Animated, {
 import { useFooterActionsMargin } from "../../hooks/useFooterActionsMargin";
 import { WithTestID } from "../../types/WithTestID";
 import { useIOAlertVisible } from "../StatusMessages/IOAlertVisibleContext";
-
-type ButtonBlockProps = Omit<
-  IOButtonBlockSpecificProps,
-  "fullWidth" | "variant" | "color"
->;
+import { ButtonBlockProps } from "./utils/buttons";
 
 type ButtonLinkProps = Omit<IOButtonLinkSpecificProps, "color" | "variant">;
 
 export type IOScrollViewRevealActions = {
-  primary: ButtonBlockProps;
+  primary: Omit<ButtonBlockProps, "color">;
   anchor: ButtonLinkProps;
 };
 

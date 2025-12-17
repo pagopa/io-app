@@ -2559,12 +2559,6 @@
           "title": "Abilita il metodo per effettuare pagamenti in app",
           "subtitle": "Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”."
         },
-        "PAYMENT_METHODS_NOT_AVAILABLE": {
-          "title": "Vuoi pagare con carta? Aggiungila ora!",
-          "subtitle": "Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.",
-          "primaryAction": "Aggiungi carta",
-          "secondaryAction": "Usa altri metodi"
-        },
         "PAYMENT_METHODS_EXPIRED": {
           "title": "La tua carta è scaduta!",
           "subtitle": "Rimuovi la carta e aggiungine una nuova.\nVerrà salvata nel Portafoglio, così la prossima volta potrai pagare più facilmente.",
@@ -3062,6 +3056,7 @@
       "title": "I miei preferiti",
       "add": "Aggiungi ai preferiti",
       "remove": "Rimuovi dai preferiti",
+      "sortButton": "Ordina",
       "toasts": {
         "added": "Aggiunto ai preferiti!",
         "removed": "Rimosso dai preferiti!",
@@ -3071,6 +3066,19 @@
         "title": "Qui vedrai la lista dei tuoi servizi preferiti",
         "subtitle": "Inizia la ricerca e salva tra i preferiti i servizi che usi di più.",
         "searchAction": "Inizia la ricerca"
+      },
+      "removeAlert": {
+        "title": "Vuoi rimuovere il servizio dai preferiti?",
+        "confirm": "Sì, rimuovi"
+      },
+      "bottomSheet": {
+        "title": "Ordina la lista",
+        "a11y": "Ordina i servizi preferiti",
+        "content": {
+          "addedAt_desc": "Dal più recente",
+          "name_asc": "Per nome (A-Z)",
+          "addedAt_asc": "Dal primo aggiunto"
+        }
       }
     }
   },
@@ -3603,6 +3611,7 @@
         "navigationTitle": "Agevolazioni",
         "screenTitle": "Scopri le opportunità",
         "merchantsAll": "Tutti i partner",
+        "a11yTitle": "Categoria: {{categoryName}}",
         "tabs": {
           "perInitiative": "Per categoria",
           "perMerchant": "Per partner",
@@ -4367,8 +4376,14 @@
     },
     "wallet": {
       "home": {
-        "emptyMessage": "Custodisci qui i tuoi metodi di pagamento, Carta Giovani Nazionale, bonus e sconti.",
-        "cta": "Aggiungi al Portafoglio",
+        "screen": {
+          "legacy": {
+            "emptyMessage": "Custodisci qui i tuoi metodi di pagamento, Carta Giovani Nazionale, bonus e sconti.",
+            "cta": "Aggiungi al Portafoglio"
+          },
+          "emptyMessage": "La tua Patente di guida, la tua Tessera Sanitaria e altri documenti digitali appariranno qui!",
+          "cta": "Aggiungi un documento"
+        },
         "toast": {
           "newMethod": "Elemento aggiunto!"
         },
