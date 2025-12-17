@@ -6,7 +6,7 @@ on:
     - cron:  '0 03 * * *'
 jobs:
   pagopa_specs_diff:
-    name: "Check PagoPA API specs alignment"
+    name: Check PagoPA API specs alignment
     runs-on: ubuntu-latest
     environment: dev
     steps:
@@ -20,7 +20,7 @@ jobs:
         run: ./scripts/pagopa_api_check.sh
         shell: bash
   io_check_uris:
-    name: "Check URIs validity in app"
+    name: Check URIs validity in app
     runs-on: ubuntu-latest
     environment: dev
     steps:
@@ -38,7 +38,7 @@ jobs:
           pipenv install
           pipenv run python3 check_urls.py
   io_check_cie_button_exists_ios:
-    name: "Check that CIE button exists on iOS"
+    name: Check that CIE button exists on iOS
     runs-on: ubuntu-latest
     environment: dev
     steps:
