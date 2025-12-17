@@ -14,7 +14,7 @@ export const updateItwProfileProperties = (state: GlobalState) => {
   }
 
   const props = buildItwBaseProperties(state);
-  
+
   getPeople()?.set(props);
 };
 
