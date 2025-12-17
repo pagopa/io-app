@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.22.0-canary.7816](https://github.com/pagopa/io-app/compare/3.22.0-rc.4...3.22.0-canary.7816) (2025-12-17)
+
+
+### Features
+
+* add @notifee/react-native dependency to yarn.lock ([40cfce8](https://github.com/pagopa/io-app/commit/40cfce84bd29b418c0bfec5c9020dfab38c562be))
+* Add mock implementation for Notifee notifications ([915e6c3](https://github.com/pagopa/io-app/commit/915e6c30d6d179191549358afa4ef4f85f959ec2))
+* Add Notifee integration for scheduling notifications ([c5182ae](https://github.com/pagopa/io-app/commit/c5182ae699bec636d69ae7b332bb6eab92f193b9))
+* Update notification scheduling to 5 minutes and improve alert messages ([3981fa8](https://github.com/pagopa/io-app/commit/3981fa8a03b87547fffdc023271ac39dd07abba2))
+
 ## [3.22.0-rc.4](https://github.com/pagopa/io-app/compare/3.22.0-rc.3...3.22.0-rc.4) (2025-12-16)
 
 
