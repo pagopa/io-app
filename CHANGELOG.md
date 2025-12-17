@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.22.0-rc.4](https://github.com/pagopa/io-app/compare/3.22.0-rc.3...3.22.0-rc.4) (2025-12-16)
+
+
+### Features
+
+* [[IOBP-324](https://pagopa.atlassian.net/browse/IOBP-324),[IOBP-315](https://pagopa.atlassian.net/browse/IOBP-315)] add card contextual onboarding payment ([#7679](https://github.com/pagopa/io-app/issues/7679)) ([8ef6575](https://github.com/pagopa/io-app/commit/8ef6575af5d847b1c5e82663e38182d67a44c149))
+* [[IOPAE-2301](https://pagopa.atlassian.net/browse/IOPAE-2301)] Add sorting for favorite services ([#7714](https://github.com/pagopa/io-app/issues/7714)) ([d3542d8](https://github.com/pagopa/io-app/commit/d3542d84c3eec8161c5414294398a22b26bd9530))
+
+
+### Bug Fixes
+
+* [[IOBP-2390](https://pagopa.atlassian.net/browse/IOBP-2390)] CGN header announcement category name ([#7713](https://github.com/pagopa/io-app/issues/7713)) ([4dd917f](https://github.com/pagopa/io-app/commit/4dd917f0de2d1ad1aed54da60f0dbf73365fd2ac))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-3312](https://pagopa.atlassian.net/browse/SIW-3312)] Add credential introduction mixpanel tracking ([#7707](https://github.com/pagopa/io-app/issues/7707)) ([d3fef73](https://github.com/pagopa/io-app/commit/d3fef73bd824c288b122b605769c95e6fe09adf9))
+
 ## [3.22.0-rc.3](https://github.com/pagopa/io-app/compare/3.22.0-rc.2...3.22.0-rc.3) (2025-12-15)
 
 

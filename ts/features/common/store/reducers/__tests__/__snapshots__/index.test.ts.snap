@@ -372,6 +372,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
     "favouriteServices": {
       "dataById": {},
+      "sortType": "addedAt_desc",
     },
     "home": {
       "featuredInstitutions": {
