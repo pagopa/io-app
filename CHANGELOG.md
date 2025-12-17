@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.22.0-canary.7853](https://github.com/pagopa/io-app/compare/3.22.0-rc.4...3.22.0-canary.7853) (2025-12-17)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-3557](https://pagopa.atlassian.net/browse/SIW-3557)] Fix wallet's placeholders system regression ([#7719](https://github.com/pagopa/io-app/issues/7719)) ([8718cbc](https://github.com/pagopa/io-app/commit/8718cbcc7f401d938f6d76ddeeeadb2e4962e86b)), closes [/#diff-8a5b2f3967d681b976fe673762bd1061f5b430130c880c1195b76af06362cf31R140](https://github.com/pagopa///issues/diff-8a5b2f3967d681b976fe673762bd1061f5b430130c880c1195b76af06362cf31R140) [/#diff-8a5b2f3967d681b976fe673762bd1061f5b430130c880c1195b76af06362cf31R613-R615](https://github.com/pagopa///issues/diff-8a5b2f3967d681b976fe673762bd1061f5b430130c880c1195b76af06362cf31R613-R615)
+* **IT-Wallet:** [[SIW-3558](https://pagopa.atlassian.net/browse/SIW-3558)] Fix action dispatch for storing auth level during eID issuance ([#7720](https://github.com/pagopa/io-app/issues/7720)) ([784a36d](https://github.com/pagopa/io-app/commit/784a36d395c7cbd05fdcd368cadbeb0a3c54d600))
+
+
+### Chores
+
+* **release:** 3.21.1-rc.0 ([5bd800a](https://github.com/pagopa/io-app/commit/5bd800ae8754248a32d10bab51207140c7e14a37))
+* [[IOPLT-1370](https://pagopa.atlassian.net/browse/IOPLT-1370)] Upgrades react-native to 0.81 ([ef74f17](https://github.com/pagopa/io-app/commit/ef74f17d2467a65cf944d714a5e53d445cc37eed))
+
 ## [3.22.0-rc.4](https://github.com/pagopa/io-app/compare/3.22.0-rc.3...3.22.0-rc.4) (2025-12-16)
 
 
