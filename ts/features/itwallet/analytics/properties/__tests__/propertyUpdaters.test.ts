@@ -32,11 +32,9 @@ describe("propertyUpdaters", () => {
       .spyOn(baseBuilder, "buildItwBaseProperties")
       .mockReturnValue({ ITW_STATUS_V2: "valid" } as any);
 
-    jest
-      .spyOn(superProp, "buildItwSuperProperties")
-      .mockReturnValue({
-        OFFLINE_ACCESS_REASON: "session_refresh"
-      } as ITWSuperProperties);
+    jest.spyOn(superProp, "buildItwSuperProperties").mockReturnValue({
+      OFFLINE_ACCESS_REASON: "session_refresh"
+    } as ITWSuperProperties);
 
     updateItwAnalyticsProperties({} as GlobalState);
 
