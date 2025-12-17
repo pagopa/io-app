@@ -2,13 +2,6 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [3.21.1-rc.0](https://github.com/pagopa/io-app/compare/3.21.0-rc.7...3.21.1-rc.0) (2025-12-17)
-
-
-### Bug Fixes
-
-* **IT-Wallet:** [[SIW-3558](https://pagopa.atlassian.net/browse/SIW-3558)] Fix action dispatch for storing auth level during eID issuance ([#7720](https://github.com/pagopa/io-app/issues/7720)) ([8fdaa8e](https://github.com/pagopa/io-app/commit/8fdaa8ed366e4126e11437381e3f539b602ae617))
-
 ## [3.21.0-rc.7](https://github.com/pagopa/io-app/compare/3.21.0-rc.6...3.21.0-rc.7) (2025-12-04)
 
 
