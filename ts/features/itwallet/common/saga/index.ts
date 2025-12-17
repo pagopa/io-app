@@ -80,8 +80,7 @@ export function* watchItwOfflineSaga(): SagaIterator {
  *
  * @param action - The action dispatched when the fiscal code whitelist status changes.
  *
- * @todo This check can be safely removed once the minimum supported app version
- * is greater than the version that introduced this fix.
+ * TODO: This check can be safely removed once the minimum supported app version is greater than 3.21
  */
 const handleAuthLevelSanitizationSaga = function* (
   action: ActionType<typeof itwSetFiscalCodeWhitelisted>
