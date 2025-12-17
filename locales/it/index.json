@@ -5123,6 +5123,10 @@
         "cieNotRegistered": {
           "title": "Registra la CIE in app CieID per continuare",
           "subtitle": "Per ottenere IT-Wallet, completa prima la registrazione della tua CIE in app CieID e poi riprova."
+        },
+        "mrtdChallengeInitError": {
+          "title": "Un problema non permette di continuare",
+          "subtitle": "Si è verificato un errore che impedisce di procedere con la lettura della CIE. Riprova. Se il problema persiste, contatta l'assistenza."
         }
       },
       "notMatchingIdentityScreen": {

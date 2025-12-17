@@ -9,7 +9,8 @@ import {
   trackItwCieIdCieNotRegistered,
   trackItwIdRequestFailure,
   trackItwIdRequestUnexpectedFailure,
-  trackItwUnsupportedDevice
+  trackItwUnsupportedDevice,
+  trackMrtdPoPChallengeInfoFailed
 } from "../../analytics";
 import {
   serializeFailureReason,
@@ -63,6 +64,16 @@ export const useEidEventsTracking = ({ failure, identification }: Params) => {
       identification
     ) {
       return trackItwCieIdCieNotRegistered(identification.level);
+    }
+
+    if (
+      failure.type === IssuanceFailureType.MRTD_CHALLENGE_INIT_ERROR &&
+      identification
+    ) {
+      return trackMrtdPoPChallengeInfoFailed({
+        ITW_ID_method: identification.mode,
+        reason: failure.reason.message
+      });
     }
 
     if (failure.type === IssuanceFailureType.UNEXPECTED) {

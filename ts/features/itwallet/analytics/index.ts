@@ -217,7 +217,7 @@ type TrackItWalletErrorCardReading = {
 };
 
 type TrackGetChallengeInfoFailure = {
-  ITW_ID_method: Exclude<ItwIdMethod, "ciePin">;
+  ITW_ID_method: ItwIdMethod;
   reason?: string;
 };
 
