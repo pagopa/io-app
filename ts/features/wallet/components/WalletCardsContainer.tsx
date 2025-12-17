@@ -1,7 +1,7 @@
 import { ListItemHeader } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { useMemo } from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../store/hooks";
@@ -51,7 +51,7 @@ const WalletCardsContainer = () => {
       return <WalletEmptyScreenContent />;
     }
     return (
-      <View testID="walletCardsContainerTestID" style={{ flex: 1, gap: 8 }}>
+      <View testID="walletCardsContainerTestID" style={styles.content}>
         <ItwUpgradeBanner />
         <ItwWalletNotAvailableBanner />
         {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
@@ -66,7 +66,7 @@ const WalletCardsContainer = () => {
 
   return (
     <Animated.View
-      style={{ flex: 1, paddingTop: 16, gap: 16 }}
+      style={styles.container}
       layout={LinearTransition.duration(200)}
     >
       <ItwEnvironmentAlert />
@@ -133,3 +133,8 @@ export {
   OtherWalletCardsContainer,
   WalletCardsContainer
 };
+
+const styles = StyleSheet.create({
+  container: { flex: 1, paddingTop: 16, gap: 16 },
+  content: { flex: 1, gap: 8 }
+});
