@@ -137,6 +137,7 @@ import { navigateToActiveSessionLogin } from "../features/authentication/activeS
 import { showSessionExpirationBlockingScreenSelector } from "../features/authentication/activeSessionLogin/store/selectors";
 import { watchCdcSaga } from "../features/bonus/cdc/common/saga";
 import { watchMessagesSaga } from "../features/messages/saga";
+import { watchWalletSaga } from "../features/wallet/saga";
 import { maybeHandlePendingBackgroundActions } from "./backgroundActions";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -608,6 +609,9 @@ export function* initializeApplicationSaga(
 
   // active session login watcher
   yield* fork(watchActiveSessionLoginSaga);
+
+  // Start wathing new wallet sagas
+  yield* fork(watchWalletSaga);
 
   // Here we can be sure that the session information is loaded and valid
   const bpdToken = maybeSessionInformation.value.bpdToken as string;
