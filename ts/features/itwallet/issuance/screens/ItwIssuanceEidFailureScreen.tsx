@@ -260,7 +260,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
             pictogram: "umbrella",
             action: {
               label: I18n.t("global.buttons.close"),
-              onPress: () => machineRef.send({ type: "close" })
+              onPress: () => machineRef.send({ type: "retry" }) // Retry event goes to UserIdentification
             },
             secondaryAction: {
               label: I18n.t("features.itWallet.support.button"),
