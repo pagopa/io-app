@@ -81,6 +81,11 @@ export const buildItwBaseProperties = (
 
 // #region  Utility functions
 
+const getWalletStatus = (state: GlobalState): ItwStatus => {
+  const authLevel = itwAuthLevelSelector(state);
+  return authLevel ? authLevel : "not_active";
+};
+
 /**
  * Returns the PID status for Mixpanel analytics.
  * - If `isL3` is true → we consider the status from the current L3 PID (IT Wallet).
@@ -101,11 +106,6 @@ export const getPIDMixpanelStatus = (
     O.map<ItwJwtCredentialStatus, ItwPIDStatus>(mapPIDStatusToMixpanel),
     O.getOrElse((): ItwPIDStatus => "not_available")
   );
-
-const getWalletStatus = (state: GlobalState): ItwStatus => {
-  const authLevel = itwAuthLevelSelector(state);
-  return authLevel ? authLevel : "not_active";
-};
 
 /**
  * Returns the Mixpanel status for a credential type, considering IT Wallet.
