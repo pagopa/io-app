@@ -3056,6 +3056,7 @@
       "title": "My favourites",
       "add": "Add to favourites",
       "remove": "Remove from favourites",
+      "sortButton": "Sort",
       "toasts": {
         "added": "Added to favourites!",
         "removed": "Removed from favourites!",
@@ -3069,6 +3070,15 @@
       "removeAlert": {
         "title": "Do you want to remove the service from favorites?",
         "confirm": "Yes, remove"
+      },
+      "bottomSheet": {
+        "title": "Sort list",
+        "a11y": "Sort favourite services",
+        "content": {
+          "addedAt_desc": "Newest",
+          "name_asc": "Name (A-Z)",
+          "addedAt_asc": "Oldest"
+        }
       }
     }
   },
@@ -3639,7 +3649,8 @@
             "byName": "Alphabetical order"
           }
         },
-        "discountOf": "Discount of {{discount}}%"
+        "discountOf": "Discount of {{discount}}%",
+        "a11yTitle": "Category: {{categoryName}}"
       },
       "merchantDetail": {
         "title": {
