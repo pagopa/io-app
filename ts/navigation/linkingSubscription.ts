@@ -15,7 +15,7 @@ import { IO_LOGIN_CIE_URL_SCHEME } from "../features/authentication/login/cie/ut
 const deepLinkStorageBlacklist: Array<RegExp> = [
   new RegExp(`^${IO_LOGIN_CIE_URL_SCHEME}`, "i")
 ];
-const isDeepLInkBlackListed = (url: string): boolean =>
+const isDeepLinkBlackListed = (url: string): boolean =>
   deepLinkStorageBlacklist.some(regex => regex.test(url.trim()));
 
 export const linkingSubscription =
@@ -50,7 +50,7 @@ export const linkingSubscription =
         // as of writing, the only deep link that is dispatched after an app wake, but before the login's completion
         // is the CIEID login one.
         // it is then necessary to ignore it to avoid letting it rewrite other deep links that may be useful after login.
-        if (!isDeepLInkBlackListed(url)) {
+        if (!isDeepLinkBlackListed(url)) {
           dispatch(storeLinkingUrl(url));
         }
       }
