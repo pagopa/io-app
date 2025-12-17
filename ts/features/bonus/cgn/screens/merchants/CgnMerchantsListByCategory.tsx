@@ -192,7 +192,15 @@ const CgnMerchantsListByCategory = () => {
             </View>
             <HSpacer size={16} />
             <View style={{ flex: 1 }}>
-              <H3 color={categorySpecs.textColor}>
+              <H3
+                color={categorySpecs.textColor}
+                accessibilityLabel={I18n.t(
+                  "bonus.cgn.merchantsList.a11yTitle",
+                  {
+                    categoryName: I18n.t(categorySpecs.nameKey as any)
+                  }
+                )}
+              >
                 {I18n.t(categorySpecs.nameKey as any)}
               </H3>
             </View>
@@ -230,8 +238,6 @@ const CgnMerchantsListByCategory = () => {
             accessibilityLabel: I18n.t("global.buttons.retry"),
             onPress: initLoadingLists
           }}
-          enableAnimatedPictogram
-          loop
         />
       ) : (
         <Animated.FlatList

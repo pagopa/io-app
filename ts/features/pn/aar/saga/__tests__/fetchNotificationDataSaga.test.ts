@@ -99,6 +99,8 @@ describe("fetchAarDataSaga", () => {
     });
     it("should handle left result and set KO state", () => {
       const mockFailure = E.left([]);
+      const failureReason = "An error was thrown (Decoding failure ())";
+
       const fetchData = jest
         .fn()
         .mockReturnValue(mockResolvedCall(mockFailure));
@@ -119,7 +121,7 @@ describe("fetchAarDataSaga", () => {
           fetchingNotificationDataRequestAction
         )
         .next(mockFailure)
-        .call(trackSendAARFailure, "Fetch Notification", "Decoding failure ()")
+        .call(trackSendAARFailure, "Fetch Notification", failureReason)
         .next()
         .put(
           setAarFlowState({
@@ -127,7 +129,7 @@ describe("fetchAarDataSaga", () => {
             previousState: mockCurrentState,
             debugData: {
               phase: "Fetch Notification",
-              reason: `Decoding failure ()`
+              reason: failureReason
             }
           })
         )

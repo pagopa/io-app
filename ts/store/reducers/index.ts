@@ -295,6 +295,9 @@ export function createRootReducer(
                 // with a dirty state.
                 ...state.features.pn
               },
+              services: {
+                ...state.features.services
+              },
               _persist: state.features._persist
             },
             identification: {

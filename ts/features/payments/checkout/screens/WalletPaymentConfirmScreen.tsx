@@ -29,6 +29,8 @@ import { useWalletPaymentAuthorizationModal } from "../hooks/useWalletPaymentAut
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
 import {
+  selectPaymentsOnboardedWalletId,
+  selectPaymentsOrderId,
   selectWalletPaymentCurrentStep,
   walletPaymentDetailsSelector
 } from "../store/selectors";
@@ -57,9 +59,11 @@ const WalletPaymentConfirmScreen = () => {
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
   const transactionPot = useIOSelector(walletPaymentTransactionSelector);
   const currentStep = useIOSelector(selectWalletPaymentCurrentStep);
+  const currentOrderId = useIOSelector(selectPaymentsOrderId);
   const selectedWalletIdOption = useIOSelector(
     walletPaymentSelectedWalletIdOptionSelector
   );
+  const onboardedWalletId = useIOSelector(selectPaymentsOnboardedWalletId);
   const selectedPaymentMethodIdOption = useIOSelector(
     walletPaymentSelectedPaymentMethodIdOptionSelector
   );
@@ -80,7 +84,8 @@ const WalletPaymentConfirmScreen = () => {
       }),
       O.map(({ paymentDetail, paymentMethodId, selectedPsp, transaction }) => {
         // In case of guest payment walletId could be undefined
-        const walletId = O.toUndefined(selectedWalletIdOption);
+        const walletId =
+          O.toUndefined(selectedWalletIdOption) ?? onboardedWalletId;
         const paymentMethodManagement = O.toUndefined(
           selectedPaymentMethodManagement
         );
@@ -107,6 +112,7 @@ const WalletPaymentConfirmScreen = () => {
         });
 
         startPaymentAuthorizaton({
+          orderId: currentOrderId,
           paymentAmount: paymentDetail.amount as AmountEuroCents,
           paymentFees: (selectedPsp.taxPayerFee ?? 0) as AmountEuroCents,
           pspId: selectedPsp.idPsp ?? "",

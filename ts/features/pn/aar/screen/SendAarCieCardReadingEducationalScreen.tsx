@@ -1,0 +1,136 @@
+import { SafeAreaView } from "react-native-safe-area-context";
+import { VSpacer } from "@pagopa/io-app-design-system";
+import { Image } from "react-native";
+import i18n from "i18next";
+import { useEffect } from "react";
+import cieScanningEducationalSource from "../../../../../img/features/itWallet/identification/itw_cie_nfc.gif";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import {
+  aarAdresseeDenominationSelector,
+  currentAARFlowData
+} from "../store/selectors";
+import { setAarFlowState } from "../store/actions";
+import { sendAARFlowStates } from "../utils/stateUtils";
+import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { PnParamsList } from "../../navigation/params";
+import PN_ROUTES from "../../navigation/routes";
+import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+
+const { width, height, uri } = Image.resolveAssetSource(
+  cieScanningEducationalSource
+);
+const aspectRatio = width / height;
+
+export type SendAarCieCardReadingEducationalScreenProps =
+  IOStackNavigationRouteProps<
+    PnParamsList,
+    typeof PN_ROUTES.SEND_AAR_CIE_CARD_READING_EDUCATIONAL
+  >;
+
+export const SendAarCieCardReadingEducationalScreen = ({
+  navigation
+}: SendAarCieCardReadingEducationalScreenProps) => {
+  const dispatch = useIODispatch();
+  const currentAarState = useIOSelector(currentAARFlowData);
+  const denomination = useIOSelector(aarAdresseeDenominationSelector);
+
+  useEffect(() => {
+    switch (currentAarState.type) {
+      case sendAARFlowStates.cieScanning: {
+        const { type: _, ...params } = currentAarState;
+
+        navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+          screen: PN_ROUTES.MAIN,
+          params: {
+            screen: PN_ROUTES.SEND_AAR_CIE_CARD_READING,
+            params
+          }
+        });
+        break;
+      }
+      case sendAARFlowStates.cieCanInsertion: {
+        navigation.goBack();
+        break;
+      }
+      // TODO: [IOCOM-2750] implement navigation into NFC activation screen
+      default:
+        break;
+    }
+  }, [currentAarState, navigation]);
+
+  const handleGoBack = () => {
+    if (currentAarState.type === sendAARFlowStates.cieScanningAdvisory) {
+      dispatch(
+        setAarFlowState({
+          ...currentAarState,
+          type: sendAARFlowStates.cieCanInsertion
+        })
+      );
+    }
+  };
+
+  const handleGoNext = () => {
+    if (currentAarState.type === sendAARFlowStates.cieScanningAdvisory) {
+      // TODO: [IOCOM-2750] check if NFC is enabled
+      dispatch(
+        setAarFlowState({
+          ...currentAarState,
+          type: sendAARFlowStates.cieScanning
+        })
+      );
+    }
+  };
+
+  useHardwareBackButton(() => {
+    handleGoBack();
+    return true;
+  });
+
+  return (
+    <SafeAreaView style={{ flex: 1 }} edges={["bottom"]}>
+      <IOScrollViewWithLargeHeader
+        actions={{
+          type: "SingleButton",
+          primary: {
+            testID: "primaryActionID",
+            label: i18n.t(
+              "features.pn.aar.flow.cieScanningAdvisory.primaryAction"
+            ),
+            onPress: handleGoNext
+          }
+        }}
+        title={{
+          label: i18n.t("features.pn.aar.flow.cieScanningAdvisory.title", {
+            denomination
+          })
+        }}
+        description={i18n.t(
+          "features.pn.aar.flow.cieScanningAdvisory.description"
+        )}
+        headerActionsProp={{ showHelp: true }}
+        contextualHelp={{
+          title: i18n.t(
+            "features.pn.aar.flow.delegated.cieContextualHelp.title"
+          ),
+          body: i18n.t("features.pn.aar.flow.delegated.cieContextualHelp.body")
+        }}
+        goBack={handleGoBack}
+        includeContentMargins
+        alwaysBounceVertical={false}
+      >
+        <VSpacer size={8} />
+        <Image
+          source={{
+            uri
+          }}
+          style={{
+            aspectRatio
+          }}
+          accessibilityIgnoresInvertColors
+        />
+      </IOScrollViewWithLargeHeader>
+    </SafeAreaView>
+  );
+};
