@@ -2,6 +2,7 @@ import { ListItemHeader, VSpacer, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
+import { View } from "react-native";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -137,6 +138,8 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
                 navigation={navigation}
               />
             )}
+            {/* Dummy view to add space in case there is another component */}
+            <View />
           </VStack>
         }
       />

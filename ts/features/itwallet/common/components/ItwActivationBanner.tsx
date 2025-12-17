@@ -29,7 +29,7 @@ export const ItwActivationBanner = () => {
   };
 
   const handleDismiss = () => {
-    // TODO implement banner dismissal logic
+    // TODO SIW-3564 implement banner dismissal logic
   };
 
   return (
