@@ -6,9 +6,9 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { OfflineAccessReasonEnum } from "../../../ingress/store/reducer";
 import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
 import { buildItwBaseProperties } from "./basePropertyBuilder";
-import { ITWBaseProperties } from "./propertyTypes";
+import { ItwBaseProperties } from "./propertyTypes";
 
-export type ITWSuperProperties = ITWBaseProperties & {
+export type ItwSuperProperties = ItwBaseProperties & {
   OFFLINE_ACCESS_REASON: string;
 };
 
@@ -30,7 +30,7 @@ export const updateItwSuperProperties = (state: GlobalState) => {
 };
 
 export const forceUpdateItwSuperProperties = (
-  partialProps: Partial<ITWSuperProperties>
+  partialProps: Partial<ItwSuperProperties>
 ) => {
   if (!isMixpanelInstanceInitialized()) {
     return;
@@ -43,7 +43,7 @@ export const forceUpdateItwSuperProperties = (
 
 export const buildItwSuperProperties = (
   state: GlobalState
-): Pick<ITWSuperProperties, "OFFLINE_ACCESS_REASON"> => ({
+): Pick<ItwSuperProperties, "OFFLINE_ACCESS_REASON"> => ({
   OFFLINE_ACCESS_REASON: offlineReasonHandler(state)
 });
 

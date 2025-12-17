@@ -8,7 +8,7 @@ import {
   updatePropertiesWalletRevoked
 } from "../propertyUpdaters";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { ITWSuperProperties } from "../superProperties";
+import { ItwSuperProperties } from "../superProperties";
 import { ITW_ANALYTICS_CREDENTIALS } from "../propertyTypes";
 
 export const mockedRegisterSuperProperties = jest.fn();
@@ -34,7 +34,7 @@ describe("propertyUpdaters", () => {
 
     jest.spyOn(superProp, "buildItwSuperProperties").mockReturnValue({
       OFFLINE_ACCESS_REASON: "session_refresh"
-    } as ITWSuperProperties);
+    } as ItwSuperProperties);
 
     updateItwAnalyticsProperties({} as GlobalState);
 

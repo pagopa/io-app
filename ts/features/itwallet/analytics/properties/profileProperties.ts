@@ -1,9 +1,9 @@
 import { getPeople, isMixpanelInstanceInitialized } from "../../../../mixpanel";
 import { GlobalState } from "../../../../store/reducers/types";
 import { buildItwBaseProperties } from "./basePropertyBuilder";
-import { ITWBaseProperties } from "./propertyTypes";
+import { ItwBaseProperties } from "./propertyTypes";
 
-export type ITWProfileProperties = ITWBaseProperties;
+export type ItwProfileProperties = ItwBaseProperties;
 
 /**
  * Updates only ITW Profile properties.
@@ -19,7 +19,7 @@ export const updateItwProfileProperties = (state: GlobalState) => {
 };
 
 export const forceUpdateItwProfileProperties = (
-  partialProps: Partial<ITWProfileProperties>
+  partialProps: Partial<ItwProfileProperties>
 ) => {
   if (!isMixpanelInstanceInitialized()) {
     return;

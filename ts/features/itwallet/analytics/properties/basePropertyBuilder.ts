@@ -18,14 +18,14 @@ import {
   CREDENTIAL_STATUS_MAP,
   ItwPIDStatus
 } from "..";
-import { ITWBaseProperties } from "./propertyTypes";
+import { ItwBaseProperties } from "./propertyTypes";
 
 /**
  * Builds the base ITW properties for Mixpanel analytics.
  */
 export const buildItwBaseProperties = (
   state: GlobalState
-): ITWBaseProperties => {
+): ItwBaseProperties => {
   const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
 
   const ITW_STATUS_V2 = getWalletStatus(state);

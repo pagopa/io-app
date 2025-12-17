@@ -15,7 +15,7 @@ import {
 } from "../../../../mixpanel";
 import { isItwAnalyticsCredential } from "../utils/analyticsUtils";
 import {
-  ITWProfileProperties,
+  ItwProfileProperties,
   forceUpdateItwProfileProperties
 } from "./profileProperties";
 import {
@@ -23,12 +23,12 @@ import {
   getPIDMixpanelStatus
 } from "./basePropertyBuilder";
 import {
-  ITWSuperProperties,
+  ItwSuperProperties,
   buildItwSuperProperties,
   forceUpdateItwSuperProperties
 } from "./superProperties";
 import {
-  ITWAnalyticsCredential,
+  ItwAnalyticsCredential,
   ITW_ANALYTICS_CREDENTIALS,
   WalletRevokedAnalyticsEvent
 } from "./propertyTypes";
@@ -52,11 +52,11 @@ export const updateItwAnalyticsProperties = (state: GlobalState) => {
   });
 };
 
-const updateItwProfilePropertiesWithProps = (props: ITWProfileProperties) => {
+const updateItwProfilePropertiesWithProps = (props: ItwProfileProperties) => {
   getPeople()?.set(props);
 };
 
-const updateItwSuperPropertiesWithProps = (props: ITWSuperProperties) => {
+const updateItwSuperPropertiesWithProps = (props: ItwSuperProperties) => {
   registerSuperProperties(props);
 };
 
@@ -94,7 +94,7 @@ export const updateITWStatusAndPIDProperties = (state: GlobalState) => {
 export const updatePropertiesWalletRevoked = () => {
   const credentialsResetProps = Object.fromEntries(
     ITW_ANALYTICS_CREDENTIALS.map(c => [c, "not_available"])
-  ) as Record<ITWAnalyticsCredential, "not_available">;
+  ) as Record<ItwAnalyticsCredential, "not_available">;
 
   const finalProps: WalletRevokedAnalyticsEvent = {
     ...credentialsResetProps,

@@ -1,7 +1,7 @@
 import { CREDENTIALS_MAP, ItwPIDStatus, MixPanelCredential } from "..";
 import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils";
 import {
-  ITWAnalyticsCredential,
+  ItwAnalyticsCredential,
   ITW_ANALYTICS_CREDENTIALS
 } from "../properties/propertyTypes";
 
@@ -47,8 +47,8 @@ export function getMixPanelCredential(
   return isItwL3 ? credential.V3 : credential.V2;
 }
 
-// Type guard to check if a MixPanelCredential is an ITWAnalyticsCredential
+// Type guard to check if a MixPanelCredential is an ItwAnalyticsCredential
 export const isItwAnalyticsCredential = (
   c: MixPanelCredential
-): c is ITWAnalyticsCredential =>
-  ITW_ANALYTICS_CREDENTIALS.includes(c as ITWAnalyticsCredential);
+): c is ItwAnalyticsCredential =>
+  ITW_ANALYTICS_CREDENTIALS.includes(c as ItwAnalyticsCredential);
