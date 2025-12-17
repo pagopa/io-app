@@ -26,7 +26,7 @@ export const ITW_ANALYTICS_CREDENTIALS = [
 export type ItwAnalyticsCredential = (typeof ITW_ANALYTICS_CREDENTIALS)[number];
 
 export type WalletRevokedAnalyticsEvent = Record<
-ItwAnalyticsCredential,
+  ItwAnalyticsCredential,
   "not_available"
 > & {
   ITW_STATUS_V2: "not_active";
