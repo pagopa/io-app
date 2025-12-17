@@ -107,6 +107,20 @@ All notable changes to this project will be documented in this file. See [standa
 * **IT-Wallet:** [[SIW-3509](https://pagopa.atlassian.net/browse/SIW-3509)] Adjust EID machine transition logic for L2+ issuance ([#7689](https://github.com/pagopa/io-app/issues/7689)) ([5e65800](https://github.com/pagopa/io-app/commit/5e658006c87a0211e9a61411713acc1c7e838768))
 * [[IOPLT-1434](https://pagopa.atlassian.net/browse/IOPLT-1434)] Add dark mode version of the `waiting` animated pictogram ([#7681](https://github.com/pagopa/io-app/issues/7681)) ([0729edc](https://github.com/pagopa/io-app/commit/0729edc19f40da9247302015186f59fe0b5246da))
 
+
+### [3.21.1-rc.0](https://github.com/pagopa/io-app/compare/3.21.0-rc.7...3.21.1-rc.0) (2025-12-17)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-3558](https://pagopa.atlassian.net/browse/SIW-3558)] Fix action dispatch for storing auth level during eID issuance ([#7720](https://github.com/pagopa/io-app/issues/7720)) ([8fdaa8e](https://github.com/pagopa/io-app/commit/8fdaa8ed366e4126e11437381e3f539b602ae617))
+
+
+### Chores
+
+* bump android versionCode ([9f8d71a](https://github.com/pagopa/io-app/commit/9f8d71a7d724e1fe1a8e9f894773706147b5f478))
+* **release:** 3.21.1-rc.0 ([b91a2cb](https://github.com/pagopa/io-app/commit/b91a2cb1ca17a17ef4295eaaadf4f02993ec0b08))
+
 ## [3.21.0-rc.7](https://github.com/pagopa/io-app/compare/3.21.0-rc.6...3.21.0-rc.7) (2025-12-04)
 
 
