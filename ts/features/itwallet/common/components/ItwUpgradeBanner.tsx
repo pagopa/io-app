@@ -36,7 +36,7 @@ export const ItwUpgradeBanner = () => {
   };
 
   const handleOnDismiss = () => {
-    // TODO implement banner dismissal logic
+    // TODO SIW-3564 implement banner dismissal logic
   };
 
   if (isWalletEmpty) {
