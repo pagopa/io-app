@@ -1,5 +1,5 @@
 import { createStore } from "redux";
-import { act, fireEvent } from "@testing-library/react-native";
+import { act, fireEvent, waitFor } from "@testing-library/react-native";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -18,8 +18,10 @@ import {
 } from "../../utils/testUtils";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import * as USE_HARDWARE_BACK_BUTTON from "../../../../../hooks/useHardwareBackButton";
+import * as NFC_HOOK from "../../hooks/useIsNfcFeatureEnabled";
 
 const mockNavigate = jest.fn();
+const mockReplace = jest.fn();
 const mockGoBack = jest.fn();
 const mockDispatch = jest.fn();
 
@@ -104,27 +106,39 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
     expect(mockNavigate).not.toHaveBeenCalled();
   });
 
-  it("should dispatch the right state update action when the primary action is clicked", () => {
-    const { getByTestId } = renderComponent();
+  it.each([true, false])(
+    "should dispatch the right state update action when the primary action is clicked",
+    async enabled => {
+      jest.spyOn(NFC_HOOK, "useIsNfcFeatureEnabled").mockReturnValue({
+        isChecking: false,
+        openNFCSettings: jest.fn(),
+        isNfcEnabled: () => Promise.resolve(enabled)
+      });
+      const { getByTestId } = renderComponent();
 
-    const primaryAction = getByTestId("primaryActionID");
+      const primaryAction = getByTestId("primaryActionID");
 
-    expect(mockDispatch).not.toHaveBeenCalled();
-    expect(mockNavigate).not.toHaveBeenCalled();
+      expect(mockDispatch).not.toHaveBeenCalled();
+      expect(mockNavigate).not.toHaveBeenCalled();
 
-    act(() => {
-      fireEvent.press(primaryAction);
-    });
+      act(() => {
+        fireEvent.press(primaryAction);
+      });
 
-    expect(mockDispatch).toHaveBeenCalledTimes(1);
-    expect(mockDispatch).toHaveBeenCalledWith(
-      setAarFlowState({
-        ...mockCieScanningAdvisoryState,
-        type: sendAARFlowStates.cieScanning
-      })
-    );
-    expect(mockGoBack).not.toHaveBeenCalled();
-  });
+      await waitFor(() => {
+        expect(mockDispatch).toHaveBeenCalledTimes(1);
+        expect(mockDispatch).toHaveBeenCalledWith(
+          setAarFlowState({
+            ...mockCieScanningAdvisoryState,
+            type: enabled
+              ? sendAARFlowStates.cieScanning
+              : sendAARFlowStates.androidNFCActivation
+          })
+        );
+        expect(mockGoBack).not.toHaveBeenCalled();
+      });
+    }
+  );
 
   it.each(sendAarStatesWithoutCieScanningAdvisory)(
     'should not update the aar state when the back button is pressed for the type: "$type"',
@@ -238,6 +252,34 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
       expect(mockDispatch).not.toHaveBeenCalled();
     });
   });
+  sendAarMockStates.forEach(currentAarState => {
+    const isAndroidNfcActivation =
+      currentAarState.type === sendAARFlowStates.androidNFCActivation;
+    it(`${
+      isAndroidNfcActivation ? "should" : "should not"
+    } invoke replace when type is "${currentAarState.type}"`, () => {
+      jest
+        .spyOn(AAR_SELECTORS, "currentAARFlowData")
+        .mockReturnValue(currentAarState);
+      renderComponent();
+
+      if (isAndroidNfcActivation) {
+        expect(mockReplace).toHaveBeenCalledTimes(1);
+        expect(mockReplace).toHaveBeenCalledWith(
+          MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
+          {
+            screen: PN_ROUTES.MAIN,
+            params: {
+              screen: PN_ROUTES.SEND_AAR_NFC_ACTIVATION
+            }
+          }
+        );
+      } else {
+        expect(mockReplace).not.toHaveBeenCalled();
+      }
+      expect(mockDispatch).not.toHaveBeenCalled();
+    });
+  });
 });
 
 function renderComponent() {
@@ -250,6 +292,7 @@ function renderComponent() {
         route={route}
         navigation={{
           ...navigation,
+          replace: mockReplace,
           navigate: mockNavigate,
           goBack: mockGoBack
         }}
