@@ -1,6 +1,5 @@
 import { Platform } from "react-native";
-import { renderHook } from "@testing-library/react-native";
-import { act } from "react";
+import { renderHook, act } from "@testing-library/react-native";
 import cieSdk from "@pagopa/react-native-cie";
 import { useIsNfcFeatureEnabled } from "../useIsNfcFeatureEnabled";
 

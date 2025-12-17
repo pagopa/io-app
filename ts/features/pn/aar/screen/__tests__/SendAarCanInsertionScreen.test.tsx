@@ -1,7 +1,7 @@
 /* eslint-disable sonarjs/cognitive-complexity */
 import { createStore } from "redux";
-import { fireEvent, waitFor } from "@testing-library/react-native";
-import { act, RefObject } from "react";
+import { fireEvent, waitFor, act } from "@testing-library/react-native";
+import { RefObject } from "react";
 import { Keyboard, TextInput, View } from "react-native";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
