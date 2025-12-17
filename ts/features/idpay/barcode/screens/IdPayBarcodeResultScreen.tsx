@@ -128,15 +128,13 @@ const FailureContent = ({
 
   return (
     <OperationResultScreenContent
+      pictogram="umbrella"
       title={I18n.t("idpay.barCode.resultScreen.error.generic.body")}
       action={{
         label: I18n.t("global.buttons.close"),
         accessibilityLabel: I18n.t("global.buttons.close"),
         onPress: navigateToInitiativeDetails
       }}
-      pictogram="umbrella"
-      enableAnimatedPictogram
-      loop
     />
   );
 };

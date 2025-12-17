@@ -272,7 +272,10 @@ type ItwCopyListItem = {
   item_copied: string;
 };
 
-export type ItwOfflineRicaricaAppIOSource = "bottom_sheet" | "banner";
+export type ItwOfflineRicaricaAppIOSource =
+  | "bottom_sheet"
+  | "banner"
+  | "access_expired_screen";
 
 type ItwCredentialInfoDetails = {
   credential: MixPanelCredential;
@@ -355,6 +358,13 @@ export const trackCredentialPreview = (
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.ITW_CREDENTIAL_PREVIEW,
     buildEventProperties("UX", "screen_view", credentialPreview)
+  );
+};
+
+export const trackItwCredentialIntro = (credential: MixPanelCredential) => {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_CREDENTIAL_INTRO,
+    buildEventProperties("UX", "screen_view", { credential })
   );
 };
 
@@ -773,6 +783,15 @@ export function trackWalletNewIdReset(state: GlobalState) {
     buildEventProperties("UX", "action")
   );
 }
+
+export const trackItwCredentialStartIssuing = (
+  credential: MixPanelCredential
+) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_START_ISSUING,
+    buildEventProperties("UX", "action", { credential })
+  );
+};
 
 export function trackItwIntroBack(itw_flow: ItwFlow) {
   void mixpanelTrack(

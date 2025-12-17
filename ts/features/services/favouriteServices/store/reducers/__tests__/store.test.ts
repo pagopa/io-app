@@ -9,9 +9,10 @@ import {
 } from "../../actions";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { createMockFavouriteService } from "../../../__mocks__";
+import { ServiceId } from "../../../../../../../definitions/services/ServiceId";
 
-const SERVICE_ID_1 = "serviceId1";
-const SERVICE_ID_2 = "serviceId2";
+const SERVICE_ID_1 = "serviceId1" as ServiceId;
+const SERVICE_ID_2 = "serviceId2" as ServiceId;
 const FAVOURITE_SERVICE_1 = createMockFavouriteService({ id: SERVICE_ID_1 });
 const FAVOURITE_SERVICE_2 = createMockFavouriteService({ id: SERVICE_ID_2 });
 

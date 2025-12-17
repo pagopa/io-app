@@ -24,12 +24,12 @@ const FastLoginModals = (
   if (tokenRefreshing.kind === "no-pin-error") {
     return (
       <AskUserInteractionScreen
-        pictogramName="time"
+        pictogram="time"
         title={I18n.t("fastLogin.userInteraction.sessionExpired.noPin.title")}
         subtitle={I18n.t(
           "fastLogin.userInteraction.sessionExpired.noPin.subtitle"
         )}
-        primaryAction={{
+        action={{
           label: I18n.t(
             "fastLogin.userInteraction.sessionExpired.noPin.submitButtonTitle"
           ),
@@ -52,7 +52,7 @@ const FastLoginModals = (
     }
     return (
       <AskUserInteractionScreen
-        pictogramName="umbrella"
+        pictogram="umbrella"
         title={I18n.t(
           "fastLogin.userInteraction.sessionExpired.transientError.title"
         )}
@@ -70,14 +70,14 @@ const FastLoginModals = (
   if (isFastLoginUserInteractionNeeded) {
     return (
       <AskUserInteractionScreen
-        pictogramName="time"
+        pictogram="time"
         title={I18n.t(
           "fastLogin.userInteraction.sessionExpired.continueNavigation.title"
         )}
         subtitle={I18n.t(
           "fastLogin.userInteraction.sessionExpired.continueNavigation.subtitle"
         )}
-        primaryAction={{
+        action={{
           label: I18n.t(
             "fastLogin.userInteraction.sessionExpired.continueNavigation.submitButtonTitle"
           ),
