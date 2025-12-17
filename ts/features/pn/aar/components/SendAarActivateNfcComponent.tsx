@@ -89,12 +89,14 @@ export const SendAarActivateNfcComponent = () => {
       actions={{
         type: "TwoButtons",
         primary: {
+          testID: "primaryActionID",
           label: i18n.t(
             "features.pn.aar.flow.androidNfcActivation.primaryAction"
           ),
           onPress: openNFCSettings
         },
         secondary: {
+          testID: "secondaryActionID",
           label: i18n.t(
             "features.pn.aar.flow.androidNfcActivation.secondaryAction"
           ),
