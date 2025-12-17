@@ -12,6 +12,9 @@ import { GlobalState } from "../store/reducers/types";
 import { initiateAarFlow } from "../features/pn/aar/store/actions";
 import { IO_LOGIN_CIE_URL_SCHEME } from "../features/authentication/login/cie/utils/cie";
 
+// as of writing this, the only deep link that is dispatched after an app wake, but before the login's completion
+// is the CIEID login one.
+// it is then necessary to ignore it to avoid letting it rewrite other deep links that may be useful after login.
 const deepLinkStorageBlacklist: Array<RegExp> = [
   new RegExp(`^${IO_LOGIN_CIE_URL_SCHEME}`, "i")
 ];
@@ -47,9 +50,8 @@ export const linkingSubscription =
       } else {
         // If we are not logged in, we store the URL to be processed later
 
-        // as of writing, the only deep link that is dispatched after an app wake, but before the login's completion
-        // is the CIEID login one.
-        // it is then necessary to ignore it to avoid letting it rewrite other deep links that may be useful after login.
+        // we avoid deepLinks that are handled in other parts of the app in order
+        // to not let them overwrite deepLinks queued for processing after login.
         if (!isDeepLinkBlackListed(url)) {
           dispatch(storeLinkingUrl(url));
         }
