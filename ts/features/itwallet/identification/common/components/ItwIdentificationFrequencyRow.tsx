@@ -1,5 +1,5 @@
 import { memo, type ComponentProps } from "react";
-import { Badge, BodySmall, HStack, VStack } from "@pagopa/io-app-design-system";
+import { Badge, BodySmall, HStack } from "@pagopa/io-app-design-system";
 
 type BadgeProps = ComponentProps<typeof Badge>;
 
