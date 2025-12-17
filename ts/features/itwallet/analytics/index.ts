@@ -54,18 +54,6 @@ export const mixPanelCredentials = [
   "UNKNOWN"
 ] as const;
 
-// Exclude ITW_ED, ITW_EE, ITW_RES and UNKNOWN from MixPanelCredentialProperty since are not used in tracking properties/super properties
-type MixPanelCredentialProperty = Exclude<
-  MixPanelCredential,
-  "ITW_ED" | "ITW_EE" | "ITW_RES" | "UNKNOWN"
->;
-
-// Type guard to exclude ITW_ED, ITW_EE, ITW_RES and UNKNOWN from MixPanelCredential
-export const isMixPanelCredentialProperty = (
-  c: MixPanelCredential
-): c is MixPanelCredentialProperty =>
-  c !== "ITW_ED" && c !== "ITW_EE" && c !== "ITW_RES" && c !== "UNKNOWN";
-
 export type MixPanelCredential = (typeof mixPanelCredentials)[number];
 
 type TrackCredentialDetail = {
@@ -1239,7 +1227,6 @@ export const trackItwDeactivated = (credential: MixPanelCredential) => {
     ITW_CONFIRM_EVENTS.ITW_DEACTIVATED,
     buildEventProperties("UX", "confirm", { credential })
   );
-  updatePropertiesWalletRevoked();
 };
 
 // #endregion CONFIRM

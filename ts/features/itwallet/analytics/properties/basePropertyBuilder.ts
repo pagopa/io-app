@@ -47,6 +47,10 @@ export const buildItwBaseProperties = (
     isItwL3
   );
 
+  /**
+   * V2 properties are not sent when IT-Wallet is active,
+   * in order to preserve their last tracked status.
+   */
   const v2Props = !isItwL3
     ? {
         ITW_ID_V2: getPIDMixpanelStatus(state, false),

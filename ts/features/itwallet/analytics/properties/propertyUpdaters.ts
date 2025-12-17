@@ -3,11 +3,7 @@ import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { itwAuthLevelSelector } from "../../common/store/selectors/preferences";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
-import {
-  mixPanelCredentials,
-  MixPanelCredential,
-  isMixPanelCredentialProperty
-} from "..";
+import { MixPanelCredential } from "..";
 import {
   setOfflineAccessReason,
   resetOfflineAccessReason
@@ -17,6 +13,7 @@ import {
   isMixpanelInstanceInitialized,
   registerSuperProperties
 } from "../../../../mixpanel";
+import { isItwAnalyticsCredential } from "../utils/analyticsUtils";
 import {
   ITWProfileProperties,
   forceUpdateItwProfileProperties
@@ -30,7 +27,11 @@ import {
   buildItwSuperProperties,
   forceUpdateItwSuperProperties
 } from "./superProperties";
-import { WalletRevokedAnalyticsEvent } from "./propertyTypes";
+import {
+  ITWAnalyticsCredential,
+  ITW_ANALYTICS_CREDENTIALS,
+  WalletRevokedAnalyticsEvent
+} from "./propertyTypes";
 
 /**
  * Performs a full sync of all ITW analytics properties
@@ -43,6 +44,11 @@ export const updateItwAnalyticsProperties = (state: GlobalState) => {
 
   const baseProps = buildItwBaseProperties(state);
   const superProps = buildItwSuperProperties(state);
+
+  console.log("Updating ITW analytics properties", {
+    baseProps,
+    superProps
+  });
 
   updateItwProfilePropertiesWithProps(baseProps);
   updateItwSuperPropertiesWithProps({
@@ -92,8 +98,8 @@ export const updateITWStatusAndPIDProperties = (state: GlobalState) => {
  */
 export const updatePropertiesWalletRevoked = () => {
   const credentialsResetProps = Object.fromEntries(
-    mixPanelCredentials.map(c => [c, "not_available"])
-  ) as Record<MixPanelCredential, "not_available">;
+    ITW_ANALYTICS_CREDENTIALS.map(c => [c, "not_available"])
+  ) as Record<ITWAnalyticsCredential, "not_available">;
 
   const finalProps: WalletRevokedAnalyticsEvent = {
     ...credentialsResetProps,
@@ -107,7 +113,7 @@ export const updatePropertiesWalletRevoked = () => {
 export const updateCredentialDeletedProperties = (
   credential: MixPanelCredential
 ) => {
-  if (!isMixPanelCredentialProperty(credential)) {
+  if (!isItwAnalyticsCredential(credential)) {
     return;
   }
   forceUpdateItwProfileProperties({
@@ -121,7 +127,7 @@ export const updateCredentialDeletedProperties = (
 export const updateCredentialAddedProperties = (
   credential: MixPanelCredential
 ) => {
-  if (!isMixPanelCredentialProperty(credential)) {
+  if (!isItwAnalyticsCredential(credential)) {
     return;
   }
   forceUpdateItwProfileProperties({

@@ -36,8 +36,8 @@ import { HIDDEN_CLAIM_TEXT } from "../utils/constants.ts";
 import { getMixPanelCredential } from "../../analytics/utils/analyticsUtils.ts";
 import { useIOSelector } from "../../../../store/hooks";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
-import { ItwCredentialMultiClaim } from "./ItwCredentialMultiClaim.tsx";
 import { trackCopyListItem } from "../../analytics";
+import { ItwCredentialMultiClaim } from "./ItwCredentialMultiClaim.tsx";
 
 /**
  * Helper function to get the accessibility text for hidden claims.
