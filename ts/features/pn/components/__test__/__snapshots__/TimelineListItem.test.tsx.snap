@@ -182,7 +182,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -751,7 +750,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1320,7 +1318,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1889,7 +1886,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2458,7 +2454,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3027,7 +3022,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3596,7 +3590,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4365,7 +4358,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5134,7 +5126,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5903,7 +5894,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6672,7 +6662,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7441,7 +7430,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8210,7 +8198,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8779,7 +8766,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9348,7 +9334,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9917,7 +9902,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -10486,7 +10470,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -11055,7 +11038,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -11624,7 +11606,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -12393,7 +12374,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -13162,7 +13142,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -13931,7 +13910,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -14700,7 +14678,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -15469,7 +15446,6 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

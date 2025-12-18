@@ -182,7 +182,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -852,7 +851,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1650,7 +1648,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTA and no pay
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2003,7 +2000,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2528,7 +2524,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and hidde
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2881,7 +2876,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3548,7 +3542,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4075,7 +4068,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

@@ -41,7 +41,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -641,7 +640,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1500,7 +1498,6 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

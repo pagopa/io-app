@@ -182,7 +182,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -643,7 +642,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1219,7 +1217,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable-wi
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1774,7 +1771,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

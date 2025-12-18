@@ -182,7 +182,6 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -535,7 +534,6 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -888,7 +886,6 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1241,7 +1238,6 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1594,7 +1590,6 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1947,7 +1942,6 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2300,7 +2294,6 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2653,7 +2646,6 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3006,7 +2998,6 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3359,7 +3350,6 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3712,7 +3702,6 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4065,7 +4054,6 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4418,7 +4406,6 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4771,7 +4758,6 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5124,7 +5110,6 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5477,7 +5462,6 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5830,7 +5814,6 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6183,7 +6166,6 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6536,7 +6518,6 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6889,7 +6870,6 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7242,7 +7222,6 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7595,7 +7574,6 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7948,7 +7926,6 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8301,7 +8278,6 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8654,7 +8630,6 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9007,7 +8982,6 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9360,7 +9334,6 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9713,7 +9686,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -10176,7 +10148,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -10639,7 +10610,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -11102,7 +11072,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -11565,7 +11534,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -12028,7 +11996,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -12491,7 +12458,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -12954,7 +12920,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -13417,7 +13382,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -13880,7 +13844,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -14233,7 +14196,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -14586,7 +14548,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -14939,7 +14900,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -15292,7 +15252,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -15645,7 +15604,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -15998,7 +15956,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -16351,7 +16308,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -16704,7 +16660,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -17057,7 +17012,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -17520,7 +17474,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -17983,7 +17936,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -18446,7 +18398,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -18909,7 +18860,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -19372,7 +19322,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -19835,7 +19784,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -20298,7 +20246,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -20761,7 +20708,6 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -21224,7 +21170,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -21687,7 +21632,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -22150,7 +22094,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -22613,7 +22556,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -23076,7 +23018,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -23539,7 +23480,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -24002,7 +23942,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -24465,7 +24404,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -24928,7 +24866,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -25391,7 +25328,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -25744,7 +25680,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -26097,7 +26032,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -26450,7 +26384,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -26803,7 +26736,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -27156,7 +27088,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -27509,7 +27440,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -27862,7 +27792,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -28215,7 +28144,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -28568,7 +28496,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -29031,7 +28958,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -29494,7 +29420,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -29957,7 +29882,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -30420,7 +30344,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -30883,7 +30806,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -31346,7 +31268,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -31809,7 +31730,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -32272,7 +32192,6 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -32735,7 +32654,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -33250,7 +33168,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -33765,7 +33682,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -34280,7 +34196,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -34795,7 +34710,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -35310,7 +35224,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -35825,7 +35738,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -36340,7 +36252,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -36855,7 +36766,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -37370,7 +37280,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -37723,7 +37632,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -38076,7 +37984,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -38429,7 +38336,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -38782,7 +38688,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -39135,7 +39040,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -39488,7 +39392,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -39841,7 +39744,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -40194,7 +40096,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -40547,7 +40448,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -41062,7 +40962,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -41577,7 +41476,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -42092,7 +41990,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -42607,7 +42504,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -43122,7 +43018,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -43637,7 +43532,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -44152,7 +44046,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -44667,7 +44560,6 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -45182,7 +45074,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -45697,7 +45588,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -46212,7 +46102,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -46727,7 +46616,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -47242,7 +47130,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -47757,7 +47644,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -48272,7 +48158,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -48787,7 +48672,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -49302,7 +49186,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -49817,7 +49700,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -50170,7 +50052,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -50523,7 +50404,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -50876,7 +50756,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -51229,7 +51108,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -51582,7 +51460,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -51935,7 +51812,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -52288,7 +52164,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -52641,7 +52516,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -52994,7 +52868,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -53509,7 +53382,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -54024,7 +53896,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -54539,7 +54410,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -55054,7 +54924,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -55569,7 +55438,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -56084,7 +55952,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -56599,7 +56466,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -57114,7 +56980,6 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -57629,7 +57494,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -57982,7 +57846,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -58335,7 +58198,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -58688,7 +58550,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -59041,7 +58902,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -59394,7 +59254,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -59747,7 +59606,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -60100,7 +59958,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -60453,7 +60310,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -60806,7 +60662,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -61159,7 +61014,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -61512,7 +61366,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -61865,7 +61718,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -62218,7 +62070,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -62571,7 +62422,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -62924,7 +62774,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -63277,7 +63126,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -63630,7 +63478,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -63983,7 +63830,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -64336,7 +64182,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -64689,7 +64534,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -65042,7 +64886,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -65395,7 +65238,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -65748,7 +65590,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -66101,7 +65942,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -66454,7 +66294,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -66807,7 +66646,6 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

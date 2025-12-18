@@ -182,7 +182,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -707,7 +706,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1232,7 +1230,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source a
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1757,7 +1754,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2282,7 +2278,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2807,7 +2802,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source m
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3332,7 +3326,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3857,7 +3850,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4382,7 +4374,6 @@ exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source n
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4907,7 +4898,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5648,7 +5638,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6389,7 +6378,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source a
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7130,7 +7118,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7871,7 +7858,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8612,7 +8598,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source m
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9353,7 +9338,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -10094,7 +10078,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -10835,7 +10818,6 @@ exports[`F24ListBottomSheetLink should match snapshot (1 items, opening source n
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -11576,7 +11558,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -12540,7 +12521,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -13504,7 +13484,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source a
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -14468,7 +14447,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -15432,7 +15410,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -16396,7 +16373,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source m
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -17360,7 +17336,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -18324,7 +18299,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -19288,7 +19262,6 @@ exports[`F24ListBottomSheetLink should match snapshot (2 items, opening source n
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

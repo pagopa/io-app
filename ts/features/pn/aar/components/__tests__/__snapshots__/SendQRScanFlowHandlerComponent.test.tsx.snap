@@ -41,7 +41,6 @@ exports[`SendQRScanFlowHandlerComponent should match snapshot and track the scre
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

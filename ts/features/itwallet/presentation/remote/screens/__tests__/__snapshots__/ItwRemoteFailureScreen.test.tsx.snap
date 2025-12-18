@@ -182,7 +182,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1553,7 +1552,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2780,7 +2778,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4007,7 +4004,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5009,7 +5005,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6366,7 +6361,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7723,7 +7717,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_G
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8871,7 +8864,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -10243,7 +10235,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -11397,7 +11388,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

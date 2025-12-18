@@ -182,7 +182,6 @@ exports[`error screens should display an error screen in case of missing_sid err
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -949,7 +948,6 @@ exports[`error screens should display an error screen in case of preferences err
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1716,7 +1714,6 @@ exports[`loading screens + error interop should render the correct loading scree
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2483,7 +2480,6 @@ exports[`loading screens + error interop should render the correct loading scree
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3086,7 +3082,6 @@ exports[`loading screens + error interop should render the correct loading scree
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3689,7 +3684,6 @@ exports[`loading screens + error interop should render the correct loading scree
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4292,7 +4286,6 @@ exports[`loading screens + error interop should render the correct loading scree
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4895,7 +4888,6 @@ exports[`loading screens + error interop should render the correct loading scree
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

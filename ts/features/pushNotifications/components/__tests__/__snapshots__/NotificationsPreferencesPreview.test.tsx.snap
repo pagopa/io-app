@@ -182,7 +182,6 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -719,7 +718,6 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1256,7 +1254,6 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1793,7 +1790,6 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

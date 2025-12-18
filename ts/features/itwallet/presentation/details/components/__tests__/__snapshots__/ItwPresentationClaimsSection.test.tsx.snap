@@ -182,7 +182,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2077,7 +2076,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

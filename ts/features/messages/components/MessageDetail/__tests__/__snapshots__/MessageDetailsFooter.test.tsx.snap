@@ -182,7 +182,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -714,7 +713,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1246,7 +1244,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1778,7 +1775,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2310,7 +2306,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3002,7 +2997,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3694,7 +3688,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4386,7 +4379,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

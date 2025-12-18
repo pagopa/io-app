@@ -41,7 +41,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

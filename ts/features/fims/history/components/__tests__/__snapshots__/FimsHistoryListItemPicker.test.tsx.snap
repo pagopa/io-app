@@ -182,7 +182,6 @@ exports[`FimsHistoryListItem should call the "failureListItem" in case of (noneE
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -541,7 +540,6 @@ exports[`FimsHistoryListItem should call the "successListItem" in case of (some)
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -900,7 +898,6 @@ exports[`FimsHistoryListItem should call the "successListItem" in case of (someE
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1259,7 +1256,6 @@ exports[`FimsHistoryListItem should call the "successListItem" in case of (someL
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1618,7 +1614,6 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1975,7 +1970,6 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2332,7 +2326,6 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2689,7 +2682,6 @@ exports[`FimsHistoryListItem should render the LoadingListItem in the {"kind": "
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

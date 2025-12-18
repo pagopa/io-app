@@ -182,7 +182,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -760,7 +759,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1448,7 +1446,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneLoading 1`] 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1801,7 +1798,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneUpdating 1`]
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2154,7 +2150,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2732,7 +2727,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, non-empty 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3085,7 +3079,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3663,7 +3656,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, non-e
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4016,7 +4008,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4594,7 +4585,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, non
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4947,7 +4937,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5525,7 +5514,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5878,7 +5866,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6456,7 +6443,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7144,7 +7130,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneLoading 1`] 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7497,7 +7482,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneUpdating 1`]
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7850,7 +7834,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8428,7 +8411,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, non-empty 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8781,7 +8763,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9359,7 +9340,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, non-e
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9712,7 +9692,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -10290,7 +10269,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, non
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -10643,7 +10621,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -11221,7 +11198,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, no
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

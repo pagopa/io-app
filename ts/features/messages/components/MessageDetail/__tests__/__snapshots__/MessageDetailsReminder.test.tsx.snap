@@ -182,7 +182,6 @@ exports[`MessageDetailsReminder should match snapshot when the due date is missi
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -535,7 +534,6 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1022,7 +1020,6 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

@@ -183,7 +183,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -802,7 +801,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1421,7 +1419,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2040,7 +2037,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2659,7 +2655,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3278,7 +3273,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3897,7 +3891,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4516,7 +4509,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5135,7 +5127,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5754,7 +5745,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6373,7 +6363,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -6992,7 +6981,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -7611,7 +7599,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -8230,7 +8217,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9165,7 +9151,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -9784,7 +9769,6 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

@@ -182,7 +182,6 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -720,7 +719,6 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

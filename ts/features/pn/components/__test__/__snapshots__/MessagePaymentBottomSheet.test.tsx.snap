@@ -182,7 +182,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, no payments 1`] = `
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -584,7 +583,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

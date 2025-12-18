@@ -182,7 +182,6 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -912,7 +911,6 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

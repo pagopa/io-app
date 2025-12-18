@@ -182,7 +182,6 @@ exports[`PreconditionsTitle should match snapshot when title content is 'empty' 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -537,7 +536,6 @@ exports[`PreconditionsTitle should match snapshot when title content is 'header'
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -919,7 +917,6 @@ exports[`PreconditionsTitle should match snapshot when title content is 'header'
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1272,7 +1269,6 @@ exports[`PreconditionsTitle should match snapshot when title content is 'loading
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1648,7 +1644,6 @@ exports[`PreconditionsTitle should match snapshot when title content is undefine
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

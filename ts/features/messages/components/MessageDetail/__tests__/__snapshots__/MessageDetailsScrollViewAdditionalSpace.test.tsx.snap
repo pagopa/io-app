@@ -182,7 +182,6 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with butt
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -543,7 +542,6 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with butt
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -904,7 +902,6 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with butt
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1265,7 +1262,6 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with hidd
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1626,7 +1622,6 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with hidd
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1987,7 +1982,6 @@ exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with hidd
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

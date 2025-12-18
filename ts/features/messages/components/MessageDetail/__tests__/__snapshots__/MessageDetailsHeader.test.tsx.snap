@@ -182,7 +182,6 @@ exports[`MessageDetailsHeader component should match the snapshot with a valid t
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -798,7 +797,6 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

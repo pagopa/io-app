@@ -41,7 +41,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1498,7 +1497,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2956,7 +2954,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4414,7 +4411,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5872,7 +5868,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

@@ -182,7 +182,6 @@ exports[`PreconditionsContent should match snapshot when content category is 'co
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -594,7 +593,6 @@ exports[`PreconditionsContent should match snapshot when content category is 'co
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -947,7 +945,6 @@ exports[`PreconditionsContent should match snapshot when content category is 'er
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1511,7 +1508,6 @@ exports[`PreconditionsContent should match snapshot when content category is 'lo
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2016,7 +2012,6 @@ exports[`PreconditionsContent should match snapshot when content category is 'up
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2610,7 +2605,6 @@ exports[`PreconditionsContent should match snapshot when content category is und
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

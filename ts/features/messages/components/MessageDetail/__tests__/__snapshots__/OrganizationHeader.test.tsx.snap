@@ -182,7 +182,6 @@ exports[`OrganizationHeader component should match the snapshot for a TPM denomi
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -715,7 +714,6 @@ exports[`OrganizationHeader component should match the snapshot for a non third-
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

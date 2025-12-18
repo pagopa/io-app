@@ -41,7 +41,6 @@ exports[`AuthenticationNavigator renders all routes (snapshot) 1`] = `
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

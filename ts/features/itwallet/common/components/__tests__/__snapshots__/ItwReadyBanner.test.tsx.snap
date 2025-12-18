@@ -182,7 +182,6 @@ exports[`ItwWalletReadyBanner should match snapshot when ITW new interface activ
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -912,7 +911,6 @@ exports[`ItwWalletReadyBanner should match snapshot when ITW new interface activ
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

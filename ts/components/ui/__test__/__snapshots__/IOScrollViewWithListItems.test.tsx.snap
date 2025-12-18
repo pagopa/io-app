@@ -182,7 +182,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1114,7 +1113,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1771,7 +1769,6 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle as array correctly
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,

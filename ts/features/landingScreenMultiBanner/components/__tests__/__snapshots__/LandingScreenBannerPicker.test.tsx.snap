@@ -182,7 +182,6 @@ exports[`LandingBannerPicker should correctly render a banner if passed a valid 
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -595,7 +594,6 @@ exports[`LandingBannerPicker should not render a banner if no id is passed: noBa
         <RNSScreen
           activityState={2}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
