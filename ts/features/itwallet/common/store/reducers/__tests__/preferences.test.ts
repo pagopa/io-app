@@ -3,10 +3,8 @@ import MockDate from "mockdate";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import {
   itwCloseDiscoveryBanner,
-  itwFlagCredentialAsRequested,
   itwSetAuthLevel,
-  itwSetClaimValuesHidden,
-  itwUnflagCredentialAsRequested
+  itwSetClaimValuesHidden
 } from "../../actions/preferences";
 import reducer, {
   itwPreferencesInitialState,
@@ -15,9 +13,7 @@ import reducer, {
 import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
 
 describe("IT Wallet preferences reducer", () => {
-  const INITIAL_STATE: ItwPreferencesState = {
-    requestedCredentials: {}
-  };
+  const INITIAL_STATE: ItwPreferencesState = {};
 
   it("should return the initial state", () => {
     expect(reducer(undefined, applicationChangeState("active"))).toEqual(
@@ -40,48 +36,9 @@ describe("IT Wallet preferences reducer", () => {
     MockDate.reset();
   });
 
-  it("should handle itwFlagCredentialAsRequested action", () => {
-    const mockDate = "2024-11-14T20:43:21.361Z";
-    MockDate.set(mockDate);
-
-    const action = itwFlagCredentialAsRequested("MDL");
-    const newState = reducer(INITIAL_STATE, action);
-
-    expect(newState).toEqual({
-      ...newState,
-      requestedCredentials: {
-        MDL: mockDate
-      }
-    });
-    MockDate.reset();
-  });
-
-  it("should handle itwRemoveRequestedCredential action", () => {
-    const mockDate = "2024-11-14T20:43:21.361Z";
-    MockDate.set(mockDate);
-
-    const action = itwUnflagCredentialAsRequested("MDL");
-    const newState = reducer(
-      {
-        ...INITIAL_STATE,
-        requestedCredentials: {
-          MDL: mockDate
-        }
-      },
-      action
-    );
-
-    expect(newState).toEqual({
-      ...newState,
-      requestedCredentials: {}
-    });
-    MockDate.reset();
-  });
-
   it("should handle itwLifecycleStoresReset action and ensure some values are not reset", () => {
     const initialState: ItwPreferencesState = {
       hideDiscoveryBannerUntilDate: "2024-11-14T20:43:21.361Z",
-      requestedCredentials: { MDL: "2024-11-14T20:43:21.361Z" },
       isPendingReview: true,
       authLevel: "L2",
       claimValuesHidden: true,
@@ -128,7 +85,6 @@ describe("IT Wallet preferences reducer", () => {
     const newState = reducer(
       {
         hideDiscoveryBannerUntilDate: "abcd",
-        requestedCredentials: { MDL: "abcd" },
         isPendingReview: true,
         authLevel: "L2",
         claimValuesHidden: true,

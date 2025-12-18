@@ -435,13 +435,6 @@ export function trackItWalletCieCardReadingSuccess(itw_flow: ItwFlow) {
   );
 }
 
-export function trackItWalletDeferredIssuing(credential: MixPanelCredential) {
-  void mixpanelTrack(
-    ITW_SCREENVIEW_EVENTS.ITW_DEFERRED_ISSUING,
-    buildEventProperties("UX", "screen_view", { credential })
-  );
-}
-
 export function trackWalletCredentialFAC_SIMILE(
   credential: MixPanelCredential
 ) {

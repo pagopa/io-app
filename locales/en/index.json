@@ -3060,11 +3060,11 @@
       "toasts": {
         "added": "Added to favourites!",
         "removed": "Removed from favourites!",
-        "limitReached": "Cannot add service to favourites because you have reached the maximum limit."
+        "limitReached": "Maximum number of favorites reached"
       },
       "emptyList": {
-        "title": "Here you will see the list of your favorite services",
-        "subtitle": "Start searching and save the services you use the most to your favorites.",
+        "title": "Create your favorites list",
+        "subtitle": "Save your favorite services for easy access",
         "searchAction": "Start searching"
       },
       "removeAlert": {
@@ -3072,12 +3072,12 @@
         "confirm": "Yes, remove"
       },
       "bottomSheet": {
-        "title": "Sort list",
+        "title": "Sort by",
         "a11y": "Sort favourite services",
         "content": {
           "addedAt_desc": "Newest",
           "name_asc": "Name (A-Z)",
-          "addedAt_asc": "Oldest"
+          "addedAt_asc": "Oldest first"
         }
       }
     }
@@ -4851,11 +4851,6 @@
         "notEntitledCredentialError": {
           "title": "Non è possibile aggiungere il documento",
           "body": "Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.",
-          "primaryAction": "Ho capito"
-        },
-        "asyncCredentialError": {
-          "title": "La Motorizzazione Civile ha preso in carico la tua richiesta",
-          "body": "Riceverai un messaggio in app per continuare appena La Motorizzazione Civile avrà elaborato la tua richiesta.",
           "primaryAction": "Ho capito"
         },
         "issuerNotTrustedCommonError": {
