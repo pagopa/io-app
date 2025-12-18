@@ -121,7 +121,7 @@ platform :ios do
 
   desc "Submit a new Canary Build to TestFlight"
   lane :canary_ci_testflight do |options|
-
+    app_identifier = "it.pagopa.app.io.canary"
     # xCode 14.2, prevents altool to fail with error "Could not
     # determine the package’s bundle ID" during the "pilot" step
     # See https://github.com/fastlane/fastlane/issues/20741
@@ -138,7 +138,7 @@ platform :ios do
       duration: 1200,
     )
 
-    sync_code_signing(type: "appstore", app_identifier:"it.pagopa.app.io.canary", api_key: api_key)
+    sync_code_signing(type: "appstore", app_identifier: app_identifier, api_key: api_key)
 
     # Install pods
     cocoapods
@@ -176,6 +176,7 @@ platform :ios do
 
     # upload to App store
     pilot(
+      app_identifier: app_identifier,
       api_key: api_key,
       changelog: changelog,
       # max wait for App Store Connect processing (30 min)
