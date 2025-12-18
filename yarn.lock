@@ -3233,9 +3233,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-app-design-system@npm:5.11.12":
-  version: 5.11.12
-  resolution: "@pagopa/io-app-design-system@npm:5.11.12"
+"@pagopa/io-app-design-system@npm:5.11.13":
+  version: 5.11.13
+  resolution: "@pagopa/io-app-design-system@npm:5.11.13"
   dependencies:
     auto-changelog: ^2.4.0
     lodash: ^4.17.21
@@ -3256,7 +3256,7 @@ __metadata:
     react-native-reanimated: "*"
     react-native-safe-area-context: "*"
     react-native-svg: "*"
-  checksum: 0828c034f442a217d1c29d955261712d835a724a7522fbf12c59bb8ae71bb6dbe2e87e324a1cfdd4f9d1d3dd4b743af04d3fb73868a51a9b50877a6ed64ca595
+  checksum: c71811f615b9b2eda2635845e4ea415efb3c2dddbeedb995cd7b4641e2d3937ef5fd7f449214d2c54a4dcf32e8ec47f42d7cad06e35b43422970c25c141ce2ea
   languageName: node
   linkType: hard
 
@@ -3392,9 +3392,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-wallet@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "@pagopa/io-react-native-wallet@npm:2.3.0"
+"@pagopa/io-react-native-wallet@npm:^2.4.0":
+  version: 2.4.1
+  resolution: "@pagopa/io-react-native-wallet@npm:2.4.1"
   dependencies:
     dcql: ^0.2.21
     js-base64: ^3.7.7
@@ -3412,7 +3412,7 @@ __metadata:
     "@pagopa/io-react-native-jwt": "*"
     react: "*"
     react-native: "*"
-  checksum: 0df61952691653392f0f1492f6520416ebcda1ad19d054612fab3cecddb7f204378ca79f314f94d9820ccb926f8429efc68ad2bdb7be599ed1ec7a48eaebc1b3
+  checksum: 23dff582a4a8f560b5ef90b0e2c29b807877947ed5efc0e245fce2f21ce02d2795a4329fa5c4800475594f9445ce37454d9392d189503ce2d8e7d2790986819f
   languageName: node
   linkType: hard
 
@@ -3426,7 +3426,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/openapi-codegen-ts@npm:^14.0.1":
+"@pagopa/openapi-codegen-ts@npm:14.0.1":
   version: 14.0.1
   resolution: "@pagopa/openapi-codegen-ts@npm:14.0.1"
   dependencies:
@@ -3447,6 +3447,30 @@ __metadata:
     gen-api-models: dist/commands/gen-api-models/cli.js
     gen-api-sdk: dist/commands/gen-api-sdk/cli.js
   checksum: 4be08809b52a3d0a9af4c692fe3f5c982f2d02cd47243a0edc91b9361800c7228ce5d8a4deacbbe822ac240ef42c60d0603fdd0e44e69dbd369019d5c52b62e4
+  languageName: node
+  linkType: hard
+
+"@pagopa/openapi-codegen-ts@patch:@pagopa/openapi-codegen-ts@npm%3A14.0.1#./.yarn/patches/@pagopa-openapi-codegen-ts-npm-14.0.1-41ae0815dd.patch::locator=io%40workspace%3A.":
+  version: 14.0.1
+  resolution: "@pagopa/openapi-codegen-ts@patch:@pagopa/openapi-codegen-ts@npm%3A14.0.1#./.yarn/patches/@pagopa-openapi-codegen-ts-npm-14.0.1-41ae0815dd.patch::version=14.0.1&hash=17d45a&locator=io%40workspace%3A."
+  dependencies:
+    "@pagopa/ts-commons": ^10.15.0
+    fs-extra: ^6.0.0
+    nunjucks: ^3.2.3
+    openapi-types: ^10.0.0
+    prettier: ^1.12.1
+    safe-identifier: ^0.4.2
+    swagger-parser: ^10.0.3
+    write-yaml-file: ^4.1.3
+    yargs: ^15.0.1
+  peerDependencies:
+    fp-ts: ^2.16.5
+    io-ts: ^2.2.21
+  bin:
+    bundle-api-spec: dist/commands/bundle-api-spec/cli.js
+    gen-api-models: dist/commands/gen-api-models/cli.js
+    gen-api-sdk: dist/commands/gen-api-sdk/cli.js
+  checksum: 6a61f021c9a779e7a672acaa8021e23a4fdfe7de9b089eb1fdfe2ae68355d9c8125d385ce0f3437fb607ad6a3280730e1c8ce55219507e22c94814e729a1e295
   languageName: node
   linkType: hard
 
@@ -11410,7 +11434,7 @@ __metadata:
     "@babel/runtime": ^7.25.0
     "@gorhom/bottom-sheet": ^5.1.2
     "@jambit/eslint-plugin-typed-redux-saga": ^0.4.0
-    "@pagopa/io-app-design-system": 5.11.12
+    "@pagopa/io-app-design-system": 5.11.13
     "@pagopa/io-pagopa-commons": ^3.1.0
     "@pagopa/io-react-native-cie": ^1.2.2
     "@pagopa/io-react-native-cieid": ^0.3.5
@@ -11421,7 +11445,7 @@ __metadata:
     "@pagopa/io-react-native-jwt": ^2.1.0
     "@pagopa/io-react-native-login-utils": ^1.1.0
     "@pagopa/io-react-native-secure-storage": ^0.2.1
-    "@pagopa/io-react-native-wallet": ^2.3.0
+    "@pagopa/io-react-native-wallet": ^2.4.0
     "@pagopa/io-react-native-wallet-legacy": "npm:@pagopa/io-react-native-wallet@0.30.0"
     "@pagopa/io-react-native-zendesk": ^0.3.30
     "@pagopa/openapi-codegen-ts": ^14.0.1
@@ -16783,14 +16807,14 @@ __metadata:
 
 "react-native-webview@patch:react-native-webview@npm%3A13.16.0#./.yarn/patches/react-native-webview-npm-13.16.0-82f4e13202.patch::locator=io%40workspace%3A.":
   version: 13.16.0
-  resolution: "react-native-webview@patch:react-native-webview@npm%3A13.16.0#./.yarn/patches/react-native-webview-npm-13.16.0-82f4e13202.patch::version=13.16.0&hash=c47d69&locator=io%40workspace%3A."
+  resolution: "react-native-webview@patch:react-native-webview@npm%3A13.16.0#./.yarn/patches/react-native-webview-npm-13.16.0-82f4e13202.patch::version=13.16.0&hash=ac17ad&locator=io%40workspace%3A."
   dependencies:
     escape-string-regexp: ^4.0.0
     invariant: 2.2.4
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 20ca3a4bc78dc13e78c6ef7ac1dbfbab758d72fd1446219411a6d4fbb9bb1523d77ca8f554b318c14a5f7832e45c82c673384c9966a1a2dff4fefc22e5026f2e
+  checksum: e4a5902b133a2afa03b0320a706fff3324216e56f628719bc956ec59659c7f099cd2f44207e1525b47e0272e2ea0929d18c9cea8c95473b6d5992fc55a58179d
   languageName: node
   linkType: hard
 

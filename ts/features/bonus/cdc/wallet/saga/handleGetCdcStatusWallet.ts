@@ -39,12 +39,12 @@ export function* handleGetCdcStatusWallet(
             type: "cdc",
             category: "bonus",
             key: "cdc_card",
-            expireDate: cdcInfo.expiration_date,
-            numberOfCards: cdcInfo.number_of_cards
+            ...cdcInfo
           }
         ])
       );
       yield* put(getCdcStatusWallet.success(cdcInfo));
+      yield* call(analytics.trackCdcStatus);
     } else if (cdcStatusResponse.right.status === 404) {
       yield* put(getCdcStatusWallet.cancel());
     } else {

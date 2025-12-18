@@ -45,10 +45,7 @@ import {
   shouldExitForOfflineAccess,
   watchSessionRefreshInOfflineSaga
 } from "../../features/ingress/saga";
-import {
-  watchForceLogoutOnDifferentCF,
-  watchForceLogoutSaga
-} from "../../features/authentication/common/saga/watchForceLogoutSaga";
+import { watchForceLogoutSaga } from "../../features/authentication/common/saga/watchForceLogoutSaga";
 
 const aSessionToken = "a_session_token" as SessionToken;
 const aSessionInfo = O.some({
@@ -117,8 +114,6 @@ describe("initializeApplicationSaga", () => {
       .next(getKeyInfo)
       .fork(watchForceLogoutSaga)
       .next()
-      .fork(watchForceLogoutOnDifferentCF)
-      .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
       .next(200) // checkSession
@@ -170,8 +165,6 @@ describe("initializeApplicationSaga", () => {
       .next(getKeyInfo)
       .fork(watchForceLogoutSaga)
       .next()
-      .fork(watchForceLogoutOnDifferentCF)
-      .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
       .call(checkSession, undefined, formatRequestedTokenString())
@@ -216,8 +209,6 @@ describe("initializeApplicationSaga", () => {
       .next(trackKeychainFailures)
       .next(getKeyInfo)
       .fork(watchForceLogoutSaga)
-      .next()
-      .fork(watchForceLogoutOnDifferentCF)
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
@@ -268,8 +259,6 @@ describe("initializeApplicationSaga", () => {
       .next(trackKeychainFailures)
       .next(getKeyInfo)
       .fork(watchForceLogoutSaga)
-      .next()
-      .fork(watchForceLogoutOnDifferentCF)
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
@@ -334,8 +323,6 @@ describe("initializeApplicationSaga", () => {
       .next(getKeyInfo)
       .fork(watchForceLogoutSaga)
       .next()
-      .fork(watchForceLogoutOnDifferentCF)
-      .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
       .next(200) // check session
@@ -385,8 +372,6 @@ describe("initializeApplicationSaga", () => {
       .next(trackKeychainFailures)
       .next(getKeyInfo)
       .fork(watchForceLogoutSaga)
-      .next()
-      .fork(watchForceLogoutOnDifferentCF)
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()

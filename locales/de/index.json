@@ -2314,12 +2314,6 @@
           "title": "Zahlungsmethode in der App aktivieren",
           "subtitle": "Bevor du die Zahlung erneut versuchst, wähle die Zahlungsmethode in deinem Konto aus und aktiviere die Funktion 'In-App-Zahlungen'."
         },
-        "PAYMENT_METHODS_NOT_AVAILABLE": {
-          "title": "Möchtest du mit Karte bezahlen? Füge sie jetzt hinzu!",
-          "subtitle": "Die Methode wird im Konto gespeichert, so dass du beim nächsten Mal einfacher bezahlen kannst.",
-          "primaryAction": "Karte hinzufügen",
-          "secondaryAction": "Andere Methoden verwenden"
-        },
         "PAYMENT_REVERSED": {
           "title": "Die Zahlung ist fehlgeschlagen",
           "subtitle": "Der autorisierte Betrag wurde auf deine Zahlungsmethode zurücküberwiesen. Die Überweisung kann einige Zeit dauern.",
@@ -2698,7 +2692,8 @@
       "institutions": {
         "title": "National"
       },
-      "searchLink": "Suche nach allen verfügbaren Diensten"
+      "searchLink": "Suche nach allen verfügbaren Diensten",
+      "favourites": "Bevorzugte Dienste"
     },
     "institution": {
       "failure": {
@@ -2759,6 +2754,9 @@
         "tosLink": "Nutzungsbedingungen",
         "privacyLink": "Datenschutzerklärung"
       }
+    },
+    "favouriteServices": {
+      "title": "Meine Favoriten"
     }
   },
   "identification": {
@@ -3229,8 +3227,12 @@
     },
     "wallet": {
       "home": {
-        "emptyMessage": "Verwahre hier deine Zahlungsmethoden, die Nationale Jugendkarte, Boni und Rabatte.",
-        "cta": "Dem Konto hinzufügen",
+        "screen": {
+          "legacy": {
+            "emptyMessage": "Verwahre hier deine Zahlungsmethoden, die Nationale Jugendkarte, Boni und Rabatte.",
+            "cta": "Dem Konto hinzufügen"
+          }
+        },
         "toast": {
           "newMethod": "Element hinzugefügt!"
         },
@@ -3569,11 +3571,6 @@
         "notEntitledCredentialError": {
           "title": "Das Dokument kann nicht hinzugefügt werden",
           "body": "Vergewissere dich, dass du im Besitz des gültigen physischen Dokuments bist, bevor du dessen digitale Version anforderst.",
-          "primaryAction": "Verstanden"
-        },
-        "asyncCredentialError": {
-          "title": "Das Führerscheinamt bearbeitet deinen Antrag",
-          "body": "Du erhältst in der App eine Mitteilung, dass du fortfahren kannst, sobald dein Antrag bearbeitet ist.",
           "primaryAction": "Verstanden"
         },
         "credentialAlreadyAdded": {

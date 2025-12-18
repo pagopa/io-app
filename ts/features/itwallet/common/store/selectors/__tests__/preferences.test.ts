@@ -6,7 +6,7 @@ import { appReducer } from "../../../../../../store/reducers";
 import {
   itwAuthLevelSelector,
   itwIsDiscoveryBannerHiddenSelector,
-  itwRequestedCredentialsSelector
+  itwIsPidReissuingSurveyHiddenSelector
 } from "../preferences";
 import { ItwAuthLevel } from "../../../utils/itwTypesUtils.ts";
 
@@ -27,27 +27,6 @@ describe("itwIsDiscoveryBannerHiddenSelector", () => {
         })
       )
     ).toBe(expected);
-  });
-});
-
-describe("itwRequestedCredentialsSelector", () => {
-  it("should return the list of requested credentials in the past 24 hours", () => {
-    MockDate.set("2023-11-15T20:43:21.361Z");
-
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-
-    expect(
-      itwRequestedCredentialsSelector(
-        _.set(globalState, "features.itWallet.preferences", {
-          requestedCredentials: {
-            MDL: "2023-11-14T20:43:21.362Z",
-            EuropeanDisabilityCard: "2023-11-14T20:43:21.360Z",
-            EuropeanHealthInsuranceCard: "2023-11-14T20:43:21.361Z"
-          }
-        })
-      )
-    ).toEqual(["MDL"]);
-    MockDate.reset();
   });
 });
 
@@ -93,5 +72,22 @@ describe("itwAuthLevelSelector", () => {
     };
 
     expect(itwAuthLevelSelector(updatedState)).toBeUndefined();
+  });
+});
+
+describe("itwIsPidReissuingSurveyHiddenSelector", () => {
+  afterEach(() => {
+    // Always reset the date after each test to avoid side effects
+    MockDate.reset();
+  });
+
+  it("should set the hidden state of the bottom sheet", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+
+    const updatedState = _.set(globalState, "features.itWallet.preferences", {
+      isPidReissuingSurveyHidden: true
+    });
+
+    expect(itwIsPidReissuingSurveyHiddenSelector(updatedState)).toBe(true);
   });
 });

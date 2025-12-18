@@ -15,10 +15,12 @@ import ROUTES from "../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
+  trackItwSurveyRequest,
   trackOpenWalletScreen,
   trackWalletAdd
 } from "../../itwallet/analytics";
 import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet.tsx";
+import { itwSetPidReissuingSurveyHidden } from "../../itwallet/common/store/actions/preferences.ts";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
@@ -48,7 +50,11 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     route.params?.requiredEidFeedback || false
   );
   const scrollViewContentRef = useAnimatedRef<Animated.ScrollView>();
-  const itwFeedbackBottomSheet = useItwEidFeedbackBottomSheet();
+  const itwFeedbackBottomSheet = useItwEidFeedbackBottomSheet({
+    onPrimaryAction: () => {
+      dispatch(itwSetPidReissuingSurveyHidden(true));
+    }
+  });
 
   // We need to use a local state to separate the UI state from the redux state
   // This prevents to display the refresh indicator when the refresh is triggered by other components
@@ -77,7 +83,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
       animatedRef: scrollViewContentRef,
       actions: [
         {
-          accessibilityLabel: I18n.t("features.wallet.home.cta"),
+          accessibilityLabel: I18n.t("features.wallet.home.screen.legacy.cta"),
           icon: "add",
           onPress: handleAddToWalletButtonPress
         }
@@ -117,11 +123,20 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
         isNewElementAdded.current = false;
       }
       if (isRequiredEidFeedback.current) {
+        trackItwSurveyRequest({
+          survey_id: "confirm_eid_flow_exit",
+          survey_page: route.name
+        });
         itwFeedbackBottomSheet.present();
         // eslint-disable-next-line functional/immutable-data
         isRequiredEidFeedback.current = false;
       }
-    }, [isNewElementAdded, isRequiredEidFeedback, itwFeedbackBottomSheet])
+    }, [
+      isNewElementAdded,
+      isRequiredEidFeedback,
+      itwFeedbackBottomSheet,
+      route.name
+    ])
   );
 
   const handleRefreshWallet = useCallback(() => {

@@ -1,6 +1,6 @@
 {
   "name": "io",
-  "version": "3.21.0-rc.3",
+  "version": "3.22.0-rc.4",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -58,7 +58,7 @@
     "@babel/plugin-transform-react-jsx": "^7.25.9",
     "@babel/plugin-transform-regenerator": "^7.18.6",
     "@gorhom/bottom-sheet": "^5.1.2",
-    "@pagopa/io-app-design-system": "5.11.12",
+    "@pagopa/io-app-design-system": "5.11.13",
     "@pagopa/io-pagopa-commons": "^3.1.0",
     "@pagopa/io-react-native-cie": "^1.2.2",
     "@pagopa/io-react-native-cieid": "^0.3.5",
@@ -69,7 +69,7 @@
     "@pagopa/io-react-native-jwt": "^2.1.0",
     "@pagopa/io-react-native-login-utils": "^1.1.0",
     "@pagopa/io-react-native-secure-storage": "^0.2.1",
-    "@pagopa/io-react-native-wallet": "^2.3.0",
+    "@pagopa/io-react-native-wallet": "^2.4.0",
     "@pagopa/io-react-native-wallet-legacy": "npm:@pagopa/io-react-native-wallet@0.30.0",
     "@pagopa/io-react-native-zendesk": "^0.3.30",
     "@pagopa/react-native-cie": "^1.4.3",
@@ -272,7 +272,8 @@
     "react-native-webview@^13.13.5": "patch:react-native-webview@npm%3A13.13.5#./.yarn/patches/react-native-webview-npm-13.13.5-802657184f.patch",
     "react-native-reanimated@^3.17.5": "patch:react-native-reanimated@npm%3A3.17.5#./.yarn/patches/react-native-reanimated-npm-3.17.5-134bd4e99e.patch",
     "react-native-pdf@6.7.7": "patch:react-native-pdf@npm%3A6.7.7#./.yarn/patches/react-native-pdf-npm-6.7.7-7aa1e3a631.patch",
-    "react-native-webview@^13.16.0": "patch:react-native-webview@npm%3A13.16.0#./.yarn/patches/react-native-webview-npm-13.16.0-82f4e13202.patch"
+    "react-native-webview@^13.16.0": "patch:react-native-webview@npm%3A13.16.0#./.yarn/patches/react-native-webview-npm-13.16.0-82f4e13202.patch",
+    "@pagopa/openapi-codegen-ts@^14.0.1": "patch:@pagopa/openapi-codegen-ts@npm%3A14.0.1#./.yarn/patches/@pagopa-openapi-codegen-ts-npm-14.0.1-41ae0815dd.patch"
   },
   "react-native": {
     "path": "path-browserify",

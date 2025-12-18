@@ -1,7 +1,7 @@
-import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
+import { ListItemHeader } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { memo, useMemo } from "react";
-import { View } from "react-native";
+import { useMemo } from "react";
+import { StyleSheet, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../store/hooks";
@@ -12,12 +12,11 @@ import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/d
 import { ItwWalletCardsContainer } from "../../itwallet/wallet/components/ItwWalletCardsContainer";
 import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
 import {
-  isWalletEmptySelector,
-  selectIsWalletLoading,
   selectWalletCategories,
   selectWalletOtherCards,
   shouldRenderItwCardsContainerSelector,
-  shouldRenderWalletEmptyStateSelector
+  shouldRenderWalletEmptyStateSelector,
+  shouldRenderWalletLoadingStateSelector
 } from "../store/selectors";
 import { withWalletCategoryFilter } from "../utils";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
@@ -31,8 +30,9 @@ import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
  * and the empty state
  */
 const WalletCardsContainer = () => {
-  const isLoading = useIOSelector(selectIsWalletLoading);
-  const isWalletEmpty = useIOSelector(isWalletEmptySelector);
+  const shouldRenderLoadingState = useIOSelector(
+    shouldRenderWalletLoadingStateSelector
+  );
   const shouldRenderEmptyState = useIOSelector(
     shouldRenderWalletEmptyStateSelector
   );
@@ -41,10 +41,6 @@ const WalletCardsContainer = () => {
   );
 
   useItwWalletInstanceRevocationAlert();
-
-  // Loading state is only displayed if there is the initial loading and there are no cards or
-  // placeholders in the wallet
-  const shouldRenderLoadingState = isLoading && isWalletEmpty;
 
   // Content to render in the wallet screen, based on the current state
   const walletContent = useMemo(() => {
@@ -55,41 +51,30 @@ const WalletCardsContainer = () => {
       return <WalletEmptyScreenContent />;
     }
     return (
-      <View testID="walletCardsContainerTestID" style={{ flex: 1 }}>
+      <View testID="walletCardsContainerTestID" style={styles.content}>
+        <ItwUpgradeBanner />
+        <ItwWalletNotAvailableBanner />
         {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
         <OtherWalletCardsContainer />
       </View>
     );
   }, [
-    shouldRenderEmptyState,
     shouldRenderLoadingState,
+    shouldRenderEmptyState,
     shouldRenderItwCardsContainer
   ]);
 
   return (
     <Animated.View
-      style={{ flex: 1, paddingTop: 16 }}
+      style={styles.container}
       layout={LinearTransition.duration(200)}
     >
-      <WalletBannersContainer />
+      <ItwEnvironmentAlert />
+      <ItwDiscoveryBannerStandalone />
       {walletContent}
     </Animated.View>
   );
 };
-
-/**
- * Renders the banners that are displayed at the top of the wallet screen
- */
-const WalletBannersContainer = memo(() => (
-  <VStack space={16}>
-    <ItwEnvironmentAlert />
-    <ItwUpgradeBanner />
-    <ItwWalletNotAvailableBanner />
-    <ItwDiscoveryBannerStandalone />
-    {/* Dummy view wich adds a spacer in case one of the above banners is rendered */}
-    <View />
-  </VStack>
-));
 
 /**
  * Skeleton for the wallet cards container
@@ -148,3 +133,15 @@ export {
   OtherWalletCardsContainer,
   WalletCardsContainer
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 16,
+    gap: 16
+  },
+  content: {
+    flex: 1,
+    gap: 8
+  }
+});
