@@ -8,8 +8,7 @@ import {
   trackAddCredentialUnexpectedFailure,
   trackCredentialInvalidStatusFailure,
   trackCredentialNotEntitledFailure,
-  trackItwAddCredentialNotTrustedIssuer,
-  trackItWalletDeferredIssuing
+  trackItwAddCredentialNotTrustedIssuer
 } from "../../analytics";
 import { getMixPanelCredential } from "../../analytics/utils/analyticsUtils";
 import {
@@ -39,10 +38,6 @@ export const useCredentialEventsTracking = ({
     }
 
     const credential = getMixPanelCredential(credentialType, isItwL3);
-
-    if (failure.type === CredentialIssuanceFailureType.ASYNC_ISSUANCE) {
-      return trackItWalletDeferredIssuing(credential);
-    }
 
     if (
       failure.type === CredentialIssuanceFailureType.INVALID_STATUS &&

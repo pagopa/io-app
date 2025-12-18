@@ -4775,6 +4775,12 @@
           }
         }
       },
+      "credentialsCatalogue": {
+        "failure": {
+          "content": "Non siamo riusciti a caricare la lista dei documenti disponibili",
+          "action": "Prova di nuovo"
+        }
+      },
       "identification": {
         "nfc": {
           "title": "Attiva l'NFC per continuare",
@@ -5080,11 +5086,6 @@
           "body": "Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.",
           "primaryAction": "Ho capito"
         },
-        "asyncCredentialError": {
-          "title": "La Motorizzazione Civile ha preso in carico la tua richiesta",
-          "body": "Riceverai un messaggio in app per continuare appena La Motorizzazione Civile avrà elaborato la tua richiesta.",
-          "primaryAction": "Ho capito"
-        },
         "issuerNotTrustedCommonError": {
           "title": "Un problema non permette di continuare",
           "subtitle": "Si è verificato un errore tecnico che impedisce di ottenere {{credential}}. Riprova.\nSe il problema persiste, contatta l’assistenza.",
@@ -5128,6 +5129,12 @@
         "cieNotRegistered": {
           "title": "Registra la CIE in app CieID per continuare",
           "subtitle": "Per ottenere IT-Wallet, completa prima la registrazione della tua CIE in app CieID e poi riprova."
+        },
+        "mdlMessageExpired": {
+          "title": "Richiesta scaduta",
+          "subtitleStart": "Questa richiesta non è più valida ma puoi aggiungere di nuovo la tua ",
+          "subtitleBold": "Patente su IO.",
+          "primaryAction": "Aggiungi di nuovo"
         }
       },
       "notMatchingIdentityScreen": {

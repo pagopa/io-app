@@ -3573,11 +3573,6 @@
           "body": "Vergewissere dich, dass du im Besitz des gültigen physischen Dokuments bist, bevor du dessen digitale Version anforderst.",
           "primaryAction": "Verstanden"
         },
-        "asyncCredentialError": {
-          "title": "Das Führerscheinamt bearbeitet deinen Antrag",
-          "body": "Du erhältst in der App eine Mitteilung, dass du fortfahren kannst, sobald dein Antrag bearbeitet ist.",
-          "primaryAction": "Verstanden"
-        },
         "credentialAlreadyAdded": {
           "title": "Du hast dieses Dokument bereits",
           "body": "Die digitale Version des Dokuments befindet sich bereits in deinem Konto.",
