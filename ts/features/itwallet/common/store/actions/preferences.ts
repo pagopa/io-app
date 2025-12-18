@@ -5,14 +5,6 @@ export const itwCloseDiscoveryBanner = createStandardAction(
   "ITW_CLOSE_DISCOVERY_BANNER"
 )();
 
-export const itwFlagCredentialAsRequested = createStandardAction(
-  "ITW_FLAG_CREDENTIAL_AS_REQUESTED"
-)<string>();
-
-export const itwUnflagCredentialAsRequested = createStandardAction(
-  "ITW_UNFLAG_CREDENTIAL_AS_REQUESTED"
-)<string>();
-
 export const itwSetReviewPending = createStandardAction(
   "ITW_SET_REVIEW_PENDING"
 )<boolean>();
@@ -51,8 +43,6 @@ export const itwSetPidReissuingSurveyHidden = createStandardAction(
 
 export type ItwPreferencesActions =
   | ActionType<typeof itwCloseDiscoveryBanner>
-  | ActionType<typeof itwFlagCredentialAsRequested>
-  | ActionType<typeof itwUnflagCredentialAsRequested>
   | ActionType<typeof itwSetReviewPending>
   | ActionType<typeof itwSetAuthLevel>
   | ActionType<typeof itwSetClaimValuesHidden>

@@ -1,7 +1,7 @@
-import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
+import { ListItemHeader } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { memo, useMemo } from "react";
-import { View } from "react-native";
+import { useMemo } from "react";
+import { StyleSheet, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../store/hooks";
@@ -51,8 +51,9 @@ const WalletCardsContainer = () => {
       return <WalletEmptyScreenContent />;
     }
     return (
-      <View testID="walletCardsContainerTestID" style={{ flex: 1 }}>
-        <WalletBannersContainer />
+      <View testID="walletCardsContainerTestID" style={styles.content}>
+        <ItwUpgradeBanner />
+        <ItwWalletNotAvailableBanner />
         {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
         <OtherWalletCardsContainer />
       </View>
@@ -65,27 +66,15 @@ const WalletCardsContainer = () => {
 
   return (
     <Animated.View
-      style={{ flex: 1, paddingTop: 16 }}
+      style={styles.container}
       layout={LinearTransition.duration(200)}
     >
+      <ItwEnvironmentAlert />
+      <ItwDiscoveryBannerStandalone />
       {walletContent}
     </Animated.View>
   );
 };
-
-/**
- * Renders the banners that are displayed at the top of the wallet screen
- */
-const WalletBannersContainer = memo(() => (
-  <VStack space={16}>
-    <ItwEnvironmentAlert />
-    <ItwUpgradeBanner />
-    <ItwWalletNotAvailableBanner />
-    <ItwDiscoveryBannerStandalone />
-    {/* Dummy view wich adds a spacer in case one of the above banners is rendered */}
-    <View />
-  </VStack>
-));
 
 /**
  * Skeleton for the wallet cards container
@@ -144,3 +133,15 @@ export {
   OtherWalletCardsContainer,
   WalletCardsContainer
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 16,
+    gap: 16
+  },
+  content: {
+    flex: 1,
+    gap: 8
+  }
+});
