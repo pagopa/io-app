@@ -1,7 +1,3 @@
-// TODO: test navigation.replace
-// TODO: test Alert.alert on close press
-// TODO: test Alert.alert actions
-
 import { createStore } from "redux";
 import { Alert } from "react-native";
 import { act, fireEvent } from "@testing-library/react-native";
