@@ -39,17 +39,11 @@ export const forceUpdateItwSuperProperties = (
   registerSuperProperties(partialProps);
 };
 
-// #region Super properties builders
-
 export const buildItwSuperProperties = (
   state: GlobalState
 ): Pick<ItwSuperProperties, "OFFLINE_ACCESS_REASON"> => ({
   OFFLINE_ACCESS_REASON: offlineReasonHandler(state)
 });
-
-// #endregion
-
-// #region Utility functions
 
 const offlineReasonHandler = (
   state: GlobalState
@@ -57,5 +51,3 @@ const offlineReasonHandler = (
   const offlineAccessReason = offlineAccessReasonSelector(state);
   return offlineAccessReason ? offlineAccessReason : "not_available";
 };
-
-// #endregion
