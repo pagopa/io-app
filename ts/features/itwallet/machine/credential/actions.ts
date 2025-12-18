@@ -16,7 +16,6 @@ import {
   trackWalletDataShareAccepted
 } from "../../analytics";
 import { getMixPanelCredential } from "../../analytics/utils/analyticsUtils";
-import { updateCredentialAddedProperties } from "../../analytics/properties/propertyUpdaters";
 import {
   itwFlagCredentialAsRequested,
   itwUnflagCredentialAsRequested
@@ -189,7 +188,6 @@ export const createCredentialIssuanceActionsImplementation = (
       const isItwL3 = itwLifecycleIsITWalletValidSelector(store.getState());
       const credential = getMixPanelCredential(context.credentialType, isItwL3);
       trackSaveCredentialSuccess(credential);
-      updateCredentialAddedProperties(credential);
     }
   },
 

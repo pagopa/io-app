@@ -12,7 +12,6 @@ import {
   trackItwDeactivated,
   trackSaveCredentialSuccess
 } from "../../analytics";
-import { updateITWStatusAndPIDProperties } from "../../analytics/properties/propertyUpdaters";
 import {
   itwSetAuthLevel,
   itwFreezeSimplifiedActivationRequirements,
@@ -321,7 +320,6 @@ export const createEidIssuanceActionsImplementation = (
     trackSaveCredentialSuccess(
       context.level === "l3" ? "ITW_PID" : "ITW_ID_V2"
     );
-    updateITWStatusAndPIDProperties(store.getState());
   },
 
   trackWalletInstanceRevocation: () => {

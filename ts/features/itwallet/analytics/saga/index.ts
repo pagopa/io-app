@@ -1,6 +1,23 @@
-import { select } from "typed-redux-saga/macro";
+import { fork, select, takeEvery } from "typed-redux-saga/macro";
+import { SagaIterator } from "redux-saga";
 import { GlobalState } from "../../../../store/reducers/types";
 import { updateItwAnalyticsProperties } from "../properties/propertyUpdaters";
+import {
+  itwCredentialsStore,
+  itwCredentialsRemove
+} from "../../credentials/store/actions";
+import {
+  handleCredentialStoredAnalytics,
+  handleCredentialRemovedAnalytics
+} from "./credentialAnalyticsHandlers";
+
+export function* watchItwAnalyticsSaga(): SagaIterator {
+  // Initial full sync: aligns Mixpanel with current IT-Wallet state
+  yield* fork(syncItwAnalyticsProperties);
+
+  // Reactive updates: keep analytics in sync with store changes
+  yield* fork(watchItwCredentialsAnalyticsSaga);
+}
 
 /**
  * Saga that performs a full sync of all ITW analytics properties
@@ -9,4 +26,9 @@ import { updateItwAnalyticsProperties } from "../properties/propertyUpdaters";
 export function* syncItwAnalyticsProperties() {
   const state: GlobalState = yield* select();
   updateItwAnalyticsProperties(state);
+}
+
+export function* watchItwCredentialsAnalyticsSaga(): SagaIterator {
+  yield* takeEvery(itwCredentialsStore, handleCredentialStoredAnalytics);
+  yield* takeEvery(itwCredentialsRemove, handleCredentialRemovedAnalytics);
 }

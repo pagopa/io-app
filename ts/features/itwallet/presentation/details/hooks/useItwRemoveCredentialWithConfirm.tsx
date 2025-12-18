@@ -5,7 +5,6 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { trackItwCredentialDelete } from "../../../analytics";
 import { getMixPanelCredential } from "../../../analytics/utils/analyticsUtils";
-import { updateCredentialDeletedProperties } from "../../../analytics/properties/propertyUpdaters";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { itwCredentialsRemoveByType } from "../../../credentials/store/actions";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
@@ -30,8 +29,6 @@ export const useItwRemoveCredentialWithConfirm = (
     toast.success(
       I18n.t("features.itWallet.presentation.credentialDetails.toast.removed")
     );
-    void updateCredentialDeletedProperties(mixpanelCredential);
-
     navigation.pop();
   };
 

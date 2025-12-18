@@ -60,7 +60,7 @@ const updateItwSuperPropertiesWithProps = (props: ItwSuperProperties) => {
   registerSuperProperties(props);
 };
 
-export const updateITWStatusAndPIDProperties = (state: GlobalState) => {
+export const updateItwStatusAndPIDProperties = (state: GlobalState) => {
   const authLevel = itwAuthLevelSelector(state);
   if (!authLevel) {
     return;
@@ -111,6 +111,7 @@ export const updateCredentialDeletedProperties = (
   if (!isItwAnalyticsCredential(credential)) {
     return;
   }
+
   forceUpdateItwProfileProperties({
     [credential]: "not_available"
   });
@@ -125,6 +126,7 @@ export const updateCredentialAddedProperties = (
   if (!isItwAnalyticsCredential(credential)) {
     return;
   }
+
   forceUpdateItwProfileProperties({
     [credential]: "valid"
   });
