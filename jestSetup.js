@@ -267,14 +267,12 @@ jest.mock("@react-native-community/netinfo", () => ({
 // eslint-disable-next-line functional/immutable-data
 window.navigator = {};
 jest.mock("reactotron-react-native", () => ({
-  default: {
-    configure: jest.fn().mockReturnThis(),
-    setAsyncStorageHandler: jest.fn().mockReturnThis(),
-    useReactNative: jest.fn().mockReturnThis(),
-    use: jest.fn().mockReturnThis(),
-    connect: jest.fn().mockReturnThis(),
-    onCustomCommand: jest.fn()
-  }
+  configure: jest.fn().mockReturnThis(),
+  setAsyncStorageHandler: jest.fn().mockReturnThis(),
+  useReactNative: jest.fn().mockReturnThis(),
+  use: jest.fn().mockReturnThis(),
+  connect: jest.fn().mockReturnThis(),
+  onCustomCommand: jest.fn()
 }));
 
 jest.mock("uuid", () => ({
