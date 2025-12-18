@@ -7,9 +7,9 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
+import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -26,21 +26,21 @@ import {
   trackStartAddNewCredential
 } from "../../analytics";
 import { ItwDiscoveryBannerOnboarding } from "../../common/components/discoveryBanner/ItwDiscoveryBannerOnboarding";
-import { selectItwEnv } from "../../common/store/selectors/environment";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import { isItwEnabledSelector } from "../../common/store/selectors/remoteConfig";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import { selectItwEnv } from "../../common/store/selectors/environment";
 import {
   availableCredentials,
   newCredentials,
   upcomingCredentials
 } from "../../common/utils/itwCredentialUtils";
-import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions/index.ts";
 import {
   itwIsCredentialsCatalogueLoading,
   itwIsCredentialsCatalogueUnavailable
 } from "../../credentialsCatalogue/store/selectors/index.ts";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
+import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions/index.ts";
 
 /**
  * Local feature flag that enables catalogue loading/error handling.
