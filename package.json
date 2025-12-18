@@ -140,7 +140,7 @@
     "react-native-reanimated": "^3.19.3",
     "react-native-safe-area-context": "^5.5.2",
     "react-native-screen-brightness": "^2.0.0-alpha",
-    "react-native-screens": "^4.17.1",
+    "react-native-screens": "4.16.0",
     "react-native-screenshot-prevent": "^1.2.1",
     "react-native-share": "^12.0.9",
     "react-native-splash-screen": "^3.2.0",
