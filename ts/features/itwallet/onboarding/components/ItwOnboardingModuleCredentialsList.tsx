@@ -10,7 +10,6 @@ import {
   isNewCredential,
   isUpcomingCredential
 } from "../../common/utils/itwCredentialUtils";
-import { itwRequestedCredentialsSelector } from "../../common/store/selectors/preferences";
 import { itwCredentialsTypesSelector } from "../../credentials/store/selectors";
 import {
   itwLifecycleIsITWalletValidSelector,
@@ -36,7 +35,6 @@ export const ItwOnboardingModuleCredentialsList = ({
   const remotelyDisabledCredentials = useIOSelector(
     itwDisabledCredentialsSelector
   );
-  const requestedCredentials = useIOSelector(itwRequestedCredentialsSelector);
   const itwCredentialsTypes = useIOSelector(itwCredentialsTypesSelector);
   const isITWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
@@ -79,7 +77,6 @@ export const ItwOnboardingModuleCredentialsList = ({
       type={type}
       isActive={itwCredentialsTypes.includes(type)}
       isDisabled={remotelyDisabledCredentials.includes(type)}
-      isRequested={requestedCredentials.includes(type)}
       isUpcoming={isUpcomingCredential(type)}
       isNew={isNewCredential(type)}
       isCredentialIssuancePending={isCredentialIssuancePending}

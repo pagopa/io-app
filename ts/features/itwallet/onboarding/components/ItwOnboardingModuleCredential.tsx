@@ -55,11 +55,11 @@ const ItwOnboardingModuleCredential = ({
   onPress,
   isActive,
   isDisabled,
-  isRequested,
   isUpcoming,
   isNew,
   isSelectedCredential,
-  isCredentialIssuancePending
+  isCredentialIssuancePending,
+  isRequested = false
 }: Props) => {
   const badge = useMemo((): Badge | undefined => {
     if (isActive) {
