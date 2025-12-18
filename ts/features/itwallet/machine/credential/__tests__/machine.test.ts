@@ -107,8 +107,6 @@ describe("itwCredentialIssuanceMachine", () => {
   const closeIssuance = jest.fn();
   const storeWalletInstanceAttestation = jest.fn();
   const storeCredential = jest.fn();
-  const flagCredentialAsRequested = jest.fn();
-  const unflagCredentialAsRequested = jest.fn();
   const handleSessionExpired = jest.fn();
   const trackStartAddCredential = jest.fn();
   const trackAddCredential = jest.fn();
@@ -122,7 +120,6 @@ describe("itwCredentialIssuanceMachine", () => {
   const obtainStatusAssertion = jest.fn();
 
   const isSessionExpired = jest.fn();
-  const isDeferredIssuance = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn();
   const isStatusError = jest.fn();
   const isSkipNavigation = jest.fn();
@@ -140,8 +137,6 @@ describe("itwCredentialIssuanceMachine", () => {
       closeIssuance,
       storeWalletInstanceAttestation,
       storeCredential,
-      flagCredentialAsRequested,
-      unflagCredentialAsRequested,
       handleSessionExpired,
       trackStartAddCredential,
       trackAddCredential,
@@ -167,7 +162,6 @@ describe("itwCredentialIssuanceMachine", () => {
     },
     guards: {
       isSessionExpired,
-      isDeferredIssuance,
       hasValidWalletInstanceAttestation,
       isStatusError,
       isEidExpired,

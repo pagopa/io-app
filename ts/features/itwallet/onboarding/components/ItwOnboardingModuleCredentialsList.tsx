@@ -36,7 +36,6 @@ export const ItwOnboardingModuleCredentialsList = ({
   const remotelyDisabledCredentials = useIOSelector(
     itwDisabledCredentialsSelector
   );
-  const requestedCredentials = useIOSelector(itwRequestedCredentialsSelector);
   const itwCredentialsTypes = useIOSelector(itwCredentialsTypesSelector);
   const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
   const isItWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
@@ -87,7 +86,6 @@ export const ItwOnboardingModuleCredentialsList = ({
       type={type}
       isActive={itwCredentialsTypes.includes(type)}
       isDisabled={remotelyDisabledCredentials.includes(type)}
-      isRequested={requestedCredentials.includes(type)}
       isUpcoming={isUpcomingCredential(type)}
       isNew={isNewCredential(type)}
       isCredentialIssuancePending={isCredentialIssuancePending}
