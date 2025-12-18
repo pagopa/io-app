@@ -108,11 +108,11 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
 
   it.each([true, false])(
     "should dispatch the right state update action when the primary action is clicked",
-    async enabled => {
+    async nfcEnabled => {
       jest.spyOn(NFC_HOOK, "useIsNfcFeatureEnabled").mockReturnValue({
         isChecking: false,
         openNFCSettings: jest.fn(),
-        isNfcEnabled: () => Promise.resolve(enabled)
+        isNfcEnabled: () => Promise.resolve(nfcEnabled)
       });
       const { getByTestId } = renderComponent();
 
@@ -130,7 +130,7 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
         expect(mockDispatch).toHaveBeenCalledWith(
           setAarFlowState({
             ...mockCieScanningAdvisoryState,
-            type: enabled
+            type: nfcEnabled
               ? sendAARFlowStates.cieScanning
               : sendAARFlowStates.androidNFCActivation
           })
