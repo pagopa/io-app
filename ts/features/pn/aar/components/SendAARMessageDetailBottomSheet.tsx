@@ -44,9 +44,7 @@ export const SendAARMessageDetailBottomSheet = ({
       />
       <VSpacer size={24} />
 
-      {isDelegate ? (
-        <></>
-      ) : (
+      {!isDelegate && (
         <>
           <FeatureInfo
             body={
