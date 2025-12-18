@@ -4854,11 +4854,6 @@
           "body": "Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.",
           "primaryAction": "Ho capito"
         },
-        "asyncCredentialError": {
-          "title": "La Motorizzazione Civile ha preso in carico la tua richiesta",
-          "body": "Riceverai un messaggio in app per continuare appena La Motorizzazione Civile avrà elaborato la tua richiesta.",
-          "primaryAction": "Ho capito"
-        },
         "issuerNotTrustedCommonError": {
           "title": "Un problema non permette di continuare",
           "subtitle": "Si è verificato un errore tecnico che impedisce di ottenere {{credential}}. Riprova.\nSe il problema persiste, contatta l’assistenza.",
