@@ -4,10 +4,7 @@ import { useCallback } from "react";
 import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import {
-  itwIsL3EnabledSelector,
-  itwRequestedCredentialsSelector
-} from "../../common/store/selectors/preferences";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import { itwDisabledCredentialsSelector } from "../../common/store/selectors/remoteConfig";
 import {
   isNewCredential,
