@@ -13,10 +13,7 @@
     "noUnusedLocals": true,
     "strictFunctionTypes": true,
     "useUnknownInCatchVariables": true,
+    "incremental": true
   },
-  "exclude": [
-    "android",
-    "ios",
-    "node_modules"
-  ]
+  "exclude": ["android", "ios", "node_modules"]
 }

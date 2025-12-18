@@ -11,12 +11,29 @@ echo "$unstagedFiles"
 echo "🔨 compiling..."
 yarn tsc:noemit
 
-# Run lintier
-echo "🧹 runnning linter..."  
-yarn lint-autofix
-# Run prettifier
-echo "🧼 runnning prettier..."
-yarn prettify
+# Determine the base branch for comparison
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+REMOTE_REF="refs/remotes/origin/$BRANCH"
+if git show-ref --verify --quiet "$REMOTE_REF"; then
+  BASE="origin/$BRANCH"
+else
+  BASE="origin/master"
+fi
+
+if ! git diff --quiet --diff-filter=ACMRT "$BASE"...HEAD -- '*.ts' '*.tsx'; then
+  echo "Running ESLint on changed files..."
+  git diff -z --name-only --diff-filter=ACMRT \
+    "$BASE"...HEAD -- '*.ts' '*.tsx' \
+  | xargs -0 npx eslint \
+      -c .eslintrc.js --ext .ts,.tsx --cache --fix
+fi
+
+if ! git diff --quiet --diff-filter=ACMRT "$BASE"...HEAD -- '*.ts' '*.tsx' '*.json'; then
+  echo "Running Prettier on changed files..."
+  git diff -z --name-only --diff-filter=ACMRT \
+    "$BASE"...HEAD -- '*.ts' '*.tsx' '*.json' \
+  | xargs -0 npx prettier --write
+fi
 
 # If we have any modified files don't push
 if [ -n "$(git status --porcelain)" ]; then
