@@ -119,7 +119,7 @@ function renderComponent() {
         navigation={{ ...navigation, replace: mockReplace }}
       />
     ),
-    PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL,
+    PN_ROUTES.SEND_AAR_NFC_ACTIVATION,
     {},
     store
   );
