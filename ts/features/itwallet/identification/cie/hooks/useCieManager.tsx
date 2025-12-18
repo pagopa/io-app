@@ -23,7 +23,12 @@ export type CieManagerFailure = CieError | NfcError;
 export type CieManagerState =
   | { state: "idle" }
   | { state: "reading"; progress: number }
-  | { state: "failure"; failure: CieManagerFailure; progress?: number }
+  | {
+      state: "failure";
+      failure: CieManagerFailure;
+      progress?: number;
+      origin?: string;
+    }
   | { state: "success" };
 
 type UseCieManager = (params: {
@@ -123,7 +128,12 @@ export const useCieManager: UseCieManager = ({
     setState(prev => {
       // For the failure state we want to preserve the current progress
       const currentProgress = prev.state === "reading" ? prev.progress : 0;
-      return { state: "failure", failure: error, progress: currentProgress };
+      return {
+        state: "failure",
+        failure: error,
+        progress: currentProgress,
+        origin: "ITW_CIE_MANAGER"
+      };
     });
 
     // Trigger a warning haptic feedback on TAG_LOST error
@@ -202,7 +212,11 @@ export const useCieManager: UseCieManager = ({
       // Start the CieManager with the provided pin and authentication URL
       await CieManager.startReading(pin, serviceProviderUrl);
     } catch (error) {
-      setState({ state: "failure", failure: error as CieManagerFailure });
+      setState({
+        state: "failure",
+        failure: error as CieManagerFailure,
+        origin: "ITW_CIE_START_READING"
+      });
     }
   };
 
