@@ -1,6 +1,6 @@
 import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { renderActionButtons } from "../../../../../components/ui/IOScrollView";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 
@@ -96,10 +96,3 @@ export const useContinueWithBottomSheet = ({
     }
   };
 };
-
-const styles = StyleSheet.create({
-  image: {
-    resizeMode: "contain",
-    width: "100%"
-  }
-});
