@@ -1,18 +1,16 @@
 import {
   Badge,
+  BannerErrorState,
   IOVisualCostants,
   ListItemHeader,
   ModuleCredential,
   VStack
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { constFalse, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard.ts";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
@@ -29,33 +27,26 @@ import {
 } from "../../analytics";
 import { ItwDiscoveryBannerOnboarding } from "../../common/components/discoveryBanner/ItwDiscoveryBannerOnboarding";
 import { selectItwEnv } from "../../common/store/selectors/environment";
-import {
-  itwIsL3EnabledSelector,
-  itwRequestedCredentialsSelector
-} from "../../common/store/selectors/preferences";
-import {
-  isItwEnabledSelector,
-  itwDisabledCredentialsSelector
-} from "../../common/store/selectors/remoteConfig";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import { isItwEnabledSelector } from "../../common/store/selectors/remoteConfig";
 import {
   availableCredentials,
-  isNewCredential,
-  isUpcomingCredential,
   newCredentials,
   upcomingCredentials
 } from "../../common/utils/itwCredentialUtils";
-import { itwCredentialsTypesSelector } from "../../credentials/store/selectors";
+import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions/index.ts";
 import {
-  itwLifecycleIsITWalletValidSelector,
-  itwLifecycleIsValidSelector
-} from "../../lifecycle/store/selectors";
-import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
-import {
-  selectCredentialTypeOption,
-  selectIsLoading
-} from "../../machine/credential/selectors";
-import { ITW_ROUTES } from "../../navigation/routes";
-import { ItwOnboardingModuleCredential } from "../components/ItwOnboardingModuleCredential";
+  itwIsCredentialsCatalogueLoading,
+  itwIsCredentialsCatalogueUnavailable
+} from "../../credentialsCatalogue/store/selectors/index.ts";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
+
+/**
+ * Local feature flag that enables catalogue loading/error handling.
+ * Since credentials are still hardcoded and the catalogue barely used, we can keep it disabled.
+ */
+const CATALOGUE_ENABLED = false;
 
 const activeBadge: Badge = {
   variant: "success",
@@ -95,28 +86,19 @@ const WalletCardOnboardingScreen = () => {
 };
 
 const ItwCredentialOnboardingSection = () => {
-  const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
-  const navigation = useIONavigation();
+  const dispatch = useIODispatch();
 
-  const remotelyDisabledCredentials = useIOSelector(
-    itwDisabledCredentialsSelector
-  );
-  const requestedCredentials = useIOSelector(itwRequestedCredentialsSelector);
   const env = useIOSelector(selectItwEnv);
   const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
-
-  const itwCredentialsTypes = useIOSelector(itwCredentialsTypesSelector);
-  const isItWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
-
-  const isCredentialIssuancePending =
-    ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
-  const selectedCredentialOption =
-    ItwCredentialIssuanceMachineContext.useSelector(selectCredentialTypeOption);
+  const isCatalogueLoading = useIOSelector(itwIsCredentialsCatalogueLoading);
+  const isCatalogueUnavailable = useIOSelector(
+    itwIsCredentialsCatalogueUnavailable
+  );
 
   // Show upcoming credentials only if L3 is enabled and env is "pre"
   const shouldShowUpcoming = isL3Enabled && env === "pre";
 
-  const getCredentialToDisplay = useCallback(() => {
+  const credentialsToDisplay = useMemo(() => {
     if (shouldShowUpcoming) {
       return [
         ...availableCredentials,
@@ -130,68 +112,38 @@ const ItwCredentialOnboardingSection = () => {
     }
   }, [isL3Enabled, shouldShowUpcoming]);
 
-  const displayedCredentials = getCredentialToDisplay();
-
-  const beginCredentialIssuance = useOfflineToastGuard(
-    useCallback(
-      (type: string) => {
-        if (isUpcomingCredential(type)) {
-          /**
-           * The credential is an upcoming one, navigate to the screens which displays
-           * more information about the upcoming credential
-           */
-          navigation.navigate(ITW_ROUTES.MAIN, {
-            screen: ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL
-          });
-        } else if (isL3Enabled && !isItWalletValid) {
-          /**
-           * User has a whitelisted fiscal code but has not yet obtained an IT Wallet.
-           * Start the credential issuance flow with contextual PID issuance
-           */
-          navigation.navigate(ITW_ROUTES.MAIN, {
-            screen: ITW_ROUTES.DISCOVERY.INFO,
-            params: { level: "l3", credentialType: type }
-          });
-        } else {
-          /**
-           * Standard credential issuance
-           */
-          machineRef.send({
-            type: "select-credential",
-            credentialType: type,
-            mode: "issuance"
-          });
-        }
-      },
-      [machineRef, navigation, isL3Enabled, isItWalletValid]
-    )
-  );
+  const renderContent = () => {
+    if (CATALOGUE_ENABLED && isCatalogueLoading) {
+      return Array.from({ length: 5 }).map((_, i) => (
+        <ModuleCredential key={`loading-item-${i}`} isLoading />
+      ));
+    }
+    if (CATALOGUE_ENABLED && isCatalogueUnavailable) {
+      return (
+        <BannerErrorState
+          label={I18n.t(
+            "features.itWallet.credentialsCatalogue.failure.content"
+          )}
+          actionText={I18n.t(
+            "features.itWallet.credentialsCatalogue.failure.action"
+          )}
+          onPress={() => dispatch(itwFetchCredentialsCatalogue.request())}
+        />
+      );
+    }
+    return (
+      <ItwOnboardingModuleCredentialsList
+        credentialTypesToDisplay={credentialsToDisplay}
+      />
+    );
+  };
 
   return (
     <View>
       <ListItemHeader
         label={I18n.t("features.wallet.onboarding.sections.itw")}
       />
-      <VStack space={8}>
-        {displayedCredentials.map(type => (
-          <ItwOnboardingModuleCredential
-            key={`itw_credential_${type}`}
-            type={type}
-            isActive={itwCredentialsTypes.includes(type)}
-            isDisabled={remotelyDisabledCredentials.includes(type)}
-            isRequested={requestedCredentials.includes(type)}
-            isUpcoming={isUpcomingCredential(type)}
-            isNew={isNewCredential(type)}
-            isCredentialIssuancePending={isCredentialIssuancePending}
-            isSelectedCredential={pipe(
-              selectedCredentialOption,
-              O.map(t => t === type),
-              O.getOrElse(constFalse)
-            )}
-            onPress={beginCredentialIssuance}
-          />
-        ))}
-      </VStack>
+      <VStack space={8}>{renderContent()}</VStack>
     </View>
   );
 };

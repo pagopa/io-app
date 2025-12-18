@@ -3060,11 +3060,11 @@
       "toasts": {
         "added": "Aggiunto ai preferiti!",
         "removed": "Rimosso dai preferiti!",
-        "limitReached": "Non è possibile aggiungere il servizio ai preferiti perché hai raggiunto il limite massimo."
+        "limitReached": "Hai raggiunto il limite massimo di preferiti"
       },
       "emptyList": {
-        "title": "Qui vedrai la lista dei tuoi servizi preferiti",
-        "subtitle": "Inizia la ricerca e salva tra i preferiti i servizi che usi di più.",
+        "title": "Crea la tua lista di preferiti",
+        "subtitle": "Salva i servizi che usi di più per averli sempre a portata di mano",
         "searchAction": "Inizia la ricerca"
       },
       "removeAlert": {
@@ -3072,12 +3072,12 @@
         "confirm": "Sì, rimuovi"
       },
       "bottomSheet": {
-        "title": "Ordina la lista",
+        "title": "Ordina per",
         "a11y": "Ordina i servizi preferiti",
         "content": {
           "addedAt_desc": "Dal più recente",
           "name_asc": "Per nome (A-Z)",
-          "addedAt_asc": "Dal primo aggiunto"
+          "addedAt_asc": "Dal meno recente"
         }
       }
     }
@@ -4773,6 +4773,12 @@
           "button": {
             "label": "Continua"
           }
+        }
+      },
+      "credentialsCatalogue": {
+        "failure": {
+          "content": "Non siamo riusciti a caricare la lista dei documenti disponibili",
+          "action": "Prova di nuovo"
         }
       },
       "identification": {
