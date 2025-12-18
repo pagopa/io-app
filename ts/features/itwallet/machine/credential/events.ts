@@ -5,7 +5,6 @@ export type SelectCredential = {
   type: "select-credential";
   credentialType: string;
   mode: CredentialIssuanceMode;
-  isAsyncContinuation?: boolean; // TODO to be removed in [SIW-2839]
 };
 
 export type ConfirmTrustData = {
