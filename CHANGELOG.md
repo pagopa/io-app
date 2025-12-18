@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.22.0-canary.7862](https://github.com/pagopa/io-app/compare/3.22.0-rc.4...3.22.0-canary.7862) (2025-12-18)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-3557](https://pagopa.atlassian.net/browse/SIW-3557)] Fix wallet's placeholders system regression ([#7719](https://github.com/pagopa/io-app/issues/7719)) ([8718cbc](https://github.com/pagopa/io-app/commit/8718cbcc7f401d938f6d76ddeeeadb2e4962e86b)), closes [/#diff-8a5b2f3967d681b976fe673762bd1061f5b430130c880c1195b76af06362cf31R140](https://github.com/pagopa///issues/diff-8a5b2f3967d681b976fe673762bd1061f5b430130c880c1195b76af06362cf31R140) [/#diff-8a5b2f3967d681b976fe673762bd1061f5b430130c880c1195b76af06362cf31R613-R615](https://github.com/pagopa///issues/diff-8a5b2f3967d681b976fe673762bd1061f5b430130c880c1195b76af06362cf31R613-R615)
+* **IT-Wallet:** [[SIW-3558](https://pagopa.atlassian.net/browse/SIW-3558)] Fix action dispatch for storing auth level during eID issuance ([#7720](https://github.com/pagopa/io-app/issues/7720)) ([784a36d](https://github.com/pagopa/io-app/commit/784a36d395c7cbd05fdcd368cadbeb0a3c54d600))
+* **IT-Wallet:** [[SIW-3560](https://pagopa.atlassian.net/browse/SIW-3560)] Fix regression in "Documenti su IO" wallet empty state ([#7722](https://github.com/pagopa/io-app/issues/7722)) ([6d3864c](https://github.com/pagopa/io-app/commit/6d3864c98004e3ff3b6343b1f8bdf2dc62b01220)), closes [/#diff-a6fd3f891898d6e0db07370497821b05db202cb5005c8739d98267257a894effL54-R56](https://github.com/pagopa///issues/diff-a6fd3f891898d6e0db07370497821b05db202cb5005c8739d98267257a894effL54-R56) [/#diff-a6fd3f891898d6e0db07370497821b05db202cb5005c8739d98267257a894effL68-L89](https://github.com/pagopa///issues/diff-a6fd3f891898d6e0db07370497821b05db202cb5005c8739d98267257a894effL68-L89)
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-2839](https://pagopa.atlassian.net/browse/SIW-2839)] Remove MDL async flow logic ([#7503](https://github.com/pagopa/io-app/issues/7503)) ([e90effc](https://github.com/pagopa/io-app/commit/e90effcc0f968c38a63638ca058a9b27e874cd58))
+* **IT Wallet:** [[SIW-3470](https://pagopa.atlassian.net/browse/SIW-3470)] Handle loading/errors in Credentials Catalogue fetch ([#7693](https://github.com/pagopa/io-app/issues/7693)) ([085601a](https://github.com/pagopa/io-app/commit/085601aca18424e8e724885620aa47e5676919fa))
+* [[IOPAE-2324](https://pagopa.atlassian.net/browse/IOPAE-2324)] Favourite services copy update ([#7724](https://github.com/pagopa/io-app/issues/7724)) ([67806ab](https://github.com/pagopa/io-app/commit/67806ab848aedd2db679cadb2ec9696ef6bed9cb))
+* **release:** 3.21.1-rc.0 ([5bd800a](https://github.com/pagopa/io-app/commit/5bd800ae8754248a32d10bab51207140c7e14a37))
+* [[IOPLT-1370](https://pagopa.atlassian.net/browse/IOPLT-1370)] Upgrades react-native to 0.81 ([ef74f17](https://github.com/pagopa/io-app/commit/ef74f17d2467a65cf944d714a5e53d445cc37eed))
+
 ## [3.22.0-rc.4](https://github.com/pagopa/io-app/compare/3.22.0-rc.3...3.22.0-rc.4) (2025-12-16)
 
 
