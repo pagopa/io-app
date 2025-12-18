@@ -5730,19 +5730,19 @@
           "action": "Aggiungi un documento"
         },
         "upgrade": {
-          "title": "I tuoi documenti sempre con te, digitali e sicuri.",
-          "description": "I tuoi documenti digitali hanno funzionalità evolute con **IT-Wallet**, l’unico portafoglio digitale di Stato: **pubblico, sicuro e gratuito**.",
-          "action": "Passa a IT-Wallet"
+          "title": "IO dà il benvenuto a IT-Wallet",
+          "description": "I tuoi documenti hanno funzionalità evolute con il portafoglio **IT-Wallet di IO**: l’unico portafoglio digitale di Stato, **pubblico, sicuro e gratuito.**",
+          "action": "Inizia"
         },
         "upgrade_empty": {
-          "title": "Documenti personali, digitali e ufficiali.",
+          "title": "Su IO i tuoi documenti personali sono digitali e ufficiali.",
           "description": "Aggiungi i tuoi documenti su IO! IT-Wallet è il tuo nuovo portafoglio digitale: **semplice, sicuro, sempre con te**.",
-          "action": "Passa a IT-Wallet"
+          "action": "Aggiungi un documento"
         },
         "upgrade_expiring": {
           "title": "IO dà il benvenuto a IT-Wallet",
           "description": "Porta i tuoi documenti digitali sull’unico portafoglio digitale di Stato: **sicuro, gratuito, tuo**.",
-          "action": "Passa a IT-Wallet"
+          "action": "Inizia"
         },
         "dismissAlert": {
           "title": "Vuoi rinunciare ai vantaggi di IT-Wallet?",

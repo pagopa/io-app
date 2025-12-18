@@ -6,6 +6,7 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import { Canvas } from "@shopify/react-native-skia";
+import { constNull } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useState } from "react";
 import { useWindowDimensions, View } from "react-native";
@@ -13,6 +14,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { DSComponentViewerBox } from "../../../design-system/components/DSComponentViewerBox";
 import { ItwBrandedBox } from "../../common/components/ItwBrandedBox";
 import { ItwBrandedSkiaGradient } from "../../common/components/ItwBrandedSkiaGradient";
+import { ItwEngagementBanner } from "../../common/components/ItwEngagementBanner";
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
 import { getCredentialStatusObject } from "../../common/utils/itwCredentialStatusUtils";
@@ -87,6 +89,40 @@ const ItwWalletIdStatusSection = () => (
         pidExpiration="2026-11-12T14:11:48.000Z"
       />
       <ItwWalletIdStatus pidStatus="jwtExpired" />
+    </VStack>
+  </View>
+);
+
+const ItwEngagementBannerSection = () => (
+  <View
+    style={{
+      marginHorizontal: -24,
+      paddingHorizontal: 24,
+      paddingBottom: 24
+    }}
+  >
+    <ListItemHeader label="IT-Wallet Engagement Banner" />
+    <VStack space={8}>
+      <ItwEngagementBanner
+        title={I18n.t("features.itWallet.engagementBanner.activation.title")}
+        description={I18n.t(
+          "features.itWallet.engagementBanner.activation.description"
+        )}
+        action={I18n.t("features.itWallet.engagementBanner.activation.action")}
+        onPress={constNull}
+        onDismiss={constNull}
+        dismissable={true}
+      />
+      <ItwEngagementBanner
+        title={I18n.t("features.itWallet.engagementBanner.upgrade.title")}
+        description={I18n.t(
+          "features.itWallet.engagementBanner.upgrade.description"
+        )}
+        action={I18n.t("features.itWallet.engagementBanner.upgrade.action")}
+        onPress={constNull}
+        onDismiss={constNull}
+        dismissable={true}
+      />
     </VStack>
   </View>
 );
@@ -214,6 +250,7 @@ export const ItwComponentsSection = () => (
   <>
     <ItwWalletBrandSection />
     <ItwWalletIdStatusSection />
+    <ItwEngagementBannerSection />
     <ItwSkeumorphicCredentialSection />
     <ItwClaimsListSection />
   </>
