@@ -34,7 +34,6 @@ type Params = {
 const mapIssuanceLevelToFlow = (issuanceLevel?: EidIssuanceLevel): ItwFlow => {
   switch (issuanceLevel) {
     case "l3":
-    case "l3-next":
       return "L3";
     case "l2":
     case "l2-fallback":
