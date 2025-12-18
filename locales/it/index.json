@@ -4949,7 +4949,14 @@
               "title": "PIN della CIE",
               "content": "Il PIN della CIE è un codice di 8 cifre che ti è stato comunicato in due momenti:\n * le prime 4 cifre le hai ricevute al momento della richiesta della CIE\n * le ultime 4 cifre le hai ricevute insieme alla CIE.",
               "primaryAction": "Ho capito",
-              "secondaryAction": "Non trovo il PIN della CIE"
+              "secondaryAction": "Non trovo il PIN della CIE",
+              "dialog": {
+                "title": "Usa SPID o CieID",
+                "body": "Se non trovi il PIN della CIE, puoi usare SPID o CieID per attivare IT-Wallet.",
+                "spidCieAction": "Continua con spid + CIE",
+                "cieIdAction": "Continua con app cieID",
+                "back": "Torna indietro"
+              }
             }
           },
           "failure": {
