@@ -35,7 +35,7 @@ const Countdown = (props: CountdownProps) => {
       <View style={{ alignItems: "center" }}>
         <VSpacer size={24} />
         {/* Adding this due to https://github.com/facebook/react-native/issues/47635 */}
-        <ProgressIndicator progress={(timerCount / 60) * 100} />
+        <ProgressIndicator progress={Math.floor((timerCount / 60) * 100)} />
         <VSpacer size={8} />
         <Body weight="Regular" style={{ textAlign: "center" }} color="black">
           {I18n.t("email.newvalidate.countdowntext")}{" "}
