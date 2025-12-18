@@ -2559,12 +2559,6 @@
           "title": "Abilita il metodo per effettuare pagamenti in app",
           "subtitle": "Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”."
         },
-        "PAYMENT_METHODS_NOT_AVAILABLE": {
-          "title": "Vuoi pagare con carta? Aggiungila ora!",
-          "subtitle": "Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.",
-          "primaryAction": "Aggiungi carta",
-          "secondaryAction": "Usa altri metodi"
-        },
         "PAYMENT_METHODS_EXPIRED": {
           "title": "La tua carta è scaduta!",
           "subtitle": "Rimuovi la carta e aggiungine una nuova.\nVerrà salvata nel Portafoglio, così la prossima volta potrai pagare più facilmente.",
@@ -3062,19 +3056,29 @@
       "title": "I miei preferiti",
       "add": "Aggiungi ai preferiti",
       "remove": "Rimuovi dai preferiti",
+      "sortButton": "Ordina",
       "toasts": {
         "added": "Aggiunto ai preferiti!",
         "removed": "Rimosso dai preferiti!",
-        "limitReached": "Non è possibile aggiungere il servizio ai preferiti perché hai raggiunto il limite massimo."
+        "limitReached": "Hai raggiunto il limite massimo di preferiti"
       },
       "emptyList": {
-        "title": "Qui vedrai la lista dei tuoi servizi preferiti",
-        "subtitle": "Inizia la ricerca e salva tra i preferiti i servizi che usi di più.",
+        "title": "Crea la tua lista di preferiti",
+        "subtitle": "Salva i servizi che usi di più per averli sempre a portata di mano",
         "searchAction": "Inizia la ricerca"
       },
       "removeAlert": {
         "title": "Vuoi rimuovere il servizio dai preferiti?",
         "confirm": "Sì, rimuovi"
+      },
+      "bottomSheet": {
+        "title": "Ordina per",
+        "a11y": "Ordina i servizi preferiti",
+        "content": {
+          "addedAt_desc": "Dal più recente",
+          "name_asc": "Per nome (A-Z)",
+          "addedAt_asc": "Dal meno recente"
+        }
       }
     }
   },
@@ -3607,6 +3611,7 @@
         "navigationTitle": "Agevolazioni",
         "screenTitle": "Scopri le opportunità",
         "merchantsAll": "Tutti i partner",
+        "a11yTitle": "Categoria: {{categoryName}}",
         "tabs": {
           "perInitiative": "Per categoria",
           "perMerchant": "Per partner",
@@ -4770,6 +4775,12 @@
           }
         }
       },
+      "credentialsCatalogue": {
+        "failure": {
+          "content": "Non siamo riusciti a caricare la lista dei documenti disponibili",
+          "action": "Prova di nuovo"
+        }
+      },
       "identification": {
         "nfc": {
           "title": "Attiva l'NFC per continuare",
@@ -5075,11 +5086,6 @@
           "body": "Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.",
           "primaryAction": "Ho capito"
         },
-        "asyncCredentialError": {
-          "title": "La Motorizzazione Civile ha preso in carico la tua richiesta",
-          "body": "Riceverai un messaggio in app per continuare appena La Motorizzazione Civile avrà elaborato la tua richiesta.",
-          "primaryAction": "Ho capito"
-        },
         "issuerNotTrustedCommonError": {
           "title": "Un problema non permette di continuare",
           "subtitle": "Si è verificato un errore tecnico che impedisce di ottenere {{credential}}. Riprova.\nSe il problema persiste, contatta l’assistenza.",
@@ -5123,6 +5129,12 @@
         "cieNotRegistered": {
           "title": "Registra la CIE in app CieID per continuare",
           "subtitle": "Per ottenere IT-Wallet, completa prima la registrazione della tua CIE in app CieID e poi riprova."
+        },
+        "mdlMessageExpired": {
+          "title": "Richiesta scaduta",
+          "subtitleStart": "Questa richiesta non è più valida ma puoi aggiungere di nuovo la tua ",
+          "subtitleBold": "Patente su IO.",
+          "primaryAction": "Aggiungi di nuovo"
         }
       },
       "notMatchingIdentityScreen": {
