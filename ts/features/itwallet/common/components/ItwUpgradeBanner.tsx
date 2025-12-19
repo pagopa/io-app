@@ -57,7 +57,7 @@ export const ItwUpgradeBanner = () => {
     return (
       <ItwEngagementBanner
         title={I18n.t(
-          "features.itWallet.engagementBanner.upgrade_with_mdl.action"
+          "features.itWallet.engagementBanner.upgrade_with_mdl.title"
         )}
         description={I18n.t(
           "features.itWallet.engagementBanner.upgrade_with_mdl.description"
