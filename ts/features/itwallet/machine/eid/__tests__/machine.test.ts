@@ -1,6 +1,6 @@
 /* eslint-disable sonarjs/no-identical-functions */
 import { waitFor } from "@testing-library/react-native";
-import _, { delay } from "lodash";
+import _ from "lodash";
 import {
   assign,
   createActor,
