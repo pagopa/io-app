@@ -1,5 +1,6 @@
 {
-  "extends": "@react-native/typescript-config/tsconfig.json",
+  "extends": "@react-native/typescript-config",
+  "include": ["**/*.ts", "**/*.tsx"],
   "compilerOptions": {
     "jsx": "react-jsx",
     "target": "esnext",
@@ -17,6 +18,7 @@
   "exclude": [
     "android",
     "ios",
-    "node_modules"
+    "**/node_modules", 
+    "**/Pods"
   ]
 }

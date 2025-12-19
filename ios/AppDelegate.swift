@@ -6,34 +6,50 @@ import ReactAppDependencyProvider
 import UserNotifications
  
 @main
-class AppDelegate: RCTAppDelegate, UNUserNotificationCenterDelegate {
-  override func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-    self.moduleName = "IO"
-    self.dependencyProvider = RCTAppDependencyProvider()
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+  var window: UIWindow?
  
-    // You can add your custom initial props in the dictionary below.
-    // They will be passed down to the ViewController used by React Native.
-    self.initialProps = [:]
+  var reactNativeDelegate: ReactNativeDelegate?
+  var reactNativeFactory: RCTReactNativeFactory?
+  
+  func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
+  ) -> Bool {
+    let delegate = ReactNativeDelegate()
+    let factory = RCTReactNativeFactory(delegate: delegate)
+        delegate.dependencyProvider = RCTAppDependencyProvider()
 
-    // react-native-push-notification-ios
+    self.reactNativeDelegate = delegate
+    self.reactNativeFactory = factory
+
+    self.window = UIWindow(frame: UIScreen.main.bounds)
+
+    factory.startReactNative(
+      withModuleName: "IO",
+      in: window,
+      launchOptions: launchOptions
+    )
+
+    // Notifications: set UNUserNotificationCenter delegate
     let center = UNUserNotificationCenter.current()
     center.delegate = self
- 
-    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+    
+    return true
   }
 
   // react-native-push-notification-ios
-  override func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+  func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
     RNCPushNotificationIOS.didRegisterForRemoteNotifications(withDeviceToken: deviceToken)
   }
   
   // react-native-push-notification-ios
-  override func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+  func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
     RNCPushNotificationIOS.didReceiveRemoteNotification(userInfo, fetchCompletionHandler: completionHandler)
   }
   
   // react-native-push-notification-ios
-  override func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+  func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
     RNCPushNotificationIOS.didFailToRegisterForRemoteNotificationsWithError(error)
   }
   
@@ -47,7 +63,18 @@ class AppDelegate: RCTAppDelegate, UNUserNotificationCenterDelegate {
   func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
     completionHandler([.sound, .alert, .badge])
   }
- 
+  
+  // Deep linking
+  func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+    return RCTLinkingManager.application(app, open: url, options: options)
+  }
+  
+  func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+    return RCTLinkingManager.application(application, continue: userActivity, restorationHandler: restorationHandler)
+  }
+}
+
+class ReactNativeDelegate: RCTDefaultReactNativeFactoryDelegate {
   override func sourceURL(for bridge: RCTBridge) -> URL? {
     self.bundleURL()
   }
@@ -58,14 +85,5 @@ class AppDelegate: RCTAppDelegate, UNUserNotificationCenterDelegate {
 #else
     Bundle.main.url(forResource: "main", withExtension: "jsbundle")
 #endif
-  }
-
-  // Deep linking
-  override func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-    return RCTLinkingManager.application(app, open: url, options: options)
-  }
-  
-  override func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-    return RCTLinkingManager.application(application, continue: userActivity, restorationHandler: restorationHandler)
   }
 }
