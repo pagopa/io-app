@@ -63,18 +63,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -144,13 +140,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -575,8 +567,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     style={
                                       [
                                         {
-                                          "height": 31,
-                                          "width": 51,
+                                          "alignSelf": "flex-start",
                                         },
                                         {
                                           "backgroundColor": "#555C70",
@@ -798,8 +789,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     style={
                                       [
                                         {
-                                          "height": 31,
-                                          "width": 51,
+                                          "alignSelf": "flex-start",
                                         },
                                         {
                                           "backgroundColor": "#555C70",
@@ -1011,7 +1001,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              hardwareAccelerated={false}
                               importantForAccessibility="yes"
                               maxDynamicContentSize={1334}
                               onDismiss={[Function]}
@@ -1028,7 +1017,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   "overflow": "hidden",
                                 }
                               }
-                              visible={true}
                             >
                               <RCTScrollView
                                 overScrollMode="never"
@@ -1453,22 +1441,14 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -1539,18 +1519,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -1620,13 +1596,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -2051,8 +2023,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     style={
                                       [
                                         {
-                                          "height": 31,
-                                          "width": 51,
+                                          "alignSelf": "flex-start",
                                         },
                                         {
                                           "backgroundColor": "#555C70",
@@ -2274,8 +2245,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     style={
                                       [
                                         {
-                                          "height": 31,
-                                          "width": 51,
+                                          "alignSelf": "flex-start",
                                         },
                                         {
                                           "backgroundColor": "#555C70",
@@ -2487,7 +2457,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              hardwareAccelerated={false}
                               importantForAccessibility="yes"
                               maxDynamicContentSize={1334}
                               onDismiss={[Function]}
@@ -2504,7 +2473,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   "overflow": "hidden",
                                 }
                               }
-                              visible={true}
                             >
                               <RCTScrollView
                                 overScrollMode="never"
@@ -2930,22 +2898,14 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -3016,18 +2976,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -3097,13 +3053,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -3528,8 +3480,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     style={
                                       [
                                         {
-                                          "height": 31,
-                                          "width": 51,
+                                          "alignSelf": "flex-start",
                                         },
                                         {
                                           "backgroundColor": "#555C70",
@@ -3751,8 +3702,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     style={
                                       [
                                         {
-                                          "height": 31,
-                                          "width": 51,
+                                          "alignSelf": "flex-start",
                                         },
                                         {
                                           "backgroundColor": "#555C70",
@@ -3964,7 +3914,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              hardwareAccelerated={false}
                               importantForAccessibility="yes"
                               maxDynamicContentSize={1334}
                               onDismiss={[Function]}
@@ -3981,7 +3930,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   "overflow": "hidden",
                                 }
                               }
-                              visible={true}
                             >
                               <RCTScrollView
                                 overScrollMode="never"
@@ -4407,22 +4355,14 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -4493,18 +4433,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -4574,13 +4510,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -5005,8 +4937,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     style={
                                       [
                                         {
-                                          "height": 31,
-                                          "width": 51,
+                                          "alignSelf": "flex-start",
                                         },
                                         {
                                           "backgroundColor": "#555C70",
@@ -5228,8 +5159,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     style={
                                       [
                                         {
-                                          "height": 31,
-                                          "width": 51,
+                                          "alignSelf": "flex-start",
                                         },
                                         {
                                           "backgroundColor": "#555C70",
@@ -5441,7 +5371,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                               enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              hardwareAccelerated={false}
                               importantForAccessibility="yes"
                               maxDynamicContentSize={1334}
                               onDismiss={[Function]}
@@ -5458,7 +5387,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   "overflow": "hidden",
                                 }
                               }
-                              visible={true}
                             >
                               <RCTScrollView
                                 overScrollMode="never"
@@ -5884,22 +5812,14 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -5970,18 +5890,14 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -6051,13 +5967,9 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -7208,7 +7120,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                               enableDynamicSizing={false}
                               footerComponent={[Function]}
                               handleComponent={[Function]}
-                              hardwareAccelerated={false}
                               importantForAccessibility="yes"
                               maxDynamicContentSize={1334}
                               onDismiss={[Function]}
@@ -7225,7 +7136,6 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   "overflow": "hidden",
                                 }
                               }
-                              visible={true}
                             >
                               <RCTScrollView
                                 overScrollMode="never"
@@ -7790,22 +7700,14 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
