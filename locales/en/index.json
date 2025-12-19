@@ -2559,12 +2559,6 @@
           "title": "Abilita il metodo per effettuare pagamenti in app",
           "subtitle": "Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”."
         },
-        "PAYMENT_METHODS_NOT_AVAILABLE": {
-          "title": "Vuoi pagare con carta? Aggiungila ora!",
-          "subtitle": "Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.",
-          "primaryAction": "Aggiungi carta",
-          "secondaryAction": "Usa altri metodi"
-        },
         "PAYMENT_METHODS_EXPIRED": {
           "title": "Your card is expired!",
           "subtitle": "Remove the card and add a new one.\nIt will be saved in your Wallet, making it easier for you to pay next time.",
@@ -3062,19 +3056,29 @@
       "title": "My favourites",
       "add": "Add to favourites",
       "remove": "Remove from favourites",
+      "sortButton": "Sort",
       "toasts": {
         "added": "Added to favourites!",
         "removed": "Removed from favourites!",
-        "limitReached": "Cannot add service to favourites because you have reached the maximum limit."
+        "limitReached": "Maximum number of favorites reached"
       },
       "emptyList": {
-        "title": "Here you will see the list of your favorite services",
-        "subtitle": "Start searching and save the services you use the most to your favorites.",
+        "title": "Create your favorites list",
+        "subtitle": "Save your favorite services for easy access",
         "searchAction": "Start searching"
       },
       "removeAlert": {
         "title": "Do you want to remove the service from favorites?",
         "confirm": "Yes, remove"
+      },
+      "bottomSheet": {
+        "title": "Sort by",
+        "a11y": "Sort favourite services",
+        "content": {
+          "addedAt_desc": "Newest",
+          "name_asc": "Name (A-Z)",
+          "addedAt_asc": "Oldest first"
+        }
       }
     }
   },
@@ -3645,7 +3649,8 @@
             "byName": "Alphabetical order"
           }
         },
-        "discountOf": "Discount of {{discount}}%"
+        "discountOf": "Discount of {{discount}}%",
+        "a11yTitle": "Category: {{categoryName}}"
       },
       "merchantDetail": {
         "title": {
@@ -3960,7 +3965,6 @@
             "paragraph1": "Conserva il codice QR, ti servirà per rileggere la notifica in app",
             "paragraph2": "Puoi inquadrarlo oppure caricare una sua foto su IO",
             "paragraph3": "Tutte le tue notifiche sono disponibili sul sito di SEND - Notifiche Digitali",
-            "paragraphDelegate3": "Tutte le tue notifiche e quelle per cui hai una delega sono disponibili sul sito di SEND - Notifiche Digitali",
             "link": "Vai sul sito di SEND",
             "primaryAction": "Torna alla notifica",
             "secondaryAction": "Chiudi la notifica"
@@ -4847,11 +4851,6 @@
         "notEntitledCredentialError": {
           "title": "Non è possibile aggiungere il documento",
           "body": "Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.",
-          "primaryAction": "Ho capito"
-        },
-        "asyncCredentialError": {
-          "title": "La Motorizzazione Civile ha preso in carico la tua richiesta",
-          "body": "Riceverai un messaggio in app per continuare appena La Motorizzazione Civile avrà elaborato la tua richiesta.",
           "primaryAction": "Ho capito"
         },
         "issuerNotTrustedCommonError": {

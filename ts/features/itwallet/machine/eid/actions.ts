@@ -295,8 +295,7 @@ export const createEidIssuanceActionsImplementation = (
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     // Save the auth level in the preferences
-    const authLevel = context.level === "l3" ? "L3" : "L2";
-    store.dispatch(itwSetAuthLevel(authLevel));
+    store.dispatch(itwSetAuthLevel(context.identification?.level));
   },
 
   freezeSimplifiedActivationRequirements: () => {
