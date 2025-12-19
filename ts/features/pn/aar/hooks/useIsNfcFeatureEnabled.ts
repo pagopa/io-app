@@ -7,14 +7,18 @@ export const useIsNfcFeatureEnabled = () => {
   const [isChecking, setIsChecking] = useState(false);
 
   const isNfcEnabled = useCallback(async (): Promise<boolean> => {
-    setIsChecking(true);
+    if (Platform.OS === "android") {
+      setIsChecking(true);
 
-    return cieSdk
-      .isNFCEnabled()
-      .catch(() => false)
-      .finally(() => {
-        setIsChecking(false);
-      });
+      return cieSdk
+        .isNFCEnabled()
+        .catch(() => false)
+        .finally(() => {
+          setIsChecking(false);
+        });
+    }
+
+    return Promise.resolve(true);
   }, []);
 
   const openNFCSettings = useCallback(() => {
