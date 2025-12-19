@@ -2144,7 +2144,26 @@ PODS:
     - ReactCommon/turbomodule/core
     - Yoga
   - RNScreenshotPrevent (1.2.1):
-    - React
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNSentry (6.11.0):
     - DoubleConversion
     - glog
@@ -2733,7 +2752,7 @@ SPEC CHECKSUMS:
   RNReactNativeHapticFeedback: f9cfb40676f21a52e9e172648d033f539156a5ec
   RNReanimated: eccbdd305c2e2e9ea6569aa1be95c24a8904be8b
   RNScreens: cfb34cc4609bb92bd4fad6583be815075705a912
-  RNScreenshotPrevent: 5f8473abaa2db2476561ef8f3704b66491ce7b01
+  RNScreenshotPrevent: 78d40f5eebed99f2d73021517c2c6f152c8231da
   RNSentry: a04b4de945a7057d87e0de215dba268802e9226b
   RNShare: b1660f26d8bc57cbf9acf11872a8eb2f3ecf4825
   RNSVG: 4c63b12b7b5761063bca4f20dd228f6a8370f614
