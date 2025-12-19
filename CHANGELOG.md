@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.22.0-rc.7](https://github.com/pagopa/io-app/compare/3.22.0-rc.6...3.22.0-rc.7) (2025-12-19)
+
+
+### Features
+
+* **AAR:** [[IOCOM-2750](https://pagopa.atlassian.net/browse/IOCOM-2750)][Android] NFC activation screen ([#7718](https://github.com/pagopa/io-app/issues/7718)) ([e9162cc](https://github.com/pagopa/io-app/commit/e9162ccc89f6d3fa5ed796fd83fbd1bc555d5c7f))
+
 ## [3.22.0-rc.6](https://github.com/pagopa/io-app/compare/3.22.0-rc.5...3.22.0-rc.6) (2025-12-19)
 
 
