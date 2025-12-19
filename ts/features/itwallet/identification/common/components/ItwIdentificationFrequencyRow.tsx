@@ -8,7 +8,7 @@ type Props = {
   badge?: BadgeProps;
 };
 
-export const ItwIdentificationFrequencyRow = memo(({ label, badge }: Props) => (
+export const ItwIdentificationMethodsHeader = memo(({ label, badge }: Props) => (
   <HStack
     space={8}
     style={{
