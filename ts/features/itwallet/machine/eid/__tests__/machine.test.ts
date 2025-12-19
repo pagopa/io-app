@@ -1,6 +1,6 @@
 /* eslint-disable sonarjs/no-identical-functions */
 import { waitFor } from "@testing-library/react-native";
-import _ from "lodash";
+import _, { delay } from "lodash";
 import {
   assign,
   createActor,
@@ -78,6 +78,8 @@ const clearSimplifiedActivationRequirements = jest.fn();
 const loadPidIntoContext = jest.fn();
 const navigateToCieCanScreen = jest.fn();
 const navigateToCieInternalAuthAndMrtdScreen = jest.fn();
+const trackItwIdAuthenticationCompleted = jest.fn();
+const trackItwIdVerifiedDocument = jest.fn();
 
 /**
  * Actors
@@ -141,6 +143,8 @@ describe("itwEidIssuanceMachine", () => {
       storeAuthLevel,
       freezeSimplifiedActivationRequirements,
       clearSimplifiedActivationRequirements,
+      trackItwIdAuthenticationCompleted,
+      trackItwIdVerifiedDocument,
       loadPidIntoContext: assign(loadPidIntoContext)
     },
     actors: {
