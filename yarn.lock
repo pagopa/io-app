@@ -3360,9 +3360,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/openapi-codegen-ts@npm:14.0.1":
-  version: 14.0.1
-  resolution: "@pagopa/openapi-codegen-ts@npm:14.0.1"
+"@pagopa/openapi-codegen-ts@npm:^14.2.0":
+  version: 14.2.0
+  resolution: "@pagopa/openapi-codegen-ts@npm:14.2.0"
   dependencies:
     "@pagopa/ts-commons": ^10.15.0
     fs-extra: ^6.0.0
@@ -3380,31 +3380,7 @@ __metadata:
     bundle-api-spec: dist/commands/bundle-api-spec/cli.js
     gen-api-models: dist/commands/gen-api-models/cli.js
     gen-api-sdk: dist/commands/gen-api-sdk/cli.js
-  checksum: 4be08809b52a3d0a9af4c692fe3f5c982f2d02cd47243a0edc91b9361800c7228ce5d8a4deacbbe822ac240ef42c60d0603fdd0e44e69dbd369019d5c52b62e4
-  languageName: node
-  linkType: hard
-
-"@pagopa/openapi-codegen-ts@patch:@pagopa/openapi-codegen-ts@npm%3A14.0.1#./.yarn/patches/@pagopa-openapi-codegen-ts-npm-14.0.1-41ae0815dd.patch::locator=io%40workspace%3A.":
-  version: 14.0.1
-  resolution: "@pagopa/openapi-codegen-ts@patch:@pagopa/openapi-codegen-ts@npm%3A14.0.1#./.yarn/patches/@pagopa-openapi-codegen-ts-npm-14.0.1-41ae0815dd.patch::version=14.0.1&hash=17d45a&locator=io%40workspace%3A."
-  dependencies:
-    "@pagopa/ts-commons": ^10.15.0
-    fs-extra: ^6.0.0
-    nunjucks: ^3.2.3
-    openapi-types: ^10.0.0
-    prettier: ^1.12.1
-    safe-identifier: ^0.4.2
-    swagger-parser: ^10.0.3
-    write-yaml-file: ^4.1.3
-    yargs: ^15.0.1
-  peerDependencies:
-    fp-ts: ^2.16.5
-    io-ts: ^2.2.21
-  bin:
-    bundle-api-spec: dist/commands/bundle-api-spec/cli.js
-    gen-api-models: dist/commands/gen-api-models/cli.js
-    gen-api-sdk: dist/commands/gen-api-sdk/cli.js
-  checksum: 6a61f021c9a779e7a672acaa8021e23a4fdfe7de9b089eb1fdfe2ae68355d9c8125d385ce0f3437fb607ad6a3280730e1c8ce55219507e22c94814e729a1e295
+  checksum: 02439ab0df1c2008b67dc79b235fac61439ff67acbcc03f7b2dc8e576a1601673f19d29c0b929088cfd3d9f1ba9ee407e3a9cba4a2a80fff25ab02914eeb17b1
   languageName: node
   linkType: hard
 
@@ -11340,7 +11316,7 @@ __metadata:
     "@pagopa/io-react-native-wallet": ^2.4.0
     "@pagopa/io-react-native-wallet-legacy": "npm:@pagopa/io-react-native-wallet@0.30.0"
     "@pagopa/io-react-native-zendesk": ^0.3.30
-    "@pagopa/openapi-codegen-ts": ^14.0.1
+    "@pagopa/openapi-codegen-ts": ^14.2.0
     "@pagopa/react-native-cie": ^1.5.0
     "@pagopa/ts-commons": ^10.15.0
     "@react-native-async-storage/async-storage": ^2.0.0
