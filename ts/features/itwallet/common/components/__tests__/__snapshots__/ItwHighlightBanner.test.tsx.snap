@@ -288,7 +288,7 @@ action"
                     "paddingVertical": 6,
                   },
                   {
-                    "backgroundColor": "#DBF9FA",
+                    "backgroundColor": "rgba(97,220,223,0.2)",
                   },
                 ]
               }
@@ -302,7 +302,7 @@ action"
                   [
                     {},
                     {
-                      "color": "#003B3D",
+                      "color": "#61DCDF",
                       "fontFamily": "Titillio",
                       "fontSize": 12,
                       "fontStyle": "normal",
@@ -833,7 +833,7 @@ action"
                       "paddingVertical": 6,
                     },
                     {
-                      "backgroundColor": "#DBF9FA",
+                      "backgroundColor": "rgba(97,220,223,0.2)",
                     },
                   ]
                 }
@@ -847,7 +847,7 @@ action"
                     [
                       {},
                       {
-                        "color": "#003B3D",
+                        "color": "#61DCDF",
                         "fontFamily": "Titillio",
                         "fontSize": 12,
                         "fontStyle": "normal",
