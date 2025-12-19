@@ -49,7 +49,12 @@ describe("BottomSheetContent", () => {
   const mockUrl = "https://example.com/test-url";
 
   sendUserTypes.forEach(sendUserType => {
-    it(`calls openWebUrl when link is pressed and trackSendAarNotificationClosureExit with proper parameters (user type ${sendUserType})`, () => {
+    const isDelegate = sendUserType === "mandatory";
+    it(`${
+      isDelegate
+        ? "doesn't render a link"
+        : "calls openWebUrl when link is pressed and trackSendAarNotificationClosureExit with proper parameters"
+    } and matches its snapshot when called with user type = ${sendUserType})`, () => {
       const openWebUrlSpy = jest
         .spyOn(URL_UTILS, "openWebUrl")
         .mockImplementation(jest.fn());
@@ -64,27 +69,33 @@ describe("BottomSheetContent", () => {
         .spyOn(ANALYTICS, "trackSendAarNotificationClosureExit")
         .mockImplementation();
 
-      const { getByTestId } = renderComponent({
+      const { queryByTestId, toJSON } = renderComponent({
         ...defaultProps,
         sendUserType
       });
 
-      const linkComponent = getByTestId("link");
-      expect(openWebUrlSpy).toHaveBeenCalledTimes(0);
-      fireEvent.press(linkComponent);
+      const linkComponent = queryByTestId("link");
+      if (isDelegate) {
+        expect(linkComponent).toBeFalsy();
+      } else {
+        expect(linkComponent).not.toBeNull();
+        expect(openWebUrlSpy).toHaveBeenCalledTimes(0);
+        fireEvent.press(linkComponent!); // the nullish case is handled by the previous expect
 
-      expect(openWebUrlSpy).toHaveBeenCalledWith(mockUrl);
-      expect(openWebUrlSpy).toHaveBeenCalledTimes(1);
+        expect(openWebUrlSpy).toHaveBeenCalledWith(mockUrl);
+        expect(openWebUrlSpy).toHaveBeenCalledTimes(1);
 
-      expect(
-        spiedOnMockedTrackSendAarNotificationClosureExit.mock.calls.length
-      ).toBe(1);
-      expect(
-        spiedOnMockedTrackSendAarNotificationClosureExit.mock.calls[0].length
-      ).toBe(1);
-      expect(
-        spiedOnMockedTrackSendAarNotificationClosureExit.mock.calls[0][0]
-      ).toBe(sendUserType);
+        expect(
+          spiedOnMockedTrackSendAarNotificationClosureExit.mock.calls.length
+        ).toBe(1);
+        expect(
+          spiedOnMockedTrackSendAarNotificationClosureExit.mock.calls[0].length
+        ).toBe(1);
+        expect(
+          spiedOnMockedTrackSendAarNotificationClosureExit.mock.calls[0][0]
+        ).toBe(sendUserType);
+      }
+      expect(toJSON()).toMatchSnapshot();
     });
   });
 
