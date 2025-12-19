@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.22.0-rc.6](https://github.com/pagopa/io-app/compare/3.22.0-rc.5...3.22.0-rc.6) (2025-12-19)
+
+
+### Chores
+
+* [[IOPLT-1370](https://pagopa.atlassian.net/browse/IOPLT-1370)] Upgrades react-native to 0.81 ([#7563](https://github.com/pagopa/io-app/issues/7563)) ([de20c38](https://github.com/pagopa/io-app/commit/de20c3892d1d4c8661d715cfffe68740b278eb41)), closes [pagopa/io-react-native-login-utils#25](https://github.com/pagopa/io-react-native-login-utils/issues/25) [pagopa/io-cie-sdk#58](https://github.com/pagopa/io-cie-sdk/issues/58) [pagopa/io-react-native-cie#10](https://github.com/pagopa/io-react-native-cie/issues/10) [pagopa/io-react-native-cieid#13](https://github.com/pagopa/io-react-native-cieid/issues/13)
+* [[IOPLT-1421](https://pagopa.atlassian.net/browse/IOPLT-1421)] Patch react-native-screenshot-prevent to properly handle react-native new arch on android. ([#7639](https://github.com/pagopa/io-app/issues/7639)) ([dae2f5f](https://github.com/pagopa/io-app/commit/dae2f5f0f277175ef33b2d72244522a69d18513e))
+
 ## [3.22.0-rc.5](https://github.com/pagopa/io-app/compare/3.22.0-rc.4...3.22.0-rc.5) (2025-12-18)
 
 
