@@ -15,10 +15,7 @@ import {
   trackItWalletSpidIDPSelected,
   trackItWalletSpidIDPSelection
 } from "../../../analytics";
-import {
-  isL3FeaturesEnabledSelector,
-  selectIssuanceMode
-} from "../../../machine/eid/selectors";
+import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 
 export const ItwIdentificationIdpSelectionScreen = () => {
   const dispatch = useIODispatch();
@@ -26,15 +23,12 @@ export const ItwIdentificationIdpSelectionScreen = () => {
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
-  const issuanceMode =
-    ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
 
   const idps = useIOSelector(idpsRemoteValueSelector);
   const idpValue = isReady(idps) ? idps.value : idpsFallback;
   const randomIdps = useRef<ReadonlyArray<SpidIdp>>(randomOrderIdps(idpValue));
 
-  const itw_flow: ItwFlow =
-    issuanceMode === "reissuance" ? "reissuing_eID" : isL3 ? "L3" : "L2";
+  const itw_flow: ItwFlow = isL3 ? "L3" : "L2";
 
   useFocusEffect(
     useCallback(() => {
