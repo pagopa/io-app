@@ -39,7 +39,7 @@ index 5b8912dcd663e30b8dbd13b37f1ca7656b0b550d..4e64a3f0cae7e2347610cd3758afb732
    
 \ No newline at end of file
 diff --git a/android/build.gradle b/android/build.gradle
-index 6ee6db648848012a47a1d95356c38d716ad29a15..7737919e7f6bcba476470afb7986c31b1b38570c 100644
+index 6ee6db648848012a47a1d95356c38d716ad29a15..a69b395bcc129179162e37c6c197dbfa727e1a71 100644
 --- a/android/build.gradle
 +++ b/android/build.gradle
 @@ -1,24 +1,22 @@
@@ -307,7 +307,7 @@ index d381e388ec81d0a456ea496891fc635fe48a863e..00000000000000000000000000000000
 -}
 \ No newline at end of file
 diff --git a/android/src/main/java/com/killserver/screenshotprev/RNScreenshotPreventPackage.java b/android/src/main/java/com/killserver/screenshotprev/RNScreenshotPreventPackage.java
-index f853d05249d33d7ca405a2dcb4b528199be40f71..f13e930179f93d97e887fe71c84c45008fa224d6 100644
+index f853d05249d33d7ca405a2dcb4b528199be40f71..b26e7f7cddc6401a857cff9e44e9a0a142034ad9 100644
 --- a/android/src/main/java/com/killserver/screenshotprev/RNScreenshotPreventPackage.java
 +++ b/android/src/main/java/com/killserver/screenshotprev/RNScreenshotPreventPackage.java
 @@ -1,29 +1,46 @@
@@ -367,7 +367,7 @@ index f853d05249d33d7ca405a2dcb4b528199be40f71..f13e930179f93d97e887fe71c84c4500
 +                            ScreenshotPreventImpl.NAME,
 +                            false, // canOverrideExistingModule
 +                            false, // needsEagerInit
-+                            true, // hasConstants
++                            false, // hasConstants
 +                            false, // isCxxModule
 +                            isTurboModule // isTurboModule
 +                    ));
@@ -546,10 +546,10 @@ index 0000000000000000000000000000000000000000..214a214fdb2762802174694ef2cd2056
 +}
 diff --git a/android/src/newArch/java/com/killserver/screenshotprev/RNScreenshotPreventModule.java b/android/src/newArch/java/com/killserver/screenshotprev/RNScreenshotPreventModule.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..2ec64b9f1c87d1c7ae06ecaf5bb5ed3c58e38f29
+index 0000000000000000000000000000000000000000..b41431214ad3846ad23b51a3f3eb4565e7dd75dc
 --- /dev/null
 +++ b/android/src/newArch/java/com/killserver/screenshotprev/RNScreenshotPreventModule.java
-@@ -0,0 +1,43 @@
+@@ -0,0 +1,63 @@
 +package com.killserver.screenshotprev;
 +
 +import androidx.annotation.NonNull;
@@ -560,6 +560,25 @@ index 0000000000000000000000000000000000000000..2ec64b9f1c87d1c7ae06ecaf5bb5ed3c
 +public class RNScreenshotPreventModule extends NativeRNScreenshotPreventSpec {
 +    public RNScreenshotPreventModule(ReactApplicationContext reactContext) {
 +        super(reactContext);
++
++        reactContext.addLifecycleEventListener(
++            new com.facebook.react.bridge.LifecycleEventListener() {
++                @Override
++                public void onHostResume() {
++                    ScreenshotPreventImpl.onHostResume(reactContext);
++                }
++
++                @Override
++                public void onHostPause() {
++                    ScreenshotPreventImpl.onHostPause(reactContext);
++                }
++
++                @Override
++                public void onHostDestroy() {
++                    // No-op: overlay/secure view state is managed by existing methods.
++                }
++            }
++        );
 +    }
 +
 +    @Override
@@ -586,11 +605,12 @@ index 0000000000000000000000000000000000000000..2ec64b9f1c87d1c7ae06ecaf5bb5ed3c
 +    @Override
 +    public void addListener(String eventName) {
 +        // Set up any upstream listeners or background tasks
++        // (Lifecycle listeners are anonymous and cannot be individually added here.)
 +    }
-+
 +    @Override
 +    public void removeListeners(double count) {
 +        // Remove any upstream listeners or background tasks
++        // (Lifecycle listeners are anonymous and cannot be individually removed here.)       
 +    }
 +}
 \ No newline at end of file
@@ -654,7 +674,7 @@ index 0000000000000000000000000000000000000000..e78f7265f2b1e0799dde3e63e6e36c20
 +}
 \ No newline at end of file
 diff --git a/ios/RNScreenshotPrevent.h b/ios/RNScreenshotPrevent.h
-index 8c05c1aee3407d69f39b118556b33da5c53854b1..dd663074c9a537fe511a28d1cfed9fc776fc49a0 100644
+index 8c05c1aee3407d69f39b118556b33da5c53854b1..72481337597b0ec7113f14e57d95f6b7d25997e7 100644
 --- a/ios/RNScreenshotPrevent.h
 +++ b/ios/RNScreenshotPrevent.h
 @@ -9,7 +9,15 @@
@@ -887,10 +907,10 @@ index 37d55b5d4021c62e3adf8dd6c1a207a99c67b32e..00000000000000000000000000000000
 -@end
 diff --git a/ios/RNScreenshotPrevent.mm b/ios/RNScreenshotPrevent.mm
 new file mode 100644
-index 0000000000000000000000000000000000000000..f6efd210c77e1243bd7cd56abdda85e8ebb8f116
+index 0000000000000000000000000000000000000000..7acdf8b8f970653d7e9387535d89f01af60fd92e
 --- /dev/null
 +++ b/ios/RNScreenshotPrevent.mm
-@@ -0,0 +1,219 @@
+@@ -0,0 +1,217 @@
 +#import "RNScreenshotPrevent.h"
 +#import "UIImage+ImageEffects.h"
 +
@@ -1082,7 +1102,6 @@ index 0000000000000000000000000000000000000000..f6efd210c77e1243bd7cd56abdda85e8
 +
 +/** adds secure textfield view */
 +RCT_EXPORT_METHOD(enableSecureView: (NSString *)imagePath) {
-+    [self enabled:YES];
 +    if(secureField.secureTextEntry == false) {
 +        UIView *view = [UIApplication sharedApplication].keyWindow.rootViewController.view;
 +        for(UIView *subview in view.subviews) {
@@ -1093,7 +1112,6 @@ index 0000000000000000000000000000000000000000..f6efd210c77e1243bd7cd56abdda85e8
 +
 +/** removes secure textfield from the view */
 +RCT_EXPORT_METHOD(disableSecureView) {
-+    [self enabled:NO];
 +    secureField.secureTextEntry = false;
 +    UIView *view = [UIApplication sharedApplication].keyWindow.rootViewController.view;
 +    for(UIView *subview in view.subviews) {
@@ -1111,7 +1129,7 @@ index 0000000000000000000000000000000000000000..f6efd210c77e1243bd7cd56abdda85e8
 +
 +@end
 diff --git a/ios/UIImage+ImageEffects.h b/ios/UIImage+ImageEffects.h
-index 3e83ea833329b8093919b8d222adeccc5c329f23..cf13319cecb29505d1809e1896782dea9e8c32c8 100644
+index 3e83ea833329b8093919b8d222adeccc5c329f23..e026fbe6a59388226aab9cd6c4510452b9594e33 100644
 --- a/ios/UIImage+ImageEffects.h
 +++ b/ios/UIImage+ImageEffects.h
 @@ -2,14 +2,14 @@
@@ -1414,7 +1432,7 @@ index 0000000000000000000000000000000000000000..d0a0e96c0816a795d73132b469608936
 +declare const _default: Spec | null;
 +export default _default;
 diff --git a/lib/typescript/index.d.ts b/lib/typescript/index.d.ts
-index bfbde95cd58cfd922419b3af59d5a152b69dbde8..f353e85e82ba7480352036ef35dfde869017d0d5 100644
+index bfbde95cd58cfd922419b3af59d5a152b69dbde8..1dd7674ec7cbb10291d7ddd31950d2a1f539566e 100644
 --- a/lib/typescript/index.d.ts
 +++ b/lib/typescript/index.d.ts
 @@ -1,9 +1,12 @@
@@ -1432,10 +1450,22 @@ index bfbde95cd58cfd922419b3af59d5a152b69dbde8..f353e85e82ba7480352036ef35dfde86
 +export declare const addListener: (fn: FN) => Return;
  export default RNScreenshotPrevent;
 diff --git a/package.json b/package.json
-index 42c26ead07c8d2c70443aa312fe0502c4dffd4be..f1262b359de295d2005b5b0657d2b69217ceaa0e 100644
+index 42c26ead07c8d2c70443aa312fe0502c4dffd4be..d0bad8e9a67979b8b00a6ea6cca89397b39164bc 100644
 --- a/package.json
 +++ b/package.json
-@@ -127,6 +127,12 @@
+@@ -5,7 +5,10 @@
+   "main": "lib/module/index",
+   "module": "lib/module/index",
+   "types": "./src/index.d.ts",
+-  "react-native": "lib/module/index",
++  "react-native": {
++    "lib/module/index": "lib/module/index",
++    "path": "path-browserify"
++  },
+   "source": "./src/index",
+   "files": [
+     "src",
+@@ -127,6 +130,16 @@
    "codegenConfig": {
      "name": "RNScreenshotPreventSpec",
      "type": "modules",
@@ -1444,9 +1474,13 @@ index 42c26ead07c8d2c70443aa312fe0502c4dffd4be..f1262b359de295d2005b5b0657d2b692
 +    "android": {
 +      "javaPackageName": "com.killserver.screenshotprev"
 +    },
-+    "ios": {  
++    "ios": {
 +      "libraryName": "RNScreenshotPrevent"
 +    }
++  },
++  "browser": {
++    "lib/module/index": "lib/module/index",
++    "path": "path-browserify"
    }
  }
 diff --git a/src/NativeRNScreenshotPrevent.ts b/src/NativeRNScreenshotPrevent.ts
@@ -1470,7 +1504,7 @@ index 0000000000000000000000000000000000000000..e0c2ae2ed44e86e68e750e701baf9df8
 +
 +export default TurboModuleRegistry.get<Spec>('RNScreenshotPrevent');
 diff --git a/src/index.ts b/src/index.ts
-index aa8f952601bb8d0c8c0d8b0f08ab4710f7e05fce..0b347b474e1ab5137630806a5f51339fdddfd6dc 100644
+index aa8f952601bb8d0c8c0d8b0f08ab4710f7e05fce..f0e3c70ebb67215dc85a7877f46713deb9c64675 100644
 --- a/src/index.ts
 +++ b/src/index.ts
 @@ -1,88 +1,121 @@
