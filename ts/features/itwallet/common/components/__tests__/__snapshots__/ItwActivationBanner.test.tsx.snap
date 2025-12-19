@@ -34,12 +34,9 @@ exports[`ItwActivationBanner should match the snapshtot when not visible 1`] = `
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -67,26 +64,18 @@ exports[`ItwActivationBanner should match the snapshtot when not visible 1`] = `
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -94,15 +83,13 @@ exports[`ItwActivationBanner should match the snapshtot when not visible 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -156,16 +143,11 @@ exports[`ItwActivationBanner should match the snapshtot when not visible 1`] = `
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   WALLET_HOME
@@ -222,18 +204,14 @@ exports[`ItwActivationBanner should match the snapshtot when not visible 1`] = `
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -303,13 +281,9 @@ exports[`ItwActivationBanner should match the snapshtot when not visible 1`] = `
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -412,12 +386,9 @@ exports[`ItwActivationBanner should match the snapshtot when visible 1`] = `
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -445,26 +416,18 @@ exports[`ItwActivationBanner should match the snapshtot when visible 1`] = `
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -472,15 +435,13 @@ exports[`ItwActivationBanner should match the snapshtot when visible 1`] = `
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -534,16 +495,11 @@ exports[`ItwActivationBanner should match the snapshtot when visible 1`] = `
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   WALLET_HOME
@@ -600,18 +556,14 @@ exports[`ItwActivationBanner should match the snapshtot when visible 1`] = `
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -681,13 +633,9 @@ exports[`ItwActivationBanner should match the snapshtot when visible 1`] = `
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -777,6 +725,344 @@ Aggiungi un documento"
                               ]
                             }
                           >
+                            <View
+                              style={
+                                {
+                                  "height": 0,
+                                  "position": "absolute",
+                                  "width": 0,
+                                }
+                              }
+                            >
+                              <skGroup
+                                opacity={0.4}
+                                origin={
+                                  JsiSkPoint {
+                                    "CanvasKit": {
+                                      "MakeBlendMode": [MockFunction],
+                                      "MakeCanvas": [MockFunction],
+                                      "MakeColor": [MockFunction],
+                                      "MakeColorFilter": [MockFunction],
+                                      "MakeFont": [MockFunction],
+                                      "MakeImage": [MockFunction],
+                                      "MakeImageFilter": [MockFunction],
+                                      "MakeManagedAnimation": [MockFunction],
+                                      "MakeMatrix": [MockFunction],
+                                      "MakePaint": [MockFunction],
+                                      "MakePath": [MockFunction],
+                                      "MakePicture": [MockFunction],
+                                      "MakeRuntimeEffect": [MockFunction],
+                                      "MakeShader": [MockFunction],
+                                      "MakeSkottieAnimation": [MockFunction],
+                                      "MakeTextBlob": [MockFunction],
+                                      "MakeTypeface": [MockFunction],
+                                      "MakeVertices": [MockFunction],
+                                    },
+                                    "__typename__": "Point",
+                                    "dispose": [Function],
+                                    "ref": Float32Array [
+                                      0,
+                                      0,
+                                    ],
+                                  }
+                                }
+                              >
+                                <skCircle
+                                  cx={0}
+                                  cy={0}
+                                  r={125}
+                                  transform={
+                                    {
+                                      "get": [Function],
+                                      "value": [
+                                        {
+                                          "translateX": undefined,
+                                        },
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    }
+                                  }
+                                >
+                                  <skRadialGradient
+                                    c={
+                                      JsiSkPoint {
+                                        "CanvasKit": {
+                                          "MakeBlendMode": [MockFunction],
+                                          "MakeCanvas": [MockFunction],
+                                          "MakeColor": [MockFunction],
+                                          "MakeColorFilter": [MockFunction],
+                                          "MakeFont": [MockFunction],
+                                          "MakeImage": [MockFunction],
+                                          "MakeImageFilter": [MockFunction],
+                                          "MakeManagedAnimation": [MockFunction],
+                                          "MakeMatrix": [MockFunction],
+                                          "MakePaint": [MockFunction],
+                                          "MakePath": [MockFunction],
+                                          "MakePicture": [MockFunction],
+                                          "MakeRuntimeEffect": [MockFunction],
+                                          "MakeShader": [MockFunction],
+                                          "MakeSkottieAnimation": [MockFunction],
+                                          "MakeTextBlob": [MockFunction],
+                                          "MakeTypeface": [MockFunction],
+                                          "MakeVertices": [MockFunction],
+                                        },
+                                        "__typename__": "Point",
+                                        "dispose": [Function],
+                                        "ref": Float32Array [
+                                          0,
+                                          0,
+                                        ],
+                                      }
+                                    }
+                                    colors={
+                                      [
+                                        "rgba(255,255,255,1)",
+                                        "rgba(255,255,255,0.987)",
+                                        "rgba(255,255,255,0.95)",
+                                        "rgba(255,255,255,0.89)",
+                                        "rgba(255,255,255,0.825)",
+                                        "rgba(255,255,255,0.74)",
+                                        "rgba(255,255,255,0.65)",
+                                        "rgba(255,255,255,0.55)",
+                                        "rgba(255,255,255,0.45)",
+                                        "rgba(255,255,255,0.35)",
+                                        "rgba(255,255,255,0.26)",
+                                        "rgba(255,255,255,0.175)",
+                                        "rgba(255,255,255,0.1)",
+                                        "rgba(255,255,255,0.05)",
+                                        "rgba(255,255,255,0.01)",
+                                        "rgba(255,255,255,0)",
+                                      ]
+                                    }
+                                    positions={
+                                      [
+                                        0,
+                                        0.081,
+                                        0.155,
+                                        0.225,
+                                        0.29,
+                                        0.353,
+                                        0.412,
+                                        0.471,
+                                        0.529,
+                                        0.588,
+                                        0.647,
+                                        0.71,
+                                        0.775,
+                                        0.845,
+                                        0.919,
+                                        1,
+                                      ]
+                                    }
+                                    r={125}
+                                  />
+                                </skCircle>
+                              </skGroup>
+                              <skGroup
+                                layer={true}
+                              >
+                                <skLayer>
+                                  <skPaint
+                                    blendMode="src"
+                                  />
+                                  <skGroup>
+                                    <skGroup
+                                      blendMode="colorDodge"
+                                      opacity={1}
+                                    >
+                                      <skRect
+                                        height={0}
+                                        transform={
+                                          {
+                                            "get": [Function],
+                                            "value": [
+                                              {
+                                                "translateY": undefined,
+                                              },
+                                            ],
+                                          }
+                                        }
+                                        width={0}
+                                        x={0}
+                                        y={-0}
+                                      >
+                                        <skLinearGradient
+                                          colors={
+                                            [
+                                              "rgba(220, 227, 252, 1)",
+                                              "rgba(25, 104, 240, 1)",
+                                              "rgba(255, 179, 87, 1)",
+                                              "rgba(205, 210, 252, 1)",
+                                              "rgba(25, 104, 240, 1)",
+                                              "rgba(255, 234, 189, 1)",
+                                              "rgba(255, 179, 87, 1)",
+                                            ]
+                                          }
+                                          end={
+                                            JsiSkPoint {
+                                              "CanvasKit": {
+                                                "MakeBlendMode": [MockFunction],
+                                                "MakeCanvas": [MockFunction],
+                                                "MakeColor": [MockFunction],
+                                                "MakeColorFilter": [MockFunction],
+                                                "MakeFont": [MockFunction],
+                                                "MakeImage": [MockFunction],
+                                                "MakeImageFilter": [MockFunction],
+                                                "MakeManagedAnimation": [MockFunction],
+                                                "MakeMatrix": [MockFunction],
+                                                "MakePaint": [MockFunction],
+                                                "MakePath": [MockFunction],
+                                                "MakePicture": [MockFunction],
+                                                "MakeRuntimeEffect": [MockFunction],
+                                                "MakeShader": [MockFunction],
+                                                "MakeSkottieAnimation": [MockFunction],
+                                                "MakeTextBlob": [MockFunction],
+                                                "MakeTypeface": [MockFunction],
+                                                "MakeVertices": [MockFunction],
+                                              },
+                                              "__typename__": "Point",
+                                              "dispose": [Function],
+                                              "ref": Float32Array [
+                                                0,
+                                                0,
+                                              ],
+                                            }
+                                          }
+                                          mode="mirror"
+                                          start={
+                                            JsiSkPoint {
+                                              "CanvasKit": {
+                                                "MakeBlendMode": [MockFunction],
+                                                "MakeCanvas": [MockFunction],
+                                                "MakeColor": [MockFunction],
+                                                "MakeColorFilter": [MockFunction],
+                                                "MakeFont": [MockFunction],
+                                                "MakeImage": [MockFunction],
+                                                "MakeImageFilter": [MockFunction],
+                                                "MakeManagedAnimation": [MockFunction],
+                                                "MakeMatrix": [MockFunction],
+                                                "MakePaint": [MockFunction],
+                                                "MakePath": [MockFunction],
+                                                "MakePicture": [MockFunction],
+                                                "MakeRuntimeEffect": [MockFunction],
+                                                "MakeShader": [MockFunction],
+                                                "MakeSkottieAnimation": [MockFunction],
+                                                "MakeTextBlob": [MockFunction],
+                                                "MakeTypeface": [MockFunction],
+                                                "MakeVertices": [MockFunction],
+                                              },
+                                              "__typename__": "Point",
+                                              "dispose": [Function],
+                                              "ref": Float32Array [
+                                                0,
+                                                0,
+                                              ],
+                                            }
+                                          }
+                                        />
+                                      </skRect>
+                                    </skGroup>
+                                    <skLayer>
+                                      <skPaint
+                                        blendMode="dstIn"
+                                      />
+                                      <skGroup>
+                                        <skLayer>
+                                          <skPaint>
+                                            <skMatrixColorFilter
+                                              matrix={
+                                                [
+                                                  1,
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  1,
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  1,
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  1,
+                                                  0,
+                                                ]
+                                              }
+                                            />
+                                          </skPaint>
+                                          <skGroup>
+                                            <skRRect
+                                              height={0}
+                                              r={8}
+                                              strokeJoin="round"
+                                              strokeWidth={3}
+                                              style="stroke"
+                                              width={0}
+                                              x={0}
+                                              y={0}
+                                            />
+                                          </skGroup>
+                                        </skLayer>
+                                      </skGroup>
+                                    </skLayer>
+                                  </skGroup>
+                                </skLayer>
+                                <skGroup
+                                  blendMode="srcIn"
+                                >
+                                  <skLayer>
+                                    <skPaint>
+                                      <skMatrixColorFilter
+                                        matrix={
+                                          [
+                                            1,
+                                            0,
+                                            0,
+                                            0,
+                                            0,
+                                            0,
+                                            1,
+                                            0,
+                                            0,
+                                            0,
+                                            0,
+                                            0,
+                                            1,
+                                            0,
+                                            0,
+                                            0,
+                                            0,
+                                            0,
+                                            1,
+                                            0,
+                                          ]
+                                        }
+                                      />
+                                    </skPaint>
+                                    <skGroup>
+                                      <skRRect
+                                        height={0}
+                                        r={8}
+                                        strokeJoin="round"
+                                        strokeWidth={3}
+                                        style="stroke"
+                                        width={0}
+                                        x={0}
+                                        y={0}
+                                      />
+                                    </skGroup>
+                                  </skLayer>
+                                </skGroup>
+                              </skGroup>
+                            </View>
                             <SvgMock
                               height={145}
                               style={
@@ -1139,345 +1425,6 @@ Aggiungi un documento"
                                   </Text>
                                 </View>
                               </View>
-                            </View>
-                            <View
-                              style={
-                                {
-                                  "height": 0,
-                                  "pointerEvents": "none",
-                                  "position": "absolute",
-                                  "width": 0,
-                                }
-                              }
-                            >
-                              <skGroup
-                                opacity={0.4}
-                                origin={
-                                  JsiSkPoint {
-                                    "CanvasKit": {
-                                      "MakeBlendMode": [MockFunction],
-                                      "MakeCanvas": [MockFunction],
-                                      "MakeColor": [MockFunction],
-                                      "MakeColorFilter": [MockFunction],
-                                      "MakeFont": [MockFunction],
-                                      "MakeImage": [MockFunction],
-                                      "MakeImageFilter": [MockFunction],
-                                      "MakeManagedAnimation": [MockFunction],
-                                      "MakeMatrix": [MockFunction],
-                                      "MakePaint": [MockFunction],
-                                      "MakePath": [MockFunction],
-                                      "MakePicture": [MockFunction],
-                                      "MakeRuntimeEffect": [MockFunction],
-                                      "MakeShader": [MockFunction],
-                                      "MakeSkottieAnimation": [MockFunction],
-                                      "MakeTextBlob": [MockFunction],
-                                      "MakeTypeface": [MockFunction],
-                                      "MakeVertices": [MockFunction],
-                                    },
-                                    "__typename__": "Point",
-                                    "dispose": [Function],
-                                    "ref": Float32Array [
-                                      0,
-                                      0,
-                                    ],
-                                  }
-                                }
-                              >
-                                <skCircle
-                                  cx={0}
-                                  cy={0}
-                                  r={125}
-                                  transform={
-                                    {
-                                      "get": [Function],
-                                      "value": [
-                                        {
-                                          "translateX": undefined,
-                                        },
-                                        {
-                                          "scale": 1,
-                                        },
-                                      ],
-                                    }
-                                  }
-                                >
-                                  <skRadialGradient
-                                    c={
-                                      JsiSkPoint {
-                                        "CanvasKit": {
-                                          "MakeBlendMode": [MockFunction],
-                                          "MakeCanvas": [MockFunction],
-                                          "MakeColor": [MockFunction],
-                                          "MakeColorFilter": [MockFunction],
-                                          "MakeFont": [MockFunction],
-                                          "MakeImage": [MockFunction],
-                                          "MakeImageFilter": [MockFunction],
-                                          "MakeManagedAnimation": [MockFunction],
-                                          "MakeMatrix": [MockFunction],
-                                          "MakePaint": [MockFunction],
-                                          "MakePath": [MockFunction],
-                                          "MakePicture": [MockFunction],
-                                          "MakeRuntimeEffect": [MockFunction],
-                                          "MakeShader": [MockFunction],
-                                          "MakeSkottieAnimation": [MockFunction],
-                                          "MakeTextBlob": [MockFunction],
-                                          "MakeTypeface": [MockFunction],
-                                          "MakeVertices": [MockFunction],
-                                        },
-                                        "__typename__": "Point",
-                                        "dispose": [Function],
-                                        "ref": Float32Array [
-                                          0,
-                                          0,
-                                        ],
-                                      }
-                                    }
-                                    colors={
-                                      [
-                                        "rgba(255,255,255,1)",
-                                        "rgba(255,255,255,0.987)",
-                                        "rgba(255,255,255,0.95)",
-                                        "rgba(255,255,255,0.89)",
-                                        "rgba(255,255,255,0.825)",
-                                        "rgba(255,255,255,0.74)",
-                                        "rgba(255,255,255,0.65)",
-                                        "rgba(255,255,255,0.55)",
-                                        "rgba(255,255,255,0.45)",
-                                        "rgba(255,255,255,0.35)",
-                                        "rgba(255,255,255,0.26)",
-                                        "rgba(255,255,255,0.175)",
-                                        "rgba(255,255,255,0.1)",
-                                        "rgba(255,255,255,0.05)",
-                                        "rgba(255,255,255,0.01)",
-                                        "rgba(255,255,255,0)",
-                                      ]
-                                    }
-                                    positions={
-                                      [
-                                        0,
-                                        0.081,
-                                        0.155,
-                                        0.225,
-                                        0.29,
-                                        0.353,
-                                        0.412,
-                                        0.471,
-                                        0.529,
-                                        0.588,
-                                        0.647,
-                                        0.71,
-                                        0.775,
-                                        0.845,
-                                        0.919,
-                                        1,
-                                      ]
-                                    }
-                                    r={125}
-                                  />
-                                </skCircle>
-                              </skGroup>
-                              <skGroup
-                                layer={true}
-                              >
-                                <skLayer>
-                                  <skPaint
-                                    blendMode="src"
-                                  />
-                                  <skGroup>
-                                    <skGroup
-                                      blendMode="colorDodge"
-                                      opacity={1}
-                                    >
-                                      <skRect
-                                        height={0}
-                                        transform={
-                                          {
-                                            "get": [Function],
-                                            "value": [
-                                              {
-                                                "translateY": undefined,
-                                              },
-                                            ],
-                                          }
-                                        }
-                                        width={0}
-                                        x={0}
-                                        y={-0}
-                                      >
-                                        <skLinearGradient
-                                          colors={
-                                            [
-                                              "rgba(220, 227, 252, 1)",
-                                              "rgba(25, 104, 240, 1)",
-                                              "rgba(255, 179, 87, 1)",
-                                              "rgba(205, 210, 252, 1)",
-                                              "rgba(25, 104, 240, 1)",
-                                              "rgba(255, 234, 189, 1)",
-                                              "rgba(255, 179, 87, 1)",
-                                            ]
-                                          }
-                                          end={
-                                            JsiSkPoint {
-                                              "CanvasKit": {
-                                                "MakeBlendMode": [MockFunction],
-                                                "MakeCanvas": [MockFunction],
-                                                "MakeColor": [MockFunction],
-                                                "MakeColorFilter": [MockFunction],
-                                                "MakeFont": [MockFunction],
-                                                "MakeImage": [MockFunction],
-                                                "MakeImageFilter": [MockFunction],
-                                                "MakeManagedAnimation": [MockFunction],
-                                                "MakeMatrix": [MockFunction],
-                                                "MakePaint": [MockFunction],
-                                                "MakePath": [MockFunction],
-                                                "MakePicture": [MockFunction],
-                                                "MakeRuntimeEffect": [MockFunction],
-                                                "MakeShader": [MockFunction],
-                                                "MakeSkottieAnimation": [MockFunction],
-                                                "MakeTextBlob": [MockFunction],
-                                                "MakeTypeface": [MockFunction],
-                                                "MakeVertices": [MockFunction],
-                                              },
-                                              "__typename__": "Point",
-                                              "dispose": [Function],
-                                              "ref": Float32Array [
-                                                0,
-                                                0,
-                                              ],
-                                            }
-                                          }
-                                          mode="mirror"
-                                          start={
-                                            JsiSkPoint {
-                                              "CanvasKit": {
-                                                "MakeBlendMode": [MockFunction],
-                                                "MakeCanvas": [MockFunction],
-                                                "MakeColor": [MockFunction],
-                                                "MakeColorFilter": [MockFunction],
-                                                "MakeFont": [MockFunction],
-                                                "MakeImage": [MockFunction],
-                                                "MakeImageFilter": [MockFunction],
-                                                "MakeManagedAnimation": [MockFunction],
-                                                "MakeMatrix": [MockFunction],
-                                                "MakePaint": [MockFunction],
-                                                "MakePath": [MockFunction],
-                                                "MakePicture": [MockFunction],
-                                                "MakeRuntimeEffect": [MockFunction],
-                                                "MakeShader": [MockFunction],
-                                                "MakeSkottieAnimation": [MockFunction],
-                                                "MakeTextBlob": [MockFunction],
-                                                "MakeTypeface": [MockFunction],
-                                                "MakeVertices": [MockFunction],
-                                              },
-                                              "__typename__": "Point",
-                                              "dispose": [Function],
-                                              "ref": Float32Array [
-                                                0,
-                                                0,
-                                              ],
-                                            }
-                                          }
-                                        />
-                                      </skRect>
-                                    </skGroup>
-                                    <skLayer>
-                                      <skPaint
-                                        blendMode="dstIn"
-                                      />
-                                      <skGroup>
-                                        <skLayer>
-                                          <skPaint>
-                                            <skMatrixColorFilter
-                                              matrix={
-                                                [
-                                                  1,
-                                                  0,
-                                                  0,
-                                                  0,
-                                                  0,
-                                                  0,
-                                                  1,
-                                                  0,
-                                                  0,
-                                                  0,
-                                                  0,
-                                                  0,
-                                                  1,
-                                                  0,
-                                                  0,
-                                                  0,
-                                                  0,
-                                                  0,
-                                                  1,
-                                                  0,
-                                                ]
-                                              }
-                                            />
-                                          </skPaint>
-                                          <skGroup>
-                                            <skRRect
-                                              height={0}
-                                              r={8}
-                                              strokeJoin="round"
-                                              strokeWidth={3}
-                                              style="stroke"
-                                              width={0}
-                                              x={0}
-                                              y={0}
-                                            />
-                                          </skGroup>
-                                        </skLayer>
-                                      </skGroup>
-                                    </skLayer>
-                                  </skGroup>
-                                </skLayer>
-                                <skGroup
-                                  blendMode="srcIn"
-                                >
-                                  <skLayer>
-                                    <skPaint>
-                                      <skMatrixColorFilter
-                                        matrix={
-                                          [
-                                            1,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            1,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            1,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            1,
-                                            0,
-                                          ]
-                                        }
-                                      />
-                                    </skPaint>
-                                    <skGroup>
-                                      <skRRect
-                                        height={0}
-                                        r={8}
-                                        strokeJoin="round"
-                                        strokeWidth={3}
-                                        style="stroke"
-                                        width={0}
-                                        x={0}
-                                        y={0}
-                                      />
-                                    </skGroup>
-                                  </skLayer>
-                                </skGroup>
-                              </skGroup>
                             </View>
                           </View>
                         </View>
