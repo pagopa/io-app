@@ -12,10 +12,10 @@ import {
 } from "./credentialAnalyticsHandlers";
 
 export function* watchItwAnalyticsSaga(): SagaIterator {
-  // Initial full sync: aligns Mixpanel with current IT-Wallet state
+  // Aligns Mixpanel with current IT-Wallet state
   yield* fork(syncItwAnalyticsProperties);
 
-  // Reactive updates: keep analytics in sync with store changes
+  // Keep analytics in sync with store changes
   yield* fork(watchItwCredentialsAnalyticsSaga);
 }
 
