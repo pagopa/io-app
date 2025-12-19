@@ -159,17 +159,12 @@ export const ItwBrandedBox = ({
         }
       ]}
     >
-      {/* Box content */}
-      {children}
-
       {/* Skia Canvas for border and light effect */}
       <Canvas
         style={{
           position: "absolute",
           height: size.height,
-          width: size.width,
-          // Allow touches to go through the canvas
-          pointerEvents: "none"
+          width: size.width
         }}
       >
         {/* Animated light effect */}
@@ -185,6 +180,9 @@ export const ItwBrandedBox = ({
           themeType={themeType}
         />
       </Canvas>
+
+      {/* Box content */}
+      {children}
     </View>
   );
 };
