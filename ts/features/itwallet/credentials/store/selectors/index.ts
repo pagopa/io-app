@@ -300,3 +300,14 @@ export const itwHasExpiringCredentialsSelector = createSelector(
     );
   }
 );
+
+/**
+ * Convenience selector that returns true if the user has a mDL credential stored.
+ *
+ * @param state - The global state.
+ * @returns Whether the user has a mDL credential.
+ */
+export const itwIsMdlPresentSelector = createSelector(
+  itwCredentialsByTypeSelector,
+  credentials => credentials.mDL !== undefined
+);

@@ -5729,19 +5729,19 @@
           "description": "Con piena validità ufficiale, digitali e sempre a portata di mano!",
           "action": "Aggiungi un documento"
         },
-        "upgrade": {
-          "title": "IO dà il benvenuto a IT-Wallet",
-          "description": "I tuoi documenti hanno funzionalità evolute con il portafoglio **IT-Wallet di IO**: l’unico portafoglio digitale di Stato, **pubblico, sicuro e gratuito.**",
-          "action": "Inizia"
-        },
         "upgrade_empty": {
-          "title": "Su IO i tuoi documenti personali sono digitali e ufficiali.",
-          "description": "Aggiungi i tuoi documenti su IO! IT-Wallet è il tuo nuovo portafoglio digitale: **semplice, sicuro, sempre con te**.",
+          "title": "Il tuo Portafoglio è ora parte di IT-Wallet",
+          "description": "Scopri le funzionalità evolute dei documenti digitali su IO.",
           "action": "Aggiungi un documento"
         },
-        "upgrade_expiring": {
+        "upgrade": {
           "title": "IO dà il benvenuto a IT-Wallet",
-          "description": "Porta i tuoi documenti digitali sull’unico portafoglio digitale di Stato: **sicuro, gratuito, tuo**.",
+          "description": "Il tuo portafoglio digitale pubblico: semplice, sicuro, tuo. Scopri i nuovi documenti ora disponibili!",
+          "action": "Inizia"
+        },
+        "upgrade_with_mdl": {
+          "title": "Dimostra chi sei col tuo dispositivo",
+          "description": "Usa la tua Patente digitale anche come documento di riconoscimento, in modo facile e sicuro!",
           "action": "Inizia"
         },
         "dismissAlert": {

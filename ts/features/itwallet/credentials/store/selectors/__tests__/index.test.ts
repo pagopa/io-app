@@ -13,7 +13,8 @@ import {
   selectNameSurnameFromEid,
   itwCredentialsByTypeSelector,
   itwCredentialsListByTypeSelector,
-  itwHasExpiringCredentialsSelector
+  itwHasExpiringCredentialsSelector,
+  itwIsMdlPresentSelector
 } from "../index";
 import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import {
@@ -404,5 +405,23 @@ describe("itwHasExpiringCredentialsSelector", () => {
       }
     });
     expect(itwHasExpiringCredentialsSelector(state)).toEqual(false);
+  });
+});
+
+describe("itwIsMdlPresentSelector", () => {
+  it("should return true if there is mDL stored", () => {
+    const state = getStateWithCredentials({
+      [mockedDisabilityCard.credentialId]: mockedDisabilityCard,
+      [mockedDrivingLicense.credentialId]: mockedDrivingLicense,
+      [mockedMdocDrivingLicense.credentialId]: mockedMdocDrivingLicense
+    });
+    expect(itwIsMdlPresentSelector(state)).toEqual(true);
+  });
+
+  it("should return false if there is not mDL stored", () => {
+    const state = getStateWithCredentials({
+      [mockedDisabilityCard.credentialId]: mockedDisabilityCard
+    });
+    expect(itwIsMdlPresentSelector(state)).toEqual(false);
   });
 });

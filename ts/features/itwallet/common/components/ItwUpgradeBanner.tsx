@@ -2,7 +2,7 @@ import I18n from "i18next";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import {
-  itwHasExpiringCredentialsSelector,
+  itwIsMdlPresentSelector,
   itwIsWalletEmptySelector
 } from "../../credentials/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
@@ -14,9 +14,7 @@ export const ItwUpgradeBanner = () => {
 
   const isBannerVisible = useIOSelector(itwShouldRenderUpgradeBannerSelector);
   const isWalletEmpty = useIOSelector(itwIsWalletEmptySelector);
-  const hasExpiringCredentials = useIOSelector(
-    itwHasExpiringCredentialsSelector
-  );
+  const hasMdl = useIOSelector(itwIsMdlPresentSelector);
 
   if (!isBannerVisible) {
     return null;
@@ -55,17 +53,17 @@ export const ItwUpgradeBanner = () => {
     );
   }
 
-  if (hasExpiringCredentials) {
+  if (hasMdl) {
     return (
       <ItwEngagementBanner
         title={I18n.t(
-          "features.itWallet.engagementBanner.upgrade_expiring.action"
+          "features.itWallet.engagementBanner.upgrade_with_mdl.action"
         )}
         description={I18n.t(
-          "features.itWallet.engagementBanner.upgrade_expiring.description"
+          "features.itWallet.engagementBanner.upgrade_with_mdl.description"
         )}
         action={I18n.t(
-          "features.itWallet.engagementBanner.upgrade_expiring.action"
+          "features.itWallet.engagementBanner.upgrade_with_mdl.action"
         )}
         onPress={handleStartPress}
         onDismiss={handleOnDismiss}
