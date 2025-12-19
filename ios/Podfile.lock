@@ -2135,36 +2135,7 @@ PODS:
     - React-Codegen
     - React-Core
     - ReactCommon/turbomodule/core
-  - react-native-pager-view (6.4.1):
-    - boost
-    - DoubleConversion
-    - fast_float
-    - fmt
-    - glog
-    - hermes-engine
-    - RCT-Folly
-    - RCT-Folly/Fabric
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-jsi
-    - react-native-pager-view/common (= 6.4.1)
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-renderercss
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - SocketRocket
-    - Yoga
-  - react-native-pager-view/common (6.4.1):
+  - react-native-pager-view (6.9.1):
     - boost
     - DoubleConversion
     - fast_float
@@ -2998,7 +2969,7 @@ PODS:
     - Yoga
   - RNFS (2.18.0):
     - React
-  - RNGestureHandler (2.25.0):
+  - RNGestureHandler (2.29.1):
     - boost
     - DoubleConversion
     - fast_float
@@ -3408,7 +3379,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - RNSVG (15.11.2):
+  - RNSVG (15.15.1):
     - boost
     - DoubleConversion
     - fast_float
@@ -3434,10 +3405,10 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNSVG/common (= 15.11.2)
+    - RNSVG/common (= 15.15.1)
     - SocketRocket
     - Yoga
-  - RNSVG/common (15.11.2):
+  - RNSVG/common (15.15.1):
     - boost
     - DoubleConversion
     - fast_float
@@ -3975,7 +3946,7 @@ SPEC CHECKSUMS:
   react-native-image-picker: b16541b587b275e81a12f9b82f215c5e9b0ccbf3
   react-native-netinfo: cec9c4e86083cb5b6aba0e0711f563e2fbbff187
   react-native-notifications-utils: 3e4bfc85db8610c150945472a8976a036a8931a7
-  react-native-pager-view: 6cbfaa1fdd951be4951f628be82b17eb7847bee9
+  react-native-pager-view: a0516effb17ca5120ac2113bfd21b91130ad5748
   react-native-pdf: c586da0d19c14e6d859e62bf957851687fba0f25
   react-native-pdf-thumbnail: 89dd3532effd7733a33229ce666fd02068dac985
   react-native-safe-area-context: c6e2edd1c1da07bdce287fa9d9e60c5f7b514616
@@ -4022,7 +3993,7 @@ SPEC CHECKSUMS:
   RNDeviceInfo: d863506092aef7e7af3a1c350c913d867d795047
   RNFlashList: b1f92e77d19aca4f9112bd977ca2ff8a2d61bf69
   RNFS: 4f02bbb5c95d71bade3d36a1b6514305ccefc4c9
-  RNGestureHandler: 212ef464597109d9a0a44bb4c68ccb4a7c20470e
+  RNGestureHandler: 29bbca60c881e5243e219e3fe0016060002ed389
   RNKeychain: a2c134ab796272c3d605e035ab727591000b30f3
   RNPermissions: 17e12d62da7494e48c47ccb800a6214d036cfc19
   RNQrGenerator: 60eab4f7c9e3f09db78029636fe356dca5cb585f
@@ -4032,7 +4003,7 @@ SPEC CHECKSUMS:
   RNScreenshotPrevent: 53b27bc29a4c71d5e60e404f10d78f91711c2a44
   RNSentry: 3ffb79c1393af4800c85bc96bc880c20316fc67a
   RNShare: 1dba46787d6e5543e05655efaefa0e4bb98380d9
-  RNSVG: cc114ae7f36ba81ae395a5b11e2d383800ee2ac1
+  RNSVG: d260beec1775108e1bd065a0ed666ff2c5565158
   Sentry: e1b49e5f49367ff211b25c431a60e2bd83b792aa
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   SwiftCBOR: aa87349b4ccddd19f861aa544f7c27d43dee5772
