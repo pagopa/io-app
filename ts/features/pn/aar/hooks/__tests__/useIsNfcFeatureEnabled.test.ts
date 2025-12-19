@@ -17,9 +17,7 @@ describe.each(platforms)(
 
     afterAll(jest.clearAllMocks);
 
-    it(`${
-      isAndroid ? "should" : "should not"
-    } invoke "cieSdk.isNFCEnabled"`, async () => {
+    it('should invoke "cieSdk.isNFCEnabled"', async () => {
       const spyOnIsNFCEnabled = jest.spyOn(cieSdk, "isNFCEnabled");
 
       const { result } = renderHook(() => useIsNfcFeatureEnabled());
@@ -28,11 +26,7 @@ describe.each(platforms)(
         await result.current.isNfcEnabled();
       });
 
-      if (isAndroid) {
-        expect(spyOnIsNFCEnabled).toHaveBeenCalledTimes(1);
-      } else {
-        expect(spyOnIsNFCEnabled).not.toHaveBeenCalled();
-      }
+      expect(spyOnIsNFCEnabled).toHaveBeenCalledTimes(1);
     });
     it(`${
       isAndroid ? "should" : "should not"
