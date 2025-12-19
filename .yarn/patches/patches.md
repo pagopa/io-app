@@ -84,7 +84,7 @@ Created on **19/05/2025**
 
 ### react-native-screenshot-prevent-npm-1.2.1-d115315590.patch
 
-created on **24/11/2025**
+Created on **24/11/2025**
 
 #### Reason:
 
