@@ -104,21 +104,21 @@ const ItwEngagementBannerSection = () => (
     <ListItemHeader label="IT-Wallet Engagement Banner" />
     <VStack space={8}>
       <ItwEngagementBanner
-        title={I18n.t("features.itWallet.engagementBanner.activation.title")}
-        description={I18n.t(
-          "features.itWallet.engagementBanner.activation.description"
-        )}
-        action={I18n.t("features.itWallet.engagementBanner.activation.action")}
+        title={"Porta su IO i tuoi documenti digitali"}
+        description={
+          "Con piena validità ufficiale, digitali e sempre a portata di mano!"
+        }
+        action={"Aggiungi un documento"}
         onPress={constNull}
         onDismiss={constNull}
         dismissable={true}
       />
       <ItwEngagementBanner
-        title={I18n.t("features.itWallet.engagementBanner.upgrade.title")}
-        description={I18n.t(
-          "features.itWallet.engagementBanner.upgrade.description"
-        )}
-        action={I18n.t("features.itWallet.engagementBanner.upgrade.action")}
+        title={"Dimostra chi sei col tuo dispositivo"}
+        description={
+          "Usa la tua Patente digitale anche come documento di riconoscimento, in modo facile e sicuro!"
+        }
+        action={"Inizia"}
         onPress={constNull}
         onDismiss={constNull}
         dismissable={true}
