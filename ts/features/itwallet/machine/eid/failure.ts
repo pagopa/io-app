@@ -10,7 +10,8 @@ import { type EidIssuanceEvents } from "./events";
 const {
   isIssuerResponseError,
   isWalletProviderResponseError,
-  WalletProviderResponseErrorCodes: Codes
+  WalletProviderResponseErrorCodes: Codes,
+  IssuerResponseErrorCodes: IssuerCodes
 } = Errors;
 
 export enum IssuanceFailureType {
@@ -21,7 +22,8 @@ export enum IssuanceFailureType {
   WALLET_PROVIDER_GENERIC = "WALLET_PROVIDER_GENERIC",
   WALLET_REVOCATION_ERROR = "WALLET_REVOCATION_ERROR",
   UNTRUSTED_ISS = "UNTRUSTED_ISS",
-  CIE_NOT_REGISTERED = "CIE_NOT_REGISTERED"
+  CIE_NOT_REGISTERED = "CIE_NOT_REGISTERED",
+  MRTD_CHALLENGE_INIT_ERROR = "MRTD_CHALLENGE_INIT_ERROR"
 }
 
 /**
@@ -38,6 +40,7 @@ export type ReasonTypeByFailure = {
   [IssuanceFailureType.WALLET_REVOCATION_ERROR]: unknown;
   [IssuanceFailureType.UNTRUSTED_ISS]: Trust.Errors.FederationError;
   [IssuanceFailureType.CIE_NOT_REGISTERED]: string;
+  [IssuanceFailureType.MRTD_CHALLENGE_INIT_ERROR]: Errors.IssuerResponseError;
   [IssuanceFailureType.UNEXPECTED]: unknown;
 };
 
@@ -75,6 +78,15 @@ export const mapEventToFailure = (
   ) {
     return {
       type: IssuanceFailureType.UNSUPPORTED_DEVICE,
+      reason: error
+    };
+  }
+
+  if (
+    isIssuerResponseError(error, IssuerCodes.MrtdChallengeInitRequestFailed)
+  ) {
+    return {
+      type: IssuanceFailureType.MRTD_CHALLENGE_INIT_ERROR,
       reason: error
     };
   }

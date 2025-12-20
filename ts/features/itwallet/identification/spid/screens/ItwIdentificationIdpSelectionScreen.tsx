@@ -11,27 +11,34 @@ import { idpsRemoteValueSelector } from "../../../../../store/reducers/content";
 import { idps as idpsFallback, SpidIdp } from "../../../../../utils/idps";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
+  ItwFlow,
   trackItWalletSpidIDPSelected,
   trackItWalletSpidIDPSelection
 } from "../../../analytics";
+import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 
 export const ItwIdentificationIdpSelectionScreen = () => {
   const dispatch = useIODispatch();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const isL3 = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
 
   const idps = useIOSelector(idpsRemoteValueSelector);
   const idpValue = isReady(idps) ? idps.value : idpsFallback;
   const randomIdps = useRef<ReadonlyArray<SpidIdp>>(randomOrderIdps(idpValue));
 
+  const itw_flow: ItwFlow = isL3 ? "L3" : "L2";
+
   useFocusEffect(
     useCallback(() => {
-      trackItWalletSpidIDPSelection();
+      trackItWalletSpidIDPSelection(itw_flow);
       dispatch(loadIdps.request());
-    }, [dispatch])
+    }, [dispatch, itw_flow])
   );
 
   const onIdpSelected = (idp: SpidIdp) => {
-    trackItWalletSpidIDPSelected({ idp: idp.name });
+    trackItWalletSpidIDPSelected({ idp: idp.name, itw_flow });
     machineRef.send({ type: "select-spid-idp", idp });
   };
 

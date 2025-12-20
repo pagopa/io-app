@@ -12,7 +12,8 @@ import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
   selectAuthUrlOption,
-  selectCiePin
+  selectCiePin,
+  selectIdentification
 } from "../../../machine/eid/selectors";
 import { ItwCieCardReadFailureContent } from "../components/ItwCieCardReadFailureContent";
 import { ItwCieCardReadProgressContent } from "../components/ItwCieCardReadProgressContent";
@@ -31,9 +32,16 @@ export const ItwCieAuthenticationScreen = () => {
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
+  const identification =
+    ItwEidIssuanceMachineContext.useSelector(selectIdentification);
 
   useFocusEffect(
-    useCallback(() => trackItWalletCieCardReading(isL3 ? "L3" : "L2"), [isL3])
+    useCallback(() => {
+      trackItWalletCieCardReading({
+        itw_flow: isL3 ? "L3" : "L2",
+        ITW_ID_method: identification?.mode
+      });
+    }, [isL3, identification])
   );
 
   // Uri used for the CIE authentication flow
