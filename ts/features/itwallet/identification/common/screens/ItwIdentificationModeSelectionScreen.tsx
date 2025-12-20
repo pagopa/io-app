@@ -29,6 +29,7 @@ import {
   selectIssuanceMode
 } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import { ItwIdentificationFrequencyRow } from "../components/ItwIdentificationFrequencyRow";
 
 export type ItwIdentificationNavigationParams = {
   eidReissuing?: boolean;
@@ -56,7 +57,7 @@ export const ItwIdentificationModeSelectionScreen = ({
   );
   const mode = ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
   const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
-
+  const isReissuanceMode = mode === "reissuance";
   const disabledIdentificationMethods = useIOSelector(
     itwDisabledIdentificationMethodsSelector
   );
@@ -162,9 +163,20 @@ export const ItwIdentificationModeSelectionScreen = ({
       <ContentWrapper>
         <VSpacer size={8} />
         <VStack space={16}>
+          {isReissuanceMode && (!isCiePinDisabled || !isCieIdDisabled) && (
+            <ItwIdentificationFrequencyRow
+              label={I18n.t(`${i18nNs}.frequency.every12Months`)}
+              badge={{
+                text: I18n.t(`${i18nNs}.mode.ciePin.reissuanceBadge`),
+                variant: "highlight",
+                outline: false,
+                testID: "CiePinReissuanceBadgeTestID"
+              }}
+            />
+          )}
           {!isCiePinDisabled && <CiePinMethodModule />}
-          {!isSpidDisabled && <SpidMethodModule />}
           {!isCieIdDisabled && <CieIdMethodModule />}
+          {!isSpidDisabled && <SpidMethodModule />}
           {isL3 && !eidReissuing && (
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <IOButton
@@ -192,8 +204,8 @@ const CiePinMethodModule = () => {
   }, [machineRef]);
 
   const badgeProps: Badge | undefined = useMemo(() => {
-    if (level === "l2" && mode === "issuance") {
-      // Should not display the recommended badge for L2 issuance
+    if (mode === "reissuance" || (level === "l2" && mode === "issuance")) {
+      // Should not display the recommended badge for reissuance or L2 issuance
       return undefined;
     }
 
@@ -220,6 +232,8 @@ const CiePinMethodModule = () => {
 const SpidMethodModule = () => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const level = ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
+  const mode = ItwEidIssuanceMachineContext.useSelector(selectIssuanceMode);
+  const isReissuanceMode = mode === "reissuance";
 
   const handleOnPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "spid" });
@@ -240,13 +254,20 @@ const SpidMethodModule = () => {
   }, [level]);
 
   return (
-    <ModuleNavigationAlt
-      title={title}
-      subtitle={subtitle}
-      testID="SpidMethodModuleTestID"
-      icon="spid"
-      onPress={handleOnPress}
-    />
+    <VStack space={16}>
+      {isReissuanceMode && (
+        <ItwIdentificationFrequencyRow
+          label={I18n.t(`${i18nNs}.frequency.every90Days`)}
+        />
+      )}
+      <ModuleNavigationAlt
+        title={title}
+        subtitle={subtitle}
+        testID="SpidMethodModuleTestID"
+        icon="spid"
+        onPress={handleOnPress}
+      />
+    </VStack>
   );
 };
 
