@@ -15,7 +15,6 @@ export const PoweredByItWalletText = () => (
 const styles = StyleSheet.create({
   poweredBy: {
     flexDirection: "row",
-    justifyContent: "center",
     alignItems: "center",
     gap: 8
   }
