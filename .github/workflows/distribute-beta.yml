@@ -1,4 +1,4 @@
-name: Distribute latest uploaded beta
+name: Distribute beta
 on: workflow_dispatch
 jobs:
   distribute-android:
