@@ -6,10 +6,9 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import { Canvas } from "@shopify/react-native-skia";
-import { constNull } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useState } from "react";
-import { useWindowDimensions, View } from "react-native";
+import { Alert, useWindowDimensions, View } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { DSComponentViewerBox } from "../../../design-system/components/DSComponentViewerBox";
 import { ItwBrandedBox } from "../../common/components/ItwBrandedBox";
@@ -109,8 +108,8 @@ const ItwEngagementBannerSection = () => (
           "Con piena validità ufficiale, digitali e sempre a portata di mano!"
         }
         action={"Aggiungi un documento"}
-        onPress={constNull}
-        onDismiss={constNull}
+        onPress={() => Alert.alert("✅ Engagement Banner pressed")}
+        onDismiss={() => Alert.alert("❌ Engagement Banner dismissed")}
         dismissable={true}
       />
       <ItwEngagementBanner
@@ -119,8 +118,8 @@ const ItwEngagementBannerSection = () => (
           "Usa la tua Patente digitale anche come documento di riconoscimento, in modo facile e sicuro!"
         }
         action={"Inizia"}
-        onPress={constNull}
-        onDismiss={constNull}
+        onPress={() => Alert.alert("✅ Engagement Banner pressed")}
+        onDismiss={() => Alert.alert("❌ Engagement Banner dismissed")}
         dismissable={true}
       />
     </VStack>
