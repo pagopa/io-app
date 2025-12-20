@@ -1,6 +1,4 @@
-import { Image } from "react-native";
-import paypalLogoImage from "../../../img/wallet/payment-methods/paypal-logo.png";
-// sadly no svg is available for paypal, since on Figma an image is used
+import PaypalLogo from "../../../img/wallet/payment-methods/paypal/paypal_logo_ext.svg";
 import BpayLogo from "../../../img/wallet/payment-methods/bpay_logo_full.svg";
 import { BankLogoOrSkeleton } from "../../features/payments/common/components/utils/BankLogoOrLoadingSkeleton";
 export type LogoPaymentExtendedProps = {
@@ -22,13 +20,11 @@ export const LogoPaymentExtended = (props: LogoPaymentExtendedProps) => {
     switch (props.icon) {
       case "payPal":
         return (
-          <Image
-            accessibilityIgnoresInvertColors
+          <PaypalLogo
             accessible={true}
             accessibilityLabel="PayPal"
-            source={paypalLogoImage}
-            resizeMode="contain"
-            style={{ height, width }}
+            height={height}
+            width={width}
           />
         );
       case "bpay":
