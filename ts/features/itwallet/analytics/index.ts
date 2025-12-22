@@ -1,10 +1,6 @@
 import { mixpanelTrack } from "../../../mixpanel";
 import { buildEventProperties } from "../../../utils/analytics";
-import {
-  ItwCredentialStatus,
-  WalletInstanceRevocationReason
-} from "../common/utils/itwTypesUtils";
-import { IdentificationContext } from "../machine/eid/context";
+import { WalletInstanceRevocationReason } from "../common/utils/itwTypesUtils";
 import { IssuanceFailure } from "../machine/eid/failure";
 import {
   ITW_ACTIONS_EVENTS,
@@ -15,337 +11,9 @@ import {
   ITW_TECH_EVENTS
 } from "./enum";
 import { updatePropertiesWalletRevoked } from "./properties/propertyUpdaters";
-
-export type KoState = {
-  reason: unknown;
-  cta_category: "custom_1" | "custom_2";
-  cta_id: string;
-};
-
-export type MixPanelCredentialVersion = "V2" | "V3";
-
-/**
- * This is the list of credentials that are tracked in MixPanel
- * ITW_ID_V2: PersonIdentificationData (obtained with Documenti su IO)
- * ITW_PG_V2: mDL
- * ITW_TS_V2: EuropeanHealthInsuranceCard
- * ITW_CED_V2: EuropeanDisabilityCard
- * ITW_PID: PID (obtained with IT Wallet)
- * ITW_PG_V3: mDL (obtained with IT Wallet)
- * ITW_TS_V3: EuropeanHealthInsuranceCard (obtained with IT Wallet)
- * ITW_CED_V3: EuropeanDisabilityCard (obtained with IT Wallet)
- * ITW_ED: ED (obtained with IT Wallet)
- * ITW_EE: EE (obtained with IT Wallet)
- * ITW_RES: Residency (obtained with IT Wallet)
- * UNKNOWN: placeholder used when a credential exists in the app but is not yet tracked on Mixpanel
- */
-export const mixPanelCredentials = [
-  "ITW_ID_V2",
-  "ITW_PG_V2",
-  "ITW_TS_V2",
-  "ITW_CED_V2",
-  "ITW_PID",
-  "ITW_PG_V3",
-  "ITW_TS_V3",
-  "ITW_CED_V3",
-  "ITW_ED",
-  "ITW_EE",
-  "ITW_RES",
-  "UNKNOWN"
-] as const;
-
-export type MixPanelCredential = (typeof mixPanelCredentials)[number];
-
-type TrackCredentialDetail = {
-  credential: MixPanelCredential; // MixPanelCredential
-  credential_status: string; // ItwPg
-  credential_type?: "multiple" | "unique";
-};
-
-type TrackCredentialPreview = {
-  credential: MixPanelCredential; // MixPanelCredential
-  credential_type?: "multiple" | "unique";
-};
-
-export type OtherMixPanelCredential = "welfare" | "payment_method" | "CGN";
-type NewCredential = MixPanelCredential | OtherMixPanelCredential;
-
-type ItwFailureCause = "CredentialIssuer" | "WalletProvider";
-
-/**
- * This map is used to map the credential type to the MixPanel credential
- * Currently, all tracked credentials have both V2 and V3 and new credentials
- */
-export const CREDENTIALS_MAP: Record<
-  string,
-  Record<MixPanelCredentialVersion, MixPanelCredential> | MixPanelCredential
-> = {
-  PersonIdentificationData: { V2: "ITW_ID_V2", V3: "ITW_PID" },
-  mDL: { V2: "ITW_PG_V2", V3: "ITW_PG_V3" },
-  EuropeanHealthInsuranceCard: { V2: "ITW_TS_V2", V3: "ITW_TS_V3" },
-  EuropeanDisabilityCard: { V2: "ITW_CED_V2", V3: "ITW_CED_V3" },
-  education_degree: "ITW_ED",
-  education_enrollment: "ITW_EE",
-  residency: "ITW_RES"
-};
-
-type BackToWallet = {
-  exit_page: string;
-  credential: Extract<MixPanelCredential, "ITW_ID_V2">;
-};
-
-type ItwExit = {
-  exit_page: string;
-  credential: MixPanelCredential;
-};
-
-type AddCredentialFailure = {
-  credential: MixPanelCredential;
-  reason: unknown;
-  type: string;
-  caused_by: ItwFailureCause;
-};
-
-type IdRequestFailure = {
-  ITW_ID_method: ItwIdMethod;
-  reason: unknown;
-  type: string;
-  caused_by: ItwFailureCause;
-  itw_flow: ItwFlow;
-};
-
-type IdUnexpectedFailure = {
-  reason: unknown;
-  type: string;
-  itw_flow: ItwFlow;
-};
-
-type CredentialUnexpectedFailure = {
-  credential: MixPanelCredential;
-  reason: unknown;
-  type: string;
-};
-
-type ItwCredentialReissuingFailedProperties = {
-  reason: unknown;
-  credential_failed: MixPanelCredential;
-  itw_flow: ItwFlow;
-  type: string;
-};
-
-type CredentialStatusAssertionFailure = {
-  credential: MixPanelCredential;
-  credential_status: string;
-  reason?: unknown;
-};
-
-type ItwIdMethod = IdentificationContext["mode"];
-
-// PROPERTIES TYPES
-type TrackITWalletBannerClosureProperties = {
-  banner_id: string;
-  banner_page: string;
-  banner_landing: string;
-  banner_campaign?: string;
-};
-
-type TrackITWalletIDMethodSelected = {
-  ITW_ID_method: "spid" | "ciePin" | "cieId";
-  itw_flow: ItwFlow;
-};
-
-type TrackITWalletSpidIDPSelected = { idp: string };
-
-type TrackItWalletCieCardVerifyFailure = {
-  reason: CieCardVerifyFailureReason;
-  itw_flow: ItwFlow;
-  cie_reading_progress: number;
-};
-
-type TrackItWalletCieCardReadingFailure = {
-  reason: CieCardReadingFailureReason;
-  itw_flow: ItwFlow;
-  cie_reading_progress: number;
-};
-
-type TrackItWalletCieCardReadingUnexpectedFailure = {
-  reason: string | undefined;
-  cie_reading_progress: number;
-};
-
-export type CieCardVerifyFailureReason =
-  | "CERTIFICATE_EXPIRED"
-  | "CERTIFICATE_REVOKED";
-
-export enum CieCardReadingFailureReason {
-  KO = "KO",
-  ON_TAG_DISCOVERED_NOT_CIE = "ON_TAG_DISCOVERED_NOT_CIE",
-  GENERIC_ERROR = "GENERIC_ERROR",
-  APDU_ERROR = "APDU_ERROR",
-  START_NFC_ERROR = "START_NFC_ERROR",
-  STOP_NFC_ERROR = "STOP_NFC_ERROR",
-  NO_INTERNET_CONNECTION = "NO_INTERNET_CONNECTION",
-  AUTHENTICATION_ERROR = "AUTHENTICATION_ERROR"
-}
-
-export type ItwCredentialMixpanelStatus =
-  | "not_available"
-  | "valid"
-  | "not_valid"
-  | "expiring"
-  | "expired"
-  | "expiring_verification"
-  | "verification_expired"
-  | "unknown";
-
-export type ItwStatus = "not_active" | "L2" | "L3";
-// Assuming that the eID status is the same as the PID status
-export type ItwPIDStatus = Extract<
-  ItwCredentialMixpanelStatus,
-  "not_available" | "valid" | "expiring" | "expired"
->;
-
-/**
- * This map is used to map the credentials status to the MixPanel credential status (not for eID)
- * valid: valid
- * invalid: not_valid
- * expired: expired
- * expiring: expiring
- * jwtExpired: verification_expired
- * jwtExpiring: expiring_verification
- * unknown: unknown
- */
-export const CREDENTIAL_STATUS_MAP: Record<
-  ItwCredentialStatus,
-  ItwCredentialMixpanelStatus
-> = {
-  valid: "valid",
-  invalid: "not_valid",
-  expired: "expired",
-  expiring: "expiring",
-  jwtExpired: "verification_expired",
-  jwtExpiring: "expiring_verification",
-  unknown: "unknown"
-};
-
-type ItwWalletDataShare = {
-  credential: MixPanelCredential;
-  phase?:
-    | "initial_request"
-    | "request_in_progress"
-    | "old_message_request"
-    | "async_continuation";
-};
-
-type ItwCopyListItem = {
-  credential: MixPanelCredential;
-  item_copied: string;
-};
-
-export type ItwOfflineRicaricaAppIOSource =
-  | "bottom_sheet"
-  | "banner"
-  | "access_expired_screen";
-
-type ItwCredentialInfoDetails = {
-  credential: MixPanelCredential;
-  credential_screen_type: "detail" | "preview";
-};
-
-/**
- * Actions that can trigger the eID reissuing flow.
- * This type represents the user action that was performed immediately before
- * the eID reissuing process is initiated.
- * Add new values here when implementing additional flows that should start
- * the reissuing procedure.
- */
-export enum ItwEidReissuingTrigger {
-  ADD_CREDENTIAL = "add_credential"
-}
-
-/**
- * Actions that trigger the requirement for L3 upgrade.
- * This type represents the user action that was performed immediately before
- * the L3 mandatory upgrade screen was displayed.
- * Add new values when implementing additional flows that require L3 upgrade.
- */
-export enum ItwL3UpgradeTrigger {
-  REMOTE_QR_CODE = "remote_qr_code"
-}
-
-// TODO: Add reissuing_PID when the L3 PID reissuance flow is ready
-export type ItwFlow = "L2" | "L3" | "reissuing_eID" | "not_available";
-
-export type ItwScreenFlowContext = {
-  screen_name: string;
-  itw_flow: ItwFlow;
-};
-
-export type ItwDismissalAction = {
-  screen_name: string;
-  itw_flow: ItwFlow;
-  user_action: string;
-};
-
-type ItwUserWithoutL3requirements = {
-  screen_name: string;
-  reason: "user_without_cie" | "user_without_pin";
-  position: "screen" | "bottom_sheet";
-};
-
-type QualtricsSurveyId = "confirm_eid_flow_success" | "confirm_eid_flow_exit";
-
-export type TrackQualtricsSurvey = {
-  survey_id: QualtricsSurveyId;
-  survey_page: string;
-};
+import { TrackITWalletBannerClosureProperties, ItwFlow, ItwWalletDataShare, ItwScreenFlowContext, TrackQualtricsSurvey, NewCredential, KoState, MixPanelCredential, TrackITWalletIDMethodSelected, TrackITWalletSpidIDPSelected, ItwCredentialInfoDetails, ItwOfflineRicaricaAppIOSource, ItwCopyListItem, ItwDismissalAction, TrackCredentialDetail, TrackItWalletCieCardVerifyFailure, TrackItWalletCieCardReadingFailure, TrackItWalletCieCardReadingUnexpectedFailure, ItwIdMethod, IdRequestFailure, AddCredentialFailure, CredentialUnexpectedFailure, IdUnexpectedFailure, CredentialStatusAssertionFailure, ItwL3UpgradeTrigger, ItwUserWithoutL3requirements, ItwCredentialReissuingFailedProperties, ItwEidReissuingTrigger, ItwExit, BackToWallet, ItwStatus } from "./utils/analyticsTypes";
 
 // #region SCREEN VIEW EVENTS
-export const trackWalletDataShare = (properties: ItwWalletDataShare) => {
-  void mixpanelTrack(
-    ITW_SCREENVIEW_EVENTS.ITW_DATA_SHARE,
-    buildEventProperties("UX", "screen_view", properties)
-  );
-};
-
-export const trackOpenWalletScreen = () => {
-  void mixpanelTrack(
-    ITW_SCREENVIEW_EVENTS.WALLET,
-    buildEventProperties("UX", "screen_view")
-  );
-};
-
-export const trackShowCredentialsList = () => {
-  void mixpanelTrack(
-    ITW_SCREENVIEW_EVENTS.WALLET_ADD_LIST_ITEM,
-    buildEventProperties("UX", "screen_view")
-  );
-};
-
-export const trackCredentialPreview = (
-  credentialPreview: TrackCredentialPreview
-) => {
-  void mixpanelTrack(
-    ITW_SCREENVIEW_EVENTS.ITW_CREDENTIAL_PREVIEW,
-    buildEventProperties("UX", "screen_view", credentialPreview)
-  );
-};
-
-export const trackItwCredentialIntro = (credential: MixPanelCredential) => {
-  void mixpanelTrack(
-    ITW_SCREENVIEW_EVENTS.ITW_CREDENTIAL_INTRO,
-    buildEventProperties("UX", "screen_view", { credential })
-  );
-};
-
-export const trackCredentialDetail = (
-  credentialDetails: TrackCredentialDetail
-) => {
-  void mixpanelTrack(
-    ITW_SCREENVIEW_EVENTS.ITW_CREDENTIAL_DETAIL,
-    buildEventProperties("UX", "screen_view", credentialDetails)
-  );
-};
 
 export function trackITWalletBannerVisualized(
   properties: TrackITWalletBannerClosureProperties
@@ -363,70 +31,26 @@ export function trackItWalletIntroScreen(itw_flow: ItwFlow) {
   );
 }
 
-export function trackItWalletIDMethod(itw_flow: ItwFlow) {
+export const trackOpenWalletScreen = () => {
   void mixpanelTrack(
-    ITW_SCREENVIEW_EVENTS.ITW_ID_METHOD,
-    buildEventProperties("UX", "screen_view", { itw_flow })
-  );
-}
-
-export function trackItWalletSpidIDPSelection() {
-  void mixpanelTrack(
-    ITW_SCREENVIEW_EVENTS.ITW_SPID_IDP_SELECTION,
+    ITW_SCREENVIEW_EVENTS.WALLET,
     buildEventProperties("UX", "screen_view")
   );
-}
+};
 
-export function trackItWalletCiePinEnter(itw_flow: ItwFlow) {
+export const trackShowCredentialsList = () => {
   void mixpanelTrack(
-    ITW_SCREENVIEW_EVENTS.ITW_CIE_PIN_ENTER,
-    buildEventProperties("UX", "screen_view", { itw_flow })
-  );
-}
-
-export function trackItWalletCieNfcActivation(itw_flow: ItwFlow) {
-  void mixpanelTrack(
-    ITW_SCREENVIEW_EVENTS.ITW_CIE_NFC_ACTIVATION,
-    buildEventProperties("UX", "screen_view", { itw_flow })
-  );
-}
-
-export function trackItWalletCieCardReading(itw_flow: ItwFlow) {
-  void mixpanelTrack(
-    ITW_SCREENVIEW_EVENTS.ITW_CIE_CARD_READING,
-    buildEventProperties("UX", "screen_view", { itw_flow })
-  );
-}
-
-export function trackItWalletCieCardReadingSuccess(itw_flow: ItwFlow) {
-  void mixpanelTrack(
-    ITW_SCREENVIEW_EVENTS.ITW_CARD_READING_SUCCESS,
-    buildEventProperties("UX", "screen_view", { itw_flow })
-  );
-}
-
-export function trackWalletCredentialFAC_SIMILE(
-  credential: MixPanelCredential
-) {
-  void mixpanelTrack(
-    ITW_SCREENVIEW_EVENTS["ITW_CREDENTIAL_FAC-SIMILE"],
-    buildEventProperties("UX", "screen_view", { credential })
-  );
-}
-
-export function trackItwOfflineWallet() {
-  void mixpanelTrack(
-    ITW_SCREENVIEW_EVENTS.ITW_OFFLINE_WALLET,
+    ITW_SCREENVIEW_EVENTS.WALLET_ADD_LIST_ITEM,
     buildEventProperties("UX", "screen_view")
   );
-}
+};
 
-export function trackItwOfflineBottomSheet() {
+export const trackWalletDataShare = (properties: ItwWalletDataShare) => {
   void mixpanelTrack(
-    ITW_SCREENVIEW_EVENTS.ITW_OFFLINE_BOTTOM_SHEET,
-    buildEventProperties("UX", "screen_view")
+    ITW_SCREENVIEW_EVENTS.ITW_DATA_SHARE,
+    buildEventProperties("UX", "screen_view", properties)
   );
-}
+};
 
 export function trackItwDismissalContext(
   screenFlowContext: ItwScreenFlowContext
@@ -444,79 +68,6 @@ export function trackItwUpgradeBanner(banner_page: string) {
   );
 }
 
-export function trackItwPinInfoBottomSheet(
-  screenFlowContext: ItwScreenFlowContext
-) {
-  void mixpanelTrack(
-    ITW_SCREENVIEW_EVENTS.ITW_PIN_INFO_BOTTOMSHEET,
-    buildEventProperties("UX", "screen_view", screenFlowContext)
-  );
-}
-
-export function trackItwCieInfoBottomSheet(
-  screenFlowContext: ItwScreenFlowContext
-) {
-  void mixpanelTrack(
-    ITW_SCREENVIEW_EVENTS.ITW_CIE_INFO_BOTTOMSHEET,
-    buildEventProperties("UX", "screen_view", screenFlowContext)
-  );
-}
-
-export function trackItwCiePinTutorialCie(itw_flow: ItwFlow) {
-  void mixpanelTrack(
-    ITW_SCREENVIEW_EVENTS.ITW_CIE_PIN_TUTORIAL_CIE,
-    buildEventProperties("UX", "screen_view", { itw_flow })
-  );
-}
-
-export function trackItwCiePinTutorialPin(itw_flow: ItwFlow) {
-  void mixpanelTrack(
-    ITW_SCREENVIEW_EVENTS.ITW_CIE_PIN_TUTORIAL_PIN,
-    buildEventProperties("UX", "screen_view", { itw_flow })
-  );
-}
-
-export function trackItwUserWithoutL3Bottomsheet() {
-  void mixpanelTrack(
-    ITW_SCREENVIEW_EVENTS.ITW_USER_WITHOUT_L3_BOTTOMSHEET,
-    buildEventProperties("UX", "screen_view")
-  );
-}
-export const trackItwCredentialBottomSheet = (
-  properties: TrackCredentialDetail
-) => {
-  void mixpanelTrack(
-    ITW_SCREENVIEW_EVENTS.ITW_CREDENTIAL_BOTTOMSHEET,
-    buildEventProperties("UX", "screen_view", properties)
-  );
-};
-
-export const trackItwCredentialNeedsVerification = (
-  credential: MixPanelCredential
-) => {
-  void mixpanelTrack(
-    ITW_SCREENVIEW_EVENTS.ITW_CREDENTIAL_NEEDS_VERIFICATION,
-    buildEventProperties("UX", "screen_view", {
-      credential,
-      credential_status: "verification_expired"
-    })
-  );
-};
-
-export const trackItwOfflineAccessExpiring = () => {
-  void mixpanelTrack(
-    ITW_SCREENVIEW_EVENTS.ITW_OFFLINE_ACCESS_EXPIRING,
-    buildEventProperties("UX", "screen_view")
-  );
-};
-
-export const trackItwOfflineAccessExpired = () => {
-  void mixpanelTrack(
-    ITW_SCREENVIEW_EVENTS.ITW_OFFLINE_ACCESS_EXPIRED,
-    buildEventProperties("KO", "screen_view")
-  );
-};
-
 export const trackItwSurveyRequest = (properties: TrackQualtricsSurvey) => {
   void mixpanelTrack(
     ITW_SCREENVIEW_EVENTS.SURVEY_REQUEST,
@@ -528,21 +79,23 @@ export const trackItwSurveyRequest = (properties: TrackQualtricsSurvey) => {
 
 // #region ACTIONS
 
-export const trackItwCredentialDelete = (credential: MixPanelCredential) => {
+export function trackItWalletBannerTap(
+  properties: TrackITWalletBannerClosureProperties
+) {
   void mixpanelTrack(
-    ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_DELETE,
-    buildEventProperties("UX", "action", { credential })
-  );
-};
-
-export const trackWalletDataShareAccepted = (
-  properties: ItwWalletDataShare
-) => {
-  void mixpanelTrack(
-    ITW_ACTIONS_EVENTS.ITW_DATA_SHARE_ACCEPTED,
+    ITW_ACTIONS_EVENTS.TAP_BANNER,
     buildEventProperties("UX", "action", properties)
   );
-};
+}
+
+export function trackItWalletBannerClosure(
+  properties: TrackITWalletBannerClosureProperties
+) {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.CLOSE_BANNER,
+    buildEventProperties("UX", "action", properties)
+  );
+}
 
 export const trackOpenItwTos = () => {
   void mixpanelTrack(
@@ -555,6 +108,15 @@ export const trackOpenItwTosAccepted = (itw_flow: ItwFlow) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_TOS_ACCEPTED,
     buildEventProperties("UX", "action", { itw_flow })
+  );
+};
+
+export const trackWalletDataShareAccepted = (
+  properties: ItwWalletDataShare
+) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_DATA_SHARE_ACCEPTED,
+    buildEventProperties("UX", "action", properties)
   );
 };
 
@@ -576,21 +138,7 @@ export const trackItwKoStateAction = (params: KoState) => {
   );
 };
 
-export const trackAddFirstCredential = () => {
-  void mixpanelTrack(
-    ITW_ACTIONS_EVENTS.ITW_ADD_FIRST_CREDENTIAL,
-    buildEventProperties("UX", "action")
-  );
-};
 
-export const trackSaveCredentialToWallet = (credential: MixPanelCredential) => {
-  if (credential) {
-    void mixpanelTrack(
-      ITW_ACTIONS_EVENTS.ITW_UX_CONVERSION,
-      buildEventProperties("UX", "action", { credential })
-    );
-  }
-};
 
 export function trackItWalletActivationStart(itw_flow: ItwFlow) {
   void mixpanelTrack(
@@ -656,24 +204,6 @@ export function trackWalletAdd() {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.WALLET_ADD,
     buildEventProperties("UX", "action")
-  );
-}
-
-export function trackItWalletBannerClosure(
-  properties: TrackITWalletBannerClosureProperties
-) {
-  void mixpanelTrack(
-    ITW_ACTIONS_EVENTS.CLOSE_BANNER,
-    buildEventProperties("UX", "action", properties)
-  );
-}
-
-export function trackItWalletBannerTap(
-  properties: TrackITWalletBannerClosureProperties
-) {
-  void mixpanelTrack(
-    ITW_ACTIONS_EVENTS.TAP_BANNER,
-    buildEventProperties("UX", "action", properties)
   );
 }
 
@@ -860,15 +390,6 @@ export const trackItwCredentialTapBanner = (
 ) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_TAP_BANNER,
-    buildEventProperties("UX", "action", properties)
-  );
-};
-
-export const trackItwCredentialBottomSheetAction = (
-  properties: TrackCredentialDetail
-) => {
-  void mixpanelTrack(
-    ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_BOTTOMSHEET_ACTION,
     buildEventProperties("UX", "action", properties)
   );
 };
