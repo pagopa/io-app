@@ -1,0 +1,53 @@
+import {
+  isMixpanelInstanceInitialized,
+  registerSuperProperties
+} from "../../../../mixpanel";
+import { GlobalState } from "../../../../store/reducers/types";
+import { OfflineAccessReasonEnum } from "../../../ingress/store/reducer";
+import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
+import { buildItwBaseProperties } from "./basePropertyBuilder";
+import { ItwBaseProperties } from "./propertyTypes";
+
+export type ItwSuperProperties = ItwBaseProperties & {
+  OFFLINE_ACCESS_REASON: string;
+};
+
+/**
+ * Updates only ITW Profile properties.
+ */
+export const updateItwSuperProperties = (state: GlobalState) => {
+  if (!isMixpanelInstanceInitialized()) {
+    return;
+  }
+
+  const baseProps = buildItwBaseProperties(state);
+  const superProps = buildItwSuperProperties(state);
+
+  registerSuperProperties({
+    ...baseProps,
+    ...superProps
+  });
+};
+
+export const forceUpdateItwSuperProperties = (
+  partialProps: Partial<ItwSuperProperties>
+) => {
+  if (!isMixpanelInstanceInitialized()) {
+    return;
+  }
+
+  registerSuperProperties(partialProps);
+};
+
+export const buildItwSuperProperties = (
+  state: GlobalState
+): Pick<ItwSuperProperties, "OFFLINE_ACCESS_REASON"> => ({
+  OFFLINE_ACCESS_REASON: offlineReasonHandler(state)
+});
+
+const offlineReasonHandler = (
+  state: GlobalState
+): OfflineAccessReasonEnum | "not_available" => {
+  const offlineAccessReason = offlineAccessReasonSelector(state);
+  return offlineAccessReason ? offlineAccessReason : "not_available";
+};
