@@ -17,6 +17,7 @@ import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppPa
 import { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import { useIsNfcFeatureEnabled } from "../hooks/useIsNfcFeatureEnabled";
 
 const { width, height, uri } = Image.resolveAssetSource(
   cieScanningEducationalSource
@@ -35,6 +36,7 @@ export const SendAarCieCardReadingEducationalScreen = ({
   const dispatch = useIODispatch();
   const currentAarState = useIOSelector(currentAARFlowData);
   const denomination = useIOSelector(aarAdresseeDenominationSelector);
+  const { isChecking, isNfcEnabled } = useIsNfcFeatureEnabled();
 
   useEffect(() => {
     switch (currentAarState.type) {
@@ -54,7 +56,15 @@ export const SendAarCieCardReadingEducationalScreen = ({
         navigation.goBack();
         break;
       }
-      // TODO: [IOCOM-2750] implement navigation into NFC activation screen
+      case sendAARFlowStates.androidNFCActivation: {
+        navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+          screen: PN_ROUTES.MAIN,
+          params: {
+            screen: PN_ROUTES.SEND_AAR_NFC_ACTIVATION
+          }
+        });
+        break;
+      }
       default:
         break;
     }
@@ -71,13 +81,16 @@ export const SendAarCieCardReadingEducationalScreen = ({
     }
   };
 
-  const handleGoNext = () => {
+  const handleGoNext = async () => {
     if (currentAarState.type === sendAARFlowStates.cieScanningAdvisory) {
-      // TODO: [IOCOM-2750] check if NFC is enabled
+      const isNfcActive = await isNfcEnabled();
+
       dispatch(
         setAarFlowState({
           ...currentAarState,
-          type: sendAARFlowStates.cieScanning
+          type: isNfcActive
+            ? sendAARFlowStates.cieScanning
+            : sendAARFlowStates.androidNFCActivation
         })
       );
     }
@@ -98,6 +111,7 @@ export const SendAarCieCardReadingEducationalScreen = ({
             label: i18n.t(
               "features.pn.aar.flow.cieScanningAdvisory.primaryAction"
             ),
+            loading: isChecking,
             onPress: handleGoNext
           }
         }}
