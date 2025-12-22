@@ -63,18 +63,14 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -144,13 +140,9 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -336,7 +328,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                       "padding": 16,
                                     },
                                     {
-                                      "backgroundColor": "#FFD9D9",
+                                      "backgroundColor": "rgba(255,102,102,0.2)",
                                     },
                                     {
                                       "transform": [
@@ -365,7 +357,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                     align="xMidYMid"
                                     bbHeight={36}
                                     bbWidth={36}
-                                    color="#5D1313"
+                                    color="#FFD9D9"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
@@ -441,7 +433,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                           [
                                             {},
                                             {
-                                              "color": "#5D1313",
+                                              "color": "#FFD9D9",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -462,7 +454,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                           [
                                             {},
                                             {
-                                              "color": "#5D1313",
+                                              "color": "#FFD9D9",
                                               "fontFamily": "Titillio",
                                               "fontSize": 16,
                                               "fontStyle": "normal",
@@ -2032,8 +2024,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                     style={
                                       [
                                         {
-                                          "height": 31,
-                                          "width": 51,
+                                          "alignSelf": "flex-start",
                                         },
                                         {
                                           "backgroundColor": "#555C70",
@@ -2294,8 +2285,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                         style={
                                           [
                                             {
-                                              "height": 31,
-                                              "width": 51,
+                                              "alignSelf": "flex-start",
                                             },
                                             {
                                               "backgroundColor": "#555C70",
@@ -2458,8 +2448,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                         style={
                                           [
                                             {
-                                              "height": 31,
-                                              "width": 51,
+                                              "alignSelf": "flex-start",
                                             },
                                             {
                                               "backgroundColor": "#555C70",
@@ -2595,8 +2584,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                         style={
                                           [
                                             {
-                                              "height": 31,
-                                              "width": 51,
+                                              "alignSelf": "flex-start",
                                             },
                                             {
                                               "backgroundColor": "#555C70",
@@ -2759,8 +2747,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                         style={
                                           [
                                             {
-                                              "height": 31,
-                                              "width": 51,
+                                              "alignSelf": "flex-start",
                                             },
                                             {
                                               "backgroundColor": "#555C70",
@@ -3144,8 +3131,7 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
                                     style={
                                       [
                                         {
-                                          "height": 31,
-                                          "width": 51,
+                                          "alignSelf": "flex-start",
                                         },
                                         {
                                           "backgroundColor": "#555C70",
@@ -3505,22 +3491,14 @@ exports[`SettingsNavigator renders all routes (snapshot) 1`] = `
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
