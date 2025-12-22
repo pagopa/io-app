@@ -39,7 +39,9 @@ describe("ItwIdentificationModeSelectionScreen", () => {
     expect(component.queryByTestId("CiePinMethodModuleTestID")).not.toBeNull();
     expect(component.queryByTestId("SpidMethodModuleTestID")).not.toBeNull();
     expect(component.queryByTestId("CieIDMethodModuleTestID")).not.toBeNull();
-    expect(component.queryByTestId("CiePinRecommendedBadgeTestID")).toBeNull();
+    expect(
+      component.queryByTestId("CiePinRecommendedBadgeTestID")
+    ).not.toBeNull();
     expect(component.queryByTestId("noCieButtonTestID")).toBeNull();
   });
 
