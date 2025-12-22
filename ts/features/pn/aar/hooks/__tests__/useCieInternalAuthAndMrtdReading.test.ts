@@ -1,5 +1,4 @@
-import { renderHook } from "@testing-library/react-native";
-import { act } from "react";
+import { renderHook, act } from "@testing-library/react-native";
 import {
   CieManager,
   InternalAuthAndMrtdResponse,

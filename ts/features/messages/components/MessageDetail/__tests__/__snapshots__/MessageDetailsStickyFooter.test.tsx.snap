@@ -34,12 +34,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -67,26 +64,18 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -94,15 +83,13 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -156,16 +143,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   DUMMY
@@ -222,18 +204,14 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -303,13 +281,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -729,12 +703,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -762,26 +733,18 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -789,15 +752,13 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -851,16 +812,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   DUMMY
@@ -917,18 +873,14 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -998,13 +950,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -1552,12 +1500,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTA and no pay
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -1585,26 +1530,18 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTA and no pay
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -1612,15 +1549,13 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTA and no pay
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -1674,16 +1609,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTA and no pay
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   DUMMY
@@ -1740,18 +1670,14 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTA and no pay
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -1821,13 +1747,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTA and no pay
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -1930,12 +1852,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -1963,26 +1882,18 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -1990,15 +1901,13 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -2052,16 +1961,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   DUMMY
@@ -2118,18 +2022,14 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -2199,13 +2099,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -2480,12 +2376,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and hidde
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -2513,26 +2406,18 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and hidde
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -2540,15 +2425,13 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and hidde
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -2602,16 +2485,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and hidde
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   DUMMY
@@ -2668,18 +2546,14 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and hidde
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -2749,13 +2623,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and hidde
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -2858,12 +2728,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -2891,26 +2758,18 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -2918,15 +2777,13 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -2980,16 +2837,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   DUMMY
@@ -3046,18 +2898,14 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -3127,13 +2975,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -3550,12 +3394,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -3583,26 +3424,18 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -3610,15 +3443,13 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -3672,16 +3503,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   DUMMY
@@ -3738,18 +3564,14 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -3819,13 +3641,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -4102,12 +3920,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -4135,26 +3950,18 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -4162,15 +3969,13 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -4224,16 +4029,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   DUMMY
@@ -4290,18 +4090,14 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -4371,13 +4167,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
