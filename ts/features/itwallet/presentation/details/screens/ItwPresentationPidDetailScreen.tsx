@@ -4,7 +4,7 @@ import { Canvas } from "@shopify/react-native-skia";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useCallback } from "react";
-import { useWindowDimensions } from "react-native";
+import { useWindowDimensions, View } from "react-native";
 import { useIOSelector } from "../../../../../store/hooks";
 import {
   mapPIDStatusToMixpanel,
@@ -56,7 +56,9 @@ export const ItwPresentationPidDetailScreen = () => {
         <VStack style={{ paddingVertical: 16 }} space={16}>
           <ItwPresentationPidDetail credential={credential} />
           <ItwPresentationPidDetailFooter credential={credential} />
-          <PoweredByItWalletText />
+          <View style={{ alignItems: "center" }}>
+            <PoweredByItWalletText />
+          </View>
         </VStack>
       </ContentWrapper>
     </ItwPresentationDetailsScreenBase>

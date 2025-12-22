@@ -1,13 +1,12 @@
 import {
   Body,
-  IOToast,
   ListItemHeader,
   ListItemSwitch,
   useIOTheme,
-  VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
 import { Canvas } from "@shopify/react-native-skia";
+import { constNull } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useState } from "react";
 import { useWindowDimensions, View } from "react-native";
@@ -15,7 +14,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { DSComponentViewerBox } from "../../../design-system/components/DSComponentViewerBox";
 import { ItwBrandedBox } from "../../common/components/ItwBrandedBox";
 import { ItwBrandedSkiaGradient } from "../../common/components/ItwBrandedSkiaGradient";
-import { ItwHighlightBanner } from "../../common/components/ItwHighlightBanner";
+import { ItwEngagementBanner } from "../../common/components/ItwEngagementBanner";
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
 import { getCredentialStatusObject } from "../../common/utils/itwCredentialStatusUtils";
@@ -90,6 +89,40 @@ const ItwWalletIdStatusSection = () => (
         pidExpiration="2026-11-12T14:11:48.000Z"
       />
       <ItwWalletIdStatus pidStatus="jwtExpired" />
+    </VStack>
+  </View>
+);
+
+const ItwEngagementBannerSection = () => (
+  <View
+    style={{
+      marginHorizontal: -24,
+      paddingHorizontal: 24,
+      paddingBottom: 24
+    }}
+  >
+    <ListItemHeader label="IT-Wallet Engagement Banner" />
+    <VStack space={8}>
+      <ItwEngagementBanner
+        title={I18n.t("features.itWallet.engagementBanner.activation.title")}
+        description={I18n.t(
+          "features.itWallet.engagementBanner.activation.description"
+        )}
+        action={I18n.t("features.itWallet.engagementBanner.activation.action")}
+        onPress={constNull}
+        onDismiss={constNull}
+        dismissable={true}
+      />
+      <ItwEngagementBanner
+        title={I18n.t("features.itWallet.engagementBanner.upgrade.title")}
+        description={I18n.t(
+          "features.itWallet.engagementBanner.upgrade.description"
+        )}
+        action={I18n.t("features.itWallet.engagementBanner.upgrade.action")}
+        onPress={constNull}
+        onDismiss={constNull}
+        dismissable={true}
+      />
     </VStack>
   </View>
 );
@@ -171,51 +204,6 @@ const ItwSkeumorphicCredentialItem = ({
   );
 };
 
-export const ItwBannerSection = () => {
-  const [remountKey, setRemountKey] = useState(0);
-
-  const handleRemount = () => {
-    setRemountKey(prevKey => prevKey + 1);
-  };
-
-  return (
-    <View
-      style={{
-        marginHorizontal: -24,
-        paddingHorizontal: 24,
-        paddingBottom: 24
-      }}
-    >
-      <ListItemHeader
-        label="Highlight Banner"
-        endElement={{
-          type: "buttonLink",
-          componentProps: {
-            label: "Remount",
-            onPress: handleRemount
-          }
-        }}
-      />
-      <ItwHighlightBanner
-        key={`large-${remountKey}`}
-        title="IT-Wallet per i tuoi documenti"
-        description="L'unico Wallet di Stato: **pubblico, sicuro e gratuito.** Garantito dallo Stato, accessibile solo a te."
-        action="Ottieni IT-Wallet"
-        onPress={() => IOToast.info("Pressed")}
-      />
-      <VSpacer size={16} />
-      <ItwHighlightBanner
-        key={`small-${remountKey}`}
-        title="IT-Wallet per i tuoi documenti"
-        description="L'unico Wallet di Stato: **pubblico, sicuro e gratuito.** Garantito dallo Stato, accessibile solo a te."
-        action="Ottieni IT-Wallet"
-        onPress={() => IOToast.info("Pressed")}
-        size="small"
-      />
-    </View>
-  );
-};
-
 export const ItwClaimsListSection = () => {
   const theme = useIOTheme();
 
@@ -262,8 +250,8 @@ export const ItwComponentsSection = () => (
   <>
     <ItwWalletBrandSection />
     <ItwWalletIdStatusSection />
+    <ItwEngagementBannerSection />
     <ItwSkeumorphicCredentialSection />
-    <ItwBannerSection />
     <ItwClaimsListSection />
   </>
 );

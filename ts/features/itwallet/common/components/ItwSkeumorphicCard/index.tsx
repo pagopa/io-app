@@ -209,7 +209,7 @@ const CardSideBase = ({ status, children, isItw }: CardSideBaseProps) => {
             height={size.height}
             variant={gradientVariantByStatus[status]}
             thickness={4}
-            cornerRadius={8}
+            borderRadius={8}
           />
         </Canvas>
       )}

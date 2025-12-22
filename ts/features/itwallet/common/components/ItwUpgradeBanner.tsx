@@ -1,58 +1,87 @@
-import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
-import { useCallback } from "react";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import {
-  trackItwTapUpgradeBanner,
-  trackItwUpgradeBanner
-} from "../../analytics";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+  itwIsMdlPresentSelector,
+  itwIsWalletEmptySelector
+} from "../../credentials/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { itwShouldRenderL3UpgradeBannerSelector } from "../store/selectors";
-import { ItwHighlightBanner } from "./ItwHighlightBanner";
+import { itwShouldRenderUpgradeBannerSelector } from "../store/selectors";
+import { ItwEngagementBanner } from "./ItwEngagementBanner";
 
 export const ItwUpgradeBanner = () => {
   const navigation = useIONavigation();
-  const shouldRender = useIOSelector(itwShouldRenderL3UpgradeBannerSelector);
-  const isItWalletValid = useIOSelector(itwLifecycleIsValidSelector);
-  const { name: routeName } = useRoute();
 
-  useFocusEffect(
-    useCallback(() => {
-      if (shouldRender) {
-        trackItwUpgradeBanner(routeName);
-      }
-    }, [shouldRender, routeName])
-  );
+  const isBannerVisible = useIOSelector(itwShouldRenderUpgradeBannerSelector);
+  const isWalletEmpty = useIOSelector(itwIsWalletEmptySelector);
+  const hasMdl = useIOSelector(itwIsMdlPresentSelector);
 
-  if (!shouldRender) {
+  if (!isBannerVisible) {
     return null;
   }
 
-  const handleOnPress = () => {
-    trackItwTapUpgradeBanner(routeName);
+  const handleAddDocumentPress = () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ONBOARDING
+    });
+  };
+
+  const handleStartPress = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
       params: { level: "l3" }
     });
   };
 
-  const isDocumentsActive = isItWalletValid ? "active" : "inactive";
+  const handleOnDismiss = () => {
+    // TODO SIW-3564 implement banner dismissal logic
+  };
+
+  if (isWalletEmpty) {
+    return (
+      <ItwEngagementBanner
+        title={I18n.t("features.itWallet.engagementBanner.upgrade_empty.title")}
+        description={I18n.t(
+          "features.itWallet.engagementBanner.upgrade_empty.description"
+        )}
+        action={I18n.t(
+          "features.itWallet.engagementBanner.upgrade_empty.action"
+        )}
+        onPress={handleAddDocumentPress}
+        onDismiss={handleOnDismiss}
+      />
+    );
+  }
+
+  if (hasMdl) {
+    return (
+      <ItwEngagementBanner
+        title={I18n.t(
+          "features.itWallet.engagementBanner.upgrade_with_mdl.title"
+        )}
+        description={I18n.t(
+          "features.itWallet.engagementBanner.upgrade_with_mdl.description"
+        )}
+        action={I18n.t(
+          "features.itWallet.engagementBanner.upgrade_with_mdl.action"
+        )}
+        onPress={handleStartPress}
+        onDismiss={handleOnDismiss}
+        dismissable={true}
+      />
+    );
+  }
 
   return (
-    <ItwHighlightBanner
-      testID="itwUpgradeBannerTestID"
-      title={I18n.t(
-        `features.itWallet.upgrade.banner.documents.${isDocumentsActive}.title`
-      )}
+    <ItwEngagementBanner
+      title={I18n.t("features.itWallet.engagementBanner.upgrade.title")}
       description={I18n.t(
-        `features.itWallet.upgrade.banner.documents.${isDocumentsActive}.description`
+        "features.itWallet.engagementBanner.upgrade.description"
       )}
-      action={I18n.t(
-        `features.itWallet.upgrade.banner.documents.${isDocumentsActive}.action`
-      )}
-      onPress={handleOnPress}
+      action={I18n.t("features.itWallet.engagementBanner.upgrade.action")}
+      onPress={handleStartPress}
+      onDismiss={handleOnDismiss}
+      dismissable={true}
     />
   );
 };

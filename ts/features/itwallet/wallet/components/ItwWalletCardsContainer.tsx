@@ -1,7 +1,8 @@
-import { ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
+import { ListItemHeader, VSpacer, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
+import { View } from "react-native";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -14,6 +15,7 @@ import {
   ItwEidInfoBottomSheetTitle
 } from "../../common/components/ItwEidInfoBottomSheetContent";
 import { ItwEidLifecycleAlert } from "../../common/components/ItwEidLifecycleAlert";
+import { ItwUpgradeBanner } from "../../common/components/ItwUpgradeBanner.tsx";
 import { ItwWalletReadyBanner } from "../../common/components/ItwWalletReadyBanner";
 import { useItwPendingReviewRequest } from "../../common/hooks/useItwPendingReviewRequest";
 import { useItwStatusIconColor } from "../../common/hooks/useItwStatusIconColor.ts";
@@ -127,7 +129,8 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         cards={cards}
         header={sectionHeader}
         topElement={
-          <>
+          <VStack space={16}>
+            <ItwUpgradeBanner />
             <ItwWalletReadyBanner />
             {!shouldHideEidAlert && (
               <ItwEidLifecycleAlert
@@ -135,7 +138,9 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
                 navigation={navigation}
               />
             )}
-          </>
+            {/* Dummy view to add space in case there is another component */}
+            <View />
+          </VStack>
         }
       />
       {eidInfoBottomSheet.bottomSheet}
