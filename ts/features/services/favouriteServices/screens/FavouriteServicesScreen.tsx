@@ -6,6 +6,7 @@ import {
   ListItemNav
 } from "@pagopa/io-app-design-system";
 import { Alert, ListRenderItemInfo, StyleSheet, View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { IOListViewWithLargeHeader } from "../../../../components/ui/IOListViewWithLargeHeader";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -16,6 +17,7 @@ import ListItemSwipeAction from "../../../../components/ListItemSwipeAction";
 import { removeFavouriteService } from "../store/actions";
 import type { FavouriteServiceType } from "../types";
 import { useSortFavouriteServicesBottomSheet } from "../hooks/useSortFavouriteServicesBottomSheet";
+import * as analytics from "../../common/analytics";
 
 const styles = StyleSheet.create({
   listItemWrapper: {
@@ -31,6 +33,12 @@ export const FavouriteServicesScreen = () => {
 
   const { bottomSheet, present } = useSortFavouriteServicesBottomSheet();
 
+  useFocusEffect(
+    useCallback(() => {
+      analytics.trackServicesFavouritesList(sortedServices.length);
+    }, [sortedServices.length])
+  );
+
   const ListHeaderComponent = useMemo(() => {
     if (sortedServices.length === 0) {
       return null;
@@ -43,7 +51,10 @@ export const FavouriteServicesScreen = () => {
           type: "buttonLink",
           componentProps: {
             label: I18n.t("services.favouriteServices.sortButton"),
-            onPress: present
+            onPress: () => {
+              analytics.trackServicesFavouritesSortStart();
+              present();
+            }
           }
         }}
       />
@@ -59,7 +70,10 @@ export const FavouriteServicesScreen = () => {
         action={{
           label: I18n.t("services.favouriteServices.emptyList.searchAction"),
           icon: "search",
-          onPress: () => navigation.navigate(SERVICES_ROUTES.SEARCH)
+          onPress: () => {
+            analytics.trackSearchStart({ source: "favourites" });
+            navigation.navigate(SERVICES_ROUTES.SEARCH);
+          }
         }}
       />
     ),
@@ -80,6 +94,8 @@ export const FavouriteServicesScreen = () => {
             triggerSwipeAction,
             resetSwipePosition
           }) => {
+            analytics.trackServicesFavouritesSwipeToRemove(item.id);
+
             Alert.alert(
               I18n.t("services.favouriteServices.removeAlert.title"),
               undefined,
@@ -88,6 +104,7 @@ export const FavouriteServicesScreen = () => {
                   text: I18n.t("global.buttons.cancel"),
                   style: "cancel",
                   onPress: () => {
+                    analytics.trackServicesFavouritesRemoveCancel(item.id);
                     setTimeout(() => {
                       resetSwipePosition();
                     }, 50);
@@ -99,6 +116,10 @@ export const FavouriteServicesScreen = () => {
                   ),
                   style: "destructive",
                   onPress: () => {
+                    analytics.trackServicesFavouritesRemove(
+                      item.id,
+                      "favourites_list"
+                    );
                     triggerSwipeAction();
                     dispatch(removeFavouriteService({ id: item.id }));
                   }
@@ -111,6 +132,12 @@ export const FavouriteServicesScreen = () => {
             value={item.name}
             description={item.institution.name}
             onPress={() => {
+              analytics.trackServiceSelected({
+                organization_name: item.institution.name,
+                service_id: item.id,
+                service_name: item.name,
+                source: "favourites"
+              });
               navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
                 screen: SERVICES_ROUTES.SERVICE_DETAIL,
                 params: {
