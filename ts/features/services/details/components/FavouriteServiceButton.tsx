@@ -9,6 +9,7 @@ import {
 } from "../../favouriteServices/store/actions";
 import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
 import { isFavouriteServicesEnabledSelector } from "../../common/store/selectors/remoteConfig";
+import * as analytics from "../../common/analytics";
 
 export type FavouriteServiceButtonProps = {
   service: ServiceDetails;
@@ -37,6 +38,7 @@ const FavouriteServiceButton = ({ service }: FavouriteServiceButtonProps) => {
         label: I18n.t("services.favouriteServices.remove"),
         onPress: () => {
           dispatch(removeFavouriteService({ id: service.id }));
+          analytics.trackServicesFavouritesRemove(service.id, "service_detail");
           toast.success(I18n.t("services.favouriteServices.toasts.removed"));
         },
         testID: "favourite-service-remove-button"
@@ -45,14 +47,16 @@ const FavouriteServiceButton = ({ service }: FavouriteServiceButtonProps) => {
         variant: "primary",
         icon: "starEmpty",
         label: I18n.t("services.favouriteServices.add"),
-        onPress: () =>
+        onPress: () => {
           dispatch(
             addFavouriteServiceRequest({
               id: service.id,
               institution: service.organization,
               name: service.name
             })
-          ),
+          );
+          analytics.trackServicesFavouritesAdd(service.id);
+        },
         testID: "favourite-service-add-button"
       };
 
