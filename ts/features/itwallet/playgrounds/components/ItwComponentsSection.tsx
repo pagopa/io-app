@@ -1,21 +1,19 @@
 import {
   Body,
-  IOToast,
   ListItemHeader,
   ListItemSwitch,
   useIOTheme,
-  VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
 import { Canvas } from "@shopify/react-native-skia";
 import I18n from "i18next";
 import { useState } from "react";
-import { useWindowDimensions, View } from "react-native";
+import { Alert, useWindowDimensions, View } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { DSComponentViewerBox } from "../../../design-system/components/DSComponentViewerBox";
 import { ItwBrandedBox } from "../../common/components/ItwBrandedBox";
 import { ItwBrandedSkiaGradient } from "../../common/components/ItwBrandedSkiaGradient";
-import { ItwHighlightBanner } from "../../common/components/ItwHighlightBanner";
+import { ItwEngagementBanner } from "../../common/components/ItwEngagementBanner";
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
 import { getCredentialStatusObject } from "../../common/utils/itwCredentialStatusUtils";
@@ -84,12 +82,57 @@ const ItwWalletIdStatusSection = () => (
   >
     <ListItemHeader label="IT-Wallet ID" />
     <VStack space={8}>
-      <ItwWalletIdStatus pidStatus="valid" />
-      <ItwWalletIdStatus
-        pidStatus="jwtExpiring"
-        pidExpiration="2026-11-12T14:11:48.000Z"
-      />
-      <ItwWalletIdStatus pidStatus="jwtExpired" />
+      <DSComponentViewerBox name={"valid"}>
+        <ItwWalletIdStatus pidStatus="valid" />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name={"jwtExpiring"}>
+        <ItwWalletIdStatus
+          pidStatus="jwtExpiring"
+          pidExpiration="2026-11-12T14:11:48.000Z"
+        />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name={"jwtExpired"}>
+        <ItwWalletIdStatus pidStatus="jwtExpired" />
+      </DSComponentViewerBox>
+    </VStack>
+  </View>
+);
+
+const ItwEngagementBannerSection = () => (
+  <View
+    style={{
+      marginHorizontal: -24,
+      paddingHorizontal: 24,
+      paddingBottom: 24
+    }}
+  >
+    <ListItemHeader label="IT-Wallet Engagement Banner" />
+    <VStack space={8}>
+      <DSComponentViewerBox name={"default"}>
+        <ItwEngagementBanner
+          title={"Porta su IO i tuoi documenti digitali"}
+          description={
+            "Con piena validità ufficiale, digitali e sempre a portata di mano!"
+          }
+          action={"Aggiungi un documento"}
+          onPress={() => Alert.alert("✅ Engagement Banner pressed")}
+          onDismiss={() => Alert.alert("❌ Engagement Banner dismissed")}
+          dismissable={true}
+        />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name={"link"}>
+        <ItwEngagementBanner
+          title={"Dimostra chi sei col tuo dispositivo"}
+          description={
+            "Usa la tua Patente digitale anche come documento di riconoscimento, in modo facile e sicuro!"
+          }
+          action={"Inizia"}
+          onPress={() => Alert.alert("✅ Engagement Banner pressed")}
+          onDismiss={() => Alert.alert("❌ Engagement Banner dismissed")}
+          dismissable={true}
+          variant="link"
+        />
+      </DSComponentViewerBox>
     </VStack>
   </View>
 );
@@ -171,51 +214,6 @@ const ItwSkeumorphicCredentialItem = ({
   );
 };
 
-export const ItwBannerSection = () => {
-  const [remountKey, setRemountKey] = useState(0);
-
-  const handleRemount = () => {
-    setRemountKey(prevKey => prevKey + 1);
-  };
-
-  return (
-    <View
-      style={{
-        marginHorizontal: -24,
-        paddingHorizontal: 24,
-        paddingBottom: 24
-      }}
-    >
-      <ListItemHeader
-        label="Highlight Banner"
-        endElement={{
-          type: "buttonLink",
-          componentProps: {
-            label: "Remount",
-            onPress: handleRemount
-          }
-        }}
-      />
-      <ItwHighlightBanner
-        key={`large-${remountKey}`}
-        title="IT-Wallet per i tuoi documenti"
-        description="L'unico Wallet di Stato: **pubblico, sicuro e gratuito.** Garantito dallo Stato, accessibile solo a te."
-        action="Ottieni IT-Wallet"
-        onPress={() => IOToast.info("Pressed")}
-      />
-      <VSpacer size={16} />
-      <ItwHighlightBanner
-        key={`small-${remountKey}`}
-        title="IT-Wallet per i tuoi documenti"
-        description="L'unico Wallet di Stato: **pubblico, sicuro e gratuito.** Garantito dallo Stato, accessibile solo a te."
-        action="Ottieni IT-Wallet"
-        onPress={() => IOToast.info("Pressed")}
-        size="small"
-      />
-    </View>
-  );
-};
-
 export const ItwClaimsListSection = () => {
   const theme = useIOTheme();
 
@@ -262,8 +260,8 @@ export const ItwComponentsSection = () => (
   <>
     <ItwWalletBrandSection />
     <ItwWalletIdStatusSection />
+    <ItwEngagementBannerSection />
     <ItwSkeumorphicCredentialSection />
-    <ItwBannerSection />
     <ItwClaimsListSection />
   </>
 );
