@@ -3,6 +3,7 @@ import {
   H4,
   IconButton,
   IOButton,
+  IOButtonProps,
   VSpacer,
   VStack,
   WithTestID
@@ -26,6 +27,8 @@ type Props = {
   // Events
   onPress: () => void;
   onDismiss: () => void;
+  // Variants
+  variant?: IOButtonProps["variant"];
 };
 
 export const ItwEngagementBanner = ({
@@ -35,7 +38,8 @@ export const ItwEngagementBanner = ({
   action,
   dismissable,
   onPress,
-  onDismiss
+  onDismiss,
+  variant
 }: WithTestID<Props>) => {
   // Generates a complete fallbackAccessibilityLabel by concatenating the title, content, and action
   // if they are present. Removes markdown formatting characters like asterisks.
@@ -97,11 +101,11 @@ export const ItwEngagementBanner = ({
         </VStack>
         <VSpacer size={8} />
         <IOButton
+          variant={variant}
           testID="itwEngagementBannerActionButtonTestID"
           color="primary"
           label={action}
           onPress={onPress}
-          fullWidth
         />
       </ItwBrandedBox>
     </View>
