@@ -19,6 +19,8 @@ ts/features/<feature>/
 ```
 Key features: `authentication/`, `itwallet/` (IT Wallet), `payments/`, `messages/`, `services/`, `idpay/`, `pn/` (Piattaforma Notifiche).
 
+**Complex features** may have sub-features following the same structure. For example, `itwallet/` has sub-features like `issuance/`, `presentation/`, `identification/`, each with their own `components/`, `screens/`, `store/`, etc.
+
 ### State Management Pattern
 - **Actions**: Use `typesafe-actions` with `createStandardAction` or `createAsyncAction`
 - **Reducers**: Combine in feature's `store/reducers/index.ts`, register in `ts/features/common/store/reducers/`
@@ -108,22 +110,43 @@ yarn lollipop_checks:uncomment # Before committing (required!)
 - **Styling/UI**: Prefer `@pagopa/io-app-design-system` components and spacing/typography tokens over custom styles; avoid reinventing standard UI patterns.
 - **Side effects**: Put async logic and business side effects in sagas or XState machines, not directly in components.
 
-## Testing Patterns
-- Tests are co-located in `__tests__/` directories
-- Use `@testing-library/react-native` for component tests
-- Use `redux-saga-test-plan` for saga tests
-- Mock stores with `redux-mock-store`
-- Use `renderScreenWithNavigationStoreContext` from `utils/testWrapper` to scaffold store and navigation for screen tests
-
 ## Functional Programming
 The codebase historically uses `fp-ts`, but it is being **deprecated in favor of vanilla TypeScript**. Use `fp-ts` only when there is a clear and significant advantage. For new code, prefer:
 - Standard `null`/`undefined` checks over `Option<T>`
 - Try/catch or Result types over `Either<E, A>`
 - Native array methods over `pipe()` chains
 
-Legacy patterns you may encounter:
-- `Option<T>`, `Either<E, A>`, `pipe()` from `fp-ts`
-- `io-ts` for runtime type validation
+### Legacy `fp-ts` Patterns (Avoid in New Code)
+When working with existing code, you may encounter these patterns:
+- **`Option<T>`**: Represents optional values
+  - `O.some(value)` - wraps a value
+  - `O.none` - represents absence
+  - `O.map()`, `O.fold()`, `O.getOrElse()`, `O.toUndefined()` - transformations
+  - Import: `import * as O from "fp-ts/lib/Option";`
+- **`Either<E, A>`**: Represents success/failure with error type
+  - `E.right(value)` - success value
+  - `E.left(error)` - error value
+  - `E.map()`, `E.fold()` - transformations
+  - Import: `import * as E from "fp-ts/lib/Either";`
+- **`pipe()`**: Function composition for chaining transformations
+  - Import: `import { pipe } from "fp-ts/lib/function";`
+  - Example: `pipe(value, O.fromNullable, O.map(fn), O.getOrElse(() => default))`
+- **Array utilities**: `RA.ReadonlyArray`, `AR.Array` modules for functional array operations
+
+### `pot` for Async State (Still in Use)
+The codebase uses `pot` from `@pagopa/ts-commons/lib/pot` to represent async data states. This is **still actively used** and should be used for new async state:
+- **States**: `none`, `noneLoading`, `noneUpdating`, `noneError`, `some`, `someLoading`, `someUpdating`, `someError`
+- **Constructors**: `pot.none`, `pot.some(value)`, `pot.toLoading(pot)`, `pot.toError(pot, error)`
+- **Type guards**: `pot.isNone()`, `pot.isSome()`, `pot.isLoading()`, `pot.isError()`
+- **Utilities in `utils/pot.ts`**: `isStrictNone()`, `isStrictSome()`, `foldK()`, `potFoldWithDefault()`, `isLoadingOrUpdating()`
+- **Usage**: Define reducer state as `pot.Pot<DataType, ErrorType>`, handle all states in UI with `pot.fold()` or custom utilities
+
+### `io-ts` for Runtime Validation (Still in Use)
+Runtime type validation with `io-ts` is **still used** for:
+- Validating external API responses and untrusted data
+- Defining codecs: `import * as t from "io-ts";`
+- Common codecs in feature utilities (e.g., `ItwCodecUtils.ts`, `fciHeaders.ts`)
+- Decode with `codec.decode(data)` which returns `Either<ValidationError[], T>`
 
 ## Navigation
 Uses React Navigation v6 with typed params:
