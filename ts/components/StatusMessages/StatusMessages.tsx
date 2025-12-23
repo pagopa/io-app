@@ -3,7 +3,7 @@ import {
   AlertEdgeToEdgeWrapper,
   IOColors
 } from "@pagopa/io-app-design-system";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useEffect } from "react";
 import { StatusBar } from "react-native";
 import { useStatusAlertProps } from "../../hooks/useStatusAlertProps";
 
@@ -21,19 +21,26 @@ const mapStatusBarVariantStates: Record<
 
 export const StatusMessages = ({ children }: StatusMessagesProps) => {
   const statusAlert = useStatusAlertProps();
+  const statusBarBackgroundColor =
+    IOColors[
+      mapStatusBarVariantStates[statusAlert?.alertProps?.variant || "info"]
+    ];
+
+  useEffect(() => {
+    if (!statusAlert || !statusBarBackgroundColor) {
+      return;
+    }
+    // Ensure Android status bar resets after full-screen modal overrides.
+    StatusBar.setBackgroundColor?.(statusBarBackgroundColor);
+    StatusBar.setBarStyle("dark-content");
+  }, [statusAlert, statusBarBackgroundColor]);
 
   return (
     <AlertEdgeToEdgeWrapper alertProps={statusAlert?.alertProps}>
       {statusAlert && (
         <StatusBar
           barStyle="dark-content"
-          backgroundColor={
-            IOColors[
-              mapStatusBarVariantStates[
-                statusAlert.alertProps?.variant || "info"
-              ]
-            ]
-          }
+          backgroundColor={statusBarBackgroundColor}
         />
       )}
       {children}
