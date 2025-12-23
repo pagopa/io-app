@@ -15,7 +15,7 @@ applyTo: '**/*.ts, **/*.tsx'
 
 ## General Guardrails
 
-- Target TypeScript 5.x / ES2022 and prefer native features over polyfills.
+- Target TypeScript 5.x / ES2019 and prefer native features over polyfills.
 - Use pure ES modules; never emit `require`, `module.exports`, or CommonJS helpers.
 - Rely on the project's build, lint, and test scripts unless asked otherwise.
 - Note design trade-offs when intent is not obvious.
