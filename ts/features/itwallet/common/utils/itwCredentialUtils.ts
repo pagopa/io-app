@@ -9,6 +9,7 @@ import {
   ItwCredentialStatus,
   StoredCredential
 } from "./itwTypesUtils";
+import { isBefore } from "date-fns";
 
 // Credentials that can be actively requested and obtained by the user
 export const availableCredentials = [
@@ -157,4 +158,21 @@ export const isItwCredential = ({
     ),
     O.getOrElse(() => false)
   );
+};
+
+/**
+ * Checks if the credential was issued before the PID.
+ * @param credentialIssuedAt - Credential issuance date
+ * @param pidIssuedAt - PID issuance date
+ * @returns true if credential was issued before PID, false otherwise
+ */
+export const isCredentialIssuedBeforePid = (
+  credentialIssuedAt?: string,
+  pidIssuedAt?: string
+): boolean => {
+  if (!credentialIssuedAt || !pidIssuedAt) {
+    return false;
+  }
+
+  return isBefore(new Date(credentialIssuedAt), new Date(pidIssuedAt));
 };

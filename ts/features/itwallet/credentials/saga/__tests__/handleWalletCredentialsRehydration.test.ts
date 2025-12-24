@@ -129,7 +129,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
             category: "itw",
             credentialType: CredentialType.DRIVING_LICENSE,
             credentialStatus: "valid",
-            isItwCredential: false,
+            issuedAt: "2025-12-23T08:32:49.000Z",
             isMultiCredential: false
           },
           {
@@ -138,7 +138,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
             category: "itw",
             credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
             credentialStatus: "valid",
-            isItwCredential: false,
+            issuedAt: "2025-12-23T07:32:49.000Z",
             isMultiCredential: false
           },
           {
@@ -147,7 +147,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
             category: "itw",
             credentialType: CredentialType.EDUCATION_DEGREE,
             credentialStatus: "valid",
-            isItwCredential: false,
+            issuedAt: "2025-12-23T07:32:49.000Z",
             isMultiCredential: true
           }
         ])

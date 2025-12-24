@@ -53,8 +53,7 @@ describe("WrappedItwCredentialCard", () => {
       .mockReturnValue(undefined);
 
     const { getByTestId } = renderComponent({
-      credentialType: tCredentialType,
-      isItwCredential: false
+      credentialType: tCredentialType
     });
     const button = getByTestId("ItwCredentialWalletCardTestID");
     fireEvent.press(button);
@@ -79,8 +78,7 @@ describe("WrappedItwCredentialCard", () => {
       .mockReturnValue(undefined);
 
     const { getByTestId } = renderComponent({
-      credentialType: tCredentialType,
-      isItwCredential: false
+      credentialType: tCredentialType
     });
     const button = getByTestId("ItwCredentialWalletCardTestID");
     fireEvent.press(button);

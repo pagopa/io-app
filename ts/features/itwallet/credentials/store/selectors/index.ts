@@ -283,7 +283,7 @@ export const itwCredentialsEidIssuedAtSelector = createSelector(
       O.map(eid => eid.jwt.issuedAt),
       O.toUndefined
     )
-)
+);
 
 /**
  * Return a list of all credentials of the same type, mainly used for clean up operations.
