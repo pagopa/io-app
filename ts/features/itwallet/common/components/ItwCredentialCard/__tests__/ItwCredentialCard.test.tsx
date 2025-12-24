@@ -79,7 +79,7 @@ describe("ItwCredentialCard", () => {
 
     const component = render(
       <Provider store={store}>
-        <ItwCredentialCard credentialType="mDL" isItwCredential={false} />
+        <ItwCredentialCard credentialType="mDL" />
       </Provider>
     );
     expect(component).toMatchSnapshot();

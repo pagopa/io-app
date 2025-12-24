@@ -6,16 +6,20 @@ import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard";
+import { itwCredentialsEidIssuedAtSelector } from "../../credentials/store/selectors";
+import { isCredentialIssuedBeforePid } from "../../common/utils/itwCredentialUtils";
 
 export type ItwCredentialWalletCardProps = ItwCredentialCard & {
   isPreview?: false; // Cards in wallet cannot be in preview mode
 };
 
 const WrappedItwCredentialCard = (props: ItwCredentialWalletCardProps) => {
-  const { isItwCredential, credentialType } = props;
+  const { credentialType, issuedAt } = props;
   const navigation = useIONavigation();
   const isItwPid = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const needsItwUpgrade = isItwPid && !isItwCredential;
+  const pidIssuedAt = useIOSelector(itwCredentialsEidIssuedAtSelector);
+  const needsItwUpgrade =
+    isItwPid && isCredentialIssuedBeforePid(issuedAt, pidIssuedAt);
 
   const handleCredentialUpgrade = useOfflineToastGuard(() =>
     navigation.navigate(ITW_ROUTES.MAIN, {
