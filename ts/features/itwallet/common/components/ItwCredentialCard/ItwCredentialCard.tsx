@@ -6,6 +6,7 @@ import { StyleSheet, View } from "react-native";
 import { useIOSelector } from "../../../../../store/hooks";
 import { fontPreferenceSelector } from "../../../../../store/reducers/persistedPreferences";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import { itwCredentialsEidIssuedAtSelector } from "../../../credentials/store/selectors";
 import { useItwDisplayCredentialStatus } from "../../../presentation/details/hooks/useItwDisplayCredentialStatus";
 import {
   getCredentialNameFromType,
@@ -19,7 +20,6 @@ import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
 import { CardBackground } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
 import { CardColorScheme } from "./types";
-import { itwCredentialsEidIssuedAtSelector } from "../../../credentials/store/selectors";
 
 export type ItwCredentialCard = {
   /**

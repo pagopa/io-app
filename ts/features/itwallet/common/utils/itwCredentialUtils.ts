@@ -3,13 +3,13 @@ import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { SdJwt, Mdoc } from "@pagopa/io-react-native-wallet";
 import I18n from "i18next";
+import { isBefore } from "date-fns";
 import { CredentialType } from "./itwMocksUtils";
 import {
   CredentialFormat,
   ItwCredentialStatus,
   StoredCredential
 } from "./itwTypesUtils";
-import { isBefore } from "date-fns";
 
 // Credentials that can be actively requested and obtained by the user
 export const availableCredentials = [
