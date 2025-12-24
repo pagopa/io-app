@@ -16,10 +16,7 @@ import {
 import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
 import { revokeCurrentWalletInstance } from "../../common/utils/itwRevocationUtils";
 import { pollForStoreValue } from "../../common/utils/itwStoreUtils";
-import {
-  StoredCredential,
-  WalletInstanceAttestations
-} from "../../common/utils/itwTypesUtils";
+import { WalletInstanceAttestations } from "../../common/utils/itwTypesUtils";
 import * as mrtdUtils from "../../common/utils/mrtd";
 import {
   itwIntegrityKeyTagSelector,
@@ -43,6 +40,10 @@ export type RequestEidActorParams = {
   authenticationContext: AuthenticationContext | undefined;
   level: EidIssuanceLevel | undefined;
 };
+
+export type RequestEidActorOutput = Awaited<
+  ReturnType<typeof issuanceUtils.getPid>
+>;
 
 export type StartAuthFlowActorParams = {
   walletInstanceAttestation: string | undefined;
@@ -229,7 +230,7 @@ export const createEidIssuanceActorsImplementation = (
     return callbackUrl;
   }),
 
-  requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
+  requestEid: fromPromise<RequestEidActorOutput, RequestEidActorParams>(
     async ({ input }) => {
       assert(input.identification, "identification is undefined");
       assert(
@@ -253,7 +254,7 @@ export const createEidIssuanceActorsImplementation = (
         input.level === "l3" ? "L3" : "L2"
       );
 
-      return issuanceUtils.getPid({
+      return await issuanceUtils.getPid({
         ...authParams,
         ...input.authenticationContext
       });
