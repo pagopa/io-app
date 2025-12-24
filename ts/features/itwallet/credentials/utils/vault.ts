@@ -125,11 +125,21 @@ const remove = async (credentialId: string): Promise<boolean> => {
 };
 
 /**
- * Removes all credentials' SD-JWT/MDOCs from the Secure Storage
+ * Removes all credentials' SD-JWT/MDOCs from the Secure Storage with the given IDs
+ * @param credentialIds An array of credential IDs
+ * @returns A promise that resolves when all removals are complete
  */
-const removeAll = async () => {
-  const credentialIds = await list();
+const removeAll = async (credentialIds: ReadonlyArray<string>) => {
   await Promise.all(credentialIds.map(remove));
+};
+
+/**
+ * Clears all credentials' SD-JWT/MDOCs from the Secure Storage
+ * @returns A promise that resolves when the clearing is complete
+ */
+const clear = async () => {
+  const credentialIds = await list();
+  await removeAll(credentialIds);
 };
 
 export default {
@@ -137,5 +147,6 @@ export default {
   get,
   remove,
   removeAll,
+  clear,
   list
 };

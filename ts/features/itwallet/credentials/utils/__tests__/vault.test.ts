@@ -86,7 +86,7 @@ describe("vault", () => {
 
       const result = await vault.get(CREDENTIAL_ID);
 
-      expect(result).toBe(CREDENTIAL_VALUE);
+      expect(result).toStrictEqual(CREDENTIAL_VALUE);
       expect(mockSecureStorage.get).toHaveBeenCalledWith(STORAGE_KEY);
     });
 
@@ -139,15 +139,55 @@ describe("vault", () => {
   });
 
   describe("removeAll", () => {
-    it("should remove all stored credentials", async () => {
+    it("should remove all credentials by ID", async () => {
+      mockSecureStorage.remove.mockResolvedValue(undefined);
+
+      await vault.removeAll(["credential1", "credential2"]);
+
+      expect(mockSecureStorage.remove).toHaveBeenCalledTimes(2);
+      expect(mockSecureStorage.remove).toHaveBeenCalledWith(
+        "itw:credential:credential1"
+      );
+      expect(mockSecureStorage.remove).toHaveBeenCalledWith(
+        "itw:credential:credential2"
+      );
+    });
+
+    it("should handle empty array gracefully", async () => {
+      mockSecureStorage.remove.mockResolvedValue(undefined);
+
+      await vault.removeAll([]);
+
+      expect(mockSecureStorage.remove).not.toHaveBeenCalled();
+    });
+
+    it("should continue removing credentials even if one fails", async () => {
+      const error = new Error("Storage error");
+      mockSecureStorage.remove
+        .mockRejectedValueOnce(error)
+        .mockResolvedValueOnce(undefined);
+
+      await vault.removeAll(["credential1", "credential2"]);
+
+      expect(mockSecureStorage.remove).toHaveBeenCalledTimes(2);
+      expect(mockSentry.captureException).toHaveBeenCalledWith(error, {
+        tags: { isRequired: true },
+        extra: { operation: "remove", key: "itw:credential:credential1" }
+      });
+    });
+  });
+
+  describe("clear", () => {
+    it("should clear all stored credentials", async () => {
       mockSecureStorage.keys.mockResolvedValue([
         "itw:credential:credential1",
         "itw:credential:credential2"
       ]);
       mockSecureStorage.remove.mockResolvedValue(undefined);
 
-      await vault.removeAll();
+      await vault.clear();
 
+      expect(mockSecureStorage.keys).toHaveBeenCalledTimes(1);
       expect(mockSecureStorage.remove).toHaveBeenCalledTimes(2);
       expect(mockSecureStorage.remove).toHaveBeenCalledWith(
         "itw:credential:credential1"
@@ -159,10 +199,26 @@ describe("vault", () => {
 
     it("should handle empty vault gracefully", async () => {
       mockSecureStorage.keys.mockResolvedValue([]);
+      mockSecureStorage.remove.mockResolvedValue(undefined);
 
-      await vault.removeAll();
+      await vault.clear();
 
+      expect(mockSecureStorage.keys).toHaveBeenCalledTimes(1);
       expect(mockSecureStorage.remove).not.toHaveBeenCalled();
+    });
+
+    it("should report list errors to Sentry and not attempt removal", async () => {
+      const error = new Error("Failed to list keys");
+      mockSecureStorage.keys.mockRejectedValue(error);
+
+      await vault.clear();
+
+      expect(mockSecureStorage.keys).toHaveBeenCalledTimes(1);
+      expect(mockSecureStorage.remove).not.toHaveBeenCalled();
+      expect(mockSentry.captureException).toHaveBeenCalledWith(error, {
+        tags: { isRequired: true },
+        extra: { operation: "list" }
+      });
     });
   });
 });
