@@ -15,12 +15,12 @@ import {
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import {
   CredentialFormat,
-  ItwJwtCredentialStatus,
-  StoredCredential
+  CredentialMetadata,
+  ItwJwtCredentialStatus
 } from "../../../common/utils/itwTypesUtils";
 
 type CredentialsByType = {
-  [K: string]: Record<CredentialFormat, StoredCredential>;
+  [K: string]: Record<CredentialFormat, CredentialMetadata>;
 };
 
 /**
@@ -65,7 +65,7 @@ export const makeSelectAllCredentials = (format: CredentialFormat) =>
   createSelector(itwCredentialsByTypeSelector, credentials =>
     Object.values(credentials)
       .map(c => withLegacyFallback(c, format))
-      .reduce<Record<string, StoredCredential>>(
+      .reduce<Record<string, CredentialMetadata>>(
         (acc, c) => (c ? { ...acc, [c.credentialType]: c } : acc),
         {}
       )
@@ -279,6 +279,6 @@ export const itwCredentialsListByTypeSelector = (key: string) =>
     pipe(
       O.fromNullable(credentials[key]),
       O.map(Object.values),
-      O.getOrElse<ReadonlyArray<StoredCredential>>(() => [])
+      O.getOrElse<ReadonlyArray<CredentialMetadata>>(() => [])
     )
   );
