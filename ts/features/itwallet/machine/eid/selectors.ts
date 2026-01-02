@@ -1,7 +1,7 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { StateFrom } from "xstate";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import { IdentificationContext } from "./context";
 import { ItwEidIssuanceMachine } from "./machine";
@@ -62,7 +62,7 @@ export const selectUpgradeFailedCredentials = (snapshot: MachineSnapshot) =>
     O.getOrElse(
       () =>
         [] as ReadonlyArray<
-          StoredCredential & {
+          CredentialMetadata & {
             failure?: {
               type: string;
               reason: unknown;

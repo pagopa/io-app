@@ -3,7 +3,7 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { isDevEnv } from "../../../../../utils/environment";
 import itwCreateSecureStorage from "../../../common/store/storages/itwSecureStorage";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { itwCredentialsRemove, itwCredentialsStore } from "../actions";
 import {
@@ -11,7 +11,7 @@ import {
   itwCredentialsStateMigrations
 } from "./migrations";
 
-type CredentialsRecord = { [credentialKey: string]: StoredCredential };
+type CredentialsRecord = { [credentialKey: string]: CredentialMetadata };
 
 export type ItwCredentialsState = {
   credentials: CredentialsRecord;

@@ -5,9 +5,9 @@ import { SdJwt, Mdoc } from "@pagopa/io-react-native-wallet";
 import I18n from "i18next";
 import { CredentialType } from "./itwMocksUtils";
 import {
+  CredentialBundle,
   CredentialFormat,
-  ItwCredentialStatus,
-  StoredCredential
+  ItwCredentialStatus
 } from "./itwTypesUtils";
 
 // Credentials that can be actively requested and obtained by the user
@@ -138,18 +138,17 @@ export const validCredentialStatuses: Array<ItwCredentialStatus> = [
  * @returns boolean indicating if the credential is an ITW credential (L3)
  */
 export const isItwCredential = ({
-  format,
   credential,
-  parsedCredential
-}: StoredCredential): boolean => {
+  metadata
+}: CredentialBundle): boolean => {
   const getVerificationByFormat = {
     [CredentialFormat.SD_JWT]: () => SdJwt.getVerification(credential),
     [CredentialFormat.MDOC]: () =>
-      Mdoc.getVerificationFromParsedCredential(parsedCredential),
+      Mdoc.getVerificationFromParsedCredential(metadata.parsedCredential),
     [CredentialFormat.LEGACY_SD_JWT]: constNull
   };
   return pipe(
-    O.tryCatch(getVerificationByFormat[format as CredentialFormat]),
+    O.tryCatch(getVerificationByFormat[metadata.format as CredentialFormat]),
     O.chain(O.fromNullable),
     O.chainNullableK(
       ({ assurance_level, trust_framework }) =>

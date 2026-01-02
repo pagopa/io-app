@@ -13,9 +13,9 @@ import {
   ItwStoredCredentialsMocks
 } from "../../../common/utils/itwMocksUtils";
 import {
+  CredentialMetadata,
   IssuerConfiguration,
-  RequestObject,
-  StoredCredential
+  RequestObject
 } from "../../../common/utils/itwTypesUtils";
 import { ItwTags } from "../../tags";
 import {
@@ -91,7 +91,7 @@ const T_REQUESTED_CREDENTIAL: RequestObject = {
   scope: "",
   state: ""
 };
-const T_STORED_STATUS_ASSERTION: StoredCredential["storedStatusAssertion"] = {
+const T_STORED_STATUS_ASSERTION: CredentialMetadata["storedStatusAssertion"] = {
   credentialStatus: "valid",
   statusAssertion: "abcdefghijklmnopqrstuvwxyz",
   parsedStatusAssertion: ItwStatusAssertionMocks.mdl
@@ -156,7 +156,7 @@ describe("itwCredentialIssuanceMachine", () => {
         ObtainCredentialActorInput
       >(obtainCredential),
       obtainStatusAssertion: fromPromise<
-        Array<StoredCredential>,
+        Array<CredentialMetadata>,
         ObtainStatusAssertionActorInput
       >(obtainStatusAssertion)
     },

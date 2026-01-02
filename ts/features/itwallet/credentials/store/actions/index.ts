@@ -1,5 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 
 /**
  * This action stores one or multiple credentials using the credential ID as key.
@@ -7,7 +7,7 @@ import { StoredCredential } from "../../../common/utils/itwTypesUtils";
  */
 export const itwCredentialsStore = createStandardAction(
   "ITW_CREDENTIALS_STORE"
-)<ReadonlyArray<StoredCredential>>();
+)<ReadonlyArray<CredentialMetadata>>();
 
 /**
  * @internal To properly remove a credential, dispatch `itwCredentialsRemoveByType`.
@@ -17,7 +17,7 @@ export const itwCredentialsStore = createStandardAction(
  */
 export const itwCredentialsRemove = createStandardAction(
   "ITW_CREDENTIALS_REMOVE"
-)<ReadonlyArray<StoredCredential>>();
+)<ReadonlyArray<CredentialMetadata>>();
 
 /**
  * Remove all credentials of the specified type. Used to fully clean

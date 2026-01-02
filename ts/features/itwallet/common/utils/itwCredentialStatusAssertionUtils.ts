@@ -4,7 +4,11 @@ import {
 } from "@pagopa/io-react-native-wallet";
 import { isAfter } from "date-fns";
 import * as t from "io-ts";
-import { CredentialFormat, StoredCredential } from "./itwTypesUtils";
+import {
+  CredentialBundle,
+  CredentialFormat,
+  CredentialMetadata
+} from "./itwTypesUtils";
 import { WIA_KEYTAG } from "./itwCryptoContextUtils";
 import { Env } from "./environment";
 
@@ -15,23 +19,23 @@ type IssuerConf = Awaited<
 const fetchIssuerConfShared = createIssuerConfSharedFetch();
 
 export const getCredentialStatusAssertion = async (
-  credential: StoredCredential,
+  { metadata, credential }: CredentialBundle,
   env: Env
 ) => {
   // Legacy credentials carry the legacy Issuer configuration, which is incompatible with the new API.
   // In this scenario the new configuration is fetched and used instead of `credential.issuerConf`.
   const issuerConf =
-    credential.format === CredentialFormat.LEGACY_SD_JWT
+    metadata.format === CredentialFormat.LEGACY_SD_JWT
       ? await fetchIssuerConfShared(env)
-      : (credential.issuerConf as IssuerConf);
+      : (metadata.issuerConf as IssuerConf);
 
-  const credentialCryptoContext = createCryptoContextFor(credential.keyTag);
+  const credentialCryptoContext = createCryptoContextFor(metadata.keyTag);
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
   const rawStatusAssertion = await Credential.Status.statusAssertion(
     issuerConf,
-    credential.credential,
-    credential.format as CredentialFormat,
+    credential,
+    metadata.format as CredentialFormat,
     { credentialCryptoContext, wiaCryptoContext }
   );
 
@@ -39,8 +43,8 @@ export const getCredentialStatusAssertion = async (
     await Credential.Status.verifyAndParseStatusAssertion(
       issuerConf,
       rawStatusAssertion,
-      credential.credential,
-      credential.format as CredentialFormat
+      credential,
+      metadata.format as CredentialFormat
     );
 
   return {
@@ -51,7 +55,7 @@ export const getCredentialStatusAssertion = async (
 
 export const shouldRequestStatusAssertion = ({
   storedStatusAssertion
-}: StoredCredential) => {
+}: CredentialMetadata) => {
   // When no status assertion is present, request a new one
   if (!storedStatusAssertion) {
     return true;
