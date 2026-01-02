@@ -19,15 +19,15 @@ import {
   trackCredentialDetail,
   trackWalletStartDeactivation
 } from "../../analytics";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import {
   itwCredentialsEidSelector,
   itwCredentialsEidStatusSelector
 } from "../../credentials/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { useItwStatusIconColor } from "../hooks/useItwStatusIconColor";
 import { parseClaims, WellKnownClaim } from "../utils/itwClaimsUtils";
-import { StoredCredential } from "../utils/itwTypesUtils";
+import { CredentialMetadata } from "../utils/itwTypesUtils";
 import { ItwCredentialClaim } from "./ItwCredentialClaim";
 import { ItwEidLifecycleAlert } from "./ItwEidLifecycleAlert";
 
@@ -65,7 +65,7 @@ const ItwEidInfoBottomSheetContent = ({
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
-  const Content = ({ credential }: { credential: StoredCredential }) => {
+  const Content = ({ credential }: { credential: CredentialMetadata }) => {
     const claims = parseClaims(credential.parsedCredential, {
       exclude: [WellKnownClaim.unique_id, WellKnownClaim.content]
     });

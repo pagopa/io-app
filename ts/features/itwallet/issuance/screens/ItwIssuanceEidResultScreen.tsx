@@ -14,10 +14,10 @@ import {
 import { ItwReissuanceFeedbackBanner } from "../../common/components/ItwReissuanceFeedbackBanner.tsx";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils.ts";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors/index.ts";
-import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
   selectCredentialType,
   selectIsLoading,
@@ -123,7 +123,7 @@ export const ItwIssuanceEidResultScreen = () => {
 const ItwIssuanceEidUpgradeResultContent = ({
   failedCredentials
 }: {
-  failedCredentials: ReadonlyArray<StoredCredential>;
+  failedCredentials: ReadonlyArray<CredentialMetadata>;
 }) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);

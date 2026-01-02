@@ -272,7 +272,7 @@ export const itwCredentialsEidExpirationSelector = createSelector(
 /**
  * Return a list of all credentials of the same type, mainly used for clean up operations.
  * @param key The type of credential
- * @returns A list of StoredCredential
+ * @returns A list of CredentialMetadata
  */
 export const itwCredentialsListByTypeSelector = (key: string) =>
   createSelector(itwCredentialsByTypeSelector, credentials =>

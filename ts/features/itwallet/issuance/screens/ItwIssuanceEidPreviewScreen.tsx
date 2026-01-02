@@ -11,15 +11,15 @@ import {
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useCallback, useLayoutEffect } from "react";
 import I18n from "i18next";
+import { useCallback, useLayoutEffect } from "react";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { identificationRequest } from "../../../identification/store/actions";
 import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import { identificationRequest } from "../../../identification/store/actions";
 import {
   trackCredentialPreview,
   trackItwExit,
@@ -28,15 +28,15 @@ import {
 } from "../../analytics";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { isItwCredential } from "../../common/utils/itwCredentialUtils";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
   selectEidOption,
   selectIdentification
 } from "../../machine/eid/selectors";
-import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
-import { isItwCredential } from "../../common/utils/itwCredentialUtils";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const eidOption = ItwEidIssuanceMachineContext.useSelector(selectEidOption);
@@ -51,13 +51,13 @@ export const ItwIssuanceEidPreviewScreen = () => {
       // A None eID cannot be stored in the context, as any issuance failure causes the machine to transition
       // to the Failure state.
       () => <LoadingScreenContent title={I18n.t("global.genericWaiting")} />,
-      eid => <ContentView eid={eid} />
+      eid => <ContentView eid={eid.metadata} />
     )
   );
 };
 
 type ContentViewProps = {
-  eid: StoredCredential;
+  eid: CredentialMetadata;
 };
 
 /**

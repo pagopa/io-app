@@ -15,8 +15,8 @@ import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { Env } from "../../common/utils/environment";
 import { enrichErrorWithMetadata } from "../../common/utils/itwFailureUtils";
+import { CredentialsVault } from "../../credentials/utils/vault";
 import { type Context } from "./context";
-import vault from "./../../credentials/utils/vault";
 
 export type GetWalletAttestationActorOutput = Awaited<
   ReturnType<typeof itwAttestationUtils.getAttestation>
@@ -136,7 +136,7 @@ export const createCredentialIssuanceActorsImplementation = (
     assert(O.isSome(eid), "eID is undefined");
 
     // Retrieve the PID credential from the vault
-    const pidCredential = await vault.get(eid.value.credentialId);
+    const pidCredential = await CredentialsVault.get(eid.value.credentialId);
     if (!pidCredential) {
       throw new Error("PID credential not found in secure storage");
     }

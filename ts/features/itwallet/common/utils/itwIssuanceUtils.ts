@@ -10,8 +10,7 @@ import { type IdentificationContext } from "../../machine/eid/context";
 import {
   CredentialAccessToken,
   CredentialBundle,
-  IssuerConfiguration,
-  StoredCredential
+  IssuerConfiguration
 } from "./itwTypesUtils";
 import {
   DPOP_KEYTAG,
@@ -162,7 +161,7 @@ export type GetPid = (args: {
 }) => Promise<CredentialBundle>;
 
 /**
- * Function to get the PID, parse it and return it in {@link StoredCredential} format.
+ * Function to get the PID, parse it and return it in {@link CredentialBundle} format.
  * It must be called after `startAuthFlow` and `completeAuthFlow`.
  * @returns The stored credential.
  */

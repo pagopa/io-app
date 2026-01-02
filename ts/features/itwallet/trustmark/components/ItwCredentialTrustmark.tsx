@@ -46,11 +46,11 @@ import Animated, {
 } from "react-native-reanimated";
 import { useIOSelector } from "../../../../store/hooks";
 import { validCredentialStatuses } from "../../common/utils/itwCredentialUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { itwCredentialStatusSelector } from "../../credentials/store/selectors";
 
 type ItwCredentialTrustmarkProps = WithTestID<{
-  credential: StoredCredential;
+  credential: CredentialMetadata;
   onPress?: () => void;
 }>;
 

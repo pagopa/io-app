@@ -4,10 +4,10 @@ import { useIOStore } from "../../../../store/hooks";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { assert } from "../../../../utils/assert";
 import * as itwAttestationUtils from "../../common/utils/itwAttestationUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import * as itwTrustmarkUtils from "../utils";
 import { Env } from "../../common/utils/environment";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 
 export type GetWalletAttestationActorOutput = Awaited<
   ReturnType<typeof itwAttestationUtils.getAttestation>
@@ -15,7 +15,7 @@ export type GetWalletAttestationActorOutput = Awaited<
 
 export type GetCredentialTrustmarkUrlActorInput = {
   walletInstanceAttestation?: string;
-  credential?: StoredCredential;
+  credential?: CredentialMetadata;
 };
 
 export type GetCredentialTrustmarkUrlActorOutput = Awaited<

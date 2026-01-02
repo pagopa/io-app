@@ -3,7 +3,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Errors } from "@pagopa/io-react-native-wallet";
 import { itwCredentialsSelector } from "../store/selectors";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import {
   shouldRequestStatusAssertion,
   getCredentialStatusAssertion,
@@ -29,26 +29,36 @@ import {
   itwUnverifiedCredentialsCounterReset,
   itwUnverifiedCredentialsCounterUp
 } from "../../common/store/actions/securePreferences";
+import { CredentialsVault } from "../utils/vault";
 
 const { isIssuerResponseError, IssuerResponseErrorCodes: Codes } = Errors;
 
 export function* updateCredentialStatusAssertionSaga(
-  credential: StoredCredential
-): Generator<ReduxSagaEffect, StoredCredential> {
+  metadata: CredentialMetadata
+): Generator<ReduxSagaEffect, CredentialMetadata> {
   const env = yield* select(selectItwEnv);
   const isItwL3 = yield* select(itwLifecycleIsITWalletValidSelector);
   const mixpanelCredential = getMixPanelCredential(
-    credential.credentialType,
+    metadata.credentialType,
     isItwL3
   );
   try {
+    const credential = yield* call(() =>
+      CredentialsVault.get(metadata.credentialType)
+    );
+    if (!credential) {
+      throw new Error(
+        `Credential of type ${metadata.credentialType} not found in vault`
+      );
+    }
+
     const { parsedStatusAssertion, statusAssertion } = yield* call(
       getCredentialStatusAssertion,
-      credential,
+      { metadata, credential },
       getEnv(env)
     );
     return {
-      ...credential,
+      ...metadata,
       storedStatusAssertion: {
         credentialStatus: "valid",
         statusAssertion,
@@ -70,7 +80,7 @@ export function* updateCredentialStatusAssertionSaga(
       });
 
       return {
-        ...credential,
+        ...metadata,
         storedStatusAssertion: { credentialStatus: "invalid", errorCode }
       };
     }
@@ -82,7 +92,7 @@ export function* updateCredentialStatusAssertionSaga(
     });
 
     return {
-      ...credential,
+      ...metadata,
       storedStatusAssertion: { credentialStatus: "unknown" }
     };
   }

@@ -102,17 +102,17 @@ export const updateMixpanelSuperProperties = async (
     const CONNECTION_STATUS = offlineStatusHandler(state);
 
     const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
-    const ITW_PG_V3 = getMixpanelCredentialStatus(
+    const ITW_PG_V3 = await getMixpanelCredentialStatus(
       CredentialType.DRIVING_LICENSE,
       state,
       isItwL3
     );
-    const ITW_TS_V3 = getMixpanelCredentialStatus(
+    const ITW_TS_V3 = await getMixpanelCredentialStatus(
       CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
       state,
       isItwL3
     );
-    const ITW_CED_V3 = getMixpanelCredentialStatus(
+    const ITW_CED_V3 = await getMixpanelCredentialStatus(
       CredentialType.EUROPEAN_DISABILITY_CARD,
       state,
       isItwL3
@@ -133,15 +133,15 @@ export const updateMixpanelSuperProperties = async (
       ITW_STATUS_V2,
       ...(!isItwL3 && {
         ITW_ID_V2: getPIDMixpanelStatus(state, false),
-        ITW_PG_V2: getMixpanelCredentialStatus(
+        ITW_PG_V2: await getMixpanelCredentialStatus(
           CredentialType.DRIVING_LICENSE,
           state
         ),
-        ITW_TS_V2: getMixpanelCredentialStatus(
+        ITW_TS_V2: await getMixpanelCredentialStatus(
           CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
           state
         ),
-        ITW_CED_V2: getMixpanelCredentialStatus(
+        ITW_CED_V2: await getMixpanelCredentialStatus(
           CredentialType.EUROPEAN_DISABILITY_CARD,
           state
         )

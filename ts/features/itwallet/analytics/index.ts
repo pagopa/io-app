@@ -27,6 +27,7 @@ import {
 import { itwLifecycleIsITWalletValidSelector } from "../lifecycle/store/selectors";
 import { IdentificationContext } from "../machine/eid/context";
 import { IssuanceFailure } from "../machine/eid/failure";
+import { CredentialsVault } from "../credentials/utils/vault.ts";
 import {
   ITW_ACTIONS_EVENTS,
   ITW_CONFIRM_EVENTS,
@@ -1461,21 +1462,28 @@ export const getPIDMixpanelStatus = (
  * - Otherwise, retrieves the credential from the store and maps it to Mixpanel status.
  * - Returns `"not_available"` if the credential is missing.
  */
-export const getMixpanelCredentialStatus = (
+export const getMixpanelCredentialStatus = async (
   type: CredentialType,
   state: GlobalState,
   isItwL3?: boolean
-): ItwCredentialMixpanelStatus => {
+): Promise<ItwCredentialMixpanelStatus> => {
   if (isItwL3 === false) {
     return "not_available";
   }
-  const credential = itwCredentialsSelector(state)[type];
-  if (isItwL3 && credential && !isItwCredential(credential)) {
+  const metadata = itwCredentialsSelector(state)[type];
+  const credential = await CredentialsVault.get(type);
+
+  if (
+    isItwL3 &&
+    credential &&
+    metadata &&
+    !isItwCredential({ metadata, credential })
+  ) {
     return "not_available";
   }
 
   return pipe(
-    O.fromNullable(credential),
+    O.fromNullable(metadata),
     O.map(cred => CREDENTIAL_STATUS_MAP[getCredentialStatus(cred)]),
     O.getOrElse(() => "not_available" as ItwCredentialMixpanelStatus)
   );

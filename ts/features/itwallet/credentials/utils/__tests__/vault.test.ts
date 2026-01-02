@@ -1,6 +1,6 @@
 import * as SecureStorage from "@pagopa/io-react-native-secure-storage";
 import * as Sentry from "@sentry/react-native";
-import vault from "../vault";
+import { CredentialsVault } from "../vault";
 
 jest.mock("@pagopa/io-react-native-secure-storage");
 jest.mock("@sentry/react-native");
@@ -25,7 +25,7 @@ describe("vault", () => {
         "other:key"
       ]);
 
-      const result = await vault.list();
+      const result = await CredentialsVault.list();
 
       expect(result).toEqual(["credential1", "credential2"]);
       expect(mockSecureStorage.keys).toHaveBeenCalledTimes(1);
@@ -34,7 +34,7 @@ describe("vault", () => {
     it("should return empty array when no credentials are stored", async () => {
       mockSecureStorage.keys.mockResolvedValue([]);
 
-      const result = await vault.list();
+      const result = await CredentialsVault.list();
 
       expect(result).toEqual([]);
     });
@@ -43,7 +43,7 @@ describe("vault", () => {
       const error = new Error("Storage error");
       mockSecureStorage.keys.mockRejectedValue(error);
 
-      const result = await vault.list();
+      const result = await CredentialsVault.list();
 
       expect(result).toEqual([]);
       expect(mockSentry.captureException).toHaveBeenCalledWith(error, {
@@ -57,7 +57,10 @@ describe("vault", () => {
     it("should store credential and return true on success", async () => {
       mockSecureStorage.put.mockResolvedValue(undefined);
 
-      const result = await vault.store(CREDENTIAL_ID, CREDENTIAL_VALUE);
+      const result = await CredentialsVault.store(
+        CREDENTIAL_ID,
+        CREDENTIAL_VALUE
+      );
 
       expect(result).toBe(true);
       expect(mockSecureStorage.put).toHaveBeenCalledWith(
@@ -70,7 +73,10 @@ describe("vault", () => {
       const error = new Error("Storage error");
       mockSecureStorage.put.mockRejectedValue(error);
 
-      const result = await vault.store(CREDENTIAL_ID, CREDENTIAL_VALUE);
+      const result = await CredentialsVault.store(
+        CREDENTIAL_ID,
+        CREDENTIAL_VALUE
+      );
 
       expect(result).toBe(false);
       expect(mockSentry.captureException).toHaveBeenCalledWith(error, {
@@ -84,7 +90,7 @@ describe("vault", () => {
     it("should return credential value on success", async () => {
       mockSecureStorage.get.mockResolvedValue(CREDENTIAL_VALUE);
 
-      const result = await vault.get(CREDENTIAL_ID);
+      const result = await CredentialsVault.get(CREDENTIAL_ID);
 
       expect(result).toStrictEqual(CREDENTIAL_VALUE);
       expect(mockSecureStorage.get).toHaveBeenCalledWith(STORAGE_KEY);
@@ -94,7 +100,7 @@ describe("vault", () => {
       const error = new Error("VALUE_NOT_FOUND");
       mockSecureStorage.get.mockRejectedValue(error);
 
-      const result = await vault.get(CREDENTIAL_ID);
+      const result = await CredentialsVault.get(CREDENTIAL_ID);
 
       expect(result).toBeUndefined();
       expect(mockSentry.captureException).not.toHaveBeenCalled();
@@ -104,7 +110,7 @@ describe("vault", () => {
       const error = new Error("Unexpected error");
       mockSecureStorage.get.mockRejectedValue(error);
 
-      const result = await vault.get(CREDENTIAL_ID);
+      const result = await CredentialsVault.get(CREDENTIAL_ID);
 
       expect(result).toBeUndefined();
       expect(mockSentry.captureException).toHaveBeenCalledWith(error, {
@@ -118,7 +124,7 @@ describe("vault", () => {
     it("should remove credential and return true on success", async () => {
       mockSecureStorage.remove.mockResolvedValue(undefined);
 
-      const result = await vault.remove(CREDENTIAL_ID);
+      const result = await CredentialsVault.remove(CREDENTIAL_ID);
 
       expect(result).toBe(true);
       expect(mockSecureStorage.remove).toHaveBeenCalledWith(STORAGE_KEY);
@@ -128,7 +134,7 @@ describe("vault", () => {
       const error = new Error("Storage error");
       mockSecureStorage.remove.mockRejectedValue(error);
 
-      const result = await vault.remove(CREDENTIAL_ID);
+      const result = await CredentialsVault.remove(CREDENTIAL_ID);
 
       expect(result).toBe(false);
       expect(mockSentry.captureException).toHaveBeenCalledWith(error, {
@@ -142,7 +148,7 @@ describe("vault", () => {
     it("should remove all credentials by ID", async () => {
       mockSecureStorage.remove.mockResolvedValue(undefined);
 
-      await vault.removeAll(["credential1", "credential2"]);
+      await CredentialsVault.removeAll(["credential1", "credential2"]);
 
       expect(mockSecureStorage.remove).toHaveBeenCalledTimes(2);
       expect(mockSecureStorage.remove).toHaveBeenCalledWith(
@@ -156,7 +162,7 @@ describe("vault", () => {
     it("should handle empty array gracefully", async () => {
       mockSecureStorage.remove.mockResolvedValue(undefined);
 
-      await vault.removeAll([]);
+      await CredentialsVault.removeAll([]);
 
       expect(mockSecureStorage.remove).not.toHaveBeenCalled();
     });
@@ -167,7 +173,7 @@ describe("vault", () => {
         .mockRejectedValueOnce(error)
         .mockResolvedValueOnce(undefined);
 
-      await vault.removeAll(["credential1", "credential2"]);
+      await CredentialsVault.removeAll(["credential1", "credential2"]);
 
       expect(mockSecureStorage.remove).toHaveBeenCalledTimes(2);
       expect(mockSentry.captureException).toHaveBeenCalledWith(error, {
@@ -185,7 +191,7 @@ describe("vault", () => {
       ]);
       mockSecureStorage.remove.mockResolvedValue(undefined);
 
-      await vault.clear();
+      await CredentialsVault.clear();
 
       expect(mockSecureStorage.keys).toHaveBeenCalledTimes(1);
       expect(mockSecureStorage.remove).toHaveBeenCalledTimes(2);
@@ -201,7 +207,7 @@ describe("vault", () => {
       mockSecureStorage.keys.mockResolvedValue([]);
       mockSecureStorage.remove.mockResolvedValue(undefined);
 
-      await vault.clear();
+      await CredentialsVault.clear();
 
       expect(mockSecureStorage.keys).toHaveBeenCalledTimes(1);
       expect(mockSecureStorage.remove).not.toHaveBeenCalled();
@@ -211,7 +217,7 @@ describe("vault", () => {
       const error = new Error("Failed to list keys");
       mockSecureStorage.keys.mockRejectedValue(error);
 
-      await vault.clear();
+      await CredentialsVault.clear();
 
       expect(mockSecureStorage.keys).toHaveBeenCalledTimes(1);
       expect(mockSecureStorage.remove).not.toHaveBeenCalled();

@@ -142,7 +142,7 @@ const clear = async () => {
   await removeAll(credentialIds);
 };
 
-export default {
+export const CredentialsVault = {
   store,
   get,
   remove,

@@ -14,7 +14,6 @@ import {
 import {
   CredentialFormat,
   RequestObject,
-  StoredCredential,
   WalletInstanceAttestations
 } from "../../../common/utils/itwTypesUtils";
 import { Env } from "../../../common/utils/environment";

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { isItwCredential } from "../utils/itwCredentialUtils";
-import { StoredCredential } from "../utils/itwTypesUtils";
+import { CredentialMetadata } from "../utils/itwTypesUtils";
 import { useIOSelector } from "../../../../store/hooks";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 
@@ -13,7 +13,7 @@ import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selec
  * @param credential The stored credential
  * @returns Boolean indicating whether the credential is compatible with IT-Wallet features
  */
-export const useItwFeaturesEnabled = (credential: StoredCredential) => {
+export const useItwFeaturesEnabled = (credential: CredentialMetadata) => {
   const isItWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   return useMemo(

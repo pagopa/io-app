@@ -11,7 +11,10 @@ import {
   DrivingPrivilegesCustomClaim,
   StringClaim
 } from "../../utils/itwClaimsUtils";
-import { ParsedCredential, StoredCredential } from "../../utils/itwTypesUtils";
+import {
+  CredentialMetadata,
+  ParsedCredential
+} from "../../utils/itwTypesUtils";
 import { CardClaim, CardClaimContainer, CardClaimRenderer } from "./CardClaim";
 import { ClaimLabel } from "./ClaimLabel";
 import { CardSide } from "./types";
@@ -287,7 +290,7 @@ const dataComponentMap: Record<
 };
 
 type CardDataProps = {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
   side: CardSide;
   valuesHidden: boolean;
 };
