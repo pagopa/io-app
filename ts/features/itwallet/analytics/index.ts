@@ -163,7 +163,7 @@ export const trackWalletCategoryFilter = (wallet_category: string) => {
     ITW_ACTIONS_EVENTS.WALLET_CATEGORY_FILTER,
     buildEventProperties("UX", "action", { wallet_category })
   );
-}
+};
 
 export const trackWalletCredentialShowIssuer = (
   properties: ItwCredentialInfoDetails
