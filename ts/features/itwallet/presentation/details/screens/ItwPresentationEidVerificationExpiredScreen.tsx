@@ -6,11 +6,9 @@ import { OperationResultScreenContent } from "../../../../../components/screens/
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { useItwEidFeedbackBottomSheet } from "../../../common/hooks/useItwEidFeedbackBottomSheet.tsx";
-import {
-  ItwEidReissuingTrigger,
-  trackItwEidReissuingMandatory,
-  trackItwSurveyRequest
-} from "../../../analytics";
+import { trackItwSurveyRequest } from "../../../analytics";
+import { trackItwEidReissuingMandatory } from "../analytics";
+import { ItwEidReissuingTrigger } from "../../../analytics/utils/analyticsTypes";
 
 export const ItwPresentationEidVerificationExpiredScreen = () => {
   const navigation = useIONavigation();

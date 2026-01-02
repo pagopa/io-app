@@ -9,7 +9,7 @@ import { PropsWithChildren, useCallback, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
-import { trackWalletShowBack } from "../../../analytics";
+import { trackWalletShowBack } from "../analytics";
 import { getMixPanelCredential } from "../../../analytics/utils/analyticsUtils";
 import { ItwSkeumorphicCard } from "../../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../../common/components/ItwSkeumorphicCard/FlipGestureDetector.tsx";

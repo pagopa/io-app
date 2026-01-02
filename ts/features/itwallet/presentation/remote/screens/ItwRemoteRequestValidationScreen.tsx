@@ -8,7 +8,7 @@ import {
   StartupStatusEnum,
   isStartupLoaded
 } from "../../../../../store/reducers/startup.ts";
-import { trackItwRemoteStart } from "../../../analytics/index.ts";
+import { trackItwRemoteStart } from "../analytics";
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
 import { ItwRemoteDeepLinkFailure } from "../components/ItwRemoteDeepLinkFailure.tsx";
 import { ItwRemoteLoadingScreen } from "../components/ItwRemoteLoadingScreen.tsx";

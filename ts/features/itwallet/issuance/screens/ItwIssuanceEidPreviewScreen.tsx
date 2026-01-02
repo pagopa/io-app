@@ -25,7 +25,7 @@ import {
   trackItwExit,
   trackItwRequestSuccess,
   trackSaveCredentialToWallet
-} from "../../analytics";
+} from "../analytics";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";

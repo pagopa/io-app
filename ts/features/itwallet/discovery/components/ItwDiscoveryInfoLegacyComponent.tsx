@@ -11,16 +11,13 @@ import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 import { tosConfigSelector } from "../../../tos/store/selectors/index.ts";
 import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum.ts";
-import {
-  trackItWalletActivationStart,
-  trackItwIntroBack,
-  trackOpenItwTos
-} from "../../analytics/index.ts";
+import { trackItWalletActivationStart, trackItwIntroBack } from "../analytics";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog.tsx";
 import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig.ts";
 import { generateItwIOMarkdownRules } from "../../common/utils/markdown.tsx";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider.tsx";
 import { selectIsLoading } from "../../machine/eid/selectors.ts";
+import { trackOpenItwTos } from "../../analytics";
 
 /**
  * This is the component that shows the information about the discovery process

@@ -2,16 +2,17 @@ import { mixpanelTrack } from "../../../../../mixpanel";
 import { buildEventProperties } from "../../../../../utils/analytics";
 import {
   CREDENTIALS_MAP,
+  ItwL3UpgradeTrigger,
   ItwScreenFlowContext,
   MixPanelCredential,
   MixPanelCredentialVersion
-} from "../../../analytics";
-import { ITW_ERRORS_EVENTS } from "../../../analytics/enum";
+} from "../../../analytics/utils/analyticsTypes";
 import { RemoteFailureType } from "../machine/failure";
 import {
   ITW_REMOTE_ACTIONS_EVENTS,
   ITW_REMOTE_ERRORS_EVENTS,
-  ITW_REMOTE_SCREENVIEW_EVENTS
+  ITW_REMOTE_SCREENVIEW_EVENTS,
+  ITW_REMOTE_TECH_EVENTS
 } from "./enum";
 
 type ItwRemoteFailure = {
@@ -42,12 +43,12 @@ const isCredentialRecord = (
 
 // #region SCREEN VIEW EVENTS
 
-export function trackItwRemoteUntrustedRPBottomSheet() {
+export const trackItwRemoteUntrustedRPBottomSheet = () => {
   void mixpanelTrack(
     ITW_REMOTE_SCREENVIEW_EVENTS.ITW_REMOTE_RP_NOT_TRUSTED_BOTTOMSHEET,
     buildEventProperties("UX", "screen_view")
   );
-}
+};
 
 export const trackItwRemoteDataShare = ({
   data_type,
@@ -59,30 +60,30 @@ export const trackItwRemoteDataShare = ({
   );
 };
 
-export function trackItwRemoteInvalidAuthResponseBottomSheet() {
+export const trackItwRemoteInvalidAuthResponseBottomSheet = () => {
   void mixpanelTrack(
     ITW_REMOTE_SCREENVIEW_EVENTS.ITW_REMOTE_INVALID_AUTH_RESPONSE_BOTTOMSHEET,
     buildEventProperties("UX", "screen_view")
   );
-}
+};
 
-export function trackItwRemotePresentationCompleted(redirect_url: boolean) {
+export const trackItwRemotePresentationCompleted = (redirect_url: boolean) => {
   void mixpanelTrack(
     ITW_REMOTE_SCREENVIEW_EVENTS.ITW_REMOTE_UX_SUCCESS,
     buildEventProperties("UX", "screen_view", { redirect_url })
   );
-}
+};
 
 // #endregion SCREEN VIEW EVENTS
 
 // #region ACTIONS
 
-export function trackItwRemoteContinuePresentation() {
+export const trackItwRemoteContinuePresentation = () => {
   void mixpanelTrack(
     ITW_REMOTE_ACTIONS_EVENTS.ITW_REMOTE_UX_CONVERSION,
     buildEventProperties("UX", "action")
   );
-}
+};
 
 // #endregion ACTIONS
 
@@ -98,19 +99,19 @@ export const trackItwRemoteUnexpectedFailure = ({
   );
 };
 
-export function trackItwRemoteIdentityNeedsVerification() {
+export const trackItwRemoteIdentityNeedsVerification = () => {
   void mixpanelTrack(
     ITW_REMOTE_ERRORS_EVENTS.ITW_REMOTE_IDENTITY_NEEDS_VERIFICATION,
     buildEventProperties("KO", "screen_view")
   );
-}
+};
 
-export function trackItwRemoteUntrustedRP() {
+export const trackItwRemoteUntrustedRP = () => {
   void mixpanelTrack(
     ITW_REMOTE_ERRORS_EVENTS.ITW_REMOTE_RP_NOT_TRUSTED,
     buildEventProperties("KO", "screen_view")
   );
-}
+};
 
 export const trackItwRemoteRequestObjectFailure = ({
   reason,
@@ -174,7 +175,23 @@ export const trackItwRemoteDeepLinkFailure = (reason: Error) => {
     buildEventProperties("KO", "screen_view", { reason })
   );
 };
+
+export const trackItwUpgradeL3Mandatory = (action: ItwL3UpgradeTrigger) => {
+  void mixpanelTrack(
+    ITW_REMOTE_ERRORS_EVENTS.ITW_UPGRADE_L3_MANDATORY,
+    buildEventProperties("KO", "screen_view", { action })
+  );
+};
 // #endregion ERRORS
+
+// #region TECH
+export const trackItwRemoteStart = () => {
+  void mixpanelTrack(
+    ITW_REMOTE_TECH_EVENTS.ITW_REMOTE_START,
+    buildEventProperties("TECH", undefined)
+  );
+};
+// #endregion TECH
 
 /**
  * Returns a string of missing or invalid credentials formatted for tracking,
@@ -210,7 +227,7 @@ export const getDismissalContextFromFailure = (
   switch (failureType) {
     case RemoteFailureType.WALLET_INACTIVE:
       return {
-        screen_name: ITW_ERRORS_EVENTS.ITW_UPGRADE_L3_MANDATORY,
+        screen_name: ITW_REMOTE_ERRORS_EVENTS.ITW_UPGRADE_L3_MANDATORY,
         itw_flow: "not_available"
       };
     case RemoteFailureType.MISSING_CREDENTIALS:

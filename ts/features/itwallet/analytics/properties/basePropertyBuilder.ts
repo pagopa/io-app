@@ -14,10 +14,10 @@ import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils";
 import { mapPIDStatusToMixpanel } from "../utils/analyticsUtils";
 import {
   ItwStatus,
+  ItwPIDStatus,
   ItwCredentialMixpanelStatus,
-  CREDENTIAL_STATUS_MAP,
-  ItwPIDStatus
-} from "..";
+  CREDENTIAL_STATUS_MAP
+} from "../utils/analyticsTypes";
 import { ItwBaseProperties } from "./propertyTypes";
 
 /**

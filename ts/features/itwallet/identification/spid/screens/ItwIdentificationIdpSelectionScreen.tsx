@@ -13,7 +13,7 @@ import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   trackItWalletSpidIDPSelected,
   trackItWalletSpidIDPSelection
-} from "../../../analytics";
+} from "../../analytics";
 
 export const ItwIdentificationIdpSelectionScreen = () => {
   const dispatch = useIODispatch();

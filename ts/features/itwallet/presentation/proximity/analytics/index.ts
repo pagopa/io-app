@@ -73,12 +73,12 @@ export const trackItwProximityPresentationCompleted = () => {
   );
 };
 
-export function trackItwProximityUnofficialVerifierBottomSheet() {
+export const trackItwProximityUnofficialVerifierBottomSheet = () => {
   void mixpanelTrack(
     ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_UNOFFICIAL_VERIFIER_BOTTOMSHEET,
     buildEventProperties("UX", "screen_view")
   );
-}
+};
 
 // #endregion SCREEN VIEW EVENTS
 
@@ -133,12 +133,12 @@ export const trackItwProximityQrCodeLoadingRetry = () => {
   );
 };
 
-export function trackItwProximityContinuePresentation() {
+export const trackItwProximityContinuePresentation = () => {
   void mixpanelTrack(
     ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_UX_CONVERSION,
     buildEventProperties("UX", "action")
   );
-}
+};
 
 // #endregion ACTIONS
 

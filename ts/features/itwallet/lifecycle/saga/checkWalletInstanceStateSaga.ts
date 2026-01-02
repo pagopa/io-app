@@ -12,10 +12,10 @@ import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwUpdateWalletInstanceStatus } from "../../walletInstance/store/actions";
 import { itwLifecycleIsOperationalOrValid } from "../store/selectors";
 import {
-  trackItwWalletInstanceRevocation,
   trackItwStatusWalletAttestationFailure,
-  trackItwWalletBadState
-} from "../../analytics";
+  trackItwWalletBadState,
+  trackItwWalletInstanceRevocation
+} from "../analytics";
 import { checkIntegrityServiceReadySaga } from "./checkIntegrityServiceReadySaga";
 import { handleWalletInstanceResetSaga } from "./handleWalletInstanceResetSaga";
 

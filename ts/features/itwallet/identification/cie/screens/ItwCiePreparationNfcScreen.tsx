@@ -1,7 +1,7 @@
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback } from "react";
-import { trackItwCiePinTutorialCie } from "../../../analytics";
+import { trackItwCiePinTutorialCie } from "../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import { ItwCiePreparationScreenContent } from "../components/ItwCiePreparationScreenContent";

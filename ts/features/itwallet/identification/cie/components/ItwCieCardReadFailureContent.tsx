@@ -4,8 +4,6 @@ import { useCallback, useEffect } from "react";
 import { Linking } from "react-native";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import {
-  CieCardReadingFailureReason,
-  ItwFlow,
   trackItWalletCardReadingClose,
   trackItWalletCieCardReadingFailure,
   trackItWalletCieCardReadingUnexpectedFailure,
@@ -16,7 +14,11 @@ import {
   trackItWalletErrorPin,
   trackItWalletLastErrorPin,
   trackItWalletSecondErrorPin
-} from "../../../analytics";
+} from "../../analytics";
+import {
+  CieCardReadingFailureReason,
+  ItwFlow
+} from "../../../analytics/utils/analyticsTypes";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
