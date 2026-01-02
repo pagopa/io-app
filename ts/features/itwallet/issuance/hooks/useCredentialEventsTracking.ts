@@ -9,7 +9,7 @@ import {
   trackCredentialInvalidStatusFailure,
   trackCredentialNotEntitledFailure,
   trackItwAddCredentialNotTrustedIssuer
-} from "../../analytics";
+} from "../analytics";
 import { getMixPanelCredential } from "../../analytics/utils/analyticsUtils";
 import {
   serializeFailureReason,

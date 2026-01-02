@@ -1,20 +1,27 @@
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
-import { ITW_OFFLINE_SCREENVIEW_EVENTS } from "./enum";
+import { ItwOfflineRicaricaAppIOSource } from "../../analytics/utils/analyticsTypes";
+import {
+  ITW_OFFLINE_ACTIONS_EVENTS,
+  ITW_OFFLINE_ERRORS_EVENTS,
+  ITW_OFFLINE_SCREENVIEW_EVENTS
+} from "./enum";
 
-export function trackItwOfflineWallet() {
+// #region SCREEN VIEW EVENTS 
+
+export const trackItwOfflineWallet = () => {
   void mixpanelTrack(
     ITW_OFFLINE_SCREENVIEW_EVENTS.ITW_OFFLINE_WALLET,
     buildEventProperties("UX", "screen_view")
   );
-}
+};
 
-export function trackItwOfflineBottomSheet() {
+export const trackItwOfflineBottomSheet = () => {
   void mixpanelTrack(
     ITW_OFFLINE_SCREENVIEW_EVENTS.ITW_OFFLINE_BOTTOM_SHEET,
     buildEventProperties("UX", "screen_view")
   );
-}
+};
 
 export const trackItwOfflineAccessExpiring = () => {
   void mixpanelTrack(
@@ -29,3 +36,31 @@ export const trackItwOfflineAccessExpired = () => {
     buildEventProperties("KO", "screen_view")
   );
 };
+
+// #endregion SCREEN VIEW EVENTS
+
+// #region ACTIONS
+
+export const trackItwOfflineRicaricaAppIO = (
+  source: ItwOfflineRicaricaAppIOSource
+) => {
+  void mixpanelTrack(
+    ITW_OFFLINE_ACTIONS_EVENTS.ITW_OFFLINE_RICARICA_APP_IO,
+    buildEventProperties("UX", "action", {
+      source
+    })
+  );
+};
+
+// #endregion ACTIONS
+
+// #region ERRORS
+
+export const trackItwOfflineReloadFailure = () => {
+  void mixpanelTrack(
+    ITW_OFFLINE_ERRORS_EVENTS.ITW_OFFLINE_RELOAD_FAILURE,
+    buildEventProperties("KO", "error")
+  );
+};
+
+// #endregion ERRORS

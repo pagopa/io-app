@@ -9,7 +9,7 @@ import {
   trackAddFirstCredential,
   trackBackToWallet,
   trackItwCredentialReissuingFailed
-} from "../../analytics";
+} from "../analytics";
 import { getMixPanelCredential } from "../../analytics/utils/analyticsUtils";
 import { ItwReissuanceFeedbackBanner } from "../../common/components/ItwReissuanceFeedbackBanner.tsx";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";

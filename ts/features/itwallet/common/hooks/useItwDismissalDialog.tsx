@@ -3,10 +3,10 @@ import { Alert } from "react-native";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import {
-  ItwScreenFlowContext,
   trackItwDismissalAction,
   trackItwDismissalContext
 } from "../../analytics";
+import { ItwScreenFlowContext } from "../../analytics/utils/analyticsTypes";
 
 type ItwDismissalDialogProps = {
   handleDismiss?: () => void;

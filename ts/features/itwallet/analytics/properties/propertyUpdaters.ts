@@ -3,7 +3,7 @@ import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { itwAuthLevelSelector } from "../../common/store/selectors/preferences";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
-import { MixPanelCredential } from "..";
+import { MixPanelCredential } from "../utils/analyticsTypes";
 import {
   setOfflineAccessReason,
   resetOfflineAccessReason

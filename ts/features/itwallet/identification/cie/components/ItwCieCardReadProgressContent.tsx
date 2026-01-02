@@ -5,7 +5,7 @@ import { Platform } from "react-native";
 import {
   trackItWalletCardReadingClose,
   trackItWalletCieCardReadingSuccess
-} from "../../../analytics";
+} from "../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import { CieManagerState } from "../hooks/useCieManager";

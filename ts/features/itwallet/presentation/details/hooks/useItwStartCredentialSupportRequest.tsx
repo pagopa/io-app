@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { trackWalletCredentialSupport } from "../../../analytics";
+import { trackWalletCredentialSupport } from "../analytics";
 import { getMixPanelCredential } from "../../../analytics/utils/analyticsUtils";
 import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.ts";
 import { useStartSupportRequest } from "../../../../../hooks/useStartSupportRequest.ts";

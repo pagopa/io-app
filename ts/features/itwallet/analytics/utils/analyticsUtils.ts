@@ -1,5 +1,9 @@
-import { CREDENTIALS_MAP, ItwPIDStatus, MixPanelCredential } from "..";
 import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils";
+import {
+  ItwPIDStatus,
+  MixPanelCredential,
+  CREDENTIALS_MAP
+} from "./analyticsTypes";
 import {
   ItwAnalyticsCredential,
   ITW_ANALYTICS_CREDENTIALS

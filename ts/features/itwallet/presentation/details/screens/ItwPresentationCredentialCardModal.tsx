@@ -22,7 +22,7 @@ import {
 } from "../../../common/utils/itwTypesUtils.ts";
 import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
 import { ItwPresentationCredentialCardFlipButton } from "../components/ItwPresentationCredentialCardFlipButton.tsx";
-import { trackCredentialCardModal } from "../../../analytics";
+import { trackCredentialCardModal } from "../analytics";
 import { getMixPanelCredential } from "../../../analytics/utils/analyticsUtils.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";

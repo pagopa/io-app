@@ -7,14 +7,14 @@ import {
   IssuanceFailure,
   IssuanceFailureType
 } from "../../machine/eid/failure";
+import { ItwFlow } from "../../analytics/utils/analyticsTypes";
 import {
-  ItwFlow,
   trackIdNotMatch,
   trackItwCieIdCieNotRegistered,
   trackItwIdRequestFailure,
   trackItwIdRequestUnexpectedFailure,
   trackItwUnsupportedDevice
-} from "../../analytics";
+} from "../analytics";
 import {
   serializeFailureReason,
   shouldSerializeReason
