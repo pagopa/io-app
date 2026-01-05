@@ -270,6 +270,22 @@ export const itwCredentialsEidExpirationSelector = createSelector(
 );
 
 /**
+ * Returns the eID credential issued at date, if present.
+ *
+ * @param state - The global state.
+ * @returns The eID credential issued at date.
+ */
+export const itwCredentialsEidIssuedAtSelector = createSelector(
+  itwCredentialsEidSelector,
+  eidOption =>
+    pipe(
+      eidOption,
+      O.map(eid => eid.jwt.issuedAt),
+      O.toUndefined
+    )
+);
+
+/**
  * Return a list of all credentials of the same type, mainly used for clean up operations.
  * @param key The type of credential
  * @returns A list of StoredCredential
