@@ -17,7 +17,7 @@ import {
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import { identificationRequest } from "../../../../identification/store/actions/index.ts";
-import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/analyticsTypes";
+import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/analyticsTypes.ts";
 import {
   trackCredentialDetail,
   trackWalletCredentialShowTrustmark,

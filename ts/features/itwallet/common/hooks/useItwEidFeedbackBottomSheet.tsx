@@ -10,7 +10,7 @@ import {
   trackItwSurveyRequestAccepted,
   trackItwSurveyRequestDeclined
 } from "../../analytics";
-import { TrackQualtricsSurvey } from "../../analytics/utils/analyticsTypes";
+import { TrackQualtricsSurvey } from "../../analytics/utils/analyticsTypes.ts";
 
 type ItwEidFeedbackBottomSheetProps = {
   onPrimaryAction?: () => void;
